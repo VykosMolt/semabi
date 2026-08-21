@@ -54,7 +54,11 @@ class State:
     _counter: int = 0
 
     def copy(self) -> "State":
-        return copy.deepcopy(self)
+        s = State.__new__(State)
+        s.objects = {k: Obj(o.id, o.type, dict(o.attrs)) for k, o in self.objects.items()}
+        s.rels = {r: dict(d) for r, d in self.rels.items()}
+        s._counter = self._counter
+        return s
 
     def fresh_id(self, prefix: str = "o") -> ObjId:
         self._counter += 1

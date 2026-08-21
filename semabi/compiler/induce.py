@@ -666,7 +666,7 @@ class Inducer:
                 canon = ti.merged[slot]
                 val = ti.merged_map[slot].get(True)
                 lit = ("attr", a.owner, canon, val)
-            elif slot in ti.attr_slots() and ti.slots[slot].varies and not slot.startswith("textbox"):
+            elif slot in ti.attr_slots() and 0 < ti.slots[slot].present_with_key < ti.slots[slot].n_identified and not slot.startswith("textbox"):
                 lit = ("attr", a.owner, slot, True)
             else:
                 continue

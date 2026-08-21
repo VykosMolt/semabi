@@ -72,6 +72,8 @@ def run(args) -> dict:
                        "explore_s": round(t_explore, 1), "compile_s": round(t_compile, 1)}
         res["config"] = {"ui": args.ui, "labels": args.labels, "variant": args.variant, "seed": args.seed,
                          "episodes": args.episodes, "steps": args.steps}
+        if args.goals:
+            res["planning"] = run_planning(args, world, base, url, run_dir, log, C, res)
         (run_dir / "eval.json").write_text(json.dumps(res, indent=1))
         report = format_report(res)
         (run_dir / "eval.txt").write_text(report)
@@ -80,6 +82,52 @@ def run(args) -> dict:
         return res
     finally:
         srv.shutdown()
+
+
+def run_planning(args, world, base, url, run_dir, log, C, res) -> dict:
+    """Held-out goals: plan with the learned model only, execute through learned
+    groundings, check the hidden state."""
+    import urllib.request
+    from semabi.compiler.ground import Live
+    from semabi.compiler.planner import execute_goal
+    from semabi.eval.goals import generate_goals, hidden_goal_satisfied, translate_goal
+    from semabi.eval.matching import align
+    hidden = load_hidden(run_dir)
+    pairs = [(rm.State.from_json(rec["state"]), C.learned_state_after(i)) for i, rec in enumerate(hidden)]
+    m = align(world.domain, C.model, pairs)
+    b = Browser(url, f"{base}/reset")
+    b.step_hooks.append(HiddenRecorder(run_dir, f"{base}/_evaluator/state"))
+    results = []
+    try:
+        live = Live(b, log, C.abstractor)
+        for gi in range(args.goals):
+            seed = 5000 + args.seed * 100 + gi
+            live.reset(seed)
+            hs = rm.State.from_json(json.loads(urllib.request.urlopen(f"{base}/_evaluator/state").read())["state"])
+            rng = random.Random(seed)
+            cases = generate_goals(hs, rng, seed)
+            case = cases[gi % len(cases)]
+            lgoal = translate_goal(case.hidden, hs, world.domain, C.model, m)
+            rec = {"goal": case.name, "hidden": [list(map(str, g)) for g in case.hidden], "learned": None, "success": False}
+            if lgoal is None:
+                rec["failure"] = "untranslatable goal (missing types/attrs/relations in learned model)"
+                results.append(rec)
+                print(f"goal {gi} {case.name}: untranslatable", flush=True)
+                continue
+            rec["learned"] = [list(map(str, g)) for g in lgoal]
+            rep = execute_goal(live, C.model, lgoal)
+            final = rm.State.from_json(json.loads(urllib.request.urlopen(f"{base}/_evaluator/state").read())["state"])
+            rec.update({"planner_success": rep.success, "success": hidden_goal_satisfied(case.hidden, final),
+                        "plans": rep.plans, "replans": rep.replans, "failure": rep.failure, "primitives": rep.primitives})
+            results.append(rec)
+            print(f"goal {gi} {case.name}: {'OK' if rec['success'] else 'FAIL'} plan={rep.plans[:1]} prims={rep.primitives} {rep.failure or ''}", flush=True)
+    finally:
+        b.close()
+    n = len(results)
+    summary = {"n": n, "success": sum(r["success"] for r in results), "rate": sum(r["success"] for r in results) / n if n else 0.0,
+               "untranslatable": sum(1 for r in results if r.get("learned") is None), "cases": results}
+    print(f"planning: {summary['success']}/{n} held-out goals solved")
+    return summary
 
 
 def main():
@@ -95,6 +143,7 @@ def main():
     ap.add_argument("--explore-more", action="store_true")
     ap.add_argument("--active-rounds", type=int, default=0)
     ap.add_argument("--min-support", type=int, default=2)
+    ap.add_argument("--goals", type=int, default=0, help="number of held-out goals to plan and execute")
     ap.add_argument("--active-budget", type=int, default=60, help="primitives per active round")
     run(ap.parse_args())
 
