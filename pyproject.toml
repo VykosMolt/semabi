@@ -1,0 +1,20 @@
+[project]
+name = "semabi"
+version = "0.1.0"
+description = "Semantic interface induction from black-box interaction"
+requires-python = ">=3.12"
+dependencies = [
+    "playwright>=1.48",
+    "pyyaml>=6",
+    "pytest>=8",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["semabi*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
