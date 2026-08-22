@@ -47,11 +47,12 @@ def main():
         out.append(f"| {r['run']} | {r['types']} | {fmt(r['preds'])} | {r['ops']} | {fmt(r['op_precision'])} | {fmt(r['pre_agree'])} | {fmt(r['eff_agree'])} | {r['goals']} | {r['primitives']} |")
     if base:
         out += ["", "## Baselines (direct structural scorer: operator counted only if pre-agree >= 0.9 and eff-agree >= 0.9)", "",
-                "| run | SemABI ops (prec/pre/eff) | LLM passive ops (prec/pre/eff) | known-vocab ops (pre/eff) | screen graph: held-out next-screen predicted |", "|---|---|---|---|---|"]
+                "| run | SemABI ops (prec/pre/eff) | LLM passive, random phase (prec/pre/eff) | LLM passive, full trace | known-vocab ops (pre/eff) | screen graph: held-out next-screen predicted |", "|---|---|---|---|---|---|"]
         for b in base:
-            s, l, k, g = b["semabi"], b.get("llm", {}), b["known_vocab"], b["graph"]
+            s, l, la, k, g = b["semabi"], b.get("llm", {}), b.get("llm_all", {}), b["known_vocab"], b["graph"]
             ls = f"{l.get('ops','-')} ({fmt(l.get('precision','-'))}/{fmt(l.get('pre','-'))}/{fmt(l.get('eff','-'))})" if "ops" in l else "failed"
-            out.append(f"| {b['run']} | {s['ops']} ({fmt(s['precision'])}/{fmt(s['pre'])}/{fmt(s['eff'])}) | {ls} | {k['ops']} ({fmt(k['pre'])}/{fmt(k['eff'])}) | {fmt(g.get('next_screen_predicted', '-'))} |")
+            las = f"{la.get('ops','-')} ({fmt(la.get('precision','-'))}/{fmt(la.get('pre','-'))}/{fmt(la.get('eff','-'))})" if "ops" in la else "-"
+            out.append(f"| {b['run']} | {s['ops']} ({fmt(s['precision'])}/{fmt(s['pre'])}/{fmt(s['eff'])}) | {ls} | {las} | {k['ops']} ({fmt(k['pre'])}/{fmt(k['eff'])}) | {fmt(g.get('next_screen_predicted', '-'))} |")
     if cross:
         out += ["", "## Cross-UI structural equivalence (learned model vs learned model, no hidden information)", "",
                 "| A | B | effects reproduced | pre+eff equivalent | B operators |", "|---|---|---|---|---|"]

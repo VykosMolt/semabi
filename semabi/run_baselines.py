@@ -41,6 +41,12 @@ def main():
                           "pre": round(r["mean_pre_agree"], 2), "eff": round(r["mean_eff_agree"], 2), "learned_ops": r["learned_ops"]}
         else:
             row["llm"] = {"error": "failed"}
+        # LLM passive over the whole evidence log (incl. SemABI's active experiments), when available
+        outall = Path("runs") / f"llmall_{run.name}_{a.llm_model}"
+        if (outall / "model.json").exists():
+            r = score(outall / "model.json", variant)
+            row["llm_all"] = {"ops": f"{r['ops_recovered']}/{r['hidden_ops']}", "precision": round(r["op_precision"], 2),
+                              "pre": round(r["mean_pre_agree"], 2), "eff": round(r["mean_eff_agree"], 2)}
         # known vocabulary (per variant; UI-independent)
         kv = Path("runs") / f"kv_{variant}"
         if not (kv / "model.json").exists():

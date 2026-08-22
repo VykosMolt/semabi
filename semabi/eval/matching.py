@@ -278,13 +278,19 @@ def simulate_match(hidden_dom: rm.Domain, learned: LearnedModel, m: Mapping, hop
         for hn, v in hb.items():
             ln = pm[hn]
             lb[ln] = idmap.get(v, v) if isinstance(v, str) and v in h.objects else v
-        l_reason = rm.check_pre(lop, learned.domain, l, lb)
+        try:
+            l_reason = rm.check_pre(lop, learned.domain, l, lb)
+        except (KeyError, TypeError):
+            l_reason = "malformed operator"
         if (h_reason is None) == (l_reason is None):
             pre_ok += 1
         if h_reason is None and l_reason is None:
             both += 1
             h2, _ = rm.apply_effects(hop, h, hb)
-            l2_pred, _ = rm.apply_effects(lop, l, lb)
+            try:
+                l2_pred, _ = rm.apply_effects(lop, l, lb)
+            except (KeyError, TypeError):
+                continue  # malformed effect (e.g. unbound parameter): counts as a mismatch
             l2_true, _ = translate_state(h2, hidden_dom, learned, m)
             if canonical_keys(l2_pred, learned) == canonical_keys(l2_true, learned):
                 eff_ok += 1
