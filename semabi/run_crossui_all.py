@@ -25,9 +25,9 @@ def main():
         for ra, rb in itertools.combinations(rs, 2):
             A, B = LearnedModel.load(ra / "model.json"), LearnedModel.load(rb / "model.json")
             c = compare_models(A, B)
-            results.append({"a": ra.name, "b": rb.name, "equivalent": c.equivalent, "ops_a": c.ops_a, "ops_b": c.ops_b, "score": c.score,
+            results.append({"a": ra.name, "b": rb.name, "equivalent": c.equivalent, "equivalent_eff": c.equivalent_eff, "ops_a": c.ops_a, "ops_b": c.ops_b, "score": c.score,
                             "type_map": c.type_map, "attr_map": c.attr_map, "rel_map": c.rel_map})
-            print(f"{ra.name} vs {rb.name}: {c.equivalent}/{c.ops_a} (B has {c.ops_b}) score={c.score:.2f}", flush=True)
+            print(f"{ra.name} vs {rb.name}: pre+eff {c.equivalent}/{c.ops_a}, eff {c.equivalent_eff}/{c.ops_a} (B has {c.ops_b})", flush=True)
     Path(a.out).write_text(json.dumps(results, indent=1))
 
 

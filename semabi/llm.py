@@ -8,7 +8,7 @@ import subprocess
 from pathlib import Path
 
 
-def ask(prompt: str, model: str = "sonnet", system: str | None = None, timeout: int = 600, cache_dir: Path | None = None) -> str:
+def ask(prompt: str, model: str = "sonnet", system: str | None = None, timeout: int = 1500, cache_dir: Path | None = None) -> str:
     key = None
     if cache_dir:
         import hashlib

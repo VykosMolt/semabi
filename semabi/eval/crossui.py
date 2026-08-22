@@ -73,15 +73,16 @@ class CrossResult:
     rel_map: dict
     ops_a: int
     ops_b: int
-    equivalent: int  # A-operators with a behaviourally equivalent B-operator
+    equivalent: int  # A-operators with a behaviourally equivalent B-operator (pre and eff agree)
     per_op: list
+    equivalent_eff: int = 0  # A-operators whose effects are reproduced by a B-operator (eff agree)
 
     @property
     def score(self) -> float:
         return self.equivalent / max(1, max(self.ops_a, self.ops_b))
 
     def report(self) -> str:
-        lines = [f"cross-UI equivalence: {self.equivalent}/{self.ops_a} operators of A matched in B (B has {self.ops_b}); score={self.score:.2f}",
+        lines = [f"cross-UI equivalence: {self.equivalent}/{self.ops_a} operators of A matched in B with pre+eff (effects only: {self.equivalent_eff}/{self.ops_a}; B has {self.ops_b}); score={self.score:.2f}",
                  f"  types {self.type_map} attrs {self.attr_map} rels {self.rel_map}"]
         for r in self.per_op:
             lines.append(f"   {r['a']:6s} -> {str(r['b']):6s} pre={r['pre']:.2f} eff={r['eff']:.2f}")
@@ -148,10 +149,11 @@ def compare_models(A: LearnedModel, B: LearnedModel, seed: int = 0, n_states: in
                         m.rel_map = {rb: ra for rb, ra in rel_combo if ra is not None}
                         res = match_operators(A.domain, B, m, states, seed)
                         eq = [r for r in res if r.learned_op and r.eff_agree >= 0.9 and r.pre_agree >= 0.9]
+                        eq_eff = [r for r in res if r.learned_op and r.eff_agree >= 0.9]
                         cr = CrossResult(dict(type_map), {f"{t}.{b}": a for (t, b), (a, _) in m.attr_map.items()}, dict(m.rel_map),
                                          len(A.domain.operators), len(B.domain.operators), len(eq),
-                                         [{"a": r.hidden_op, "b": r.learned_op, "pre": r.pre_agree, "eff": r.eff_agree} for r in res])
-                        if best is None or cr.equivalent > best.equivalent:
+                                         [{"a": r.hidden_op, "b": r.learned_op, "pre": r.pre_agree, "eff": r.eff_agree} for r in res], len(eq_eff))
+                        if best is None or (cr.equivalent_eff, cr.equivalent) > (best.equivalent_eff, best.equivalent):
                             best = cr
         if best and best.equivalent > 0:
             break
