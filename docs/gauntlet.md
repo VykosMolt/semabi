@@ -106,3 +106,12 @@ object/representation correspondences are *proposed* (by priors or an LLM) and
 then validated by the existing interventionist machinery, which is exactly the
 division of labour the brief asked for ("LLMs may propose hypotheses; only
 environment interaction may validate them").
+
+On **pantry** the LLM proposes `Dish(name, category, ...)`, `Ingredient(name,
+nick, ...)` with `placedIn(Ingredient, Dish)`, i.e. it again recovers the
+nick <-> full-name correspondence and the dish/ingredient ontology, but it
+flattens stations into a boolean (`onMain`), misses the many-to-many link and
+invents four toggle operators that do not exist; the real `out` (detach, or
+destroy when it was the last line) is rendered as a cascade delete. Same
+pattern: ontology and representation correspondence from priors, semantics
+unverified.
