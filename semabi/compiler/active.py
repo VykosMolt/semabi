@@ -447,6 +447,15 @@ class ActiveExplorer:
             for k in range(1, len(seq) + 1):
                 self.chain_tried[tuple(seq[:k])] = self.chain_tried.get(tuple(seq[:k]), 0) + 1
             after_chain = live.state
+            # re-enter the current view so that a wizard restarts from its first step
+            cat = getattr(self.C.abstractor, "cat", None)
+            cur = getattr(self.C.abstractor, "current_view", None)
+            if cat is not None and cur is not None:
+                label = next((l for l, v in cat.view_controls.items() if v == cur), None)
+                po3 = self.C.abstractor.parsed(live.obs)
+                node = next((n for n, k in po3.node_key.items() if label and k == f"button:{label}" and n not in po3.node_instance), None)
+                if node is not None:
+                    live.do(Primitive("click", node))
             d = diff(before, after_chain)
             out = {"executed": True, "reason": None, "steps": r.steps, "domain_changed": d.domain_changed, "diff": str(d)}
             if d.domain_changed and hasattr(self.live.A, "cat"):

@@ -212,8 +212,10 @@ class SchemaGrounder(Abstractor):
                     val = None
                 val = transform(val, sm.get("transform")) if val is not None else None
                 if "attr" in sm:
-                    attrs[sm["attr"]] = val
                     node_key[m.node] = sm["attr"]
+                    if role in ("textbox", "combobox"):
+                        continue  # an input shows what the user types, not the entity's state
+                    attrs[sm["attr"]] = val
                 elif "ref" in sm:
                     rel = sm.get("relation", f"{um.type_name}_{m.sid}")
                     refs["ref:" + rel] = val
@@ -434,10 +436,12 @@ class V1Tracker(Tracker):
         self.G = A
         self.scopes = [Scope(k, A.tid_of[t], set()) for k, t in A.context_slots.items() if t in A.tid_of]
         self.listed_seen: set[int] = set()
+        self.scope_seen: set[tuple[int, Any]] = set()
 
     def reset(self) -> None:
         super().reset()
         self.listed_seen = set()
+        self.scope_seen = set()
 
     def listed_types(self, view: str) -> dict[int, str]:
         out = {}
@@ -499,6 +503,10 @@ class V1Tracker(Tracker):
         for oid, o in visible.objs.items():
             c = _copy_obj(o)
             b = prev.get(oid)
+            if b is None and o.tid in scoped:
+                rk, cur = scoped[o.tid]
+                if (o.tid, cur) not in self.scope_seen:
+                    first_visit.add(oid)
             if b is not None:
                 for k, v in b.attrs.items():
                     if c.attrs.get(k) is None and v is not None:
@@ -513,6 +521,8 @@ class V1Tracker(Tracker):
             new.objs[oid] = c
         for tid in listed:
             self.listed_seen.add(tid)
+        for tid, (rk, cur) in scoped.items():
+            self.scope_seen.add((tid, cur))
         ctx = {k: new.view.get(k) for k in self.G.context_slots}
         self.belief = new
         self.ctx = ctx

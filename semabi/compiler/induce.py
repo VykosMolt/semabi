@@ -410,7 +410,14 @@ class Inducer:
         cat = getattr(self.A, "cat", None)
         if cat is None or s.action.kind != "click" or not s.action.target_desc:
             return False
-        return s.action.target_desc.get("name") in cat.view_controls
+        if s.action.target_desc.get("name") in cat.view_controls:
+            return True
+        # a click on a static entity mention (object-named tab / selector) is a view action
+        po = self.A.parsed(self.log.obs(s.before))
+        idx = po.node_instance.get(s.action.target)
+        if idx is not None and po.instances[idx].anchor == "static":
+            return True
+        return False
 
     def tracked(self, sig: str) -> AbstractState:
         return self.state(sig)
