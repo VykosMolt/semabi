@@ -41,6 +41,8 @@ primitives, 3 active rounds x 150, 6 held-out goals, 2 LLM schema proposals
 
 ## Fresh suite (gauntlet-v2), frozen V0
 
+(Three runs hit V0's known `ti.slots[k]` KeyError on unseen slot labels; the five that completed recovered 0 operators and 0-1 types.)
+
 | app | types | attrs | rels | operators recovered (observed) | learned / spurious | failures rejected | goals | primitives |
 |---|---|---|---|---|---|---|---|---|
 | g2_claude_01_airport | 2/4 | 5/10 | 0/5 | 0/7 (4) | 0 / 0 | 0.0 | 0/6 | 564 |
