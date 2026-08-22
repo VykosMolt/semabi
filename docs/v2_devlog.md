@@ -23,3 +23,8 @@ C = 1.0 everywhere.
   rejection (U. vs Undercroft CONTRADICTED). RTC unchanged: .81/.00/.80/.00/.59/.35/.26/.00.
   Conclusion: passive evidence is exhausted for identity across abbreviated representations;
   next is the intervention layer (reload-after-action, probes), then freeze.
+- 2026-08-23: persistence-probe explorer (`v2/explore.py`, probes.jsonl), probe-based view
+  controls, UNGROUNDED counterexample extraction, FD over distinct pairs, pairwise families,
+  frame units. Random traces: .81/.00/.80/.00/.59/.35/.00/.00 (museum regressed .26 -> .00);
+  probe traces (same budget): apiary .50, pharmacy-g .06, others 0 with far fewer domain
+  events observed. Consolidated in docs/v2_status.md; stopping passive rule changes.

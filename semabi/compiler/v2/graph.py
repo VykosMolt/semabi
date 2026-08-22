@@ -167,7 +167,11 @@ class ObsGraph:
             pos = paths[n.i] + "|" + token_pattern(node_text(n))
             self.position_of[(sig, n.i)] = pos
             tt = self.templates.setdefault(pos, TextTemplate(pos))
-            tv = self.templates_v.setdefault((pos, self.position_idx(obs, n.i), skel), TextTemplate(pos))
+            # variation is judged per (position, indexed position of the *parent*, view): two
+            # headings under different containers are different positions; the rows of one
+            # listing share theirs (their own index would make every stable listing look constant)
+            ppos = self.position_idx(obs, n.parent) if n.parent >= 0 else ()
+            tv = self.templates_v.setdefault((pos, ppos, skel), TextTemplate(pos))
             if node_text(n) and (sig, n.i) not in self.header:
                 tt.strings[node_text(n)] += 1
                 tt.n += 1

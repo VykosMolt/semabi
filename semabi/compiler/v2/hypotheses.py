@@ -168,6 +168,22 @@ class Hypotheses:
                     sid = f"{rel}#{k}@{i - owner.root}" + ("~" if transient else "")
                 owner.slots[sid] = tok
                 owner.slot_nodes[sid] = i
+        # a unit whose only persistent content is one nested mention (a cell holding a tape
+        # button and a colour select) is that mention's frame: its slots belong to the mention
+        for ui in list(insts):
+            own_persistent = [k for k in ui.slots if not k.endswith("~")]
+            if own_persistent or len(ui.nested) != 1:
+                continue
+            child = by_root.get(ui.nested[0])
+            if child is None or not ui.slots:
+                continue
+            for k, v in ui.slots.items():
+                nk = f"^{k}"
+                if nk.endswith("~") and (child.template, nk[:-1]) in self.persistent_widgets:
+                    nk = nk[:-1]
+                child.slots[nk] = v
+                child.slot_nodes[nk] = ui.slot_nodes[k]
+            ui.slots = {}
         # column context: a cell's header (tables and matrices) is an own slot of the
         # innermost unit that owns the cell
         header_cache: dict[int, list[int] | None] = {}
@@ -474,7 +490,7 @@ class Hypotheses:
         fams: list[list[UnitHyp]] = []
         for u in keyed:
             for f in fams:
-                if any(self._same_family(u, v) for v in f):
+                if all(self._same_family(u, v) for v in f):  # pairwise, not chained
                     f.append(u)
                     break
             else:
@@ -563,14 +579,15 @@ class Hypotheses:
             return 1.0
         scores = []
         for s in others:
-            by_k: dict[str, Counter] = defaultdict(Counter)
+            by_k: dict[str, set] = defaultdict(set)
             for ui in uh.instances:
                 if k in ui.slots and s in ui.slots:
-                    by_k[ui.slots[k]][ui.slots[s]] += 1
-            tot = sum(sum(c.values()) for c in by_k.values())
-            if not tot:
+                    by_k[ui.slots[k]].add(ui.slots[s])
+            if not by_k:
                 continue
-            scores.append(sum(c.most_common(1)[0][1] for c in by_k.values()) / tot)
+            # distinct (key, value) pairs, not observation counts (a state seen many times
+            # must not outweigh a contradiction seen once)
+            scores.append(len(by_k) / sum(len(v) for v in by_k.values()))
         return sum(scores) / len(scores) if scores else 1.0
 
     def _choose_key(self, uh: UnitHyp, pool: Counter | None = None) -> None:
