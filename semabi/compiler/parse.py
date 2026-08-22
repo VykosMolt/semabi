@@ -154,21 +154,39 @@ class Parser:
         self.typed_tokens = set(typed_tokens)
         for obs in observations:
             self.detect_roots(obs)
+        # per (tid, rolepath): were labels ever shared by two co-present instances? were there >= 2 instances?
+        shared_ever: set[tuple[int, str]] = set()
+        multi_ever: set[tuple[int, str]] = set()
         for obs in observations:
             roots = self.detect_roots(obs)
             owner: dict[int, int] = {}
+            root_of: dict[int, int] = {}
             relpath: dict[int, str] = {}
+            labels_at: dict[tuple[int, str], list[tuple[int, str]]] = {}
             for i, n in enumerate(obs.nodes):
                 p = n.parent
                 if i in roots:
                     owner[i] = roots[i]
+                    root_of[i] = i
                     relpath[i] = n.role
                     continue
                 if p >= 0 and p in owner:
                     owner[i] = owner[p]
+                    root_of[i] = root_of[p]
                     relpath[i] = relpath[p] + "/" + n.role
-                    if n.role in WIDGETS and leaf_label(n) in self.typed_tokens:
-                        self.data_positions.add((owner[i], relpath[i]))
+                    if n.role in WIDGETS and leaf_label(n):
+                        if leaf_label(n) in self.typed_tokens:
+                            self.data_positions.add((owner[i], relpath[i]))
+                        labels_at.setdefault((owner[i], relpath[i]), []).append((root_of[i], leaf_label(n)))
+            for key, items in labels_at.items():
+                labs = [l for _, l in items]
+                if len(set(r for r, _ in items)) >= 2:
+                    multi_ever.add(key)
+                    if len(labs) != len(set(labs)):
+                        shared_ever.add(key)
+        # labels always pairwise distinct across co-present instances -> data (e.g. links named after objects)
+        for key in multi_ever - shared_ever:
+            self.data_positions.add(key)
 
     # ---- template registry
     def _find_template(self, role, anchor, shape, leaves) -> TypeTemplate | None:

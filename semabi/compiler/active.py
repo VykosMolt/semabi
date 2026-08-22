@@ -423,6 +423,7 @@ class ActiveExplorer:
     def round(self, budget: int, reset_every: int = 12) -> int:
         """Run experiments until `budget` primitives are used. Returns primitives used."""
         n_exp = 0
+        stalled = 0
         start = self.live.b.n_primitives
         while self.live.b.n_primitives - start < budget and n_exp < budget * 2:
             if n_exp % reset_every == 0:
@@ -438,9 +439,23 @@ class ActiveExplorer:
             exps.sort(key=lambda e: -e.priority)
             top = [e for e in exps if e.priority >= exps[0].priority - 1e-9]
             exp = self.rng.choice(top)
+            before_prims = self.live.b.n_primitives
             outcome = self.run_experiment(exp)
             self._record(exp, outcome)
             n_exp += 1
+            if self.live.b.n_primitives == before_prims:
+                stalled += 1
+                if stalled >= 10:
+                    # experiments cannot be executed with the current model: gather fresh evidence randomly
+                    from semabi.compiler.explorer import Explorer
+                    ex = Explorer(self.live.b, self.live.log, seed=self.rng.randrange(10_000))
+                    obs = self.live.obs
+                    for _ in range(15):
+                        obs = ex.step(obs, self.live.episode, ex.choose(obs))
+                    self.live.refresh()
+                    stalled = 0
+            else:
+                stalled = 0
             if len(self.live.state.objs) > 14:
                 self.live.reset(self.rng.randrange(10_000))
         self._save()
