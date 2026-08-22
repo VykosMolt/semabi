@@ -1,0 +1,180 @@
+{
+ "types": {
+  "hidden": 4,
+  "learned": 4,
+  "recovered": 4,
+  "map": {
+   "T3": "Prescription",
+   "T2": "Pharmacist",
+   "T1": "Patient",
+   "T0": "Drug"
+  }
+ },
+ "predicates": {
+  "hidden_attrs": 13,
+  "recovered_attrs": 8,
+  "hidden_rels": 9,
+  "recovered_rels": 3,
+  "attr_map": {
+   "T3.attr:dosage": "dosage",
+   "T3.attr:refills_left": "refills_left",
+   "T3.attr:status": "status",
+   "T2.attr:name": "name",
+   "T1.attr:name": "name",
+   "T0.attr:name": "name",
+   "T0.attr:form": "form",
+   "T0.attr:stock": "stock"
+  },
+  "rel_map": {
+   "ref_3_rel:prescription_patient": "prescription_patient",
+   "ref_3_rel:prescription_drug": "prescription_drug",
+   "ref_3_rel:last_filled_by": "last_filled_by"
+  }
+ },
+ "operators": {
+  "hidden": 4,
+  "observed_in_trace": 4,
+  "recovered": 3,
+  "recovered_ops": [
+   "write_prescription",
+   "restock_drug",
+   "void_prescription"
+  ],
+  "learned": 9,
+  "spurious_learned": [],
+  "precision": 1.0,
+  "failure_rejection_rate": 0.0,
+  "per_op": {
+   "write_prescription": {
+    "successes": 11,
+    "explained": 10,
+    "invisible": 0,
+    "explained_rate": 0.91,
+    "by": {
+     "op1": 4,
+     "op6": 2,
+     "op7": 2,
+     "op8": 2
+    },
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "fill_prescription": {
+    "successes": 2,
+    "explained": 0,
+    "invisible": 0,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 1,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "restock_drug": {
+    "successes": 11,
+    "explained": 9,
+    "invisible": 0,
+    "explained_rate": 0.82,
+    "by": {
+     "op2": 3,
+     "op3": 2,
+     "op4": 2,
+     "op5": 2
+    },
+    "failures": 4,
+    "rejected": 0,
+    "unbound_failures": 4
+   },
+   "void_prescription": {
+    "successes": 5,
+    "explained": 5,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "op0": 5
+    },
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   }
+  }
+ },
+ "gtc": {
+  "transitions": 29,
+  "fully_representable": 29,
+  "partly_representable": 29,
+  "gtc": 1.0,
+  "gtc_any": 1.0,
+  "per_op": {
+   "fill_prescription": {
+    "n": 2,
+    "full": 2,
+    "any": 2
+   },
+   "write_prescription": {
+    "n": 11,
+    "full": 11,
+    "any": 11
+   },
+   "void_prescription": {
+    "n": 5,
+    "full": 5,
+    "any": 5
+   },
+   "restock_drug": {
+    "n": 11,
+    "full": 11,
+    "any": 11
+   }
+  }
+ },
+ "rtc": {
+  "transitions": 29,
+  "fully_registered": 29,
+  "partly_registered": 29,
+  "rtc": 1.0,
+  "rtc_any": 1.0,
+  "per_op": {
+   "fill_prescription": {
+    "n": 2,
+    "full": 2,
+    "any": 2
+   },
+   "write_prescription": {
+    "n": 11,
+    "full": 11,
+    "any": 11
+   },
+   "void_prescription": {
+    "n": 5,
+    "full": 5,
+    "any": 5
+   },
+   "restock_drug": {
+    "n": 11,
+    "full": 11,
+    "any": 11
+   }
+  }
+ },
+ "object_layer": {
+  "annotated_leaves": 5030,
+  "grounded_leaves": 5030,
+  "grounded_frac": 1.0,
+  "pair_precision": 1.0,
+  "pair_recall": 1.0,
+  "learned_keys_merging_entities": 0,
+  "entities_split_across_keys": 0,
+  "entities_grounded": 21
+ },
+ "view_false_positives": {
+  "learned_transitions": 29,
+  "without_hidden_change": 0,
+  "rate": 0.0
+ },
+ "condition": "C",
+ "cost": {
+  "primitives": 427
+ },
+ "sig_conflicts": 0
+}

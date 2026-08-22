@@ -1,0 +1,151 @@
+{
+ "types": {
+  "hidden": 4,
+  "learned": 4,
+  "recovered": 2,
+  "map": {
+   "T0": "Patient",
+   "T1": "Drug"
+  }
+ },
+ "predicates": {
+  "hidden_attrs": 13,
+  "recovered_attrs": 2,
+  "hidden_rels": 9,
+  "recovered_rels": 0,
+  "attr_map": {
+   "T1.form": "form",
+   "T1.stock": "stock"
+  },
+  "rel_map": {}
+ },
+ "operators": {
+  "hidden": 4,
+  "observed_in_trace": 4,
+  "recovered": 0,
+  "recovered_ops": [],
+  "learned": 0,
+  "spurious_learned": [],
+  "precision": 0.0,
+  "failure_rejection_rate": 0.0,
+  "per_op": {
+   "write_prescription": {
+    "successes": 11,
+    "explained": 0,
+    "invisible": 11,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "fill_prescription": {
+    "successes": 2,
+    "explained": 0,
+    "invisible": 0,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 1,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "restock_drug": {
+    "successes": 11,
+    "explained": 0,
+    "invisible": 3,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 4,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "void_prescription": {
+    "successes": 5,
+    "explained": 0,
+    "invisible": 5,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   }
+  }
+ },
+ "gtc": {
+  "transitions": 29,
+  "fully_representable": 11,
+  "partly_representable": 13,
+  "gtc": 0.379,
+  "gtc_any": 0.448,
+  "per_op": {
+   "fill_prescription": {
+    "n": 2,
+    "full": 0,
+    "any": 2
+   },
+   "write_prescription": {
+    "n": 11,
+    "full": 0,
+    "any": 0
+   },
+   "void_prescription": {
+    "n": 5,
+    "full": 0,
+    "any": 0
+   },
+   "restock_drug": {
+    "n": 11,
+    "full": 11,
+    "any": 11
+   }
+  }
+ },
+ "rtc": {
+  "transitions": 29,
+  "fully_registered": 8,
+  "partly_registered": 8,
+  "rtc": 0.276,
+  "rtc_any": 0.276,
+  "per_op": {
+   "fill_prescription": {
+    "n": 2,
+    "full": 0,
+    "any": 0
+   },
+   "write_prescription": {
+    "n": 11,
+    "full": 0,
+    "any": 0
+   },
+   "void_prescription": {
+    "n": 5,
+    "full": 0,
+    "any": 0
+   },
+   "restock_drug": {
+    "n": 11,
+    "full": 8,
+    "any": 8
+   }
+  }
+ },
+ "object_layer": {
+  "annotated_leaves": 5030,
+  "grounded_leaves": 2890,
+  "grounded_frac": 0.575,
+  "pair_precision": 0.704,
+  "pair_recall": 1.0,
+  "learned_keys_merging_entities": 16,
+  "entities_split_across_keys": 9,
+  "entities_grounded": 10
+ },
+ "view_false_positives": {
+  "learned_transitions": 16,
+  "without_hidden_change": 8,
+  "rate": 0.5
+ },
+ "condition": "base",
+ "cost": {
+  "primitives": 427
+ }
+}

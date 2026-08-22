@@ -1,0 +1,167 @@
+{
+ "types": {
+  "hidden": 4,
+  "learned": 3,
+  "recovered": 1,
+  "map": {
+   "T0": "Scope"
+  }
+ },
+ "predicates": {
+  "hidden_attrs": 12,
+  "recovered_attrs": 0,
+  "hidden_rels": 9,
+  "recovered_rels": 0,
+  "attr_map": {},
+  "rel_map": {}
+ },
+ "operators": {
+  "hidden": 5,
+  "observed_in_trace": 5,
+  "recovered": 0,
+  "recovered_ops": [],
+  "learned": 0,
+  "spurious_learned": [],
+  "precision": 0.0,
+  "failure_rejection_rate": 0.0,
+  "per_op": {
+   "book": {
+    "successes": 3,
+    "explained": 0,
+    "invisible": 3,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 6,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "extend": {
+    "successes": 12,
+    "explained": 0,
+    "invisible": 12,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 1,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "clip": {
+    "successes": 8,
+    "explained": 0,
+    "invisible": 8,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 3,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "retarget": {
+    "successes": 3,
+    "explained": 0,
+    "invisible": 3,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 7,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "detach": {
+    "successes": 8,
+    "explained": 0,
+    "invisible": 8,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   }
+  }
+ },
+ "gtc": {
+  "transitions": 34,
+  "fully_representable": 0,
+  "partly_representable": 0,
+  "gtc": 0.0,
+  "gtc_any": 0.0,
+  "per_op": {
+   "extend": {
+    "n": 12,
+    "full": 0,
+    "any": 0
+   },
+   "clip": {
+    "n": 8,
+    "full": 0,
+    "any": 0
+   },
+   "retarget": {
+    "n": 3,
+    "full": 0,
+    "any": 0
+   },
+   "book": {
+    "n": 3,
+    "full": 0,
+    "any": 0
+   },
+   "detach": {
+    "n": 8,
+    "full": 0,
+    "any": 0
+   }
+  }
+ },
+ "rtc": {
+  "transitions": 34,
+  "fully_registered": 0,
+  "partly_registered": 0,
+  "rtc": 0.0,
+  "rtc_any": 0.0,
+  "per_op": {
+   "extend": {
+    "n": 12,
+    "full": 0,
+    "any": 0
+   },
+   "clip": {
+    "n": 8,
+    "full": 0,
+    "any": 0
+   },
+   "retarget": {
+    "n": 3,
+    "full": 0,
+    "any": 0
+   },
+   "book": {
+    "n": 3,
+    "full": 0,
+    "any": 0
+   },
+   "detach": {
+    "n": 8,
+    "full": 0,
+    "any": 0
+   }
+  }
+ },
+ "object_layer": {
+  "annotated_leaves": 2466,
+  "grounded_leaves": 603,
+  "grounded_frac": 0.245,
+  "pair_precision": 0.762,
+  "pair_recall": 1.0,
+  "learned_keys_merging_entities": 3,
+  "entities_split_across_keys": 3,
+  "entities_grounded": 10
+ },
+ "view_false_positives": {
+  "learned_transitions": 7,
+  "without_hidden_change": 4,
+  "rate": 0.571
+ },
+ "condition": "base",
+ "cost": {
+  "primitives": 408
+ }
+}

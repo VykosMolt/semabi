@@ -1,0 +1,210 @@
+{
+ "types": {
+  "hidden": 4,
+  "learned": 3,
+  "recovered": 2,
+  "map": {
+   "T0": "Hive",
+   "T1": "Stand"
+  }
+ },
+ "predicates": {
+  "hidden_attrs": 11,
+  "recovered_attrs": 0,
+  "hidden_rels": 5,
+  "recovered_rels": 0,
+  "attr_map": {},
+  "rel_map": {}
+ },
+ "operators": {
+  "hidden": 7,
+  "observed_in_trace": 7,
+  "recovered": 0,
+  "recovered_ops": [],
+  "learned": 1,
+  "spurious_learned": [
+   "op0"
+  ],
+  "precision": 0.0,
+  "failure_rejection_rate": 0.0,
+  "per_op": {
+   "perch": {
+    "successes": 10,
+    "explained": 0,
+    "invisible": 10,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 3,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "unperch": {
+    "successes": 11,
+    "explained": 0,
+    "invisible": 11,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 6,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "add_frame": {
+    "successes": 12,
+    "explained": 0,
+    "invisible": 12,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 4,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "take_frame": {
+    "successes": 14,
+    "explained": 0,
+    "invisible": 14,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 5,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "open_forage": {
+    "successes": 3,
+    "explained": 0,
+    "invisible": 3,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 2,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "haul": {
+    "successes": 7,
+    "explained": 0,
+    "invisible": 7,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 8,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "withdraw": {
+    "successes": 2,
+    "explained": 0,
+    "invisible": 1,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 4,
+    "rejected": 0,
+    "unbound_failures": 0
+   }
+  }
+ },
+ "gtc": {
+  "transitions": 59,
+  "fully_representable": 0,
+  "partly_representable": 1,
+  "gtc": 0.0,
+  "gtc_any": 0.017,
+  "per_op": {
+   "add_frame": {
+    "n": 12,
+    "full": 0,
+    "any": 0
+   },
+   "take_frame": {
+    "n": 14,
+    "full": 0,
+    "any": 0
+   },
+   "perch": {
+    "n": 10,
+    "full": 0,
+    "any": 0
+   },
+   "unperch": {
+    "n": 11,
+    "full": 0,
+    "any": 0
+   },
+   "haul": {
+    "n": 7,
+    "full": 0,
+    "any": 0
+   },
+   "open_forage": {
+    "n": 3,
+    "full": 0,
+    "any": 0
+   },
+   "withdraw": {
+    "n": 2,
+    "full": 0,
+    "any": 1
+   }
+  }
+ },
+ "rtc": {
+  "transitions": 59,
+  "fully_registered": 0,
+  "partly_registered": 0,
+  "rtc": 0.0,
+  "rtc_any": 0.0,
+  "per_op": {
+   "add_frame": {
+    "n": 12,
+    "full": 0,
+    "any": 0
+   },
+   "take_frame": {
+    "n": 14,
+    "full": 0,
+    "any": 0
+   },
+   "perch": {
+    "n": 10,
+    "full": 0,
+    "any": 0
+   },
+   "unperch": {
+    "n": 11,
+    "full": 0,
+    "any": 0
+   },
+   "haul": {
+    "n": 7,
+    "full": 0,
+    "any": 0
+   },
+   "open_forage": {
+    "n": 3,
+    "full": 0,
+    "any": 0
+   },
+   "withdraw": {
+    "n": 2,
+    "full": 0,
+    "any": 0
+   }
+  }
+ },
+ "object_layer": {
+  "annotated_leaves": 2767,
+  "grounded_leaves": 584,
+  "grounded_frac": 0.211,
+  "pair_precision": 0.362,
+  "pair_recall": 1.0,
+  "learned_keys_merging_entities": 7,
+  "entities_split_across_keys": 6,
+  "entities_grounded": 13
+ },
+ "view_false_positives": {
+  "learned_transitions": 13,
+  "without_hidden_change": 8,
+  "rate": 0.615
+ },
+ "condition": "base",
+ "cost": {
+  "primitives": 451
+ }
+}

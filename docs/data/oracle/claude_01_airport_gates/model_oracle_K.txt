@@ -1,0 +1,97 @@
+domain known_vocab
+type Gate(__id: str, label: str, terminal: str)
+type Flight(__id: str, code: str, size: str, status: str, delay_min: int, has_assignment_flight: bool)
+type Agent(__id: str, name: str, shift: str, has_assignment_agent: bool)
+type Assignment(__id: str, role: str)
+rel docked_at(Flight, Gate)
+rel assignment_flight(Assignment, Flight)
+rel assignment_agent(Assignment, Agent)
+undock_flight(?f: Flight)
+  pre: delay_min(?f) == '0'
+  eff: docked_at(?f) := None
+delay_flight(?f: Flight, ?minutes: str)
+  eff: delay_min(?f) := '?minutes'
+cancel_flight(?f: Flight)
+  eff: status(?f) := 'cancelled'
+unassign_agent(?f: Flight, ?a: Agent)
+  eff: delete all x: assignment_flight(x, ?f)
+dock_flight(?f: Flight, ?g: Gate)
+  pre: no_incoming(docked_at, ?g) & size(?f) == 'narrow'
+  eff: docked_at(?f) := ?g
+assign_agent(?f: Flight, ?a: Agent, ?role: str)
+  pre: no_incoming(assignment_agent, ?a)
+  eff: ?new0 := new Assignment(role=?role)
+  eff: assignment_flight(?new0) := ?f
+  eff: assignment_agent(?new0) := ?a
+
+[
+ {
+  "hidden_op": "undock_flight",
+  "learned": "undock_flight",
+  "support": 9,
+  "pre": [
+   "delay_min(?f) == '0'"
+  ],
+  "effects": [
+   "docked_at(?f) := None"
+  ],
+  "unexplained_failures": 6
+ },
+ {
+  "hidden_op": "delay_flight",
+  "learned": "delay_flight",
+  "support": 9,
+  "pre": [],
+  "effects": [
+   "delay_min(?f) := '?minutes'"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "cancel_flight",
+  "learned": "cancel_flight",
+  "support": 3,
+  "pre": [],
+  "effects": [
+   "status(?f) := 'cancelled'"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "unassign_agent",
+  "learned": "unassign_agent",
+  "support": 6,
+  "pre": [],
+  "effects": [
+   "delete all x: assignment_flight(x, ?f)"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "dock_flight",
+  "learned": "dock_flight",
+  "support": 3,
+  "pre": [
+   "no_incoming(docked_at, ?g)",
+   "size(?f) == 'narrow'"
+  ],
+  "effects": [
+   "docked_at(?f) := ?g"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "assign_agent",
+  "learned": "assign_agent",
+  "support": 3,
+  "pre": [
+   "no_incoming(assignment_agent, ?a)"
+  ],
+  "effects": [
+   "?new0 := new Assignment(role=?role)",
+   "assignment_flight(?new0) := ?f",
+   "assignment_agent(?new0) := ?a"
+  ],
+  "unexplained_failures": 0
+ }
+]

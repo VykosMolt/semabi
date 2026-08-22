@@ -1,0 +1,3963 @@
+{
+ "apps": {
+  "grok_01_apiary": {
+   "base": {
+    "types": [
+     2,
+     4
+    ],
+    "attrs": [
+     0,
+     11
+    ],
+    "rels": [
+     0,
+     5
+    ],
+    "ops": [
+     0,
+     7,
+     7
+    ],
+    "recovered_ops": [],
+    "learned": 1,
+    "spurious": 1,
+    "failure_rejection": 0.0,
+    "gtc": 0.0,
+    "rtc": 0.0,
+    "object_layer": {
+     "annotated_leaves": 2767,
+     "grounded_leaves": 584,
+     "grounded_frac": 0.211,
+     "pair_precision": 0.362,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 7,
+     "entities_split_across_keys": 6,
+     "entities_grounded": 13
+    },
+    "view_false_positives": {
+     "learned_transitions": 13,
+     "without_hidden_change": 8,
+     "rate": 0.615
+    },
+    "per_op": {
+     "perch": [
+      0,
+      10,
+      0
+     ],
+     "unperch": [
+      0,
+      11,
+      0
+     ],
+     "add_frame": [
+      0,
+      12,
+      0
+     ],
+     "take_frame": [
+      0,
+      14,
+      0
+     ],
+     "open_forage": [
+      0,
+      3,
+      0
+     ],
+     "haul": [
+      0,
+      7,
+      0
+     ],
+     "withdraw": [
+      0,
+      2,
+      0
+     ]
+    }
+   },
+   "A": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     0,
+     11
+    ],
+    "rels": [
+     0,
+     5
+    ],
+    "ops": [
+     1,
+     7,
+     7
+    ],
+    "recovered_ops": [
+     "open_forage"
+    ],
+    "learned": 1,
+    "spurious": 0,
+    "failure_rejection": 0.0,
+    "gtc": 0.085,
+    "rtc": 0.085,
+    "object_layer": {
+     "annotated_leaves": 2767,
+     "grounded_leaves": 2767,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 13
+    },
+    "view_false_positives": {
+     "learned_transitions": 5,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "perch": [
+      0,
+      10,
+      0
+     ],
+     "unperch": [
+      0,
+      11,
+      0
+     ],
+     "add_frame": [
+      0,
+      12,
+      0
+     ],
+     "take_frame": [
+      0,
+      14,
+      0
+     ],
+     "open_forage": [
+      3,
+      3,
+      1
+     ],
+     "haul": [
+      0,
+      7,
+      0
+     ],
+     "withdraw": [
+      0,
+      2,
+      0
+     ]
+    }
+   },
+   "B": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     8,
+     11
+    ],
+    "rels": [
+     3,
+     5
+    ],
+    "ops": [
+     3,
+     7,
+     7
+    ],
+    "recovered_ops": [
+     "perch",
+     "add_frame",
+     "open_forage"
+    ],
+    "learned": 10,
+    "spurious": 3,
+    "failure_rejection": 0.11,
+    "gtc": 1.0,
+    "rtc": 0.746,
+    "object_layer": {
+     "annotated_leaves": 2767,
+     "grounded_leaves": 2767,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 13
+    },
+    "view_false_positives": {
+     "learned_transitions": 44,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "perch": [
+      9,
+      10,
+      2
+     ],
+     "unperch": [
+      0,
+      11,
+      0
+     ],
+     "add_frame": [
+      11,
+      12,
+      3
+     ],
+     "take_frame": [
+      11,
+      14,
+      2
+     ],
+     "open_forage": [
+      3,
+      3,
+      1
+     ],
+     "haul": [
+      2,
+      7,
+      1
+     ],
+     "withdraw": [
+      0,
+      2,
+      0
+     ]
+    }
+   },
+   "Bv": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     8,
+     11
+    ],
+    "rels": [
+     3,
+     5
+    ],
+    "ops": [
+     3,
+     7,
+     7
+    ],
+    "recovered_ops": [
+     "perch",
+     "add_frame",
+     "open_forage"
+    ],
+    "learned": 10,
+    "spurious": 3,
+    "failure_rejection": 0.11,
+    "gtc": 1.0,
+    "rtc": 0.746,
+    "object_layer": {
+     "annotated_leaves": 2767,
+     "grounded_leaves": 2767,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 13
+    },
+    "view_false_positives": {
+     "learned_transitions": 44,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "perch": [
+      9,
+      10,
+      2
+     ],
+     "unperch": [
+      0,
+      11,
+      0
+     ],
+     "add_frame": [
+      11,
+      12,
+      3
+     ],
+     "take_frame": [
+      11,
+      14,
+      2
+     ],
+     "open_forage": [
+      3,
+      3,
+      1
+     ],
+     "haul": [
+      2,
+      7,
+      1
+     ],
+     "withdraw": [
+      0,
+      2,
+      0
+     ]
+    }
+   },
+   "C": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     8,
+     11
+    ],
+    "rels": [
+     3,
+     5
+    ],
+    "ops": [
+     4,
+     7,
+     7
+    ],
+    "recovered_ops": [
+     "perch",
+     "unperch",
+     "add_frame",
+     "open_forage"
+    ],
+    "learned": 13,
+    "spurious": 5,
+    "failure_rejection": 0.11,
+    "gtc": 1.0,
+    "rtc": 1.0,
+    "object_layer": {
+     "annotated_leaves": 2767,
+     "grounded_leaves": 2767,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 13
+    },
+    "view_false_positives": {
+     "learned_transitions": 59,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "perch": [
+      10,
+      10,
+      2
+     ],
+     "unperch": [
+      11,
+      11,
+      1
+     ],
+     "add_frame": [
+      11,
+      12,
+      3
+     ],
+     "take_frame": [
+      11,
+      14,
+      2
+     ],
+     "open_forage": [
+      3,
+      3,
+      1
+     ],
+     "haul": [
+      2,
+      7,
+      1
+     ],
+     "withdraw": [
+      0,
+      2,
+      0
+     ]
+    }
+   },
+   "D": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     8,
+     11
+    ],
+    "rels": [
+     3,
+     5
+    ],
+    "ops": [
+     4,
+     7,
+     7
+    ],
+    "recovered_ops": [
+     "perch",
+     "unperch",
+     "add_frame",
+     "open_forage"
+    ],
+    "learned": 13,
+    "spurious": 6,
+    "failure_rejection": 0.1,
+    "gtc": 1.0,
+    "rtc": 1.0,
+    "object_layer": {
+     "annotated_leaves": 2767,
+     "grounded_leaves": 2767,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 13
+    },
+    "view_false_positives": {
+     "learned_transitions": 59,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "perch": [
+      10,
+      10,
+      1
+     ],
+     "unperch": [
+      11,
+      11,
+      1
+     ],
+     "add_frame": [
+      11,
+      12,
+      3
+     ],
+     "take_frame": [
+      11,
+      14,
+      2
+     ],
+     "open_forage": [
+      3,
+      3,
+      1
+     ],
+     "haul": [
+      2,
+      7,
+      1
+     ],
+     "withdraw": [
+      0,
+      2,
+      0
+     ]
+    }
+   },
+   "K": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     10,
+     11
+    ],
+    "rels": [
+     3,
+     5
+    ],
+    "ops": [
+     5,
+     7,
+     7
+    ],
+    "recovered_ops": [
+     "perch",
+     "unperch",
+     "add_frame",
+     "take_frame",
+     "open_forage"
+    ],
+    "learned": 11,
+    "spurious": 0,
+    "failure_rejection": 0.47,
+    "gtc": 1.0,
+    "rtc": null,
+    "object_layer": null,
+    "view_false_positives": null,
+    "per_op": {
+     "perch": [
+      10,
+      10,
+      1
+     ],
+     "unperch": [
+      11,
+      11,
+      1
+     ],
+     "add_frame": [
+      11,
+      12,
+      3
+     ],
+     "take_frame": [
+      13,
+      14,
+      4
+     ],
+     "open_forage": [
+      3,
+      3,
+      1
+     ],
+     "haul": [
+      5,
+      7,
+      2
+     ],
+     "withdraw": [
+      0,
+      2,
+      0
+     ]
+    }
+   }
+  },
+  "grok_02_observatory": {
+   "base": {
+    "types": [
+     1,
+     4
+    ],
+    "attrs": [
+     0,
+     12
+    ],
+    "rels": [
+     0,
+     9
+    ],
+    "ops": [
+     0,
+     5,
+     5
+    ],
+    "recovered_ops": [],
+    "learned": 0,
+    "spurious": 0,
+    "failure_rejection": 0.0,
+    "gtc": 0.0,
+    "rtc": 0.0,
+    "object_layer": {
+     "annotated_leaves": 2466,
+     "grounded_leaves": 603,
+     "grounded_frac": 0.245,
+     "pair_precision": 0.762,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 3,
+     "entities_split_across_keys": 3,
+     "entities_grounded": 10
+    },
+    "view_false_positives": {
+     "learned_transitions": 7,
+     "without_hidden_change": 4,
+     "rate": 0.571
+    },
+    "per_op": {
+     "book": [
+      0,
+      3,
+      0
+     ],
+     "extend": [
+      0,
+      12,
+      0
+     ],
+     "clip": [
+      0,
+      8,
+      0
+     ],
+     "retarget": [
+      0,
+      3,
+      0
+     ],
+     "detach": [
+      0,
+      8,
+      0
+     ]
+    }
+   },
+   "A": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     0,
+     12
+    ],
+    "rels": [
+     0,
+     9
+    ],
+    "ops": [
+     1,
+     5,
+     5
+    ],
+    "recovered_ops": [
+     "book"
+    ],
+    "learned": 3,
+    "spurious": 1,
+    "failure_rejection": 0.0,
+    "gtc": 0.324,
+    "rtc": 0.118,
+    "object_layer": {
+     "annotated_leaves": 2466,
+     "grounded_leaves": 2463,
+     "grounded_frac": 0.999,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 12
+    },
+    "view_false_positives": {
+     "learned_transitions": 13,
+     "without_hidden_change": 2,
+     "rate": 0.154
+    },
+    "per_op": {
+     "book": [
+      3,
+      3,
+      1
+     ],
+     "extend": [
+      0,
+      12,
+      0
+     ],
+     "clip": [
+      0,
+      8,
+      0
+     ],
+     "retarget": [
+      0,
+      3,
+      0
+     ],
+     "detach": [
+      1,
+      8,
+      1
+     ]
+    }
+   },
+   "B": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     6,
+     12
+    ],
+    "rels": [
+     3,
+     9
+    ],
+    "ops": [
+     1,
+     5,
+     5
+    ],
+    "recovered_ops": [
+     "extend"
+    ],
+    "learned": 6,
+    "spurious": 2,
+    "failure_rejection": 0.06,
+    "gtc": 1.0,
+    "rtc": 0.794,
+    "object_layer": {
+     "annotated_leaves": 2466,
+     "grounded_leaves": 2463,
+     "grounded_frac": 0.999,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 12
+    },
+    "view_false_positives": {
+     "learned_transitions": 36,
+     "without_hidden_change": 2,
+     "rate": 0.056
+    },
+    "per_op": {
+     "book": [
+      0,
+      3,
+      0
+     ],
+     "extend": [
+      10,
+      12,
+      2
+     ],
+     "clip": [
+      5,
+      8,
+      1
+     ],
+     "retarget": [
+      0,
+      3,
+      0
+     ],
+     "detach": [
+      1,
+      8,
+      1
+     ]
+    }
+   },
+   "Bv": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     6,
+     12
+    ],
+    "rels": [
+     3,
+     9
+    ],
+    "ops": [
+     2,
+     5,
+     5
+    ],
+    "recovered_ops": [
+     "extend",
+     "detach"
+    ],
+    "learned": 6,
+    "spurious": 1,
+    "failure_rejection": 0.06,
+    "gtc": 1.0,
+    "rtc": 0.853,
+    "object_layer": {
+     "annotated_leaves": 2466,
+     "grounded_leaves": 2463,
+     "grounded_frac": 0.999,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 12
+    },
+    "view_false_positives": {
+     "learned_transitions": 34,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "book": [
+      0,
+      3,
+      0
+     ],
+     "extend": [
+      10,
+      12,
+      2
+     ],
+     "clip": [
+      5,
+      8,
+      1
+     ],
+     "retarget": [
+      0,
+      3,
+      0
+     ],
+     "detach": [
+      8,
+      8,
+      2
+     ]
+    }
+   },
+   "C": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     6,
+     12
+    ],
+    "rels": [
+     3,
+     9
+    ],
+    "ops": [
+     2,
+     5,
+     5
+    ],
+    "recovered_ops": [
+     "extend",
+     "detach"
+    ],
+    "learned": 5,
+    "spurious": 0,
+    "failure_rejection": 0.09,
+    "gtc": 1.0,
+    "rtc": 1.0,
+    "object_layer": {
+     "annotated_leaves": 2466,
+     "grounded_leaves": 2463,
+     "grounded_frac": 0.999,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 12
+    },
+    "view_false_positives": {
+     "learned_transitions": 34,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "book": [
+      2,
+      3,
+      1
+     ],
+     "extend": [
+      10,
+      12,
+      2
+     ],
+     "clip": [
+      5,
+      8,
+      1
+     ],
+     "retarget": [
+      0,
+      3,
+      0
+     ],
+     "detach": [
+      7,
+      8,
+      1
+     ]
+    }
+   },
+   "D": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     6,
+     12
+    ],
+    "rels": [
+     3,
+     9
+    ],
+    "ops": [
+     4,
+     5,
+     5
+    ],
+    "recovered_ops": [
+     "book",
+     "extend",
+     "retarget",
+     "detach"
+    ],
+    "learned": 6,
+    "spurious": 0,
+    "failure_rejection": 0.06,
+    "gtc": 1.0,
+    "rtc": 1.0,
+    "object_layer": {
+     "annotated_leaves": 2466,
+     "grounded_leaves": 2463,
+     "grounded_frac": 0.999,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 12
+    },
+    "view_false_positives": {
+     "learned_transitions": 34,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "book": [
+      3,
+      3,
+      1
+     ],
+     "extend": [
+      10,
+      12,
+      2
+     ],
+     "clip": [
+      5,
+      8,
+      1
+     ],
+     "retarget": [
+      3,
+      3,
+      1
+     ],
+     "detach": [
+      7,
+      8,
+      1
+     ]
+    }
+   },
+   "K": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     11,
+     12
+    ],
+    "rels": [
+     3,
+     9
+    ],
+    "ops": [
+     5,
+     5,
+     5
+    ],
+    "recovered_ops": [
+     "book",
+     "extend",
+     "clip",
+     "retarget",
+     "detach"
+    ],
+    "learned": 8,
+    "spurious": 0,
+    "failure_rejection": 0.94,
+    "gtc": 1.0,
+    "rtc": null,
+    "object_layer": null,
+    "view_false_positives": null,
+    "per_op": {
+     "book": [
+      3,
+      3,
+      1
+     ],
+     "extend": [
+      12,
+      12,
+      3
+     ],
+     "clip": [
+      7,
+      8,
+      2
+     ],
+     "retarget": [
+      3,
+      3,
+      1
+     ],
+     "detach": [
+      7,
+      8,
+      1
+     ]
+    }
+   }
+  },
+  "grok_03_pharmacy": {
+   "base": {
+    "types": [
+     3,
+     4
+    ],
+    "attrs": [
+     1,
+     11
+    ],
+    "rels": [
+     1,
+     5
+    ],
+    "ops": [
+     0,
+     7,
+     6
+    ],
+    "recovered_ops": [],
+    "learned": 2,
+    "spurious": 2,
+    "failure_rejection": 0.0,
+    "gtc": 0.804,
+    "rtc": 0.0,
+    "object_layer": {
+     "annotated_leaves": 4349,
+     "grounded_leaves": 3535,
+     "grounded_frac": 0.813,
+     "pair_precision": 0.978,
+     "pair_recall": 0.999,
+     "learned_keys_merging_entities": 3,
+     "entities_split_across_keys": 6,
+     "entities_grounded": 10
+    },
+    "view_false_positives": {
+     "learned_transitions": 30,
+     "without_hidden_change": 26,
+     "rate": 0.867
+    },
+    "per_op": {
+     "stow": [
+      0,
+      2,
+      0
+     ],
+     "unstow": [
+      0,
+      8,
+      0
+     ],
+     "dispense": [
+      0,
+      19,
+      0
+     ],
+     "restock": [
+      0,
+      12,
+      0
+     ],
+     "dose": [
+      0,
+      7,
+      0
+     ],
+     "strike": [
+      0,
+      3,
+      0
+     ]
+    }
+   },
+   "A": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     0,
+     11
+    ],
+    "rels": [
+     0,
+     5
+    ],
+    "ops": [
+     1,
+     7,
+     6
+    ],
+    "recovered_ops": [
+     "strike"
+    ],
+    "learned": 1,
+    "spurious": 0,
+    "failure_rejection": 0.0,
+    "gtc": 0.059,
+    "rtc": 0.059,
+    "object_layer": {
+     "annotated_leaves": 4349,
+     "grounded_leaves": 4349,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 10
+    },
+    "view_false_positives": {
+     "learned_transitions": 3,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "stow": [
+      0,
+      2,
+      0
+     ],
+     "unstow": [
+      0,
+      8,
+      0
+     ],
+     "dispense": [
+      0,
+      19,
+      0
+     ],
+     "restock": [
+      0,
+      12,
+      0
+     ],
+     "dose": [
+      0,
+      7,
+      0
+     ],
+     "strike": [
+      3,
+      3,
+      1
+     ]
+    }
+   },
+   "B": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     7,
+     11
+    ],
+    "rels": [
+     3,
+     5
+    ],
+    "ops": [
+     3,
+     7,
+     6
+    ],
+    "recovered_ops": [
+     "stow",
+     "dispense",
+     "strike"
+    ],
+    "learned": 12,
+    "spurious": 0,
+    "failure_rejection": 0.35,
+    "gtc": 1.0,
+    "rtc": 0.824,
+    "object_layer": {
+     "annotated_leaves": 4349,
+     "grounded_leaves": 4349,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 10
+    },
+    "view_false_positives": {
+     "learned_transitions": 44,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "stow": [
+      2,
+      2,
+      1
+     ],
+     "unstow": [
+      0,
+      8,
+      0
+     ],
+     "dispense": [
+      17,
+      19,
+      5
+     ],
+     "restock": [
+      8,
+      12,
+      4
+     ],
+     "dose": [
+      5,
+      7,
+      2
+     ],
+     "strike": [
+      3,
+      3,
+      1
+     ]
+    }
+   },
+   "Bv": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     7,
+     11
+    ],
+    "rels": [
+     3,
+     5
+    ],
+    "ops": [
+     3,
+     7,
+     6
+    ],
+    "recovered_ops": [
+     "stow",
+     "dispense",
+     "strike"
+    ],
+    "learned": 12,
+    "spurious": 0,
+    "failure_rejection": 0.35,
+    "gtc": 1.0,
+    "rtc": 0.824,
+    "object_layer": {
+     "annotated_leaves": 4349,
+     "grounded_leaves": 4349,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 10
+    },
+    "view_false_positives": {
+     "learned_transitions": 44,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "stow": [
+      2,
+      2,
+      1
+     ],
+     "unstow": [
+      0,
+      8,
+      0
+     ],
+     "dispense": [
+      17,
+      19,
+      5
+     ],
+     "restock": [
+      8,
+      12,
+      4
+     ],
+     "dose": [
+      5,
+      7,
+      2
+     ],
+     "strike": [
+      3,
+      3,
+      1
+     ]
+    }
+   },
+   "C": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     7,
+     11
+    ],
+    "rels": [
+     3,
+     5
+    ],
+    "ops": [
+     4,
+     7,
+     6
+    ],
+    "recovered_ops": [
+     "stow",
+     "unstow",
+     "dispense",
+     "strike"
+    ],
+    "learned": 15,
+    "spurious": 2,
+    "failure_rejection": 0.35,
+    "gtc": 1.0,
+    "rtc": 1.0,
+    "object_layer": {
+     "annotated_leaves": 4349,
+     "grounded_leaves": 4349,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 10
+    },
+    "view_false_positives": {
+     "learned_transitions": 53,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "stow": [
+      2,
+      2,
+      1
+     ],
+     "unstow": [
+      8,
+      8,
+      1
+     ],
+     "dispense": [
+      17,
+      19,
+      5
+     ],
+     "restock": [
+      8,
+      12,
+      4
+     ],
+     "dose": [
+      5,
+      7,
+      2
+     ],
+     "strike": [
+      3,
+      3,
+      1
+     ]
+    }
+   },
+   "D": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     7,
+     11
+    ],
+    "rels": [
+     3,
+     5
+    ],
+    "ops": [
+     4,
+     7,
+     6
+    ],
+    "recovered_ops": [
+     "stow",
+     "unstow",
+     "dispense",
+     "strike"
+    ],
+    "learned": 15,
+    "spurious": 2,
+    "failure_rejection": 0.35,
+    "gtc": 1.0,
+    "rtc": 1.0,
+    "object_layer": {
+     "annotated_leaves": 4349,
+     "grounded_leaves": 4349,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 10
+    },
+    "view_false_positives": {
+     "learned_transitions": 53,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "stow": [
+      2,
+      2,
+      1
+     ],
+     "unstow": [
+      8,
+      8,
+      1
+     ],
+     "dispense": [
+      17,
+      19,
+      5
+     ],
+     "restock": [
+      8,
+      12,
+      4
+     ],
+     "dose": [
+      5,
+      7,
+      2
+     ],
+     "strike": [
+      3,
+      3,
+      1
+     ]
+    }
+   },
+   "K": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     10,
+     11
+    ],
+    "rels": [
+     3,
+     5
+    ],
+    "ops": [
+     5,
+     7,
+     6
+    ],
+    "recovered_ops": [
+     "stow",
+     "unstow",
+     "dispense",
+     "restock",
+     "strike"
+    ],
+    "learned": 14,
+    "spurious": 0,
+    "failure_rejection": 0.55,
+    "gtc": 1.0,
+    "rtc": null,
+    "object_layer": null,
+    "view_false_positives": null,
+    "per_op": {
+     "stow": [
+      2,
+      2,
+      1
+     ],
+     "unstow": [
+      8,
+      8,
+      1
+     ],
+     "dispense": [
+      18,
+      19,
+      5
+     ],
+     "restock": [
+      10,
+      12,
+      4
+     ],
+     "dose": [
+      5,
+      7,
+      2
+     ],
+     "strike": [
+      3,
+      3,
+      1
+     ]
+    }
+   }
+  },
+  "grok_04_climbing": {
+   "base": {
+    "types": [
+     2,
+     4
+    ],
+    "attrs": [
+     1,
+     12
+    ],
+    "rels": [
+     0,
+     9
+    ],
+    "ops": [
+     0,
+     6,
+     5
+    ],
+    "recovered_ops": [],
+    "learned": 3,
+    "spurious": 3,
+    "failure_rejection": 0.0,
+    "gtc": 0.024,
+    "rtc": 0.012,
+    "object_layer": {
+     "annotated_leaves": 3081,
+     "grounded_leaves": 2132,
+     "grounded_frac": 0.692,
+     "pair_precision": 0.367,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 4,
+     "entities_split_across_keys": 4,
+     "entities_grounded": 10
+    },
+    "view_false_positives": {
+     "learned_transitions": 19,
+     "without_hidden_change": 18,
+     "rate": 0.947
+    },
+    "per_op": {
+     "hang": [
+      0,
+      3,
+      0
+     ],
+     "recolor": [
+      0,
+      74,
+      0
+     ],
+     "restow": [
+      0,
+      1,
+      0
+     ],
+     "bump": [
+      0,
+      2,
+      0
+     ],
+     "pull": [
+      0,
+      2,
+      0
+     ]
+    }
+   },
+   "A": {
+    "types": [
+     3,
+     4
+    ],
+    "attrs": [
+     0,
+     12
+    ],
+    "rels": [
+     0,
+     9
+    ],
+    "ops": [
+     1,
+     6,
+     5
+    ],
+    "recovered_ops": [
+     "hang"
+    ],
+    "learned": 2,
+    "spurious": 1,
+    "failure_rejection": 0.0,
+    "gtc": 0.061,
+    "rtc": 0.037,
+    "object_layer": {
+     "annotated_leaves": 3081,
+     "grounded_leaves": 3081,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 10
+    },
+    "view_false_positives": {
+     "learned_transitions": 5,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "hang": [
+      3,
+      3,
+      1
+     ],
+     "recolor": [
+      0,
+      74,
+      0
+     ],
+     "restow": [
+      0,
+      1,
+      0
+     ],
+     "bump": [
+      0,
+      2,
+      0
+     ],
+     "pull": [
+      0,
+      2,
+      0
+     ]
+    }
+   },
+   "B": {
+    "types": [
+     3,
+     4
+    ],
+    "attrs": [
+     5,
+     12
+    ],
+    "rels": [
+     2,
+     9
+    ],
+    "ops": [
+     2,
+     6,
+     5
+    ],
+    "recovered_ops": [
+     "hang",
+     "recolor"
+    ],
+    "learned": 3,
+    "spurious": 1,
+    "failure_rejection": 0.0,
+    "gtc": 1.0,
+    "rtc": 0.976,
+    "object_layer": {
+     "annotated_leaves": 3081,
+     "grounded_leaves": 3081,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 10
+    },
+    "view_false_positives": {
+     "learned_transitions": 82,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "hang": [
+      3,
+      3,
+      1
+     ],
+     "recolor": [
+      74,
+      74,
+      1
+     ],
+     "restow": [
+      0,
+      1,
+      0
+     ],
+     "bump": [
+      0,
+      2,
+      0
+     ],
+     "pull": [
+      0,
+      2,
+      0
+     ]
+    }
+   },
+   "Bv": {
+    "types": [
+     3,
+     4
+    ],
+    "attrs": [
+     5,
+     12
+    ],
+    "rels": [
+     2,
+     9
+    ],
+    "ops": [
+     2,
+     6,
+     5
+    ],
+    "recovered_ops": [
+     "hang",
+     "recolor"
+    ],
+    "learned": 3,
+    "spurious": 1,
+    "failure_rejection": 0.0,
+    "gtc": 1.0,
+    "rtc": 0.976,
+    "object_layer": {
+     "annotated_leaves": 3081,
+     "grounded_leaves": 3081,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 10
+    },
+    "view_false_positives": {
+     "learned_transitions": 82,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "hang": [
+      3,
+      3,
+      1
+     ],
+     "recolor": [
+      74,
+      74,
+      1
+     ],
+     "restow": [
+      0,
+      1,
+      0
+     ],
+     "bump": [
+      0,
+      2,
+      0
+     ],
+     "pull": [
+      0,
+      2,
+      0
+     ]
+    }
+   },
+   "C": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     6,
+     12
+    ],
+    "rels": [
+     3,
+     9
+    ],
+    "ops": [
+     3,
+     6,
+     5
+    ],
+    "recovered_ops": [
+     "hang",
+     "recolor",
+     "pull"
+    ],
+    "learned": 3,
+    "spurious": 0,
+    "failure_rejection": 0.0,
+    "gtc": 1.0,
+    "rtc": 1.0,
+    "object_layer": {
+     "annotated_leaves": 3081,
+     "grounded_leaves": 3081,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 10
+    },
+    "view_false_positives": {
+     "learned_transitions": 82,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "hang": [
+      3,
+      3,
+      1
+     ],
+     "recolor": [
+      74,
+      74,
+      1
+     ],
+     "restow": [
+      0,
+      1,
+      0
+     ],
+     "bump": [
+      0,
+      2,
+      0
+     ],
+     "pull": [
+      2,
+      2,
+      1
+     ]
+    }
+   },
+   "D": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     6,
+     12
+    ],
+    "rels": [
+     3,
+     9
+    ],
+    "ops": [
+     3,
+     6,
+     5
+    ],
+    "recovered_ops": [
+     "hang",
+     "recolor",
+     "pull"
+    ],
+    "learned": 3,
+    "spurious": 0,
+    "failure_rejection": 0.81,
+    "gtc": 1.0,
+    "rtc": 1.0,
+    "object_layer": {
+     "annotated_leaves": 3081,
+     "grounded_leaves": 3081,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 10
+    },
+    "view_false_positives": {
+     "learned_transitions": 82,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "hang": [
+      3,
+      3,
+      1
+     ],
+     "recolor": [
+      74,
+      74,
+      1
+     ],
+     "restow": [
+      0,
+      1,
+      0
+     ],
+     "bump": [
+      0,
+      2,
+      0
+     ],
+     "pull": [
+      2,
+      2,
+      1
+     ]
+    }
+   },
+   "K": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     11,
+     12
+    ],
+    "rels": [
+     3,
+     9
+    ],
+    "ops": [
+     3,
+     6,
+     5
+    ],
+    "recovered_ops": [
+     "hang",
+     "recolor",
+     "pull"
+    ],
+    "learned": 3,
+    "spurious": 0,
+    "failure_rejection": 0.81,
+    "gtc": 1.0,
+    "rtc": null,
+    "object_layer": null,
+    "view_false_positives": null,
+    "per_op": {
+     "hang": [
+      3,
+      3,
+      1
+     ],
+     "recolor": [
+      74,
+      74,
+      1
+     ],
+     "restow": [
+      0,
+      1,
+      0
+     ],
+     "bump": [
+      0,
+      2,
+      0
+     ],
+     "pull": [
+      2,
+      2,
+      1
+     ]
+    }
+   }
+  },
+  "claude_01_airport_gates": {
+   "base": {
+    "types": [
+     1,
+     4
+    ],
+    "attrs": [
+     3,
+     12
+    ],
+    "rels": [
+     0,
+     5
+    ],
+    "ops": [
+     0,
+     7,
+     6
+    ],
+    "recovered_ops": [],
+    "learned": 0,
+    "spurious": 0,
+    "failure_rejection": 0.0,
+    "gtc": 0.353,
+    "rtc": 0.0,
+    "object_layer": {
+     "annotated_leaves": 10047,
+     "grounded_leaves": 8968,
+     "grounded_frac": 0.893,
+     "pair_precision": 0.716,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 16,
+     "entities_split_across_keys": 13,
+     "entities_grounded": 13
+    },
+    "view_false_positives": {
+     "learned_transitions": 0,
+     "without_hidden_change": 0,
+     "rate": null
+    },
+    "per_op": {
+     "dock_flight": [
+      0,
+      3,
+      0
+     ],
+     "undock_flight": [
+      0,
+      9,
+      0
+     ],
+     "delay_flight": [
+      0,
+      9,
+      0
+     ],
+     "cancel_flight": [
+      0,
+      3,
+      0
+     ],
+     "assign_agent": [
+      0,
+      3,
+      0
+     ],
+     "unassign_agent": [
+      0,
+      7,
+      0
+     ]
+    }
+   },
+   "A": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     0,
+     12
+    ],
+    "rels": [
+     0,
+     5
+    ],
+    "ops": [
+     2,
+     7,
+     6
+    ],
+    "recovered_ops": [
+     "assign_agent",
+     "unassign_agent"
+    ],
+    "learned": 2,
+    "spurious": 0,
+    "failure_rejection": 0.0,
+    "gtc": 0.294,
+    "rtc": 0.294,
+    "object_layer": {
+     "annotated_leaves": 10047,
+     "grounded_leaves": 10047,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 13
+    },
+    "view_false_positives": {
+     "learned_transitions": 10,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "dock_flight": [
+      0,
+      3,
+      0
+     ],
+     "undock_flight": [
+      0,
+      9,
+      0
+     ],
+     "delay_flight": [
+      0,
+      9,
+      0
+     ],
+     "cancel_flight": [
+      0,
+      3,
+      0
+     ],
+     "assign_agent": [
+      3,
+      3,
+      1
+     ],
+     "unassign_agent": [
+      7,
+      7,
+      1
+     ]
+    }
+   },
+   "B": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     6,
+     12
+    ],
+    "rels": [
+     3,
+     5
+    ],
+    "ops": [
+     4,
+     7,
+     6
+    ],
+    "recovered_ops": [
+     "delay_flight",
+     "cancel_flight",
+     "assign_agent",
+     "unassign_agent"
+    ],
+    "learned": 4,
+    "spurious": 0,
+    "failure_rejection": 0.0,
+    "gtc": 1.0,
+    "rtc": 0.647,
+    "object_layer": {
+     "annotated_leaves": 10047,
+     "grounded_leaves": 10047,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 13
+    },
+    "view_false_positives": {
+     "learned_transitions": 22,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "dock_flight": [
+      0,
+      3,
+      0
+     ],
+     "undock_flight": [
+      0,
+      9,
+      0
+     ],
+     "delay_flight": [
+      9,
+      9,
+      1
+     ],
+     "cancel_flight": [
+      3,
+      3,
+      1
+     ],
+     "assign_agent": [
+      3,
+      3,
+      1
+     ],
+     "unassign_agent": [
+      7,
+      7,
+      1
+     ]
+    }
+   },
+   "Bv": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     6,
+     12
+    ],
+    "rels": [
+     3,
+     5
+    ],
+    "ops": [
+     4,
+     7,
+     6
+    ],
+    "recovered_ops": [
+     "delay_flight",
+     "cancel_flight",
+     "assign_agent",
+     "unassign_agent"
+    ],
+    "learned": 4,
+    "spurious": 0,
+    "failure_rejection": 0.0,
+    "gtc": 1.0,
+    "rtc": 0.647,
+    "object_layer": {
+     "annotated_leaves": 10047,
+     "grounded_leaves": 10047,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 13
+    },
+    "view_false_positives": {
+     "learned_transitions": 22,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "dock_flight": [
+      0,
+      3,
+      0
+     ],
+     "undock_flight": [
+      0,
+      9,
+      0
+     ],
+     "delay_flight": [
+      9,
+      9,
+      1
+     ],
+     "cancel_flight": [
+      3,
+      3,
+      1
+     ],
+     "assign_agent": [
+      3,
+      3,
+      1
+     ],
+     "unassign_agent": [
+      7,
+      7,
+      1
+     ]
+    }
+   },
+   "C": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     9,
+     12
+    ],
+    "rels": [
+     3,
+     5
+    ],
+    "ops": [
+     6,
+     7,
+     6
+    ],
+    "recovered_ops": [
+     "dock_flight",
+     "undock_flight",
+     "delay_flight",
+     "cancel_flight",
+     "assign_agent",
+     "unassign_agent"
+    ],
+    "learned": 6,
+    "spurious": 0,
+    "failure_rejection": 0.0,
+    "gtc": 1.0,
+    "rtc": 1.0,
+    "object_layer": {
+     "annotated_leaves": 10047,
+     "grounded_leaves": 10047,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 13
+    },
+    "view_false_positives": {
+     "learned_transitions": 34,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "dock_flight": [
+      3,
+      3,
+      1
+     ],
+     "undock_flight": [
+      9,
+      9,
+      1
+     ],
+     "delay_flight": [
+      9,
+      9,
+      1
+     ],
+     "cancel_flight": [
+      3,
+      3,
+      1
+     ],
+     "assign_agent": [
+      3,
+      3,
+      1
+     ],
+     "unassign_agent": [
+      7,
+      7,
+      1
+     ]
+    }
+   },
+   "D": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     9,
+     12
+    ],
+    "rels": [
+     3,
+     5
+    ],
+    "ops": [
+     6,
+     7,
+     6
+    ],
+    "recovered_ops": [
+     "dock_flight",
+     "undock_flight",
+     "delay_flight",
+     "cancel_flight",
+     "assign_agent",
+     "unassign_agent"
+    ],
+    "learned": 6,
+    "spurious": 0,
+    "failure_rejection": 0.12,
+    "gtc": 1.0,
+    "rtc": 1.0,
+    "object_layer": {
+     "annotated_leaves": 10047,
+     "grounded_leaves": 10047,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 13
+    },
+    "view_false_positives": {
+     "learned_transitions": 34,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "dock_flight": [
+      3,
+      3,
+      1
+     ],
+     "undock_flight": [
+      9,
+      9,
+      1
+     ],
+     "delay_flight": [
+      9,
+      9,
+      1
+     ],
+     "cancel_flight": [
+      3,
+      3,
+      1
+     ],
+     "assign_agent": [
+      3,
+      3,
+      1
+     ],
+     "unassign_agent": [
+      7,
+      7,
+      1
+     ]
+    }
+   },
+   "K": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     11,
+     12
+    ],
+    "rels": [
+     3,
+     5
+    ],
+    "ops": [
+     6,
+     7,
+     6
+    ],
+    "recovered_ops": [
+     "dock_flight",
+     "undock_flight",
+     "delay_flight",
+     "cancel_flight",
+     "assign_agent",
+     "unassign_agent"
+    ],
+    "learned": 6,
+    "spurious": 0,
+    "failure_rejection": 0.4,
+    "gtc": 1.0,
+    "rtc": null,
+    "object_layer": null,
+    "view_false_positives": null,
+    "per_op": {
+     "dock_flight": [
+      3,
+      3,
+      1
+     ],
+     "undock_flight": [
+      9,
+      9,
+      1
+     ],
+     "delay_flight": [
+      9,
+      9,
+      1
+     ],
+     "cancel_flight": [
+      3,
+      3,
+      1
+     ],
+     "assign_agent": [
+      3,
+      3,
+      1
+     ],
+     "unassign_agent": [
+      6,
+      7,
+      1
+     ]
+    }
+   }
+  },
+  "claude_02_pharmacy_dispensary": {
+   "base": {
+    "types": [
+     2,
+     4
+    ],
+    "attrs": [
+     2,
+     13
+    ],
+    "rels": [
+     0,
+     9
+    ],
+    "ops": [
+     0,
+     4,
+     4
+    ],
+    "recovered_ops": [],
+    "learned": 0,
+    "spurious": 0,
+    "failure_rejection": 0.0,
+    "gtc": 0.379,
+    "rtc": 0.276,
+    "object_layer": {
+     "annotated_leaves": 5030,
+     "grounded_leaves": 2890,
+     "grounded_frac": 0.575,
+     "pair_precision": 0.704,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 16,
+     "entities_split_across_keys": 9,
+     "entities_grounded": 10
+    },
+    "view_false_positives": {
+     "learned_transitions": 16,
+     "without_hidden_change": 8,
+     "rate": 0.5
+    },
+    "per_op": {
+     "write_prescription": [
+      0,
+      11,
+      0
+     ],
+     "fill_prescription": [
+      0,
+      2,
+      0
+     ],
+     "restock_drug": [
+      0,
+      11,
+      0
+     ],
+     "void_prescription": [
+      0,
+      5,
+      0
+     ]
+    }
+   },
+   "A": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     0,
+     13
+    ],
+    "rels": [
+     0,
+     9
+    ],
+    "ops": [
+     1,
+     4,
+     4
+    ],
+    "recovered_ops": [
+     "write_prescription"
+    ],
+    "learned": 1,
+    "spurious": 0,
+    "failure_rejection": 0.0,
+    "gtc": 0.379,
+    "rtc": 0.379,
+    "object_layer": {
+     "annotated_leaves": 5030,
+     "grounded_leaves": 5030,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 21
+    },
+    "view_false_positives": {
+     "learned_transitions": 11,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "write_prescription": [
+      11,
+      11,
+      1
+     ],
+     "fill_prescription": [
+      0,
+      2,
+      0
+     ],
+     "restock_drug": [
+      0,
+      11,
+      0
+     ],
+     "void_prescription": [
+      0,
+      5,
+      0
+     ]
+    }
+   },
+   "B": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     8,
+     13
+    ],
+    "rels": [
+     3,
+     9
+    ],
+    "ops": [
+     1,
+     4,
+     4
+    ],
+    "recovered_ops": [
+     "restock_drug"
+    ],
+    "learned": 8,
+    "spurious": 4,
+    "failure_rejection": 0.0,
+    "gtc": 1.0,
+    "rtc": 0.759,
+    "object_layer": {
+     "annotated_leaves": 5030,
+     "grounded_leaves": 5030,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 21
+    },
+    "view_false_positives": {
+     "learned_transitions": 25,
+     "without_hidden_change": 1,
+     "rate": 0.04
+    },
+    "per_op": {
+     "write_prescription": [
+      0,
+      11,
+      0
+     ],
+     "fill_prescription": [
+      0,
+      2,
+      0
+     ],
+     "restock_drug": [
+      9,
+      11,
+      4
+     ],
+     "void_prescription": [
+      0,
+      5,
+      0
+     ]
+    }
+   },
+   "Bv": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     8,
+     13
+    ],
+    "rels": [
+     3,
+     9
+    ],
+    "ops": [
+     1,
+     4,
+     4
+    ],
+    "recovered_ops": [
+     "restock_drug"
+    ],
+    "learned": 8,
+    "spurious": 4,
+    "failure_rejection": 0.0,
+    "gtc": 1.0,
+    "rtc": 0.759,
+    "object_layer": {
+     "annotated_leaves": 5030,
+     "grounded_leaves": 5030,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 21
+    },
+    "view_false_positives": {
+     "learned_transitions": 24,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "write_prescription": [
+      0,
+      11,
+      0
+     ],
+     "fill_prescription": [
+      0,
+      2,
+      0
+     ],
+     "restock_drug": [
+      9,
+      11,
+      4
+     ],
+     "void_prescription": [
+      0,
+      5,
+      0
+     ]
+    }
+   },
+   "C": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     8,
+     13
+    ],
+    "rels": [
+     3,
+     9
+    ],
+    "ops": [
+     3,
+     4,
+     4
+    ],
+    "recovered_ops": [
+     "write_prescription",
+     "restock_drug",
+     "void_prescription"
+    ],
+    "learned": 9,
+    "spurious": 0,
+    "failure_rejection": 0.0,
+    "gtc": 1.0,
+    "rtc": 1.0,
+    "object_layer": {
+     "annotated_leaves": 5030,
+     "grounded_leaves": 5030,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 21
+    },
+    "view_false_positives": {
+     "learned_transitions": 29,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "write_prescription": [
+      10,
+      11,
+      4
+     ],
+     "fill_prescription": [
+      0,
+      2,
+      0
+     ],
+     "restock_drug": [
+      9,
+      11,
+      4
+     ],
+     "void_prescription": [
+      5,
+      5,
+      1
+     ]
+    }
+   },
+   "D": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     8,
+     13
+    ],
+    "rels": [
+     3,
+     9
+    ],
+    "ops": [
+     3,
+     4,
+     4
+    ],
+    "recovered_ops": [
+     "write_prescription",
+     "restock_drug",
+     "void_prescription"
+    ],
+    "learned": 6,
+    "spurious": 0,
+    "failure_rejection": 0.0,
+    "gtc": 1.0,
+    "rtc": 1.0,
+    "object_layer": {
+     "annotated_leaves": 5030,
+     "grounded_leaves": 5030,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 21
+    },
+    "view_false_positives": {
+     "learned_transitions": 29,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "write_prescription": [
+      10,
+      11,
+      1
+     ],
+     "fill_prescription": [
+      0,
+      2,
+      0
+     ],
+     "restock_drug": [
+      9,
+      11,
+      4
+     ],
+     "void_prescription": [
+      5,
+      5,
+      1
+     ]
+    }
+   },
+   "K": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     11,
+     13
+    ],
+    "rels": [
+     3,
+     9
+    ],
+    "ops": [
+     3,
+     4,
+     4
+    ],
+    "recovered_ops": [
+     "write_prescription",
+     "restock_drug",
+     "void_prescription"
+    ],
+    "learned": 6,
+    "spurious": 0,
+    "failure_rejection": 0.0,
+    "gtc": 1.0,
+    "rtc": null,
+    "object_layer": null,
+    "view_false_positives": null,
+    "per_op": {
+     "write_prescription": [
+      11,
+      11,
+      1
+     ],
+     "fill_prescription": [
+      0,
+      2,
+      0
+     ],
+     "restock_drug": [
+      9,
+      11,
+      4
+     ],
+     "void_prescription": [
+      5,
+      5,
+      1
+     ]
+    }
+   }
+  },
+  "claude_03_museum_loans": {
+   "base": {
+    "types": [
+     1,
+     4
+    ],
+    "attrs": [
+     2,
+     13
+    ],
+    "rels": [
+     0,
+     5
+    ],
+    "ops": [
+     0,
+     6,
+     6
+    ],
+    "recovered_ops": [],
+    "learned": 0,
+    "spurious": 0,
+    "failure_rejection": 0.0,
+    "gtc": 0.0,
+    "rtc": 0.0,
+    "object_layer": {
+     "annotated_leaves": 13370,
+     "grounded_leaves": 10144,
+     "grounded_frac": 0.759,
+     "pair_precision": 0.76,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 11,
+     "entities_split_across_keys": 8,
+     "entities_grounded": 8
+    },
+    "view_false_positives": {
+     "learned_transitions": 0,
+     "without_hidden_change": 0,
+     "rate": null
+    },
+    "per_op": {
+     "place_artifact": [
+      0,
+      16,
+      0
+     ],
+     "remove_from_display": [
+      0,
+      23,
+      0
+     ],
+     "propose_loan": [
+      0,
+      7,
+      0
+     ],
+     "approve_loan": [
+      0,
+      2,
+      0
+     ],
+     "return_loan": [
+      0,
+      8,
+      0
+     ],
+     "cancel_loan_proposal": [
+      0,
+      2,
+      0
+     ]
+    }
+   },
+   "A": {
+    "types": [
+     3,
+     4
+    ],
+    "attrs": [
+     0,
+     13
+    ],
+    "rels": [
+     0,
+     5
+    ],
+    "ops": [
+     0,
+     6,
+     6
+    ],
+    "recovered_ops": [],
+    "learned": 0,
+    "spurious": 0,
+    "failure_rejection": 0.0,
+    "gtc": 0.121,
+    "rtc": 0.0,
+    "object_layer": {
+     "annotated_leaves": 13370,
+     "grounded_leaves": 13370,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 15
+    },
+    "view_false_positives": {
+     "learned_transitions": 0,
+     "without_hidden_change": 0,
+     "rate": null
+    },
+    "per_op": {
+     "place_artifact": [
+      0,
+      16,
+      0
+     ],
+     "remove_from_display": [
+      0,
+      23,
+      0
+     ],
+     "propose_loan": [
+      0,
+      7,
+      0
+     ],
+     "approve_loan": [
+      0,
+      2,
+      0
+     ],
+     "return_loan": [
+      0,
+      8,
+      0
+     ],
+     "cancel_loan_proposal": [
+      0,
+      2,
+      0
+     ]
+    }
+   },
+   "B": {
+    "types": [
+     3,
+     4
+    ],
+    "attrs": [
+     6,
+     13
+    ],
+    "rels": [
+     2,
+     5
+    ],
+    "ops": [
+     4,
+     6,
+     6
+    ],
+    "recovered_ops": [
+     "place_artifact",
+     "approve_loan",
+     "return_loan",
+     "cancel_loan_proposal"
+    ],
+    "learned": 5,
+    "spurious": 0,
+    "failure_rejection": 0.0,
+    "gtc": 1.0,
+    "rtc": 0.31,
+    "object_layer": {
+     "annotated_leaves": 13370,
+     "grounded_leaves": 13370,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 15
+    },
+    "view_false_positives": {
+     "learned_transitions": 18,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "place_artifact": [
+      16,
+      16,
+      2
+     ],
+     "remove_from_display": [
+      0,
+      23,
+      0
+     ],
+     "propose_loan": [
+      0,
+      7,
+      0
+     ],
+     "approve_loan": [
+      2,
+      2,
+      1
+     ],
+     "return_loan": [
+      8,
+      8,
+      1
+     ],
+     "cancel_loan_proposal": [
+      2,
+      2,
+      1
+     ]
+    }
+   },
+   "Bv": {
+    "types": [
+     3,
+     4
+    ],
+    "attrs": [
+     6,
+     13
+    ],
+    "rels": [
+     2,
+     5
+    ],
+    "ops": [
+     4,
+     6,
+     6
+    ],
+    "recovered_ops": [
+     "place_artifact",
+     "approve_loan",
+     "return_loan",
+     "cancel_loan_proposal"
+    ],
+    "learned": 5,
+    "spurious": 0,
+    "failure_rejection": 0.0,
+    "gtc": 1.0,
+    "rtc": 0.31,
+    "object_layer": {
+     "annotated_leaves": 13370,
+     "grounded_leaves": 13370,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 15
+    },
+    "view_false_positives": {
+     "learned_transitions": 18,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "place_artifact": [
+      16,
+      16,
+      2
+     ],
+     "remove_from_display": [
+      0,
+      23,
+      0
+     ],
+     "propose_loan": [
+      0,
+      7,
+      0
+     ],
+     "approve_loan": [
+      2,
+      2,
+      1
+     ],
+     "return_loan": [
+      8,
+      8,
+      1
+     ],
+     "cancel_loan_proposal": [
+      2,
+      2,
+      1
+     ]
+    }
+   },
+   "C": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     9,
+     13
+    ],
+    "rels": [
+     3,
+     5
+    ],
+    "ops": [
+     6,
+     6,
+     6
+    ],
+    "recovered_ops": [
+     "place_artifact",
+     "remove_from_display",
+     "propose_loan",
+     "approve_loan",
+     "return_loan",
+     "cancel_loan_proposal"
+    ],
+    "learned": 6,
+    "spurious": 0,
+    "failure_rejection": 0.0,
+    "gtc": 1.0,
+    "rtc": 1.0,
+    "object_layer": {
+     "annotated_leaves": 13370,
+     "grounded_leaves": 13370,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 15
+    },
+    "view_false_positives": {
+     "learned_transitions": 58,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "place_artifact": [
+      16,
+      16,
+      1
+     ],
+     "remove_from_display": [
+      23,
+      23,
+      1
+     ],
+     "propose_loan": [
+      6,
+      7,
+      1
+     ],
+     "approve_loan": [
+      2,
+      2,
+      1
+     ],
+     "return_loan": [
+      8,
+      8,
+      1
+     ],
+     "cancel_loan_proposal": [
+      2,
+      2,
+      1
+     ]
+    }
+   },
+   "D": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     9,
+     13
+    ],
+    "rels": [
+     3,
+     5
+    ],
+    "ops": [
+     6,
+     6,
+     6
+    ],
+    "recovered_ops": [
+     "place_artifact",
+     "remove_from_display",
+     "propose_loan",
+     "approve_loan",
+     "return_loan",
+     "cancel_loan_proposal"
+    ],
+    "learned": 6,
+    "spurious": 0,
+    "failure_rejection": 0.12,
+    "gtc": 1.0,
+    "rtc": 1.0,
+    "object_layer": {
+     "annotated_leaves": 13370,
+     "grounded_leaves": 13370,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 15
+    },
+    "view_false_positives": {
+     "learned_transitions": 58,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "place_artifact": [
+      16,
+      16,
+      1
+     ],
+     "remove_from_display": [
+      23,
+      23,
+      1
+     ],
+     "propose_loan": [
+      6,
+      7,
+      1
+     ],
+     "approve_loan": [
+      2,
+      2,
+      1
+     ],
+     "return_loan": [
+      8,
+      8,
+      1
+     ],
+     "cancel_loan_proposal": [
+      2,
+      2,
+      1
+     ]
+    }
+   },
+   "K": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     11,
+     13
+    ],
+    "rels": [
+     3,
+     5
+    ],
+    "ops": [
+     6,
+     6,
+     6
+    ],
+    "recovered_ops": [
+     "place_artifact",
+     "remove_from_display",
+     "propose_loan",
+     "approve_loan",
+     "return_loan",
+     "cancel_loan_proposal"
+    ],
+    "learned": 6,
+    "spurious": 0,
+    "failure_rejection": 0.12,
+    "gtc": 1.0,
+    "rtc": null,
+    "object_layer": null,
+    "view_false_positives": null,
+    "per_op": {
+     "place_artifact": [
+      16,
+      16,
+      1
+     ],
+     "remove_from_display": [
+      23,
+      23,
+      1
+     ],
+     "propose_loan": [
+      6,
+      7,
+      1
+     ],
+     "approve_loan": [
+      2,
+      2,
+      1
+     ],
+     "return_loan": [
+      8,
+      8,
+      1
+     ],
+     "cancel_loan_proposal": [
+      2,
+      2,
+      1
+     ]
+    }
+   }
+  },
+  "claude_04_datacenter_racks": {
+   "base": {
+    "types": [
+     2,
+     4
+    ],
+    "attrs": [
+     1,
+     13
+    ],
+    "rels": [
+     0,
+     5
+    ],
+    "ops": [
+     0,
+     5,
+     3
+    ],
+    "recovered_ops": [],
+    "learned": 0,
+    "spurious": 0,
+    "failure_rejection": 0.0,
+    "gtc": 0.0,
+    "rtc": 0.0,
+    "object_layer": {
+     "annotated_leaves": 2546,
+     "grounded_leaves": 380,
+     "grounded_frac": 0.149,
+     "pair_precision": 0.585,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 8,
+     "entities_split_across_keys": 10,
+     "entities_grounded": 11
+    },
+    "view_false_positives": {
+     "learned_transitions": 9,
+     "without_hidden_change": 7,
+     "rate": 0.778
+    },
+    "per_op": {
+     "mount_server": [
+      0,
+      3,
+      0
+     ],
+     "decommission_server": [
+      0,
+      4,
+      0
+     ],
+     "open_ticket": [
+      0,
+      4,
+      0
+     ]
+    }
+   },
+   "A": {
+    "types": [
+     3,
+     4
+    ],
+    "attrs": [
+     0,
+     13
+    ],
+    "rels": [
+     0,
+     5
+    ],
+    "ops": [
+     1,
+     5,
+     3
+    ],
+    "recovered_ops": [
+     "open_ticket"
+    ],
+    "learned": 1,
+    "spurious": 0,
+    "failure_rejection": 0.0,
+    "gtc": 0.364,
+    "rtc": 0.364,
+    "object_layer": {
+     "annotated_leaves": 2546,
+     "grounded_leaves": 2546,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 16
+    },
+    "view_false_positives": {
+     "learned_transitions": 4,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "mount_server": [
+      0,
+      3,
+      0
+     ],
+     "decommission_server": [
+      0,
+      4,
+      0
+     ],
+     "open_ticket": [
+      4,
+      4,
+      1
+     ]
+    }
+   },
+   "B": {
+    "types": [
+     3,
+     4
+    ],
+    "attrs": [
+     7,
+     13
+    ],
+    "rels": [
+     2,
+     5
+    ],
+    "ops": [
+     0,
+     5,
+     3
+    ],
+    "recovered_ops": [],
+    "learned": 1,
+    "spurious": 1,
+    "failure_rejection": 0.0,
+    "gtc": 0.364,
+    "rtc": 0.364,
+    "object_layer": {
+     "annotated_leaves": 2546,
+     "grounded_leaves": 2546,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 16
+    },
+    "view_false_positives": {
+     "learned_transitions": 4,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "mount_server": [
+      0,
+      3,
+      0
+     ],
+     "decommission_server": [
+      0,
+      4,
+      0
+     ],
+     "open_ticket": [
+      0,
+      4,
+      0
+     ]
+    }
+   },
+   "Bv": {
+    "types": [
+     3,
+     4
+    ],
+    "attrs": [
+     7,
+     13
+    ],
+    "rels": [
+     2,
+     5
+    ],
+    "ops": [
+     0,
+     5,
+     3
+    ],
+    "recovered_ops": [],
+    "learned": 1,
+    "spurious": 1,
+    "failure_rejection": 0.0,
+    "gtc": 0.364,
+    "rtc": 0.364,
+    "object_layer": {
+     "annotated_leaves": 2546,
+     "grounded_leaves": 2546,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 16
+    },
+    "view_false_positives": {
+     "learned_transitions": 4,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "mount_server": [
+      0,
+      3,
+      0
+     ],
+     "decommission_server": [
+      0,
+      4,
+      0
+     ],
+     "open_ticket": [
+      0,
+      4,
+      0
+     ]
+    }
+   },
+   "C": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     9,
+     13
+    ],
+    "rels": [
+     3,
+     5
+    ],
+    "ops": [
+     2,
+     5,
+     3
+    ],
+    "recovered_ops": [
+     "decommission_server",
+     "open_ticket"
+    ],
+    "learned": 4,
+    "spurious": 0,
+    "failure_rejection": 0.0,
+    "gtc": 1.0,
+    "rtc": 1.0,
+    "object_layer": {
+     "annotated_leaves": 2546,
+     "grounded_leaves": 2546,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 16
+    },
+    "view_false_positives": {
+     "learned_transitions": 11,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "mount_server": [
+      2,
+      3,
+      1
+     ],
+     "decommission_server": [
+      4,
+      4,
+      2
+     ],
+     "open_ticket": [
+      4,
+      4,
+      1
+     ]
+    }
+   },
+   "D": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     9,
+     13
+    ],
+    "rels": [
+     3,
+     5
+    ],
+    "ops": [
+     2,
+     5,
+     3
+    ],
+    "recovered_ops": [
+     "decommission_server",
+     "open_ticket"
+    ],
+    "learned": 4,
+    "spurious": 0,
+    "failure_rejection": 0.0,
+    "gtc": 1.0,
+    "rtc": 1.0,
+    "object_layer": {
+     "annotated_leaves": 2546,
+     "grounded_leaves": 2546,
+     "grounded_frac": 1.0,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 16
+    },
+    "view_false_positives": {
+     "learned_transitions": 11,
+     "without_hidden_change": 0,
+     "rate": 0.0
+    },
+    "per_op": {
+     "mount_server": [
+      2,
+      3,
+      1
+     ],
+     "decommission_server": [
+      4,
+      4,
+      2
+     ],
+     "open_ticket": [
+      4,
+      4,
+      1
+     ]
+    }
+   },
+   "K": {
+    "types": [
+     4,
+     4
+    ],
+    "attrs": [
+     11,
+     13
+    ],
+    "rels": [
+     3,
+     5
+    ],
+    "ops": [
+     3,
+     5,
+     3
+    ],
+    "recovered_ops": [
+     "mount_server",
+     "decommission_server",
+     "open_ticket"
+    ],
+    "learned": 4,
+    "spurious": 0,
+    "failure_rejection": 0.0,
+    "gtc": 1.0,
+    "rtc": null,
+    "object_layer": null,
+    "view_false_positives": null,
+    "per_op": {
+     "mount_server": [
+      3,
+      3,
+      1
+     ],
+     "decommission_server": [
+      4,
+      4,
+      2
+     ],
+     "open_ticket": [
+      4,
+      4,
+      1
+     ]
+    }
+   }
+  }
+ },
+ "totals": {
+  "base": {
+   "recovered": 0,
+   "hidden": 47,
+   "observed": 42
+  },
+  "A": {
+   "recovered": 8,
+   "hidden": 47,
+   "observed": 42
+  },
+  "B": {
+   "recovered": 18,
+   "hidden": 47,
+   "observed": 42
+  },
+  "Bv": {
+   "recovered": 19,
+   "hidden": 47,
+   "observed": 42
+  },
+  "C": {
+   "recovered": 30,
+   "hidden": 47,
+   "observed": 42
+  },
+  "D": {
+   "recovered": 32,
+   "hidden": 47,
+   "observed": 42
+  },
+  "K": {
+   "recovered": 36,
+   "hidden": 47,
+   "observed": 42
+  }
+ }
+}

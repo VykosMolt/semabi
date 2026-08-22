@@ -1,0 +1,208 @@
+{
+ "types": {
+  "hidden": 4,
+  "learned": 4,
+  "recovered": 4,
+  "map": {
+   "T1": "Flight",
+   "T2": "Agent",
+   "T3": "Assignment",
+   "T0": "Gate"
+  }
+ },
+ "predicates": {
+  "hidden_attrs": 12,
+  "recovered_attrs": 0,
+  "hidden_rels": 5,
+  "recovered_rels": 0,
+  "attr_map": {},
+  "rel_map": {}
+ },
+ "operators": {
+  "hidden": 7,
+  "observed_in_trace": 6,
+  "recovered": 2,
+  "recovered_ops": [
+   "assign_agent",
+   "unassign_agent"
+  ],
+  "learned": 2,
+  "spurious_learned": [],
+  "precision": 1.0,
+  "failure_rejection_rate": 0.0,
+  "per_op": {
+   "dock_flight": {
+    "successes": 3,
+    "explained": 0,
+    "invisible": 3,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 3,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "undock_flight": {
+    "successes": 9,
+    "explained": 0,
+    "invisible": 9,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 8,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "advance_status": {
+    "successes": 0,
+    "explained": 0,
+    "invisible": 0,
+    "explained_rate": null,
+    "by": {},
+    "failures": 6,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "delay_flight": {
+    "successes": 9,
+    "explained": 0,
+    "invisible": 9,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "cancel_flight": {
+    "successes": 3,
+    "explained": 0,
+    "invisible": 3,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "assign_agent": {
+    "successes": 3,
+    "explained": 3,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "op1": 3
+    },
+    "failures": 3,
+    "rejected": 0,
+    "unbound_failures": 3
+   },
+   "unassign_agent": {
+    "successes": 7,
+    "explained": 7,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "op0": 7
+    },
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   }
+  }
+ },
+ "gtc": {
+  "transitions": 34,
+  "fully_representable": 10,
+  "partly_representable": 10,
+  "gtc": 0.294,
+  "gtc_any": 0.294,
+  "per_op": {
+   "undock_flight": {
+    "n": 9,
+    "full": 0,
+    "any": 0
+   },
+   "delay_flight": {
+    "n": 9,
+    "full": 0,
+    "any": 0
+   },
+   "cancel_flight": {
+    "n": 3,
+    "full": 0,
+    "any": 0
+   },
+   "unassign_agent": {
+    "n": 7,
+    "full": 7,
+    "any": 7
+   },
+   "dock_flight": {
+    "n": 3,
+    "full": 0,
+    "any": 0
+   },
+   "assign_agent": {
+    "n": 3,
+    "full": 3,
+    "any": 3
+   }
+  }
+ },
+ "rtc": {
+  "transitions": 34,
+  "fully_registered": 10,
+  "partly_registered": 10,
+  "rtc": 0.294,
+  "rtc_any": 0.294,
+  "per_op": {
+   "undock_flight": {
+    "n": 9,
+    "full": 0,
+    "any": 0
+   },
+   "delay_flight": {
+    "n": 9,
+    "full": 0,
+    "any": 0
+   },
+   "cancel_flight": {
+    "n": 3,
+    "full": 0,
+    "any": 0
+   },
+   "unassign_agent": {
+    "n": 7,
+    "full": 7,
+    "any": 7
+   },
+   "dock_flight": {
+    "n": 3,
+    "full": 0,
+    "any": 0
+   },
+   "assign_agent": {
+    "n": 3,
+    "full": 3,
+    "any": 3
+   }
+  }
+ },
+ "object_layer": {
+  "annotated_leaves": 10047,
+  "grounded_leaves": 10047,
+  "grounded_frac": 1.0,
+  "pair_precision": 1.0,
+  "pair_recall": 1.0,
+  "learned_keys_merging_entities": 0,
+  "entities_split_across_keys": 0,
+  "entities_grounded": 13
+ },
+ "view_false_positives": {
+  "learned_transitions": 10,
+  "without_hidden_change": 0,
+  "rate": 0.0
+ },
+ "condition": "A",
+ "cost": {
+  "primitives": 387
+ },
+ "sig_conflicts": 0
+}

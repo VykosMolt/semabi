@@ -1,0 +1,105 @@
+domain learned
+type T0(id: str, attr:name: str, attr:code: str, attr:aperture: str)
+type T1(id: str, attr:catalog: str, attr:mag: str)
+type T2(id: str, attr:label: str, attr:slots: str)
+type T3(id: str, attr:duration: str)
+rel ref_3_rel:pointing_scope(T3, T0)
+rel ref_3_rel:pointing_target(T3, T1)
+rel ref_3_rel:pointing_night(T3, T2)
+op0(?o0: T3, ?o1: T1)
+  pre: ref_3_rel:pointing_target(?o0, ?o1)
+  eff: delete ?o0
+  eff: delete ?o1
+op1(?o0: T3)
+  eff: attr:duration(?o0) := '1'
+op2(?o0: T3)
+  pre: attr:duration(?o0) == '2'
+  eff: attr:duration(?o0) := '3'
+op3(?o0: T3)
+  pre: attr:duration(?o0) == '1'
+  eff: attr:duration(?o0) := '2'
+op4(?o1: T0, ?o0: T1)
+  eff: ?new0 := new T3(id=<new>, attr:duration=1)
+  eff: ref_3_rel:pointing_night(?new0) := T2:night1
+  eff: ref_3_rel:pointing_scope(?new0) := ?o1
+  eff: ref_3_rel:pointing_target(?new0) := ?o0
+
+groundings:
+  op0: click(button:Detach@T3[?o0]); click(button:Confirm detach@T3[?o0])
+  op1: click(button:Clip@T3[?o0])
+  op2: click(button#0@T3[?o0]); click(button:Extend@T3[?o0])
+  op3: click(button#0@T3[?o0]); click(button:Extend@T3[?o0])
+  op4: select(combobox#0, ?o0); click(button#0@T0[?o1]); click(button#0)
+
+34 transitions, 321 no-op segments, 18 operator hypotheses, 0 view operators
+op0(?o0: T3, ?o1: T1)  support=6 neg=2 verified=0/0
+  how: click(button:Detach@T3[?o0]); click(button:Confirm detach@T3[?o0])
+  pre: rel:pointing_target(?o0) == ?o1
+  eff: delete ?o0
+  eff: delete ?o1
+op1(?o0: T3)  support=5 neg=1 verified=0/0
+  how: click(button:Clip@T3[?o0])
+  pre: ? (1 unexplained failures)
+  eff: attr:duration(?o0) := '1'
+op2(?o0: T3)  support=4 neg=5 verified=0/0
+  how: click(button#0@T3[?o0]); click(button:Extend@T3[?o0])
+  pre: attr:duration(?o0) == '2'
+  eff: attr:duration(?o0) := '3'
+op3(?o0: T3)  support=4 neg=5 verified=0/0
+  how: click(button#0@T3[?o0]); click(button:Extend@T3[?o0])
+  pre: attr:duration(?o0) == '1'
+  eff: attr:duration(?o0) := '2'
+op4(?o1: T0, ?new0: T3, ?o0: T1)  support=2 neg=0 verified=0/0
+  how: select(combobox#0, ?o0); click(button#0@T0[?o1]); click(button#0)
+  eff: ?new0 := new T3(id=<new>, attr:duration=1) rel:pointing_night->T2:night1 rel:pointing_scope->?o1 rel:pointing_target->?o0
+op5(?o0: T3)  support=1 neg=1 verified=0/0
+  how: click(button:Retarget@T3[?o0])
+  pre: ? (1 unexplained failures)
+  eff: rel:pointing_target(?o0) := 'T1:target2'
+op6(?o0: T3)  support=1 neg=3 verified=0/0
+  how: click(button:Pointing); click(button:Extend@T3[?o0])
+  pre: id(?o0) != 'pointing2'
+  eff: attr:duration(?o0) := '2'
+op7(?o0: T3)  support=1 neg=3 verified=0/0
+  how: click(button:Pointing); click(button:Extend@T3[?o0])
+  pre: ? (3 unexplained failures)
+  eff: attr:duration(?o0) := '3'
+op8(?o0: T3)  support=1 neg=0 verified=0/0
+  how: click(button:Pointing); click(button:Clip@T3[?o0])
+  eff: attr:duration(?o0) := '2'
+op9(?o0: T3)  support=1 neg=2 verified=0/0
+  how: click(button:Pointing); click(button:Retarget@T3[?o0])
+  pre: id(?o0) != 'pointing1'
+  eff: rel:pointing_target(?o0) := 'T1:target1'
+op10(?o0: T3)  support=1 neg=3 verified=0/0
+  how: click(button#0@T3[?o0]); click(button:Clip@T3[?o0])
+  pre: attr:duration(?o0) != '1'  (+1 unexplained failures)
+  eff: attr:duration(?o0) := '2'
+op11(?o0: T3, ?o1: T1)  support=1 neg=7 verified=0/0
+  how: click(button:Detach@T3[?o0]); click(button:Confirm detach@T3[?o0])
+  pre: rel:pointing_target(?o0) != ?o1
+  eff: delete ?o1
+  eff: forall x:T3 with rel:pointing_target(x)==?o1: delete x
+op12(?o0: T3)  support=1 neg=3 verified=0/0
+  how: click(button#0@T3[?o0]); click(button:Retarget@T3[?o0])
+  pre: ? (3 unexplained failures)
+  eff: rel:pointing_target(?o0) := 'T1:target1'
+op13(?o0: T3)  support=1 neg=7 verified=0/0
+  how: click(button:Detach@T3[?o0]); click(button:Confirm detach@T3[?o0])
+  pre: id(?o0) != 'pointing2' & attr:duration(?o0) != '1'  (+1 unexplained failures)
+  eff: delete ?o0
+op14(?o0: T3)  support=1 neg=3 verified=0/0
+  how: click(button:Pointing); click(button:Extend@T3[?o0])
+  pre: ? (3 unexplained failures)
+  eff: attr:duration(?o0) := '4'
+op15(?o0: T3)  support=1 neg=8 verified=0/0
+  how: click(button#0@T3[?o0]); click(button:Extend@T3[?o0])
+  pre: attr:duration(?o0) != '1' & attr:duration(?o0) != '2'
+  eff: attr:duration(?o0) := '4'
+op16(?o0: T3)  support=1 neg=3 verified=0/0
+  how: click(button#0@T3[?o0]); click(button:Clip@T3[?o0])
+  pre: id(?o0) != 'pointing1'
+  eff: attr:duration(?o0) := '3'
+op17(?o1: T0, ?new0: T3, ?o0: T1)  support=1 neg=0 verified=0/0
+  how: select(combobox#0, ?o0); click(button#1@T0[?o1]); click(button#0)
+  eff: ?new0 := new T3(id=<new>, attr:duration=1) rel:pointing_night->T2:night2 rel:pointing_scope->?o1 rel:pointing_target->?o0

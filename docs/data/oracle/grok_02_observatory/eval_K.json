@@ -1,0 +1,255 @@
+{
+ "types": {
+  "hidden": 4,
+  "learned": 4,
+  "recovered": 4,
+  "map": {
+   "Scope": "Scope",
+   "Target": "Target",
+   "Night": "Night",
+   "Pointing": "Pointing"
+  }
+ },
+ "predicates": {
+  "hidden_attrs": 12,
+  "recovered_attrs": 11,
+  "hidden_rels": 9,
+  "recovered_rels": 3,
+  "attr_map": {
+   "Scope.name": "name",
+   "Scope.code": "code",
+   "Scope.aperture": "aperture",
+   "Scope.has_pointing_scope": "has_pointing_scope",
+   "Target.catalog": "catalog",
+   "Target.mag": "mag",
+   "Target.has_pointing_target": "has_pointing_target",
+   "Night.label": "label",
+   "Night.slots": "slots",
+   "Night.has_pointing_night": "has_pointing_night",
+   "Pointing.duration": "duration"
+  },
+  "rel_map": {
+   "pointing_scope": "pointing_scope",
+   "pointing_target": "pointing_target",
+   "pointing_night": "pointing_night"
+  }
+ },
+ "operators": {
+  "hidden": 5,
+  "observed_in_trace": 5,
+  "recovered": 5,
+  "recovered_ops": [
+   "book",
+   "extend",
+   "clip",
+   "retarget",
+   "detach"
+  ],
+  "learned": 8,
+  "spurious_learned": [],
+  "precision": 1.0,
+  "failure_rejection_rate": 0.94,
+  "per_op": {
+   "book": {
+    "successes": 3,
+    "explained": 3,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "book": 3
+    },
+    "failures": 6,
+    "rejected": 5,
+    "unbound_failures": 1
+   },
+   "extend": {
+    "successes": 12,
+    "explained": 12,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "extend": 5,
+     "extend__1": 5,
+     "extend__2": 2
+    },
+    "failures": 1,
+    "rejected": 1,
+    "unbound_failures": 0
+   },
+   "clip": {
+    "successes": 8,
+    "explained": 7,
+    "invisible": 0,
+    "explained_rate": 0.88,
+    "by": {
+     "clip": 5,
+     "clip__1": 2
+    },
+    "failures": 3,
+    "rejected": 3,
+    "unbound_failures": 0
+   },
+   "retarget": {
+    "successes": 3,
+    "explained": 3,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "retarget": 3
+    },
+    "failures": 7,
+    "rejected": 6,
+    "unbound_failures": 0
+   },
+   "detach": {
+    "successes": 8,
+    "explained": 7,
+    "invisible": 0,
+    "explained_rate": 0.88,
+    "by": {
+     "detach": 7
+    },
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   }
+  }
+ },
+ "gtc": {
+  "transitions": 34,
+  "fully_representable": 34,
+  "partly_representable": 34,
+  "gtc": 1.0,
+  "gtc_any": 1.0,
+  "per_op": {
+   "extend": {
+    "n": 12,
+    "full": 12,
+    "any": 12
+   },
+   "clip": {
+    "n": 8,
+    "full": 8,
+    "any": 8
+   },
+   "retarget": {
+    "n": 3,
+    "full": 3,
+    "any": 3
+   },
+   "book": {
+    "n": 3,
+    "full": 3,
+    "any": 3
+   },
+   "detach": {
+    "n": 8,
+    "full": 8,
+    "any": 8
+   }
+  }
+ },
+ "condition": "K",
+ "learned_report": [
+  {
+   "hidden_op": "extend",
+   "learned": "extend",
+   "support": 5,
+   "pre": [
+    "duration(?pointing) == '1'"
+   ],
+   "effects": [
+    "duration(?pointing) := '2'"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "extend",
+   "learned": "extend__1",
+   "support": 5,
+   "pre": [
+    "duration(?pointing) == '2'"
+   ],
+   "effects": [
+    "duration(?pointing) := '3'"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "extend",
+   "learned": "extend__2",
+   "support": 2,
+   "pre": [
+    "duration(?pointing) == '3'"
+   ],
+   "effects": [
+    "duration(?pointing) := '4'"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "clip",
+   "learned": "clip",
+   "support": 5,
+   "pre": [
+    "duration(?pointing) == '2'"
+   ],
+   "effects": [
+    "duration(?pointing) := '1'"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "clip",
+   "learned": "clip__1",
+   "support": 2,
+   "pre": [
+    "duration(?pointing) == '3'"
+   ],
+   "effects": [
+    "duration(?pointing) := '2'"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "retarget",
+   "learned": "retarget",
+   "support": 3,
+   "pre": [
+    "catalog(?target) == 'M31'",
+    "not pointing_target(?pointing, ?target)"
+   ],
+   "effects": [
+    "pointing_target(?pointing) := ?target"
+   ],
+   "unexplained_failures": 1
+  },
+  {
+   "hidden_op": "book",
+   "learned": "book",
+   "support": 3,
+   "pre": [
+    "name(?scope) == 'West'",
+    "slots(?night) == '2'"
+   ],
+   "effects": [
+    "?new0 := new Pointing(duration=1)",
+    "pointing_scope(?new0) := ?scope",
+    "pointing_target(?new0) := ?target",
+    "pointing_night(?new0) := ?night"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "detach",
+   "learned": "detach",
+   "support": 7,
+   "pre": [],
+   "effects": [
+    "delete ?pointing",
+    "delete ?x1"
+   ],
+   "unexplained_failures": 0
+  }
+ ]
+}

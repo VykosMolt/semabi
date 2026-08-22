@@ -1,0 +1,49 @@
+domain learned
+type T0(id: str, attr:label: str, attr:room: str, attr:power_cap_w: str)
+type T1(id: str, attr:hostname: str, attr:power_draw_w: str, attr:status: str)
+type T2(id: str, attr:name: str)
+type T3(id: str, attr:kind: str, attr:status: str)
+rel ref_1_rel:mounted_in(T1, T0)
+rel ref_3_rel:ticket_server(T3, T1)
+rel ref_3_rel:ticket_technician(T3, T2)
+op0(?o1: T1, ?o0: T2)
+  eff: ?new0 := new T3(id=<new>, attr:kind=install, attr:status=open)
+  eff: ref_3_rel:ticket_server(?new0) := ?o1
+  eff: ref_3_rel:ticket_technician(?new0) := ?o0
+op1(?o0: T1)
+  eff: attr:status(?o0) := 'decommissioned'
+op2(?o0: T1)
+  eff: attr:status(?o0) := 'decommissioned'
+  eff: ref_1_rel:mounted_in(?o0) := None
+op3(?o0: T0, ?o1: T1)
+  pre: no_incoming(ref_3_rel:ticket_server, ?o1)
+  eff: attr:status(?o1) := 'racked'
+  eff: ref_1_rel:mounted_in(?o1) := ?o0
+
+groundings:
+  op0: select(combobox#1, ?o0); select(combobox#0, ?o1); click(button:Tickets); click(button:Open Ticket)
+  op1: click(button:Take Offline@T1[?o0]); click(button:Confirm@T1[?o0])
+  op2: click(button#1@T1[?o0]); click(button:Confirm@T1[?o0])
+  op3: click(button:Staging); select(combobox#0, ?o0); click(button:Mount)
+
+11 transitions, 354 no-op segments, 5 operator hypotheses, 0 view operators
+op0(?new0: T3, ?o1: T1, ?o0: T2)  support=4 neg=0 verified=0/0
+  how: select(combobox#1, ?o0); select(combobox#0, ?o1); click(button:Tickets); click(button:Open Ticket)
+  eff: ?new0 := new T3(id=<new>, attr:kind=install, attr:status=open) rel:ticket_server->?o1 rel:ticket_technician->?o0
+op1(?o0: T1)  support=2 neg=0 verified=0/0
+  how: click(button:Take Offline@T1[?o0]); click(button:Confirm@T1[?o0])
+  eff: attr:status(?o0) := 'decommissioned'
+op2(?o0: T1)  support=2 neg=0 verified=0/0
+  how: click(button#1@T1[?o0]); click(button:Confirm@T1[?o0])
+  eff: attr:status(?o0) := 'decommissioned'
+  eff: rel:mounted_in(?o0) := None
+op3(?o0: T0, ?o1: T1)  support=2 neg=6 verified=0/0
+  how: click(button:Staging); select(combobox#0, ?o0); click(button:Mount)
+  pre: no_children(?o1)
+  eff: attr:status(?o1) := 'racked'
+  eff: rel:mounted_in(?o1) := '?o0'
+op4(?o1: T1, ?o0: T0)  support=1 neg=7 verified=0/0
+  how: select(combobox#0, ?o0); click(button:Staging); click(button:Mount)
+  pre: rel:mounted_in(?o1) != ?o0  (+2 unexplained failures)
+  eff: attr:status(?o1) := 'racked'
+  eff: rel:mounted_in(?o1) := '?o0'

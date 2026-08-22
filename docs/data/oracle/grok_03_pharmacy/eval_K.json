@@ -1,0 +1,348 @@
+{
+ "types": {
+  "hidden": 4,
+  "learned": 4,
+  "recovered": 4,
+  "map": {
+   "Lot": "Lot",
+   "Cabinet": "Cabinet",
+   "Formula": "Formula",
+   "Component": "Component"
+  }
+ },
+ "predicates": {
+  "hidden_attrs": 11,
+  "recovered_attrs": 10,
+  "hidden_rels": 5,
+  "recovered_rels": 3,
+  "attr_map": {
+   "Lot.code": "code",
+   "Lot.title": "title",
+   "Lot.units": "units",
+   "Lot.has_component_lot": "has_component_lot",
+   "Cabinet.name": "name",
+   "Cabinet.bins": "bins",
+   "Formula.title": "title",
+   "Formula.potency": "potency",
+   "Formula.has_component_formula": "has_component_formula",
+   "Component.qty": "qty"
+  },
+  "rel_map": {
+   "housed": "housed",
+   "component_formula": "component_formula",
+   "component_lot": "component_lot"
+  }
+ },
+ "operators": {
+  "hidden": 7,
+  "observed_in_trace": 6,
+  "recovered": 5,
+  "recovered_ops": [
+   "stow",
+   "unstow",
+   "dispense",
+   "restock",
+   "strike"
+  ],
+  "learned": 14,
+  "spurious_learned": [],
+  "precision": 1.0,
+  "failure_rejection_rate": 0.55,
+  "per_op": {
+   "stow": {
+    "successes": 2,
+    "explained": 2,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "stow": 2
+    },
+    "failures": 5,
+    "rejected": 4,
+    "unbound_failures": 0
+   },
+   "unstow": {
+    "successes": 8,
+    "explained": 8,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "unstow": 8
+    },
+    "failures": 10,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "dispense": {
+    "successes": 19,
+    "explained": 18,
+    "invisible": 0,
+    "explained_rate": 0.95,
+    "by": {
+     "dispense": 5,
+     "dispense__3": 2,
+     "dispense__4": 2,
+     "dispense__1": 5,
+     "dispense__2": 4
+    },
+    "failures": 8,
+    "rejected": 5,
+    "unbound_failures": 0
+   },
+   "restock": {
+    "successes": 12,
+    "explained": 10,
+    "invisible": 0,
+    "explained_rate": 0.83,
+    "by": {
+     "restock__1": 2,
+     "restock": 4,
+     "restock__2": 2,
+     "restock__3": 2
+    },
+    "failures": 8,
+    "rejected": 8,
+    "unbound_failures": 0
+   },
+   "bind": {
+    "successes": 0,
+    "explained": 0,
+    "invisible": 0,
+    "explained_rate": null,
+    "by": {},
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "dose": {
+    "successes": 7,
+    "explained": 5,
+    "invisible": 0,
+    "explained_rate": 0.71,
+    "by": {
+     "dose": 3,
+     "dose__1": 2
+    },
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "strike": {
+    "successes": 3,
+    "explained": 3,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "strike": 3
+    },
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   }
+  }
+ },
+ "gtc": {
+  "transitions": 51,
+  "fully_representable": 51,
+  "partly_representable": 51,
+  "gtc": 1.0,
+  "gtc_any": 1.0,
+  "per_op": {
+   "dispense": {
+    "n": 19,
+    "full": 19,
+    "any": 19
+   },
+   "restock": {
+    "n": 12,
+    "full": 12,
+    "any": 12
+   },
+   "unstow": {
+    "n": 8,
+    "full": 8,
+    "any": 8
+   },
+   "dose": {
+    "n": 7,
+    "full": 7,
+    "any": 7
+   },
+   "strike": {
+    "n": 3,
+    "full": 3,
+    "any": 3
+   },
+   "stow": {
+    "n": 2,
+    "full": 2,
+    "any": 2
+   }
+  }
+ },
+ "condition": "K",
+ "learned_report": [
+  {
+   "hidden_op": "dispense",
+   "learned": "dispense",
+   "support": 5,
+   "pre": [
+    "units(?lot) == '2'"
+   ],
+   "effects": [
+    "units(?lot) := '1'"
+   ],
+   "unexplained_failures": 3
+  },
+  {
+   "hidden_op": "dispense",
+   "learned": "dispense__1",
+   "support": 5,
+   "pre": [
+    "units(?lot) == '4'"
+   ],
+   "effects": [
+    "units(?lot) := '3'"
+   ],
+   "unexplained_failures": 3
+  },
+  {
+   "hidden_op": "dispense",
+   "learned": "dispense__2",
+   "support": 4,
+   "pre": [
+    "units(?lot) == '3'"
+   ],
+   "effects": [
+    "units(?lot) := '2'"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "dispense",
+   "learned": "dispense__3",
+   "support": 2,
+   "pre": [
+    "units(?lot) == '5'"
+   ],
+   "effects": [
+    "units(?lot) := '4'"
+   ],
+   "unexplained_failures": 1
+  },
+  {
+   "hidden_op": "dispense",
+   "learned": "dispense__4",
+   "support": 2,
+   "pre": [
+    "units(?lot) == '1'"
+   ],
+   "effects": [
+    "units(?lot) := '0'"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "restock",
+   "learned": "restock",
+   "support": 4,
+   "pre": [
+    "units(?lot) == '1'"
+   ],
+   "effects": [
+    "units(?lot) := '2'"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "restock",
+   "learned": "restock__1",
+   "support": 2,
+   "pre": [
+    "units(?lot) == '0'"
+   ],
+   "effects": [
+    "units(?lot) := '1'"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "restock",
+   "learned": "restock__2",
+   "support": 2,
+   "pre": [
+    "units(?lot) == '2'",
+    "code(?lot) == 'L1'"
+   ],
+   "effects": [
+    "units(?lot) := '3'"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "restock",
+   "learned": "restock__3",
+   "support": 2,
+   "pre": [
+    "units(?lot) == '3'"
+   ],
+   "effects": [
+    "units(?lot) := '4'"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "unstow",
+   "learned": "unstow",
+   "support": 8,
+   "pre": [],
+   "effects": [
+    "housed(?lot) := None"
+   ],
+   "unexplained_failures": 10
+  },
+  {
+   "hidden_op": "dose",
+   "learned": "dose",
+   "support": 3,
+   "pre": [],
+   "effects": [
+    "qty(?component) := '4'"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "dose",
+   "learned": "dose__1",
+   "support": 2,
+   "pre": [],
+   "effects": [
+    "qty(?component) := '2'"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "strike",
+   "learned": "strike",
+   "support": 3,
+   "pre": [],
+   "effects": [
+    "delete ?component",
+    "delete ?x1"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "stow",
+   "learned": "stow",
+   "support": 2,
+   "pre": [
+    "not housed(?lot, ?cabinet)"
+   ],
+   "effects": [
+    "housed(?lot) := ?cabinet"
+   ],
+   "unexplained_failures": 1
+  }
+ ]
+}

@@ -1,0 +1,205 @@
+{
+ "types": {
+  "hidden": 4,
+  "learned": 4,
+  "recovered": 4,
+  "map": {
+   "T0": "Lot",
+   "T1": "Cabinet",
+   "T3": "Component",
+   "T2": "Formula"
+  }
+ },
+ "predicates": {
+  "hidden_attrs": 11,
+  "recovered_attrs": 0,
+  "hidden_rels": 5,
+  "recovered_rels": 0,
+  "attr_map": {},
+  "rel_map": {}
+ },
+ "operators": {
+  "hidden": 7,
+  "observed_in_trace": 6,
+  "recovered": 1,
+  "recovered_ops": [
+   "strike"
+  ],
+  "learned": 1,
+  "spurious_learned": [],
+  "precision": 1.0,
+  "failure_rejection_rate": 0.0,
+  "per_op": {
+   "stow": {
+    "successes": 2,
+    "explained": 0,
+    "invisible": 2,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 5,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "unstow": {
+    "successes": 8,
+    "explained": 0,
+    "invisible": 8,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 10,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "dispense": {
+    "successes": 19,
+    "explained": 0,
+    "invisible": 19,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 8,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "restock": {
+    "successes": 12,
+    "explained": 0,
+    "invisible": 12,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 8,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "bind": {
+    "successes": 0,
+    "explained": 0,
+    "invisible": 0,
+    "explained_rate": null,
+    "by": {},
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "dose": {
+    "successes": 7,
+    "explained": 0,
+    "invisible": 7,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "strike": {
+    "successes": 3,
+    "explained": 3,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "op0": 3
+    },
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   }
+  }
+ },
+ "gtc": {
+  "transitions": 51,
+  "fully_representable": 3,
+  "partly_representable": 3,
+  "gtc": 0.059,
+  "gtc_any": 0.059,
+  "per_op": {
+   "dispense": {
+    "n": 19,
+    "full": 0,
+    "any": 0
+   },
+   "restock": {
+    "n": 12,
+    "full": 0,
+    "any": 0
+   },
+   "unstow": {
+    "n": 8,
+    "full": 0,
+    "any": 0
+   },
+   "dose": {
+    "n": 7,
+    "full": 0,
+    "any": 0
+   },
+   "strike": {
+    "n": 3,
+    "full": 3,
+    "any": 3
+   },
+   "stow": {
+    "n": 2,
+    "full": 0,
+    "any": 0
+   }
+  }
+ },
+ "rtc": {
+  "transitions": 51,
+  "fully_registered": 3,
+  "partly_registered": 3,
+  "rtc": 0.059,
+  "rtc_any": 0.059,
+  "per_op": {
+   "dispense": {
+    "n": 19,
+    "full": 0,
+    "any": 0
+   },
+   "restock": {
+    "n": 12,
+    "full": 0,
+    "any": 0
+   },
+   "unstow": {
+    "n": 8,
+    "full": 0,
+    "any": 0
+   },
+   "dose": {
+    "n": 7,
+    "full": 0,
+    "any": 0
+   },
+   "strike": {
+    "n": 3,
+    "full": 3,
+    "any": 3
+   },
+   "stow": {
+    "n": 2,
+    "full": 0,
+    "any": 0
+   }
+  }
+ },
+ "object_layer": {
+  "annotated_leaves": 4349,
+  "grounded_leaves": 4349,
+  "grounded_frac": 1.0,
+  "pair_precision": 1.0,
+  "pair_recall": 1.0,
+  "learned_keys_merging_entities": 0,
+  "entities_split_across_keys": 0,
+  "entities_grounded": 10
+ },
+ "view_false_positives": {
+  "learned_transitions": 3,
+  "without_hidden_change": 0,
+  "rate": 0.0
+ },
+ "condition": "A",
+ "cost": {
+  "primitives": 409
+ },
+ "sig_conflicts": 2
+}

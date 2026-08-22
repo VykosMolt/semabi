@@ -1,0 +1,192 @@
+domain learned
+type T0(id: str, attr:code: str, attr:title: str, attr:units: str)
+type T1(id: str, attr:name: str)
+type T2(id: str, attr:title: str, attr:potency: str)
+type T3(id: str, attr:qty: str)
+rel ref_0_rel:housed(T0, T1)
+rel ref_3_rel:component_formula(T3, T2)
+rel ref_3_rel:component_lot(T3, T0)
+op0(?o0: T0)
+  eff: ref_0_rel:housed(?o0) := None
+op1(?o0: T0, ?o1: T0)
+  pre: attr:units(?o1) == '2'
+  eff: attr:units(?o1) := '1'
+op2(?o0: T0)
+  pre: attr:units(?o0) == '4'
+  eff: attr:units(?o0) := '3'
+op3(?o0: T3)
+  pre: attr:qty(?o0) == '3'
+  eff: attr:qty(?o0) := '4'
+op4(?o0: T0)
+  pre: attr:code(?o0) != 'L2' & attr:code(?o0) != 'L3'
+  eff: attr:units(?o0) := '2'
+op5(?o0: T0, ?o1: T1)
+  pre: not ref_0_rel:housed(?o0, ?o1)
+  eff: ref_0_rel:housed(?o0) := ?o1
+op6(?o0: T0, ?o1: T0)
+  pre: attr:units(?o0) == '5'
+  eff: ref_0_rel:housed(?o1) := None
+op7(?o0: T0)
+  pre: attr:units(?o0) == '5'
+  eff: attr:units(?o0) := '4'
+op8(?o0: T0, ?o1: T0)
+  pre: attr:units(?o1) == '1'
+  eff: attr:units(?o1) := '0'
+op9(?o0: T0, ?o1: T0)
+  pre: attr:units(?o1) == '0'
+  eff: attr:units(?o1) := '1'
+op10(?o0: T0, ?o1: T0)
+  pre: attr:units(?o1) == '1'
+  eff: attr:units(?o1) := '2'
+op11(?o0: T0, ?o1: T0)
+  pre: attr:units(?o1) == '3'
+  eff: attr:units(?o1) := '4'
+op12(?o0: T0)
+  eff: ref_0_rel:housed(?o0) := None
+op13(?o0: T3, ?o1: T3, ?o2: T2)
+  eff: delete ?o0
+  eff: delete ?o2
+op14(?o0: T3)
+  pre: attr:qty(?o0) != '3'
+  eff: attr:qty(?o0) := '2'
+
+groundings:
+  op0: click(button#0@T0[?o0]); click(button:Unstow@T0[?o0])
+  op1: click(button#0@T0[?o0]); click(button:Dispense@T0[?o1])
+  op2: click(button#0@T0[?o0]); click(button:Dispense@T0[?o0])
+  op3: click(button:Formulas); click(button:Dose@T3[?o0])
+  op4: click(button:Lots); click(button:Dispense@T0[?o0])
+  op5: click(button#0@T0[?o0]); select(combobox#0, ?o1); click(button:Stow chosen)
+  op6: click(button#0@T0[?o0]); click(button:Unstow@T0[?o1])
+  op7: click(button#0@T0[?o0]); click(button:Dispense@T0[?o0])
+  op8: click(button#0@T0[?o0]); click(button:Dispense@T0[?o1])
+  op9: click(button#0@T0[?o0]); click(button:Restock@T0[?o1])
+  op10: click(button#0@T0[?o0]); click(button:Restock@T0[?o1])
+  op11: click(button#0@T0[?o0]); click(button:Restock@T0[?o1])
+  op12: click(button:Lots); click(button:Unstow@T0[?o0])
+  op13: click(button:Strike@T3[?o0]); click(button:Confirm strike@T3[?o1])
+  op14: click(button:Formulas); click(button:Dose@T3[?o0])
+
+53 transitions, 303 no-op segments, 31 operator hypotheses, 0 view operators
+op0(?o0: T0)  support=4 neg=0 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Unstow@T0[?o0])
+  eff: rel:housed(?o0) := None
+op1(?o0: T0, ?o1: T0)  support=3 neg=9 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Dispense@T0[?o1])
+  pre: attr:units(?o1) == '2'  (+1 unexplained failures)
+  eff: attr:units(?o1) := '1'
+op2(?o0: T0)  support=3 neg=4 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Dispense@T0[?o0])
+  pre: attr:units(?o0) == '4'
+  eff: attr:units(?o0) := '3'
+op3(?o0: T3)  support=3 neg=4 verified=0/0
+  how: click(button:Formulas); click(button:Dose@T3[?o0])
+  pre: attr:qty(?o0) == '3'
+  eff: attr:qty(?o0) := '4'
+op4(?o0: T0)  support=3 neg=5 verified=0/0
+  how: click(button:Lots); click(button:Dispense@T0[?o0])
+  pre: attr:code(?o0) != 'L2' & attr:code(?o0) != 'L3'
+  eff: attr:units(?o0) := '2'
+op5(?o0: T0, ?o1: T1)  support=3 neg=7 verified=0/0
+  how: click(button#0@T0[?o0]); select(combobox#0, ?o1); click(button:Stow chosen)
+  pre: rel:housed(?o0) != ?o1
+  eff: rel:housed(?o0) := '?o1'
+op6(?o0: T0, ?o1: T0)  support=2 neg=9 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Unstow@T0[?o1])
+  pre: attr:units(?o0) == '5'  (+1 unexplained failures)
+  eff: rel:housed(?o1) := None
+op7(?o0: T0)  support=2 neg=5 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Dispense@T0[?o0])
+  pre: attr:units(?o0) == '5'
+  eff: attr:units(?o0) := '4'
+op8(?o0: T0, ?o1: T0)  support=2 neg=10 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Dispense@T0[?o1])
+  pre: attr:units(?o1) == '1'
+  eff: attr:units(?o1) := '0'
+op9(?o0: T0, ?o1: T0)  support=2 neg=11 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Restock@T0[?o1])
+  pre: attr:units(?o1) == '0'
+  eff: attr:units(?o1) := '1'
+op10(?o0: T0, ?o1: T0)  support=2 neg=11 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Restock@T0[?o1])
+  pre: attr:units(?o1) == '1'
+  eff: attr:units(?o1) := '2'
+op11(?o0: T0, ?o1: T0)  support=2 neg=11 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Restock@T0[?o1])
+  pre: attr:units(?o1) == '3'
+  eff: attr:units(?o1) := '4'
+op12(?o0: T0)  support=2 neg=1 verified=0/0
+  how: click(button:Lots); click(button:Unstow@T0[?o0])
+  pre: ? (1 unexplained failures)
+  eff: rel:housed(?o0) := None
+op13(?o0: T3, ?o1: T3, ?o2: T2)  support=2 neg=0 verified=0/0
+  how: click(button:Strike@T3[?o0]); click(button:Confirm strike@T3[?o1])
+  eff: delete ?o0
+  eff: delete ?o2
+op14(?o0: T3)  support=2 neg=5 verified=0/0
+  how: click(button:Formulas); click(button:Dose@T3[?o0])
+  pre: attr:qty(?o0) != '3'  (+2 unexplained failures)
+  eff: attr:qty(?o0) := '2'
+op15(?o0: T0)  support=1 neg=2 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Restock@T0[?o0])
+  pre: ? (2 unexplained failures)
+  eff: attr:units(?o0) := '6'
+op16(?o0: T0)  support=1 neg=6 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Dispense@T0[?o0])
+  pre: attr:code(?o0) != 'L3' & attr:units(?o0) != '5'  (+1 unexplained failures)
+  eff: attr:units(?o0) := '5'
+op17(?o0: T0)  support=1 neg=7 verified=0/0
+  how: click(button:Lots); click(button:Dispense@T0[?o0])
+  pre: attr:title(?o0) != 'Saline' & attr:units(?o0) != '2'
+  eff: attr:units(?o0) := '3'
+op18(?o0: T0, ?o1: T0)  support=1 neg=12 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Restock@T0[?o1])
+  pre: attr:title(?o0) != 'Saline' & attr:code(?o0) != 'L4' & attr:units(?o0) != '4'  (+1 unexplained failures)
+  eff: attr:units(?o1) := '3'
+op19(?o0: T0)  support=1 neg=7 verified=0/0
+  how: click(button:Lots); click(button:Dispense@T0[?o0])
+  pre: no_children(?o0)  (+3 unexplained failures)
+  eff: attr:units(?o0) := '1'
+op20(?o0: T3)  support=1 neg=6 verified=0/0
+  how: click(button:Formulas); click(button:Dose@T3[?o0])
+  pre: attr:qty(?o0) != '3' & attr:qty(?o0) != '1'  (+1 unexplained failures)
+  eff: attr:qty(?o0) := '5'
+op21(?o0: T0, ?o1: T0)  support=1 neg=11 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Dispense@T0[?o1])
+  pre: attr:code(?o0) != 'L2' & attr:code(?o0) != 'L3'  (+3 unexplained failures)
+  eff: attr:units(?o1) := '2'
+op22(?o0: T0)  support=1 neg=2 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Restock@T0[?o0])
+  pre: ? (2 unexplained failures)
+  eff: attr:units(?o0) := '2'
+op23(?o0: T0)  support=1 neg=6 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Dispense@T0[?o0])
+  pre: attr:code(?o0) != 'L2' & attr:units(?o0) != '4'  (+1 unexplained failures)
+  eff: attr:units(?o0) := '1'
+op24(?o0: T0)  support=1 neg=3 verified=0/0
+  how: click(button:Lots); click(button:Restock@T0[?o0])
+  pre: attr:title(?o0) != 'Saline'
+  eff: attr:units(?o0) := '2'
+op25(?o0: T0)  support=1 neg=3 verified=0/0
+  how: click(button:Lots); click(button:Restock@T0[?o0])
+  pre: attr:code(?o0) != 'L2'  (+1 unexplained failures)
+  eff: attr:units(?o0) := '3'
+op26(?o0: T0)  support=1 neg=2 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Restock@T0[?o0])
+  pre: attr:code(?o0) != 'L2'
+  eff: attr:units(?o0) := '5'
+op27(?o0: T0, ?o1: T0)  support=1 neg=11 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Dispense@T0[?o1])
+  pre: no_children(?o0)
+  eff: attr:units(?o1) := '3'
+op28(?o0: T3)  support=1 neg=6 verified=0/0
+  how: click(button:Formulas); click(button:Dose@T3[?o0])
+  pre: attr:qty(?o0) != '3' & attr:qty(?o0) != '1'  (+1 unexplained failures)
+  eff: attr:qty(?o0) := '3'
+op29(?o0: T3, ?o1: T2)  support=1 neg=0 verified=0/0
+  how: click(button:Strike@T3[?o0]); click(button:Confirm strike@T3[?o0])
+  eff: delete ?o0
+  eff: delete ?o1
+op30(?o1: T0, ?o0: T1)  support=1 neg=0 verified=0/0
+  how: select(combobox#0, ?o0); click(button#0@T0[?o1]); click(button:Stow chosen)
+  eff: rel:housed(?o1) := '?o0'

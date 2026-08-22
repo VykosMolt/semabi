@@ -1,0 +1,55 @@
+domain learned
+type T0(id: str, attr:label: str, attr:terminal: str)
+type T1(id: str, attr:code: str, attr:size: str, attr:status: str, attr:delay_min: str)
+type T2(id: str, attr:name: str, attr:shift: str)
+type T3(id: str, attr:role: str)
+rel ref_1_rel:docked_at(T1, T0)
+rel ref_3_rel:assignment_flight(T3, T1)
+rel ref_3_rel:assignment_agent(T3, T2)
+op0(?o0: T1)
+  eff: ref_1_rel:docked_at(?o0) := None
+op1(?o0: T1)
+  eff: attr:delay_min(?o0) := '10'
+op2(?o0: T3)
+  eff: delete ?o0
+op3(?o0: T1)
+  eff: attr:status(?o0) := 'cancelled'
+op4(?o0: T1)
+  pre: attr:size(?o0) == 'narrow'
+  eff: ref_1_rel:docked_at(?o0) := T0:gate-1
+op5(?o0: T1, ?o1: T2)
+  pre: no_incoming(ref_3_rel:assignment_agent, ?o1)
+  eff: ?new0 := new T3(id=<new>, attr:role=loader)
+  eff: ref_3_rel:assignment_agent(?new0) := ?o1
+  eff: ref_3_rel:assignment_flight(?new0) := ?o0
+
+groundings:
+  op0: click(button:Release stand@T1[?o0])
+  op1: click(button:Flights); click(button:Delay@T1[?o0])
+  op2: click(button:Crew roster); click(button#0@T3[?o0])
+  op3: click(button:Cancel flight@T1[?o0]); click(button:Confirm cancellation@T1[?o0])
+  op4: click(button:Flights); click(button:Dock@T1[?o0])
+  op5: select(combobox#0, ?o0); select(combobox#1, ?o1); click(button:Crew roster); click(button:Assign to duty)
+
+34 transitions, 320 no-op segments, 6 operator hypotheses, 0 view operators
+op0(?o0: T1)  support=9 neg=0 verified=0/0
+  how: click(button:Release stand@T1[?o0])
+  eff: rel:docked_at(?o0) := None
+op1(?o0: T1)  support=9 neg=2 verified=0/0
+  how: click(button:Flights); click(button:Delay@T1[?o0])
+  pre: ? (2 unexplained failures)
+  eff: attr:delay_min(?o0) := '10'
+op2(?o0: T3)  support=7 neg=0 verified=0/0
+  how: click(button:Crew roster); click(button#0@T3[?o0])
+  eff: delete ?o0
+op3(?o0: T1)  support=3 neg=0 verified=0/0
+  how: click(button:Cancel flight@T1[?o0]); click(button:Confirm cancellation@T1[?o0])
+  eff: attr:status(?o0) := 'cancelled'
+op4(?o0: T1)  support=3 neg=7 verified=0/0
+  how: click(button:Flights); click(button:Dock@T1[?o0])
+  pre: attr:size(?o0) == 'narrow'  (+3 unexplained failures)
+  eff: rel:docked_at(?o0) := 'T0:gate-1'
+op5(?new0: T3, ?o0: T1, ?o1: T2)  support=3 neg=3 verified=0/0
+  how: select(combobox#0, ?o0); select(combobox#1, ?o1); click(button:Crew roster); click(button:Assign to duty)
+  pre: no_children(?o1)
+  eff: ?new0 := new T3(id=<new>, attr:role=loader) rel:assignment_agent->?o1 rel:assignment_flight->?o0

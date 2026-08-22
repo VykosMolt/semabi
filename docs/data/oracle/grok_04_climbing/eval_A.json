@@ -1,0 +1,186 @@
+{
+ "types": {
+  "hidden": 4,
+  "learned": 4,
+  "recovered": 3,
+  "map": {
+   "T0": "Wall",
+   "T3": "Tape",
+   "T1": "Route"
+  }
+ },
+ "predicates": {
+  "hidden_attrs": 12,
+  "recovered_attrs": 0,
+  "hidden_rels": 9,
+  "recovered_rels": 0,
+  "attr_map": {},
+  "rel_map": {}
+ },
+ "operators": {
+  "hidden": 6,
+  "observed_in_trace": 5,
+  "recovered": 1,
+  "recovered_ops": [
+   "hang"
+  ],
+  "learned": 2,
+  "spurious_learned": [
+   "op1"
+  ],
+  "precision": 0.5,
+  "failure_rejection_rate": 0.0,
+  "per_op": {
+   "hang": {
+    "successes": 3,
+    "explained": 3,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "op0": 3
+    },
+    "failures": 37,
+    "rejected": 0,
+    "unbound_failures": 37
+   },
+   "recolor": {
+    "successes": 74,
+    "explained": 0,
+    "invisible": 74,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "restow": {
+    "successes": 1,
+    "explained": 0,
+    "invisible": 1,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 2,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "bump": {
+    "successes": 2,
+    "explained": 0,
+    "invisible": 2,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 1,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "ease": {
+    "successes": 0,
+    "explained": 0,
+    "invisible": 0,
+    "explained_rate": null,
+    "by": {},
+    "failures": 2,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "pull": {
+    "successes": 2,
+    "explained": 0,
+    "invisible": 0,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   }
+  }
+ },
+ "gtc": {
+  "transitions": 82,
+  "fully_representable": 5,
+  "partly_representable": 5,
+  "gtc": 0.061,
+  "gtc_any": 0.061,
+  "per_op": {
+   "recolor": {
+    "n": 74,
+    "full": 0,
+    "any": 0
+   },
+   "restow": {
+    "n": 1,
+    "full": 0,
+    "any": 0
+   },
+   "hang": {
+    "n": 3,
+    "full": 3,
+    "any": 3
+   },
+   "pull": {
+    "n": 2,
+    "full": 2,
+    "any": 2
+   },
+   "bump": {
+    "n": 2,
+    "full": 0,
+    "any": 0
+   }
+  }
+ },
+ "rtc": {
+  "transitions": 82,
+  "fully_registered": 3,
+  "partly_registered": 5,
+  "rtc": 0.037,
+  "rtc_any": 0.061,
+  "per_op": {
+   "recolor": {
+    "n": 74,
+    "full": 0,
+    "any": 0
+   },
+   "restow": {
+    "n": 1,
+    "full": 0,
+    "any": 0
+   },
+   "hang": {
+    "n": 3,
+    "full": 3,
+    "any": 3
+   },
+   "pull": {
+    "n": 2,
+    "full": 0,
+    "any": 2
+   },
+   "bump": {
+    "n": 2,
+    "full": 0,
+    "any": 0
+   }
+  }
+ },
+ "object_layer": {
+  "annotated_leaves": 3081,
+  "grounded_leaves": 3081,
+  "grounded_frac": 1.0,
+  "pair_precision": 1.0,
+  "pair_recall": 1.0,
+  "learned_keys_merging_entities": 0,
+  "entities_split_across_keys": 0,
+  "entities_grounded": 10
+ },
+ "view_false_positives": {
+  "learned_transitions": 5,
+  "without_hidden_change": 0,
+  "rate": 0.0
+ },
+ "condition": "A",
+ "cost": {
+  "primitives": 411
+ },
+ "sig_conflicts": 1
+}

@@ -1,0 +1,155 @@
+{
+ "types": {
+  "hidden": 4,
+  "learned": 4,
+  "recovered": 4,
+  "map": {
+   "T1": "Patient",
+   "T3": "Prescription",
+   "T0": "Drug",
+   "T2": "Pharmacist"
+  }
+ },
+ "predicates": {
+  "hidden_attrs": 13,
+  "recovered_attrs": 0,
+  "hidden_rels": 9,
+  "recovered_rels": 0,
+  "attr_map": {},
+  "rel_map": {}
+ },
+ "operators": {
+  "hidden": 4,
+  "observed_in_trace": 4,
+  "recovered": 1,
+  "recovered_ops": [
+   "write_prescription"
+  ],
+  "learned": 1,
+  "spurious_learned": [],
+  "precision": 1.0,
+  "failure_rejection_rate": 0.0,
+  "per_op": {
+   "write_prescription": {
+    "successes": 11,
+    "explained": 11,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "op0": 11
+    },
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "fill_prescription": {
+    "successes": 2,
+    "explained": 0,
+    "invisible": 2,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 1,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "restock_drug": {
+    "successes": 11,
+    "explained": 0,
+    "invisible": 11,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 4,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "void_prescription": {
+    "successes": 5,
+    "explained": 0,
+    "invisible": 5,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   }
+  }
+ },
+ "gtc": {
+  "transitions": 29,
+  "fully_representable": 11,
+  "partly_representable": 11,
+  "gtc": 0.379,
+  "gtc_any": 0.379,
+  "per_op": {
+   "fill_prescription": {
+    "n": 2,
+    "full": 0,
+    "any": 0
+   },
+   "write_prescription": {
+    "n": 11,
+    "full": 11,
+    "any": 11
+   },
+   "void_prescription": {
+    "n": 5,
+    "full": 0,
+    "any": 0
+   },
+   "restock_drug": {
+    "n": 11,
+    "full": 0,
+    "any": 0
+   }
+  }
+ },
+ "rtc": {
+  "transitions": 29,
+  "fully_registered": 11,
+  "partly_registered": 11,
+  "rtc": 0.379,
+  "rtc_any": 0.379,
+  "per_op": {
+   "fill_prescription": {
+    "n": 2,
+    "full": 0,
+    "any": 0
+   },
+   "write_prescription": {
+    "n": 11,
+    "full": 11,
+    "any": 11
+   },
+   "void_prescription": {
+    "n": 5,
+    "full": 0,
+    "any": 0
+   },
+   "restock_drug": {
+    "n": 11,
+    "full": 0,
+    "any": 0
+   }
+  }
+ },
+ "object_layer": {
+  "annotated_leaves": 5030,
+  "grounded_leaves": 5030,
+  "grounded_frac": 1.0,
+  "pair_precision": 1.0,
+  "pair_recall": 1.0,
+  "learned_keys_merging_entities": 0,
+  "entities_split_across_keys": 0,
+  "entities_grounded": 21
+ },
+ "view_false_positives": {
+  "learned_transitions": 11,
+  "without_hidden_change": 0,
+  "rate": 0.0
+ },
+ "condition": "A",
+ "cost": {
+  "primitives": 427
+ },
+ "sig_conflicts": 0
+}

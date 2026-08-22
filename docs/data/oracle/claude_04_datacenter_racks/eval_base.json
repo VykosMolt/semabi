@@ -1,0 +1,150 @@
+{
+ "types": {
+  "hidden": 4,
+  "learned": 4,
+  "recovered": 2,
+  "map": {
+   "T0": "Rack",
+   "T1": "Server"
+  }
+ },
+ "predicates": {
+  "hidden_attrs": 13,
+  "recovered_attrs": 1,
+  "hidden_rels": 5,
+  "recovered_rels": 0,
+  "attr_map": {
+   "T1.label": "power_draw_w"
+  },
+  "rel_map": {}
+ },
+ "operators": {
+  "hidden": 5,
+  "observed_in_trace": 3,
+  "recovered": 0,
+  "recovered_ops": [],
+  "learned": 0,
+  "spurious_learned": [],
+  "precision": 0.0,
+  "failure_rejection_rate": 0.0,
+  "per_op": {
+   "mount_server": {
+    "successes": 3,
+    "explained": 0,
+    "invisible": 3,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 1,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "unmount_server": {
+    "successes": 0,
+    "explained": 0,
+    "invisible": 0,
+    "explained_rate": null,
+    "by": {},
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "decommission_server": {
+    "successes": 4,
+    "explained": 0,
+    "invisible": 4,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "open_ticket": {
+    "successes": 4,
+    "explained": 0,
+    "invisible": 4,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "close_ticket": {
+    "successes": 0,
+    "explained": 0,
+    "invisible": 0,
+    "explained_rate": null,
+    "by": {},
+    "failures": 3,
+    "rejected": 0,
+    "unbound_failures": 0
+   }
+  }
+ },
+ "gtc": {
+  "transitions": 11,
+  "fully_representable": 0,
+  "partly_representable": 0,
+  "gtc": 0.0,
+  "gtc_any": 0.0,
+  "per_op": {
+   "open_ticket": {
+    "n": 4,
+    "full": 0,
+    "any": 0
+   },
+   "decommission_server": {
+    "n": 4,
+    "full": 0,
+    "any": 0
+   },
+   "mount_server": {
+    "n": 3,
+    "full": 0,
+    "any": 0
+   }
+  }
+ },
+ "rtc": {
+  "transitions": 11,
+  "fully_registered": 0,
+  "partly_registered": 0,
+  "rtc": 0.0,
+  "rtc_any": 0.0,
+  "per_op": {
+   "open_ticket": {
+    "n": 4,
+    "full": 0,
+    "any": 0
+   },
+   "decommission_server": {
+    "n": 4,
+    "full": 0,
+    "any": 0
+   },
+   "mount_server": {
+    "n": 3,
+    "full": 0,
+    "any": 0
+   }
+  }
+ },
+ "object_layer": {
+  "annotated_leaves": 2546,
+  "grounded_leaves": 380,
+  "grounded_frac": 0.149,
+  "pair_precision": 0.585,
+  "pair_recall": 1.0,
+  "learned_keys_merging_entities": 8,
+  "entities_split_across_keys": 10,
+  "entities_grounded": 11
+ },
+ "view_false_positives": {
+  "learned_transitions": 9,
+  "without_hidden_change": 7,
+  "rate": 0.778
+ },
+ "condition": "base",
+ "cost": {
+  "primitives": 419
+ }
+}

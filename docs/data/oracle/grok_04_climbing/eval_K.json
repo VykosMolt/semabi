@@ -1,0 +1,192 @@
+{
+ "types": {
+  "hidden": 4,
+  "learned": 4,
+  "recovered": 4,
+  "map": {
+   "Wall": "Wall",
+   "Route": "Route",
+   "Setter": "Setter",
+   "Tape": "Tape"
+  }
+ },
+ "predicates": {
+  "hidden_attrs": 12,
+  "recovered_attrs": 11,
+  "hidden_rels": 9,
+  "recovered_rels": 3,
+  "attr_map": {
+   "Wall.name": "name",
+   "Wall.lines": "lines",
+   "Wall.has_tape_wall": "has_tape_wall",
+   "Route.name": "name",
+   "Route.abbr": "abbr",
+   "Route.grade": "grade",
+   "Route.has_tape_route": "has_tape_route",
+   "Setter.handle": "handle",
+   "Setter.lead": "lead",
+   "Setter.has_tape_setter": "has_tape_setter",
+   "Tape.color": "color"
+  },
+  "rel_map": {
+   "tape_route": "tape_route",
+   "tape_wall": "tape_wall",
+   "tape_setter": "tape_setter"
+  }
+ },
+ "operators": {
+  "hidden": 6,
+  "observed_in_trace": 5,
+  "recovered": 3,
+  "recovered_ops": [
+   "hang",
+   "recolor",
+   "pull"
+  ],
+  "learned": 3,
+  "spurious_learned": [],
+  "precision": 1.0,
+  "failure_rejection_rate": 0.81,
+  "per_op": {
+   "hang": {
+    "successes": 3,
+    "explained": 3,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "hang": 3
+    },
+    "failures": 37,
+    "rejected": 34,
+    "unbound_failures": 0
+   },
+   "recolor": {
+    "successes": 74,
+    "explained": 74,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "recolor": 74
+    },
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "restow": {
+    "successes": 1,
+    "explained": 0,
+    "invisible": 0,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 2,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "bump": {
+    "successes": 2,
+    "explained": 0,
+    "invisible": 0,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 1,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "ease": {
+    "successes": 0,
+    "explained": 0,
+    "invisible": 0,
+    "explained_rate": null,
+    "by": {},
+    "failures": 2,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "pull": {
+    "successes": 2,
+    "explained": 2,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "pull": 2
+    },
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   }
+  }
+ },
+ "gtc": {
+  "transitions": 82,
+  "fully_representable": 82,
+  "partly_representable": 82,
+  "gtc": 1.0,
+  "gtc_any": 1.0,
+  "per_op": {
+   "recolor": {
+    "n": 74,
+    "full": 74,
+    "any": 74
+   },
+   "restow": {
+    "n": 1,
+    "full": 1,
+    "any": 1
+   },
+   "hang": {
+    "n": 3,
+    "full": 3,
+    "any": 3
+   },
+   "pull": {
+    "n": 2,
+    "full": 2,
+    "any": 2
+   },
+   "bump": {
+    "n": 2,
+    "full": 2,
+    "any": 2
+   }
+  }
+ },
+ "condition": "K",
+ "learned_report": [
+  {
+   "hidden_op": "recolor",
+   "learned": "recolor",
+   "support": 74,
+   "pre": [],
+   "effects": [
+    "color(?tape) := '?color'"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "hang",
+   "learned": "hang",
+   "support": 3,
+   "pre": [
+    "grade(?route) == '4'"
+   ],
+   "effects": [
+    "?new0 := new Tape(color=pink)",
+    "tape_route(?new0) := ?route",
+    "tape_wall(?new0) := ?wall",
+    "tape_setter(?new0) := ?setter"
+   ],
+   "unexplained_failures": 3
+  },
+  {
+   "hidden_op": "pull",
+   "learned": "pull",
+   "support": 2,
+   "pre": [],
+   "effects": [
+    "delete ?tape",
+    "delete ?x1"
+   ],
+   "unexplained_failures": 0
+  }
+ ]
+}

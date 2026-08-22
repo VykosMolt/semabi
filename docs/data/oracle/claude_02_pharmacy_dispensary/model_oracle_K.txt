@@ -1,0 +1,99 @@
+domain known_vocab
+type Drug(__id: str, name: str, form: str, stock: int, has_prescription_drug: bool)
+type Patient(__id: str, name: str, has_prescription_patient: bool)
+type Pharmacist(__id: str, name: str, has_last_filled_by: bool)
+type Prescription(__id: str, dosage: str, refills_left: int, status: str)
+rel prescription_patient(Prescription, Patient)
+rel prescription_drug(Prescription, Drug)
+rel last_filled_by(Prescription, Pharmacist)
+write_prescription(?patient: Patient, ?drug: Drug, ?dosage: str, ?refills: str)
+  eff: ?new0 := new Prescription(dosage=?dosage, refills_left=?refills, status=active)
+  eff: prescription_patient(?new0) := ?patient
+  eff: prescription_drug(?new0) := ?drug
+void_prescription(?prescription: Prescription)
+  eff: status(?prescription) := 'void'
+restock_drug(?drug: Drug, ?amount: str)
+  pre: stock(?drug) == '8'
+  eff: stock(?drug) := '9'
+restock_drug__1(?drug: Drug, ?amount: str)
+  pre: stock(?drug) == '0'
+  eff: stock(?drug) := '?amount'
+restock_drug__2(?drug: Drug, ?amount: str)
+  pre: form(?drug) == 'liquid'
+  eff: stock(?drug) := '11'
+restock_drug__3(?drug: Drug, ?amount: str)
+  pre: form(?drug) == 'liquid'
+  eff: stock(?drug) := '10'
+
+[
+ {
+  "hidden_op": "write_prescription",
+  "learned": "write_prescription",
+  "support": 11,
+  "pre": [],
+  "effects": [
+   "?new0 := new Prescription(dosage=?dosage, refills_left=?refills, status=active)",
+   "prescription_patient(?new0) := ?patient",
+   "prescription_drug(?new0) := ?drug"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "void_prescription",
+  "learned": "void_prescription",
+  "support": 5,
+  "pre": [],
+  "effects": [
+   "status(?prescription) := 'void'"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "restock_drug",
+  "learned": "restock_drug",
+  "support": 3,
+  "pre": [
+   "stock(?drug) == '8'"
+  ],
+  "effects": [
+   "stock(?drug) := '9'"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "restock_drug",
+  "learned": "restock_drug__1",
+  "support": 2,
+  "pre": [
+   "stock(?drug) == '0'"
+  ],
+  "effects": [
+   "stock(?drug) := '?amount'"
+  ],
+  "unexplained_failures": 2
+ },
+ {
+  "hidden_op": "restock_drug",
+  "learned": "restock_drug__2",
+  "support": 2,
+  "pre": [
+   "form(?drug) == 'liquid'"
+  ],
+  "effects": [
+   "stock(?drug) := '11'"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "restock_drug",
+  "learned": "restock_drug__3",
+  "support": 2,
+  "pre": [
+   "form(?drug) == 'liquid'"
+  ],
+  "effects": [
+   "stock(?drug) := '10'"
+  ],
+  "unexplained_failures": 0
+ }
+]

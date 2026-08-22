@@ -1,0 +1,251 @@
+{
+ "types": {
+  "hidden": 4,
+  "learned": 4,
+  "recovered": 4,
+  "map": {
+   "T3": "Forage",
+   "T2": "Bloom",
+   "T1": "Stand",
+   "T0": "Hive"
+  }
+ },
+ "predicates": {
+  "hidden_attrs": 11,
+  "recovered_attrs": 8,
+  "hidden_rels": 5,
+  "recovered_rels": 3,
+  "attr_map": {
+   "T3.attr:loads": "loads",
+   "T2.attr:title": "title",
+   "T2.attr:nectar": "nectar",
+   "T1.attr:code": "code",
+   "T1.attr:capacity": "capacity",
+   "T0.attr:label": "label",
+   "T0.attr:mark": "mark",
+   "T0.attr:frames": "frames"
+  },
+  "rel_map": {
+   "ref_0_rel:perched": "perched",
+   "ref_3_rel:forage_hive": "forage_hive",
+   "ref_3_rel:forage_bloom": "forage_bloom"
+  }
+ },
+ "operators": {
+  "hidden": 7,
+  "observed_in_trace": 7,
+  "recovered": 4,
+  "recovered_ops": [
+   "perch",
+   "unperch",
+   "add_frame",
+   "open_forage"
+  ],
+  "learned": 13,
+  "spurious_learned": [
+   "op3",
+   "op4",
+   "op6",
+   "op7",
+   "op8",
+   "op11"
+  ],
+  "precision": 0.54,
+  "failure_rejection_rate": 0.1,
+  "per_op": {
+   "perch": {
+    "successes": 10,
+    "explained": 10,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "op5": 10
+    },
+    "failures": 3,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "unperch": {
+    "successes": 11,
+    "explained": 11,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "op0": 11
+    },
+    "failures": 6,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "add_frame": {
+    "successes": 12,
+    "explained": 11,
+    "invisible": 0,
+    "explained_rate": 0.92,
+    "by": {
+     "op1": 7,
+     "op2": 2,
+     "op12": 2
+    },
+    "failures": 4,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "take_frame": {
+    "successes": 14,
+    "explained": 11,
+    "invisible": 0,
+    "explained_rate": 0.79,
+    "by": {
+     "op2": 7,
+     "op1": 4
+    },
+    "failures": 5,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "open_forage": {
+    "successes": 3,
+    "explained": 3,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "op9": 3
+    },
+    "failures": 2,
+    "rejected": 0,
+    "unbound_failures": 2
+   },
+   "haul": {
+    "successes": 7,
+    "explained": 2,
+    "invisible": 0,
+    "explained_rate": 0.29,
+    "by": {
+     "op10": 2
+    },
+    "failures": 8,
+    "rejected": 3,
+    "unbound_failures": 0
+   },
+   "withdraw": {
+    "successes": 2,
+    "explained": 0,
+    "invisible": 0,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 4,
+    "rejected": 0,
+    "unbound_failures": 0
+   }
+  }
+ },
+ "gtc": {
+  "transitions": 59,
+  "fully_representable": 59,
+  "partly_representable": 59,
+  "gtc": 1.0,
+  "gtc_any": 1.0,
+  "per_op": {
+   "add_frame": {
+    "n": 12,
+    "full": 12,
+    "any": 12
+   },
+   "take_frame": {
+    "n": 14,
+    "full": 14,
+    "any": 14
+   },
+   "perch": {
+    "n": 10,
+    "full": 10,
+    "any": 10
+   },
+   "unperch": {
+    "n": 11,
+    "full": 11,
+    "any": 11
+   },
+   "haul": {
+    "n": 7,
+    "full": 7,
+    "any": 7
+   },
+   "open_forage": {
+    "n": 3,
+    "full": 3,
+    "any": 3
+   },
+   "withdraw": {
+    "n": 2,
+    "full": 2,
+    "any": 2
+   }
+  }
+ },
+ "rtc": {
+  "transitions": 59,
+  "fully_registered": 59,
+  "partly_registered": 59,
+  "rtc": 1.0,
+  "rtc_any": 1.0,
+  "per_op": {
+   "add_frame": {
+    "n": 12,
+    "full": 12,
+    "any": 12
+   },
+   "take_frame": {
+    "n": 14,
+    "full": 14,
+    "any": 14
+   },
+   "perch": {
+    "n": 10,
+    "full": 10,
+    "any": 10
+   },
+   "unperch": {
+    "n": 11,
+    "full": 11,
+    "any": 11
+   },
+   "haul": {
+    "n": 7,
+    "full": 7,
+    "any": 7
+   },
+   "open_forage": {
+    "n": 3,
+    "full": 3,
+    "any": 3
+   },
+   "withdraw": {
+    "n": 2,
+    "full": 2,
+    "any": 2
+   }
+  }
+ },
+ "object_layer": {
+  "annotated_leaves": 2767,
+  "grounded_leaves": 2767,
+  "grounded_frac": 1.0,
+  "pair_precision": 1.0,
+  "pair_recall": 1.0,
+  "learned_keys_merging_entities": 0,
+  "entities_split_across_keys": 0,
+  "entities_grounded": 13
+ },
+ "view_false_positives": {
+  "learned_transitions": 59,
+  "without_hidden_change": 0,
+  "rate": 0.0
+ },
+ "condition": "D",
+ "cost": {
+  "primitives": 451
+ },
+ "sig_conflicts": 0
+}

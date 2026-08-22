@@ -1,0 +1,204 @@
+{
+ "types": {
+  "hidden": 4,
+  "learned": 4,
+  "recovered": 4,
+  "map": {
+   "Drug": "Drug",
+   "Patient": "Patient",
+   "Pharmacist": "Pharmacist",
+   "Prescription": "Prescription"
+  }
+ },
+ "predicates": {
+  "hidden_attrs": 13,
+  "recovered_attrs": 11,
+  "hidden_rels": 9,
+  "recovered_rels": 3,
+  "attr_map": {
+   "Drug.name": "name",
+   "Drug.form": "form",
+   "Drug.stock": "stock",
+   "Drug.has_prescription_drug": "has_prescription_drug",
+   "Patient.name": "name",
+   "Patient.has_prescription_patient": "has_prescription_patient",
+   "Pharmacist.name": "name",
+   "Pharmacist.has_last_filled_by": "has_last_filled_by",
+   "Prescription.dosage": "dosage",
+   "Prescription.refills_left": "refills_left",
+   "Prescription.status": "status"
+  },
+  "rel_map": {
+   "prescription_patient": "prescription_patient",
+   "prescription_drug": "prescription_drug",
+   "last_filled_by": "last_filled_by"
+  }
+ },
+ "operators": {
+  "hidden": 4,
+  "observed_in_trace": 4,
+  "recovered": 3,
+  "recovered_ops": [
+   "write_prescription",
+   "restock_drug",
+   "void_prescription"
+  ],
+  "learned": 6,
+  "spurious_learned": [],
+  "precision": 1.0,
+  "failure_rejection_rate": 0.0,
+  "per_op": {
+   "write_prescription": {
+    "successes": 11,
+    "explained": 11,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "write_prescription": 11
+    },
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "fill_prescription": {
+    "successes": 2,
+    "explained": 0,
+    "invisible": 0,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 1,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "restock_drug": {
+    "successes": 11,
+    "explained": 9,
+    "invisible": 0,
+    "explained_rate": 0.82,
+    "by": {
+     "restock_drug": 3,
+     "restock_drug__1": 2,
+     "restock_drug__2": 2,
+     "restock_drug__3": 2
+    },
+    "failures": 4,
+    "rejected": 0,
+    "unbound_failures": 4
+   },
+   "void_prescription": {
+    "successes": 5,
+    "explained": 5,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "void_prescription": 5
+    },
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   }
+  }
+ },
+ "gtc": {
+  "transitions": 29,
+  "fully_representable": 29,
+  "partly_representable": 29,
+  "gtc": 1.0,
+  "gtc_any": 1.0,
+  "per_op": {
+   "fill_prescription": {
+    "n": 2,
+    "full": 2,
+    "any": 2
+   },
+   "write_prescription": {
+    "n": 11,
+    "full": 11,
+    "any": 11
+   },
+   "void_prescription": {
+    "n": 5,
+    "full": 5,
+    "any": 5
+   },
+   "restock_drug": {
+    "n": 11,
+    "full": 11,
+    "any": 11
+   }
+  }
+ },
+ "condition": "K",
+ "learned_report": [
+  {
+   "hidden_op": "write_prescription",
+   "learned": "write_prescription",
+   "support": 11,
+   "pre": [],
+   "effects": [
+    "?new0 := new Prescription(dosage=?dosage, refills_left=?refills, status=active)",
+    "prescription_patient(?new0) := ?patient",
+    "prescription_drug(?new0) := ?drug"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "void_prescription",
+   "learned": "void_prescription",
+   "support": 5,
+   "pre": [],
+   "effects": [
+    "status(?prescription) := 'void'"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "restock_drug",
+   "learned": "restock_drug",
+   "support": 3,
+   "pre": [
+    "stock(?drug) == '8'"
+   ],
+   "effects": [
+    "stock(?drug) := '9'"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "restock_drug",
+   "learned": "restock_drug__1",
+   "support": 2,
+   "pre": [
+    "stock(?drug) == '0'"
+   ],
+   "effects": [
+    "stock(?drug) := '?amount'"
+   ],
+   "unexplained_failures": 2
+  },
+  {
+   "hidden_op": "restock_drug",
+   "learned": "restock_drug__2",
+   "support": 2,
+   "pre": [
+    "form(?drug) == 'liquid'"
+   ],
+   "effects": [
+    "stock(?drug) := '11'"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "restock_drug",
+   "learned": "restock_drug__3",
+   "support": 2,
+   "pre": [
+    "form(?drug) == 'liquid'"
+   ],
+   "effects": [
+    "stock(?drug) := '10'"
+   ],
+   "unexplained_failures": 0
+  }
+ ]
+}

@@ -1,0 +1,179 @@
+{
+ "types": {
+  "hidden": 4,
+  "learned": 4,
+  "recovered": 4,
+  "map": {
+   "T0": "Scope",
+   "T2": "Night",
+   "T1": "Target",
+   "T3": "Pointing"
+  }
+ },
+ "predicates": {
+  "hidden_attrs": 12,
+  "recovered_attrs": 0,
+  "hidden_rels": 9,
+  "recovered_rels": 0,
+  "attr_map": {},
+  "rel_map": {}
+ },
+ "operators": {
+  "hidden": 5,
+  "observed_in_trace": 5,
+  "recovered": 1,
+  "recovered_ops": [
+   "book"
+  ],
+  "learned": 3,
+  "spurious_learned": [
+   "op1"
+  ],
+  "precision": 0.67,
+  "failure_rejection_rate": 0.0,
+  "per_op": {
+   "book": {
+    "successes": 3,
+    "explained": 3,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "op2": 3
+    },
+    "failures": 6,
+    "rejected": 0,
+    "unbound_failures": 6
+   },
+   "extend": {
+    "successes": 12,
+    "explained": 0,
+    "invisible": 12,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 1,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "clip": {
+    "successes": 8,
+    "explained": 0,
+    "invisible": 8,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 3,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "retarget": {
+    "successes": 3,
+    "explained": 0,
+    "invisible": 3,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 7,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "detach": {
+    "successes": 8,
+    "explained": 1,
+    "invisible": 0,
+    "explained_rate": 0.12,
+    "by": {
+     "op0": 1
+    },
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   }
+  }
+ },
+ "gtc": {
+  "transitions": 34,
+  "fully_representable": 11,
+  "partly_representable": 11,
+  "gtc": 0.324,
+  "gtc_any": 0.324,
+  "per_op": {
+   "extend": {
+    "n": 12,
+    "full": 0,
+    "any": 0
+   },
+   "clip": {
+    "n": 8,
+    "full": 0,
+    "any": 0
+   },
+   "retarget": {
+    "n": 3,
+    "full": 0,
+    "any": 0
+   },
+   "book": {
+    "n": 3,
+    "full": 3,
+    "any": 3
+   },
+   "detach": {
+    "n": 8,
+    "full": 8,
+    "any": 8
+   }
+  }
+ },
+ "rtc": {
+  "transitions": 34,
+  "fully_registered": 4,
+  "partly_registered": 11,
+  "rtc": 0.118,
+  "rtc_any": 0.324,
+  "per_op": {
+   "extend": {
+    "n": 12,
+    "full": 0,
+    "any": 0
+   },
+   "clip": {
+    "n": 8,
+    "full": 0,
+    "any": 0
+   },
+   "retarget": {
+    "n": 3,
+    "full": 0,
+    "any": 0
+   },
+   "book": {
+    "n": 3,
+    "full": 3,
+    "any": 3
+   },
+   "detach": {
+    "n": 8,
+    "full": 1,
+    "any": 8
+   }
+  }
+ },
+ "object_layer": {
+  "annotated_leaves": 2466,
+  "grounded_leaves": 2463,
+  "grounded_frac": 0.999,
+  "pair_precision": 1.0,
+  "pair_recall": 1.0,
+  "learned_keys_merging_entities": 0,
+  "entities_split_across_keys": 0,
+  "entities_grounded": 12
+ },
+ "view_false_positives": {
+  "learned_transitions": 13,
+  "without_hidden_change": 2,
+  "rate": 0.154
+ },
+ "condition": "A",
+ "cost": {
+  "primitives": 408
+ },
+ "sig_conflicts": 10
+}

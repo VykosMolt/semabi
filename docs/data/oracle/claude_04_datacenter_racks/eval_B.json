@@ -1,0 +1,163 @@
+{
+ "types": {
+  "hidden": 4,
+  "learned": 4,
+  "recovered": 3,
+  "map": {
+   "T3": "Ticket",
+   "T0": "Rack",
+   "T1": "Server"
+  }
+ },
+ "predicates": {
+  "hidden_attrs": 13,
+  "recovered_attrs": 7,
+  "hidden_rels": 5,
+  "recovered_rels": 2,
+  "attr_map": {
+   "T3.attr:kind": "kind",
+   "T3.attr:status": "status",
+   "T0.attr:label": "label",
+   "T0.attr:room": "room",
+   "T0.attr:power_cap_w": "power_cap_w",
+   "T1.attr:hostname": "hostname",
+   "T1.attr:power_draw_w": "power_draw_w"
+  },
+  "rel_map": {
+   "ref_1_rel:mounted_in": "mounted_in",
+   "ref_3_rel:ticket_server": "ticket_server"
+  }
+ },
+ "operators": {
+  "hidden": 5,
+  "observed_in_trace": 3,
+  "recovered": 0,
+  "recovered_ops": [],
+  "learned": 1,
+  "spurious_learned": [
+   "op0"
+  ],
+  "precision": 0.0,
+  "failure_rejection_rate": 0.0,
+  "per_op": {
+   "mount_server": {
+    "successes": 3,
+    "explained": 0,
+    "invisible": 0,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 1,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "unmount_server": {
+    "successes": 0,
+    "explained": 0,
+    "invisible": 0,
+    "explained_rate": null,
+    "by": {},
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "decommission_server": {
+    "successes": 4,
+    "explained": 0,
+    "invisible": 2,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "open_ticket": {
+    "successes": 4,
+    "explained": 0,
+    "invisible": 0,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "close_ticket": {
+    "successes": 0,
+    "explained": 0,
+    "invisible": 0,
+    "explained_rate": null,
+    "by": {},
+    "failures": 3,
+    "rejected": 0,
+    "unbound_failures": 0
+   }
+  }
+ },
+ "gtc": {
+  "transitions": 11,
+  "fully_representable": 4,
+  "partly_representable": 9,
+  "gtc": 0.364,
+  "gtc_any": 0.818,
+  "per_op": {
+   "open_ticket": {
+    "n": 4,
+    "full": 4,
+    "any": 4
+   },
+   "decommission_server": {
+    "n": 4,
+    "full": 0,
+    "any": 2
+   },
+   "mount_server": {
+    "n": 3,
+    "full": 0,
+    "any": 3
+   }
+  }
+ },
+ "rtc": {
+  "transitions": 11,
+  "fully_registered": 4,
+  "partly_registered": 4,
+  "rtc": 0.364,
+  "rtc_any": 0.364,
+  "per_op": {
+   "open_ticket": {
+    "n": 4,
+    "full": 4,
+    "any": 4
+   },
+   "decommission_server": {
+    "n": 4,
+    "full": 0,
+    "any": 0
+   },
+   "mount_server": {
+    "n": 3,
+    "full": 0,
+    "any": 0
+   }
+  }
+ },
+ "object_layer": {
+  "annotated_leaves": 2546,
+  "grounded_leaves": 2546,
+  "grounded_frac": 1.0,
+  "pair_precision": 1.0,
+  "pair_recall": 1.0,
+  "learned_keys_merging_entities": 0,
+  "entities_split_across_keys": 0,
+  "entities_grounded": 16
+ },
+ "view_false_positives": {
+  "learned_transitions": 4,
+  "without_hidden_change": 0,
+  "rate": 0.0
+ },
+ "condition": "B",
+ "cost": {
+  "primitives": 419
+ },
+ "sig_conflicts": 0
+}

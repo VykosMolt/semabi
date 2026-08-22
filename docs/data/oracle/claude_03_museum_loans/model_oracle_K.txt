@@ -1,0 +1,90 @@
+domain known_vocab
+type Artifact(__id: str, name: str, era: str, condition: str, has_loan_artifact: bool)
+type Gallery(__id: str, name: str, capacity: int)
+type Institution(__id: str, name: str, has_loan_institution: bool)
+type LoanAgreement(__id: str, note: str, duration_weeks: int, status: str)
+rel displayed_in(Artifact, Gallery)
+rel loan_artifact(LoanAgreement, Artifact)
+rel loan_institution(LoanAgreement, Institution)
+remove_from_display(?artifact: Artifact)
+  eff: displayed_in(?artifact) := None
+return_loan(?loan: LoanAgreement)
+  eff: status(?loan) := 'returned'
+propose_loan(?artifact: Artifact, ?institution: Institution, ?duration_weeks: str, ?note: str)
+  eff: ?new0 := new LoanAgreement(note=?note, duration_weeks=?duration_weeks, status=proposed)
+  eff: loan_artifact(?new0) := ?artifact
+  eff: loan_institution(?new0) := ?institution
+approve_loan(?loan: LoanAgreement)
+  eff: status(?loan) := 'active'
+place_artifact(?artifact: Artifact, ?gallery: Gallery)
+  pre: not displayed_in(?artifact, ?gallery)
+  eff: displayed_in(?artifact) := ?gallery
+cancel_loan_proposal(?loan: LoanAgreement)
+  eff: status(?loan) := 'void'
+
+[
+ {
+  "hidden_op": "remove_from_display",
+  "learned": "remove_from_display",
+  "support": 23,
+  "pre": [],
+  "effects": [
+   "displayed_in(?artifact) := None"
+  ],
+  "unexplained_failures": 9
+ },
+ {
+  "hidden_op": "return_loan",
+  "learned": "return_loan",
+  "support": 8,
+  "pre": [],
+  "effects": [
+   "status(?loan) := 'returned'"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "propose_loan",
+  "learned": "propose_loan",
+  "support": 7,
+  "pre": [],
+  "effects": [
+   "?new0 := new LoanAgreement(note=?note, duration_weeks=?duration_weeks, status=proposed)",
+   "loan_artifact(?new0) := ?artifact",
+   "loan_institution(?new0) := ?institution"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "approve_loan",
+  "learned": "approve_loan",
+  "support": 2,
+  "pre": [],
+  "effects": [
+   "status(?loan) := 'active'"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "place_artifact",
+  "learned": "place_artifact",
+  "support": 16,
+  "pre": [
+   "not displayed_in(?artifact, ?gallery)"
+  ],
+  "effects": [
+   "displayed_in(?artifact) := ?gallery"
+  ],
+  "unexplained_failures": 5
+ },
+ {
+  "hidden_op": "cancel_loan_proposal",
+  "learned": "cancel_loan_proposal",
+  "support": 2,
+  "pre": [],
+  "effects": [
+   "status(?loan) := 'void'"
+  ],
+  "unexplained_failures": 0
+ }
+]

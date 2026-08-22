@@ -1,0 +1,214 @@
+{
+ "types": {
+  "hidden": 4,
+  "learned": 4,
+  "recovered": 3,
+  "map": {
+   "T0": "Artifact",
+   "T1": "Gallery",
+   "T3": "LoanAgreement"
+  }
+ },
+ "predicates": {
+  "hidden_attrs": 13,
+  "recovered_attrs": 6,
+  "hidden_rels": 5,
+  "recovered_rels": 2,
+  "attr_map": {
+   "T0.attr:name": "name",
+   "T0.attr:era": "era",
+   "T0.attr:condition": "condition",
+   "T3.attr:note": "note",
+   "T3.attr:duration_weeks": "duration_weeks",
+   "T3.attr:status": "status"
+  },
+  "rel_map": {
+   "ref_0_rel:displayed_in": "displayed_in",
+   "ref_3_rel:loan_artifact": "loan_artifact"
+  }
+ },
+ "operators": {
+  "hidden": 6,
+  "observed_in_trace": 6,
+  "recovered": 4,
+  "recovered_ops": [
+   "place_artifact",
+   "approve_loan",
+   "return_loan",
+   "cancel_loan_proposal"
+  ],
+  "learned": 5,
+  "spurious_learned": [],
+  "precision": 1.0,
+  "failure_rejection_rate": 0.0,
+  "per_op": {
+   "place_artifact": {
+    "successes": 16,
+    "explained": 16,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "op1": 5,
+     "op4": 11
+    },
+    "failures": 7,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "remove_from_display": {
+    "successes": 23,
+    "explained": 0,
+    "invisible": 0,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 9,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "propose_loan": {
+    "successes": 7,
+    "explained": 0,
+    "invisible": 0,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "approve_loan": {
+    "successes": 2,
+    "explained": 2,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "op2": 2
+    },
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "return_loan": {
+    "successes": 8,
+    "explained": 8,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "op0": 8
+    },
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "cancel_loan_proposal": {
+    "successes": 2,
+    "explained": 2,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "op3": 2
+    },
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   }
+  }
+ },
+ "gtc": {
+  "transitions": 58,
+  "fully_representable": 58,
+  "partly_representable": 58,
+  "gtc": 1.0,
+  "gtc_any": 1.0,
+  "per_op": {
+   "remove_from_display": {
+    "n": 23,
+    "full": 23,
+    "any": 23
+   },
+   "return_loan": {
+    "n": 8,
+    "full": 8,
+    "any": 8
+   },
+   "propose_loan": {
+    "n": 7,
+    "full": 7,
+    "any": 7
+   },
+   "approve_loan": {
+    "n": 2,
+    "full": 2,
+    "any": 2
+   },
+   "place_artifact": {
+    "n": 16,
+    "full": 16,
+    "any": 16
+   },
+   "cancel_loan_proposal": {
+    "n": 2,
+    "full": 2,
+    "any": 2
+   }
+  }
+ },
+ "rtc": {
+  "transitions": 58,
+  "fully_registered": 18,
+  "partly_registered": 18,
+  "rtc": 0.31,
+  "rtc_any": 0.31,
+  "per_op": {
+   "remove_from_display": {
+    "n": 23,
+    "full": 0,
+    "any": 0
+   },
+   "return_loan": {
+    "n": 8,
+    "full": 8,
+    "any": 8
+   },
+   "propose_loan": {
+    "n": 7,
+    "full": 0,
+    "any": 0
+   },
+   "approve_loan": {
+    "n": 2,
+    "full": 2,
+    "any": 2
+   },
+   "place_artifact": {
+    "n": 16,
+    "full": 6,
+    "any": 6
+   },
+   "cancel_loan_proposal": {
+    "n": 2,
+    "full": 2,
+    "any": 2
+   }
+  }
+ },
+ "object_layer": {
+  "annotated_leaves": 13370,
+  "grounded_leaves": 13370,
+  "grounded_frac": 1.0,
+  "pair_precision": 1.0,
+  "pair_recall": 1.0,
+  "learned_keys_merging_entities": 0,
+  "entities_split_across_keys": 0,
+  "entities_grounded": 15
+ },
+ "view_false_positives": {
+  "learned_transitions": 18,
+  "without_hidden_change": 0,
+  "rate": 0.0
+ },
+ "condition": "B",
+ "cost": {
+  "primitives": 385
+ },
+ "sig_conflicts": 0
+}

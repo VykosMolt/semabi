@@ -1,0 +1,181 @@
+{
+ "types": {
+  "hidden": 4,
+  "learned": 4,
+  "recovered": 4,
+  "map": {
+   "Rack": "Rack",
+   "Server": "Server",
+   "Technician": "Technician",
+   "Ticket": "Ticket"
+  }
+ },
+ "predicates": {
+  "hidden_attrs": 13,
+  "recovered_attrs": 11,
+  "hidden_rels": 5,
+  "recovered_rels": 3,
+  "attr_map": {
+   "Rack.label": "label",
+   "Rack.room": "room",
+   "Rack.power_cap_w": "power_cap_w",
+   "Server.hostname": "hostname",
+   "Server.power_draw_w": "power_draw_w",
+   "Server.status": "status",
+   "Server.has_ticket_server": "has_ticket_server",
+   "Technician.name": "name",
+   "Technician.has_ticket_technician": "has_ticket_technician",
+   "Ticket.kind": "kind",
+   "Ticket.status": "status"
+  },
+  "rel_map": {
+   "mounted_in": "mounted_in",
+   "ticket_server": "ticket_server",
+   "ticket_technician": "ticket_technician"
+  }
+ },
+ "operators": {
+  "hidden": 5,
+  "observed_in_trace": 3,
+  "recovered": 3,
+  "recovered_ops": [
+   "mount_server",
+   "decommission_server",
+   "open_ticket"
+  ],
+  "learned": 4,
+  "spurious_learned": [],
+  "precision": 1.0,
+  "failure_rejection_rate": 0.0,
+  "per_op": {
+   "mount_server": {
+    "successes": 3,
+    "explained": 3,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "mount_server": 3
+    },
+    "failures": 1,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "unmount_server": {
+    "successes": 0,
+    "explained": 0,
+    "invisible": 0,
+    "explained_rate": null,
+    "by": {},
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "decommission_server": {
+    "successes": 4,
+    "explained": 4,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "decommission_server": 2,
+     "decommission_server__1": 2
+    },
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "open_ticket": {
+    "successes": 4,
+    "explained": 4,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "open_ticket": 4
+    },
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "close_ticket": {
+    "successes": 0,
+    "explained": 0,
+    "invisible": 0,
+    "explained_rate": null,
+    "by": {},
+    "failures": 3,
+    "rejected": 0,
+    "unbound_failures": 0
+   }
+  }
+ },
+ "gtc": {
+  "transitions": 11,
+  "fully_representable": 11,
+  "partly_representable": 11,
+  "gtc": 1.0,
+  "gtc_any": 1.0,
+  "per_op": {
+   "open_ticket": {
+    "n": 4,
+    "full": 4,
+    "any": 4
+   },
+   "decommission_server": {
+    "n": 4,
+    "full": 4,
+    "any": 4
+   },
+   "mount_server": {
+    "n": 3,
+    "full": 3,
+    "any": 3
+   }
+  }
+ },
+ "condition": "K",
+ "learned_report": [
+  {
+   "hidden_op": "open_ticket",
+   "learned": "open_ticket",
+   "support": 4,
+   "pre": [],
+   "effects": [
+    "?new0 := new Ticket(kind=?kind, status=open)",
+    "ticket_server(?new0) := ?server",
+    "ticket_technician(?new0) := ?technician"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "decommission_server",
+   "learned": "decommission_server",
+   "support": 2,
+   "pre": [],
+   "effects": [
+    "status(?server) := 'decommissioned'"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "decommission_server",
+   "learned": "decommission_server__1",
+   "support": 2,
+   "pre": [],
+   "effects": [
+    "status(?server) := 'decommissioned'",
+    "mounted_in(?server) := None"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "mount_server",
+   "learned": "mount_server",
+   "support": 3,
+   "pre": [],
+   "effects": [
+    "status(?server) := 'racked'",
+    "mounted_in(?server) := ?rack"
+   ],
+   "unexplained_failures": 1
+  }
+ ]
+}

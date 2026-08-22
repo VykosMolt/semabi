@@ -1,0 +1,322 @@
+{
+ "types": {
+  "hidden": 4,
+  "learned": 4,
+  "recovered": 4,
+  "map": {
+   "Hive": "Hive",
+   "Stand": "Stand",
+   "Bloom": "Bloom",
+   "Forage": "Forage"
+  }
+ },
+ "predicates": {
+  "hidden_attrs": 11,
+  "recovered_attrs": 10,
+  "hidden_rels": 5,
+  "recovered_rels": 3,
+  "attr_map": {
+   "Hive.label": "label",
+   "Hive.mark": "mark",
+   "Hive.frames": "frames",
+   "Hive.has_forage_hive": "has_forage_hive",
+   "Stand.code": "code",
+   "Stand.capacity": "capacity",
+   "Bloom.title": "title",
+   "Bloom.nectar": "nectar",
+   "Bloom.has_forage_bloom": "has_forage_bloom",
+   "Forage.loads": "loads"
+  },
+  "rel_map": {
+   "perched": "perched",
+   "forage_hive": "forage_hive",
+   "forage_bloom": "forage_bloom"
+  }
+ },
+ "operators": {
+  "hidden": 7,
+  "observed_in_trace": 7,
+  "recovered": 5,
+  "recovered_ops": [
+   "perch",
+   "unperch",
+   "add_frame",
+   "take_frame",
+   "open_forage"
+  ],
+  "learned": 11,
+  "spurious_learned": [],
+  "precision": 1.0,
+  "failure_rejection_rate": 0.47,
+  "per_op": {
+   "perch": {
+    "successes": 10,
+    "explained": 10,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "perch": 10
+    },
+    "failures": 3,
+    "rejected": 2,
+    "unbound_failures": 0
+   },
+   "unperch": {
+    "successes": 11,
+    "explained": 11,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "unperch": 11
+    },
+    "failures": 6,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "add_frame": {
+    "successes": 12,
+    "explained": 11,
+    "invisible": 0,
+    "explained_rate": 0.92,
+    "by": {
+     "add_frame": 7,
+     "add_frame__1": 2,
+     "add_frame__2": 2
+    },
+    "failures": 4,
+    "rejected": 3,
+    "unbound_failures": 0
+   },
+   "take_frame": {
+    "successes": 14,
+    "explained": 13,
+    "invisible": 0,
+    "explained_rate": 0.93,
+    "by": {
+     "add_frame__1": 3,
+     "take_frame": 4,
+     "take_frame__1": 4,
+     "take_frame__2": 2
+    },
+    "failures": 5,
+    "rejected": 5,
+    "unbound_failures": 0
+   },
+   "open_forage": {
+    "successes": 3,
+    "explained": 3,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "open_forage": 3
+    },
+    "failures": 2,
+    "rejected": 0,
+    "unbound_failures": 2
+   },
+   "haul": {
+    "successes": 7,
+    "explained": 5,
+    "invisible": 0,
+    "explained_rate": 0.71,
+    "by": {
+     "haul": 3,
+     "haul__1": 2
+    },
+    "failures": 8,
+    "rejected": 4,
+    "unbound_failures": 0
+   },
+   "withdraw": {
+    "successes": 2,
+    "explained": 0,
+    "invisible": 0,
+    "explained_rate": 0.0,
+    "by": {},
+    "failures": 4,
+    "rejected": 0,
+    "unbound_failures": 0
+   }
+  }
+ },
+ "gtc": {
+  "transitions": 59,
+  "fully_representable": 59,
+  "partly_representable": 59,
+  "gtc": 1.0,
+  "gtc_any": 1.0,
+  "per_op": {
+   "add_frame": {
+    "n": 12,
+    "full": 12,
+    "any": 12
+   },
+   "take_frame": {
+    "n": 14,
+    "full": 14,
+    "any": 14
+   },
+   "perch": {
+    "n": 10,
+    "full": 10,
+    "any": 10
+   },
+   "unperch": {
+    "n": 11,
+    "full": 11,
+    "any": 11
+   },
+   "haul": {
+    "n": 7,
+    "full": 7,
+    "any": 7
+   },
+   "open_forage": {
+    "n": 3,
+    "full": 3,
+    "any": 3
+   },
+   "withdraw": {
+    "n": 2,
+    "full": 2,
+    "any": 2
+   }
+  }
+ },
+ "condition": "K",
+ "learned_report": [
+  {
+   "hidden_op": "add_frame",
+   "learned": "add_frame",
+   "support": 7,
+   "pre": [
+    "frames(?hive) == '2'"
+   ],
+   "effects": [
+    "frames(?hive) := '3'"
+   ],
+   "unexplained_failures": 1
+  },
+  {
+   "hidden_op": "add_frame",
+   "learned": "add_frame__1",
+   "support": 2,
+   "pre": [
+    "mark(?hive) == 'A'"
+   ],
+   "effects": [
+    "frames(?hive) := '2'"
+   ],
+   "unexplained_failures": 1
+  },
+  {
+   "hidden_op": "add_frame",
+   "learned": "add_frame__2",
+   "support": 2,
+   "pre": [
+    "frames(?hive) == '3'"
+   ],
+   "effects": [
+    "frames(?hive) := '4'"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "take_frame",
+   "learned": "take_frame",
+   "support": 7,
+   "pre": [
+    "frames(?hive) == '3'"
+   ],
+   "effects": [
+    "frames(?hive) := '2'"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "take_frame",
+   "learned": "take_frame__1",
+   "support": 4,
+   "pre": [
+    "frames(?hive) == '4'"
+   ],
+   "effects": [
+    "frames(?hive) := '3'"
+   ],
+   "unexplained_failures": 1
+  },
+  {
+   "hidden_op": "take_frame",
+   "learned": "take_frame__2",
+   "support": 2,
+   "pre": [
+    "frames(?hive) == '1'",
+    "no_incoming(forage_hive, ?hive)"
+   ],
+   "effects": [
+    "frames(?hive) := '0'"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "perch",
+   "learned": "perch",
+   "support": 10,
+   "pre": [
+    "not perched(?hive, ?stand)"
+   ],
+   "effects": [
+    "perched(?hive) := ?stand"
+   ],
+   "unexplained_failures": 1
+  },
+  {
+   "hidden_op": "unperch",
+   "learned": "unperch",
+   "support": 11,
+   "pre": [],
+   "effects": [
+    "perched(?hive) := None"
+   ],
+   "unexplained_failures": 6
+  },
+  {
+   "hidden_op": "haul",
+   "learned": "haul",
+   "support": 3,
+   "pre": [
+    "loads(?forage) == '3'"
+   ],
+   "effects": [
+    "loads(?forage) := '4'"
+   ],
+   "unexplained_failures": 4
+  },
+  {
+   "hidden_op": "haul",
+   "learned": "haul__1",
+   "support": 2,
+   "pre": [
+    "loads(?forage) == '4'"
+   ],
+   "effects": [
+    "loads(?forage) := '5'"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "open_forage",
+   "learned": "open_forage",
+   "support": 3,
+   "pre": [
+    "no_incoming(forage_hive, ?hive)"
+   ],
+   "effects": [
+    "?new0 := new Forage(loads=?loads)",
+    "forage_hive(?new0) := ?hive",
+    "forage_bloom(?new0) := ?bloom"
+   ],
+   "unexplained_failures": 0
+  }
+ ]
+}

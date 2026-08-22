@@ -30,7 +30,10 @@ semabi/compiler/        BLACK-BOX SIDE (never imports hidden/env/eval; enforced 
 semabi/eval/            scoring against hidden ground truth (paired-state alignment + behavioural simulation),
                         held-out goals, direct model-vs-model comparison (crossui.py), generic scorer
 semabi/baselines/       screen-transition graph, LLM passive (claude -p), known action vocabulary
-docs/                   related_work.md, results.md
+semabi/eval/oracle*.py  EVALUATOR ONLY: oracle ladder (mention->entity annotations from instrumented
+                        gauntlet-v2 copies in experiments/oracle_apps/, fed to the unchanged V0 inducer;
+                        run_oracle.py / report_oracle.py; docs/v2_oracle.md)
+docs/                   related_work.md, results.md (V0), gauntlet.md, v1_design.md, v1_results.md, v2_oracle.md
 ```
 
 ## Run
@@ -48,6 +51,10 @@ cat runs/demo/eval.txt
 .venv/bin/python -m semabi.run_crossui_all --prefix final
 .venv/bin/python -m semabi.run_baselines --runs runs/final_standard_plain_kanban_s0 ...
 .venv/bin/python -m semabi.report
+# oracle ladder on gauntlet-v2 (experiments/oracle_apps/run_all.sh first)
+.venv/bin/python -m semabi.run_oracle explore --base http://127.0.0.1:8800 --run runs/oracle/grok_01_apiary
+.venv/bin/python -m semabi.run_oracle ladder --run runs/oracle/grok_01_apiary --rungs base,A,B,Bv,C,D,K
+.venv/bin/python -m semabi.report_oracle
 ```
 
 The evaluator/compiler boundary: `semabi.compiler` sees only the browser. Hidden

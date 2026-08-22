@@ -1,0 +1,241 @@
+{
+ "types": {
+  "hidden": 4,
+  "learned": 4,
+  "recovered": 4,
+  "map": {
+   "T3": "Component",
+   "T2": "Formula",
+   "T1": "Cabinet",
+   "T0": "Lot"
+  }
+ },
+ "predicates": {
+  "hidden_attrs": 11,
+  "recovered_attrs": 7,
+  "hidden_rels": 5,
+  "recovered_rels": 3,
+  "attr_map": {
+   "T3.attr:qty": "qty",
+   "T2.attr:title": "title",
+   "T2.attr:potency": "potency",
+   "T1.attr:name": "name",
+   "T0.attr:code": "code",
+   "T0.attr:title": "title",
+   "T0.attr:units": "units"
+  },
+  "rel_map": {
+   "ref_0_rel:housed": "housed",
+   "ref_3_rel:component_formula": "component_formula",
+   "ref_3_rel:component_lot": "component_lot"
+  }
+ },
+ "operators": {
+  "hidden": 7,
+  "observed_in_trace": 6,
+  "recovered": 4,
+  "recovered_ops": [
+   "stow",
+   "unstow",
+   "dispense",
+   "strike"
+  ],
+  "learned": 15,
+  "spurious_learned": [
+   "op6",
+   "op12"
+  ],
+  "precision": 0.87,
+  "failure_rejection_rate": 0.35,
+  "per_op": {
+   "stow": {
+    "successes": 2,
+    "explained": 2,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "op5": 2
+    },
+    "failures": 5,
+    "rejected": 4,
+    "unbound_failures": 0
+   },
+   "unstow": {
+    "successes": 8,
+    "explained": 8,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "op0": 8
+    },
+    "failures": 10,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "dispense": {
+    "successes": 19,
+    "explained": 17,
+    "invisible": 0,
+    "explained_rate": 0.89,
+    "by": {
+     "op1": 5,
+     "op7": 2,
+     "op8": 2,
+     "op2": 5,
+     "op4": 3
+    },
+    "failures": 8,
+    "rejected": 4,
+    "unbound_failures": 0
+   },
+   "restock": {
+    "successes": 12,
+    "explained": 8,
+    "invisible": 0,
+    "explained_rate": 0.67,
+    "by": {
+     "op9": 2,
+     "op10": 3,
+     "op11": 2,
+     "op4": 1
+    },
+    "failures": 8,
+    "rejected": 3,
+    "unbound_failures": 0
+   },
+   "bind": {
+    "successes": 0,
+    "explained": 0,
+    "invisible": 0,
+    "explained_rate": null,
+    "by": {},
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "dose": {
+    "successes": 7,
+    "explained": 5,
+    "invisible": 0,
+    "explained_rate": 0.71,
+    "by": {
+     "op3": 3,
+     "op14": 2
+    },
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "strike": {
+    "successes": 3,
+    "explained": 3,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "op13": 3
+    },
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   }
+  }
+ },
+ "gtc": {
+  "transitions": 51,
+  "fully_representable": 51,
+  "partly_representable": 51,
+  "gtc": 1.0,
+  "gtc_any": 1.0,
+  "per_op": {
+   "dispense": {
+    "n": 19,
+    "full": 19,
+    "any": 19
+   },
+   "restock": {
+    "n": 12,
+    "full": 12,
+    "any": 12
+   },
+   "unstow": {
+    "n": 8,
+    "full": 8,
+    "any": 8
+   },
+   "dose": {
+    "n": 7,
+    "full": 7,
+    "any": 7
+   },
+   "strike": {
+    "n": 3,
+    "full": 3,
+    "any": 3
+   },
+   "stow": {
+    "n": 2,
+    "full": 2,
+    "any": 2
+   }
+  }
+ },
+ "rtc": {
+  "transitions": 51,
+  "fully_registered": 51,
+  "partly_registered": 51,
+  "rtc": 1.0,
+  "rtc_any": 1.0,
+  "per_op": {
+   "dispense": {
+    "n": 19,
+    "full": 19,
+    "any": 19
+   },
+   "restock": {
+    "n": 12,
+    "full": 12,
+    "any": 12
+   },
+   "unstow": {
+    "n": 8,
+    "full": 8,
+    "any": 8
+   },
+   "dose": {
+    "n": 7,
+    "full": 7,
+    "any": 7
+   },
+   "strike": {
+    "n": 3,
+    "full": 3,
+    "any": 3
+   },
+   "stow": {
+    "n": 2,
+    "full": 2,
+    "any": 2
+   }
+  }
+ },
+ "object_layer": {
+  "annotated_leaves": 4349,
+  "grounded_leaves": 4349,
+  "grounded_frac": 1.0,
+  "pair_precision": 1.0,
+  "pair_recall": 1.0,
+  "learned_keys_merging_entities": 0,
+  "entities_split_across_keys": 0,
+  "entities_grounded": 10
+ },
+ "view_false_positives": {
+  "learned_transitions": 53,
+  "without_hidden_change": 0,
+  "rate": 0.0
+ },
+ "condition": "C",
+ "cost": {
+  "primitives": 409
+ },
+ "sig_conflicts": 2
+}

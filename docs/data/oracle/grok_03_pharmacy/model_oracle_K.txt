@@ -1,0 +1,213 @@
+domain known_vocab
+type Lot(__id: str, code: str, title: str, units: int, has_component_lot: bool)
+type Cabinet(__id: str, name: str, bins: int)
+type Formula(__id: str, title: str, potency: int, has_component_formula: bool)
+type Component(__id: str, qty: int)
+rel housed(Lot, Cabinet)
+rel component_formula(Component, Formula)
+rel component_lot(Component, Lot)
+dispense(?lot: Lot)
+  pre: units(?lot) == '2'
+  eff: units(?lot) := '1'
+dispense__1(?lot: Lot)
+  pre: units(?lot) == '4'
+  eff: units(?lot) := '3'
+dispense__2(?lot: Lot)
+  pre: units(?lot) == '3'
+  eff: units(?lot) := '2'
+dispense__3(?lot: Lot)
+  pre: units(?lot) == '5'
+  eff: units(?lot) := '4'
+dispense__4(?lot: Lot)
+  pre: units(?lot) == '1'
+  eff: units(?lot) := '0'
+restock(?lot: Lot)
+  pre: units(?lot) == '1'
+  eff: units(?lot) := '2'
+restock__1(?lot: Lot)
+  pre: units(?lot) == '0'
+  eff: units(?lot) := '1'
+restock__2(?lot: Lot)
+  pre: units(?lot) == '2' & code(?lot) == 'L1'
+  eff: units(?lot) := '3'
+restock__3(?lot: Lot)
+  pre: units(?lot) == '3'
+  eff: units(?lot) := '4'
+unstow(?lot: Lot)
+  eff: housed(?lot) := None
+dose(?component: Component)
+  eff: qty(?component) := '4'
+dose__1(?component: Component)
+  eff: qty(?component) := '2'
+strike(?component: Component, ?x1: Formula)
+  pre: component_formula(?component, ?x1)
+  eff: delete ?component
+  eff: delete ?x1
+stow(?lot: Lot, ?cabinet: Cabinet)
+  pre: not housed(?lot, ?cabinet)
+  eff: housed(?lot) := ?cabinet
+
+[
+ {
+  "hidden_op": "dispense",
+  "learned": "dispense",
+  "support": 5,
+  "pre": [
+   "units(?lot) == '2'"
+  ],
+  "effects": [
+   "units(?lot) := '1'"
+  ],
+  "unexplained_failures": 3
+ },
+ {
+  "hidden_op": "dispense",
+  "learned": "dispense__1",
+  "support": 5,
+  "pre": [
+   "units(?lot) == '4'"
+  ],
+  "effects": [
+   "units(?lot) := '3'"
+  ],
+  "unexplained_failures": 3
+ },
+ {
+  "hidden_op": "dispense",
+  "learned": "dispense__2",
+  "support": 4,
+  "pre": [
+   "units(?lot) == '3'"
+  ],
+  "effects": [
+   "units(?lot) := '2'"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "dispense",
+  "learned": "dispense__3",
+  "support": 2,
+  "pre": [
+   "units(?lot) == '5'"
+  ],
+  "effects": [
+   "units(?lot) := '4'"
+  ],
+  "unexplained_failures": 1
+ },
+ {
+  "hidden_op": "dispense",
+  "learned": "dispense__4",
+  "support": 2,
+  "pre": [
+   "units(?lot) == '1'"
+  ],
+  "effects": [
+   "units(?lot) := '0'"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "restock",
+  "learned": "restock",
+  "support": 4,
+  "pre": [
+   "units(?lot) == '1'"
+  ],
+  "effects": [
+   "units(?lot) := '2'"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "restock",
+  "learned": "restock__1",
+  "support": 2,
+  "pre": [
+   "units(?lot) == '0'"
+  ],
+  "effects": [
+   "units(?lot) := '1'"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "restock",
+  "learned": "restock__2",
+  "support": 2,
+  "pre": [
+   "units(?lot) == '2'",
+   "code(?lot) == 'L1'"
+  ],
+  "effects": [
+   "units(?lot) := '3'"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "restock",
+  "learned": "restock__3",
+  "support": 2,
+  "pre": [
+   "units(?lot) == '3'"
+  ],
+  "effects": [
+   "units(?lot) := '4'"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "unstow",
+  "learned": "unstow",
+  "support": 8,
+  "pre": [],
+  "effects": [
+   "housed(?lot) := None"
+  ],
+  "unexplained_failures": 10
+ },
+ {
+  "hidden_op": "dose",
+  "learned": "dose",
+  "support": 3,
+  "pre": [],
+  "effects": [
+   "qty(?component) := '4'"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "dose",
+  "learned": "dose__1",
+  "support": 2,
+  "pre": [],
+  "effects": [
+   "qty(?component) := '2'"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "strike",
+  "learned": "strike",
+  "support": 3,
+  "pre": [],
+  "effects": [
+   "delete ?component",
+   "delete ?x1"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "stow",
+  "learned": "stow",
+  "support": 2,
+  "pre": [
+   "not housed(?lot, ?cabinet)"
+  ],
+  "effects": [
+   "housed(?lot) := ?cabinet"
+  ],
+  "unexplained_failures": 1
+ }
+]

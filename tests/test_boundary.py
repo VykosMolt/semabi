@@ -40,3 +40,11 @@ def test_relmodel_has_no_domain_content():
     text = (ROOT / "relmodel.py").read_text()
     for word in ("Project", "Task", "belongs_to", "kanban"):
         assert word not in text
+
+
+def test_compiler_never_reads_oracle_annotations():
+    """The oracle ladder's ground truth (data-eid annotations, oracle.jsonl) is evaluator-only."""
+    for f in compiler_files():
+        text = f.read_text()
+        assert "data-eid" not in text and "data-erefs" not in text and "data-oid" not in text, f.name
+        assert "oracle.jsonl" not in text, f.name

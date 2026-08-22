@@ -1,0 +1,68 @@
+domain learned
+type T0(id: str, attr:name: str, attr:era: str, attr:condition: str)
+type T1(id: str, attr:name: str, attr:capacity: str)
+type T2(id: str, attr:name: str)
+type T3(id: str, attr:note: str, attr:duration_weeks: str, attr:status: str)
+rel ref_0_rel:displayed_in(T0, T1)
+rel ref_3_rel:loan_artifact(T3, T0)
+rel ref_3_rel:loan_institution(T3, T2)
+op0(?o0: T0)
+  eff: ref_0_rel:displayed_in(?o0) := None
+op1(?o0: T0)
+  eff: ref_0_rel:displayed_in(?o0) := T1:gal-1
+op2(?o0: T3)
+  pre: attr:status(?o0) == 'active'
+  eff: attr:status(?o0) := 'returned'
+op3(?o1: T0, ?o0: T2)
+  pre: attr:era(?o1) != 'Neolithic'
+  eff: ?new0 := new T3(id=<new>, attr:duration_weeks=8, attr:note=, attr:status=proposed)
+  eff: ref_3_rel:loan_artifact(?new0) := ?o1
+  eff: ref_3_rel:loan_institution(?new0) := ?o0
+op4(?o0: T3)
+  eff: attr:status(?o0) := 'active'
+op5(?o0: T3)
+  pre: id(?o0) != 'loan-2'
+  eff: attr:status(?o0) := 'void'
+
+groundings:
+  op0: click(button:Take down@T0[?o0])
+  op1: click(button:Catalogue); click(button:Place@T0[?o0])
+  op2: click(button:Loan ledger); click(button#0@T3[?o0])
+  op3: select(combobox#0, ?o0); click(button:Draft loan@T0[?o1]); click(button#0)
+  op4: click(button#0@T3[?o0]); click(button:Confirm approval@T3[?o0])
+  op5: click(button:Loan ledger); click(button#1@T3[?o0])
+
+58 transitions, 284 no-op segments, 9 operator hypotheses, 0 view operators
+op0(?o0: T0)  support=23 neg=0 verified=0/0
+  how: click(button:Take down@T0[?o0])
+  eff: rel:displayed_in(?o0) := None
+op1(?o0: T0)  support=15 neg=7 verified=0/0
+  how: click(button:Catalogue); click(button:Place@T0[?o0])
+  pre: ? (7 unexplained failures)
+  eff: rel:displayed_in(?o0) := 'T1:gal-1'
+op2(?o0: T3)  support=8 neg=5 verified=0/0
+  how: click(button:Loan ledger); click(button#0@T3[?o0])
+  pre: attr:status(?o0) == 'active'
+  eff: attr:status(?o0) := 'returned'
+op3(?o1: T0, ?new0: T3, ?o0: T2)  support=5 neg=2 verified=0/0
+  how: select(combobox#0, ?o0); click(button:Draft loan@T0[?o1]); click(button#0)
+  pre: attr:era(?o1) != 'Neolithic'
+  eff: ?new0 := new T3(id=<new>, attr:duration_weeks=8, attr:note=, attr:status=proposed) rel:loan_artifact->?o1 rel:loan_institution->?o0
+op4(?o0: T3)  support=2 neg=0 verified=0/0
+  how: click(button#0@T3[?o0]); click(button:Confirm approval@T3[?o0])
+  eff: attr:status(?o0) := 'active'
+op5(?o0: T3)  support=2 neg=3 verified=0/0
+  how: click(button:Loan ledger); click(button#1@T3[?o0])
+  pre: id(?o0) != 'loan-2'  (+1 unexplained failures)
+  eff: attr:status(?o0) := 'void'
+op6(?o0: T0, ?o1: T1, ?o2: T0)  support=1 neg=0 verified=0/0
+  how: click(button:Catalogue); select(combobox#0@T0[?o0], ?o1); click(button:Place@T0[?o2])
+  eff: rel:displayed_in(?o2) := '?o1'
+op7(?o1: T0, ?new0: T3, ?o0: T2)  support=1 neg=6 verified=0/0
+  how: select(combobox#0, ?o0); click(button:Draft loan@T0[?o1]); click(button#0)
+  pre: id(?o0) != 'inst-2' & attr:era(?o1) != 'Baroque'  (+1 unexplained failures)
+  eff: ?new0 := new T3(id=<new>, attr:duration_weeks=8, attr:note=, attr:status=proposed) rel:loan_artifact->T0:art-7 rel:loan_institution->?o0
+op8(?o1: T0, ?s0: str, ?new0: T3, ?o0: T2)  support=1 neg=6 verified=0/0
+  how: select(combobox#0, ?o0); click(button:Draft loan@T0[?o1]); type(textbox#1, ?s0); click(button#0)
+  pre: ?s0 != ''
+  eff: ?new0 := new T3(id=<new>, attr:duration_weeks=8, attr:note=?s0, attr:status=proposed) rel:loan_artifact->?o1 rel:loan_institution->?o0

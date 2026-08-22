@@ -1,0 +1,59 @@
+domain known_vocab
+type Wall(__id: str, name: str, lines: int, has_tape_wall: bool)
+type Route(__id: str, name: str, abbr: str, grade: int, has_tape_route: bool)
+type Setter(__id: str, handle: str, lead: bool, has_tape_setter: bool)
+type Tape(__id: str, color: str)
+rel tape_route(Tape, Route)
+rel tape_wall(Tape, Wall)
+rel tape_setter(Tape, Setter)
+recolor(?tape: Tape, ?color: str)
+  eff: color(?tape) := '?color'
+hang(?route: Route, ?wall: Wall, ?setter: Setter)
+  pre: grade(?route) == '4'
+  eff: ?new0 := new Tape(color=pink)
+  eff: tape_route(?new0) := ?route
+  eff: tape_wall(?new0) := ?wall
+  eff: tape_setter(?new0) := ?setter
+pull(?tape: Tape, ?x1: Route)
+  pre: tape_route(?tape, ?x1)
+  eff: delete ?tape
+  eff: delete ?x1
+
+[
+ {
+  "hidden_op": "recolor",
+  "learned": "recolor",
+  "support": 74,
+  "pre": [],
+  "effects": [
+   "color(?tape) := '?color'"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "hang",
+  "learned": "hang",
+  "support": 3,
+  "pre": [
+   "grade(?route) == '4'"
+  ],
+  "effects": [
+   "?new0 := new Tape(color=pink)",
+   "tape_route(?new0) := ?route",
+   "tape_wall(?new0) := ?wall",
+   "tape_setter(?new0) := ?setter"
+  ],
+  "unexplained_failures": 3
+ },
+ {
+  "hidden_op": "pull",
+  "learned": "pull",
+  "support": 2,
+  "pre": [],
+  "effects": [
+   "delete ?tape",
+   "delete ?x1"
+  ],
+  "unexplained_failures": 0
+ }
+]

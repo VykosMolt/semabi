@@ -1,0 +1,178 @@
+domain known_vocab
+type Hive(__id: str, label: str, mark: str, frames: int, has_forage_hive: bool)
+type Stand(__id: str, code: str, capacity: int)
+type Bloom(__id: str, title: str, nectar: int, has_forage_bloom: bool)
+type Forage(__id: str, loads: int)
+rel perched(Hive, Stand)
+rel forage_hive(Forage, Hive)
+rel forage_bloom(Forage, Bloom)
+add_frame(?hive: Hive)
+  pre: frames(?hive) == '2'
+  eff: frames(?hive) := '3'
+add_frame__1(?hive: Hive)
+  pre: mark(?hive) == 'A'
+  eff: frames(?hive) := '2'
+add_frame__2(?hive: Hive)
+  pre: frames(?hive) == '3'
+  eff: frames(?hive) := '4'
+take_frame(?hive: Hive)
+  pre: frames(?hive) == '3'
+  eff: frames(?hive) := '2'
+take_frame__1(?hive: Hive)
+  pre: frames(?hive) == '4'
+  eff: frames(?hive) := '3'
+take_frame__2(?hive: Hive)
+  pre: frames(?hive) == '1' & no_incoming(forage_hive, ?hive)
+  eff: frames(?hive) := '0'
+perch(?hive: Hive, ?stand: Stand)
+  pre: not perched(?hive, ?stand)
+  eff: perched(?hive) := ?stand
+unperch(?hive: Hive)
+  eff: perched(?hive) := None
+haul(?forage: Forage)
+  pre: loads(?forage) == '3'
+  eff: loads(?forage) := '4'
+haul__1(?forage: Forage)
+  pre: loads(?forage) == '4'
+  eff: loads(?forage) := '5'
+open_forage(?hive: Hive, ?bloom: Bloom, ?loads: str)
+  pre: no_incoming(forage_hive, ?hive)
+  eff: ?new0 := new Forage(loads=?loads)
+  eff: forage_hive(?new0) := ?hive
+  eff: forage_bloom(?new0) := ?bloom
+
+[
+ {
+  "hidden_op": "add_frame",
+  "learned": "add_frame",
+  "support": 7,
+  "pre": [
+   "frames(?hive) == '2'"
+  ],
+  "effects": [
+   "frames(?hive) := '3'"
+  ],
+  "unexplained_failures": 1
+ },
+ {
+  "hidden_op": "add_frame",
+  "learned": "add_frame__1",
+  "support": 2,
+  "pre": [
+   "mark(?hive) == 'A'"
+  ],
+  "effects": [
+   "frames(?hive) := '2'"
+  ],
+  "unexplained_failures": 1
+ },
+ {
+  "hidden_op": "add_frame",
+  "learned": "add_frame__2",
+  "support": 2,
+  "pre": [
+   "frames(?hive) == '3'"
+  ],
+  "effects": [
+   "frames(?hive) := '4'"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "take_frame",
+  "learned": "take_frame",
+  "support": 7,
+  "pre": [
+   "frames(?hive) == '3'"
+  ],
+  "effects": [
+   "frames(?hive) := '2'"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "take_frame",
+  "learned": "take_frame__1",
+  "support": 4,
+  "pre": [
+   "frames(?hive) == '4'"
+  ],
+  "effects": [
+   "frames(?hive) := '3'"
+  ],
+  "unexplained_failures": 1
+ },
+ {
+  "hidden_op": "take_frame",
+  "learned": "take_frame__2",
+  "support": 2,
+  "pre": [
+   "frames(?hive) == '1'",
+   "no_incoming(forage_hive, ?hive)"
+  ],
+  "effects": [
+   "frames(?hive) := '0'"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "perch",
+  "learned": "perch",
+  "support": 10,
+  "pre": [
+   "not perched(?hive, ?stand)"
+  ],
+  "effects": [
+   "perched(?hive) := ?stand"
+  ],
+  "unexplained_failures": 1
+ },
+ {
+  "hidden_op": "unperch",
+  "learned": "unperch",
+  "support": 11,
+  "pre": [],
+  "effects": [
+   "perched(?hive) := None"
+  ],
+  "unexplained_failures": 6
+ },
+ {
+  "hidden_op": "haul",
+  "learned": "haul",
+  "support": 3,
+  "pre": [
+   "loads(?forage) == '3'"
+  ],
+  "effects": [
+   "loads(?forage) := '4'"
+  ],
+  "unexplained_failures": 4
+ },
+ {
+  "hidden_op": "haul",
+  "learned": "haul__1",
+  "support": 2,
+  "pre": [
+   "loads(?forage) == '4'"
+  ],
+  "effects": [
+   "loads(?forage) := '5'"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "open_forage",
+  "learned": "open_forage",
+  "support": 3,
+  "pre": [
+   "no_incoming(forage_hive, ?hive)"
+  ],
+  "effects": [
+   "?new0 := new Forage(loads=?loads)",
+   "forage_hive(?new0) := ?hive",
+   "forage_bloom(?new0) := ?bloom"
+  ],
+  "unexplained_failures": 0
+ }
+]

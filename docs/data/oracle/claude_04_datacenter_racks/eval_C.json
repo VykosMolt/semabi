@@ -1,0 +1,175 @@
+{
+ "types": {
+  "hidden": 4,
+  "learned": 4,
+  "recovered": 4,
+  "map": {
+   "T3": "Ticket",
+   "T2": "Technician",
+   "T1": "Server",
+   "T0": "Rack"
+  }
+ },
+ "predicates": {
+  "hidden_attrs": 13,
+  "recovered_attrs": 9,
+  "hidden_rels": 5,
+  "recovered_rels": 3,
+  "attr_map": {
+   "T3.attr:kind": "kind",
+   "T3.attr:status": "status",
+   "T2.attr:name": "name",
+   "T1.attr:hostname": "hostname",
+   "T1.attr:power_draw_w": "power_draw_w",
+   "T1.attr:status": "status",
+   "T0.attr:label": "label",
+   "T0.attr:room": "room",
+   "T0.attr:power_cap_w": "power_cap_w"
+  },
+  "rel_map": {
+   "ref_1_rel:mounted_in": "mounted_in",
+   "ref_3_rel:ticket_server": "ticket_server",
+   "ref_3_rel:ticket_technician": "ticket_technician"
+  }
+ },
+ "operators": {
+  "hidden": 5,
+  "observed_in_trace": 3,
+  "recovered": 2,
+  "recovered_ops": [
+   "decommission_server",
+   "open_ticket"
+  ],
+  "learned": 4,
+  "spurious_learned": [],
+  "precision": 1.0,
+  "failure_rejection_rate": 0.0,
+  "per_op": {
+   "mount_server": {
+    "successes": 3,
+    "explained": 2,
+    "invisible": 0,
+    "explained_rate": 0.67,
+    "by": {
+     "op3": 2
+    },
+    "failures": 1,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "unmount_server": {
+    "successes": 0,
+    "explained": 0,
+    "invisible": 0,
+    "explained_rate": null,
+    "by": {},
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "decommission_server": {
+    "successes": 4,
+    "explained": 4,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "op1": 2,
+     "op2": 2
+    },
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "open_ticket": {
+    "successes": 4,
+    "explained": 4,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "op0": 4
+    },
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "close_ticket": {
+    "successes": 0,
+    "explained": 0,
+    "invisible": 0,
+    "explained_rate": null,
+    "by": {},
+    "failures": 3,
+    "rejected": 0,
+    "unbound_failures": 0
+   }
+  }
+ },
+ "gtc": {
+  "transitions": 11,
+  "fully_representable": 11,
+  "partly_representable": 11,
+  "gtc": 1.0,
+  "gtc_any": 1.0,
+  "per_op": {
+   "open_ticket": {
+    "n": 4,
+    "full": 4,
+    "any": 4
+   },
+   "decommission_server": {
+    "n": 4,
+    "full": 4,
+    "any": 4
+   },
+   "mount_server": {
+    "n": 3,
+    "full": 3,
+    "any": 3
+   }
+  }
+ },
+ "rtc": {
+  "transitions": 11,
+  "fully_registered": 11,
+  "partly_registered": 11,
+  "rtc": 1.0,
+  "rtc_any": 1.0,
+  "per_op": {
+   "open_ticket": {
+    "n": 4,
+    "full": 4,
+    "any": 4
+   },
+   "decommission_server": {
+    "n": 4,
+    "full": 4,
+    "any": 4
+   },
+   "mount_server": {
+    "n": 3,
+    "full": 3,
+    "any": 3
+   }
+  }
+ },
+ "object_layer": {
+  "annotated_leaves": 2546,
+  "grounded_leaves": 2546,
+  "grounded_frac": 1.0,
+  "pair_precision": 1.0,
+  "pair_recall": 1.0,
+  "learned_keys_merging_entities": 0,
+  "entities_split_across_keys": 0,
+  "entities_grounded": 16
+ },
+ "view_false_positives": {
+  "learned_transitions": 11,
+  "without_hidden_change": 0,
+  "rate": 0.0
+ },
+ "condition": "C",
+ "cost": {
+  "primitives": 419
+ },
+ "sig_conflicts": 0
+}

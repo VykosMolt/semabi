@@ -1,0 +1,51 @@
+domain learned
+type T0(id: str, attr:name: str)
+type T1(id: str, attr:name: str, attr:abbr: str, attr:grade: str)
+type T2(id: str, attr:handle: str, attr:lead: bool)
+type T3(id: str, attr:color: str)
+rel ref_3_rel:tape_route(T3, T1)
+rel ref_3_rel:tape_wall(T3, T0)
+rel ref_3_rel:tape_setter(T3, T2)
+op0(?o0: T3, ?s0: str)
+  pre: ?s0 != 
+  eff: attr:color(?o0) := '?s0'
+op1(?o2: T0, ?o1: T1, ?o0: T2)
+  eff: ?new0 := new T3(id=<new>, attr:color=pink)
+  eff: ref_3_rel:tape_route(?new0) := ?o1
+  eff: ref_3_rel:tape_setter(?new0) := ?o0
+  eff: ref_3_rel:tape_wall(?new0) := ?o2
+op2(?o0: T1)
+  pre: attr:grade(?o0) == '3'
+  eff: delete ?o0
+  eff: delete all x: ref_3_rel:tape_route(x, ?o0)
+
+groundings:
+  op0: select(combobox#0@T3[?o0], ?s0)
+  op1: select(combobox#1, ?o0); select(combobox#0, ?o1); click(button#0@T100[key][?o2])
+  op2: select(combobox#0, ?o0); click(button:Pull); click(button:Confirm pull)
+
+82 transitions, 274 no-op segments, 6 operator hypotheses, 0 view operators
+op0(?o0: T3, ?s0: str)  support=74 neg=85 verified=0/0
+  how: select(combobox#0@T3[?o0], ?s0)
+  pre: ?s0 != ''
+  eff: attr:color(?o0) := '?s0'
+op1(?o2: T0, ?new0: T3, ?o1: T1, ?o0: T2)  support=3 neg=0 verified=0/0
+  how: select(combobox#1, ?o0); select(combobox#0, ?o1); click(button#0@T100[key][?o2])
+  eff: ?new0 := new T3(id=<new>, attr:color=pink) rel:tape_route->?o1 rel:tape_setter->?o0 rel:tape_wall->?o2
+op2(?o0: T1)  support=2 neg=4 verified=0/0
+  how: select(combobox#0, ?o0); click(button:Pull); click(button:Confirm pull)
+  pre: attr:grade(?o0) == '3'  (+2 unexplained failures)
+  eff: delete ?o0
+  eff: forall x:T3 with rel:tape_route(x)==?o0: delete x
+op3(?o0: T1)  support=1 neg=2 verified=0/0
+  how: click(button:Routes); click(button:Bump@T1[?o0])
+  pre: ? (2 unexplained failures)
+  eff: attr:grade(?o0) := '3'
+op4(?o0: T1)  support=1 neg=2 verified=0/0
+  how: click(button:Routes); click(button:Bump@T1[?o0])
+  pre: attr:abbr(?o0) != 'R3'
+  eff: attr:grade(?o0) := '4'
+op5(?o0: T3, ?o1: T0)  support=1 neg=2 verified=0/0
+  how: click(checkbox#0); select(combobox#0@T3[?o0], ?o1); click(button#0@T3[?o0])
+  pre: no_children(?o1)
+  eff: rel:tape_wall(?o0) := '?o1'

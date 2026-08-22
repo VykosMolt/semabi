@@ -1,0 +1,164 @@
+domain learned
+type T0(id: str, attr:label: str, attr:mark: str, attr:frames: str)
+type T1(id: str, attr:code: str, attr:capacity: str)
+type T2(id: str, attr:title: str, attr:nectar: str)
+type T3(id: str, attr:loads: str)
+rel ref_0_rel:perched(T0, T1)
+rel ref_3_rel:forage_hive(T3, T0)
+rel ref_3_rel:forage_bloom(T3, T2)
+op0(?o0: T0)
+  eff: ref_0_rel:perched(?o0) := None
+op1(?o0: T0)
+  eff: attr:frames(?o0) := '3'
+op2(?o0: T0)
+  eff: attr:frames(?o0) := '2'
+op3(?o0: T0)
+  eff: ref_0_rel:perched(?o0) := T1:stand1
+op4(?o0: T0)
+  eff: ref_0_rel:perched(?o0) := None
+op5(?o0: T0)
+  pre: attr:frames(?o0) == '4'
+  eff: attr:frames(?o0) := '3'
+op6(?o0: T0)
+  pre: attr:frames(?o0) == '3'
+  eff: attr:frames(?o0) := '2'
+op7(?o0: T0, ?o1: T1)
+  pre: attr:frames(?o0) != '4'
+  eff: ref_0_rel:perched(?o0) := ?o1
+op8(?o0: T0, ?o1: T2)
+  pre: no_incoming(ref_3_rel:forage_hive, ?o0)
+  eff: ?new0 := new T3(id=<new>, attr:loads=1)
+  eff: ref_3_rel:forage_bloom(?new0) := ?o1
+  eff: ref_3_rel:forage_hive(?new0) := ?o0
+op9(?o0: T0, ?o1: T3)
+  pre: attr:frames(?o0) != '4' & id(?o1) != 'forage2'
+  eff: attr:loads(?o1) := '5'
+op10(?o0: T0)
+  pre: attr:label(?o0) != 'Willow' & attr:frames(?o0) != '2'
+  eff: ref_0_rel:perched(?o0) := T1:stand1
+op11(?o0: T0)
+  pre: attr:mark(?o0) != 'B'
+  eff: attr:frames(?o0) := '2'
+op12(?o0: T0)
+  pre: attr:frames(?o0) == '3'
+  eff: attr:frames(?o0) := '4'
+
+groundings:
+  op0: click(button#0@T0[?o0]); click(button:Unperch@T0[?o0])
+  op1: click(button:Add frame@T0[?o0])
+  op2: click(button:Colony); click(button:Take frame@T0[?o0])
+  op3: click(button:Colony); click(button:Perch@T0[?o0])
+  op4: click(button:Colony); click(button:Unperch@T0[?o0])
+  op5: click(button#0@T0[?o0]); click(button:Take frame@T0[?o0])
+  op6: click(button#0@T0[?o0]); click(button:Take frame@T0[?o0])
+  op7: click(button#0@T0[?o0]); select(combobox#0@T0[?o0], ?o1); click(button:Perch@T0[?o0])
+  op8: select(combobox#0, ?o0); select(combobox#1, ?o1); click(button:Blooms); click(button:Open forage)
+  op9: click(button#0@T0[?o0]); click(button:Haul@T3[?o1])
+  op10: click(button#0@T0[?o0]); click(button:Perch@T0[?o0])
+  op11: click(button#0@T0[?o0]); click(button:Add frame@T0[?o0])
+  op12: click(button#0@T0[?o0]); click(button:Add frame@T0[?o0])
+
+59 transitions, 337 no-op segments, 26 operator hypotheses, 0 view operators
+op0(?o0: T0)  support=7 neg=4 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Unperch@T0[?o0])
+  pre: ? (4 unexplained failures)
+  eff: rel:perched(?o0) := None
+op1(?o0: T0)  support=6 neg=0 verified=0/0
+  how: click(button:Add frame@T0[?o0])
+  eff: attr:frames(?o0) := '3'
+op2(?o0: T0)  support=4 neg=1 verified=0/0
+  how: click(button:Colony); click(button:Take frame@T0[?o0])
+  pre: ? (1 unexplained failures)
+  eff: attr:frames(?o0) := '2'
+op3(?o0: T0)  support=4 neg=1 verified=0/0
+  how: click(button:Colony); click(button:Perch@T0[?o0])
+  pre: ? (1 unexplained failures)
+  eff: rel:perched(?o0) := 'T1:stand1'
+op4(?o0: T0)  support=4 neg=1 verified=0/0
+  how: click(button:Colony); click(button:Unperch@T0[?o0])
+  pre: ? (1 unexplained failures)
+  eff: rel:perched(?o0) := None
+op5(?o0: T0)  support=4 neg=9 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Take frame@T0[?o0])
+  pre: attr:frames(?o0) == '4'  (+1 unexplained failures)
+  eff: attr:frames(?o0) := '3'
+op6(?o0: T0)  support=3 neg=10 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Take frame@T0[?o0])
+  pre: attr:frames(?o0) == '3'
+  eff: attr:frames(?o0) := '2'
+op7(?o0: T0, ?o1: T1)  support=3 neg=5 verified=0/0
+  how: click(button#0@T0[?o0]); select(combobox#0@T0[?o0], ?o1); click(button:Perch@T0[?o0])
+  pre: attr:frames(?o0) != '4'  (+3 unexplained failures)
+  eff: rel:perched(?o0) := '?o1'
+op8(?new0: T3, ?o0: T0, ?o1: T2)  support=3 neg=2 verified=0/0
+  how: select(combobox#0, ?o0); select(combobox#1, ?o1); click(button:Blooms); click(button:Open forage)
+  pre: no_children(?o0)
+  eff: ?new0 := new T3(id=<new>, attr:loads=1) rel:forage_bloom->?o1 rel:forage_hive->?o0
+op9(?o0: T0, ?o1: T3)  support=2 neg=9 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Haul@T3[?o1])
+  pre: attr:frames(?o0) != '4' & id(?o1) != 'forage2'
+  eff: attr:loads(?o1) := '5'
+op10(?o0: T0)  support=2 neg=6 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Perch@T0[?o0])
+  pre: attr:label(?o0) != 'Willow' & attr:frames(?o0) != '2'  (+1 unexplained failures)
+  eff: rel:perched(?o0) := 'T1:stand1'
+op11(?o0: T0)  support=2 neg=5 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Add frame@T0[?o0])
+  pre: attr:mark(?o0) != 'B'  (+2 unexplained failures)
+  eff: attr:frames(?o0) := '2'
+op12(?o0: T0)  support=2 neg=5 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Add frame@T0[?o0])
+  pre: attr:frames(?o0) == '3'
+  eff: attr:frames(?o0) := '4'
+op13(?o0: T0)  support=1 neg=11 verified=0/0
+  how: press(None, Enter)
+  pre: no_children(?o0)  (+1 unexplained failures)
+  eff: attr:frames(?o0) := '0'
+op14(?o0: T0)  support=1 neg=11 verified=0/0
+  how: press(None, Enter)
+  pre: no_children(?o0)  (+1 unexplained failures)
+  eff: attr:frames(?o0) := '3'
+op15(?o0: T3)  support=1 neg=0 verified=0/0
+  how: click(button:Colony); click(button:Haul@T3[?o0])
+  eff: attr:loads(?o0) := '4'
+op16(?o0: T0, ?o1: T3)  support=1 neg=10 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Haul@T3[?o1])
+  pre: attr:frames(?o0) != '4' & attr:label(?o0) != 'Cedar'
+  eff: attr:loads(?o1) := '2'
+op17(?o0: T0)  support=1 neg=7 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Perch@T0[?o0])
+  pre: attr:frames(?o0) != '0' & attr:frames(?o0) != '4'  (+2 unexplained failures)
+  eff: rel:perched(?o0) := 'T1:stand2'
+op18(?o0: T0)  support=1 neg=12 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Take frame@T0[?o0])
+  pre: attr:frames(?o0) != '4' & attr:frames(?o0) != '3' & attr:label(?o0) != 'Willow'  (+1 unexplained failures)
+  eff: attr:frames(?o0) := '1'
+op19(?o0: T0, ?o1: T3)  support=1 neg=10 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Haul@T3[?o1])
+  pre: id(?o1) != 'forage1' & attr:label(?o0) != 'Cedar'  (+1 unexplained failures)
+  eff: attr:loads(?o1) := '4'
+op20(?o0: T3)  support=1 neg=2 verified=0/0
+  how: click(button:Blooms); click(button:Haul@T3[?o0])
+  pre: ? (2 unexplained failures)
+  eff: attr:loads(?o0) := '4'
+op21(?o0: T3)  support=1 neg=5 verified=0/0
+  how: click(button:Withdraw@T3[?o0]); click(button:Confirm withdraw@T3[?o0])
+  pre: attr:loads(?o0) != '3'  (+1 unexplained failures)
+  eff: delete ?o0
+op22(?o0: T0)  support=1 neg=12 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Take frame@T0[?o0])
+  pre: attr:frames(?o0) != '4' & attr:frames(?o0) != '3' & attr:frames(?o0) != '0' & attr:label(?o0) != 'Maple'
+  eff: attr:frames(?o0) := '0'
+op23(?o0: T0)  support=1 neg=1 verified=0/0
+  how: click(button:Colony); click(button:Add frame@T0[?o0])
+  pre: ? (1 unexplained failures)
+  eff: attr:frames(?o0) := '5'
+op24(?o0: T0, ?o1: T3)  support=1 neg=10 verified=0/0
+  how: click(button#0@T0[?o0]); click(button:Haul@T3[?o1])
+  pre: attr:frames(?o0) != '4' & attr:frames(?o0) != '2'  (+1 unexplained failures)
+  eff: attr:loads(?o1) := '3'
+op25(?o0: T3, ?o1: T0)  support=1 neg=5 verified=0/0
+  how: click(button:Withdraw@T3[?o0]); click(button:Confirm withdraw@T3[?o0])
+  pre: rel:forage_hive(?o0) == ?o1
+  eff: delete ?o0
+  eff: delete ?o1

@@ -1,0 +1,67 @@
+domain known_vocab
+type Rack(__id: str, label: str, room: str, power_cap_w: int)
+type Server(__id: str, hostname: str, power_draw_w: int, status: str, has_ticket_server: bool)
+type Technician(__id: str, name: str, has_ticket_technician: bool)
+type Ticket(__id: str, kind: str, status: str)
+rel mounted_in(Server, Rack)
+rel ticket_server(Ticket, Server)
+rel ticket_technician(Ticket, Technician)
+open_ticket(?server: Server, ?technician: Technician, ?kind: str)
+  eff: ?new0 := new Ticket(kind=?kind, status=open)
+  eff: ticket_server(?new0) := ?server
+  eff: ticket_technician(?new0) := ?technician
+decommission_server(?server: Server)
+  eff: status(?server) := 'decommissioned'
+decommission_server__1(?server: Server)
+  eff: status(?server) := 'decommissioned'
+  eff: mounted_in(?server) := None
+mount_server(?server: Server, ?rack: Rack)
+  eff: status(?server) := 'racked'
+  eff: mounted_in(?server) := ?rack
+
+[
+ {
+  "hidden_op": "open_ticket",
+  "learned": "open_ticket",
+  "support": 4,
+  "pre": [],
+  "effects": [
+   "?new0 := new Ticket(kind=?kind, status=open)",
+   "ticket_server(?new0) := ?server",
+   "ticket_technician(?new0) := ?technician"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "decommission_server",
+  "learned": "decommission_server",
+  "support": 2,
+  "pre": [],
+  "effects": [
+   "status(?server) := 'decommissioned'"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "decommission_server",
+  "learned": "decommission_server__1",
+  "support": 2,
+  "pre": [],
+  "effects": [
+   "status(?server) := 'decommissioned'",
+   "mounted_in(?server) := None"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "mount_server",
+  "learned": "mount_server",
+  "support": 3,
+  "pre": [],
+  "effects": [
+   "status(?server) := 'racked'",
+   "mounted_in(?server) := ?rack"
+  ],
+  "unexplained_failures": 1
+ }
+]

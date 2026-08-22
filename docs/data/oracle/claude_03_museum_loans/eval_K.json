@@ -1,0 +1,234 @@
+{
+ "types": {
+  "hidden": 4,
+  "learned": 4,
+  "recovered": 4,
+  "map": {
+   "Artifact": "Artifact",
+   "Gallery": "Gallery",
+   "Institution": "Institution",
+   "LoanAgreement": "LoanAgreement"
+  }
+ },
+ "predicates": {
+  "hidden_attrs": 13,
+  "recovered_attrs": 11,
+  "hidden_rels": 5,
+  "recovered_rels": 3,
+  "attr_map": {
+   "Artifact.name": "name",
+   "Artifact.era": "era",
+   "Artifact.condition": "condition",
+   "Artifact.has_loan_artifact": "has_loan_artifact",
+   "Gallery.name": "name",
+   "Gallery.capacity": "capacity",
+   "Institution.name": "name",
+   "Institution.has_loan_institution": "has_loan_institution",
+   "LoanAgreement.note": "note",
+   "LoanAgreement.duration_weeks": "duration_weeks",
+   "LoanAgreement.status": "status"
+  },
+  "rel_map": {
+   "displayed_in": "displayed_in",
+   "loan_artifact": "loan_artifact",
+   "loan_institution": "loan_institution"
+  }
+ },
+ "operators": {
+  "hidden": 6,
+  "observed_in_trace": 6,
+  "recovered": 6,
+  "recovered_ops": [
+   "place_artifact",
+   "remove_from_display",
+   "propose_loan",
+   "approve_loan",
+   "return_loan",
+   "cancel_loan_proposal"
+  ],
+  "learned": 6,
+  "spurious_learned": [],
+  "precision": 1.0,
+  "failure_rejection_rate": 0.12,
+  "per_op": {
+   "place_artifact": {
+    "successes": 16,
+    "explained": 16,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "place_artifact": 16
+    },
+    "failures": 7,
+    "rejected": 2,
+    "unbound_failures": 0
+   },
+   "remove_from_display": {
+    "successes": 23,
+    "explained": 23,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "remove_from_display": 23
+    },
+    "failures": 9,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "propose_loan": {
+    "successes": 7,
+    "explained": 6,
+    "invisible": 0,
+    "explained_rate": 0.86,
+    "by": {
+     "propose_loan": 6
+    },
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "approve_loan": {
+    "successes": 2,
+    "explained": 2,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "approve_loan": 2
+    },
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "return_loan": {
+    "successes": 8,
+    "explained": 8,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "return_loan": 8
+    },
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   },
+   "cancel_loan_proposal": {
+    "successes": 2,
+    "explained": 2,
+    "invisible": 0,
+    "explained_rate": 1.0,
+    "by": {
+     "cancel_loan_proposal": 2
+    },
+    "failures": 0,
+    "rejected": 0,
+    "unbound_failures": 0
+   }
+  }
+ },
+ "gtc": {
+  "transitions": 58,
+  "fully_representable": 58,
+  "partly_representable": 58,
+  "gtc": 1.0,
+  "gtc_any": 1.0,
+  "per_op": {
+   "remove_from_display": {
+    "n": 23,
+    "full": 23,
+    "any": 23
+   },
+   "return_loan": {
+    "n": 8,
+    "full": 8,
+    "any": 8
+   },
+   "propose_loan": {
+    "n": 7,
+    "full": 7,
+    "any": 7
+   },
+   "approve_loan": {
+    "n": 2,
+    "full": 2,
+    "any": 2
+   },
+   "place_artifact": {
+    "n": 16,
+    "full": 16,
+    "any": 16
+   },
+   "cancel_loan_proposal": {
+    "n": 2,
+    "full": 2,
+    "any": 2
+   }
+  }
+ },
+ "condition": "K",
+ "learned_report": [
+  {
+   "hidden_op": "remove_from_display",
+   "learned": "remove_from_display",
+   "support": 23,
+   "pre": [],
+   "effects": [
+    "displayed_in(?artifact) := None"
+   ],
+   "unexplained_failures": 9
+  },
+  {
+   "hidden_op": "return_loan",
+   "learned": "return_loan",
+   "support": 8,
+   "pre": [],
+   "effects": [
+    "status(?loan) := 'returned'"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "propose_loan",
+   "learned": "propose_loan",
+   "support": 7,
+   "pre": [],
+   "effects": [
+    "?new0 := new LoanAgreement(note=?note, duration_weeks=?duration_weeks, status=proposed)",
+    "loan_artifact(?new0) := ?artifact",
+    "loan_institution(?new0) := ?institution"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "approve_loan",
+   "learned": "approve_loan",
+   "support": 2,
+   "pre": [],
+   "effects": [
+    "status(?loan) := 'active'"
+   ],
+   "unexplained_failures": 0
+  },
+  {
+   "hidden_op": "place_artifact",
+   "learned": "place_artifact",
+   "support": 16,
+   "pre": [
+    "not displayed_in(?artifact, ?gallery)"
+   ],
+   "effects": [
+    "displayed_in(?artifact) := ?gallery"
+   ],
+   "unexplained_failures": 5
+  },
+  {
+   "hidden_op": "cancel_loan_proposal",
+   "learned": "cancel_loan_proposal",
+   "support": 2,
+   "pre": [],
+   "effects": [
+    "status(?loan) := 'void'"
+   ],
+   "unexplained_failures": 0
+  }
+ ]
+}

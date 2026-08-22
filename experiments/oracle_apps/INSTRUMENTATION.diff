@@ -1,0 +1,622 @@
+--- /home/moloch/semabi-gauntlet-v2/grok/apps/01_apiary/app.py	2026-08-22 13:19:58.281089166 +0200
++++ grok_01_apiary/app.py	2026-08-22 16:11:15.055922226 +0200
+@@ -537,6 +537,7 @@
+     if(hide && st.perched.length === 0) return;
+     const d = document.createElement("div");
+     d.className = "col";
++    d.setAttribute("data-eid", st.id);
+     const h = document.createElement("h2");
+     h.textContent = st.code + " " + st.perched.length + " of " + st.capacity;
+     d.appendChild(h);
+@@ -544,6 +545,7 @@
+       const b = document.createElement("button");
+       b.type = "button";
+       b.className = "hivebtn";
++      b.setAttribute("data-eid", p.id);
+       b.textContent = p.mark;
+       b.addEventListener("click", () => { selected = p.id; setView("colony"); });
+       d.appendChild(b);
+@@ -558,6 +560,7 @@
+   ui.hives.filter(h => !h.stand).forEach(h => {
+     const b = document.createElement("button");
+     b.type = "button";
++    b.setAttribute("data-eid", h.id);
+     b.textContent = h.mark;
+     b.addEventListener("click", () => { selected = h.id; setView("colony"); });
+     g.appendChild(b);
+@@ -570,11 +573,13 @@
+   ui.blooms.forEach(bl => {
+     const box = document.createElement("div");
+     box.className = "bloom col";
++    box.setAttribute("data-eid", bl.id);
+     const h = document.createElement("h2");
+     h.textContent = bl.title + " nectar " + bl.nectar;
+     box.appendChild(h);
+     bl.forages.forEach(f => {
+       const row = document.createElement("p");
++      row.setAttribute("data-eid", f.id);
+       row.textContent = f.mark + " loads " + f.loads + " ";
+       const haul = document.createElement("button");
+       haul.type = "button";
+@@ -598,12 +603,14 @@
+   const h = selected ? hive(selected) : ui.hives[0];
+   if(h) selected = h.id;
+   if(!h){
++    $("view-colony").removeAttribute("data-eid");
+     $("crumb").textContent = "no colony";
+     $("colony-label").textContent = "";
+     $("frame-count").textContent = "";
+     $("colony-forages").innerHTML = "";
+     return;
+   }
++  $("view-colony").setAttribute("data-eid", h.id);
+   $("crumb").textContent = (h.stand_code || "Ground") + " / " + h.mark;
+   $("colony-label").textContent = h.label;
+   $("frame-count").textContent = "frames " + h.frames;
+@@ -612,6 +619,7 @@
+   box.innerHTML = "";
+   h.forages.forEach(f => {
+     const p = document.createElement("p");
++    p.setAttribute("data-eid", f.id);
+     p.textContent = f.title + " loads " + f.loads + " ";
+     const haul = document.createElement("button");
+     haul.type = "button";
+@@ -629,6 +637,7 @@
+ 
+ function askWithdraw(fid){
+   pendingForage = fid;
++  $("dialog").setAttribute("data-eid", fid);
+   $("dialog").hidden = false;
+ }
+ 
+--- /home/moloch/semabi-gauntlet-v2/grok/apps/02_observatory/app.py	2026-08-22 13:19:58.281089166 +0200
++++ grok_02_observatory/app.py	2026-08-22 16:11:53.494001978 +0200
+@@ -475,12 +475,14 @@
+   head.appendChild(document.createElement("th"));
+   nights.forEach(n => {
+     const th = document.createElement("th");
++    th.setAttribute("data-eid", n.id);
+     th.textContent = n.label + " " + n.used + " of " + n.slots;
+     head.appendChild(th);
+   });
+   tbl.appendChild(head);
+   ui.scopes.forEach(sc => {
+     const tr = document.createElement("tr");
++    tr.setAttribute("data-eid", sc.id);
+     const th = document.createElement("th");
+     th.textContent = sc.code;
+     tr.appendChild(th);
+@@ -491,9 +493,12 @@
+       const b = document.createElement("button");
+       b.type = "button";
+       if(cell){
++        b.setAttribute("data-eid", cell.id);
++        b.setAttribute("data-erefs", sc.id + "," + n.id);
+         b.textContent = cell.catalog;
+         b.addEventListener("click", () => { selected = cell.id; setView("pointing"); });
+       } else {
++        b.setAttribute("data-erefs", sc.id + "," + n.id);
+         b.textContent = "open";
+         b.addEventListener("click", () => openWizard(sc.id, n.id));
+       }
+@@ -515,6 +520,7 @@
+   body.innerHTML = "";
+   rows.forEach(t => {
+     const tr = document.createElement("tr");
++    tr.setAttribute("data-eid", t.id);
+     const c1 = document.createElement("td");
+     c1.textContent = t.catalog;
+     const c2 = document.createElement("td");
+@@ -530,11 +536,13 @@
+   const p = selected ? pointing(selected) : ui.pointings[0];
+   if(p) selected = p.id;
+   if(!p){
++    $("view-pointing").removeAttribute("data-eid");
+     $("crumb").textContent = "no pointing";
+     $("pt-info").textContent = "";
+     $("dur").textContent = "";
+     return;
+   }
++  $("view-pointing").setAttribute("data-eid", p.id);
+   $("crumb").textContent = p.scope_code + " / " + p.night_label + " / " + p.catalog;
+   $("pt-info").textContent = p.scope_name + " aperture " + p.aperture + " mag " + p.mag;
+   $("dur").textContent = "duration " + p.duration;
+@@ -543,6 +551,7 @@
+ 
+ function openWizard(scopeId, nightId){
+   pendingCell = {scope: scopeId, night: nightId};
++  $("wizard").setAttribute("data-erefs", scopeId + "," + nightId);
+   fillSelect($("wiz-target"), ui.targets, t => t.catalog + " mag " + t.mag);
+   $("wizard").hidden = false;
+ }
+@@ -569,7 +578,7 @@
+   const t = oidOf($("retarget-sel"));
+   if(selected && t) act("retarget", {pointing: selected, target: t});
+ });
+-$("btn-detach").addEventListener("click", () => { $("dialog").hidden = false; });
++$("btn-detach").addEventListener("click", () => { if(selected) $("dialog").setAttribute("data-eid", selected); $("dialog").hidden = false; });
+ $("dialog-yes").addEventListener("click", () => {
+   $("dialog").hidden = true;
+   if(selected) act("detach", {pointing: selected});
+--- /home/moloch/semabi-gauntlet-v2/grok/apps/03_pharmacy/app.py	2026-08-22 13:19:04.986470933 +0200
++++ grok_03_pharmacy/app.py	2026-08-22 16:12:29.264187047 +0200
+@@ -483,6 +483,7 @@
+   root.innerHTML = "";
+   ui.cabinets.forEach(c => {
+     const box = document.createElement("div");
++    box.setAttribute("data-eid", c.id);
+     box.className = "acc";
+     const h = document.createElement("button");
+     h.type = "button";
+@@ -502,6 +503,7 @@
+         const p = document.createElement("p");
+         const btn = document.createElement("button");
+         btn.type = "button";
++        btn.setAttribute("data-eid", lot.id);
+         btn.textContent = lot.code;
+         btn.addEventListener("click", () => { checked = {}; checked[lot.id] = true; setView("lots"); });
+         p.appendChild(btn);
+@@ -520,6 +522,7 @@
+   ui.lots.forEach(l => {
+     if(only && l.cabinet) return;
+     const tr = document.createElement("tr");
++    tr.setAttribute("data-eid", l.id);
+     const c0 = document.createElement("td");
+     const cb = document.createElement("input");
+     cb.type = "checkbox";
+@@ -552,18 +555,20 @@
+   ui.formulas.forEach(f => {
+     const box = document.createElement("div");
+     box.className = "formbox";
++    box.setAttribute("data-eid", f.id);
+     const h = document.createElement("p");
+     h.textContent = f.title + " potency " + f.potency;
+     box.appendChild(h);
+     f.components.forEach(c => {
+       const p = document.createElement("p");
++      p.setAttribute("data-eid", c.id);
+       p.textContent = c.code + " qty " + c.qty + " ";
+       const d = document.createElement("button");
+       d.type = "button"; d.textContent = "Dose";
+       d.addEventListener("click", () => act("dose", {component: c.id}));
+       const s = document.createElement("button");
+       s.type = "button"; s.textContent = "Strike";
+-      s.addEventListener("click", () => { pendingStrike = c.id; $("dialog").hidden = false; });
++      s.addEventListener("click", () => { pendingStrike = c.id; $("dialog").setAttribute("data-eid", c.id); $("dialog").hidden = false; });
+       p.appendChild(d); p.appendChild(s);
+       box.appendChild(p);
+     });
+@@ -573,6 +578,7 @@
+ }
+ 
+ function renderWiz(){
++  $("wiz").setAttribute("data-erefs", [wizFormula, wizLot].filter(x => x).join(","));
+   $("wiz-step-label").textContent = "Blend step " + wizStep;
+   $("wiz-bind").hidden = wizStep !== 3;
+   $("wiz-next").hidden = wizStep === 3;
+@@ -583,6 +589,7 @@
+     ui.formulas.forEach(f => {
+       const b = document.createElement("button");
+       b.type = "button";
++      b.setAttribute("data-eid", f.id);
+       b.textContent = f.title;
+       if(wizFormula === f.id) b.textContent = f.title + " chosen";
+       b.addEventListener("click", () => { wizFormula = f.id; renderWiz(); });
+@@ -592,6 +599,7 @@
+     ui.lots.forEach(l => {
+       const b = document.createElement("button");
+       b.type = "button";
++      b.setAttribute("data-eid", l.id);
+       b.textContent = l.code + " " + l.title;
+       if(wizLot === l.id) b.textContent = l.code + " " + l.title + " chosen";
+       b.addEventListener("click", () => { wizLot = l.id; renderWiz(); });
+--- /home/moloch/semabi-gauntlet-v2/grok/apps/04_climbing/app.py	2026-08-22 13:21:28.256132885 +0200
++++ grok_04_climbing/app.py	2026-08-22 16:12:45.266071767 +0200
+@@ -514,6 +514,7 @@
+   visibleWalls().forEach(w => {
+     const b = document.createElement("button");
+     b.type = "button";
++    b.setAttribute("data-erefs", w.id);
+     b.textContent = "Hang on " + w.name;
+     b.addEventListener("click", () => {
+       const route = oidOf($("hang-route"));
+@@ -527,12 +528,15 @@
+   visibleWalls().forEach(w => {
+     const d = document.createElement("div");
+     d.className = "col";
++    d.setAttribute("data-eid", w.id);
+     const h = document.createElement("h2");
+     h.textContent = w.name + " " + w.tapes.length + " of " + w.lines;
+     d.appendChild(h);
+     w.tapes.forEach(t => {
+       const cell = document.createElement("div");
+       cell.className = "cell";
++      cell.setAttribute("data-eid", t.id);
++      cell.setAttribute("data-erefs", t.route);
+       const b = document.createElement("button");
+       b.type = "button";
+       b.textContent = t.abbr;
+@@ -558,6 +562,7 @@
+ function renderDetail(){
+   const found = selectedTape ? findTape(selectedTape) : null;
+   if(!found){
++    $("detail").removeAttribute("data-eid");
+     $("crumb").textContent = "no line";
+     $("detail-body").textContent = "";
+     return;
+@@ -565,6 +570,8 @@
+   const t = found.tape, w = found.wall;
+   const route = ui.routes.find(r => r.id === t.route);
+   const setter = ui.setters.find(s => s.id === t.setter);
++  $("detail").setAttribute("data-eid", t.id);
++  $("detail").setAttribute("data-erefs", [t.route, w.id, t.setter].filter(x => x).join(","));
+   $("crumb").textContent = w.name + " / " + (route ? route.name : t.abbr);
+   let extra = "grade " + t.grade + " " + t.color;
+   if(setter) extra += " " + setter.handle + (setter.lead ? " lead" : "");
+@@ -583,6 +590,7 @@
+   body.innerHTML = "";
+   rows.forEach(r => {
+     const tr = document.createElement("tr");
++    tr.setAttribute("data-eid", r.id);
+     const c1 = document.createElement("td"); c1.textContent = r.name;
+     const c2 = document.createElement("td");
+     c2.textContent = String(r.grade) + " ";
+@@ -623,7 +631,7 @@
+   const wall = oidOf($("restow-wall"));
+   if(selectedTape && wall) act("restow", {tape: selectedTape, wall});
+ });
+-$("btn-pull").addEventListener("click", () => { $("dialog").hidden = false; });
++$("btn-pull").addEventListener("click", () => { if(selectedTape) $("dialog").setAttribute("data-eid", selectedTape); $("dialog").hidden = false; });
+ $("dialog-yes").addEventListener("click", () => {
+   $("dialog").hidden = true;
+   if(selectedTape) act("pull", {tape: selectedTape});
+--- /home/moloch/semabi-gauntlet-v2/claude/apps/01_airport_gates/app.py	2026-08-22 13:13:09.156343284 +0200
++++ claude_01_airport_gates/app.py	2026-08-22 16:13:43.160874454 +0200
+@@ -359,6 +359,7 @@
+             if flight is None:
+                 continue
+             crew.append({
++                "link_id": link["id"],
+                 "flight_id": flight["id"],
+                 "flight_code": flight["attrs"]["code"],
+                 "flight_status": flight["attrs"]["status"],
+@@ -588,11 +589,11 @@
+     var body;
+     if (g.flight_id) {
+       body = '<div class="occ">Occupied by ' + esc(g.flight_code) + "</div>"
+-        + '<button data-act="clear" data-flight="' + g.flight_id + '">Release stand</button>';
++        + '<button data-act="clear" data-flight="' + g.flight_id + '" data-eid="' + g.flight_id + '">Release stand</button>';
+     } else {
+       body = '<div class="occ">Vacant</div>';
+     }
+-    return '<div class="stand"><div class="lbl">' + esc(g.label) + "</div>"
++    return '<div class="stand" data-eid="' + g.id + '"' + (g.flight_id ? ' data-erefs="' + g.flight_id + '"' : '') + '><div class="lbl">' + esc(g.label) + "</div>"
+       + '<div class="term">Terminal ' + esc(g.terminal) + "</div>" + body + "</div>";
+   }).join("");
+   return "<h2>Stand occupancy</h2>" + '<div class="board">' + cells + "</div>";
+@@ -600,11 +601,11 @@
+ 
+ function renderFlights() {
+   var options = data.gates.map(function (g) {
+-    return '<option value="' + g.id + '">' + esc(g.label) + " \\u00b7 " + esc(g.terminal)
++    return '<option value="' + g.id + '" data-oid="' + g.id + '">' + esc(g.label) + " \\u00b7 " + esc(g.terminal)
+       + "</option>";
+   }).join("");
+   var rows = data.flights.map(function (f) {
+-    return "<tr data-row=\\"" + f.id + "\\">"
++    return "<tr data-row=\\"" + f.id + "\\" data-eid=\\"" + f.id + "\\">"
+       + "<td>" + esc(f.code) + "</td>"
+       + "<td>" + esc(f.size) + "</td>"
+       + "<td>" + esc(f.status) + "</td>"
+@@ -628,19 +629,19 @@
+     } else {
+       crew = a.crew.map(function (c) {
+         return esc(c.flight_code) + " [" + shortStatus(c.flight_status) + "] as "
+-          + esc(c.role) + ' <button data-act="unassign" data-flight="' + c.flight_id
++          + esc(c.role) + ' <button data-act="unassign" data-eid="' + c.link_id + '" data-erefs="' + c.flight_id + '" data-flight="' + c.flight_id
+           + '" data-agent="' + a.id + '">Unassign</button>';
+       }).join("<br>");
+     }
+-    return "<tr><td>" + esc(a.name) + "</td><td>" + esc(a.shift) + "</td><td>" + crew
++    return '<tr data-eid="' + a.id + '"><td>' + esc(a.name) + "</td><td>" + esc(a.shift) + "</td><td>" + crew
+       + "</td></tr>";
+   }).join("");
+   var flightOpts = data.flights.map(function (f) {
+-    return '<option value="' + f.id + '">' + esc(f.code) + " \\u00b7 "
++    return '<option value="' + f.id + '" data-oid="' + f.id + '">' + esc(f.code) + " \\u00b7 "
+       + shortStatus(f.status) + "</option>";
+   }).join("");
+   var agentOpts = data.agents.map(function (a) {
+-    return '<option value="' + a.id + '">' + esc(a.name) + " \\u00b7 " + esc(a.shift)
++    return '<option value="' + a.id + '" data-oid="' + a.id + '">' + esc(a.name) + " \\u00b7 " + esc(a.shift)
+       + "</option>";
+   }).join("");
+   var roleOpts = data.roles.map(function (r) {
+@@ -658,7 +659,7 @@
+ function renderOverlay() {
+   var host = document.getElementById("overlay");
+   if (!pending) { host.innerHTML = ""; return; }
+-  host.innerHTML = '<div class="modal"><div class="dialog"><p>Cancel flight '
++  host.innerHTML = '<div class="modal"><div class="dialog" data-eid="' + pending.id + '"><p>Cancel flight '
+     + esc(pending.code) + "? The flight will be withdrawn and cannot be restored.</p>"
+     + '<button data-act="cancel-yes">Confirm cancellation</button> '
+     + '<button data-act="cancel-no">Keep flight</button></div></div>';
+--- /home/moloch/semabi-gauntlet-v2/claude/apps/02_pharmacy_dispensary/app.py	2026-08-22 13:10:56.119800032 +0200
++++ claude_02_pharmacy_dispensary/app.py	2026-08-22 16:14:08.855621592 +0200
+@@ -442,6 +442,9 @@
+     if (opts.oninput) e.oninput = opts.oninput;
+     if (opts.onchange) e.onchange = opts.onchange;
+     if (opts.kids) opts.kids.forEach(function (k) { e.appendChild(k); });
++    if (opts.eid) e.setAttribute("data-eid", opts.eid);
++    if (opts.erefs) e.setAttribute("data-erefs", opts.erefs);
++    if (opts.oid) e.setAttribute("data-oid", opts.oid);
+   }
+   return e;
+ }
+@@ -526,7 +529,7 @@
+   left.appendChild(h("h2", { text: "Patients" }));
+   const ul = h("ul");
+   S.view.patients.forEach(function (p) {
+-    const li = h("li");
++    const li = h("li", { eid: p.id });
+     li.appendChild(h("button", {
+       text: p.name,
+       onclick: function () { S.patient = p.id; render(); }
+@@ -536,7 +539,7 @@
+   left.appendChild(ul);
+   cols.appendChild(left);
+ 
+-  const right = h("div", { cls: "col grow" });
++  const right = h("div", { cls: "col grow", eid: S.patient || undefined });
+   if (!S.patient) {
+     right.appendChild(h("h2", { text: "No patient selected" }));
+     right.appendChild(h("div", { cls: "line", text: "Choose a patient from the list." }));
+@@ -551,7 +554,7 @@
+     right.appendChild(h("div", { cls: "line", text: "None on file." }));
+   }
+   mine.forEach(function (r) {
+-    const card = h("div", { cls: "card" });
++    const card = h("div", { cls: "card", eid: r.id, erefs: [r.drug, r.last_filled_by].filter(function (x) { return x; }).join(",") });
+     card.appendChild(h("div", { cls: "line", text: "Drug: " + drugLabel(r.drug) }));
+     card.appendChild(h("div", { cls: "line", text: "Dosage: " + r.dosage }));
+     card.appendChild(h("div", { cls: "line", text: "Refills left: " + r.refills_left }));
+@@ -575,7 +578,7 @@
+   const form = h("div");
+   const drugSel = h("select");
+   S.view.drugs.forEach(function (d) {
+-    const o = h("option", { text: d.name, value: d.id });
++    const o = h("option", { text: d.name, value: d.id, oid: d.id });
+     if (d.id === S.draft.drug) o.selected = true;
+     drugSel.appendChild(o);
+   });
+@@ -624,7 +627,7 @@
+   table.appendChild(thead);
+   const tbody = h("tbody");
+   S.view.drugs.forEach(function (d) {
+-    const tr = h("tr");
++    const tr = h("tr", { eid: d.id });
+     tr.appendChild(h("td", { text: d.name }));
+     tr.appendChild(h("td", { text: d.form }));
+     tr.appendChild(h("td", { text: String(d.stock) }));
+@@ -679,7 +682,7 @@
+   left.appendChild(h("h2", { text: "Prescription queue" }));
+   const ul = h("ul");
+   S.view.prescriptions.forEach(function (r) {
+-    const li = h("li");
++    const li = h("li", { eid: r.id, erefs: [r.patient, r.drug].join(",") });
+     li.appendChild(h("button", {
+       text: queueLine(r),
+       onclick: function () { S.rx = r.id; render(); }
+@@ -693,7 +696,7 @@
+   right.appendChild(h("h2", { text: "Pharmacist roster" }));
+   const ul2 = h("ul");
+   S.view.pharmacists.forEach(function (ph) {
+-    const li = h("li");
++    const li = h("li", { eid: ph.id });
+     li.appendChild(h("button", {
+       text: ph.name,
+       onclick: function () { S.pharm = ph.id; render(); }
+@@ -703,11 +706,11 @@
+   right.appendChild(ul2);
+   const chosen = S.rx ? byId(S.view.prescriptions, S.rx) : null;
+   right.appendChild(h("div", {
+-    cls: "sel",
++    cls: "sel", erefs: chosen ? chosen.id : undefined,
+     text: "Selected prescription: " + (chosen ? queueLine(chosen) : "none")
+   }));
+   right.appendChild(h("div", {
+-    cls: "sel",
++    cls: "sel", erefs: S.pharm || undefined,
+     text: "Selected pharmacist: " + (S.pharm ? byId(S.view.pharmacists, S.pharm).name : "none")
+   }));
+   const ready = !!chosen && !!S.pharm && chosen.status === "active";
+@@ -725,7 +728,7 @@
+ function voidDialog() {
+   const r = byId(S.view.prescriptions, S.pendingVoid);
+   const veil = h("div", { cls: "veil" });
+-  const box = h("div", { cls: "dialog" });
++  const box = h("div", { cls: "dialog", eid: S.pendingVoid });
+   box.appendChild(h("h2", { text: "Void this prescription?" }));
+   box.appendChild(h("div", { cls: "line", text: drugLabel(r.drug) + " - " + r.dosage + " - refills " + r.refills_left }));
+   box.appendChild(h("div", { cls: "line", text: "This cannot be undone." }));
+--- /home/moloch/semabi-gauntlet-v2/claude/apps/03_museum_loans/app.py	2026-08-22 13:25:58.832271558 +0200
++++ claude_03_museum_loans/app.py	2026-08-22 16:14:43.969163358 +0200
+@@ -356,6 +356,8 @@
+         loans.append({
+             "id": loan["id"],
+             "artifact": artifact["attrs"]["name"] if artifact else "—",
++            "artifact_id": artifact["id"] if artifact else None,
++            "institution_id": institution["id"] if institution else None,
+             "institution": institution["attrs"]["name"] if institution else "—",
+             "duration_weeks": loan["attrs"]["duration_weeks"],
+             "note": loan["attrs"]["note"],
+@@ -618,12 +620,12 @@
+   var rooms = data.galleries.map(function (g) {
+     var slots = g.slots.map(function (s) {
+       if (!s) return '<div class="slot"><span class="empty">empty</span></div>';
+-      return '<div class="slot full"><div class="mark">' + esc(s.mark) + "</div>"
++      return '<div class="slot full" data-eid="' + s.artifact_id + '"><div class="mark">' + esc(s.mark) + "</div>"
+         + '<div class="era">' + esc(s.era) + "</div>"
+         + '<button data-act="takedown" data-artifact="' + s.artifact_id
+         + '">Take down</button></div>';
+     }).join("");
+-    return '<div class="room"><div class="rname">' + esc(g.name) + "</div>"
++    return '<div class="room" data-eid="' + g.id + '"><div class="rname">' + esc(g.name) + "</div>"
+       + '<div class="slots">' + slots + "</div></div>";
+   }).join("");
+   return "<h2>Galleries</h2>" + '<div class="floor">' + rooms + "</div>";
+@@ -631,10 +633,10 @@
+ 
+ function renderCatalogue() {
+   var options = data.galleries.map(function (g) {
+-    return '<option value="' + g.id + '">' + esc(g.name) + "</option>";
++    return '<option value="' + g.id + '" data-oid="' + g.id + '">' + esc(g.name) + "</option>";
+   }).join("");
+   var rows = data.artifacts.map(function (a) {
+-    return '<tr data-row="' + a.id + '">'
++    return '<tr data-row="' + a.id + '" data-eid="' + a.id + '">'
+       + "<td>" + esc(a.name) + "</td>"
+       + "<td>" + esc(a.era) + "</td>"
+       + "<td>" + esc(a.condition) + "</td>"
+@@ -657,9 +659,9 @@
+       + "proposal.</span></div>";
+   }
+   var instOpts = data.institutions.map(function (i) {
+-    return '<option value="' + i.id + '">' + esc(i.name) + "</option>";
++    return '<option value="' + i.id + '" data-oid="' + i.id + '">' + esc(i.name) + "</option>";
+   }).join("");
+-  return '<div class="panel"><span class="who">Proposal for ' + esc(who.name)
++  return '<div class="panel" data-erefs="' + who.id + '"><span class="who">Proposal for ' + esc(who.name)
+     + "</span><span>Borrower</span>" + '<select id="pi">' + instOpts + "</select>"
+     + "<span>Weeks</span>" + '<input id="pw" type="number" value="8">'
+     + "<span>Purpose</span>" + '<input id="pn" type="text" value="">'
+@@ -678,7 +680,7 @@
+     } else {
+       action = "\\u2014";
+     }
+-    return '<tr data-row="' + l.id + '">'
++    return '<tr data-row="' + l.id + '" data-eid="' + l.id + '" data-erefs="' + [l.artifact_id, l.institution_id].filter(function (x) { return x; }).join(",") + '">'
+       + "<td>" + esc(l.artifact) + "</td>"
+       + "<td>" + esc(l.institution) + "</td>"
+       + "<td>" + l.duration_weeks + "</td>"
+@@ -695,7 +697,7 @@
+ function renderOverlay() {
+   var host = document.getElementById("overlay");
+   if (!pending) { host.innerHTML = ""; return; }
+-  host.innerHTML = '<div class="modal"><div class="dialog"><p>Approve the agreement '
++  host.innerHTML = '<div class="modal"><div class="dialog" data-eid="' + pending.id + '"><p>Approve the agreement '
+     + "for " + esc(pending.artifact) + "? An approved agreement can no longer be "
+     + "cancelled as a proposal.</p>"
+     + '<button data-act="approve-yes">Confirm approval</button> '
+--- /home/moloch/semabi-gauntlet-v2/claude/apps/04_datacenter_racks/app.py	2026-08-22 13:24:32.692272337 +0200
++++ claude_04_datacenter_racks/app.py	2026-08-22 16:22:42.692902893 +0200
+@@ -314,6 +314,8 @@
+             "status": ticket["attrs"]["status"],
+             "hostname": server["attrs"]["hostname"] if server else "",
+             "technician": technician["attrs"]["name"] if technician else "",
++            "server_id": server["id"] if server else None,
++            "technician_id": technician["id"] if technician else None,
+         })
+     return {
+         "racks": racks,
+@@ -524,7 +526,7 @@
+ function floorGrid() {
+   var h = '<div class="panel"><h2>Floor</h2><div class="grid">';
+   for (var i = 0; i < data.racks.length; i++) {
+-    h += '<button data-act="rack" data-id="' + data.racks[i].id + '">'
++    h += '<button data-act="rack" data-id="' + data.racks[i].id + '" data-eid="' + data.racks[i].id + '">'
+       + esc(data.racks[i].label) + "</button>";
+   }
+   return h + "</div></div>";
+@@ -533,7 +535,7 @@
+ function elevation() {
+   var rack = byId(data.racks, view.rack);
+   if (!rack) { view = { name: "floor", rack: null, unit: null }; return floorGrid(); }
+-  var h = '<div class="panel"><p class="crumb"><button data-act="floor">Floor</button> '
++  var h = '<div class="panel" data-eid="' + rack.id + '"><p class="crumb"><button data-act="floor">Floor</button> '
+     + esc(rack.label) + "</p>";
+   h += "<p>Room: " + esc(rack.room) + "</p>";
+   h += "<p>Load: " + rack.load + " W of " + rack.cap + " W</p><h2>Elevation</h2>";
+@@ -541,7 +543,7 @@
+     h += '<p class="note">No units mounted.</p>';
+   }
+   for (var i = 0; i < rack.units.length; i++) {
+-    h += '<div class="row"><button data-act="unit" data-id="' + rack.units[i].id + '">'
++    h += '<div class="row" data-eid="' + rack.units[i].id + '"><button data-act="unit" data-id="' + rack.units[i].id + '">'
+       + esc(rack.units[i].hostname) + "</button>"
+       + '<button data-act="offline" data-id="' + rack.units[i].id + '">Take Offline</button></div>';
+   }
+@@ -552,8 +554,8 @@
+   var rack = byId(data.racks, view.rack);
+   var unit = byId(data.units, view.unit);
+   if (!rack || !unit) { view = { name: "floor", rack: null, unit: null }; return floorGrid(); }
+-  var h = '<div class="panel"><p class="crumb"><button data-act="floor">Floor</button> '
+-    + '<button data-act="rack" data-id="' + rack.id + '">' + esc(rack.label) + "</button> "
++  var h = '<div class="panel" data-eid="' + unit.id + '" data-erefs="' + rack.id + '"><p class="crumb"><button data-act="floor">Floor</button> '
++    + '<button data-act="rack" data-id="' + rack.id + '" data-eid="' + rack.id + '">' + esc(rack.label) + "</button> "
+     + esc(unit.hostname) + "</p>";
+   h += "<h2>Unit</h2>";
+   h += "<p>Host: " + esc(unit.hostname) + "</p>";
+@@ -569,24 +571,24 @@
+   if (data.staged.length === 0) { h += '<p class="note">Pool is empty.</p>'; }
+   for (var i = 0; i < data.staged.length; i++) {
+     var s = data.staged[i];
+-    h += '<div class="row"><button data-act="select" data-id="' + s.id + '" aria-pressed="'
++    h += '<div class="row" data-eid="' + s.id + '"><button data-act="select" data-id="' + s.id + '" aria-pressed="'
+       + (selected === s.id) + '">' + esc(s.hostname) + " &mdash; " + s.draw + " W</button>"
+       + '<button data-act="offline" data-id="' + s.id + '">Take Offline</button></div>';
+   }
+   var chosen = selected ? byId(data.staged, selected) : null;
+   h += "<h2>Mount</h2>";
+-  h += "<p>Selected unit: "
++  h += '<p' + (chosen ? ' data-erefs="' + chosen.id + '"' : '') + '>Selected unit: '
+     + (chosen ? esc(chosen.hostname) + " (" + chosen.draw + " W)" : "none") + "</p>";
+   h += '<label>Destination rack <select data-role="rack">';
+   for (var j = 0; j < data.racks.length; j++) {
+-    h += '<option value="' + data.racks[j].id + '">' + esc(data.racks[j].label) + "</option>";
++    h += '<option value="' + data.racks[j].id + '" data-oid="' + data.racks[j].id + '">' + esc(data.racks[j].label) + "</option>";
+   }
+   h += "</select></label>";
+   h += '<button data-act="mount"' + (chosen ? "" : " disabled") + ">Mount</button>";
+   h += "<h2>Retired</h2>";
+   if (data.retired.length === 0) { h += '<p class="note">Nothing retired.</p>'; }
+   for (var k = 0; k < data.retired.length; k++) {
+-    h += '<div class="row">' + esc(data.retired[k].hostname) + " &mdash; "
++    h += '<div class="row" data-eid="' + data.retired[k].id + '">' + esc(data.retired[k].hostname) + " &mdash; "
+       + data.retired[k].draw + " W</div>";
+   }
+   return h + "</div>";
+@@ -598,7 +600,7 @@
+     + "<th>Action</th></tr></thead><tbody>";
+   for (var i = 0; i < data.tickets.length; i++) {
+     var t = data.tickets[i];
+-    h += "<tr><td>" + esc(t.kind) + "</td><td>" + esc(t.hostname) + "</td><td>"
++    h += '<tr data-eid="' + t.id + '" data-erefs="' + [t.server_id, t.technician_id].filter(function (x) { return x; }).join(",") + '"><td>' + esc(t.kind) + "</td><td>" + esc(t.hostname) + "</td><td>"
+       + esc(t.technician) + "</td><td>" + esc(t.status) + "</td><td>"
+       + '<button data-act="close" data-id="' + t.id + '">Close</button></td></tr>';
+   }
+@@ -609,13 +611,13 @@
+   h += "<h2>New Ticket</h2>";
+   h += '<label>Unit <select data-role="unit">';
+   for (var j = 0; j < data.units.length; j++) {
+-    h += '<option value="' + data.units[j].id + '">' + esc(data.units[j].hostname)
++    h += '<option value="' + data.units[j].id + '" data-oid="' + data.units[j].id + '">' + esc(data.units[j].hostname)
+       + " (" + data.units[j].draw + " W)</option>";
+   }
+   h += "</select></label>";
+   h += '<label>Technician <select data-role="tech">';
+   for (var k = 0; k < data.technicians.length; k++) {
+-    h += '<option value="' + data.technicians[k].id + '">'
++    h += '<option value="' + data.technicians[k].id + '" data-oid="' + data.technicians[k].id + '">'
+       + esc(data.technicians[k].name) + "</option>";
+   }
+   h += "</select></label>";
+@@ -631,7 +633,7 @@
+ function dialog() {
+   var unit = byId(data.units, pending.id);
+   var host = unit ? unit.hostname : "";
+-  return '<div class="dialog"><p>Take ' + esc(host)
++  return '<div class="dialog" data-eid="' + pending.id + '"><p>Take ' + esc(host)
+     + " offline? This step cannot be reversed.</p>"
+     + '<button data-act="confirm">Confirm</button>'
+     + '<button data-act="cancel">Cancel</button></div>';

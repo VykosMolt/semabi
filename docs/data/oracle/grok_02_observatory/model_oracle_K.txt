@@ -1,0 +1,139 @@
+domain known_vocab
+type Scope(__id: str, name: str, code: str, aperture: int, has_pointing_scope: bool)
+type Target(__id: str, catalog: str, mag: int, has_pointing_target: bool)
+type Night(__id: str, label: str, slots: int, has_pointing_night: bool)
+type Pointing(__id: str, duration: int)
+rel pointing_scope(Pointing, Scope)
+rel pointing_target(Pointing, Target)
+rel pointing_night(Pointing, Night)
+extend(?pointing: Pointing)
+  pre: duration(?pointing) == '1'
+  eff: duration(?pointing) := '2'
+extend__1(?pointing: Pointing)
+  pre: duration(?pointing) == '2'
+  eff: duration(?pointing) := '3'
+extend__2(?pointing: Pointing)
+  pre: duration(?pointing) == '3'
+  eff: duration(?pointing) := '4'
+clip(?pointing: Pointing)
+  pre: duration(?pointing) == '2'
+  eff: duration(?pointing) := '1'
+clip__1(?pointing: Pointing)
+  pre: duration(?pointing) == '3'
+  eff: duration(?pointing) := '2'
+retarget(?pointing: Pointing, ?target: Target)
+  pre: catalog(?target) == 'M31' & not pointing_target(?pointing, ?target)
+  eff: pointing_target(?pointing) := ?target
+book(?scope: Scope, ?target: Target, ?night: Night)
+  pre: name(?scope) == 'West' & slots(?night) == '2'
+  eff: ?new0 := new Pointing(duration=1)
+  eff: pointing_scope(?new0) := ?scope
+  eff: pointing_target(?new0) := ?target
+  eff: pointing_night(?new0) := ?night
+detach(?pointing: Pointing, ?x1: Target)
+  pre: pointing_target(?pointing, ?x1)
+  eff: delete ?pointing
+  eff: delete ?x1
+
+[
+ {
+  "hidden_op": "extend",
+  "learned": "extend",
+  "support": 5,
+  "pre": [
+   "duration(?pointing) == '1'"
+  ],
+  "effects": [
+   "duration(?pointing) := '2'"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "extend",
+  "learned": "extend__1",
+  "support": 5,
+  "pre": [
+   "duration(?pointing) == '2'"
+  ],
+  "effects": [
+   "duration(?pointing) := '3'"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "extend",
+  "learned": "extend__2",
+  "support": 2,
+  "pre": [
+   "duration(?pointing) == '3'"
+  ],
+  "effects": [
+   "duration(?pointing) := '4'"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "clip",
+  "learned": "clip",
+  "support": 5,
+  "pre": [
+   "duration(?pointing) == '2'"
+  ],
+  "effects": [
+   "duration(?pointing) := '1'"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "clip",
+  "learned": "clip__1",
+  "support": 2,
+  "pre": [
+   "duration(?pointing) == '3'"
+  ],
+  "effects": [
+   "duration(?pointing) := '2'"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "retarget",
+  "learned": "retarget",
+  "support": 3,
+  "pre": [
+   "catalog(?target) == 'M31'",
+   "not pointing_target(?pointing, ?target)"
+  ],
+  "effects": [
+   "pointing_target(?pointing) := ?target"
+  ],
+  "unexplained_failures": 1
+ },
+ {
+  "hidden_op": "book",
+  "learned": "book",
+  "support": 3,
+  "pre": [
+   "name(?scope) == 'West'",
+   "slots(?night) == '2'"
+  ],
+  "effects": [
+   "?new0 := new Pointing(duration=1)",
+   "pointing_scope(?new0) := ?scope",
+   "pointing_target(?new0) := ?target",
+   "pointing_night(?new0) := ?night"
+  ],
+  "unexplained_failures": 0
+ },
+ {
+  "hidden_op": "detach",
+  "learned": "detach",
+  "support": 7,
+  "pre": [],
+  "effects": [
+   "delete ?pointing",
+   "delete ?x1"
+  ],
+  "unexplained_failures": 0
+ }
+]

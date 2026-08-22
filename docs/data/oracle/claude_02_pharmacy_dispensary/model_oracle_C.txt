@@ -1,0 +1,119 @@
+domain learned
+type T0(id: str, attr:name: str, attr:form: str, attr:stock: str)
+type T1(id: str, attr:name: str)
+type T2(id: str, attr:name: str)
+type T3(id: str, attr:dosage: str, attr:refills_left: str, attr:status: str)
+rel ref_3_rel:prescription_patient(T3, T1)
+rel ref_3_rel:prescription_drug(T3, T0)
+rel ref_3_rel:last_filled_by(T3, T2)
+op0(?o0: T3)
+  pre: id(?o0) != 'rx_6'
+  eff: attr:status(?o0) := 'void'
+op1(?o0: T1)
+  eff: ?new0 := new T3(id=<new>, attr:dosage=, attr:refills_left=0, attr:status=active)
+  eff: ref_3_rel:last_filled_by(?new0) := None
+  eff: ref_3_rel:prescription_drug(?new0) := T0:drug_1
+  eff: ref_3_rel:prescription_patient(?new0) := ?o0
+op2(?o0: T0)
+  pre: attr:stock(?o0) == '8'
+  eff: attr:stock(?o0) := '9'
+op3(?o0: T0)
+  pre: attr:stock(?o0) == '0' & attr:name(?o0) != 'Metformin'
+  eff: attr:stock(?o0) := '1'
+op4(?o0: T0)
+  pre: attr:form(?o0) == 'liquid' & id(?o0) != 'drug_2' & attr:name(?o0) != 'Naproxen'
+  eff: attr:stock(?o0) := '11'
+op5(?o0: T0)
+  pre: attr:form(?o0) == 'liquid' & attr:name(?o0) != 'Cetirizine' & attr:name(?o0) != 'Ibuprofen'
+  eff: attr:stock(?o0) := '10'
+op6(?o0: T1)
+  pre: id(?o0) != 'patient_2'
+  eff: ?new0 := new T3(id=<new>, attr:dosage=, attr:refills_left=0, attr:status=active)
+  eff: ref_3_rel:last_filled_by(?new0) := None
+  eff: ref_3_rel:prescription_drug(?new0) := T0:drug_5
+  eff: ref_3_rel:prescription_patient(?new0) := ?o0
+op7(?o0: T1)
+  pre: attr:name(?o0) != 'Farid Haddad' & id(?o0) != 'patient_3'
+  eff: ?new0 := new T3(id=<new>, attr:dosage=, attr:refills_left=0, attr:status=active)
+  eff: ref_3_rel:last_filled_by(?new0) := None
+  eff: ref_3_rel:prescription_drug(?new0) := T0:drug_4
+  eff: ref_3_rel:prescription_patient(?new0) := ?o0
+op8(?o0: T1)
+  pre: attr:name(?o0) != 'Farid Haddad' & id(?o0) != 'patient_3'
+  eff: ?new0 := new T3(id=<new>, attr:dosage=, attr:refills_left=0, attr:status=active)
+  eff: ref_3_rel:last_filled_by(?new0) := None
+  eff: ref_3_rel:prescription_drug(?new0) := T0:drug_2
+  eff: ref_3_rel:prescription_patient(?new0) := ?o0
+
+groundings:
+  op0: click(button#0@T3[?o0])
+  op1: click(button#0@T1[?o0]); click(button:Write@T1[?o0])
+  op2: click(button:Drug shelf); click(button:Restock@T0[?o0])
+  op3: click(button:Drug shelf); click(button:Restock@T0[?o0])
+  op4: click(button:Drug shelf); click(button:Restock@T0[?o0])
+  op5: click(button:Drug shelf); click(button:Restock@T0[?o0])
+  op6: click(button#0@T1[?o0]); click(button:Write@T1[?o0])
+  op7: click(button#0@T1[?o0]); click(button:Write@T1[?o0])
+  op8: click(button#0@T1[?o0]); click(button:Write@T1[?o0])
+
+29 transitions, 352 no-op segments, 14 operator hypotheses, 0 view operators
+op0(?o0: T3)  support=5 neg=4 verified=0/0
+  how: click(button#0@T3[?o0])
+  pre: id(?o0) != 'rx_6'  (+1 unexplained failures)
+  eff: attr:status(?o0) := 'void'
+op1(?o0: T1, ?new0: T3)  support=4 neg=11 verified=0/0
+  how: click(button#0@T1[?o0]); click(button:Write@T1[?o0])
+  pre: ? (11 unexplained failures)
+  eff: ?new0 := new T3(id=<new>, attr:dosage=, attr:refills_left=0, attr:status=active) rel:last_filled_by->None rel:prescription_drug->T0:drug_1 rel:prescription_patient->?o0
+op2(?o0: T0)  support=3 neg=15 verified=0/0
+  how: click(button:Drug shelf); click(button:Restock@T0[?o0])
+  pre: attr:stock(?o0) == '8'  (+2 unexplained failures)
+  eff: attr:stock(?o0) := '9'
+op3(?o0: T0)  support=2 neg=16 verified=0/0
+  how: click(button:Drug shelf); click(button:Restock@T0[?o0])
+  pre: attr:stock(?o0) == '0' & attr:name(?o0) != 'Metformin'  (+1 unexplained failures)
+  eff: attr:stock(?o0) := '1'
+op4(?o0: T0)  support=2 neg=16 verified=0/0
+  how: click(button:Drug shelf); click(button:Restock@T0[?o0])
+  pre: attr:form(?o0) == 'liquid' & id(?o0) != 'drug_2' & attr:name(?o0) != 'Naproxen'  (+2 unexplained failures)
+  eff: attr:stock(?o0) := '11'
+op5(?o0: T0)  support=2 neg=16 verified=0/0
+  how: click(button:Drug shelf); click(button:Restock@T0[?o0])
+  pre: attr:form(?o0) == 'liquid' & attr:name(?o0) != 'Cetirizine' & attr:name(?o0) != 'Ibuprofen'  (+3 unexplained failures)
+  eff: attr:stock(?o0) := '10'
+op6(?o0: T1, ?new0: T3)  support=2 neg=13 verified=0/0
+  how: click(button#0@T1[?o0]); click(button:Write@T1[?o0])
+  pre: id(?o0) != 'patient_2'  (+7 unexplained failures)
+  eff: ?new0 := new T3(id=<new>, attr:dosage=, attr:refills_left=0, attr:status=active) rel:last_filled_by->None rel:prescription_drug->T0:drug_5 rel:prescription_patient->?o0
+op7(?o0: T1, ?new0: T3)  support=2 neg=13 verified=0/0
+  how: click(button#0@T1[?o0]); click(button:Write@T1[?o0])
+  pre: attr:name(?o0) != 'Farid Haddad' & id(?o0) != 'patient_3'  (+7 unexplained failures)
+  eff: ?new0 := new T3(id=<new>, attr:dosage=, attr:refills_left=0, attr:status=active) rel:last_filled_by->None rel:prescription_drug->T0:drug_4 rel:prescription_patient->?o0
+op8(?o0: T1, ?new0: T3)  support=2 neg=13 verified=0/0
+  how: click(button#0@T1[?o0]); click(button:Write@T1[?o0])
+  pre: attr:name(?o0) != 'Farid Haddad' & id(?o0) != 'patient_3'  (+7 unexplained failures)
+  eff: ?new0 := new T3(id=<new>, attr:dosage=, attr:refills_left=0, attr:status=active) rel:last_filled_by->None rel:prescription_drug->T0:drug_2 rel:prescription_patient->?o0
+op9(?o0: T0)  support=1 neg=3 verified=0/0
+  how: click(button:Fill counter); click(button:Fill)
+  pre: ? (3 unexplained failures)
+  eff: attr:stock(?o0) := '3'
+  eff: forall x:T3 with rel:prescription_drug(x)==?o0: attr:status(x) := 'void'
+  eff: forall x:T3 with rel:prescription_drug(x)==?o0: rel:last_filled_by(x) := 'T2:pharmacist_2'
+op10(?o0: T0)  support=1 neg=3 verified=0/0
+  how: click(button:Fill counter); click(button:Fill)
+  pre: ? (3 unexplained failures)
+  eff: attr:stock(?o0) := '0'
+  eff: forall x:T3 with rel:prescription_drug(x)==?o0: attr:refills_left(x) := '2'
+  eff: forall x:T3 with rel:prescription_drug(x)==?o0: rel:last_filled_by(x) := 'T2:pharmacist_2'
+op11(?o0: T0)  support=1 neg=17 verified=0/0
+  how: click(button:Drug shelf); click(button:Restock@T0[?o0])
+  pre: attr:form(?o0) != 'tablet' & attr:name(?o0) != 'Omeprazole' & attr:name(?o0) != 'Cetirizine' & attr:name(?o0) != 'Ibuprofen'  (+1 unexplained failures)
+  eff: attr:stock(?o0) := '8'
+op12(?o0: T0)  support=1 neg=17 verified=0/0
+  how: click(button:Drug shelf); click(button:Restock@T0[?o0])
+  pre: attr:form(?o0) != 'tablet' & attr:name(?o0) != 'Omeprazole' & attr:name(?o0) != 'Ibuprofen' & attr:name(?o0) != 'Naproxen'  (+1 unexplained failures)
+  eff: attr:stock(?o0) := '12'
+op13(?o0: T1, ?s0: str, ?new0: T3)  support=1 neg=14 verified=0/0
+  how: click(button#0@T1[?o0]); type(textbox#0@T1[?o0], ?s0); click(button:Write@T1[?o0])
+  pre: ?s0 != ''
+  eff: ?new0 := new T3(id=<new>, attr:dosage=?s0, attr:refills_left=0, attr:status=active) rel:last_filled_by->None rel:prescription_drug->T0:drug_4 rel:prescription_patient->?o0
