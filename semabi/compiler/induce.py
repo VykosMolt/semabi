@@ -177,7 +177,7 @@ def _rename(x, m: dict[str, str]):
     if isinstance(x, ActT):
         return ActT(x.kind, x.loc, r(x.owner), r(x.arg))
     return EffT(x.kind, x.tid, r(x.obj), x.slot, r(x.old), r(x.new),
-                tuple((k, r(v)) for k, v in x.attrs), r(x.parent), tuple((k, r(v)) for k, v in x.refs))
+                tuple((k, r(v)) for k, v in x.attrs), r(x.parent), tuple((k, r(v)) for k, v in x.refs), x.anchor_rel)
 
 
 def _act_unify(a: ActT, b: ActT, m: dict[str, str]) -> dict[str, str] | None:
