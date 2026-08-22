@@ -50,13 +50,15 @@ class ActiveExplorer:
         self.exp_path = self.run_dir / "experiments.jsonl"
         self.use_counts: dict[tuple[str, str], int] = {}
         self.probe_memo: dict[tuple, int] = {}
+        self.sweep_noeffect: dict[str, int] = {}  # situ -> times tried without effect
+        self.sweep_effect: set[str] = set()  # akeys that produced a domain effect at least once
 
     # ---------------------------------------------------------------- utils
     def recompile(self) -> Compiled:
         self.probe_memo = {}
         self.C = compile_log(self.run_dir)
         self.live.A = self.C.abstractor
-        self.live.state = None
+        self.live.model = self.C.model
         self.live.refresh()
         return self.C
 
@@ -120,6 +122,7 @@ class ActiveExplorer:
         for op in self.C.inducer.operators:
             n_done = op.verified + op.failed
             b = self._sample_binding(op)
+            setup = None
             if b is None:
                 continue
             reason, _ = self._predict(op.name, b)
@@ -132,11 +135,37 @@ class ActiveExplorer:
                     reason, _ = self._predict(op.name, b)
                     if reason is None:
                         break
-                if b is None or reason is not None:
+                if b is not None and reason is not None:
+                    # setup: a freshly created object of the constrained type usually satisfies the precondition
+                    for p, t in op.params.items():
+                        if t != "str" and not p.startswith("?new"):
+                            st = self._setup_fresh_object(t)
+                            if st is not None:
+                                setup, key = st
+                                b[p] = (t, key)
+                                break
+                    if setup is None:
+                        continue
+                if b is None:
                     continue
-            pr = 1.0 / (1 + op.support + n_done)
-            out.append(Experiment("verify", op.name, b, list(op.acts), priority=pr))
+            pr = 0.9 if op.support + op.verified < 3 else 0.4 / (1 + n_done)
+            ex = Experiment("verify", op.name, b, list(op.acts), priority=pr)
+            if setup:
+                ex.setup = setup
+            out.append(ex)
         return out
+
+    def _setup_fresh_object(self, tid: int):
+        """Find a create-operator for `tid` without object params; returns (setup, key)."""
+        for cop in self.C.inducer.operators:
+            if any(e.kind == "add" and e.tid == tid for e in cop.effs) and all(t == "str" or p.startswith("?new") for p, t in cop.params.items()):
+                sb = self._sample_binding(cop, prefer_unused=False)
+                if sb is None:
+                    continue
+                key = next((v for v in sb.values() if isinstance(v, str)), None)
+                if key:
+                    return [(cop.name, sb)], key
+        return None
 
     def propose_probes(self) -> list[Experiment]:
         out = []
@@ -223,10 +252,12 @@ class ActiveExplorer:
             return None
         return None
 
-    def propose_sweeps(self) -> list[Experiment]:
-        """Untried affordances on the current page, with form completion."""
+    def propose_sweeps(self, max_owners: int = 2) -> list[Experiment]:
+        """Untried affordances on the current page, with form completion: every
+        textbox/combobox/radio in the button's nearest form container is set."""
         out = []
-        po = self.C.abstractor.parsed(self.live.obs)
+        obs = self.live.obs
+        po = self.C.abstractor.parsed(obs)
         A = self.C.abstractor
         by_node = {o.node: o for o in self.live.state.objs.values()}
 
@@ -243,8 +274,23 @@ class ActiveExplorer:
                 idx = inst.parent
             return None, trans
 
+        def form_container(node):
+            """Nearest ancestor whose subtree holds a form element, without crossing the owner's root."""
+            owner, _ = owner_of(node)
+            stop = owner.node if owner else -1
+            cur = obs.node(node).parent
+            while cur >= 0:
+                sub = obs.subtree(cur)
+                if any(obs.node(x).role in ("textbox", "combobox", "radio") for x in sub if x != node):
+                    return sub
+                if cur == stop:
+                    break
+                cur = obs.node(cur).parent
+            return []
+
+        ctx_key = tuple(sorted((k, v) for k, v in self.live.tracker.ctx.items()))
         for node, key in po.node_key.items():
-            n = self.live.obs.node(node)
+            n = obs.node(node)
             if n.role not in ("button", "link", "checkbox", "radio", "combobox"):
                 continue
             owner, trans = owner_of(node)
@@ -254,43 +300,59 @@ class ActiveExplorer:
                 variants = [o for o in (n.options or []) if o != n.value]
             for var in variants:
                 akey = f"{owner_tid}|{trans[0] if trans else None}|{key}|{'opt' if var else ''}"
-                if akey in self.swept:
+                situ = f"{akey}|{owner.key if owner else ''}|{ctx_key if owner is None else ''}"
+                if situ in self.swept or sum(1 for x in self.swept if x.startswith(akey + "|")) >= max_owners:
                     continue
                 acts = []
                 binding = {}
-                # form completion: textboxes / comboboxes in the same container (same owner or static)
-                if n.role in ("button",):
-                    for node2, key2 in po.node_key.items():
-                        n2 = self.live.obs.node(node2)
-                        o2, t2 = owner_of(node2)
-                        same = (o2.id if o2 else None) == (owner.id if owner else None) and (t2 is None) == (trans is None)
-                        if not same:
+                if n.role == "button":
+                    radios_done = set()
+                    for node2 in form_container(node):
+                        key2 = po.node_key.get(node2)
+                        if key2 is None or node2 == node:
                             continue
+                        n2 = obs.node(node2)
+                        o2, t2 = owner_of(node2)
                         if n2.role == "textbox":
                             pname = f"?s{len(binding)}"
                             binding[pname] = self._fresh()
-                            acts.append(ActT("type", self._loc(key2, owner_tid, trans), "?own" if owner else None, pname))
+                            acts.append(ActT("type", self._loc(key2, o2.tid if o2 else None, t2), "?own2" if o2 else None, pname))
+                            if o2:
+                                binding["?own2"] = o2.key
                         elif n2.role == "combobox" and n2.options:
                             others = [o for o in n2.options if o != n2.value]
                             if others:
                                 pname = f"?v{len(binding)}"
                                 binding[pname] = self.rng.choice(others)
-                                acts.append(ActT("select", self._loc(key2, owner_tid, trans), "?own" if owner else None, pname))
+                                acts.append(ActT("select", self._loc(key2, o2.tid if o2 else None, t2), "?own2" if o2 else None, pname))
+                                if o2:
+                                    binding["?own2"] = o2.key
+                        elif n2.role == "radio" and t2 is not None and t2[0] not in radios_done and not n2.checked:
+                            # pick one unchecked radio of this transient group at random
+                            group = [x for x in form_container(node) if obs.node(x).role == "radio" and not obs.node(x).checked]
+                            pick = self.rng.choice(group)
+                            op2, tp = owner_of(pick)
+                            ident = next((v for k3, (_, v) in tp[1].slots.items() if isinstance(v, str) and v), None) if tp else None
+                            if ident:
+                                acts.append(ActT("click", self._loc(po.node_key[pick], None, tp), "?rad", None))
+                                binding["?rad"] = ident
+                            radios_done.add(t2[0])
                 if n.role == "combobox":
                     pname = "?v0"
                     binding[pname] = var
                     acts.append(ActT("select", self._loc(key, owner_tid, trans), "?own" if owner else None, pname))
                 else:
-                    acts.append(ActT("click", self._loc(key, owner_tid, trans), "?own" if owner else None, None))
+                    acts.append(ActT("click", self._loc(key, owner_tid, trans), "?own" if owner or trans else None, None))
                 if owner:
                     binding["?own"] = owner.key
-                if trans:
-                    # identify the transient instance by its first string slot value
-                    for k2, (_, v2) in trans[1].slots.items():
-                        if isinstance(v2, str) and v2:
-                            binding["?own"] = v2
-                            break
-                out.append(Experiment("sweep", None, binding, acts, note=akey, priority=1.0))
+                elif trans:
+                    ident = next((v for k3, (_, v) in trans[1].slots.items() if isinstance(v, str) and v), None)
+                    if ident:
+                        binding["?own"] = ident
+                pr = 0.6 if self.sweep_noeffect.get(situ, 0) else 1.0
+                if akey in self.sweep_effect:
+                    pr = 0.3  # its effect is known; verification takes over
+                out.append(Experiment("sweep", None, binding, acts, note=situ, priority=pr))
         return out
 
     def _loc(self, key: str, owner_tid: int | None, trans) -> Locator:
@@ -304,6 +366,7 @@ class ActiveExplorer:
         live = self.live
         before = live.state
         setup = exp.binding.pop("__setup__", None) if exp.kind == "probe" else None
+        setup = setup or exp.setup
         if setup:
             for op_name, sb in setup:
                 sop = self._op(op_name)
@@ -314,6 +377,8 @@ class ActiveExplorer:
         predicted_reason, predicted = (None, None)
         if exp.op:
             predicted_reason, predicted = self._predict(exp.op, exp.binding)
+            if predicted_reason is not None and exp.kind == "verify":
+                return {"outcome": "setup_insufficient", "reason": predicted_reason}
             for p, v in exp.binding.items():
                 if isinstance(v, tuple):
                     self.use_counts[(exp.op, v[1])] = self.use_counts.get((exp.op, v[1]), 0) + 1
@@ -325,7 +390,15 @@ class ActiveExplorer:
         out = {"executed": r.ok, "reason": r.reason, "steps": r.steps, "domain_changed": d.domain_changed, "diff": str(d)}
         if exp.kind == "sweep":
             self.swept.add(exp.note)
-            # reveal: new affordances -> sweep them too (handled by next propose_sweeps call)
+            if not d.domain_changed:
+                self.sweep_noeffect[exp.note] = self.sweep_noeffect.get(exp.note, 0) + 1
+            else:
+                self.sweep_effect.add(exp.note.rsplit("|", 2)[0])
+        # a scoped object vanished: look everywhere so the inducer can tell deleted from moved
+        if d.removed and self.live.model is not None and self.live.model.view_ops:
+            from semabi.compiler.belief import scoped_ids
+            if any(o.id in scoped_ids(before, self.live.tracker.scopes) for o in d.removed):
+                self.live.survey(force=True)
         if exp.op:
             op = self._op(exp.op)
             if predicted is not None:
@@ -343,12 +416,16 @@ class ActiveExplorer:
 
     def round(self, budget: int, reset_every: int = 12) -> int:
         """Run experiments until `budget` primitives are used. Returns primitives used."""
-        used = 0
         n_exp = 0
         start = self.live.b.n_primitives
-        while self.live.b.n_primitives - start < budget:
+        while self.live.b.n_primitives - start < budget and n_exp < budget * 2:
             if n_exp % reset_every == 0:
                 self.live.reset(self.rng.randrange(10_000))
+                self.live.survey()
+                # affordances that never did anything get another chance in the new state
+                for situ, k in list(self.sweep_noeffect.items()):
+                    if k < 4:
+                        self.swept.discard(situ)
             exps = self.propose_sweeps() + self.propose_probes() + self.propose_verifies()
             if not exps:
                 break

@@ -225,7 +225,7 @@ class Parser:
             by_role: dict[str, list[int]] = {}
             for c in kids:
                 n = obs.node(c)
-                if n.role in ("text", "heading", "cell", "alert", "option") or not obs.children(c):
+                if n.role in ("alert", "option") or not obs.children(c):
                     continue
                 by_role.setdefault(n.role, []).append(c)
             for role, members in by_role.items():
@@ -256,7 +256,7 @@ class Parser:
                         roots[m] = t.tid
         # pass 2: singletons matching known templates
         for i, n in enumerate(obs.nodes):
-            if i in roots or n.role in ("text", "heading", "cell", "alert", "option") or not obs.children(i):
+            if i in roots or n.role in ("alert", "option") or not obs.children(i):
                 continue
             if n.parent < 0:
                 continue
@@ -276,7 +276,10 @@ class Parser:
         root_to_idx: dict[int, int] = {}
         for r in sorted(roots):
             root_to_idx[r] = len(instances)
-            instances.append(Instance(r, roots[r], None, {}, {}, self._anchor(obs, r)))
+            inst = Instance(r, roots[r], None, {}, {}, self._anchor(obs, r))
+            if obs.node(r).name:
+                inst.slots[f"{obs.node(r).role}@self"] = (obs.node(r).name, obs.node(r).name)
+            instances.append(inst)
         for i in range(len(obs.nodes)):
             p = obs.node(i).parent
             if i in root_to_idx:

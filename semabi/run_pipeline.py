@@ -42,7 +42,7 @@ def run(args) -> dict:
             b = Browser(url, f"{base}/reset")
             b.step_hooks.append(HiddenRecorder(run_dir, f"{base}/_evaluator/state"))
             try:
-                live = Live(b, log, C0.abstractor)
+                live = Live(b, log, C0.abstractor, C0.model)
                 live.reset(args.seed * 100 + 50)
                 act = ActiveExplorer(live, run_dir, seed=args.seed)
                 act.C = C0
@@ -99,10 +99,11 @@ def run_planning(args, world, base, url, run_dir, log, C, res) -> dict:
     b.step_hooks.append(HiddenRecorder(run_dir, f"{base}/_evaluator/state"))
     results = []
     try:
-        live = Live(b, log, C.abstractor)
+        live = Live(b, log, C.abstractor, C.model)
         for gi in range(args.goals):
             seed = 5000 + args.seed * 100 + gi
             live.reset(seed)
+            live.survey()
             hs = rm.State.from_json(json.loads(urllib.request.urlopen(f"{base}/_evaluator/state").read())["state"])
             rng = random.Random(seed)
             cases = generate_goals(hs, rng, seed)

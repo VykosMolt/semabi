@@ -32,7 +32,7 @@ def generate_goals(state: rm.State, rng: random.Random, seed: int) -> list[GoalC
     goals.append(GoalCase("create_done_task", [("exists", "Task", {"title": "gx1", "done": True}, {"belongs_to": p.id})], seed))
     goals.append(GoalCase("move_then_delete_project", [("rel", "belongs_to", t.id, q.id),
                                                        ("not_exists", "Project", {"name": state.get_rel("belongs_to", t.id) and state.objects[state.get_rel("belongs_to", t.id)].attrs["name"]})], seed))
-    goals.append(GoalCase("new_project_with_task", [("exists", "Project", {"name": "gx2"}, {}), ("exists", "Task", {"title": t.attrs["title"]}, {"belongs_to": "NEW:gx2"})], seed))
+    goals.append(GoalCase("new_project_with_task", [("exists", "Project", {"name": "gx2"}, {}), ("rel", "belongs_to", t.id, "NEW:gx2")], seed))
     goals.append(GoalCase("delete_task_rename_project", [("not_exists", "Task", {"title": t.attrs["title"]}), ("attr", p.id, "name", "gx3")], seed))
     src = state.get_rel("belongs_to", t.id)
     goals.append(GoalCase("all_done_in_project", [("attr", x.id, "done", True) for x in tasks if state.get_rel("belongs_to", x.id) == src] or [("attr", t.id, "done", True)], seed))
@@ -127,6 +127,9 @@ def translate_goal(goal: HGoal, hidden_state: rm.State, hidden_dom: rm.Domain, l
             l, t = lid(hid), lid(tgt)
             if l is None or t is None:
                 return None
+            if tgt.startswith("NEW:"):
+                L2 = inv_type.get(hidden_dom.relations[r].dst)
+                t = f"{L2}:{t}"
             if r in inv_rel:
                 out.append(("rel", inv_rel[r], l, t))
             elif (o.type, r) in attr_as_rel_inv:
@@ -165,6 +168,10 @@ def hidden_goal_satisfied(goal: HGoal, s: rm.State) -> bool:
                 return False
         elif g[0] == "rel":
             _, r, oid, t = g
-            if s.get_rel(r, oid) != t:
+            actual = s.get_rel(r, oid)
+            if t.startswith("NEW:"):
+                if actual is None or s.objects[actual].attrs.get("name") != t[4:]:
+                    return False
+            elif actual != t:
                 return False
     return True

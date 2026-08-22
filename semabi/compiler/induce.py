@@ -12,6 +12,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from semabi.compiler.abstract import AbsObj, Abstractor, AbstractState, Diff, diff, resolve_masked
+from semabi.compiler.belief import Tracker, scoped_ids
 from semabi.compiler.browser import Primitive
 from semabi.compiler.evidence import EvidenceLog, Step
 
@@ -86,9 +87,24 @@ class Transition:
     effs: tuple[EffT, ...] = ()
     binding: dict[str, Any] = field(default_factory=dict)
     param_types: dict[str, int | str] = field(default_factory=dict)
+    ambiguous: list[tuple[int, str]] = field(default_factory=list)  # scoped objects that vanished, fate unresolved
+    ext: tuple | None = None  # macro-extension arguments, for re-extension after delayed attribution
 
     def core(self) -> tuple[ActT, ...]:
-        return tuple(a for a in self.acts if a.kind not in ("type", "select"))
+        return tuple(a for a in self.acts if a.kind not in ("type", "select", "context"))
+
+
+@dataclass
+class ViewOp:
+    """Action template whose only effect is to set a view context slot."""
+    slot: str
+    acts: tuple[ActT, ...]
+    param: str
+    tid: int
+    support: int = 0
+
+    def __str__(self) -> str:
+        return f"view[{self.slot}] := {self.param}:T{self.tid}  how: " + "; ".join(str(a) for a in self.acts)
 
 
 @dataclass
@@ -110,7 +126,7 @@ class OperatorHyp:
         return len(self.positives)
 
     def core(self) -> tuple[ActT, ...]:
-        return tuple(a for a in self.acts if a.kind not in ("type", "select"))
+        return tuple(a for a in self.acts if a.kind not in ("type", "select", "context"))
 
     def __str__(self) -> str:
         ps = ", ".join(f"{p}: {'str' if t == 'str' else 'T' + str(t)}" for p, t in self.params.items())
@@ -268,6 +284,9 @@ class Inducer:
         self._state_cache: dict[str, AbstractState] = {}
         self._tracked: dict[str, AbstractState] = {}
         self._changing_steps: set[int] = set()
+        self.view_transitions: list[tuple[Transition, str, int, Any]] = []
+        self.view_ops: list[ViewOp] = []
+        self._view_steps: set[int] = set()
 
     def state(self, sig: str) -> AbstractState:
         if sig not in self._state_cache:
@@ -280,28 +299,72 @@ class Inducer:
         for s in self.log.steps:
             by_ep[s.episode].append(s)
         for ep, steps in by_ep.items():
-            prev = self.state(steps[0].before)
+            tracker = Tracker(self.A)
+            prev, _ = tracker.observe(self.log.obs(steps[0].before), "reset")
+            self._tracked[steps[0].before] = prev
             last_change_i = -1
+            pending: list[tuple[Transition, AbsObj, set]] = []  # (transition, vanished object, visited snapshot)
             for i, s in enumerate(steps):
-                raw = self.state(s.after)
-                st = resolve_masked(self.A, prev, raw) if s.action.kind not in ("reload", "reset") else raw
+                st, discovered = tracker.observe(self.log.obs(s.after), s.action.kind)
                 self._tracked[s.after] = st
                 if s.action.kind in ("reload", "reset"):
                     prev, last_change_i = st, i
+                    if s.action.kind == "reset":
+                        pending = []
                     continue
                 if not st.clean:
                     prev = st
                     continue
                 d = diff(prev, st)
+                d.added = [o for o in d.added if o.id not in discovered]
+                # resolve pending disappearances: a vanished scoped object re-appearing elsewhere
+                # was moved (and possibly changed) by the earlier transition, not created now
+                for o in list(d.added):
+                    for ptr, po_, snap in list(pending):
+                        if po_.id == o.id:
+                            ptr.d.removed = [x for x in ptr.d.removed if x.id != o.id]
+                            for k in set(po_.refs) | set(o.refs):
+                                if po_.refs.get(k) != o.refs.get(k):
+                                    ptr.d.rel_changes.append((o.id, k, po_.refs.get(k), o.refs.get(k)))
+                            if po_.parent != o.parent:
+                                ptr.d.rel_changes.append((o.id, "parent", po_.parent, o.parent))
+                            for k in set(po_.attrs) | set(o.attrs):
+                                if po_.attrs.get(k) != o.attrs.get(k):
+                                    ptr.d.attr_changes.append((o.id, k, po_.attrs.get(k), o.attrs.get(k)))
+                            ptr.ambiguous = [x for x in ptr.ambiguous if x != o.id]
+                            ptr.after.objs[o.id] = o
+                            pending.remove((ptr, po_, snap))
+                            d.added.remove(o)
+                            if ptr.ext:
+                                ptr.macro = list(ptr.steps)
+                                self._extend_macro(ptr, *ptr.ext)
+                            break
+                # pending that have been searched everywhere are confirmed deletions
+                for ptr, po_, snap in list(pending):
+                    if tracker.all_scopes_visited_since(snap):
+                        ptr.ambiguous = [x for x in ptr.ambiguous if x != po_.id]
+                        pending.remove((ptr, po_, snap))
                 tr = Transition(ep, [s.step], [s.step], prev, st, d)
                 if d.domain_changed:
                     self._changing_steps.add(s.step)
-                    self._extend_macro(tr, steps, last_change_i + 1, i - 1, enabling_lo=self._episode_anchor(steps, i))
+                    tr.ext = (steps, last_change_i + 1, i - 1, self._episode_anchor(steps, i))
+                    self._extend_macro(tr, *tr.ext)
                     self.transitions.append(tr)
                     last_change_i = i
+                    sids = scoped_ids(prev, tracker.scopes)
+                    for o in d.removed:
+                        if o.id in sids:
+                            tr.ambiguous.append(o.id)
+                            pending.append((tr, o, tracker.step))
                 else:
                     self._extend_macro(tr, steps, i, i - 1, enabling_lo=self._episode_anchor(steps, i))
                     self.noops.append(tr)
+                    # view transition: a context slot changed to an object key
+                    for sc in tracker.scopes:
+                        b = d.view_changes.get(sc.ctx_slot)
+                        if b and b[1] is not None and b[1] != b[0]:
+                            self.view_transitions.append((tr, sc.ctx_slot, sc.scope_tid, b[1]))
+                            self._view_steps.add(s.step)
                 prev = st
 
     def tracked(self, sig: str) -> AbstractState:
@@ -339,6 +402,7 @@ class Inducer:
             if ti:
                 targets.add((ti.owner.id if ti.owner else None, ti.slot))
         extra = []
+        revealed_by: dict = {}  # target affordance -> latest step revealing it
         for j in range(min(lo, enabling_lo), hi + 1):
             s = steps[j]
             if s.action.kind in ("reload", "reset"):
@@ -349,18 +413,24 @@ class Inducer:
             if j >= lo and s.action.kind == "select" and s.action.text in eff_texts:
                 extra.append(s.step)
                 continue
-            if s.step in self._changing_steps:
+            if s.step in self._changing_steps or s.step in self._view_steps:
                 continue
             ti = describe_target(self.A, self.tracked(s.before), self.log.obs(s.before), s.action.target)
+            if (j >= lo and s.action.kind == "click" and ti is not None and ti.owner is None and ti.trans_slots
+                    and any(isinstance(v, str) and v in eff_texts for v in ti.trans_slots.values())):
+                extra.append(s.step)  # chose a value through a selector widget
+                continue
             # enabling action: a target of the effective actions is absent before this step and present after
-            if ti is not None and self._reveals(s, targets):
-                extra.append(s.step)
+            if ti is not None:
+                for t in self._revealed(s, targets):
+                    revealed_by[t] = s.step
+        extra += list(revealed_by.values())
         tr.macro = sorted(set(extra) | set(tr.steps))
 
-    def _reveals(self, s: Step, targets: set) -> bool:
+    def _revealed(self, s: Step, targets: set) -> list:
         before_keys = self._affordance_keys(s.before)
         after_keys = self._affordance_keys(s.after)
-        return any(t not in before_keys and t in after_keys for t in targets)
+        return [t for t in targets if t not in before_keys and t in after_keys]
 
     def _affordance_keys(self, sig: str) -> set:
         st = self.tracked(sig)
@@ -528,12 +598,26 @@ class Inducer:
                         op.negatives.append(tr)
         for op in self.operators:
             self.learn_pre(op)
+        self._cluster_view_ops()
+
+    def _cluster_view_ops(self) -> None:
+        groups: dict[tuple, ViewOp] = {}
+        for tr, slot, tid, value in self.view_transitions:
+            self.lift(tr)
+            param = next((p for p, v in tr.binding.items() if isinstance(v, tuple) and v[0] == tid and v[1] == value), None)
+            if param is None or not tr.acts:
+                continue
+            key = (slot, tr.acts)
+            if key not in groups:
+                groups[key] = ViewOp(slot, tr.acts, param, tid)
+            groups[key].support += 1
+        self.view_ops = sorted(groups.values(), key=lambda v: -v.support)
 
     def _merge_supersequences(self) -> None:
         """An operator whose acts are a supersequence of a better-supported
         operator with identical effects is absorbed (extra actions are noise)."""
         keep: list[OperatorHyp] = []
-        for op in self.operators:
+        for op in sorted(self.operators, key=lambda o: (len(o.acts), -o.support)):
             absorbed = False
             for base in keep:
                 if len(base.acts) < len(op.acts) and match_subsequence(base.acts, base.effs, op.acts, op.effs) is not None:
@@ -542,6 +626,7 @@ class Inducer:
                     break
             if not absorbed:
                 keep.append(op)
+        keep.sort(key=lambda o: -o.support)
         for i, op in enumerate(keep):
             op.name = f"op{i}"
         self.operators = keep
@@ -558,13 +643,15 @@ class Inducer:
                 continue
             for k, v in o.attrs.items():
                 lits.add(("attr", p, k, v))
+            has_parent_rel = bool(self.A.types[o.tid].parent_tids)
             for q, o2 in objs.items():
                 if q == p or o2 is None:
                     continue
-                if o.parent == o2.id:
-                    lits.add(("parent", p, q))
-                else:
-                    lits.add(("parent_ne", p, q))
+                if has_parent_rel:
+                    if o.parent == o2.id:
+                        lits.add(("parent", p, q))
+                    else:
+                        lits.add(("parent_ne", p, q))
                 for k, v in o.refs.items():
                     if v == o2.id:
                         lits.add(("ref", p, k, q))
@@ -680,7 +767,12 @@ class Inducer:
         return self.operators
 
     def report(self) -> str:
-        lines = [f"{len(self.transitions)} transitions, {len(self.noops)} no-op segments, {len(self.operators)} operator hypotheses"]
+        lines = [f"{len(self.transitions)} transitions, {len(self.noops)} no-op segments, {len(self.operators)} operator hypotheses, {len(self.view_ops)} view operators"]
         for op in self.operators:
             lines.append(str(op))
+            amb = sum(len(t.ambiguous) for t in op.positives)
+            if amb:
+                lines.append(f"  ambiguous disappearances (deleted vs moved out of view): {amb}")
+        for v in self.view_ops:
+            lines.append(str(v) + f"  support={v.support}")
         return "\n".join(lines)

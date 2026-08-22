@@ -14,7 +14,7 @@ from semabi.compiler.evidence import EvidenceLog
 from semabi.compiler.observation import Observation
 from semabi.compiler.parse import Instance, ParsedObs, Parser
 
-STRING_DATA_ROLES = ("text@", "heading@", "link@", "cell@", "button@")
+STRING_DATA_ROLES = ("text@", "heading@", "link@", "cell@", "button@", "listitem@", "group@", "row@")
 
 
 @dataclass
@@ -68,10 +68,14 @@ class TypeInfo:
     merged_map: dict[str, dict] = field(default_factory=dict)  # redundant slot -> {its value: canonical value}
     parent_tids: Counter = field(default_factory=Counter)  # nesting parent type counts
     refs: dict[str, int] = field(default_factory=dict)  # slot key (or ctx:key) -> referenced tid
+    keys_survive_reload: int = 0  # indirect persistence: same keys seen before and after a reload
+    selector_of: int | None = None  # type whose keys are always another type's keys (a chooser widget)
 
     @property
     def persistent(self) -> bool:
-        return self.seen_after_reload > 0
+        if self.selector_of is not None:
+            return False
+        return self.seen_after_reload > 0 or self.keys_survive_reload > 0
 
     def attr_slots(self) -> list[str]:
         return [k for k, s in self.slots.items() if s.persistent is not False and s.varies and k != self.key_slot
@@ -245,8 +249,12 @@ class Abstractor:
                 continue
             before, after = self.parsed(log.obs(s.before)), self.parsed(log.obs(s.after))
             self._reload_evidence(before, after)
+        # 3b. indirect persistence: keys surviving a reload (scoped types not visible right after reload)
+        self._key_survival(log)
         # 4. reference relations
         self._find_refs(observations)
+        # 4b. selector types: keys always drawn from another persistent type's keys
+        self._find_selectors(observations)
         # 5. merge perfectly correlated attribute slots
         self._merge_correlated(observations)
 
@@ -283,6 +291,50 @@ class Abstractor:
                     if drop != keep and drop not in ti.merged:
                         ti.merged[drop] = keep
                         ti.merged_map[drop] = vm
+
+    def _key_survival(self, log: EvidenceLog) -> None:
+        by_ep: dict[int, list] = defaultdict(list)
+        for st in log.steps:
+            by_ep[st.episode].append(st)
+        for steps in by_ep.values():
+            # split the episode into segments at reload/reset boundaries
+            segs: list[list] = [[]]
+            for st in steps:
+                if st.action.kind in ("reload", "reset"):
+                    segs.append([st])
+                else:
+                    segs[-1].append(st)
+            keysets = []
+            for seg in segs:
+                ks: dict[int, set] = defaultdict(set)
+                for st in seg:
+                    po = self.parsed(log.obs(st.after))
+                    for tid in self.types:
+                        ks[tid] |= set(self._instances_by_key(po, tid))
+                keysets.append(ks)
+            for a, b in zip(keysets, keysets[1:]):
+                for tid, ti in self.types.items():
+                    if ti.seen_after_reload:
+                        continue
+                    if a.get(tid) and b.get(tid) and (a[tid] & b[tid]):
+                        ti.keys_survive_reload += 1
+
+    def _find_selectors(self, observations) -> None:
+        for tb in self.types.values():
+            if tb.key_slot is None or tb.seen_after_reload:
+                continue
+            for ta in self.types.values():
+                if ta.tid == tb.tid or ta.key_slot is None or not ta.seen_after_reload:
+                    continue
+                hits = total = 0
+                for obs in observations:
+                    po = self.parsed(obs)
+                    akeys = set(self._instances_by_key(po, ta.tid))
+                    for k in self._instances_by_key(po, tb.tid):
+                        total += 1
+                        hits += k in akeys
+                if total >= 3 and hits / total >= 0.95:
+                    tb.selector_of = ta.tid
 
     def _instances_by_key(self, po: ParsedObs, tid: int) -> dict[str, Instance]:
         ti = self.types[tid]
@@ -472,7 +524,7 @@ def resolve_masked(abstractor: "Abstractor", prev: AbstractState, cur: AbstractS
             pinst = po.instances[parent_idx]
             pobj = inst_obj.get(pinst.root)
             parent_id = pobj.id if pobj else None
-        missing = [o for o in prev.objs.values() if o.tid == tid and o.id not in cur.objs
+        missing = [o for o in prev.objs.values() if o.tid == tid and o.id not in cur.objs and o.node >= 0
                    and o.ordinal == ordinal and o.parent == parent_id]
         if len(missing) != 1:
             new.unidentified.append((tid, root, ordinal, parent_idx))

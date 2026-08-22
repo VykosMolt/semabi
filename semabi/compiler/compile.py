@@ -33,7 +33,7 @@ def compile_log(run_dir: Path, min_support: int = 1) -> Compiled:
     A.fit(log)
     I = Inducer(A, log)
     I.run()
-    M = build_model(A, I.operators, min_support=min_support)
+    M = build_model(A, I.operators, min_support=min_support, view_ops=I.view_ops)
     M.meta = {"n_steps": len(log.steps), "n_observations": len(log.observations), "n_transitions": len(I.transitions),
               "n_operators": len(I.operators), "typed_tokens": len(log.typed_tokens)}
     M.save(Path(run_dir) / "model.json")

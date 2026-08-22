@@ -37,11 +37,20 @@ class Grounding:
 
 
 @dataclass
+class ViewGrounding:
+    slot: str
+    grounding: Grounding
+    param: str
+    tid: int
+
+
+@dataclass
 class LearnedModel:
     domain: rm.Domain
     groundings: dict[str, Grounding]
     key_slots: dict[str, str]  # type name -> key attr
     meta: dict[str, Any] = field(default_factory=dict)
+    view_ops: dict[str, ViewGrounding] = field(default_factory=dict)  # context slot -> how to set it
 
     def save(self, path: Path) -> None:
         path.write_text(json.dumps({
@@ -49,18 +58,22 @@ class LearnedModel:
             "groundings": {k: g.to_json() for k, g in self.groundings.items()},
             "key_slots": self.key_slots,
             "meta": self.meta,
+            "view_ops": {k: {"grounding": v.grounding.to_json(), "param": v.param, "tid": v.tid} for k, v in self.view_ops.items()},
         }, indent=1))
 
     @classmethod
     def load(cls, path: Path) -> "LearnedModel":
         j = json.loads(path.read_text())
+        vo = {k: ViewGrounding(k, Grounding.from_json(v["grounding"]), v["param"], v["tid"]) for k, v in j.get("view_ops", {}).items()}
         return cls(rm.domain_from_json(j["domain"]), {k: Grounding.from_json(g) for k, g in j["groundings"].items()},
-                   j["key_slots"], j.get("meta", {}))
+                   j["key_slots"], j.get("meta", {}), vo)
 
     def __str__(self) -> str:
         out = [str(self.domain), "", "groundings:"]
         for k, g in self.groundings.items():
             out.append(f"  {k}: " + "; ".join(str(a) for a in g.acts))
+        for k, v in self.view_ops.items():
+            out.append(f"  view[{k}] := {v.param}:T{v.tid}: " + "; ".join(str(a) for a in v.grounding.acts))
         return "\n".join(out)
 
 
@@ -106,7 +119,7 @@ def _lit(l: tuple, A: Abstractor, rels: dict, ptypes: dict[str, Any]) -> rm.Lite
     return None
 
 
-def build_model(A: Abstractor, ops: list[OperatorHyp], min_support: int = 1) -> LearnedModel:
+def build_model(A: Abstractor, ops: list[OperatorHyp], min_support: int = 1, view_ops=()) -> LearnedModel:
     types: dict[str, rm.TypeDef] = {}
     key_slots: dict[str, str] = {}
     for tid in A.persistent_types():
@@ -156,7 +169,11 @@ def build_model(A: Abstractor, ops: list[OperatorHyp], min_support: int = 1) -> 
         operators[op.name] = rm.Operator(op.name, params, pre, effects)
         groundings[op.name] = Grounding(list(op.acts))
     dom = rm.Domain("learned", types, relations, operators)
-    return LearnedModel(dom, groundings, key_slots)
+    vo = {}
+    for v in view_ops:
+        if v.slot not in vo:
+            vo[v.slot] = ViewGrounding(v.slot, Grounding(list(v.acts)), v.param, v.tid)
+    return LearnedModel(dom, groundings, key_slots, view_ops=vo)
 
 
 def abstract_to_state(A: Abstractor, st: AbstractState, key_slots: dict[str, str] | None = None) -> rm.State:
