@@ -54,15 +54,16 @@ class ActT:
 
 @dataclass(frozen=True)
 class EffT:
-    kind: str  # add | remove | set | rel
+    kind: str  # add | remove | set | rel | forall_remove | forall_set | forall_rel
     tid: int
-    obj: str  # param
+    obj: str  # param (for forall_*: the anchor param)
     slot: str | None = None
     old: Any = None
     new: Any = None
     attrs: tuple = ()  # add: ((slot, value|param), ...)
     parent: Any = None  # add: param | None
     refs: tuple = ()  # add: ((slot, param|None), ...)
+    anchor_rel: str | None = None  # forall_*: relation slot ('parent' or ref slot) linking x to the anchor
 
     def __str__(self) -> str:
         if self.kind == "add":
@@ -72,6 +73,10 @@ class EffT:
             return f"{self.obj} := new T{self.tid}({a}){p}{r}"
         if self.kind == "remove":
             return f"delete {self.obj}"
+        if self.kind == "forall_remove":
+            return f"forall x:T{self.tid} with {self.anchor_rel}(x)=={self.obj}: delete x"
+        if self.kind in ("forall_set", "forall_rel"):
+            return f"forall x:T{self.tid} with {self.anchor_rel}(x)=={self.obj}: {self.slot}(x) := {self.new!r}"
         return f"{self.slot}({self.obj}) := {self.new!r}"
 
 
@@ -117,6 +122,7 @@ class OperatorHyp:
     negatives: list[Transition] = field(default_factory=list)  # same core, no effect / different effect
     pre: list[tuple] = field(default_factory=list)  # learned precondition literals
     common: set = field(default_factory=set)  # literals true in every positive (candidate preconditions)
+    alternatives: dict = field(default_factory=dict)  # chosen literal -> tied literals (competing explanations)
     unexplained_negatives: int = 0
     verified: int = 0
     failed: int = 0
@@ -434,6 +440,16 @@ class Inducer:
                 for t in self._revealed(s, targets):
                     revealed_by[t] = s.step
         extra += list(revealed_by.values())
+        # selector clicks (transient chooser widgets) after the latest enabling action supply parameters
+        if revealed_by:
+            start = min(revealed_by.values())
+            for j in range(lo, hi + 1):
+                s = steps[j]
+                if s.step <= start or s.action.kind != "click" or s.step in self._changing_steps or s.step in self._view_steps:
+                    continue
+                ti = describe_target(self.A, self.tracked_before(s.step), self.log.obs(s.before), s.action.target)
+                if ti is not None and ti.owner is None and ti.trans_tid is not None and ti.trans_slots:
+                    extra.append(s.step)
         tr.macro = sorted(set(extra) | set(tr.steps))
 
     def _revealed(self, s: Step, targets: set) -> list:
@@ -514,9 +530,18 @@ class Inducer:
                 arg = obj_p(oid) if oid else str_p(s.action.text or "")
             acts.append(ActT(s.action.kind, loc, owner_p, arg))
 
+        view_sources: dict[str, tuple] = {}
+
         def lift_val(v: Any) -> Any:
             if isinstance(v, tuple) and len(v) == 2 and isinstance(v[0], int):
-                return obj_p(v)
+                if v in obj_param:
+                    return obj_param[v]
+                src = self._find_view_source(tr.before, v[1], prefer_tid=v[0])
+                if src is not None:
+                    p = obj_p(v)
+                    view_sources[p] = src
+                    return p
+                return f"T{v[0]}:{v[1]}"  # constant object not supplied by the actions or the view
             if isinstance(v, str) and v in str_param:
                 return str_param[v]
             return v
@@ -543,6 +568,7 @@ class Inducer:
             effs.append(EffT("set", oid[0], obj_p(oid), k, None, lift_val(b)))
         for oid, k, a, b in tr.d.rel_changes:
             effs.append(EffT("rel", oid[0], obj_p(oid), k, None, lift_val(b) if b else None))
+        effs = self._quantify(effs, acts, binding, ptypes, tr)
         # params used in effects but never supplied by an action: bind from view state
         supplied = set(a.owner for a in acts) | set(a.arg for a in acts)
         effs = sorted(effs, key=str)
@@ -552,7 +578,7 @@ class Inducer:
                     continue
                 v = binding[p]
                 key = v[1] if isinstance(v, tuple) else v
-                src = self._find_view_source(tr.before, key, prefer_tid=v[0] if isinstance(v, tuple) else None)
+                src = view_sources.get(p) or self._find_view_source(tr.before, key, prefer_tid=v[0] if isinstance(v, tuple) else None)
                 if src is not None:
                     kind, loc = src
                     acts.insert(0, ActT(kind, loc, None, p))
@@ -562,11 +588,62 @@ class Inducer:
         tr.binding = binding
         tr.param_types = ptypes
 
+    def _quantify(self, effs: list[EffT], acts: list[ActT], binding: dict, ptypes: dict, tr: Transition) -> list[EffT]:
+        """Effects on objects not supplied by the actions: if they cover exactly the
+        set of objects related (parent/ref) to an action param, lift to a forall-effect."""
+        supplied = set(a.owner for a in acts) | set(a.arg for a in acts)
+        extra = {p for e in effs for p in _params_of(e) if p not in supplied and not p.startswith("?new")
+                 and isinstance(binding.get(p), tuple)}
+        if not extra:
+            return effs
+        groups: dict[tuple, list[EffT]] = defaultdict(list)
+        for e in effs:
+            if e.obj in extra and e.kind in ("remove", "set", "rel"):
+                groups[(e.kind, e.tid, e.slot, e.new)].append(e)
+        out = [e for e in effs if not (e.obj in extra and e.kind in ("remove", "set", "rel"))]
+        used: set[str] = set()
+        for (kind, tid, slot, new), es in groups.items():
+            affected = {binding[e.obj] for e in es}
+            anchor = None
+            for p in supplied:
+                if p is None or not isinstance(binding.get(p), tuple):
+                    continue
+                pid = binding[p]
+                for rel in ["parent"] + list(self.A.types[tid].refs):
+                    related = set()
+                    for o in tr.before.objs.values():
+                        if o.tid != tid or not ((o.parent == pid) if rel == "parent" else (o.refs.get(rel) == pid)):
+                            continue
+                        # only objects that would actually change count (vacuous members leave no trace)
+                        if kind == "set" and o.attrs.get(slot) == new:
+                            continue
+                        if kind == "rel":
+                            cur = o.parent if slot == "parent" else o.refs.get(slot)
+                            if (lift_cur := (f"T{cur[0]}:{cur[1]}" if cur else None)) == new or (isinstance(new, str) and new.startswith("?") and cur == binding.get(new)):
+                                continue
+                        related.add(o.id)
+                    if related and related == affected:
+                        anchor = (p, rel)
+                        break
+                if anchor:
+                    break
+            if anchor is None:
+                out.extend(es)
+                continue
+            p, rel = anchor
+            used |= {e.obj for e in es}
+            out.append(EffT({"remove": "forall_remove", "set": "forall_set", "rel": "forall_rel"}[kind], tid, p, slot, None, new, anchor_rel=rel))
+        for q in used:
+            if not any(q in _params_of(e) for e in out):
+                binding.pop(q, None)
+                ptypes.pop(q, None)
+        return out
+
     def _find_view_source(self, state: AbstractState, value: Any, prefer_tid: int | None = None):
         """Locate a widget/context slot in the state whose value equals `value`.
         Returns (kind, Locator): 'select'/'type' for settable widgets, 'context' for
         read-only context slots (to be achieved through view operators)."""
-        po = self.A.parsed_by_state.get(id(state))
+        po = state.parsed
         if po is None:
             return None
         for k, (_, v) in po.statics.items():
@@ -628,16 +705,76 @@ class Inducer:
         for op in sorted(self.operators, key=lambda o: (len(o.acts), -o.support)):
             absorbed = False
             for base in keep:
-                if len(base.acts) < len(op.acts) and match_subsequence(base.acts, base.effs, op.acts, op.effs) is not None:
-                    base.positives.extend(op.positives)
-                    absorbed = True
-                    break
+                if len(base.acts) >= len(op.acts):
+                    continue
+                m = match_subsequence(base.acts, base.effs, op.acts, op.effs)
+                if m is None:
+                    continue
+                inv = {v: k for k, v in m.items()}  # candidate param -> base param
+                for tr in op.positives:
+                    tr.binding = {inv.get(k, k): v for k, v in tr.binding.items() if k in inv or k not in m.values()}
+                    tr.param_types = {inv.get(k, k): v for k, v in tr.param_types.items() if k in inv or k not in m.values()}
+                    tr.acts = tuple(_rename(a, inv) for a in tr.acts)
+                    tr.effs = tuple(_rename(e, inv) for e in tr.effs)
+                base.positives.extend(op.positives)
+                absorbed = True
+                break
             if not absorbed:
                 keep.append(op)
         keep.sort(key=lambda o: -o.support)
         for i, op in enumerate(keep):
             op.name = f"op{i}"
-        self.operators = keep
+        self.operators = self._merge_vacuous(keep)
+
+    def _merge_vacuous(self, ops: list[OperatorHyp]) -> list[OperatorHyp]:
+        """An operator whose effects are a subset of another's, the difference being
+        forall-effects whose anchor sets were empty in all of its transitions, is the
+        same operator observed in the vacuous case."""
+        out: list[OperatorHyp] = []
+        absorbed: set[int] = set()
+        for i, a in enumerate(ops):
+            if i in absorbed:
+                continue
+            for j, b in enumerate(ops):
+                if j == i or j in absorbed:
+                    continue
+                if tuple(x.kind for x in a.core()) != tuple(x.kind for x in b.core()):
+                    continue
+                m = match_subsequence(a.acts, (), b.acts, ()) if len(a.acts) == len(b.acts) else None
+                if m is None:
+                    continue
+                a_effs = set(str(_rename(e, m)) for e in a.effs)
+                b_effs = set(str(e) for e in b.effs)
+                if not (a_effs < b_effs):
+                    continue
+                extra = [e for e in b.effs if str(e) not in a_effs]
+                if not extra or not all(e.kind.startswith("forall_") for e in extra):
+                    continue
+                vacuous = True
+                for tr in a.positives:
+                    for e in extra:
+                        anchor = tr.binding.get({v: k for k, v in m.items()}.get(e.obj, e.obj))
+                        rel = e.anchor_rel
+                        related = [o for o in tr.before.objs.values() if o.tid == e.tid and
+                                   ((o.parent == anchor) if rel == "parent" else (o.refs.get(rel) == anchor))]
+                        if related:
+                            vacuous = False
+                if not vacuous:
+                    continue
+                inv = {v: k for k, v in m.items()}
+                for tr in a.positives:
+                    tr.binding = {m.get(k, k): v for k, v in tr.binding.items()}
+                    tr.param_types = {m.get(k, k): v for k, v in tr.param_types.items()}
+                    tr.acts = tuple(_rename(x, m) for x in tr.acts)
+                    tr.effs = b.effs
+                b.positives.extend(a.positives)
+                absorbed.add(i)
+                break
+            if i not in absorbed:
+                out.append(a)
+        for k, op in enumerate(out):
+            op.name = f"op{k}"
+        return out
 
     # ---------------------------------------------------------- preconditions
     def _literals(self, op: OperatorHyp, tr: Transition) -> set[tuple]:
@@ -651,6 +788,7 @@ class Inducer:
                 continue
             for k, v in o.attrs.items():
                 lits.add(("attr", p, k, v))
+            lits.add(("attr", p, self.A.types[o.tid].key_slot, o.key))
             has_parent_rel = bool(self.A.types[o.tid].parent_tids)
             for q, o2 in objs.items():
                 if q == p or o2 is None:
@@ -736,20 +874,46 @@ class Inducer:
                 continue
             fake = Transition(tr.episode, tr.steps, tr.macro, tr.before, tr.after, tr.d, binding=b)
             neg_lits.append(self._literals(op, fake))
-        # greedy cover: pick literals (true in all positives) that are false in most negatives
+        # candidate "attr != const" literals: constants seen on negatives' params but on no positive
+        pos_vals: set[tuple] = set()
+        for tr in op.positives:
+            for l in self._literals(op, tr):
+                if l[0] == "attr":
+                    pos_vals.add(l)
+        for nl in neg_lits:
+            for l in nl:
+                if l[0] == "attr" and l not in pos_vals and isinstance(l[3], str):
+                    common.add(("attr_ne", l[1], l[2], l[3]))
+        # greedy cover: pick literals (true in all positives) that are false in most negatives;
+        # ties are kept as competing explanations for active probing
         chosen: list[tuple] = []
+        alternatives: dict = {}
         remaining = list(range(len(neg_lits)))
         while remaining:
-            best, best_cov = None, 0
+            covs = {}
             for l in sorted(common, key=str):
-                cov = sum(1 for i in remaining if l not in neg_lits[i])
-                if cov > best_cov:
-                    best, best_cov = l, cov
-            if best is None:
+                if l[0] == "attr_ne":
+                    cov = sum(1 for i in remaining if ("attr", l[1], l[2], l[3]) in neg_lits[i])
+                else:
+                    cov = sum(1 for i in remaining if l not in neg_lits[i])
+                if cov > 0:
+                    covs[l] = cov
+            if not covs:
                 break
+            best_cov = max(covs.values())
+            if best_cov < (2 if len(neg_lits) >= 4 else 1):
+                break  # do not explain isolated failures with ad-hoc literals
+            tied = [l for l, c in covs.items() if c == best_cov]
+            best = tied[0]
             chosen.append(best)
-            remaining = [i for i in remaining if best in neg_lits[i]]
+            if len(tied) > 1:
+                alternatives[best] = tied[1:]
+            if best[0] == "attr_ne":
+                remaining = [i for i in remaining if ("attr", best[1], best[2], best[3]) not in neg_lits[i]]
+            else:
+                remaining = [i for i in remaining if best in neg_lits[i]]
         op.pre = chosen
+        op.alternatives = alternatives
         op.unexplained_negatives = len(remaining)
         # affordance preconditions: a grounding widget whose presence is an attribute of its owner
         for a in op.acts:

@@ -43,7 +43,7 @@ def merge_belief(A: Abstractor, prev: AbstractState | None, visible: AbstractSta
     """Return the new belief. `visited` is the set of (ctx_slot, value) scopes
     observed since the last reset; it is updated in place."""
     new = AbstractState({k: _copy_obj(o) for k, o in visible.objs.items()}, dict(visible.view), visible.partial,
-                        list(visible.unidentified), set(visible.provisional))
+                        list(visible.unidentified), set(visible.provisional), parsed=visible.parsed)
     if prev is None:
         for sc in scopes:
             if ctx.get(sc.ctx_slot) is not None:
@@ -120,7 +120,7 @@ class Tracker:
                                 and (o.refs.get("ctx:" + sc.ctx_slot) or (None, None))[1] == cur
                                 and (self.belief is None or o.id not in self.belief.objs)}
         belief = merge_belief(self.A, self.belief, visible, self.scopes, ctx, self.visited)
-        self.A.parsed_by_state[id(belief)] = self.A.parsed(obs)
+        belief.parsed = self.A.parsed(obs)
         self.belief = belief
         self.ctx = ctx
         self.step += 1

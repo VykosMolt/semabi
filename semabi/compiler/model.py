@@ -166,6 +166,22 @@ def build_model(A: Abstractor, ops: list[OperatorHyp], min_support: int = 1, vie
                 r = rels.get((e.tid, e.slot))
                 if r:
                     effects.append(rm.SetRel(r, e.obj, e.new))
+            elif e.kind == "forall_remove":
+                r = rels.get((e.tid, e.anchor_rel))
+                if r:
+                    effects.append(rm.DeleteIncoming(r, e.obj))
+            elif e.kind == "forall_set":
+                r = rels.get((e.tid, e.anchor_rel))
+                if r:
+                    effects.append(rm.SetAttrIncoming(r, e.obj, e.slot, e.new))
+            elif e.kind == "forall_rel":
+                r = rels.get((e.tid, e.anchor_rel))
+                r2 = rels.get((e.tid, e.slot))
+                if r and r2 == r:
+                    effects.append(rm.MoveIncoming(r, e.obj, e.new))
+                elif r and r2:
+                    # moving along a different relation than the anchor: approximate per-object
+                    effects.append(rm.MoveIncoming(r2, e.obj, e.new))
         operators[op.name] = rm.Operator(op.name, params, pre, effects)
         groundings[op.name] = Grounding(list(op.acts))
     dom = rm.Domain("learned", types, relations, operators)

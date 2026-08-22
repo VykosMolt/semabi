@@ -119,6 +119,7 @@ class AbstractState:
     partial: bool = False  # True if some persistent types may be hidden from view
     unidentified: list[tuple[int, int, int, int | None]] = field(default_factory=list)  # (tid, root, ordinal, parent inst idx)
     provisional: set[tuple[int, str]] = field(default_factory=set)  # ids carried forward by position
+    parsed: Any = field(default=None, repr=False, compare=False)  # the ParsedObs this state was derived from
 
     @property
     def clean(self) -> bool:
@@ -166,7 +167,6 @@ class Abstractor:
         self.types: dict[int, TypeInfo] = {}
         self.static_slots: dict[str, SlotInfo] = {}
         self._cache: dict[str, ParsedObs] = {}
-        self.parsed_by_state: dict[int, ParsedObs] = {}  # id(AbstractState) -> ParsedObs
 
     def parsed(self, obs: Observation) -> ParsedObs:
         sig = obs.structural_signature()
@@ -487,8 +487,7 @@ class Abstractor:
             si = self.static_slots.get(k)
             if si is None or si.varies:
                 view[k] = v
-        st = AbstractState(objs, view, unidentified=unidentified)
-        self.parsed_by_state[id(st)] = po
+        st = AbstractState(objs, view, unidentified=unidentified, parsed=po)
         # partial view: a persistent type is referenced by context (only the referenced subset is shown)
         st.partial = any(k.startswith("ctx:") for t in self.types.values() for k in t.refs)
         return st
@@ -507,11 +506,11 @@ def resolve_masked(abstractor: "Abstractor", prev: AbstractState, cur: AbstractS
     key provisionally (object permanence by position)."""
     if cur.clean or prev is None:
         return cur
-    po = abstractor.parsed_by_state.get(id(cur))
+    po = cur.parsed
     if po is None:
         return cur
     import copy as _copy
-    new = AbstractState({k: _copy.copy(o) for k, o in cur.objs.items()}, dict(cur.view), cur.partial, [], set(cur.provisional))
+    new = AbstractState({k: _copy.copy(o) for k, o in cur.objs.items()}, dict(cur.view), cur.partial, [], set(cur.provisional), parsed=po)
     for o in new.objs.values():
         o.attrs = dict(o.attrs)
         o.refs = dict(o.refs)
@@ -540,7 +539,6 @@ def resolve_masked(abstractor: "Abstractor", prev: AbstractState, cur: AbstractS
         new.objs[o.id] = o
         new.provisional.add(o.id)
         inst_obj[root] = o
-    abstractor.parsed_by_state[id(new)] = po
     # re-parent children of provisional objects
     for o in new.objs.values():
         if o.parent is None and o.node >= 0:

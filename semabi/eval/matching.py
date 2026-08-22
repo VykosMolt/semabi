@@ -205,8 +205,8 @@ def canonical_keys(s: rm.State, learned: LearnedModel) -> tuple:
     def key_of(oid):
         o = s.objects[oid]
         return (o.type, o.attrs.get(learned.key_slots.get(o.type, ""), oid))
-    objs = tuple(sorted((o.type, tuple(sorted((k, v) for k, v in o.attrs.items()))) for o in s.objects.values()))
-    rels = tuple(sorted((r, key_of(a), key_of(b)) for r, d in s.rels.items() for a, b in d.items() if a in s.objects and b in s.objects))
+    objs = tuple(sorted(((o.type, tuple(sorted(((k, v) for k, v in o.attrs.items()), key=str))) for o in s.objects.values()), key=str))
+    rels = tuple(sorted(((r, key_of(a), key_of(b)) for r, d in s.rels.items() for a, b in d.items() if a in s.objects and b in s.objects), key=str))
     return (objs, rels)
 
 

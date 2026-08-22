@@ -178,6 +178,8 @@ class ActiveExplorer:
                 if b is None:
                     continue
                 pr = 0.8 if not in_pre else 0.5
+                if in_pre and lit in op.alternatives:
+                    pr = 0.85  # competing explanations: discriminate them first
                 out.append(Experiment("probe", op.name, b, list(op.acts), note=("confirm" if in_pre else "challenge"), literal=lit, priority=pr))
         return out
 
@@ -193,7 +195,8 @@ class ActiveExplorer:
         if k in ("attr", "attr_ne"):
             p, slot, v = lit[1], lit[2], lit[3]
             tid = op.params[p]
-            objs = [o for o in self._objects(tid) if (o.attrs.get(slot) != v) == (k == "attr")]
+            key_slot = self.C.abstractor.types[tid].key_slot
+            objs = [o for o in self._objects(tid) if ((o.key if slot == key_slot else o.attrs.get(slot)) != v) == (k == "attr")]
             if not objs:
                 return None
             b[p] = self.rng.choice(objs).id

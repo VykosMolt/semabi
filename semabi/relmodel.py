@@ -343,9 +343,13 @@ def check_pre(op: Operator, domain: Domain, state: State, binding: dict[str, Any
 
 
 def apply_effects(op: Operator, state: State, binding: dict[str, Any]) -> tuple[State, dict[str, Any]]:
+    """Canonical order: quantified (*Incoming) effects are applied before deletions so
+    that the written order of effects does not change the semantics."""
     s = state.copy()
     b = dict(binding)
-    for e in op.effects:
+    ordered = [e for e in op.effects if isinstance(e, (DeleteIncoming, MoveIncoming, SetAttrIncoming))] + \
+              [e for e in op.effects if not isinstance(e, (DeleteIncoming, MoveIncoming, SetAttrIncoming))]
+    for e in ordered:
         if isinstance(e, Create):
             attrs = {k: _resolve(v, b) for k, v in e.attrs}
             o = s.add(e.type, attrs)
