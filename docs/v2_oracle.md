@@ -212,7 +212,11 @@ reported number, but both are recorded here with the replay that shows it.
    operators on all 16 V1 runs (gauntlet-v1 dev set and the gauntlet-v2 fresh run;
    e.g. harbor 3/4, 4/7, 1/9, 3/6 under both pairings). Operator explanation never
    used the pairing; alignment turned out insensitive to a one-step shift because
-   hidden state changes at ~10% of steps.
+   hidden state changes at ~10% of steps. (The replay also exposed a latent
+   hazard: `external.py` registers derived link relations per domain name and
+   looks them up by first registration, which is only safe with one app per
+   process; the replay clears them per app. All reported runs were one app per
+   process.)
 2. **Stale observations.** `Browser.observe` accepted two identical snapshots 40 ms
    apart; apps that re-render after an asynchronous fetch (the four Claude-authored
    v2 apps) sometimes handed the compiler the *previous* page (up to ~10% of

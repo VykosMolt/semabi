@@ -37,6 +37,7 @@ class SurveyExplorer(Explorer):
         self.n_obs = 0
         self.P = Parser()
         self.probed: dict[tuple, str] = {}
+        self.probe_count: Counter = Counter()
         self.last_view_obs: dict[str, str] = {}  # nav name -> signature at the last visit (this episode)
         self.last_reload_obs: str | None = None
         self.default_skeleton: frozenset | None = None  # role-path set of the view a reload shows
@@ -118,14 +119,20 @@ class SurveyExplorer(Explorer):
             status = "DOMAIN"
         else:
             status = "VIEW"
-        self.probed[key] = status
+        # a key is DOMAIN once any attempt persisted (a first attempt may have been refused)
+        self.probe_count[key] += 1
+        if self.probed.get(key) != "DOMAIN":
+            self.probed[key] = status
         with self.probes_path.open("a") as f:
             f.write(json.dumps({"step": step_index, "key": list(key), "status": status, "mixed": [list(k) for k in mixed],
                                 "persisted_default": persisted_default, "changed_views": changed_views}) + "\n")
         return obs
 
-    def probed_ok(self, key: tuple) -> bool:
-        return all(self.probed.get(k) is None for k in (key,))
+    def want_probe(self, key: tuple) -> bool:
+        """Probe a new action kind; re-probe VIEW/UNDETERMINED kinds up to three times (a
+        first attempt may have been refused or mixed with other actions)."""
+        st = self.probed.get(key)
+        return st is None or (st != "DOMAIN" and self.probe_count[key] < 3)
 
     def run(self, n_episodes: int, steps_per_episode: int, seed_base: int = 0) -> None:
         obs = self.b.observe()
@@ -155,7 +162,7 @@ class SurveyExplorer(Explorer):
                 nav = (p.kind == "click" and p.target is not None and before.node(p.target).name in self.nav_names())
                 if nav:
                     self.last_view_obs[before.node(p.target).name] = obs.structural_signature()
-                elif p.kind in ("click", "select", "press") and key not in self.probed:
+                elif p.kind in ("click", "select", "press") and self.want_probe(key):
                     obs = self.probe(obs, episode, key, step_index)
                 else:
                     if p.kind in ("click", "select", "press"):

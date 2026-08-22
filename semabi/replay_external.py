@@ -20,6 +20,9 @@ from semabi.eval.recorder import load_hidden
 
 
 def evaluate(run_dir: Path, offset: int) -> dict:
+    from semabi.eval import external as ext
+    ext.LINK_DERIVED.clear()  # derived link relations are registered per domain name and looked up by
+    ext.LINK_FLAGS.clear()  # first registration: one app per process in normal runs, cleared here
     desc = json.loads((run_dir / "hidden_domain.json").read_text())
     hidden_dom = domain_from_description(desc)
     C = compile_v1(run_dir, min_support=2)  # schema.json cached -> deterministic, identical model
