@@ -180,7 +180,7 @@ class Hypotheses:
             if tbl < 0:
                 continue
             if tbl not in header_cache:
-                rows = [x for x in obs.subtree(tbl) if obs.node(x).role == "row"]
+                rows = sorted(x for x in obs.subtree(tbl) if obs.node(x).role == "row")
                 header_cache[tbl] = obs.children(rows[0]) if rows else None
             hdr = header_cache[tbl]
             if not hdr or row == obs.node(hdr[0]).parent:

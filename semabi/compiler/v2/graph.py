@@ -96,16 +96,6 @@ class ObsGraph:
             d = set()
             for tt in self.templates.values():
                 d |= tt.varying_tokens()
-            # header cells of a column whose text varies over the run (matrix headers) are data too
-            for strs in self.header_strings.values():
-                strs = strs - {""}
-                if len(strs) > 1:
-                    per = Counter()
-                    for st in strs:
-                        for t in set(tokens(st)):
-                            if t[0].isalnum():
-                                per[t] += 1
-                    d |= {t for t, c in per.items() if c < 0.8 * len(strs)}
             self._data = {t for t in d if t[0].isdigit() or t in self._in_nonwidget}
         return self._data
 
@@ -123,7 +113,7 @@ class ObsGraph:
         # tables) -- unless the cell's text varies over time at that position (a matrix header)
         for n in obs.nodes:
             if n.role == "table":
-                rows = [x for x in obs.subtree(n.i) if obs.node(x).role == "row"]
+                rows = sorted(x for x in obs.subtree(n.i) if obs.node(x).role == "row")
                 if rows:
                     for k, c in enumerate(obs.children(rows[0])):
                         self.header.add((sig, c))
@@ -150,18 +140,14 @@ class ObsGraph:
         return t in self.data_set() or t[0].isdigit()
 
     def is_header(self, sig: str, i: int) -> bool:
-        """A first-row cell whose text never varies at its (table, column) position."""
+        """A first-row cell is a label row unless its text is data elsewhere (a matrix whose
+        column headers name entities shown in other places)."""
         if (sig, i) not in self.header:
             return False
-        obs = self.obs[sig]
-        n = obs.node(i)
-        row = n.parent
-        tbl = obs.node(row).parent
-        while tbl >= 0 and obs.node(tbl).role != "table":
-            tbl = obs.node(tbl).parent
-        k = obs.children(row).index(i)
-        strs = self.header_strings.get((self.nodes[(sig, tbl)].path, k), set()) - {""}
-        return len(strs) <= 1
+        n = self.obs[sig].node(i)
+        d = self.data_set()
+        toks = [t for t in tokens(node_text(n)) if t[0].isalnum()]
+        return not toks or not any(t in d for t in toks)
 
     def data_tokens(self, sig: str, i: int) -> list[str]:
         """Data *spans*: maximal runs of consecutive data tokens ("Ines Halli", "Two Sisters")."""
