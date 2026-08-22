@@ -12,7 +12,7 @@ from semabi.compiler.v2.graph import ObsGraph
 from semabi.compiler.v2.hypotheses import Hypotheses
 
 
-def compile_v2(run_dir: Path, min_support: int = 1) -> Compiled:
+def compile_v2(run_dir: Path, min_support: int = 1, refine_hypotheses: bool = False) -> Compiled:
     run_dir = Path(run_dir)
     log = EvidenceLog(run_dir)
     G = ObsGraph()
@@ -21,8 +21,14 @@ def compile_v2(run_dir: Path, min_support: int = 1) -> Compiled:
     H = Hypotheses(G)
     H.fit(step_sigs=[s.after for s in log.steps], step_targets=[(s.before, s.action.target) for s in log.steps], step_kinds=[s.action.kind for s in log.steps], reload_pairs=[(s.before, s.after) for i, s in enumerate(log.steps)
                         if s.action.kind == "reload" and i > 0 and log.steps[i - 1].action.kind not in ("reset", "reload")])
-    A = V2Abstractor(G, H)
-    A.fit_view_controls(log)
+    if refine_hypotheses:
+        from semabi.compiler.v2.score import refine
+        notes: list[str] = []
+        A, score, moves = refine(H, G, log, log_fn=notes.append)
+        (run_dir / "refine_v2.log").write_text("\n".join(notes) + "\n")
+    else:
+        A = V2Abstractor(G, H)
+        A.fit_view_controls(log)
     I = Inducer(A, log)
     I.run()
     M = build_model(A, I.operators, min_support=min_support, view_ops=I.view_ops)

@@ -95,6 +95,8 @@ class Hypotheses:
         self.ctx_split: dict[tuple[str, str | None], str] = {}  # (template, enclosing template) -> split template
         self.transient: set[str] = set()
         self.transient_positions: set[tuple] = set()
+        self.force_link: set[str] = set()  # refinement: templates whose link/merge decision is flipped
+        self._split_done = False
         self.frozen = False
 
     # ------------------------------------------------------------- templates
@@ -594,7 +596,11 @@ class Hypotheses:
             self._choose_key(u)
 
     def _build_entity_types(self) -> None:
-        self._split_by_context()
+        if not self._split_done:
+            self._split_by_context()
+            self._split_done = True
+        self.entity_types = {}
+        self.tid_of_template = {}
         keyed = [u for u in self.units.values() if u.key_slot]
         # 1. correspondence by key overlap -> union-find over unit types, unless contradicted
         parent: dict[str, str] = {u.template: u.template for u in keyed}
@@ -621,7 +627,8 @@ class Hypotheses:
                 # likewise a unit that comes into existence while the other already showed the
                 # key (a loan row appearing for an existing artifact) is a new object, not a view
                 for u, other in ((a, b), (b, a)):
-                    if "col" in u.slots or self._repeats_in_obs(u) or self._created_later(u, other):
+                    rule = "col" in u.slots or self._repeats_in_obs(u) or self._created_later(u, other)
+                    if rule != (u.template in self.force_link):
                         # a matrix cell is a value at (row, column): its content refers to `other`
                         links[u.template] = other.template
                         u.evidence.append(f"key overlaps {other.template[:40]} but repeats within observations: link type")
