@@ -71,3 +71,67 @@ different UIs and adversarial labels.
 Our structural parser (repeated-sibling detection, label/data slot separation)
 is a small wrapper-induction algorithm. We add an interventionist criterion:
 a position is *data* iff an agent-typed token ever appeared there.
+
+## Added for V2 (abstraction refinement)
+
+Questions asked of each: what is assumed known, which part of SemABI's problem
+that removes, how insufficiency is detected, how refinement is kept small, how
+experiments are chosen, what is reusable.
+
+### Automated alphabet abstraction refinement (Howar, Steffen, Merten, VMCAI 2011) and Tomte (Aarts, Jonsson, Uijen, Vaandrager 2012-2015)
+Active automata learning over an *abstract* alphabet: a mapper turns concrete
+inputs/outputs (with data parameters) into abstract symbols; a counterexample
+that the learned model cannot reproduce is first blamed on the mapper, which is
+refined (a new abstract symbol / a new register relation) before the automaton
+is re-learned. Tomte's mapper tracks data values in registers and refines with
+"lookahead" on which parameters must be remembered. **Assumed known:** the
+concrete input alphabet and how to apply it, a reset, and a deterministic
+finite-state core. That removes action discovery and object identity entirely.
+**Reusable:** the refinement discipline — a counterexample is an accusation
+against the abstraction first and against the model second; refinements are
+minimal (one new distinction); the learner must be re-run after each. This is
+V2's loop, with observation-graph hypotheses instead of a parameter mapper.
+
+### CEGAR (Clarke et al. 2000)
+Abstraction refinement from spurious counterexamples of a model checker.
+Assumes the concrete system is given; refinement splits abstract states along
+the predicate that separates the spurious path. **Reusable:** the test "is this
+counterexample real or an artefact of the abstraction" — V2's *contradiction*
+(same abstract state and action, different outcome) is exactly a spurious
+transition, and the response is to add the smallest separating predicate.
+
+### Predictive state representations (Littman, Sutton, Singh 2002)
+State is a vector of predictions of future observable tests; no latent
+variables are posited unless needed for prediction. **Reusable:** the criterion
+for introducing latent state (a distinction justified only by future
+behaviour), used conservatively in V2 for anonymous latent flags; not the
+linear-algebraic machinery.
+
+### Semantic data association under partial views (SLAM / semantic world models)
+Associating observations with persistent objects under ambiguity, keeping
+multiple hypotheses and using motion/appearance consistency. **Reusable:** the
+separation of surface observation from latent object, scored association
+graphs with retained alternatives, and the use of interventions (here: tracer
+text, moves) as the analogue of controlled motion.
+
+### ExoPredicator (arXiv:2509.26255)
+Learns predicates and causal processes (including exogenous ones) with LLM
+proposals scored by Bayesian model selection (likelihood x MDL prior); when
+planning fails it takes random actions, then re-learns; converges in a few
+online iterations. **Assumed known:** object-centric perception with tracked
+objects and attributes, and motor primitives — i.e. the object layer that is
+SemABI's hard part. **Reusable:** the split between proposal (LLM) and
+acceptance (fit + complexity), and plan failure as the trigger for re-learning.
+
+### PSALM-V (arXiv:2506.20097) — revisited
+Given the action vocabulary and predicates, learns pre/post-conditions by
+LLM proposal + execution feedback. On our ladder, the known-vocabulary control
+(rung K, 36/47) is this setting; the 0 -> 36 gap below it is what PSALM-V
+assumes away.
+
+### GUI semantic component grouping (e.g. Xie et al. 2022 "Psychologically-inspired, unsupervised inference of perceptual groups of GUI widgets")
+Groups widgets into perceptual units from layout (proximity, similarity,
+continuity) without labels. **Reusable:** bbox-derived edges (aligned, near,
+same-pattern) as *evidence* for unit hypotheses; **not reusable** as a decision
+procedure — the ladder's B -> C gap shows the unit is only half the problem,
+belief over what is not rendered is the other half.
