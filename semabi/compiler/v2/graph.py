@@ -85,6 +85,7 @@ class ObsGraph:
         self.position_of: dict[tuple[str, int], str] = {}
         self._in_nonwidget: set[str] = set()  # tokens seen in a non-widget text or an input value
         self._data: set[str] | None = None
+        self.templates_v: dict[tuple, TextTemplate] = {}  # (position, indexed position, view skeleton) -> strings
         self.header: set[tuple[str, int]] = set()  # (sig, node) cells of a table's first row
         self.header_strings: dict[tuple[str, int], set[str]] = defaultdict(set)  # (table path, col) -> strings
 
@@ -94,10 +95,42 @@ class ObsGraph:
         data text anywhere)."""
         if self._data is None:
             d = set()
-            for tt in self.templates.values():
+            # variation is judged within one view: a heading that differs between views is
+            # not data, a label that differs between the hives a panel shows is
+            for tt in self.templates_v.values():
                 d |= tt.varying_tokens()
-            self._data = {t for t in d if t[0].isdigit() or t in self._in_nonwidget}
+            d = {t for t in d if t[0].isdigit() or t in self._in_nonwidget}
+            # prose positions (sentences with a vocabulary of >= 4 constant words) vary in
+            # wording, not in data: their varying tokens count only if data elsewhere
+            prose = set()
+            for pos, tt in self.templates.items():
+                vocab = {t for st in tt.strings for t in tokens(st) if t[0].isalpha() and t not in d}
+                if len(vocab) >= 4 and len(tt.strings) >= 2:
+                    prose.add(pos)
+            if prose:
+                d2 = set()
+                for (pos, _, _), tt in self.templates_v.items():
+                    if pos not in prose:
+                        d2 |= tt.varying_tokens()
+                d = {t for t in d if t[0].isdigit() or t in d2}
+            self._data = d
         return self._data
+
+    def position_idx(self, obs, i: int) -> tuple:
+        """Indexed role path with leaf-aware ordinals (optional leaf siblings such as a
+        feedback line do not shift structured siblings)."""
+        out = []
+        x = i
+        while x >= 0:
+            n = obs.node(x)
+            if n.parent >= 0:
+                leaf = not obs.children(x)
+                sibs = [c for c in obs.children(n.parent) if obs.node(c).role == n.role and (not obs.children(c)) == leaf]
+                out.append((n.role, sibs.index(x) * 2 + (1 if leaf else 0)))
+            else:
+                out.append((n.role, 0))
+            x = n.parent
+        return tuple(reversed(out))
 
     # ------------------------------------------------------------------ build
     def add(self, sig: str, obs: Observation) -> None:
@@ -122,6 +155,7 @@ class ObsGraph:
         for n in reversed(obs.nodes):
             ch = obs.children(n.i)
             shapes[n.i] = n.role + ("(" + ",".join(shapes[c] for c in ch) + ")" if ch else "")
+        skel = hash(frozenset(paths.values()))  # which view this is (set of role paths)
         for n in obs.nodes:
             d = NodeDesc(sig, n.i, n.role, paths[n.i], shapes[n.i], tokens(node_text(n)), depth[n.i], list(obs.children(n.i)), n.parent)
             self.nodes[(sig, n.i)] = d
@@ -129,9 +163,12 @@ class ObsGraph:
             pos = paths[n.i] + "|" + token_pattern(node_text(n))
             self.position_of[(sig, n.i)] = pos
             tt = self.templates.setdefault(pos, TextTemplate(pos))
+            tv = self.templates_v.setdefault((pos, self.position_idx(obs, n.i), skel), TextTemplate(pos))
             if node_text(n) and (sig, n.i) not in self.header:
                 tt.strings[node_text(n)] += 1
                 tt.n += 1
+                tv.strings[node_text(n)] += 1
+                tv.n += 1
                 if n.role not in ("button", "link", "checkbox", "radio") or n.role in ("textbox", "combobox"):
                     self._in_nonwidget.update(tokens(node_text(n)))
         self._data = None

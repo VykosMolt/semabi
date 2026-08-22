@@ -19,7 +19,7 @@ def compile_v2(run_dir: Path, min_support: int = 1) -> Compiled:
     for sig, obs in log.observations.items():
         G.add(sig, obs)
     H = Hypotheses(G)
-    H.fit(step_sigs=[s.after for s in log.steps], reload_pairs=[(s.before, s.after) for i, s in enumerate(log.steps)
+    H.fit(step_sigs=[s.after for s in log.steps], step_targets=[(s.before, s.action.target) for s in log.steps], step_kinds=[s.action.kind for s in log.steps], reload_pairs=[(s.before, s.after) for i, s in enumerate(log.steps)
                         if s.action.kind == "reload" and i > 0 and log.steps[i - 1].action.kind not in ("reset", "reload")])
     A = V2Abstractor(G, H)
     A.fit_view_controls(log)

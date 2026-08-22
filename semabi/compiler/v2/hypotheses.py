@@ -231,13 +231,16 @@ class Hypotheses:
         return "/".join(reversed(parts)) or obs.node(i).role
 
     # ------------------------------------------------------------- fitting
-    def fit(self, rounds: int = 3, step_sigs: list[str] | None = None, reload_pairs: list[tuple[str, str]] | None = None) -> None:
+    def fit(self, rounds: int = 3, step_sigs: list[str] | None = None, reload_pairs: list[tuple[str, str]] | None = None,
+            step_targets: list[tuple[str, int | None]] | None = None, step_kinds: list[str] | None = None) -> None:
         """Fixpoint: a recurring template is a unit only if it has identity (a key slot);
         the data of unkeyed parts flows to the enclosing unit. `step_sigs` (the observation
         after every step, in order) lets short-lived templates (feedback lines) be dropped."""
-        self.unit_types = find_unit_types(self.G)
         self.step_sigs = step_sigs or []
+        self.unit_types = find_unit_types(self.G)
         self.reload_pairs = reload_pairs or []
+        self.step_targets = step_targets or []  # per step: (observation before, clicked node)
+        self.step_kinds = step_kinds or []
         self.allowed = None
         for _ in range(rounds):
             self._fit_once()
@@ -293,12 +296,23 @@ class Hypotheses:
                 for ui in v.instances:
                     keys_at[ui.sig].add(ui.slots.get(v.key_slot))
             k_ = g_ = 0
-            for a, b in zip(self.step_sigs, self.step_sigs[1:]):
+            roots_at: dict[str, list[int]] = defaultdict(list)
+            for v in fam_of.get(t, [u]):
+                for ui in v.instances:
+                    roots_at[ui.sig].append(ui.root)
+            for i, (a, b) in enumerate(zip(self.step_sigs, self.step_sigs[1:])):
                 if a not in keys_at or a == b or b not in self.G.obs:
                     continue
+                if i + 1 < len(self.step_kinds) and self.step_kinds[i + 1] in ("reset", "reload"):
+                    continue  # a new episode shows other entities; reloads are judged separately
                 root = next((ui.root for ui in u.instances if ui.sig == a), None)
                 if root is None or not self._same_view(a, b, root):
                     continue
+                # an action aimed at one of these instances may legitimately remove it
+                if i + 1 < len(self.step_targets):
+                    bsig, tgt = self.step_targets[i + 1]
+                    if tgt is not None and bsig == a and any(tgt in self.G.obs[a].subtree(r) for r in roots_at[a]):
+                        continue
                 for k in keys_at[a]:
                     if k in keys_at.get(b, ()):
                         k_ += 1
@@ -315,8 +329,10 @@ class Hypotheses:
                 for ui in v.instances:
                     slots_at[ui.sig][ui.slots.get(v.key_slot)] = tuple(sorted((k, x) for k, x in ui.slots.items() if not k.endswith("~") and k != v.key_slot and "|" not in k))
             same = changed = 0
-            for a, b in zip(self.step_sigs, self.step_sigs[1:]):
+            for i, (a, b) in enumerate(zip(self.step_sigs, self.step_sigs[1:])):
                 if a == b or a not in slots_at or b not in slots_at:
+                    continue
+                if i + 1 < len(self.step_kinds) and self.step_kinds[i + 1] in ("reset", "reload"):
                     continue
                 for k, f in slots_at[a].items():
                     if k in slots_at[b]:
@@ -443,7 +459,7 @@ class Hypotheses:
         fams: list[list[UnitHyp]] = []
         for u in keyed:
             for f in fams:
-                if any(len(parts[u.template] & parts[v.template]) / min(len(parts[u.template]), len(parts[v.template])) >= 0.8 for v in f):
+                if any(self._same_family(u, v) for v in f):
                     f.append(u)
                     break
             else:
@@ -749,7 +765,21 @@ class Hypotheses:
     def _same_family(self, a: UnitHyp, b: UnitHyp) -> bool:
         pa = set(a.template.replace("(", ",").replace(")", ",").split(",")) - {""}
         pb = set(b.template.replace("(", ",").replace(")", ",").split(",")) - {""}
-        return len(pa & pb) / min(len(pa), len(pb)) >= 0.8  # one is the other plus optional parts
+        ov = len(pa & pb) / min(len(pa), len(pb))
+        if ov >= 0.8:
+            return True  # one is the other plus optional parts
+        # variants of one thing at one place (a card with / without an occupant, a row with or
+        # without a duty): half the parts in common and the same parent positions
+        return ov >= 0.5 and bool(self._parent_paths(a) & self._parent_paths(b))
+
+    def _parent_paths(self, u: UnitHyp) -> set[str]:
+        out = set()
+        for ui in u.instances[:50]:
+            if ui.root >= 0:
+                p = self.G.obs[ui.sig].node(ui.root).parent
+                if p >= 0:
+                    out.add(self.G.nodes[(ui.sig, p)].path)
+        return out
 
     def _repeats_in_obs(self, u: UnitHyp) -> bool:
         """One entity cannot carry two values of an attribute at once. Evidence that the
