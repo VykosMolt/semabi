@@ -33,7 +33,11 @@ def explore(a):
     b = Browser(f"{base}/", f"{base}/reset")
     b.step_hooks.append(OracleHook(run_dir, f"{base}/_evaluator/state"))
     try:
-        ex = Explorer(b, log, seed=a.seed)
+        if a.v2:
+            from semabi.compiler.v2.explore import SurveyExplorer
+            ex = SurveyExplorer(b, log, seed=a.seed)
+        else:
+            ex = Explorer(b, log, seed=a.seed)
         view_sweep(ex, a.seed * 100 + 99)
         ex.run(a.episodes, a.steps, seed_base=a.seed * 100)
     finally:
@@ -50,6 +54,7 @@ def main():
     e.add_argument("--seed", type=int, default=0)
     e.add_argument("--episodes", type=int, default=6)
     e.add_argument("--steps", type=int, default=60)
+    e.add_argument("--v2", action="store_true", help="survey/reload-probe explorer (V2)")
     l = sub.add_parser("ladder")
     l.add_argument("--run", required=True)
     l.add_argument("--rungs", default="A,B,C,D,K")
