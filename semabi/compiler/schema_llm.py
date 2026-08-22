@@ -24,6 +24,7 @@ SCHEMA_DOC = """Return ONE JSON object (no prose) with this structure:
    "<unit id>": {"type": "<EntityType>" | null,   // null: the unit is not an entity listing (e.g. a table header row, a wizard picker whose items use "picks")
                  "link": true | false,             // true: the unit is nested inside another entity's unit and each item is a MEMBERSHIP of the entity in that container (many-to-many), not the entity itself
                  "presence": "all" | "subset",     // does this unit list ALL entities of the type when shown, or only some (e.g. only the ones related to something)?
+                 "ordinal_attr": "<attr>" | null,  // if the POSITION of the item in the list is itself a meaningful attribute (an order/rank), name it
                  "slots": {
                    "<slot id>": {"attr": "<attr>", "transform": "<transform>", "ignore": ["<value>", ...]}
                                | {"ref": {"type": "<EntityType>", "attr": "<attr of the referenced entity shown here>"}, "relation": "<relation name>", "transform": "<transform>", "ignore": ["—", ...]}
@@ -45,7 +46,10 @@ SCHEMA_DOC = """Return ONE JSON object (no prose) with this structure:
 Transforms (apply to the raw slot text before interpreting it): "none", "number" (first integer in the text),
 "strip_star" (remove a trailing ' *'), "before_paren" (text before ' ('), "in_paren" (text inside parentheses),
 "after_space" (text after the first space), "before_slash" (text before ' /'), "after_slash" (text after '/ '),
-"after_dot" (text after '· '). Use "ignore" lists for header/placeholder values (e.g. 'slot', 'deep', '—').
+"after_dot" (text after '· '), "second_number" (second integer in the text). Use "ignore" lists for header/placeholder values (e.g. 'slot', 'deep', '—').
+A unit whose items are the entities themselves (a listing) must be mapped with "type", even if clicking an item also
+selects it for a detail panel (selection is a view context, declare the detail panel's slots as "context_ref"); use
+"picks" only for option lists that are not listings of the entities (wizard steps, choose-a-target dialogs).
 Rules: every entity type must have a key attribute that is shown directly in at least one unit OR reachable through a
 correspondence from an attribute shown there. Attribute names are yours. Relations are functional (each source entity
 has at most one target). Only describe what the catalog supports; put speculation in "notes"."""
@@ -107,16 +111,28 @@ def build_prompt(log: EvidenceLog, cat: Catalog, seed: int = 0) -> str:
         "=== OUTPUT ===", SCHEMA_DOC])
 
 
-def propose(run_dir: Path, model: str = "opus", seed: int = 0, cache: bool = True) -> tuple[dict, Catalog]:
+def propose_candidates(run_dir: Path, model: str = "opus", k: int = 2) -> list[dict]:
+    """Several independent proposals (different prompt seeds -> different dynamics samples)."""
+    out = []
+    for i in range(k):
+        try:
+            schema, _ = propose(run_dir, model=model, seed=i, cache=True, suffix=f"_{i}")
+            out.append(schema)
+        except Exception as e:  # noqa: BLE001 - a malformed proposal is skipped
+            (run_dir / "schema_candidates.log").open("a").write(json.dumps({"error": str(e)[:200]}) + "\n")
+    return out
+
+
+def propose(run_dir: Path, model: str = "opus", seed: int = 0, cache: bool = True, suffix: str = "") -> tuple[dict, Catalog]:
     log = EvidenceLog(run_dir)
     cat = Catalog()
     cat.fit_log(log)
     prompt = build_prompt(log, cat, seed)
-    (run_dir / "schema_prompt.txt").write_text(prompt)
+    (run_dir / f"schema_prompt{suffix}.txt").write_text(prompt)
     text = ask(prompt, model=model, cache_dir=Path("runs/llm_cache") if cache else None)
-    (run_dir / "schema_response.txt").write_text(text)
+    (run_dir / f"schema_response{suffix}.txt").write_text(text)
     schema = extract_json(text)
-    (run_dir / "schema.json").write_text(json.dumps(schema, indent=1))
+    (run_dir / f"schema{suffix}.json").write_text(json.dumps(schema, indent=1))
     return schema, cat
 
 

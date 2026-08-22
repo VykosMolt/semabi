@@ -149,7 +149,7 @@ def build_model(A: Abstractor, ops: list[OperatorHyp], min_support: int = 1, vie
             continue
         params = [(p, "str" if t == "str" else type_name(t)) for p, t in op.params.items() if not p.startswith("?new")]
         ptypes = dict(op.params)
-        pre = [x for x in (_lit(l, A, rels, ptypes) for l in op.pre) if x is not None]
+        pre = [x for x in (_lit(l, A, rels, ptypes) for l in op.pre if not any(str(t).startswith("?new") for t in l[1:])) if x is not None]
         # context actions become view preconditions (kept in grounding only)
         effects: list[rm.Effect] = []
         for e in op.effs:

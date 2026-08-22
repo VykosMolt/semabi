@@ -113,7 +113,10 @@ class ActiveExplorer:
         if rop is None:
             return "no rm op", None
         rb = {p: (f"T{v[0]}:{v[1]}" if isinstance(v, tuple) else v) for p, v in b.items()}
-        reason = rm.check_pre(rop, self.C.model.domain, st, rb)
+        try:
+            reason = rm.check_pre(rop, self.C.model.domain, st, rb)
+        except KeyError as e:
+            return f"unbound {e}", None
         if reason:
             return reason, None
         s2, _ = rm.apply_effects(rop, st, rb)
@@ -256,7 +259,7 @@ class ActiveExplorer:
                 for e in cop.effs:
                     if e.kind == "add" and (e.parent in cop.params or any(v in cop.params for _, v in e.refs)):
                         par = e.parent if e.parent else next(v for _, v in e.refs if v in cop.params)
-                        if cop.params.get(par) == tid:
+                        if cop.params.get(par) == tid and p in b:
                             sb = self._sample_binding(cop, prefer_unused=False)
                             if sb is None:
                                 continue

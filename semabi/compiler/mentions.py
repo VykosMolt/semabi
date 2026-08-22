@@ -131,7 +131,8 @@ class Catalog:
         named = {v: p for v, p in self.view_profiles.items() if v != self.initial_view}
         for prof, _ in self.view_profiles[self.initial_view].most_common(3):
             for v, profs in named.items():
-                if any(pp[0] == prof[0] for pp in profs):
+                dom_anchor = Counter(pp[0] for pp in profs.elements()).most_common(1)[0][0]
+                if dom_anchor == prof[0]:
                     self.initial_view = v
                     break
             if self.initial_view != "main":
@@ -166,12 +167,15 @@ class Catalog:
             if i in roots or (n.parent >= 0 and n.parent in owner):
                 owner.add(i)
         statics = set()
+        heads = set()
         for i, n in enumerate(obs.nodes):
             if i in owner:
+                if n.role == "heading" and n.name:
+                    heads.add(n.name)  # unit headings distinguish tabs with identical structure
                 continue
             if n.role in LEAF_ROLES and leaf_label(n) and n.role != "textbox":
                 statics.add((rolepath_indexed(obs, i, -1), leaf_label(n)))
-        return (tuple(sorted(anchors)), tuple(sorted(statics)))
+        return ((tuple(sorted(anchors)), tuple(sorted(heads))), tuple(sorted(statics)))
 
     def _detect_view_controls(self, log) -> None:
         """A static button is a view control if clicking it leads to a profile that is
@@ -201,7 +205,7 @@ class Catalog:
                 before = log.obs(s.before)
                 label_pos[s.action.target_desc["name"]][rolepath_indexed(before, s.action.target, -1)] += 1
         for label, pairs in outcomes.items():
-            if len(pairs) < 3:
+            if len(pairs) < 2:
                 continue
             sources = set(b[0] for b, _ in pairs)
             if len(sources) < 2:

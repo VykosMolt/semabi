@@ -31,6 +31,9 @@ def transform(value: Any, how: str | None) -> Any:
     if how == "number":
         m = re.search(r"-?\d+", s)
         return int(m.group()) if m else None
+    if how == "second_number":
+        ms = re.findall(r"-?\d+", s)
+        return int(ms[1]) if len(ms) > 1 else None
     if how == "strip_star":
         return re.sub(r"\s*\*$", "", s)
     if how == "before_paren":
@@ -55,6 +58,7 @@ class UnitMap:
     presence: str
     slots: dict[str, dict]
     link: bool = False
+    ordinal_attr: str | None = None
 
 
 class SchemaGrounder(Abstractor):
@@ -67,7 +71,7 @@ class SchemaGrounder(Abstractor):
         self.type_defs = {t["name"]: t for t in schema.get("types", [])}
         self.unit_maps: dict[str, UnitMap] = {}
         for uid, um in schema.get("units", {}).items():
-            self.unit_maps[uid] = UnitMap(um.get("type"), um.get("presence", "all"), um.get("slots", {}), bool(um.get("link")))
+            self.unit_maps[uid] = UnitMap(um.get("type"), um.get("presence", "all"), um.get("slots", {}), bool(um.get("link")), um.get("ordinal_attr"))
         self.static_maps: dict[str, dict] = {sid: sm for sid, sm in schema.get("statics", {}).items() if not sm.get("ignore")}
         # correspondences: type -> attr -> value -> [keys]
         self.corr: dict[str, dict[str, dict[str, list[str]]]] = defaultdict(lambda: defaultdict(dict))
@@ -216,6 +220,8 @@ class SchemaGrounder(Abstractor):
                     node_key[m.node] = "ref:" + rel
             for pa in self.presence_attrs(um):
                 attrs[pa] = presence.get(pa, False)
+            if um.ordinal_attr:
+                attrs[um.ordinal_attr] = idx
             if all(v is None for v in attrs.values()) and not refs:
                 continue  # header row etc.
             key = self._key_for(um.type_name, attrs, ordinal_among)

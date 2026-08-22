@@ -50,7 +50,6 @@ def main():
     t0 = time.time()
     if a.v1:
         from semabi.compiler.compile_v1 import compile_v1
-        from semabi.compiler.schema_llm import propose
 
         def compile_fn(rd, min_support=1):
             return compile_v1(rd, min_support=min_support, model=a.llm)
@@ -60,12 +59,16 @@ def main():
         b = Browser(url, reset_url)
         b.step_hooks.append(HiddenRecorder(run_dir, ev_url))
         try:
-            Explorer(b, log, seed=a.seed).run(a.episodes, a.steps, seed_base=a.seed * 100)
+            ex = Explorer(b, log, seed=a.seed)
+            if a.v1:
+                from semabi.compiler.explorer import view_sweep
+                view_sweep(ex, a.seed * 100 + 99)
+            ex.run(a.episodes, a.steps, seed_base=a.seed * 100)
         finally:
             b.close()
         if a.active_rounds:
             if a.v1:
-                propose(run_dir, model=a.llm)  # schema from the random phase
+                (run_dir / "schema.json").unlink(missing_ok=True)  # schema from the random phase (best of k candidates)
             C0 = compile_fn(run_dir)
             b = Browser(url, reset_url)
             b.step_hooks.append(HiddenRecorder(run_dir, ev_url))
@@ -78,7 +81,7 @@ def main():
                 for r in range(a.active_rounds):
                     if r > 0:
                         if a.v1 and r == a.active_rounds - 1:
-                            propose(run_dir, model=a.llm)  # refresh the schema with the active evidence
+                            (run_dir / "schema.json").unlink(missing_ok=True)  # refresh the schema with the active evidence
                         act.recompile()
                     used = act.round(a.active_budget)
                     print(f"active round {r}: {used} primitives, {len(act.records)} experiments", flush=True)

@@ -296,6 +296,7 @@ class Inducer:
         self.view_transitions: list[tuple[Transition, str, int, Any]] = []
         self.view_ops: list[ViewOp] = []
         self._view_steps: set[int] = set()
+        self.reattributed = 0  # domain changes revealed by view switches / reloads
 
     def state(self, sig: str) -> AbstractState:
         if sig not in self._state_cache:
@@ -380,6 +381,7 @@ class Inducer:
                     if last.ext:
                         last.macro = list(last.steps)
                         self._extend_macro(last, *last.ext)
+                    self.reattributed += 1
                     d = Diff([], [], [], [], d.view_changes)
                     tr = Transition(ep, [s.step], [s.step], prev, st, d)
                 if d.domain_changed:

@@ -96,3 +96,43 @@ class Explorer:
                     continue
                 obs = self.step(obs, episode, self.choose(obs))
             obs = self.step(obs, episode, Primitive("reload"))
+
+
+def view_sweep(explorer: "Explorer", episode_seed: int, depth: int = 2, max_buttons: int = 12) -> None:
+    """Deterministic coverage of static controls: from the fresh page click every
+    static button; from each resulting page click every static button again.
+    Cheap, and it makes tab/view structure observable regardless of random luck."""
+    from semabi.compiler.parse import Parser
+    b = explorer.b
+    obs = b.reset(episode_seed)
+    episode = b.episode
+    P = Parser()
+
+    def static_buttons(o):
+        roots = P.detect_roots(o)
+        inside = set()
+        for i, n in enumerate(o.nodes):
+            if i in roots or (n.parent >= 0 and n.parent in inside):
+                inside.add(i)
+        return [n for n in o.nodes if n.role == "button" and n.i not in inside][:max_buttons]
+
+    first = static_buttons(obs)
+    for n1 in first:
+        obs = explorer.step(obs, episode, Primitive("reload"))
+        t = next((n for n in static_buttons(obs) if n.name == n1.name), None)
+        if t is None:
+            continue
+        obs = explorer.step(obs, episode, Primitive("click", t.i))
+        if depth >= 2:
+            for n2 in static_buttons(obs):
+                if n2.name == n1.name:
+                    continue
+                t2 = next((n for n in static_buttons(obs) if n.name == n2.name), None)
+                if t2 is None:
+                    continue
+                obs = explorer.step(obs, episode, Primitive("click", t2.i))
+                # return to n1's page before the next sibling
+                t1 = next((n for n in static_buttons(obs) if n.name == n1.name), None)
+                if t1 is not None:
+                    obs = explorer.step(obs, episode, Primitive("click", t1.i))
+    explorer.step(obs, episode, Primitive("reload"))
