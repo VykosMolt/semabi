@@ -41,7 +41,7 @@ from semabi.compiler.model import LearnedModel, build_model, type_name
 from semabi.compiler.observation import Observation
 from semabi.compiler.parse import LEAF_ROLES, WIDGETS, Instance, ParsedObs, leaf_label, leaf_value
 from semabi.eval import external as ext
-from semabi.eval.matching import Mapping, align, canonical_keys, translate_state
+from semabi.eval.matching import LINK_KEY, Mapping, align, canonical_keys, hidden_key, link_key, translate_state
 from semabi.eval.oracle_hook import align_records, load_records
 
 ID_ATTR = "__id"  # hidden object id exposed as a pseudo-attribute so id-keyed learners can be aligned
@@ -1043,7 +1043,7 @@ def registered_transition_coverage(C: Compiled, recs: list[dict | None], hidden_
         tid = tid_of_L[L]
         hid = change[2]
         o = (hs1 if kind == "create" else hs0).objects.get(hid)
-        key = o.attrs.get(m.key_attr[L]) if o else None
+        key = (link_key(hs1 if kind == "create" else hs0, o, L, m, C.model) if m.key_attr[L] == LINK_KEY else hidden_key(o, m.key_attr[L])) if o else None
         if kind in ("create", "delete"):
             return (kind, tid, key)
         if kind == "attr":
@@ -1355,6 +1355,10 @@ def run_ladder(run_dir: Path, rungs: list[str], min_support: int = 2, llm: str =
             from semabi.compiler.compile_v1 import compile_v1
             C = compile_v1(run_dir, min_support=min_support, model=llm)
             res = evaluate(C, run_dir, recs, v1_like=True, tag="base", abstr_ids=False)
+        elif rung == "v2":
+            from semabi.compiler.compile_v2 import compile_v2
+            C = compile_v2(run_dir, min_support=min_support)
+            res = evaluate(C, run_dir, recs, v1_like=True, tag="v2", abstr_ids=False)
         elif rung == "K":
             res = evaluate_known_vocab(run_dir, min_support)
         else:

@@ -26,6 +26,7 @@ class Mapping:
     rel_map: dict[str, str] = field(default_factory=dict)  # learned rel -> hidden rel
     attr_as_rel: dict[tuple[str, str], str] = field(default_factory=dict)  # (L, a) -> hidden rel (attr holds target key)
     op_map: dict[str, tuple[str, dict[str, str], float, float]] = field(default_factory=dict)  # hidden op -> (learned op, param map h->l, pre_agree, eff_agree)
+    _learned: Any = None  # the learned model (for link keys)
 
     def hidden_types_covered(self) -> set[str]:
         return set(self.type_map.values())
@@ -36,14 +37,58 @@ class Mapping:
 # --------------------------------------------------------------------------
 
 
+LINK_KEY = "__link"  # key_attr marker: the learned key is composed of the keys of the objects the link refers to
+
+
+def hidden_key(o: rm.Obj, spec: str) -> Any:
+    """Value of a key specification on a hidden object: a hidden attribute, or several
+    joined by '|' (composite keys the learner uses to separate duplicate names)."""
+    if spec == LINK_KEY:
+        return None
+    if "|" in spec:
+        parts = [o.attrs.get(a) for a in spec.split("|")]
+        if any(p is None for p in parts):
+            return None
+        return "|".join(str(p) for p in parts)
+    return o.attrs.get(spec)
+
+
+def link_key(h: rm.State, o: rm.Obj, L: str, m: Mapping, learned: LearnedModel) -> str | None:
+    """Expected learned key of a hidden link object: sorted 'L2:key2' of its endpoints."""
+    spec = learned.meta.get("link_types", {}).get(L)
+    if not spec:
+        return None
+    inv_type = {H: L2 for L2, H in m.type_map.items()}
+    parts = []
+    for hr in spec:
+        tgt = h.get_rel(hr, o.id)
+        if not tgt or tgt not in h.objects:
+            return None
+        t = h.objects[tgt]
+        L2 = inv_type.get(t.type)
+        if L2 is None:
+            return None
+        k = hidden_key(t, m.key_attr[L2]) if m.key_attr[L2] != LINK_KEY else None
+        if k is None:
+            return None
+        parts.append(f"{L2}:{k}")
+    return "|".join(sorted(parts))
+
+
 def _pair_objects(h: rm.State, l: rm.State, m: Mapping) -> dict[str, str]:
-    """learned obj id -> hidden obj id, by key attribute equality."""
+    """learned obj id -> hidden obj id, by key equality (attribute, composite or link key)."""
     out = {}
     for L, H in m.type_map.items():
         ka = m.key_attr[L]
         by_val: dict[Any, list[str]] = defaultdict(list)
-        for o in h.of_type(H):
-            by_val[o.attrs.get(ka)].append(o.id)
+        if ka == LINK_KEY:
+            for o in h.of_type(H):
+                k = link_key(h, o, L, m, m._learned)
+                if k is not None:
+                    by_val[k].append(o.id)
+        else:
+            for o in h.of_type(H):
+                by_val[hidden_key(o, ka)].append(o.id)
         for o in l.of_type(L):
             key = o.attrs.get(_learned_key(l, L, o))
             cands = by_val.get(key, [])
@@ -64,35 +109,77 @@ def _learned_key(l: rm.State, L: str, o: rm.Obj) -> str:
 def align(hidden_dom: rm.Domain, learned: LearnedModel, pairs: list[tuple[rm.State, rm.State]], min_agree: float = 0.75,
           attr_agree: float = 0.95, rel_agree: float = 0.95) -> Mapping:
     m = Mapping()
+    m._learned = learned
     ld = learned.domain
-    # 1. types via key/attr set overlap
+    link_types = learned.meta.get("link_types", {})
+    # 1. types via key/attr set overlap; key specs are single str attributes or pairs joined by '|'
     scores = []
     for L, lt in ld.types.items():
+        if L in link_types:
+            continue
         kl = learned.key_slots[L]
         for H, ht in hidden_dom.types.items():
-            for a, kind in ht.attrs.items():
-                if kind != "str":
-                    continue
+            strs = [a for a, kind in ht.attrs.items() if kind == "str"]
+            specs = list(strs) + [f"{a}|{b}" for a in strs for b in ht.attrs if a != b]
+            for spec in specs:
                 # the learned state may be a partial belief (objects out of view): score by
                 # precision of learned keys against hidden values, Jaccard as tie-breaker
                 ps, js = [], []
                 for h, l in pairs:
                     lk = set(o.attrs.get(kl) for o in l.of_type(L))
-                    hk = set(o.attrs.get(a) for o in h.of_type(H))
+                    hk = set(hidden_key(o, spec) for o in h.of_type(H))
                     if not lk and not hk:
                         continue
                     js.append(len(lk & hk) / len(lk | hk))
                     if lk:
                         ps.append(len(lk & hk) / len(lk))
                 if ps:
-                    scores.append(((sum(ps) / len(ps), sum(js) / len(js)), L, H, a))
+                    scores.append(((sum(ps) / len(ps), sum(js) / len(js), -spec.count("|")), L, H, spec))
     used_h = set()
-    for (prec, jac), L, H, a in sorted(scores, reverse=True):
+    for (prec, jac, _), L, H, spec in sorted(scores, reverse=True):
         if prec < min_agree or L in m.type_map or H in used_h:
             continue
         m.type_map[L] = H
-        m.key_attr[L] = a
+        m.key_attr[L] = spec
         used_h.add(H)
+    # 1b. link types: learned objects keyed by their endpoints <-> hidden types whose
+    # relations point at the aligned counterparts
+    for L, lrels in link_types.items():
+        if L in m.type_map:
+            continue
+        best = None
+        for H, ht in hidden_dom.types.items():
+            if H in used_h:
+                continue
+            hrels = [r for r, rd in hidden_dom.relations.items() if rd.src == H and "~" not in r]
+            if len(hrels) < 2:
+                continue
+            # try every assignment of the learned endpoint relations to hidden relations
+            import itertools
+            for combo in itertools.permutations(hrels, len(lrels)):
+                trial = Mapping(type_map=dict(m.type_map), key_attr=dict(m.key_attr))
+                trial._learned = learned
+                trial.type_map[L] = H
+                trial.key_attr[L] = LINK_KEY
+                learned.meta.setdefault("link_types", {})
+                saved = learned.meta["link_types"][L]
+                learned.meta["link_types"][L] = list(combo)
+                ps = []
+                for h, l in pairs:
+                    lk = set(o.attrs.get(learned.key_slots[L]) for o in l.of_type(L))
+                    hk = set(k for k in (link_key(h, o, L, trial, learned) for o in h.of_type(H)) if k)
+                    if lk:
+                        ps.append(len(lk & hk) / len(lk))
+                learned.meta["link_types"][L] = saved
+                if ps:
+                    p = sum(ps) / len(ps)
+                    if p >= min_agree and (best is None or p > best[0]):
+                        best = (p, H, list(combo))
+        if best:
+            m.type_map[L] = best[1]
+            m.key_attr[L] = LINK_KEY
+            learned.meta["link_types"][L] = best[2]
+            used_h.add(best[1])
     # 2. attributes and relations via paired objects
     for L, H in m.type_map.items():
         for a in ld.types[L].attrs:
@@ -101,7 +188,7 @@ def align(hidden_dom: rm.Domain, learned: LearnedModel, pairs: list[tuple[rm.Sta
             # candidate hidden attrs
             best = None
             for b, kind in hidden_dom.types[H].attrs.items():
-                if b == m.key_attr[L]:
+                if b in str(m.key_attr[L]).split("|"):
                     continue
                 co: dict[Any, Counter] = defaultdict(Counter)
                 n = 0
@@ -139,7 +226,7 @@ def align(hidden_dom: rm.Domain, learned: LearnedModel, pairs: list[tuple[rm.Sta
                             continue
                         tgt = h.get_rel(rname, ho)
                         n += 1
-                        if tgt and h.objects[tgt].attrs.get(m.key_attr[L2]) == lo.attrs.get(a):
+                        if tgt and hidden_key(h.objects[tgt], m.key_attr[L2]) == lo.attrs.get(a):
                             hit += 1
                 if n >= 3 and hit / n >= rel_agree:
                     m.attr_as_rel[(L, a)] = rname
@@ -167,7 +254,7 @@ def align(hidden_dom: rm.Domain, learned: LearnedModel, pairs: list[tuple[rm.Sta
                         if tgt_h is None:
                             L2 = lrel.dst
                             key = lt.split(":", 1)[1]
-                            tgt_h = next((o.id for o in h.of_type(m.type_map[L2]) if o.attrs.get(m.key_attr[L2]) == key), None)
+                            tgt_h = next((o.id for o in h.of_type(m.type_map[L2]) if hidden_key(o, m.key_attr[L2]) == key), None)
                         if tgt_h == ht:
                             hit += 1
             if n >= 3 and hit / n >= rel_agree:
@@ -189,7 +276,9 @@ def translate_state(h: rm.State, hidden_dom: rm.Domain, learned: LearnedModel, m
         L = inv_type.get(o.type)
         if L is None:
             continue
-        key = o.attrs.get(m.key_attr[L])
+        key = link_key(h, o, L, m, learned) if m.key_attr[L] == LINK_KEY else hidden_key(o, m.key_attr[L])
+        if key is None:
+            continue
         lid = f"{L}:{key}"
         attrs = {learned.key_slots[L]: key}
         for a in learned.domain.types[L].attrs:
@@ -208,7 +297,7 @@ def translate_state(h: rm.State, hidden_dom: rm.Domain, learned: LearnedModel, m
                 r = m.attr_as_rel[(L, a)]
                 tgt = h.get_rel(r, o.id)
                 L2 = inv_type.get(hidden_dom.relations[r].dst)
-                attrs[a] = h.objects[tgt].attrs.get(m.key_attr[L2]) if tgt and L2 else None
+                attrs[a] = hidden_key(h.objects[tgt], m.key_attr[L2]) if tgt and L2 else None
             else:
                 attrs[a] = None
         l.objects[lid] = rm.Obj(lid, L, attrs)

@@ -7,7 +7,7 @@ from dataclasses import dataclass
 
 from semabi import relmodel as rm
 from semabi.compiler.model import LearnedModel
-from semabi.eval.matching import Mapping
+from semabi.eval.matching import hidden_key, Mapping
 
 HGoal = list[tuple]  # hidden-vocabulary goal atoms (same shapes as the learned goal language)
 
@@ -58,13 +58,13 @@ def translate_goal(goal: HGoal, hidden_state: rm.State, hidden_dom: rm.Domain, l
         L = inv_type.get(o.type)
         if L is None:
             return None
-        return f"{L}:{o.attrs.get(m.key_attr[L])}"
+        return f"{L}:{hidden_key(o, m.key_attr[L])}"
 
     def lattrs(H: str, attrs: dict) -> dict | None:
         L = inv_type[H]
         out = {}
         for b, v in attrs.items():
-            if b == m.key_attr[L]:
+            if b in str(m.key_attr[L]).split("|"):
                 out[learned.key_slots[L]] = v
                 continue
             hit = [(a, vmap) for (L2, a), (b2, vmap) in m.attr_map.items() if L2 == L and b2 == b]

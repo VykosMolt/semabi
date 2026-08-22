@@ -147,6 +147,8 @@ class Tracker:
 def make_tracker(A: Abstractor) -> "Tracker":
     """V1 grounders get the per-view belief tracker; V0 abstractors the scope tracker."""
     from semabi.compiler.grounder import SchemaGrounder, V1Tracker
+    if hasattr(A, "make_tracker"):
+        return A.make_tracker()  # V2 abstractors supply their own belief tracker
     if isinstance(A, SchemaGrounder):
         return V1Tracker(A)
     return Tracker(A)

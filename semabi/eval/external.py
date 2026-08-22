@@ -21,7 +21,7 @@ from typing import Any
 from semabi import relmodel as rm
 from semabi.compiler.model import LearnedModel
 from semabi.compiler.planner import apply_learned, unsatisfied
-from semabi.eval.matching import Mapping, align, canonical_keys, translate_state
+from semabi.eval.matching import Mapping, align, canonical_keys, hidden_key, translate_state
 
 
 def fetch(url: str) -> dict:
@@ -264,7 +264,7 @@ def translate_goal_generic(goal: list[tuple], hs: rm.State, hidden_dom: rm.Domai
     def lid(hid):
         o = hs.objects.get(hid)
         L = inv_type.get(o.type) if o else None
-        return f"{L}:{o.attrs.get(m.key_attr[L])}" if L else None
+        return f"{L}:{hidden_key(o, m.key_attr[L])}" if L else None
 
     def lattrs(H, attrs):
         L = inv_type.get(H)
@@ -272,8 +272,9 @@ def translate_goal_generic(goal: list[tuple], hs: rm.State, hidden_dom: rm.Domai
             return None
         out = {}
         for b, v in attrs.items():
-            if b == m.key_attr[L]:
-                out[learned.key_slots[L]] = v
+            if b in str(m.key_attr[L]).split("|"):
+                if m.key_attr[L] == b:
+                    out[learned.key_slots[L]] = v
                 continue
             hit = [(a, vmap) for (L2, a), (b2, vmap) in m.attr_map.items() if L2 == L and b2 == b]
             if not hit:
@@ -340,7 +341,8 @@ def translate_goal_generic(goal: list[tuple], hs: rm.State, hidden_dom: rm.Domai
 
 def summarize(hidden_dom: rm.Domain, learned: LearnedModel, m: Mapping, scores: dict[str, OpScore], used: Counter) -> dict:
     n_ht = len(hidden_dom.types)
-    hidden_preds = [(H, a) for H, t in hidden_dom.types.items() for a in t.attrs if a not in m.key_attr.values()]
+    key_attrs = {a for spec in m.key_attr.values() for a in str(spec).split("|")}
+    hidden_preds = [(H, a) for H, t in hidden_dom.types.items() for a in t.attrs if a not in key_attrs]
     rec_attrs = {(m.type_map[L], b) for (L, a), (b, _) in m.attr_map.items()}
     rec_rels = set(m.rel_map.values()) | set(m.attr_as_rel.values())
     per_op = {}

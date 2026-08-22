@@ -100,7 +100,7 @@ class Browser:
     """Primitive interface. `hooks` (evaluator-side) may be attached to observe
     step boundaries; the compiler never reads from them."""
 
-    def __init__(self, url: str, reset_url: str, headless: bool = True, settle_ms: int = 40, max_settle_ms: int = 3000):
+    def __init__(self, url: str, reset_url: str, headless: bool = True, settle_ms: int = 150, max_settle_ms: int = 3000):
         self.url = url
         self.reset_url = reset_url
         self.settle_ms = settle_ms
@@ -128,14 +128,21 @@ class Browser:
         return Observation(nodes, self._page.url)
 
     def observe(self) -> Observation:
-        """Snapshot after the page has settled (two identical consecutive snapshots)."""
+        """Snapshot after the page has settled: three identical consecutive snapshots
+        `settle_ms` apart (apps that re-render after an asynchronous fetch need more than
+        one quiet interval; V0/V1 used two snapshots 40 ms apart, see docs/v2_design.md)."""
         t0 = time.time()
         prev = self._raw_snapshot()
+        stable = 0
         while True:
             time.sleep(self.settle_ms / 1000)
             cur = self._raw_snapshot()
             if cur.structural_signature() == prev.structural_signature():
-                break
+                stable += 1
+                if stable >= 2:
+                    break
+            else:
+                stable = 0
             prev = cur
             if (time.time() - t0) * 1000 > self.max_settle_ms:
                 break
