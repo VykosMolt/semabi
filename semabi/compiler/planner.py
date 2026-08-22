@@ -116,7 +116,10 @@ def plan(model: LearnedModel, init: rm.State, goal: Goal, max_expansions: int = 
                 if rm.check_pre(op, dom, s, b) is not None:
                     continue
                 n_applicable += 1
-                s2 = apply_learned(model, s, op, b)
+                try:
+                    s2 = apply_learned(model, s, op, b)
+                except (KeyError, TypeError):
+                    continue
                 key = canonical_learned(s2, model)
                 if key in seen and seen[key] <= g + 1:
                     continue
@@ -160,7 +163,12 @@ def execute_goal(live: Live, model: LearnedModel, goal: Goal, max_replans: int =
         cur = init
         for name, b in p.steps:
             op = model.domain.operators[name]
-            predicted = apply_learned(model, cur, op, b)
+            try:
+                predicted = apply_learned(model, cur, op, b)
+            except (KeyError, TypeError):
+                ok = False
+                rep.failure = f"step {name}: malformed operator"
+                break
             ground = model.groundings[name]
             exec_b = {k: (v.split(":", 1)[1] if isinstance(v, str) and v in cur.objects else v) for k, v in b.items()}
             r = live.execute(ground.acts, exec_b)

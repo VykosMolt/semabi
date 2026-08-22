@@ -184,6 +184,12 @@ def build_model(A: Abstractor, ops: list[OperatorHyp], min_support: int = 1, vie
                 elif r and r2:
                     # moving along a different relation than the anchor: approximate per-object
                     effects.append(rm.MoveIncoming(r2, e.obj, e.new))
+        # effects may only mention ?new params that a Create in this operator binds
+        created = {e.bind for e in effects if isinstance(e, rm.Create)}
+        def mentions_unbound(e):
+            vals = [getattr(e, k) for k in ("obj", "a", "b", "src", "dst", "value") if hasattr(e, k)]
+            return any(isinstance(v, str) and v.startswith("?new") and v not in created for v in vals)
+        effects = [e for e in effects if not mentions_unbound(e)]
         operators[op.name] = rm.Operator(op.name, params, pre, effects)
         groundings[op.name] = Grounding(list(op.acts))
     dom = rm.Domain("learned", types, relations, operators)
