@@ -99,7 +99,9 @@ class V2Abstractor(Abstractor):
         n = self.G.obs[ui.sig].node(node)
         lab = sorted(self.G.labels(ui.sig, node))
         k = sid.split("#")[-1].split("@")[0]
-        return "attr:" + (" ".join(lab) if lab else n.role) + f"#{k}"
+        if lab:
+            return "attr:" + " ".join(lab) + f"#{k}"
+        return "attr:" + sid  # unlabeled slots keep their positional id
 
     def persistent_types(self) -> list[int]:
         return sorted(self.types)
@@ -251,13 +253,19 @@ class V2Abstractor(Abstractor):
         sensing actions (their view-revealed differences are re-attributed downstream)."""
         changed: Counter = Counter()
         clicked: Counter = Counter()
+        in_unit: set[str] = set()  # button labels that ever occur inside a unit instance
+        for sig, obs in list(log.observations.items())[:300]:
+            po = self.parsed(obs)
+            for n in obs.nodes:
+                if n.role == "button" and n.i in po.node_instance and n.name:
+                    in_unit.add(n.name)
         for s in log.steps:
             if s.action.kind != "click" or not s.action.target_desc or s.action.target is None:
                 continue
             name = s.action.target_desc.get("name")
             before = log.obs(s.before)
             po = self.parsed(before)
-            if not name or s.action.target in po.node_instance:
+            if not name or s.action.target in po.node_instance or name in in_unit:
                 continue
             a, b = self.abstract(before), self.abstract(log.obs(s.after))
             clicked[name] += 1

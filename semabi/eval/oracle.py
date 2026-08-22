@@ -1276,15 +1276,21 @@ class _noop:
 
 
 class _with_ids:
-    """Context: ext.state_from_json adds the hidden id as a pseudo-attribute."""
+    """Context: ext.state_from_json normalises ints to strings (the learner's value
+    language) and, with ids=True, adds the hidden id as a pseudo-attribute."""
+
+    def __init__(self, ids: bool = True):
+        self.ids = ids
 
     def __enter__(self):
         self.orig = ext.state_from_json
+        ids = self.ids
 
         def with_ids(j, domain_name=None):
             st = self.orig(j, domain_name)
             for o in st.objects.values():
-                o.attrs[ID_ATTR] = o.id
+                if ids:
+                    o.attrs[ID_ATTR] = o.id
                 for a, v in list(o.attrs.items()):
                     o.attrs[a] = _norm(v)
             return st
@@ -1305,20 +1311,20 @@ def evaluate(C: Compiled, run_dir: Path, recs: list[dict | None], v1_like: bool,
     hidden_dom = _hidden_dom_with_ids(desc) if abstr_ids else ext.domain_from_description(desc)
     hidden = [r for r in recs if r is not None]
     pairs = []
-    for s, r in zip(C.log.steps, recs):
-        if r is None:
-            continue
-        hs = hidden_state(r["state"]) if abstr_ids else ext.state_from_json(r["state"])
-        ls = C.visible_state_after(s.step) if v1_like else C.learned_state_after(s.step)
-        pairs.append((hs, ls))
-    m = align(hidden_dom, C.model, pairs, attr_agree=0.85, rel_agree=0.8)
-    with (_with_ids() if abstr_ids else _noop()):
+    with _with_ids(ids=abstr_ids):
+        for s, r in zip(C.log.steps, recs):
+            if r is None:
+                continue
+            hs = ext.state_from_json(r["state"])
+            ls = C.visible_state_after(s.step) if v1_like else C.learned_state_after(s.step)
+            pairs.append((hs, ls))
+        m = align(hidden_dom, C.model, pairs, attr_agree=0.85, rel_agree=0.8)
         scores, used = explain_transitions(hidden_dom, C.model, m, hidden)
         ext.check_failures(hidden_dom, C.model, m, hidden, scores)
     res = ext.summarize(hidden_dom, C.model, m, scores, used)
     res["predicates"]["hidden_attrs"] = _n_hidden_attrs(hidden_dom)
-    res["gtc"] = grounded_transition_coverage(hidden, hidden_dom, C.model, m, latent)
-    with (_with_ids() if abstr_ids else _noop()):
+    with _with_ids(ids=abstr_ids):
+        res["gtc"] = grounded_transition_coverage(hidden, hidden_dom, C.model, m, latent)
         res["rtc"] = registered_transition_coverage(C, recs, hidden_dom, m, latent)
     res["object_layer"] = object_layer_metrics(C, recs, v1_like)
     res["view_false_positives"] = view_false_positives(C, recs)

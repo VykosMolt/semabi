@@ -93,7 +93,7 @@ class Hypotheses:
         self.allowed: set[str] | None = None  # unit templates with identity (after fitting)
         self.ctx_split: dict[tuple[str, str | None], str] = {}  # (template, enclosing template) -> split template
         self.transient: set[str] = set()
-        self.transient_positions: set[tuple[str, int]] = set()
+        self.transient_positions: set[tuple] = set()
         self.frozen = False
 
     # ------------------------------------------------------------- templates
@@ -141,7 +141,7 @@ class Hypotheses:
             for n in obs.nodes:
                 if n.i in skip:
                     continue
-                if (self.G.nodes[(sig, n.i)].path, self._ordinal(obs, n.i)) in self.transient_positions:
+                if self._position(obs, n.i) in self.transient_positions:
                     skip.update(obs.subtree(n.i))
         for i, chain in order:
             if not chain or i in skip:
@@ -261,11 +261,11 @@ class Hypotheses:
             oa, ob = self.G.obs[a], self.G.obs[b]
             pos_b: dict[tuple[str, int], str] = {}
             for n in ob.nodes:
-                pos_b[(self.G.nodes[(b, n.i)].path, self._ordinal(ob, n.i))] = self.G.subtree_template_text(b, n.i)
+                pos_b[self._position(ob, n.i)] = self.G.subtree_template_text(b, n.i)
             for n in oa.nodes:
                 if not node_text(n) and not oa.children(n.i):
                     continue
-                key = (self.G.nodes[(a, n.i)].path, self._ordinal(oa, n.i))
+                key = self._position(oa, n.i)
                 if not self._same_view(a, b, n.i):
                     continue
                 if pos_b.get(key) == self.G.subtree_template_text(a, n.i):
@@ -330,13 +330,22 @@ class Hypotheses:
                 continue
             g = k = 0
             for ui in u.instances[:200]:
-                key = (self.G.nodes[(ui.sig, ui.root)].path, self._ordinal(self.G.obs[ui.sig], ui.root))
+                key = self._position(self.G.obs[ui.sig], ui.root)
                 g += gone[key]
                 k += kept[key]
             if g >= 2 and k == 0:
                 u.key_slot = None
                 u.evidence.append(f"transient: its position is cleared by reload ({g} cases, never kept)")
                 self.transient.add(t)
+
+    def _position(self, obs, i: int) -> tuple:
+        """Indexed role path: (role, leaf-aware ordinal) at every level."""
+        out = []
+        x = i
+        while x >= 0:
+            out.append((obs.node(x).role, self._ordinal(obs, x)))
+            x = obs.node(x).parent
+        return tuple(reversed(out))
 
     def _ordinal(self, obs, i: int) -> int:
         """Position among siblings of the same role and leafness (optional leaf siblings such
@@ -467,10 +476,17 @@ class Hypotheses:
                         u.evidence.append(f"key {best} adopted for family consistency (was {u.key_slot})")
                         u.key_slot = best
 
+    def _slot_order(self, uh: UnitHyp, sid: str) -> int:
+        for ui in uh.instances:
+            if sid in ui.slot_nodes:
+                return ui.slot_nodes[sid] - ui.root
+        return 10 ** 6
+
     def _fd(self, uh: UnitHyp, k: str) -> float:
         """How well slot k functionally determines the other persistent own slots
         (identity determines attributes): mean over slots of the dominant-value share."""
-        others = [s for s in uh.slots if s != k and not s.endswith("~") and "|" not in s and s not in k.split("|")]
+        others = [s for s in uh.slots if s != k and not s.endswith("~") and not s.endswith("!") and "|" not in s and s not in k.split("|")
+                  and uh.slots[s].numeric < 0.5 * max(1, uh.slots[s].n)]  # counters are expected to change
         if not others:
             return 1.0
         scores = []
@@ -506,7 +522,8 @@ class Hypotheses:
                 own = set(st.values)
                 elsewhere = sum(1 for v in own if pool[v] > 1) / len(own)
                 score += 0.5 * elsewhere
-            if best is None or score > best[0]:
+            # ties (within 0.05): the slot shown first (identity usually precedes description)
+            if best is None or score > best[0] + 0.1 or (abs(score - best[0]) <= 0.1 and self._slot_order(uh, sid) < self._slot_order(uh, best[1])):
                 best = (score, sid, fd)
         if best:
             uh.key_slot = best[1]
