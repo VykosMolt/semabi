@@ -74,3 +74,35 @@ never gets to run because the object layer fails first. That is the precise V1
 problem: object identity as data association across representations and views,
 not as a visible key; attribute extraction from text; tab-like view scopes
 without object references; and latent predicates inferred from failures.
+
+## Contrast: passive LLM on the same gauntlet traces
+
+The LLM-passive baseline (claude-sonnet, random-phase trace only, no
+verification) was run on the same evidence logs. On **harbor** it proposes
+(`runs/llm_gauntlet_02_harbor/model.txt`):
+
+```
+type Boat(code, name, noted)   type Slot(code, depth)   type Hand(name, inked)
+rel berthed(Boat, Slot)  rel crewed(Boat, Hand)
+Bind(?boat, ?slot, ?hand)  pre: slot free & hand free   eff: berthed := ?slot; crewed := ?hand
+Loose(?boat)  eff: delete ?boat            Mark/Wipe(?boat): noted toggles
+Stamp/Unstamp(?hand): inked toggles
+```
+
+against the hidden `Ship(name, flag, draft, hold)`, `Berth(code, depth)`,
+`Pilot(name, ticket)`, `Tie` link, and operators `tie(?s,?b,?p)` (four
+preconditions incl. draft <= depth and not hold), `loose`, `hold`/`free`
+(latent), `stamp`, `rename`. The LLM recovers the type structure, the
+code <-> name correspondence of the same object across views, the 3-parameter
+tie (two of its four preconditions) and the pilot toggle; it gets the effect of
+`loose` wrong (deletes the ship instead of the tie), misses `rename` and the
+numeric constraint, and invents a visible `noted` flag for the latent hold.
+
+So the two approaches fail in complementary places: V0's structural induction
+cannot even establish *which observations are the same object* on these UIs,
+while the LLM does that from linguistic/layout priors but does not verify
+effects or preconditions. The obvious V1 hypothesis is a hybrid in which
+object/representation correspondences are *proposed* (by priors or an LLM) and
+then validated by the existing interventionist machinery, which is exactly the
+division of labour the brief asked for ("LLMs may propose hypotheses; only
+environment interaction may validate them").
