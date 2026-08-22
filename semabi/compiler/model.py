@@ -188,6 +188,8 @@ def build_model(A: Abstractor, ops: list[OperatorHyp], min_support: int = 1, vie
         created = {e.bind for e in effects if isinstance(e, rm.Create)}
         def mentions_unbound(e):
             vals = [getattr(e, k) for k in ("obj", "a", "b", "src", "dst", "value") if hasattr(e, k)]
+            if isinstance(e, rm.Create):
+                vals += [v for _, v in e.attrs]
             return any(isinstance(v, str) and v.startswith("?new") and v not in created for v in vals)
         effects = [e for e in effects if not mentions_unbound(e)]
         operators[op.name] = rm.Operator(op.name, params, pre, effects)

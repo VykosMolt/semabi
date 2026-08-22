@@ -119,7 +119,10 @@ class ActiveExplorer:
             return f"unbound {e}", None
         if reason:
             return reason, None
-        s2, _ = rm.apply_effects(rop, st, rb)
+        try:
+            s2, _ = rm.apply_effects(rop, st, rb)
+        except (KeyError, TypeError) as e:
+            return f"malformed effect {e}", None
         return None, s2
 
     # ---------------------------------------------------------------- experiments
