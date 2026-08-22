@@ -74,6 +74,10 @@ def run(args) -> dict:
                          "episodes": args.episodes, "steps": args.steps}
         if args.goals:
             res["planning"] = run_planning(args, world, base, url, run_dir, log, C, res)
+        elif (run_dir / "eval.json").exists():
+            prev = json.loads((run_dir / "eval.json").read_text())
+            if "planning" in prev:
+                res["planning"] = prev["planning"]  # keep earlier held-out goal results
         (run_dir / "eval.json").write_text(json.dumps(res, indent=1))
         report = format_report(res)
         (run_dir / "eval.txt").write_text(report)

@@ -72,18 +72,22 @@ def align(hidden_dom: rm.Domain, learned: LearnedModel, pairs: list[tuple[rm.Sta
             for a, kind in ht.attrs.items():
                 if kind != "str":
                     continue
-                js = []
+                # the learned state may be a partial belief (objects out of view): score by
+                # precision of learned keys against hidden values, Jaccard as tie-breaker
+                ps, js = [], []
                 for h, l in pairs:
                     lk = set(o.attrs.get(kl) for o in l.of_type(L))
                     hk = set(o.attrs.get(a) for o in h.of_type(H))
                     if not lk and not hk:
                         continue
                     js.append(len(lk & hk) / len(lk | hk))
-                if js:
-                    scores.append((sum(js) / len(js), L, H, a))
+                    if lk:
+                        ps.append(len(lk & hk) / len(lk))
+                if ps:
+                    scores.append(((sum(ps) / len(ps), sum(js) / len(js)), L, H, a))
     used_h = set()
-    for sc, L, H, a in sorted(scores, reverse=True):
-        if sc < min_agree or L in m.type_map or H in used_h:
+    for (prec, jac), L, H, a in sorted(scores, reverse=True):
+        if prec < min_agree or L in m.type_map or H in used_h:
             continue
         m.type_map[L] = H
         m.key_attr[L] = a

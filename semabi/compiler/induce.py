@@ -965,9 +965,11 @@ class Inducer:
             for l in self._literals(op, tr):
                 if l[0] == "attr":
                     pos_vals.add(l)
+        typed = set(self.log.typed_tokens)
         for nl in neg_lits:
             for l in nl:
-                if l[0] == "attr" and l not in pos_vals and isinstance(l[3], str):
+                # constants the agent typed itself cannot be semantically special
+                if l[0] == "attr" and l not in pos_vals and isinstance(l[3], str) and l[3] not in typed:
                     common.add(("attr_ne", l[1], l[2], l[3]))
         # greedy cover: pick literals (true in all positives) that are false in most negatives;
         # ties are kept as competing explanations for active probing
