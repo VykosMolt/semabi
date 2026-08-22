@@ -41,6 +41,8 @@ class SurveyExplorer(Explorer):
         self.last_reload_obs: str | None = None
         self.default_skeleton: frozenset | None = None  # role-path set of the view a reload shows
         self.fresh = False  # every view's rendering is known since the last page-changing action
+        self.pending: list[tuple] = []  # page-changing actions since the last probe (their effects are mixed in)
+        self.post_reload_views: dict[str, str] = {}  # view renderings at the last post-reload survey
         self.probes_path = Path(log.dir) / "probes.jsonl"
 
     # ----------------------------------------------------------- navigation
@@ -100,16 +102,25 @@ class SurveyExplorer(Explorer):
         self.last_reload_obs = sig
         if self.default_skeleton is None:
             self.default_skeleton = self.skeleton(obs)
-        obs, changed_views = self.survey(obs, episode)
-        if persisted_default or changed_views:
-            status = "DOMAIN"
-        elif persisted_default is False and self.last_view_obs:
-            status = "VIEW"
-        else:
+        obs, _ = self.survey(obs, episode)
+        # compare with the previous post-reload survey: selection state is reset by both reloads,
+        # so differences are domain changes made by the actions in between
+        changed_views = [n for n, sg in self.last_view_obs.items() if n in self.post_reload_views and self.post_reload_views[n] != sg]
+        comparable = bool(self.post_reload_views)
+        self.post_reload_views = dict(self.last_view_obs)
+        mixed = [k for k in self.pending if self.probed.get(k) != "VIEW"]
+        self.pending = []
+        if not comparable:
             status = "UNDETERMINED"
+        elif mixed:
+            status = "UNDETERMINED" if (persisted_default or changed_views) else "VIEW"
+        elif persisted_default or changed_views:
+            status = "DOMAIN"
+        else:
+            status = "VIEW"
         self.probed[key] = status
         with self.probes_path.open("a") as f:
-            f.write(json.dumps({"step": step_index, "key": list(key), "status": status,
+            f.write(json.dumps({"step": step_index, "key": list(key), "status": status, "mixed": [list(k) for k in mixed],
                                 "persisted_default": persisted_default, "changed_views": changed_views}) + "\n")
         return obs
 
@@ -124,17 +135,15 @@ class SurveyExplorer(Explorer):
             episode = self.b.episode
             self.note(obs)
             self.last_view_obs = {}
+            self.pending = []
             self.last_reload_obs = obs.structural_signature()
             if self.default_skeleton is None:
                 self.default_skeleton = self.skeleton(obs)
             obs, _ = self.survey(obs, episode)  # known rendering of every view at the start
+            self.post_reload_views = dict(self.last_view_obs)
             for i in range(steps_per_episode):
                 p = self.choose(obs)
                 key = affordance_key(obs, p)
-                if key not in self.probed and not self.fresh and p.kind in ("click", "select", "press"):
-                    obs, _ = self.survey(obs, episode)  # a probe needs every view's rendering to be current
-                    p = self.choose(obs)
-                    key = affordance_key(obs, p)
                 before = obs
                 step_index = len(self.log.steps)
                 obs = self.step(obs, episode, p)
@@ -146,8 +155,11 @@ class SurveyExplorer(Explorer):
                 nav = (p.kind == "click" and p.target is not None and before.node(p.target).name in self.nav_names())
                 if nav:
                     self.last_view_obs[before.node(p.target).name] = obs.structural_signature()
-                elif p.kind in ("click", "select", "press") and key not in self.probed and self.probed_ok(key):
+                elif p.kind in ("click", "select", "press") and key not in self.probed:
                     obs = self.probe(obs, episode, key, step_index)
-                elif p.kind in ("click", "select", "press") and self.rng.random() < self.survey_prob:
-                    obs, _ = self.survey(obs, episode)
+                else:
+                    if p.kind in ("click", "select", "press"):
+                        self.pending.append(key)
+                    if p.kind in ("click", "select", "press") and self.rng.random() < self.survey_prob:
+                        obs, _ = self.survey(obs, episode)
             obs = self.step(obs, episode, Primitive("reload"))

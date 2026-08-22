@@ -88,9 +88,10 @@ def classify(A: V2Abstractor, log: EvidenceLog) -> list[Counterexample]:
             if s.before == s.after:
                 prev = st
                 continue
+            probe = getattr(A, "probe_status", {}).get(name, set()) if name else set()
             if d.domain_changed:
                 ce.status = "EXPLAINED"
-            elif s.action.kind == "click" and name in A.view_controls:
+            elif (s.action.kind == "click" and name in A.view_controls) or probe == {"VIEW"}:
                 ce.status = "VIEW_ONLY"
             else:
                 before, after = log.obs(s.before), log.obs(s.after)

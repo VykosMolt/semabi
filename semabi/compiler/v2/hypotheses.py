@@ -97,6 +97,7 @@ class Hypotheses:
         self.transient_positions: set[tuple] = set()
         self.force_link: set[str] = set()  # refinement: templates whose link/merge decision is flipped
         self.alias_map: dict[tuple[str, str], str] = {}  # (template, key value) -> canonical key value (another template's)
+        self.persistent_widgets: set[tuple[str, str]] = set()  # (template, slot) widget values shown to survive reloads
         self._split_done = False
         self.frozen = False
 
@@ -161,6 +162,8 @@ class Hypotheses:
             prose = self.G.is_prose(sig, i)  # a sentence about entities: neither identity nor attribute
             for k, tok in enumerate(toks):
                 sid = f"{rel}#{k}" + ("~" if transient else ("!" if prose else ""))
+                if transient and (owner.template, sid[:-1]) in self.persistent_widgets:
+                    sid = sid[:-1]
                 if sid in owner.slots:
                     sid = f"{rel}#{k}@{i - owner.root}" + ("~" if transient else "")
                 owner.slots[sid] = tok
@@ -430,6 +433,7 @@ class Hypotheses:
         for uh in self.units.values():
             self._choose_key(uh, pool)
         self._family_keys()
+        self._promote_persistent_widgets()
 
     def _slot_stats(self, uh: UnitHyp) -> None:
         uh.slots = {}
@@ -505,6 +509,44 @@ class Hypotheses:
                     if u.key_slot != best:
                         u.evidence.append(f"key {best} adopted for family consistency (was {u.key_slot})")
                         u.key_slot = best
+
+    def _promote_persistent_widgets(self) -> None:
+        """A widget value inside a unit (a colour select in a cell) is interface state by
+        default; when reload probes show it survives a reload for the same instance, it is an
+        attribute of the entity (domain state shown in a widget)."""
+        if not self.reload_pairs:
+            return
+        for t, u in self.units.items():
+            if not u.key_slot:
+                continue
+            trans = [sid for sid in u.slots if sid.endswith("~")]
+            if not trans:
+                continue
+            by_sig: dict[str, dict[str, UnitInstance]] = defaultdict(dict)
+            for ui in u.instances:
+                k = ui.slots.get(u.key_slot)
+                if k is not None:
+                    by_sig[ui.sig][k] = ui
+            for sid in trans:
+                kept = lost = 0
+                for a, b in self.reload_pairs:
+                    for k, ua in by_sig.get(a, {}).items():
+                        ub = by_sig.get(b, {}).get(k)
+                        if ub is None or sid not in ua.slots or sid not in ub.slots:
+                            continue
+                        if ua.slots[sid] == ub.slots[sid]:
+                            kept += 1
+                        else:
+                            lost += 1
+                if kept >= 2 and lost == 0:
+                    new = sid[:-1]
+                    self.persistent_widgets.add((t, new))
+                    for ui in u.instances:
+                        if sid in ui.slots:
+                            ui.slots[new] = ui.slots.pop(sid)
+                            ui.slot_nodes[new] = ui.slot_nodes.pop(sid)
+                    u.evidence.append(f"widget slot {sid} survives reloads ({kept}): attribute")
+            self._slot_stats(u)
 
     def _slot_order(self, uh: UnitHyp, sid: str) -> int:
         for ui in uh.instances:

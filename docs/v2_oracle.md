@@ -199,6 +199,31 @@ constraints are a separate problem the ladder does not touch; (d) the K
 control shares V0's effect language, so the ceiling it shows (36/47) is a
 ceiling of the language, not of the task.
 
+## Measurement audit (corrected replay)
+
+Two measurement defects were found while building the ladder; neither changes a
+reported number, but both are recorded here with the replay that shows it.
+
+1. **State pairing off by one.** `view_sweep` performs one reset that the evidence
+   log does not record while the hidden recorder does, so the V1 evaluation paired
+   hidden state *after* step i+1 with learned state after step i. Corrected replay
+   (`semabi/replay_external.py`: same stored traces, same cached schemas, both
+   pairings; `docs/data/replay_v1.md`): identical types / attributes / relations /
+   operators on all 16 V1 runs (gauntlet-v1 dev set and the gauntlet-v2 fresh run;
+   e.g. harbor 3/4, 4/7, 1/9, 3/6 under both pairings). Operator explanation never
+   used the pairing; alignment turned out insensitive to a one-step shift because
+   hidden state changes at ~10% of steps.
+2. **Stale observations.** `Browser.observe` accepted two identical snapshots 40 ms
+   apart; apps that re-render after an asynchronous fetch (the four Claude-authored
+   v2 apps) sometimes handed the compiler the *previous* page (up to ~10% of
+   steps on those apps, visible as oracle-hook records that did not align with the
+   evidence log). The browser now requires three identical snapshots 150 ms apart.
+   This changes the evidence stream itself, so it cannot be replayed; the oracle
+   ladder in this document was re-run on fresh traces with the corrected browser
+   (the totals 0/8/18/19/30/32/36 are from those traces). The frozen V0/V1 fresh
+   results stand as reported; a corrected-browser rerun of frozen V1 is listed as
+   pending work, not as a correction of the reported numbers.
+
 ## Evaluator note
 
 The V1 runs in `docs/v1_results.md` paired hidden and learned states by index

@@ -8,7 +8,9 @@ downstream V0 inducer would see what it saw in oracle condition B.
 from __future__ import annotations
 
 import copy
+import json
 from collections import Counter, defaultdict
+from pathlib import Path
 from typing import Any
 
 from semabi.compiler.abstract import AbsObj, Abstractor, AbstractState, SlotInfo, TypeInfo
@@ -281,8 +283,22 @@ class V2Abstractor(Abstractor):
         return V2Tracker(self)
 
     def fit_view_controls(self, log: EvidenceLog) -> None:
-        """Static controls whose clicks never change the abstract domain state are
-        sensing actions (their view-revealed differences are re-attributed downstream)."""
+        """Sensing controls. Primary evidence: persistence probes (probes.jsonl, written by
+        the V2 explorer): a click kind whose page change never survives a reload is interface
+        state (VIEW); one that does is a domain action (DOMAIN) and can never be a view control.
+        Fallback for traces without probes: static controls whose clicks never change the
+        abstract state."""
+        probe_status: dict[str, set[str]] = defaultdict(set)
+        pp = Path(log.dir) / "probes.jsonl"
+        if pp.exists():
+            for line in pp.read_text().splitlines():
+                j = json.loads(line)
+                k = j["key"]
+                if len(k) >= 3 and k[0] == "click" and k[1] == "button":
+                    probe_status[k[2]].add(j["status"])
+        self.probe_status = probe_status
+        domain_names = {n for n, st in probe_status.items() if "DOMAIN" in st}
+        view_names = {n for n, st in probe_status.items() if st == {"VIEW"}}
         changed: Counter = Counter()
         clicked: Counter = Counter()
         in_unit: Counter = Counter()  # button label -> occurrences inside a unit instance
@@ -310,7 +326,8 @@ class V2Abstractor(Abstractor):
                        for k in common for x in a.objs[k].attrs) or \
                 any(a.objs[k].refs.get(x) != b.objs[k].refs.get(x) and x in a.objs[k].refs and x in b.objs[k].refs for k in common for x in a.objs[k].refs)
             changed[name] += diff
-        self.view_controls = {n for n, c in clicked.items() if changed[n] <= 0.1 * c}
+        heuristic = {n for n, c in clicked.items() if changed[n] <= 0.1 * c}
+        self.view_controls = (heuristic | view_names) - domain_names
         self.cat = type("Cat", (), {"view_controls": self.view_controls})()
 
     def summary(self) -> str:
