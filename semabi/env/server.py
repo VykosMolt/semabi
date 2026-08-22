@@ -101,6 +101,10 @@ def make_handler(world: World):
                     return self._json(world.state.to_json())
             if u.path == "/_evaluator/state":
                 return self._json(world.snapshot())
+            if u.path == "/_evaluator/domain":
+                d = domain_to_json(world.domain)
+                return self._json({"name": d["name"], "types": d["types"], "relations": d["relations"],
+                                   "operators": [{"name": o["name"], "params": o["params"]} for o in d["operators"]]})
             if u.path == "/":
                 return self._send(200, b"<a href='/ui/kanban'>kanban</a> <a href='/ui/table'>table</a> <a href='/ui/list'>list</a>", "text/html")
             return self._send(404, b"not found", "text/plain")

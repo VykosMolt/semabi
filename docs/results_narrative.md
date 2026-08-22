@@ -113,6 +113,17 @@ of missing preconditions, while effects are 8/8.
   here; the substance of the result is the vocabulary induction from the UI,
   which reaches the same 8/8 on the full-view UIs.
 
+## Control: random-only exploration at equal budget
+
+Replacing the active phase by more random exploration (13 episodes x 30 = 390
+primitives, `runs/ctrl_random_*`) gives kanban 8/8 (pre 0.94, goals 6/6), table
+8/8 (pre 0.94, 6/6) and list 7/8 (pre 0.81, goals 3/6). On this small domain
+random interaction already covers most operators; what the active phase buys is
+precisely the evidence random interaction never produces: the unobservable
+precondition of rename (`name != ''`; the rename box is prefilled so random
+typing never submits an empty name) and, on the list UI, the three-step move
+dialog (Move -> radio -> Confirm) and the surveys that resolve disappearances.
+
 ## What failed, precisely
 
 1. **Partial views multiply ambiguity.** In the list UI every disappearance is
