@@ -39,6 +39,7 @@ class ChangeEvent:
     lo: int  # last visit step where the old filling was seen (exclusive)
     hi: int  # visit step where the new filling was seen (inclusive)
     kind: str  # change | appear | vanish
+    new_values: frozenset = frozenset()  # values that appeared in the filling (change/appear)
 
 
 class Associator:
@@ -61,8 +62,11 @@ class Associator:
                 k = ui.slots.get(u.key_slot)
                 if k is None:
                     continue
-                f = tuple(sorted((s, v) for s, v in ui.slots.items() if not s.endswith("~") and not s.endswith("!") and "|" not in s and s != u.key_slot))
-                fill_at[t][ui.sig][k] = f
+                f = [(s, v) for s, v in ui.slots.items() if not s.endswith("~") and not s.endswith("!") and "|" not in s and s != u.key_slot]
+                pk = H._parent_key(ui)
+                if pk is not None:
+                    f.append(("@parent", pk))  # where it is shown is part of what happened to it
+                fill_at[t][ui.sig][k] = tuple(sorted(f))
                 seen_region[t].add(ui.sig)
         for t in fill_at:
             last_visit: int | None = None
@@ -74,9 +78,10 @@ class Associator:
                 if last_visit is not None:
                     for k, f in cur.items():
                         if k not in last:
-                            self.events.append(ChangeEvent(t, k, last_visit, i, "appear"))
+                            self.events.append(ChangeEvent(t, k, last_visit, i, "appear", frozenset(v for _, v in f)))
                         elif last[k] != f:
-                            self.events.append(ChangeEvent(t, k, last_visit, i, "change"))
+                            nv = frozenset(v for _, v in f) - frozenset(v for _, v in last[k])
+                            self.events.append(ChangeEvent(t, k, last_visit, i, "change", nv))
                     for k in last:
                         if k not in cur:
                             self.events.append(ChangeEvent(t, k, last_visit, i, "vanish"))
@@ -101,8 +106,16 @@ class Associator:
                 for eb in by_t[tb]:
                     if ea.hi - ea.lo > 2 and eb.hi - eb.lo > 2:
                         continue  # both imprecise (neither region was revisited soon)
-                    if ea.lo < eb.hi and eb.lo < ea.hi:  # intervals overlap
-                        co[(ea.key, eb.key)] += 1
+                    if not (ea.lo < eb.hi and eb.lo < ea.hi):
+                        continue  # intervals do not overlap
+                    # the same thing happened to both: a shared new value (a gallery name in the
+                    # catalogue row and the gallery the floor slot appeared in), or both vanished
+                    if ea.kind == "vanish" or eb.kind == "vanish":
+                        if ea.kind != eb.kind:
+                            continue
+                    elif not (ea.new_values & eb.new_values):
+                        continue
+                    co[(ea.key, eb.key)] += 1
             if not co:
                 continue
             tot_a: Counter = Counter()
@@ -111,9 +124,9 @@ class Associator:
                 tot_a[ka] += c
                 tot_b[kb] += c
             for (ka, kb), c in co.items():
-                if c < min_support:
+                if c < max(3, min_support):
                     continue
-                if c / tot_a[ka] < 0.6 or c / tot_b[kb] < 0.6:
+                if c / tot_a[ka] < 0.8 or c / tot_b[kb] < 0.8:
                     continue  # not the dominant partner
                 al = Alias(ta, ka, tb, kb, "SUPPORTED", c, tot_a[ka] - c + tot_b[kb] - c)
                 self.aliases[(ta, ka, tb)] = al
@@ -130,7 +143,8 @@ class Associator:
             if ea.key != al.a_key:
                 continue
             partners = {eb.key for eb in by_t.get(al.b_template, [])
-                        if not (ea.hi - ea.lo > 2 and eb.hi - eb.lo > 2) and ea.lo < eb.hi and eb.lo < ea.hi}
+                        if not (ea.hi - ea.lo > 2 and eb.hi - eb.lo > 2) and ea.lo < eb.hi and eb.lo < ea.hi
+                        and ((ea.kind == "vanish") == (eb.kind == "vanish")) and (ea.kind == "vanish" or (ea.new_values & eb.new_values))}
             if al.b_key in partners:
                 sup += 1
             elif partners:

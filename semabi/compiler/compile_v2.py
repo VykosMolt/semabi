@@ -12,7 +12,7 @@ from semabi.compiler.v2.graph import ObsGraph
 from semabi.compiler.v2.hypotheses import Hypotheses
 
 
-def compile_v2(run_dir: Path, min_support: int = 1, refine_hypotheses: bool = False) -> Compiled:
+def compile_v2(run_dir: Path, min_support: int = 1, refine_hypotheses: bool = False, llm: str | None = "opus") -> Compiled:
     run_dir = Path(run_dir)
     log = EvidenceLog(run_dir)
     G = ObsGraph()
@@ -21,6 +21,11 @@ def compile_v2(run_dir: Path, min_support: int = 1, refine_hypotheses: bool = Fa
     H = Hypotheses(G)
     H.fit(step_sigs=[s.after for s in log.steps], step_targets=[(s.before, s.action.target) for s in log.steps], step_kinds=[s.action.kind for s in log.steps], reload_pairs=[(s.before, s.after) for i, s in enumerate(log.steps)
                         if s.action.kind == "reload" and i > 0 and log.steps[i - 1].action.kind not in ("reset", "reload")])
+    if llm:
+        from semabi.compiler.v2.llm_propose import verified_aliases
+        aliases = verified_aliases(H, [s.after for s in log.steps], run_dir, model=llm)
+        if aliases:
+            H.apply_aliases(aliases)
     if refine_hypotheses:
         from semabi.compiler.v2.score import refine
         notes: list[str] = []

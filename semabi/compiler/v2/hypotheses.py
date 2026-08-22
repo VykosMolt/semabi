@@ -96,6 +96,7 @@ class Hypotheses:
         self.transient: set[str] = set()
         self.transient_positions: set[tuple] = set()
         self.force_link: set[str] = set()  # refinement: templates whose link/merge decision is flipped
+        self.alias_map: dict[tuple[str, str], str] = {}  # (template, key value) -> canonical key value (another template's)
         self._split_done = False
         self.frozen = False
 
@@ -212,6 +213,14 @@ class Hypotheses:
                 if all(p in ui.slots for p in parts):
                     ui.slots[u.key_slot] = "|".join(ui.slots[p] for p in parts)
                     ui.slot_nodes[u.key_slot] = ui.slot_nodes[parts[0]]
+        # aliases (verified correspondences): a key shown under another naming convention
+        if self.alias_map:
+            for ui in insts:
+                u = self.units.get(ui.template)
+                if u and u.key_slot and u.key_slot in ui.slots:
+                    canon = self.alias_map.get((ui.template, ui.slots[u.key_slot]))
+                    if canon is not None:
+                        ui.slots[u.key_slot] = canon
         # duplicate names among siblings are told apart by position (second copy: "name#2")
         seen: dict[tuple[int | None, str, str], int] = defaultdict(int)
         for ui in insts:
@@ -550,6 +559,20 @@ class Hypotheses:
             uh.key_slot = best[1]
             uh.key_score = best[0]
             uh.evidence.append(f"key {best[1]} score {best[0]:.2f} fd {best[2]:.2f} values {len(uh.slots[best[1]].values)}")
+
+    def apply_aliases(self, aliases) -> None:
+        """Adopt verified/provisional aliases: B's key values are rewritten to A's, so that the
+        key-overlap logic identifies the two representations; then rebuild entity types."""
+        for al in aliases:
+            self.alias_map[(al.b_template, al.b_key)] = al.a_key
+        for u in self.units.values():
+            for ui in u.instances:
+                if u.key_slot and u.key_slot in ui.slots:
+                    canon = self.alias_map.get((ui.template, ui.slots[u.key_slot]))
+                    if canon is not None:
+                        ui.slots[u.key_slot] = canon
+            self._slot_stats(u)
+        self._build_entity_types()
 
     def _split_by_context(self) -> None:
         """One template can realise different things in different containers (a row

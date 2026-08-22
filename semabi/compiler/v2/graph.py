@@ -84,6 +84,7 @@ class ObsGraph:
         self.templates: dict[str, TextTemplate] = {}  # position -> template
         self.position_of: dict[tuple[str, int], str] = {}
         self._in_nonwidget: set[str] = set()  # tokens seen in a non-widget text or an input value
+        self._whole: set[str] = set()  # complete texts / option labels / input values (lowercase data values)
         self._data: set[str] | None = None
         self.templates_v: dict[tuple, TextTemplate] = {}  # (position, indexed position, view skeleton) -> strings
         self.header: set[tuple[str, int]] = set()  # (sig, node) cells of a table's first row
@@ -100,6 +101,9 @@ class ObsGraph:
             for tt in self.templates_v.values():
                 d |= tt.varying_tokens()
             d = {t for t in d if t[0].isdigit() or t in self._in_nonwidget}
+            # a lowercase word is a value only when it occurs on its own somewhere (a status
+            # word in a cell, an option); inside sentences it is wording, not data
+            d = {t for t in d if t[0].isdigit() or t[0].isupper() or t in self._whole}
             # prose positions (sentences with a vocabulary of >= 4 constant words) vary in
             # wording, not in data: their varying tokens count only if data elsewhere
             prose = set()
@@ -171,6 +175,9 @@ class ObsGraph:
                 tv.n += 1
                 if n.role not in ("button", "link", "checkbox", "radio") or n.role in ("textbox", "combobox"):
                     self._in_nonwidget.update(tokens(node_text(n)))
+                self._whole.add(node_text(n).strip())
+                for o in n.options or ():
+                    self._whole.add(o.strip())
         self._data = None
 
     def is_data(self, t: str) -> bool:
