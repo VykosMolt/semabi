@@ -309,8 +309,8 @@ def translate_state(h: rm.State, hidden_dom: rm.Domain, learned: LearnedModel, m
         if L is None:
             continue
         key = link_key(h, o, L, m, learned) if m.key_attr[L] == LINK_KEY else hidden_key(o, m.key_attr[L])
-        if key is None:
-            continue
+        if key is None and m.key_attr[L] == LINK_KEY:
+            continue  # a link whose endpoints the learner does not know cannot be named
         lid = f"{L}:{key}"
         attrs = {learned.key_slots[L]: key}
         for a in learned.domain.types[L].attrs:
