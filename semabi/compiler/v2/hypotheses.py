@@ -78,6 +78,7 @@ class EntityType:
     attr_slots: dict[str, set[str]] = field(default_factory=dict)  # template -> own non-key slot ids
     ref_slots: dict[tuple[str, str], int] = field(default_factory=dict)  # (template, slot) -> target tid
     link_parent: dict[str, int] = field(default_factory=dict)  # template -> enclosing tid that is part of the identity
+    matrix: set[str] = field(default_factory=set)  # templates whose identity is (enclosing row, column); content is a reference
     contain: dict[str, int] = field(default_factory=dict)  # template -> enclosing entity tid (containment relation)
     evidence: list[str] = field(default_factory=list)
 
@@ -100,11 +101,12 @@ class Hypotheses:
     def template(self, sig: str, i: int) -> str:
         return collapsed_template(self.G, sig, i, self.memo)
 
-    def is_unit_template(self, t: str, role: str, has_children: bool) -> bool:
+    def is_unit_template(self, t: str, role: str, has_children: bool, header_cell: bool = False) -> bool:
         if role in ("combobox", "textbox") or t in self.transient:
             return False  # input widgets are slots of their enclosing unit, never units
-        if not has_children and role not in WIDGET:
-            return False  # a childless text node is a slot of its enclosing unit
+        if not has_children and role not in WIDGET and not header_cell:
+            return False  # a childless text node is a slot of its enclosing unit (header cells of a
+            # matrix, whose text varies, are mentions like buttons)
         if self.allowed is not None:
             return t in self.allowed
         return t in self.unit_types
@@ -123,7 +125,8 @@ class Hypotheses:
             i, chain = stack.pop()
             n = obs.node(i)
             t = self.template(sig, i)
-            is_unit = n.parent >= 0 and self.is_unit_template(t, n.role, bool(obs.children(i)))
+            hdr = (sig, i) in self.G.header and not self.G.is_header(sig, i)
+            is_unit = n.parent >= 0 and self.is_unit_template(t, n.role, bool(obs.children(i)), hdr)
             if is_unit:
                 parent_t = self.template(sig, chain[-1]) if chain else None
                 ui = UnitInstance(sig, i, self.ctx_split.get((t, parent_t), t), {}, {}, [], chain[-1] if chain else None)
@@ -538,10 +541,14 @@ class Hypotheses:
             u = self.units[t]
             if not u.key_slot:
                 continue
+            fam_root = {}
+            for f in self._families():
+                for v in f:
+                    fam_root[v.template] = f[0].template
             by_ctx: dict[str | None, list[UnitInstance]] = defaultdict(list)
             for ui in u.instances:
                 ctx = self.template(ui.sig, ui.parent_root) if ui.parent_root is not None else None
-                by_ctx[ctx].append(ui)
+                by_ctx[fam_root.get(ctx, ctx)].append(ui)
             if len(by_ctx) < 2:
                 continue
             keysets = {c: {ui.slots.get(u.key_slot) for ui in us} for c, us in by_ctx.items()}
@@ -554,6 +561,9 @@ class Hypotheses:
                 ka, kb = keysets[main], keysets[c]
                 if ka and kb and len(ka & kb) / len(ka | kb) < 0.2 and len(by_ctx[c]) >= 2:
                     nt = f"{t}@ctx{len(self.ctx_split)}"
+                    for pt, root in fam_root.items():
+                        if root == c:
+                            self.ctx_split[(t, pt)] = nt
                     self.ctx_split[(t, c)] = nt
                     nu = UnitHyp(nt, by_ctx[c])
                     nu.max_per_obs = u.max_per_obs
@@ -595,7 +605,8 @@ class Hypotheses:
                 # likewise a unit that comes into existence while the other already showed the
                 # key (a loan row appearing for an existing artifact) is a new object, not a view
                 for u, other in ((a, b), (b, a)):
-                    if self._repeats_in_obs(u) or self._created_later(u, other):
+                    if "col" in u.slots or self._repeats_in_obs(u) or self._created_later(u, other):
+                        # a matrix cell is a value at (row, column): its content refers to `other`
                         links[u.template] = other.template
                         u.evidence.append(f"key overlaps {other.template[:40]} but repeats within observations: link type")
                         break
@@ -634,6 +645,12 @@ class Hypotheses:
         for t, other in links.items():
             u = self.units[t]
             et = EntityType(tid, [t], {t: u.key_slot})
+            if "col" in u.slots:
+                et.matrix.add(t)
+            hops = 0
+            while other in links and hops < 5:  # the borrowed keys may themselves be borrowed
+                other = links[other]
+                hops += 1
             et.attr_slots[t] = {s for s in u.slots if s != u.key_slot and not s.endswith("~") and not s.endswith("!") and "|" not in s}
             et.ref_slots[(t, u.key_slot)] = self.tid_of_template.get(other, -1)
             et.evidence += u.evidence
@@ -647,6 +664,8 @@ class Hypotheses:
                 keys_of[et.tid] |= self.units[t].key_values()
         for et in self.entity_types.values():
             for t in et.units:
+                if "col" in self.units[t].slots:
+                    et.attr_slots[t].add("col")
                 for sid in list(et.attr_slots[t]):
                     if sid in et.key_slot[t].split("|"):
                         continue

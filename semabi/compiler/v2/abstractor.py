@@ -72,7 +72,8 @@ class V2Abstractor(Abstractor):
         for et in H.entity_types.values():
             if et.link_parent:
                 t = et.units[0]
-                pair = frozenset({H.tid_of_template.get(x, -1) for x in []} | {et.link_parent[t], et.ref_slots.get((t, et.key_slot[t]), -1)})
+                second = et.ref_slots.get((t, "col"), -1) if t in et.matrix else et.ref_slots.get((t, et.key_slot[t]), -1)
+                pair = frozenset({et.link_parent[t], second})
                 if pair in self.link_pairs:
                     self.tid_map[et.tid] = self.link_pairs[pair]
                     continue
@@ -140,17 +141,29 @@ class V2Abstractor(Abstractor):
         if k is None:
             return None
         if t in et.link_parent:
-            # identity of a link: the pair of entities it connects
+            # identity of a link: the pair of entities it connects; for a matrix cell the
+            # enclosing row and the column (its content is a reference, not identity)
             parts = []
             pk = self.H._parent_key(ui)
             if pk is not None:
                 parts.append(f"T{self.tid_map[et.link_parent[t]]}:{pk}")
-            tgt = et.ref_slots.get((t, et.key_slot[t]))
-            if tgt is not None and tgt in self.tid_map:
-                r = self.resolve(self.tid_map[tgt], k)
-                if r is None:
+            if t in et.matrix:
+                col = ui.slots.get("col")
+                ctgt = et.ref_slots.get((t, "col"))
+                if col is None:
                     return None
-                parts.append(f"T{self.tid_map[tgt]}:{r}")
+                if ctgt is not None and ctgt in self.tid_map:
+                    r = self.resolve(self.tid_map[ctgt], col)
+                    parts.append(f"T{self.tid_map[ctgt]}:{r if r is not None else col}")
+                else:
+                    parts.append(f"col:{col}")
+            else:
+                tgt = et.ref_slots.get((t, et.key_slot[t]))
+                if tgt is not None and tgt in self.tid_map:
+                    r = self.resolve(self.tid_map[tgt], k)
+                    if r is None:
+                        return None
+                    parts.append(f"T{self.tid_map[tgt]}:{r}")
             return "|".join(sorted(parts)) if len(parts) == 2 else None
         return k
 

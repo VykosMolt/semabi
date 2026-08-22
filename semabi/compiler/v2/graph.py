@@ -86,6 +86,7 @@ class ObsGraph:
         self._in_nonwidget: set[str] = set()  # tokens seen in a non-widget text or an input value
         self._data: set[str] | None = None
         self.header: set[tuple[str, int]] = set()  # (sig, node) cells of a table's first row
+        self.header_strings: dict[tuple[str, int], set[str]] = defaultdict(set)  # (table path, col) -> strings
 
     def data_set(self) -> set[str]:
         """Data tokens: numbers, and tokens that vary within a position, except tokens that
@@ -95,6 +96,16 @@ class ObsGraph:
             d = set()
             for tt in self.templates.values():
                 d |= tt.varying_tokens()
+            # header cells of a column whose text varies over the run (matrix headers) are data too
+            for strs in self.header_strings.values():
+                strs = strs - {""}
+                if len(strs) > 1:
+                    per = Counter()
+                    for st in strs:
+                        for t in set(tokens(st)):
+                            if t[0].isalnum():
+                                per[t] += 1
+                    d |= {t for t, c in per.items() if c < 0.8 * len(strs)}
             self._data = {t for t in d if t[0].isdigit() or t in self._in_nonwidget}
         return self._data
 
@@ -108,13 +119,15 @@ class ObsGraph:
         for n in obs.nodes:
             depth[n.i] = 0 if n.parent < 0 else depth[n.parent] + 1
             paths[n.i] = n.role if n.parent < 0 else paths[n.parent] + "/" + n.role
-        # table header cells: the first row of a table (labels even when they vary between tables)
+        # table header cells: the first row of a table (labels even when they vary between
+        # tables) -- unless the cell's text varies over time at that position (a matrix header)
         for n in obs.nodes:
             if n.role == "table":
                 rows = [x for x in obs.subtree(n.i) if obs.node(x).role == "row"]
                 if rows:
-                    for c in obs.children(rows[0]):
+                    for k, c in enumerate(obs.children(rows[0])):
                         self.header.add((sig, c))
+                        self.header_strings[(paths[n.i], k)].add(node_text(obs.node(c)))
         shapes = {}
         for n in reversed(obs.nodes):
             ch = obs.children(n.i)
@@ -136,9 +149,23 @@ class ObsGraph:
     def is_data(self, t: str) -> bool:
         return t in self.data_set() or t[0].isdigit()
 
+    def is_header(self, sig: str, i: int) -> bool:
+        """A first-row cell whose text never varies at its (table, column) position."""
+        if (sig, i) not in self.header:
+            return False
+        obs = self.obs[sig]
+        n = obs.node(i)
+        row = n.parent
+        tbl = obs.node(row).parent
+        while tbl >= 0 and obs.node(tbl).role != "table":
+            tbl = obs.node(tbl).parent
+        k = obs.children(row).index(i)
+        strs = self.header_strings.get((self.nodes[(sig, tbl)].path, k), set()) - {""}
+        return len(strs) <= 1
+
     def data_tokens(self, sig: str, i: int) -> list[str]:
         """Data *spans*: maximal runs of consecutive data tokens ("Ines Halli", "Two Sisters")."""
-        if (sig, i) in self.header:
+        if self.is_header(sig, i):
             return []
         n = self.obs[sig].node(i)
         out: list[str] = []
@@ -174,7 +201,7 @@ class ObsGraph:
 
     def labels(self, sig: str, i: int) -> set[str]:
         n = self.obs[sig].node(i)
-        if (sig, i) in self.header:
+        if self.is_header(sig, i):
             return set(tokens(node_text(n)))
         d = self.data_set()
         return {t for t in tokens(node_text(n)) if t not in d and not t[0].isdigit()}
