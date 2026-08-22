@@ -43,6 +43,10 @@ operation of the application (not a UI step). Only include what the evidence sup
 def build_prompt(log: EvidenceLog, max_steps: int = 120, rng: random.Random | None = None) -> str:
     rng = rng or random.Random(0)
     steps = [s for s in log.steps if s.action.kind not in ("reset",)]
+    # prefer informative steps: keep every step that changed visible text, sample the rest
+    changed = [s for s in steps if log.obs(s.before).texts() != log.obs(s.after).texts()]
+    if len(changed) > max_steps:
+        steps = changed
     first = log.obs(log.steps[0].after)
     lines = ["You are reverse-engineering the semantic data model of an unknown web application purely from black-box",
              "interaction traces. You see rendered accessibility trees and primitive actions (click/type/select/reload).",
@@ -80,10 +84,10 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--model", default="sonnet")
     ap.add_argument("--max-steps", type=int, default=120)
-    ap.add_argument("--random-only", action="store_true", default=True)
+    ap.add_argument("--all-steps", action="store_true", help="use the whole evidence log (incl. SemABI's active experiments)")
     a = ap.parse_args()
     log = EvidenceLog(Path(a.run))
-    if a.random_only:
+    if not a.all_steps:
         # restrict to the random exploration phase: steps before the first experiment record
         exp = Path(a.run) / "experiments.jsonl"
         if exp.exists():

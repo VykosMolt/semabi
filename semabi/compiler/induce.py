@@ -442,17 +442,32 @@ class Inducer:
                 for t in self._revealed(s, targets):
                     revealed_by[t] = s.step
         extra += list(revealed_by.values())
-        # selector clicks (transient chooser widgets) after the latest enabling action supply parameters
+        # selector clicks (transient chooser widgets) after the latest enabling action supply parameters;
+        # only the last click per chooser type counts (earlier choices are overridden)
         if revealed_by:
-            start = min(revealed_by.values())
+            start = max(revealed_by.values())
+            last_by_type: dict[int, int] = {}
             for j in range(lo, hi + 1):
                 s = steps[j]
                 if s.step <= start or s.action.kind != "click" or s.step in self._changing_steps or s.step in self._view_steps:
                     continue
                 ti = describe_target(self.A, self.tracked_before(s.step), self.log.obs(s.before), s.action.target)
                 if ti is not None and ti.owner is None and ti.trans_tid is not None and ti.trans_slots:
-                    extra.append(s.step)
+                    last_by_type[ti.trans_tid] = s.step
+            extra += list(last_by_type.values())
+            # drop value-provenance selector clicks that were overridden by a later choice of the same chooser
+            extra = [e for e in extra if not self._is_stale_selector_click(e, steps, lo, hi, last_by_type)]
         tr.macro = sorted(set(extra) | set(tr.steps))
+
+    def _is_stale_selector_click(self, step: int, steps: list[Step], lo: int, hi: int, last_by_type: dict[int, int]) -> bool:
+        s = self.log.steps[step]
+        if s.action.kind != "click":
+            return False
+        ti = describe_target(self.A, self.tracked_before(step), self.log.obs(s.before), s.action.target)
+        if ti is None or ti.owner is not None or ti.trans_tid is None:
+            return False
+        last = last_by_type.get(ti.trans_tid)
+        return last is not None and step < last
 
     def _revealed(self, s: Step, targets: set) -> list:
         before_keys = self._affordance_keys(s.before, self.tracked_before(s.step))
@@ -585,8 +600,28 @@ class Inducer:
                     kind, loc = src
                     acts.insert(0, ActT(kind, loc, None, p))
                 supplied.add(p)
+        # canonical parameter names: order of first appearance in acts, then effects
+        order: list[str] = []
+        for a in acts:
+            for p in (a.owner, a.arg):
+                if p and p.startswith("?") and p not in order:
+                    order.append(p)
+        for e in effs:
+            for p in _params_of(e):
+                if p not in order:
+                    order.append(p)
+        ren: dict[str, str] = {}
+        counters = {"?o": 0, "?s": 0, "?new": 0}
+        for p in order:
+            pref = "?new" if p.startswith("?new") else ("?s" if p.startswith("?s") else "?o")
+            ren[p] = f"{pref}{counters[pref]}"
+            counters[pref] += 1
+        acts = [_rename(a, ren) for a in acts]
+        effs = [_rename(e, ren) for e in effs]
+        binding = {ren.get(k, k): v for k, v in binding.items()}
+        ptypes = {ren.get(k, k): v for k, v in ptypes.items()}
         tr.acts = tuple(acts)
-        tr.effs = tuple(effs)
+        tr.effs = tuple(sorted(effs, key=str))
         tr.binding = binding
         tr.param_types = ptypes
 
