@@ -17,3 +17,9 @@ C = 1.0 everywhere.
   domain change when the reload never shows the affected view; this is the job of
   interventions (reload after the action in the same view, or an identity-preserving probe).
   Refinement is kept in `v2/score.py` but disabled by default.
+- 2026-08-22 c: LLM alias proposals (narrow two-list questions, opus) verified by co-change;
+  only SUPPORTED aliases adopted. Co-change still yields related-entity false positives
+  (hive C ~ stand Mid after perch); LLM pairs mostly empty or wrong on these lists, one true
+  rejection (U. vs Undercroft CONTRADICTED). RTC unchanged: .81/.00/.80/.00/.59/.35/.26/.00.
+  Conclusion: passive evidence is exhausted for identity across abbreviated representations;
+  next is the intervention layer (reload-after-action, probes), then freeze.
