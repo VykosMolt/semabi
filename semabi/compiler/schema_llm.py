@@ -22,6 +22,7 @@ SCHEMA_DOC = """Return ONE JSON object (no prose) with this structure:
             "attrs": {"<attr>": "str"|"int"|"bool", ...}}],
  "units": {
    "<unit id>": {"type": "<EntityType>" | null,   // null: the unit is not an entity listing (e.g. a table header row, a wizard picker whose items use "picks")
+                 "link": true | false,             // true: the unit is nested inside another entity's unit and each item is a MEMBERSHIP of the entity in that container (many-to-many), not the entity itself
                  "presence": "all" | "subset",     // does this unit list ALL entities of the type when shown, or only some (e.g. only the ones related to something)?
                  "slots": {
                    "<slot id>": {"attr": "<attr>", "transform": "<transform>", "ignore": ["<value>", ...]}

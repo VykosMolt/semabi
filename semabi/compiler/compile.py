@@ -23,6 +23,11 @@ class Compiled:
     def learned_state_after(self, step: int) -> rm.State:
         return abstract_to_state(self.abstractor, self.inducer.tracked_after(step))
 
+    def visible_state_after(self, step: int) -> rm.State:
+        """What the learner can see at this step (no carried belief); unseen attributes are None."""
+        s = self.log.steps[step]
+        return abstract_to_state(self.abstractor, self.abstractor.abstract(self.log.obs(s.after)))
+
 
 def compile_log(run_dir: Path, min_support: int = 1) -> Compiled:
     log = EvidenceLog(run_dir)

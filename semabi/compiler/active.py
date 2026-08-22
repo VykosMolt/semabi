@@ -211,6 +211,8 @@ class ActiveExplorer:
             return b
         if k in ("parent_ne", "parent"):
             p, q = lit[1], lit[2]
+            if p not in b or q not in op.params:
+                return None
             o = st.objs.get(b[p])
             if o is None:
                 return None
@@ -226,6 +228,8 @@ class ActiveExplorer:
             return b
         if k in ("ref_ne", "ref"):
             p, slot, q = lit[1], lit[2], lit[3]
+            if p not in b or q not in op.params:
+                return None
             o = st.objs.get(b[p])
             if o is None:
                 return None

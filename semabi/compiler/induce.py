@@ -319,6 +319,18 @@ class Inducer:
                 if i + 1 < len(steps):
                     self._tracked_before[steps[i + 1].step] = st
                 if s.action.kind in ("reload", "reset"):
+                    if s.action.kind == "reload" and getattr(st, "unknown_is_none", False) and self.transitions and self.transitions[-1].episode == ep:
+                        # a reload reveals changes the last operation made in views not visited since
+                        d = diff(prev, st)
+                        if d.domain_changed:
+                            last = self.transitions[-1]
+                            last.d.added += d.added
+                            last.d.removed += d.removed
+                            last.d.attr_changes += d.attr_changes
+                            last.d.rel_changes += d.rel_changes
+                            if last.ext:
+                                last.macro = list(last.steps)
+                                self._extend_macro(last, *last.ext)
                     prev, last_change_i = st, i
                     if s.action.kind == "reset":
                         pending = []
@@ -834,6 +846,8 @@ class Inducer:
                     continue
                 if tuple(x.kind for x in a.core()) != tuple(x.kind for x in b.core()):
                     continue
+                if len(b.effs) <= len(a.effs):
+                    continue
                 m = match_subsequence(a.acts, (), b.acts, ()) if len(a.acts) == len(b.acts) else None
                 if m is None:
                     continue
@@ -851,6 +865,8 @@ class Inducer:
                         rel = e.anchor_rel
                         related = [o for o in tr.before.objs.values() if o.tid == e.tid and
                                    ((o.parent == anchor) if rel == "parent" else (o.refs.get(rel) == anchor))]
+                        # objects not visible after the action (other view) could have changed unobserved
+                        related = [o for o in related if not (o.id in tr.after.objs and tr.after.objs[o.id].node < 0)]
                         if related:
                             vacuous = False
                 if not vacuous:
@@ -961,6 +977,14 @@ class Inducer:
                 return v[1] if v else None
         return None
 
+    def _is_free_text(self, op: OperatorHyp, param: str, slot: str) -> bool:
+        tid = op.params.get(param)
+        ti = self.A.types.get(tid) if tid in self.A.types else None
+        if ti is None or slot not in ti.slots:
+            return False
+        typed = set(self.log.typed_tokens)
+        return any(isinstance(v, str) and v in typed for v in ti.slots[slot].values)
+
     def _is_key_slot(self, op: OperatorHyp, param: str, slot: str) -> bool:
         tid = op.params.get(param)
         return tid in self.A.types and self.A.types[tid].key_slot == slot
@@ -998,9 +1022,14 @@ class Inducer:
         remaining = list(range(len(neg_lits)))
         while remaining:
             covs = {}
+            distinct_objs = {p: len({tr.binding.get(p) for tr in op.positives}) for p in op.params}
             for l in sorted(common, key=str):
                 if l[0] == "attr" and self._is_key_slot(op, l[1], l[2]):
                     continue  # identity constants never generalise
+                if l[0] == "attr" and not isinstance(l[3], bool) and distinct_objs.get(l[1], 0) < 2:
+                    continue  # a constant attribute of a single object is indistinguishable from its identity
+                if l[0] in ("attr", "attr_ne") and self._is_free_text(op, l[1], l[2]) and not self._is_key_slot(op, l[1], l[2]):
+                    continue  # constants of a mutable free-text attribute cannot be semantic preconditions
                 if l[0] == "attr_ne":
                     cov = sum(1 for i in remaining if ("attr", l[1], l[2], l[3]) in neg_lits[i])
                 else:
@@ -1013,7 +1042,12 @@ class Inducer:
             if best_cov < (2 if len(neg_lits) >= 4 else 1):
                 break  # do not explain isolated failures with ad-hoc literals
             tied = [l for l, c in covs.items() if c == best_cov]
+            if best_cov == 1 and len(tied) > 1:
+                break  # a single failure explained equally well by several literals: undetermined
             best = tied[0]
+            if best[0] == "attr_ne" and self._is_key_slot(op, best[1], best[2]) and \
+                    any(c[0] == "attr_ne" and c[1] == best[1] and self._is_key_slot(op, c[1], c[2]) for c in chosen):
+                break  # at most one "special object" exclusion per parameter; the rest stays unexplained
             chosen.append(best)
             if len(tied) > 1:
                 alternatives[best] = tied[1:]

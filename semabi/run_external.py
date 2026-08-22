@@ -88,8 +88,13 @@ def main():
     C = compile_fn(run_dir, min_support=a.min_support)
     hidden = load_hidden(run_dir)
     n = min(len(hidden), len(C.log.steps))
-    pairs = [(state_from_json(hidden[i]["state"]), C.learned_state_after(i)) for i in range(n)]
-    m = align(hidden_dom, C.model, pairs, attr_agree=0.8, rel_agree=0.75)  # beliefs may be stale between view visits
+    if a.v1:
+        # align on what is visible at each step (beliefs carry stale values between view visits)
+        pairs = [(state_from_json(hidden[i]["state"]), C.visible_state_after(i)) for i in range(n)]
+        m = align(hidden_dom, C.model, pairs, attr_agree=0.85, rel_agree=0.8)
+    else:
+        pairs = [(state_from_json(hidden[i]["state"]), C.learned_state_after(i)) for i in range(n)]
+        m = align(hidden_dom, C.model, pairs)
     scores, used = explain_transitions(hidden_dom, C.model, m, hidden[:n])
     check_failures(hidden_dom, C.model, m, hidden[:n], scores)
     res = summarize(hidden_dom, C.model, m, scores, used)

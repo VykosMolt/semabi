@@ -109,8 +109,8 @@ def align(hidden_dom: rm.Domain, learned: LearnedModel, pairs: list[tuple[rm.Sta
                     po = _pair_objects(h, l, m)
                     for lo in l.of_type(L):
                         ho = po.get(lo.id)
-                        if ho is None:
-                            continue
+                        if ho is None or lo.attrs.get(a) is None:
+                            continue  # attribute not visible in this learned state
                         co[h.objects[ho].attrs.get(b)][lo.attrs.get(a)] += 1
                         n += 1
                 if n < 3 or len(co) < 2:
@@ -159,8 +159,17 @@ def align(hidden_dom: rm.Domain, learned: LearnedModel, pairs: list[tuple[rm.Sta
                     lt = l.get_rel(lr, lo.id)
                     ht = h.get_rel(hr, ho)
                     n += 1
-                    if (lt is None and ht is None) or (lt is not None and po.get(lt) == ht):
+                    if lt is None and ht is None:
                         hit += 1
+                    elif lt is not None:
+                        # resolve the learned target by key (it may not be listed in this view)
+                        tgt_h = po.get(lt)
+                        if tgt_h is None:
+                            L2 = lrel.dst
+                            key = lt.split(":", 1)[1]
+                            tgt_h = next((o.id for o in h.of_type(m.type_map[L2]) if o.attrs.get(m.key_attr[L2]) == key), None)
+                        if tgt_h == ht:
+                            hit += 1
             if n >= 3 and hit / n >= rel_agree:
                 m.rel_map[lr] = hr
     return m
@@ -188,7 +197,13 @@ def translate_state(h: rm.State, hidden_dom: rm.Domain, learned: LearnedModel, m
                 continue
             if (L, a) in m.attr_map:
                 b, vmap = m.attr_map[(L, a)]
-                attrs[a] = vmap.get(o.attrs.get(b))
+                hv = o.attrs.get(b)
+                if hv in vmap:
+                    attrs[a] = vmap[hv]
+                elif vmap and all(k == v for k, v in vmap.items()):
+                    attrs[a] = hv  # identity map (free text): pass unseen values through
+                else:
+                    attrs[a] = None
             elif (L, a) in m.attr_as_rel:
                 r = m.attr_as_rel[(L, a)]
                 tgt = h.get_rel(r, o.id)

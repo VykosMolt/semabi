@@ -54,6 +54,7 @@ class UnitMap:
     type_name: str | None
     presence: str
     slots: dict[str, dict]
+    link: bool = False
 
 
 class SchemaGrounder(Abstractor):
@@ -66,7 +67,7 @@ class SchemaGrounder(Abstractor):
         self.type_defs = {t["name"]: t for t in schema.get("types", [])}
         self.unit_maps: dict[str, UnitMap] = {}
         for uid, um in schema.get("units", {}).items():
-            self.unit_maps[uid] = UnitMap(um.get("type"), um.get("presence", "all"), um.get("slots", {}))
+            self.unit_maps[uid] = UnitMap(um.get("type"), um.get("presence", "all"), um.get("slots", {}), bool(um.get("link")))
         self.static_maps: dict[str, dict] = {sid: sm for sid, sm in schema.get("statics", {}).items() if not sm.get("ignore")}
         # correspondences: type -> attr -> value -> [keys]
         self.corr: dict[str, dict[str, dict[str, list[str]]]] = defaultdict(lambda: defaultdict(dict))
@@ -218,6 +219,9 @@ class SchemaGrounder(Abstractor):
             if all(v is None for v in attrs.values()) and not refs:
                 continue  # header row etc.
             key = self._key_for(um.type_name, attrs, ordinal_among)
+            if key is None and um.link:
+                ref_keys = [v for v in refs.values() if v is not None]
+                key = str(ref_keys[0]) if ref_keys else None
             if key is not None:
                 self.known_keys[um.type_name].add(key)
             key_attr = self.type_defs[um.type_name]["key"]
@@ -233,23 +237,6 @@ class SchemaGrounder(Abstractor):
             node_instance[root] = idx_inst
             for m in ms:
                 node_instance[m.node] = idx_inst
-        # view family: the current view is parameterised by an entity; units in it carry the relation
-        for fam in self.families:
-            t = fam.get("parameter_type")
-            if t not in self.type_defs or view not in (fam.get("views") or []) or label is None:
-                continue
-            fkey = label
-            view = label  # the family's active label names the context below
-            if fam.get("attr") and fam["attr"] != self.type_defs[t]["key"]:
-                keys = self.corr.get(t, {}).get(fam["attr"], {}).get(view)
-                fkey = keys[0] if keys else view
-            statics[f"ctx_{t}"] = (label, fkey)
-            self.context_slots[f"ctx_{t}"] = t
-            self.known_keys[t].add(str(fkey))
-            for uid, rel in (fam.get("units") or {}).items():
-                for inst in instances:
-                    if inst.anchor == self.cat.units[uid].anchor if uid in self.cat.units else False:
-                        inst.slots["ref:" + rel] = (fkey, fkey)
         # statics: context refs, entity mentions, V0-style widget keys
         for m in pm.mentions:
             if m.unit:
@@ -290,6 +277,23 @@ class SchemaGrounder(Abstractor):
                 k = f"{role}@{m.sid}"
             statics[k] = (m.label, m.value)
             node_key[m.node] = k
+        # view family: the current view is parameterised by an entity; units in it carry the relation
+        for fam in self.families:
+            t = fam.get("parameter_type")
+            if t not in self.type_defs or view not in (fam.get("views") or []):
+                continue
+            ctx_val = statics.get(f"ctx_{t}", (None, None))[1]
+            fkey = ctx_val if ctx_val not in (None, "") else label
+            if fam.get("attr") and fam["attr"] != self.type_defs[t]["key"]:
+                keys = self.corr.get(t, {}).get(fam["attr"], {}).get(view)
+                fkey = keys[0] if keys else view
+            statics[f"ctx_{t}"] = (str(fkey), fkey)
+            self.context_slots[f"ctx_{t}"] = t
+            self.known_keys[t].add(str(fkey))
+            for uid, rel in (fam.get("units") or {}).items():
+                for inst in instances:
+                    if inst.anchor == self.cat.units[uid].anchor if uid in self.cat.units else False:
+                        inst.slots["ref:" + rel] = (fkey, fkey)
         # nesting (parent instance) by containment
         roots = {inst.root: i for i, inst in enumerate(instances)}
         for i, inst in enumerate(instances):
@@ -297,9 +301,42 @@ class SchemaGrounder(Abstractor):
                 if a in roots:
                     inst.parent = roots[a]
                     break
+        # link units: a nested instance is a membership (container, member) with references to both
+        for i, inst in enumerate(instances):
+            uid = next((u for u in self.unit_maps if self.cat.units.get(u) and self.cat.units[u].anchor == inst.anchor
+                        and self.cat.units[u].view == view), None)
+            um = self.unit_maps.get(uid) if uid else None
+            if um is None or not um.link or inst.parent is None:
+                continue
+            parent = instances[inst.parent]
+            ptype, mtype = self.type_name(parent.tid), self.type_name(inst.tid)
+            mkey = inst.slots.get(self.type_defs[mtype]["key"], (None, None))[1]
+            if mkey is None:
+                for k, (_, v) in inst.slots.items():
+                    if k.startswith("ref:") and v is not None and self.relations.get(k[4:], (None, None))[1] == mtype:
+                        mkey = v
+                        break
+            pkey = parent.slots.get(self.type_defs[ptype]["key"], (None, None))[1]
+            if mkey is None or pkey is None:
+                continue
+            ltid = self._link_tid(mtype, ptype)
+            inst.tid = ltid
+            inst.slots = {"key": (f"{pkey}/{mkey}", f"{pkey}/{mkey}"),
+                          f"ref:member_{mtype}": (str(mkey), mkey), f"ref:container_{ptype}": (str(pkey), pkey)}
+            inst.parent = None
         po = ParsedObs(obs, instances, statics, node_instance, node_key)
         po.view = view  # type: ignore[attr-defined]
         return po
+
+    def _link_tid(self, mtype: str, ptype: str) -> int:
+        name = f"{mtype}_in_{ptype}"
+        if name not in self.tid_of:
+            self.tid_of[name] = len(self.type_names)
+            self.type_names.append(name)
+            self.type_defs[name] = {"name": name, "key": "key", "attrs": {"key": "str"}}
+            self.relations[f"member_{mtype}"] = (name, mtype)
+            self.relations[f"container_{ptype}"] = (name, ptype)
+        return self.tid_of[name]
 
     def _picker_tid(self, type_name: str) -> int:
         name = f"pick_{type_name}"
@@ -320,7 +357,7 @@ class SchemaGrounder(Abstractor):
         if log.steps:
             self.view_for_sig.setdefault(log.obs(log.steps[0].before).structural_signature(), self.cat.initial_view)
         for s in log.steps:
-            self._ground(log.obs(s.after), self.view_of(log.obs(s.after)))  # collects known keys
+            self._ground(log.obs(s.after), self.view_of(log.obs(s.after)))  # collects known keys, creates link types
         self._grounded.clear()
         super().fit(log)
         # schema overrides
