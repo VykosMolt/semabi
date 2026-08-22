@@ -51,6 +51,7 @@ def merge_belief(A: Abstractor, prev: AbstractState | None, visible: AbstractSta
         return new
     for sc in scopes:
         cur = ctx.get(sc.ctx_slot)
+        scope_keys = {o.key for o in new.objs.values() if o.tid == sc.scope_tid}
         for o in prev.objs.values():
             if o.tid not in sc.scoped_tids:
                 continue
@@ -58,6 +59,8 @@ def merge_belief(A: Abstractor, prev: AbstractState | None, visible: AbstractSta
             in_view = ref is not None and ref[1] == cur
             if in_view:
                 continue  # replaced by what is visible (possibly absent)
+            if ref is not None and ref[1] not in scope_keys and o.node < 0 or (ref is not None and ref[1] not in scope_keys and o.id not in new.objs):
+                continue  # its scope object is gone: unobservable -> treated as vanished (ambiguous: deleted or moved)
             if o.id not in new.objs:
                 new.objs[o.id] = _copy_obj(o)
                 new.objs[o.id].node = -1  # not on screen

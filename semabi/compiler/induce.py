@@ -642,9 +642,9 @@ class Inducer:
         for (kind, tid, slot, new), es in groups.items():
             affected = {binding[e.obj] for e in es}
             anchor = None
-            for p in supplied:
-                if p is None or not isinstance(binding.get(p), tuple):
-                    continue
+            group_params = {e.obj for e in es}
+            candidates = [p for p in binding if isinstance(binding.get(p), tuple) and p not in group_params]
+            for p in candidates:
                 pid = binding[p]
                 for rel in ["parent"] + list(self.A.types[tid].refs):
                     related = set()
@@ -703,6 +703,7 @@ class Inducer:
             ptypes = dict(trs[0].param_types)
             op = OperatorHyp(f"op{len(self.operators)}", acts, effs, ptypes, positives=trs)
             self.operators.append(op)
+        self._resolve_view_bound_constants()
         self._merge_supersequences()
         # negatives: other operators with the same core, and no-op segments with the same core
         for tr in self.noops:
@@ -734,6 +735,42 @@ class Inducer:
                 groups[key] = ViewOp(slot, tr.acts, param, tid)
             groups[key].support += 1
         self.view_ops = sorted(groups.values(), key=lambda v: -v.support)
+
+    def _resolve_view_bound_constants(self) -> None:
+        """A synthesized setter (select/type on a static widget, inserted because an effect
+        value happened to be displayed there) is dropped in favour of a constant when the
+        evidence contains the same operator observed with the widget showing something else,
+        i.e. a cluster with the constant interpretation already exists."""
+        by_key = {(op.acts, op.effs): op for op in self.operators}
+        absorbed = set()
+        for op in self.operators:
+            for a in op.acts:
+                if a.kind not in ("select", "type") or a.loc is None or a.loc.owner_tid is not None or a.loc.trans_tid is not None:
+                    continue
+                p = a.arg
+                if p is None or not p.startswith("?o"):
+                    continue
+                vals = {tr.binding.get(p) for tr in op.positives}
+                if len(vals) != 1:
+                    continue
+                v = next(iter(vals))
+                if not isinstance(v, tuple):
+                    continue
+                const = f"T{v[0]}:{v[1]}"
+                acts2 = tuple(x for x in op.acts if x is not a)
+                effs2 = tuple(sorted((_rename(e, {p: const}) for e in op.effs), key=str))
+                other = by_key.get((acts2, effs2))
+                if other is None or other is op:
+                    continue
+                for tr in op.positives:
+                    tr.acts = acts2
+                    tr.effs = effs2
+                    tr.binding.pop(p, None)
+                    tr.param_types.pop(p, None)
+                other.positives.extend(op.positives)
+                absorbed.add(id(op))
+                break
+        self.operators = [op for op in self.operators if id(op) not in absorbed]
 
     def _merge_supersequences(self) -> None:
         """An operator whose acts are a supersequence of a better-supported
