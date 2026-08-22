@@ -105,6 +105,7 @@ def plan(model: LearnedModel, init: rm.State, goal: Goal, max_expansions: int = 
     seen = {start_key: 0}
     counter = itertools.count(1)
     expanded = 0
+    n_applicable = 0
     while frontier and expanded < max_expansions:
         f, g, _, s, path = heapq.heappop(frontier)
         expanded += 1
@@ -114,6 +115,7 @@ def plan(model: LearnedModel, init: rm.State, goal: Goal, max_expansions: int = 
             for b in rm.groundings(dom, s, op, pool):
                 if rm.check_pre(op, dom, s, b) is not None:
                     continue
+                n_applicable += 1
                 s2 = apply_learned(model, s, op, b)
                 key = canonical_learned(s2, model)
                 if key in seen and seen[key] <= g + 1:
@@ -124,6 +126,7 @@ def plan(model: LearnedModel, init: rm.State, goal: Goal, max_expansions: int = 
                 if h == 0:
                     return Plan(p2, expanded)
                 heapq.heappush(frontier, (g + 1 + h, g + 1, next(counter), s2, p2))
+    plan.last_failure = f"expanded={expanded} applicable={n_applicable} seen={len(seen)} frontier={len(frontier)}"
     return None
 
 
@@ -148,7 +151,7 @@ def execute_goal(live: Live, model: LearnedModel, goal: Goal, max_replans: int =
             break
         p = plan(model, init, goal)
         if p is None:
-            rep.failure = "no plan"
+            rep.failure = "no plan: " + getattr(plan, "last_failure", "")
             break
         rep.plans.append(str(p))
         if attempt > 0:
@@ -163,6 +166,7 @@ def execute_goal(live: Live, model: LearnedModel, goal: Goal, max_replans: int =
             r = live.execute(ground.acts, exec_b)
             rep.executed += 1
             live.refresh()
+            live.reconcile(predicted)
             observed = abstract_to_state(live.A, live.state)
             if not r.ok or canonical_learned(observed, model) != canonical_learned(predicted, model):
                 ok = False

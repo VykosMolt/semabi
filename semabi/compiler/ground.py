@@ -80,6 +80,25 @@ class Live:
                 return self.set_context(k[4:], ref[1])
         return False
 
+    def reconcile(self, predicted) -> None:
+        """Predicted scoped objects that are not in the belief may simply be out of
+        view: visit the scope the prediction puts them in."""
+        from semabi.compiler.model import relation_names
+        rel_to_ctx = {name: slot[4:] for (tid, slot), name in relation_names(self.A).items() if slot.startswith("ctx:")}
+        if not rel_to_ctx or self.state is None:
+            return
+        known = {f"T{o.tid}:{o.key}" for o in self.state.objs.values()}
+        for oid in predicted.objects:
+            if oid in known:
+                continue
+            for rel, slot in rel_to_ctx.items():
+                tgt = predicted.get_rel(rel, oid)
+                if tgt is not None:
+                    key = tgt.split(":", 1)[1]
+                    if self.context_value(slot) != key:
+                        self.set_context(slot, key)
+                    break
+
     def survey(self, force: bool = False) -> None:
         """Visit every scope so that the belief covers all scoped objects."""
         if self.model is None:
