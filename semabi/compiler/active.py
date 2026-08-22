@@ -135,17 +135,15 @@ class ActiveExplorer:
                     reason, _ = self._predict(op.name, b)
                     if reason is None:
                         break
-                if b is not None and reason is not None:
-                    # setup: a freshly created object of the constrained type usually satisfies the precondition
+                if b is not None and reason is not None and any(l[0] == "empty" for l in op.pre):
+                    # setup: a freshly created object of the constrained type satisfies no_children
                     for p, t in op.params.items():
-                        if t != "str" and not p.startswith("?new"):
+                        if t != "str" and not p.startswith("?new") and any(l[0] == "empty" and l[1] == p for l in op.pre):
                             st = self._setup_fresh_object(t)
                             if st is not None:
                                 setup, key = st
                                 b[p] = (t, key)
                                 break
-                    if setup is None:
-                        continue
                 if b is None:
                     continue
             pr = 0.9 if op.support + op.verified < 3 else 0.4 / (1 + n_done)
@@ -192,6 +190,13 @@ class ActiveExplorer:
         if k == "nonempty_str":
             b[lit[1]] = ""
             return b
+        if k == "str_ne_attr":
+            o = st.objs.get(b.get(lit[2]))
+            if o is None:
+                return None
+            key_slot = self.C.abstractor.types[o.tid].key_slot
+            b[lit[1]] = o.key if lit[3] == key_slot else o.attrs.get(lit[3])
+            return b if isinstance(b[lit[1]], str) else None
         if k in ("attr", "attr_ne"):
             p, slot, v = lit[1], lit[2], lit[3]
             tid = op.params[p]
@@ -380,8 +385,6 @@ class ActiveExplorer:
         predicted_reason, predicted = (None, None)
         if exp.op:
             predicted_reason, predicted = self._predict(exp.op, exp.binding)
-            if predicted_reason is not None and exp.kind == "verify":
-                return {"outcome": "setup_insufficient", "reason": predicted_reason}
             for p, v in exp.binding.items():
                 if isinstance(v, tuple):
                     self.use_counts[(exp.op, v[1])] = self.use_counts.get((exp.op, v[1]), 0) + 1

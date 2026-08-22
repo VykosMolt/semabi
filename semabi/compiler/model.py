@@ -116,6 +116,8 @@ def _lit(l: tuple, A: Abstractor, rels: dict, ptypes: dict[str, Any]) -> rm.Lite
         return None
     if k == "nonempty_str":
         return rm.Distinct(l[1], "")
+    if k == "str_ne_attr":
+        return rm.AttrEq(l[2], l[3], l[1], negate=True)
     return None
 
 

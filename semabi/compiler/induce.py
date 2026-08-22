@@ -165,6 +165,8 @@ def _lit_str(l: tuple) -> str:
         return f"no_children({l[1]})"
     if k == "nonempty_str":
         return f"{l[1]} != ''"
+    if k == "str_ne_attr":
+        return f"{l[1]} != {l[3]}({l[2]})"
     return str(l)
 
 
@@ -808,6 +810,13 @@ class Inducer:
         for p, v in b.items():
             if isinstance(v, str) and v != "":
                 lits.add(("nonempty_str", p))
+            if isinstance(v, str):
+                for q, o in objs.items():
+                    if o is None:
+                        continue
+                    for k, av in list(o.attrs.items()) + [(self.A.types[o.tid].key_slot, o.key)]:
+                        if isinstance(av, str) and av != v:
+                            lits.add(("str_ne_attr", p, q, k))
         return lits
 
     def _rebind_negative(self, op: OperatorHyp, tr: Transition) -> dict[str, Any] | None:
@@ -860,6 +869,10 @@ class Inducer:
                 return v[1] if v else None
         return None
 
+    def _is_key_slot(self, op: OperatorHyp, param: str, slot: str) -> bool:
+        tid = op.params.get(param)
+        return tid in self.A.types and self.A.types[tid].key_slot == slot
+
     def learn_pre(self, op: OperatorHyp) -> None:
         common: set[tuple] | None = None
         for tr in op.positives:
@@ -892,6 +905,8 @@ class Inducer:
         while remaining:
             covs = {}
             for l in sorted(common, key=str):
+                if l[0] == "attr" and self._is_key_slot(op, l[1], l[2]):
+                    continue  # identity constants never generalise
                 if l[0] == "attr_ne":
                     cov = sum(1 for i in remaining if ("attr", l[1], l[2], l[3]) in neg_lits[i])
                 else:
