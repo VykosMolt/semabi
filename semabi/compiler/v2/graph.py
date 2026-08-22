@@ -20,7 +20,15 @@ LEAF = {"button", "link", "checkbox", "radio", "combobox", "textbox", "text", "h
 
 
 def tokens(text: str) -> list[str]:
-    return TOKEN_RE.findall(text or "")
+    out = []
+    for t in TOKEN_RE.findall(text or ""):
+        # sentence punctuation glued to a word ("Ewer.") is not part of the value; initials ("T.S.") are
+        if t.endswith(".") and any(c.islower() for c in t):
+            out.append(t.rstrip("."))
+            out.append(".")
+        else:
+            out.append(t)
+    return out
 
 
 def token_pattern(text: str) -> str:
@@ -150,6 +158,19 @@ class ObsGraph:
         if run:
             out.append(" ".join(run))
         return out
+
+    def is_prose(self, sig: str, i: int) -> bool:
+        """A sentence position: its strings use a vocabulary of >= 4 distinct constant words
+        (feedback lines), or this string alone carries >= 3 constant words."""
+        n = self.obs[sig].node(i)
+        if len(self.labels(sig, i)) >= 3:
+            return True
+        tt = self.templates.get(self.position_of[(sig, i)])
+        if tt is None:
+            return False
+        d = self.data_set()
+        vocab = {t for st in tt.strings for t in tokens(st) if t[0].isalpha() and t not in d}
+        return len(vocab) >= 4
 
     def labels(self, sig: str, i: int) -> set[str]:
         n = self.obs[sig].node(i)

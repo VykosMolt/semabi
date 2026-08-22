@@ -152,8 +152,9 @@ class Hypotheses:
                 continue
             rel = self._relpath(obs, owner.root, i)
             transient = obs.node(i).role in ("combobox", "textbox")
+            prose = self.G.is_prose(sig, i)  # a sentence about entities: neither identity nor attribute
             for k, tok in enumerate(toks):
-                sid = f"{rel}#{k}" + ("~" if transient else "")
+                sid = f"{rel}#{k}" + ("~" if transient else ("!" if prose else ""))
                 if sid in owner.slots:
                     sid = f"{rel}#{k}@{i - owner.root}" + ("~" if transient else "")
                 owner.slots[sid] = tok
@@ -413,7 +414,7 @@ class Hypotheses:
     def _add_composite_keys(self, uh: UnitHyp) -> None:
         """Duplicate names: when no single slot identifies an instance among its siblings,
         a pair of persistent own slots may (title + a distinguishing value)."""
-        persistent = [s for s in uh.slots if not s.endswith("~") and "|" not in s]
+        persistent = [s for s in uh.slots if not s.endswith("~") and not s.endswith("!") and "|" not in s]
         for i, a in enumerate(persistent):
             for b in persistent[i + 1:]:
                 sid = f"{a}|{b}"
@@ -430,7 +431,7 @@ class Hypotheses:
         fams: list[list[UnitHyp]] = []
         for u in keyed:
             for f in fams:
-                if any(len(parts[u.template] & parts[v.template]) / len(parts[u.template] | parts[v.template]) >= 0.5 for v in f):
+                if any(len(parts[u.template] & parts[v.template]) / min(len(parts[u.template]), len(parts[v.template])) >= 0.8 for v in f):
                     f.append(u)
                     break
             else:
@@ -453,7 +454,7 @@ class Hypotheses:
                     uniq = st.unique_in_parent / st.n if st.n else 0
                     nonnum = 1 - st.numeric / st.n if st.n else 0
                     crowded = st.crowded / st.n if st.n else 1
-                    if sid.endswith("~") or sid == "col" or crowded > 0.1 or uniq < 0.5 or nonnum < 0.8 or len(st.values) < 2:
+                    if sid.endswith("~") or sid.endswith("!") or sid == "col" or crowded > 0.1 or uniq < 0.5 or nonnum < 0.8 or len(st.values) < 2:
                         ok = False
                         break
                     tot += uniq * nonnum * self._fd(u, sid)
@@ -489,8 +490,8 @@ class Hypotheses:
         uh.evidence = [e for e in uh.evidence if not e.startswith("key ")]
         n_inst = len(uh.instances)
         for sid, st in uh.slots.items():
-            if sid.endswith("~") or sid == "col" or st.n < 0.8 * n_inst:
-                continue  # transient widget value / column context / not present in most instances
+            if sid.endswith("~") or sid.endswith("!") or sid == "col" or st.n < 0.8 * n_inst:
+                continue  # transient widget value / prose / column context / not present in most instances
             uniq = st.unique_in_parent / st.n
             nonnum = 1 - st.numeric / st.n
             crowded = st.crowded / st.n
@@ -573,9 +574,11 @@ class Hypotheses:
                 if j < 0.5 or len(ka & kb) < 2:
                     continue
                 # contradiction: a unit type whose key repeats within one observation (different
-                # parents) cannot be the same entity as one where it does not -> link type
+                # parents) cannot be the same entity as one where it does not -> link type;
+                # likewise a unit that comes into existence while the other already showed the
+                # key (a loan row appearing for an existing artifact) is a new object, not a view
                 for u, other in ((a, b), (b, a)):
-                    if self._repeats_in_obs(u):
+                    if self._repeats_in_obs(u) or self._created_later(u, other):
                         links[u.template] = other.template
                         u.evidence.append(f"key overlaps {other.template[:40]} but repeats within observations: link type")
                         break
@@ -605,7 +608,7 @@ class Hypotheses:
                         u.evidence.append(f"composite key {comp} adopted from a sibling template")
             et = EntityType(tid, [u.template for u in us], {u.template: u.key_slot for u in us})
             for u in us:
-                et.attr_slots[u.template] = {s for s in u.slots if s != u.key_slot and not s.endswith("~") and "|" not in s}
+                et.attr_slots[u.template] = {s for s in u.slots if s != u.key_slot and not s.endswith("~") and not s.endswith("!") and "|" not in s}
                 self.tid_of_template[u.template] = tid
                 et.evidence += u.evidence
             self.entity_types[tid] = et
@@ -614,7 +617,7 @@ class Hypotheses:
         for t, other in links.items():
             u = self.units[t]
             et = EntityType(tid, [t], {t: u.key_slot})
-            et.attr_slots[t] = {s for s in u.slots if s != u.key_slot and not s.endswith("~") and "|" not in s}
+            et.attr_slots[t] = {s for s in u.slots if s != u.key_slot and not s.endswith("~") and not s.endswith("!") and "|" not in s}
             et.ref_slots[(t, u.key_slot)] = self.tid_of_template.get(other, -1)
             et.evidence += u.evidence
             self.tid_of_template[t] = tid
@@ -675,20 +678,57 @@ class Hypotheses:
                 return x.slots.get(pu.key_slot)
         return None
 
+    def _created_later(self, u: UnitHyp, other: UnitHyp) -> bool:
+        """Temporal evidence against identity: keys that `other` showed from early on start
+        appearing in u only later, although u's region had been rendered before (a loan row
+        appearing for an artifact that existed all along). Templates of one family (optional
+        parts) are exempt."""
+        if not self.step_sigs or self._same_family(u, other) or u.max_per_obs < 2:
+            return False  # a detail panel shows keys one at a time by selection: no evidence
+        idx: dict[str, int] = {}
+        for i, sig in enumerate(self.step_sigs):
+            idx.setdefault(sig, i)
+        first_other: dict[str, int] = {}
+        for ui in other.instances:
+            k = ui.slots.get(other.key_slot)
+            if ui.sig in idx and k is not None:
+                first_other[k] = min(first_other.get(k, 10 ** 9), idx[ui.sig])
+        first_u: dict[str, int] = {}
+        rendered = []
+        for ui in u.instances:
+            if ui.sig not in idx:
+                continue
+            k = ui.slots.get(u.key_slot)
+            first_u[k] = min(first_u.get(k, 10 ** 9), idx[ui.sig])
+            rendered.append(idx[ui.sig])
+        if not rendered:
+            return False
+        first_render = min(rendered)
+        events = sum(1 for k, t in first_u.items() if k in first_other and first_other[k] + 3 < t and first_render + 3 < t)
+        if events >= 2:
+            u.evidence.append(f"keys of {other.template[:30]} appear in it only later ({events}): not the same entity")
+            return True
+        return False
+
+    def _same_family(self, a: UnitHyp, b: UnitHyp) -> bool:
+        pa = set(a.template.replace("(", ",").replace(")", ",").split(",")) - {""}
+        pb = set(b.template.replace("(", ",").replace(")", ",").split(",")) - {""}
+        return len(pa & pb) / min(len(pa), len(pb)) >= 0.8  # one is the other plus optional parts
+
     def _repeats_in_obs(self, u: UnitHyp) -> bool:
         """One entity cannot carry two values of an attribute at once. Evidence that the
         key alone does not identify an entity (link type): (a) one observation shows two
         instances with the same key and different persistent values; (b) the persistent
         values are a function of (enclosing entity, key) but not of the key alone."""
-        per: dict[tuple[str, str], list[dict]] = defaultdict(list)
+        per: dict[tuple[str, str], list[tuple]] = defaultdict(list)
         for ui in u.instances:
-            per[(ui.sig, ui.slots.get(u.key_slot))].append(ui.slots)
+            per[(ui.sig, ui.slots.get(u.key_slot))].append((ui.parent_root, ui.slots))
         attrs = [sid for sid in u.slots if sid != u.key_slot and not sid.endswith("~") and "|" not in sid]
-        for (sig, k), slots in per.items():
-            if len(slots) < 2:
-                continue
+        for (sig, k), items in per.items():
+            if len({p for p, _ in items}) < 2:
+                continue  # duplicates under one parent are told apart by position, not a link
             for sid in attrs:
-                if len({sl.get(sid) for sl in slots}) > 1:
+                if len({sl.get(sid) for _, sl in items}) > 1:
                     return True
         if attrs:
             def fd(keyfn):
