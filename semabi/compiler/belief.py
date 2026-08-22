@@ -142,3 +142,11 @@ class Tracker:
             if any(self.last_visit.get((sc.ctx_slot, k), -1) <= step for k in keys):
                 return False
         return True
+
+
+def make_tracker(A: Abstractor) -> "Tracker":
+    """V1 grounders get the per-view belief tracker; V0 abstractors the scope tracker."""
+    from semabi.compiler.grounder import SchemaGrounder, V1Tracker
+    if isinstance(A, SchemaGrounder):
+        return V1Tracker(A)
+    return Tracker(A)

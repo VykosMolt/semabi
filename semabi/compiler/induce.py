@@ -12,7 +12,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from semabi.compiler.abstract import AbsObj, Abstractor, AbstractState, Diff, diff, resolve_masked
-from semabi.compiler.belief import Tracker, scoped_ids
+from semabi.compiler.belief import Tracker, make_tracker, scoped_ids
 from semabi.compiler.browser import Primitive
 from semabi.compiler.evidence import EvidenceLog, Step
 
@@ -308,7 +308,7 @@ class Inducer:
         for s in self.log.steps:
             by_ep[s.episode].append(s)
         for ep, steps in by_ep.items():
-            tracker = Tracker(self.A)
+            tracker = make_tracker(self.A)
             prev, _ = tracker.observe(self.log.obs(steps[0].before), "reset")
             self._tracked_before[steps[0].step] = prev
             last_change_i = -1
@@ -356,6 +356,20 @@ class Inducer:
                         ptr.ambiguous = [x for x in ptr.ambiguous if x != po_.id]
                         pending.remove((ptr, po_, snap))
                 tr = Transition(ep, [s.step], [s.step], prev, st, d)
+                if d.domain_changed and self._is_view_control_click(s) and self.transitions and self.transitions[-1].episode == ep:
+                    # a pure view switch revealed changes made by the last domain transition
+                    last = self.transitions[-1]
+                    last.d.added += d.added
+                    last.d.removed += d.removed
+                    last.d.attr_changes += d.attr_changes
+                    last.d.rel_changes += d.rel_changes
+                    for o in d.added:
+                        last.after.objs[o.id] = o
+                    if last.ext:
+                        last.macro = list(last.steps)
+                        self._extend_macro(last, *last.ext)
+                    d = Diff([], [], [], [], d.view_changes)
+                    tr = Transition(ep, [s.step], [s.step], prev, st, d)
                 if d.domain_changed:
                     self._changing_steps.add(s.step)
                     tr.ext = (steps, last_change_i + 1, i - 1, self._episode_anchor(steps, i))
@@ -377,6 +391,12 @@ class Inducer:
                             self.view_transitions.append((tr, sc.ctx_slot, sc.scope_tid, b[1]))
                             self._view_steps.add(s.step)
                 prev = st
+
+    def _is_view_control_click(self, s: Step) -> bool:
+        cat = getattr(self.A, "cat", None)
+        if cat is None or s.action.kind != "click" or not s.action.target_desc:
+            return False
+        return s.action.target_desc.get("name") in cat.view_controls
 
     def tracked(self, sig: str) -> AbstractState:
         return self.state(sig)

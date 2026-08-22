@@ -120,6 +120,7 @@ class AbstractState:
     unidentified: list[tuple[int, int, int, int | None]] = field(default_factory=list)  # (tid, root, ordinal, parent inst idx)
     provisional: set[tuple[int, str]] = field(default_factory=set)  # ids carried forward by position
     parsed: Any = field(default=None, repr=False, compare=False)  # the ParsedObs this state was derived from
+    unknown_is_none: bool = False  # V1 beliefs: None means "not observed", never a value
 
     @property
     def clean(self) -> bool:
@@ -586,11 +587,15 @@ def diff(a: AbstractState, b: AbstractState) -> Diff:
         for s in set(oa.attrs) | set(ob.attrs):
             va, vb = oa.attrs.get(s), ob.attrs.get(s)
             if va != vb:
+                if getattr(b, "unknown_is_none", False) and (va is None or vb is None):
+                    continue  # attribute not observed before/after (other view): discovery, not a change
                 attr_changes.append((k, s, va, vb))
         if oa.parent != m(ob.parent):
             rel_changes.append((k, "parent", oa.parent, m(ob.parent)))
         for s in set(oa.refs) | set(ob.refs):
             if oa.refs.get(s) != m(ob.refs.get(s)):
+                if getattr(b, "unknown_is_none", False) and s not in oa.refs:
+                    continue  # reference never observed before: discovery
                 rel_changes.append((k, s, oa.refs.get(s), m(ob.refs.get(s))))
     view_changes = {k: (a.view.get(k), b.view.get(k)) for k in set(a.view) | set(b.view) if a.view.get(k) != b.view.get(k)}
     return Diff(added, removed, attr_changes, rel_changes, view_changes)

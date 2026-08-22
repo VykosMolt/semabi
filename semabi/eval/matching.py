@@ -61,7 +61,8 @@ def _learned_key(l: rm.State, L: str, o: rm.Obj) -> str:
     return next(iter(o.attrs))
 
 
-def align(hidden_dom: rm.Domain, learned: LearnedModel, pairs: list[tuple[rm.State, rm.State]], min_agree: float = 0.75) -> Mapping:
+def align(hidden_dom: rm.Domain, learned: LearnedModel, pairs: list[tuple[rm.State, rm.State]], min_agree: float = 0.75,
+          attr_agree: float = 0.95, rel_agree: float = 0.95) -> Mapping:
     m = Mapping()
     ld = learned.domain
     # 1. types via key/attr set overlap
@@ -117,7 +118,7 @@ def align(hidden_dom: rm.Domain, learned: LearnedModel, pairs: list[tuple[rm.Sta
                 vmap = {hv: c.most_common(1)[0][0] for hv, c in co.items()}
                 agree = sum(c[vmap[hv]] for hv, c in co.items()) / n
                 injective = len(set(vmap.values())) == len(vmap)
-                if agree >= 0.95 and injective and (best is None or agree > best[0]):
+                if agree >= attr_agree and injective and (best is None or agree > best[0]):
                     best = (agree, b, vmap)
             if best:
                 m.attr_map[(L, a)] = (best[1], best[2])
@@ -140,7 +141,7 @@ def align(hidden_dom: rm.Domain, learned: LearnedModel, pairs: list[tuple[rm.Sta
                         n += 1
                         if tgt and h.objects[tgt].attrs.get(m.key_attr[L2]) == lo.attrs.get(a):
                             hit += 1
-                if n >= 3 and hit / n >= 0.95:
+                if n >= 3 and hit / n >= rel_agree:
                     m.attr_as_rel[(L, a)] = rname
     for lr, lrel in ld.relations.items():
         if lrel.src not in m.type_map or lrel.dst not in m.type_map:
@@ -160,7 +161,7 @@ def align(hidden_dom: rm.Domain, learned: LearnedModel, pairs: list[tuple[rm.Sta
                     n += 1
                     if (lt is None and ht is None) or (lt is not None and po.get(lt) == ht):
                         hit += 1
-            if n >= 3 and hit / n >= 0.95:
+            if n >= 3 and hit / n >= rel_agree:
                 m.rel_map[lr] = hr
     return m
 

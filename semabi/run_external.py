@@ -36,6 +36,8 @@ def main():
     ap.add_argument("--min-support", type=int, default=2)
     ap.add_argument("--skip-explore", action="store_true")
     ap.add_argument("--page", default="/", help="path of the UI page relative to base (reset/evaluator endpoints stay at the root)")
+    ap.add_argument("--v1", action="store_true", help="use the V1 grounding front end (catalog + LLM schema + grounder)")
+    ap.add_argument("--llm", default="opus")
     a = ap.parse_args()
     run_dir = Path(a.run)
     run_dir.mkdir(parents=True, exist_ok=True)
@@ -46,6 +48,14 @@ def main():
     hidden_dom = domain_from_description(desc)
     log = EvidenceLog(run_dir)
     t0 = time.time()
+    if a.v1:
+        from semabi.compiler.compile_v1 import compile_v1
+        from semabi.compiler.schema_llm import propose
+
+        def compile_fn(rd, min_support=1):
+            return compile_v1(rd, min_support=min_support, model=a.llm)
+    else:
+        compile_fn = compile_log
     if not a.skip_explore and len(log.steps) == 0:
         b = Browser(url, reset_url)
         b.step_hooks.append(HiddenRecorder(run_dir, ev_url))
@@ -54,27 +64,32 @@ def main():
         finally:
             b.close()
         if a.active_rounds:
-            C0 = compile_log(run_dir)
+            if a.v1:
+                propose(run_dir, model=a.llm)  # schema from the random phase
+            C0 = compile_fn(run_dir)
             b = Browser(url, reset_url)
             b.step_hooks.append(HiddenRecorder(run_dir, ev_url))
             try:
                 live = Live(b, log, C0.abstractor, C0.model)
                 live.reset(a.seed * 100 + 50)
                 act = ActiveExplorer(live, run_dir, seed=a.seed)
+                act.compile_fn = staticmethod(compile_fn) if False else compile_fn
                 act.C = C0
                 for r in range(a.active_rounds):
                     if r > 0:
+                        if a.v1 and r == a.active_rounds - 1:
+                            propose(run_dir, model=a.llm)  # refresh the schema with the active evidence
                         act.recompile()
                     used = act.round(a.active_budget)
                     print(f"active round {r}: {used} primitives, {len(act.records)} experiments", flush=True)
             finally:
                 b.close()
     t_explore = time.time() - t0
-    C = compile_log(run_dir, min_support=a.min_support)
+    C = compile_fn(run_dir, min_support=a.min_support)
     hidden = load_hidden(run_dir)
     n = min(len(hidden), len(C.log.steps))
     pairs = [(state_from_json(hidden[i]["state"]), C.learned_state_after(i)) for i in range(n)]
-    m = align(hidden_dom, C.model, pairs)
+    m = align(hidden_dom, C.model, pairs, attr_agree=0.8, rel_agree=0.75)  # beliefs may be stale between view visits
     scores, used = explain_transitions(hidden_dom, C.model, m, hidden[:n])
     check_failures(hidden_dom, C.model, m, hidden[:n], scores)
     res = summarize(hidden_dom, C.model, m, scores, used)
@@ -82,7 +97,16 @@ def main():
     # held-out goals from reachable states of exploration episodes
     if a.goals:
         rng = random.Random(a.seed)
-        goals = goals_from_trace(hidden[:n], hidden_dom, rng, n=a.goals)
+        all_goals = goals_from_trace(hidden[:n], hidden_dom, rng, n=a.goals * 4)
+        goals, n_untranslatable = [], 0
+        for g in all_goals:
+            hs0 = state_from_json(hidden[[r["episode"] for r in hidden].index(g["episode"])]["state"])
+            if translate_goal_generic(g["hidden"], hs0, hidden_dom, C.model, m) is None:
+                n_untranslatable += 1
+                continue
+            goals.append(g)
+            if len(goals) >= a.goals:
+                break
         ep_seed = {}
         for s in C.log.steps:
             if s.action.kind == "reset":
@@ -112,7 +136,8 @@ def main():
                 print(f"goal {gi}: {'OK' if rec['success'] else 'FAIL'} {rep.plans[:1]} {rep.failure or ''}", flush=True)
         finally:
             b.close()
-        res["planning"] = {"n": len(cases), "success": sum(c["success"] for c in cases), "cases": cases}
+        res["planning"] = {"n": len(cases), "success": sum(c["success"] for c in cases), "cases": cases,
+                           "untranslatable_candidates": n_untranslatable, "candidates": len(all_goals)}
     (run_dir / "eval.json").write_text(json.dumps(res, indent=1))
     o, t, p = res["operators"], res["types"], res["predicates"]
     print(f"types {t['recovered']}/{t['hidden']} (learned {t['learned']}) map={t['map']}")

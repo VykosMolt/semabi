@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from semabi.compiler.abstract import Abstractor, AbstractState
-from semabi.compiler.belief import Tracker
+from semabi.compiler.belief import Tracker, make_tracker
 from semabi.compiler.browser import Browser, Primitive
 from semabi.compiler.evidence import EvidenceLog
 from semabi.compiler.induce import ActT, Locator
@@ -27,7 +27,7 @@ class Live:
         self.b = browser
         self.log = log
         self._A = abstractor
-        self.tracker = Tracker(abstractor)
+        self.tracker = make_tracker(abstractor)
         self.model = model
         self.obs: Observation | None = None
         self.state: AbstractState | None = None
@@ -40,7 +40,7 @@ class Live:
     @A.setter
     def A(self, abstractor: Abstractor) -> None:
         self._A = abstractor
-        self.tracker = Tracker(abstractor)
+        self.tracker = make_tracker(abstractor)
         self.state = None
 
     def refresh(self) -> AbstractState:
@@ -56,6 +56,8 @@ class Live:
         after = self.b.observe()
         step = self.log.add_step(self.episode, p, res.ok, res.error, before, after)
         self.obs = after
+        if hasattr(self.A, "note_action"):
+            self.A.note_action(p.kind, (p.target_desc or {}).get("name"), after)
         self.state, _ = self.tracker.observe(after, p.kind)
         return res.ok, res.error, step.step
 
@@ -98,6 +100,26 @@ class Live:
                     if self.context_value(slot) != key:
                         self.set_context(slot, key)
                     break
+
+    def survey_views(self) -> None:
+        """V1: visit every view once (effects of the last operation may only be visible elsewhere)."""
+        cat = getattr(self.A, "cat", None)
+        if cat is None or not cat.view_controls:
+            return
+        start = getattr(self.A, "current_view", None)
+        for label, view in cat.view_controls.items():
+            if view == start:
+                continue
+            po = self.A.parsed(self.obs)
+            node = next((n for n, k in po.node_key.items() if k == f"button:{label}" and n not in po.node_instance), None)
+            if node is not None:
+                self.do(Primitive("click", node))
+        if start is not None:
+            label = next((l for l, v in cat.view_controls.items() if v == start), None)
+            po = self.A.parsed(self.obs)
+            node = next((n for n, k in po.node_key.items() if k == f"button:{label}" and n not in po.node_instance), None) if label else None
+            if node is not None:
+                self.do(Primitive("click", node))
 
     def survey(self, force: bool = False) -> None:
         """Visit every scope so that the belief covers all scoped objects."""

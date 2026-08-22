@@ -52,11 +52,14 @@ class ActiveExplorer:
         self.probe_memo: dict[tuple, int] = {}
         self.sweep_noeffect: dict[str, int] = {}  # situ -> times tried without effect
         self.sweep_effect: set[str] = set()  # akeys that produced a domain effect at least once
+        self.chain_tried: dict[tuple, int] = {}  # pick sequences tried in wizard chains
 
     # ---------------------------------------------------------------- utils
+    compile_fn = staticmethod(compile_log)
+
     def recompile(self) -> Compiled:
         self.probe_memo = {}
-        self.C = compile_log(self.run_dir)
+        self.C = self.compile_fn(self.run_dir)
         self.live.A = self.C.abstractor
         self.live.model = self.C.model
         self.live.refresh()
@@ -361,6 +364,25 @@ class ActiveExplorer:
                 if akey in self.sweep_effect:
                     pr = 0.3  # its effect is known; verification takes over
                 out.append(Experiment("sweep", None, binding, acts, note=situ, priority=pr))
+        # chained picker sweep (wizards): pick one option of every picker type currently shown, then press each
+        # remaining static button once; proposed as one experiment so the whole chain is exercised
+        pick_nodes = [(node, key) for node, key in po.node_key.items() if key == "pick"]
+        if pick_nodes and hasattr(self.C.abstractor, "cat"):
+            node, key = self.rng.choice(pick_nodes)
+            idx = po.node_instance.get(node)
+            inst = po.instances[idx] if idx is not None else None
+            if inst is not None:
+                cands = []
+                for node2, _ in pick_nodes:
+                    inst2 = po.instances[po.node_instance[node2]]
+                    pk2 = inst2.slots.get("pick", (None, None))[1]
+                    cands.append((self.chain_tried.get((pk2,), 0), pk2, inst2))
+                cands.sort(key=lambda x: x[0])
+                n_tried, pk, inst = cands[0]
+                situ = f"chain|{A.type_name(inst.tid) if hasattr(A, 'type_name') else inst.tid}|{pk}|{n_tried}"
+                if n_tried < 6:
+                    acts = [ActT("click", Locator("pick", None, inst.tid, "pick"), "?pick0", None)]
+                    out.append(Experiment("chain", None, {"?pick0": pk}, acts, note=situ, priority=0.95 if n_tried == 0 else 0.7))
         return out
 
     def _loc(self, key: str, owner_tid: int | None, trans) -> Locator:
@@ -391,6 +413,38 @@ class ActiveExplorer:
         if exp.kind == "probe":
             self.probe_memo[(exp.op, exp.literal)] = self.probe_memo.get((exp.op, exp.literal), 0) + 1
         r = live.execute(exp.acts, self._exec_binding(exp.binding))
+        if exp.kind == "chain" and r.ok:
+            self.swept.add(exp.note)
+            seq = [exp.binding.get("?pick0")]
+            for _ in range(6):
+                po2 = self.C.abstractor.parsed(live.obs)
+                picks = [n for n, k in po2.node_key.items() if k == "pick"]
+                if picks:
+                    # prefer the option whose resulting pick sequence was tried least
+                    def tried(n):
+                        inst = po2.instances[po2.node_instance[n]]
+                        return self.chain_tried.get(tuple(seq + [inst.slots.get("pick", (None, None))[1]]), 0)
+                    best = min(tried(n) for n in picks)
+                    n = self.rng.choice([n for n in picks if tried(n) == best])
+                    seq.append(po2.instances[po2.node_instance[n]].slots.get("pick", (None, None))[1])
+                    live.do(Primitive("click", n))
+                    continue
+                # terminal: static buttons that are not view controls
+                cat = getattr(self.C.abstractor, "cat", None)
+                btns = [n for n, k in po2.node_key.items() if k.startswith("button:") and n not in po2.node_instance
+                        and (cat is None or k[7:] not in cat.view_controls)]
+                if not btns:
+                    break
+                live.do(Primitive("click", self.rng.choice(btns)))
+                break
+            for k in range(1, len(seq) + 1):
+                self.chain_tried[tuple(seq[:k])] = self.chain_tried.get(tuple(seq[:k]), 0) + 1
+            after_chain = live.state
+            d = diff(before, after_chain)
+            out = {"executed": True, "reason": None, "steps": r.steps, "domain_changed": d.domain_changed, "diff": str(d)}
+            if d.domain_changed and hasattr(self.live.A, "cat"):
+                self.live.survey_views()
+            return out
         after = live.state
         d = diff(before, after)
         out = {"executed": r.ok, "reason": r.reason, "steps": r.steps, "domain_changed": d.domain_changed, "diff": str(d)}
@@ -400,6 +454,9 @@ class ActiveExplorer:
                 self.sweep_noeffect[exp.note] = self.sweep_noeffect.get(exp.note, 0) + 1
             else:
                 self.sweep_effect.add(exp.note.rsplit("|", 2)[0])
+        # V1: after any domain change, look at every view so that effects elsewhere are attributed
+        if d.domain_changed and hasattr(self.live.A, "cat"):
+            self.live.survey_views()
         # a scoped object vanished: look everywhere so the inducer can tell deleted from moved
         if d.removed and self.live.model is not None and self.live.model.view_ops:
             from semabi.compiler.belief import scoped_ids

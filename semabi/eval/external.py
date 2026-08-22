@@ -28,14 +28,42 @@ def fetch(url: str) -> dict:
     return json.loads(urllib.request.urlopen(url, timeout=10).read())
 
 
+LINK_DERIVED: dict[str, list[tuple[str, str, str, str]]] = {}  # domain name -> [(derived rel, link type, rel_from, rel_to)]
+LINK_FLAGS: dict[str, list[tuple[str, str, str]]] = {}  # domain name -> [(flag attr, type, link rel)]
+
+
 def domain_from_description(j: dict) -> rm.Domain:
+    """Hidden domain plus *derived* relations/attributes for link types: a type L with
+    relations r1: L->A and r2: L->B also induces A->B (`r1~r2`), B->A and boolean
+    flags `has_<r1>` on A / `has_<r2>` on B. A learner that represents the link as
+    a reference between A and B (plus a flag) is then structurally comparable."""
     types = {t["name"]: rm.TypeDef(t["name"], dict(t.get("attrs", {}))) for t in j["types"]}
     rels = {r["name"]: rm.RelationDef(r["name"], r["src"], r["dst"]) for r in j.get("relations", [])}
     ops = {o["name"]: rm.Operator(o["name"], [tuple(p) for p in o.get("params", [])]) for o in j.get("operators", [])}
-    return rm.Domain(j.get("name", "external"), types, rels, ops)
+    name = j.get("name", "external")
+    derived, flags = [], []
+    by_src: dict[str, list[rm.RelationDef]] = defaultdict(list)
+    for r in rels.values():
+        by_src[r.src].append(r)
+    for L, rs in by_src.items():
+        if len(rs) < 2:
+            continue
+        for r1 in rs:
+            flags.append((f"has_{r1.name}", r1.dst, r1.name))
+            types[r1.dst].attrs[f"has_{r1.name}"] = "bool"
+            for r2 in rs:
+                if r1 is r2:
+                    continue
+                dname = f"{r1.name}~{r2.name}"
+                rels[dname] = rm.RelationDef(dname, r1.dst, r2.dst)
+                derived.append((dname, L, r1.name, r2.name))
+    LINK_DERIVED[name] = derived
+    LINK_FLAGS[name] = flags
+    dom = rm.Domain(name, types, rels, ops)
+    return dom
 
 
-def state_from_json(j: dict) -> rm.State:
+def state_from_json(j: dict, domain_name: str | None = None) -> rm.State:
     s = rm.State()
     for o in j["objects"]:
         s.objects[str(o["id"])] = rm.Obj(str(o["id"]), o["type"], dict(o.get("attrs", {})))
@@ -43,6 +71,17 @@ def state_from_json(j: dict) -> rm.State:
         for a, b in d.items():
             if b is not None:
                 s.set_rel(r, str(a), str(b))
+    # derived relations / flags through link objects
+    dn = domain_name or next(iter(LINK_DERIVED), None)
+    for dname, L, r1, r2 in LINK_DERIVED.get(dn, []):
+        for link in s.of_type(L):
+            a, b = s.get_rel(r1, link.id), s.get_rel(r2, link.id)
+            if a and b:
+                s.set_rel(dname, a, b)
+    for flag, T, r in LINK_FLAGS.get(dn, []):
+        linked = set(s.rels.get(r, {}).values())
+        for o in s.of_type(T):
+            o.attrs[flag] = o.id in linked
     return s
 
 
@@ -268,7 +307,9 @@ def translate_goal_generic(goal: list[tuple], hs: rm.State, hidden_dom: rm.Domai
                     return None
             out.append(("exists", L, attrs, rels))
         elif g[0] == "attr":
-            o = hs.objects[g[1]]
+            o = hs.objects.get(g[1])
+            if o is None:
+                return None
             l = lid(g[1])
             attrs = lattrs(o.type, {g[2]: g[3]})
             if l is None or attrs is None:
@@ -282,7 +323,9 @@ def translate_goal_generic(goal: list[tuple], hs: rm.State, hidden_dom: rm.Domai
                 else:
                     out.append(("attr", l, a, lv))
         elif g[0] == "rel":
-            o = hs.objects[g[2]]
+            o = hs.objects.get(g[2])
+            if o is None:
+                return None
             l, t = lid(g[2]), lid(g[3])
             if l is None or t is None:
                 return None
