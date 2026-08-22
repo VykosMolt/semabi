@@ -21,8 +21,7 @@ class Compiled:
     model: LearnedModel
 
     def learned_state_after(self, step: int) -> rm.State:
-        s = self.log.steps[step]
-        return abstract_to_state(self.abstractor, self.inducer.tracked(s.after))
+        return abstract_to_state(self.abstractor, self.inducer.tracked_after(step))
 
 
 def compile_log(run_dir: Path, min_support: int = 1) -> Compiled:

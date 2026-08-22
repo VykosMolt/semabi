@@ -282,7 +282,8 @@ class Inducer:
         self.noops: list[Transition] = []  # clean->clean segments without domain change
         self.operators: list[OperatorHyp] = []
         self._state_cache: dict[str, AbstractState] = {}
-        self._tracked: dict[str, AbstractState] = {}
+        self._tracked_before: dict[int, AbstractState] = {}
+        self._tracked_after: dict[int, AbstractState] = {}
         self._changing_steps: set[int] = set()
         self.view_transitions: list[tuple[Transition, str, int, Any]] = []
         self.view_ops: list[ViewOp] = []
@@ -301,12 +302,14 @@ class Inducer:
         for ep, steps in by_ep.items():
             tracker = Tracker(self.A)
             prev, _ = tracker.observe(self.log.obs(steps[0].before), "reset")
-            self._tracked[steps[0].before] = prev
+            self._tracked_before[steps[0].step] = prev
             last_change_i = -1
             pending: list[tuple[Transition, AbsObj, set]] = []  # (transition, vanished object, visited snapshot)
             for i, s in enumerate(steps):
                 st, discovered = tracker.observe(self.log.obs(s.after), s.action.kind)
-                self._tracked[s.after] = st
+                self._tracked_after[s.step] = st
+                if i + 1 < len(steps):
+                    self._tracked_before[steps[i + 1].step] = st
                 if s.action.kind in ("reload", "reset"):
                     prev, last_change_i = st, i
                     if s.action.kind == "reset":
@@ -368,7 +371,13 @@ class Inducer:
                 prev = st
 
     def tracked(self, sig: str) -> AbstractState:
-        return self._tracked.get(sig) or self.state(sig)
+        return self.state(sig)
+
+    def tracked_before(self, step: int) -> AbstractState:
+        return self._tracked_before.get(step) or self.state(self.log.steps[step].before)
+
+    def tracked_after(self, step: int) -> AbstractState:
+        return self._tracked_after.get(step) or self.state(self.log.steps[step].after)
 
     def _episode_anchor(self, steps: list[Step], i: int) -> int:
         """Index after the last reload/reset before i (view state is wiped there)."""
@@ -396,7 +405,7 @@ class Inducer:
         targets = set()
         for si in tr.steps:
             s = self.log.steps[si]
-            ti = describe_target(self.A, self.tracked(s.before), self.log.obs(s.before), s.action.target)
+            ti = describe_target(self.A, self.tracked_before(s.step), self.log.obs(s.before), s.action.target)
             if ti and ti.owner:
                 owners.add(ti.owner.id)
             if ti:
@@ -415,7 +424,7 @@ class Inducer:
                 continue
             if s.step in self._changing_steps or s.step in self._view_steps:
                 continue
-            ti = describe_target(self.A, self.tracked(s.before), self.log.obs(s.before), s.action.target)
+            ti = describe_target(self.A, self.tracked_before(s.step), self.log.obs(s.before), s.action.target)
             if (j >= lo and s.action.kind == "click" and ti is not None and ti.owner is None and ti.trans_slots
                     and any(isinstance(v, str) and v in eff_texts for v in ti.trans_slots.values())):
                 extra.append(s.step)  # chose a value through a selector widget
@@ -428,12 +437,11 @@ class Inducer:
         tr.macro = sorted(set(extra) | set(tr.steps))
 
     def _revealed(self, s: Step, targets: set) -> list:
-        before_keys = self._affordance_keys(s.before)
-        after_keys = self._affordance_keys(s.after)
+        before_keys = self._affordance_keys(s.before, self.tracked_before(s.step))
+        after_keys = self._affordance_keys(s.after, self.tracked_after(s.step))
         return [t for t in targets if t not in before_keys and t in after_keys]
 
-    def _affordance_keys(self, sig: str) -> set:
-        st = self.tracked(sig)
+    def _affordance_keys(self, sig: str, st: AbstractState) -> set:
         obs = self.log.obs(sig)
         po = self.A.parsed(obs)
         out = set()
@@ -474,7 +482,7 @@ class Inducer:
         acts: list[ActT] = []
         for si in tr.macro:
             s = self.log.steps[si]
-            st = self.tracked(s.before)
+            st = self.tracked_before(si)
             obs = self.log.obs(s.before)
             ti = describe_target(self.A, st, obs, s.action.target)
             if s.action.kind == "press":
