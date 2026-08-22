@@ -27,6 +27,7 @@ class Mapping:
     attr_as_rel: dict[tuple[str, str], str] = field(default_factory=dict)  # (L, a) -> hidden rel (attr holds target key)
     op_map: dict[str, tuple[str, dict[str, str], float, float]] = field(default_factory=dict)  # hidden op -> (learned op, param map h->l, pre_agree, eff_agree)
     _learned: Any = None  # the learned model (for link keys)
+    rel_inverse: set = field(default_factory=set)  # learned relations that represent the hidden one from the target side
 
     def hidden_types_covered(self) -> set[str]:
         return set(self.type_map.values())
@@ -259,6 +260,37 @@ def align(hidden_dom: rm.Domain, learned: LearnedModel, pairs: list[tuple[rm.Sta
                             hit += 1
             if n >= 3 and hit / n >= rel_agree:
                 m.rel_map[lr] = hr
+        if lr in m.rel_map:
+            continue
+        # inverse representation: the learner shows the relation from the other side
+        # (a gate's occupant for a flight's stand); accepted when the inverse is consistent
+        for hr, hrel in hidden_dom.relations.items():
+            if "~" in hr or hrel.dst != m.type_map[lrel.src] or hrel.src != m.type_map[lrel.dst]:
+                continue
+            n = hit = 0
+            for h, l in pairs:
+                po = _pair_objects(h, l, m)
+                for lo in l.of_type(lrel.src):
+                    ho = po.get(lo.id)
+                    if ho is None:
+                        continue
+                    lt = l.get_rel(lr, lo.id)
+                    inc = h.incoming(hr, ho)  # hidden objects pointing at ho
+                    n += 1
+                    if lt is None and not inc:
+                        hit += 1
+                    elif lt is not None:
+                        tgt_h = po.get(lt)
+                        if tgt_h is None:
+                            L2 = lrel.dst
+                            key = lt.split(":", 1)[1]
+                            tgt_h = next((o.id for o in h.of_type(m.type_map[L2]) if hidden_key(o, m.key_attr[L2]) == key), None)
+                        if tgt_h is not None and tgt_h in inc:
+                            hit += 1
+            if n >= 3 and hit / n >= rel_agree:
+                m.rel_map[lr] = hr
+                m.rel_inverse.add(lr)
+                break
     return m
 
 
@@ -305,7 +337,10 @@ def translate_state(h: rm.State, hidden_dom: rm.Domain, learned: LearnedModel, m
     for lr, hr in m.rel_map.items():
         for a, b in h.rels.get(hr, {}).items():
             if a in idmap and b in idmap:
-                l.set_rel(lr, idmap[a], idmap[b])
+                if lr in m.rel_inverse:
+                    l.set_rel(lr, idmap[b], idmap[a])
+                else:
+                    l.set_rel(lr, idmap[a], idmap[b])
     return l, idmap
 
 

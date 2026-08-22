@@ -30,6 +30,21 @@ class V2Abstractor(Abstractor):
         self.link_pairs: dict[frozenset, int] = {}
         self._build_types()
         self.view_controls: set[str] = set()
+        # reference relations a template is silent about although a family sibling shows them
+        # (a vacant card has no occupant): absence means "no target", not "unknown"
+        self.family_refs: dict[str, set[int]] = defaultdict(set)  # template -> target tids
+        for fam in H._families():
+            tids = set()
+            for u in fam:
+                et_id = H.tid_of_template.get(u.template)
+                if et_id is None:
+                    continue
+                et = H.entity_types[et_id]
+                for (t2, sid), tgt in et.ref_slots.items():
+                    if t2 == u.template and tgt in self.tid_map:
+                        tids.add(self.tid_map[tgt])
+            for u in fam:
+                self.family_refs[u.template] |= tids
         # primary key component -> full keys per abstract type (resolving references made by name)
         self.registry: dict[int, dict[str, set[str]]] = defaultdict(lambda: defaultdict(set))
         for et in H.entity_types.values():
@@ -163,8 +178,12 @@ class V2Abstractor(Abstractor):
                 if sid in ui.slots:
                     inst.slots[self.attr_name(et, ui.template, sid)] = ("", ui.slots[sid])
             for (t2, sid), tgt in et.ref_slots.items():
-                if t2 == ui.template and sid in ui.slots and tgt in self.tid_map:
-                    inst.slots[f"rel:{self.tid_map[tgt]}"] = ("", self.resolve(self.tid_map[tgt], ui.slots[sid]))
+                if t2 == ui.template and tgt in self.tid_map:
+                    # a reference slot this template displays: absent or unresolvable value = no target
+                    v = self.resolve(self.tid_map[tgt], ui.slots[sid]) if sid in ui.slots else None
+                    inst.slots[f"rel:{self.tid_map[tgt]}"] = ("", v)
+            for tgt_tid in self.family_refs.get(ui.template, ()):
+                inst.slots.setdefault(f"rel:{tgt_tid}", ("", None))
             instances.append(inst)
             idx_of_root[ui.root] = len(instances) - 1
             ordinals[idx_of_root[ui.root]] = Counter()

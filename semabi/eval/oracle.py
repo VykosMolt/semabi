@@ -1052,7 +1052,15 @@ def registered_transition_coverage(C: Compiled, recs: list[dict | None], hidden_
         if kind == "rel":
             hits = [lr for lr, hr in m.rel_map.items() if hr == change[3] and lr in inv_rel]
             if hits:
-                return ("rel", tid, key, inv_rel[hits[0]][1])
+                lr = hits[0]
+                if lr in m.rel_inverse:
+                    # the learner registers this change on the object at the other end
+                    ends = {hs0.get_rel(change[3], hid), hs1.get_rel(change[3], hid)} - {None}
+                    tid2 = inv_rel[lr][0]
+                    L2 = type_name(tid2)
+                    keys = {hidden_key(hs0.objects[e] if e in hs0.objects else hs1.objects[e], m.key_attr[L2]) for e in ends if e in hs0.objects or e in hs1.objects}
+                    return ("rel*", tid2, frozenset(keys), inv_rel[lr][1])
+                return ("rel", tid, key, inv_rel[lr][1])
             hits = [a for (L2, a), hr in m.attr_as_rel.items() if L2 == L and hr == change[3]]
             return ("attr", tid, key, hits[0]) if hits else None
         return None
@@ -1085,6 +1093,8 @@ def registered_transition_coverage(C: Compiled, recs: list[dict | None], hidden_
                 return True
             if la[0] == "delete":
                 return la in got
+            if la[0] == "rel*":
+                return any(g[0] == "rel" and g[1] == la[1] and g[2] in la[2] and g[3] == la[3] for g in got)
             return False
         hits = [matched(c) for c in ch]
         if all(hits):
