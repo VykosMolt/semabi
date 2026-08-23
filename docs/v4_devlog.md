@@ -137,11 +137,68 @@ A parsimony term (fewest atomic changes for the same explanatory power and the s
 was added because it is a genuine MDL statement rather than a fix aimed at one application.
 It changes no outcome here, and it is reported because it was tried, not because it worked.
 
-## h — measured so far, and what is not yet shown
+## h — measured
 
-Recorded in `docs/data/v4/`. The honest position at this point: the mechanism reliably
-removes wrong structure on both authors' applications, produces a genuine semantic gain on
-some, and becomes silent rather than correct on others. It has not yet been shown to
-transfer as a *decision* — readings chosen on one trace and pinned on an independently
-collected one hold on `harbour` and collapse on `vet_clinic`, where the chosen reading is
-mostly "no identity" and silence transfers as silence.
+All of `docs/data/v4/`, twelve (application, trace) pairs, V2 and V4 compiled from the same
+evidence and scored by the same evaluator afterwards. Selection traces are the protocol's
+373-423 plain-explorer traces; held-out traces are the 453-935 primitive survey traces
+collected independently for the V3 falsification campaign.
+
+| trace | primitives | V2 RTC / strict precision | V4 RTC / strict precision | V4 vs V2 |
+|---|---:|---|---|---|
+| `grok_01_landing_board` selection | 373 | 0.031 / 0.018 | 0.000 / 0.000 | worse |
+| `grok_02_blend_book` selection | 375 | 0.692 / 0.575 | 0.692 / **0.652** | better |
+| `opus_01_harbour` selection | 377 | 0.000 / 0.000 | 0.000 / 0.000 | tie at nil |
+| `opus_01_harbour` seed 11 | 453 | 0.125 / 0.159 | **0.411 / 0.511** | much better |
+| `opus_02_cellar` selection | 391 | 0.000 / — | 0.000 / 0.000 | tie at nil |
+| `sonnet_01_vet_clinic` selection | 403 | 0.000 / 0.000 | 0.000 / 0.000 | tie at nil |
+| `sonnet_01_vet_clinic` seed 11 | 867 | 0.225 / 0.178 | 0.225 / **0.276** | better |
+| `sonnet_02_barter_market` selection | 423 | 0.038 / 0.023 | 0.000 / 0.000 | worse |
+| `sonnet_02_barter_market` seed 11 | 656 | 0.020 / 0.016 | 0.000 / 0.000 | worse |
+| `sonnet_02_barter_market` seed 12 | 633 | 0.000 / 0.000 | 0.000 / 0.000 | tie at nil |
+| `sonnet_02_barter_market` seed 13 | 641 | 0.062 / 0.121 | 0.000 / 0.000 | worse |
+
+Where it wins it wins on the things the V3 diagnosis named:
+
+* `opus_01_harbour` seed 11 — **23 correct registered deltas against 7**, and the first
+  operator either model has ever recovered on that application (1 of 4 exercised);
+* `grok_02_blend_book` — operators 1 -> **2**, view false-positive rate 0.386 -> **0.020**,
+  43 correct deltas of 66 against 42 of 73;
+* `sonnet_01_vet_clinic` seed 11 — view false-positive rate 0.865 -> **0.365**, 58
+  registered deltas against 90 for the same 16 correct ones;
+* object layer, on the two applications with per-node ground truth
+  (`vet_clinic` selection): pairwise same-entity precision 0.759 -> **1.000**, keys merging
+  several hidden entities 14 -> **6**, entities split across keys 13 -> **5**;
+* false deltas fall on four of six selection traces, and the `spurious_relation` and
+  `wrong_attribute_attachment` categories disappear entirely on `vet_clinic`.
+
+Where it loses it loses by silence: `landing_board` and `barter_market` keep coverage under
+V2 that V4 declines to claim. `barter_market` is the sharpest case and worth stating
+plainly, because it is the one application where V4 loses on all four of its traces: it
+recovers *more* static structure than V2 there — 3 of 4 types against 2, and 3 of 9
+relations against 0 or 1 — while registering fewer correct deltas. Better furniture, worse
+dynamics. Whatever V4 gains on that application's object layer it does not convert into
+transitions, and that is not yet explained.
+
+**The pattern is the evidence, not the application.** V4 is better on the richer traces and
+worse on the thin ones, and the two are the protocol's own two exploration policies: the
+selection traces are 373-423 primitives with few surveys, the held-out traces 453-935 with
+survey and reload probing. Identity evidence is made of co-presence and reload survival, so
+a reading that a thin trace cannot support is one V4 will decline and V2 will assert
+anyway. `harbour` is the clean case: at 377 primitives V4 finds nothing (0.000), at 453 it
+finds 0.411. Nothing about the objective changed between them; the evidence did. A bisect
+confirmed the parsimony term and the scoring window change none of `harbour`'s readings.
+
+Transfer of a *decision* is a different matter and does not work: readings chosen on one
+trace and pinned by family on another give 0.071 on `harbour` seed 11 against 0.411 for
+readings chosen there, and 0.000 on `vet_clinic`. The mechanism generalizes; its output
+does not travel.
+
+## i — operator eligibility, unchanged
+
+`docs/data/v4/operator_eligibility.json`, same clean denominator as V2 and V3, computed on
+the selection traces: 29 operators, 19 exercised, 11 recoverable under known vocabulary,
+**0 eligible and 0 recovered**, every exercised operator still failing at
+`STATE_DELTA_UNREPRESENTABLE`. V4 does not yet produce a clean denominator, so there is
+still no evidence for touching the frozen V0 inducer or its effect language, and neither
+was touched.

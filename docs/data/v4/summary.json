@@ -1,0 +1,1195 @@
+{
+ "version": 1,
+ "suite": "gauntlet-v3 (development)",
+ "apps": [
+  {
+   "app": "grok_01_landing_board",
+   "author": "Grok 4.6",
+   "trace": "runs/v4/grok_01_landing_board_dev",
+   "primitives": null,
+   "v2": {
+    "rtc": 0.031,
+    "strict_precision": 0.018,
+    "registered_deltas": 111,
+    "matched": 2,
+    "view_fp": 0.0,
+    "types": [
+     3,
+     3
+    ],
+    "operators": [
+     0,
+     4
+    ],
+    "object_layer": {
+     "grounded_frac": null,
+     "pair_precision": null,
+     "pair_recall": null,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 0,
+     "duplicate_name_separation": null,
+     "cross_view_identity": null
+    },
+    "false_delta_categories": {
+     "incorrect_persistence": 96,
+     "spurious_relation": 12,
+     "wrong_attribute_attachment": 1
+    },
+    "primitives": 367
+   },
+   "v4": {
+    "rtc": 0.0,
+    "strict_precision": 0.0,
+    "registered_deltas": 72,
+    "matched": 0,
+    "view_fp": 0.0,
+    "types": [
+     0,
+     3
+    ],
+    "operators": [
+     0,
+     4
+    ],
+    "object_layer": {
+     "grounded_frac": null,
+     "pair_precision": null,
+     "pair_recall": null,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 0,
+     "duplicate_name_separation": null,
+     "cross_view_identity": null
+    },
+    "false_delta_categories": {
+     "incorrect_persistence": 21,
+     "wrong_attribute_attachment": 51
+    },
+    "primitives": 367
+   },
+   "search": {
+    "contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "unexplained": 0,
+    "spurious": 0,
+    "explained": 65,
+    "delta_atoms": 72,
+    "complexity": 16,
+    "steps": 373,
+    "churn_steps": [],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   },
+   "open_questions": 0
+  },
+  {
+   "app": "grok_02_blend_book",
+   "author": "Grok 4.6",
+   "trace": "runs/v4/grok_02_blend_book_dev",
+   "primitives": null,
+   "v2": {
+    "rtc": 0.692,
+    "strict_precision": 0.575,
+    "registered_deltas": 73,
+    "matched": 42,
+    "view_fp": 0.386,
+    "types": [
+     2,
+     3
+    ],
+    "operators": [
+     1,
+     6
+    ],
+    "object_layer": {
+     "grounded_frac": null,
+     "pair_precision": null,
+     "pair_recall": null,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 0,
+     "duplicate_name_separation": null,
+     "cross_view_identity": null
+    },
+    "false_delta_categories": {
+     "incorrect_persistence": 8,
+     "spurious_relation": 7,
+     "wrong_attribute_attachment": 9,
+     "wrong_entity_correspondence": 7
+    },
+    "primitives": 369
+   },
+   "v4": {
+    "rtc": 0.692,
+    "strict_precision": 0.652,
+    "registered_deltas": 66,
+    "matched": 43,
+    "view_fp": 0.02,
+    "types": [
+     1,
+     3
+    ],
+    "operators": [
+     2,
+     6
+    ],
+    "object_layer": {
+     "grounded_frac": null,
+     "pair_precision": null,
+     "pair_recall": null,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 0,
+     "duplicate_name_separation": null,
+     "cross_view_identity": null
+    },
+    "false_delta_categories": {
+     "spurious_relation": 7,
+     "wrong_attribute_attachment": 10,
+     "wrong_entity_correspondence": 6
+    },
+    "primitives": 369
+   },
+   "search": {
+    "contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "unexplained": 11,
+    "spurious": 0,
+    "explained": 51,
+    "delta_atoms": 67,
+    "complexity": 72,
+    "steps": 375,
+    "churn_steps": [],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   },
+   "open_questions": 3
+  },
+  {
+   "app": "harbour",
+   "author": "Opus 5",
+   "trace": "runs/v4/harbour_dev",
+   "primitives": null,
+   "v2": {
+    "rtc": 0.0,
+    "strict_precision": 0.0,
+    "registered_deltas": 49,
+    "matched": 0,
+    "view_fp": 0.0,
+    "types": [
+     3,
+     4
+    ],
+    "operators": [
+     0,
+     5
+    ],
+    "object_layer": {
+     "grounded_frac": 0.61,
+     "pair_precision": 0.976,
+     "pair_recall": 0.961,
+     "learned_keys_merging_entities": 19,
+     "entities_split_across_keys": 10,
+     "entities_grounded": 10,
+     "duplicate_name_separation": null,
+     "cross_view_identity": 1.0
+    },
+    "false_delta_categories": {
+     "incorrect_persistence": 22,
+     "spurious_relation": 27
+    },
+    "primitives": 367
+   },
+   "v4": {
+    "rtc": 0.0,
+    "strict_precision": 0.0,
+    "registered_deltas": 57,
+    "matched": 0,
+    "view_fp": 0.0,
+    "types": [
+     1,
+     4
+    ],
+    "operators": [
+     0,
+     5
+    ],
+    "object_layer": {
+     "grounded_frac": 0.624,
+     "pair_precision": 0.991,
+     "pair_recall": 0.962,
+     "learned_keys_merging_entities": 14,
+     "entities_split_across_keys": 10,
+     "entities_grounded": 10,
+     "duplicate_name_separation": null,
+     "cross_view_identity": 1.0
+    },
+    "false_delta_categories": {
+     "incorrect_persistence": 17,
+     "spurious_relation": 14,
+     "wrong_attribute_attachment": 26
+    },
+    "primitives": 367
+   },
+   "search": {
+    "contradictions": 0,
+    "churn": 0,
+    "visibility": 3,
+    "unexplained": 17,
+    "spurious": 0,
+    "explained": 32,
+    "delta_atoms": 43,
+    "complexity": 122,
+    "steps": 373,
+    "churn_steps": [],
+    "contradiction_steps": [],
+    "visibility_steps": [
+     32,
+     107,
+     285
+    ]
+   },
+   "open_questions": 1,
+   "probe": {
+    "outcome": "UNRESOLVED",
+    "primitives": 0,
+    "results": [
+     {
+      "outcome": "NO_EXECUTABLE_PROBE",
+      "eliminated": null
+     }
+    ]
+   }
+  },
+  {
+   "app": "opus_02_cellar",
+   "author": "Opus 5",
+   "trace": "runs/v4/opus_02_cellar_dev",
+   "primitives": null,
+   "v2": {
+    "rtc": 0.0,
+    "strict_precision": null,
+    "registered_deltas": 0,
+    "matched": 0,
+    "view_fp": 1.0,
+    "types": [
+     3,
+     4
+    ],
+    "operators": [
+     0,
+     1
+    ],
+    "object_layer": {
+     "grounded_frac": null,
+     "pair_precision": null,
+     "pair_recall": null,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 0,
+     "duplicate_name_separation": null,
+     "cross_view_identity": null
+    },
+    "false_delta_categories": {},
+    "primitives": 385
+   },
+   "v4": {
+    "rtc": 0.0,
+    "strict_precision": 0.0,
+    "registered_deltas": 1,
+    "matched": 0,
+    "view_fp": 0.923,
+    "types": [
+     1,
+     4
+    ],
+    "operators": [
+     0,
+     1
+    ],
+    "object_layer": {
+     "grounded_frac": null,
+     "pair_precision": null,
+     "pair_recall": null,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 0,
+     "duplicate_name_separation": null,
+     "cross_view_identity": null
+    },
+    "false_delta_categories": {
+     "spurious_relation": 1
+    },
+    "primitives": 385
+   },
+   "search": {
+    "contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "unexplained": 40,
+    "spurious": 0,
+    "explained": 13,
+    "delta_atoms": 13,
+    "complexity": 45,
+    "steps": 391,
+    "churn_steps": [],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   },
+   "open_questions": 1
+  },
+  {
+   "app": "vet_clinic",
+   "author": "Sonnet 5",
+   "trace": "runs/v4/vet_clinic_dev",
+   "primitives": null,
+   "v2": {
+    "rtc": 0.0,
+    "strict_precision": 0.0,
+    "registered_deltas": 23,
+    "matched": 0,
+    "view_fp": 0.854,
+    "types": [
+     2,
+     4
+    ],
+    "operators": [
+     0,
+     6
+    ],
+    "object_layer": {
+     "grounded_frac": 0.76,
+     "pair_precision": 0.759,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 14,
+     "entities_split_across_keys": 13,
+     "entities_grounded": 14,
+     "duplicate_name_separation": null,
+     "cross_view_identity": 1.0
+    },
+    "false_delta_categories": {
+     "incorrect_persistence": 20,
+     "spurious_relation": 1,
+     "wrong_attribute_attachment": 2
+    },
+    "primitives": 397
+   },
+   "v4": {
+    "rtc": 0.0,
+    "strict_precision": 0.0,
+    "registered_deltas": 10,
+    "matched": 0,
+    "view_fp": 0.722,
+    "types": [
+     2,
+     4
+    ],
+    "operators": [
+     0,
+     6
+    ],
+    "object_layer": {
+     "grounded_frac": 0.446,
+     "pair_precision": 1.0,
+     "pair_recall": 1.0,
+     "learned_keys_merging_entities": 6,
+     "entities_split_across_keys": 5,
+     "entities_grounded": 5,
+     "duplicate_name_separation": null,
+     "cross_view_identity": 1.0
+    },
+    "false_delta_categories": {
+     "incorrect_persistence": 10
+    },
+    "primitives": 397
+   },
+   "search": {
+    "contradictions": 6,
+    "churn": 0,
+    "visibility": 8,
+    "unexplained": 65,
+    "spurious": 0,
+    "explained": 30,
+    "delta_atoms": 30,
+    "complexity": 64,
+    "steps": 403,
+    "churn_steps": [],
+    "contradiction_steps": [
+     402,
+     220,
+     263,
+     276,
+     377,
+     381
+    ],
+    "visibility_steps": [
+     4,
+     66,
+     107,
+     126,
+     177,
+     238,
+     279,
+     382
+    ]
+   },
+   "open_questions": 0,
+   "probe": {
+    "outcome": "RESOLVED",
+    "primitives": 2,
+    "results": [
+     {
+      "outcome": "RIGHT_SURVIVES",
+      "eliminated": "text#0"
+     }
+    ]
+   }
+  },
+  {
+   "app": "sonnet_02_barter_market",
+   "author": "Sonnet 5",
+   "trace": "runs/v4/sonnet_02_barter_market_dev",
+   "primitives": null,
+   "v2": {
+    "rtc": 0.038,
+    "strict_precision": 0.023,
+    "registered_deltas": 87,
+    "matched": 2,
+    "view_fp": 0.595,
+    "types": [
+     2,
+     4
+    ],
+    "operators": [
+     0,
+     7
+    ],
+    "object_layer": {
+     "grounded_frac": null,
+     "pair_precision": null,
+     "pair_recall": null,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 0,
+     "duplicate_name_separation": null,
+     "cross_view_identity": null
+    },
+    "false_delta_categories": {
+     "incorrect_persistence": 68,
+     "wrong_attribute_attachment": 17
+    },
+    "primitives": 415
+   },
+   "v4": {
+    "rtc": 0.0,
+    "strict_precision": 0.0,
+    "registered_deltas": 75,
+    "matched": 0,
+    "view_fp": 0.639,
+    "types": [
+     2,
+     4
+    ],
+    "operators": [
+     0,
+     7
+    ],
+    "object_layer": {
+     "grounded_frac": null,
+     "pair_precision": null,
+     "pair_recall": null,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 0,
+     "duplicate_name_separation": null,
+     "cross_view_identity": null
+    },
+    "false_delta_categories": {
+     "incorrect_persistence": 60,
+     "wrong_attribute_attachment": 15
+    },
+    "primitives": 415
+   },
+   "search": {
+    "contradictions": 17,
+    "churn": 0,
+    "visibility": 13,
+    "unexplained": 22,
+    "spurious": 0,
+    "explained": 101,
+    "delta_atoms": 136,
+    "complexity": 25,
+    "steps": 423,
+    "churn_steps": [],
+    "contradiction_steps": [
+     412,
+     420,
+     59,
+     78,
+     112,
+     127,
+     137,
+     139,
+     158,
+     175,
+     220,
+     225,
+     238,
+     245,
+     281,
+     344,
+     406
+    ],
+    "visibility_steps": [
+     12,
+     25,
+     96,
+     98,
+     128,
+     186,
+     187,
+     202,
+     213,
+     215,
+     267,
+     325,
+     404
+    ]
+   },
+   "open_questions": 4
+  },
+  {
+   "app": "heldout_barter_market_seed11",
+   "author": "held-out",
+   "trace": "runs/v4/barter_market_seed11",
+   "primitives": null,
+   "v2": {
+    "rtc": 0.02,
+    "strict_precision": 0.016,
+    "registered_deltas": 62,
+    "matched": 1,
+    "view_fp": 0.471,
+    "types": [
+     3,
+     4
+    ],
+    "operators": [
+     0,
+     7
+    ],
+    "object_layer": {
+     "grounded_frac": null,
+     "pair_precision": null,
+     "pair_recall": null,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 0,
+     "duplicate_name_separation": null,
+     "cross_view_identity": null
+    },
+    "false_delta_categories": {
+     "duplicate_or_redundant_atom": 3,
+     "incorrect_persistence": 44,
+     "spurious_relation": 8,
+     "wrong_attribute_attachment": 6
+    },
+    "primitives": 650
+   },
+   "v4": {
+    "rtc": 0.0,
+    "strict_precision": 0.0,
+    "registered_deltas": 66,
+    "matched": 0,
+    "view_fp": 0.505,
+    "types": [
+     3,
+     4
+    ],
+    "operators": [
+     0,
+     7
+    ],
+    "object_layer": {
+     "grounded_frac": null,
+     "pair_precision": null,
+     "pair_recall": null,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 0,
+     "duplicate_name_separation": null,
+     "cross_view_identity": null
+    },
+    "false_delta_categories": {
+     "incorrect_persistence": 49,
+     "spurious_relation": 6,
+     "wrong_attribute_attachment": 11
+    },
+    "primitives": 650
+   },
+   "search": {
+    "contradictions": 16,
+    "churn": 0,
+    "visibility": 29,
+    "unexplained": 151,
+    "spurious": 0,
+    "explained": 75,
+    "delta_atoms": 122,
+    "complexity": 39,
+    "steps": 656,
+    "churn_steps": [],
+    "contradiction_steps": [
+     87,
+     94,
+     106,
+     113,
+     132,
+     158,
+     173,
+     225,
+     235,
+     325,
+     407,
+     423,
+     512,
+     529,
+     536,
+     639
+    ],
+    "visibility_steps": [
+     8,
+     12,
+     25,
+     104,
+     154,
+     164,
+     165,
+     177,
+     187,
+     200,
+     232,
+     274,
+     286,
+     300,
+     301,
+     321,
+     340,
+     363,
+     385,
+     398,
+     417,
+     451,
+     473,
+     497,
+     499,
+     565,
+     584,
+     591,
+     632
+    ]
+   },
+   "open_questions": 4
+  },
+  {
+   "app": "heldout_barter_market_seed12",
+   "author": "held-out",
+   "trace": "runs/v4/barter_market_seed12",
+   "primitives": null,
+   "v2": {
+    "rtc": 0.0,
+    "strict_precision": 0.0,
+    "registered_deltas": 49,
+    "matched": 0,
+    "view_fp": 0.47,
+    "types": [
+     2,
+     4
+    ],
+    "operators": [
+     0,
+     6
+    ],
+    "object_layer": {
+     "grounded_frac": null,
+     "pair_precision": null,
+     "pair_recall": null,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 0,
+     "duplicate_name_separation": null,
+     "cross_view_identity": null
+    },
+    "false_delta_categories": {
+     "incorrect_persistence": 26,
+     "wrong_attribute_attachment": 23
+    },
+    "primitives": 627
+   },
+   "v4": {
+    "rtc": 0.0,
+    "strict_precision": 0.0,
+    "registered_deltas": 49,
+    "matched": 0,
+    "view_fp": 0.557,
+    "types": [
+     3,
+     4
+    ],
+    "operators": [
+     0,
+     6
+    ],
+    "object_layer": {
+     "grounded_frac": null,
+     "pair_precision": null,
+     "pair_recall": null,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 0,
+     "duplicate_name_separation": null,
+     "cross_view_identity": null
+    },
+    "false_delta_categories": {
+     "incorrect_persistence": 39,
+     "spurious_relation": 3,
+     "wrong_attribute_attachment": 7
+    },
+    "primitives": 627
+   },
+   "search": {
+    "contradictions": 18,
+    "churn": 0,
+    "visibility": 23,
+    "unexplained": 138,
+    "spurious": 0,
+    "explained": 74,
+    "delta_atoms": 116,
+    "complexity": 31,
+    "steps": 633,
+    "churn_steps": [],
+    "contradiction_steps": [
+     37,
+     53,
+     59,
+     201,
+     213,
+     272,
+     319,
+     326,
+     346,
+     375,
+     386,
+     396,
+     568,
+     581,
+     593,
+     607,
+     624,
+     632
+    ],
+    "visibility_steps": [
+     12,
+     25,
+     45,
+     174,
+     177,
+     238,
+     268,
+     302,
+     304,
+     311,
+     312,
+     331,
+     373,
+     403,
+     422,
+     436,
+     466,
+     472,
+     484,
+     485,
+     524,
+     559,
+     574
+    ]
+   },
+   "open_questions": 2
+  },
+  {
+   "app": "heldout_barter_market_seed13",
+   "author": "held-out",
+   "trace": "runs/v4/barter_market_seed13",
+   "primitives": null,
+   "v2": {
+    "rtc": 0.062,
+    "strict_precision": 0.121,
+    "registered_deltas": 33,
+    "matched": 4,
+    "view_fp": 0.408,
+    "types": [
+     2,
+     4
+    ],
+    "operators": [
+     0,
+     7
+    ],
+    "object_layer": {
+     "grounded_frac": null,
+     "pair_precision": null,
+     "pair_recall": null,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 0,
+     "duplicate_name_separation": null,
+     "cross_view_identity": null
+    },
+    "false_delta_categories": {
+     "incorrect_persistence": 14,
+     "wrong_attribute_attachment": 15
+    },
+    "primitives": 635
+   },
+   "v4": {
+    "rtc": 0.0,
+    "strict_precision": 0.0,
+    "registered_deltas": 47,
+    "matched": 0,
+    "view_fp": 0.49,
+    "types": [
+     3,
+     4
+    ],
+    "operators": [
+     0,
+     7
+    ],
+    "object_layer": {
+     "grounded_frac": null,
+     "pair_precision": null,
+     "pair_recall": null,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 0,
+     "duplicate_name_separation": null,
+     "cross_view_identity": null
+    },
+    "false_delta_categories": {
+     "incorrect_persistence": 26,
+     "spurious_relation": 9,
+     "wrong_attribute_attachment": 12
+    },
+    "primitives": 635
+   },
+   "search": {
+    "contradictions": 29,
+    "churn": 0,
+    "visibility": 19,
+    "unexplained": 142,
+    "spurious": 0,
+    "explained": 43,
+    "delta_atoms": 86,
+    "complexity": 23,
+    "steps": 641,
+    "churn_steps": [],
+    "contradiction_steps": [
+     4,
+     8,
+     12,
+     17,
+     25,
+     39,
+     77,
+     96,
+     130,
+     143,
+     149,
+     150,
+     183,
+     206,
+     219,
+     225,
+     298,
+     353,
+     397,
+     402,
+     407,
+     426,
+     497,
+     511,
+     524,
+     530,
+     553,
+     627,
+     640
+    ],
+    "visibility_steps": [
+     21,
+     81,
+     93,
+     170,
+     213,
+     292,
+     293,
+     298,
+     299,
+     353,
+     354,
+     395,
+     431,
+     438,
+     472,
+     486,
+     518,
+     559,
+     639
+    ]
+   },
+   "open_questions": 5
+  },
+  {
+   "app": "prospective_harbour_seed11",
+   "author": "held-out",
+   "trace": "runs/v4/harbour_seed11",
+   "primitives": null,
+   "v2": {
+    "rtc": 0.125,
+    "strict_precision": 0.159,
+    "registered_deltas": 44,
+    "matched": 7,
+    "view_fp": 0.0,
+    "types": [
+     3,
+     4
+    ],
+    "operators": [
+     0,
+     4
+    ],
+    "object_layer": {
+     "grounded_frac": null,
+     "pair_precision": null,
+     "pair_recall": null,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 0,
+     "duplicate_name_separation": null,
+     "cross_view_identity": null
+    },
+    "false_delta_categories": {
+     "incorrect_persistence": 11,
+     "spurious_relation": 26
+    },
+    "primitives": 447
+   },
+   "v4": {
+    "rtc": 0.411,
+    "strict_precision": 0.511,
+    "registered_deltas": 45,
+    "matched": 23,
+    "view_fp": 0.0,
+    "types": [
+     3,
+     4
+    ],
+    "operators": [
+     1,
+     4
+    ],
+    "object_layer": {
+     "grounded_frac": null,
+     "pair_precision": null,
+     "pair_recall": null,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 0,
+     "duplicate_name_separation": null,
+     "cross_view_identity": null
+    },
+    "false_delta_categories": {
+     "spurious_relation": 10,
+     "wrong_attribute_attachment": 12
+    },
+    "primitives": 447
+   },
+   "v4_pinned": {
+    "rtc": 0.071,
+    "strict_precision": 0.105,
+    "registered_deltas": 38,
+    "matched": 4,
+    "view_fp": 0.0,
+    "types": [
+     1,
+     4
+    ],
+    "operators": [
+     0,
+     4
+    ],
+    "object_layer": {
+     "grounded_frac": null,
+     "pair_precision": null,
+     "pair_recall": null,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 0,
+     "duplicate_name_separation": null,
+     "cross_view_identity": null
+    },
+    "false_delta_categories": {
+     "incorrect_persistence": 6,
+     "spurious_relation": 1,
+     "wrong_attribute_attachment": 27
+    },
+    "primitives": 447
+   },
+   "search": {
+    "contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "unexplained": 0,
+    "spurious": 0,
+    "explained": 35,
+    "delta_atoms": 45,
+    "complexity": 102,
+    "steps": 453,
+    "churn_steps": [],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   },
+   "open_questions": 1
+  },
+  {
+   "app": "prospective_vet_clinic_seed11",
+   "author": "held-out",
+   "trace": "runs/v4/vet_clinic_seed11",
+   "primitives": null,
+   "v2": {
+    "rtc": 0.225,
+    "strict_precision": 0.178,
+    "registered_deltas": 90,
+    "matched": 16,
+    "view_fp": 0.865,
+    "types": [
+     3,
+     4
+    ],
+    "operators": [
+     1,
+     6
+    ],
+    "object_layer": {
+     "grounded_frac": null,
+     "pair_precision": null,
+     "pair_recall": null,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 0,
+     "duplicate_name_separation": null,
+     "cross_view_identity": null
+    },
+    "false_delta_categories": {
+     "duplicate_or_redundant_atom": 1,
+     "incorrect_persistence": 45,
+     "spurious_relation": 1,
+     "wrong_attribute_attachment": 27
+    },
+    "primitives": 861
+   },
+   "v4": {
+    "rtc": 0.225,
+    "strict_precision": 0.276,
+    "registered_deltas": 58,
+    "matched": 16,
+    "view_fp": 0.365,
+    "types": [
+     2,
+     4
+    ],
+    "operators": [
+     1,
+     6
+    ],
+    "object_layer": {
+     "grounded_frac": null,
+     "pair_precision": null,
+     "pair_recall": null,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 0,
+     "duplicate_name_separation": null,
+     "cross_view_identity": null
+    },
+    "false_delta_categories": {
+     "duplicate_or_redundant_atom": 1,
+     "incorrect_persistence": 13,
+     "spurious_relation": 1,
+     "wrong_attribute_attachment": 27
+    },
+    "primitives": 861
+   },
+   "v4_pinned": {
+    "rtc": 0.0,
+    "strict_precision": 0.0,
+    "registered_deltas": 37,
+    "matched": 0,
+    "view_fp": 0.3,
+    "types": [
+     2,
+     4
+    ],
+    "operators": [
+     0,
+     6
+    ],
+    "object_layer": {
+     "grounded_frac": null,
+     "pair_precision": null,
+     "pair_recall": null,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 0,
+     "duplicate_name_separation": null,
+     "cross_view_identity": null
+    },
+    "false_delta_categories": {
+     "incorrect_persistence": 9,
+     "spurious_relation": 7,
+     "wrong_attribute_attachment": 21
+    },
+    "primitives": 861
+   },
+   "search": {
+    "contradictions": 0,
+    "churn": 0,
+    "visibility": 5,
+    "unexplained": 354,
+    "spurious": 2,
+    "explained": 78,
+    "delta_atoms": 82,
+    "complexity": 53,
+    "steps": 867,
+    "churn_steps": [],
+    "contradiction_steps": [],
+    "visibility_steps": [
+     4,
+     102,
+     425,
+     544,
+     851
+    ]
+   },
+   "open_questions": 6
+  }
+ ],
+ "summary": {
+  "apps_measured": 11,
+  "v4_better_strict_precision": 3,
+  "v4_worse_rtc": 4,
+  "v4_better_rtc": 1,
+  "v4_fewer_false_deltas": 5,
+  "probe_primitives": 2
+ }
+}

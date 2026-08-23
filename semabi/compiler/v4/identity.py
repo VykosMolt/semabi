@@ -193,7 +193,8 @@ class _Family:
 
 
 def readings_for(unit, reload_pairs: list[tuple[str, str]],
-                 view_of: dict[str, str] | None = None) -> list[Reading]:
+                 view_of: dict[str, str] | None = None,
+                 allow_prose: bool = False) -> list[Reading]:
     """Every candidate identity reading of one family, each with its own evidence."""
     instances = unit.instances
     if not instances:
@@ -209,12 +210,14 @@ def readings_for(unit, reload_pairs: list[tuple[str, str]],
     for sid, n in slot_n.items():
         if sid.endswith("~") or sid == "col" or "|" in sid:
             continue      # transient widget value, column context, or an existing composite
-        # a slot V2 marked as prose is *not* excluded here.  Whether a run of text is
-        # narration or the thing that names an object is one more hypothesis, and the
-        # evidence settles it without a rule: a paragraph repeated on every card separates
-        # no two instances, and a line that reads "Peanut - Bird, age 11" separates all of
-        # them.  Excluding prose by category is what leaves a promoted leaf with no
-        # candidate reading at all.
+        if sid.endswith("!") and not allow_prose:
+            # a run of text inside a compound unit is narration *about* that unit, and
+            # letting it compete as the unit's name costs more than it buys: on `harbour` it
+            # wins the objective with a reading that separates barely half of the co-present
+            # pairs.  The exception is a leaf being read as an object of its own, where the
+            # text is not narration about something else -- it is the whole of what is
+            # rendered, and excluding it leaves the reading with no candidate at all.
+            continue
         if n < 0.5 * len(instances):
             continue      # present in too few instances to name them
         usable.append(sid)
@@ -305,7 +308,8 @@ def _rank(reading: Reading) -> tuple:
 
 
 def family_readings(units: list, reload_pairs: list[tuple[str, str]],
-                    view_of: dict[str, str] | None = None) -> list[Reading]:
+                    view_of: dict[str, str] | None = None,
+                    allow_prose: bool = False) -> list[Reading]:
     """Identity readings for a family, with evidence gathered over all of its templates.
 
     Instances of two templates of one family that are on the page together are peers, so
@@ -315,4 +319,4 @@ def family_readings(units: list, reload_pairs: list[tuple[str, str]],
     if not units:
         return []
     name = family_key(units[0].template)
-    return readings_for(_Family(name, units), reload_pairs, view_of)
+    return readings_for(_Family(name, units), reload_pairs, view_of, allow_prose)

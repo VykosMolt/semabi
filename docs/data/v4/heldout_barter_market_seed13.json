@@ -1,0 +1,783 @@
+{
+ "run": "runs/v4/barter_market_seed13",
+ "tag": "sonnet_02_barter_market",
+ "conditions": {
+  "v2": {
+   "rtc": 0.062,
+   "registered_transitions": 64,
+   "registered_deltas": 33,
+   "matched_registered_deltas": 4,
+   "strict_registered_delta_precision": 0.121,
+   "false_delta_categories": {
+    "incorrect_persistence": 14,
+    "wrong_attribute_attachment": 15
+   },
+   "gtc": 0.062,
+   "view_false_positive_rate": 0.408,
+   "types": {
+    "hidden": 4,
+    "learned": 3,
+    "recovered": 2,
+    "map": {
+     "T0": "Trader",
+     "T2": "Item"
+    }
+   },
+   "predicates": {
+    "hidden_attrs": 11,
+    "recovered_attrs": 1,
+    "hidden_rels": 9,
+    "recovered_rels": 0,
+    "attr_map": {
+     "T2.attr:\u2014#1": "category"
+    },
+    "rel_map": {}
+   },
+   "operators": {
+    "hidden": 7,
+    "observed_in_trace": 7,
+    "recovered": 0,
+    "recovered_ops": [],
+    "learned": 4,
+    "spurious_learned": [
+     "op0",
+     "op1",
+     "op2",
+     "op3"
+    ],
+    "precision": 0.0,
+    "failure_rejection_rate": 0.0
+   },
+   "operators_per_op": {
+    "RegisterItem": [
+     4,
+     0
+    ],
+    "CreateListing": [
+     6,
+     0
+    ],
+    "WithdrawListing": [
+     13,
+     0
+    ],
+    "MakeOffer": [
+     18,
+     0
+    ],
+    "WithdrawOffer": [
+     13,
+     0
+    ],
+    "DeclineOffer": [
+     5,
+     0
+    ],
+    "AcceptOffer": [
+     5,
+     0
+    ]
+   },
+   "object_layer": {
+    "grounded_frac": null,
+    "pair_precision": null,
+    "pair_recall": null,
+    "learned_keys_merging_entities": 0,
+    "entities_split_across_keys": 0,
+    "entities_grounded": 0,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null
+   },
+   "argument_binding": {
+    "MakeOffer": 0.0,
+    "DeclineOffer": 0.0,
+    "WithdrawOffer": 0.0,
+    "WithdrawListing": 0.0,
+    "AcceptOffer": 0.0,
+    "CreateListing": 0.0,
+    "RegisterItem": 0.0
+   },
+   "cost_primitives": 635
+  },
+  "v4": {
+   "rtc": 0.0,
+   "registered_transitions": 64,
+   "registered_deltas": 47,
+   "matched_registered_deltas": 0,
+   "strict_registered_delta_precision": 0.0,
+   "false_delta_categories": {
+    "incorrect_persistence": 26,
+    "spurious_relation": 9,
+    "wrong_attribute_attachment": 12
+   },
+   "gtc": 0.156,
+   "view_false_positive_rate": 0.49,
+   "types": {
+    "hidden": 4,
+    "learned": 3,
+    "recovered": 3,
+    "map": {
+     "T0": "Trader",
+     "T2": "Item",
+     "T1": "Listing"
+    }
+   },
+   "predicates": {
+    "hidden_attrs": 11,
+    "recovered_attrs": 2,
+    "hidden_rels": 9,
+    "recovered_rels": 3,
+    "attr_map": {
+     "T2.attr:cell#0@2": "category",
+     "T1.attr:cell#0@4": "price"
+    },
+    "rel_map": {
+     "ref_1_rel:2": "item",
+     "ref_1_rel:0": "seller",
+     "ref_2_rel:0": "item~seller"
+    }
+   },
+   "operators": {
+    "hidden": 7,
+    "observed_in_trace": 7,
+    "recovered": 0,
+    "recovered_ops": [],
+    "learned": 1,
+    "spurious_learned": [
+     "op0"
+    ],
+    "precision": 0.0,
+    "failure_rejection_rate": 0.0
+   },
+   "operators_per_op": {
+    "RegisterItem": [
+     4,
+     0
+    ],
+    "CreateListing": [
+     6,
+     0
+    ],
+    "WithdrawListing": [
+     13,
+     0
+    ],
+    "MakeOffer": [
+     18,
+     0
+    ],
+    "WithdrawOffer": [
+     13,
+     0
+    ],
+    "DeclineOffer": [
+     5,
+     0
+    ],
+    "AcceptOffer": [
+     5,
+     0
+    ]
+   },
+   "object_layer": {
+    "grounded_frac": null,
+    "pair_precision": null,
+    "pair_recall": null,
+    "learned_keys_merging_entities": 0,
+    "entities_split_across_keys": 0,
+    "entities_grounded": 0,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null
+   },
+   "argument_binding": {
+    "MakeOffer": 0.0,
+    "DeclineOffer": 0.0,
+    "WithdrawOffer": 0.0,
+    "WithdrawListing": 0.769,
+    "AcceptOffer": 0.0,
+    "CreateListing": 0.0,
+    "RegisterItem": 0.0
+   },
+   "cost_primitives": 635
+  }
+ },
+ "prospective": null,
+ "v4_search": {
+  "initial": {
+   "contradictions": 29,
+   "churn": 14,
+   "visibility": 22,
+   "unexplained": 147,
+   "spurious": 0,
+   "explained": 34,
+   "delta_atoms": 38,
+   "complexity": 22,
+   "steps": 641,
+   "churn_steps": [
+    149,
+    150,
+    218,
+    219,
+    396,
+    397,
+    406,
+    407,
+    425,
+    426,
+    520,
+    523,
+    551,
+    553
+   ],
+   "contradiction_steps": [
+    4,
+    8,
+    12,
+    17,
+    25,
+    39,
+    77,
+    96,
+    130,
+    143,
+    149,
+    150,
+    183,
+    206,
+    219,
+    225,
+    298,
+    353,
+    397,
+    402,
+    407,
+    426,
+    497,
+    511,
+    524,
+    530,
+    553,
+    627,
+    640
+   ],
+   "visibility_steps": [
+    6,
+    21,
+    24,
+    81,
+    93,
+    170,
+    213,
+    217,
+    292,
+    293,
+    298,
+    299,
+    353,
+    354,
+    395,
+    431,
+    438,
+    472,
+    486,
+    518,
+    559,
+    639
+   ]
+  },
+  "final": {
+   "contradictions": 29,
+   "churn": 0,
+   "visibility": 19,
+   "unexplained": 142,
+   "spurious": 0,
+   "explained": 43,
+   "delta_atoms": 86,
+   "complexity": 23,
+   "steps": 641,
+   "churn_steps": [],
+   "contradiction_steps": [
+    4,
+    8,
+    12,
+    17,
+    25,
+    39,
+    77,
+    96,
+    130,
+    143,
+    149,
+    150,
+    183,
+    206,
+    219,
+    225,
+    298,
+    353,
+    397,
+    402,
+    407,
+    426,
+    497,
+    511,
+    524,
+    530,
+    553,
+    627,
+    640
+   ],
+   "visibility_steps": [
+    21,
+    81,
+    93,
+    170,
+    213,
+    292,
+    293,
+    298,
+    299,
+    353,
+    354,
+    395,
+    431,
+    438,
+    472,
+    486,
+    518,
+    559,
+    639
+   ]
+  },
+  "moves": [
+   {
+    "move": "identity",
+    "family": "listitem[_](text[_],textbox[_],button[_],text[_])",
+    "templates": 1,
+    "key_slot": "text#1",
+    "status": "SUPPORTED",
+    "score": {
+     "contradictions": 29,
+     "churn": 12,
+     "visibility": 22,
+     "unexplained": 147,
+     "spurious": 0,
+     "explained": 36,
+     "delta_atoms": 46,
+     "complexity": 21,
+     "steps": 641,
+     "churn_steps": [
+      149,
+      150,
+      218,
+      219,
+      396,
+      397,
+      406,
+      407,
+      425,
+      426,
+      551,
+      553
+     ],
+     "contradiction_steps": [
+      4,
+      8,
+      12,
+      17,
+      25,
+      39,
+      77,
+      96,
+      130,
+      143,
+      149,
+      150,
+      183,
+      206,
+      219,
+      225,
+      298,
+      353,
+      397,
+      402,
+      407,
+      426,
+      497,
+      511,
+      524,
+      530,
+      553,
+      627,
+      640
+     ],
+     "visibility_steps": [
+      6,
+      21,
+      24,
+      81,
+      93,
+      170,
+      213,
+      217,
+      292,
+      293,
+      298,
+      299,
+      353,
+      354,
+      395,
+      431,
+      438,
+      472,
+      486,
+      518,
+      559,
+      639
+     ]
+    }
+   },
+   {
+    "move": "identity",
+    "family": "listitem[_](text[_],textbox[_],button[_],text[_])",
+    "templates": 1,
+    "key_slot": null,
+    "status": "NO_IDENTITY",
+    "score": {
+     "contradictions": 29,
+     "churn": 0,
+     "visibility": 19,
+     "unexplained": 147,
+     "spurious": 0,
+     "explained": 38,
+     "delta_atoms": 44,
+     "complexity": 14,
+     "steps": 641,
+     "churn_steps": [],
+     "contradiction_steps": [
+      4,
+      8,
+      12,
+      17,
+      25,
+      39,
+      77,
+      96,
+      130,
+      143,
+      149,
+      150,
+      183,
+      206,
+      219,
+      225,
+      298,
+      353,
+      397,
+      402,
+      407,
+      426,
+      497,
+      511,
+      524,
+      530,
+      553,
+      627,
+      640
+     ],
+     "visibility_steps": [
+      21,
+      81,
+      93,
+      170,
+      213,
+      292,
+      293,
+      298,
+      299,
+      353,
+      354,
+      395,
+      431,
+      438,
+      472,
+      486,
+      518,
+      559,
+      639
+     ]
+    }
+   },
+   {
+    "move": "identity",
+    "family": "row[_](cell[_],cell[_](button[_],combobox[_],textbox[_],button[_],text[_]))",
+    "templates": 1,
+    "key_slot": "cell#0@5",
+    "status": "CONTRADICTED",
+    "score": {
+     "contradictions": 29,
+     "churn": 0,
+     "visibility": 19,
+     "unexplained": 142,
+     "spurious": 0,
+     "explained": 43,
+     "delta_atoms": 86,
+     "complexity": 23,
+     "steps": 641,
+     "churn_steps": [],
+     "contradiction_steps": [
+      4,
+      8,
+      12,
+      17,
+      25,
+      39,
+      77,
+      96,
+      130,
+      143,
+      149,
+      150,
+      183,
+      206,
+      219,
+      225,
+      298,
+      353,
+      397,
+      402,
+      407,
+      426,
+      497,
+      511,
+      524,
+      530,
+      553,
+      627,
+      640
+     ],
+     "visibility_steps": [
+      21,
+      81,
+      93,
+      170,
+      213,
+      292,
+      293,
+      298,
+      299,
+      353,
+      354,
+      395,
+      431,
+      438,
+      472,
+      486,
+      518,
+      559,
+      639
+     ]
+    }
+   }
+  ],
+  "open_questions": [
+   {
+    "template": "button[_]",
+    "left": {
+     "template": "button[_]",
+     "key_slot": "button#0",
+     "status": "SUPPORTED",
+     "why": "separates 150/150 co-present pairs, 7 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 150,
+      "separated_pairs": 150,
+      "discrimination": 1.0,
+      "coverage": 1.0,
+      "distinct_values": 7,
+      "constant_share": 0.308,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "button[_]",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "why": "no identity-bearing observation claimed",
+     "evidence": {
+      "copresent_pairs": 150,
+      "separated_pairs": 0,
+      "discrimination": 0.0,
+      "coverage": 0.0,
+      "distinct_values": 0,
+      "constant_share": 0.0,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "reason": "undecided: chosen explains 34 with 65 errors, the alternative explains 26 with 28"
+   },
+   {
+    "template": "group[_](heading[_],list[_](listitem[_]),heading[_],textbox[_],combobox[_],button[_],text[_])",
+    "left": {
+     "template": "group[_](heading[_],list[_](listitem[_]),heading[_],textbox[_],combobox[_],button[_],text[_])",
+     "key_slot": "heading#0@4",
+     "status": "UNSUPPORTED",
+     "why": "the family never rendered two instances at once, so nothing shows this value distinguishes instances",
+     "evidence": {
+      "copresent_pairs": 0,
+      "separated_pairs": 0,
+      "discrimination": null,
+      "coverage": 1.0,
+      "distinct_values": 3,
+      "constant_share": 0.667,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "group[_](heading[_],list[_](listitem[_]),heading[_],textbox[_],combobox[_],button[_],text[_])",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "why": "no identity-bearing observation claimed",
+     "evidence": {
+      "copresent_pairs": 0,
+      "separated_pairs": 0,
+      "discrimination": null,
+      "coverage": 0.0,
+      "distinct_values": 0,
+      "constant_share": 0.0,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "reason": "undecided: chosen explains 34 with 65 errors, the alternative explains 35 with 72"
+   },
+   {
+    "template": "listitem[_](text[_],textbox[_],button[_],text[_])",
+    "left": {
+     "template": "listitem[_](text[_],textbox[_],button[_],text[_])",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "why": "no identity-bearing observation claimed",
+     "evidence": {
+      "copresent_pairs": 52,
+      "separated_pairs": 0,
+      "discrimination": 0.0,
+      "coverage": 0.0,
+      "distinct_values": 0,
+      "constant_share": 0.0,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "listitem[_](text[_],textbox[_],button[_],text[_])",
+     "key_slot": "textbox#0",
+     "status": "CONTRADICTED",
+     "why": "one value only: it names no instance in particular",
+     "evidence": {
+      "copresent_pairs": 52,
+      "separated_pairs": 0,
+      "discrimination": 0.0,
+      "coverage": 1.0,
+      "distinct_values": 1,
+      "constant_share": 1.0,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 1.0
+     }
+    },
+    "reason": "undecided: chosen explains 38 with 48 errors, the alternative explains 43 with 50"
+   },
+   {
+    "template": "row[_](cell[_])",
+    "left": {
+     "template": "row[_](cell[_])",
+     "key_slot": "cell#0|cell#0@4",
+     "status": "SUPPORTED",
+     "why": "separates 54/54 co-present pairs, 17 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 54,
+      "separated_pairs": 54,
+      "discrimination": 1.0,
+      "coverage": 1.0,
+      "distinct_values": 17,
+      "constant_share": 0.208,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "row[_](cell[_])",
+     "key_slot": "cell#0@2|cell#0@4",
+     "status": "SUPPORTED",
+     "why": "separates 54/54 co-present pairs, 16 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 54,
+      "separated_pairs": 54,
+      "discrimination": 1.0,
+      "coverage": 1.0,
+      "distinct_values": 16,
+      "constant_share": 0.208,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "reason": "undecided: chosen explains 38 with 48 errors, the alternative explains 39 with 52"
+   },
+   {
+    "template": "row[_](cell[_])",
+    "left": {
+     "template": "row[_](cell[_])",
+     "key_slot": "cell#0|cell#0@4",
+     "status": "SUPPORTED",
+     "why": "separates 54/54 co-present pairs, 17 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 54,
+      "separated_pairs": 54,
+      "discrimination": 1.0,
+      "coverage": 1.0,
+      "distinct_values": 17,
+      "constant_share": 0.208,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "row[_](cell[_])",
+     "key_slot": "cell#0@4|cell#0@5",
+     "status": "SUPPORTED",
+     "why": "separates 54/54 co-present pairs, 13 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 54,
+      "separated_pairs": 54,
+      "discrimination": 1.0,
+      "coverage": 1.0,
+      "distinct_values": 13,
+      "constant_share": 0.208,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "reason": "undecided: chosen explains 38 with 48 errors, the alternative explains 39 with 52"
+   }
+  ],
+  "families": {
+   "button[_]": 1,
+   "group[_](heading[_],list[_](listitem[_]),heading[_],textbox[_],combobox[_],button[_],text[_])": 1,
+   "listitem[_](text[_],textbox[_],button[_],text[_])": 1,
+   "row[_](cell[_])": 1,
+   "row[_](cell[_],cell[_](button[_],combobox[_],textbox[_],button[_],text[_]))": 1
+  }
+ }
+}

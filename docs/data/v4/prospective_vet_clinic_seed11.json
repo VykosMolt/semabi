@@ -124,20 +124,20 @@
   "v4": {
    "rtc": 0.225,
    "registered_transitions": 71,
-   "registered_deltas": 71,
+   "registered_deltas": 58,
    "matched_registered_deltas": 16,
-   "strict_registered_delta_precision": 0.225,
+   "strict_registered_delta_precision": 0.276,
    "false_delta_categories": {
     "duplicate_or_redundant_atom": 1,
     "incorrect_persistence": 13,
-    "spurious_relation": 22,
-    "wrong_attribute_attachment": 19
+    "spurious_relation": 1,
+    "wrong_attribute_attachment": 27
    },
    "gtc": 0.817,
-   "view_false_positive_rate": 0.603,
+   "view_false_positive_rate": 0.365,
    "types": {
     "hidden": 4,
-    "learned": 9,
+    "learned": 8,
     "recovered": 2,
     "map": {
      "T3": "Patient",
@@ -164,27 +164,21 @@
     "recovered_ops": [
      "CancelAppointment"
     ],
-    "learned": 18,
+    "learned": 12,
     "spurious_learned": [
      "op0",
      "op1",
      "op2",
      "op3",
      "op4",
-     "op5",
      "op6",
+     "op7",
      "op8",
      "op9",
      "op10",
-     "op11",
-     "op12",
-     "op13",
-     "op14",
-     "op15",
-     "op16",
-     "op17"
+     "op11"
     ],
-    "precision": 0.06,
+    "precision": 0.08,
     "failure_rejection_rate": 0.0
    },
    "operators_per_op": {
@@ -233,27 +227,31 @@
     "StartExam": 0.0,
     "CompleteAppointment": 0.0,
     "ScheduleAppointment": 0.0,
-    "CheckIn": 0.231
+    "CheckIn": 0.154
    },
    "cost_primitives": 861
   },
   "v4_pinned": {
    "rtc": 0.0,
    "registered_transitions": 71,
-   "registered_deltas": 86,
+   "registered_deltas": 37,
    "matched_registered_deltas": 0,
    "strict_registered_delta_precision": 0.0,
    "false_delta_categories": {
-    "incorrect_persistence": 81,
-    "spurious_relation": 5
+    "incorrect_persistence": 9,
+    "spurious_relation": 7,
+    "wrong_attribute_attachment": 21
    },
-   "gtc": 0.0,
-   "view_false_positive_rate": 0.033,
+   "gtc": 0.183,
+   "view_false_positive_rate": 0.3,
    "types": {
     "hidden": 4,
-    "learned": 5,
-    "recovered": 0,
-    "map": {}
+    "learned": 19,
+    "recovered": 2,
+    "map": {
+     "T5": "Patient",
+     "T11": "Appointment"
+    }
    },
    "predicates": {
     "hidden_attrs": 13,
@@ -268,13 +266,11 @@
     "observed_in_trace": 6,
     "recovered": 0,
     "recovered_ops": [],
-    "learned": 5,
+    "learned": 3,
     "spurious_learned": [
      "op0",
      "op1",
-     "op2",
-     "op3",
-     "op4"
+     "op2"
     ],
     "precision": 0.0,
     "failure_rejection_rate": 0.0
@@ -339,12 +335,13 @@
   "initial": {
    "contradictions": 0,
    "churn": 0,
-   "visibility": 132,
-   "unexplained": 3,
-   "spurious": 1,
-   "explained": 24,
+   "visibility": 415,
+   "unexplained": 27,
+   "spurious": 2,
+   "explained": 78,
+   "delta_atoms": 82,
    "complexity": 62,
-   "steps": 260,
+   "steps": 867,
    "churn_steps": [],
    "contradiction_steps": [],
    "visibility_steps": [
@@ -393,17 +390,21 @@
   "final": {
    "contradictions": 0,
    "churn": 0,
-   "visibility": 2,
-   "unexplained": 92,
-   "spurious": 1,
-   "explained": 33,
-   "complexity": 64,
-   "steps": 260,
+   "visibility": 5,
+   "unexplained": 354,
+   "spurious": 2,
+   "explained": 78,
+   "delta_atoms": 82,
+   "complexity": 53,
+   "steps": 867,
    "churn_steps": [],
    "contradiction_steps": [],
    "visibility_steps": [
     4,
-    102
+    102,
+    425,
+    544,
+    851
    ]
   },
   "moves": [
@@ -416,12 +417,13 @@
     "score": {
      "contradictions": 0,
      "churn": 0,
-     "visibility": 85,
-     "unexplained": 50,
-     "spurious": 1,
-     "explained": 24,
+     "visibility": 274,
+     "unexplained": 168,
+     "spurious": 2,
+     "explained": 78,
+     "delta_atoms": 82,
      "complexity": 67,
-     "steps": 260,
+     "steps": 867,
      "churn_steps": [],
      "contradiction_steps": [],
      "visibility_steps": [
@@ -477,73 +479,13 @@
     "score": {
      "contradictions": 0,
      "churn": 0,
-     "visibility": 85,
-     "unexplained": 50,
-     "spurious": 1,
-     "explained": 24,
+     "visibility": 274,
+     "unexplained": 168,
+     "spurious": 2,
+     "explained": 78,
+     "delta_atoms": 82,
      "complexity": 58,
-     "steps": 260,
-     "churn_steps": [],
-     "contradiction_steps": [],
-     "visibility_steps": [
-      4,
-      5,
-      12,
-      14,
-      15,
-      16,
-      17,
-      22,
-      27,
-      28,
-      35,
-      37,
-      40,
-      43,
-      46,
-      48,
-      51,
-      53,
-      56,
-      59,
-      62,
-      64,
-      67,
-      71,
-      74,
-      76,
-      79,
-      81,
-      84,
-      91,
-      94,
-      95,
-      100,
-      102,
-      103,
-      105,
-      111,
-      114,
-      117,
-      120
-     ]
-    }
-   },
-   {
-    "move": "identity",
-    "family": "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))",
-    "templates": 5,
-    "key_slot": "cell#0@5",
-    "status": "CONTRADICTED",
-    "score": {
-     "contradictions": 0,
-     "churn": 0,
-     "visibility": 85,
-     "unexplained": 44,
-     "spurious": 1,
-     "explained": 30,
-     "complexity": 69,
-     "steps": 260,
+     "steps": 867,
      "churn_steps": [],
      "contradiction_steps": [],
      "visibility_steps": [
@@ -599,17 +541,21 @@
     "score": {
      "contradictions": 0,
      "churn": 0,
-     "visibility": 2,
-     "unexplained": 92,
-     "spurious": 1,
-     "explained": 33,
-     "complexity": 64,
-     "steps": 260,
+     "visibility": 5,
+     "unexplained": 354,
+     "spurious": 2,
+     "explained": 78,
+     "delta_atoms": 82,
+     "complexity": 53,
+     "steps": 867,
      "churn_steps": [],
      "contradiction_steps": [],
      "visibility_steps": [
       4,
-      102
+      102,
+      425,
+      544,
+      851
      ]
     }
    }
@@ -651,7 +597,7 @@
       "numeric_share": 0.0
      }
     },
-    "reason": "undecided: chosen explains 24 with 86 errors, the alternative explains 23 with 85"
+    "reason": "undecided: chosen explains 78 with 276 errors, the alternative explains 71 with 273"
    },
    {
     "template": "row[_](cell[_])",
@@ -689,7 +635,7 @@
       "numeric_share": 0.0
      }
     },
-    "reason": "undecided: chosen explains 24 with 86 errors, the alternative explains 17 with 85"
+    "reason": "undecided: chosen explains 78 with 276 errors, the alternative explains 55 with 273"
    },
    {
     "template": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
@@ -727,7 +673,7 @@
       "numeric_share": 0.0
      }
     },
-    "reason": "undecided: chosen explains 24 with 86 errors, the alternative explains 18 with 85"
+    "reason": "undecided: chosen explains 78 with 276 errors, the alternative explains 67 with 272"
    },
    {
     "template": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
@@ -765,7 +711,45 @@
       "numeric_share": 0.0
      }
     },
-    "reason": "undecided: chosen explains 24 with 86 errors, the alternative explains 12 with 85"
+    "reason": "undecided: chosen explains 78 with 276 errors, the alternative explains 43 with 272"
+   },
+   {
+    "template": "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))",
+    "left": {
+     "template": "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))",
+     "key_slot": "cell#0",
+     "status": "SUPPORTED",
+     "why": "separates 1/1 co-present pairs, 5 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 1,
+      "separated_pairs": 1,
+      "discrimination": 1.0,
+      "coverage": 1.0,
+      "distinct_values": 5,
+      "constant_share": 0.625,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))",
+     "key_slot": "cell#0@5",
+     "status": "CONTRADICTED",
+     "why": "separates none of the 1 co-present pairs",
+     "evidence": {
+      "copresent_pairs": 1,
+      "separated_pairs": 0,
+      "discrimination": 0.0,
+      "coverage": 1.0,
+      "distinct_values": 3,
+      "constant_share": 0.775,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "reason": "undecided: chosen explains 78 with 276 errors, the alternative explains 106 with 279"
    },
    {
     "template": "text[_](textbox[_])",
@@ -803,7 +787,7 @@
       "numeric_share": 0.0
      }
     },
-    "reason": "undecided: chosen explains 33 with 3 errors, the alternative explains 26 with 1"
+    "reason": "undecided: chosen explains 78 with 7 errors, the alternative explains 52 with 4"
    }
   ],
   "families": {

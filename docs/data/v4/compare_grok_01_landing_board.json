@@ -105,23 +105,20 @@
   "v4": {
    "rtc": 0.0,
    "registered_transitions": 65,
-   "registered_deltas": 85,
+   "registered_deltas": 72,
    "matched_registered_deltas": 0,
    "strict_registered_delta_precision": 0.0,
    "false_delta_categories": {
     "incorrect_persistence": 21,
-    "spurious_relation": 11,
-    "wrong_attribute_attachment": 53
+    "wrong_attribute_attachment": 51
    },
    "gtc": 0.0,
    "view_false_positive_rate": 0.0,
    "types": {
     "hidden": 3,
-    "learned": 3,
-    "recovered": 1,
-    "map": {
-     "T0": "Slip"
-    }
+    "learned": 2,
+    "recovered": 0,
+    "map": {}
    },
    "predicates": {
     "hidden_attrs": 10,
@@ -190,7 +187,7 @@
     "sail": 0.0,
     "clock": 0.0,
     "warp": 0.0,
-    "stand_down": 1.0
+    "stand_down": 0.0
    },
    "cost_primitives": 367
   }
@@ -199,14 +196,17 @@
  "v4_search": {
   "initial": {
    "contradictions": 0,
-   "churn": 0,
+   "churn": 1,
    "visibility": 0,
    "unexplained": 9,
    "spurious": 0,
-   "explained": 56,
-   "complexity": 51,
+   "explained": 55,
+   "delta_atoms": 101,
+   "complexity": 44,
    "steps": 373,
-   "churn_steps": [],
+   "churn_steps": [
+    103
+   ],
    "contradiction_steps": [],
    "visibility_steps": []
   },
@@ -217,7 +217,8 @@
    "unexplained": 0,
    "spurious": 0,
    "explained": 65,
-   "complexity": 29,
+   "delta_atoms": 72,
+   "complexity": 16,
    "steps": 373,
    "churn_steps": [],
    "contradiction_steps": [],
@@ -232,12 +233,36 @@
     "status": "NO_IDENTITY",
     "score": {
      "contradictions": 0,
-     "churn": 0,
+     "churn": 1,
      "visibility": 0,
      "unexplained": 9,
      "spurious": 0,
-     "explained": 56,
-     "complexity": 44,
+     "explained": 55,
+     "delta_atoms": 56,
+     "complexity": 37,
+     "steps": 373,
+     "churn_steps": [
+      103
+     ],
+     "contradiction_steps": [],
+     "visibility_steps": []
+    }
+   },
+   {
+    "move": "identity",
+    "family": "group[_](heading[_],text[_],text[_](button[_]))",
+    "templates": 2,
+    "key_slot": null,
+    "status": "NO_IDENTITY",
+    "score": {
+     "contradictions": 0,
+     "churn": 0,
+     "visibility": 0,
+     "unexplained": 10,
+     "spurious": 0,
+     "explained": 55,
+     "delta_atoms": 56,
+     "complexity": 25,
      "steps": 373,
      "churn_steps": [],
      "contradiction_steps": [],
@@ -257,7 +282,8 @@
      "unexplained": 0,
      "spurious": 0,
      "explained": 65,
-     "complexity": 40,
+     "delta_atoms": 82,
+     "complexity": 28,
      "steps": 373,
      "churn_steps": [],
      "contradiction_steps": [],
@@ -266,8 +292,8 @@
    },
    {
     "move": "identity",
-    "family": "text[_](radio[_],text[_])",
-    "templates": 3,
+    "family": "text[_]",
+    "templates": 1,
     "key_slot": null,
     "status": "NO_IDENTITY",
     "score": {
@@ -277,7 +303,68 @@
      "unexplained": 0,
      "spurious": 0,
      "explained": 65,
-     "complexity": 29,
+     "delta_atoms": 82,
+     "complexity": 22,
+     "steps": 373,
+     "churn_steps": [],
+     "contradiction_steps": [],
+     "visibility_steps": []
+    }
+   },
+   {
+    "move": "identity",
+    "family": "text[_]@ctx0",
+    "templates": 1,
+    "key_slot": "text#0",
+    "status": "SUPPORTED",
+    "score": {
+     "contradictions": 0,
+     "churn": 0,
+     "visibility": 0,
+     "unexplained": 0,
+     "spurious": 0,
+     "explained": 65,
+     "delta_atoms": 79,
+     "complexity": 22,
+     "steps": 373,
+     "churn_steps": [],
+     "contradiction_steps": [],
+     "visibility_steps": []
+    }
+   },
+   {
+    "move": "identity",
+    "family": "text[_]@ctx0",
+    "templates": 1,
+    "key_slot": null,
+    "status": "NO_IDENTITY",
+    "score": {
+     "contradictions": 0,
+     "churn": 0,
+     "visibility": 0,
+     "unexplained": 0,
+     "spurious": 0,
+     "explained": 65,
+     "delta_atoms": 72,
+     "complexity": 16,
+     "steps": 373,
+     "churn_steps": [],
+     "contradiction_steps": [],
+     "visibility_steps": []
+    }
+   },
+   {
+    "move": "promote_leaf",
+    "template": "text[_]",
+    "score": {
+     "contradictions": 0,
+     "churn": 0,
+     "visibility": 0,
+     "unexplained": 0,
+     "spurious": 0,
+     "explained": 65,
+     "delta_atoms": 72,
+     "complexity": 16,
      "steps": 373,
      "churn_steps": [],
      "contradiction_steps": [],
@@ -285,89 +372,13 @@
     }
    }
   ],
-  "open_questions": [
-   {
-    "template": "group[_](heading[_],text[_],text[_](button[_]))",
-    "left": {
-     "template": "group[_](heading[_],text[_],text[_](button[_]))",
-     "key_slot": "text/button#0@9",
-     "status": "SUPPORTED",
-     "why": "separates 400/400 co-present pairs, 6 values, coverage 1.00",
-     "evidence": {
-      "copresent_pairs": 400,
-      "separated_pairs": 400,
-      "discrimination": 1.0,
-      "coverage": 1.0,
-      "distinct_values": 6,
-      "constant_share": 0.242,
-      "reload_stability": 1.0,
-      "cross_view_values": 0,
-      "numeric_share": 0.0
-     }
-    },
-    "right": {
-     "template": "group[_](heading[_],text[_],text[_](button[_]))",
-     "key_slot": "heading#0",
-     "status": "SUPPORTED",
-     "why": "separates 400/400 co-present pairs, 6 values, coverage 1.00",
-     "evidence": {
-      "copresent_pairs": 400,
-      "separated_pairs": 400,
-      "discrimination": 1.0,
-      "coverage": 1.0,
-      "distinct_values": 6,
-      "constant_share": 0.242,
-      "reload_stability": 1.0,
-      "cross_view_values": 0,
-      "numeric_share": 0.0
-     }
-    },
-    "reason": "the trace so far scores both readings identically"
-   },
-   {
-    "template": "group[_](heading[_],text[_],text[_](button[_]))",
-    "left": {
-     "template": "group[_](heading[_],text[_],text[_](button[_]))",
-     "key_slot": "text/button#0@9",
-     "status": "SUPPORTED",
-     "why": "separates 400/400 co-present pairs, 6 values, coverage 1.00",
-     "evidence": {
-      "copresent_pairs": 400,
-      "separated_pairs": 400,
-      "discrimination": 1.0,
-      "coverage": 1.0,
-      "distinct_values": 6,
-      "constant_share": 0.242,
-      "reload_stability": 1.0,
-      "cross_view_values": 0,
-      "numeric_share": 0.0
-     }
-    },
-    "right": {
-     "template": "group[_](heading[_],text[_],text[_](button[_]))",
-     "key_slot": "text/button#0@10",
-     "status": "SUPPORTED",
-     "why": "separates 400/400 co-present pairs, 6 values, coverage 1.00",
-     "evidence": {
-      "copresent_pairs": 400,
-      "separated_pairs": 400,
-      "discrimination": 1.0,
-      "coverage": 1.0,
-      "distinct_values": 6,
-      "constant_share": 0.242,
-      "reload_stability": 1.0,
-      "cross_view_values": 0,
-      "numeric_share": 0.0
-     }
-    },
-    "reason": "the trace so far scores both readings identically"
-   }
-  ],
+  "open_questions": [],
   "families": {
    "button[_]": 3,
    "group[_](heading[_],text[_],text[_](button[_]))": 2,
    "row[_](cell[_],cell[_](button[_]))": 3,
-   "text[_](radio[_],text[_])": 3
+   "text[_]": 1,
+   "text[_]@ctx0": 1
   }
  }
 }

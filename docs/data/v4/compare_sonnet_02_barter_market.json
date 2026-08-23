@@ -114,12 +114,12 @@
   "v4": {
    "rtc": 0.0,
    "registered_transitions": 53,
-   "registered_deltas": 76,
+   "registered_deltas": 75,
    "matched_registered_deltas": 0,
    "strict_registered_delta_precision": 0.0,
    "false_delta_categories": {
-    "incorrect_persistence": 59,
-    "wrong_attribute_attachment": 17
+    "incorrect_persistence": 60,
+    "wrong_attribute_attachment": 15
    },
    "gtc": 0.094,
    "view_false_positive_rate": 0.639,
@@ -129,18 +129,20 @@
     "recovered": 2,
     "map": {
      "T1": "Item",
-     "T2": "Trader"
+     "T0": "Trader"
     }
    },
    "predicates": {
     "hidden_attrs": 11,
     "recovered_attrs": 1,
     "hidden_rels": 9,
-    "recovered_rels": 0,
+    "recovered_rels": 1,
     "attr_map": {
      "T1.attr:cell#0@2": "category"
     },
-    "rel_map": {}
+    "rel_map": {
+     "ref_1_rel:0": "item~seller"
+    }
    },
    "operators": {
     "hidden": 7,
@@ -231,6 +233,7 @@
    "unexplained": 30,
    "spurious": 0,
    "explained": 86,
+   "delta_atoms": 120,
    "complexity": 42,
    "steps": 423,
    "churn_steps": [
@@ -306,6 +309,7 @@
    "unexplained": 22,
    "spurious": 0,
    "explained": 101,
+   "delta_atoms": 136,
    "complexity": 25,
    "steps": 423,
    "churn_steps": [],
@@ -358,6 +362,7 @@
      "unexplained": 30,
      "spurious": 0,
      "explained": 88,
+     "delta_atoms": 130,
      "complexity": 41,
      "steps": 423,
      "churn_steps": [
@@ -437,6 +442,7 @@
      "unexplained": 22,
      "spurious": 0,
      "explained": 101,
+     "delta_atoms": 138,
      "complexity": 34,
      "steps": 423,
      "churn_steps": [],
@@ -489,6 +495,60 @@
      "unexplained": 22,
      "spurious": 0,
      "explained": 101,
+     "delta_atoms": 137,
+     "complexity": 25,
+     "steps": 423,
+     "churn_steps": [],
+     "contradiction_steps": [
+      412,
+      420,
+      59,
+      78,
+      112,
+      127,
+      137,
+      139,
+      158,
+      175,
+      220,
+      225,
+      238,
+      245,
+      281,
+      344,
+      406
+     ],
+     "visibility_steps": [
+      12,
+      25,
+      96,
+      98,
+      128,
+      186,
+      187,
+      202,
+      213,
+      215,
+      267,
+      325,
+      404
+     ]
+    }
+   },
+   {
+    "move": "identity",
+    "family": "row[_](cell[_],cell[_](button[_],text[_]))",
+    "templates": 1,
+    "key_slot": "cell#1!",
+    "status": "SUPPORTED",
+    "score": {
+     "contradictions": 17,
+     "churn": 0,
+     "visibility": 13,
+     "unexplained": 22,
+     "spurious": 0,
+     "explained": 101,
+     "delta_atoms": 136,
      "complexity": 25,
      "steps": 423,
      "churn_steps": [],
@@ -681,82 +741,6 @@
      }
     },
     "reason": "undecided: chosen explains 101 with 30 errors, the alternative explains 98 with 21"
-   },
-   {
-    "template": "row[_](cell[_],cell[_](button[_],text[_]))",
-    "left": {
-     "template": "row[_](cell[_],cell[_](button[_],text[_]))",
-     "key_slot": "cell#0",
-     "status": "SUPPORTED",
-     "why": "separates 3/7 co-present pairs, 6 values, coverage 1.00",
-     "evidence": {
-      "copresent_pairs": 7,
-      "separated_pairs": 3,
-      "discrimination": 0.42857142857142855,
-      "coverage": 1.0,
-      "distinct_values": 6,
-      "constant_share": 0.261,
-      "reload_stability": null,
-      "cross_view_values": 0,
-      "numeric_share": 0.0
-     }
-    },
-    "right": {
-     "template": "row[_](cell[_],cell[_](button[_],text[_]))",
-     "key_slot": "cell#0@3",
-     "status": "SUPPORTED",
-     "why": "separates 6/7 co-present pairs, 8 values, coverage 1.00",
-     "evidence": {
-      "copresent_pairs": 7,
-      "separated_pairs": 6,
-      "discrimination": 0.8571428571428571,
-      "coverage": 1.0,
-      "distinct_values": 8,
-      "constant_share": 0.261,
-      "reload_stability": null,
-      "cross_view_values": 0,
-      "numeric_share": 1.0
-     }
-    },
-    "reason": "the trace so far scores both readings identically"
-   },
-   {
-    "template": "row[_](cell[_],cell[_](button[_],text[_]))",
-    "left": {
-     "template": "row[_](cell[_],cell[_](button[_],text[_]))",
-     "key_slot": "cell#0",
-     "status": "SUPPORTED",
-     "why": "separates 3/7 co-present pairs, 6 values, coverage 1.00",
-     "evidence": {
-      "copresent_pairs": 7,
-      "separated_pairs": 3,
-      "discrimination": 0.42857142857142855,
-      "coverage": 1.0,
-      "distinct_values": 6,
-      "constant_share": 0.261,
-      "reload_stability": null,
-      "cross_view_values": 0,
-      "numeric_share": 0.0
-     }
-    },
-    "right": {
-     "template": "row[_](cell[_],cell[_](button[_],text[_]))",
-     "key_slot": "cell#0@3|cell#0@4",
-     "status": "SUPPORTED",
-     "why": "separates 6/7 co-present pairs, 8 values, coverage 1.00",
-     "evidence": {
-      "copresent_pairs": 7,
-      "separated_pairs": 6,
-      "discrimination": 0.8571428571428571,
-      "coverage": 1.0,
-      "distinct_values": 8,
-      "constant_share": 0.261,
-      "reload_stability": null,
-      "cross_view_values": 0,
-      "numeric_share": 0.0
-     }
-    },
-    "reason": "the trace so far scores both readings identically"
    }
   ],
   "families": {

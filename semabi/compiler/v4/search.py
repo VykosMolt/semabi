@@ -152,7 +152,10 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
     result.families = {name: [u.template for u in units] for name, units in grouped.items()}
     family_reading: dict[str, list[Reading]] = {}
     for name, units in grouped.items():
-        candidates = family_readings(units, reload_pairs, view_of)
+        # a family whose members are leaves on trial as objects may name itself with its own
+        # text; a compound unit may not use its narration as its name
+        leaf_family = bool(H.promoted) and all(u.template in H.promoted for u in units)
+        candidates = family_readings(units, reload_pairs, view_of, allow_prose=leaf_family)
         gone = refuted.get(name, set())
         if gone:
             kept = [r for r in candidates if r.key_slot not in gone]
