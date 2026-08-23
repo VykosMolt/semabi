@@ -1,0 +1,105 @@
+{
+ "version": 1,
+ "frozen": "V2 compiler, refinement loop, prospective validator and acceptance thresholds",
+ "tag": "v2.0-causal-abstraction",
+ "environment": {
+  "python": "3.12.13",
+  "platform": "linux",
+  "hash_seeds_verified": [
+   "0",
+   "1",
+   "7"
+  ],
+  "min_support": 2,
+  "llm": null,
+  "browser": "playwright chromium (exploration only)"
+ },
+ "canonical_decisions": {
+  "observatory_loop_001": [
+   "ref-080835c578e1"
+  ]
+ },
+ "noncanonical": {
+  "climbing_loop_004": "ref-a4fd4824b37a MISPREDICTED on seeds 11/12/13",
+  "climbing_reopen_003": "ref-47e12ddb5822 MISPREDICTED on seeds 11/12/13",
+  "datacenter_context_loop_004": "ref-2e782cb7889a, ref-e89963ebd151 PROVISIONAL, no incremental semantic prediction"
+ },
+ "development_suites": [
+  "~/semabi-gauntlet (gauntlet-v1)",
+  "~/semabi-gauntlet-v2 (gauntlet-v2)",
+  "experiments/oracle_apps (instrumented copies)"
+ ],
+ "next_evidence": "an independently authored, compiler-blind benchmark; the SemABI project must not author it",
+ "artifact_sha256": {
+  "docs/data/v2/action_alphabet_determinism_2026-08-23.json": "fd36c9402c1a117dd4ade2cfbe5d286485df0a0d4f206ba9aa22a30c8e5ca627",
+  "docs/data/v2/active_control_2026-08-23.json": "7c0408e10d231dc7df47c780d5547759b610eb94f1b765950c2139c43719fef5",
+  "docs/data/v2/artifact_consistency_2026-08-23.json": "4a166be6b188075138cbe28b07b2d81024e042874ec31e69d72a99a4b8868fef",
+  "docs/data/v2/budget_curve_2026-08-23.json": "ecf7dd6ae7ee28eb2b04e1725cc8d894dbb11aed7d2d7e0080113fcc78b613d7",
+  "docs/data/v2/control_collision_2026-08-23.json": "afea25fce877d0ffe139bf1cb488b0739c81a7d6d0c85161be2c2824f18f3849",
+  "docs/data/v2/control_collision_legacy_2026-08-23.json": "dc1c96203339058e821dd524624b0fe754dab429f30432800820d9609d2f5a50",
+  "docs/data/v2/counterexample_refinement_2026-08-23.json": "3dbd61d2eff5cfc2e3fe367a00f6a876223cd4780ea503d1285c4bf3f347729b",
+  "docs/data/v2/falsification_2026-08-23.json": "9ef194144ce07ca67b6e6c5f3ff634036f0f52fef3a57af3171a2e17fac4a661",
+  "docs/data/v2/falsification_traces_2026-08-23.json": "4e61ca51f944393dad0ae834236ceb74edb5f5ab07d29192b827c4e534baf919",
+  "docs/data/v2/gate_reachability_2026-08-23.json": "a6596b4e6df12b0e17f9a66c51ae7cbedb8c58ce3618de79cfd20e9f28bf78ae",
+  "docs/data/v2/llm_condition_2026-08-23.json": "4628ce9b4c758d5bcd39376f7c3bce5c12fe8041483127a75d77859ab69c5453",
+  "docs/data/v2/operator_eligibility_2026-08-23.json": "e27873183fb93b0e0070548dbf419e0af7e654abf0fd3b3450b70041f672db9d",
+  "docs/data/v2/prospective_validation_2026-08-23.json": "749144226a816a71351b592a2bff26d7feb17e1afe707a6ff8f10542e314666d",
+  "docs/data/v2/stability_seed11_2026-08-23.json": "7055e2f85c4ae0bd6d57315b896fc500d03d2c20e3da62646c88c3603e4b9304"
+ },
+ "compiler_source_sha256_16": {
+  "semabi/compiler/__init__.py": "5249623658aef7d2",
+  "semabi/compiler/abstract.py": "07fd8b41fcfdfe3d",
+  "semabi/compiler/active.py": "e3572ead5849a7c2",
+  "semabi/compiler/belief.py": "10996cf9f5f2264e",
+  "semabi/compiler/browser.py": "a63591db4b8899f5",
+  "semabi/compiler/compile.py": "fa0e4b4237658dc2",
+  "semabi/compiler/compile_v1.py": "200ccf04a38b69f0",
+  "semabi/compiler/compile_v2.py": "4c548ab43776c854",
+  "semabi/compiler/evidence.py": "b4a5d0c9208f9b6c",
+  "semabi/compiler/explorer.py": "16827d3735c9eab4",
+  "semabi/compiler/ground.py": "5c94dc46bb5dab37",
+  "semabi/compiler/grounder.py": "d272260d2bacd64d",
+  "semabi/compiler/induce.py": "46075088d34187ea",
+  "semabi/compiler/mentions.py": "800fa94e2e4f76bf",
+  "semabi/compiler/model.py": "31b2d1207d678c05",
+  "semabi/compiler/observation.py": "ccf5dbae2727837a",
+  "semabi/compiler/parse.py": "c609e78b0f020f09",
+  "semabi/compiler/planner.py": "0c56abb0518fcfb7",
+  "semabi/compiler/schema_llm.py": "f05e458184188ff7",
+  "semabi/compiler/v2/__init__.py": "e3b0c44298fc1c14",
+  "semabi/compiler/v2/abstractor.py": "8ef5620e76fbfd60",
+  "semabi/compiler/v2/association.py": "f34e19ff719b2b63",
+  "semabi/compiler/v2/controls.py": "593eaaacfae90a3b",
+  "semabi/compiler/v2/counterexamples.py": "3ca77e39f57b99b4",
+  "semabi/compiler/v2/differential.py": "a6e7f005f4ff4ab4",
+  "semabi/compiler/v2/explore.py": "0212ea7cd7358490",
+  "semabi/compiler/v2/graph.py": "feb2ee73faca3bd5",
+  "semabi/compiler/v2/hypotheses.py": "8d65c7297302c897",
+  "semabi/compiler/v2/llm_propose.py": "fa0951ce5fbdc2e9",
+  "semabi/compiler/v2/refinement.py": "79f69756fc146f2f",
+  "semabi/compiler/v2/score.py": "292ea78f2237e7b8",
+  "semabi/compiler/v2/units.py": "c1a94e811f825974",
+  "semabi/compiler/v2/validation.py": "fc9b6c38def59c4f",
+  "semabi/compiler/v2/validation_probe.py": "244cca6a0b735fc6",
+  "semabi/eval/v2_ablation.py": "e6f60b259891c0df",
+  "semabi/eval/v2_active_control.py": "52f3f9e654d5b220",
+  "semabi/eval/v2_artifact_consistency.py": "79443f7840c7e85f",
+  "semabi/eval/v2_budget_curve.py": "7112fb240b0b153c",
+  "semabi/eval/v2_control_collision.py": "49c7a3fa54c691ba",
+  "semabi/eval/v2_determinism.py": "c6de7b5ce1ce1405",
+  "semabi/eval/v2_falsification_report.py": "855b19fe9b92eed8",
+  "semabi/eval/v2_gate_reachability.py": "0bcc1b8b863a9f38",
+  "semabi/eval/v2_operator_ledger.py": "eed23e50e2eddc09",
+  "semabi/eval/v2_prospective_report.py": "3a06bd98195a2dd4",
+  "semabi/eval/v2_refinement_run.py": "9c795771172caa7a",
+  "semabi/eval/v2_stability.py": "c7b02480a3881934",
+  "semabi/eval/v2_validation_probe_run.py": "f815fbf21032a3ce"
+ },
+ "identified_by": "the annotated tag records the exact commit; a manifest cannot contain the hash of the commit that contains it",
+ "documents_sha256": {
+  "docs/v2_status.md": "692561a2d538202e46cb002f0f71ae17ae384a81f5ffdf77ac4ef3beb57e57ea",
+  "docs/v2_design.md": "5ae4f795a10e0f204a3edec2b5a55d6b0377e162ff554565f060000807d58bbf",
+  "docs/v2_devlog.md": "dcca4f12627cdc9e07a0810c0f6a64652746a5f86cc0bf9ca9256c95e6916326",
+  "docs/v2_oracle.md": "12e891dd4cff5f93a24b00c5dea414ed1b5dcc2fa2b85dc18cc3aa649087d05f"
+ }
+}

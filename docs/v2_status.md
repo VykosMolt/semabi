@@ -12,6 +12,7 @@ Machine-readable evidence:
 - `docs/data/v2/falsification_2026-08-23.json` (per-seed prospective evidence)
 - `docs/data/v2/prospective_validation_2026-08-23.json`
 - `docs/data/v2/gate_reachability_2026-08-23.json`
+- `docs/v2_freeze_manifest.json` (commit, environment, artifact and source hashes)
 - `docs/data/v2/artifact_consistency_2026-08-23.json` (documents, artifacts and run records
   checked against each other by `semabi/eval/v2_artifact_consistency.py`)
 - `docs/data/v2/falsification_traces_2026-08-23.json`
@@ -363,6 +364,15 @@ computed from it.
 | 9 | datacenter has an honest status | met: `PROVISIONAL`, gate unreachable by construction, recorded |
 | 10 | full tests and compiler/evaluator boundaries pass | met |
 | 11 | documentation and machine artifacts agree | met |
+
+The gauntlet suites are development suites: `~/semabi-gauntlet` (gauntlet-v1) and
+`~/semabi-gauntlet-v2` (gauntlet-v2), together with the instrumented copies under
+`experiments/oracle_apps`, have all been seen by this project and can no longer produce
+generalization evidence. All V2 mechanisms and thresholds -- control-family induction, the
+refinement loop, the prospective validator, the differential arm and every acceptance
+threshold -- are frozen at the tagged commit; `docs/v2_freeze_manifest.json` records the
+commit, environment, canonical decisions and the sha256 of every artifact and compiler
+source file.
 
 V2 is frozen at this state. The canonical abstraction contains exactly one decision,
 observatory's relational-record split `ref-080835c578e1`. Climbing's two candidate
