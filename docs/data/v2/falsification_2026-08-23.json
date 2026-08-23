@@ -1,0 +1,2231 @@
+{
+ "version": 1,
+ "question": "do the currently VALIDATED refinements keep predicting correctly on further independent traces, and do they predict anything the unrefined model does not?",
+ "method": {
+  "per_seed": "every held-out trace is reported individually; nothing is averaged",
+  "inconclusive": "a trace that exercises no refinement-introduced schema is INCONCLUSIVE_FOR_VALIDATION, never a pass",
+  "differential": "candidate and baseline models are compiled from the same held-out trace and paired by step index; a candidate win requires the baseline to be contradicted on a transition where the candidate was confirmed",
+  "hidden_evaluator_labels_used": false
+ },
+ "cases": {
+  "climbing_loop_004": {
+   "source_run": "runs/v2_refinement/climbing_loop_004",
+   "decision_statuses": {
+    "ref-a4fd4824b37a": "MISPREDICTED"
+   },
+   "canonical_decision_ids": [],
+   "held_out_traces": [
+    {
+     "test_run": "runs/v2_stability/climbing_seed11",
+     "test_trace_sha256": "e1255565ea4708475fbf719eae23ffc1006bc007ce48af3ef04c1e26293ecc54",
+     "independent_of_selection_trace": true,
+     "independence": {
+      "independent": true,
+      "source_trace_sha256": "bd5477efa7eb46e7ea0b4cd874f21386537b75ca75cc760542945b025c7575ee",
+      "test_trace_sha256": "e1255565ea4708475fbf719eae23ffc1006bc007ce48af3ef04c1e26293ecc54",
+      "shared_step_prefix": 0,
+      "test_step_triples_present_in_source": 0.0,
+      "test_observation_signatures_present_in_source": 0.003,
+      "source_reset_seeds": [
+       "0",
+       "1",
+       "2",
+       "3",
+       "31",
+       "38",
+       "4",
+       "5"
+      ],
+      "test_reset_seeds": [
+       "1100",
+       "1101",
+       "1102",
+       "1103",
+       "1104",
+       "1105"
+      ]
+     },
+     "status": "VALIDATED",
+     "reason": "a refinement-introduced schema recurred exactly on an object binding or affected object absent from the source evidence, under a unique type mapping, with no contradiction and no unexplained visible effects",
+     "refinement_introduced_predictions": 6,
+     "predictions_with_an_applicable_held_out_occurrence": 2,
+     "outcome_counts_over_prediction_x_occurrence": {
+      "EXACT": 16,
+      "NOT_COMPARABLE": 3650,
+      "PREDICTED_WITH_UNOBSERVED_EXTRAS": 2,
+      "UNOBSERVED_OUTCOME": 4
+     },
+     "exact_recurrences": 16,
+     "contradictions": 0,
+     "not_comparable": 3650,
+     "inapplicable": 0,
+     "novel_binding_matches": 4,
+     "object_level_novel_matches_under_a_unique_mapping": 4,
+     "novel_bindings": [
+      "{\"?o0\": [0, \"Cave\"], \"?s0\": \"pink\"}",
+      "{\"?o0\": [0, \"Cave\"], \"?s0\": \"white\"}",
+      "{\"?o0\": [0, \"Island\"], \"?s0\": \"black\"}",
+      "{\"?o0\": [0, \"Island\"], \"?s0\": \"yellow\"}"
+     ],
+     "view_domain_leaks": 0,
+     "baseline_control": {
+      "predictions": 0,
+      "underdetermined": 6,
+      "outcome_counts": {}
+     },
+     "differential": {
+      "counts": {
+       "CANDIDATE_CORRECT_BASELINE_WRONG": 0,
+       "CANDIDATE_WRONG_BASELINE_CORRECT": 0,
+       "BOTH_CORRECT": 0,
+       "BOTH_WRONG": 0,
+       "SAME_PREDICTION": 0,
+       "NOT_COMPARABLE": 18
+      },
+      "not_comparable_detail": {
+       "CANDIDATE_ONLY_PREDICTS_CORRECT": 15,
+       "CANDIDATE_ONLY_PREDICTS_CORRECT_OTHER_MODEL_HAS_NO_MATCHING_OCCURRENCE": 3
+      },
+      "held_out_steps_with_a_determinate_prediction": 18,
+      "steps_where_the_silent_model_never_segmented_an_occurrence": 3,
+      "occurrence_pairing": {
+       "candidate_occurrences": 612,
+       "baseline_occurrences": 609,
+       "paired": 608,
+       "candidate_only": 4,
+       "baseline_only": 1
+      },
+      "candidate": {
+       "steps_determinate": 18,
+       "steps_correct": 18,
+       "steps_wrong": 0,
+       "steps_silent": 0
+      },
+      "baseline": {
+       "steps_determinate": 0,
+       "steps_correct": 0,
+       "steps_wrong": 0,
+       "steps_silent": 18
+      },
+      "candidate_wins_where_baseline_also_had_a_confirmed_schema": 0,
+      "candidate_wins": 0,
+      "baseline_wins": 0,
+      "divergent_comparable_cases": 0,
+      "candidate_win_fraction": null,
+      "candidate_wins_attributed_to_refinement_introduced_schema": 0,
+      "candidate_only_correct_where_baseline_silent": 15,
+      "candidate_only_correct_attributed_to_refinement_introduced_schema": 15,
+      "behavioral_novelty": "NOT_DEMONSTRATED_NO_DIVERGENT_COMPARABLE_CASE",
+      "incremental_value_class": "VALIDATED_INCREMENTAL_VALUE_COVERAGE_ONLY",
+      "interpretation": "candidate_wins counts held-out transitions where the candidate model's applicable determinate schemas were confirmed against the rendered after-state and the baseline model's were contradicted on the same transition; the two models therefore did not predict the same thing there. Structural schema difference alone is never counted.",
+      "candidate_determinate_schemas": 6,
+      "baseline_determinate_schemas": 0,
+      "candidate_outcome_counts": {
+       "EXACT": 16,
+       "UNOBSERVED_OUTCOME": 4,
+       "PREDICTED_WITH_UNOBSERVED_EXTRAS": 2
+      }
+     },
+     "validated_decision_ids": [
+      "ref-a4fd4824b37a"
+     ],
+     "predictive_counterexamples_file": "runs/v2_refinement/climbing_loop_004/predictive_counterexamples_v2.jsonl",
+     "classification": "VALIDATED",
+     "primitive_cost": {
+      "total_primitives": 747,
+      "broad_behavior_generating_primitives": 368,
+      "view_survey_or_navigation_primitives": 299,
+      "reload_probe_primitives": 74,
+      "reset_primitives": 6,
+      "automatic_probe_trigger_actions": 60,
+      "counterexample_targeted_probe_trigger_actions": 0,
+      "diagnostic_overhead_primitives": 373,
+      "diagnostic_overhead_rate": 0.499
+     }
+    },
+    {
+     "test_run": "runs/v2_falsification/climbing_seed12",
+     "test_trace_sha256": "2b318cbc14bfb476883baca709578ffec53c8e1d46bca54458a961ad45ae2aef",
+     "independent_of_selection_trace": true,
+     "independence": {
+      "independent": true,
+      "source_trace_sha256": "bd5477efa7eb46e7ea0b4cd874f21386537b75ca75cc760542945b025c7575ee",
+      "test_trace_sha256": "2b318cbc14bfb476883baca709578ffec53c8e1d46bca54458a961ad45ae2aef",
+      "shared_step_prefix": 0,
+      "test_step_triples_present_in_source": 0.0,
+      "test_observation_signatures_present_in_source": 0.0,
+      "source_reset_seeds": [
+       "0",
+       "1",
+       "2",
+       "3",
+       "31",
+       "38",
+       "4",
+       "5"
+      ],
+      "test_reset_seeds": [
+       "1200",
+       "1201",
+       "1202",
+       "1203",
+       "1204",
+       "1205"
+      ]
+     },
+     "status": "MISPREDICTED",
+     "reason": "an applicable, rendered held-out occurrence contradicted a predicted effect literal",
+     "refinement_introduced_predictions": 6,
+     "predictions_with_an_applicable_held_out_occurrence": 2,
+     "outcome_counts_over_prediction_x_occurrence": {
+      "CONTRADICTED": 8,
+      "EXACT": 20,
+      "NOT_COMPARABLE": 3215,
+      "PREDICTED_WITH_UNOBSERVED_EXTRAS": 1,
+      "UNOBSERVED_OUTCOME": 2
+     },
+     "exact_recurrences": 20,
+     "contradictions": 8,
+     "not_comparable": 3215,
+     "inapplicable": 0,
+     "novel_binding_matches": 4,
+     "object_level_novel_matches_under_a_unique_mapping": 4,
+     "novel_bindings": [
+      "{\"?o0\": [0, \"Cave\"], \"?s0\": \"white\"}",
+      "{\"?o0\": [0, \"Island\"], \"?s0\": \"yellow\"}",
+      "{\"?o0\": [0, \"Moon\"], \"?s0\": \"black\"}",
+      "{\"?o0\": [0, \"Moon\"], \"?s0\": \"yellow\"}"
+     ],
+     "view_domain_leaks": 0,
+     "baseline_control": {
+      "predictions": 0,
+      "underdetermined": 6,
+      "outcome_counts": {}
+     },
+     "differential": {
+      "counts": {
+       "CANDIDATE_CORRECT_BASELINE_WRONG": 0,
+       "CANDIDATE_WRONG_BASELINE_CORRECT": 0,
+       "BOTH_CORRECT": 0,
+       "BOTH_WRONG": 0,
+       "SAME_PREDICTION": 0,
+       "NOT_COMPARABLE": 29
+      },
+      "not_comparable_detail": {
+       "CANDIDATE_ONLY_PREDICTS_CORRECT": 21,
+       "CANDIDATE_ONLY_PREDICTS_WRONG": 8
+      },
+      "held_out_steps_with_a_determinate_prediction": 29,
+      "steps_where_the_silent_model_never_segmented_an_occurrence": 0,
+      "occurrence_pairing": {
+       "candidate_occurrences": 541,
+       "baseline_occurrences": 542,
+       "paired": 540,
+       "candidate_only": 1,
+       "baseline_only": 2
+      },
+      "candidate": {
+       "steps_determinate": 29,
+       "steps_correct": 21,
+       "steps_wrong": 8,
+       "steps_silent": 0
+      },
+      "baseline": {
+       "steps_determinate": 0,
+       "steps_correct": 0,
+       "steps_wrong": 0,
+       "steps_silent": 29
+      },
+      "candidate_wins_where_baseline_also_had_a_confirmed_schema": 0,
+      "candidate_wins": 0,
+      "baseline_wins": 0,
+      "divergent_comparable_cases": 0,
+      "candidate_win_fraction": null,
+      "candidate_wins_attributed_to_refinement_introduced_schema": 0,
+      "candidate_only_correct_where_baseline_silent": 21,
+      "candidate_only_correct_attributed_to_refinement_introduced_schema": 21,
+      "behavioral_novelty": "NOT_DEMONSTRATED_NO_DIVERGENT_COMPARABLE_CASE",
+      "incremental_value_class": "VALIDATED_INCREMENTAL_VALUE_COVERAGE_ONLY",
+      "interpretation": "candidate_wins counts held-out transitions where the candidate model's applicable determinate schemas were confirmed against the rendered after-state and the baseline model's were contradicted on the same transition; the two models therefore did not predict the same thing there. Structural schema difference alone is never counted.",
+      "candidate_determinate_schemas": 6,
+      "baseline_determinate_schemas": 0,
+      "candidate_outcome_counts": {
+       "EXACT": 20,
+       "UNOBSERVED_OUTCOME": 2,
+       "PREDICTED_WITH_UNOBSERVED_EXTRAS": 1,
+       "CONTRADICTED": 8
+      }
+     },
+     "validated_decision_ids": [
+      "ref-a4fd4824b37a"
+     ],
+     "predictive_counterexamples_file": "runs/v2_refinement/climbing_loop_004/predictive_counterexamples_v2.jsonl",
+     "classification": "MISPREDICTED",
+     "primitive_cost": {
+      "total_primitives": 751,
+      "broad_behavior_generating_primitives": 369,
+      "view_survey_or_navigation_primitives": 300,
+      "reload_probe_primitives": 76,
+      "reset_primitives": 6,
+      "automatic_probe_trigger_actions": 62,
+      "counterexample_targeted_probe_trigger_actions": 0,
+      "diagnostic_overhead_primitives": 376,
+      "diagnostic_overhead_rate": 0.501
+     }
+    },
+    {
+     "test_run": "runs/v2_falsification/climbing_seed13",
+     "test_trace_sha256": "2112a1a7862c21f971635135261a18fd60008310de927200089b031efc39e68a",
+     "independent_of_selection_trace": true,
+     "independence": {
+      "independent": true,
+      "source_trace_sha256": "bd5477efa7eb46e7ea0b4cd874f21386537b75ca75cc760542945b025c7575ee",
+      "test_trace_sha256": "2112a1a7862c21f971635135261a18fd60008310de927200089b031efc39e68a",
+      "shared_step_prefix": 0,
+      "test_step_triples_present_in_source": 0.0,
+      "test_observation_signatures_present_in_source": 0.004,
+      "source_reset_seeds": [
+       "0",
+       "1",
+       "2",
+       "3",
+       "31",
+       "38",
+       "4",
+       "5"
+      ],
+      "test_reset_seeds": [
+       "1300",
+       "1301",
+       "1302",
+       "1303",
+       "1304",
+       "1305"
+      ]
+     },
+     "status": "VALIDATED",
+     "reason": "a refinement-introduced schema recurred exactly on an object binding or affected object absent from the source evidence, under a unique type mapping, with no contradiction and no unexplained visible effects",
+     "refinement_introduced_predictions": 6,
+     "predictions_with_an_applicable_held_out_occurrence": 2,
+     "outcome_counts_over_prediction_x_occurrence": {
+      "EXACT": 11,
+      "NOT_COMPARABLE": 3678,
+      "PREDICTED_WITH_UNOBSERVED_EXTRAS": 1,
+      "UNOBSERVED_OUTCOME": 6
+     },
+     "exact_recurrences": 11,
+     "contradictions": 0,
+     "not_comparable": 3678,
+     "inapplicable": 0,
+     "novel_binding_matches": 4,
+     "object_level_novel_matches_under_a_unique_mapping": 4,
+     "novel_bindings": [
+      "{\"?o0\": [0, \"Island\"], \"?s0\": \"black\"}",
+      "{\"?o0\": [0, \"Island\"], \"?s0\": \"pink\"}",
+      "{\"?o0\": [0, \"Island\"], \"?s0\": \"yellow\"}",
+      "{\"?o0\": [0, \"Moon\"], \"?s0\": \"black\"}"
+     ],
+     "view_domain_leaks": 0,
+     "baseline_control": {
+      "predictions": 0,
+      "underdetermined": 6,
+      "outcome_counts": {}
+     },
+     "differential": {
+      "counts": {
+       "CANDIDATE_CORRECT_BASELINE_WRONG": 0,
+       "CANDIDATE_WRONG_BASELINE_CORRECT": 0,
+       "BOTH_CORRECT": 0,
+       "BOTH_WRONG": 0,
+       "SAME_PREDICTION": 0,
+       "NOT_COMPARABLE": 12
+      },
+      "not_comparable_detail": {
+       "CANDIDATE_ONLY_PREDICTS_CORRECT": 12
+      },
+      "held_out_steps_with_a_determinate_prediction": 12,
+      "steps_where_the_silent_model_never_segmented_an_occurrence": 0,
+      "occurrence_pairing": {
+       "candidate_occurrences": 616,
+       "baseline_occurrences": 616,
+       "paired": 616,
+       "candidate_only": 0,
+       "baseline_only": 0
+      },
+      "candidate": {
+       "steps_determinate": 12,
+       "steps_correct": 12,
+       "steps_wrong": 0,
+       "steps_silent": 0
+      },
+      "baseline": {
+       "steps_determinate": 0,
+       "steps_correct": 0,
+       "steps_wrong": 0,
+       "steps_silent": 12
+      },
+      "candidate_wins_where_baseline_also_had_a_confirmed_schema": 0,
+      "candidate_wins": 0,
+      "baseline_wins": 0,
+      "divergent_comparable_cases": 0,
+      "candidate_win_fraction": null,
+      "candidate_wins_attributed_to_refinement_introduced_schema": 0,
+      "candidate_only_correct_where_baseline_silent": 12,
+      "candidate_only_correct_attributed_to_refinement_introduced_schema": 12,
+      "behavioral_novelty": "NOT_DEMONSTRATED_NO_DIVERGENT_COMPARABLE_CASE",
+      "incremental_value_class": "VALIDATED_INCREMENTAL_VALUE_COVERAGE_ONLY",
+      "interpretation": "candidate_wins counts held-out transitions where the candidate model's applicable determinate schemas were confirmed against the rendered after-state and the baseline model's were contradicted on the same transition; the two models therefore did not predict the same thing there. Structural schema difference alone is never counted.",
+      "candidate_determinate_schemas": 6,
+      "baseline_determinate_schemas": 0,
+      "candidate_outcome_counts": {
+       "UNOBSERVED_OUTCOME": 6,
+       "EXACT": 11,
+       "PREDICTED_WITH_UNOBSERVED_EXTRAS": 1
+      }
+     },
+     "validated_decision_ids": [
+      "ref-a4fd4824b37a"
+     ],
+     "predictive_counterexamples_file": "runs/v2_refinement/climbing_loop_004/predictive_counterexamples_v2.jsonl",
+     "classification": "VALIDATED",
+     "primitive_cost": {
+      "total_primitives": 741,
+      "broad_behavior_generating_primitives": 370,
+      "view_survey_or_navigation_primitives": 295,
+      "reload_probe_primitives": 70,
+      "reset_primitives": 6,
+      "automatic_probe_trigger_actions": 55,
+      "counterexample_targeted_probe_trigger_actions": 0,
+      "diagnostic_overhead_primitives": 365,
+      "diagnostic_overhead_rate": 0.493
+     }
+    }
+   ],
+   "independent_traces_tested": 3,
+   "mispredicted_traces": 1,
+   "validated_traces": 2,
+   "inconclusive_traces": 0,
+   "candidate_wins_total": 0,
+   "baseline_wins_total": 0
+  },
+  "observatory_loop_001": {
+   "source_run": "runs/v2_refinement/observatory_loop_001",
+   "decision_statuses": {
+    "ref-080835c578e1": "VALIDATED"
+   },
+   "canonical_decision_ids": [
+    "ref-080835c578e1"
+   ],
+   "held_out_traces": [
+    {
+     "test_run": "runs/v2_stability/observatory_seed11",
+     "test_trace_sha256": "a5d7e9a08f7c4717a8699a3a19dbc528c14c0bc0b90324adfd49b9bfad0a3e02",
+     "independent_of_selection_trace": true,
+     "independence": {
+      "independent": true,
+      "source_trace_sha256": "4590d2ac701e41bd58d4b02f42509d5d14a2a1260bf7459e6f3d7e29354ee248",
+      "test_trace_sha256": "a5d7e9a08f7c4717a8699a3a19dbc528c14c0bc0b90324adfd49b9bfad0a3e02",
+      "shared_step_prefix": 0,
+      "test_step_triples_present_in_source": 0.0,
+      "test_observation_signatures_present_in_source": 0.01,
+      "source_reset_seeds": [
+       "0",
+       "1",
+       "2",
+       "3",
+       "4",
+       "5",
+       "51"
+      ],
+      "test_reset_seeds": [
+       "1100",
+       "1101",
+       "1102",
+       "1103",
+       "1104",
+       "1105"
+      ]
+     },
+     "status": "VALIDATED",
+     "reason": "a refinement-introduced schema recurred exactly on an object binding or affected object absent from the source evidence, under a unique type mapping, with no contradiction and no unexplained visible effects",
+     "refinement_introduced_predictions": 3,
+     "predictions_with_an_applicable_held_out_occurrence": 3,
+     "outcome_counts_over_prediction_x_occurrence": {
+      "EXACT": 34,
+      "INAPPLICABLE": 31,
+      "NOT_COMPARABLE": 2214,
+      "PREDICTED_WITH_UNOBSERVED_EXTRAS": 1
+     },
+     "exact_recurrences": 34,
+     "contradictions": 0,
+     "not_comparable": 2214,
+     "inapplicable": 31,
+     "novel_binding_matches": 7,
+     "object_level_novel_matches_under_a_unique_mapping": 7,
+     "novel_bindings": [
+      "{\"?o0\": [3, \"Ttst0:First|Ttst1:P8\"]}",
+      "{\"?o0\": [3, \"Ttst0:Mid|Ttst1:N6\"]}"
+     ],
+     "view_domain_leaks": 0,
+     "baseline_control": {
+      "predictions": 7,
+      "underdetermined": 3,
+      "outcome_counts": {
+       "INAPPLICABLE": 36,
+       "EXACT": 36,
+       "CONTRADICTED": 18
+      }
+     },
+     "differential": {
+      "counts": {
+       "CANDIDATE_CORRECT_BASELINE_WRONG": 14,
+       "CANDIDATE_WRONG_BASELINE_CORRECT": 0,
+       "BOTH_CORRECT": 0,
+       "BOTH_WRONG": 0,
+       "SAME_PREDICTION": 21,
+       "NOT_COMPARABLE": 5
+      },
+      "not_comparable_detail": {
+       "BASELINE_ONLY_PREDICTS_WRONG": 4,
+       "BASELINE_ONLY_PREDICTS_CORRECT": 1
+      },
+      "held_out_steps_with_a_determinate_prediction": 40,
+      "steps_where_the_silent_model_never_segmented_an_occurrence": 0,
+      "occurrence_pairing": {
+       "candidate_occurrences": 760,
+       "baseline_occurrences": 758,
+       "paired": 757,
+       "candidate_only": 3,
+       "baseline_only": 1
+      },
+      "candidate": {
+       "steps_determinate": 35,
+       "steps_correct": 35,
+       "steps_wrong": 0,
+       "steps_silent": 5
+      },
+      "baseline": {
+       "steps_determinate": 40,
+       "steps_correct": 22,
+       "steps_wrong": 18,
+       "steps_silent": 0
+      },
+      "candidate_wins_where_baseline_also_had_a_confirmed_schema": 14,
+      "candidate_wins": 14,
+      "baseline_wins": 0,
+      "divergent_comparable_cases": 14,
+      "candidate_win_fraction": 1.0,
+      "candidate_wins_attributed_to_refinement_introduced_schema": 14,
+      "candidate_only_correct_where_baseline_silent": 0,
+      "candidate_only_correct_attributed_to_refinement_introduced_schema": 0,
+      "behavioral_novelty": "DEMONSTRATED",
+      "incremental_value_class": "VALIDATED_INCREMENTAL_VALUE_CORRECTIVE",
+      "interpretation": "candidate_wins counts held-out transitions where the candidate model's applicable determinate schemas were confirmed against the rendered after-state and the baseline model's were contradicted on the same transition; the two models therefore did not predict the same thing there. Structural schema difference alone is never counted.",
+      "candidate_determinate_schemas": 3,
+      "baseline_determinate_schemas": 7,
+      "candidate_outcome_counts": {
+       "INAPPLICABLE": 31,
+       "EXACT": 34,
+       "PREDICTED_WITH_UNOBSERVED_EXTRAS": 1
+      }
+     },
+     "validated_decision_ids": [
+      "ref-080835c578e1"
+     ],
+     "predictive_counterexamples_file": "runs/v2_refinement/observatory_loop_001/predictive_counterexamples_v2.jsonl",
+     "classification": "VALIDATED",
+     "primitive_cost": {
+      "total_primitives": 885,
+      "broad_behavior_generating_primitives": 371,
+      "view_survey_or_navigation_primitives": 439,
+      "reload_probe_primitives": 69,
+      "reset_primitives": 6,
+      "automatic_probe_trigger_actions": 57,
+      "counterexample_targeted_probe_trigger_actions": 0,
+      "diagnostic_overhead_primitives": 508,
+      "diagnostic_overhead_rate": 0.574
+     }
+    },
+    {
+     "test_run": "runs/v2_falsification/observatory_seed12",
+     "test_trace_sha256": "6194bf95ceb6eac8c59aca228855a680bc26a480b1e9ef6c840f6336773787c7",
+     "independent_of_selection_trace": true,
+     "independence": {
+      "independent": true,
+      "source_trace_sha256": "4590d2ac701e41bd58d4b02f42509d5d14a2a1260bf7459e6f3d7e29354ee248",
+      "test_trace_sha256": "6194bf95ceb6eac8c59aca228855a680bc26a480b1e9ef6c840f6336773787c7",
+      "shared_step_prefix": 0,
+      "test_step_triples_present_in_source": 0.015,
+      "test_observation_signatures_present_in_source": 0.008,
+      "source_reset_seeds": [
+       "0",
+       "1",
+       "2",
+       "3",
+       "4",
+       "5",
+       "51"
+      ],
+      "test_reset_seeds": [
+       "1200",
+       "1201",
+       "1202",
+       "1203",
+       "1204",
+       "1205"
+      ]
+     },
+     "status": "VALIDATED",
+     "reason": "a refinement-introduced schema recurred exactly on an object binding or affected object absent from the source evidence, under a unique type mapping, with no contradiction and no unexplained visible effects",
+     "refinement_introduced_predictions": 3,
+     "predictions_with_an_applicable_held_out_occurrence": 3,
+     "outcome_counts_over_prediction_x_occurrence": {
+      "EXACT": 25,
+      "INAPPLICABLE": 26,
+      "NOT_COMPARABLE": 2045,
+      "UNOBSERVED_OUTCOME": 1
+     },
+     "exact_recurrences": 25,
+     "contradictions": 0,
+     "not_comparable": 2045,
+     "inapplicable": 26,
+     "novel_binding_matches": 12,
+     "object_level_novel_matches_under_a_unique_mapping": 12,
+     "novel_bindings": [
+      "{\"?o0\": [3, \"Ttst0:First|Ttst1:P8\"]}",
+      "{\"?o0\": [3, \"Ttst0:Mid|Ttst1:N6\"]}"
+     ],
+     "view_domain_leaks": 0,
+     "baseline_control": {
+      "predictions": 7,
+      "underdetermined": 3,
+      "outcome_counts": {
+       "EXACT": 27,
+       "INAPPLICABLE": 28,
+       "PREDICTED_WITH_VISIBLE_EXTRAS": 1,
+       "CONTRADICTED": 15
+      }
+     },
+     "differential": {
+      "counts": {
+       "CANDIDATE_CORRECT_BASELINE_WRONG": 10,
+       "CANDIDATE_WRONG_BASELINE_CORRECT": 0,
+       "BOTH_CORRECT": 0,
+       "BOTH_WRONG": 0,
+       "SAME_PREDICTION": 15,
+       "NOT_COMPARABLE": 8
+      },
+      "not_comparable_detail": {
+       "BASELINE_ONLY_PREDICTS_WRONG": 5,
+       "BASELINE_ONLY_PREDICTS_CORRECT": 3
+      },
+      "held_out_steps_with_a_determinate_prediction": 33,
+      "steps_where_the_silent_model_never_segmented_an_occurrence": 0,
+      "occurrence_pairing": {
+       "candidate_occurrences": 699,
+       "baseline_occurrences": 699,
+       "paired": 699,
+       "candidate_only": 0,
+       "baseline_only": 0
+      },
+      "candidate": {
+       "steps_determinate": 25,
+       "steps_correct": 25,
+       "steps_wrong": 0,
+       "steps_silent": 8
+      },
+      "baseline": {
+       "steps_determinate": 33,
+       "steps_correct": 18,
+       "steps_wrong": 15,
+       "steps_silent": 0
+      },
+      "candidate_wins_where_baseline_also_had_a_confirmed_schema": 10,
+      "candidate_wins": 10,
+      "baseline_wins": 0,
+      "divergent_comparable_cases": 10,
+      "candidate_win_fraction": 1.0,
+      "candidate_wins_attributed_to_refinement_introduced_schema": 10,
+      "candidate_only_correct_where_baseline_silent": 0,
+      "candidate_only_correct_attributed_to_refinement_introduced_schema": 0,
+      "behavioral_novelty": "DEMONSTRATED",
+      "incremental_value_class": "VALIDATED_INCREMENTAL_VALUE_CORRECTIVE",
+      "interpretation": "candidate_wins counts held-out transitions where the candidate model's applicable determinate schemas were confirmed against the rendered after-state and the baseline model's were contradicted on the same transition; the two models therefore did not predict the same thing there. Structural schema difference alone is never counted.",
+      "candidate_determinate_schemas": 3,
+      "baseline_determinate_schemas": 7,
+      "candidate_outcome_counts": {
+       "EXACT": 25,
+       "INAPPLICABLE": 26,
+       "UNOBSERVED_OUTCOME": 1
+      }
+     },
+     "validated_decision_ids": [
+      "ref-080835c578e1"
+     ],
+     "predictive_counterexamples_file": "runs/v2_refinement/observatory_loop_001/predictive_counterexamples_v2.jsonl",
+     "classification": "VALIDATED",
+     "primitive_cost": {
+      "total_primitives": 841,
+      "broad_behavior_generating_primitives": 361,
+      "view_survey_or_navigation_primitives": 406,
+      "reload_probe_primitives": 68,
+      "reset_primitives": 6,
+      "automatic_probe_trigger_actions": 58,
+      "counterexample_targeted_probe_trigger_actions": 0,
+      "diagnostic_overhead_primitives": 474,
+      "diagnostic_overhead_rate": 0.564
+     }
+    },
+    {
+     "test_run": "runs/v2_falsification/observatory_seed13",
+     "test_trace_sha256": "1d033dc10a3c5b122bb66710116e4a233d271f21562e1cbe934154b6fdc77ff8",
+     "independent_of_selection_trace": true,
+     "independence": {
+      "independent": true,
+      "source_trace_sha256": "4590d2ac701e41bd58d4b02f42509d5d14a2a1260bf7459e6f3d7e29354ee248",
+      "test_trace_sha256": "1d033dc10a3c5b122bb66710116e4a233d271f21562e1cbe934154b6fdc77ff8",
+      "shared_step_prefix": 0,
+      "test_step_triples_present_in_source": 0.0,
+      "test_observation_signatures_present_in_source": 0.011,
+      "source_reset_seeds": [
+       "0",
+       "1",
+       "2",
+       "3",
+       "4",
+       "5",
+       "51"
+      ],
+      "test_reset_seeds": [
+       "1300",
+       "1301",
+       "1302",
+       "1303",
+       "1304",
+       "1305"
+      ]
+     },
+     "status": "VALIDATED",
+     "reason": "a refinement-introduced schema recurred exactly on an object binding or affected object absent from the source evidence, under a unique type mapping, with no contradiction and no unexplained visible effects",
+     "refinement_introduced_predictions": 3,
+     "predictions_with_an_applicable_held_out_occurrence": 3,
+     "outcome_counts_over_prediction_x_occurrence": {
+      "EXACT": 29,
+      "INAPPLICABLE": 28,
+      "NOT_COMPARABLE": 2205
+     },
+     "exact_recurrences": 29,
+     "contradictions": 0,
+     "not_comparable": 2205,
+     "inapplicable": 28,
+     "novel_binding_matches": 8,
+     "object_level_novel_matches_under_a_unique_mapping": 8,
+     "novel_bindings": [
+      "{\"?o0\": [3, \"Ttst0:Mid|Ttst1:N6\"]}"
+     ],
+     "view_domain_leaks": 0,
+     "baseline_control": {
+      "predictions": 7,
+      "underdetermined": 3,
+      "outcome_counts": {
+       "INAPPLICABLE": 30,
+       "EXACT": 31,
+       "CONTRADICTED": 17
+      }
+     },
+     "differential": {
+      "counts": {
+       "CANDIDATE_CORRECT_BASELINE_WRONG": 12,
+       "CANDIDATE_WRONG_BASELINE_CORRECT": 0,
+       "BOTH_CORRECT": 0,
+       "BOTH_WRONG": 0,
+       "SAME_PREDICTION": 17,
+       "NOT_COMPARABLE": 7
+      },
+      "not_comparable_detail": {
+       "BASELINE_ONLY_PREDICTS_WRONG": 5,
+       "BASELINE_ONLY_PREDICTS_CORRECT": 2
+      },
+      "held_out_steps_with_a_determinate_prediction": 36,
+      "steps_where_the_silent_model_never_segmented_an_occurrence": 0,
+      "occurrence_pairing": {
+       "candidate_occurrences": 754,
+       "baseline_occurrences": 754,
+       "paired": 754,
+       "candidate_only": 0,
+       "baseline_only": 0
+      },
+      "candidate": {
+       "steps_determinate": 29,
+       "steps_correct": 29,
+       "steps_wrong": 0,
+       "steps_silent": 7
+      },
+      "baseline": {
+       "steps_determinate": 36,
+       "steps_correct": 19,
+       "steps_wrong": 17,
+       "steps_silent": 0
+      },
+      "candidate_wins_where_baseline_also_had_a_confirmed_schema": 12,
+      "candidate_wins": 12,
+      "baseline_wins": 0,
+      "divergent_comparable_cases": 12,
+      "candidate_win_fraction": 1.0,
+      "candidate_wins_attributed_to_refinement_introduced_schema": 12,
+      "candidate_only_correct_where_baseline_silent": 0,
+      "candidate_only_correct_attributed_to_refinement_introduced_schema": 0,
+      "behavioral_novelty": "DEMONSTRATED",
+      "incremental_value_class": "VALIDATED_INCREMENTAL_VALUE_CORRECTIVE",
+      "interpretation": "candidate_wins counts held-out transitions where the candidate model's applicable determinate schemas were confirmed against the rendered after-state and the baseline model's were contradicted on the same transition; the two models therefore did not predict the same thing there. Structural schema difference alone is never counted.",
+      "candidate_determinate_schemas": 3,
+      "baseline_determinate_schemas": 7,
+      "candidate_outcome_counts": {
+       "INAPPLICABLE": 28,
+       "EXACT": 29
+      }
+     },
+     "validated_decision_ids": [
+      "ref-080835c578e1"
+     ],
+     "predictive_counterexamples_file": "runs/v2_refinement/observatory_loop_001/predictive_counterexamples_v2.jsonl",
+     "classification": "VALIDATED",
+     "primitive_cost": {
+      "total_primitives": 885,
+      "broad_behavior_generating_primitives": 358,
+      "view_survey_or_navigation_primitives": 454,
+      "reload_probe_primitives": 67,
+      "reset_primitives": 6,
+      "automatic_probe_trigger_actions": 57,
+      "counterexample_targeted_probe_trigger_actions": 0,
+      "diagnostic_overhead_primitives": 521,
+      "diagnostic_overhead_rate": 0.589
+     }
+    }
+   ],
+   "independent_traces_tested": 3,
+   "mispredicted_traces": 0,
+   "validated_traces": 3,
+   "inconclusive_traces": 0,
+   "candidate_wins_total": 36,
+   "baseline_wins_total": 0
+  },
+  "datacenter_context_loop_004": {
+   "source_run": "runs/v2_refinement/datacenter_context_loop_004",
+   "decision_statuses": {
+    "ref-2e782cb7889a": "PROVISIONAL",
+    "ref-e89963ebd151": "PROVISIONAL"
+   },
+   "canonical_decision_ids": [],
+   "held_out_traces": [
+    {
+     "test_run": "runs/v2_validation/datacenter_context_holdout_002",
+     "test_trace_sha256": "7c65bd00d9c1b05e80a193e239db6ad737e140d567881b070f788f6c246c87f4",
+     "independent_of_selection_trace": true,
+     "independence": {
+      "independent": true,
+      "source_trace_sha256": "a6b7796c781bbff953f3c2a36d9c450ef69eb48893b0dbe3818efd130aaf237c",
+      "test_trace_sha256": "7c65bd00d9c1b05e80a193e239db6ad737e140d567881b070f788f6c246c87f4",
+      "shared_step_prefix": 0,
+      "test_step_triples_present_in_source": 0.0,
+      "test_observation_signatures_present_in_source": 0.111,
+      "source_reset_seeds": [
+       "0",
+       "1",
+       "2",
+       "3",
+       "4",
+       "41",
+       "42",
+       "43",
+       "44",
+       "45",
+       "46",
+       "47",
+       "48",
+       "5"
+      ],
+      "test_reset_seeds": [
+       "11"
+      ]
+     },
+     "status": "INCONCLUSIVE",
+     "reason": "the held-out trace did not exercise a testable refinement-introduced schema",
+     "refinement_introduced_predictions": 0,
+     "predictions_with_an_applicable_held_out_occurrence": 0,
+     "outcome_counts_over_prediction_x_occurrence": {},
+     "exact_recurrences": 0,
+     "contradictions": 0,
+     "not_comparable": 0,
+     "inapplicable": 0,
+     "novel_binding_matches": 0,
+     "object_level_novel_matches_under_a_unique_mapping": 0,
+     "novel_bindings": [],
+     "view_domain_leaks": 0,
+     "baseline_control": {
+      "predictions": 0,
+      "underdetermined": 0,
+      "outcome_counts": {}
+     },
+     "differential": {
+      "counts": {
+       "CANDIDATE_CORRECT_BASELINE_WRONG": 0,
+       "CANDIDATE_WRONG_BASELINE_CORRECT": 0,
+       "BOTH_CORRECT": 0,
+       "BOTH_WRONG": 0,
+       "SAME_PREDICTION": 0,
+       "NOT_COMPARABLE": 0
+      },
+      "not_comparable_detail": {},
+      "held_out_steps_with_a_determinate_prediction": 0,
+      "steps_where_the_silent_model_never_segmented_an_occurrence": 0,
+      "occurrence_pairing": {
+       "candidate_occurrences": 8,
+       "baseline_occurrences": 8,
+       "paired": 8,
+       "candidate_only": 0,
+       "baseline_only": 0
+      },
+      "candidate": {
+       "steps_determinate": 0,
+       "steps_correct": 0,
+       "steps_wrong": 0,
+       "steps_silent": 0
+      },
+      "baseline": {
+       "steps_determinate": 0,
+       "steps_correct": 0,
+       "steps_wrong": 0,
+       "steps_silent": 0
+      },
+      "candidate_wins_where_baseline_also_had_a_confirmed_schema": 0,
+      "candidate_wins": 0,
+      "baseline_wins": 0,
+      "divergent_comparable_cases": 0,
+      "candidate_win_fraction": null,
+      "candidate_wins_attributed_to_refinement_introduced_schema": 0,
+      "candidate_only_correct_where_baseline_silent": 0,
+      "candidate_only_correct_attributed_to_refinement_introduced_schema": 0,
+      "behavioral_novelty": "NOT_DEMONSTRATED_NO_DIVERGENT_COMPARABLE_CASE",
+      "incremental_value_class": "NO_PREDICTION_MADE_BY_EITHER_MODEL",
+      "interpretation": "candidate_wins counts held-out transitions where the candidate model's applicable determinate schemas were confirmed against the rendered after-state and the baseline model's were contradicted on the same transition; the two models therefore did not predict the same thing there. Structural schema difference alone is never counted.",
+      "candidate_determinate_schemas": 0,
+      "baseline_determinate_schemas": 0,
+      "candidate_outcome_counts": {}
+     },
+     "validated_decision_ids": [],
+     "predictive_counterexamples_file": "runs/v2_refinement/datacenter_context_loop_004/predictive_counterexamples_v2.jsonl",
+     "classification": "INCONCLUSIVE_FOR_VALIDATION",
+     "classification_why": "the held-out trace exercised no refinement-introduced schema with a determinate outcome",
+     "primitive_cost": {
+      "total_primitives": 11,
+      "broad_behavior_generating_primitives": 5,
+      "view_survey_or_navigation_primitives": 3,
+      "reload_probe_primitives": 1,
+      "reset_primitives": 2,
+      "automatic_probe_trigger_actions": 0,
+      "counterexample_targeted_probe_trigger_actions": 0,
+      "diagnostic_overhead_primitives": 4,
+      "diagnostic_overhead_rate": 0.364
+     }
+    },
+    {
+     "test_run": "runs/v2_stability/datacenter_seed11",
+     "test_trace_sha256": "7d77ac2a832d8ad19fb6f15f6c3b8fc2395d15e27ff4efa87e8ec3c9eacbdf1e",
+     "independent_of_selection_trace": true,
+     "independence": {
+      "independent": true,
+      "source_trace_sha256": "a6b7796c781bbff953f3c2a36d9c450ef69eb48893b0dbe3818efd130aaf237c",
+      "test_trace_sha256": "7d77ac2a832d8ad19fb6f15f6c3b8fc2395d15e27ff4efa87e8ec3c9eacbdf1e",
+      "shared_step_prefix": 0,
+      "test_step_triples_present_in_source": 0.0,
+      "test_observation_signatures_present_in_source": 0.0,
+      "source_reset_seeds": [
+       "0",
+       "1",
+       "2",
+       "3",
+       "4",
+       "41",
+       "42",
+       "43",
+       "44",
+       "45",
+       "46",
+       "47",
+       "48",
+       "5"
+      ],
+      "test_reset_seeds": [
+       "1100",
+       "1101",
+       "1102",
+       "1103",
+       "1104",
+       "1105"
+      ]
+     },
+     "status": "INCONCLUSIVE",
+     "reason": "the held-out trace did not exercise a testable refinement-introduced schema",
+     "refinement_introduced_predictions": 0,
+     "predictions_with_an_applicable_held_out_occurrence": 0,
+     "outcome_counts_over_prediction_x_occurrence": {},
+     "exact_recurrences": 0,
+     "contradictions": 0,
+     "not_comparable": 0,
+     "inapplicable": 0,
+     "novel_binding_matches": 0,
+     "object_level_novel_matches_under_a_unique_mapping": 0,
+     "novel_bindings": [],
+     "view_domain_leaks": 0,
+     "baseline_control": {
+      "predictions": 0,
+      "underdetermined": 0,
+      "outcome_counts": {}
+     },
+     "differential": {
+      "counts": {
+       "CANDIDATE_CORRECT_BASELINE_WRONG": 0,
+       "CANDIDATE_WRONG_BASELINE_CORRECT": 0,
+       "BOTH_CORRECT": 0,
+       "BOTH_WRONG": 0,
+       "SAME_PREDICTION": 0,
+       "NOT_COMPARABLE": 0
+      },
+      "not_comparable_detail": {},
+      "held_out_steps_with_a_determinate_prediction": 0,
+      "steps_where_the_silent_model_never_segmented_an_occurrence": 0,
+      "occurrence_pairing": {
+       "candidate_occurrences": 1090,
+       "baseline_occurrences": 1090,
+       "paired": 1090,
+       "candidate_only": 0,
+       "baseline_only": 0
+      },
+      "candidate": {
+       "steps_determinate": 0,
+       "steps_correct": 0,
+       "steps_wrong": 0,
+       "steps_silent": 0
+      },
+      "baseline": {
+       "steps_determinate": 0,
+       "steps_correct": 0,
+       "steps_wrong": 0,
+       "steps_silent": 0
+      },
+      "candidate_wins_where_baseline_also_had_a_confirmed_schema": 0,
+      "candidate_wins": 0,
+      "baseline_wins": 0,
+      "divergent_comparable_cases": 0,
+      "candidate_win_fraction": null,
+      "candidate_wins_attributed_to_refinement_introduced_schema": 0,
+      "candidate_only_correct_where_baseline_silent": 0,
+      "candidate_only_correct_attributed_to_refinement_introduced_schema": 0,
+      "behavioral_novelty": "NOT_DEMONSTRATED_NO_DIVERGENT_COMPARABLE_CASE",
+      "incremental_value_class": "NO_PREDICTION_MADE_BY_EITHER_MODEL",
+      "interpretation": "candidate_wins counts held-out transitions where the candidate model's applicable determinate schemas were confirmed against the rendered after-state and the baseline model's were contradicted on the same transition; the two models therefore did not predict the same thing there. Structural schema difference alone is never counted.",
+      "candidate_determinate_schemas": 0,
+      "baseline_determinate_schemas": 0,
+      "candidate_outcome_counts": {}
+     },
+     "validated_decision_ids": [],
+     "predictive_counterexamples_file": "runs/v2_refinement/datacenter_context_loop_004/predictive_counterexamples_v2.jsonl",
+     "classification": "INCONCLUSIVE_FOR_VALIDATION",
+     "classification_why": "the held-out trace exercised no refinement-introduced schema with a determinate outcome",
+     "primitive_cost": {
+      "total_primitives": 1302,
+      "broad_behavior_generating_primitives": 374,
+      "view_survey_or_navigation_primitives": 725,
+      "reload_probe_primitives": 197,
+      "reset_primitives": 6,
+      "automatic_probe_trigger_actions": 184,
+      "counterexample_targeted_probe_trigger_actions": 0,
+      "diagnostic_overhead_primitives": 922,
+      "diagnostic_overhead_rate": 0.708
+     }
+    }
+   ],
+   "independent_traces_tested": 2,
+   "mispredicted_traces": 0,
+   "validated_traces": 0,
+   "inconclusive_traces": 2,
+   "candidate_wins_total": 0,
+   "baseline_wins_total": 0
+  },
+  "climbing_reopen_001": {
+   "source_run": "runs/v2_falsification/climbing_reopen_001",
+   "decision_statuses": {
+    "ref-a4fd4824b37a": "MISPREDICTED",
+    "ref-47e12ddb5822": "MISPREDICTED"
+   },
+   "canonical_decision_ids": [],
+   "held_out_traces": [
+    {
+     "test_run": "runs/v2_stability/climbing_seed11",
+     "test_trace_sha256": "e1255565ea4708475fbf719eae23ffc1006bc007ce48af3ef04c1e26293ecc54",
+     "independent_of_selection_trace": true,
+     "independence": {
+      "independent": true,
+      "source_trace_sha256": "bd5477efa7eb46e7ea0b4cd874f21386537b75ca75cc760542945b025c7575ee",
+      "test_trace_sha256": "e1255565ea4708475fbf719eae23ffc1006bc007ce48af3ef04c1e26293ecc54",
+      "shared_step_prefix": 0,
+      "test_step_triples_present_in_source": 0.0,
+      "test_observation_signatures_present_in_source": 0.003,
+      "source_reset_seeds": [
+       "0",
+       "1",
+       "2",
+       "3",
+       "31",
+       "38",
+       "4",
+       "5"
+      ],
+      "test_reset_seeds": [
+       "1100",
+       "1101",
+       "1102",
+       "1103",
+       "1104",
+       "1105"
+      ]
+     },
+     "status": "VALIDATED",
+     "reason": "a refinement-introduced schema recurred exactly on an object binding or affected object absent from the source evidence, under a unique type mapping, with no contradiction and no unexplained visible effects",
+     "refinement_introduced_predictions": 6,
+     "predictions_with_an_applicable_held_out_occurrence": 2,
+     "outcome_counts_over_prediction_x_occurrence": {
+      "EXACT": 16,
+      "NOT_COMPARABLE": 3650,
+      "PREDICTED_WITH_UNOBSERVED_EXTRAS": 2,
+      "UNOBSERVED_OUTCOME": 4
+     },
+     "exact_recurrences": 16,
+     "contradictions": 0,
+     "not_comparable": 3650,
+     "inapplicable": 0,
+     "novel_binding_matches": 4,
+     "object_level_novel_matches_under_a_unique_mapping": 4,
+     "novel_bindings": [
+      "{\"?o0\": [0, \"Cave\"], \"?s0\": \"pink\"}",
+      "{\"?o0\": [0, \"Cave\"], \"?s0\": \"white\"}",
+      "{\"?o0\": [0, \"Island\"], \"?s0\": \"black\"}",
+      "{\"?o0\": [0, \"Island\"], \"?s0\": \"yellow\"}"
+     ],
+     "view_domain_leaks": 0,
+     "baseline_control": {
+      "predictions": 0,
+      "underdetermined": 6,
+      "outcome_counts": {}
+     },
+     "differential": {
+      "counts": {
+       "CANDIDATE_CORRECT_BASELINE_WRONG": 0,
+       "CANDIDATE_WRONG_BASELINE_CORRECT": 0,
+       "BOTH_CORRECT": 0,
+       "BOTH_WRONG": 0,
+       "SAME_PREDICTION": 0,
+       "NOT_COMPARABLE": 18
+      },
+      "not_comparable_detail": {
+       "CANDIDATE_ONLY_PREDICTS_CORRECT": 15,
+       "CANDIDATE_ONLY_PREDICTS_CORRECT_OTHER_MODEL_HAS_NO_MATCHING_OCCURRENCE": 3
+      },
+      "held_out_steps_with_a_determinate_prediction": 18,
+      "steps_where_the_silent_model_never_segmented_an_occurrence": 3,
+      "occurrence_pairing": {
+       "candidate_occurrences": 612,
+       "baseline_occurrences": 609,
+       "paired": 608,
+       "candidate_only": 4,
+       "baseline_only": 1
+      },
+      "candidate": {
+       "steps_determinate": 18,
+       "steps_correct": 18,
+       "steps_wrong": 0,
+       "steps_silent": 0
+      },
+      "baseline": {
+       "steps_determinate": 0,
+       "steps_correct": 0,
+       "steps_wrong": 0,
+       "steps_silent": 18
+      },
+      "candidate_wins_where_baseline_also_had_a_confirmed_schema": 0,
+      "candidate_wins": 0,
+      "baseline_wins": 0,
+      "divergent_comparable_cases": 0,
+      "candidate_win_fraction": null,
+      "candidate_wins_attributed_to_refinement_introduced_schema": 0,
+      "candidate_only_correct_where_baseline_silent": 15,
+      "candidate_only_correct_attributed_to_refinement_introduced_schema": 15,
+      "behavioral_novelty": "NOT_DEMONSTRATED_NO_DIVERGENT_COMPARABLE_CASE",
+      "incremental_value_class": "VALIDATED_INCREMENTAL_VALUE_COVERAGE_ONLY",
+      "interpretation": "candidate_wins counts held-out transitions where the candidate model's applicable determinate schemas were confirmed against the rendered after-state and the baseline model's were contradicted on the same transition; the two models therefore did not predict the same thing there. Structural schema difference alone is never counted.",
+      "candidate_determinate_schemas": 6,
+      "baseline_determinate_schemas": 0,
+      "candidate_outcome_counts": {
+       "EXACT": 16,
+       "UNOBSERVED_OUTCOME": 4,
+       "PREDICTED_WITH_UNOBSERVED_EXTRAS": 2
+      }
+     },
+     "validated_decision_ids": [
+      "ref-a4fd4824b37a"
+     ],
+     "predictive_counterexamples_file": "runs/v2_falsification/climbing_reopen_001/predictive_counterexamples_v2.jsonl",
+     "classification": "VALIDATED",
+     "primitive_cost": {
+      "total_primitives": 747,
+      "broad_behavior_generating_primitives": 368,
+      "view_survey_or_navigation_primitives": 299,
+      "reload_probe_primitives": 74,
+      "reset_primitives": 6,
+      "automatic_probe_trigger_actions": 60,
+      "counterexample_targeted_probe_trigger_actions": 0,
+      "diagnostic_overhead_primitives": 373,
+      "diagnostic_overhead_rate": 0.499
+     }
+    },
+    {
+     "test_run": "runs/v2_falsification/climbing_seed12",
+     "test_trace_sha256": "2b318cbc14bfb476883baca709578ffec53c8e1d46bca54458a961ad45ae2aef",
+     "independent_of_selection_trace": true,
+     "independence": {
+      "independent": true,
+      "source_trace_sha256": "bd5477efa7eb46e7ea0b4cd874f21386537b75ca75cc760542945b025c7575ee",
+      "test_trace_sha256": "2b318cbc14bfb476883baca709578ffec53c8e1d46bca54458a961ad45ae2aef",
+      "shared_step_prefix": 0,
+      "test_step_triples_present_in_source": 0.0,
+      "test_observation_signatures_present_in_source": 0.0,
+      "source_reset_seeds": [
+       "0",
+       "1",
+       "2",
+       "3",
+       "31",
+       "38",
+       "4",
+       "5"
+      ],
+      "test_reset_seeds": [
+       "1200",
+       "1201",
+       "1202",
+       "1203",
+       "1204",
+       "1205"
+      ]
+     },
+     "status": "MISPREDICTED",
+     "reason": "an applicable, rendered held-out occurrence contradicted a predicted effect literal",
+     "refinement_introduced_predictions": 6,
+     "predictions_with_an_applicable_held_out_occurrence": 2,
+     "outcome_counts_over_prediction_x_occurrence": {
+      "CONTRADICTED": 8,
+      "EXACT": 20,
+      "NOT_COMPARABLE": 3215,
+      "PREDICTED_WITH_UNOBSERVED_EXTRAS": 1,
+      "UNOBSERVED_OUTCOME": 2
+     },
+     "exact_recurrences": 20,
+     "contradictions": 8,
+     "not_comparable": 3215,
+     "inapplicable": 0,
+     "novel_binding_matches": 4,
+     "object_level_novel_matches_under_a_unique_mapping": 4,
+     "novel_bindings": [
+      "{\"?o0\": [0, \"Cave\"], \"?s0\": \"white\"}",
+      "{\"?o0\": [0, \"Island\"], \"?s0\": \"yellow\"}",
+      "{\"?o0\": [0, \"Moon\"], \"?s0\": \"black\"}",
+      "{\"?o0\": [0, \"Moon\"], \"?s0\": \"yellow\"}"
+     ],
+     "view_domain_leaks": 0,
+     "baseline_control": {
+      "predictions": 0,
+      "underdetermined": 6,
+      "outcome_counts": {}
+     },
+     "differential": {
+      "counts": {
+       "CANDIDATE_CORRECT_BASELINE_WRONG": 0,
+       "CANDIDATE_WRONG_BASELINE_CORRECT": 0,
+       "BOTH_CORRECT": 0,
+       "BOTH_WRONG": 0,
+       "SAME_PREDICTION": 0,
+       "NOT_COMPARABLE": 29
+      },
+      "not_comparable_detail": {
+       "CANDIDATE_ONLY_PREDICTS_CORRECT": 21,
+       "CANDIDATE_ONLY_PREDICTS_WRONG": 8
+      },
+      "held_out_steps_with_a_determinate_prediction": 29,
+      "steps_where_the_silent_model_never_segmented_an_occurrence": 0,
+      "occurrence_pairing": {
+       "candidate_occurrences": 541,
+       "baseline_occurrences": 542,
+       "paired": 540,
+       "candidate_only": 1,
+       "baseline_only": 2
+      },
+      "candidate": {
+       "steps_determinate": 29,
+       "steps_correct": 21,
+       "steps_wrong": 8,
+       "steps_silent": 0
+      },
+      "baseline": {
+       "steps_determinate": 0,
+       "steps_correct": 0,
+       "steps_wrong": 0,
+       "steps_silent": 29
+      },
+      "candidate_wins_where_baseline_also_had_a_confirmed_schema": 0,
+      "candidate_wins": 0,
+      "baseline_wins": 0,
+      "divergent_comparable_cases": 0,
+      "candidate_win_fraction": null,
+      "candidate_wins_attributed_to_refinement_introduced_schema": 0,
+      "candidate_only_correct_where_baseline_silent": 21,
+      "candidate_only_correct_attributed_to_refinement_introduced_schema": 21,
+      "behavioral_novelty": "NOT_DEMONSTRATED_NO_DIVERGENT_COMPARABLE_CASE",
+      "incremental_value_class": "VALIDATED_INCREMENTAL_VALUE_COVERAGE_ONLY",
+      "interpretation": "candidate_wins counts held-out transitions where the candidate model's applicable determinate schemas were confirmed against the rendered after-state and the baseline model's were contradicted on the same transition; the two models therefore did not predict the same thing there. Structural schema difference alone is never counted.",
+      "candidate_determinate_schemas": 6,
+      "baseline_determinate_schemas": 0,
+      "candidate_outcome_counts": {
+       "EXACT": 20,
+       "UNOBSERVED_OUTCOME": 2,
+       "PREDICTED_WITH_UNOBSERVED_EXTRAS": 1,
+       "CONTRADICTED": 8
+      }
+     },
+     "validated_decision_ids": [
+      "ref-a4fd4824b37a"
+     ],
+     "predictive_counterexamples_file": "runs/v2_falsification/climbing_reopen_001/predictive_counterexamples_v2.jsonl",
+     "classification": "MISPREDICTED",
+     "primitive_cost": {
+      "total_primitives": 751,
+      "broad_behavior_generating_primitives": 369,
+      "view_survey_or_navigation_primitives": 300,
+      "reload_probe_primitives": 76,
+      "reset_primitives": 6,
+      "automatic_probe_trigger_actions": 62,
+      "counterexample_targeted_probe_trigger_actions": 0,
+      "diagnostic_overhead_primitives": 376,
+      "diagnostic_overhead_rate": 0.501
+     }
+    },
+    {
+     "test_run": "runs/v2_falsification/climbing_seed13",
+     "test_trace_sha256": "2112a1a7862c21f971635135261a18fd60008310de927200089b031efc39e68a",
+     "independent_of_selection_trace": true,
+     "independence": {
+      "independent": true,
+      "source_trace_sha256": "bd5477efa7eb46e7ea0b4cd874f21386537b75ca75cc760542945b025c7575ee",
+      "test_trace_sha256": "2112a1a7862c21f971635135261a18fd60008310de927200089b031efc39e68a",
+      "shared_step_prefix": 0,
+      "test_step_triples_present_in_source": 0.0,
+      "test_observation_signatures_present_in_source": 0.004,
+      "source_reset_seeds": [
+       "0",
+       "1",
+       "2",
+       "3",
+       "31",
+       "38",
+       "4",
+       "5"
+      ],
+      "test_reset_seeds": [
+       "1300",
+       "1301",
+       "1302",
+       "1303",
+       "1304",
+       "1305"
+      ]
+     },
+     "status": "VALIDATED",
+     "reason": "a refinement-introduced schema recurred exactly on an object binding or affected object absent from the source evidence, under a unique type mapping, with no contradiction and no unexplained visible effects",
+     "refinement_introduced_predictions": 6,
+     "predictions_with_an_applicable_held_out_occurrence": 2,
+     "outcome_counts_over_prediction_x_occurrence": {
+      "EXACT": 11,
+      "NOT_COMPARABLE": 3678,
+      "PREDICTED_WITH_UNOBSERVED_EXTRAS": 1,
+      "UNOBSERVED_OUTCOME": 6
+     },
+     "exact_recurrences": 11,
+     "contradictions": 0,
+     "not_comparable": 3678,
+     "inapplicable": 0,
+     "novel_binding_matches": 4,
+     "object_level_novel_matches_under_a_unique_mapping": 4,
+     "novel_bindings": [
+      "{\"?o0\": [0, \"Island\"], \"?s0\": \"black\"}",
+      "{\"?o0\": [0, \"Island\"], \"?s0\": \"pink\"}",
+      "{\"?o0\": [0, \"Island\"], \"?s0\": \"yellow\"}",
+      "{\"?o0\": [0, \"Moon\"], \"?s0\": \"black\"}"
+     ],
+     "view_domain_leaks": 0,
+     "baseline_control": {
+      "predictions": 0,
+      "underdetermined": 6,
+      "outcome_counts": {}
+     },
+     "differential": {
+      "counts": {
+       "CANDIDATE_CORRECT_BASELINE_WRONG": 0,
+       "CANDIDATE_WRONG_BASELINE_CORRECT": 0,
+       "BOTH_CORRECT": 0,
+       "BOTH_WRONG": 0,
+       "SAME_PREDICTION": 0,
+       "NOT_COMPARABLE": 12
+      },
+      "not_comparable_detail": {
+       "CANDIDATE_ONLY_PREDICTS_CORRECT": 12
+      },
+      "held_out_steps_with_a_determinate_prediction": 12,
+      "steps_where_the_silent_model_never_segmented_an_occurrence": 0,
+      "occurrence_pairing": {
+       "candidate_occurrences": 616,
+       "baseline_occurrences": 616,
+       "paired": 616,
+       "candidate_only": 0,
+       "baseline_only": 0
+      },
+      "candidate": {
+       "steps_determinate": 12,
+       "steps_correct": 12,
+       "steps_wrong": 0,
+       "steps_silent": 0
+      },
+      "baseline": {
+       "steps_determinate": 0,
+       "steps_correct": 0,
+       "steps_wrong": 0,
+       "steps_silent": 12
+      },
+      "candidate_wins_where_baseline_also_had_a_confirmed_schema": 0,
+      "candidate_wins": 0,
+      "baseline_wins": 0,
+      "divergent_comparable_cases": 0,
+      "candidate_win_fraction": null,
+      "candidate_wins_attributed_to_refinement_introduced_schema": 0,
+      "candidate_only_correct_where_baseline_silent": 12,
+      "candidate_only_correct_attributed_to_refinement_introduced_schema": 12,
+      "behavioral_novelty": "NOT_DEMONSTRATED_NO_DIVERGENT_COMPARABLE_CASE",
+      "incremental_value_class": "VALIDATED_INCREMENTAL_VALUE_COVERAGE_ONLY",
+      "interpretation": "candidate_wins counts held-out transitions where the candidate model's applicable determinate schemas were confirmed against the rendered after-state and the baseline model's were contradicted on the same transition; the two models therefore did not predict the same thing there. Structural schema difference alone is never counted.",
+      "candidate_determinate_schemas": 6,
+      "baseline_determinate_schemas": 0,
+      "candidate_outcome_counts": {
+       "UNOBSERVED_OUTCOME": 6,
+       "EXACT": 11,
+       "PREDICTED_WITH_UNOBSERVED_EXTRAS": 1
+      }
+     },
+     "validated_decision_ids": [
+      "ref-a4fd4824b37a"
+     ],
+     "predictive_counterexamples_file": "runs/v2_falsification/climbing_reopen_001/predictive_counterexamples_v2.jsonl",
+     "classification": "VALIDATED",
+     "primitive_cost": {
+      "total_primitives": 741,
+      "broad_behavior_generating_primitives": 370,
+      "view_survey_or_navigation_primitives": 295,
+      "reload_probe_primitives": 70,
+      "reset_primitives": 6,
+      "automatic_probe_trigger_actions": 55,
+      "counterexample_targeted_probe_trigger_actions": 0,
+      "diagnostic_overhead_primitives": 365,
+      "diagnostic_overhead_rate": 0.493
+     }
+    },
+    {
+     "test_run": "runs/v2_stability/climbing_seed11",
+     "test_trace_sha256": "e1255565ea4708475fbf719eae23ffc1006bc007ce48af3ef04c1e26293ecc54",
+     "independent_of_selection_trace": true,
+     "independence": {
+      "independent": true,
+      "source_trace_sha256": "8faf38f35cab31fbdcef7f32566be9d29c777b3aac6ea3e0cb40d84f9d5a52fc",
+      "test_trace_sha256": "e1255565ea4708475fbf719eae23ffc1006bc007ce48af3ef04c1e26293ecc54",
+      "shared_step_prefix": 0,
+      "test_step_triples_present_in_source": 0.0,
+      "test_observation_signatures_present_in_source": 0.003,
+      "source_reset_seeds": [
+       "0",
+       "1",
+       "2",
+       "21",
+       "28",
+       "3",
+       "31",
+       "38",
+       "4",
+       "5"
+      ],
+      "test_reset_seeds": [
+       "1100",
+       "1101",
+       "1102",
+       "1103",
+       "1104",
+       "1105"
+      ]
+     },
+     "status": "VALIDATED",
+     "reason": "a refinement-introduced schema recurred exactly on an object binding or affected object absent from the source evidence, under a unique type mapping, with no contradiction and no unexplained visible effects",
+     "refinement_introduced_predictions": 5,
+     "predictions_with_an_applicable_held_out_occurrence": 1,
+     "outcome_counts_over_prediction_x_occurrence": {
+      "EXACT": 10,
+      "NOT_COMPARABLE": 3044,
+      "PREDICTED_WITH_UNOBSERVED_EXTRAS": 2,
+      "UNOBSERVED_OUTCOME": 4
+     },
+     "exact_recurrences": 10,
+     "contradictions": 0,
+     "not_comparable": 3044,
+     "inapplicable": 0,
+     "novel_binding_matches": 2,
+     "object_level_novel_matches_under_a_unique_mapping": 2,
+     "novel_bindings": [
+      "{\"?o0\": [0, \"Island\"], \"?s0\": \"black\"}",
+      "{\"?o0\": [0, \"Island\"], \"?s0\": \"yellow\"}"
+     ],
+     "view_domain_leaks": 0,
+     "baseline_control": {
+      "predictions": 0,
+      "underdetermined": 6,
+      "outcome_counts": {}
+     },
+     "differential": {
+      "counts": {
+       "CANDIDATE_CORRECT_BASELINE_WRONG": 0,
+       "CANDIDATE_WRONG_BASELINE_CORRECT": 0,
+       "BOTH_CORRECT": 0,
+       "BOTH_WRONG": 0,
+       "SAME_PREDICTION": 0,
+       "NOT_COMPARABLE": 12
+      },
+      "not_comparable_detail": {
+       "CANDIDATE_ONLY_PREDICTS_CORRECT": 12
+      },
+      "held_out_steps_with_a_determinate_prediction": 12,
+      "steps_where_the_silent_model_never_segmented_an_occurrence": 0,
+      "occurrence_pairing": {
+       "candidate_occurrences": 612,
+       "baseline_occurrences": 609,
+       "paired": 608,
+       "candidate_only": 4,
+       "baseline_only": 1
+      },
+      "candidate": {
+       "steps_determinate": 12,
+       "steps_correct": 12,
+       "steps_wrong": 0,
+       "steps_silent": 0
+      },
+      "baseline": {
+       "steps_determinate": 0,
+       "steps_correct": 0,
+       "steps_wrong": 0,
+       "steps_silent": 12
+      },
+      "candidate_wins_where_baseline_also_had_a_confirmed_schema": 0,
+      "candidate_wins": 0,
+      "baseline_wins": 0,
+      "divergent_comparable_cases": 0,
+      "candidate_win_fraction": null,
+      "candidate_wins_attributed_to_refinement_introduced_schema": 0,
+      "candidate_only_correct_where_baseline_silent": 12,
+      "candidate_only_correct_attributed_to_refinement_introduced_schema": 12,
+      "behavioral_novelty": "NOT_DEMONSTRATED_NO_DIVERGENT_COMPARABLE_CASE",
+      "incremental_value_class": "VALIDATED_INCREMENTAL_VALUE_COVERAGE_ONLY",
+      "interpretation": "candidate_wins counts held-out transitions where the candidate model's applicable determinate schemas were confirmed against the rendered after-state and the baseline model's were contradicted on the same transition; the two models therefore did not predict the same thing there. Structural schema difference alone is never counted.",
+      "candidate_determinate_schemas": 5,
+      "baseline_determinate_schemas": 0,
+      "candidate_outcome_counts": {
+       "EXACT": 10,
+       "UNOBSERVED_OUTCOME": 4,
+       "PREDICTED_WITH_UNOBSERVED_EXTRAS": 2
+      }
+     },
+     "validated_decision_ids": [
+      "ref-a4fd4824b37a"
+     ],
+     "predictive_counterexamples_file": "runs/v2_falsification/climbing_reopen_001/predictive_counterexamples_v2.jsonl",
+     "classification": "VALIDATED",
+     "primitive_cost": {
+      "total_primitives": 747,
+      "broad_behavior_generating_primitives": 368,
+      "view_survey_or_navigation_primitives": 299,
+      "reload_probe_primitives": 74,
+      "reset_primitives": 6,
+      "automatic_probe_trigger_actions": 60,
+      "counterexample_targeted_probe_trigger_actions": 0,
+      "diagnostic_overhead_primitives": 373,
+      "diagnostic_overhead_rate": 0.499
+     }
+    },
+    {
+     "test_run": "runs/v2_falsification/climbing_seed12",
+     "test_trace_sha256": "2b318cbc14bfb476883baca709578ffec53c8e1d46bca54458a961ad45ae2aef",
+     "independent_of_selection_trace": true,
+     "independence": {
+      "independent": true,
+      "source_trace_sha256": "8faf38f35cab31fbdcef7f32566be9d29c777b3aac6ea3e0cb40d84f9d5a52fc",
+      "test_trace_sha256": "2b318cbc14bfb476883baca709578ffec53c8e1d46bca54458a961ad45ae2aef",
+      "shared_step_prefix": 0,
+      "test_step_triples_present_in_source": 0.0,
+      "test_observation_signatures_present_in_source": 0.0,
+      "source_reset_seeds": [
+       "0",
+       "1",
+       "2",
+       "21",
+       "28",
+       "3",
+       "31",
+       "38",
+       "4",
+       "5"
+      ],
+      "test_reset_seeds": [
+       "1200",
+       "1201",
+       "1202",
+       "1203",
+       "1204",
+       "1205"
+      ]
+     },
+     "status": "MISPREDICTED",
+     "reason": "an applicable, rendered held-out occurrence contradicted a predicted effect literal",
+     "refinement_introduced_predictions": 5,
+     "predictions_with_an_applicable_held_out_occurrence": 1,
+     "outcome_counts_over_prediction_x_occurrence": {
+      "CONTRADICTED": 8,
+      "EXACT": 18,
+      "NOT_COMPARABLE": 2676,
+      "PREDICTED_WITH_UNOBSERVED_EXTRAS": 1,
+      "UNOBSERVED_OUTCOME": 2
+     },
+     "exact_recurrences": 18,
+     "contradictions": 8,
+     "not_comparable": 2676,
+     "inapplicable": 0,
+     "novel_binding_matches": 3,
+     "object_level_novel_matches_under_a_unique_mapping": 3,
+     "novel_bindings": [
+      "{\"?o0\": [0, \"Island\"], \"?s0\": \"yellow\"}",
+      "{\"?o0\": [0, \"Moon\"], \"?s0\": \"black\"}",
+      "{\"?o0\": [0, \"Moon\"], \"?s0\": \"yellow\"}"
+     ],
+     "view_domain_leaks": 0,
+     "baseline_control": {
+      "predictions": 0,
+      "underdetermined": 6,
+      "outcome_counts": {}
+     },
+     "differential": {
+      "counts": {
+       "CANDIDATE_CORRECT_BASELINE_WRONG": 0,
+       "CANDIDATE_WRONG_BASELINE_CORRECT": 0,
+       "BOTH_CORRECT": 0,
+       "BOTH_WRONG": 0,
+       "SAME_PREDICTION": 0,
+       "NOT_COMPARABLE": 27
+      },
+      "not_comparable_detail": {
+       "CANDIDATE_ONLY_PREDICTS_CORRECT": 19,
+       "CANDIDATE_ONLY_PREDICTS_WRONG": 8
+      },
+      "held_out_steps_with_a_determinate_prediction": 27,
+      "steps_where_the_silent_model_never_segmented_an_occurrence": 0,
+      "occurrence_pairing": {
+       "candidate_occurrences": 541,
+       "baseline_occurrences": 542,
+       "paired": 540,
+       "candidate_only": 1,
+       "baseline_only": 2
+      },
+      "candidate": {
+       "steps_determinate": 27,
+       "steps_correct": 19,
+       "steps_wrong": 8,
+       "steps_silent": 0
+      },
+      "baseline": {
+       "steps_determinate": 0,
+       "steps_correct": 0,
+       "steps_wrong": 0,
+       "steps_silent": 27
+      },
+      "candidate_wins_where_baseline_also_had_a_confirmed_schema": 0,
+      "candidate_wins": 0,
+      "baseline_wins": 0,
+      "divergent_comparable_cases": 0,
+      "candidate_win_fraction": null,
+      "candidate_wins_attributed_to_refinement_introduced_schema": 0,
+      "candidate_only_correct_where_baseline_silent": 19,
+      "candidate_only_correct_attributed_to_refinement_introduced_schema": 19,
+      "behavioral_novelty": "NOT_DEMONSTRATED_NO_DIVERGENT_COMPARABLE_CASE",
+      "incremental_value_class": "VALIDATED_INCREMENTAL_VALUE_COVERAGE_ONLY",
+      "interpretation": "candidate_wins counts held-out transitions where the candidate model's applicable determinate schemas were confirmed against the rendered after-state and the baseline model's were contradicted on the same transition; the two models therefore did not predict the same thing there. Structural schema difference alone is never counted.",
+      "candidate_determinate_schemas": 5,
+      "baseline_determinate_schemas": 0,
+      "candidate_outcome_counts": {
+       "EXACT": 18,
+       "UNOBSERVED_OUTCOME": 2,
+       "PREDICTED_WITH_UNOBSERVED_EXTRAS": 1,
+       "CONTRADICTED": 8
+      }
+     },
+     "validated_decision_ids": [
+      "ref-a4fd4824b37a"
+     ],
+     "predictive_counterexamples_file": "runs/v2_falsification/climbing_reopen_001/predictive_counterexamples_v2.jsonl",
+     "classification": "MISPREDICTED",
+     "primitive_cost": {
+      "total_primitives": 751,
+      "broad_behavior_generating_primitives": 369,
+      "view_survey_or_navigation_primitives": 300,
+      "reload_probe_primitives": 76,
+      "reset_primitives": 6,
+      "automatic_probe_trigger_actions": 62,
+      "counterexample_targeted_probe_trigger_actions": 0,
+      "diagnostic_overhead_primitives": 376,
+      "diagnostic_overhead_rate": 0.501
+     }
+    },
+    {
+     "test_run": "runs/v2_falsification/climbing_seed13",
+     "test_trace_sha256": "2112a1a7862c21f971635135261a18fd60008310de927200089b031efc39e68a",
+     "independent_of_selection_trace": true,
+     "independence": {
+      "independent": true,
+      "source_trace_sha256": "8faf38f35cab31fbdcef7f32566be9d29c777b3aac6ea3e0cb40d84f9d5a52fc",
+      "test_trace_sha256": "2112a1a7862c21f971635135261a18fd60008310de927200089b031efc39e68a",
+      "shared_step_prefix": 0,
+      "test_step_triples_present_in_source": 0.0,
+      "test_observation_signatures_present_in_source": 0.004,
+      "source_reset_seeds": [
+       "0",
+       "1",
+       "2",
+       "21",
+       "28",
+       "3",
+       "31",
+       "38",
+       "4",
+       "5"
+      ],
+      "test_reset_seeds": [
+       "1300",
+       "1301",
+       "1302",
+       "1303",
+       "1304",
+       "1305"
+      ]
+     },
+     "status": "VALIDATED",
+     "reason": "a refinement-introduced schema recurred exactly on an object binding or affected object absent from the source evidence, under a unique type mapping, with no contradiction and no unexplained visible effects",
+     "refinement_introduced_predictions": 5,
+     "predictions_with_an_applicable_held_out_occurrence": 1,
+     "outcome_counts_over_prediction_x_occurrence": {
+      "EXACT": 8,
+      "NOT_COMPARABLE": 3065,
+      "PREDICTED_WITH_UNOBSERVED_EXTRAS": 1,
+      "UNOBSERVED_OUTCOME": 6
+     },
+     "exact_recurrences": 8,
+     "contradictions": 0,
+     "not_comparable": 3065,
+     "inapplicable": 0,
+     "novel_binding_matches": 4,
+     "object_level_novel_matches_under_a_unique_mapping": 4,
+     "novel_bindings": [
+      "{\"?o0\": [0, \"Island\"], \"?s0\": \"black\"}",
+      "{\"?o0\": [0, \"Island\"], \"?s0\": \"pink\"}",
+      "{\"?o0\": [0, \"Island\"], \"?s0\": \"yellow\"}",
+      "{\"?o0\": [0, \"Moon\"], \"?s0\": \"black\"}"
+     ],
+     "view_domain_leaks": 0,
+     "baseline_control": {
+      "predictions": 0,
+      "underdetermined": 6,
+      "outcome_counts": {}
+     },
+     "differential": {
+      "counts": {
+       "CANDIDATE_CORRECT_BASELINE_WRONG": 0,
+       "CANDIDATE_WRONG_BASELINE_CORRECT": 0,
+       "BOTH_CORRECT": 0,
+       "BOTH_WRONG": 0,
+       "SAME_PREDICTION": 0,
+       "NOT_COMPARABLE": 9
+      },
+      "not_comparable_detail": {
+       "CANDIDATE_ONLY_PREDICTS_CORRECT": 9
+      },
+      "held_out_steps_with_a_determinate_prediction": 9,
+      "steps_where_the_silent_model_never_segmented_an_occurrence": 0,
+      "occurrence_pairing": {
+       "candidate_occurrences": 616,
+       "baseline_occurrences": 616,
+       "paired": 616,
+       "candidate_only": 0,
+       "baseline_only": 0
+      },
+      "candidate": {
+       "steps_determinate": 9,
+       "steps_correct": 9,
+       "steps_wrong": 0,
+       "steps_silent": 0
+      },
+      "baseline": {
+       "steps_determinate": 0,
+       "steps_correct": 0,
+       "steps_wrong": 0,
+       "steps_silent": 9
+      },
+      "candidate_wins_where_baseline_also_had_a_confirmed_schema": 0,
+      "candidate_wins": 0,
+      "baseline_wins": 0,
+      "divergent_comparable_cases": 0,
+      "candidate_win_fraction": null,
+      "candidate_wins_attributed_to_refinement_introduced_schema": 0,
+      "candidate_only_correct_where_baseline_silent": 9,
+      "candidate_only_correct_attributed_to_refinement_introduced_schema": 9,
+      "behavioral_novelty": "NOT_DEMONSTRATED_NO_DIVERGENT_COMPARABLE_CASE",
+      "incremental_value_class": "VALIDATED_INCREMENTAL_VALUE_COVERAGE_ONLY",
+      "interpretation": "candidate_wins counts held-out transitions where the candidate model's applicable determinate schemas were confirmed against the rendered after-state and the baseline model's were contradicted on the same transition; the two models therefore did not predict the same thing there. Structural schema difference alone is never counted.",
+      "candidate_determinate_schemas": 5,
+      "baseline_determinate_schemas": 0,
+      "candidate_outcome_counts": {
+       "UNOBSERVED_OUTCOME": 6,
+       "EXACT": 8,
+       "PREDICTED_WITH_UNOBSERVED_EXTRAS": 1
+      }
+     },
+     "validated_decision_ids": [
+      "ref-a4fd4824b37a"
+     ],
+     "predictive_counterexamples_file": "runs/v2_falsification/climbing_reopen_001/predictive_counterexamples_v2.jsonl",
+     "classification": "VALIDATED",
+     "primitive_cost": {
+      "total_primitives": 741,
+      "broad_behavior_generating_primitives": 370,
+      "view_survey_or_navigation_primitives": 295,
+      "reload_probe_primitives": 70,
+      "reset_primitives": 6,
+      "automatic_probe_trigger_actions": 55,
+      "counterexample_targeted_probe_trigger_actions": 0,
+      "diagnostic_overhead_primitives": 365,
+      "diagnostic_overhead_rate": 0.493
+     }
+    }
+   ],
+   "independent_traces_tested": 6,
+   "mispredicted_traces": 2,
+   "validated_traces": 4,
+   "inconclusive_traces": 0,
+   "candidate_wins_total": 0,
+   "baseline_wins_total": 0
+  },
+  "climbing_reopen_002": {
+   "source_run": "runs/v2_falsification/climbing_reopen_002",
+   "decision_statuses": {
+    "ref-47e12ddb5822": "PROVISIONAL"
+   },
+   "canonical_decision_ids": [],
+   "held_out_traces": [
+    {
+     "test_run": "runs/v2_stability/climbing_seed11",
+     "test_trace_sha256": "e1255565ea4708475fbf719eae23ffc1006bc007ce48af3ef04c1e26293ecc54",
+     "independent_of_selection_trace": true,
+     "independence": {
+      "independent": true,
+      "source_trace_sha256": "8faf38f35cab31fbdcef7f32566be9d29c777b3aac6ea3e0cb40d84f9d5a52fc",
+      "test_trace_sha256": "e1255565ea4708475fbf719eae23ffc1006bc007ce48af3ef04c1e26293ecc54",
+      "shared_step_prefix": 0,
+      "test_step_triples_present_in_source": 0.0,
+      "test_observation_signatures_present_in_source": 0.003,
+      "source_reset_seeds": [
+       "0",
+       "1",
+       "2",
+       "21",
+       "28",
+       "3",
+       "31",
+       "38",
+       "4",
+       "5"
+      ],
+      "test_reset_seeds": [
+       "1100",
+       "1101",
+       "1102",
+       "1103",
+       "1104",
+       "1105"
+      ]
+     },
+     "status": "PROVISIONAL",
+     "reason": "predicted behavior recurred, but only on bindings already present in source evidence",
+     "refinement_introduced_predictions": 5,
+     "predictions_with_an_applicable_held_out_occurrence": 1,
+     "outcome_counts_over_prediction_x_occurrence": {
+      "EXACT": 14,
+      "NOT_COMPARABLE": 3044,
+      "PREDICTED_WITH_UNOBSERVED_EXTRAS": 2
+     },
+     "exact_recurrences": 14,
+     "contradictions": 0,
+     "not_comparable": 3044,
+     "inapplicable": 0,
+     "novel_binding_matches": 0,
+     "object_level_novel_matches_under_a_unique_mapping": 0,
+     "novel_bindings": [],
+     "view_domain_leaks": 0,
+     "baseline_control": {
+      "predictions": 0,
+      "underdetermined": 6,
+      "outcome_counts": {}
+     },
+     "differential": {
+      "counts": {
+       "CANDIDATE_CORRECT_BASELINE_WRONG": 0,
+       "CANDIDATE_WRONG_BASELINE_CORRECT": 0,
+       "BOTH_CORRECT": 0,
+       "BOTH_WRONG": 0,
+       "SAME_PREDICTION": 0,
+       "NOT_COMPARABLE": 16
+      },
+      "not_comparable_detail": {
+       "CANDIDATE_ONLY_PREDICTS_CORRECT": 15,
+       "CANDIDATE_ONLY_PREDICTS_CORRECT_OTHER_MODEL_HAS_NO_MATCHING_OCCURRENCE": 1
+      },
+      "held_out_steps_with_a_determinate_prediction": 16,
+      "steps_where_the_silent_model_never_segmented_an_occurrence": 1,
+      "occurrence_pairing": {
+       "candidate_occurrences": 612,
+       "baseline_occurrences": 609,
+       "paired": 608,
+       "candidate_only": 4,
+       "baseline_only": 1
+      },
+      "candidate": {
+       "steps_determinate": 16,
+       "steps_correct": 16,
+       "steps_wrong": 0,
+       "steps_silent": 0
+      },
+      "baseline": {
+       "steps_determinate": 0,
+       "steps_correct": 0,
+       "steps_wrong": 0,
+       "steps_silent": 16
+      },
+      "candidate_wins_where_baseline_also_had_a_confirmed_schema": 0,
+      "candidate_wins": 0,
+      "baseline_wins": 0,
+      "divergent_comparable_cases": 0,
+      "candidate_win_fraction": null,
+      "candidate_wins_attributed_to_refinement_introduced_schema": 0,
+      "candidate_only_correct_where_baseline_silent": 15,
+      "candidate_only_correct_attributed_to_refinement_introduced_schema": 15,
+      "behavioral_novelty": "NOT_DEMONSTRATED_NO_DIVERGENT_COMPARABLE_CASE",
+      "incremental_value_class": "VALIDATED_INCREMENTAL_VALUE_COVERAGE_ONLY",
+      "interpretation": "candidate_wins counts held-out transitions where the candidate model's applicable determinate schemas were confirmed against the rendered after-state and the baseline model's were contradicted on the same transition; the two models therefore did not predict the same thing there. Structural schema difference alone is never counted.",
+      "candidate_determinate_schemas": 5,
+      "baseline_determinate_schemas": 0,
+      "candidate_outcome_counts": {
+       "EXACT": 14,
+       "PREDICTED_WITH_UNOBSERVED_EXTRAS": 2
+      }
+     },
+     "validated_decision_ids": [],
+     "predictive_counterexamples_file": "runs/v2_falsification/climbing_reopen_002/predictive_counterexamples_v2.jsonl",
+     "classification": "PROVISIONAL",
+     "primitive_cost": {
+      "total_primitives": 747,
+      "broad_behavior_generating_primitives": 368,
+      "view_survey_or_navigation_primitives": 299,
+      "reload_probe_primitives": 74,
+      "reset_primitives": 6,
+      "automatic_probe_trigger_actions": 60,
+      "counterexample_targeted_probe_trigger_actions": 0,
+      "diagnostic_overhead_primitives": 373,
+      "diagnostic_overhead_rate": 0.499
+     }
+    },
+    {
+     "test_run": "runs/v2_falsification/climbing_seed12",
+     "test_trace_sha256": "2b318cbc14bfb476883baca709578ffec53c8e1d46bca54458a961ad45ae2aef",
+     "independent_of_selection_trace": true,
+     "independence": {
+      "independent": true,
+      "source_trace_sha256": "8faf38f35cab31fbdcef7f32566be9d29c777b3aac6ea3e0cb40d84f9d5a52fc",
+      "test_trace_sha256": "2b318cbc14bfb476883baca709578ffec53c8e1d46bca54458a961ad45ae2aef",
+      "shared_step_prefix": 0,
+      "test_step_triples_present_in_source": 0.0,
+      "test_observation_signatures_present_in_source": 0.0,
+      "source_reset_seeds": [
+       "0",
+       "1",
+       "2",
+       "21",
+       "28",
+       "3",
+       "31",
+       "38",
+       "4",
+       "5"
+      ],
+      "test_reset_seeds": [
+       "1200",
+       "1201",
+       "1202",
+       "1203",
+       "1204",
+       "1205"
+      ]
+     },
+     "status": "MISPREDICTED",
+     "reason": "an applicable, rendered held-out occurrence contradicted a predicted effect literal",
+     "refinement_introduced_predictions": 5,
+     "predictions_with_an_applicable_held_out_occurrence": 1,
+     "outcome_counts_over_prediction_x_occurrence": {
+      "CONTRADICTED": 7,
+      "EXACT": 21,
+      "NOT_COMPARABLE": 2676,
+      "PREDICTED_WITH_UNOBSERVED_EXTRAS": 1
+     },
+     "exact_recurrences": 21,
+     "contradictions": 7,
+     "not_comparable": 2676,
+     "inapplicable": 0,
+     "novel_binding_matches": 0,
+     "object_level_novel_matches_under_a_unique_mapping": 0,
+     "novel_bindings": [],
+     "view_domain_leaks": 0,
+     "baseline_control": {
+      "predictions": 0,
+      "underdetermined": 6,
+      "outcome_counts": {}
+     },
+     "differential": {
+      "counts": {
+       "CANDIDATE_CORRECT_BASELINE_WRONG": 0,
+       "CANDIDATE_WRONG_BASELINE_CORRECT": 0,
+       "BOTH_CORRECT": 0,
+       "BOTH_WRONG": 0,
+       "SAME_PREDICTION": 0,
+       "NOT_COMPARABLE": 29
+      },
+      "not_comparable_detail": {
+       "CANDIDATE_ONLY_PREDICTS_CORRECT": 22,
+       "CANDIDATE_ONLY_PREDICTS_WRONG": 7
+      },
+      "held_out_steps_with_a_determinate_prediction": 29,
+      "steps_where_the_silent_model_never_segmented_an_occurrence": 0,
+      "occurrence_pairing": {
+       "candidate_occurrences": 541,
+       "baseline_occurrences": 542,
+       "paired": 540,
+       "candidate_only": 1,
+       "baseline_only": 2
+      },
+      "candidate": {
+       "steps_determinate": 29,
+       "steps_correct": 22,
+       "steps_wrong": 7,
+       "steps_silent": 0
+      },
+      "baseline": {
+       "steps_determinate": 0,
+       "steps_correct": 0,
+       "steps_wrong": 0,
+       "steps_silent": 29
+      },
+      "candidate_wins_where_baseline_also_had_a_confirmed_schema": 0,
+      "candidate_wins": 0,
+      "baseline_wins": 0,
+      "divergent_comparable_cases": 0,
+      "candidate_win_fraction": null,
+      "candidate_wins_attributed_to_refinement_introduced_schema": 0,
+      "candidate_only_correct_where_baseline_silent": 22,
+      "candidate_only_correct_attributed_to_refinement_introduced_schema": 22,
+      "behavioral_novelty": "NOT_DEMONSTRATED_NO_DIVERGENT_COMPARABLE_CASE",
+      "incremental_value_class": "VALIDATED_INCREMENTAL_VALUE_COVERAGE_ONLY",
+      "interpretation": "candidate_wins counts held-out transitions where the candidate model's applicable determinate schemas were confirmed against the rendered after-state and the baseline model's were contradicted on the same transition; the two models therefore did not predict the same thing there. Structural schema difference alone is never counted.",
+      "candidate_determinate_schemas": 5,
+      "baseline_determinate_schemas": 0,
+      "candidate_outcome_counts": {
+       "EXACT": 21,
+       "PREDICTED_WITH_UNOBSERVED_EXTRAS": 1,
+       "CONTRADICTED": 7
+      }
+     },
+     "validated_decision_ids": [],
+     "predictive_counterexamples_file": "runs/v2_falsification/climbing_reopen_002/predictive_counterexamples_v2.jsonl",
+     "classification": "MISPREDICTED",
+     "primitive_cost": {
+      "total_primitives": 751,
+      "broad_behavior_generating_primitives": 369,
+      "view_survey_or_navigation_primitives": 300,
+      "reload_probe_primitives": 76,
+      "reset_primitives": 6,
+      "automatic_probe_trigger_actions": 62,
+      "counterexample_targeted_probe_trigger_actions": 0,
+      "diagnostic_overhead_primitives": 376,
+      "diagnostic_overhead_rate": 0.501
+     }
+    },
+    {
+     "test_run": "runs/v2_falsification/climbing_seed13",
+     "test_trace_sha256": "2112a1a7862c21f971635135261a18fd60008310de927200089b031efc39e68a",
+     "independent_of_selection_trace": true,
+     "independence": {
+      "independent": true,
+      "source_trace_sha256": "8faf38f35cab31fbdcef7f32566be9d29c777b3aac6ea3e0cb40d84f9d5a52fc",
+      "test_trace_sha256": "2112a1a7862c21f971635135261a18fd60008310de927200089b031efc39e68a",
+      "shared_step_prefix": 0,
+      "test_step_triples_present_in_source": 0.0,
+      "test_observation_signatures_present_in_source": 0.004,
+      "source_reset_seeds": [
+       "0",
+       "1",
+       "2",
+       "21",
+       "28",
+       "3",
+       "31",
+       "38",
+       "4",
+       "5"
+      ],
+      "test_reset_seeds": [
+       "1300",
+       "1301",
+       "1302",
+       "1303",
+       "1304",
+       "1305"
+      ]
+     },
+     "status": "PROVISIONAL",
+     "reason": "predicted behavior recurred, but only on bindings already present in source evidence",
+     "refinement_introduced_predictions": 5,
+     "predictions_with_an_applicable_held_out_occurrence": 1,
+     "outcome_counts_over_prediction_x_occurrence": {
+      "EXACT": 14,
+      "NOT_COMPARABLE": 3065,
+      "PREDICTED_WITH_UNOBSERVED_EXTRAS": 1
+     },
+     "exact_recurrences": 14,
+     "contradictions": 0,
+     "not_comparable": 3065,
+     "inapplicable": 0,
+     "novel_binding_matches": 0,
+     "object_level_novel_matches_under_a_unique_mapping": 0,
+     "novel_bindings": [],
+     "view_domain_leaks": 0,
+     "baseline_control": {
+      "predictions": 0,
+      "underdetermined": 6,
+      "outcome_counts": {}
+     },
+     "differential": {
+      "counts": {
+       "CANDIDATE_CORRECT_BASELINE_WRONG": 0,
+       "CANDIDATE_WRONG_BASELINE_CORRECT": 0,
+       "BOTH_CORRECT": 0,
+       "BOTH_WRONG": 0,
+       "SAME_PREDICTION": 0,
+       "NOT_COMPARABLE": 15
+      },
+      "not_comparable_detail": {
+       "CANDIDATE_ONLY_PREDICTS_CORRECT": 15
+      },
+      "held_out_steps_with_a_determinate_prediction": 15,
+      "steps_where_the_silent_model_never_segmented_an_occurrence": 0,
+      "occurrence_pairing": {
+       "candidate_occurrences": 616,
+       "baseline_occurrences": 616,
+       "paired": 616,
+       "candidate_only": 0,
+       "baseline_only": 0
+      },
+      "candidate": {
+       "steps_determinate": 15,
+       "steps_correct": 15,
+       "steps_wrong": 0,
+       "steps_silent": 0
+      },
+      "baseline": {
+       "steps_determinate": 0,
+       "steps_correct": 0,
+       "steps_wrong": 0,
+       "steps_silent": 15
+      },
+      "candidate_wins_where_baseline_also_had_a_confirmed_schema": 0,
+      "candidate_wins": 0,
+      "baseline_wins": 0,
+      "divergent_comparable_cases": 0,
+      "candidate_win_fraction": null,
+      "candidate_wins_attributed_to_refinement_introduced_schema": 0,
+      "candidate_only_correct_where_baseline_silent": 15,
+      "candidate_only_correct_attributed_to_refinement_introduced_schema": 15,
+      "behavioral_novelty": "NOT_DEMONSTRATED_NO_DIVERGENT_COMPARABLE_CASE",
+      "incremental_value_class": "VALIDATED_INCREMENTAL_VALUE_COVERAGE_ONLY",
+      "interpretation": "candidate_wins counts held-out transitions where the candidate model's applicable determinate schemas were confirmed against the rendered after-state and the baseline model's were contradicted on the same transition; the two models therefore did not predict the same thing there. Structural schema difference alone is never counted.",
+      "candidate_determinate_schemas": 5,
+      "baseline_determinate_schemas": 0,
+      "candidate_outcome_counts": {
+       "EXACT": 14,
+       "PREDICTED_WITH_UNOBSERVED_EXTRAS": 1
+      }
+     },
+     "validated_decision_ids": [],
+     "predictive_counterexamples_file": "runs/v2_falsification/climbing_reopen_002/predictive_counterexamples_v2.jsonl",
+     "classification": "PROVISIONAL",
+     "primitive_cost": {
+      "total_primitives": 741,
+      "broad_behavior_generating_primitives": 370,
+      "view_survey_or_navigation_primitives": 295,
+      "reload_probe_primitives": 70,
+      "reset_primitives": 6,
+      "automatic_probe_trigger_actions": 55,
+      "counterexample_targeted_probe_trigger_actions": 0,
+      "diagnostic_overhead_primitives": 365,
+      "diagnostic_overhead_rate": 0.493
+     }
+    }
+   ],
+   "independent_traces_tested": 3,
+   "mispredicted_traces": 1,
+   "validated_traces": 0,
+   "inconclusive_traces": 0,
+   "candidate_wins_total": 0,
+   "baseline_wins_total": 0
+  }
+ },
+ "summary": {
+  "cases": 5,
+  "cases_with_a_contradiction_on_any_independent_trace": 3,
+  "cases_with_corrective_behavioral_novelty": 1,
+  "total_candidate_wins": 36,
+  "total_baseline_wins": 0
+ }
+}

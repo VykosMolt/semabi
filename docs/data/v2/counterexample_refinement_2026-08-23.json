@@ -2814,35 +2814,39 @@
     }
    },
    "provisional": {
-    "types_recovered": 3,
-    "attributes_recovered": 2,
-    "relations_recovered": 2,
-    "operators_recovered": 1,
+    "types_recovered": 2,
+    "attributes_recovered": 0,
+    "relations_recovered": 1,
+    "operators_recovered": 3,
     "operators_observed": 5,
-    "learned_operators": 9,
+    "learned_operators": 6,
     "operator_names_recovered": [
-     "recolor"
+     "hang",
+     "pull",
+     "restow"
     ],
     "operators_with_any_explanation": [
-     "recolor"
+     "hang",
+     "pull",
+     "restow"
     ],
-    "gtc": 1.0,
-    "rtc": 0.817,
-    "rtc_any": 0.841,
-    "registered_deltas": 97,
-    "registered_delta_precision": 0.711,
-    "strict_registered_delta_precision": 0.711,
+    "gtc": 0.0,
+    "rtc": 0.0,
+    "rtc_any": 0.024,
+    "registered_deltas": 12,
+    "registered_delta_precision": 0.167,
+    "strict_registered_delta_precision": 0.167,
     "false_registered_delta_categories": {
-     "incorrect_persistence": 8,
-     "spurious_relation": 1,
-     "wrong_attribute_attachment": 19
+     "incorrect_persistence": 4,
+     "spurious_relation": 4,
+     "wrong_attribute_attachment": 2
     },
-    "spurious_registered_delta_rate": 0.289,
-    "mention_pair_precision": 0.794,
+    "spurious_registered_delta_rate": 0.833,
+    "mention_pair_precision": 0.742,
     "mention_pair_recall": 0.553,
     "duplicate_name_separation": null,
     "cross_view_identity": 1.0,
-    "view_false_positive_rate": 0.268,
+    "view_false_positive_rate": 0.757,
     "abstraction_contradiction_rate": null,
     "comparable_abstraction_groups": 0,
     "consistent_abstraction_groups": 0,
@@ -2850,31 +2854,31 @@
     "comparable_abstraction_pairs": 0,
     "consistent_abstraction_pairs": 0,
     "contradictory_abstraction_pairs": 0,
-    "unresolved_abstraction_pairs_due_unknown": 16,
+    "unresolved_abstraction_pairs_due_unknown": 29,
     "argument_binding": {
      "recolor": {
       "successful_instances": 74,
-      "with_abstract_transition": 74,
-      "all_arguments_bound": 15,
+      "with_abstract_transition": 2,
+      "all_arguments_bound": 0,
       "action_arguments_grounded": 0,
-      "all_arguments_bound_rate": 0.203,
+      "all_arguments_bound_rate": 0.0,
       "action_arguments_grounded_rate": 0.0,
-      "conditional_all_arguments_bound_rate": 0.203,
+      "conditional_all_arguments_bound_rate": 0.0,
       "conditional_action_arguments_grounded_rate": 0.0
      },
      "restow": {
       "successful_instances": 1,
       "with_abstract_transition": 1,
-      "all_arguments_bound": 1,
+      "all_arguments_bound": 0,
       "action_arguments_grounded": 0,
-      "all_arguments_bound_rate": 1.0,
+      "all_arguments_bound_rate": 0.0,
       "action_arguments_grounded_rate": 0.0,
-      "conditional_all_arguments_bound_rate": 1.0,
+      "conditional_all_arguments_bound_rate": 0.0,
       "conditional_action_arguments_grounded_rate": 0.0
      },
      "hang": {
       "successful_instances": 3,
-      "with_abstract_transition": 3,
+      "with_abstract_transition": 2,
       "all_arguments_bound": 0,
       "action_arguments_grounded": 0,
       "all_arguments_bound_rate": 0.0,
@@ -2885,54 +2889,54 @@
      "pull": {
       "successful_instances": 2,
       "with_abstract_transition": 2,
-      "all_arguments_bound": 2,
+      "all_arguments_bound": 0,
       "action_arguments_grounded": 0,
-      "all_arguments_bound_rate": 1.0,
+      "all_arguments_bound_rate": 0.0,
       "action_arguments_grounded_rate": 0.0,
-      "conditional_all_arguments_bound_rate": 1.0,
+      "conditional_all_arguments_bound_rate": 0.0,
       "conditional_action_arguments_grounded_rate": 0.0
      },
      "bump": {
       "successful_instances": 2,
       "with_abstract_transition": 2,
-      "all_arguments_bound": 2,
-      "action_arguments_grounded": 2,
-      "all_arguments_bound_rate": 1.0,
-      "action_arguments_grounded_rate": 1.0,
-      "conditional_all_arguments_bound_rate": 1.0,
-      "conditional_action_arguments_grounded_rate": 1.0
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
      }
     },
     "per_operator": {
      "hang": {
       "n": 3,
-      "full": 3,
-      "any": 3,
-      "registered_deltas": 6,
-      "matched_registered_deltas": 3,
-      "strict_matched_registered_deltas": 3,
-      "registered_delta_precision": 0.5,
-      "strict_registered_delta_precision": 0.5,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 2,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
       "successes": 3,
       "failures": 37,
-      "explained": 0,
+      "explained": 3,
       "invisible": 0,
       "rejected": 0,
       "unbound_failures": 0
      },
      "recolor": {
       "n": 74,
-      "full": 62,
-      "any": 62,
-      "registered_deltas": 80,
-      "matched_registered_deltas": 62,
-      "strict_matched_registered_deltas": 62,
-      "registered_delta_precision": 0.775,
-      "strict_registered_delta_precision": 0.775,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 4,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
       "successes": 74,
       "failures": 0,
-      "explained": 74,
-      "invisible": 0,
+      "explained": 0,
+      "invisible": 74,
       "rejected": 0,
       "unbound_failures": 0
      },
@@ -2940,31 +2944,31 @@
       "n": 1,
       "full": 0,
       "any": 0,
-      "registered_deltas": 5,
+      "registered_deltas": 2,
       "matched_registered_deltas": 0,
       "strict_matched_registered_deltas": 0,
       "registered_delta_precision": 0.0,
       "strict_registered_delta_precision": 0.0,
       "successes": 1,
       "failures": 2,
-      "explained": 0,
+      "explained": 1,
       "invisible": 0,
       "rejected": 0,
       "unbound_failures": 0
      },
      "bump": {
       "n": 2,
-      "full": 2,
-      "any": 2,
+      "full": 0,
+      "any": 0,
       "registered_deltas": 2,
-      "matched_registered_deltas": 2,
-      "strict_matched_registered_deltas": 2,
-      "registered_delta_precision": 1.0,
-      "strict_registered_delta_precision": 1.0,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
       "successes": 2,
       "failures": 1,
       "explained": 0,
-      "invisible": 0,
+      "invisible": 2,
       "rejected": 0,
       "unbound_failures": 0
      },
@@ -2980,24 +2984,24 @@
       "n": 2,
       "full": 0,
       "any": 2,
-      "registered_deltas": 4,
+      "registered_deltas": 2,
       "matched_registered_deltas": 2,
       "strict_matched_registered_deltas": 2,
-      "registered_delta_precision": 0.5,
-      "strict_registered_delta_precision": 0.5,
+      "registered_delta_precision": 1.0,
+      "strict_registered_delta_precision": 1.0,
       "successes": 2,
       "failures": 0,
-      "explained": 0,
+      "explained": 2,
       "invisible": 0,
       "rejected": 0,
       "unbound_failures": 0
      }
     },
     "induction": {
-     "transitions": 112,
-     "no_op_segments": 256,
-     "hypotheses_before_min_support": 25,
-     "reattributed_domain_changes": 0,
+     "transitions": 37,
+     "no_op_segments": 317,
+     "hypotheses_before_min_support": 17,
+     "reattributed_domain_changes": 2,
      "unattributed_sensing_changes": [
       {
        "revealing_step": 112,
@@ -3005,103 +3009,61 @@
        "last_transition_steps": [
         108
        ],
-       "delta": "+T0:'Island' {'attr:of#1': '2', 'attr:of#2': '2', 'attr:group/combobox#0@7': 'pink'}",
+       "delta": "+T0:'Island' {'attr:of#1': None, 'attr:of#2': None, 'attr:group/combobox#0': None, 'attr:group/combobox#0@7': None}",
        "observation": "5a044aba4d6c0e20"
-      },
-      {
-       "revealing_step": 212,
-       "kind": "reload_after_intervening_actions",
-       "last_transition_steps": [
-        207
-       ],
-       "delta": "+T0:'Moon' {'attr:of#1': '2', 'attr:of#2': '2', 'attr:group/combobox#0@7': 'white'}; +T2:'T0:Moon|T1:R1' {'attr:attached:group/combobox#0': 'black'} rel:1->T1:'R1' rel:0->T0:'Moon'; +T2:'T0:Moon|T1:R2' {'attr:attached:group/combobox#0': None} rel:1->T1:'R2' rel:0->T0:'Moon'",
-       "observation": "f42cd2e83f7472b8"
       }
      ],
      "delayed_object_resolutions": [],
      "hypotheses": [
       {
        "name": "op0",
-       "support": 45,
-       "negative_examples": 107,
-       "unexplained_negative_examples": 0,
+       "support": 7,
+       "negative_examples": 50,
+       "unexplained_negative_examples": 27,
        "actions": [
-        "select(combobox#0@T0[?o0], ?s0)"
-       ],
-       "effects": [
-        "forall x:T2 with rel:0(x)==?o0: attr:attached:group/combobox#0(x) := '?s0'"
-       ],
-       "preconditions": [
-        "('nonempty_str', '?s0')"
-       ]
-      },
-      {
-       "name": "op1",
-       "support": 16,
-       "negative_examples": 136,
-       "unexplained_negative_examples": 0,
-       "actions": [
-        "select(combobox#0@T0[?o0], ?s0)"
-       ],
-       "effects": [
-        "attr:attached:group/combobox#0(?o1) := '?s0'"
-       ],
-       "preconditions": [
-        "('empty', '?o1')"
-       ]
-      },
-      {
-       "name": "op2",
-       "support": 12,
-       "negative_examples": 140,
-       "unexplained_negative_examples": 0,
-       "actions": [
-        "select(combobox#1@T0[?o0], ?s0)"
-       ],
-       "effects": [
-        "attr:group/combobox#0@7(?o0) := '?s0'"
-       ],
-       "preconditions": [
-        "('nonempty_str', '?s0')"
-       ]
-      },
-      {
-       "name": "op3",
-       "support": 6,
-       "negative_examples": 49,
-       "unexplained_negative_examples": 9,
-       "actions": [
-        "click(button#0@T2[?o0])"
+        "click(button#0@T1[?o0])"
        ],
        "effects": [
         "rel:0(?o1) := 'T0:Cave'"
        ],
        "preconditions": [
-        "('ref', '?o0', 'rel:1', '?o1')",
-        "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'white')",
-        "('attr_ne', '?o0', 'id', 'T0:Island|T1:R2')"
+        "('ref_ne', '?o0', 'in:0', '?o1')"
        ]
       },
       {
-       "name": "op4",
-       "support": 4,
-       "negative_examples": 51,
-       "unexplained_negative_examples": 5,
+       "name": "op1",
+       "support": 5,
+       "negative_examples": 52,
+       "unexplained_negative_examples": 20,
        "actions": [
-        "click(button#0@T2[?o0])"
+        "click(button#0@T1[?o0])"
+       ],
+       "effects": [
+        "rel:0(?o1) := 'T0:Moon'"
+       ],
+       "preconditions": [
+        "('ref_ne', '?o0', 'in:0', '?o1')",
+        "('attr_ne', '?o0', 'id', 'R3')"
+       ]
+      },
+      {
+       "name": "op2",
+       "support": 4,
+       "negative_examples": 53,
+       "unexplained_negative_examples": 12,
+       "actions": [
+        "click(button#0@T1[?o0])"
        ],
        "effects": [
         "rel:0(?o1) := 'T0:Island'"
        ],
        "preconditions": [
-        "('ref', '?o0', 'rel:1', '?o1')",
-        "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'pink')",
-        "('attr_ne', '?o1', 'id', 'R1')",
-        "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'black')"
+        "('ref_ne', '?o0', 'in:0', '?o1')",
+        "('attr_ne', '?o1', 'id', 'Arete')"
        ]
       },
       {
-       "name": "op5",
+       "name": "op3",
        "support": 6,
        "negative_examples": 10,
        "unexplained_negative_examples": 0,
@@ -3110,50 +3072,29 @@
        ],
        "effects": [
         "delete ?o0",
-        "forall x:T2 with rel:0(x)==?o0: delete x"
+        "forall x:T1 with in:0(x)==?o0: delete x"
        ],
        "preconditions": [
-        "('attr', '?o0', 'attr:of#1', '2')"
+        "('attr', '?o0', 'attr:group/combobox#0', None)"
        ]
       },
       {
-       "name": "op6",
-       "support": 3,
-       "negative_examples": 52,
-       "unexplained_negative_examples": 8,
-       "actions": [
-        "click(button#0@T2[?o0])"
-       ],
-       "effects": [
-        "rel:0(?o1) := 'T0:Moon'"
-       ],
-       "preconditions": [
-        "('ref', '?o0', 'rel:1', '?o1')",
-        "('attr_ne', '?o1', 'attr:cell#0@2', '4')",
-        "('attr_ne', '?o0', 'id', 'T0:Cave|T1:R1')"
-       ]
-      },
-      {
-       "name": "op7",
+       "name": "op4",
        "support": 2,
-       "negative_examples": 53,
-       "unexplained_negative_examples": 12,
+       "negative_examples": 37,
+       "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T2[?o0])"
+        "click(button#0@T0[?o0])"
        ],
        "effects": [
-        "?new0 := new T1(id=R2, attr:cell#0=None, attr:cell#0@2=None) rel:0->T0:Moon"
+        "in:0(?o1) := '?o0'"
        ],
        "preconditions": [
-        "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'white')",
-        "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'pink')",
-        "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'black')",
-        "('attr_ne', '?o0', 'id', 'T0:Island|T1:R2')",
-        "('empty', '?o0')"
+        "('empty', '?o1')"
        ]
       },
       {
-       "name": "op8",
+       "name": "op5",
        "support": 2,
        "negative_examples": 4,
        "unexplained_negative_examples": 0,
@@ -3162,114 +3103,6 @@
         "click(button:Confirm pull)"
        ],
        "effects": [
-        "attr:of#1(?o0) := '1'",
-        "delete ?o1"
-       ],
-       "preconditions": [
-        "('attr', '?o1', 'attr:attached:group/combobox#0', 'white')"
-       ]
-      },
-      {
-       "name": "op9",
-       "support": 1,
-       "negative_examples": 15,
-       "unexplained_negative_examples": 15,
-       "actions": [
-        "click(checkbox#0)"
-       ],
-       "effects": [
-        "?new0 := new T0(id=Moon, attr:group/combobox#0@7=black, attr:of#1=2, attr:of#2=2)"
-       ],
-       "preconditions": []
-      },
-      {
-       "name": "op10",
-       "support": 1,
-       "negative_examples": 36,
-       "unexplained_negative_examples": 3,
-       "actions": [
-        "click(button#0@T0[?o0])"
-       ],
-       "effects": [
-        "?new0 := new T2(id=T0:Cave|T1:R3, attr:attached:group/combobox#0=pink) rel:0->?o0 rel:1->T1:R3",
-        "attr:of#1(?o0) := '1'"
-       ],
-       "preconditions": [
-        "('empty', '?o0')",
-        "('attr_ne', '?o0', 'id', 'Moon')"
-       ]
-      },
-      {
-       "name": "op11",
-       "support": 1,
-       "negative_examples": 54,
-       "unexplained_negative_examples": 43,
-       "actions": [
-        "click(button#0@T2[?o0])"
-       ],
-       "effects": [
-        "?new0 := new T1(id=R1, attr:cell#0=None, attr:cell#0@2=None) rel:0->T0:Island"
-       ],
-       "preconditions": [
-        "('attr_ne', '?o0', 'id', 'T0:Cave|T1:R3')"
-       ]
-      },
-      {
-       "name": "op12",
-       "support": 1,
-       "negative_examples": 19,
-       "unexplained_negative_examples": 19,
-       "actions": [
-        "click(button:Routes)"
-       ],
-       "effects": [
-        "?new0 := new T1(id=R3, attr:cell#0=Overhang, attr:cell#0@2=2)"
-       ],
-       "preconditions": []
-      },
-      {
-       "name": "op13",
-       "support": 1,
-       "negative_examples": 151,
-       "unexplained_negative_examples": 0,
-       "actions": [
-        "select(combobox#0@T0[?o0], ?s0)"
-       ],
-       "effects": [
-        "?new0 := new T0(id=Moon, attr:group/combobox#0@7=white, attr:of#1=2, attr:of#2=2)",
-        "?new1 := new T2(id=T0:Moon|T1:R1, attr:attached:group/combobox#0=white) rel:0->?new0 rel:1->T1:R1",
-        "?new2 := new T2(id=T0:Moon|T1:R2, attr:attached:group/combobox#0=None) rel:0->?new0 rel:1->T1:R2",
-        "forall x:T2 with rel:0(x)==?o0: attr:attached:group/combobox#0(x) := '?s0'"
-       ],
-       "preconditions": [
-        "('nonempty_str', '?s0')"
-       ]
-      },
-      {
-       "name": "op14",
-       "support": 1,
-       "negative_examples": 15,
-       "unexplained_negative_examples": 15,
-       "actions": [
-        "click(checkbox#0)"
-       ],
-       "effects": [
-        "?new0 := new T0(id=Moon, attr:group/combobox#0@7=white, attr:of#1=2, attr:of#2=2)",
-        "?new1 := new T2(id=T0:Moon|T1:R1, attr:attached:group/combobox#0=yellow) rel:0->?new0 rel:1->T1:R1",
-        "?new2 := new T2(id=T0:Moon|T1:R2, attr:attached:group/combobox#0=None) rel:0->?new0 rel:1->T1:R2"
-       ],
-       "preconditions": []
-      },
-      {
-       "name": "op15",
-       "support": 1,
-       "negative_examples": 19,
-       "unexplained_negative_examples": 0,
-       "actions": [
-        "click(button:Routes)"
-       ],
-       "effects": [
-        "?new0 := new T1(id=R1, attr:cell#0=Arete, attr:cell#0@2=3)",
         "delete ?o0"
        ],
        "preconditions": [
@@ -3277,26 +3110,136 @@
        ]
       },
       {
-       "name": "op16",
+       "name": "op6",
        "support": 1,
-       "negative_examples": 19,
-       "unexplained_negative_examples": 19,
+       "negative_examples": 56,
+       "unexplained_negative_examples": 39,
        "actions": [
-        "click(button:Routes)"
+        "click(button#0@T1[?o0])"
        ],
        "effects": [
-        "?new0 := new T1(id=R2, attr:cell#0=Arete, attr:cell#0@2=4)",
-        "?new1 := new T1(id=R3, attr:cell#0=Overhang, attr:cell#0@2=2)"
+        "?new0 := new T2(id=Arete) rel:0->T0:Moon"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'R1')"
+       ]
+      },
+      {
+       "name": "op7",
+       "support": 1,
+       "negative_examples": 15,
+       "unexplained_negative_examples": 15,
+       "actions": [
+        "click(checkbox#0)"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Moon, attr:group/combobox#0=None, attr:group/combobox#0@7=None, attr:of#1=None, attr:of#2=None)"
        ],
        "preconditions": []
       },
       {
-       "name": "op17",
+       "name": "op8",
        "support": 1,
-       "negative_examples": 1,
-       "unexplained_negative_examples": 1,
+       "negative_examples": 56,
+       "unexplained_negative_examples": 33,
        "actions": [
-        "click(button:Bump@T1[?o0])"
+        "click(button#0@T1[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T2(id=Arete) rel:0->T0:Island"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'R2')"
+       ]
+      },
+      {
+       "name": "op9",
+       "support": 1,
+       "negative_examples": 133,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "select(combobox#0@T0[?o0], ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Moon, attr:group/combobox#0=None, attr:group/combobox#0@7=None, attr:of#1=None, attr:of#2=None)",
+        "?new1 := new T1(id=R2) in:0->?new0"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op10",
+       "support": 1,
+       "negative_examples": 56,
+       "unexplained_negative_examples": 33,
+       "actions": [
+        "click(button#0@T1[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Moon, attr:group/combobox#0=None, attr:group/combobox#0@7=None, attr:of#1=None, attr:of#2=None)",
+        "?new1 := new T1(id=R2) in:0->?new0",
+        "forall x:T2 with rel:0(x)==?new0: rel:0(x) := 'T0:Cave'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'R2')"
+       ]
+      },
+      {
+       "name": "op11",
+       "support": 1,
+       "negative_examples": 15,
+       "unexplained_negative_examples": 15,
+       "actions": [
+        "click(checkbox#0)"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Moon, attr:group/combobox#0=None, attr:group/combobox#0@7=None, attr:of#1=None, attr:of#2=None)",
+        "?new1 := new T1(id=R2) in:0->?new0"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op12",
+       "support": 1,
+       "negative_examples": 133,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "select(combobox#0@T0[?o0], ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Island, attr:group/combobox#0=None, attr:group/combobox#0@7=None, attr:of#1=None, attr:of#2=None)",
+        "?new1 := new T1(id=R1) in:0->?new0"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op13",
+       "support": 1,
+       "negative_examples": 2,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button#0@T1[?o0])",
+        "click(button:Restow@T2[?o1])"
+       ],
+       "effects": [
+        "in:0(?o0) := 'T0:Cave'",
+        "rel:0(?o1) := 'T0:Cave'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'R3')"
+       ]
+      },
+      {
+       "name": "op14",
+       "support": 1,
+       "negative_examples": 2,
+       "unexplained_negative_examples": 2,
+       "actions": [
+        "click(button:Routes)",
+        "click(button:Bump@T3[?o0])"
        ],
        "effects": [
         "attr:cell#0@2(?o0) := '3'"
@@ -3304,126 +3247,45 @@
        "preconditions": []
       },
       {
-       "name": "op18",
-       "support": 1,
-       "negative_examples": 36,
-       "unexplained_negative_examples": 23,
-       "actions": [
-        "click(button#0@T0[?o0])"
-       ],
-       "effects": [
-        "?new0 := new T2(id=T0:Island|T1:R2, attr:attached:group/combobox#0=None) rel:0->?o0 rel:1->T1:R2",
-        "attr:of#1(?o0) := '2'"
-       ],
-       "preconditions": [
-        "('attr_ne', '?o0', 'id', 'Moon')"
-       ]
-      },
-      {
-       "name": "op19",
-       "support": 1,
-       "negative_examples": 36,
-       "unexplained_negative_examples": 3,
-       "actions": [
-        "click(button#0@T0[?o0])"
-       ],
-       "effects": [
-        "?new0 := new T2(id=T0:Cave|T1:R2, attr:attached:group/combobox#0=pink) rel:0->?o0 rel:1->T1:R2",
-        "attr:of#1(?o0) := '1'"
-       ],
-       "preconditions": [
-        "('empty', '?o0')",
-        "('attr_ne', '?o0', 'id', 'Moon')"
-       ]
-      },
-      {
-       "name": "op20",
-       "support": 1,
-       "negative_examples": 19,
-       "unexplained_negative_examples": 19,
-       "actions": [
-        "click(button:Routes)"
-       ],
-       "effects": [
-        "?new0 := new T1(id=R1, attr:cell#0=Arete, attr:cell#0@2=4)",
-        "?new1 := new T1(id=R3, attr:cell#0=Overhang, attr:cell#0@2=2)"
-       ],
-       "preconditions": []
-      },
-      {
-       "name": "op21",
-       "support": 1,
-       "negative_examples": 151,
-       "unexplained_negative_examples": 0,
-       "actions": [
-        "select(combobox#0@T0[?o0], ?s0)"
-       ],
-       "effects": [
-        "?new0 := new T0(id=Island, attr:group/combobox#0@7=white, attr:of#1=2, attr:of#2=2)",
-        "?new1 := new T2(id=T0:Island|T1:R1, attr:attached:group/combobox#0=black) rel:0->?new0 rel:1->T1:R1",
-        "?new2 := new T2(id=T0:Island|T1:R2, attr:attached:group/combobox#0=None) rel:0->?new0 rel:1->T1:R2",
-        "forall x:T2 with rel:0(x)==?o0: attr:attached:group/combobox#0(x) := '?s0'"
-       ],
-       "preconditions": [
-        "('nonempty_str', '?s0')"
-       ]
-      },
-      {
-       "name": "op22",
+       "name": "op15",
        "support": 1,
        "negative_examples": 2,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T2[?o0])",
-        "click(button:Restow@T1[?o1])"
-       ],
-       "effects": [
-        "?new0 := new T2(id=T0:Cave|T1:R2, attr:attached:group/combobox#0=white) rel:0->T0:Cave rel:1->?o1",
-        "attr:of#1(?o2) := '1'",
-        "attr:of#1(?o3) := '1'",
-        "delete ?o0",
-        "rel:0(?o1) := '?o2'"
-       ],
-       "preconditions": [
-        "('attr_ne', '?o0', 'id', 'T0:Cave|T1:R3')"
-       ]
-      },
-      {
-       "name": "op23",
-       "support": 1,
-       "negative_examples": 0,
-       "unexplained_negative_examples": 0,
-       "actions": [
         "click(button:Routes)",
-        "click(button:Bump@T1[?o0])"
+        "click(button:Bump@T3[?o0])"
        ],
        "effects": [
         "attr:cell#0@2(?o0) := '4'"
        ],
-       "preconditions": []
+       "preconditions": [
+        "('attr_ne', '?o0', 'attr:cell#0@2', '2')"
+       ]
       },
       {
-       "name": "op24",
+       "name": "op16",
        "support": 1,
-       "negative_examples": 1,
-       "unexplained_negative_examples": 1,
+       "negative_examples": 3,
+       "unexplained_negative_examples": 0,
        "actions": [
         "click(button:Routes)",
-        "click(button:Open@T1[?o0])"
+        "click(button:Open@T3[?o0])"
        ],
        "effects": [
-        "rel:0(?o0) := 'T0:Cave'"
+        "rel:0(?o1) := 'T0:Cave'"
        ],
-       "preconditions": []
+       "preconditions": [
+        "('ref', '?o0', 'rel:2', '?o1')"
+       ]
       }
      ]
     },
     "counterexamples": {
      "status_counts": {
-      "UNDETERMINED": 159,
-      "VIEW_ONLY": 11,
-      "UNGROUNDED": 20,
-      "EXPLAINED": 112
+      "UNDETERMINED": 212,
+      "VIEW_ONLY": 10,
+      "UNGROUNDED": 45,
+      "EXPLAINED": 35
      },
      "by_step": {
       "2": "UNDETERMINED",
@@ -3441,64 +3303,64 @@
       "42": "UNDETERMINED",
       "43": "UNGROUNDED",
       "419": "VIEW_ONLY",
-      "421": "EXPLAINED",
+      "421": "UNGROUNDED",
       "424": "UNDETERMINED",
-      "46": "EXPLAINED",
-      "47": "EXPLAINED",
-      "48": "EXPLAINED",
+      "46": "UNDETERMINED",
+      "47": "UNGROUNDED",
+      "48": "UNDETERMINED",
       "49": "UNDETERMINED",
       "50": "EXPLAINED",
       "51": "UNDETERMINED",
       "52": "UNDETERMINED",
-      "53": "EXPLAINED",
+      "53": "UNDETERMINED",
       "54": "UNDETERMINED",
-      "55": "EXPLAINED",
+      "55": "UNDETERMINED",
       "56": "UNDETERMINED",
-      "57": "EXPLAINED",
+      "57": "UNDETERMINED",
       "58": "UNDETERMINED",
       "59": "UNDETERMINED",
       "60": "UNDETERMINED",
       "61": "UNDETERMINED",
       "62": "UNDETERMINED",
-      "63": "EXPLAINED",
+      "63": "UNGROUNDED",
       "65": "UNDETERMINED",
-      "66": "EXPLAINED",
-      "68": "EXPLAINED",
+      "66": "UNGROUNDED",
+      "68": "UNDETERMINED",
       "69": "EXPLAINED",
       "70": "EXPLAINED",
       "71": "UNDETERMINED",
-      "72": "EXPLAINED",
+      "72": "UNDETERMINED",
       "73": "UNDETERMINED",
-      "74": "EXPLAINED",
+      "74": "UNGROUNDED",
       "75": "UNDETERMINED",
       "76": "UNDETERMINED",
       "77": "UNDETERMINED",
-      "79": "EXPLAINED",
-      "80": "EXPLAINED",
-      "81": "EXPLAINED",
+      "79": "UNDETERMINED",
+      "80": "UNDETERMINED",
+      "81": "UNDETERMINED",
       "82": "UNDETERMINED",
-      "83": "EXPLAINED",
+      "83": "UNDETERMINED",
       "84": "UNDETERMINED",
       "85": "UNDETERMINED",
       "86": "EXPLAINED",
       "87": "UNDETERMINED",
       "88": "UNDETERMINED",
-      "89": "EXPLAINED",
+      "89": "UNGROUNDED",
       "90": "UNDETERMINED",
       "91": "UNDETERMINED",
       "92": "UNDETERMINED",
       "93": "UNDETERMINED",
       "95": "UNDETERMINED",
-      "96": "EXPLAINED",
-      "97": "EXPLAINED",
+      "96": "UNGROUNDED",
+      "97": "UNDETERMINED",
       "98": "UNDETERMINED",
       "99": "UNDETERMINED",
-      "100": "EXPLAINED",
-      "101": "EXPLAINED",
+      "100": "UNDETERMINED",
+      "101": "UNDETERMINED",
       "102": "UNDETERMINED",
       "103": "UNDETERMINED",
       "104": "UNDETERMINED",
-      "105": "EXPLAINED",
+      "105": "UNGROUNDED",
       "427": "VIEW_ONLY",
       "430": "UNDETERMINED",
       "431": "UNGROUNDED",
@@ -3508,7 +3370,7 @@
       "110": "UNDETERMINED",
       "114": "UNDETERMINED",
       "115": "EXPLAINED",
-      "116": "EXPLAINED",
+      "116": "UNGROUNDED",
       "118": "UNDETERMINED",
       "119": "UNDETERMINED",
       "120": "EXPLAINED",
@@ -3518,76 +3380,76 @@
       "125": "EXPLAINED",
       "126": "UNDETERMINED",
       "127": "UNGROUNDED",
-      "129": "EXPLAINED",
+      "129": "UNDETERMINED",
       "130": "UNDETERMINED",
-      "133": "EXPLAINED",
+      "133": "UNDETERMINED",
       "134": "UNDETERMINED",
-      "135": "EXPLAINED",
-      "136": "EXPLAINED",
+      "135": "UNDETERMINED",
+      "136": "UNGROUNDED",
       "138": "UNGROUNDED",
       "140": "UNDETERMINED",
       "141": "UNDETERMINED",
-      "143": "EXPLAINED",
+      "143": "UNDETERMINED",
       "144": "EXPLAINED",
       "145": "UNDETERMINED",
-      "147": "EXPLAINED",
+      "147": "UNDETERMINED",
       "148": "UNDETERMINED",
       "149": "UNDETERMINED",
-      "150": "EXPLAINED",
+      "150": "UNGROUNDED",
       "151": "UNDETERMINED",
       "152": "UNGROUNDED",
       "154": "UNDETERMINED",
       "155": "UNDETERMINED",
       "158": "UNDETERMINED",
-      "159": "EXPLAINED",
-      "160": "EXPLAINED",
+      "159": "UNDETERMINED",
+      "160": "UNDETERMINED",
       "162": "UNDETERMINED",
       "164": "UNDETERMINED",
       "165": "UNDETERMINED",
-      "167": "EXPLAINED",
+      "167": "UNGROUNDED",
       "170": "UNDETERMINED",
       "171": "UNDETERMINED",
       "172": "UNDETERMINED",
       "173": "UNDETERMINED",
-      "174": "EXPLAINED",
+      "174": "UNDETERMINED",
       "175": "EXPLAINED",
-      "176": "EXPLAINED",
+      "176": "UNDETERMINED",
       "177": "UNDETERMINED",
       "178": "EXPLAINED",
       "179": "UNDETERMINED",
-      "180": "EXPLAINED",
-      "182": "EXPLAINED",
+      "180": "UNGROUNDED",
+      "182": "UNDETERMINED",
       "183": "UNDETERMINED",
       "184": "EXPLAINED",
       "185": "UNDETERMINED",
       "186": "UNDETERMINED",
-      "187": "EXPLAINED",
+      "187": "UNDETERMINED",
       "188": "EXPLAINED",
-      "189": "EXPLAINED",
+      "189": "UNGROUNDED",
       "191": "UNDETERMINED",
-      "192": "UNDETERMINED",
-      "193": "EXPLAINED",
+      "192": "EXPLAINED",
+      "193": "UNGROUNDED",
       "195": "UNDETERMINED",
-      "196": "EXPLAINED",
-      "197": "EXPLAINED",
+      "196": "UNDETERMINED",
+      "197": "UNDETERMINED",
       "198": "UNGROUNDED",
-      "200": "EXPLAINED",
+      "200": "UNGROUNDED",
       "202": "UNDETERMINED",
       "203": "EXPLAINED",
       "204": "UNDETERMINED",
       "205": "UNDETERMINED",
-      "207": "EXPLAINED",
+      "207": "UNDETERMINED",
       "208": "UNDETERMINED",
       "210": "UNDETERMINED",
-      "211": "UNGROUNDED",
-      "213": "VIEW_ONLY",
-      "216": "EXPLAINED",
-      "217": "EXPLAINED",
-      "218": "EXPLAINED",
+      "211": "EXPLAINED",
+      "213": "EXPLAINED",
+      "216": "UNDETERMINED",
+      "217": "UNGROUNDED",
+      "218": "UNDETERMINED",
       "219": "UNDETERMINED",
       "220": "UNDETERMINED",
       "222": "EXPLAINED",
-      "223": "UNDETERMINED",
+      "223": "EXPLAINED",
       "224": "UNDETERMINED",
       "225": "EXPLAINED",
       "226": "UNGROUNDED",
@@ -3603,7 +3465,7 @@
       "240": "UNDETERMINED",
       "241": "UNDETERMINED",
       "242": "UNDETERMINED",
-      "243": "EXPLAINED",
+      "243": "UNDETERMINED",
       "244": "UNDETERMINED",
       "245": "UNDETERMINED",
       "246": "UNDETERMINED",
@@ -3613,14 +3475,14 @@
       "253": "UNDETERMINED",
       "254": "UNDETERMINED",
       "255": "UNDETERMINED",
-      "256": "EXPLAINED",
-      "257": "EXPLAINED",
+      "256": "UNGROUNDED",
+      "257": "UNGROUNDED",
       "260": "UNDETERMINED",
       "261": "UNDETERMINED",
       "262": "UNDETERMINED",
-      "263": "EXPLAINED",
+      "263": "UNDETERMINED",
       "264": "UNDETERMINED",
-      "266": "EXPLAINED",
+      "266": "UNDETERMINED",
       "267": "UNDETERMINED",
       "268": "UNDETERMINED",
       "270": "UNDETERMINED",
@@ -3629,39 +3491,39 @@
       "276": "EXPLAINED",
       "277": "UNDETERMINED",
       "281": "VIEW_ONLY",
-      "283": "EXPLAINED",
-      "284": "EXPLAINED",
+      "283": "UNDETERMINED",
+      "284": "UNGROUNDED",
       "285": "UNDETERMINED",
       "286": "EXPLAINED",
-      "287": "EXPLAINED",
-      "288": "EXPLAINED",
+      "287": "UNDETERMINED",
+      "288": "UNDETERMINED",
       "289": "UNDETERMINED",
-      "290": "EXPLAINED",
+      "290": "UNDETERMINED",
       "291": "UNGROUNDED",
-      "296": "EXPLAINED",
+      "296": "UNDETERMINED",
       "297": "UNDETERMINED",
       "298": "UNDETERMINED",
-      "299": "EXPLAINED",
-      "300": "EXPLAINED",
+      "299": "UNGROUNDED",
+      "300": "UNDETERMINED",
       "301": "UNGROUNDED",
       "303": "UNDETERMINED",
       "304": "UNDETERMINED",
       "305": "UNDETERMINED",
       "306": "UNDETERMINED",
-      "308": "EXPLAINED",
+      "308": "UNDETERMINED",
       "309": "UNDETERMINED",
       "310": "UNDETERMINED",
       "312": "UNDETERMINED",
       "313": "EXPLAINED",
-      "314": "EXPLAINED",
+      "314": "UNDETERMINED",
       "315": "EXPLAINED",
       "317": "UNDETERMINED",
       "318": "UNGROUNDED",
-      "322": "EXPLAINED",
+      "322": "UNGROUNDED",
       "324": "UNDETERMINED",
-      "325": "EXPLAINED",
+      "325": "UNDETERMINED",
       "326": "UNGROUNDED",
-      "329": "EXPLAINED",
+      "329": "UNDETERMINED",
       "330": "UNDETERMINED",
       "331": "UNDETERMINED",
       "332": "UNDETERMINED",
@@ -3682,49 +3544,49 @@
       "352": "UNDETERMINED",
       "353": "VIEW_ONLY",
       "356": "UNDETERMINED",
-      "357": "EXPLAINED",
+      "357": "UNDETERMINED",
       "358": "UNDETERMINED",
       "359": "UNDETERMINED",
       "360": "UNDETERMINED",
-      "362": "EXPLAINED",
-      "363": "EXPLAINED",
+      "362": "UNDETERMINED",
+      "363": "UNDETERMINED",
       "364": "EXPLAINED",
       "366": "UNGROUNDED",
       "368": "EXPLAINED",
-      "370": "EXPLAINED",
+      "370": "UNGROUNDED",
       "371": "EXPLAINED",
       "372": "UNDETERMINED",
       "373": "EXPLAINED",
       "374": "UNDETERMINED",
       "375": "UNDETERMINED",
       "376": "UNDETERMINED",
-      "377": "EXPLAINED",
+      "377": "UNDETERMINED",
       "380": "UNDETERMINED",
       "381": "UNDETERMINED",
       "382": "UNGROUNDED",
       "384": "UNDETERMINED",
-      "385": "EXPLAINED",
-      "386": "EXPLAINED",
+      "385": "UNDETERMINED",
+      "386": "UNDETERMINED",
       "387": "UNDETERMINED",
       "388": "EXPLAINED",
-      "389": "EXPLAINED",
-      "390": "EXPLAINED",
-      "391": "EXPLAINED",
+      "389": "UNDETERMINED",
+      "390": "UNDETERMINED",
+      "391": "UNDETERMINED",
       "392": "UNDETERMINED",
       "393": "UNDETERMINED",
       "394": "UNDETERMINED",
-      "395": "EXPLAINED",
+      "395": "UNDETERMINED",
       "396": "UNDETERMINED",
       "397": "UNDETERMINED",
-      "398": "EXPLAINED",
-      "399": "EXPLAINED",
+      "398": "UNGROUNDED",
+      "399": "UNDETERMINED",
       "400": "EXPLAINED",
-      "402": "EXPLAINED",
+      "402": "UNGROUNDED",
       "404": "UNDETERMINED",
       "405": "EXPLAINED",
       "407": "EXPLAINED",
-      "408": "EXPLAINED",
-      "409": "EXPLAINED",
+      "408": "UNDETERMINED",
+      "409": "UNGROUNDED",
       "413": "UNDETERMINED",
       "414": "UNDETERMINED",
       "415": "UNGROUNDED"
@@ -3732,35 +3594,39 @@
     }
    },
    "validated": {
-    "types_recovered": 3,
-    "attributes_recovered": 2,
-    "relations_recovered": 2,
-    "operators_recovered": 1,
+    "types_recovered": 2,
+    "attributes_recovered": 0,
+    "relations_recovered": 1,
+    "operators_recovered": 3,
     "operators_observed": 5,
-    "learned_operators": 9,
+    "learned_operators": 6,
     "operator_names_recovered": [
-     "recolor"
+     "hang",
+     "pull",
+     "restow"
     ],
     "operators_with_any_explanation": [
-     "recolor"
+     "hang",
+     "pull",
+     "restow"
     ],
-    "gtc": 1.0,
-    "rtc": 0.817,
-    "rtc_any": 0.841,
-    "registered_deltas": 97,
-    "registered_delta_precision": 0.711,
-    "strict_registered_delta_precision": 0.711,
+    "gtc": 0.0,
+    "rtc": 0.0,
+    "rtc_any": 0.024,
+    "registered_deltas": 12,
+    "registered_delta_precision": 0.167,
+    "strict_registered_delta_precision": 0.167,
     "false_registered_delta_categories": {
-     "incorrect_persistence": 8,
-     "spurious_relation": 1,
-     "wrong_attribute_attachment": 19
+     "incorrect_persistence": 4,
+     "spurious_relation": 4,
+     "wrong_attribute_attachment": 2
     },
-    "spurious_registered_delta_rate": 0.289,
-    "mention_pair_precision": 0.794,
+    "spurious_registered_delta_rate": 0.833,
+    "mention_pair_precision": 0.742,
     "mention_pair_recall": 0.553,
     "duplicate_name_separation": null,
     "cross_view_identity": 1.0,
-    "view_false_positive_rate": 0.268,
+    "view_false_positive_rate": 0.757,
     "abstraction_contradiction_rate": null,
     "comparable_abstraction_groups": 0,
     "consistent_abstraction_groups": 0,
@@ -3768,31 +3634,31 @@
     "comparable_abstraction_pairs": 0,
     "consistent_abstraction_pairs": 0,
     "contradictory_abstraction_pairs": 0,
-    "unresolved_abstraction_pairs_due_unknown": 16,
+    "unresolved_abstraction_pairs_due_unknown": 29,
     "argument_binding": {
      "recolor": {
       "successful_instances": 74,
-      "with_abstract_transition": 74,
-      "all_arguments_bound": 15,
+      "with_abstract_transition": 2,
+      "all_arguments_bound": 0,
       "action_arguments_grounded": 0,
-      "all_arguments_bound_rate": 0.203,
+      "all_arguments_bound_rate": 0.0,
       "action_arguments_grounded_rate": 0.0,
-      "conditional_all_arguments_bound_rate": 0.203,
+      "conditional_all_arguments_bound_rate": 0.0,
       "conditional_action_arguments_grounded_rate": 0.0
      },
      "restow": {
       "successful_instances": 1,
       "with_abstract_transition": 1,
-      "all_arguments_bound": 1,
+      "all_arguments_bound": 0,
       "action_arguments_grounded": 0,
-      "all_arguments_bound_rate": 1.0,
+      "all_arguments_bound_rate": 0.0,
       "action_arguments_grounded_rate": 0.0,
-      "conditional_all_arguments_bound_rate": 1.0,
+      "conditional_all_arguments_bound_rate": 0.0,
       "conditional_action_arguments_grounded_rate": 0.0
      },
      "hang": {
       "successful_instances": 3,
-      "with_abstract_transition": 3,
+      "with_abstract_transition": 2,
       "all_arguments_bound": 0,
       "action_arguments_grounded": 0,
       "all_arguments_bound_rate": 0.0,
@@ -3803,54 +3669,54 @@
      "pull": {
       "successful_instances": 2,
       "with_abstract_transition": 2,
-      "all_arguments_bound": 2,
+      "all_arguments_bound": 0,
       "action_arguments_grounded": 0,
-      "all_arguments_bound_rate": 1.0,
+      "all_arguments_bound_rate": 0.0,
       "action_arguments_grounded_rate": 0.0,
-      "conditional_all_arguments_bound_rate": 1.0,
+      "conditional_all_arguments_bound_rate": 0.0,
       "conditional_action_arguments_grounded_rate": 0.0
      },
      "bump": {
       "successful_instances": 2,
       "with_abstract_transition": 2,
-      "all_arguments_bound": 2,
-      "action_arguments_grounded": 2,
-      "all_arguments_bound_rate": 1.0,
-      "action_arguments_grounded_rate": 1.0,
-      "conditional_all_arguments_bound_rate": 1.0,
-      "conditional_action_arguments_grounded_rate": 1.0
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
      }
     },
     "per_operator": {
      "hang": {
       "n": 3,
-      "full": 3,
-      "any": 3,
-      "registered_deltas": 6,
-      "matched_registered_deltas": 3,
-      "strict_matched_registered_deltas": 3,
-      "registered_delta_precision": 0.5,
-      "strict_registered_delta_precision": 0.5,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 2,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
       "successes": 3,
       "failures": 37,
-      "explained": 0,
+      "explained": 3,
       "invisible": 0,
       "rejected": 0,
       "unbound_failures": 0
      },
      "recolor": {
       "n": 74,
-      "full": 62,
-      "any": 62,
-      "registered_deltas": 80,
-      "matched_registered_deltas": 62,
-      "strict_matched_registered_deltas": 62,
-      "registered_delta_precision": 0.775,
-      "strict_registered_delta_precision": 0.775,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 4,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
       "successes": 74,
       "failures": 0,
-      "explained": 74,
-      "invisible": 0,
+      "explained": 0,
+      "invisible": 74,
       "rejected": 0,
       "unbound_failures": 0
      },
@@ -3858,31 +3724,31 @@
       "n": 1,
       "full": 0,
       "any": 0,
-      "registered_deltas": 5,
+      "registered_deltas": 2,
       "matched_registered_deltas": 0,
       "strict_matched_registered_deltas": 0,
       "registered_delta_precision": 0.0,
       "strict_registered_delta_precision": 0.0,
       "successes": 1,
       "failures": 2,
-      "explained": 0,
+      "explained": 1,
       "invisible": 0,
       "rejected": 0,
       "unbound_failures": 0
      },
      "bump": {
       "n": 2,
-      "full": 2,
-      "any": 2,
+      "full": 0,
+      "any": 0,
       "registered_deltas": 2,
-      "matched_registered_deltas": 2,
-      "strict_matched_registered_deltas": 2,
-      "registered_delta_precision": 1.0,
-      "strict_registered_delta_precision": 1.0,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
       "successes": 2,
       "failures": 1,
       "explained": 0,
-      "invisible": 0,
+      "invisible": 2,
       "rejected": 0,
       "unbound_failures": 0
      },
@@ -3898,24 +3764,24 @@
       "n": 2,
       "full": 0,
       "any": 2,
-      "registered_deltas": 4,
+      "registered_deltas": 2,
       "matched_registered_deltas": 2,
       "strict_matched_registered_deltas": 2,
-      "registered_delta_precision": 0.5,
-      "strict_registered_delta_precision": 0.5,
+      "registered_delta_precision": 1.0,
+      "strict_registered_delta_precision": 1.0,
       "successes": 2,
       "failures": 0,
-      "explained": 0,
+      "explained": 2,
       "invisible": 0,
       "rejected": 0,
       "unbound_failures": 0
      }
     },
     "induction": {
-     "transitions": 112,
-     "no_op_segments": 256,
-     "hypotheses_before_min_support": 25,
-     "reattributed_domain_changes": 0,
+     "transitions": 37,
+     "no_op_segments": 317,
+     "hypotheses_before_min_support": 17,
+     "reattributed_domain_changes": 2,
      "unattributed_sensing_changes": [
       {
        "revealing_step": 112,
@@ -3923,103 +3789,61 @@
        "last_transition_steps": [
         108
        ],
-       "delta": "+T0:'Island' {'attr:of#1': '2', 'attr:of#2': '2', 'attr:group/combobox#0@7': 'pink'}",
+       "delta": "+T0:'Island' {'attr:of#1': None, 'attr:of#2': None, 'attr:group/combobox#0': None, 'attr:group/combobox#0@7': None}",
        "observation": "5a044aba4d6c0e20"
-      },
-      {
-       "revealing_step": 212,
-       "kind": "reload_after_intervening_actions",
-       "last_transition_steps": [
-        207
-       ],
-       "delta": "+T0:'Moon' {'attr:of#1': '2', 'attr:of#2': '2', 'attr:group/combobox#0@7': 'white'}; +T2:'T0:Moon|T1:R1' {'attr:attached:group/combobox#0': 'black'} rel:1->T1:'R1' rel:0->T0:'Moon'; +T2:'T0:Moon|T1:R2' {'attr:attached:group/combobox#0': None} rel:1->T1:'R2' rel:0->T0:'Moon'",
-       "observation": "f42cd2e83f7472b8"
       }
      ],
      "delayed_object_resolutions": [],
      "hypotheses": [
       {
        "name": "op0",
-       "support": 45,
-       "negative_examples": 107,
-       "unexplained_negative_examples": 0,
+       "support": 7,
+       "negative_examples": 50,
+       "unexplained_negative_examples": 27,
        "actions": [
-        "select(combobox#0@T0[?o0], ?s0)"
-       ],
-       "effects": [
-        "forall x:T2 with rel:0(x)==?o0: attr:attached:group/combobox#0(x) := '?s0'"
-       ],
-       "preconditions": [
-        "('nonempty_str', '?s0')"
-       ]
-      },
-      {
-       "name": "op1",
-       "support": 16,
-       "negative_examples": 136,
-       "unexplained_negative_examples": 0,
-       "actions": [
-        "select(combobox#0@T0[?o0], ?s0)"
-       ],
-       "effects": [
-        "attr:attached:group/combobox#0(?o1) := '?s0'"
-       ],
-       "preconditions": [
-        "('empty', '?o1')"
-       ]
-      },
-      {
-       "name": "op2",
-       "support": 12,
-       "negative_examples": 140,
-       "unexplained_negative_examples": 0,
-       "actions": [
-        "select(combobox#1@T0[?o0], ?s0)"
-       ],
-       "effects": [
-        "attr:group/combobox#0@7(?o0) := '?s0'"
-       ],
-       "preconditions": [
-        "('nonempty_str', '?s0')"
-       ]
-      },
-      {
-       "name": "op3",
-       "support": 6,
-       "negative_examples": 49,
-       "unexplained_negative_examples": 9,
-       "actions": [
-        "click(button#0@T2[?o0])"
+        "click(button#0@T1[?o0])"
        ],
        "effects": [
         "rel:0(?o1) := 'T0:Cave'"
        ],
        "preconditions": [
-        "('ref', '?o0', 'rel:1', '?o1')",
-        "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'white')",
-        "('attr_ne', '?o0', 'id', 'T0:Island|T1:R2')"
+        "('ref_ne', '?o0', 'in:0', '?o1')"
        ]
       },
       {
-       "name": "op4",
-       "support": 4,
-       "negative_examples": 51,
-       "unexplained_negative_examples": 5,
+       "name": "op1",
+       "support": 5,
+       "negative_examples": 52,
+       "unexplained_negative_examples": 20,
        "actions": [
-        "click(button#0@T2[?o0])"
+        "click(button#0@T1[?o0])"
+       ],
+       "effects": [
+        "rel:0(?o1) := 'T0:Moon'"
+       ],
+       "preconditions": [
+        "('ref_ne', '?o0', 'in:0', '?o1')",
+        "('attr_ne', '?o0', 'id', 'R3')"
+       ]
+      },
+      {
+       "name": "op2",
+       "support": 4,
+       "negative_examples": 53,
+       "unexplained_negative_examples": 12,
+       "actions": [
+        "click(button#0@T1[?o0])"
        ],
        "effects": [
         "rel:0(?o1) := 'T0:Island'"
        ],
        "preconditions": [
-        "('ref', '?o0', 'rel:1', '?o1')",
-        "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'pink')",
-        "('attr_ne', '?o1', 'id', 'R1')",
-        "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'black')"
+        "('ref_ne', '?o0', 'in:0', '?o1')",
+        "('attr_ne', '?o1', 'id', 'Arete')"
        ]
       },
       {
-       "name": "op5",
+       "name": "op3",
        "support": 6,
        "negative_examples": 10,
        "unexplained_negative_examples": 0,
@@ -4028,50 +3852,29 @@
        ],
        "effects": [
         "delete ?o0",
-        "forall x:T2 with rel:0(x)==?o0: delete x"
+        "forall x:T1 with in:0(x)==?o0: delete x"
        ],
        "preconditions": [
-        "('attr', '?o0', 'attr:of#1', '2')"
+        "('attr', '?o0', 'attr:group/combobox#0', None)"
        ]
       },
       {
-       "name": "op6",
-       "support": 3,
-       "negative_examples": 52,
-       "unexplained_negative_examples": 8,
-       "actions": [
-        "click(button#0@T2[?o0])"
-       ],
-       "effects": [
-        "rel:0(?o1) := 'T0:Moon'"
-       ],
-       "preconditions": [
-        "('ref', '?o0', 'rel:1', '?o1')",
-        "('attr_ne', '?o1', 'attr:cell#0@2', '4')",
-        "('attr_ne', '?o0', 'id', 'T0:Cave|T1:R1')"
-       ]
-      },
-      {
-       "name": "op7",
+       "name": "op4",
        "support": 2,
-       "negative_examples": 53,
-       "unexplained_negative_examples": 12,
+       "negative_examples": 37,
+       "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T2[?o0])"
+        "click(button#0@T0[?o0])"
        ],
        "effects": [
-        "?new0 := new T1(id=R2, attr:cell#0=None, attr:cell#0@2=None) rel:0->T0:Moon"
+        "in:0(?o1) := '?o0'"
        ],
        "preconditions": [
-        "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'white')",
-        "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'pink')",
-        "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'black')",
-        "('attr_ne', '?o0', 'id', 'T0:Island|T1:R2')",
-        "('empty', '?o0')"
+        "('empty', '?o1')"
        ]
       },
       {
-       "name": "op8",
+       "name": "op5",
        "support": 2,
        "negative_examples": 4,
        "unexplained_negative_examples": 0,
@@ -4080,114 +3883,6 @@
         "click(button:Confirm pull)"
        ],
        "effects": [
-        "attr:of#1(?o0) := '1'",
-        "delete ?o1"
-       ],
-       "preconditions": [
-        "('attr', '?o1', 'attr:attached:group/combobox#0', 'white')"
-       ]
-      },
-      {
-       "name": "op9",
-       "support": 1,
-       "negative_examples": 15,
-       "unexplained_negative_examples": 15,
-       "actions": [
-        "click(checkbox#0)"
-       ],
-       "effects": [
-        "?new0 := new T0(id=Moon, attr:group/combobox#0@7=black, attr:of#1=2, attr:of#2=2)"
-       ],
-       "preconditions": []
-      },
-      {
-       "name": "op10",
-       "support": 1,
-       "negative_examples": 36,
-       "unexplained_negative_examples": 3,
-       "actions": [
-        "click(button#0@T0[?o0])"
-       ],
-       "effects": [
-        "?new0 := new T2(id=T0:Cave|T1:R3, attr:attached:group/combobox#0=pink) rel:0->?o0 rel:1->T1:R3",
-        "attr:of#1(?o0) := '1'"
-       ],
-       "preconditions": [
-        "('empty', '?o0')",
-        "('attr_ne', '?o0', 'id', 'Moon')"
-       ]
-      },
-      {
-       "name": "op11",
-       "support": 1,
-       "negative_examples": 54,
-       "unexplained_negative_examples": 43,
-       "actions": [
-        "click(button#0@T2[?o0])"
-       ],
-       "effects": [
-        "?new0 := new T1(id=R1, attr:cell#0=None, attr:cell#0@2=None) rel:0->T0:Island"
-       ],
-       "preconditions": [
-        "('attr_ne', '?o0', 'id', 'T0:Cave|T1:R3')"
-       ]
-      },
-      {
-       "name": "op12",
-       "support": 1,
-       "negative_examples": 19,
-       "unexplained_negative_examples": 19,
-       "actions": [
-        "click(button:Routes)"
-       ],
-       "effects": [
-        "?new0 := new T1(id=R3, attr:cell#0=Overhang, attr:cell#0@2=2)"
-       ],
-       "preconditions": []
-      },
-      {
-       "name": "op13",
-       "support": 1,
-       "negative_examples": 151,
-       "unexplained_negative_examples": 0,
-       "actions": [
-        "select(combobox#0@T0[?o0], ?s0)"
-       ],
-       "effects": [
-        "?new0 := new T0(id=Moon, attr:group/combobox#0@7=white, attr:of#1=2, attr:of#2=2)",
-        "?new1 := new T2(id=T0:Moon|T1:R1, attr:attached:group/combobox#0=white) rel:0->?new0 rel:1->T1:R1",
-        "?new2 := new T2(id=T0:Moon|T1:R2, attr:attached:group/combobox#0=None) rel:0->?new0 rel:1->T1:R2",
-        "forall x:T2 with rel:0(x)==?o0: attr:attached:group/combobox#0(x) := '?s0'"
-       ],
-       "preconditions": [
-        "('nonempty_str', '?s0')"
-       ]
-      },
-      {
-       "name": "op14",
-       "support": 1,
-       "negative_examples": 15,
-       "unexplained_negative_examples": 15,
-       "actions": [
-        "click(checkbox#0)"
-       ],
-       "effects": [
-        "?new0 := new T0(id=Moon, attr:group/combobox#0@7=white, attr:of#1=2, attr:of#2=2)",
-        "?new1 := new T2(id=T0:Moon|T1:R1, attr:attached:group/combobox#0=yellow) rel:0->?new0 rel:1->T1:R1",
-        "?new2 := new T2(id=T0:Moon|T1:R2, attr:attached:group/combobox#0=None) rel:0->?new0 rel:1->T1:R2"
-       ],
-       "preconditions": []
-      },
-      {
-       "name": "op15",
-       "support": 1,
-       "negative_examples": 19,
-       "unexplained_negative_examples": 0,
-       "actions": [
-        "click(button:Routes)"
-       ],
-       "effects": [
-        "?new0 := new T1(id=R1, attr:cell#0=Arete, attr:cell#0@2=3)",
         "delete ?o0"
        ],
        "preconditions": [
@@ -4195,26 +3890,136 @@
        ]
       },
       {
-       "name": "op16",
+       "name": "op6",
        "support": 1,
-       "negative_examples": 19,
-       "unexplained_negative_examples": 19,
+       "negative_examples": 56,
+       "unexplained_negative_examples": 39,
        "actions": [
-        "click(button:Routes)"
+        "click(button#0@T1[?o0])"
        ],
        "effects": [
-        "?new0 := new T1(id=R2, attr:cell#0=Arete, attr:cell#0@2=4)",
-        "?new1 := new T1(id=R3, attr:cell#0=Overhang, attr:cell#0@2=2)"
+        "?new0 := new T2(id=Arete) rel:0->T0:Moon"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'R1')"
+       ]
+      },
+      {
+       "name": "op7",
+       "support": 1,
+       "negative_examples": 15,
+       "unexplained_negative_examples": 15,
+       "actions": [
+        "click(checkbox#0)"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Moon, attr:group/combobox#0=None, attr:group/combobox#0@7=None, attr:of#1=None, attr:of#2=None)"
        ],
        "preconditions": []
       },
       {
-       "name": "op17",
+       "name": "op8",
        "support": 1,
-       "negative_examples": 1,
-       "unexplained_negative_examples": 1,
+       "negative_examples": 56,
+       "unexplained_negative_examples": 33,
        "actions": [
-        "click(button:Bump@T1[?o0])"
+        "click(button#0@T1[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T2(id=Arete) rel:0->T0:Island"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'R2')"
+       ]
+      },
+      {
+       "name": "op9",
+       "support": 1,
+       "negative_examples": 133,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "select(combobox#0@T0[?o0], ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Moon, attr:group/combobox#0=None, attr:group/combobox#0@7=None, attr:of#1=None, attr:of#2=None)",
+        "?new1 := new T1(id=R2) in:0->?new0"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op10",
+       "support": 1,
+       "negative_examples": 56,
+       "unexplained_negative_examples": 33,
+       "actions": [
+        "click(button#0@T1[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Moon, attr:group/combobox#0=None, attr:group/combobox#0@7=None, attr:of#1=None, attr:of#2=None)",
+        "?new1 := new T1(id=R2) in:0->?new0",
+        "forall x:T2 with rel:0(x)==?new0: rel:0(x) := 'T0:Cave'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'R2')"
+       ]
+      },
+      {
+       "name": "op11",
+       "support": 1,
+       "negative_examples": 15,
+       "unexplained_negative_examples": 15,
+       "actions": [
+        "click(checkbox#0)"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Moon, attr:group/combobox#0=None, attr:group/combobox#0@7=None, attr:of#1=None, attr:of#2=None)",
+        "?new1 := new T1(id=R2) in:0->?new0"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op12",
+       "support": 1,
+       "negative_examples": 133,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "select(combobox#0@T0[?o0], ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Island, attr:group/combobox#0=None, attr:group/combobox#0@7=None, attr:of#1=None, attr:of#2=None)",
+        "?new1 := new T1(id=R1) in:0->?new0"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op13",
+       "support": 1,
+       "negative_examples": 2,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button#0@T1[?o0])",
+        "click(button:Restow@T2[?o1])"
+       ],
+       "effects": [
+        "in:0(?o0) := 'T0:Cave'",
+        "rel:0(?o1) := 'T0:Cave'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'R3')"
+       ]
+      },
+      {
+       "name": "op14",
+       "support": 1,
+       "negative_examples": 2,
+       "unexplained_negative_examples": 2,
+       "actions": [
+        "click(button:Routes)",
+        "click(button:Bump@T3[?o0])"
        ],
        "effects": [
         "attr:cell#0@2(?o0) := '3'"
@@ -4222,126 +4027,45 @@
        "preconditions": []
       },
       {
-       "name": "op18",
-       "support": 1,
-       "negative_examples": 36,
-       "unexplained_negative_examples": 23,
-       "actions": [
-        "click(button#0@T0[?o0])"
-       ],
-       "effects": [
-        "?new0 := new T2(id=T0:Island|T1:R2, attr:attached:group/combobox#0=None) rel:0->?o0 rel:1->T1:R2",
-        "attr:of#1(?o0) := '2'"
-       ],
-       "preconditions": [
-        "('attr_ne', '?o0', 'id', 'Moon')"
-       ]
-      },
-      {
-       "name": "op19",
-       "support": 1,
-       "negative_examples": 36,
-       "unexplained_negative_examples": 3,
-       "actions": [
-        "click(button#0@T0[?o0])"
-       ],
-       "effects": [
-        "?new0 := new T2(id=T0:Cave|T1:R2, attr:attached:group/combobox#0=pink) rel:0->?o0 rel:1->T1:R2",
-        "attr:of#1(?o0) := '1'"
-       ],
-       "preconditions": [
-        "('empty', '?o0')",
-        "('attr_ne', '?o0', 'id', 'Moon')"
-       ]
-      },
-      {
-       "name": "op20",
-       "support": 1,
-       "negative_examples": 19,
-       "unexplained_negative_examples": 19,
-       "actions": [
-        "click(button:Routes)"
-       ],
-       "effects": [
-        "?new0 := new T1(id=R1, attr:cell#0=Arete, attr:cell#0@2=4)",
-        "?new1 := new T1(id=R3, attr:cell#0=Overhang, attr:cell#0@2=2)"
-       ],
-       "preconditions": []
-      },
-      {
-       "name": "op21",
-       "support": 1,
-       "negative_examples": 151,
-       "unexplained_negative_examples": 0,
-       "actions": [
-        "select(combobox#0@T0[?o0], ?s0)"
-       ],
-       "effects": [
-        "?new0 := new T0(id=Island, attr:group/combobox#0@7=white, attr:of#1=2, attr:of#2=2)",
-        "?new1 := new T2(id=T0:Island|T1:R1, attr:attached:group/combobox#0=black) rel:0->?new0 rel:1->T1:R1",
-        "?new2 := new T2(id=T0:Island|T1:R2, attr:attached:group/combobox#0=None) rel:0->?new0 rel:1->T1:R2",
-        "forall x:T2 with rel:0(x)==?o0: attr:attached:group/combobox#0(x) := '?s0'"
-       ],
-       "preconditions": [
-        "('nonempty_str', '?s0')"
-       ]
-      },
-      {
-       "name": "op22",
+       "name": "op15",
        "support": 1,
        "negative_examples": 2,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T2[?o0])",
-        "click(button:Restow@T1[?o1])"
-       ],
-       "effects": [
-        "?new0 := new T2(id=T0:Cave|T1:R2, attr:attached:group/combobox#0=white) rel:0->T0:Cave rel:1->?o1",
-        "attr:of#1(?o2) := '1'",
-        "attr:of#1(?o3) := '1'",
-        "delete ?o0",
-        "rel:0(?o1) := '?o2'"
-       ],
-       "preconditions": [
-        "('attr_ne', '?o0', 'id', 'T0:Cave|T1:R3')"
-       ]
-      },
-      {
-       "name": "op23",
-       "support": 1,
-       "negative_examples": 0,
-       "unexplained_negative_examples": 0,
-       "actions": [
         "click(button:Routes)",
-        "click(button:Bump@T1[?o0])"
+        "click(button:Bump@T3[?o0])"
        ],
        "effects": [
         "attr:cell#0@2(?o0) := '4'"
        ],
-       "preconditions": []
+       "preconditions": [
+        "('attr_ne', '?o0', 'attr:cell#0@2', '2')"
+       ]
       },
       {
-       "name": "op24",
+       "name": "op16",
        "support": 1,
-       "negative_examples": 1,
-       "unexplained_negative_examples": 1,
+       "negative_examples": 3,
+       "unexplained_negative_examples": 0,
        "actions": [
         "click(button:Routes)",
-        "click(button:Open@T1[?o0])"
+        "click(button:Open@T3[?o0])"
        ],
        "effects": [
-        "rel:0(?o0) := 'T0:Cave'"
+        "rel:0(?o1) := 'T0:Cave'"
        ],
-       "preconditions": []
+       "preconditions": [
+        "('ref', '?o0', 'rel:2', '?o1')"
+       ]
       }
      ]
     },
     "counterexamples": {
      "status_counts": {
-      "UNDETERMINED": 159,
-      "VIEW_ONLY": 11,
-      "UNGROUNDED": 20,
-      "EXPLAINED": 112
+      "UNDETERMINED": 212,
+      "VIEW_ONLY": 10,
+      "UNGROUNDED": 45,
+      "EXPLAINED": 35
      },
      "by_step": {
       "2": "UNDETERMINED",
@@ -4359,64 +4083,64 @@
       "42": "UNDETERMINED",
       "43": "UNGROUNDED",
       "419": "VIEW_ONLY",
-      "421": "EXPLAINED",
+      "421": "UNGROUNDED",
       "424": "UNDETERMINED",
-      "46": "EXPLAINED",
-      "47": "EXPLAINED",
-      "48": "EXPLAINED",
+      "46": "UNDETERMINED",
+      "47": "UNGROUNDED",
+      "48": "UNDETERMINED",
       "49": "UNDETERMINED",
       "50": "EXPLAINED",
       "51": "UNDETERMINED",
       "52": "UNDETERMINED",
-      "53": "EXPLAINED",
+      "53": "UNDETERMINED",
       "54": "UNDETERMINED",
-      "55": "EXPLAINED",
+      "55": "UNDETERMINED",
       "56": "UNDETERMINED",
-      "57": "EXPLAINED",
+      "57": "UNDETERMINED",
       "58": "UNDETERMINED",
       "59": "UNDETERMINED",
       "60": "UNDETERMINED",
       "61": "UNDETERMINED",
       "62": "UNDETERMINED",
-      "63": "EXPLAINED",
+      "63": "UNGROUNDED",
       "65": "UNDETERMINED",
-      "66": "EXPLAINED",
-      "68": "EXPLAINED",
+      "66": "UNGROUNDED",
+      "68": "UNDETERMINED",
       "69": "EXPLAINED",
       "70": "EXPLAINED",
       "71": "UNDETERMINED",
-      "72": "EXPLAINED",
+      "72": "UNDETERMINED",
       "73": "UNDETERMINED",
-      "74": "EXPLAINED",
+      "74": "UNGROUNDED",
       "75": "UNDETERMINED",
       "76": "UNDETERMINED",
       "77": "UNDETERMINED",
-      "79": "EXPLAINED",
-      "80": "EXPLAINED",
-      "81": "EXPLAINED",
+      "79": "UNDETERMINED",
+      "80": "UNDETERMINED",
+      "81": "UNDETERMINED",
       "82": "UNDETERMINED",
-      "83": "EXPLAINED",
+      "83": "UNDETERMINED",
       "84": "UNDETERMINED",
       "85": "UNDETERMINED",
       "86": "EXPLAINED",
       "87": "UNDETERMINED",
       "88": "UNDETERMINED",
-      "89": "EXPLAINED",
+      "89": "UNGROUNDED",
       "90": "UNDETERMINED",
       "91": "UNDETERMINED",
       "92": "UNDETERMINED",
       "93": "UNDETERMINED",
       "95": "UNDETERMINED",
-      "96": "EXPLAINED",
-      "97": "EXPLAINED",
+      "96": "UNGROUNDED",
+      "97": "UNDETERMINED",
       "98": "UNDETERMINED",
       "99": "UNDETERMINED",
-      "100": "EXPLAINED",
-      "101": "EXPLAINED",
+      "100": "UNDETERMINED",
+      "101": "UNDETERMINED",
       "102": "UNDETERMINED",
       "103": "UNDETERMINED",
       "104": "UNDETERMINED",
-      "105": "EXPLAINED",
+      "105": "UNGROUNDED",
       "427": "VIEW_ONLY",
       "430": "UNDETERMINED",
       "431": "UNGROUNDED",
@@ -4426,7 +4150,7 @@
       "110": "UNDETERMINED",
       "114": "UNDETERMINED",
       "115": "EXPLAINED",
-      "116": "EXPLAINED",
+      "116": "UNGROUNDED",
       "118": "UNDETERMINED",
       "119": "UNDETERMINED",
       "120": "EXPLAINED",
@@ -4436,76 +4160,76 @@
       "125": "EXPLAINED",
       "126": "UNDETERMINED",
       "127": "UNGROUNDED",
-      "129": "EXPLAINED",
+      "129": "UNDETERMINED",
       "130": "UNDETERMINED",
-      "133": "EXPLAINED",
+      "133": "UNDETERMINED",
       "134": "UNDETERMINED",
-      "135": "EXPLAINED",
-      "136": "EXPLAINED",
+      "135": "UNDETERMINED",
+      "136": "UNGROUNDED",
       "138": "UNGROUNDED",
       "140": "UNDETERMINED",
       "141": "UNDETERMINED",
-      "143": "EXPLAINED",
+      "143": "UNDETERMINED",
       "144": "EXPLAINED",
       "145": "UNDETERMINED",
-      "147": "EXPLAINED",
+      "147": "UNDETERMINED",
       "148": "UNDETERMINED",
       "149": "UNDETERMINED",
-      "150": "EXPLAINED",
+      "150": "UNGROUNDED",
       "151": "UNDETERMINED",
       "152": "UNGROUNDED",
       "154": "UNDETERMINED",
       "155": "UNDETERMINED",
       "158": "UNDETERMINED",
-      "159": "EXPLAINED",
-      "160": "EXPLAINED",
+      "159": "UNDETERMINED",
+      "160": "UNDETERMINED",
       "162": "UNDETERMINED",
       "164": "UNDETERMINED",
       "165": "UNDETERMINED",
-      "167": "EXPLAINED",
+      "167": "UNGROUNDED",
       "170": "UNDETERMINED",
       "171": "UNDETERMINED",
       "172": "UNDETERMINED",
       "173": "UNDETERMINED",
-      "174": "EXPLAINED",
+      "174": "UNDETERMINED",
       "175": "EXPLAINED",
-      "176": "EXPLAINED",
+      "176": "UNDETERMINED",
       "177": "UNDETERMINED",
       "178": "EXPLAINED",
       "179": "UNDETERMINED",
-      "180": "EXPLAINED",
-      "182": "EXPLAINED",
+      "180": "UNGROUNDED",
+      "182": "UNDETERMINED",
       "183": "UNDETERMINED",
       "184": "EXPLAINED",
       "185": "UNDETERMINED",
       "186": "UNDETERMINED",
-      "187": "EXPLAINED",
+      "187": "UNDETERMINED",
       "188": "EXPLAINED",
-      "189": "EXPLAINED",
+      "189": "UNGROUNDED",
       "191": "UNDETERMINED",
-      "192": "UNDETERMINED",
-      "193": "EXPLAINED",
+      "192": "EXPLAINED",
+      "193": "UNGROUNDED",
       "195": "UNDETERMINED",
-      "196": "EXPLAINED",
-      "197": "EXPLAINED",
+      "196": "UNDETERMINED",
+      "197": "UNDETERMINED",
       "198": "UNGROUNDED",
-      "200": "EXPLAINED",
+      "200": "UNGROUNDED",
       "202": "UNDETERMINED",
       "203": "EXPLAINED",
       "204": "UNDETERMINED",
       "205": "UNDETERMINED",
-      "207": "EXPLAINED",
+      "207": "UNDETERMINED",
       "208": "UNDETERMINED",
       "210": "UNDETERMINED",
-      "211": "UNGROUNDED",
-      "213": "VIEW_ONLY",
-      "216": "EXPLAINED",
-      "217": "EXPLAINED",
-      "218": "EXPLAINED",
+      "211": "EXPLAINED",
+      "213": "EXPLAINED",
+      "216": "UNDETERMINED",
+      "217": "UNGROUNDED",
+      "218": "UNDETERMINED",
       "219": "UNDETERMINED",
       "220": "UNDETERMINED",
       "222": "EXPLAINED",
-      "223": "UNDETERMINED",
+      "223": "EXPLAINED",
       "224": "UNDETERMINED",
       "225": "EXPLAINED",
       "226": "UNGROUNDED",
@@ -4521,7 +4245,7 @@
       "240": "UNDETERMINED",
       "241": "UNDETERMINED",
       "242": "UNDETERMINED",
-      "243": "EXPLAINED",
+      "243": "UNDETERMINED",
       "244": "UNDETERMINED",
       "245": "UNDETERMINED",
       "246": "UNDETERMINED",
@@ -4531,14 +4255,14 @@
       "253": "UNDETERMINED",
       "254": "UNDETERMINED",
       "255": "UNDETERMINED",
-      "256": "EXPLAINED",
-      "257": "EXPLAINED",
+      "256": "UNGROUNDED",
+      "257": "UNGROUNDED",
       "260": "UNDETERMINED",
       "261": "UNDETERMINED",
       "262": "UNDETERMINED",
-      "263": "EXPLAINED",
+      "263": "UNDETERMINED",
       "264": "UNDETERMINED",
-      "266": "EXPLAINED",
+      "266": "UNDETERMINED",
       "267": "UNDETERMINED",
       "268": "UNDETERMINED",
       "270": "UNDETERMINED",
@@ -4547,39 +4271,39 @@
       "276": "EXPLAINED",
       "277": "UNDETERMINED",
       "281": "VIEW_ONLY",
-      "283": "EXPLAINED",
-      "284": "EXPLAINED",
+      "283": "UNDETERMINED",
+      "284": "UNGROUNDED",
       "285": "UNDETERMINED",
       "286": "EXPLAINED",
-      "287": "EXPLAINED",
-      "288": "EXPLAINED",
+      "287": "UNDETERMINED",
+      "288": "UNDETERMINED",
       "289": "UNDETERMINED",
-      "290": "EXPLAINED",
+      "290": "UNDETERMINED",
       "291": "UNGROUNDED",
-      "296": "EXPLAINED",
+      "296": "UNDETERMINED",
       "297": "UNDETERMINED",
       "298": "UNDETERMINED",
-      "299": "EXPLAINED",
-      "300": "EXPLAINED",
+      "299": "UNGROUNDED",
+      "300": "UNDETERMINED",
       "301": "UNGROUNDED",
       "303": "UNDETERMINED",
       "304": "UNDETERMINED",
       "305": "UNDETERMINED",
       "306": "UNDETERMINED",
-      "308": "EXPLAINED",
+      "308": "UNDETERMINED",
       "309": "UNDETERMINED",
       "310": "UNDETERMINED",
       "312": "UNDETERMINED",
       "313": "EXPLAINED",
-      "314": "EXPLAINED",
+      "314": "UNDETERMINED",
       "315": "EXPLAINED",
       "317": "UNDETERMINED",
       "318": "UNGROUNDED",
-      "322": "EXPLAINED",
+      "322": "UNGROUNDED",
       "324": "UNDETERMINED",
-      "325": "EXPLAINED",
+      "325": "UNDETERMINED",
       "326": "UNGROUNDED",
-      "329": "EXPLAINED",
+      "329": "UNDETERMINED",
       "330": "UNDETERMINED",
       "331": "UNDETERMINED",
       "332": "UNDETERMINED",
@@ -4600,49 +4324,49 @@
       "352": "UNDETERMINED",
       "353": "VIEW_ONLY",
       "356": "UNDETERMINED",
-      "357": "EXPLAINED",
+      "357": "UNDETERMINED",
       "358": "UNDETERMINED",
       "359": "UNDETERMINED",
       "360": "UNDETERMINED",
-      "362": "EXPLAINED",
-      "363": "EXPLAINED",
+      "362": "UNDETERMINED",
+      "363": "UNDETERMINED",
       "364": "EXPLAINED",
       "366": "UNGROUNDED",
       "368": "EXPLAINED",
-      "370": "EXPLAINED",
+      "370": "UNGROUNDED",
       "371": "EXPLAINED",
       "372": "UNDETERMINED",
       "373": "EXPLAINED",
       "374": "UNDETERMINED",
       "375": "UNDETERMINED",
       "376": "UNDETERMINED",
-      "377": "EXPLAINED",
+      "377": "UNDETERMINED",
       "380": "UNDETERMINED",
       "381": "UNDETERMINED",
       "382": "UNGROUNDED",
       "384": "UNDETERMINED",
-      "385": "EXPLAINED",
-      "386": "EXPLAINED",
+      "385": "UNDETERMINED",
+      "386": "UNDETERMINED",
       "387": "UNDETERMINED",
       "388": "EXPLAINED",
-      "389": "EXPLAINED",
-      "390": "EXPLAINED",
-      "391": "EXPLAINED",
+      "389": "UNDETERMINED",
+      "390": "UNDETERMINED",
+      "391": "UNDETERMINED",
       "392": "UNDETERMINED",
       "393": "UNDETERMINED",
       "394": "UNDETERMINED",
-      "395": "EXPLAINED",
+      "395": "UNDETERMINED",
       "396": "UNDETERMINED",
       "397": "UNDETERMINED",
-      "398": "EXPLAINED",
-      "399": "EXPLAINED",
+      "398": "UNGROUNDED",
+      "399": "UNDETERMINED",
       "400": "EXPLAINED",
-      "402": "EXPLAINED",
+      "402": "UNGROUNDED",
       "404": "UNDETERMINED",
       "405": "EXPLAINED",
       "407": "EXPLAINED",
-      "408": "EXPLAINED",
-      "409": "EXPLAINED",
+      "408": "UNDETERMINED",
+      "409": "UNGROUNDED",
       "413": "UNDETERMINED",
       "414": "UNDETERMINED",
       "415": "UNGROUNDED"
@@ -4655,11 +4379,9 @@
     "decision_kind": "ATTACH_PERSISTENT_WIDGET",
     "decision_status": "SUPPORTED",
     "current_decision_statuses": {
-     "ref-a4fd4824b37a": "VALIDATED"
+     "ref-a4fd4824b37a": "MISPREDICTED"
     },
-    "canonical_validated_decision_ids": [
-     "ref-a4fd4824b37a"
-    ],
+    "canonical_validated_decision_ids": [],
     "prospective_validations": [
      {
       "decision_ids": [
@@ -4667,6 +4389,32 @@
       ],
       "test_run": "runs/v2_stability/climbing_seed11",
       "test_trace_sha256": "e1255565ea4708475fbf719eae23ffc1006bc007ce48af3ef04c1e26293ecc54",
+      "status": "VALIDATED",
+      "tested_source_predictions": 2,
+      "prospectively_correct_predictions": 2,
+      "prospective_schema_accuracy": 1.0,
+      "evidence_independent_of_selection": true,
+      "reason": "a refinement-introduced schema recurred exactly on an object binding or affected object absent from the source evidence, under a unique type mapping, with no contradiction and no unexplained visible effects"
+     },
+     {
+      "decision_ids": [
+       "ref-a4fd4824b37a"
+      ],
+      "test_run": "runs/v2_falsification/climbing_seed12",
+      "test_trace_sha256": "2b318cbc14bfb476883baca709578ffec53c8e1d46bca54458a961ad45ae2aef",
+      "status": "MISPREDICTED",
+      "tested_source_predictions": 2,
+      "prospectively_correct_predictions": 1,
+      "prospective_schema_accuracy": 0.5,
+      "evidence_independent_of_selection": true,
+      "reason": "an applicable, rendered held-out occurrence contradicted a predicted effect literal"
+     },
+     {
+      "decision_ids": [
+       "ref-a4fd4824b37a"
+      ],
+      "test_run": "runs/v2_falsification/climbing_seed13",
+      "test_trace_sha256": "2112a1a7862c21f971635135261a18fd60008310de927200089b031efc39e68a",
       "status": "VALIDATED",
       "tested_source_predictions": 2,
       "prospectively_correct_predictions": 2,
@@ -10109,6 +9857,32 @@
       "prospective_schema_accuracy": 1.0,
       "evidence_independent_of_selection": true,
       "reason": "a refinement-introduced schema recurred exactly on an object binding or affected object absent from the source evidence, under a unique type mapping, with no contradiction and no unexplained visible effects"
+     },
+     {
+      "decision_ids": [
+       "ref-080835c578e1"
+      ],
+      "test_run": "runs/v2_falsification/observatory_seed12",
+      "test_trace_sha256": "6194bf95ceb6eac8c59aca228855a680bc26a480b1e9ef6c840f6336773787c7",
+      "status": "VALIDATED",
+      "tested_source_predictions": 3,
+      "prospectively_correct_predictions": 3,
+      "prospective_schema_accuracy": 1.0,
+      "evidence_independent_of_selection": true,
+      "reason": "a refinement-introduced schema recurred exactly on an object binding or affected object absent from the source evidence, under a unique type mapping, with no contradiction and no unexplained visible effects"
+     },
+     {
+      "decision_ids": [
+       "ref-080835c578e1"
+      ],
+      "test_run": "runs/v2_falsification/observatory_seed13",
+      "test_trace_sha256": "1d033dc10a3c5b122bb66710116e4a233d271f21562e1cbe934154b6fdc77ff8",
+      "status": "VALIDATED",
+      "tested_source_predictions": 3,
+      "prospectively_correct_predictions": 3,
+      "prospective_schema_accuracy": 1.0,
+      "evidence_independent_of_selection": true,
+      "reason": "a refinement-introduced schema recurred exactly on an object binding or affected object absent from the source evidence, under a unique type mapping, with no contradiction and no unexplained visible effects"
      }
     ],
     "selected_ungrounded_domain_events": [],
@@ -13630,8 +13404,8 @@
        "ref-2e782cb7889a",
        "ref-e89963ebd151"
       ],
-      "test_run": "runs/v2_stability/datacenter_seed11",
-      "test_trace_sha256": "7d77ac2a832d8ad19fb6f15f6c3b8fc2395d15e27ff4efa87e8ec3c9eacbdf1e",
+      "test_run": "runs/v2_validation/datacenter_context_holdout_002",
+      "test_trace_sha256": "7c65bd00d9c1b05e80a193e239db6ad737e140d567881b070f788f6c246c87f4",
       "status": "INCONCLUSIVE",
       "tested_source_predictions": 0,
       "prospectively_correct_predictions": 0,
@@ -13644,8 +13418,8 @@
        "ref-2e782cb7889a",
        "ref-e89963ebd151"
       ],
-      "test_run": "runs/v2_validation/datacenter_context_holdout_002",
-      "test_trace_sha256": "7c65bd00d9c1b05e80a193e239db6ad737e140d567881b070f788f6c246c87f4",
+      "test_run": "runs/v2_stability/datacenter_seed11",
+      "test_trace_sha256": "7d77ac2a832d8ad19fb6f15f6c3b8fc2395d15e27ff4efa87e8ec3c9eacbdf1e",
       "status": "INCONCLUSIVE",
       "tested_source_predictions": 0,
       "prospectively_correct_predictions": 0,

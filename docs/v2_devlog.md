@@ -158,3 +158,69 @@ C = 1.0 everywhere.
   also report how much of each decision transfers by template: observatory's record split
   carries 91 observation-keyed matrix cells of which 4 occur in seed 11, so only its
   template-keyed detail branch is exercised there.
+- 2026-08-23 n: candidate-versus-baseline differential arm. Structural baseline
+  subtraction cannot tell a refinement that adds behavioral information from one that
+  re-attaches the same information to another entity, so the two models are now compiled
+  from the same held-out trace, paired by step index, and each transition is labelled by
+  which model the environment selected (`semabi/compiler/v2/differential.py`, 12 tests).
+  A candidate win requires the baseline to be contradicted where the candidate was
+  confirmed, so divergence is entailed rather than asserted; silence, pairing gaps and
+  mixed models (one schema right and another wrong at the same step) are reported
+  separately, and corrective value is distinguished from coverage value. Observatory:
+  36 wins, 0 losses over three seeds, all one mechanism — scope-level identity merges
+  durations across nights, so the unrefined inducer emits two contradictory
+  precondition-free `Extend` rules and is contradicted on one of them at every win while
+  the record model states one conditioned rule. Climbing: zero divergent comparable cases
+  on every trace, because the unrefined climbing model has no determinate schema at all;
+  its refinement is therefore validated-prediction-only, never shown to predict better.
+- 2026-08-23 o: independent-seed falsification campaign. Four new traces (climbing 12/13,
+  observatory 12/13; 3,218 primitives, overhead .49-.59, unchanged). Observatory validates
+  on all three seeds (88 exact, 0 contradictions, 27 object-level novel bindings).
+  **Climbing is MISPREDICTED on seed 12**: 8 contradictions in 29 determinate steps.
+  Diagnosed from compiler-visible evidence: (1) seed 12's baseline entity typing merges the
+  wall-card and route-card unit templates into one type (5 units in T0 against 3 in seed 11
+  and the source, and the merge is present in the *unrefined* compile), while slot ids are
+  per-instance role ordinals and `describe_target` keeps only (slot id, owner type), so
+  `select(combobox#0@T0[?o])` denotes the grade combobox in one unit and the route card's
+  `_ of _` wall selector in another — 7 of 8 contradictions are the refinement asserting
+  that a route's colour becomes "Moon 1 of 2"; (2) the remaining one is a genuine
+  over-generalization, the learned forall recolours every route of the wall while the app
+  recolours only the co-local route, indistinguishable while no trace rendered two routes of
+  one wall at once. Both defects are upstream of the refinement and neither is app-specific.
+  A decision is not carried by a majority: seeds 11 and 13 do not overturn seed 12, the
+  decision is demoted, and climbing's canonical model reverts to RTC .000 / precision .167.
+  The .817 point estimate stands only as a development-trace fit.
+- 2026-08-23 p: the predictive-counterexample loop executed end to end.
+  `reopen_from_predictive_counterexamples` marks a refuted decision's accepted hypothesis
+  CONTRADICTED with the failure as evidence, so `select_intervention` and
+  `apply_*_result` cannot re-select it. First attempt failed silently: every diagnostic
+  compile rebuilds ambiguity components and `write_components` overwrote the stored ones by
+  id, erasing the refutation before the next pass read it — the reopened run re-selected the
+  refuted hypothesis and reset it to PROVISIONAL. `write_components` now carries
+  CONTRADICTED statuses and their evidence across refits (`_carry_refutations`, 6 tests).
+  With that fixed the reopened loop found no surviving refinement alternative in the refuted
+  component (only VIEW_STATE, which the persistence probe contradicts), moved to the sibling
+  widget component, and produced `ref-47e12ddb5822` for 18 primitives. Validated in
+  isolation it is PROVISIONAL / **MISPREDICTED** / PROVISIONAL on seeds 11/12/13, refuted by
+  the same seven page-selector cases. The deterministic hypothesis space for climbing's
+  widget ambiguity is exhausted; repairing it needs run-independent control identity, not
+  another local alternative, so this is recorded as a negative result rather than patched.
+- 2026-08-23 q: two more validator defects and one honesty defect, all found while the new
+  seeds were being judged, all fixed generically with every historical verdict re-run.
+  (1) Absence from a partial after-state that renders no object of the type was decisive in
+  both directions — CONTRADICTED for a predicted change, confirmed for a predicted removal.
+  It is UNKNOWN now unless the type is rendered afterwards. This removed observatory seed
+  12's only contradiction, a transition whose own lifted effects both set `duration := '3'`
+  and deleted the record, and it made removal confirmations strictly harder; climbing's
+  contradictions are value mismatches on rendered objects and are untouched. (2) A lifted
+  set/rel effect on an object the occurrence's after-state does not contain is now reported
+  as inconsistent provenance. (3) `decision_transfer.template_keyed` was hardcoded true,
+  which asserted something false about datacenter; it is now derived from the decision's
+  run-independent target keys and paired with an empirical compile-digest comparison. That
+  comparison settles datacenter: `ATTACH_CONTEXT_MEMBERSHIP` and `ASSOCIATE_MENTION_TYPE`
+  install only `(signature, node)` overrides, the candidate compile of every independent
+  datacenter trace is bit-identical to its baseline, and at support 1 (a diagnostic that can
+  never promote) the retirement schema is NOT_COMPARABLE on all 8 held-out occurrences of the
+  holdout run and all 1,090 of seed 11. The gate is unreachable by construction, so no
+  further retirement primitives were spent; the decision keeps its one passed direct test.
+  Suite: 70 passed, 1 expected xfail. Freeze gate: PARTIAL_1_OF_3. Not tagged.

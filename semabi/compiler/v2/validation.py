@@ -62,6 +62,17 @@ PREDICTIVE_COUNTEREXAMPLES_FILE = "predictive_counterexamples_v2.jsonl"
 UNKNOWN = object()
 _TID_RE = re.compile(r"T(\d+):")
 
+# Decision-target fields that name run-independent structure (unit templates, slots).
+# Kinds absent from this table carry only source-observation-keyed assignments and cannot
+# express anything about an independently collected trace.
+RUN_INDEPENDENT_TARGET_KEYS = {
+    "ATTACH_PERSISTENT_WIDGET": ("source_template", "source_slot", "target_template"),
+    "SPLIT_RELATIONAL_RECORD": ("anchor_entity_templates", "context_entity_templates",
+                                "target_entity_templates"),
+    "ASSOCIATE_MENTION_TYPE": (),
+    "ATTACH_CONTEXT_MEMBERSHIP": (),
+}
+
 OUTCOME_ORDER = [
     "EXACT",
     "PREDICTED_WITH_UNOBSERVED_EXTRAS",
@@ -689,9 +700,53 @@ def _members(occurrence: Schema, tid: int, rel: str | None, anchor, kind: str, s
     return out
 
 
+def _claim_subject(oid, after, before) -> str:
+    """Run-internal identity of a claim's subject: the rendered DOM node if there is one.
+
+    Two compiles of the same held-out trace factor the page differently, so object ids are
+    not comparable across them; the root node index of the same observation is."""
+    o = after.objs.get(oid) if isinstance(oid, tuple) else None
+    if o is None or o.node < 0:
+        o = before.objs.get(oid) if isinstance(oid, tuple) else None
+    if o is not None and o.node >= 0:
+        return f"node:{o.node}"
+    if isinstance(oid, tuple):
+        return "obj:" + re.sub(r"T(?:tst)?\d+:", "", oid[1])
+    return str(oid)
+
+
+def _claim_value(value, after, before):
+    if isinstance(value, tuple) and len(value) == 2 and value[0] == "new":
+        return "NEW"
+    if isinstance(value, tuple) and len(value) == 2 and isinstance(value[0], int):
+        return _claim_subject(value, after, before)
+    return value
+
+
+def claim_key(claim: dict[str, Any]) -> str:
+    """Cross-compile identity of one grounded predicted claim.
+
+    Reference-slot names are dropped: a refinement that renames the edge between the same
+    two rendered things must not look like a different prediction.  Attribute slot names
+    are kept; they are read from the same rendered labels by both compiles."""
+    if claim["kind"] == "rel":
+        return _stable(["rel", claim["subject"], claim["value"]])
+    return _stable([claim["kind"], claim["subject"], claim.get("slot"), claim["value"]])
+
+
 def _check_effects(prediction: Schema, occurrence: Schema, r: _Resolver) -> dict[str, Any]:
     """State-based check of predicted literals plus classification of unexplained extras."""
     after, before = occurrence.after, occurrence.before
+    # Absence from a partial after-state is only evidence of removal when the object's
+    # type is rendered there at all.  A view that shows no object of the type says nothing
+    # about any particular one: that is UNKNOWN, and UNKNOWN must not act as FALSE (for a
+    # predicted change) or as TRUE (for a predicted removal).
+    rendered_tids = {o.tid for o in after.objs.values() if o.node >= 0}
+
+    def type_unrendered(o_before) -> bool:
+        return (o_before is not None and getattr(after, "partial", True)
+                and o_before.tid not in rendered_tids)
+
     touched: set[tuple] = set()
     failures: list[dict] = []
     unobserved: list[dict] = []
@@ -699,15 +754,31 @@ def _check_effects(prediction: Schema, occurrence: Schema, r: _Resolver) -> dict
     confirmed: list[str] = []
     unresolved: list[str] = []
     matched_adds: set[tuple] = set()
+    claims: list[dict[str, Any]] = []
+
+    def note(kind: str, oid, slot, value) -> None:
+        """Record one determinate grounded claim.  Reporting only: never read by the
+        outcome logic, only by the candidate-versus-baseline differential arm."""
+        claims.append({
+            "kind": kind,
+            "subject": _claim_subject(oid, after, before),
+            "object": list(oid) if isinstance(oid, tuple) else oid,
+            "slot": slot,
+            "value": _claim_value(value, after, before),
+        })
 
     def check_set(oid, slot, value, label):
         o_after, o_before = after.objs.get(oid), before.objs.get(oid)
         if value is UNKNOWN:
             unresolved.append(label)
             return
+        note("attr", oid, slot, value)
         if o_after is None:
             if o_before is None:
                 unresolved.append(label)
+            elif type_unrendered(o_before):
+                unobserved.append({"effect": label, "object": list(oid),
+                                   "why": "no object of this type is rendered after the action"})
             else:
                 failures.append({"effect": label, "object": list(oid), "why": "object absent after action"})
             return
@@ -732,9 +803,13 @@ def _check_effects(prediction: Schema, occurrence: Schema, r: _Resolver) -> dict
         if value is UNKNOWN:
             unresolved.append(label)
             return
+        note("rel", oid, slot, value)
         if o_after is None:
             if o_before is None:
                 unresolved.append(label)
+            elif type_unrendered(o_before):
+                unobserved.append({"effect": label, "object": list(oid),
+                                   "why": "no object of this type is rendered after the action"})
             else:
                 failures.append({"effect": label, "object": list(oid), "why": "object absent after action"})
             return
@@ -758,7 +833,13 @@ def _check_effects(prediction: Schema, occurrence: Schema, r: _Resolver) -> dict
         if oid not in before.objs:
             unresolved.append(label)
             return
+        note("remove", oid, "__removed__", None)
         if o_after is None:
+            if type_unrendered(before.objs.get(oid)):
+                # the after-state renders no object of this type: absence confirms nothing
+                unobserved.append({"effect": label, "object": list(oid),
+                                   "why": "no object of this type is rendered after the action"})
+                return
             touched.add((oid, "__removed__"))
             confirmed.append(label)
         elif o_after.node < 0:
@@ -830,6 +911,13 @@ def _check_effects(prediction: Schema, occurrence: Schema, r: _Resolver) -> dict
                     or wanted_parent is UNKNOWN or None in wanted_refs:
                 unresolved.append(label)
                 continue
+            claims.append({
+                "kind": "add", "subject": f"type:{tid}", "slot": None,
+                "value": _stable([sorted((k, v) for k, v in wanted_attrs.items() if v is not UNKNOWN),
+                                  sorted((k, _claim_value(v, after, before)) for k, v in wanted_refs.items()),
+                                  _claim_value(wanted_parent, after, before)]),
+                "object": None,
+            })
             added = [o for o in after.objs.values() if o.id not in before.objs and o.tid == tid and o.id not in matched_adds]
             hits = []
             for o in added:
@@ -885,6 +973,14 @@ def _check_effects(prediction: Schema, occurrence: Schema, r: _Resolver) -> dict
                 inconsistent.append({"effect": label, "object": list(oid),
                                      "why": "object is still rendered after the action"})
                 continue
+        if e.kind in ("set", "rel"):
+            oid = occurrence.binding.get(e.obj)
+            target = after.objs.get(oid) if isinstance(oid, tuple) else None
+            if target is None and isinstance(oid, tuple) and oid in before.objs:
+                inconsistent.append({"effect": label, "object": list(oid),
+                                     "why": "the lifted effect changes an object its own after-state "
+                                            "does not contain"})
+                continue
         if e.kind == "set":
             oid = occurrence.binding.get(e.obj)
             target = after.objs.get(oid) if isinstance(oid, tuple) else None
@@ -919,6 +1015,7 @@ def _check_effects(prediction: Schema, occurrence: Schema, r: _Resolver) -> dict
         "failures": failures, "unresolved": unresolved, "extras": extras,
         "inconsistent_held_out_effects": inconsistent,
         "touched_objects": sorted({oid for oid, _slot in touched} | matched_adds),
+        "claims": claims,
     }
 
 
@@ -1117,6 +1214,45 @@ def trace_independence(source_log, test_log, source_run: Path, test_run: Path) -
 # ----------------------------------------------------------------------------------
 
 
+def decision_transfer(decisions: list[dict[str, Any]], test_sigs: set) -> dict[str, dict[str, Any]]:
+    """Which parts of each decision can say anything about an independent trace."""
+    out = {}
+    for decision in decisions:
+        target = decision.get("target", {})
+        cells = target.get("matrix_cells") or []
+        assignments = target.get("mention_assignments") or target.get("context_assignments") or []
+        run_independent = sorted(k for k in RUN_INDEPENDENT_TARGET_KEYS.get(decision.get("kind"), ())
+                                 if target.get(k))
+        out[decision["id"]] = {
+            "kind": decision.get("kind"),
+            "run_independent_target_keys": run_independent,
+            "transfers_by_template": bool(run_independent),
+            "observation_keyed_items": len(cells) + len(assignments),
+            "observation_keyed_items_present_in_test": sum(
+                1 for x in [*cells, *assignments] if x.get("sig") in test_sigs),
+        }
+    return out
+
+
+def _compile_digest(compiled) -> dict[str, Any]:
+    """Structure-sensitive summary of one compile, used to tell whether a decision bundle
+    changes the held-out model at all."""
+    types = sorted(
+        f"T{tid}|key={ti.key_slot}|slots={sorted(ti.slots)}|refs={sorted(ti.refs.items())}"
+        for tid, ti in compiled.abstractor.types.items()
+    )
+    operators = sorted(
+        _stable([[str(a) for a in op.acts], [str(e) for e in op.effs], op.support])
+        for op in compiled.inducer.operators
+    )
+    return {
+        "types": len(types),
+        "operators": len(operators),
+        "transitions": len(compiled.inducer.transitions),
+        "digest": hashlib.sha1(_stable([types, operators]).encode()).hexdigest()[:16],
+    }
+
+
 def _view_leaks(compiled) -> list[dict[str, Any]]:
     leaks = []
     probes = getattr(compiled.abstractor, "probe_by_step", {})
@@ -1166,6 +1302,7 @@ class ValidationRecord:
     baseline_shared_schemas: list[dict[str, Any]] = field(default_factory=list)
     independence: dict[str, Any] = field(default_factory=dict)
     limitations: list[str] = field(default_factory=list)
+    differential_evidence: dict[str, Any] = field(default_factory=dict)
 
 
 def backfill_decision_templates(decisions: list[dict[str, Any]], compiled) -> int:
@@ -1189,6 +1326,8 @@ def backfill_decision_templates(decisions: list[dict[str, Any]], compiled) -> in
 def cross_validate(source_run: Path, test_run: Path,
                    decisions: list[dict[str, Any]], min_support: int = 2) -> ValidationRecord:
     """Test a frozen decision bundle on an independently collected rendered trace."""
+    # deferred: the differential arm reuses this module's comparison machinery
+    from semabi.compiler.v2.differential import arm_verdicts, differential_evidence
     source_run, test_run = Path(source_run), Path(test_run)
     source_base = compile_v2(
         source_run, min_support=min_support, llm=None, apply_refinements=False,
@@ -1358,34 +1497,28 @@ def cross_validate(source_run: Path, test_run: Path,
             schema = transition_schema(test_base.inducer, tr, outcome)
             if schema is not None:
                 base_occurrences.append(schema)
-    base_control = {"predictions": 0, "underdetermined": 0, "outcome_counts": Counter()}
     base_test_types = test_base.abstractor.types
-    for schema in base_schemas:
-        if schema.support < min_support:
-            continue
-        if schema.underdetermined:
-            base_control["underdetermined"] += 1
-            continue
-        base_control["predictions"] += 1
-        for k, rows in partition_applicable_outcomes(schema, base_occurrences, base_types, base_test_types).items():
-            if k != "NOT_COMPARABLE":
-                base_control["outcome_counts"][k] += len(rows)
-    base_control["outcome_counts"] = dict(base_control["outcome_counts"])
+    base_arm = arm_verdicts(base_schemas, base_occurrences, base_types, base_test_types, min_support)
+    base_control = {k: base_arm[k] for k in ("predictions", "underdetermined", "outcome_counts")}
 
-    # How much of each decision transfers by run-independent keys
+    # Differential arm: the same held-out transitions, judged by the whole candidate model
+    # and by the whole unrefined model, paired by step index.  Structural difference from
+    # the baseline is not behavioral novelty; only divergent verdicts are.  Reporting only.
+    cand_arm = arm_verdicts(candidate_schemas, occurrences, src_types, tst_types, min_support)
+    differential = differential_evidence(cand_arm["by_step"], base_arm["by_step"],
+                                         {p.name for p in predictions},
+                                         cand_arm["occurrence_keys"], base_arm["occurrence_keys"])
+    differential["candidate_determinate_schemas"] = cand_arm["predictions"]
+    differential["baseline_determinate_schemas"] = base_arm["predictions"]
+    differential["candidate_outcome_counts"] = cand_arm["outcome_counts"]
+
+    # How much of each decision transfers by run-independent keys, and whether the bundle
+    # changes the held-out compile at all.  A decision whose whole content is keyed by
+    # source observation signatures cannot state anything about an independent trace, so
+    # its schema-level gate is unreachable by construction rather than by sparse data.
     test_sigs = {s.after for s in test_base.log.steps} | {s.before for s in test_base.log.steps}
-    transfer = {}
-    for decision in decisions:
-        target = decision.get("target", {})
-        cells = target.get("matrix_cells") or []
-        assignments = target.get("mention_assignments") or target.get("context_assignments") or []
-        transfer[decision["id"]] = {
-            "kind": decision.get("kind"),
-            "template_keyed": True,
-            "observation_keyed_items": len(cells) + len(assignments),
-            "observation_keyed_items_present_in_test": sum(
-                1 for x in [*cells, *assignments] if x.get("sig") in test_sigs),
-        }
+    transfer = decision_transfer(decisions, test_sigs)
+    base_digest, cand_digest = _compile_digest(test_base), _compile_digest(test_candidate)
 
     limitations = [
         "CONTRADICTED cannot distinguish a wrong refinement from a held-out abstraction that lacks a state "
@@ -1403,8 +1536,14 @@ def cross_validate(source_run: Path, test_run: Path,
         "The machinery confirms more readily than it refutes: a wrong refinement mostly degrades to NOT_COMPARABLE "
         "or UNKNOWN, and any single non-contradicting type/slot mapping suppresses a contradiction.",
         "Decision parts keyed by source observation signatures (matrix cells, mention/context assignments) are "
-        "inert on an independent trace; only template-keyed parts transfer. See provenance.decision_transfer.",
+        "inert on an independent trace; only template-keyed parts transfer. A decision with no run-independent "
+        "target keys cannot reach the schema-level gate at all, whatever the evidence. See "
+        "provenance.decision_transfer and provenance.held_out_compile_changed_by_decisions.",
         "VIEW leaks are detectable only on probe-classified steps, which are few on held-out traces.",
+        "Structural baseline subtraction does not establish behavioral novelty; the differential arm "
+        "reports the held-out transitions where the two models' verdicts actually diverge. Its "
+        "SAME_PREDICTION/BOTH_CORRECT split is approximate (grounded claims compared by rendered DOM "
+        "node, reference-slot names ignored) and neither category counts as a win.",
     ]
     return ValidationRecord(
         2, [d["id"] for d in decisions], str(source_run), str(test_run),
@@ -1425,6 +1564,10 @@ def cross_validate(source_run: Path, test_run: Path,
             "view_probed_test_steps": sum(
                 1 for v in getattr(test_candidate.abstractor, "probe_by_step", {}).values() if v.get("status") == "VIEW"),
             "baseline_control": base_control,
+            "held_out_compile_changed_by_decisions": base_digest != cand_digest,
+            "held_out_compile_baseline": base_digest,
+            "held_out_compile_candidate": cand_digest,
+            "differential_summary": {k: v for k, v in differential.items() if k != "cases"},
             "decision_transfer": transfer,
             "validated_decision_ids": validated_decision_ids,
             "decision_attribution": attribution,
@@ -1436,7 +1579,7 @@ def cross_validate(source_run: Path, test_run: Path,
                                   "unique type mapping, no contradiction, no unexplained visible extras, no VIEW leak",
             "source_affected_objects_per_prediction": {p.name: len(p.affected) for p in predictions},
         },
-        untestable, shared, independence, limitations,
+        untestable, shared, independence, limitations, differential,
     )
 
 

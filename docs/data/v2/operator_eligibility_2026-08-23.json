@@ -7418,20 +7418,20 @@
     }
    },
    "v2": {
-    "rtc": 0.817,
-    "registered_delta_precision": 0.711,
-    "strict_registered_delta_precision": 0.711,
+    "rtc": 0.0,
+    "registered_delta_precision": 0.167,
+    "strict_registered_delta_precision": 0.167,
     "operators_recovered": 1,
     "recovered_operators": [
-     "recolor"
+     "pull"
     ],
     "behavioral_repeats": {
      "version": 2,
-     "candidate_repeat_groups": 2,
+     "candidate_repeat_groups": 3,
      "comparable_groups": 0,
      "consistent_groups": 0,
      "contradictory_groups": 0,
-     "unresolved_repeat_pairs_due_unknown": 16,
+     "unresolved_repeat_pairs_due_unknown": 29,
      "abstraction_contradiction_rate": null,
      "comparable_transition_pairs": 0,
      "consistent_transition_pairs": 0,
@@ -7441,10 +7441,10 @@
       {
        "transition_steps": [
         [
-         287
+         184
         ],
         [
-         290
+         203
         ]
        ],
        "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
@@ -7453,70 +7453,82 @@
       {
        "transition_steps": [
         [
-         390
+         184
         ],
-        [
-         395
-        ]
-       ],
-       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
-       "same_registered_outcome": true
-      },
-      {
-       "transition_steps": [
-        [
-         421
-        ],
-        [
-         47
-        ]
-       ],
-       "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
-       "same_registered_outcome": false
-      },
-      {
-       "transition_steps": [
-        [
-         101
-        ],
-        [
-         329
-        ]
-       ],
-       "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
-       "same_registered_outcome": false
-      },
-      {
-       "transition_steps": [
-        [
-         69
-        ],
-        [
-         70
-        ]
-       ],
-       "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
-       "same_registered_outcome": false
-      },
-      {
-       "transition_steps": [
-        [
-         70
-        ],
-        [
-         108
-        ]
-       ],
-       "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
-       "same_registered_outcome": false
-      },
-      {
-       "transition_steps": [
         [
          222
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         203
         ],
         [
-         225
+         222
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         188
+        ],
+        [
+         211
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": false
+      },
+      {
+       "transition_steps": [
+        [
+         188
+        ],
+        [
+         223
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         211
+        ],
+        [
+         223
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": false
+      },
+      {
+       "transition_steps": [
+        [
+         192
+        ],
+        [
+         213
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         50
+        ],
+        [
+         178
         ]
        ],
        "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
@@ -7525,10 +7537,10 @@
       {
        "transition_steps": [
         [
-         96
+         50
         ],
         [
-         299
+         192
         ]
        ],
        "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
@@ -7537,10 +7549,10 @@
       {
        "transition_steps": [
         [
-         189
+         50
         ],
         [
-         217
+         213
         ]
        ],
        "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
@@ -7549,34 +7561,10 @@
       {
        "transition_steps": [
         [
-         398
+         178
         ],
         [
-         409
-        ]
-       ],
-       "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
-       "same_registered_outcome": false
-      },
-      {
-       "transition_steps": [
-        [
-         97
-        ],
-        [
-         325
-        ]
-       ],
-       "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
-       "same_registered_outcome": false
-      },
-      {
-       "transition_steps": [
-        [
-         97
-        ],
-        [
-         408
+         192
         ]
        ],
        "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
@@ -7585,34 +7573,22 @@
       {
        "transition_steps": [
         [
-         105
+         178
         ],
         [
-         296
+         213
         ]
        ],
        "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
-       "same_registered_outcome": false
+       "same_registered_outcome": true
       },
       {
        "transition_steps": [
         [
-         105
+         368
         ],
         [
-         308
-        ]
-       ],
-       "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
-       "same_registered_outcome": false
-      },
-      {
-       "transition_steps": [
-        [
-         314
-        ],
-        [
-         377
+         388
         ]
        ],
        "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
@@ -7629,34 +7605,214 @@
        ],
        "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
        "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         69
+        ],
+        [
+         70
+        ]
+       ],
+       "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
+       "same_registered_outcome": false
+      },
+      {
+       "transition_steps": [
+        [
+         69
+        ],
+        [
+         184
+        ]
+       ],
+       "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
+       "same_registered_outcome": false
+      },
+      {
+       "transition_steps": [
+        [
+         69
+        ],
+        [
+         203
+        ]
+       ],
+       "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
+       "same_registered_outcome": false
+      },
+      {
+       "transition_steps": [
+        [
+         69
+        ],
+        [
+         222
+        ]
+       ],
+       "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
+       "same_registered_outcome": false
+      },
+      {
+       "transition_steps": [
+        [
+         70
+        ],
+        [
+         184
+        ]
+       ],
+       "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
+       "same_registered_outcome": false
+      },
+      {
+       "transition_steps": [
+        [
+         70
+        ],
+        [
+         203
+        ]
+       ],
+       "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
+       "same_registered_outcome": false
+      },
+      {
+       "transition_steps": [
+        [
+         70
+        ],
+        [
+         222
+        ]
+       ],
+       "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
+       "same_registered_outcome": false
+      },
+      {
+       "transition_steps": [
+        [
+         108
+        ],
+        [
+         407
+        ]
+       ],
+       "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
+       "same_registered_outcome": false
+      },
+      {
+       "transition_steps": [
+        [
+         115
+        ],
+        [
+         364
+        ]
+       ],
+       "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
+       "same_registered_outcome": false
+      },
+      {
+       "transition_steps": [
+        [
+         175
+        ],
+        [
+         188
+        ]
+       ],
+       "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         175
+        ],
+        [
+         211
+        ]
+       ],
+       "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
+       "same_registered_outcome": false
+      },
+      {
+       "transition_steps": [
+        [
+         175
+        ],
+        [
+         223
+        ]
+       ],
+       "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         175
+        ],
+        [
+         337
+        ]
+       ],
+       "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         125
+        ],
+        [
+         237
+        ]
+       ],
+       "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
+       "same_registered_outcome": false
+      },
+      {
+       "transition_steps": [
+        [
+         144
+        ],
+        [
+         276
+        ]
+       ],
+       "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
+       "same_registered_outcome": true
       }
      ],
      "contradictions": []
     },
     "false_registered_delta_categories": {
-     "incorrect_persistence": 8,
-     "spurious_relation": 1,
-     "wrong_attribute_attachment": 19
+     "incorrect_persistence": 4,
+     "spurious_relation": 4,
+     "wrong_attribute_attachment": 2
     },
     "false_registered_delta_downstream_risks": {
-     "EFFECT_SIGNATURE_FRAGMENTATION": 21,
-     "EXTRA_EFFECT_IN_SUPPORTED_HYPOTHESIS": 7
+     "EFFECT_SIGNATURE_FRAGMENTATION": 6,
+     "EXTRA_EFFECT_IN_SUPPORTED_HYPOTHESIS": 4
     },
     "false_registered_deltas_by_operator": {
-     "hang": {
-      "atoms": 3,
-      "categories": {
-       "wrong_attribute_attachment": 3
-      },
-      "downstream_risks": {
-       "EFFECT_SIGNATURE_FRAGMENTATION": 3
-      },
-      "normal_v2_recovers_operator": false
-     },
-     "pull": {
+     "bump": {
       "atoms": 2,
       "categories": {
        "wrong_attribute_attachment": 2
+      },
+      "downstream_risks": {
+       "EFFECT_SIGNATURE_FRAGMENTATION": 2
+      },
+      "normal_v2_recovers_operator": false
+     },
+     "hang": {
+      "atoms": 2,
+      "categories": {
+       "spurious_relation": 2
       },
       "downstream_risks": {
        "EXTRA_EFFECT_IN_SUPPORTED_HYPOTHESIS": 2
@@ -7664,252 +7820,39 @@
       "normal_v2_recovers_operator": false
      },
      "recolor": {
-      "atoms": 18,
+      "atoms": 4,
       "categories": {
-       "incorrect_persistence": 6,
-       "wrong_attribute_attachment": 12
+       "incorrect_persistence": 4
       },
       "downstream_risks": {
-       "EFFECT_SIGNATURE_FRAGMENTATION": 18
+       "EFFECT_SIGNATURE_FRAGMENTATION": 4
       },
-      "normal_v2_recovers_operator": true
+      "normal_v2_recovers_operator": false
      },
      "restow": {
-      "atoms": 5,
+      "atoms": 2,
       "categories": {
-       "incorrect_persistence": 2,
-       "spurious_relation": 1,
-       "wrong_attribute_attachment": 2
+       "spurious_relation": 2
       },
       "downstream_risks": {
-       "EXTRA_EFFECT_IN_SUPPORTED_HYPOTHESIS": 5
+       "EXTRA_EFFECT_IN_SUPPORTED_HYPOTHESIS": 2
       },
       "normal_v2_recovers_operator": false
      }
     },
     "false_registered_delta_events": [
      {
-      "step": 46,
-      "operator": "recolor",
-      "category": "wrong_attribute_attachment",
-      "registered_atom": [
-       "attr",
-       0,
-       "Moon",
-       "attr:group/combobox#0@7"
-      ],
-      "expected_atoms": [
-       [
-        "attr",
-        2,
-        "T0:Moon|T1:R3",
-        "attr:attached:group/combobox#0"
-       ]
-      ],
-      "hidden_changes": [
-       [
-        "attr",
-        "Tape",
-        "tape1",
-        "color"
-       ]
-      ],
-      "transition_steps": [
-       46
-      ],
-      "macro_steps": [
-       46
-      ],
-      "induced_hypotheses": [
-       "op2"
-      ],
-      "learned_effect_signature": [
-       "attr:group/combobox#0@7(?o0) := '?s0'"
-      ],
-      "effect_signature_variants_for_operator": 5,
-      "downstream_risk": "EFFECT_SIGNATURE_FRAGMENTATION"
-     },
-     {
-      "step": 55,
-      "operator": "recolor",
-      "category": "wrong_attribute_attachment",
-      "registered_atom": [
-       "attr",
-       0,
-       "Moon",
-       "attr:group/combobox#0@7"
-      ],
-      "expected_atoms": [
-       [
-        "attr",
-        2,
-        "T0:Moon|T1:R3",
-        "attr:attached:group/combobox#0"
-       ]
-      ],
-      "hidden_changes": [
-       [
-        "attr",
-        "Tape",
-        "tape1",
-        "color"
-       ]
-      ],
-      "transition_steps": [
-       55
-      ],
-      "macro_steps": [
-       55
-      ],
-      "induced_hypotheses": [
-       "op2"
-      ],
-      "learned_effect_signature": [
-       "attr:group/combobox#0@7(?o0) := '?s0'"
-      ],
-      "effect_signature_variants_for_operator": 5,
-      "downstream_risk": "EFFECT_SIGNATURE_FRAGMENTATION"
-     },
-     {
-      "step": 57,
-      "operator": "recolor",
-      "category": "wrong_attribute_attachment",
-      "registered_atom": [
-       "attr",
-       0,
-       "Moon",
-       "attr:group/combobox#0@7"
-      ],
-      "expected_atoms": [
-       [
-        "attr",
-        2,
-        "T0:Moon|T1:R3",
-        "attr:attached:group/combobox#0"
-       ]
-      ],
-      "hidden_changes": [
-       [
-        "attr",
-        "Tape",
-        "tape1",
-        "color"
-       ]
-      ],
-      "transition_steps": [
-       57
-      ],
-      "macro_steps": [
-       57
-      ],
-      "induced_hypotheses": [
-       "op2"
-      ],
-      "learned_effect_signature": [
-       "attr:group/combobox#0@7(?o0) := '?s0'"
-      ],
-      "effect_signature_variants_for_operator": 5,
-      "downstream_risk": "EFFECT_SIGNATURE_FRAGMENTATION"
-     },
-     {
-      "step": 68,
-      "operator": "recolor",
-      "category": "wrong_attribute_attachment",
-      "registered_atom": [
-       "attr",
-       0,
-       "Moon",
-       "attr:group/combobox#0@7"
-      ],
-      "expected_atoms": [
-       [
-        "attr",
-        2,
-        "T0:Moon|T1:R3",
-        "attr:attached:group/combobox#0"
-       ]
-      ],
-      "hidden_changes": [
-       [
-        "attr",
-        "Tape",
-        "tape1",
-        "color"
-       ]
-      ],
-      "transition_steps": [
-       68
-      ],
-      "macro_steps": [
-       68
-      ],
-      "induced_hypotheses": [
-       "op2"
-      ],
-      "learned_effect_signature": [
-       "attr:group/combobox#0@7(?o0) := '?s0'"
-      ],
-      "effect_signature_variants_for_operator": 5,
-      "downstream_risk": "EFFECT_SIGNATURE_FRAGMENTATION"
-     },
-     {
-      "step": 72,
-      "operator": "recolor",
-      "category": "wrong_attribute_attachment",
-      "registered_atom": [
-       "attr",
-       0,
-       "Moon",
-       "attr:group/combobox#0@7"
-      ],
-      "expected_atoms": [
-       [
-        "attr",
-        2,
-        "T0:Moon|T1:R3",
-        "attr:attached:group/combobox#0"
-       ]
-      ],
-      "hidden_changes": [
-       [
-        "attr",
-        "Tape",
-        "tape1",
-        "color"
-       ]
-      ],
-      "transition_steps": [
-       72
-      ],
-      "macro_steps": [
-       72
-      ],
-      "induced_hypotheses": [
-       "op2"
-      ],
-      "learned_effect_signature": [
-       "attr:group/combobox#0@7(?o0) := '?s0'"
-      ],
-      "effect_signature_variants_for_operator": 5,
-      "downstream_risk": "EFFECT_SIGNATURE_FRAGMENTATION"
-     },
-     {
       "step": 86,
       "operator": "restow",
-      "category": "wrong_attribute_attachment",
+      "category": "spurious_relation",
       "registered_atom": [
-       "attr",
-       0,
-       "Cave",
-       "attr:of#1"
+       "rel",
+       1,
+       "R2",
+       "in:0"
       ],
       "expected_atoms": [
-       [
-        "rel",
-        2,
-        "T0:Moon|T1:R2",
-        "rel:0"
-       ]
+       null
       ],
       "hidden_changes": [
        [
@@ -7927,150 +7870,11 @@
        86
       ],
       "induced_hypotheses": [
-       "op22"
+       "op13"
       ],
       "learned_effect_signature": [
-       "?new0 := new T2(id=T0:Cave|T1:R2, attr:attached:group/combobox#0=white) rel:0->T0:Cave rel:1->?o1",
-       "attr:of#1(?o2) := '1'",
-       "attr:of#1(?o3) := '1'",
-       "delete ?o0",
-       "rel:0(?o1) := '?o2'"
-      ],
-      "effect_signature_variants_for_operator": 1,
-      "downstream_risk": "EXTRA_EFFECT_IN_SUPPORTED_HYPOTHESIS"
-     },
-     {
-      "step": 86,
-      "operator": "restow",
-      "category": "wrong_attribute_attachment",
-      "registered_atom": [
-       "attr",
-       0,
-       "Moon",
-       "attr:of#1"
-      ],
-      "expected_atoms": [
-       [
-        "rel",
-        2,
-        "T0:Moon|T1:R2",
-        "rel:0"
-       ]
-      ],
-      "hidden_changes": [
-       [
-        "rel",
-        "Tape",
-        "tape2",
-        "tape_wall"
-       ]
-      ],
-      "transition_steps": [
-       86
-      ],
-      "macro_steps": [
-       84,
-       86
-      ],
-      "induced_hypotheses": [
-       "op22"
-      ],
-      "learned_effect_signature": [
-       "?new0 := new T2(id=T0:Cave|T1:R2, attr:attached:group/combobox#0=white) rel:0->T0:Cave rel:1->?o1",
-       "attr:of#1(?o2) := '1'",
-       "attr:of#1(?o3) := '1'",
-       "delete ?o0",
-       "rel:0(?o1) := '?o2'"
-      ],
-      "effect_signature_variants_for_operator": 1,
-      "downstream_risk": "EXTRA_EFFECT_IN_SUPPORTED_HYPOTHESIS"
-     },
-     {
-      "step": 86,
-      "operator": "restow",
-      "category": "incorrect_persistence",
-      "registered_atom": [
-       "create",
-       2,
-       "T0:Cave|T1:R2"
-      ],
-      "expected_atoms": [
-       [
-        "rel",
-        2,
-        "T0:Moon|T1:R2",
-        "rel:0"
-       ]
-      ],
-      "hidden_changes": [
-       [
-        "rel",
-        "Tape",
-        "tape2",
-        "tape_wall"
-       ]
-      ],
-      "transition_steps": [
-       86
-      ],
-      "macro_steps": [
-       84,
-       86
-      ],
-      "induced_hypotheses": [
-       "op22"
-      ],
-      "learned_effect_signature": [
-       "?new0 := new T2(id=T0:Cave|T1:R2, attr:attached:group/combobox#0=white) rel:0->T0:Cave rel:1->?o1",
-       "attr:of#1(?o2) := '1'",
-       "attr:of#1(?o3) := '1'",
-       "delete ?o0",
-       "rel:0(?o1) := '?o2'"
-      ],
-      "effect_signature_variants_for_operator": 1,
-      "downstream_risk": "EXTRA_EFFECT_IN_SUPPORTED_HYPOTHESIS"
-     },
-     {
-      "step": 86,
-      "operator": "restow",
-      "category": "incorrect_persistence",
-      "registered_atom": [
-       "delete",
-       2,
-       "T0:Moon|T1:R2"
-      ],
-      "expected_atoms": [
-       [
-        "rel",
-        2,
-        "T0:Moon|T1:R2",
-        "rel:0"
-       ]
-      ],
-      "hidden_changes": [
-       [
-        "rel",
-        "Tape",
-        "tape2",
-        "tape_wall"
-       ]
-      ],
-      "transition_steps": [
-       86
-      ],
-      "macro_steps": [
-       84,
-       86
-      ],
-      "induced_hypotheses": [
-       "op22"
-      ],
-      "learned_effect_signature": [
-       "?new0 := new T2(id=T0:Cave|T1:R2, attr:attached:group/combobox#0=white) rel:0->T0:Cave rel:1->?o1",
-       "attr:of#1(?o2) := '1'",
-       "attr:of#1(?o3) := '1'",
-       "delete ?o0",
-       "rel:0(?o1) := '?o2'"
+       "in:0(?o0) := 'T0:Cave'",
+       "rel:0(?o1) := 'T0:Cave'"
       ],
       "effect_signature_variants_for_operator": 1,
       "downstream_risk": "EXTRA_EFFECT_IN_SUPPORTED_HYPOTHESIS"
@@ -8081,17 +7885,12 @@
       "category": "spurious_relation",
       "registered_atom": [
        "rel",
-       1,
-       "R2",
+       2,
+       "Arete",
        "rel:0"
       ],
       "expected_atoms": [
-       [
-        "rel",
-        2,
-        "T0:Moon|T1:R2",
-        "rel:0"
-       ]
+       null
       ],
       "hidden_changes": [
        [
@@ -8109,14 +7908,11 @@
        86
       ],
       "induced_hypotheses": [
-       "op22"
+       "op13"
       ],
       "learned_effect_signature": [
-       "?new0 := new T2(id=T0:Cave|T1:R2, attr:attached:group/combobox#0=white) rel:0->T0:Cave rel:1->?o1",
-       "attr:of#1(?o2) := '1'",
-       "attr:of#1(?o3) := '1'",
-       "delete ?o0",
-       "rel:0(?o1) := '?o2'"
+       "in:0(?o0) := 'T0:Cave'",
+       "rel:0(?o1) := 'T0:Cave'"
       ],
       "effect_signature_variants_for_operator": 1,
       "downstream_risk": "EXTRA_EFFECT_IN_SUPPORTED_HYPOTHESIS"
@@ -8124,19 +7920,15 @@
      {
       "step": 115,
       "operator": "hang",
-      "category": "wrong_attribute_attachment",
+      "category": "spurious_relation",
       "registered_atom": [
-       "attr",
-       0,
-       "Cave",
-       "attr:of#1"
+       "rel",
+       1,
+       "R3",
+       "in:0"
       ],
       "expected_atoms": [
-       [
-        "create",
-        2,
-        "T0:Cave|T1:R3"
-       ]
+       null
       ],
       "hidden_changes": [
        [
@@ -8152,147 +7944,13 @@
        115
       ],
       "induced_hypotheses": [
-       "op10"
+       "op4"
       ],
       "learned_effect_signature": [
-       "?new0 := new T2(id=T0:Cave|T1:R3, attr:attached:group/combobox#0=pink) rel:0->?o0 rel:1->T1:R3",
-       "attr:of#1(?o0) := '1'"
-      ],
-      "effect_signature_variants_for_operator": 3,
-      "downstream_risk": "EFFECT_SIGNATURE_FRAGMENTATION"
-     },
-     {
-      "step": 116,
-      "operator": "recolor",
-      "category": "wrong_attribute_attachment",
-      "registered_atom": [
-       "attr",
-       0,
-       "Island",
-       "attr:group/combobox#0@7"
-      ],
-      "expected_atoms": [
-       [
-        "attr",
-        2,
-        "T0:Island|T1:R3",
-        "attr:attached:group/combobox#0"
-       ]
-      ],
-      "hidden_changes": [
-       [
-        "attr",
-        "Tape",
-        "tape1",
-        "color"
-       ]
-      ],
-      "transition_steps": [
-       116
-      ],
-      "macro_steps": [
-       116
-      ],
-      "induced_hypotheses": [
-       "op2"
-      ],
-      "learned_effect_signature": [
-       "attr:group/combobox#0@7(?o0) := '?s0'"
-      ],
-      "effect_signature_variants_for_operator": 5,
-      "downstream_risk": "EFFECT_SIGNATURE_FRAGMENTATION"
-     },
-     {
-      "step": 125,
-      "operator": "pull",
-      "category": "wrong_attribute_attachment",
-      "registered_atom": [
-       "attr",
-       0,
-       "Island",
-       "attr:of#1"
-      ],
-      "expected_atoms": [
-       [
-        "delete",
-        1,
-        "R1"
-       ],
-       [
-        "delete",
-        2,
-        "T0:Island|T1:R1"
-       ]
-      ],
-      "hidden_changes": [
-       [
-        "delete",
-        "Route",
-        "route1"
-       ],
-       [
-        "delete",
-        "Tape",
-        "tape2"
-       ]
-      ],
-      "transition_steps": [
-       125
-      ],
-      "macro_steps": [
-       123,
-       125
-      ],
-      "induced_hypotheses": [
-       "op8"
-      ],
-      "learned_effect_signature": [
-       "attr:of#1(?o0) := '1'",
-       "delete ?o1"
+       "in:0(?o1) := '?o0'"
       ],
       "effect_signature_variants_for_operator": 1,
       "downstream_risk": "EXTRA_EFFECT_IN_SUPPORTED_HYPOTHESIS"
-     },
-     {
-      "step": 176,
-      "operator": "recolor",
-      "category": "wrong_attribute_attachment",
-      "registered_atom": [
-       "attr",
-       0,
-       "Moon",
-       "attr:group/combobox#0@7"
-      ],
-      "expected_atoms": [
-       [
-        "attr",
-        2,
-        "T0:Moon|T1:R2",
-        "attr:attached:group/combobox#0"
-       ]
-      ],
-      "hidden_changes": [
-       [
-        "attr",
-        "Tape",
-        "tape1",
-        "color"
-       ]
-      ],
-      "transition_steps": [
-       176
-      ],
-      "macro_steps": [
-       176
-      ],
-      "induced_hypotheses": [
-       "op2"
-      ],
-      "learned_effect_signature": [
-       "attr:group/combobox#0@7(?o0) := '?s0'"
-      ],
-      "effect_signature_variants_for_operator": 5,
-      "downstream_risk": "EFFECT_SIGNATURE_FRAGMENTATION"
      },
      {
       "step": 189,
@@ -8304,12 +7962,7 @@
        "Moon"
       ],
       "expected_atoms": [
-       [
-        "attr",
-        2,
-        "T0:Cave|T1:R1",
-        "attr:attached:group/combobox#0"
-       ]
+       null
       ],
       "hidden_changes": [
        [
@@ -8326,15 +7979,13 @@
        189
       ],
       "induced_hypotheses": [
-       "op13"
+       "op9"
       ],
       "learned_effect_signature": [
-       "?new0 := new T0(id=Moon, attr:group/combobox#0@7=white, attr:of#1=2, attr:of#2=2)",
-       "?new1 := new T2(id=T0:Moon|T1:R1, attr:attached:group/combobox#0=white) rel:0->?new0 rel:1->T1:R1",
-       "?new2 := new T2(id=T0:Moon|T1:R2, attr:attached:group/combobox#0=None) rel:0->?new0 rel:1->T1:R2",
-       "forall x:T2 with rel:0(x)==?o0: attr:attached:group/combobox#0(x) := '?s0'"
+       "?new0 := new T0(id=Moon, attr:group/combobox#0=None, attr:group/combobox#0@7=None, attr:of#1=None, attr:of#2=None)",
+       "?new1 := new T1(id=R2) in:0->?new0"
       ],
-      "effect_signature_variants_for_operator": 5,
+      "effect_signature_variants_for_operator": 2,
       "downstream_risk": "EFFECT_SIGNATURE_FRAGMENTATION"
      },
      {
@@ -8343,16 +7994,11 @@
       "category": "incorrect_persistence",
       "registered_atom": [
        "create",
-       2,
-       "T0:Moon|T1:R1"
+       1,
+       "R2"
       ],
       "expected_atoms": [
-       [
-        "attr",
-        2,
-        "T0:Cave|T1:R1",
-        "attr:attached:group/combobox#0"
-       ]
+       null
       ],
       "hidden_changes": [
        [
@@ -8369,249 +8015,101 @@
        189
       ],
       "induced_hypotheses": [
-       "op13"
+       "op9"
       ],
       "learned_effect_signature": [
-       "?new0 := new T0(id=Moon, attr:group/combobox#0@7=white, attr:of#1=2, attr:of#2=2)",
-       "?new1 := new T2(id=T0:Moon|T1:R1, attr:attached:group/combobox#0=white) rel:0->?new0 rel:1->T1:R1",
-       "?new2 := new T2(id=T0:Moon|T1:R2, attr:attached:group/combobox#0=None) rel:0->?new0 rel:1->T1:R2",
-       "forall x:T2 with rel:0(x)==?o0: attr:attached:group/combobox#0(x) := '?s0'"
+       "?new0 := new T0(id=Moon, attr:group/combobox#0=None, attr:group/combobox#0@7=None, attr:of#1=None, attr:of#2=None)",
+       "?new1 := new T1(id=R2) in:0->?new0"
       ],
-      "effect_signature_variants_for_operator": 5,
+      "effect_signature_variants_for_operator": 2,
       "downstream_risk": "EFFECT_SIGNATURE_FRAGMENTATION"
      },
      {
-      "step": 189,
-      "operator": "recolor",
-      "category": "incorrect_persistence",
-      "registered_atom": [
-       "create",
-       2,
-       "T0:Moon|T1:R2"
-      ],
-      "expected_atoms": [
-       [
-        "attr",
-        2,
-        "T0:Cave|T1:R1",
-        "attr:attached:group/combobox#0"
-       ]
-      ],
-      "hidden_changes": [
-       [
-        "attr",
-        "Tape",
-        "tape2",
-        "color"
-       ]
-      ],
-      "transition_steps": [
-       189
-      ],
-      "macro_steps": [
-       189
-      ],
-      "induced_hypotheses": [
-       "op13"
-      ],
-      "learned_effect_signature": [
-       "?new0 := new T0(id=Moon, attr:group/combobox#0@7=white, attr:of#1=2, attr:of#2=2)",
-       "?new1 := new T2(id=T0:Moon|T1:R1, attr:attached:group/combobox#0=white) rel:0->?new0 rel:1->T1:R1",
-       "?new2 := new T2(id=T0:Moon|T1:R2, attr:attached:group/combobox#0=None) rel:0->?new0 rel:1->T1:R2",
-       "forall x:T2 with rel:0(x)==?o0: attr:attached:group/combobox#0(x) := '?s0'"
-      ],
-      "effect_signature_variants_for_operator": 5,
-      "downstream_risk": "EFFECT_SIGNATURE_FRAGMENTATION"
-     },
-     {
-      "step": 237,
-      "operator": "pull",
+      "step": 315,
+      "operator": "bump",
       "category": "wrong_attribute_attachment",
       "registered_atom": [
        "attr",
-       0,
-       "Island",
-       "attr:of#1"
+       3,
+       "R3",
+       "attr:cell#0@2"
       ],
       "expected_atoms": [
-       [
-        "delete",
-        1,
-        "R2"
-       ],
-       [
-        "delete",
-        2,
-        "T0:Island|T1:R2"
-       ]
+       null
       ],
       "hidden_changes": [
        [
-        "delete",
+        "attr",
         "Route",
-        "route2"
-       ],
-       [
-        "delete",
-        "Tape",
-        "tape2"
+        "route3",
+        "grade"
        ]
       ],
       "transition_steps": [
-       237
+       315
       ],
       "macro_steps": [
-       234,
-       237
+       314,
+       315
       ],
       "induced_hypotheses": [
-       "op8"
+       "op14"
       ],
       "learned_effect_signature": [
-       "attr:of#1(?o0) := '1'",
-       "delete ?o1"
+       "attr:cell#0@2(?o0) := '3'"
       ],
-      "effect_signature_variants_for_operator": 1,
-      "downstream_risk": "EXTRA_EFFECT_IN_SUPPORTED_HYPOTHESIS"
-     },
-     {
-      "step": 357,
-      "operator": "hang",
-      "category": "wrong_attribute_attachment",
-      "registered_atom": [
-       "attr",
-       0,
-       "Island",
-       "attr:of#1"
-      ],
-      "expected_atoms": [
-       [
-        "create",
-        2,
-        "T0:Island|T1:R2"
-       ]
-      ],
-      "hidden_changes": [
-       [
-        "create",
-        "Tape",
-        "tape3"
-       ]
-      ],
-      "transition_steps": [
-       357
-      ],
-      "macro_steps": [
-       357
-      ],
-      "induced_hypotheses": [
-       "op18"
-      ],
-      "learned_effect_signature": [
-       "?new0 := new T2(id=T0:Island|T1:R2, attr:attached:group/combobox#0=None) rel:0->?o0 rel:1->T1:R2",
-       "attr:of#1(?o0) := '2'"
-      ],
-      "effect_signature_variants_for_operator": 3,
+      "effect_signature_variants_for_operator": 2,
       "downstream_risk": "EFFECT_SIGNATURE_FRAGMENTATION"
      },
      {
-      "step": 362,
-      "operator": "recolor",
+      "step": 343,
+      "operator": "bump",
       "category": "wrong_attribute_attachment",
       "registered_atom": [
        "attr",
-       0,
-       "Island",
-       "attr:group/combobox#0@7"
+       3,
+       "R1 Cave Moon",
+       "attr:cell#0@2"
       ],
       "expected_atoms": [
-       [
-        "attr",
-        2,
-        "T0:Island|T1:R2",
-        "attr:attached:group/combobox#0"
-       ]
+       null
       ],
       "hidden_changes": [
        [
         "attr",
-        "Tape",
-        "tape3",
-        "color"
+        "Route",
+        "route1",
+        "grade"
        ]
       ],
       "transition_steps": [
-       362
+       343
       ],
       "macro_steps": [
-       362
+       342,
+       343
       ],
       "induced_hypotheses": [
-       "op2"
+       "op15"
       ],
       "learned_effect_signature": [
-       "attr:group/combobox#0@7(?o0) := '?s0'"
+       "attr:cell#0@2(?o0) := '4'"
       ],
-      "effect_signature_variants_for_operator": 5,
-      "downstream_risk": "EFFECT_SIGNATURE_FRAGMENTATION"
-     },
-     {
-      "step": 363,
-      "operator": "recolor",
-      "category": "wrong_attribute_attachment",
-      "registered_atom": [
-       "attr",
-       0,
-       "Island",
-       "attr:group/combobox#0@7"
-      ],
-      "expected_atoms": [
-       [
-        "attr",
-        2,
-        "T0:Island|T1:R2",
-        "attr:attached:group/combobox#0"
-       ]
-      ],
-      "hidden_changes": [
-       [
-        "attr",
-        "Tape",
-        "tape3",
-        "color"
-       ]
-      ],
-      "transition_steps": [
-       363
-      ],
-      "macro_steps": [
-       363
-      ],
-      "induced_hypotheses": [
-       "op2"
-      ],
-      "learned_effect_signature": [
-       "attr:group/combobox#0@7(?o0) := '?s0'"
-      ],
-      "effect_signature_variants_for_operator": 5,
+      "effect_signature_variants_for_operator": 2,
       "downstream_risk": "EFFECT_SIGNATURE_FRAGMENTATION"
      },
      {
       "step": 364,
       "operator": "hang",
-      "category": "wrong_attribute_attachment",
+      "category": "spurious_relation",
       "registered_atom": [
-       "attr",
-       0,
-       "Cave",
-       "attr:of#1"
+       "rel",
+       1,
+       "R2",
+       "in:0"
       ],
       "expected_atoms": [
-       [
-        "create",
-        2,
-        "T0:Cave|T1:R2"
-       ]
+       null
       ],
       "hidden_changes": [
        [
@@ -8627,137 +8125,13 @@
        364
       ],
       "induced_hypotheses": [
-       "op19"
+       "op4"
       ],
       "learned_effect_signature": [
-       "?new0 := new T2(id=T0:Cave|T1:R2, attr:attached:group/combobox#0=pink) rel:0->?o0 rel:1->T1:R2",
-       "attr:of#1(?o0) := '1'"
+       "in:0(?o1) := '?o0'"
       ],
-      "effect_signature_variants_for_operator": 3,
-      "downstream_risk": "EFFECT_SIGNATURE_FRAGMENTATION"
-     },
-     {
-      "step": 386,
-      "operator": "recolor",
-      "category": "wrong_attribute_attachment",
-      "registered_atom": [
-       "attr",
-       0,
-       "Island",
-       "attr:group/combobox#0@7"
-      ],
-      "expected_atoms": [
-       [
-        "attr",
-        2,
-        "T0:Island|T1:R2",
-        "attr:attached:group/combobox#0"
-       ]
-      ],
-      "hidden_changes": [
-       [
-        "attr",
-        "Tape",
-        "tape3",
-        "color"
-       ]
-      ],
-      "transition_steps": [
-       386
-      ],
-      "macro_steps": [
-       386
-      ],
-      "induced_hypotheses": [
-       "op2"
-      ],
-      "learned_effect_signature": [
-       "attr:group/combobox#0@7(?o0) := '?s0'"
-      ],
-      "effect_signature_variants_for_operator": 5,
-      "downstream_risk": "EFFECT_SIGNATURE_FRAGMENTATION"
-     },
-     {
-      "step": 389,
-      "operator": "recolor",
-      "category": "wrong_attribute_attachment",
-      "registered_atom": [
-       "attr",
-       0,
-       "Island",
-       "attr:group/combobox#0@7"
-      ],
-      "expected_atoms": [
-       [
-        "attr",
-        2,
-        "T0:Island|T1:R2",
-        "attr:attached:group/combobox#0"
-       ]
-      ],
-      "hidden_changes": [
-       [
-        "attr",
-        "Tape",
-        "tape3",
-        "color"
-       ]
-      ],
-      "transition_steps": [
-       389
-      ],
-      "macro_steps": [
-       389
-      ],
-      "induced_hypotheses": [
-       "op2"
-      ],
-      "learned_effect_signature": [
-       "attr:group/combobox#0@7(?o0) := '?s0'"
-      ],
-      "effect_signature_variants_for_operator": 5,
-      "downstream_risk": "EFFECT_SIGNATURE_FRAGMENTATION"
-     },
-     {
-      "step": 399,
-      "operator": "recolor",
-      "category": "wrong_attribute_attachment",
-      "registered_atom": [
-       "attr",
-       0,
-       "Island",
-       "attr:group/combobox#0@7"
-      ],
-      "expected_atoms": [
-       [
-        "attr",
-        2,
-        "T0:Island|T1:R2",
-        "attr:attached:group/combobox#0"
-       ]
-      ],
-      "hidden_changes": [
-       [
-        "attr",
-        "Tape",
-        "tape3",
-        "color"
-       ]
-      ],
-      "transition_steps": [
-       399
-      ],
-      "macro_steps": [
-       399
-      ],
-      "induced_hypotheses": [
-       "op2"
-      ],
-      "learned_effect_signature": [
-       "attr:group/combobox#0@7(?o0) := '?s0'"
-      ],
-      "effect_signature_variants_for_operator": 5,
-      "downstream_risk": "EFFECT_SIGNATURE_FRAGMENTATION"
+      "effect_signature_variants_for_operator": 1,
+      "downstream_risk": "EXTRA_EFFECT_IN_SUPPORTED_HYPOTHESIS"
      },
      {
       "step": 409,
@@ -8769,12 +8143,7 @@
        "Island"
       ],
       "expected_atoms": [
-       [
-        "attr",
-        2,
-        "T0:Cave|T1:R2",
-        "attr:attached:group/combobox#0"
-       ]
+       null
       ],
       "hidden_changes": [
        [
@@ -8791,15 +8160,13 @@
        409
       ],
       "induced_hypotheses": [
-       "op21"
+       "op12"
       ],
       "learned_effect_signature": [
-       "?new0 := new T0(id=Island, attr:group/combobox#0@7=white, attr:of#1=2, attr:of#2=2)",
-       "?new1 := new T2(id=T0:Island|T1:R1, attr:attached:group/combobox#0=black) rel:0->?new0 rel:1->T1:R1",
-       "?new2 := new T2(id=T0:Island|T1:R2, attr:attached:group/combobox#0=None) rel:0->?new0 rel:1->T1:R2",
-       "forall x:T2 with rel:0(x)==?o0: attr:attached:group/combobox#0(x) := '?s0'"
+       "?new0 := new T0(id=Island, attr:group/combobox#0=None, attr:group/combobox#0@7=None, attr:of#1=None, attr:of#2=None)",
+       "?new1 := new T1(id=R1) in:0->?new0"
       ],
-      "effect_signature_variants_for_operator": 5,
+      "effect_signature_variants_for_operator": 2,
       "downstream_risk": "EFFECT_SIGNATURE_FRAGMENTATION"
      },
      {
@@ -8808,16 +8175,11 @@
       "category": "incorrect_persistence",
       "registered_atom": [
        "create",
-       2,
-       "T0:Island|T1:R1"
+       1,
+       "R1"
       ],
       "expected_atoms": [
-       [
-        "attr",
-        2,
-        "T0:Cave|T1:R2",
-        "attr:attached:group/combobox#0"
-       ]
+       null
       ],
       "hidden_changes": [
        [
@@ -8834,65 +8196,20 @@
        409
       ],
       "induced_hypotheses": [
-       "op21"
+       "op12"
       ],
       "learned_effect_signature": [
-       "?new0 := new T0(id=Island, attr:group/combobox#0@7=white, attr:of#1=2, attr:of#2=2)",
-       "?new1 := new T2(id=T0:Island|T1:R1, attr:attached:group/combobox#0=black) rel:0->?new0 rel:1->T1:R1",
-       "?new2 := new T2(id=T0:Island|T1:R2, attr:attached:group/combobox#0=None) rel:0->?new0 rel:1->T1:R2",
-       "forall x:T2 with rel:0(x)==?o0: attr:attached:group/combobox#0(x) := '?s0'"
+       "?new0 := new T0(id=Island, attr:group/combobox#0=None, attr:group/combobox#0@7=None, attr:of#1=None, attr:of#2=None)",
+       "?new1 := new T1(id=R1) in:0->?new0"
       ],
-      "effect_signature_variants_for_operator": 5,
-      "downstream_risk": "EFFECT_SIGNATURE_FRAGMENTATION"
-     },
-     {
-      "step": 409,
-      "operator": "recolor",
-      "category": "incorrect_persistence",
-      "registered_atom": [
-       "create",
-       2,
-       "T0:Island|T1:R2"
-      ],
-      "expected_atoms": [
-       [
-        "attr",
-        2,
-        "T0:Cave|T1:R2",
-        "attr:attached:group/combobox#0"
-       ]
-      ],
-      "hidden_changes": [
-       [
-        "attr",
-        "Tape",
-        "tape4",
-        "color"
-       ]
-      ],
-      "transition_steps": [
-       409
-      ],
-      "macro_steps": [
-       409
-      ],
-      "induced_hypotheses": [
-       "op21"
-      ],
-      "learned_effect_signature": [
-       "?new0 := new T0(id=Island, attr:group/combobox#0@7=white, attr:of#1=2, attr:of#2=2)",
-       "?new1 := new T2(id=T0:Island|T1:R1, attr:attached:group/combobox#0=black) rel:0->?new0 rel:1->T1:R1",
-       "?new2 := new T2(id=T0:Island|T1:R2, attr:attached:group/combobox#0=None) rel:0->?new0 rel:1->T1:R2",
-       "forall x:T2 with rel:0(x)==?o0: attr:attached:group/combobox#0(x) := '?s0'"
-      ],
-      "effect_signature_variants_for_operator": 5,
+      "effect_signature_variants_for_operator": 2,
       "downstream_risk": "EFFECT_SIGNATURE_FRAGMENTATION"
      }
     ],
     "induction_diagnostics": {
-     "transitions": 112,
-     "hypotheses_before_min_support": 25,
-     "reattributed_domain_changes": 0,
+     "transitions": 37,
+     "hypotheses_before_min_support": 17,
+     "reattributed_domain_changes": 2,
      "unattributed_sensing_changes": [
       {
        "revealing_step": 112,
@@ -8900,17 +8217,8 @@
        "last_transition_steps": [
         108
        ],
-       "delta": "+T0:'Island' {'attr:of#1': '2', 'attr:of#2': '2', 'attr:group/combobox#0@7': 'pink'}",
+       "delta": "+T0:'Island' {'attr:of#1': None, 'attr:of#2': None, 'attr:group/combobox#0': None, 'attr:group/combobox#0@7': None}",
        "observation": "5a044aba4d6c0e20"
-      },
-      {
-       "revealing_step": 212,
-       "kind": "reload_after_intervening_actions",
-       "last_transition_steps": [
-        207
-       ],
-       "delta": "+T0:'Moon' {'attr:of#1': '2', 'attr:of#2': '2', 'attr:group/combobox#0@7': 'white'}; +T2:'T0:Moon|T1:R1' {'attr:attached:group/combobox#0': 'black'} rel:1->T1:'R1' rel:0->T0:'Moon'; +T2:'T0:Moon|T1:R2' {'attr:attached:group/combobox#0': None} rel:1->T1:'R2' rel:0->T0:'Moon'",
-       "observation": "f42cd2e83f7472b8"
       }
      ],
      "delayed_object_resolutions": []
@@ -12091,7 +11399,7 @@
    "arguments_representable": false,
    "argument_binding_evidence": {
     "successful_instances": 3,
-    "with_abstract_transition": 3,
+    "with_abstract_transition": 2,
     "all_arguments_bound": 0,
     "action_arguments_grounded": 0,
     "all_arguments_bound_rate": 0.0,
@@ -12099,10 +11407,10 @@
     "conditional_all_arguments_bound_rate": 0.0,
     "conditional_action_arguments_grounded_rate": 0.0
    },
-   "persistent_delta_representable": true,
+   "persistent_delta_representable": false,
    "registered_delta_correct": false,
-   "v2_registered_transition_coverage": 1.0,
-   "v2_strict_registered_delta_precision": 0.5,
+   "v2_registered_transition_coverage": 0.0,
+   "v2_strict_registered_delta_precision": 0.0,
    "effect_language": {
     "expressible_in_frozen_v0": true,
     "reasons": [],
@@ -12150,7 +11458,7 @@
    "normal_v2_explained_instances": 0,
    "eligible_clean_80pct": false,
    "eligible_exact": false,
-   "failure_category": "UNGROUNDED_ARGUMENTS",
+   "failure_category": "STATE_DELTA_UNREPRESENTABLE",
    "competing_or_secondary_causes": []
   },
   {
@@ -12162,18 +11470,18 @@
    "arguments_representable": false,
    "argument_binding_evidence": {
     "successful_instances": 74,
-    "with_abstract_transition": 74,
-    "all_arguments_bound": 15,
+    "with_abstract_transition": 2,
+    "all_arguments_bound": 0,
     "action_arguments_grounded": 0,
-    "all_arguments_bound_rate": 0.203,
+    "all_arguments_bound_rate": 0.0,
     "action_arguments_grounded_rate": 0.0,
-    "conditional_all_arguments_bound_rate": 0.203,
+    "conditional_all_arguments_bound_rate": 0.0,
     "conditional_action_arguments_grounded_rate": 0.0
    },
-   "persistent_delta_representable": true,
+   "persistent_delta_representable": false,
    "registered_delta_correct": false,
-   "v2_registered_transition_coverage": 0.8378378378378378,
-   "v2_strict_registered_delta_precision": 0.775,
+   "v2_registered_transition_coverage": 0.0,
+   "v2_strict_registered_delta_precision": 0.0,
    "effect_language": {
     "expressible_in_frozen_v0": true,
     "reasons": [],
@@ -12210,11 +11518,11 @@
    "known_vocabulary_explained_instances": 74,
    "oracle_D_recovers": true,
    "oracle_D_explained_instances": 74,
-   "normal_v2_recovers": true,
-   "normal_v2_explained_instances": 74,
+   "normal_v2_recovers": false,
+   "normal_v2_explained_instances": 0,
    "eligible_clean_80pct": false,
    "eligible_exact": false,
-   "failure_category": "RECOVERED",
+   "failure_category": "STATE_DELTA_UNREPRESENTABLE",
    "competing_or_secondary_causes": []
   },
   {
@@ -12227,11 +11535,11 @@
    "argument_binding_evidence": {
     "successful_instances": 1,
     "with_abstract_transition": 1,
-    "all_arguments_bound": 1,
+    "all_arguments_bound": 0,
     "action_arguments_grounded": 0,
-    "all_arguments_bound_rate": 1.0,
+    "all_arguments_bound_rate": 0.0,
     "action_arguments_grounded_rate": 0.0,
-    "conditional_all_arguments_bound_rate": 1.0,
+    "conditional_all_arguments_bound_rate": 0.0,
     "conditional_action_arguments_grounded_rate": 0.0
    },
    "persistent_delta_representable": false,
@@ -12287,21 +11595,21 @@
    "was_ever_exercised": true,
    "successful_instances": 2,
    "failed_or_refused_instances": 1,
-   "arguments_representable": true,
+   "arguments_representable": false,
    "argument_binding_evidence": {
     "successful_instances": 2,
     "with_abstract_transition": 2,
-    "all_arguments_bound": 2,
-    "action_arguments_grounded": 2,
-    "all_arguments_bound_rate": 1.0,
-    "action_arguments_grounded_rate": 1.0,
-    "conditional_all_arguments_bound_rate": 1.0,
-    "conditional_action_arguments_grounded_rate": 1.0
+    "all_arguments_bound": 0,
+    "action_arguments_grounded": 0,
+    "all_arguments_bound_rate": 0.0,
+    "action_arguments_grounded_rate": 0.0,
+    "conditional_all_arguments_bound_rate": 0.0,
+    "conditional_action_arguments_grounded_rate": 0.0
    },
-   "persistent_delta_representable": true,
-   "registered_delta_correct": true,
-   "v2_registered_transition_coverage": 1.0,
-   "v2_strict_registered_delta_precision": 1.0,
+   "persistent_delta_representable": false,
+   "registered_delta_correct": false,
+   "v2_registered_transition_coverage": 0.0,
+   "v2_strict_registered_delta_precision": 0.0,
    "effect_language": {
     "expressible_in_frozen_v0": false,
     "reasons": [
@@ -12360,10 +11668,8 @@
    "normal_v2_explained_instances": 0,
    "eligible_clean_80pct": false,
    "eligible_exact": false,
-   "failure_category": "OUT_OF_EFFECT_LANGUAGE",
-   "competing_or_secondary_causes": [
-    "INSUFFICIENT_SUPPORT"
-   ]
+   "failure_category": "STATE_DELTA_UNREPRESENTABLE",
+   "competing_or_secondary_causes": []
   },
   {
    "app": "climbing",
@@ -12418,17 +11724,17 @@
    "argument_binding_evidence": {
     "successful_instances": 2,
     "with_abstract_transition": 2,
-    "all_arguments_bound": 2,
+    "all_arguments_bound": 0,
     "action_arguments_grounded": 0,
-    "all_arguments_bound_rate": 1.0,
+    "all_arguments_bound_rate": 0.0,
     "action_arguments_grounded_rate": 0.0,
-    "conditional_all_arguments_bound_rate": 1.0,
+    "conditional_all_arguments_bound_rate": 0.0,
     "conditional_action_arguments_grounded_rate": 0.0
    },
    "persistent_delta_representable": false,
    "registered_delta_correct": false,
    "v2_registered_transition_coverage": 0.0,
-   "v2_strict_registered_delta_precision": 0.5,
+   "v2_strict_registered_delta_precision": 1.0,
    "effect_language": {
     "expressible_in_frozen_v0": false,
     "reasons": [
@@ -12477,11 +11783,11 @@
    "known_vocabulary_explained_instances": 2,
    "oracle_D_recovers": true,
    "oracle_D_explained_instances": 2,
-   "normal_v2_recovers": false,
-   "normal_v2_explained_instances": 0,
+   "normal_v2_recovers": true,
+   "normal_v2_explained_instances": 2,
    "eligible_clean_80pct": false,
    "eligible_exact": false,
-   "failure_category": "STATE_DELTA_UNREPRESENTABLE",
+   "failure_category": "RECOVERED",
    "competing_or_secondary_causes": []
   }
  ],
@@ -12496,10 +11802,10 @@
   "eligible_exact": 1,
   "failure_categories": {
    "NOT_TRIGGERED": 5,
-   "OUT_OF_EFFECT_LANGUAGE": 4,
+   "OUT_OF_EFFECT_LANGUAGE": 3,
    "RECOVERED": 9,
-   "STATE_DELTA_UNREPRESENTABLE": 24,
-   "UNGROUNDED_ARGUMENTS": 5
+   "STATE_DELTA_UNREPRESENTABLE": 26,
+   "UNGROUNDED_ARGUMENTS": 4
   },
   "known_vocabulary_gap": {
    "exercised_but_not_recovered": [

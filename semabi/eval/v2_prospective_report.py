@@ -43,6 +43,17 @@ def main() -> None:
             "source_run": str(source),
             "decision_statuses": {d["id"]: d["status"] for d in decisions},
             "canonical_decision_ids": [d["id"] for d in decisions if d["status"] == "VALIDATED"],
+            # every independent trace is reported; a later inconclusive test never hides an
+            # earlier contradiction and an earlier pass never covers a later one
+            "held_out_traces": [
+                {"test_run": v["test_run"], "test_trace_sha256": v["test_trace_sha256"],
+                 "status": v["status"], "reason": v.get("reason"),
+                 "independent": v.get("evidence_independent_of_selection"),
+                 "contradictions": len(v.get("mispredictions", [])),
+                 "differential": {k: x for k, x in (v.get("differential_evidence") or {}).items()
+                                  if k != "cases"}}
+                for v in validations
+            ],
             "latest_validation": latest,
             "predictive_counterexamples_file": str(source / "predictive_counterexamples_v2.jsonl"),
             "predictive_counterexamples": sum(
@@ -94,7 +105,27 @@ def main() -> None:
             for name, row in report["cases"].items() if row.get("novel_interventions")
         },
         "held_out_statuses": {
-            name: (row.get("latest_validation") or {}).get("status") for name, row in report["cases"].items()
+            name: [x["status"] for x in row.get("held_out_traces", [])]
+            for name, row in report["cases"].items()
+        },
+        "independent_traces_per_case": {
+            name: len(row.get("held_out_traces", [])) for name, row in report["cases"].items()
+        },
+        "cases_with_a_contradiction": sorted(
+            name for name, row in report["cases"].items()
+            if any(x["status"] == "MISPREDICTED" for x in row.get("held_out_traces", []))
+        ),
+        "differential_by_case": {
+            name: {
+                "candidate_wins": sum((x["differential"] or {}).get("candidate_wins", 0)
+                                      for x in row.get("held_out_traces", [])),
+                "baseline_wins": sum((x["differential"] or {}).get("baseline_wins", 0)
+                                     for x in row.get("held_out_traces", [])),
+                "incremental_value_class": sorted({
+                    (x["differential"] or {}).get("incremental_value_class")
+                    for x in row.get("held_out_traces", []) if x.get("differential")} - {None}),
+            }
+            for name, row in report["cases"].items()
         },
     }
     validated = report["summary"]["validated_cases"]

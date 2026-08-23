@@ -995,9 +995,80 @@ def apply_matrix_record_result(component: AmbiguityComponent, result: dict[str, 
     )
 
 
+def reopen_from_predictive_counterexamples(
+        run_dir: Path, decisions: list[dict[str, Any]], mispredicted_ids: set[str],
+        provenance: dict[str, Any]) -> dict[str, Any]:
+    """Feed a predictive failure back into the hypothesis space that produced it.
+
+    Demoting a decision is not enough: unless the refuted alternative is marked, the next
+    refinement pass re-selects it and the loop cannot learn from the counterexample.  Each
+    MISPREDICTED decision's accepted hypothesis becomes CONTRADICTED with the failure as
+    its evidence, so `select_intervention` targets only the surviving alternatives and
+    `apply_*_result` accepts a different refinement.  Competing hypotheses are never
+    invented here; only the refuted one is removed from contention.
+    """
+    if not mispredicted_ids:
+        return {"reopened_components": [], "contradicted_hypotheses": []}
+    path = Path(run_dir) / HYPOTHESES_FILE
+    if not path.exists():
+        return {"reopened_components": [], "contradicted_hypotheses": [],
+                "note": "no stored ambiguity components to reopen"}
+    components = read_components(run_dir)
+    by_id = {c.id: c for c in components}
+    reopened, contradicted = [], []
+    for decision in decisions:
+        if decision.get("id") not in mispredicted_ids:
+            continue
+        component = by_id.get(decision.get("component_id"))
+        if component is None:
+            continue
+        for h in component.hypotheses:
+            if h.id != decision.get("accepted_hypothesis") or h.status == "CONTRADICTED":
+                continue
+            h.status = "CONTRADICTED"
+            h.evidence.append(EvidenceContribution(
+                "DOMAIN_CONTRADICTION", "cross_run_prospective_validation", None, [],
+                {"decision_id": decision.get("id"), **provenance},
+            ))
+            contradicted.append(h.id)
+            reopened.append(component.id)
+    if contradicted:
+        write_components(run_dir, components)
+    return {
+        "reopened_components": sorted(set(reopened)),
+        "contradicted_hypotheses": sorted(set(contradicted)),
+        "surviving_alternatives": {
+            c.id: [h.id for h in c.hypotheses if h.status != "CONTRADICTED"]
+            for c in components if c.id in set(reopened)
+        },
+    }
+
+
 def write_counterexamples(run_dir: Path, counterexamples: list[Counterexample]) -> None:
     path = Path(run_dir) / COUNTEREXAMPLES_FILE
     path.write_text("".join(json.dumps(asdict(ce), sort_keys=True, default=str) + "\n" for ce in counterexamples))
+
+
+def _carry_refutations(stored: dict[str, Any], fresh: dict[str, Any]) -> dict[str, Any]:
+    """Keep a hypothesis refuted, whatever a later refit proposes.
+
+    Components are rebuilt from scratch by every diagnostic compile.  A refutation -
+    from a controlled probe or from a predictive counterexample on an independent trace -
+    is evidence about the application, not about the current fit, so a rebuild must not
+    silently return a contradicted alternative to contention.  Nothing else is carried:
+    support is re-derived from the trace each time.
+    """
+    prior = {h["id"]: h for h in stored.get("hypotheses", [])}
+    for h in fresh.get("hypotheses", []):
+        old = prior.get(h["id"])
+        if old is None or old.get("status") != "CONTRADICTED":
+            continue
+        h["status"] = "CONTRADICTED"
+        seen = {(e.get("source"), e.get("step")) for e in h.get("evidence", [])}
+        h["evidence"] = [*h.get("evidence", []),
+                         *[e for e in old.get("evidence", [])
+                           if (e.get("source"), e.get("step")) not in seen]]
+    return fresh
 
 
 def write_components(run_dir: Path, components: list[AmbiguityComponent]) -> None:
@@ -1008,7 +1079,11 @@ def write_components(run_dir: Path, components: list[AmbiguityComponent]) -> Non
             merged = {c["id"]: c for c in json.loads(path.read_text()).get("components", [])}
         except (json.JSONDecodeError, KeyError, TypeError):
             merged = {}
-    merged.update({c.id: asdict(c) for c in components})
+    for component in components:
+        row = asdict(component)
+        if component.id in merged:
+            row = _carry_refutations(merged[component.id], row)
+        merged[component.id] = row
     path.write_text(json.dumps({"version": 1, "components": list(merged.values())}, indent=1))
 
 

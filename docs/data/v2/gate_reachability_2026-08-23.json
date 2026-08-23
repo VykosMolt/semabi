@@ -1,0 +1,865 @@
+{
+ "version": 1,
+ "protocol": "Is the schema-level prospective gate reachable at all for a decision bundle?\n\nA decision can fail its gate for three very different reasons, and only one of them is\nabout evidence:\n\n* the held-out trace never exercised the behavior          (sparse evidence)\n* the source schema never reached the support threshold    (sparse evidence)\n* the decision cannot state anything about an independent trace at all, because its whole\n  content is keyed by source observation signatures        (representation)\n\nThe third is not fixable by collecting more traces, and reporting it as \"inconclusive,\ncollect more data\" would be misleading.  This diagnostic separates them: it recompiles the\nheld-out trace with and without the bundle, and additionally re-runs the comparison with\nthe support threshold lowered to 1.  The lowered threshold is below the frozen inducer's\ngate and is used only to ask \"if support were met, would anything become testable?\" - it\nnever promotes and its records are not written into the run's validation history.",
+ "pairs": {
+  "climbing_loop_004 -> climbing_seed12": {
+   "source_run": "runs/v2_refinement/climbing_loop_004",
+   "test_run": "runs/v2_falsification/climbing_seed12",
+   "verdict": "GATE_BLOCKED_BY_SUPPORT",
+   "why": "a comparable held-out occurrence exists; the source schema is below the frozen inducer's support threshold, so more source instances would decide it",
+   "at_frozen_support_threshold": {
+    "status": "MISPREDICTED",
+    "min_support": 2,
+    "source_candidate_schemas": 9,
+    "refinement_introduced_predictions": 6,
+    "untestable_underdetermined": 3,
+    "baseline_shared": 0,
+    "held_out_compile_changed_by_decisions": true,
+    "held_out_compile_baseline": {
+     "types": 3,
+     "operators": 29,
+     "transitions": 96,
+     "digest": "c9a4796090259033"
+    },
+    "held_out_compile_candidate": {
+     "types": 3,
+     "operators": 33,
+     "transitions": 121,
+     "digest": "aa2d2e8b793f6f0d"
+    },
+    "decision_transfer": {
+     "ref-a4fd4824b37a": {
+      "kind": "ATTACH_PERSISTENT_WIDGET",
+      "run_independent_target_keys": [
+       "source_slot",
+       "source_template",
+       "target_template"
+      ],
+      "transfers_by_template": true,
+      "observation_keyed_items": 0,
+      "observation_keyed_items_present_in_test": 0
+     }
+    },
+    "predictions": [
+     {
+      "effective_actions": [
+       "select(combobox#0@T0[?o0], ?s0)"
+      ],
+      "effects": [
+       "forall x:T2 with rel:0(x)==?o0: attr:attached:group/combobox#0(x) := '?s0'"
+      ],
+      "support": 45,
+      "outcome_counts": {
+       "EXACT": 18,
+       "NOT_COMPARABLE": 512,
+       "UNOBSERVED_OUTCOME": 2,
+       "PREDICTED_WITH_UNOBSERVED_EXTRAS": 1,
+       "CONTRADICTED": 8
+      },
+      "comparable_occurrences": 29
+     },
+     {
+      "effective_actions": [
+       "select(combobox#1@T0[?o0], ?s0)"
+      ],
+      "effects": [
+       "attr:group/combobox#0@7(?o0) := '?s0'"
+      ],
+      "support": 12,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 539,
+       "EXACT": 2
+      },
+      "comparable_occurrences": 2
+     },
+     {
+      "effective_actions": [
+       "click(button#0@T2[?o0])"
+      ],
+      "effects": [
+       "rel:0(?o1) := 'T0:Cave'"
+      ],
+      "support": 6,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 541
+      },
+      "comparable_occurrences": 0
+     },
+     {
+      "effective_actions": [
+       "click(button#0@T2[?o0])"
+      ],
+      "effects": [
+       "rel:0(?o1) := 'T0:Island'"
+      ],
+      "support": 4,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 541
+      },
+      "comparable_occurrences": 0
+     },
+     {
+      "effective_actions": [
+       "click(button#0@T2[?o0])"
+      ],
+      "effects": [
+       "rel:0(?o1) := 'T0:Moon'"
+      ],
+      "support": 3,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 541
+      },
+      "comparable_occurrences": 0
+     },
+     {
+      "effective_actions": [
+       "click(button#0@T2[?o0])"
+      ],
+      "effects": [
+       "?new0 := new T1(id=R2, attr:cell#0=None, attr:cell#0@2=None) rel:0->T0:Moon"
+      ],
+      "support": 2,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 541
+      },
+      "comparable_occurrences": 0
+     }
+    ]
+   },
+   "diagnostic_at_support_1_never_promotes": {
+    "status": "MISPREDICTED",
+    "min_support": 1,
+    "source_candidate_schemas": 25,
+    "refinement_introduced_predictions": 20,
+    "untestable_underdetermined": 5,
+    "baseline_shared": 0,
+    "held_out_compile_changed_by_decisions": true,
+    "held_out_compile_baseline": {
+     "types": 3,
+     "operators": 29,
+     "transitions": 96,
+     "digest": "c9a4796090259033"
+    },
+    "held_out_compile_candidate": {
+     "types": 3,
+     "operators": 33,
+     "transitions": 121,
+     "digest": "aa2d2e8b793f6f0d"
+    },
+    "decision_transfer": {
+     "ref-a4fd4824b37a": {
+      "kind": "ATTACH_PERSISTENT_WIDGET",
+      "run_independent_target_keys": [
+       "source_slot",
+       "source_template",
+       "target_template"
+      ],
+      "transfers_by_template": true,
+      "observation_keyed_items": 0,
+      "observation_keyed_items_present_in_test": 0
+     }
+    },
+    "predictions": [
+     {
+      "effective_actions": [
+       "select(combobox#0@T0[?o0], ?s0)"
+      ],
+      "effects": [
+       "forall x:T2 with rel:0(x)==?o0: attr:attached:group/combobox#0(x) := '?s0'"
+      ],
+      "support": 45,
+      "outcome_counts": {
+       "EXACT": 18,
+       "NOT_COMPARABLE": 512,
+       "UNOBSERVED_OUTCOME": 2,
+       "PREDICTED_WITH_UNOBSERVED_EXTRAS": 1,
+       "CONTRADICTED": 8
+      },
+      "comparable_occurrences": 29
+     },
+     {
+      "effective_actions": [
+       "select(combobox#1@T0[?o0], ?s0)"
+      ],
+      "effects": [
+       "attr:group/combobox#0@7(?o0) := '?s0'"
+      ],
+      "support": 12,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 539,
+       "EXACT": 2
+      },
+      "comparable_occurrences": 2
+     },
+     {
+      "effective_actions": [
+       "click(button#0@T2[?o0])"
+      ],
+      "effects": [
+       "rel:0(?o1) := 'T0:Cave'"
+      ],
+      "support": 6,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 541
+      },
+      "comparable_occurrences": 0
+     },
+     {
+      "effective_actions": [
+       "click(button#0@T2[?o0])"
+      ],
+      "effects": [
+       "rel:0(?o1) := 'T0:Island'"
+      ],
+      "support": 4,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 541
+      },
+      "comparable_occurrences": 0
+     },
+     {
+      "effective_actions": [
+       "click(button#0@T2[?o0])"
+      ],
+      "effects": [
+       "rel:0(?o1) := 'T0:Moon'"
+      ],
+      "support": 3,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 541
+      },
+      "comparable_occurrences": 0
+     },
+     {
+      "effective_actions": [
+       "click(button#0@T2[?o0])"
+      ],
+      "effects": [
+       "?new0 := new T1(id=R2, attr:cell#0=None, attr:cell#0@2=None) rel:0->T0:Moon"
+      ],
+      "support": 2,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 541
+      },
+      "comparable_occurrences": 0
+     },
+     {
+      "effective_actions": [
+       "click(checkbox#0)"
+      ],
+      "effects": [
+       "?new0 := new T0(id=Moon, attr:group/combobox#0@7=black, attr:of#1=2, attr:of#2=2)"
+      ],
+      "support": 1,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 496,
+       "CONTRADICTED": 45
+      },
+      "comparable_occurrences": 45
+     },
+     {
+      "effective_actions": [
+       "click(button#0@T0[?o0])"
+      ],
+      "effects": [
+       "?new0 := new T2(id=T0:Cave|T1:R3, attr:attached:group/combobox#0=pink) rel:0->?o0 rel:1->T1:R3",
+       "attr:of#1(?o0) := '1'"
+      ],
+      "support": 1,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 541
+      },
+      "comparable_occurrences": 0
+     },
+     {
+      "effective_actions": [
+       "click(button#0@T2[?o0])"
+      ],
+      "effects": [
+       "?new0 := new T1(id=R1, attr:cell#0=None, attr:cell#0@2=None) rel:0->T0:Island"
+      ],
+      "support": 1,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 541
+      },
+      "comparable_occurrences": 0
+     },
+     {
+      "effective_actions": [
+       "click(button:Routes)"
+      ],
+      "effects": [
+       "?new0 := new T1(id=R3, attr:cell#0=Overhang, attr:cell#0@2=2)"
+      ],
+      "support": 1,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 541
+      },
+      "comparable_occurrences": 0
+     },
+     {
+      "effective_actions": [
+       "select(combobox#0@T0[?o0], ?s0)"
+      ],
+      "effects": [
+       "?new0 := new T0(id=Moon, attr:group/combobox#0@7=white, attr:of#1=2, attr:of#2=2)",
+       "?new1 := new T2(id=T0:Moon|T1:R1, attr:attached:group/combobox#0=white) rel:0->?new0 rel:1->T1:R1",
+       "?new2 := new T2(id=T0:Moon|T1:R2, attr:attached:group/combobox#0=None) rel:0->?new0 rel:1->T1:R2",
+       "forall x:T2 with rel:0(x)==?o0: attr:attached:group/combobox#0(x) := '?s0'"
+      ],
+      "support": 1,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 541
+      },
+      "comparable_occurrences": 0
+     },
+     {
+      "effective_actions": [
+       "click(checkbox#0)"
+      ],
+      "effects": [
+       "?new0 := new T0(id=Moon, attr:group/combobox#0@7=white, attr:of#1=2, attr:of#2=2)",
+       "?new1 := new T2(id=T0:Moon|T1:R1, attr:attached:group/combobox#0=yellow) rel:0->?new0 rel:1->T1:R1",
+       "?new2 := new T2(id=T0:Moon|T1:R2, attr:attached:group/combobox#0=None) rel:0->?new0 rel:1->T1:R2"
+      ],
+      "support": 1,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 541
+      },
+      "comparable_occurrences": 0
+     },
+     {
+      "effective_actions": [
+       "click(button:Routes)"
+      ],
+      "effects": [
+       "?new0 := new T1(id=R2, attr:cell#0=Arete, attr:cell#0@2=4)",
+       "?new1 := new T1(id=R3, attr:cell#0=Overhang, attr:cell#0@2=2)"
+      ],
+      "support": 1,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 541
+      },
+      "comparable_occurrences": 0
+     },
+     {
+      "effective_actions": [
+       "click(button:Bump@T1[?o0])"
+      ],
+      "effects": [
+       "attr:cell#0@2(?o0) := '3'"
+      ],
+      "support": 1,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 541
+      },
+      "comparable_occurrences": 0
+     },
+     {
+      "effective_actions": [
+       "click(button#0@T0[?o0])"
+      ],
+      "effects": [
+       "?new0 := new T2(id=T0:Island|T1:R2, attr:attached:group/combobox#0=None) rel:0->?o0 rel:1->T1:R2",
+       "attr:of#1(?o0) := '2'"
+      ],
+      "support": 1,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 541
+      },
+      "comparable_occurrences": 0
+     },
+     {
+      "effective_actions": [
+       "click(button#0@T0[?o0])"
+      ],
+      "effects": [
+       "?new0 := new T2(id=T0:Cave|T1:R2, attr:attached:group/combobox#0=pink) rel:0->?o0 rel:1->T1:R2",
+       "attr:of#1(?o0) := '1'"
+      ],
+      "support": 1,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 541
+      },
+      "comparable_occurrences": 0
+     },
+     {
+      "effective_actions": [
+       "click(button:Routes)"
+      ],
+      "effects": [
+       "?new0 := new T1(id=R1, attr:cell#0=Arete, attr:cell#0@2=4)",
+       "?new1 := new T1(id=R3, attr:cell#0=Overhang, attr:cell#0@2=2)"
+      ],
+      "support": 1,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 541
+      },
+      "comparable_occurrences": 0
+     },
+     {
+      "effective_actions": [
+       "select(combobox#0@T0[?o0], ?s0)"
+      ],
+      "effects": [
+       "?new0 := new T0(id=Island, attr:group/combobox#0@7=white, attr:of#1=2, attr:of#2=2)",
+       "?new1 := new T2(id=T0:Island|T1:R1, attr:attached:group/combobox#0=black) rel:0->?new0 rel:1->T1:R1",
+       "?new2 := new T2(id=T0:Island|T1:R2, attr:attached:group/combobox#0=None) rel:0->?new0 rel:1->T1:R2",
+       "forall x:T2 with rel:0(x)==?o0: attr:attached:group/combobox#0(x) := '?s0'"
+      ],
+      "support": 1,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 541
+      },
+      "comparable_occurrences": 0
+     },
+     {
+      "effective_actions": [
+       "click(button:Bump@T1[?o0])"
+      ],
+      "effects": [
+       "attr:cell#0@2(?o0) := '4'"
+      ],
+      "support": 1,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 541
+      },
+      "comparable_occurrences": 0
+     },
+     {
+      "effective_actions": [
+       "click(button:Open@T1[?o0])"
+      ],
+      "effects": [
+       "rel:0(?o0) := 'T0:Cave'"
+      ],
+      "support": 1,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 541
+      },
+      "comparable_occurrences": 0
+     }
+    ]
+   }
+  },
+  "observatory_loop_001 -> observatory_seed12": {
+   "source_run": "runs/v2_refinement/observatory_loop_001",
+   "test_run": "runs/v2_falsification/observatory_seed12",
+   "verdict": "GATE_BLOCKED_BY_SUPPORT",
+   "why": "a comparable held-out occurrence exists; the source schema is below the frozen inducer's support threshold, so more source instances would decide it",
+   "at_frozen_support_threshold": {
+    "status": "VALIDATED",
+    "min_support": 2,
+    "source_candidate_schemas": 5,
+    "refinement_introduced_predictions": 3,
+    "untestable_underdetermined": 2,
+    "baseline_shared": 0,
+    "held_out_compile_changed_by_decisions": true,
+    "held_out_compile_baseline": {
+     "types": 4,
+     "operators": 33,
+     "transitions": 160,
+     "digest": "e290397c05c66b12"
+    },
+    "held_out_compile_candidate": {
+     "types": 5,
+     "operators": 27,
+     "transitions": 89,
+     "digest": "8119ea2be1347655"
+    },
+    "decision_transfer": {
+     "ref-080835c578e1": {
+      "kind": "SPLIT_RELATIONAL_RECORD",
+      "run_independent_target_keys": [
+       "anchor_entity_templates",
+       "context_entity_templates",
+       "target_entity_templates"
+      ],
+      "transfers_by_template": true,
+      "observation_keyed_items": 91,
+      "observation_keyed_items_present_in_test": 2
+     }
+    },
+    "predictions": [
+     {
+      "effective_actions": [
+       "click(button:Extend@T3[?o0])"
+      ],
+      "effects": [
+       "attr:duration#0(?o0) := '3'"
+      ],
+      "support": 4,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 680,
+       "EXACT": 6,
+       "INAPPLICABLE": 12,
+       "UNOBSERVED_OUTCOME": 1
+      },
+      "comparable_occurrences": 19
+     },
+     {
+      "effective_actions": [
+       "click(button:Extend@T3[?o0])"
+      ],
+      "effects": [
+       "attr:duration#0(?o0) := '2'"
+      ],
+      "support": 4,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 680,
+       "INAPPLICABLE": 9,
+       "EXACT": 10
+      },
+      "comparable_occurrences": 19
+     },
+     {
+      "effective_actions": [
+       "click(button:Clip@T3[?o0])"
+      ],
+      "effects": [
+       "attr:duration#0(?o0) := '1'"
+      ],
+      "support": 3,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 685,
+       "INAPPLICABLE": 5,
+       "EXACT": 9
+      },
+      "comparable_occurrences": 14
+     }
+    ]
+   },
+   "diagnostic_at_support_1_never_promotes": {
+    "status": "MISPREDICTED",
+    "min_support": 1,
+    "source_candidate_schemas": 23,
+    "refinement_introduced_predictions": 13,
+    "untestable_underdetermined": 10,
+    "baseline_shared": 0,
+    "held_out_compile_changed_by_decisions": true,
+    "held_out_compile_baseline": {
+     "types": 4,
+     "operators": 33,
+     "transitions": 160,
+     "digest": "e290397c05c66b12"
+    },
+    "held_out_compile_candidate": {
+     "types": 5,
+     "operators": 27,
+     "transitions": 89,
+     "digest": "8119ea2be1347655"
+    },
+    "decision_transfer": {
+     "ref-080835c578e1": {
+      "kind": "SPLIT_RELATIONAL_RECORD",
+      "run_independent_target_keys": [
+       "anchor_entity_templates",
+       "context_entity_templates",
+       "target_entity_templates"
+      ],
+      "transfers_by_template": true,
+      "observation_keyed_items": 91,
+      "observation_keyed_items_present_in_test": 2
+     }
+    },
+    "predictions": [
+     {
+      "effective_actions": [
+       "click(button:Extend@T3[?o0])"
+      ],
+      "effects": [
+       "attr:duration#0(?o0) := '3'"
+      ],
+      "support": 4,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 680,
+       "EXACT": 6,
+       "INAPPLICABLE": 12,
+       "UNOBSERVED_OUTCOME": 1
+      },
+      "comparable_occurrences": 19
+     },
+     {
+      "effective_actions": [
+       "click(button:Extend@T3[?o0])"
+      ],
+      "effects": [
+       "attr:duration#0(?o0) := '2'"
+      ],
+      "support": 4,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 680,
+       "INAPPLICABLE": 9,
+       "EXACT": 10
+      },
+      "comparable_occurrences": 19
+     },
+     {
+      "effective_actions": [
+       "click(button:Clip@T3[?o0])"
+      ],
+      "effects": [
+       "attr:duration#0(?o0) := '1'"
+      ],
+      "support": 3,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 685,
+       "INAPPLICABLE": 5,
+       "EXACT": 9
+      },
+      "comparable_occurrences": 14
+     },
+     {
+      "effective_actions": [
+       "click(button:Extend@T3[?o0])"
+      ],
+      "effects": [
+       "attr:duration#0(?o0) := '2'"
+      ],
+      "support": 1,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 680,
+       "UNKNOWN_APPLICABILITY": 18,
+       "EXACT": 1
+      },
+      "comparable_occurrences": 19
+     },
+     {
+      "effective_actions": [
+       "click(button:Clip@T3[?o0])"
+      ],
+      "effects": [
+       "attr:duration#0(?o0) := '1'"
+      ],
+      "support": 1,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 685,
+       "CONTRADICTED": 5,
+       "EXACT": 9
+      },
+      "comparable_occurrences": 14
+     },
+     {
+      "effective_actions": [
+       "click(button:Extend@T3[?o0])"
+      ],
+      "effects": [
+       "attr:duration#0(?o0) := '3'"
+      ],
+      "support": 1,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 680,
+       "UNKNOWN_APPLICABILITY": 19
+      },
+      "comparable_occurrences": 19
+     },
+     {
+      "effective_actions": [
+       "click(button:Clip@T3[?o0])"
+      ],
+      "effects": [
+       "attr:duration#0(?o0) := '2'"
+      ],
+      "support": 1,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 685,
+       "EXACT": 4,
+       "CONTRADICTED": 10
+      },
+      "comparable_occurrences": 14
+     },
+     {
+      "effective_actions": [
+       "click(button:Retarget@T3[?o0])"
+      ],
+      "effects": [
+       "rel:2(?o0) := 'T2:M31'"
+      ],
+      "support": 1,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 694,
+       "UNOBSERVED_OUTCOME": 1,
+       "UNKNOWN_APPLICABILITY": 4
+      },
+      "comparable_occurrences": 5
+     },
+     {
+      "effective_actions": [
+       "click(button:Clip@T3[?o0])"
+      ],
+      "effects": [
+       "attr:duration#0(?o0) := '1'"
+      ],
+      "support": 1,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 685,
+       "CONTRADICTED": 5,
+       "EXACT": 9
+      },
+      "comparable_occurrences": 14
+     },
+     {
+      "effective_actions": [
+       "click(button:Clip@T3[?o0])"
+      ],
+      "effects": [
+       "attr:duration#0(?o0) := '2'"
+      ],
+      "support": 1,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 685,
+       "EXACT": 4,
+       "INAPPLICABLE": 9,
+       "CONTRADICTED": 1
+      },
+      "comparable_occurrences": 14
+     },
+     {
+      "effective_actions": [
+       "click(button:Extend@T3[?o0])"
+      ],
+      "effects": [
+       "attr:duration#0(?o0) := '4'"
+      ],
+      "support": 1,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 680,
+       "CONTRADICTED": 16,
+       "UNOBSERVED_OUTCOME": 1,
+       "EXACT": 2
+      },
+      "comparable_occurrences": 19
+     },
+     {
+      "effective_actions": [
+       "click(button:Extend@T3[?o0])"
+      ],
+      "effects": [
+       "attr:duration#0(?o0) := '4'"
+      ],
+      "support": 1,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 680,
+       "INAPPLICABLE": 17,
+       "EXACT": 2
+      },
+      "comparable_occurrences": 19
+     },
+     {
+      "effective_actions": [
+       "click(button:Clip@T3[?o0])"
+      ],
+      "effects": [
+       "attr:duration#0(?o0) := '3'"
+      ],
+      "support": 1,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 685,
+       "CONTRADICTED": 4,
+       "INAPPLICABLE": 9,
+       "EXACT": 1
+      },
+      "comparable_occurrences": 14
+     }
+    ]
+   }
+  },
+  "datacenter_context_loop_004 -> datacenter_context_holdout_002": {
+   "source_run": "runs/v2_refinement/datacenter_context_loop_004",
+   "test_run": "runs/v2_validation/datacenter_context_holdout_002",
+   "verdict": "GATE_UNREACHABLE_DECISION_INERT_ON_INDEPENDENT_TRACE",
+   "why": "the decision bundle leaves the held-out compile bit-identical, so no refinement-introduced claim can be stated about this trace; more evidence cannot change this",
+   "at_frozen_support_threshold": {
+    "status": "INCONCLUSIVE",
+    "min_support": 2,
+    "source_candidate_schemas": 0,
+    "refinement_introduced_predictions": 0,
+    "untestable_underdetermined": 0,
+    "baseline_shared": 0,
+    "held_out_compile_changed_by_decisions": false,
+    "held_out_compile_baseline": {
+     "types": 4,
+     "operators": 4,
+     "transitions": 4,
+     "digest": "5a9d36cae9500ffe"
+    },
+    "held_out_compile_candidate": {
+     "types": 4,
+     "operators": 4,
+     "transitions": 4,
+     "digest": "5a9d36cae9500ffe"
+    },
+    "decision_transfer": {
+     "ref-2e782cb7889a": {
+      "kind": "ASSOCIATE_MENTION_TYPE",
+      "run_independent_target_keys": [],
+      "transfers_by_template": false,
+      "observation_keyed_items": 23,
+      "observation_keyed_items_present_in_test": 0
+     },
+     "ref-e89963ebd151": {
+      "kind": "ATTACH_CONTEXT_MEMBERSHIP",
+      "run_independent_target_keys": [],
+      "transfers_by_template": false,
+      "observation_keyed_items": 34,
+      "observation_keyed_items_present_in_test": 0
+     }
+    },
+    "predictions": []
+   },
+   "diagnostic_at_support_1_never_promotes": {
+    "status": "INCONCLUSIVE",
+    "min_support": 1,
+    "source_candidate_schemas": 6,
+    "refinement_introduced_predictions": 1,
+    "untestable_underdetermined": 1,
+    "baseline_shared": 4,
+    "held_out_compile_changed_by_decisions": false,
+    "held_out_compile_baseline": {
+     "types": 4,
+     "operators": 4,
+     "transitions": 4,
+     "digest": "5a9d36cae9500ffe"
+    },
+    "held_out_compile_candidate": {
+     "types": 4,
+     "operators": 4,
+     "transitions": 4,
+     "digest": "5a9d36cae9500ffe"
+    },
+    "decision_transfer": {
+     "ref-2e782cb7889a": {
+      "kind": "ASSOCIATE_MENTION_TYPE",
+      "run_independent_target_keys": [],
+      "transfers_by_template": false,
+      "observation_keyed_items": 23,
+      "observation_keyed_items_present_in_test": 0
+     },
+     "ref-e89963ebd151": {
+      "kind": "ATTACH_CONTEXT_MEMBERSHIP",
+      "run_independent_target_keys": [],
+      "transfers_by_template": false,
+      "observation_keyed_items": 34,
+      "observation_keyed_items_present_in_test": 0
+     }
+    },
+    "predictions": [
+     {
+      "effective_actions": [
+       "click(button#2@T4[?o0])",
+       "click(button:Confirm)"
+      ],
+      "effects": [
+       "attr:context(?o0) := 'Retired'"
+      ],
+      "support": 1,
+      "outcome_counts": {
+       "NOT_COMPARABLE": 8
+      },
+      "comparable_occurrences": 0
+     }
+    ]
+   }
+  }
+ }
+}

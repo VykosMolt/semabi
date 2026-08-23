@@ -189,6 +189,11 @@ collected trace. Its comparison is behavioral, not syntactic:
   afterwards is UNOBSERVED; held-out effects the prediction does not explain are extras,
   classified by whether the object was rendered before the action. Extras never
   contradict predicted literals; visible extras block VALIDATED;
+- absence is three-valued too. An object missing from a partial after-state that renders
+  no object of its type is UNKNOWN: it neither contradicts a predicted change nor confirms
+  a predicted removal. A held-out occurrence whose own lifted effects change an object its
+  after-state does not contain is reported as inconsistent provenance and cannot
+  contradict anything;
 - a VIEW-domain leak counts only when the baseline compile of the same held-out trace
   does not register it;
 - independence requires distinct paths and hashes plus a near-zero shared step prefix
@@ -207,9 +212,15 @@ decision: in a multi-decision bundle a decision is credited only if leave-one-ou
 recompilation shows a validated schema depends on it; a contradiction retained from any
 other held-out trace or direct probe vetoes promotion. Every record also carries a
 baseline control arm (the same test applied to the unrefined model of the source trace
-on the unrefined held-out compile) and a decision-transfer report (how many decision
-parts are keyed by source observation signatures and therefore inert on an independent
-trace). What this does not justify: a contradiction cannot distinguish a wrong
+on the unrefined held-out compile) and a decision-transfer report: which of the decision's
+target keys are run-independent, how many parts are keyed by source observation signatures
+and therefore inert on an independent trace, and whether the bundle changes the held-out
+compile at all. A decision with no run-independent target key (the datacenter context and
+mention assignments are pure `(signature, node)` overrides) cannot state anything about a
+trace it did not see; its schema-level gate is unreachable by construction rather than
+unmet by sparse evidence, and `semabi/eval/v2_gate_reachability.py` separates the two by
+recompiling the held-out trace with and without the bundle and by re-running the comparison
+with the support threshold lowered to 1 (a diagnostic that can never promote). What this does not justify: a contradiction cannot distinguish a wrong
 refinement from a held-out abstraction missing a state variable; inverse relations,
 intermediate entities the schema itself mentions, and attribute-name drift are not
 equated and become NOT_COMPARABLE rather than contradicted. No evaluator ontology or
@@ -217,6 +228,39 @@ hidden operator label enters this decision. The first implementation compared
 neighbour-propagating type fingerprints and exact effect strings; its climbing and
 observatory `MISPREDICTED` verdicts were artifacts of that comparison and were
 withdrawn when the audit replaced it (devlog entry k).
+
+### Behavioral novelty versus structural novelty
+
+Baseline subtraction is structural, so a candidate schema can look refinement-introduced
+while predicting exactly what the baseline predicts — for instance when the same
+information is attached to a different entity in the same rendered node. A differential arm
+(`semabi/compiler/v2/differential.py`) reports what structure cannot: both models are
+compiled from the same held-out trace, their occurrences are paired by step index, and each
+transition is labelled `CANDIDATE_CORRECT_BASELINE_WRONG`, `CANDIDATE_WRONG_BASELINE_CORRECT`,
+`BOTH_CORRECT`, `BOTH_WRONG`, `SAME_PREDICTION` or `NOT_COMPARABLE`. The two critical
+categories need no separate "the predictions differ" test: one model matched the rendered
+outcome and the other did not. A model that contradicts the observation at a transition is
+wrong there even if another of its schemas matched, and such cases are flagged `mixed`.
+Silence is distinguished from being wrong, and a step the other model never segmented is
+reported as a pairing gap rather than as abstention. Only wins attributed to a
+refinement-introduced schema count as corrective value; a refinement that is merely correct
+where the baseline says nothing is recorded as coverage value
+(`VALIDATED_INCREMENTAL_VALUE_COVERAGE_ONLY`), which is not the same claim. Nothing in this
+arm participates in promotion.
+
+### Predictive failure reopens the hypothesis space
+
+A `MISPREDICTED` verdict demotes every decision in the bundle and retains the
+counterexample. That alone would teach the loop nothing, so the accepted hypothesis of a
+refuted decision is marked `CONTRADICTED` with the failure as its evidence
+(`reopen_from_predictive_counterexamples`), which removes it from `select_intervention`'s
+live set and from `apply_*_result`'s acceptance. Because every diagnostic compile rebuilds
+ambiguity components from scratch, `write_components` carries `CONTRADICTED` statuses and
+their evidence across refits: support is re-derived from the trace each time, but a
+refutation is evidence about the application and must not be silently returned to
+contention. If no competing refinement survives in the component, the loop moves to another
+open ambiguity and the exhaustion is reported rather than papered over with a new
+layout-specific rule.
 
 Scheduling uses a simple cost-aware priority: hypothesis disagreement divided by
 estimated primitive cost. Cost reporting separates broad actions, recurrent-view
@@ -294,19 +338,20 @@ implemented or claimed.
 1. Demonstrate one full persistent-DOMAIN causal loop on a blind app. **Complete on
    climbing (1/1 selected event resolved).**
 2. Transfer the same decision/evidence architecture without application branches.
-   **Complete and independently validated for climbing and observatory: under the
-   audited validator their refinement-introduced schemas recur exactly on seed 11 with
-   novel bindings and zero contradictions. Datacenter remains PROVISIONAL: its bounded
-   novel retirement test executed and passed once (rack D4, server node-16, seed 11),
-   but no source schema reaches the support gate, so the schema-level validator is
-   INCONCLUSIVE.**
+   **Partially falsified. Observatory's relational-record split is validated on three
+   independent traces (88 exact recurrences, 0 contradictions, 27 novel bindings, 36
+   held-out transitions where the unrefined model is contradicted and it is not).
+   Climbing's widget attachment passed seeds 11 and 13 and is MISPREDICTED on seed 12
+   (8 contradictions); it is demoted from the canonical abstraction, its component was
+   reopened, and the replacement refinement the loop produced is refuted by the same trace.
+   Datacenter stays PROVISIONAL and its schema-level gate is unreachable by construction,
+   not merely unmet.**
 3. Run matched endpoint controls, then interaction-budget curves for coverage-only,
    random diagnostics, targeted diagnostics, LLM proposals without verification, and LLM
    proposals with executed verification. **Custody-safe single-trace prefix curves are
-   complete on climbing and observatory. One independent seed per principal case is
-   compiled and the prospective gate is now trusted and deterministic; further full seeds
-   were not launched in this checkpoint. The natural pharmacy-c LLM condition is blocked
-   at an uncached prompt and no payload was sent.**
+   complete on climbing and observatory. Three independent seeds per principal case are
+   now compiled and reported individually, never averaged. The natural pharmacy-c LLM
+   condition is blocked at an uncached prompt and no payload was sent.**
 4. Localize downstream induction wherever representation coverage rises without operator
    recovery. **Complete for current traces; numeric/conditional effects, spurious effects,
    and sparse support are the residuals.**
@@ -317,7 +362,11 @@ implemented or claimed.
 
 V2 is freeze-ready only after principal refinements either pass a novel predictive test
 or are automatically rejected and replaced by a generic refinement that does. A
-supported originating probe is not enough. Diagnostic overhead must be measured and
+supported originating probe is not enough, and neither is one held-out trace: a single
+independent pass can agree with a wrong abstraction whose error that trace's entity
+universe cannot express, which is what happened to climbing between seeds 11 and 12. At
+least one validated refinement must additionally show behavioral, not merely structural,
+advantage over the unrefined model on divergent comparable held-out cases. Diagnostic overhead must be measured and
 bounded on the version considered for freeze; the clean operator-eligibility denominator
 must remain explicit; external-authority blockers must be retained; tests and
 compiler/evaluator boundaries must pass; and design, status, and machine artifacts must

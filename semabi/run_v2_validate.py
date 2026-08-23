@@ -6,7 +6,12 @@ import json
 from dataclasses import asdict
 from pathlib import Path
 
-from semabi.compiler.v2.refinement import RefinementDecision, read_decisions, write_decisions
+from semabi.compiler.v2.refinement import (
+    RefinementDecision,
+    read_decisions,
+    reopen_from_predictive_counterexamples,
+    write_decisions,
+)
 from semabi.compiler.v2.validation import cross_validate, promote_from_validation, write_validation
 
 
@@ -28,11 +33,20 @@ def main() -> None:
         raise RuntimeError("source run has no refinement decisions")
     record = cross_validate(source, test, decisions, args.min_support)
     write_validation(source, record)
+    reopened = None
     if args.promote:
         # cross_validate backfills run-independent endpoint templates into legacy decision
         # targets in place; they are persisted together with the status update.
         updated = promote_from_validation(all_decisions, record)
         write_decisions(source, [RefinementDecision(**d) for d in updated])
+        # A predictive failure is the next counterexample: mark the refuted hypothesis so
+        # the next refinement pass cannot re-select it.
+        reopened = reopen_from_predictive_counterexamples(
+            source, updated,
+            {d["id"] for d in updated if d.get("status") == "MISPREDICTED"},
+            {"test_run": str(test), "test_trace_sha256": record.test_trace_sha256,
+             "validation_status": record.status, "reason": record.reason},
+        )
     payload = asdict(record)
     if args.output:
         output = Path(args.output)
@@ -53,6 +67,8 @@ def main() -> None:
         "promoted": args.promote and record.status == "VALIDATED",
         "validated_decision_ids": record.provenance.get("validated_decision_ids", []),
         "baseline_control": record.provenance.get("baseline_control"),
+        "differential": {k: v for k, v in (record.differential_evidence or {}).items() if k != "cases"},
+        "reopened_hypotheses": reopened,
         "reason": record.reason,
     }, indent=1))
 

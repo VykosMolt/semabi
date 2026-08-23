@@ -171,8 +171,10 @@ def _board_case(extra_member_node):
     first, mid = _obj(0, "First"), _obj(0, "Mid")
     rec_first = _obj(4, "T0:First|T1:N6", {"attr:duration": "1"}, {"rel:0": (0, "First")})
     rec_mid = _obj(4, "T0:Mid|T1:N6", {"attr:duration": "2"}, {"rel:0": (0, "Mid")}, node=extra_member_node)
-    before = _state(first, mid, rec_first, rec_mid)
-    after = _state(first, mid)
+    # a surviving record keeps the type rendered afterwards, so absence is observable
+    survivor = _obj(4, "T0:Late|T1:N9", {"attr:duration": "1"}, {"rel:0": (0, "Late")}, node=5)
+    before = _state(first, mid, rec_first, rec_mid, survivor)
+    after = _state(first, mid, survivor)
     occurrence = _schema([ActT("click", Locator("button:Board", 0), "?o0")],
                          [EffT("remove", 4, "?o1"), EffT("remove", 4, "?o2")],
                          param_types={"?o0": 0, "?o1": 4, "?o2": 4},
@@ -400,3 +402,84 @@ def test_promotion_is_per_decision_and_vetoed_by_retained_contradictions():
     # an inconclusive later trace does not demote a validated decision
     later = V.promote_from_validation(updated, _record("INCONCLUSIVE", "z"))
     assert [d["status"] for d in later] == ["VALIDATED", "PROVISIONAL"]
+
+
+def test_a_decision_keyed_only_by_source_observations_is_not_reported_as_transferring():
+    """The datacenter context decision installs (sig, node) assignments and nothing else,
+    so its schema-level gate is unreachable by construction, not by sparse evidence."""
+    context = {"id": "ref-ctx", "kind": "ATTACH_CONTEXT_MEMBERSHIP", "target": {
+        "target_template": "unit-row", "target_entity_tid": 4,
+        "context_assignments": [{"sig": "s1", "node": 3, "key": "node-30", "context": "Retired"},
+                                {"sig": "s9", "node": 4, "key": "node-30", "context": "Retired"}]}}
+    widget = {"id": "ref-w", "kind": "ATTACH_PERSISTENT_WIDGET", "target": {
+        "source_template": "wall-card", "source_slot": "combobox#1", "target_template": "route-row"}}
+
+    transfer = V.decision_transfer([context, widget], {"s1"})
+
+    assert transfer["ref-ctx"]["transfers_by_template"] is False
+    assert transfer["ref-ctx"]["run_independent_target_keys"] == []
+    assert transfer["ref-ctx"]["observation_keyed_items"] == 2
+    assert transfer["ref-ctx"]["observation_keyed_items_present_in_test"] == 1
+    # a template-keyed decision names structure that exists independently of the trace
+    assert transfer["ref-w"]["transfers_by_template"] is True
+    assert transfer["ref-w"]["run_independent_target_keys"] == ["source_slot", "source_template",
+                                                                "target_template"]
+
+
+def test_compile_digest_changes_only_when_the_model_changes():
+    class _Compiled:
+        def __init__(self, types, operators):
+            self.abstractor = SimpleNamespace(types=types)
+            self.inducer = SimpleNamespace(operators=operators, transitions=[])
+
+    types = {0: _type(0, ["attr:a"])}
+    op = SimpleNamespace(acts=(ActT("click", Locator("button:Go", 0), "?o0"),),
+                         effs=(EffT("set", 0, "?o0", "attr:a", None, "x"),), support=2)
+    other = SimpleNamespace(acts=op.acts,
+                            effs=(EffT("set", 0, "?o0", "attr:a", None, "y"),), support=2)
+    assert V._compile_digest(_Compiled(types, [op])) == V._compile_digest(_Compiled(types, [op]))
+    assert V._compile_digest(_Compiled(types, [op])) != V._compile_digest(_Compiled(types, [other]))
+
+
+def _absence_case(after_state, effs=(EffT("set", 3, "?o0", "attr:duration", None, "3"),),
+                  occurrence_effs=()):
+    src_types = {3: _type(3, ["attr:duration"])}
+    tst_types = {4: _type(4, ["attr:duration"])}
+    prediction = _schema([ActT("click", Locator("button:Extend", 3), "?o0")], list(effs), [],
+                         {"?o0": 3}, {"?o0": (3, "r")})
+    before = _state(_obj(4, "rec", {"attr:duration": "2"}, node=9))
+    occurrence = _schema([ActT("click", Locator("button:Extend", 4), "?o0")], list(occurrence_effs),
+                         param_types={"?o0": 4}, binding={"?o0": (4, "rec")},
+                         before=before, after=after_state)
+    return V.compare(prediction, occurrence, src_types, tst_types)
+
+
+def test_absence_from_a_view_that_renders_no_object_of_the_type_is_unknown_not_contradiction():
+    """A view showing no record at all cannot refute a prediction about one record."""
+    row = _absence_case(_state(_obj(0, "other", node=1)),
+                        occurrence_effs=[EffT("set", 4, "?o0", "attr:duration", None, "3"),
+                                         EffT("remove", 4, "?o0")])
+    assert row["outcome"] == "UNOBSERVED_OUTCOME"
+    assert row["failures"] == []
+    assert row["unobserved"][0]["why"] == "no object of this type is rendered after the action"
+    # the held-out occurrence changed and removed the same object: unusable provenance
+    assert row["inconsistent_held_out_effects"][0]["why"] == \
+        "the lifted effect changes an object its own after-state does not contain"
+
+
+def test_absence_while_the_type_is_still_rendered_does_contradict():
+    row = _absence_case(_state(_obj(4, "survivor", {"attr:duration": "1"}, node=3)))
+    assert row["outcome"] == "CONTRADICTED"
+    assert row["failures"][0]["why"] == "object absent after action"
+
+
+def test_a_predicted_removal_is_not_confirmed_by_a_view_without_the_type():
+    """The symmetric hazard: absence must not act as TRUE either."""
+    unrendered = _absence_case(_state(_obj(0, "other", node=1)),
+                               effs=[EffT("remove", 3, "?o0")])
+    assert unrendered["outcome"] == "UNOBSERVED_OUTCOME"
+    assert unrendered["confirmed"] == []
+    rendered = _absence_case(_state(_obj(4, "survivor", {"attr:duration": "1"}, node=3)),
+                             effs=[EffT("remove", 3, "?o0")])
+    assert rendered["outcome"] == "EXACT"
+    assert rendered["confirmed"] == ["delete ?o0"]
