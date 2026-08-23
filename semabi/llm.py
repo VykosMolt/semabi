@@ -16,6 +16,10 @@ def ask(prompt: str, model: str = "sonnet", system: str | None = None, timeout: 
         p = Path(cache_dir) / f"{key}.json"
         if p.exists():
             return json.loads(p.read_text())["text"]
+    if os.environ.get("SEMABI_LLM_CACHE_ONLY") == "1":
+        raise RuntimeError(
+            f"LLM cache miss for model alias {model!r}; external invocation is disabled by SEMABI_LLM_CACHE_ONLY"
+        )
     cmd = ["claude", "-p", "--model", model, "--output-format", "json"]
     if system:
         cmd += ["--system-prompt", system]

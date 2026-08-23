@@ -1,169 +1,228 @@
 # V2 design: counterexample-guided relational abstraction
 
-Derived from the oracle ladder (docs/v2_oracle.md). Everything below is tied to
-a measured failure; nothing here is a feature the ladder did not ask for.
+This document describes the implemented V2 architecture as of 2026-08-23. It is derived
+from the oracle ladder in `docs/v2_oracle.md` and the development evidence in
+`docs/v2_status.md`.
 
-## What the ladder fixed as the target
+## Research target
 
-| measured gap (gauntlet-v2, unchanged V0 inducer) | operators | what closes it |
-|---|---|---|
-| base -> A: no stable identity for mentions | 0 -> 8 | mention -> latent entity association (across views, codes vs names, duplicates, options) |
-| A -> B: values/endpoints not bound to entities | 8 -> 18 | attachment: which node carries which entity's attribute / relation endpoint, for *any* unit shape |
-| B -> C: beliefs about out-of-view facts | 18 -> 30 | belief revision: vanished units, absence words, non-local effects |
-| C -> D: arguments supplied outside V0's provenance | 30 -> 32 | argument binding for wizard/selection arguments |
-| D -> K and K's own ceiling | 32 -> 36 -> (42) | effect language: numeric deltas, conditional templates; more data for rare operators |
+SemABI learns a compact, behaviorally sufficient relational abstraction of an unfamiliar
+interactive system by maintaining competing interpretations of raw observations and
+refining them when interaction evidence contradicts the current behavioral model.
 
-Consequences: keep V0's inducer as the behavioural model builder (it works when
-fed a correct abstraction); put all V2 effort into producing that abstraction as
-a *hypothesis that earns its place through behaviour*; measure RTC before
-operators.
+The target is not the unknowable true ontology or a perceptual decomposition of a GUI.
+The abstraction must express persistent changes, preserve relevant out-of-view facts,
+predict effects, distinguish histories only when future behavior demands it, and support
+induction and planning.
 
-## Problem statement
+The oracle ladder fixes the priority order: persistent belief is the largest measured
+gain (Bv to C: 19 to 30 operators), followed by attachment and association. The V0 effect
+language remains frozen during V2 abstraction work even though the known-vocabulary
+ceiling identifies numeric and conditional effects as later limitations.
 
-Infer a compact relational state/action abstraction phi whose distinctions are
-justified by observed behaviour under intervention, given only observation
-graphs and primitive actions. We do not reconstruct the app's internal
-ontology; behaviourally equivalent abstractions are equally good. Complexity
-must be paid for by explained behaviour.
+## Iterative pipeline
 
-## Pipeline (iterative, not one-way)
-
-```
-observation graphs + action history
-   -> abstraction hypothesis H (entities, attachments, relations, sensing controls, belief rules)
-   -> M(H): V0 inducer on phi_H(history)          (the oracle ladder's adapter, minus the oracle)
-   -> counterexamples: unexplained changes, contradictions, plan failures
-   -> minimal refinements (deterministic proposers + local LLM proposals, all UNTESTED)
-   -> discriminating interventions; accept / reject / retain
-   -> repeat
+```text
+broad behavior-generating exploration
+    -> observation graph and deterministic proposals
+    -> factorized local abstraction alternatives
+    -> persistent belief and V0 behavioral model
+    -> UNGROUNDED change / abstraction contradiction / plan divergence
+    -> minimal competing refinements with predicted probe outcomes
+    -> targeted diagnostic intervention
+    -> typed evidence and supported/contradicted alternatives
+    -> refined abstraction
 ```
 
-### 1. Observation graph (replaces catalog units)
+When no live ambiguity offers a useful discriminating probe, exploration returns to
+broad behavioral coverage. Probes augment exploration; they do not replace it.
 
-Nodes: every snapshot node (role, name, value, checked, bbox, placeholder).
-Edges: DOM parent/sibling order; spatial containment and alignment from bbox
-(same column/row, left/above); *same-pattern* (two subtrees with the same role
-shape; V0's repeated-sibling detector becomes one edge type among others);
-*appears-with* (nodes whose presence co-varies across observations);
-*changes-with* (nodes whose text changes at the same steps). No detector
-decides units globally: a unit is a hypothesis over a connected subgraph.
+## Observation and candidate generation
 
-### 2. Abstraction hypothesis H
+`graph.py`, `units.py`, `hypotheses.py`, and `association.py` retain the working V2
+frontend. Their outputs have proposal status:
 
-- **Entity hypotheses**: clusters of mentions (node occurrences across
-  observations) with a type label and a key policy (which mention text is
-  stable, which is mutable). Alternatives are kept as a scored assignment graph
-  (mention -> candidate entity), not collapsed; same-named mentions may stay
-  distinct, differently-coded ones may merge.
-- **Attachment hypotheses**: node -> (entity, attr | ref | presence | context),
-  including *absence words* (a value that means "no target": "storage",
-  "loose", "—", "Vacant") and *text-embedded values* (number / token inside a
-  text node).
-- **Relation hypotheses**: nesting (unit inside unit), breadcrumb/heading
-  context, co-mention in one text, picker/option references.
-- **Sensing controls**: static controls whose clicks change observation but
-  never the abstract domain state (tabs, filters, sort, selection, disclosure);
-  usable deliberately as surveys.
-- **Belief rules** (the B -> C gap): what an entity's disappearance from a
-  container means (relation revised to unknown, survey scheduled), which view
-  lists which type completely (refresh-on-visit), which effects are non-local
-  (survey other views after a change). Belief values are TRUE / FALSE / UNKNOWN;
-  `not observed != false`.
+- recurrence proposes a mention group, not an entity boundary;
+- functional dependency proposes a stable key or attachment, not identity truth;
+- co-change proposes dependency or correspondence evidence, not alias truth;
+- a matrix pattern proposes a relation or relational record, not a semantic fact;
+- reload survival proposes persistence evidence, not an infallible DOMAIN label.
 
-H is executed by the same adapter interface the ladder used
-(`Abstractor.parsed/abstract` + a tracker): `ParsedObs` instances with slots,
-`AbstractState` objects with attrs/refs, a per-step belief. The oracle
-conditions are the reference implementation of that interface with perfect
-inputs; V2 replaces the inputs with hypotheses and keeps the downstream path.
+Every DOM/accessibility node can be a raw mention. A latent entity is a set of surface
+mentions across time and views; it need not coincide with one subtree or recurrent unit.
+The graph carries DOM structure, order, role/name/value, structural recurrence, and
+temporal observations. V2 has no branches on application identity and no detector named
+for a benchmark layout family.
 
-### 3. Counterexamples (structured, stored)
+## Factorized ambiguity
 
-- **Unexplained change**: a non-sensing action changed the observation graph
-  (or a later survey revealed a change) but phi_H registers no domain diff.
-  This is 1 - RTC computed *without* ground truth: detectable from the
-  observation graph alone.
-- **Contradiction**: phi_H(h1) = phi_H(h2), same abstract action, different
-  abstract delta (or success vs refusal).
-- **Association conflict**: two mentions assigned to one entity change
-  independently under intervention (tracer text appears in one, not the
-  other); or one mention assigned to two entities.
-- **Plan failure**: M(H) predicted a plan, execution diverged.
+`refinement.py` represents ambiguity as small `AmbiguityComponent`s. Each component has:
 
-### 4. Refinement operators (minimal, costed)
+- a local scope and the counterexample steps it addresses;
+- two or more `LocalHypothesis` alternatives;
+- predicted outcomes for a candidate intervention;
+- explicit complexity;
+- status: `UNTESTED`, `SUPPORTED`, `CONTRADICTED`, or `UNRESOLVED`;
+- typed `EvidenceContribution`s with source, step, observation signatures, and detail;
+- an optional selected intervention with cost, risk, disagreement score, and targeted
+  alternatives.
 
-split entity / merge entities / re-attach value / introduce attribute /
-introduce relation / reclassify control as sensing / add belief rule /
-split action template / add parameter / introduce anonymous latent variable
-(only after a contradiction survives every visible refinement; never named).
-Each refinement carries provenance: the counterexample, the proposer, the
-interventions that supported or contradicted it.
+Components remain independent unless evidence connects them. V2 does not enumerate a
+global partition of all mentions. Supported decisions are installed before fitting the
+deterministic hypotheses; untested proposals never silently modify the abstraction.
+Accepted decisions retain their component and evidence provenance in
+`hypotheses_v2.json`, `interventions_v2.jsonl`, and `refinements_v2.json`.
 
-### 5. Proposers
+Implemented local decisions are:
 
-Deterministic first (repetition, co-change, tracer injection outcomes, value
-matching across views, absence-word detection by co-change with a relation).
-LLM second, on *narrow* counterexample packets: the two observations, the
-action, the current hypotheses, "propose the smallest distinction or
-correspondence that explains this, and an experiment that discriminates the
-alternatives". Every proposal is UNTESTED until an intervention or held-out
-transitions support it; cached with prompt/response/model id.
+- `ATTACH_PERSISTENT_WIDGET`: choose among view state, enclosing-mention attribute, and
+  co-local mention/entity attachment after a controlled persistence probe;
+- `ASSOCIATE_MENTION_TYPE`: associate compact and rich representations only after a
+  controlled view transition reveals equal keys with invariant persistent state;
+- `SPLIT_RELATIONAL_RECORD`: distinguish a row anchor from a row-column record after a
+  matrix/detail probe reveals the predicted triple under view invariance.
 
-### 6. Interventions
+These are generic evidence patterns, not layout authorities. Further refinement
+operators should be added only in response to a stored counterexample and should retain
+the same local alternative/evidence contract.
 
-Identity-revealing: tracer text into any writable field, rename, move, toggle,
-membership change, delete/restore, create sibling, then survey all views.
-Chosen to separate the currently competing hypotheses (largest expected
-disagreement), with a budget; falls back to coverage-driven random actions when
-no hypothesis is pending (so the active phase never stalls).
+## Belief and sensing
 
-### 7. Scoring
+`V2Tracker` uses TRUE/FALSE/UNKNOWN semantics. A confirmed fact carries:
 
+- source and last-confirming observation;
+- last-confirming step;
+- actions since confirmation;
+- possible invalidators;
+- confidence/status.
+
+Facts absent from a partial view remain in belief. Absence becomes explicit FALSE only
+when structural evidence identifies the current rendering as a complete collection for
+that type. Reset establishes a new episode. The legacy policy that treats every visible
+type as complete remains available only as an ablation.
+
+Sensing actions are information-gathering operations. Only executed persistence or
+reload/survey probes may certify a control as view-only for the inducer. Heuristic view
+candidates remain available to intervention selection, with their uncertainty intact.
+`DOMAIN`, `VIEW`, and `UNDETERMINED` remain evidence statuses rather than metaphysical
+ground truth.
+
+## Counterexamples
+
+`counterexamples.py` stores the relevant pre/post observation signatures, primitive or
+macro action, probe status, changed/appeared/disappeared nodes, current grounding, and
+why the delta is not represented. Page-changing steps use:
+
+- `EXPLAINED`: the persistent abstract delta is registered;
+- `PARTIALLY_EXPLAINED`: some but not all relevant change is represented;
+- `UNGROUNDED`: persistent DOMAIN evidence exists but the abstraction cannot express it;
+- `UNOBSERVABLE`: DOMAIN evidence exists but the visible before/after pair cannot expose
+  the persistent delta;
+- `VIEW_ONLY`: sensing/view evidence with no persistent delta;
+- `UNDETERMINED`: available evidence cannot classify the transition.
+
+A second detector groups transitions by abstract pre-state plus grounded semantic action
+and arguments. Incompatible deltas within one group are abstraction-induced
+nondeterminism candidates. Before introducing nondeterminism, refinement should try
+association, attachment, persistence, relation, action parameterization, and schema
+split. Planning divergence is intended to enter the same path, but is not yet wired.
+
+## Intervention selection
+
+The current intervention families are persistence, identity/correspondence, and context
+or matrix-detail perturbation. Selection is a simple disagreement rule: prefer a safe,
+low-cost probe whose predicted outcomes differ across the live alternatives. The record
+contains which hypotheses were targeted, every predicted outcome, the actual outcome,
+and evidence/status changes.
+
+Persistence probes use action, observe, reload, and relevant-view survey compared with
+the previous post-reload survey. Correspondence probes navigate from one representation
+and test whether a predicted counterpart appears while persistent state is invariant.
+Text mutation is not assumed identity-preserving and is not required by the demonstrated
+loops.
+
+## LLM boundary
+
+LLM proposals remain optional and local. A prompt may contain one unresolved
+counterexample, relevant observation fragments, current alternatives, and a request for
+up to a small number of minimal refinements plus a discriminating test. It may propose
+grouping, correspondence, attachment, relation, missing state, or a diagnostic action.
+It cannot certify an entity or operator. Responses are cached with model/configuration;
+confidence is not evidence. No LLM proposal was required for the demonstrated climbing
+or observatory decisions.
+
+`SEMABI_LLM_CACHE_ONLY=1` makes cache misses fail closed, which is used by audits that
+must not export new local traces without authority.
+
+## Selection pressure and diagnostics
+
+RTC is recall-like. For every hidden persistent transition, it checks whether all aligned
+hidden changed atoms appear in the learner's registered delta. It does not penalize
+additional learned atoms, so oracle-B is not an absolute RTC ceiling.
+
+Evaluator-only diagnostics therefore report:
+
+1. RTC and any-atom RTC;
+2. registered-delta precision and spurious registered-delta rate;
+3. `UNGROUNDED`/unobservable persistent change and CER;
+4. abstraction contradiction rate;
+5. mention association precision/recall, cross-view identity, duplicate-name separation,
+   attachment/relation alignment where available, and view false positives;
+6. downstream operator/effect/precondition agreement and planning;
+7. primitive interaction cost.
+
+The conceptual model-selection objective rewards covered persistent evidence, held-out
+prediction, and resolved counterexamples, while penalizing contradictions, unexplained
+persistent events, spurious deltas, and unnecessary complexity. Coefficients are not
+blindly tuned against development scores; the current mechanism accepts only a local
+refinement supported by its discriminating intervention.
+
+Counterexample Resolution Rate is:
+
+```text
+selected UNGROUNDED DOMAIN events made representable after refinement
+---------------------------------------------------------------------
+selected UNGROUNDED DOMAIN events for which refinement was attempted
 ```
-score(H) = supported transitions (RTC-like, label-free)
-         + held-out transition prediction by M(H)
-         + (later) planning validity
-         - unexplained changes - contradictions
-         - |entities| - |attributes| - |relations| - |action templates| - |latent vars|
-```
-MDL-style, not Bayesian; the exact weights are a dev-set choice and will be
-reported.
 
-### 8. Downstream (kept, with two language extensions the ladder justified)
+Association/record contradictions have their own attempted/resolved counts and are not
+inserted into the CER denominator. Resolution mode records passive versus diagnostic;
+later contradiction can mark an apparent resolution incorrect.
 
-V0 inducer unchanged except: numeric delta effects (`x := x + c`, lifted when
-old/new are both numbers) and conditional templates (two effect templates for
-one action, discriminated by a learned precondition) — both shown necessary by
-K's ceiling (36/47) and D's residuals. Order-insensitive matching of
-argument-supplying actions (mount_server) is a third, smaller fix.
+## Downstream boundary
 
-## Metrics (dev sets gauntlet-v1/v2, in this order)
+V2 continues to feed the V0 inducer through the existing `ParsedObs`/`AbstractState`
+adapter. The effect language is frozen: no numeric-delta or conditional-effect extension
+is part of V2's current abstraction checkpoint. High RTC with low operator recovery is
+reported as downstream evidence rather than repaired by moving the ceiling.
 
-1. RTC (registered transition coverage) — label-free proxy available at run
-   time as "unexplained changes"; oracle B reached 0.65-0.98, C 1.0.
-2. Object layer: mention -> entity pair precision/recall, cross-view identity
-   (entities split across keys), duplicate separation (keys merging entities),
-   attachment accuracy, relation endpoint accuracy, view false positives.
-3. Operators, effects, preconditions, held-out planning, interaction budget.
+Anonymous restricted latent state (for example `L1 in {0,1}`) is a last-resort extension
+point only after repeated same-state/same-action outcome differences survive visible
+association, attachment, persistence, and action-argument refinements. It is not yet
+implemented or claimed.
 
-## Phase 3 vertical slice
+## Experimental sequence
 
-Apps where base RTC ~ 0 and oracle B is high: apiary (grid of stand columns +
-colony detail panel), museum (floor plan of groups + catalogue table + ledger),
-airport (stand cards + tables with abbreviations). Target: RTC from 0 to the
-B range with observation-graph hypotheses, deterministic proposers, one LLM
-local proposer and two interventions (tracer + survey), without any app- or
-layout-specific detector. Operators are not the objective of the slice.
+1. Demonstrate one full persistent-DOMAIN causal loop on a blind app. **Complete on
+   climbing (1/1 selected event resolved).**
+2. Transfer the same decision/evidence architecture without application branches.
+   **Partial: observatory coverage rises substantially; datacenter association improves
+   but coverage remains zero; pharmacy-c remains partial.**
+3. Run matched endpoint controls, then full interaction-budget curves for coverage-only,
+   random diagnostics, targeted diagnostics, LLM proposals without verification, and LLM
+   proposals with executed verification. **Endpoint controls complete on climbing and
+   observatory; curves and LLM ablations pending.**
+4. Localize downstream induction wherever representation coverage rises without operator
+   recovery. **Complete for current traces; numeric/conditional effects, spurious effects,
+   and sparse support are the residuals.**
+5. Complete measurement hygiene, freeze code/protocol, and commission a fresh independent
+   test. The SemABI team must not author gauntlet-v3 itself.
 
-## Ablations (Phase 6)
+## Freeze condition
 
-deterministic-only; LLM proposals without verification; LLM + verification;
-without counterexample refinement; without interventions (random equal budget);
-each reported on RTC, object-layer metrics and operators against budget.
-
-## Freeze and fresh test
-
-Freeze/tag V2, stop compiler edits, commission gauntlet-v3 (three independent
-authors, 20+ apps, the diversity list in the brief), audit for leakage, run
-once, report development / frozen / post-hoc separately (docs/v2_results.md).
-A fresh RTC near zero after this design falsifies the behaviour-driven
-abstraction approach, not a missing detector.
+V2 is freeze-ready only after the unresolved development counterexamples have either a
+generic supported refinement or an explicit retained failure; fair budget/LLM ablations
+are complete; the corrected-browser V1 comparison is completed or its external-authority
+blocker is formally retained; tests and compiler/evaluator boundaries pass; and design,
+status, and machine artifacts agree. Development gains must remain separate from any
+future frozen fresh result.

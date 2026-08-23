@@ -27,13 +27,15 @@ semabi/compiler/        BLACK-BOX SIDE (never imports hidden/env/eval; enforced 
   ground.py             execute learned groundings on the live app (navigation through view operators)
   planner.py            best-first planning on the learned model; execution with replanning/reconcile
   model.py              export to the relational language + groundings
+  v2/                    observation/evidence proposals, factorized abstraction hypotheses,
+                        counterexamples, diagnostic interventions, and persistent belief
 semabi/eval/            scoring against hidden ground truth (paired-state alignment + behavioural simulation),
                         held-out goals, direct model-vs-model comparison (crossui.py), generic scorer
 semabi/baselines/       screen-transition graph, LLM passive (claude -p), known action vocabulary
 semabi/eval/oracle*.py  EVALUATOR ONLY: oracle ladder (mention->entity annotations from instrumented
                         gauntlet-v2 copies in experiments/oracle_apps/, fed to the unchanged V0 inducer;
                         run_oracle.py / report_oracle.py; docs/v2_oracle.md)
-docs/                   related_work.md, results.md (V0), gauntlet.md, v1_design.md, v1_results.md, v2_oracle.md
+docs/                   frozen V0/V1 history plus V2 oracle, design, devlog, status, and machine results
 ```
 
 ## Run
@@ -55,9 +57,17 @@ cat runs/demo/eval.txt
 .venv/bin/python -m semabi.run_oracle explore --base http://127.0.0.1:8800 --run runs/oracle/grok_01_apiary
 .venv/bin/python -m semabi.run_oracle ladder --run runs/oracle/grok_01_apiary --rungs base,A,B,Bv,C,D,K
 .venv/bin/python -m semabi.report_oracle
+# compile/refine one V2 trace; see --help for probe execution modes
+.venv/bin/python -m semabi.run_v2_refine --help
+# regenerate the evaluator-only V2 development ablation report
+.venv/bin/python -m semabi.eval.v2_ablation --help
 ```
 
 The evaluator/compiler boundary: `semabi.compiler` sees only the browser. Hidden
 state is recorded by an evaluator-side hook (`semabi/eval/recorder.py`) into
 `hidden.jsonl`, which the compiler never reads. `tests/test_boundary.py` checks
 imports and endpoint strings statically.
+
+Current V2 status is in `docs/v2_status.md`. Its reported gains are on the already-seen
+gauntlet-v2 development set, not a fresh result. V2 keeps the V0 effect language frozen,
+and this repository must not author the independently commissioned next gauntlet.

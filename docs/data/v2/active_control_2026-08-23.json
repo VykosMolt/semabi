@@ -1,0 +1,1587 @@
+{
+ "version": 1,
+ "status": "ENDPOINT_CONTROL_ONLY",
+ "protocol": {
+  "comparison": "identical broad trace plus equal extra non-reset primitive budget",
+  "ordinary_random": "extra coverage actions followed by a final reload",
+  "random_action_reload": "random affordance actions alternating with reload",
+  "targeted": "counterexample-triggered diagnostic intervention plus evidence-supported refinement",
+  "not_claimed": "not a budget curve, not an LLM proposal/verification ablation, not fresh generalization"
+ },
+ "apps": {
+  "climbing_loop_004": {
+   "source_run": "runs/oracle/grok_04_climbing",
+   "targeted_run": "runs/v2_refinement/climbing_loop_004",
+   "broad_primitive_cost": 411,
+   "extra_primitive_budget": 16,
+   "total_primitive_cost": 427,
+   "broad_only": {
+    "types_recovered": 2,
+    "attributes_recovered": 0,
+    "relations_recovered": 1,
+    "operators_recovered": 3,
+    "operators_observed": 5,
+    "learned_operators": 7,
+    "operator_names_recovered": [
+     "hang",
+     "pull",
+     "restow"
+    ],
+    "operators_with_any_explanation": [
+     "hang",
+     "pull",
+     "restow"
+    ],
+    "gtc": 0.0,
+    "rtc": 0.0,
+    "rtc_any": 0.024,
+    "registered_deltas": 8,
+    "registered_delta_precision": 0.25,
+    "spurious_registered_delta_rate": 0.75,
+    "mention_pair_precision": 0.742,
+    "mention_pair_recall": 0.553,
+    "duplicate_name_separation": null,
+    "cross_view_identity": 1.0,
+    "view_false_positive_rate": 0.8,
+    "abstraction_contradiction_rate": 0.333,
+    "comparable_abstraction_groups": 3,
+    "per_operator": {
+     "hang": {
+      "n": 3,
+      "full": 0,
+      "any": 0,
+      "successes": 3,
+      "failures": 37,
+      "explained": 3,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "recolor": {
+      "n": 74,
+      "full": 0,
+      "any": 0,
+      "successes": 74,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 74,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "restow": {
+      "n": 1,
+      "full": 0,
+      "any": 0,
+      "successes": 1,
+      "failures": 2,
+      "explained": 1,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "bump": {
+      "n": 2,
+      "full": 0,
+      "any": 0,
+      "successes": 2,
+      "failures": 1,
+      "explained": 0,
+      "invisible": 2,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "ease": {
+      "successes": 0,
+      "failures": 2,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "pull": {
+      "n": 2,
+      "full": 0,
+      "any": 2,
+      "successes": 2,
+      "failures": 0,
+      "explained": 2,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     }
+    },
+    "induction": {}
+   },
+   "ordinary_random": {
+    "types_recovered": 2,
+    "attributes_recovered": 0,
+    "relations_recovered": 1,
+    "operators_recovered": 3,
+    "operators_observed": 5,
+    "learned_operators": 7,
+    "operator_names_recovered": [
+     "hang",
+     "pull",
+     "restow"
+    ],
+    "operators_with_any_explanation": [
+     "hang",
+     "pull",
+     "restow"
+    ],
+    "gtc": 0.0,
+    "rtc": 0.0,
+    "rtc_any": 0.023,
+    "registered_deltas": 12,
+    "registered_delta_precision": 0.167,
+    "spurious_registered_delta_rate": 0.833,
+    "mention_pair_precision": 0.753,
+    "mention_pair_recall": 0.573,
+    "duplicate_name_separation": null,
+    "cross_view_identity": 1.0,
+    "view_false_positive_rate": 0.757,
+    "abstraction_contradiction_rate": 0.333,
+    "comparable_abstraction_groups": 3,
+    "per_operator": {
+     "hang": {
+      "n": 4,
+      "full": 0,
+      "any": 0,
+      "successes": 4,
+      "failures": 37,
+      "explained": 4,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "recolor": {
+      "n": 77,
+      "full": 0,
+      "any": 0,
+      "successes": 77,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 77,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "restow": {
+      "n": 1,
+      "full": 0,
+      "any": 0,
+      "successes": 1,
+      "failures": 2,
+      "explained": 1,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "bump": {
+      "n": 3,
+      "full": 0,
+      "any": 0,
+      "successes": 3,
+      "failures": 1,
+      "explained": 0,
+      "invisible": 3,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "ease": {
+      "successes": 0,
+      "failures": 3,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "pull": {
+      "n": 2,
+      "full": 0,
+      "any": 2,
+      "successes": 2,
+      "failures": 0,
+      "explained": 2,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     }
+    },
+    "induction": {}
+   },
+   "random_action_reload": {
+    "types_recovered": 2,
+    "attributes_recovered": 0,
+    "relations_recovered": 1,
+    "operators_recovered": 3,
+    "operators_observed": 5,
+    "learned_operators": 7,
+    "operator_names_recovered": [
+     "hang",
+     "pull",
+     "restow"
+    ],
+    "operators_with_any_explanation": [
+     "hang",
+     "pull",
+     "restow"
+    ],
+    "gtc": 0.0,
+    "rtc": 0.0,
+    "rtc_any": 0.024,
+    "registered_deltas": 9,
+    "registered_delta_precision": 0.222,
+    "spurious_registered_delta_rate": 0.778,
+    "mention_pair_precision": 0.737,
+    "mention_pair_recall": 0.551,
+    "duplicate_name_separation": null,
+    "cross_view_identity": 1.0,
+    "view_false_positive_rate": 0.784,
+    "abstraction_contradiction_rate": 0.333,
+    "comparable_abstraction_groups": 3,
+    "per_operator": {
+     "hang": {
+      "n": 4,
+      "full": 0,
+      "any": 0,
+      "successes": 4,
+      "failures": 37,
+      "explained": 4,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "recolor": {
+      "n": 76,
+      "full": 0,
+      "any": 0,
+      "successes": 76,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 76,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "restow": {
+      "n": 1,
+      "full": 0,
+      "any": 0,
+      "successes": 1,
+      "failures": 2,
+      "explained": 1,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "bump": {
+      "n": 2,
+      "full": 0,
+      "any": 0,
+      "successes": 2,
+      "failures": 1,
+      "explained": 0,
+      "invisible": 2,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "ease": {
+      "successes": 0,
+      "failures": 2,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "pull": {
+      "n": 2,
+      "full": 0,
+      "any": 2,
+      "successes": 2,
+      "failures": 0,
+      "explained": 2,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     }
+    },
+    "induction": {}
+   },
+   "counterexample_targeted": {
+    "types_recovered": 3,
+    "attributes_recovered": 2,
+    "relations_recovered": 2,
+    "operators_recovered": 1,
+    "operators_observed": 5,
+    "learned_operators": 9,
+    "operator_names_recovered": [
+     "recolor"
+    ],
+    "operators_with_any_explanation": [
+     "recolor"
+    ],
+    "gtc": 1.0,
+    "rtc": 0.817,
+    "rtc_any": 0.841,
+    "registered_deltas": 100,
+    "registered_delta_precision": 0.69,
+    "spurious_registered_delta_rate": 0.31,
+    "mention_pair_precision": 0.794,
+    "mention_pair_recall": 0.553,
+    "duplicate_name_separation": null,
+    "cross_view_identity": 1.0,
+    "view_false_positive_rate": 0.268,
+    "abstraction_contradiction_rate": 0.0,
+    "comparable_abstraction_groups": 2,
+    "per_operator": {
+     "hang": {
+      "n": 3,
+      "full": 3,
+      "any": 3,
+      "successes": 3,
+      "failures": 37,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "recolor": {
+      "n": 74,
+      "full": 62,
+      "any": 62,
+      "successes": 74,
+      "failures": 0,
+      "explained": 74,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "restow": {
+      "n": 1,
+      "full": 0,
+      "any": 0,
+      "successes": 1,
+      "failures": 2,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "bump": {
+      "n": 2,
+      "full": 2,
+      "any": 2,
+      "successes": 2,
+      "failures": 1,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "ease": {
+      "successes": 0,
+      "failures": 2,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "pull": {
+      "n": 2,
+      "full": 0,
+      "any": 2,
+      "successes": 2,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     }
+    },
+    "induction": {
+     "transitions": 112,
+     "no_op_segments": 256,
+     "hypotheses_before_min_support": 27,
+     "hypotheses": [
+      {
+       "name": "op0",
+       "support": 44,
+       "negative_examples": 108,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "select(combobox#0@T0[?o0], ?s0)"
+       ],
+       "effects": [
+        "forall x:T2 with rel:0(x)==?o0: attr:attached:group/combobox#0(x) := '?s0'"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op1",
+       "support": 16,
+       "negative_examples": 136,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "select(combobox#0@T0[?o0], ?s0)"
+       ],
+       "effects": [
+        "attr:attached:group/combobox#0(?o1) := '?s0'"
+       ],
+       "preconditions": [
+        "('empty', '?o1')"
+       ]
+      },
+      {
+       "name": "op2",
+       "support": 12,
+       "negative_examples": 140,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "select(combobox#1@T0[?o0], ?s0)"
+       ],
+       "effects": [
+        "attr:group/combobox#0@7(?o0) := '?s0'"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op3",
+       "support": 6,
+       "negative_examples": 49,
+       "unexplained_negative_examples": 9,
+       "actions": [
+        "click(button#0@T2[?o0])"
+       ],
+       "effects": [
+        "rel:0(?o1) := 'T0:Cave'"
+       ],
+       "preconditions": [
+        "('ref', '?o0', 'rel:1', '?o1')",
+        "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'white')",
+        "('attr_ne', '?o0', 'id', 'T0:Island|T1:R2')"
+       ]
+      },
+      {
+       "name": "op4",
+       "support": 4,
+       "negative_examples": 51,
+       "unexplained_negative_examples": 5,
+       "actions": [
+        "click(button#0@T2[?o0])"
+       ],
+       "effects": [
+        "rel:0(?o1) := 'T0:Island'"
+       ],
+       "preconditions": [
+        "('ref', '?o0', 'rel:1', '?o1')",
+        "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'pink')",
+        "('attr_ne', '?o1', 'id', 'R1')",
+        "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'black')"
+       ]
+      },
+      {
+       "name": "op5",
+       "support": 5,
+       "negative_examples": 11,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(checkbox#0)"
+       ],
+       "effects": [
+        "delete ?o0",
+        "forall x:T2 with rel:0(x)==?o0: delete x"
+       ],
+       "preconditions": [
+        "('attr', '?o0', 'attr:of#1', '2')"
+       ]
+      },
+      {
+       "name": "op6",
+       "support": 3,
+       "negative_examples": 52,
+       "unexplained_negative_examples": 8,
+       "actions": [
+        "click(button#0@T2[?o0])"
+       ],
+       "effects": [
+        "rel:0(?o1) := 'T0:Moon'"
+       ],
+       "preconditions": [
+        "('ref', '?o0', 'rel:1', '?o1')",
+        "('attr_ne', '?o1', 'attr:cell#0@2', '4')",
+        "('attr_ne', '?o0', 'id', 'T0:Cave|T1:R1')"
+       ]
+      },
+      {
+       "name": "op7",
+       "support": 2,
+       "negative_examples": 53,
+       "unexplained_negative_examples": 12,
+       "actions": [
+        "click(button#0@T2[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=R2, attr:cell#0=None, attr:cell#0@2=None) rel:0->T0:Moon"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'white')",
+        "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'pink')",
+        "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'black')",
+        "('attr_ne', '?o0', 'id', 'T0:Island|T1:R2')",
+        "('empty', '?o0')"
+       ]
+      },
+      {
+       "name": "op8",
+       "support": 2,
+       "negative_examples": 4,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Pull)",
+        "click(button:Confirm pull)"
+       ],
+       "effects": [
+        "attr:of#1(?o0) := '1'",
+        "delete ?o1"
+       ],
+       "preconditions": [
+        "('attr', '?o1', 'attr:attached:group/combobox#0', 'white')"
+       ]
+      },
+      {
+       "name": "op9",
+       "support": 1,
+       "negative_examples": 15,
+       "unexplained_negative_examples": 15,
+       "actions": [
+        "click(checkbox#0)"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Moon, attr:group/combobox#0@7=black, attr:of#1=2, attr:of#2=2)"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op10",
+       "support": 1,
+       "negative_examples": 15,
+       "unexplained_negative_examples": 15,
+       "actions": [
+        "click(checkbox#0)"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Island, attr:group/combobox#0@7=pink, attr:of#1=2, attr:of#2=2)",
+        "delete ?new0"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op11",
+       "support": 1,
+       "negative_examples": 36,
+       "unexplained_negative_examples": 3,
+       "actions": [
+        "click(button#0@T0[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T2(id=T0:Cave|T1:R3, attr:attached:group/combobox#0=pink) rel:0->?o0 rel:1->T1:R3",
+        "attr:of#1(?o0) := '1'"
+       ],
+       "preconditions": [
+        "('empty', '?o0')",
+        "('attr_ne', '?o0', 'id', 'Moon')"
+       ]
+      },
+      {
+       "name": "op12",
+       "support": 1,
+       "negative_examples": 54,
+       "unexplained_negative_examples": 43,
+       "actions": [
+        "click(button#0@T2[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=R1, attr:cell#0=None, attr:cell#0@2=None) rel:0->T0:Island"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'T0:Cave|T1:R3')"
+       ]
+      },
+      {
+       "name": "op13",
+       "support": 1,
+       "negative_examples": 19,
+       "unexplained_negative_examples": 19,
+       "actions": [
+        "click(button:Routes)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=R3, attr:cell#0=Overhang, attr:cell#0@2=2)"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op14",
+       "support": 1,
+       "negative_examples": 151,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "select(combobox#0@T0[?o0], ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Moon, attr:group/combobox#0@7=white, attr:of#1=2, attr:of#2=2)",
+        "?new1 := new T2(id=T0:Moon|T1:R1, attr:attached:group/combobox#0=white) rel:0->?new0 rel:1->T1:R1",
+        "?new2 := new T2(id=T0:Moon|T1:R2, attr:attached:group/combobox#0=None) rel:0->?new0 rel:1->T1:R2",
+        "forall x:T2 with rel:0(x)==?o0: attr:attached:group/combobox#0(x) := '?s0'"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op15",
+       "support": 1,
+       "negative_examples": 151,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "select(combobox#0@T0[?o0], ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Moon, attr:group/combobox#0@7=white, attr:of#1=2, attr:of#2=2)",
+        "?new1 := new T2(id=T0:Moon|T1:R1, attr:attached:group/combobox#0=?s0) rel:0->?new0 rel:1->T1:R1",
+        "?new2 := new T2(id=T0:Moon|T1:R2, attr:attached:group/combobox#0=None) rel:0->?new0 rel:1->T1:R2",
+        "forall x:T2 with rel:0(x)==?o0: attr:attached:group/combobox#0(x) := '?s0'"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op16",
+       "support": 1,
+       "negative_examples": 15,
+       "unexplained_negative_examples": 15,
+       "actions": [
+        "click(checkbox#0)"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Moon, attr:group/combobox#0@7=white, attr:of#1=2, attr:of#2=2)",
+        "?new1 := new T2(id=T0:Moon|T1:R1, attr:attached:group/combobox#0=yellow) rel:0->?new0 rel:1->T1:R1",
+        "?new2 := new T2(id=T0:Moon|T1:R2, attr:attached:group/combobox#0=None) rel:0->?new0 rel:1->T1:R2"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op17",
+       "support": 1,
+       "negative_examples": 19,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Routes)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=R1, attr:cell#0=Arete, attr:cell#0@2=3)",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('empty', '?o0')"
+       ]
+      },
+      {
+       "name": "op18",
+       "support": 1,
+       "negative_examples": 19,
+       "unexplained_negative_examples": 19,
+       "actions": [
+        "click(button:Routes)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=R2, attr:cell#0=Arete, attr:cell#0@2=4)",
+        "?new1 := new T1(id=R3, attr:cell#0=Overhang, attr:cell#0@2=2)"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op19",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Bump@T1[?o0])"
+       ],
+       "effects": [
+        "attr:cell#0@2(?o0) := '3'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op20",
+       "support": 1,
+       "negative_examples": 36,
+       "unexplained_negative_examples": 23,
+       "actions": [
+        "click(button#0@T0[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T2(id=T0:Island|T1:R2, attr:attached:group/combobox#0=None) rel:0->?o0 rel:1->T1:R2",
+        "attr:of#1(?o0) := '2'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'Moon')"
+       ]
+      },
+      {
+       "name": "op21",
+       "support": 1,
+       "negative_examples": 36,
+       "unexplained_negative_examples": 3,
+       "actions": [
+        "click(button#0@T0[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T2(id=T0:Cave|T1:R2, attr:attached:group/combobox#0=pink) rel:0->?o0 rel:1->T1:R2",
+        "attr:of#1(?o0) := '1'"
+       ],
+       "preconditions": [
+        "('empty', '?o0')",
+        "('attr_ne', '?o0', 'id', 'Moon')"
+       ]
+      },
+      {
+       "name": "op22",
+       "support": 1,
+       "negative_examples": 19,
+       "unexplained_negative_examples": 19,
+       "actions": [
+        "click(button:Routes)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=R1, attr:cell#0=Arete, attr:cell#0@2=4)",
+        "?new1 := new T1(id=R3, attr:cell#0=Overhang, attr:cell#0@2=2)"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op23",
+       "support": 1,
+       "negative_examples": 151,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "select(combobox#0@T0[?o0], ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Island, attr:group/combobox#0@7=white, attr:of#1=2, attr:of#2=2)",
+        "?new1 := new T2(id=T0:Island|T1:R1, attr:attached:group/combobox#0=black) rel:0->?new0 rel:1->T1:R1",
+        "?new2 := new T2(id=T0:Island|T1:R2, attr:attached:group/combobox#0=None) rel:0->?new0 rel:1->T1:R2",
+        "forall x:T2 with rel:0(x)==?o0: attr:attached:group/combobox#0(x) := '?s0'"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op24",
+       "support": 1,
+       "negative_examples": 2,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button#0@T2[?o0])",
+        "click(button:Restow@T1[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T2(id=T0:Cave|T1:R2, attr:attached:group/combobox#0=white) rel:0->T0:Cave rel:1->?o1",
+        "attr:of#1(?o2) := '1'",
+        "attr:of#1(?o3) := '1'",
+        "delete ?o0",
+        "rel:0(?o1) := '?o2'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'T0:Cave|T1:R3')"
+       ]
+      },
+      {
+       "name": "op25",
+       "support": 1,
+       "negative_examples": 0,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Routes)",
+        "click(button:Bump@T1[?o0])"
+       ],
+       "effects": [
+        "attr:cell#0@2(?o0) := '4'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op26",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Routes)",
+        "click(button:Open@T1[?o0])"
+       ],
+       "effects": [
+        "rel:0(?o0) := 'T0:Cave'"
+       ],
+       "preconditions": []
+      }
+     ]
+    }
+   }
+  },
+  "observatory_loop_001": {
+   "source_run": "runs/oracle/grok_02_observatory",
+   "targeted_run": "runs/v2_refinement/observatory_loop_001",
+   "broad_primitive_cost": 408,
+   "extra_primitive_budget": 9,
+   "total_primitive_cost": 417,
+   "broad_only": {
+    "types_recovered": 3,
+    "attributes_recovered": 5,
+    "relations_recovered": 0,
+    "operators_recovered": 0,
+    "operators_observed": 5,
+    "learned_operators": 10,
+    "operator_names_recovered": [],
+    "operators_with_any_explanation": [
+     "detach"
+    ],
+    "gtc": 0.0,
+    "rtc": 0.0,
+    "rtc_any": 0.0,
+    "registered_deltas": 51,
+    "registered_delta_precision": 0.0,
+    "spurious_registered_delta_rate": 1.0,
+    "mention_pair_precision": 0.959,
+    "mention_pair_recall": 1.0,
+    "duplicate_name_separation": null,
+    "cross_view_identity": 1.0,
+    "view_false_positive_rate": 0.537,
+    "abstraction_contradiction_rate": 0.75,
+    "comparable_abstraction_groups": 4,
+    "per_operator": {
+     "book": {
+      "n": 3,
+      "full": 0,
+      "any": 0,
+      "successes": 3,
+      "failures": 6,
+      "explained": 0,
+      "invisible": 2,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "extend": {
+      "n": 12,
+      "full": 0,
+      "any": 0,
+      "successes": 12,
+      "failures": 1,
+      "explained": 0,
+      "invisible": 12,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "clip": {
+      "n": 8,
+      "full": 0,
+      "any": 0,
+      "successes": 8,
+      "failures": 3,
+      "explained": 0,
+      "invisible": 8,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "retarget": {
+      "n": 3,
+      "full": 0,
+      "any": 0,
+      "successes": 3,
+      "failures": 7,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "detach": {
+      "n": 8,
+      "full": 0,
+      "any": 0,
+      "successes": 8,
+      "failures": 0,
+      "explained": 2,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     }
+    },
+    "induction": {}
+   },
+   "ordinary_random": {
+    "types_recovered": 3,
+    "attributes_recovered": 5,
+    "relations_recovered": 0,
+    "operators_recovered": 0,
+    "operators_observed": 5,
+    "learned_operators": 10,
+    "operator_names_recovered": [],
+    "operators_with_any_explanation": [
+     "detach"
+    ],
+    "gtc": 0.0,
+    "rtc": 0.0,
+    "rtc_any": 0.0,
+    "registered_deltas": 52,
+    "registered_delta_precision": 0.0,
+    "spurious_registered_delta_rate": 1.0,
+    "mention_pair_precision": 0.958,
+    "mention_pair_recall": 1.0,
+    "duplicate_name_separation": 1.0,
+    "cross_view_identity": 1.0,
+    "view_false_positive_rate": 0.529,
+    "abstraction_contradiction_rate": 0.75,
+    "comparable_abstraction_groups": 4,
+    "per_operator": {
+     "book": {
+      "n": 3,
+      "full": 0,
+      "any": 0,
+      "successes": 3,
+      "failures": 6,
+      "explained": 0,
+      "invisible": 2,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "extend": {
+      "n": 13,
+      "full": 0,
+      "any": 0,
+      "successes": 13,
+      "failures": 1,
+      "explained": 0,
+      "invisible": 13,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "clip": {
+      "n": 8,
+      "full": 0,
+      "any": 0,
+      "successes": 8,
+      "failures": 3,
+      "explained": 0,
+      "invisible": 8,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "retarget": {
+      "n": 3,
+      "full": 0,
+      "any": 0,
+      "successes": 3,
+      "failures": 7,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "detach": {
+      "n": 8,
+      "full": 0,
+      "any": 0,
+      "successes": 8,
+      "failures": 0,
+      "explained": 2,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     }
+    },
+    "induction": {}
+   },
+   "random_action_reload": {
+    "types_recovered": 3,
+    "attributes_recovered": 5,
+    "relations_recovered": 0,
+    "operators_recovered": 0,
+    "operators_observed": 5,
+    "learned_operators": 10,
+    "operator_names_recovered": [],
+    "operators_with_any_explanation": [
+     "detach"
+    ],
+    "gtc": 0.0,
+    "rtc": 0.0,
+    "rtc_any": 0.0,
+    "registered_deltas": 51,
+    "registered_delta_precision": 0.0,
+    "spurious_registered_delta_rate": 1.0,
+    "mention_pair_precision": 0.958,
+    "mention_pair_recall": 1.0,
+    "duplicate_name_separation": 1.0,
+    "cross_view_identity": 1.0,
+    "view_false_positive_rate": 0.537,
+    "abstraction_contradiction_rate": 0.75,
+    "comparable_abstraction_groups": 4,
+    "per_operator": {
+     "book": {
+      "n": 3,
+      "full": 0,
+      "any": 0,
+      "successes": 3,
+      "failures": 6,
+      "explained": 0,
+      "invisible": 2,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "extend": {
+      "n": 12,
+      "full": 0,
+      "any": 0,
+      "successes": 12,
+      "failures": 1,
+      "explained": 0,
+      "invisible": 12,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "clip": {
+      "n": 8,
+      "full": 0,
+      "any": 0,
+      "successes": 8,
+      "failures": 3,
+      "explained": 0,
+      "invisible": 8,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "retarget": {
+      "n": 3,
+      "full": 0,
+      "any": 0,
+      "successes": 3,
+      "failures": 7,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "detach": {
+      "n": 8,
+      "full": 0,
+      "any": 0,
+      "successes": 8,
+      "failures": 0,
+      "explained": 2,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     }
+    },
+    "induction": {}
+   },
+   "counterexample_targeted": {
+    "types_recovered": 4,
+    "attributes_recovered": 4,
+    "relations_recovered": 3,
+    "operators_recovered": 1,
+    "operators_observed": 5,
+    "learned_operators": 5,
+    "operator_names_recovered": [
+     "extend"
+    ],
+    "operators_with_any_explanation": [
+     "clip",
+     "extend"
+    ],
+    "gtc": 1.0,
+    "rtc": 0.676,
+    "rtc_any": 0.676,
+    "registered_deltas": 34,
+    "registered_delta_precision": 0.676,
+    "spurious_registered_delta_rate": 0.324,
+    "mention_pair_precision": 0.988,
+    "mention_pair_recall": 0.979,
+    "duplicate_name_separation": null,
+    "cross_view_identity": 1.0,
+    "view_false_positive_rate": 0.314,
+    "abstraction_contradiction_rate": null,
+    "comparable_abstraction_groups": 0,
+    "per_operator": {
+     "book": {
+      "n": 3,
+      "full": 2,
+      "any": 2,
+      "successes": 3,
+      "failures": 6,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "extend": {
+      "n": 12,
+      "full": 12,
+      "any": 12,
+      "successes": 12,
+      "failures": 1,
+      "explained": 10,
+      "invisible": 0,
+      "rejected": 1,
+      "unbound_failures": 0
+     },
+     "clip": {
+      "n": 8,
+      "full": 8,
+      "any": 8,
+      "successes": 8,
+      "failures": 3,
+      "explained": 5,
+      "invisible": 0,
+      "rejected": 3,
+      "unbound_failures": 0
+     },
+     "retarget": {
+      "n": 3,
+      "full": 1,
+      "any": 1,
+      "successes": 3,
+      "failures": 7,
+      "explained": 0,
+      "invisible": 2,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "detach": {
+      "n": 8,
+      "full": 0,
+      "any": 0,
+      "successes": 8,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     }
+    },
+    "induction": {
+     "transitions": 35,
+     "no_op_segments": 327,
+     "hypotheses_before_min_support": 25,
+     "hypotheses": [
+      {
+       "name": "op0",
+       "support": 4,
+       "negative_examples": 23,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Board)"
+       ],
+       "effects": [
+        "attr:of#1(?o0) := '0'",
+        "forall x:T3 with rel:0(x)==?o0: delete x"
+       ],
+       "preconditions": [
+        "('attr', '?o0', 'attr:of#1', '1')"
+       ]
+      },
+      {
+       "name": "op1",
+       "support": 4,
+       "negative_examples": 5,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button#0@T3[?o0])",
+        "click(button:Extend@T3[?o0])"
+       ],
+       "effects": [
+        "attr:duration#0(?o0) := '3'"
+       ],
+       "preconditions": [
+        "('attr', '?o0', 'attr:duration#0', '2')"
+       ]
+      },
+      {
+       "name": "op2",
+       "support": 3,
+       "negative_examples": 6,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button#0@T3[?o0])",
+        "click(button:Extend@T3[?o0])"
+       ],
+       "effects": [
+        "attr:duration#0(?o0) := '2'"
+       ],
+       "preconditions": [
+        "('attr', '?o0', 'attr:duration#0', '1')"
+       ]
+      },
+      {
+       "name": "op3",
+       "support": 2,
+       "negative_examples": 19,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Catalog)"
+       ],
+       "effects": [
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('empty', '?o0')"
+       ]
+      },
+      {
+       "name": "op4",
+       "support": 2,
+       "negative_examples": 5,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button#0@T3[?o0])",
+        "click(button:Clip@T3[?o0])"
+       ],
+       "effects": [
+        "attr:duration#0(?o0) := '1'"
+       ],
+       "preconditions": [
+        "('attr', '?o0', 'attr:duration#0', '2')"
+       ]
+      },
+      {
+       "name": "op5",
+       "support": 1,
+       "negative_examples": 20,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Catalog)"
+       ],
+       "effects": [
+        "attr:cell#0@3(?o0) := '2'",
+        "attr:cell#0@3(?o1) := '0'"
+       ],
+       "preconditions": [
+        "('empty', '?o1')"
+       ]
+      },
+      {
+       "name": "op6",
+       "support": 1,
+       "negative_examples": 20,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Catalog)"
+       ],
+       "effects": [
+        "attr:cell#0@3(?o0) := '0'",
+        "attr:cell#0@3(?o1) := '1'"
+       ],
+       "preconditions": [
+        "('empty', '?o1')"
+       ]
+      },
+      {
+       "name": "op7",
+       "support": 1,
+       "negative_examples": 22,
+       "unexplained_negative_examples": 22,
+       "actions": [
+        "click(checkbox#0)"
+       ],
+       "effects": [
+        "delete ?o0",
+        "forall x:T3 with rel:0(x)==?o0: delete x"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op8",
+       "support": 1,
+       "negative_examples": 20,
+       "unexplained_negative_examples": 16,
+       "actions": [
+        "click(button:Catalog)"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Mid, attr:of#1=1, attr:of#2=1)",
+        "?new1 := new T3(id=T0:Mid|T1:N6, attr:duration#0=None) rel:0->?new0 rel:1->T1:N6 rel:2->T2:M31",
+        "attr:cell#0@3(?o0) := '1'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'attr:cell#0@3', '1')"
+       ]
+      },
+      {
+       "name": "op9",
+       "support": 1,
+       "negative_examples": 20,
+       "unexplained_negative_examples": 17,
+       "actions": [
+        "click(button:Catalog)"
+       ],
+       "effects": [
+        "attr:cell#0@3(?o0) := '2'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'attr:cell#0@2', '3')"
+       ]
+      },
+      {
+       "name": "op10",
+       "support": 1,
+       "negative_examples": 3,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Pointing)",
+        "click(button:Extend@T3[?o0])"
+       ],
+       "effects": [
+        "attr:duration#0(?o0) := '2'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'T0:Mid|T1:N6')"
+       ]
+      },
+      {
+       "name": "op11",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Pointing)",
+        "click(button:Clip@T3[?o0])"
+       ],
+       "effects": [
+        "attr:duration#0(?o0) := '1'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op12",
+       "support": 1,
+       "negative_examples": 3,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Pointing)",
+        "click(button:Extend@T3[?o0])"
+       ],
+       "effects": [
+        "attr:duration#0(?o0) := '3'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'T0:Mid|T1:N6')"
+       ]
+      },
+      {
+       "name": "op13",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Pointing)",
+        "click(button:Clip@T3[?o0])"
+       ],
+       "effects": [
+        "attr:duration#0(?o0) := '2'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op14",
+       "support": 1,
+       "negative_examples": 2,
+       "unexplained_negative_examples": 2,
+       "actions": [
+        "click(button:Pointing)",
+        "click(button:Retarget@T3[?o0])"
+       ],
+       "effects": [
+        "rel:2(?o0) := 'T2:M31'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op15",
+       "support": 1,
+       "negative_examples": 9,
+       "unexplained_negative_examples": 2,
+       "actions": [
+        "click(button:open@T1[?o0])",
+        "click(button#0)"
+       ],
+       "effects": [
+        "?new0 := new T3(id=T0:Mid|T1:W12, attr:duration#0=None) rel:0->T0:Mid rel:1->?o0 rel:2->T2:M31",
+        "attr:of#1(?o1) := '2'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'N6')",
+        "('attr_ne', '?o1', 'id', 'First')"
+       ]
+      },
+      {
+       "name": "op16",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Confirm detach)",
+        "click(button:Clip@T3[?o0])"
+       ],
+       "effects": [
+        "attr:duration#0(?o0) := '1'",
+        "attr:of#1(?o1) := '0'",
+        "attr:of#1(?o2) := '1'",
+        "delete ?o0",
+        "forall x:T3 with rel:0(x)==?o1: delete x"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op17",
+       "support": 1,
+       "negative_examples": 6,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button#0@T3[?o0])",
+        "click(button:Clip@T3[?o0])"
+       ],
+       "effects": [
+        "attr:duration#0(?o0) := '2'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'attr:duration#0', '2')",
+        "('attr_ne', '?o0', 'attr:duration#0', '1')"
+       ]
+      },
+      {
+       "name": "op18",
+       "support": 1,
+       "negative_examples": 6,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button#0@T3[?o0])",
+        "click(button:Clip@T3[?o0])"
+       ],
+       "effects": [
+        "attr:duration#0(?o0) := '1'",
+        "attr:of#1(?o1) := '0'",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('ref', '?o0', 'rel:0', '?o1')"
+       ]
+      },
+      {
+       "name": "op19",
+       "support": 1,
+       "negative_examples": 8,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button#0@T3[?o0])",
+        "click(button:Extend@T3[?o0])"
+       ],
+       "effects": [
+        "attr:duration#0(?o0) := '2'",
+        "attr:of#1(?o1) := '0'",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('ref', '?o0', 'rel:0', '?o1')"
+       ]
+      },
+      {
+       "name": "op20",
+       "support": 1,
+       "negative_examples": 3,
+       "unexplained_negative_examples": 3,
+       "actions": [
+        "click(button:Pointing)",
+        "click(button:Extend@T3[?o0])"
+       ],
+       "effects": [
+        "attr:duration#0(?o0) := '4'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op21",
+       "support": 1,
+       "negative_examples": 9,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:open@T1[?o0])",
+        "click(button#0)"
+       ],
+       "effects": [
+        "attr:of#1(?o1) := '1'"
+       ],
+       "preconditions": [
+        "('empty', '?o1')"
+       ]
+      },
+      {
+       "name": "op22",
+       "support": 1,
+       "negative_examples": 8,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button#0@T3[?o0])",
+        "click(button:Extend@T3[?o0])"
+       ],
+       "effects": [
+        "attr:duration#0(?o0) := '4'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'attr:duration#0', '1')",
+        "('attr_ne', '?o0', 'attr:duration#0', '2')"
+       ]
+      },
+      {
+       "name": "op23",
+       "support": 1,
+       "negative_examples": 6,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button#0@T3[?o0])",
+        "click(button:Clip@T3[?o0])"
+       ],
+       "effects": [
+        "attr:duration#0(?o0) := '3'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'attr:duration#0', '2')",
+        "('attr_ne', '?o0', 'attr:duration#0', '1')"
+       ]
+      },
+      {
+       "name": "op24",
+       "support": 1,
+       "negative_examples": 9,
+       "unexplained_negative_examples": 4,
+       "actions": [
+        "click(button:open@T1[?o0])",
+        "click(button#0)"
+       ],
+       "effects": [
+        "?new0 := new T3(id=T0:First|T1:W12, attr:duration#0=None) rel:0->T0:First rel:1->?o0 rel:2->T2:Vega",
+        "attr:of#1(?o1) := '2'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'N6')"
+       ]
+      }
+     ]
+    }
+   }
+  }
+ }
+}

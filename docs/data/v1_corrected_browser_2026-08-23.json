@@ -1,0 +1,30 @@
+{
+ "version": 1,
+ "status": "BLOCKED_EXTERNAL_LLM_AUTHORITY",
+ "protocol": {
+  "compiler": "V1 compiler sources byte-identical to v1.0-grounding; browser settling is the intended correction",
+  "browser": "150 ms interval, three identical consecutive snapshots, 3000 ms maximum",
+  "exploration": "view sweep plus 3 episodes x 30 random primitives",
+  "active_learning": "3 rounds x 150 primitives",
+  "held_out_goals": 6,
+  "schema_proposals": "2 retained Opus-alias proposals after random exploration; refreshed before final active round; cache-only, with cache miss treated as BLOCKED",
+  "min_support": 2,
+  "process_isolation": "one application and evaluator per process",
+  "runs_root": "runs/v1_corrected_browser_20260823"
+ },
+ "source_sha256": {
+  "semabi/compiler/browser.py": "a63591db4b8899f5ce55ad4388c7628a2f83dd23cfbbe66753f2eef4dd3e10fd",
+  "semabi/compiler/compile_v1.py": "200ccf04a38b69f04655a3bd72c9e0edb5a436eea64dadab6c4f55a3e4377d6c",
+  "semabi/compiler/schema_llm.py": "f05e458184188ff78113df6c8b872e50174b5232c5b0781e73251e97b1199d4d",
+  "semabi/run_external.py": "0ebfb32c12c8f01c9ddb176d391b33e71aa098d0d0c914ab582c57f7103c441b",
+  "semabi/eval/external.py": "afd5e542dd93abf73f4717083eb30105bab0fa02dc2f9db550401d6a8a4725d6",
+  "semabi/eval/matching.py": "70b7a8e0a8fbccd037af9ff827949dcf579fccfa9f4be76a7ba7f780aa4868a9"
+ },
+ "apps": {
+  "g2_claude_03_museum": {
+   "status": "BLOCKED_CACHE_ONLY_RERUN",
+   "run": "runs/v1_corrected_browser_20260823/g2_claude_03_museum",
+   "failure": "run_external exited with code 1 (likely retained-LLM cache miss; inspect schema_candidates.log)"
+  }
+ }
+}

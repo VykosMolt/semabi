@@ -16,6 +16,7 @@ from typing import Any
 from semabi.compiler.abstract import AbsObj, Abstractor, AbstractState, SlotInfo, TypeInfo
 from semabi.compiler.belief import Tracker
 from semabi.compiler.evidence import EvidenceLog
+from semabi.compiler.explorer import affordance_key
 from semabi.compiler.observation import Observation
 from semabi.compiler.parse import LEAF_ROLES, WIDGETS, Instance, ParsedObs, leaf_label, leaf_value
 from semabi.compiler.v2.graph import ObsGraph, node_text, tokens
@@ -471,15 +472,61 @@ class V2Abstractor(Abstractor):
         abstract state."""
         probe_status: dict[str, set[str]] = defaultdict(set)
         probe_by_step: dict[int, dict] = {}
+        probe_by_key: dict[tuple, list[dict]] = defaultdict(list)
         pp = Path(log.dir) / "probes.jsonl"
         if pp.exists():
             for line in pp.read_text().splitlines():
                 j = json.loads(line)
                 if "step" in j:
                     probe_by_step[int(j["step"])] = j
-                k = j["key"]
+                k = tuple(j["key"])
+                probe_by_key[k].append(j)
                 if len(k) >= 3 and k[0] == "click" and k[1] == "button":
                     probe_status[k[2]].add(j["status"])
+        # A controlled persistence result also supplies evidence for earlier occurrences
+        # of the exact same compiler-visible affordance key.  Keep the originating probe
+        # step and scope explicit; DOMAIN dominates, while VIEW is generalized only when
+        # every matching probe is VIEW.
+        for step in log.steps:
+            if step.step in probe_by_step or step.action.target is None:
+                continue
+            try:
+                key = affordance_key(log.obs(step.before), step.action)
+            except (IndexError, KeyError):
+                continue
+            candidates = probe_by_key.get(key, [])
+            if not candidates:
+                continue
+            scoped = []
+            for candidate in candidates:
+                identity = candidate.get("identity") or {}
+                source_template = identity.get("source_template")
+                source_slot = identity.get("source_slot")
+                if not source_template or not source_slot:
+                    scoped.append(candidate)
+                    continue
+                applies = any(
+                    ui.template == source_template and any(
+                        sid.rstrip("~") == source_slot and node == step.action.target
+                        for sid, node in ui.slot_nodes.items()
+                    )
+                    for ui in self.H.parse_units(step.before)
+                )
+                if applies:
+                    scoped.append(candidate)
+            candidates = scoped
+            if not candidates:
+                continue
+            selected = next((x for x in candidates if x.get("status") == "DOMAIN"), None)
+            if selected is None and all(x.get("status") == "VIEW" for x in candidates):
+                selected = candidates[-1]
+            if selected is None:
+                selected = candidates[-1]
+            inherited = dict(selected)
+            inherited["evidence_scope"] = "matching_local_affordance"
+            inherited["originating_probe_step"] = selected.get("step")
+            inherited["applies_to_step"] = step.step
+            probe_by_step[step.step] = inherited
         self.probe_status = probe_status
         self.probe_by_step = probe_by_step
         domain_names = {n for n, st in probe_status.items() if "DOMAIN" in st}

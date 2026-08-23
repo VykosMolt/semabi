@@ -5,7 +5,7 @@ from semabi.compiler.abstract import AbsObj, AbstractState, Diff
 from semabi.compiler.induce import ActT, Locator
 from semabi.compiler.observation import Node, Observation
 from semabi.compiler.v2.abstractor import V2Tracker
-from semabi.compiler.v2.counterexamples import abstraction_contradictions
+from semabi.compiler.v2.counterexamples import abstraction_contradictions, classify_unregistered
 from semabi.compiler.v2.hypotheses import Hypotheses, UnitHyp, UnitInstance
 from semabi.compiler.v2.refinement import (
     AmbiguityComponent,
@@ -146,3 +146,12 @@ def test_behavioral_contradiction_requires_same_state_and_grounded_action():
     assert report["contradictory_groups"] == 1
     assert report["pair_contradiction_rate"] == 1.0
     assert report["contradictions"][0]["transition_steps"] == [[1], [2]]
+
+
+def test_ungrounded_requires_persistence_evidence():
+    assert classify_unregistered(None, False, None, True) == "UNDETERMINED"
+    assert classify_unregistered("UNDETERMINED", False, None, True) == "UNDETERMINED"
+    assert classify_unregistered("DOMAIN", False, None, True) == "UNGROUNDED"
+    assert classify_unregistered(None, True, False, True) == "UNGROUNDED"
+    assert classify_unregistered(None, True, True, True) == "VIEW_ONLY"
+    assert classify_unregistered("DOMAIN", False, None, False) == "UNOBSERVABLE"

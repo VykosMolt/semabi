@@ -28,3 +28,35 @@ C = 1.0 everywhere.
   frame units. Random traces: .81/.00/.80/.00/.59/.35/.00/.00 (museum regressed .26 -> .00);
   probe traces (same budget): apiary .50, pharmacy-g .06, others 0 with far fewer domain
   events observed. Consolidated in docs/v2_status.md; stopping passive rule changes.
+- 2026-08-23 b: replaced threshold-only commitment with factorized local ambiguity
+  components (`v2/refinement.py`), evidence/status provenance, disagreement-selected
+  persistence/correspondence/matrix probes, raw-mention assignments, supported-decision
+  installation, conservative TRUE/FALSE/UNKNOWN belief, and abstraction-contradiction
+  detection. Added registered-delta precision/spurious rate and corrected duplicate-key
+  diagnostics. Climbing completed the first full loop: UNGROUNDED DOMAIN step 47 -> local
+  view/attachment alternatives -> controlled value change/reload -> supported attachment ->
+  EXPLAINED, CER 1/1. Same augmented trace: RTC .00 -> .817, registered-delta precision
+  .25 -> .69, view false positives .80 -> .268, operators 3 misleading -> 1 aligned
+  (`recolor`). No app/layout branch and no effect-language change.
+- 2026-08-23 c: generic relational-record split transferred to observatory after an occupied
+  matrix cell revealed the predicted row/column/target detail triple under reload invariance.
+  This resolves an abstraction contradiction (kept outside the DOMAIN-event CER denominator):
+  RTC .00 -> .676, precision .00 -> .676, view false positives .537 -> .314, one operator
+  (`extend`). Datacenter's generic compact/rich correspondence raised cross-view identity
+  .476 -> .815 but RTC stayed .00 and duplicate separation stayed .00: identity-only
+  sufficiency falsified. Claude pharmacy stayed RTC .345, precision .909, operators 0;
+  `restock` is 10/11 fully registered but numeric effects fragment V0 induction.
+- 2026-08-23 d: equal-extra-budget endpoint controls on the identical broad traces. Climbing
+  spent 16 extra primitives: broad, ordinary random, and random action/reload all stayed RTC
+  .00; targeted refinement reached .817. Observatory spent 9: all controls stayed .00;
+  targeted reached .676. This supports diagnostic targeting at these endpoints but is not a
+  budget curve, LLM ablation, or fresh result. Conservative-belief ablation removed severe
+  view leakage (observatory legacy RTC .706/precision .377/view-FP .697 versus conservative
+  .676/.676/.314; datacenter view-FP .880 -> .200).
+- 2026-08-23 e: corrected-browser V1 measurement audit. A fully regenerated frozen-protocol
+  museum run reached a new local Opus prompt after 115 steps; cache-only mode stopped it as
+  `BLOCKED_EXTERNAL_LLM_AUTHORITY` rather than exporting the trace. A lawful prospective
+  replay re-executed all historical primitive sequences under the corrected browser with
+  the exact retained schema and corrected +1 pairing. All eight headline metric deltas are
+  zero. Five apps have no target/action divergence; airport, Claude pharmacy, and datacenter
+  have execution divergences and are explicitly not clean no-effect evidence.

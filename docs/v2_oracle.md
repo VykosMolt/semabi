@@ -168,9 +168,10 @@ cannot express.
    only in D), `mount_server` (order), every counter (13 of the 47 hidden
    operators change a numeric attribute arithmetically, 10 of them by +/-1;
    under D 7 of them fall below the 80% criterion, under K 4 do). These are not representation-convention failures and they do not
-   disappear with a known vocabulary; they argue for extending the effect
-   language (numeric deltas, conditional effects as alternative templates with a
-   discriminating precondition) rather than redesigning action abstraction.
+   disappear with a known vocabulary; they identify a later effect-language
+   experiment (numeric deltas and conditional effects) rather than a current
+   action-abstraction failure. V2 keeps that language frozen so abstraction gains
+   remain measurable.
 4. **Exploration is not the bottleneck on this suite** (42/47 operators
    triggered by ~420 random primitives), consistent with the gauntlet-v1 note;
    the five unobserved ones need a prior state the random walk rarely produces
@@ -179,7 +180,7 @@ cannot express.
 ## Decision
 
 **A: grounding dominates** — with a precise statement of "grounding". Keep
-V0's operator machinery (with the language extensions noted in 3) and make V2
+V0's operator machinery and effect language frozen during V2, and make V2
 a grounding/refinement system whose target, in order of measured value, is:
 (i) belief about entities and relations that are not currently rendered
 (vanishing units, absence words, non-local effects), (ii) attachment of
@@ -222,19 +223,55 @@ reported number, but both are recorded here with the replay that shows it.
    v2 apps) sometimes handed the compiler the *previous* page (up to ~10% of
    steps on those apps, visible as oracle-hook records that did not align with the
    evidence log). The browser now requires three identical snapshots 150 ms apart.
-   This changes the evidence stream itself, so it cannot be replayed; the oracle
-   ladder in this document was re-run on fresh traces with the corrected browser
-   (the totals 0/8/18/19/30/32/36 are from those traces). The frozen V0/V1 fresh
-   results stand as reported; a corrected-browser rerun of frozen V1 is listed as
-   pending work, not as a correction of the reported numbers.
+   This changes the evidence stream itself, so the oracle ladder in this document was
+   re-run on fresh traces with the corrected browser (the totals
+   0/8/18/19/30/32/36 are from those traces). The frozen V0/V1 fresh results remain
+   historical results and were not rewritten.
 
-## Evaluator note
+### Prospective corrected-browser V1 audit (2026-08-23)
 
-The V1 runs in `docs/v1_results.md` paired hidden and learned states by index
-(`hidden.jsonl` line i <-> step i). `view_sweep` performs one reset that the
-evidence log does not record while the hidden recorder does, so those pairs
-were shifted by one step. Operator explanation (hidden-trace based) is not
-affected; the type/attribute alignment used hidden state *after* step i+1
-against learned state after step i, which can only have lowered the reported
-type/attribute counts slightly (hidden state changes at ~10% of steps). The
-oracle runner aligns records by (primitive kind, after-signature) instead.
+Two different questions must remain separate.
+
+**Exact regenerated protocol.** `semabi/eval/v1_corrected_rerun.py` runs the V1
+compiler/explorer/active/planner sources byte-identical to tag `v1.0-grounding`, changing
+only the browser settling rule and corrected pairing. It is fail-closed under
+`SEMABI_LLM_CACHE_ONLY=1`. On museum, the corrected trace produced a schema-proposal
+prompt absent from the retained cache after 115 recorded steps. Sending that new local
+trace to the external Opus service was not authorized, so the generative audit stopped as
+`BLOCKED_EXTERNAL_LLM_AUTHORITY`. The partial run is not a result. Machine record:
+`docs/data/v1_corrected_browser_2026-08-23.json`.
+
+**Action/schema-pinned prospective replay.** As the strongest lawful alternative,
+`semabi/eval/v1_browser_replay.py` re-executed every historical primitive sequence under
+the corrected browser and original reset seeds, copied the exact retained final
+`schema.json` by content hash, compiled V1, and evaluated with the corrected +1 pairing.
+This is prospective browser execution, not retrospective state replay, but it is not a
+regenerated active-learning run because actions and schema are pinned.
+
+| app | replay custody | target resolution | action result | observation signature | headline delta |
+|---|---|---:|---:|---:|---:|
+| apiary | clean execution | 0 | 0 | 1 | all zero |
+| observatory | clean execution | 0 | 0 | 0 | all zero |
+| pharmacy-g | clean execution | 0 | 0 | 0 | all zero |
+| climbing | clean execution | 0 | 0 | 0 | all zero |
+| museum | clean execution | 0 | 0 | 0 | all zero |
+| airport | execution divergence | 7 | 8 | 53 | all zero |
+| pharmacy-c | execution divergence | 5 | 1 | 12 | all zero |
+| datacenter | execution divergence | 11 | 13 | 37 | all zero |
+
+“Headline delta” covers recovered types, attributes, relations, operators, observed and
+learned operators, spurious learned operators, failure rejection, and primitive count.
+All are zero for all eight apps. The five clean executions support no observed headline
+effect from corrected settling under the pinned protocol. The three divergent executions
+do not: their zero metric deltas are recorded, but stale historical targets or changed
+action outcomes prevent a clean causal comparison. Aggregate status is
+`COMPLETE_WITH_EXECUTION_DIVERGENCES`; full provenance and schema hashes are in
+`docs/data/v1_corrected_browser_replay_2026-08-23.json`.
+
+## Audit conclusion
+
+The historical V1 table remains exactly as reported. Corrected stored-state replay leaves
+all 16 historical runs unchanged. Prospective action/schema-pinned corrected-browser
+execution also leaves the eight gauntlet-v2 headline rows unchanged, with five clean and
+three execution-divergent comparisons. A fully regenerated active-learning audit remains
+blocked on authority for a new external LLM prompt and must not be described as complete.

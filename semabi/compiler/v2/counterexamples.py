@@ -1,13 +1,13 @@
 """Counterexamples of the current abstraction, label-free.
 
 Every primitive step that changed the page lands in one class:
-  EXPLAINED   the abstract state registered a domain change
-  VIEW_ONLY   the change is interface state: only widget values changed, the action was a
-              navigation control, or a reload right after it reverted the change
-  UNGROUNDED  the page changed persistently (as far as we can tell) but the abstraction
-              registered nothing: the raw observation-graph delta is stored so that a
-              binding can be proposed for it (by deterministic rules or an LLM asked about
-              *these* nodes only)
+  EXPLAINED             the abstract state registered the observed persistent change
+  PARTIALLY_EXPLAINED   an abstract delta exists but a probe-confirmed persistent widget
+                        change remains unattached
+  VIEW_ONLY             a verified sensing action or a change reverted by reload
+  UNGROUNDED            persistence evidence exists but the abstraction registered nothing
+  UNOBSERVABLE          persistence evidence exists but no rendered fragment exposes it
+  UNDETERMINED          no current evidence separates a view change from a domain change
 
 The delta of a step is computed on indexed positions: texts that changed at the same
 position, nodes that appeared, nodes that vanished; each with its role, label context and
@@ -93,6 +93,20 @@ def _value(n):
     return node_text(n)
 
 
+def classify_unregistered(probe_status: str | None, reload_observed: bool,
+                          reverted_by_reload: bool | None, has_changes: bool) -> str:
+    """Conservative evidence gate for a transition with no abstract domain delta."""
+    if not has_changes:
+        return "UNOBSERVABLE" if probe_status == "DOMAIN" else (
+            "UNDETERMINED" if probe_status == "UNDETERMINED" else "VIEW_ONLY"
+        )
+    if reverted_by_reload is True or probe_status == "VIEW":
+        return "VIEW_ONLY"
+    if probe_status == "DOMAIN" or (reload_observed and reverted_by_reload is False):
+        return "UNGROUNDED"
+    return "UNDETERMINED"
+
+
 def classify(A: V2Abstractor, log: EvidenceLog) -> list[Counterexample]:
     out: list[Counterexample] = []
     by_ep: dict[int, list] = defaultdict(list)
@@ -123,47 +137,60 @@ def classify(A: V2Abstractor, log: EvidenceLog) -> list[Counterexample]:
                     out.append(ce)
                 prev = st
                 continue
+            before, after = log.obs(s.before), log.obs(s.after)
+            ib, ia = _index_nodes(A, before), _index_nodes(A, after)
+            changes: list[NodeChange] = []
+            for pos, i in ia.items():
+                n = after.node(i)
+                ut, uk = _unit_of(A, after, i)
+                if pos in ib:
+                    o = before.node(ib[pos])
+                    if _value(o) != _value(n):
+                        changes.append(NodeChange("changed", "/".join(f"{r}[{k}]" for r, k in pos), n.role, _value(o), _value(n), ut, uk, sorted(A.G.labels(after.structural_signature(), i)),
+                                                  "WIDGET" if n.role in ("combobox", "textbox", "checkbox", "radio") else "SURFACE"))
+                elif _value(n) not in (None, "", False):
+                    changes.append(NodeChange("appeared", "/".join(f"{r}[{k}]" for r, k in pos), n.role, None, _value(n), ut, uk, sorted(A.G.labels(after.structural_signature(), i)),
+                                              "WIDGET" if n.role in ("combobox", "textbox", "checkbox", "radio") else "SURFACE"))
+            for pos, i in ib.items():
+                n = before.node(i)
+                if pos not in ia and _value(n) not in (None, "", False):
+                    ut, uk = _unit_of(A, before, i)
+                    changes.append(NodeChange("vanished", "/".join(f"{r}[{k}]" for r, k in pos), n.role, _value(n), None, ut, uk, sorted(A.G.labels(before.structural_signature(), i)),
+                                              "WIDGET" if n.role in ("combobox", "textbox", "checkbox", "radio") else "SURFACE"))
+            ce.changes = changes
+            reload_observed = j + 1 < len(ss) and ss[j + 1].action.kind == "reload"
+            if reload_observed:
+                nxt = log.obs(ss[j + 1].after)
+                ce.reverted_by_reload = nxt.structural_signature() == before.structural_signature()
+
             if d.domain_changed:
-                ce.status = "EXPLAINED"
+                unattached_persistent_widget = probe_status == "DOMAIN" and any(
+                    ch.channel == "WIDGET" and ch.unit is None for ch in changes
+                )
+                ce.status = "PARTIALLY_EXPLAINED" if unattached_persistent_widget else "EXPLAINED"
                 ce.abstraction_delta = str(d)
-            elif (s.action.kind == "click" and name in A.verified_view_controls) or probe_status == "VIEW":
+                if unattached_persistent_widget:
+                    ce.why_unrepresentable.append(
+                        "an abstract delta exists but a probe-confirmed persistent widget change remains unattached"
+                    )
+            elif s.action.kind == "click" and name in A.verified_view_controls:
                 ce.status = "VIEW_ONLY"
             else:
-                before, after = log.obs(s.before), log.obs(s.after)
-                ib, ia = _index_nodes(A, before), _index_nodes(A, after)
-                changes: list[NodeChange] = []
-                for pos, i in ia.items():
-                    n = after.node(i)
-                    ut, uk = _unit_of(A, after, i)
-                    if pos in ib:
-                        o = before.node(ib[pos])
-                        if _value(o) != _value(n):
-                            changes.append(NodeChange("changed", "/".join(f"{r}[{k}]" for r, k in pos), n.role, _value(o), _value(n), ut, uk, sorted(A.G.labels(after.structural_signature(), i)),
-                                                      "WIDGET" if n.role in ("combobox", "textbox", "checkbox", "radio") else "SURFACE"))
-                    elif _value(n) not in (None, "", False):
-                        changes.append(NodeChange("appeared", "/".join(f"{r}[{k}]" for r, k in pos), n.role, None, _value(n), ut, uk, sorted(A.G.labels(after.structural_signature(), i)),
-                                                  "WIDGET" if n.role in ("combobox", "textbox", "checkbox", "radio") else "SURFACE"))
-                for pos, i in ib.items():
-                    n = before.node(i)
-                    if pos not in ia and _value(n) not in (None, "", False):
-                        ut, uk = _unit_of(A, before, i)
-                        changes.append(NodeChange("vanished", "/".join(f"{r}[{k}]" for r, k in pos), n.role, _value(n), None, ut, uk, sorted(A.G.labels(before.structural_signature(), i)),
-                                                  "WIDGET" if n.role in ("combobox", "textbox", "checkbox", "radio") else "SURFACE"))
-                ce.changes = changes
-                # a reload right after tells whether the change persists
-                if j + 1 < len(ss) and ss[j + 1].action.kind == "reload":
-                    nxt = log.obs(ss[j + 1].after)
-                    ce.reverted_by_reload = nxt.structural_signature() == before.structural_signature()
+                ce.status = classify_unregistered(
+                    probe_status, reload_observed, ce.reverted_by_reload, bool(changes)
+                )
                 if not changes:
-                    ce.status = "UNOBSERVABLE" if probe_status == "DOMAIN" else "VIEW_ONLY"
                     ce.why_unrepresentable.append("no rendered before/after fragment changed")
-                elif ce.reverted_by_reload:
-                    ce.status = "VIEW_ONLY"
-                else:
-                    ce.status = "UNGROUNDED"
-                    ce.why_unrepresentable.append("rendered delta exists but the current abstract state registered no domain change")
+                elif ce.status == "UNGROUNDED":
+                    ce.why_unrepresentable.append(
+                        "persistent rendered delta exists but the current abstract state registered no domain change"
+                    )
                     if any(ch.channel == "WIDGET" for ch in changes):
                         ce.why_unrepresentable.append("changed widget values are currently treated as transient view state")
+                elif ce.status == "UNDETERMINED":
+                    ce.why_unrepresentable.append(
+                        "no controlled probe or immediate reload evidence establishes whether the rendered delta is persistent"
+                    )
             out.append(ce)
             prev = st
     return out

@@ -8,9 +8,11 @@ from __future__ import annotations
 
 import argparse
 import json
+from collections import Counter
 from pathlib import Path
 
 from semabi.compiler.compile_v2 import compile_v2
+from semabi.compiler.v2.counterexamples import classify
 from semabi.eval.oracle import align_records, evaluate, load_records
 
 
@@ -40,6 +42,11 @@ def run_ablation(run_dir: Path, min_support: int = 2) -> dict:
             compiled, run_dir, records, v1_like=True,
             tag=f"v2_{tag}", abstr_ids=False,
         )
+        counterexamples = classify(compiled.abstractor, compiled.log)
+        result["counterexamples"] = {
+            "status_counts": dict(Counter(x.status for x in counterexamples)),
+            "by_step": {str(x.step): x.status for x in counterexamples},
+        }
         result["induction"] = {
             "transitions": len(compiled.inducer.transitions),
             "no_op_segments": len(compiled.inducer.noops),
@@ -103,6 +110,61 @@ def compact(result: dict) -> dict:
             for name, score in operators["per_op"].items()
         },
         "induction": result.get("induction", {}),
+        "counterexamples": result.get("counterexamples", {}),
+    }
+
+
+def refinement_process(run_dir: Path, variants: dict) -> dict | None:
+    path = run_dir / "refinement_result_v2.json"
+    if not path.exists():
+        return None
+    source = json.loads(path.read_text())
+    decision = source.get("decision", {})
+    decision_kind = decision.get("kind")
+    if decision_kind == "ATTACH_PERSISTENT_WIDGET":
+        candidate = source.get("selected_counterexamples", [])[:1]
+        baseline_status = variants["baseline"].get("counterexamples", {}).get("by_step", {})
+        refined_status = variants["refined"].get("counterexamples", {}).get("by_step", {})
+        selected = [x for x in candidate if baseline_status.get(str(x)) == "UNGROUNDED"
+                    and source.get("intervention", {}).get("status") == "DOMAIN"]
+        resolved = [x for x in selected if refined_status.get(str(x)) == "EXPLAINED"]
+        selected_contradictions = []
+    else:
+        # Early runner versions populated these fields with every nearby UNGROUNDED
+        # event even though correspondence/record probes targeted an association
+        # contradiction, not a probe-confirmed persistent DOMAIN event.  Normalize the
+        # diagnostic denominator without altering the append-only source artifact.
+        selected = []
+        resolved = []
+        selected_contradictions = [source.get("component_id")]
+    intervention = source.get("intervention", {})
+    correspondence = source.get("correspondence_intervention")
+    return {
+        "component_id": source.get("component_id"),
+        "decision_id": decision.get("id"),
+        "decision_kind": decision_kind,
+        "decision_status": decision.get("status"),
+        "selected_ungrounded_domain_events": selected,
+        "resolved_ungrounded_domain_events": resolved,
+        "counterexample_resolution_rate": round(len(resolved) / len(selected), 3) if selected else None,
+        "selected_abstraction_contradictions": selected_contradictions,
+        "resolution_mode": source.get("resolution_mode"),
+        "intervention": {
+            "kind": intervention.get("kind", "PERSISTENCE_PROBE" if intervention.get("controlled") else None),
+            "status": intervention.get("status"),
+            "controlled": intervention.get("controlled"),
+            "component_id": intervention.get("component_id"),
+            "step": intervention.get("step"),
+            "view_invariance_supported": intervention.get("view_invariance_supported"),
+            "same_mention_value_persisted": intervention.get("same_mention_value_persisted"),
+        },
+        "secondary_correspondence_intervention": {
+            "kind": correspondence.get("kind"), "status": correspondence.get("status"),
+            "controlled": correspondence.get("controlled"),
+            "view_invariance_supported": correspondence.get("view_invariance_supported"),
+        } if correspondence else None,
+        "normalization_note": "association/record probes are counted as abstraction-contradiction resolutions, not as attempted UNGROUNDED DOMAIN-event CER",
+        "classification_note": "CER statuses are recomputed with the current conservative evidence gate; historical runner status counts are not reused",
     }
 
 
@@ -131,6 +193,9 @@ def main() -> None:
         print(f"== {run_dir}", flush=True)
         results = run_ablation(run_dir, args.min_support)
         report["runs"][run_dir.name] = {tag: compact(result) for tag, result in results.items()}
+        report["runs"][run_dir.name]["refinement_process"] = refinement_process(
+            run_dir, report["runs"][run_dir.name]
+        )
         for tag in (x[0] for x in VARIANTS):
             x = report["runs"][run_dir.name][tag]
             print(
