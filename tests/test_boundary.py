@@ -12,7 +12,9 @@ def forbidden(name: str) -> bool:
 
 
 def compiler_files():
-    return list((ROOT / "compiler").glob("*.py")) + [ROOT / "relmodel.py", ROOT / "eval_free_canon.py"]
+    # The V2 compiler lives in nested packages.  A shallow glob left exactly the new
+    # decision/refinement boundary outside this gate.
+    return list((ROOT / "compiler").rglob("*.py")) + [ROOT / "relmodel.py", ROOT / "eval_free_canon.py"]
 
 
 def test_compiler_imports_are_clean():

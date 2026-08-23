@@ -97,7 +97,16 @@ class Hypotheses:
         self.transient_positions: set[tuple] = set()
         self.force_link: set[str] = set()  # refinement: templates whose link/merge decision is flipped
         self.alias_map: dict[tuple[str, str], str] = {}  # (template, key value) -> canonical key value (another template's)
+        self.key_overrides: dict[tuple[str, str, str], str] = {}  # (observation, template, rendered key) -> associated key
         self.persistent_widgets: set[tuple[str, str]] = set()  # (template, slot) widget values shown to survive reloads
+        self.slot_attachments: dict[tuple[str, str], str] = {}  # (source template, slot) -> sibling mention template
+        self.contextual_identity: set[str] = set()  # mention templates keyed by (enclosing key, own key)
+        self.mention_type_assignments: dict[tuple[str, str, str], str] = {}
+        # (observation, source template, rendered key) -> target entity template.
+        # These are accepted local data-association decisions, not global template merges.
+        self.raw_mention_assignments: dict[tuple[str, int], tuple[str, str]] = {}
+        # (observation, DOM node) -> (target entity template, associated entity key).
+        self.record_splits: list[dict] = []
         self._split_done = False
         self.frozen = False
 
@@ -161,11 +170,18 @@ class Hypotheses:
             transient = obs.node(i).role in ("combobox", "textbox")
             prose = self.G.is_prose(sig, i)  # a sentence about entities: neither identity nor attribute
             for k, tok in enumerate(toks):
-                sid = f"{rel}#{k}" + ("~" if transient else ("!" if prose else ""))
-                if transient and (owner.template, sid[:-1]) in self.persistent_widgets:
-                    sid = sid[:-1]
+                base = f"{rel}#{k}"
+                sid = base + ("~" if transient else ("!" if prose else ""))
+                if transient and (owner.template, base) in self.persistent_widgets:
+                    sid = base
                 if sid in owner.slots:
-                    sid = f"{rel}#{k}@{i - owner.root}" + ("~" if transient else "")
+                    base = f"{rel}#{k}@{i - owner.root}"
+                    sid = base + ("~" if transient else "")
+                    # Re-check after disambiguating repeated widget positions.  Previously
+                    # only the first combobox in a unit could consume persistence evidence;
+                    # later siblings silently regained the transient suffix.
+                    if transient and (owner.template, base) in self.persistent_widgets:
+                        sid = base
                 owner.slots[sid] = tok
                 owner.slot_nodes[sid] = i
         # a unit whose only persistent content is one nested mention (a cell holding a tape
@@ -184,6 +200,25 @@ class Hypotheses:
                 child.slots[nk] = v
                 child.slot_nodes[nk] = ui.slot_nodes[k]
             ui.slots = {}
+        # Explicit, evidence-backed attachment refinements.  A widget initially belongs to
+        # the enclosing recurring unit because that is the only safe structural default.
+        # A refinement may instead attach it to the unique keyed mention sharing its local
+        # parent (for example, a button mention paired with one value widget).  The rule is
+        # relational and local; it does not name an application or layout family.
+        for owner in list(insts):
+            for sid in list(owner.slots):
+                target_template = self.slot_attachments.get((owner.template, sid.rstrip("~")))
+                if target_template is None:
+                    continue
+                node = owner.slot_nodes[sid]
+                parent = obs.node(node).parent
+                candidates = [ui for ui in insts if ui.template == target_template and obs.node(ui.root).parent == parent]
+                if len(candidates) != 1:
+                    continue
+                target = candidates[0]
+                attached = f"attached:{sid.rstrip('~')}"
+                target.slots[attached] = owner.slots.pop(sid)
+                target.slot_nodes[attached] = owner.slot_nodes.pop(sid)
         # column context: a cell's header (tables and matrices) is an own slot of the
         # innermost unit that owns the cell
         header_cache: dict[int, list[int] | None] = {}
@@ -233,11 +268,13 @@ class Hypotheses:
                     ui.slots[u.key_slot] = "|".join(ui.slots[p] for p in parts)
                     ui.slot_nodes[u.key_slot] = ui.slot_nodes[parts[0]]
         # aliases (verified correspondences): a key shown under another naming convention
-        if self.alias_map:
+        if self.alias_map or self.key_overrides:
             for ui in insts:
                 u = self.units.get(ui.template)
                 if u and u.key_slot and u.key_slot in ui.slots:
-                    canon = self.alias_map.get((ui.template, ui.slots[u.key_slot]))
+                    rendered = ui.slots[u.key_slot]
+                    canon = self.key_overrides.get((sig, ui.template, rendered),
+                                                   self.alias_map.get((ui.template, rendered)))
                     if canon is not None:
                         ui.slots[u.key_slot] = canon
         # duplicate names among siblings are told apart by position (second copy: "name#2")
@@ -279,8 +316,36 @@ class Hypotheses:
             if self.allowed == keyed:
                 break
             self.allowed = keyed
+        # Association evidence is observation-local, so it cannot safely be folded into
+        # the raw token stream before a unit's key slot is known.  Apply supported key
+        # correspondences to the fitted instances now, before key overlap proposes entity
+        # merges.  Runtime parsing applies the same map in ``parse_units``.
+        self._apply_key_associations()
         self._build_entity_types()
         self.frozen = True
+
+    def _apply_key_associations(self) -> None:
+        for u in self.units.values():
+            if not u.key_slot:
+                continue
+            changed = 0
+            for ui in u.instances:
+                rendered = ui.slots.get(u.key_slot)
+                if rendered is None:
+                    continue
+                canonical = self.key_overrides.get(
+                    (ui.sig, ui.template, rendered),
+                    self.alias_map.get((ui.template, rendered)),
+                )
+                if canonical is None or canonical == rendered:
+                    continue
+                ui.slots[u.key_slot] = canonical
+                changed += 1
+            if changed:
+                self._slot_stats(u)
+                u.evidence.append(
+                    f"key association rewrote {changed} fitted instances from supported observation evidence"
+                )
 
     def _drop_transient(self) -> None:
         """Interface state vanishes on reload while the view stays: evidence is pooled per

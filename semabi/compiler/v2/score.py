@@ -70,7 +70,7 @@ def behaviour_score(A: V2Abstractor, log: EvidenceLog, max_steps: int | None = N
             changed_dom = d.domain_changed
             page_changed = s.before != s.after
             name = (s.action.target_desc or {}).get("name") if s.action.target_desc else None
-            sensing = s.action.kind == "reload" or (s.action.kind == "click" and name in A.view_controls)
+            sensing = s.action.kind == "reload" or (s.action.kind == "click" and name in A.verified_view_controls)
             if s.action.kind == "reload":
                 # a reload that shows the same view again must not change the abstract state;
                 # one that returns to another view merely reveals earlier changes (belief revision)

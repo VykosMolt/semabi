@@ -22,6 +22,7 @@ from __future__ import annotations
 import json
 from collections import Counter
 from pathlib import Path
+from typing import Callable, Any
 
 from semabi.compiler.browser import Primitive
 from semabi.compiler.explorer import Explorer, affordance_key
@@ -133,6 +134,71 @@ class SurveyExplorer(Explorer):
         first attempt may have been refused or mixed with other actions)."""
         st = self.probed.get(key)
         return st is None or (st != "DOMAIN" and self.probe_count[key] < 3)
+
+    def controlled_persistence_probe(self, obs: Observation, episode: int, primitive: Primitive,
+                                     component_id: str, identity: dict[str, Any],
+                                     value_of: Callable[[Observation, dict[str, Any]], Any],
+                                     predictions: dict[str, Any]) -> tuple[Observation, dict[str, Any]]:
+        """Execute one hypothesis-targeted action -> reload -> survey intervention.
+
+        `identity` and `value_of` are compiler-side mention descriptors.  They contain
+        only rendered structure/values; no evaluator annotation is available here.
+        """
+        before_sig = obs.structural_signature()
+        before_value = value_of(obs, identity)
+        action_step = len(self.log.steps)
+        after = self.step(obs, episode, primitive)
+        self.note(after)
+        self.track(after)
+        after_sig = after.structural_signature()
+        after_value = value_of(after, identity)
+
+        reloaded = self.step(after, episode, Primitive("reload"))
+        self.note(reloaded)
+        reload_sig = reloaded.structural_signature()
+        reload_value = value_of(reloaded, identity)
+        baseline_views = dict(self.post_reload_views or self.last_view_obs)
+        self.last_reload_obs = reload_sig
+        surveyed, _ = self.survey(reloaded, episode)
+        changed_views = sorted(name for name, sig in self.last_view_obs.items()
+                               if name in baseline_views and baseline_views[name] != sig)
+        self.post_reload_views = dict(self.last_view_obs)
+
+        chosen = primitive.text if primitive.kind in ("select", "type") else after_value
+        persisted = chosen is not None and reload_value == chosen and before_value != chosen
+        if persisted:
+            status = "DOMAIN"
+        elif reload_value == before_value and not changed_views:
+            status = "VIEW"
+        else:
+            status = "UNDETERMINED"
+        key = affordance_key(obs, primitive)
+        record = {
+            "step": action_step,
+            "key": list(key),
+            "status": status,
+            "controlled": True,
+            "component_id": component_id,
+            "identity": identity,
+            "predictions": predictions,
+            "before_sig": before_sig,
+            "after_sig": after_sig,
+            "reload_sig": reload_sig,
+            "before_value": before_value,
+            "after_value": after_value,
+            "reload_value": reload_value,
+            "chosen_value": chosen,
+            "same_mention_value_persisted": persisted,
+            "changed_views": changed_views,
+            "mixed": [],
+        }
+        with self.probes_path.open("a") as f:
+            f.write(json.dumps(record, sort_keys=True) + "\n")
+        with (Path(self.log.dir) / "interventions_v2.jsonl").open("a") as f:
+            f.write(json.dumps(record, sort_keys=True) + "\n")
+        self.probed[key] = status
+        self.probe_count[key] += 1
+        return surveyed, record
 
     def run(self, n_episodes: int, steps_per_episode: int, seed_base: int = 0) -> None:
         obs = self.b.observe()

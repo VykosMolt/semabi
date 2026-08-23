@@ -27,6 +27,7 @@ import json
 import re
 from collections import Counter, defaultdict
 from dataclasses import dataclass, field
+from itertools import combinations
 from pathlib import Path
 from typing import Any
 
@@ -1066,6 +1067,8 @@ def registered_transition_coverage(C: Compiled, recs: list[dict | None], hidden_
         return None
 
     n = full = partial = 0
+    registered_atoms = matched_registered_atoms = 0
+    transitions_with_spurious_atoms = 0
     per_op: dict[str, list[int]] = defaultdict(lambda: [0, 0, 0])
     for st, r in enumerate(recs):
         prev = recs[st - 1] if st > 0 else None
@@ -1097,6 +1100,26 @@ def registered_transition_coverage(C: Compiled, recs: list[dict | None], hidden_
                 return any(g[0] == "rel" and g[1] == la[1] and g[2] in la[2] and g[3] == la[3] for g in got)
             return False
         hits = [matched(c) for c in ch]
+        expected = [hidden_to_learned(c, hs0, hs1) for c in ch]
+
+        def got_matches(g):
+            for want in expected:
+                if want is None:
+                    continue
+                if want[0] == "create":
+                    if g[0] == "create" and g[1] == want[1]:
+                        return True
+                elif want[0] == "rel*":
+                    if g[0] == "rel" and g[1] == want[1] and g[2] in want[2] and g[3] == want[3]:
+                        return True
+                elif g == want:
+                    return True
+            return False
+
+        matched_got = sum(got_matches(g) for g in got)
+        registered_atoms += len(got)
+        matched_registered_atoms += matched_got
+        transitions_with_spurious_atoms += matched_got < len(got)
         if all(hits):
             full += 1
             per_op[op][1] += 1
@@ -1105,10 +1128,15 @@ def registered_transition_coverage(C: Compiled, recs: list[dict | None], hidden_
             per_op[op][2] += 1
     return {"transitions": n, "fully_registered": full, "partly_registered": partial,
             "rtc": round(full / n, 3) if n else None, "rtc_any": round(partial / n, 3) if n else None,
+            "registered_deltas": registered_atoms,
+            "matched_registered_deltas": matched_registered_atoms,
+            "registered_delta_precision": round(matched_registered_atoms / registered_atoms, 3) if registered_atoms else None,
+            "spurious_registered_delta_rate": round((registered_atoms - matched_registered_atoms) / registered_atoms, 3) if registered_atoms else None,
+            "transitions_with_spurious_deltas": transitions_with_spurious_atoms,
             "per_op": {k: {"n": v[0], "full": v[1], "any": v[2]} for k, v in per_op.items()}}
 
 
-def object_layer_metrics(C: Compiled, recs: list[dict | None], v1: bool) -> dict:
+def object_layer_metrics(C: Compiled, recs: list[dict | None], v1: bool, m: Mapping) -> dict:
     """Mention -> entity association of the learner's grounding against the oracle
     annotations: pairwise same-entity precision/recall over annotated leaf nodes
     that the learner assigned to a keyed object, plus duplicate-name separation
@@ -1118,6 +1146,8 @@ def object_layer_metrics(C: Compiled, recs: list[dict | None], v1: bool) -> dict
     tp = fp = fn = 0
     same_key_by_entity: dict[str, set[str]] = defaultdict(set)
     entity_by_key: dict[tuple[int, str], set[str]] = defaultdict(set)
+    keys_by_entity_view: dict[str, dict[frozenset, set[tuple[int, str]]]] = defaultdict(lambda: defaultdict(set))
+    hidden_objects = {}
     n_nodes = n_grounded = 0
     seen_sigs = set()
     for s, rec in zip(C.log.steps, recs):
@@ -1125,9 +1155,14 @@ def object_layer_metrics(C: Compiled, recs: list[dict | None], v1: bool) -> dict
             continue
         seen_sigs.add(s.after)
         obs = C.log.obs(s.after)
+        hidden_objects.update(hidden_state(rec["state"]).objects)
         po = A.parsed(obs)
         st = A.abstract(obs)
         by_node = {o.node: o for o in st.objs.values()}
+        paths = {}
+        for node in obs.nodes:
+            paths[node.i] = node.role if node.parent < 0 else paths[node.parent] + "/" + node.role
+        view_skeleton = frozenset(paths.values())
         pairs = []  # (hidden eid, learned id) per annotated node
         for n in obs.nodes:
             e = rec["eid"][n.i]
@@ -1153,6 +1188,7 @@ def object_layer_metrics(C: Compiled, recs: list[dict | None], v1: bool) -> dict
             pairs.append((e, lid))
             same_key_by_entity[e].add(f"{lid[0]}:{lid[1]}")
             entity_by_key[lid].add(e)
+            keys_by_entity_view[e][view_skeleton].add(lid)
         for i in range(len(pairs)):
             for j in range(i + 1, len(pairs)):
                 same_h = pairs[i][0] == pairs[j][0]
@@ -1165,13 +1201,47 @@ def object_layer_metrics(C: Compiled, recs: list[dict | None], v1: bool) -> dict
                     fn += 1
     prec = tp / (tp + fp) if tp + fp else None
     recall = tp / (tp + fn) if tp + fn else None
-    # duplicate separation: hidden entities sharing a visible name that the learner keeps apart
+    # duplicate separation: hidden entities sharing one component of the evaluator-aligned
+    # visible key that the learner keeps apart
     merged = sum(1 for k, es in entity_by_key.items() if len(es) > 1)
     split = sum(1 for e, ks in same_key_by_entity.items() if len(ks) > 1)
+    candidate_duplicate_pairs = set()
+    for learned_type, hidden_type in m.type_map.items():
+        spec = m.key_attr.get(learned_type)
+        if not spec or spec == LINK_KEY:
+            continue
+        for attr in spec.split("|"):
+            entities_by_value: dict[str, set[str]] = defaultdict(set)
+            for entity, obj in hidden_objects.items():
+                value = obj.attrs.get(attr) if obj.type == hidden_type else None
+                if value is not None:
+                    entities_by_value[str(value)].add(entity)
+            for entities in entities_by_value.values():
+                if len(entities) >= 2:
+                    candidate_duplicate_pairs.update(combinations(sorted(entities), 2))
+    duplicate_pairs = separated_duplicate_pairs = 0
+    for a, b in candidate_duplicate_pairs:
+        keys_a = {lid for lid, hidden in entity_by_key.items() if a in hidden}
+        keys_b = {lid for lid, hidden in entity_by_key.items() if b in hidden}
+        if not keys_a or not keys_b:
+            continue
+        duplicate_pairs += 1
+        separated_duplicate_pairs += keys_a.isdisjoint(keys_b)
+    cross_view_pairs = cross_view_matches = 0
+    for by_view in keys_by_entity_view.values():
+        for (_view_a, keys_a), (_view_b, keys_b) in combinations(by_view.items(), 2):
+            cross_view_pairs += 1
+            cross_view_matches += bool(keys_a & keys_b)
     return {"annotated_leaves": n_nodes, "grounded_leaves": n_grounded, "grounded_frac": round(n_grounded / n_nodes, 3) if n_nodes else None,
             "pair_precision": round(prec, 3) if prec is not None else None, "pair_recall": round(recall, 3) if recall is not None else None,
             "learned_keys_merging_entities": merged, "entities_split_across_keys": split,
-            "entities_grounded": len(same_key_by_entity)}
+            "entities_grounded": len(same_key_by_entity),
+            "duplicate_name_pairs": duplicate_pairs,
+            "duplicate_name_pairs_separated": separated_duplicate_pairs,
+            "duplicate_name_separation": round(separated_duplicate_pairs / duplicate_pairs, 3) if duplicate_pairs else None,
+            "cross_view_entity_pairs": cross_view_pairs,
+            "cross_view_entity_matches": cross_view_matches,
+            "cross_view_identity": round(cross_view_matches / cross_view_pairs, 3) if cross_view_pairs else None}
 
 
 def view_false_positives(C: Compiled, recs: list[dict | None]) -> dict:
@@ -1336,8 +1406,10 @@ def evaluate(C: Compiled, run_dir: Path, recs: list[dict | None], v1_like: bool,
     with _with_ids(ids=abstr_ids):
         res["gtc"] = grounded_transition_coverage(hidden, hidden_dom, C.model, m, latent)
         res["rtc"] = registered_transition_coverage(C, recs, hidden_dom, m, latent)
-    res["object_layer"] = object_layer_metrics(C, recs, v1_like)
+    res["object_layer"] = object_layer_metrics(C, recs, v1_like, m)
     res["view_false_positives"] = view_false_positives(C, recs)
+    from semabi.compiler.v2.counterexamples import abstraction_contradictions
+    res["abstraction_contradictions"] = abstraction_contradictions(C.inducer)
     res["condition"] = tag
     res["cost"] = {"primitives": sum(1 for s in C.log.steps if s.action.kind != "reset")}
     return res

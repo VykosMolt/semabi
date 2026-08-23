@@ -23,15 +23,25 @@ from semabi.compiler.v2.hypotheses import EntityType, Hypotheses, UnitInstance
 
 
 class V2Abstractor(Abstractor):
-    def __init__(self, G: ObsGraph, H: Hypotheses):
+    def __init__(self, G: ObsGraph, H: Hypotheses, merge_mentions: bool = False,
+                 conservative_belief: bool = True):
         super().__init__(parser=None)
         self.G = G
         self.H = H
+        self.merge_mentions = merge_mentions
+        self.conservative_belief = conservative_belief
         self.data = G.data_set()
         self.tid_map: dict[int, int] = {}  # hypothesis tid -> abstract tid (link types merged)
         self.link_pairs: dict[frozenset, int] = {}
+        self.record_by_anchor: dict[int, dict] = {}
+        self.explicit_link_types: dict[int, list[int]] = {}
         self._build_types()
         self.view_controls: set[str] = set()
+        self.verified_view_controls: set[str] = set()
+        self.heuristic_view_controls: set[str] = set()
+        self.verified_domain_controls: set[str] = set()
+        self.mention_conflicts: list[dict] = []
+        self._mention_conflict_keys: set[str] = set()
         # reference relations a template is silent about although a family sibling shows them
         # (a vacant card has no occupant): absence means "no target", not "unknown"
         self.family_refs: dict[str, set[int]] = defaultdict(set)  # template -> target tids
@@ -104,6 +114,44 @@ class V2Abstractor(Abstractor):
                     ti.refs[f"in:{self.tid_map[et.contain[t]]}"] = self.tid_map[et.contain[t]]
                 if t in et.link_parent:
                     ti.refs[f"rel:{self.tid_map[et.link_parent[t]]}"] = self.tid_map[et.link_parent[t]]
+        for spec in H.record_splits:
+            anchor_et = spec["anchor_entity_tid"]
+            if anchor_et not in self.tid_map:
+                continue
+            detail = spec["detail_template"]
+            et = H.entity_types[anchor_et]
+            anchor_tid = self.tid_map[anchor_et]
+            context_tid = self.tid_map[spec["context_entity_tid"]]
+            target_tid = self.tid_map[spec["target_entity_tid"]]
+            record_tid = max(self.types, default=-1) + 1
+            record = dict(spec)
+            record.update({"record_tid": record_tid, "anchor_tid": anchor_tid,
+                           "context_tid": context_tid, "target_tid": target_tid})
+            self.record_by_anchor[anchor_et] = record
+            ti = TypeInfo(record_tid, n_instances=1, seen_after_reload=1, key_slot="id")
+            ti.slots["id"] = SlotInfo("id", n_present=1, n_total=1, seen_after_reload=1,
+                                      value_kept=1, present_with_key=1, n_identified=1)
+            for sid in spec["record_attr_slots"]:
+                name = self.attr_name(et, detail, sid)
+                si = SlotInfo(name, n_present=1, n_total=1, seen_after_reload=1,
+                              value_kept=1, present_with_key=1, n_identified=1)
+                for value, count in H.units[detail].slots[sid].values.items():
+                    si.values[value] += count
+                    si.values_with_key[value] += count
+                ti.slots[name] = si
+            for target in (anchor_tid, context_tid, target_tid):
+                ti.refs[f"rel:{target}"] = target
+            self.types[record_tid] = ti
+            # Only anchor + context define record identity.  The third endpoint is mutable
+            # state (for example a retarget operation) and remains a normal relation.
+            self.explicit_link_types[record_tid] = [anchor_tid, context_tid]
+            anchor_type = self.types[anchor_tid]
+            keep = {self.attr_name(et, detail, sid) for sid in spec["anchor_attr_slots"]}
+            for name in list(anchor_type.slots):
+                if name.startswith("attr:") and name not in keep:
+                    del anchor_type.slots[name]
+            anchor_type.refs.pop(f"rel:{context_tid}", None)
+            anchor_type.refs.pop(f"rel:{target_tid}", None)
 
     def attr_name(self, et: EntityType, t: str, sid: str) -> str:
         """Attribute names are shared across templates by their label context (the label
@@ -167,6 +215,11 @@ class V2Abstractor(Abstractor):
                         return None
                     parts.append(f"T{self.tid_map[tgt]}:{r}")
             return "|".join(sorted(parts)) if len(parts) == 2 else None
+        if t in self.H.contextual_identity:
+            parent = self.H._parent_key(ui)
+            if parent is None:
+                return None
+            return f"{parent}|{k}"
         return k
 
     def _parse(self, obs: Observation, sig: str) -> ParsedObs:
@@ -183,16 +236,39 @@ class V2Abstractor(Abstractor):
             et_id = H.tid_of_template.get(ui.template)
             if et_id is None:
                 continue
+            source_u = H.units.get(ui.template)
+            rendered_key = ui.slots.get(source_u.key_slot) if source_u and source_u.key_slot else None
+            assigned_template = H.mention_type_assignments.get((sig, ui.template, rendered_key)) \
+                if rendered_key is not None else None
+            if assigned_template is not None:
+                assigned_tid = H.tid_of_template.get(assigned_template)
+                if assigned_tid is not None:
+                    # A surface mention may be assigned to a latent entity type proposed by
+                    # another representation.  It contributes identity only; attributes and
+                    # references still come from the templates that actually render them.
+                    tid = self.tid_map[assigned_tid]
+                    inst = Instance(ui.root, tid, idx_of_root.get(ui.parent_root), {}, {}, "v2-association")
+                    inst.slots["id"] = ("", rendered_key)
+                    instances.append(inst)
+                    idx_of_root[ui.root] = len(instances) - 1
+                    ordinals[idx_of_root[ui.root]] = Counter()
+                    continue
             et = H.entity_types[et_id]
             tid = self.tid_map[et_id]
             key = self.entity_key(et, ui, {})
             parent_idx = idx_of_root.get(ui.parent_root) if ui.parent_root is not None else None
             inst = Instance(ui.root, tid, parent_idx, {}, {}, "v2")
             inst.slots["id"] = ("", key if key is not None else "")
-            for sid in et.attr_slots[ui.template]:
+            record_spec = self.record_by_anchor.get(et_id)
+            attr_slots = et.attr_slots[ui.template]
+            if record_spec is not None:
+                attr_slots = set(record_spec["anchor_attr_slots"]) if ui.template == record_spec["detail_template"] else set()
+            for sid in attr_slots:
                 if sid in ui.slots:
                     inst.slots[self.attr_name(et, ui.template, sid)] = ("", ui.slots[sid])
             for (t2, sid), tgt in et.ref_slots.items():
+                if record_spec is not None:
+                    continue
                 if t2 == ui.template and tgt in self.tid_map:
                     # a reference slot this template displays: absent or unresolvable value = no target
                     v = self.resolve(self.tid_map[tgt], ui.slots[sid]) if sid in ui.slots else None
@@ -202,6 +278,28 @@ class V2Abstractor(Abstractor):
             instances.append(inst)
             idx_of_root[ui.root] = len(instances) - 1
             ordinals[idx_of_root[ui.root]] = Counter()
+            if record_spec is not None and key is not None:
+                for record_inst in self._record_instances(record_spec, et, ui, key, obs, sig, len(instances) - 1):
+                    instances.append(record_inst)
+                    idx_of_root[record_inst.root] = len(instances) - 1
+                    ordinals[idx_of_root[record_inst.root]] = Counter()
+        # A semantic mention need not be a recurring unit.  Accepted local association
+        # evidence may assign one raw DOM node to an entity type realised richly elsewhere.
+        # These node-level assignments avoid promoting the node's whole generic template.
+        for (assigned_sig, node_i), (target_template, associated_key) in H.raw_mention_assignments.items():
+            if assigned_sig != sig or node_i in idx_of_root:
+                continue
+            target_et = H.tid_of_template.get(target_template)
+            if target_et is None or node_i >= len(obs.nodes):
+                continue
+            parent = obs.node(node_i).parent
+            while parent >= 0 and parent not in idx_of_root:
+                parent = obs.node(parent).parent
+            inst = Instance(node_i, self.tid_map[target_et], idx_of_root.get(parent), {}, {}, "v2-raw-association")
+            inst.slots["id"] = ("", associated_key)
+            instances.append(inst)
+            idx_of_root[node_i] = len(instances) - 1
+            ordinals[idx_of_root[node_i]] = Counter()
         # node -> innermost instance; widget slots
         owner_of: dict[int, int] = {}
         for n in obs.nodes:
@@ -232,6 +330,36 @@ class V2Abstractor(Abstractor):
             node_key[n.i] = key
         return ParsedObs(obs, instances, statics, node_instance, node_key)
 
+    def _record_instances(self, spec: dict, et: EntityType, ui: UnitInstance, anchor_key: str,
+                          obs: Observation, sig: str, anchor_idx: int) -> list[Instance]:
+        out = []
+
+        def make(root: int, context_key: str, target_key: str | None, attrs: dict[str, str]):
+            context = self.resolve(spec["context_tid"], context_key)
+            if context is None:
+                return
+            parts = sorted((f"T{spec['anchor_tid']}:{anchor_key}", f"T{spec['context_tid']}:{context}"))
+            inst = Instance(root, spec["record_tid"], anchor_idx, {}, {}, "v2-relational-record")
+            inst.slots["id"] = ("", "|".join(parts))
+            for name, value in attrs.items():
+                inst.slots[name] = ("", value)
+            inst.slots[f"rel:{spec['anchor_tid']}"] = ("", anchor_key)
+            inst.slots[f"rel:{spec['context_tid']}"] = ("", context)
+            target = self.resolve(spec["target_tid"], target_key) if target_key is not None else None
+            inst.slots[f"rel:{spec['target_tid']}"] = ("", target)
+            out.append(inst)
+
+        if ui.template == spec["detail_template"]:
+            attrs = {self.attr_name(et, ui.template, sid): ui.slots[sid]
+                     for sid in spec["record_attr_slots"] if sid in ui.slots}
+            make(ui.root, ui.slots.get(spec["detail_context_slot"], ""),
+                 ui.slots.get(spec["detail_target_slot"]), attrs)
+        elif ui.template in spec["row_templates"]:
+            for cell in spec["matrix_cells"]:
+                if cell["sig"] == sig and cell["row_root"] == ui.root and cell["anchor_key"] == anchor_key:
+                    make(cell["cell"], cell["context_key"], cell["target_key"], {})
+        return out
+
     # ---------------------------------------------------------------- abstraction
     def abstract(self, obs: Observation) -> AbstractState:
         po = self.parsed(obs)
@@ -261,7 +389,32 @@ class V2Abstractor(Abstractor):
             o = AbsObj(inst.tid, key, attrs, None, refs, 0, inst.root)
             inst_obj[idx] = o
             if o.id in objs:
-                continue  # the same entity shown twice (e.g. its card and its row)
+                if not self.merge_mentions:
+                    continue
+                # An entity is a set of surface mentions.  Combine compatible evidence
+                # rather than letting DOM order select an ontology authority.  Conflicting
+                # values remain explicit and the earlier value is retained as the current
+                # point estimate until a refinement discriminates the mentions.
+                old = objs[o.id]
+                for slot, value in o.attrs.items():
+                    if value is None:
+                        continue
+                    prior = old.attrs.get(slot)
+                    if prior is None:
+                        old.attrs[slot] = value
+                    elif prior != value:
+                        self._record_mention_conflict(o.id, "attribute", slot, prior, value, old.node, o.node)
+                for slot, value in o.refs.items():
+                    if value is None:
+                        continue
+                    prior = old.refs.get(slot)
+                    if prior is None:
+                        old.refs[slot] = value
+                    elif prior != value:
+                        self._record_mention_conflict(o.id, "reference", slot, prior, value, old.node, o.node)
+                if old.node < 0 and o.node >= 0:
+                    old.node = o.node
+                continue
             objs[o.id] = o
         # containment / link parents through nesting
         for idx, inst in enumerate(po.instances):
@@ -279,8 +432,36 @@ class V2Abstractor(Abstractor):
                         o.refs[k] = po_.id
         return AbstractState(objs, view, partial=True, parsed=po, unknown_is_none=True)
 
+    def _record_mention_conflict(self, entity, kind, slot, prior, value, old_node, new_node) -> None:
+        key = json.dumps([entity, kind, slot, prior, value, old_node, new_node], sort_keys=True, default=str)
+        if key in self._mention_conflict_keys:
+            return
+        self._mention_conflict_keys.add(key)
+        self.mention_conflicts.append({"entity": list(entity), "kind": kind, "slot": slot,
+                                       "values": [prior, value], "mentions": [old_node, new_node]})
+
     def make_tracker(self) -> "V2Tracker":
         return V2Tracker(self)
+
+    def complete_types(self, obs: Observation, po: ParsedObs) -> set[int]:
+        """Types for which this observation is a collection view, not one detail mention.
+
+        Mere visibility is insufficient evidence that absent objects are false.  Recurring
+        templates observed with sibling multiplicity and accepted matrix-record boards are
+        conservative completeness evidence; a singleton detail pane is not.
+        """
+        sig = obs.structural_signature()
+        complete = set()
+        units = self.H.parse_units(sig)
+        for ui in units:
+            u = self.H.units.get(ui.template)
+            et = self.H.tid_of_template.get(ui.template)
+            if u is not None and et is not None and u.max_per_obs >= 2:
+                complete.add(self.tid_map[et])
+        for spec in self.record_by_anchor.values():
+            if any(ui.template in spec["row_templates"] for ui in units):
+                complete.add(spec["record_tid"])
+        return complete
 
     def fit_view_controls(self, log: EvidenceLog) -> None:
         """Sensing controls. Primary evidence: persistence probes (probes.jsonl, written by
@@ -289,14 +470,18 @@ class V2Abstractor(Abstractor):
         Fallback for traces without probes: static controls whose clicks never change the
         abstract state."""
         probe_status: dict[str, set[str]] = defaultdict(set)
+        probe_by_step: dict[int, dict] = {}
         pp = Path(log.dir) / "probes.jsonl"
         if pp.exists():
             for line in pp.read_text().splitlines():
                 j = json.loads(line)
+                if "step" in j:
+                    probe_by_step[int(j["step"])] = j
                 k = j["key"]
                 if len(k) >= 3 and k[0] == "click" and k[1] == "button":
                     probe_status[k[2]].add(j["status"])
         self.probe_status = probe_status
+        self.probe_by_step = probe_by_step
         domain_names = {n for n, st in probe_status.items() if "DOMAIN" in st}
         view_names = {n for n, st in probe_status.items() if st == {"VIEW"}}
         changed: Counter = Counter()
@@ -327,17 +512,30 @@ class V2Abstractor(Abstractor):
                 any(a.objs[k].refs.get(x) != b.objs[k].refs.get(x) and x in a.objs[k].refs and x in b.objs[k].refs for k in common for x in a.objs[k].refs)
             changed[name] += diff
         heuristic = {n for n, c in clicked.items() if changed[n] <= 0.1 * c}
-        self.view_controls = (heuristic | view_names) - domain_names
+        self.verified_view_controls = view_names - domain_names
+        self.verified_domain_controls = domain_names
+        self.heuristic_view_controls = heuristic - domain_names
+        # Consistency under a collapsed abstraction is not evidence that an action is
+        # sensing-only: that exact fallback hid successful domain actions on blind apps.
+        # Only executed reload/survey probes can certify the control used by the inducer.
+        # Heuristic candidates remain available for intervention selection and provenance.
+        self.view_controls = set(self.verified_view_controls)
         self.cat = type("Cat", (), {"view_controls": self.view_controls})()
 
     def summary(self) -> str:
-        return self.H.report() + "\nview controls: " + ", ".join(sorted(self.view_controls))
+        return (self.H.report()
+                + "\nverified view controls: " + ", ".join(sorted(self.verified_view_controls))
+                + "\nheuristic view candidates: " + ", ".join(sorted(self.heuristic_view_controls)))
 
 
 class V2Tracker(Tracker):
-    """Belief across views: last observed values carried; an entity is dropped when its
-    type is visible again and it is absent (refresh-on-visit), or when it vanished from
-    a container that is still shown."""
+    """TRUE/FALSE/UNKNOWN belief across partially rendered views.
+
+    Confirmed values are carried when their surface representation disappears.  Under the
+    default conservative policy, absence becomes FALSE only in a view with structural
+    evidence that it renders a complete collection.  The legacy visible-type policy is
+    retained only as an ablation control.
+    """
 
     def __init__(self, A: V2Abstractor):
         self.A = A
@@ -345,24 +543,55 @@ class V2Tracker(Tracker):
         self.step = 0
         self.belief: AbstractState | None = None
         self.prev_visible: dict[tuple[int, str], Any] = {}
+        self.fact_provenance: dict[tuple, dict] = {}
 
     def reset(self) -> None:
         self.belief = None
         self.prev_visible = {}
+        self.fact_provenance = {}
+
+    def _confirm(self, oid, kind, slot, value, sig) -> None:
+        self.fact_provenance[(oid, kind, slot)] = {
+            "status": "UNKNOWN" if value is None else "TRUE",
+            "value": value,
+            "source_observations": [sig],
+            "last_confirming_observation": sig,
+            "last_confirming_step": self.step,
+            "actions_since_confirmation": [],
+            "possible_invalidators": [],
+            "confidence": "OBSERVED",
+        }
 
     def observe(self, obs, action_kind: str):
         self.step += 1
         raw = self.A.abstract(obs)
+        sig = obs.structural_signature()
+        for provenance in self.fact_provenance.values():
+            provenance["actions_since_confirmation"].append(action_kind)
         if action_kind == "reset" or self.belief is None:
             self.belief = raw
             self.prev_visible = {o.id: o for o in raw.objs.values()}
+            self.fact_provenance = {}
+            for o in raw.objs.values():
+                for slot, value in o.attrs.items():
+                    self._confirm(o.id, "attribute", slot, value, sig)
+                for slot, value in o.refs.items():
+                    self._confirm(o.id, "reference", slot, value, sig)
             return raw, set()
         discovered: set[tuple[int, str]] = set()
-        visible_types = {o.tid for o in raw.objs.values()}
+        complete_types = (self.A.complete_types(obs, raw.parsed)
+                          if self.A.conservative_belief
+                          else {o.tid for o in raw.objs.values()})
         new = AbstractState({}, dict(raw.view), partial=True, parsed=raw.parsed, unknown_is_none=True)
         for oid, o in self.belief.objs.items():
-            if oid not in raw.objs and o.tid in visible_types:
-                continue  # its type is listed here and it is not: gone (or out of this scope)
+            if oid not in raw.objs and o.tid in complete_types:
+                self.fact_provenance[(oid, "existence", "id")] = {
+                    "status": "FALSE", "value": False, "source_observations": [sig],
+                    "last_confirming_observation": sig, "last_confirming_step": self.step,
+                    "actions_since_confirmation": [], "possible_invalidators": [],
+                    "confidence": "COMPLETE_COLLECTION_ABSENCE",
+                }
+                continue
             c = copy.copy(o)
             c.attrs, c.refs, c.node = dict(o.attrs), dict(o.refs), -1
             new.objs[oid] = c
@@ -372,14 +601,21 @@ class V2Tracker(Tracker):
                 for k, v in o.attrs.items():
                     if v is not None:
                         c.attrs[k] = v
+                        self._confirm(oid, "attribute", k, v, sig)
                     elif k not in c.attrs:
                         c.attrs[k] = None
                 c.refs.update(o.refs)
+                for k, v in o.refs.items():
+                    self._confirm(oid, "reference", k, v, sig)
                 c.node = o.node
             else:
                 c = copy.copy(o)
                 c.attrs, c.refs = dict(o.attrs), dict(o.refs)
                 new.objs[oid] = c
+                for k, v in o.attrs.items():
+                    self._confirm(oid, "attribute", k, v, sig)
+                for k, v in o.refs.items():
+                    self._confirm(oid, "reference", k, v, sig)
                 if action_kind in ("click", "reload") and o.tid not in {x.tid for x in self.prev_visible.values()}:
                     discovered.add(oid)  # first listing of this type since the last view of it: not an effect
         self.belief = new
