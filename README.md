@@ -73,3 +73,11 @@ imports and endpoint strings statically.
 Current V2 status is in `docs/v2_status.md`. Its reported gains are on the already-seen
 gauntlet-v2 development set, not a fresh result. V2 keeps the V0 effect language frozen,
 and this repository must not author the independently commissioned next gauntlet.
+
+The fresh result exists and is negative. `docs/v3_protocol.md` (pre-registered),
+`docs/v3_result.md` (the ordinary run of the frozen `v2.0-causal-abstraction` compiler
+against six applications written by three independent authors who never saw it) and
+`docs/v3_diagnosis.md` (oracle localization afterwards). Two of the six applications
+produced no trace at all; on the other four, 19 hidden operators were exercised and none
+was recovered. Given a correct state layer the frozen V0 inducer recovers 7-11 of them, so
+the failure is the state abstraction, not the induction.
