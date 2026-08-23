@@ -1,0 +1,193 @@
+=== vet_clinic ===
+--- /home/moloch/semabi-gauntlet-v3/authors/C_claude_sonnet/apps/01_vet_clinic/app.py	2026-08-23 21:13:42.551678731 +0200
++++ experiments/oracle_apps_v3/vet_clinic/app.py	2026-08-23 23:17:46.187744900 +0200
+@@ -425,7 +425,7 @@
+   const root = document.getElementById("view-clients");
+   root.innerHTML = "";
+   for (const owner of DATA.owners) {
+-    const section = el("section", {});
++    const section = el("section", {"data-eid": owner.id});
+     section.appendChild(el("h3", {text: owner.name + " — " + owner.phone}));
+     const ul = el("ul", {});
+     const mine = DATA.patients.filter(p => p.owner === owner.id);
+@@ -433,7 +433,7 @@
+       ul.appendChild(el("li", {text: "(no patients registered)"}));
+     }
+     for (const p of mine) {
+-      ul.appendChild(el("li", {text: p.name + " — " + p.species + ", age " + p.age}));
++      ul.appendChild(el("li", {"data-eid": p.id, text: p.name + " — " + p.species + ", age " + p.age}));
+     }
+     section.appendChild(ul);
+     root.appendChild(section);
+@@ -445,7 +445,7 @@
+   const ownerLabel = el("label", {text: "Owner "});
+   const ownerSelect = el("select", {id: "rp-owner"});
+   for (const o of DATA.owners) {
+-    ownerSelect.appendChild(el("option", {value: o.id, text: o.name}));
++    ownerSelect.appendChild(el("option", {"data-oid": o.id, value: o.id, text: o.name}));
+   }
+   ownerLabel.appendChild(ownerSelect);
+   form.appendChild(ownerLabel);
+@@ -502,7 +502,7 @@
+   table.appendChild(thead);
+   const tbody = el("tbody", {});
+   for (const v of DATA.vets) {
+-    const row = el("tr", {});
++    const row = el("tr", {"data-eid": v.id});
+     row.appendChild(el("td", {text: v.name}));
+     row.appendChild(el("td", {text: v.specialty}));
+     row.appendChild(el("td", {text: v.onDuty ? "Yes" : "No"}));
+@@ -521,7 +521,7 @@
+   const patientLabel = el("label", {text: "Patient "});
+   const patientSelect = el("select", {id: "sa-patient"});
+   for (const p of DATA.patients) {
+-    patientSelect.appendChild(el("option", {value: p.id, text: p.name + " (" + ownerName(p.owner) + ")"}));
++    patientSelect.appendChild(el("option", {"data-oid": p.id, value: p.id, text: p.name + " (" + ownerName(p.owner) + ")"}));
+   }
+   patientLabel.appendChild(patientSelect);
+   form.appendChild(patientLabel);
+@@ -556,13 +556,13 @@
+   const tbody = el("tbody", {});
+ 
+   for (const a of DATA.appointments) {
+-    const row = el("tr", {});
++    const row = el("tr", {"data-eid": a.id});
+     const patient = DATA.patients.find(p => p.id === a.patient);
+-    row.appendChild(el("td", {text: patientName(a.patient)}));
+-    row.appendChild(el("td", {text: patient ? ownerName(patient.owner) : "(unknown)"}));
++    row.appendChild(el("td", {"data-erefs": a.patient || "", text: patientName(a.patient)}));
++    row.appendChild(el("td", {"data-erefs": patient ? patient.owner : "", text: patient ? ownerName(patient.owner) : "(unknown)"}));
+     row.appendChild(el("td", {text: a.reason}));
+     row.appendChild(el("td", {text: a.status}));
+-    row.appendChild(el("td", {text: a.vet ? vetName(a.vet) : "(unassigned)"}));
++    row.appendChild(el("td", {"data-erefs": a.vet || "", text: a.vet ? vetName(a.vet) : "(unassigned)"}));
+     row.appendChild(el("td", {text: a.notes || ""}));
+ 
+     const actions = el("td", {});
+@@ -570,7 +570,7 @@
+     if (a.status === "scheduled" || a.status === "checked_in") {
+       const vetSelect = el("select", {});
+       for (const v of DATA.vets) {
+-        vetSelect.appendChild(el("option", {value: v.id, text: v.name + (v.onDuty ? " (on duty)" : " (off duty)")}));
++        vetSelect.appendChild(el("option", {"data-oid": v.id, value: v.id, text: v.name + (v.onDuty ? " (on duty)" : " (off duty)")}));
+       }
+       const assignBtn = el("button", {type: "button", text: "Assign vet"});
+       assignBtn.addEventListener("click", async () => {
+=== harbour ===
+--- /home/moloch/semabi-gauntlet-v3/authors/B_claude_opus/apps/01_harbour/app.py	2026-08-23 21:31:45.345578627 +0200
++++ experiments/oracle_apps_v3/harbour/app.py	2026-08-23 23:30:37.397029044 +0200
+@@ -368,6 +368,9 @@
+                 "cargo": vessel["cargo"],
+                 "berth": self.objects[berth_id]["attrs"]["code"] if berth_id else "",
+                 "pilot": self.objects[pilot_id]["attrs"]["name"] if pilot_id else "",
++                "vessel_id": self.rels["visit_vessel"][c["id"]],
++                "berth_id": berth_id or "",
++                "pilot_id": pilot_id or "",
+             })
+         berths = []
+         for b in self.of_type("Berth"):
+@@ -375,6 +378,7 @@
+             item = dict(b["attrs"])
+             item["id"] = b["id"]
+             item["occupied_by"] = self._ref(held) if held else ""
++            item["occupied_by_id"] = held or ""
+             berths.append(item)
+         pilots = []
+         for p in self.of_type("Pilot"):
+@@ -382,6 +386,7 @@
+             item = dict(p["attrs"])
+             item["id"] = p["id"]
+             item["assigned_to"] = self._ref(booked) if booked else ""
++            item["assigned_to_id"] = booked or ""
+             pilots.append(item)
+         vessels = []
+         for v in self.of_type("Vessel"):
+@@ -389,6 +394,7 @@
+             item = dict(v["attrs"])
+             item["id"] = v["id"]
+             item["current_call"] = self._ref(call) if call else ""
++            item["current_call_id"] = call or ""
+             vessels.append(item)
+         return {"calls": calls, "berths": berths, "pilots": pilots, "vessels": vessels}
+ 
+@@ -565,10 +571,14 @@
+ 
+ function callsSection() {
+   var rows = VIEW.calls.map(function (c) {
+-    return el('tr', null, [
++    return el('tr', {'data-eid': c.id}, [
+       el('td', null, [el('button', {type: 'button', text: c.ref,
+         onclick: function () { SELECTED = c.id; render(); }})]),
+-      td(c.vessel), td(c.length_m + ' m'), td(dash(c.berth)), td(dash(c.pilot)), td(c.state)
++      el('td', {'data-erefs': c.vessel_id, text: String(c.vessel)}),
++      td(c.length_m + ' m'),
++      el('td', {'data-erefs': c.berth_id, text: String(dash(c.berth))}),
++      el('td', {'data-erefs': c.pilot_id, text: String(dash(c.pilot))}),
++      td(c.state)
+     ]);
+   });
+   var body = rows.length
+@@ -587,6 +597,7 @@
+     s.appendChild(el('p', {text: 'No call is open. Press a call reference in the list above.'}));
+     return s;
+   }
++  s.setAttribute('data-eid', c.id);
+   s.appendChild(el('h2', {text: 'Call sheet ' + c.ref}));
+   var facts = [['Vessel', c.vessel], ['Flag', c.flag], ['Length overall', c.length_m + ' m'],
+                ['Hazardous cargo', yn(c.hazardous)], ['Cargo', c.cargo], ['Status', c.state],
+@@ -597,7 +608,7 @@
+   })));
+ 
+   var bsel = el('select', {id: 'berthSel'}, [el('option', {value: '', text: 'no berth chosen'})].concat(
+-    VIEW.berths.map(function (b) { return el('option', {value: b.id, text: berthLabel(b)}); })));
++    VIEW.berths.map(function (b) { return el('option', {'data-oid': b.id, value: b.id, text: berthLabel(b)}); })));
+   bsel.value = FORM.berth;
+   if (bsel.value !== FORM.berth) { FORM.berth = ''; bsel.value = ''; }
+   bsel.addEventListener('change', function () { FORM.berth = bsel.value; });
+@@ -607,7 +618,7 @@
+       onclick: function () { op('assign_berth', {visit: c.id, berth: FORM.berth}); }})]));
+ 
+   var psel = el('select', {id: 'pilotSel'}, [el('option', {value: '', text: 'no pilot chosen'})].concat(
+-    VIEW.pilots.map(function (p) { return el('option', {value: p.id, text: pilotLabel(p)}); })));
++    VIEW.pilots.map(function (p) { return el('option', {'data-oid': p.id, value: p.id, text: pilotLabel(p)}); })));
+   psel.value = FORM.pilot;
+   if (psel.value !== FORM.pilot) { FORM.pilot = ''; psel.value = ''; }
+   psel.addEventListener('change', function () { FORM.pilot = psel.value; });
+@@ -626,9 +637,10 @@
+ 
+ function berthsSection() {
+   var rows = VIEW.berths.map(function (b) {
+-    return el('tr', null, [
++    return el('tr', {'data-eid': b.id}, [
+       td(b.code), td(b.quay), td(b.max_length_m + ' m'), td(yn(b.hazard_certified)),
+-      td(b.closed ? 'closed' : 'open'), td(dash(b.occupied_by)),
++      td(b.closed ? 'closed' : 'open'),
++      el('td', {'data-erefs': b.occupied_by_id, text: String(dash(b.occupied_by))}),
+       el('td', null, [
+         el('button', {type: 'button', text: 'Close',
+           onclick: function () { op('set_berth_closed', {berth: b.id, closed: true}); }}),
+@@ -643,9 +655,9 @@
+ 
+ function pilotsSection() {
+   var rows = VIEW.pilots.map(function (p) {
+-    return el('tr', null, [
++    return el('tr', {'data-eid': p.id}, [
+       td(p.name), td(p.ticket_max_m + ' m'), td(p.on_duty ? 'on duty' : 'off duty'),
+-      td(dash(p.assigned_to)),
++      el('td', {'data-erefs': p.assigned_to_id, text: String(dash(p.assigned_to))}),
+       el('td', null, [
+         el('button', {type: 'button', text: 'Sign on',
+           onclick: function () { op('set_pilot_duty', {pilot: p.id, on_duty: true}); }}),
+@@ -659,9 +671,10 @@
+ 
+ function vesselsSection() {
+   var rows = VIEW.vessels.map(function (v) {
+-    return el('tr', null, [
++    return el('tr', {'data-eid': v.id}, [
+       td(v.name), td(v.flag), td(v.length_m + ' m'), td(yn(v.hazardous)), td(v.cargo),
+-      td(v.calls_logged), td(dash(v.current_call)),
++      td(v.calls_logged),
++      el('td', {'data-erefs': v.current_call_id, text: String(dash(v.current_call))}),
+       el('td', null, [el('button', {type: 'button', text: 'Schedule call',
+         onclick: function () { op('schedule_call', {vessel: v.id}); }})])
+     ]);
