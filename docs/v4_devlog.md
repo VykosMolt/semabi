@@ -157,6 +157,7 @@ collected independently for the V3 falsification campaign.
 | `sonnet_02_barter_market` seed 11 | 656 | 0.020 / 0.016 | 0.000 / 0.000 | worse |
 | `sonnet_02_barter_market` seed 12 | 633 | 0.000 / 0.000 | 0.000 / 0.000 | tie at nil |
 | `sonnet_02_barter_market` seed 13 | 641 | 0.062 / 0.121 | 0.000 / 0.000 | worse |
+| `opus_02_cellar` seed 11 | 935 | — / — | — / — | nothing to measure |
 
 Where it wins it wins on the things the V3 diagnosis named:
 
@@ -171,6 +172,14 @@ Where it wins it wins on the things the V3 diagnosis named:
   several hidden entities 14 -> **6**, entities split across keys 13 -> **5**;
 * false deltas fall on four of six selection traces, and the `spurious_relation` and
   `wrong_attribute_attachment` categories disappear entirely on `vet_clinic`.
+
+`opus_02_cellar` cannot be scored at all: 935 primitives of survey exploration fired **none**
+of its eight operators, because each needs a select-then-submit sequence that random
+exploration does not compose. V2 nonetheless learns transitions there, all of them at steps
+where the hidden state did not change (view false-positive rate 1.000); V4 learns none, so
+its rate is undefined rather than perfect. Asserting nothing where there is nothing to
+assert is the right behaviour, and it is also the whole of the improvement on that
+application.
 
 Where it loses it loses by silence: `landing_board` and `barter_market` keep coverage under
 V2 that V4 declines to claim. `barter_market` is the sharpest case and worth stating

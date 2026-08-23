@@ -92,7 +92,7 @@ def main() -> None:
     Path(a.output).write_text(json.dumps(out, indent=1))
     for name, row in out["conditions"].items():
         o, t, p = row["operators"], row["types"], row["predicates"]
-        print(f"{name}: rtc={row['rtc']:.3f} strictprec={row['strict_registered_delta_precision']} "
+        print(f"{name}: rtc={row['rtc'] if row['rtc'] is not None else float('nan'):.3f} strictprec={row['strict_registered_delta_precision']} "
               f"deltas={row['registered_deltas']} matched={row['matched_registered_deltas']} "
               f"types={t['recovered']}/{t['hidden']} attrs={p['recovered_attrs']}/{p['hidden_attrs']} "
               f"rels={p['recovered_rels']}/{p['hidden_rels']} ops={o['recovered']}/{o['observed_in_trace']} "

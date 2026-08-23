@@ -950,6 +950,81 @@
    "open_questions": 5
   },
   {
+   "app": "heldout_cellar_seed11",
+   "author": "held-out",
+   "trace": "runs/v4/cellar_seed11",
+   "primitives": null,
+   "v2": {
+    "rtc": null,
+    "strict_precision": null,
+    "registered_deltas": 0,
+    "matched": 0,
+    "view_fp": 1.0,
+    "types": [
+     2,
+     4
+    ],
+    "operators": [
+     0,
+     0
+    ],
+    "object_layer": {
+     "grounded_frac": null,
+     "pair_precision": null,
+     "pair_recall": null,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 0,
+     "duplicate_name_separation": null,
+     "cross_view_identity": null
+    },
+    "false_delta_categories": {},
+    "primitives": 929
+   },
+   "v4": {
+    "rtc": null,
+    "strict_precision": null,
+    "registered_deltas": 0,
+    "matched": 0,
+    "view_fp": null,
+    "types": [
+     0,
+     4
+    ],
+    "operators": [
+     0,
+     0
+    ],
+    "object_layer": {
+     "grounded_frac": null,
+     "pair_precision": null,
+     "pair_recall": null,
+     "learned_keys_merging_entities": 0,
+     "entities_split_across_keys": 0,
+     "entities_grounded": 0,
+     "duplicate_name_separation": null,
+     "cross_view_identity": null
+    },
+    "false_delta_categories": {},
+    "primitives": 929
+   },
+   "search": {
+    "contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "unexplained": 0,
+    "spurious": 0,
+    "explained": 0,
+    "delta_atoms": 0,
+    "complexity": 0,
+    "steps": 935,
+    "churn_steps": [],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   },
+   "open_questions": 0
+  },
+  {
    "app": "prospective_harbour_seed11",
    "author": "held-out",
    "trace": "runs/v4/harbour_seed11",
@@ -1185,7 +1260,8 @@
   }
  ],
  "summary": {
-  "apps_measured": 11,
+  "traces_measured": 12,
+  "traces_with_something_to_score": 11,
   "v4_better_strict_precision": 3,
   "v4_worse_rtc": 4,
   "v4_better_rtc": 1,

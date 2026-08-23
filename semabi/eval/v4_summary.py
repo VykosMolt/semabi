@@ -60,13 +60,19 @@ def main() -> None:
         rows.append(row)
 
     report = {"version": 1, "suite": "gauntlet-v3 (development)", "apps": rows}
+    def scored(r) -> bool:
+        """A trace where the application actually did something both models could describe."""
+        return ("v4" in r and "v2" in r
+                and r["v2"]["rtc"] is not None and r["v4"]["rtc"] is not None)
+
     report["summary"] = {
-        "apps_measured": len(rows),
-        "v4_better_strict_precision": sum(1 for r in rows if "v4" in r and "v2" in r
+        "traces_measured": len(rows),
+        "traces_with_something_to_score": sum(1 for r in rows if scored(r)),
+        "v4_better_strict_precision": sum(1 for r in rows if scored(r)
                                           and (r["v4"]["strict_precision"] or 0) > (r["v2"]["strict_precision"] or 0)),
-        "v4_worse_rtc": sum(1 for r in rows if "v4" in r and "v2" in r and r["v4"]["rtc"] < r["v2"]["rtc"]),
-        "v4_better_rtc": sum(1 for r in rows if "v4" in r and "v2" in r and r["v4"]["rtc"] > r["v2"]["rtc"]),
-        "v4_fewer_false_deltas": sum(1 for r in rows if "v4" in r and "v2" in r
+        "v4_worse_rtc": sum(1 for r in rows if scored(r) and r["v4"]["rtc"] < r["v2"]["rtc"]),
+        "v4_better_rtc": sum(1 for r in rows if scored(r) and r["v4"]["rtc"] > r["v2"]["rtc"]),
+        "v4_fewer_false_deltas": sum(1 for r in rows if scored(r)
                                      and r["v4"]["registered_deltas"] < r["v2"]["registered_deltas"]),
         "probe_primitives": sum((r.get("probe") or {}).get("primitives", 0) for r in rows),
     }
@@ -75,7 +81,8 @@ def main() -> None:
     head = f"{'app':26s} {'author':9s} {'RTC v2->v4':>16s} {'prec v2->v4':>16s} {'deltas':>12s} {'viewFP':>14s}"
     print(head)
     for r in rows:
-        if "v4" not in r or "v2" not in r:
+        if not scored(r):
+            print(f"{r['app'][:26]:26s} {r['author'][:9]:9s} (nothing exercised in the trace)")
             continue
         v2, v4 = r["v2"], r["v4"]
         print(f"{r['app'][:26]:26s} {r['author'][:9]:9s} "
