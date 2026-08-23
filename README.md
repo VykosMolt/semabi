@@ -61,6 +61,8 @@ cat runs/demo/eval.txt
 .venv/bin/python -m semabi.run_v2_refine --help
 # regenerate the evaluator-only V2 development ablation report
 .venv/bin/python -m semabi.eval.v2_ablation --help
+# build custody-safe matched primitive-prefix curves from retained traces
+.venv/bin/python -m semabi.eval.v2_budget_curve --help
 ```
 
 The evaluator/compiler boundary: `semabi.compiler` sees only the browser. Hidden

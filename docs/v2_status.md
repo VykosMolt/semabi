@@ -8,6 +8,7 @@ Machine-readable evidence:
 
 - `docs/data/v2/counterexample_refinement_2026-08-23.json`
 - `docs/data/v2/active_control_2026-08-23.json`
+- `docs/data/v2/budget_curve_2026-08-23.json`
 - per-run provenance under `runs/v2_refinement/`
 
 ## Checkpoint
@@ -92,19 +93,29 @@ RTC 0.676, precision 0.676, and view false positives 0.314. On datacenter the co
 view false-positive rate falls from 0.880 to 0.200. Treating every currently visible type
 as a complete listing creates false deletions and creations.
 
-### Equal-extra-budget endpoint control
+### Matched extra-budget prefix curves
 
-Both controls start from the identical broad trace and receive the same extra non-reset
-primitive count as the targeted trace. They do not constitute a budget curve.
+All variants start from the identical broad trace. A custody-safe prefix materializer
+exposes only observations referenced by the available primitive prefix and withholds probe
+evidence and accepted decisions until the complete diagnostic sequence. Full hidden
+records are copied only for the evaluator; alignment consumes the compiler prefix.
 
 | app | extra primitives | broad only RTC / precision | + ordinary random | + random action-reload | targeted refinement |
 |---|---:|---|---|---|---|
 | climbing | 16 | .000 / .250 | .000 / .167 | .000 / .222 | **.817 / .690** |
 | observatory | 9 | .000 / .000 | .000 / .000 | .000 / .000 | **.676 / .676** |
 
-This rules out the narrow explanation that any equal amount of additional interaction
-would have produced the endpoint. It does not yet establish sample-efficiency curves,
-LLM benefit, or fresh generalization.
+For climbing, all three variants remain RTC 0 at +0, +4, +8, and +12 primitives;
+targeted refinement moves to .817 only when its supported decision becomes available at
++16, while both controls remain 0. For observatory all variants remain RTC 0 at +0, +3,
+and +6; at +9 the targeted decision reaches .676 and both controls remain 0. This rules
+out future-observation and early-decision leakage and the narrow explanation that any
+equal amount of extra interaction would have produced the endpoint.
+
+These are post-hoc, single-seed development curves over retained traces. They do not
+establish multi-seed sample efficiency or fresh generalization. No LLM proposal was used
+in either demonstrated loop, so LLM proposal/verification conditions are explicitly
+`NOT_RUN`, not relabeled deterministic conditions.
 
 ## What failed and what was falsified
 
@@ -141,7 +152,7 @@ LLM benefit, or fresh generalization.
 - CER currently has one selected persistent-DOMAIN event and one resolved event; the
   observatory/datacenter probes resolve association contradictions and are kept in a
   separate denominator. Larger denominators are needed.
-- Active evidence is an endpoint comparison only. Fair interaction-budget curves and
+- Custody-safe single-trace prefix curves are complete. Multi-seed curves and
   LLM-proposal-with/without-executed-verification ablations remain pending.
 - Planning-feedback refinement and restricted anonymous latent-state splitting are
   architectural extension points, not demonstrated capabilities.
@@ -158,7 +169,8 @@ observatory matrix case without an app-specific branch. The null datacenter resu
 the downstream induction gap prevent a broader success claim.
 
 Next, extend the same counterexample-driven attachment machinery only where datacenter
-and pharmacy-c supply a concrete unresolved transition; produce fair budget curves and
-the LLM verification ablation; resolve or explicitly retain the corrected-browser V1
-rerun blocker; then freeze. After freeze, commission an independently authored fresh
-gauntlet. This project must not author gauntlet-v3 itself.
+and pharmacy-c supply a concrete unresolved transition; add multi-seed online curves and
+the LLM verification ablation only when a live LLM-proposed ambiguity exists; resolve or
+explicitly retain the corrected-browser V1 rerun blocker; then freeze. After freeze,
+commission an independently authored fresh gauntlet. This project must not author
+gauntlet-v3 itself.

@@ -59,6 +59,27 @@ LATENT: dict[str, set[tuple[str, str]]] = {
     "claude_04_datacenter_racks": {("Rack", "cooling_ok"), ("Server", "redundant_psu")},
 }
 
+APP_BY_DOMAIN_NAME = {
+    "apiary": "grok_01_apiary",
+    "observatory": "grok_02_observatory",
+    "pharmacy": "grok_03_pharmacy",
+    "climbing": "grok_04_climbing",
+    "airport_gate_ops": "claude_01_airport_gates",
+    "pharmacy_dispensary": "claude_02_pharmacy_dispensary",
+    "museum_loan_registry": "claude_03_museum_loans",
+    "datacenter_rack_provisioning": "claude_04_datacenter_racks",
+}
+
+
+def latent_for(run_dir: Path, desc: dict | None = None) -> set[tuple[str, str]]:
+    """Resolve evaluator-only latent declarations across renamed/copied run dirs."""
+    if run_dir.name in LATENT:
+        return LATENT[run_dir.name]
+    if desc is None:
+        path = run_dir / "hidden_domain.json"
+        desc = json.loads(path.read_text()) if path.exists() else {}
+    return LATENT.get(APP_BY_DOMAIN_NAME.get(desc.get("name"), ""), set())
+
 
 # --------------------------------------------------------------------------
 # hidden-state helpers
@@ -621,7 +642,7 @@ def compile_oracle(run_dir: Path, rung: str, min_support: int = 2) -> tuple[Comp
     log = EvidenceLog(run_dir)
     recs = align_records(log, load_records(run_dir))
     desc = json.loads((run_dir / "hidden_domain.json").read_text())
-    latent = LATENT.get(run_dir.name, set())
+    latent = latent_for(run_dir)
     glog = grounded_log(log, recs)
     A = OracleAbstractor(glog, recs, desc, rung, latent)
     restore = install_tracker_factory(A, glog)
@@ -799,7 +820,7 @@ def _candidate_literals(s: rm.State, binding: dict[str, str], dom: rm.Domain, la
 
 def learn_known_vocab(run_dir: Path, min_support: int = 2) -> tuple[LearnedModel, Mapping, list[dict]]:
     desc = json.loads((run_dir / "hidden_domain.json").read_text())
-    latent = LATENT.get(run_dir.name, set())
+    latent = latent_for(run_dir)
     recs = [r for r in load_records(run_dir)]
     hidden_dom = ext.domain_from_description(desc)
     # learned vocabulary = hidden types/relations minus latent attributes, keyed by id
@@ -1387,7 +1408,7 @@ def _n_hidden_attrs(hidden_dom: rm.Domain) -> int:
 
 def evaluate(C: Compiled, run_dir: Path, recs: list[dict | None], v1_like: bool, tag: str, abstr_ids: bool) -> dict:
     desc = json.loads((run_dir / "hidden_domain.json").read_text())
-    latent = LATENT.get(run_dir.name, set())
+    latent = latent_for(run_dir, desc)
     hidden_dom = _hidden_dom_with_ids(desc) if abstr_ids else ext.domain_from_description(desc)
     hidden = [r for r in recs if r is not None]
     pairs = []
@@ -1418,7 +1439,7 @@ def evaluate(C: Compiled, run_dir: Path, recs: list[dict | None], v1_like: bool,
 def evaluate_known_vocab(run_dir: Path, min_support: int = 2) -> dict:
     M, m, report = learn_known_vocab(run_dir, min_support)
     desc = json.loads((run_dir / "hidden_domain.json").read_text())
-    latent = LATENT.get(run_dir.name, set())
+    latent = latent_for(run_dir, desc)
     hidden_dom = _hidden_dom_with_ids(desc)
     recs = load_records(run_dir)
     with _with_ids():

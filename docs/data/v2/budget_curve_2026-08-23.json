@@ -1,0 +1,2625 @@
+{
+ "version": 1,
+ "status": "SINGLE_TRACE_PREFIX_CURVES",
+ "protocol": {
+  "comparison": "identical broad trace plus matched extra primitive prefixes",
+  "compiler_custody": "no future observations, probe evidence, or decisions at any prefix",
+  "decision_timing": "accepted refinement appears only after the complete retained diagnostic sequence",
+  "limitations": "post-hoc single-seed development curves; targeted decision occurs at the final measured prefix",
+  "llm_conditions": "NOT_RUN_NO_LLM_PROPOSAL_IN_DEMONSTRATED_LOOPS",
+  "not_claimed": "not fresh generalization and not an LLM verification ablation"
+ },
+ "apps": {
+  "climbing": {
+   "broad_run": "runs/oracle/grok_04_climbing",
+   "base_primitive_cost": 411,
+   "max_extra_primitive_budget": 16,
+   "points": [
+    {
+     "extra_primitives": 0,
+     "total_primitives": 411,
+     "variants": {
+      "ordinary_random": {
+       "prefix_run": "runs/oracle/grok_04_climbing",
+       "accepted_refinement_available": false,
+       "types_recovered": 2,
+       "attributes_recovered": 0,
+       "relations_recovered": 1,
+       "operators_recovered": 3,
+       "operators_observed": 5,
+       "learned_operators": 7,
+       "operator_names_recovered": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "operators_with_any_explanation": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "gtc": 0.0,
+       "rtc": 0.0,
+       "rtc_any": 0.024,
+       "registered_deltas": 8,
+       "registered_delta_precision": 0.25,
+       "spurious_registered_delta_rate": 0.75,
+       "mention_pair_precision": 0.742,
+       "mention_pair_recall": 0.553,
+       "duplicate_name_separation": null,
+       "cross_view_identity": 1.0,
+       "view_false_positive_rate": 0.8,
+       "abstraction_contradiction_rate": 0.333,
+       "comparable_abstraction_groups": 3,
+       "per_operator": {
+        "hang": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 37,
+         "explained": 3,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "recolor": {
+         "n": 74,
+         "full": 0,
+         "any": 0,
+         "successes": 74,
+         "failures": 0,
+         "explained": 0,
+         "invisible": 74,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "restow": {
+         "n": 1,
+         "full": 0,
+         "any": 0,
+         "successes": 1,
+         "failures": 2,
+         "explained": 1,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "bump": {
+         "n": 2,
+         "full": 0,
+         "any": 0,
+         "successes": 2,
+         "failures": 1,
+         "explained": 0,
+         "invisible": 2,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "ease": {
+         "successes": 0,
+         "failures": 2,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "pull": {
+         "n": 2,
+         "full": 0,
+         "any": 2,
+         "successes": 2,
+         "failures": 0,
+         "explained": 2,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        }
+       },
+       "induction": {},
+       "counterexamples": {}
+      },
+      "random_action_reload": {
+       "prefix_run": "runs/oracle/grok_04_climbing",
+       "accepted_refinement_available": false,
+       "types_recovered": 2,
+       "attributes_recovered": 0,
+       "relations_recovered": 1,
+       "operators_recovered": 3,
+       "operators_observed": 5,
+       "learned_operators": 7,
+       "operator_names_recovered": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "operators_with_any_explanation": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "gtc": 0.0,
+       "rtc": 0.0,
+       "rtc_any": 0.024,
+       "registered_deltas": 8,
+       "registered_delta_precision": 0.25,
+       "spurious_registered_delta_rate": 0.75,
+       "mention_pair_precision": 0.742,
+       "mention_pair_recall": 0.553,
+       "duplicate_name_separation": null,
+       "cross_view_identity": 1.0,
+       "view_false_positive_rate": 0.8,
+       "abstraction_contradiction_rate": 0.333,
+       "comparable_abstraction_groups": 3,
+       "per_operator": {
+        "hang": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 37,
+         "explained": 3,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "recolor": {
+         "n": 74,
+         "full": 0,
+         "any": 0,
+         "successes": 74,
+         "failures": 0,
+         "explained": 0,
+         "invisible": 74,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "restow": {
+         "n": 1,
+         "full": 0,
+         "any": 0,
+         "successes": 1,
+         "failures": 2,
+         "explained": 1,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "bump": {
+         "n": 2,
+         "full": 0,
+         "any": 0,
+         "successes": 2,
+         "failures": 1,
+         "explained": 0,
+         "invisible": 2,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "ease": {
+         "successes": 0,
+         "failures": 2,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "pull": {
+         "n": 2,
+         "full": 0,
+         "any": 2,
+         "successes": 2,
+         "failures": 0,
+         "explained": 2,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        }
+       },
+       "induction": {},
+       "counterexamples": {}
+      },
+      "counterexample_targeted": {
+       "prefix_run": "runs/oracle/grok_04_climbing",
+       "accepted_refinement_available": false,
+       "types_recovered": 2,
+       "attributes_recovered": 0,
+       "relations_recovered": 1,
+       "operators_recovered": 3,
+       "operators_observed": 5,
+       "learned_operators": 7,
+       "operator_names_recovered": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "operators_with_any_explanation": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "gtc": 0.0,
+       "rtc": 0.0,
+       "rtc_any": 0.024,
+       "registered_deltas": 8,
+       "registered_delta_precision": 0.25,
+       "spurious_registered_delta_rate": 0.75,
+       "mention_pair_precision": 0.742,
+       "mention_pair_recall": 0.553,
+       "duplicate_name_separation": null,
+       "cross_view_identity": 1.0,
+       "view_false_positive_rate": 0.8,
+       "abstraction_contradiction_rate": 0.333,
+       "comparable_abstraction_groups": 3,
+       "per_operator": {
+        "hang": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 37,
+         "explained": 3,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "recolor": {
+         "n": 74,
+         "full": 0,
+         "any": 0,
+         "successes": 74,
+         "failures": 0,
+         "explained": 0,
+         "invisible": 74,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "restow": {
+         "n": 1,
+         "full": 0,
+         "any": 0,
+         "successes": 1,
+         "failures": 2,
+         "explained": 1,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "bump": {
+         "n": 2,
+         "full": 0,
+         "any": 0,
+         "successes": 2,
+         "failures": 1,
+         "explained": 0,
+         "invisible": 2,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "ease": {
+         "successes": 0,
+         "failures": 2,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "pull": {
+         "n": 2,
+         "full": 0,
+         "any": 2,
+         "successes": 2,
+         "failures": 0,
+         "explained": 2,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        }
+       },
+       "induction": {},
+       "counterexamples": {}
+      }
+     }
+    },
+    {
+     "extra_primitives": 4,
+     "total_primitives": 415,
+     "variants": {
+      "ordinary_random": {
+       "prefix_run": "runs/v2_budget_curve/climbing_ordinary_random_b4",
+       "accepted_refinement_available": false,
+       "types_recovered": 2,
+       "attributes_recovered": 0,
+       "relations_recovered": 1,
+       "operators_recovered": 3,
+       "operators_observed": 5,
+       "learned_operators": 7,
+       "operator_names_recovered": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "operators_with_any_explanation": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "gtc": 0.0,
+       "rtc": 0.0,
+       "rtc_any": 0.024,
+       "registered_deltas": 8,
+       "registered_delta_precision": 0.25,
+       "spurious_registered_delta_rate": 0.75,
+       "mention_pair_precision": 0.74,
+       "mention_pair_recall": 0.553,
+       "duplicate_name_separation": null,
+       "cross_view_identity": 1.0,
+       "view_false_positive_rate": 0.8,
+       "abstraction_contradiction_rate": 0.333,
+       "comparable_abstraction_groups": 3,
+       "per_operator": {
+        "hang": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 37,
+         "explained": 3,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "recolor": {
+         "n": 74,
+         "full": 0,
+         "any": 0,
+         "successes": 74,
+         "failures": 0,
+         "explained": 0,
+         "invisible": 74,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "restow": {
+         "n": 1,
+         "full": 0,
+         "any": 0,
+         "successes": 1,
+         "failures": 2,
+         "explained": 1,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "bump": {
+         "n": 2,
+         "full": 0,
+         "any": 0,
+         "successes": 2,
+         "failures": 1,
+         "explained": 0,
+         "invisible": 2,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "ease": {
+         "successes": 0,
+         "failures": 2,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "pull": {
+         "n": 2,
+         "full": 0,
+         "any": 2,
+         "successes": 2,
+         "failures": 0,
+         "explained": 2,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        }
+       },
+       "induction": {},
+       "counterexamples": {}
+      },
+      "random_action_reload": {
+       "prefix_run": "runs/v2_budget_curve/climbing_random_action_reload_b4",
+       "accepted_refinement_available": false,
+       "types_recovered": 2,
+       "attributes_recovered": 0,
+       "relations_recovered": 1,
+       "operators_recovered": 3,
+       "operators_observed": 5,
+       "learned_operators": 7,
+       "operator_names_recovered": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "operators_with_any_explanation": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "gtc": 0.0,
+       "rtc": 0.0,
+       "rtc_any": 0.024,
+       "registered_deltas": 8,
+       "registered_delta_precision": 0.25,
+       "spurious_registered_delta_rate": 0.75,
+       "mention_pair_precision": 0.74,
+       "mention_pair_recall": 0.553,
+       "duplicate_name_separation": null,
+       "cross_view_identity": 1.0,
+       "view_false_positive_rate": 0.8,
+       "abstraction_contradiction_rate": 0.333,
+       "comparable_abstraction_groups": 3,
+       "per_operator": {
+        "hang": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 37,
+         "explained": 3,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "recolor": {
+         "n": 74,
+         "full": 0,
+         "any": 0,
+         "successes": 74,
+         "failures": 0,
+         "explained": 0,
+         "invisible": 74,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "restow": {
+         "n": 1,
+         "full": 0,
+         "any": 0,
+         "successes": 1,
+         "failures": 2,
+         "explained": 1,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "bump": {
+         "n": 2,
+         "full": 0,
+         "any": 0,
+         "successes": 2,
+         "failures": 1,
+         "explained": 0,
+         "invisible": 2,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "ease": {
+         "successes": 0,
+         "failures": 2,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "pull": {
+         "n": 2,
+         "full": 0,
+         "any": 2,
+         "successes": 2,
+         "failures": 0,
+         "explained": 2,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        }
+       },
+       "induction": {},
+       "counterexamples": {}
+      },
+      "counterexample_targeted": {
+       "prefix_run": "runs/v2_budget_curve/climbing_counterexample_targeted_b4",
+       "accepted_refinement_available": false,
+       "types_recovered": 2,
+       "attributes_recovered": 0,
+       "relations_recovered": 1,
+       "operators_recovered": 3,
+       "operators_observed": 5,
+       "learned_operators": 7,
+       "operator_names_recovered": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "operators_with_any_explanation": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "gtc": 0.0,
+       "rtc": 0.0,
+       "rtc_any": 0.024,
+       "registered_deltas": 8,
+       "registered_delta_precision": 0.25,
+       "spurious_registered_delta_rate": 0.75,
+       "mention_pair_precision": 0.742,
+       "mention_pair_recall": 0.553,
+       "duplicate_name_separation": null,
+       "cross_view_identity": 1.0,
+       "view_false_positive_rate": 0.8,
+       "abstraction_contradiction_rate": 0.333,
+       "comparable_abstraction_groups": 3,
+       "per_operator": {
+        "hang": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 37,
+         "explained": 3,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "recolor": {
+         "n": 74,
+         "full": 0,
+         "any": 0,
+         "successes": 74,
+         "failures": 0,
+         "explained": 0,
+         "invisible": 74,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "restow": {
+         "n": 1,
+         "full": 0,
+         "any": 0,
+         "successes": 1,
+         "failures": 2,
+         "explained": 1,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "bump": {
+         "n": 2,
+         "full": 0,
+         "any": 0,
+         "successes": 2,
+         "failures": 1,
+         "explained": 0,
+         "invisible": 2,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "ease": {
+         "successes": 0,
+         "failures": 2,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "pull": {
+         "n": 2,
+         "full": 0,
+         "any": 2,
+         "successes": 2,
+         "failures": 0,
+         "explained": 2,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        }
+       },
+       "induction": {},
+       "counterexamples": {}
+      }
+     }
+    },
+    {
+     "extra_primitives": 8,
+     "total_primitives": 419,
+     "variants": {
+      "ordinary_random": {
+       "prefix_run": "runs/v2_budget_curve/climbing_ordinary_random_b8",
+       "accepted_refinement_available": false,
+       "types_recovered": 2,
+       "attributes_recovered": 0,
+       "relations_recovered": 1,
+       "operators_recovered": 3,
+       "operators_observed": 5,
+       "learned_operators": 7,
+       "operator_names_recovered": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "operators_with_any_explanation": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "gtc": 0.0,
+       "rtc": 0.0,
+       "rtc_any": 0.024,
+       "registered_deltas": 8,
+       "registered_delta_precision": 0.25,
+       "spurious_registered_delta_rate": 0.75,
+       "mention_pair_precision": 0.738,
+       "mention_pair_recall": 0.552,
+       "duplicate_name_separation": null,
+       "cross_view_identity": 1.0,
+       "view_false_positive_rate": 0.8,
+       "abstraction_contradiction_rate": 0.333,
+       "comparable_abstraction_groups": 3,
+       "per_operator": {
+        "hang": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 37,
+         "explained": 3,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "recolor": {
+         "n": 77,
+         "full": 0,
+         "any": 0,
+         "successes": 77,
+         "failures": 0,
+         "explained": 0,
+         "invisible": 77,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "restow": {
+         "n": 1,
+         "full": 0,
+         "any": 0,
+         "successes": 1,
+         "failures": 2,
+         "explained": 1,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "bump": {
+         "n": 2,
+         "full": 0,
+         "any": 0,
+         "successes": 2,
+         "failures": 1,
+         "explained": 0,
+         "invisible": 2,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "ease": {
+         "successes": 0,
+         "failures": 2,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "pull": {
+         "n": 2,
+         "full": 0,
+         "any": 2,
+         "successes": 2,
+         "failures": 0,
+         "explained": 2,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        }
+       },
+       "induction": {},
+       "counterexamples": {}
+      },
+      "random_action_reload": {
+       "prefix_run": "runs/v2_budget_curve/climbing_random_action_reload_b8",
+       "accepted_refinement_available": false,
+       "types_recovered": 2,
+       "attributes_recovered": 0,
+       "relations_recovered": 1,
+       "operators_recovered": 3,
+       "operators_observed": 5,
+       "learned_operators": 7,
+       "operator_names_recovered": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "operators_with_any_explanation": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "gtc": 0.0,
+       "rtc": 0.0,
+       "rtc_any": 0.024,
+       "registered_deltas": 9,
+       "registered_delta_precision": 0.222,
+       "spurious_registered_delta_rate": 0.778,
+       "mention_pair_precision": 0.739,
+       "mention_pair_recall": 0.552,
+       "duplicate_name_separation": null,
+       "cross_view_identity": 1.0,
+       "view_false_positive_rate": 0.784,
+       "abstraction_contradiction_rate": 0.333,
+       "comparable_abstraction_groups": 3,
+       "per_operator": {
+        "hang": {
+         "n": 4,
+         "full": 0,
+         "any": 0,
+         "successes": 4,
+         "failures": 37,
+         "explained": 4,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "recolor": {
+         "n": 74,
+         "full": 0,
+         "any": 0,
+         "successes": 74,
+         "failures": 0,
+         "explained": 0,
+         "invisible": 74,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "restow": {
+         "n": 1,
+         "full": 0,
+         "any": 0,
+         "successes": 1,
+         "failures": 2,
+         "explained": 1,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "bump": {
+         "n": 2,
+         "full": 0,
+         "any": 0,
+         "successes": 2,
+         "failures": 1,
+         "explained": 0,
+         "invisible": 2,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "ease": {
+         "successes": 0,
+         "failures": 2,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "pull": {
+         "n": 2,
+         "full": 0,
+         "any": 2,
+         "successes": 2,
+         "failures": 0,
+         "explained": 2,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        }
+       },
+       "induction": {},
+       "counterexamples": {}
+      },
+      "counterexample_targeted": {
+       "prefix_run": "runs/v2_budget_curve/climbing_counterexample_targeted_b8",
+       "accepted_refinement_available": false,
+       "types_recovered": 2,
+       "attributes_recovered": 0,
+       "relations_recovered": 1,
+       "operators_recovered": 3,
+       "operators_observed": 5,
+       "learned_operators": 7,
+       "operator_names_recovered": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "operators_with_any_explanation": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "gtc": 0.0,
+       "rtc": 0.0,
+       "rtc_any": 0.024,
+       "registered_deltas": 8,
+       "registered_delta_precision": 0.25,
+       "spurious_registered_delta_rate": 0.75,
+       "mention_pair_precision": 0.742,
+       "mention_pair_recall": 0.553,
+       "duplicate_name_separation": null,
+       "cross_view_identity": 1.0,
+       "view_false_positive_rate": 0.8,
+       "abstraction_contradiction_rate": 0.333,
+       "comparable_abstraction_groups": 3,
+       "per_operator": {
+        "hang": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 37,
+         "explained": 3,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "recolor": {
+         "n": 74,
+         "full": 0,
+         "any": 0,
+         "successes": 74,
+         "failures": 0,
+         "explained": 0,
+         "invisible": 74,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "restow": {
+         "n": 1,
+         "full": 0,
+         "any": 0,
+         "successes": 1,
+         "failures": 2,
+         "explained": 1,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "bump": {
+         "n": 2,
+         "full": 0,
+         "any": 0,
+         "successes": 2,
+         "failures": 1,
+         "explained": 0,
+         "invisible": 2,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "ease": {
+         "successes": 0,
+         "failures": 2,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "pull": {
+         "n": 2,
+         "full": 0,
+         "any": 2,
+         "successes": 2,
+         "failures": 0,
+         "explained": 2,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        }
+       },
+       "induction": {},
+       "counterexamples": {}
+      }
+     }
+    },
+    {
+     "extra_primitives": 12,
+     "total_primitives": 423,
+     "variants": {
+      "ordinary_random": {
+       "prefix_run": "runs/v2_budget_curve/climbing_ordinary_random_b12",
+       "accepted_refinement_available": false,
+       "types_recovered": 2,
+       "attributes_recovered": 0,
+       "relations_recovered": 1,
+       "operators_recovered": 3,
+       "operators_observed": 5,
+       "learned_operators": 8,
+       "operator_names_recovered": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "operators_with_any_explanation": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "gtc": 0.0,
+       "rtc": 0.0,
+       "rtc_any": 0.023,
+       "registered_deltas": 10,
+       "registered_delta_precision": 0.2,
+       "spurious_registered_delta_rate": 0.8,
+       "mention_pair_precision": 0.749,
+       "mention_pair_recall": 0.567,
+       "duplicate_name_separation": null,
+       "cross_view_identity": 1.0,
+       "view_false_positive_rate": 0.757,
+       "abstraction_contradiction_rate": 0.333,
+       "comparable_abstraction_groups": 3,
+       "per_operator": {
+        "hang": {
+         "n": 4,
+         "full": 0,
+         "any": 0,
+         "successes": 4,
+         "failures": 37,
+         "explained": 4,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "recolor": {
+         "n": 77,
+         "full": 0,
+         "any": 0,
+         "successes": 77,
+         "failures": 0,
+         "explained": 0,
+         "invisible": 77,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "restow": {
+         "n": 1,
+         "full": 0,
+         "any": 0,
+         "successes": 1,
+         "failures": 2,
+         "explained": 1,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "bump": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 1,
+         "explained": 0,
+         "invisible": 3,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "ease": {
+         "successes": 0,
+         "failures": 3,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "pull": {
+         "n": 2,
+         "full": 0,
+         "any": 2,
+         "successes": 2,
+         "failures": 0,
+         "explained": 2,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        }
+       },
+       "induction": {},
+       "counterexamples": {}
+      },
+      "random_action_reload": {
+       "prefix_run": "runs/v2_budget_curve/climbing_random_action_reload_b12",
+       "accepted_refinement_available": false,
+       "types_recovered": 2,
+       "attributes_recovered": 0,
+       "relations_recovered": 1,
+       "operators_recovered": 3,
+       "operators_observed": 5,
+       "learned_operators": 7,
+       "operator_names_recovered": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "operators_with_any_explanation": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "gtc": 0.0,
+       "rtc": 0.0,
+       "rtc_any": 0.024,
+       "registered_deltas": 9,
+       "registered_delta_precision": 0.222,
+       "spurious_registered_delta_rate": 0.778,
+       "mention_pair_precision": 0.737,
+       "mention_pair_recall": 0.552,
+       "duplicate_name_separation": null,
+       "cross_view_identity": 1.0,
+       "view_false_positive_rate": 0.784,
+       "abstraction_contradiction_rate": 0.333,
+       "comparable_abstraction_groups": 3,
+       "per_operator": {
+        "hang": {
+         "n": 4,
+         "full": 0,
+         "any": 0,
+         "successes": 4,
+         "failures": 37,
+         "explained": 4,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "recolor": {
+         "n": 76,
+         "full": 0,
+         "any": 0,
+         "successes": 76,
+         "failures": 0,
+         "explained": 0,
+         "invisible": 76,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "restow": {
+         "n": 1,
+         "full": 0,
+         "any": 0,
+         "successes": 1,
+         "failures": 2,
+         "explained": 1,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "bump": {
+         "n": 2,
+         "full": 0,
+         "any": 0,
+         "successes": 2,
+         "failures": 1,
+         "explained": 0,
+         "invisible": 2,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "ease": {
+         "successes": 0,
+         "failures": 2,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "pull": {
+         "n": 2,
+         "full": 0,
+         "any": 2,
+         "successes": 2,
+         "failures": 0,
+         "explained": 2,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        }
+       },
+       "induction": {},
+       "counterexamples": {}
+      },
+      "counterexample_targeted": {
+       "prefix_run": "runs/v2_budget_curve/climbing_counterexample_targeted_b12",
+       "accepted_refinement_available": false,
+       "types_recovered": 2,
+       "attributes_recovered": 0,
+       "relations_recovered": 1,
+       "operators_recovered": 3,
+       "operators_observed": 5,
+       "learned_operators": 7,
+       "operator_names_recovered": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "operators_with_any_explanation": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "gtc": 0.0,
+       "rtc": 0.0,
+       "rtc_any": 0.024,
+       "registered_deltas": 8,
+       "registered_delta_precision": 0.25,
+       "spurious_registered_delta_rate": 0.75,
+       "mention_pair_precision": 0.742,
+       "mention_pair_recall": 0.553,
+       "duplicate_name_separation": null,
+       "cross_view_identity": 1.0,
+       "view_false_positive_rate": 0.8,
+       "abstraction_contradiction_rate": 0.333,
+       "comparable_abstraction_groups": 3,
+       "per_operator": {
+        "hang": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 37,
+         "explained": 3,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "recolor": {
+         "n": 74,
+         "full": 0,
+         "any": 0,
+         "successes": 74,
+         "failures": 0,
+         "explained": 0,
+         "invisible": 74,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "restow": {
+         "n": 1,
+         "full": 0,
+         "any": 0,
+         "successes": 1,
+         "failures": 2,
+         "explained": 1,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "bump": {
+         "n": 2,
+         "full": 0,
+         "any": 0,
+         "successes": 2,
+         "failures": 1,
+         "explained": 0,
+         "invisible": 2,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "ease": {
+         "successes": 0,
+         "failures": 2,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "pull": {
+         "n": 2,
+         "full": 0,
+         "any": 2,
+         "successes": 2,
+         "failures": 0,
+         "explained": 2,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        }
+       },
+       "induction": {},
+       "counterexamples": {}
+      }
+     }
+    },
+    {
+     "extra_primitives": 16,
+     "total_primitives": 427,
+     "variants": {
+      "ordinary_random": {
+       "prefix_run": "runs/v2_budget_curve/climbing_ordinary_random_b16",
+       "accepted_refinement_available": false,
+       "types_recovered": 2,
+       "attributes_recovered": 0,
+       "relations_recovered": 1,
+       "operators_recovered": 3,
+       "operators_observed": 5,
+       "learned_operators": 7,
+       "operator_names_recovered": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "operators_with_any_explanation": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "gtc": 0.0,
+       "rtc": 0.0,
+       "rtc_any": 0.023,
+       "registered_deltas": 12,
+       "registered_delta_precision": 0.167,
+       "spurious_registered_delta_rate": 0.833,
+       "mention_pair_precision": 0.753,
+       "mention_pair_recall": 0.573,
+       "duplicate_name_separation": null,
+       "cross_view_identity": 1.0,
+       "view_false_positive_rate": 0.757,
+       "abstraction_contradiction_rate": 0.333,
+       "comparable_abstraction_groups": 3,
+       "per_operator": {
+        "hang": {
+         "n": 4,
+         "full": 0,
+         "any": 0,
+         "successes": 4,
+         "failures": 37,
+         "explained": 4,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "recolor": {
+         "n": 77,
+         "full": 0,
+         "any": 0,
+         "successes": 77,
+         "failures": 0,
+         "explained": 0,
+         "invisible": 77,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "restow": {
+         "n": 1,
+         "full": 0,
+         "any": 0,
+         "successes": 1,
+         "failures": 2,
+         "explained": 1,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "bump": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 1,
+         "explained": 0,
+         "invisible": 3,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "ease": {
+         "successes": 0,
+         "failures": 3,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "pull": {
+         "n": 2,
+         "full": 0,
+         "any": 2,
+         "successes": 2,
+         "failures": 0,
+         "explained": 2,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        }
+       },
+       "induction": {},
+       "counterexamples": {}
+      },
+      "random_action_reload": {
+       "prefix_run": "runs/v2_budget_curve/climbing_random_action_reload_b16",
+       "accepted_refinement_available": false,
+       "types_recovered": 2,
+       "attributes_recovered": 0,
+       "relations_recovered": 1,
+       "operators_recovered": 3,
+       "operators_observed": 5,
+       "learned_operators": 7,
+       "operator_names_recovered": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "operators_with_any_explanation": [
+        "hang",
+        "pull",
+        "restow"
+       ],
+       "gtc": 0.0,
+       "rtc": 0.0,
+       "rtc_any": 0.024,
+       "registered_deltas": 9,
+       "registered_delta_precision": 0.222,
+       "spurious_registered_delta_rate": 0.778,
+       "mention_pair_precision": 0.737,
+       "mention_pair_recall": 0.551,
+       "duplicate_name_separation": null,
+       "cross_view_identity": 1.0,
+       "view_false_positive_rate": 0.784,
+       "abstraction_contradiction_rate": 0.333,
+       "comparable_abstraction_groups": 3,
+       "per_operator": {
+        "hang": {
+         "n": 4,
+         "full": 0,
+         "any": 0,
+         "successes": 4,
+         "failures": 37,
+         "explained": 4,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "recolor": {
+         "n": 76,
+         "full": 0,
+         "any": 0,
+         "successes": 76,
+         "failures": 0,
+         "explained": 0,
+         "invisible": 76,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "restow": {
+         "n": 1,
+         "full": 0,
+         "any": 0,
+         "successes": 1,
+         "failures": 2,
+         "explained": 1,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "bump": {
+         "n": 2,
+         "full": 0,
+         "any": 0,
+         "successes": 2,
+         "failures": 1,
+         "explained": 0,
+         "invisible": 2,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "ease": {
+         "successes": 0,
+         "failures": 2,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "pull": {
+         "n": 2,
+         "full": 0,
+         "any": 2,
+         "successes": 2,
+         "failures": 0,
+         "explained": 2,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        }
+       },
+       "induction": {},
+       "counterexamples": {}
+      },
+      "counterexample_targeted": {
+       "prefix_run": "runs/v2_budget_curve/climbing_counterexample_targeted_b16",
+       "accepted_refinement_available": true,
+       "types_recovered": 3,
+       "attributes_recovered": 2,
+       "relations_recovered": 2,
+       "operators_recovered": 1,
+       "operators_observed": 5,
+       "learned_operators": 9,
+       "operator_names_recovered": [
+        "recolor"
+       ],
+       "operators_with_any_explanation": [
+        "recolor"
+       ],
+       "gtc": 1.0,
+       "rtc": 0.817,
+       "rtc_any": 0.841,
+       "registered_deltas": 100,
+       "registered_delta_precision": 0.69,
+       "spurious_registered_delta_rate": 0.31,
+       "mention_pair_precision": 0.794,
+       "mention_pair_recall": 0.553,
+       "duplicate_name_separation": null,
+       "cross_view_identity": 1.0,
+       "view_false_positive_rate": 0.268,
+       "abstraction_contradiction_rate": 0.0,
+       "comparable_abstraction_groups": 2,
+       "per_operator": {
+        "hang": {
+         "n": 3,
+         "full": 3,
+         "any": 3,
+         "successes": 3,
+         "failures": 37,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "recolor": {
+         "n": 74,
+         "full": 62,
+         "any": 62,
+         "successes": 74,
+         "failures": 0,
+         "explained": 74,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "restow": {
+         "n": 1,
+         "full": 0,
+         "any": 0,
+         "successes": 1,
+         "failures": 2,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "bump": {
+         "n": 2,
+         "full": 2,
+         "any": 2,
+         "successes": 2,
+         "failures": 1,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "ease": {
+         "successes": 0,
+         "failures": 2,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "pull": {
+         "n": 2,
+         "full": 0,
+         "any": 2,
+         "successes": 2,
+         "failures": 0,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        }
+       },
+       "induction": {},
+       "counterexamples": {}
+      }
+     }
+    }
+   ]
+  },
+  "observatory": {
+   "broad_run": "runs/oracle/grok_02_observatory",
+   "base_primitive_cost": 408,
+   "max_extra_primitive_budget": 9,
+   "points": [
+    {
+     "extra_primitives": 0,
+     "total_primitives": 408,
+     "variants": {
+      "ordinary_random": {
+       "prefix_run": "runs/oracle/grok_02_observatory",
+       "accepted_refinement_available": false,
+       "types_recovered": 3,
+       "attributes_recovered": 5,
+       "relations_recovered": 1,
+       "operators_recovered": 0,
+       "operators_observed": 5,
+       "learned_operators": 10,
+       "operator_names_recovered": [],
+       "operators_with_any_explanation": [
+        "book",
+        "detach"
+       ],
+       "gtc": 0.0,
+       "rtc": 0.0,
+       "rtc_any": 0.0,
+       "registered_deltas": 54,
+       "registered_delta_precision": 0.0,
+       "spurious_registered_delta_rate": 1.0,
+       "mention_pair_precision": 0.959,
+       "mention_pair_recall": 1.0,
+       "duplicate_name_separation": null,
+       "cross_view_identity": 1.0,
+       "view_false_positive_rate": 0.544,
+       "abstraction_contradiction_rate": 0.6,
+       "comparable_abstraction_groups": 5,
+       "per_operator": {
+        "book": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 6,
+         "explained": 2,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 6
+        },
+        "extend": {
+         "n": 12,
+         "full": 0,
+         "any": 0,
+         "successes": 12,
+         "failures": 1,
+         "explained": 0,
+         "invisible": 12,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "clip": {
+         "n": 8,
+         "full": 0,
+         "any": 0,
+         "successes": 8,
+         "failures": 3,
+         "explained": 0,
+         "invisible": 8,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "retarget": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 7,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "detach": {
+         "n": 8,
+         "full": 0,
+         "any": 0,
+         "successes": 8,
+         "failures": 0,
+         "explained": 1,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        }
+       },
+       "induction": {},
+       "counterexamples": {}
+      },
+      "random_action_reload": {
+       "prefix_run": "runs/oracle/grok_02_observatory",
+       "accepted_refinement_available": false,
+       "types_recovered": 3,
+       "attributes_recovered": 5,
+       "relations_recovered": 1,
+       "operators_recovered": 0,
+       "operators_observed": 5,
+       "learned_operators": 10,
+       "operator_names_recovered": [],
+       "operators_with_any_explanation": [
+        "book",
+        "detach"
+       ],
+       "gtc": 0.0,
+       "rtc": 0.0,
+       "rtc_any": 0.0,
+       "registered_deltas": 54,
+       "registered_delta_precision": 0.0,
+       "spurious_registered_delta_rate": 1.0,
+       "mention_pair_precision": 0.959,
+       "mention_pair_recall": 1.0,
+       "duplicate_name_separation": null,
+       "cross_view_identity": 1.0,
+       "view_false_positive_rate": 0.544,
+       "abstraction_contradiction_rate": 0.6,
+       "comparable_abstraction_groups": 5,
+       "per_operator": {
+        "book": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 6,
+         "explained": 2,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 6
+        },
+        "extend": {
+         "n": 12,
+         "full": 0,
+         "any": 0,
+         "successes": 12,
+         "failures": 1,
+         "explained": 0,
+         "invisible": 12,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "clip": {
+         "n": 8,
+         "full": 0,
+         "any": 0,
+         "successes": 8,
+         "failures": 3,
+         "explained": 0,
+         "invisible": 8,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "retarget": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 7,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "detach": {
+         "n": 8,
+         "full": 0,
+         "any": 0,
+         "successes": 8,
+         "failures": 0,
+         "explained": 1,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        }
+       },
+       "induction": {},
+       "counterexamples": {}
+      },
+      "counterexample_targeted": {
+       "prefix_run": "runs/oracle/grok_02_observatory",
+       "accepted_refinement_available": false,
+       "types_recovered": 3,
+       "attributes_recovered": 5,
+       "relations_recovered": 1,
+       "operators_recovered": 0,
+       "operators_observed": 5,
+       "learned_operators": 10,
+       "operator_names_recovered": [],
+       "operators_with_any_explanation": [
+        "book",
+        "detach"
+       ],
+       "gtc": 0.0,
+       "rtc": 0.0,
+       "rtc_any": 0.0,
+       "registered_deltas": 54,
+       "registered_delta_precision": 0.0,
+       "spurious_registered_delta_rate": 1.0,
+       "mention_pair_precision": 0.959,
+       "mention_pair_recall": 1.0,
+       "duplicate_name_separation": null,
+       "cross_view_identity": 1.0,
+       "view_false_positive_rate": 0.544,
+       "abstraction_contradiction_rate": 0.6,
+       "comparable_abstraction_groups": 5,
+       "per_operator": {
+        "book": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 6,
+         "explained": 2,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 6
+        },
+        "extend": {
+         "n": 12,
+         "full": 0,
+         "any": 0,
+         "successes": 12,
+         "failures": 1,
+         "explained": 0,
+         "invisible": 12,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "clip": {
+         "n": 8,
+         "full": 0,
+         "any": 0,
+         "successes": 8,
+         "failures": 3,
+         "explained": 0,
+         "invisible": 8,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "retarget": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 7,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "detach": {
+         "n": 8,
+         "full": 0,
+         "any": 0,
+         "successes": 8,
+         "failures": 0,
+         "explained": 1,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        }
+       },
+       "induction": {},
+       "counterexamples": {}
+      }
+     }
+    },
+    {
+     "extra_primitives": 3,
+     "total_primitives": 411,
+     "variants": {
+      "ordinary_random": {
+       "prefix_run": "runs/v2_budget_curve/observatory_ordinary_random_b3",
+       "accepted_refinement_available": false,
+       "types_recovered": 3,
+       "attributes_recovered": 5,
+       "relations_recovered": 1,
+       "operators_recovered": 0,
+       "operators_observed": 5,
+       "learned_operators": 10,
+       "operator_names_recovered": [],
+       "operators_with_any_explanation": [
+        "book",
+        "detach"
+       ],
+       "gtc": 0.0,
+       "rtc": 0.0,
+       "rtc_any": 0.0,
+       "registered_deltas": 54,
+       "registered_delta_precision": 0.0,
+       "spurious_registered_delta_rate": 1.0,
+       "mention_pair_precision": 0.958,
+       "mention_pair_recall": 1.0,
+       "duplicate_name_separation": 1.0,
+       "cross_view_identity": 1.0,
+       "view_false_positive_rate": 0.544,
+       "abstraction_contradiction_rate": 0.6,
+       "comparable_abstraction_groups": 5,
+       "per_operator": {
+        "book": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 6,
+         "explained": 2,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 6
+        },
+        "extend": {
+         "n": 12,
+         "full": 0,
+         "any": 0,
+         "successes": 12,
+         "failures": 1,
+         "explained": 0,
+         "invisible": 12,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "clip": {
+         "n": 8,
+         "full": 0,
+         "any": 0,
+         "successes": 8,
+         "failures": 3,
+         "explained": 0,
+         "invisible": 8,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "retarget": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 7,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "detach": {
+         "n": 8,
+         "full": 0,
+         "any": 0,
+         "successes": 8,
+         "failures": 0,
+         "explained": 1,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        }
+       },
+       "induction": {},
+       "counterexamples": {}
+      },
+      "random_action_reload": {
+       "prefix_run": "runs/v2_budget_curve/observatory_random_action_reload_b3",
+       "accepted_refinement_available": false,
+       "types_recovered": 3,
+       "attributes_recovered": 5,
+       "relations_recovered": 1,
+       "operators_recovered": 0,
+       "operators_observed": 5,
+       "learned_operators": 10,
+       "operator_names_recovered": [],
+       "operators_with_any_explanation": [
+        "book",
+        "detach"
+       ],
+       "gtc": 0.0,
+       "rtc": 0.0,
+       "rtc_any": 0.0,
+       "registered_deltas": 54,
+       "registered_delta_precision": 0.0,
+       "spurious_registered_delta_rate": 1.0,
+       "mention_pair_precision": 0.958,
+       "mention_pair_recall": 1.0,
+       "duplicate_name_separation": 1.0,
+       "cross_view_identity": 1.0,
+       "view_false_positive_rate": 0.544,
+       "abstraction_contradiction_rate": 0.6,
+       "comparable_abstraction_groups": 5,
+       "per_operator": {
+        "book": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 6,
+         "explained": 2,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 6
+        },
+        "extend": {
+         "n": 12,
+         "full": 0,
+         "any": 0,
+         "successes": 12,
+         "failures": 1,
+         "explained": 0,
+         "invisible": 12,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "clip": {
+         "n": 8,
+         "full": 0,
+         "any": 0,
+         "successes": 8,
+         "failures": 3,
+         "explained": 0,
+         "invisible": 8,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "retarget": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 7,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "detach": {
+         "n": 8,
+         "full": 0,
+         "any": 0,
+         "successes": 8,
+         "failures": 0,
+         "explained": 1,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        }
+       },
+       "induction": {},
+       "counterexamples": {}
+      },
+      "counterexample_targeted": {
+       "prefix_run": "runs/v2_budget_curve/observatory_counterexample_targeted_b3",
+       "accepted_refinement_available": false,
+       "types_recovered": 3,
+       "attributes_recovered": 5,
+       "relations_recovered": 1,
+       "operators_recovered": 0,
+       "operators_observed": 5,
+       "learned_operators": 10,
+       "operator_names_recovered": [],
+       "operators_with_any_explanation": [
+        "book",
+        "detach"
+       ],
+       "gtc": 0.0,
+       "rtc": 0.0,
+       "rtc_any": 0.0,
+       "registered_deltas": 54,
+       "registered_delta_precision": 0.0,
+       "spurious_registered_delta_rate": 1.0,
+       "mention_pair_precision": 0.959,
+       "mention_pair_recall": 1.0,
+       "duplicate_name_separation": null,
+       "cross_view_identity": 1.0,
+       "view_false_positive_rate": 0.544,
+       "abstraction_contradiction_rate": 0.6,
+       "comparable_abstraction_groups": 5,
+       "per_operator": {
+        "book": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 6,
+         "explained": 2,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 6
+        },
+        "extend": {
+         "n": 12,
+         "full": 0,
+         "any": 0,
+         "successes": 12,
+         "failures": 1,
+         "explained": 0,
+         "invisible": 12,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "clip": {
+         "n": 8,
+         "full": 0,
+         "any": 0,
+         "successes": 8,
+         "failures": 3,
+         "explained": 0,
+         "invisible": 8,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "retarget": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 7,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "detach": {
+         "n": 8,
+         "full": 0,
+         "any": 0,
+         "successes": 8,
+         "failures": 0,
+         "explained": 1,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        }
+       },
+       "induction": {},
+       "counterexamples": {}
+      }
+     }
+    },
+    {
+     "extra_primitives": 6,
+     "total_primitives": 414,
+     "variants": {
+      "ordinary_random": {
+       "prefix_run": "runs/v2_budget_curve/observatory_ordinary_random_b6",
+       "accepted_refinement_available": false,
+       "types_recovered": 3,
+       "attributes_recovered": 5,
+       "relations_recovered": 1,
+       "operators_recovered": 0,
+       "operators_observed": 5,
+       "learned_operators": 10,
+       "operator_names_recovered": [],
+       "operators_with_any_explanation": [
+        "book",
+        "detach"
+       ],
+       "gtc": 0.0,
+       "rtc": 0.0,
+       "rtc_any": 0.0,
+       "registered_deltas": 54,
+       "registered_delta_precision": 0.0,
+       "spurious_registered_delta_rate": 1.0,
+       "mention_pair_precision": 0.958,
+       "mention_pair_recall": 1.0,
+       "duplicate_name_separation": 1.0,
+       "cross_view_identity": 1.0,
+       "view_false_positive_rate": 0.544,
+       "abstraction_contradiction_rate": 0.6,
+       "comparable_abstraction_groups": 5,
+       "per_operator": {
+        "book": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 6,
+         "explained": 2,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 6
+        },
+        "extend": {
+         "n": 12,
+         "full": 0,
+         "any": 0,
+         "successes": 12,
+         "failures": 1,
+         "explained": 0,
+         "invisible": 12,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "clip": {
+         "n": 8,
+         "full": 0,
+         "any": 0,
+         "successes": 8,
+         "failures": 3,
+         "explained": 0,
+         "invisible": 8,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "retarget": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 7,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "detach": {
+         "n": 8,
+         "full": 0,
+         "any": 0,
+         "successes": 8,
+         "failures": 0,
+         "explained": 1,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        }
+       },
+       "induction": {},
+       "counterexamples": {}
+      },
+      "random_action_reload": {
+       "prefix_run": "runs/v2_budget_curve/observatory_random_action_reload_b6",
+       "accepted_refinement_available": false,
+       "types_recovered": 3,
+       "attributes_recovered": 5,
+       "relations_recovered": 1,
+       "operators_recovered": 0,
+       "operators_observed": 5,
+       "learned_operators": 10,
+       "operator_names_recovered": [],
+       "operators_with_any_explanation": [
+        "book",
+        "detach"
+       ],
+       "gtc": 0.0,
+       "rtc": 0.0,
+       "rtc_any": 0.0,
+       "registered_deltas": 54,
+       "registered_delta_precision": 0.0,
+       "spurious_registered_delta_rate": 1.0,
+       "mention_pair_precision": 0.958,
+       "mention_pair_recall": 1.0,
+       "duplicate_name_separation": 1.0,
+       "cross_view_identity": 1.0,
+       "view_false_positive_rate": 0.544,
+       "abstraction_contradiction_rate": 0.6,
+       "comparable_abstraction_groups": 5,
+       "per_operator": {
+        "book": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 6,
+         "explained": 2,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 6
+        },
+        "extend": {
+         "n": 12,
+         "full": 0,
+         "any": 0,
+         "successes": 12,
+         "failures": 1,
+         "explained": 0,
+         "invisible": 12,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "clip": {
+         "n": 8,
+         "full": 0,
+         "any": 0,
+         "successes": 8,
+         "failures": 3,
+         "explained": 0,
+         "invisible": 8,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "retarget": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 7,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "detach": {
+         "n": 8,
+         "full": 0,
+         "any": 0,
+         "successes": 8,
+         "failures": 0,
+         "explained": 1,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        }
+       },
+       "induction": {},
+       "counterexamples": {}
+      },
+      "counterexample_targeted": {
+       "prefix_run": "runs/v2_budget_curve/observatory_counterexample_targeted_b6",
+       "accepted_refinement_available": false,
+       "types_recovered": 3,
+       "attributes_recovered": 5,
+       "relations_recovered": 1,
+       "operators_recovered": 0,
+       "operators_observed": 5,
+       "learned_operators": 10,
+       "operator_names_recovered": [],
+       "operators_with_any_explanation": [
+        "book",
+        "detach"
+       ],
+       "gtc": 0.0,
+       "rtc": 0.0,
+       "rtc_any": 0.0,
+       "registered_deltas": 54,
+       "registered_delta_precision": 0.0,
+       "spurious_registered_delta_rate": 1.0,
+       "mention_pair_precision": 0.959,
+       "mention_pair_recall": 1.0,
+       "duplicate_name_separation": null,
+       "cross_view_identity": 1.0,
+       "view_false_positive_rate": 0.544,
+       "abstraction_contradiction_rate": 0.6,
+       "comparable_abstraction_groups": 5,
+       "per_operator": {
+        "book": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 6,
+         "explained": 2,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 6
+        },
+        "extend": {
+         "n": 12,
+         "full": 0,
+         "any": 0,
+         "successes": 12,
+         "failures": 1,
+         "explained": 0,
+         "invisible": 12,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "clip": {
+         "n": 8,
+         "full": 0,
+         "any": 0,
+         "successes": 8,
+         "failures": 3,
+         "explained": 0,
+         "invisible": 8,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "retarget": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 7,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "detach": {
+         "n": 8,
+         "full": 0,
+         "any": 0,
+         "successes": 8,
+         "failures": 0,
+         "explained": 1,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        }
+       },
+       "induction": {},
+       "counterexamples": {}
+      }
+     }
+    },
+    {
+     "extra_primitives": 9,
+     "total_primitives": 417,
+     "variants": {
+      "ordinary_random": {
+       "prefix_run": "runs/v2_budget_curve/observatory_ordinary_random_b9",
+       "accepted_refinement_available": false,
+       "types_recovered": 3,
+       "attributes_recovered": 5,
+       "relations_recovered": 1,
+       "operators_recovered": 0,
+       "operators_observed": 5,
+       "learned_operators": 10,
+       "operator_names_recovered": [],
+       "operators_with_any_explanation": [
+        "book",
+        "detach"
+       ],
+       "gtc": 0.0,
+       "rtc": 0.0,
+       "rtc_any": 0.0,
+       "registered_deltas": 55,
+       "registered_delta_precision": 0.0,
+       "spurious_registered_delta_rate": 1.0,
+       "mention_pair_precision": 0.958,
+       "mention_pair_recall": 1.0,
+       "duplicate_name_separation": 1.0,
+       "cross_view_identity": 1.0,
+       "view_false_positive_rate": 0.536,
+       "abstraction_contradiction_rate": 0.6,
+       "comparable_abstraction_groups": 5,
+       "per_operator": {
+        "book": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 6,
+         "explained": 2,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 6
+        },
+        "extend": {
+         "n": 13,
+         "full": 0,
+         "any": 0,
+         "successes": 13,
+         "failures": 1,
+         "explained": 0,
+         "invisible": 13,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "clip": {
+         "n": 8,
+         "full": 0,
+         "any": 0,
+         "successes": 8,
+         "failures": 3,
+         "explained": 0,
+         "invisible": 8,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "retarget": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 7,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "detach": {
+         "n": 8,
+         "full": 0,
+         "any": 0,
+         "successes": 8,
+         "failures": 0,
+         "explained": 1,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        }
+       },
+       "induction": {},
+       "counterexamples": {}
+      },
+      "random_action_reload": {
+       "prefix_run": "runs/v2_budget_curve/observatory_random_action_reload_b9",
+       "accepted_refinement_available": false,
+       "types_recovered": 3,
+       "attributes_recovered": 5,
+       "relations_recovered": 1,
+       "operators_recovered": 0,
+       "operators_observed": 5,
+       "learned_operators": 10,
+       "operator_names_recovered": [],
+       "operators_with_any_explanation": [
+        "book",
+        "detach"
+       ],
+       "gtc": 0.0,
+       "rtc": 0.0,
+       "rtc_any": 0.0,
+       "registered_deltas": 54,
+       "registered_delta_precision": 0.0,
+       "spurious_registered_delta_rate": 1.0,
+       "mention_pair_precision": 0.958,
+       "mention_pair_recall": 1.0,
+       "duplicate_name_separation": 1.0,
+       "cross_view_identity": 1.0,
+       "view_false_positive_rate": 0.544,
+       "abstraction_contradiction_rate": 0.6,
+       "comparable_abstraction_groups": 5,
+       "per_operator": {
+        "book": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 6,
+         "explained": 2,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 6
+        },
+        "extend": {
+         "n": 12,
+         "full": 0,
+         "any": 0,
+         "successes": 12,
+         "failures": 1,
+         "explained": 0,
+         "invisible": 12,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "clip": {
+         "n": 8,
+         "full": 0,
+         "any": 0,
+         "successes": 8,
+         "failures": 3,
+         "explained": 0,
+         "invisible": 8,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "retarget": {
+         "n": 3,
+         "full": 0,
+         "any": 0,
+         "successes": 3,
+         "failures": 7,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "detach": {
+         "n": 8,
+         "full": 0,
+         "any": 0,
+         "successes": 8,
+         "failures": 0,
+         "explained": 1,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        }
+       },
+       "induction": {},
+       "counterexamples": {}
+      },
+      "counterexample_targeted": {
+       "prefix_run": "runs/v2_budget_curve/observatory_counterexample_targeted_b9",
+       "accepted_refinement_available": true,
+       "types_recovered": 4,
+       "attributes_recovered": 6,
+       "relations_recovered": 3,
+       "operators_recovered": 1,
+       "operators_observed": 5,
+       "learned_operators": 5,
+       "operator_names_recovered": [
+        "extend"
+       ],
+       "operators_with_any_explanation": [
+        "clip",
+        "detach",
+        "extend"
+       ],
+       "gtc": 1.0,
+       "rtc": 0.676,
+       "rtc_any": 0.676,
+       "registered_deltas": 34,
+       "registered_delta_precision": 0.676,
+       "spurious_registered_delta_rate": 0.324,
+       "mention_pair_precision": 0.988,
+       "mention_pair_recall": 0.979,
+       "duplicate_name_separation": null,
+       "cross_view_identity": 1.0,
+       "view_false_positive_rate": 0.314,
+       "abstraction_contradiction_rate": null,
+       "comparable_abstraction_groups": 0,
+       "per_operator": {
+        "book": {
+         "n": 3,
+         "full": 2,
+         "any": 2,
+         "successes": 3,
+         "failures": 6,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "extend": {
+         "n": 12,
+         "full": 12,
+         "any": 12,
+         "successes": 12,
+         "failures": 1,
+         "explained": 10,
+         "invisible": 0,
+         "rejected": 1,
+         "unbound_failures": 0
+        },
+        "clip": {
+         "n": 8,
+         "full": 8,
+         "any": 8,
+         "successes": 8,
+         "failures": 3,
+         "explained": 5,
+         "invisible": 0,
+         "rejected": 3,
+         "unbound_failures": 0
+        },
+        "retarget": {
+         "n": 3,
+         "full": 1,
+         "any": 1,
+         "successes": 3,
+         "failures": 7,
+         "explained": 0,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        },
+        "detach": {
+         "n": 8,
+         "full": 0,
+         "any": 0,
+         "successes": 8,
+         "failures": 0,
+         "explained": 2,
+         "invisible": 0,
+         "rejected": 0,
+         "unbound_failures": 0
+        }
+       },
+       "induction": {},
+       "counterexamples": {}
+      }
+     }
+    }
+   ]
+  }
+ }
+}

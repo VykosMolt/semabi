@@ -60,3 +60,11 @@ C = 1.0 everywhere.
   the exact retained schema and corrected +1 pairing. All eight headline metric deltas are
   zero. Five apps have no target/action divergence; airport, Claude pharmacy, and datacenter
   have execution divergences and are explicitly not clean no-effect evidence.
+- 2026-08-23 f: replaced the endpoint-only active table with custody-safe retained-trace
+  prefix curves. Each prefix contains only referenced observations; probe/refinement files
+  appear only after the complete diagnostic sequence. Climbing: all variants RTC .00 at
+  +0/+4/+8/+12; at +16 targeted=.817 while ordinary/random-reload remain .00. Observatory:
+  all .00 at +0/+3/+6; at +9 targeted=.676 while controls remain .00. These are post-hoc
+  single-seed dev curves; LLM conditions are `NOT_RUN` because neither loop used an LLM
+  proposal. Also fixed evaluator latent-attribute lookup for renamed/copy run directories
+  by stable hidden-domain name; regenerated V2 and active artifacts retain headline values.

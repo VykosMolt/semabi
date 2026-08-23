@@ -227,6 +227,12 @@ reported number, but both are recorded here with the replay that shows it.
    re-run on fresh traces with the corrected browser (the totals
    0/8/18/19/30/32/36 are from those traces). The frozen V0/V1 fresh results remain
    historical results and were not rewritten.
+3. **Renamed-run latent declarations.** Development refinement/control traces are copied
+   into directories whose names are not the canonical app ids. The evaluator previously
+   selected declared never-rendered attributes by directory name, so copied runs could
+   fail to exclude them. It now resolves the declaration by the stable hidden-domain name
+   when the canonical directory id is absent. Regenerating the V2 ablation and active
+   artifacts changes no reported RTC, precision, or operator headline values.
 
 ### Prospective corrected-browser V1 audit (2026-08-23)
 

@@ -208,10 +208,12 @@ implemented or claimed.
 2. Transfer the same decision/evidence architecture without application branches.
    **Partial: observatory coverage rises substantially; datacenter association improves
    but coverage remains zero; pharmacy-c remains partial.**
-3. Run matched endpoint controls, then full interaction-budget curves for coverage-only,
+3. Run matched endpoint controls, then interaction-budget curves for coverage-only,
    random diagnostics, targeted diagnostics, LLM proposals without verification, and LLM
-   proposals with executed verification. **Endpoint controls complete on climbing and
-   observatory; curves and LLM ablations pending.**
+   proposals with executed verification. **Custody-safe single-trace prefix curves are
+   complete on climbing and observatory; multi-seed online curves and LLM ablations are
+   pending. The LLM conditions are `NOT_RUN` because neither demonstrated loop used an
+   LLM proposal.**
 4. Localize downstream induction wherever representation coverage rises without operator
    recovery. **Complete for current traces; numeric/conditional effects, spurious effects,
    and sparse support are the residuals.**
@@ -221,7 +223,7 @@ implemented or claimed.
 ## Freeze condition
 
 V2 is freeze-ready only after the unresolved development counterexamples have either a
-generic supported refinement or an explicit retained failure; fair budget/LLM ablations
+generic supported refinement or an explicit retained failure; multi-seed budget/LLM ablations
 are complete; the corrected-browser V1 comparison is completed or its external-authority
 blocker is formally retained; tests and compiler/evaluator boundaries pass; and design,
 status, and machine artifacts agree. Development gains must remain separate from any
