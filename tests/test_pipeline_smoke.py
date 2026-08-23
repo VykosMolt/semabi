@@ -1,5 +1,4 @@
 """End-to-end smoke test on the kanban UI (requires Playwright/Chromium)."""
-import random
 import tempfile
 from pathlib import Path
 
@@ -17,10 +16,11 @@ from semabi.eval.recorder import HiddenRecorder, load_hidden
 
 @pytest.mark.slow
 def test_kanban_random_phase_recovers_types():
-    port = 8700 + random.randrange(200)
+    # an ephemeral port: a fixed range collides with a leftover server or with the
+    # instrumented gauntlet-v2 apps on 8800-8807 and fails the run for no reason
     world = World("standard", 0)
-    srv = serve(world, port)
-    base = f"http://127.0.0.1:{port}"
+    srv = serve(world, 0)
+    base = f"http://127.0.0.1:{srv.server_address[1]}"
     with tempfile.TemporaryDirectory() as d:
         run = Path(d)
         try:
