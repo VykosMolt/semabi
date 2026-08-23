@@ -113,7 +113,7 @@ def test_run_local_relation_slot_names_are_mapped_by_target_type_not_by_index():
 def test_navigation_provenance_is_not_semantics_but_value_supplying_actions_are():
     extend = ActT("click", Locator("button:Extend", 3), "?o0")
     assert V.align_actions((extend,), (ActT("click", Locator("button:Pointing")), extend)) == (
-        {3: 3}, {"?o0": "?o0"}, ["click(button:Pointing)"])
+        {3: 3}, {"?o0": "?o0"}, {"button:Extend": "button:Extend"}, ["click(button:Pointing)"])
     assert V.align_actions((extend,), (ActT("type", Locator("textbox#0"), None, "?s0"), extend)) is None
 
 
@@ -483,3 +483,90 @@ def test_a_predicted_removal_is_not_confirmed_by_a_view_without_the_type():
                              effs=[EffT("remove", 3, "?o0")])
     assert rendered["outcome"] == "EXACT"
     assert rendered["confirmed"] == ["delete ?o0"]
+
+
+class _Families:
+    def __init__(self, families):
+        self.families = families
+
+
+def _family(role, label, path, templates):
+    from semabi.compiler.v2.controls import ControlFamily
+    return ControlFamily("x", role, label, path, frozenset(templates))
+
+
+def test_a_control_family_the_held_out_run_never_rendered_is_not_comparable():
+    """Cross-run action alignment must fail closed: an unmatched family makes the
+    occurrence untested, never contradicted."""
+    src_types = {3: _type(3, ["attr:duration"])}
+    tst_types = {4: _type(4, ["attr:duration"])}
+    prediction = _schema([ActT("click", Locator("button#a", 3), "?o0")],
+                         [EffT("set", 3, "?o0", "attr:duration", None, "4")],
+                         param_types={"?o0": 3}, binding={"?o0": (3, "rec")})
+    before = _state(_obj(4, "rec", {"attr:duration": "1"}, node=9))
+    after = _state(_obj(4, "rec", {"attr:duration": "2"}, node=9))
+    occurrence = _schema([ActT("click", Locator("button#b", 4), "?o0")], [],
+                         param_types={"?o0": 4}, binding={"?o0": (4, "rec")},
+                         before=before, after=after)
+
+    assert V.compare(prediction, occurrence, src_types, tst_types)["outcome"] == "NOT_COMPARABLE"
+
+    # the same two families align once their descriptors and templates correspond
+    compatible = V.family_compatibility(
+        _Families({"button#a": _family("button", "", "cell/button", ["card-plain"])}),
+        _Families({"button#b": _family("button", "", "cell/button", ["card-plain", "card-lead"])}),
+    )
+    row = V.compare(prediction, occurrence, src_types, tst_types, compatible)
+    assert row["outcome"] == "CONTRADICTED"
+    assert row["control_family_mapping"] == {"button#a": "button#b"}
+
+
+def test_families_with_the_same_descriptor_but_no_shared_template_do_not_align():
+    src_types = {3: _type(3, ["attr:duration"])}
+    tst_types = {4: _type(4, ["attr:duration"])}
+    prediction = _schema([ActT("click", Locator("button#a", 3), "?o0")],
+                         [EffT("set", 3, "?o0", "attr:duration", None, "2")],
+                         param_types={"?o0": 3}, binding={"?o0": (3, "rec")})
+    before = _state(_obj(4, "rec", {"attr:duration": "1"}, node=9))
+    after = _state(_obj(4, "rec", {"attr:duration": "2"}, node=9))
+    occurrence = _schema([ActT("click", Locator("button#b", 4), "?o0")], [],
+                         param_types={"?o0": 4}, binding={"?o0": (4, "rec")},
+                         before=before, after=after)
+    compatible = V.family_compatibility(
+        _Families({"button#a": _family("button", "", "cell/button", ["card-plain"])}),
+        _Families({"button#b": _family("button", "", "cell/button", ["other-card"])}),
+    )
+
+    assert V.compare(prediction, occurrence, src_types, tst_types, compatible)["outcome"] == "NOT_COMPARABLE"
+
+
+def test_one_prediction_family_cannot_align_with_two_held_out_families_at_once():
+    fam = _family("combobox", "", "text/combobox", ["card"])
+    compatible = V.family_compatibility(_Families({"c#src": fam}),
+                                        _Families({"c#a": fam, "c#b": fam}))
+    pred = (ActT("select", Locator("c#src", 0), "?o0", "?s0"),
+            ActT("select", Locator("c#src", 0), "?o1", "?s1"))
+    occ = (ActT("select", Locator("c#a", 0), "?o0", "?s0"),
+           ActT("select", Locator("c#b", 0), "?o1", "?s1"))
+
+    assert V.align_actions(pred, occ, compatible=compatible) is None
+    same = (ActT("select", Locator("c#a", 0), "?o0", "?s0"),
+            ActT("select", Locator("c#a", 0), "?o1", "?s1"))
+    assert V.align_actions(pred, same, compatible=compatible) is not None
+
+
+def test_a_universal_effect_never_seen_with_two_members_is_not_a_prediction():
+    """The climbing forall: every observed wall had one route, so `all routes change` and
+    `that route changes` are the same claim on the source evidence."""
+    anchor = _obj(0, "Cave")
+    one_member = _state(anchor, _obj(2, "R1", {"attr:attached": "pink"}, {"rel:0": (0, "Cave")}))
+    two_members = _state(anchor, _obj(2, "R1", {"attr:attached": "pink"}, {"rel:0": (0, "Cave")}),
+                         _obj(2, "R2", {"attr:attached": "white"}, {"rel:0": (0, "Cave")}))
+    effect = EffT("forall_set", 2, "?o0", "attr:attached", None, "?s0", anchor_rel="rel:0")
+
+    def _op(states):
+        return SimpleNamespace(effs=(effect,), positives=[
+            SimpleNamespace(binding={"?o0": (0, "Cave")}, before=st) for st in states])
+
+    assert V.unsupported_quantifiers(None, _op([one_member, one_member])) == [str(effect)]
+    assert V.unsupported_quantifiers(None, _op([one_member, two_members])) == []

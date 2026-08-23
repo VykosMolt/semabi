@@ -11,21 +11,21 @@
     "status": "MISPREDICTED",
     "min_support": 2,
     "source_candidate_schemas": 9,
-    "refinement_introduced_predictions": 6,
-    "untestable_underdetermined": 3,
+    "refinement_introduced_predictions": 5,
+    "untestable_underdetermined": 4,
     "baseline_shared": 0,
     "held_out_compile_changed_by_decisions": true,
     "held_out_compile_baseline": {
      "types": 3,
      "operators": 29,
      "transitions": 96,
-     "digest": "c9a4796090259033"
+     "digest": "60d6e6d96f6009dc"
     },
     "held_out_compile_candidate": {
      "types": 3,
-     "operators": 33,
+     "operators": 32,
      "transitions": 121,
-     "digest": "aa2d2e8b793f6f0d"
+     "digest": "a88d3d12c964e829"
     },
     "decision_transfer": {
      "ref-a4fd4824b37a": {
@@ -43,38 +43,23 @@
     "predictions": [
      {
       "effective_actions": [
-       "select(combobox#0@T0[?o0], ?s0)"
-      ],
-      "effects": [
-       "forall x:T2 with rel:0(x)==?o0: attr:attached:group/combobox#0(x) := '?s0'"
-      ],
-      "support": 45,
-      "outcome_counts": {
-       "EXACT": 18,
-       "NOT_COMPARABLE": 512,
-       "UNOBSERVED_OUTCOME": 2,
-       "PREDICTED_WITH_UNOBSERVED_EXTRAS": 1,
-       "CONTRADICTED": 8
-      },
-      "comparable_occurrences": 29
-     },
-     {
-      "effective_actions": [
-       "select(combobox#1@T0[?o0], ?s0)"
+       "select(combobox#group/combobox@T0[?o0], ?s0)"
       ],
       "effects": [
        "attr:group/combobox#0@7(?o0) := '?s0'"
       ],
       "support": 12,
       "outcome_counts": {
-       "NOT_COMPARABLE": 539,
+       "UNOBSERVED_OUTCOME": 19,
+       "NOT_COMPARABLE": 517,
+       "CONTRADICTED": 3,
        "EXACT": 2
       },
-      "comparable_occurrences": 2
+      "comparable_occurrences": 24
      },
      {
       "effective_actions": [
-       "click(button#0@T2[?o0])"
+       "click(button#button@bb8f76@T2[?o0])"
       ],
       "effects": [
        "rel:0(?o1) := 'T0:Cave'"
@@ -87,7 +72,7 @@
      },
      {
       "effective_actions": [
-       "click(button#0@T2[?o0])"
+       "click(button#button@bb8f76@T2[?o0])"
       ],
       "effects": [
        "rel:0(?o1) := 'T0:Island'"
@@ -100,7 +85,7 @@
      },
      {
       "effective_actions": [
-       "click(button#0@T2[?o0])"
+       "click(button#button@bb8f76@T2[?o0])"
       ],
       "effects": [
        "rel:0(?o1) := 'T0:Moon'"
@@ -113,7 +98,7 @@
      },
      {
       "effective_actions": [
-       "click(button#0@T2[?o0])"
+       "click(button#button@bb8f76@T2[?o0])"
       ],
       "effects": [
        "?new0 := new T1(id=R2, attr:cell#0=None, attr:cell#0@2=None) rel:0->T0:Moon"
@@ -130,21 +115,21 @@
     "status": "MISPREDICTED",
     "min_support": 1,
     "source_candidate_schemas": 25,
-    "refinement_introduced_predictions": 20,
-    "untestable_underdetermined": 5,
+    "refinement_introduced_predictions": 17,
+    "untestable_underdetermined": 8,
     "baseline_shared": 0,
     "held_out_compile_changed_by_decisions": true,
     "held_out_compile_baseline": {
      "types": 3,
      "operators": 29,
      "transitions": 96,
-     "digest": "c9a4796090259033"
+     "digest": "60d6e6d96f6009dc"
     },
     "held_out_compile_candidate": {
      "types": 3,
-     "operators": 33,
+     "operators": 32,
      "transitions": 121,
-     "digest": "aa2d2e8b793f6f0d"
+     "digest": "a88d3d12c964e829"
     },
     "decision_transfer": {
      "ref-a4fd4824b37a": {
@@ -162,38 +147,23 @@
     "predictions": [
      {
       "effective_actions": [
-       "select(combobox#0@T0[?o0], ?s0)"
-      ],
-      "effects": [
-       "forall x:T2 with rel:0(x)==?o0: attr:attached:group/combobox#0(x) := '?s0'"
-      ],
-      "support": 45,
-      "outcome_counts": {
-       "EXACT": 18,
-       "NOT_COMPARABLE": 512,
-       "UNOBSERVED_OUTCOME": 2,
-       "PREDICTED_WITH_UNOBSERVED_EXTRAS": 1,
-       "CONTRADICTED": 8
-      },
-      "comparable_occurrences": 29
-     },
-     {
-      "effective_actions": [
-       "select(combobox#1@T0[?o0], ?s0)"
+       "select(combobox#group/combobox@T0[?o0], ?s0)"
       ],
       "effects": [
        "attr:group/combobox#0@7(?o0) := '?s0'"
       ],
       "support": 12,
       "outcome_counts": {
-       "NOT_COMPARABLE": 539,
+       "UNOBSERVED_OUTCOME": 19,
+       "NOT_COMPARABLE": 517,
+       "CONTRADICTED": 3,
        "EXACT": 2
       },
-      "comparable_occurrences": 2
+      "comparable_occurrences": 24
      },
      {
       "effective_actions": [
-       "click(button#0@T2[?o0])"
+       "click(button#button@bb8f76@T2[?o0])"
       ],
       "effects": [
        "rel:0(?o1) := 'T0:Cave'"
@@ -206,7 +176,7 @@
      },
      {
       "effective_actions": [
-       "click(button#0@T2[?o0])"
+       "click(button#button@bb8f76@T2[?o0])"
       ],
       "effects": [
        "rel:0(?o1) := 'T0:Island'"
@@ -219,7 +189,7 @@
      },
      {
       "effective_actions": [
-       "click(button#0@T2[?o0])"
+       "click(button#button@bb8f76@T2[?o0])"
       ],
       "effects": [
        "rel:0(?o1) := 'T0:Moon'"
@@ -232,7 +202,7 @@
      },
      {
       "effective_actions": [
-       "click(button#0@T2[?o0])"
+       "click(button#button@bb8f76@T2[?o0])"
       ],
       "effects": [
        "?new0 := new T1(id=R2, attr:cell#0=None, attr:cell#0@2=None) rel:0->T0:Moon"
@@ -259,7 +229,7 @@
      },
      {
       "effective_actions": [
-       "click(button#0@T0[?o0])"
+       "click(button#button@9f41fc@T0[?o0])"
       ],
       "effects": [
        "?new0 := new T2(id=T0:Cave|T1:R3, attr:attached:group/combobox#0=pink) rel:0->?o0 rel:1->T1:R3",
@@ -273,7 +243,7 @@
      },
      {
       "effective_actions": [
-       "click(button#0@T2[?o0])"
+       "click(button#button@bb8f76@T2[?o0])"
       ],
       "effects": [
        "?new0 := new T1(id=R1, attr:cell#0=None, attr:cell#0@2=None) rel:0->T0:Island"
@@ -290,22 +260,6 @@
       ],
       "effects": [
        "?new0 := new T1(id=R3, attr:cell#0=Overhang, attr:cell#0@2=2)"
-      ],
-      "support": 1,
-      "outcome_counts": {
-       "NOT_COMPARABLE": 541
-      },
-      "comparable_occurrences": 0
-     },
-     {
-      "effective_actions": [
-       "select(combobox#0@T0[?o0], ?s0)"
-      ],
-      "effects": [
-       "?new0 := new T0(id=Moon, attr:group/combobox#0@7=white, attr:of#1=2, attr:of#2=2)",
-       "?new1 := new T2(id=T0:Moon|T1:R1, attr:attached:group/combobox#0=white) rel:0->?new0 rel:1->T1:R1",
-       "?new2 := new T2(id=T0:Moon|T1:R2, attr:attached:group/combobox#0=None) rel:0->?new0 rel:1->T1:R2",
-       "forall x:T2 with rel:0(x)==?o0: attr:attached:group/combobox#0(x) := '?s0'"
       ],
       "support": 1,
       "outcome_counts": {
@@ -357,7 +311,7 @@
      },
      {
       "effective_actions": [
-       "click(button#0@T0[?o0])"
+       "click(button#button@9f41fc@T0[?o0])"
       ],
       "effects": [
        "?new0 := new T2(id=T0:Island|T1:R2, attr:attached:group/combobox#0=None) rel:0->?o0 rel:1->T1:R2",
@@ -371,7 +325,7 @@
      },
      {
       "effective_actions": [
-       "click(button#0@T0[?o0])"
+       "click(button#button@9f41fc@T0[?o0])"
       ],
       "effects": [
        "?new0 := new T2(id=T0:Cave|T1:R2, attr:attached:group/combobox#0=pink) rel:0->?o0 rel:1->T1:R2",
@@ -390,22 +344,6 @@
       "effects": [
        "?new0 := new T1(id=R1, attr:cell#0=Arete, attr:cell#0@2=4)",
        "?new1 := new T1(id=R3, attr:cell#0=Overhang, attr:cell#0@2=2)"
-      ],
-      "support": 1,
-      "outcome_counts": {
-       "NOT_COMPARABLE": 541
-      },
-      "comparable_occurrences": 0
-     },
-     {
-      "effective_actions": [
-       "select(combobox#0@T0[?o0], ?s0)"
-      ],
-      "effects": [
-       "?new0 := new T0(id=Island, attr:group/combobox#0@7=white, attr:of#1=2, attr:of#2=2)",
-       "?new1 := new T2(id=T0:Island|T1:R1, attr:attached:group/combobox#0=black) rel:0->?new0 rel:1->T1:R1",
-       "?new2 := new T2(id=T0:Island|T1:R2, attr:attached:group/combobox#0=None) rel:0->?new0 rel:1->T1:R2",
-       "forall x:T2 with rel:0(x)==?o0: attr:attached:group/combobox#0(x) := '?s0'"
       ],
       "support": 1,
       "outcome_counts": {
@@ -459,13 +397,13 @@
      "types": 4,
      "operators": 33,
      "transitions": 160,
-     "digest": "e290397c05c66b12"
+     "digest": "fa3eb5d6b49f6ed1"
     },
     "held_out_compile_candidate": {
      "types": 5,
      "operators": 27,
      "transitions": 89,
-     "digest": "8119ea2be1347655"
+     "digest": "9269d4479b4a185c"
     },
     "decision_transfer": {
      "ref-080835c578e1": {
@@ -541,13 +479,13 @@
      "types": 4,
      "operators": 33,
      "transitions": 160,
-     "digest": "e290397c05c66b12"
+     "digest": "fa3eb5d6b49f6ed1"
     },
     "held_out_compile_candidate": {
      "types": 5,
      "operators": 27,
      "transitions": 89,
-     "digest": "8119ea2be1347655"
+     "digest": "9269d4479b4a185c"
     },
     "decision_transfer": {
      "ref-080835c578e1": {
@@ -781,13 +719,13 @@
      "types": 4,
      "operators": 4,
      "transitions": 4,
-     "digest": "5a9d36cae9500ffe"
+     "digest": "3b12ac67a16895cb"
     },
     "held_out_compile_candidate": {
      "types": 4,
      "operators": 4,
      "transitions": 4,
-     "digest": "5a9d36cae9500ffe"
+     "digest": "3b12ac67a16895cb"
     },
     "decision_transfer": {
      "ref-2e782cb7889a": {
@@ -819,13 +757,13 @@
      "types": 4,
      "operators": 4,
      "transitions": 4,
-     "digest": "5a9d36cae9500ffe"
+     "digest": "3b12ac67a16895cb"
     },
     "held_out_compile_candidate": {
      "types": 4,
      "operators": 4,
      "transitions": 4,
-     "digest": "5a9d36cae9500ffe"
+     "digest": "3b12ac67a16895cb"
     },
     "decision_transfer": {
      "ref-2e782cb7889a": {
@@ -846,7 +784,7 @@
     "predictions": [
      {
       "effective_actions": [
-       "click(button#2@T4[?o0])",
+       "click(button#button@T4[?o0])",
        "click(button:Confirm)"
       ],
       "effects": [

@@ -120,6 +120,7 @@ class Schema:
     name: str = ""
     affected: set = field(default_factory=set)   # object ids changed by the positives (source namespace)
     core: frozenset = frozenset()                # positions in `acts` that are the state-changing step
+    unsupported_quantifiers: list[str] = field(default_factory=list)
 
     def describe(self) -> dict[str, Any]:
         return {
@@ -261,6 +262,38 @@ def _positions(kept: set[int], core: set[int]) -> frozenset:
     return frozenset(order.index(i) for i in core if i in kept)
 
 
+def unsupported_quantifiers(inducer, op) -> list[str]:
+    """Universal effects the source evidence could never have falsified.
+
+    `forall x in R(anchor): effect(x)` is inferred because every observed member changed.
+    If no positive transition ever contained two eligible members, the universal claim is
+    observationally identical to a singular effect on the one member that was there: the
+    evidence supports the effect, not the quantifier.  Such a schema is reported and is
+    not a prediction, in either direction, until a discriminating multi-member state is
+    observed.  The rule is stated over the source evidence alone and never consults the
+    held-out trace."""
+    out = []
+    for e in op.effs:
+        if not e.kind.startswith("forall_"):
+            continue
+        best = 0
+        for tr in op.positives:
+            anchor = tr.binding.get(e.obj)
+            before = getattr(tr, "before", None)
+            if anchor is None or before is None:
+                continue
+            rel = e.anchor_rel
+            members = [
+                o for o in before.objs.values()
+                if o.tid == e.tid
+                and ((o.parent == anchor) if rel in (None, "parent") else (o.refs.get(rel) == anchor))
+            ]
+            best = max(best, len(members))
+        if best < 2:
+            out.append(str(e))
+    return out
+
+
 def operator_schema(inducer, op) -> Schema:
     idx: set[int] = set()
     core: set[int] = set()
@@ -280,6 +313,7 @@ def operator_schema(inducer, op) -> Schema:
         op.support, name=op.name,
     )
     schema.core = _positions(idx, core)
+    schema.unsupported_quantifiers = unsupported_quantifiers(inducer, op)
     for tr in op.positives:
         schema.affected |= _affected_ids(tr.d)
     return schema
@@ -322,7 +356,9 @@ def _mentioned_structure(schema: Schema, types) -> dict[int, dict[str, set[str]]
     for a in schema.acts + schema.full_acts:
         if a.loc is not None:
             if a.loc.owner_tid is not None:
-                mentioned[a.loc.owner_tid]["slots"].add(a.loc.slot)
+                # the *state* slot of the operated occurrence, not its control family:
+                # this constrains which held-out types can carry the control at all
+                mentioned[a.loc.owner_tid]["slots"].add(a.loc.state_slot)
             if a.loc.trans_tid is not None:
                 mentioned[a.loc.trans_tid]
         note_constant(a.arg)
@@ -402,13 +438,47 @@ def _ref_slot_maps(src_ti, tst_ti, refs: set[str], mapping: dict[int, int]) -> l
     return out
 
 
-def _unify_act(a: ActT, b: ActT, forced: dict[int, int], params: dict[str, str]) -> bool:
-    """Extend type/param correspondences so that prediction act a matches held-out act b."""
+def same_family(a: str, b: str) -> bool:
+    return a == b
+
+
+def family_compatibility(src_controls, tst_controls):
+    """Align latent control families across runs.
+
+    Family ids are run-local strings: a run that never rendered one template variant of a
+    split family gets a different digest suffix.  Two families correspond when their
+    run-independent descriptors agree -- same interaction role, same stable label, same
+    role path inside the unit -- and their template sets overlap, so that the alignment
+    rests on shared structure rather than on a name.  Exactly the same discipline as the
+    type-variable unification: never compare run-local identifiers directly."""
+    def compatible(a: str, b: str) -> bool:
+        if a == b:
+            return True
+        fa = getattr(src_controls, "families", {}).get(a)
+        fb = getattr(tst_controls, "families", {}).get(b)
+        if fa is None or fb is None:
+            return False
+        return (fa.role == fb.role and fa.label == fb.label and fa.path == fb.path
+                and bool(fa.templates & fb.templates))
+    return compatible
+
+
+def _unify_act(a: ActT, b: ActT, forced: dict[int, int], params: dict[str, str],
+               fams: dict[str, str], compatible=same_family) -> bool:
+    """Extend type/param/family correspondences so prediction act a matches held-out act b."""
     if a.kind != b.kind or (a.loc is None) != (b.loc is None):
         return False
     if a.loc is not None:
-        if a.loc.slot != b.loc.slot or a.loc.trans_slot != b.loc.trans_slot:
+        if a.loc.trans_slot != b.loc.trans_slot:
             return False
+        if not compatible(a.loc.slot, b.loc.slot):
+            return False
+        # one prediction family may not align with two held-out families at once
+        if fams.get(a.loc.slot, b.loc.slot) != b.loc.slot:
+            return False
+        if any(v == b.loc.slot and k != a.loc.slot for k, v in fams.items()):
+            return False
+        fams[a.loc.slot] = b.loc.slot
         for s, t in ((a.loc.owner_tid, b.loc.owner_tid), (a.loc.trans_tid, b.loc.trans_tid)):
             if (s is None) != (t is None):
                 return False
@@ -433,35 +503,38 @@ def _unify_act(a: ActT, b: ActT, forced: dict[int, int], params: dict[str, str])
 
 
 def align_actions(pred_acts: tuple[ActT, ...], occ_acts: tuple[ActT, ...],
-                  occ_core: frozenset = frozenset()):
+                  occ_core: frozenset = frozenset(), compatible=same_family):
     """Match prediction acts as an ordered subsequence of the held-out effective acts.
 
     Skipped held-out acts must be clicks (navigation/enabling provenance with their own
     parameters) and must not be the held-out transition's own state-changing step;
     value-supplying acts can never be skipped.  Returns the forced type pairs, the
-    prediction->held-out parameter renaming, and the skipped acts.
+    prediction->held-out parameter renaming, the control-family correspondence, and the
+    skipped acts.
     """
     def skippable(lo: int, hi: int) -> bool:
         return all(occ_acts[k].kind == "click" and k not in occ_core for k in range(lo, hi))
 
-    def go(i: int, j: int, forced: dict[int, int], params: dict[str, str], skipped: list):
+    def go(i: int, j: int, forced: dict[int, int], params: dict[str, str],
+           fams: dict[str, str], skipped: list):
         if i == len(pred_acts):
             if not skippable(j, len(occ_acts)):
                 return None
-            return forced, params, skipped + [str(x) for x in occ_acts[j:]]
+            return forced, params, fams, skipped + [str(x) for x in occ_acts[j:]]
         for k in range(j, len(occ_acts)):
-            f2, p2 = dict(forced), dict(params)
-            if _unify_act(pred_acts[i], occ_acts[k], f2, p2):
+            f2, p2, m2 = dict(forced), dict(params), dict(fams)
+            if _unify_act(pred_acts[i], occ_acts[k], f2, p2, m2, compatible):
                 if not skippable(j, k):
                     continue
-                found = go(i + 1, k + 1, f2, p2, skipped + [str(x) for x in occ_acts[j:k]])
+                found = go(i + 1, k + 1, f2, p2, m2, skipped + [str(x) for x in occ_acts[j:k]])
                 if found is not None:
                     return found
         return None
-    return go(0, 0, {}, {}, [])
+    return go(0, 0, {}, {}, {}, [])
 
 
-def type_mappings(prediction: Schema, src_types, occurrence: Schema, tst_types) -> list[dict[str, Any]]:
+def type_mappings(prediction: Schema, src_types, occurrence: Schema, tst_types,
+                  compatible=same_family) -> list[dict[str, Any]]:
     """Injective mappings of the prediction's mentioned types onto held-out types.
 
     Locator owner types are forced by the aligned effective actions; the remaining
@@ -469,10 +542,10 @@ def type_mappings(prediction: Schema, src_types, occurrence: Schema, tst_types) 
     carries the reference-slot correspondence for the mentioned slots.
     """
     mentioned = _mentioned_structure(prediction, src_types)
-    alignment = align_actions(prediction.acts, occurrence.acts, occurrence.core)
+    alignment = align_actions(prediction.acts, occurrence.acts, occurrence.core, compatible)
     if alignment is None:
         return []
-    forced, param_map, extra = alignment
+    forced, param_map, family_map, extra = alignment
     for tid in forced:
         mentioned.setdefault(tid, {"slots": set(), "refs": set()})
     src_tids = sorted(mentioned)
@@ -503,7 +576,8 @@ def type_mappings(prediction: Schema, src_types, occurrence: Schema, tst_types) 
                              for partial in slot_maps for option in options]
             for slot_map in slot_maps:
                 results.append({"types": dict(mapping), "ref_slots": slot_map,
-                                "params": dict(param_map), "extra_actions": list(extra)})
+                                "params": dict(param_map), "families": dict(family_map),
+                                "extra_actions": list(extra)})
             return
         tid = src_tids[i]
         for t in candidates[tid]:
@@ -1079,9 +1153,10 @@ def _source_binding_values(prediction: Schema) -> dict[str, set]:
     return out
 
 
-def compare(prediction: Schema, occurrence: Schema, src_types, tst_types) -> dict[str, Any]:
+def compare(prediction: Schema, occurrence: Schema, src_types, tst_types,
+            compatible=same_family) -> dict[str, Any]:
     """Best outcome over valid type mappings; contradiction requires every mapping to fail."""
-    mappings = type_mappings(prediction, src_types, occurrence, tst_types)
+    mappings = type_mappings(prediction, src_types, occurrence, tst_types, compatible)
     if not mappings:
         return {"outcome": "NOT_COMPARABLE", "steps": occurrence.steps[0], "mappings": 0}
     results = []
@@ -1092,6 +1167,7 @@ def compare(prediction: Schema, occurrence: Schema, src_types, tst_types) -> dic
         row["binding"] = _binding_in_source_namespace(occurrence, prediction.action_params, mapping["types"],
                                                       mapping.get("params"))
         row["extra_held_out_actions"] = mapping.get("extra_actions", [])
+        row["control_family_mapping"] = mapping.get("families", {})
         inverse = inverse_of(mapping["types"])
         row["affected_objects"] = sorted(
             ([inverse.get(oid[0], f"tst{oid[0]}"), _rewrite_key_back(oid[1], inverse)]
@@ -1148,9 +1224,10 @@ def _placeholder_effects(schema: Schema, rename_types, rename_slots, rename_para
     return sorted(rows)
 
 
-def schemas_equivalent(candidate: Schema, cand_types, other: Schema, other_types) -> bool:
+def schemas_equivalent(candidate: Schema, cand_types, other: Schema, other_types,
+                       compatible=same_family) -> bool:
     """Same effective actions and effects under some type mapping (preconditions ignored)."""
-    for mapping in type_mappings(candidate, cand_types, other, other_types):
+    for mapping in type_mappings(candidate, cand_types, other, other_types, compatible):
         cand_rows = _placeholder_effects(candidate, mapping["types"], mapping["ref_slots"], mapping.get("params"))
         # the other side keeps its own slot names; the candidate is translated into them
         other_rows = _placeholder_effects(
@@ -1269,11 +1346,12 @@ def _view_leaks(compiled) -> list[dict[str, Any]]:
 
 
 def partition_applicable_outcomes(prediction: Schema, occurrences: list[Schema],
-                                  src_types, tst_types) -> dict[str, list[dict[str, Any]]]:
+                                  src_types, tst_types,
+                                  compatible=same_family) -> dict[str, list[dict[str, Any]]]:
     """Group held-out occurrences by comparison outcome; only applicable ones are tested."""
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for occurrence in occurrences:
-        row = compare(prediction, occurrence, src_types, tst_types)
+        row = compare(prediction, occurrence, src_types, tst_types, compatible)
         grouped[row["outcome"]].append(row)
     return grouped
 
@@ -1303,6 +1381,7 @@ class ValidationRecord:
     independence: dict[str, Any] = field(default_factory=dict)
     limitations: list[str] = field(default_factory=list)
     differential_evidence: dict[str, Any] = field(default_factory=dict)
+    quantifier_counterexamples: list[dict[str, Any]] = field(default_factory=list)
 
 
 def backfill_decision_templates(decisions: list[dict[str, Any]], compiled) -> int:
@@ -1351,6 +1430,13 @@ def cross_validate(source_run: Path, test_run: Path,
     src_types = source_candidate.abstractor.types
     base_types = source_base.abstractor.types
     tst_types = test_candidate.abstractor.types
+    # control families are run-local strings; align them by descriptor, never by name
+    cand_families = family_compatibility(source_candidate.abstractor.controls,
+                                         test_candidate.abstractor.controls)
+    base_families = family_compatibility(source_base.abstractor.controls,
+                                         test_base.abstractor.controls)
+    subtraction_families = family_compatibility(source_candidate.abstractor.controls,
+                                                source_base.abstractor.controls)
     base_schemas = [operator_schema(source_base.inducer, op) for op in source_base.inducer.operators]
     candidate_schemas = [operator_schema(source_candidate.inducer, op)
                          for op in source_candidate.inducer.operators if op.support >= min_support]
@@ -1362,14 +1448,35 @@ def cross_validate(source_run: Path, test_run: Path,
             if schema is not None:
                 occurrences.append(schema)
 
-    predictions, untestable, shared = [], [], []
+    predictions, untestable, shared, quantifier_counterexamples = [], [], [], []
     for schema in candidate_schemas:
         row = schema.describe()
         if schema.underdetermined:
             untestable.append({**row, "why": "UNDERDETERMINED_EFFECT_PARAMETER",
                                "detail": "the action does not bind every object the schema claims to change"})
             continue
-        twin = next((b for b in base_schemas if schemas_equivalent(schema, src_types, b, base_types)), None)
+        if schema.unsupported_quantifiers:
+            # reported, never tested: the source evidence never contained a state with two
+            # eligible members, so the universal reading was not one the model earned.
+            grouped = partition_applicable_outcomes(schema, occurrences, src_types, tst_types, cand_families)
+            counts = {k: len(v) for k, v in grouped.items()}
+            entry = {**row, "why": "UNSUPPORTED_UNIVERSAL_QUANTIFIER",
+                     "detail": "no positive transition contained two eligible members, so the "
+                               "quantifier is observationally identical to a singular effect",
+                     "unsupported_quantifiers": schema.unsupported_quantifiers,
+                     "held_out_outcome_counts": counts}
+            untestable.append(entry)
+            if grouped.get("CONTRADICTED"):
+                quantifier_counterexamples.append({
+                    "prediction": row,
+                    "unsupported_quantifiers": schema.unsupported_quantifiers,
+                    "held_out_occurrences": grouped["CONTRADICTED"],
+                    "reason": "a held-out state with several eligible members falsified the universal "
+                              "reading; the source evidence never contained such a state",
+                })
+            continue
+        twin = next((b for b in base_schemas
+                     if schemas_equivalent(schema, src_types, b, base_types, subtraction_families)), None)
         if twin is not None:
             shared.append({**row, "baseline_schema": twin.name, "baseline_support": twin.support})
             continue
@@ -1377,7 +1484,7 @@ def cross_validate(source_run: Path, test_run: Path,
 
     matched, novel, mispredicted, tested_rows = [], [], [], []
     for prediction in predictions:
-        grouped = partition_applicable_outcomes(prediction, occurrences, src_types, tst_types)
+        grouped = partition_applicable_outcomes(prediction, occurrences, src_types, tst_types, cand_families)
         source_values = _source_binding_values(prediction)
         counts = {k: len(v) for k, v in grouped.items()}
         exact = grouped.get("EXACT", [])
@@ -1478,9 +1585,12 @@ def cross_validate(source_run: Path, test_run: Path,
                 without = compile_v2(source_run, min_support=min_support, llm=None, apply_refinements=True,
                                      refinement_decisions=rest, write_diagnostics=False)
                 without_schemas = [operator_schema(without.inducer, op) for op in without.inducer.operators]
+                without_families = family_compatibility(source_candidate.abstractor.controls,
+                                                        without.abstractor.controls)
                 credited = [
                     p.name for p in predictions if p.name in validated_names
-                    and not any(schemas_equivalent(p, src_types, w, without.abstractor.types) for w in without_schemas)
+                    and not any(schemas_equivalent(p, src_types, w, without.abstractor.types, without_families)
+                                for w in without_schemas)
                 ]
                 attribution[decision["id"]] = credited
                 if credited:
@@ -1498,13 +1608,15 @@ def cross_validate(source_run: Path, test_run: Path,
             if schema is not None:
                 base_occurrences.append(schema)
     base_test_types = test_base.abstractor.types
-    base_arm = arm_verdicts(base_schemas, base_occurrences, base_types, base_test_types, min_support)
+    base_arm = arm_verdicts(base_schemas, base_occurrences, base_types, base_test_types, min_support,
+                            base_families)
     base_control = {k: base_arm[k] for k in ("predictions", "underdetermined", "outcome_counts")}
 
     # Differential arm: the same held-out transitions, judged by the whole candidate model
     # and by the whole unrefined model, paired by step index.  Structural difference from
     # the baseline is not behavioral novelty; only divergent verdicts are.  Reporting only.
-    cand_arm = arm_verdicts(candidate_schemas, occurrences, src_types, tst_types, min_support)
+    cand_arm = arm_verdicts(candidate_schemas, occurrences, src_types, tst_types, min_support,
+                            cand_families)
     differential = differential_evidence(cand_arm["by_step"], base_arm["by_step"],
                                          {p.name for p in predictions},
                                          cand_arm["occurrence_keys"], base_arm["occurrence_keys"])
@@ -1540,6 +1652,13 @@ def cross_validate(source_run: Path, test_run: Path,
         "target keys cannot reach the schema-level gate at all, whatever the evidence. See "
         "provenance.decision_transfer and provenance.held_out_compile_changed_by_decisions.",
         "VIEW leaks are detectable only on probe-classified steps, which are few on held-out traces.",
+        "A universal effect whose source evidence never contained two eligible members is reported as "
+        "UNSUPPORTED_UNIVERSAL_QUANTIFIER and is not a prediction in either direction; a held-out "
+        "multi-member state that falsifies it is retained separately as a quantifier counterexample, "
+        "because what it refutes is the inducer's quantifier, not the refinement's attachment claim.",
+        "Control families are aligned across runs by descriptor (role, stable label, role path inside the "
+        "unit) plus overlapping unit templates, injectively per alignment. A family the held-out run never "
+        "rendered makes an occurrence NOT_COMPARABLE, never contradicted.",
         "Structural baseline subtraction does not establish behavioral novelty; the differential arm "
         "reports the held-out transitions where the two models' verdicts actually diverge. Its "
         "SAME_PREDICTION/BOTH_CORRECT split is approximate (grounded claims compared by rendered DOM "
@@ -1579,7 +1698,7 @@ def cross_validate(source_run: Path, test_run: Path,
                                   "unique type mapping, no contradiction, no unexplained visible extras, no VIEW leak",
             "source_affected_objects_per_prediction": {p.name: len(p.affected) for p in predictions},
         },
-        untestable, shared, independence, limitations, differential,
+        untestable, shared, independence, limitations, differential, quantifier_counterexamples,
     )
 
 

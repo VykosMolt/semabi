@@ -94,6 +94,71 @@ These are generic evidence patterns, not layout authorities. Further refinement
 operators should be added only in response to a stored counterexample and should retain
 the same local alternative/evidence contract.
 
+## Control identity
+
+Entities were the first thing V2 stopped reading off the surface: a UI fragment is an
+observation of a latent entity, not the entity itself.  Actions were still read off the
+surface long after that.  A control was identified by the slot key its enclosing entity
+instance assigned it -- for an unlabelled widget a per-instance role ordinal such as
+`combobox#0` -- together with that entity's run-local type id.  The key is positional, so
+it failed in both directions at once: two structurally different controls in different
+unit templates of one entity type received the *same* identity, and two renderings of one
+control inside one instance received different ones.  A diagnostic over sixteen retained
+traces (`semabi/eval/v2_control_collision.py`) found twenty-eight action symbols covering
+more than one surface context, two of them covering *incompatible* contexts -- different
+role paths or disjoint option vocabularies -- across thirty-eight performed actions.  One
+of those two produced climbing's seven false lifted claims.
+
+A surface control occurrence is therefore treated the way a UI fragment is treated for
+entities (`semabi/compiler/v2/controls.py`).  A control mention keeps its provenance --
+run, observation, node, role, options, enclosing unit -- and is assigned to a latent
+*control family* described only by run-independent evidence:
+
+* the interaction role;
+* the control's stable label, when it has one that is not entity data;
+* the role path from the root of the innermost recurring unit containing it.
+
+Occurrences agreeing on all three are one family across unit-template variants, but only
+when the entity layer already groups those templates into one latent entity, and only when
+their option vocabularies are not disjoint.  Merging therefore requires agreement on
+structure, on the entity the control belongs to, and on values; any one disagreeing splits.
+The asymmetry is deliberate: a false merge fabricates lifted preconditions and universal
+rules, a false split only fragments support.  Nothing in the criterion reads a control's
+effects, so family identity stays available as selection evidence that behavioural
+validation can later confirm or refute without circularity; nothing reads type ids, hash
+order, node indices or per-instance ordinals, so the alphabet does not depend on the run.
+Labels are used only to *separate* controls that already differ structurally, never to
+merge them, and no rule names a widget's meaning.
+
+A semantic action is then `control family + bound entities/context + entered value`.  The
+occurrence's own state slot survives on the locator as `ui_slot`: it is what reads the
+widget's current value, what an affordance precondition names, and what replays the
+primitive.  Semantic identity and executable grounding are related but distinct, and where
+one family has several rendered occurrences inside one owner the executor picks one
+deterministically while the inducer reports the operator as underdetermined.  Controls
+outside every recurring unit -- navigation, filters, global forms -- keep the identity they
+already had, so the view/domain separation and the probe-based sensing classification are
+untouched.
+
+The boundary between the two is deliberate and audited. `Locator.ui_slot` is declared
+`compare=False`, so it cannot enter action identity, operator grouping, cross-unit merging
+or cross-run alignment; it is read only to fetch a widget's current value, to name an
+affordance precondition and to pick a concrete node for replay, where the recorded
+occurrence is preferred and the fallback is the lowest node index rather than a dict order.
+Effect slots remain *state* attribute names and may still carry a positional suffix; that is
+state-side, and cross-run it can only make an occurrence `NOT_COMPARABLE`, never confirm
+one. Controls that belong to no recurring unit keep a document-positional identity, which is
+the same namespace the view/sensing classification uses; the collision diagnostic finds no
+incompatible static symbol in any retained trace, and extending families to them is
+post-freeze work. `tests/test_v2_action_slot_boundary.py` pins each of these.
+
+Across runs a family id is a run-local string: a run that never rendered one template
+variant of a split family needs no disambiguating suffix and so names the family
+differently.  Cross-run comparison therefore unifies families the way it already unifies
+types -- by descriptor (role, stable label, path) plus overlapping templates, injectively
+within an alignment -- and a family the held-out run never rendered makes an occurrence
+`NOT_COMPARABLE`, never contradicted.
+
 ## Belief and sensing
 
 `V2Tracker` uses TRUE/FALSE/UNKNOWN semantics. A confirmed fact carries:
@@ -189,6 +254,17 @@ collected trace. Its comparison is behavioral, not syntactic:
   afterwards is UNOBSERVED; held-out effects the prediction does not explain are extras,
   classified by whether the object was rendered before the action. Extras never
   contradict predicted literals; visible extras block VALIDATED;
+- a universal effect the source evidence could never have falsified is not a prediction.
+  `forall x in R(anchor): effect(x)` is inferred because every observed member changed; if
+  no positive transition ever held two eligible members, the universal reading is
+  observationally identical to a singular effect on the one member that was there. Such a
+  schema is reported as `UNSUPPORTED_UNIVERSAL_QUANTIFIER` and tested in neither direction.
+  A held-out multi-member state that falsifies it is retained as a quantifier
+  counterexample: what it refutes is the inducer's quantifier, not the refinement's
+  attachment claim, and conflating the two would blame the wrong component. A discriminating
+  multi-member state that the quantifier survives makes the schema testable again; it is
+  then evidence *for* the quantifier and goes through the ordinary prospective gate, never
+  straight to canonical;
 - absence is three-valued too. An object missing from a partial after-state that renders
   no object of its type is UNKNOWN: it neither contradicts a predicted change nor confirms
   a predicted removal. A held-out occurrence whose own lifted effects change an object its

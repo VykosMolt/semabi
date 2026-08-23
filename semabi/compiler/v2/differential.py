@@ -36,7 +36,7 @@ from __future__ import annotations
 from collections import Counter, defaultdict
 from typing import Any
 
-from semabi.compiler.v2.validation import Schema, claim_key, compare
+from semabi.compiler.v2.validation import Schema, claim_key, compare, same_family
 
 CORRECT_OUTCOMES = ("EXACT", "PREDICTED_WITH_UNOBSERVED_EXTRAS", "PREDICTED_WITH_VISIBLE_EXTRAS")
 
@@ -63,7 +63,7 @@ def _trim(row: dict[str, Any]) -> dict[str, Any]:
 
 
 def arm_verdicts(schemas: list[Schema], occurrences: list[Schema], src_types, tst_types,
-                 min_support: int) -> dict[str, Any]:
+                 min_support: int, compatible=same_family) -> dict[str, Any]:
     """Run one model's determinate schemas against every held-out occurrence.
 
     Returns the per-step determinate verdicts plus the same aggregate outcome tally the
@@ -74,12 +74,12 @@ def arm_verdicts(schemas: list[Schema], occurrences: list[Schema], src_types, ts
     for schema in schemas:
         if schema.support < min_support:
             continue
-        if schema.underdetermined:
+        if schema.underdetermined or schema.unsupported_quantifiers:
             underdetermined += 1
             continue
         predictions += 1
         for occurrence in occurrences:
-            row = compare(schema, occurrence, src_types, tst_types)
+            row = compare(schema, occurrence, src_types, tst_types, compatible)
             outcome = row["outcome"]
             if outcome != "NOT_COMPARABLE":
                 outcome_counts[outcome] += 1

@@ -224,3 +224,72 @@ C = 1.0 everywhere.
   holdout run and all 1,090 of seed 11. The gate is unreachable by construction, so no
   further retirement primitives were spent; the decision keeps its one passed direct test.
   Suite: 70 passed, 1 expected xfail. Freeze gate: PARTIAL_1_OF_3. Not tagged.
+- 2026-08-23 r: the action alphabet was measured before it was replaced
+  (`semabi/eval/v2_control_collision.py`). For every action the explorer actually
+  performed the diagnostic recovers the symbol the inducer would use -- the slot key the
+  enclosing entity instance assigns the control plus that entity's run-local type id --
+  and the control's *surface context*: the template of the innermost recurring unit and
+  the role path from that unit's root. Over sixteen retained traces (climbing, observatory,
+  datacenter, pharmacy-c, three oracle runs, a gauntlet-v1 and a gauntlet-v2 trace) 28
+  symbols cover more than one surface context across 536 performed actions. Most are
+  benign: eight row variants of the museum loan table, two apiary card variants, three
+  observatory row variants, all at one path with overlapping option vocabularies. Two are
+  not: climbing seed 12 merges a grade selector at `group/combobox` with a route card's
+  wall selector at `text/combobox` (29 actions, disjoint vocabularies), and datacenter
+  merges a blade selector with a pool selector at one path (9 actions, disjoint
+  vocabularies). The collision is a property of the representation, not of climbing.
+- 2026-08-23 s: control identity replaced by latent control families
+  (`semabi/compiler/v2/controls.py`). A control occurrence is described by run-independent
+  evidence only -- interaction role, stable non-data label, role path from the innermost
+  unit root -- and occurrences agreeing on all three are one family across unit-template
+  variants, but only when the entity layer already groups those templates into one latent
+  entity and only when their option vocabularies are not disjoint. Merging therefore needs
+  structure, entity and values to agree; any one disagreeing splits, because a false merge
+  fabricates lifted semantics while a false split only fragments support. No rule names a
+  widget's meaning and no label ever merges two controls. The locator keeps the operated
+  occurrence's own state slot as `ui_slot` (excluded from identity) for reading widget
+  values, affordance preconditions and replay; grounding resolves a family to a concrete
+  node deterministically. Controls outside every recurring unit keep their old identity, so
+  view/sensing separation and probe-based VIEW classification are untouched, as are the V0
+  and V1 front ends, which have no family induction. Cross-run comparison aligns families
+  by descriptor plus overlapping templates, injectively per alignment, exactly as types are
+  aligned. Result over the same sixteen traces: incompatible symbols 2 -> 0, incompatible
+  actions 38 -> 0; seven runs also lost an over-split symbol.
+- 2026-08-23 t: recompilation under the corrected alphabet, nothing grandfathered.
+  Climbing's seven collision-driven false claims are gone -- no wall-selector occurrence
+  can match the grade-selector family any more -- and the decision `ref-a4fd4824b37a` is
+  now MISPREDICTED on *all three* seeds rather than only on seed 12: the collision had been
+  masking the real defect. What contradicts it is `attr:group/combobox#0@7`, the wall-level
+  schema of the *second* co-located grade widget, which the decision does not refine (4/3/4
+  contradictions on seeds 11/12/13). The eighth failure, the forall over-generalization, is
+  now handled by a general rule rather than by a climbing patch: a universal effect whose
+  positive transitions never contained two eligible members is observationally identical to
+  a singular effect, is reported as UNSUPPORTED_UNIVERSAL_QUANTIFIER and is tested in
+  neither direction, while a held-out multi-member state that falsifies it is retained
+  separately as a quantifier counterexample (6/3/2 across the seeds) because what it
+  refutes is the inducer's quantifier, not the refinement's attachment claim.
+- 2026-08-23 u: the reopened climbing loop under the corrected alphabet produced
+  `ref-47e12ddb5822` on the sibling widget component -- exactly the half the refuted
+  decision leaves unrefined -- and it is `MISPREDICTED` on all three seeds too (5/2/2
+  contradictions), refuted by the mirror-image wall-level schema of the widget *it* leaves
+  unrefined. Applying both halves is not a promotion path but was run as a diagnostic:
+  every false claim disappears and nothing testable remains (`INCONCLUSIVE` on all three
+  seeds, recolor schemas reported `UNDERDETERMINED_EFFECT_PARAMETER` or
+  `UNSUPPORTED_UNIVERSAL_QUANTIFIER`). The deterministic hypothesis space is honestly
+  exhausted and climbing stays non-canonical; the `.817` RTC is historical development
+  evidence only, and the canonical climbing model is the unrefined one (RTC .000).
+- 2026-08-23 v: freeze checks. Determinism: twenty compiles (both principal apps as
+  selection trace plus their held-out seeds, datacenter, pharmacy-c, refined and unrefined)
+  under `PYTHONHASHSEED` 0/1/7, compared on a structural model digest and the full family
+  registry -- all identical, and the registry is stable per application across runs
+  (climbing 9 families, observatory 7, datacenter 14, pharmacy-c 6). Residual raw-slot
+  audit: `ui_slot` is `compare=False` so it cannot enter action identity, families and
+  cross-run alignment never consult it, and grounding still reaches the recorded occurrence;
+  the only ordinal-shaped action symbols left belong to controls outside every recurring
+  unit, where the collision diagnostic finds nothing incompatible in sixteen traces. Seven
+  boundary regressions added. Observatory was tested once more on a seed collected after
+  the rewrite (seed 14, 834 primitives): `VALIDATED`, 18 exact recurrences, 0
+  contradictions, 3 novel bindings, 4 differential wins, 0 losses -- four independent seeds
+  now, 106 exact, 0 contradictions, 30 novel bindings, 40 wins, 0 losses, baseline
+  contradicted 62 times. Ledger unchanged (47/42/36, clean denominator 3 of 3). Suite 91
+  passed, 1 expected xfail, boundary 4/4.

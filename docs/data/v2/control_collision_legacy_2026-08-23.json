@@ -1,0 +1,2268 @@
+{
+ "version": 2,
+ "symbol_source": "per-instance slot key (legacy)",
+ "question": "how many semantically distinct controls does one learned action symbol denote?",
+ "method": "How many semantically distinct controls does one action symbol currently denote?\n\nThe learned action alphabet identifies a control by the slot key its enclosing entity\ninstance assigns it plus that entity's run-local type id -- for an unlabelled widget the\nkey is a per-instance role ordinal (`combobox#0`).  Two controls in different unit\ntemplates of one entity type therefore receive the same identity, and operator induction\ntreats them as instances of the same semantic action.\n\nThis diagnostic measures the damage without changing anything.  For every action the\nexplorer actually performed it recovers the symbol the inducer would use and the\n*surface context* of the target: the template of the innermost recurring unit containing\nit and the role path from that unit's root.  A symbol covering more than one surface\ncontext is a candidate collision; disjoint option vocabularies are strong evidence that\nthe merged occurrences are not the same semantic action.\n\nCompiler-visible evidence only: templates, roles, paths, option sets and interaction\nkinds.  No hidden operator name or evaluator label is read.",
+ "runs": {
+  "climbing_seed11": {
+   "run": "runs/v2_stability/climbing_seed11",
+   "symbol_source": "per-instance slot key (legacy)",
+   "action_symbols": 17,
+   "surface_contexts": 10,
+   "colliding_symbols": 1,
+   "colliding_occurrences": 14,
+   "incompatible_symbols": 0,
+   "incompatible_occurrences": 0,
+   "collisions_with_disjoint_option_vocabularies": 0,
+   "collisions": [
+    {
+     "symbol": {
+      "kind": "select",
+      "slot": "combobox#0",
+      "owner_type": 2
+     },
+     "incompatible": false,
+     "distinct_paths": [
+      "text/combobox"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "group[](text[_],text[grade _ lead],text[](combobox[_ of _],button[Restow],button[Pull]))",
+       "path": "text/combobox",
+       "occurrences": 9,
+       "roles": [
+        "combobox"
+       ],
+       "option_vocabulary": [
+        "Cave 0 of 2",
+        "Cave 1 of 2",
+        "Cave 2 of 2",
+        "Island 1 of 2",
+        "Island 2 of 2",
+        "Moon 0 of 2",
+        "Moon 1 of 2",
+        "Moon 2 of 2"
+       ],
+       "option_vocabulary_size": 8
+      },
+      {
+       "unit_template": "group[](text[_],text[grade _],text[](combobox[_ of _],button[Restow],button[Pull]))",
+       "path": "text/combobox",
+       "occurrences": 5,
+       "roles": [
+        "combobox"
+       ],
+       "option_vocabulary": [
+        "Cave 0 of 2",
+        "Cave 1 of 2",
+        "Cave 2 of 2",
+        "Island 1 of 2",
+        "Moon 0 of 2",
+        "Moon 1 of 2",
+        "Moon 2 of 2"
+       ],
+       "option_vocabulary_size": 7
+      }
+     ],
+     "distinct_surface_contexts": 2,
+     "option_vocabularies_disjoint": false,
+     "occurrences": 14
+    }
+   ],
+   "one_surface_context_many_symbols": [
+    {
+     "unit_template": "<static>",
+     "path": "button",
+     "symbols": [
+      "click:button:Confirm pull@TNone",
+      "click:button:Pull@TNone",
+      "click:button:Restow@TNone",
+      "click:button:Routes@TNone",
+      "click:button:Walls@TNone"
+     ]
+    },
+    {
+     "unit_template": "group[](heading[_ of _],group[](button[_],combobox[_]))",
+     "path": "group/combobox",
+     "symbols": [
+      "select:combobox#0@T0",
+      "select:combobox#1@T0"
+     ]
+    },
+    {
+     "unit_template": "row[](cell[_],cell[_](button[Bump],button[Ease]),cell[_],cell[](button[Open]))",
+     "path": "cell/button",
+     "symbols": [
+      "click:button:Bump@T1",
+      "click:button:Ease@T1",
+      "click:button:Open@T1"
+     ]
+    },
+    {
+     "unit_template": "<static>",
+     "path": "combobox",
+     "symbols": [
+      "select:combobox#0@TNone",
+      "select:combobox#1@TNone"
+     ]
+    }
+   ]
+  },
+  "climbing_seed12": {
+   "run": "runs/v2_falsification/climbing_seed12",
+   "symbol_source": "per-instance slot key (legacy)",
+   "action_symbols": 18,
+   "surface_contexts": 11,
+   "colliding_symbols": 3,
+   "colliding_occurrences": 33,
+   "incompatible_symbols": 1,
+   "incompatible_occurrences": 29,
+   "collisions_with_disjoint_option_vocabularies": 1,
+   "collisions": [
+    {
+     "symbol": {
+      "kind": "select",
+      "slot": "combobox#0",
+      "owner_type": 0
+     },
+     "incompatible": true,
+     "distinct_paths": [
+      "group/combobox",
+      "text/combobox"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "group[](heading[_ of _],group[](button[_],combobox[_]))",
+       "path": "group/combobox",
+       "occurrences": 22,
+       "roles": [
+        "combobox"
+       ],
+       "option_vocabulary": [
+        "black",
+        "pink",
+        "white",
+        "yellow"
+       ],
+       "option_vocabulary_size": 4
+      },
+      {
+       "unit_template": "group[](text[_],text[grade _ lead],text[](combobox[_ of _],button[Restow],button[Pull]))",
+       "path": "text/combobox",
+       "occurrences": 5,
+       "roles": [
+        "combobox"
+       ],
+       "option_vocabulary": [
+        "Cave 0 of 2",
+        "Cave 1 of 2",
+        "Cave 2 of 2",
+        "Island 1 of 2",
+        "Moon 1 of 2",
+        "Moon 2 of 2"
+       ],
+       "option_vocabulary_size": 6
+      },
+      {
+       "unit_template": "group[](text[_],text[grade _],text[](combobox[_ of _],button[Restow],button[Pull]))",
+       "path": "text/combobox",
+       "occurrences": 2,
+       "roles": [
+        "combobox"
+       ],
+       "option_vocabulary": [
+        "Cave 0 of 2",
+        "Cave 1 of 2",
+        "Island 1 of 2",
+        "Moon 1 of 2",
+        "Moon 2 of 2"
+       ],
+       "option_vocabulary_size": 5
+      }
+     ],
+     "distinct_surface_contexts": 3,
+     "option_vocabularies_disjoint": true,
+     "occurrences": 29
+    },
+    {
+     "symbol": {
+      "kind": "click",
+      "slot": "button:Pull",
+      "owner_type": 0
+     },
+     "incompatible": false,
+     "distinct_paths": [
+      "text/button"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "group[](text[_],text[grade _ lead],text[](combobox[_ of _],button[Restow],button[Pull]))",
+       "path": "text/button",
+       "occurrences": 1,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      },
+      {
+       "unit_template": "group[](text[_],text[grade _],text[](combobox[_ of _],button[Restow],button[Pull]))",
+       "path": "text/button",
+       "occurrences": 1,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      }
+     ],
+     "distinct_surface_contexts": 2,
+     "option_vocabularies_disjoint": false,
+     "occurrences": 2
+    },
+    {
+     "symbol": {
+      "kind": "click",
+      "slot": "button:Restow",
+      "owner_type": 0
+     },
+     "incompatible": false,
+     "distinct_paths": [
+      "text/button"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "group[](text[_],text[grade _],text[](combobox[_ of _],button[Restow],button[Pull]))",
+       "path": "text/button",
+       "occurrences": 1,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      },
+      {
+       "unit_template": "group[](text[_],text[grade _ lead],text[](combobox[_ of _],button[Restow],button[Pull]))",
+       "path": "text/button",
+       "occurrences": 1,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      }
+     ],
+     "distinct_surface_contexts": 2,
+     "option_vocabularies_disjoint": false,
+     "occurrences": 2
+    }
+   ],
+   "one_surface_context_many_symbols": [
+    {
+     "unit_template": "<static>",
+     "path": "button",
+     "symbols": [
+      "click:button:Cancel@TNone",
+      "click:button:Confirm pull@TNone",
+      "click:button:Pull@TNone",
+      "click:button:Restow@TNone",
+      "click:button:Routes@TNone",
+      "click:button:Walls@TNone"
+     ]
+    },
+    {
+     "unit_template": "group[](heading[_ of _],group[](button[_],combobox[_]))",
+     "path": "group/combobox",
+     "symbols": [
+      "select:combobox#0@T0",
+      "select:combobox#1@T0"
+     ]
+    },
+    {
+     "unit_template": "row[](cell[_],cell[_](button[Bump],button[Ease]),cell[_],cell[](button[Open]))",
+     "path": "cell/button",
+     "symbols": [
+      "click:button:Bump@T2",
+      "click:button:Ease@T2",
+      "click:button:Open@T2"
+     ]
+    },
+    {
+     "unit_template": "<static>",
+     "path": "combobox",
+     "symbols": [
+      "select:combobox#0@TNone",
+      "select:combobox#1@TNone"
+     ]
+    },
+    {
+     "unit_template": "group[](text[_],text[grade _ lead],text[](combobox[_ of _],button[Restow],button[Pull]))",
+     "path": "text/button",
+     "symbols": [
+      "click:button:Pull@T0",
+      "click:button:Restow@T0"
+     ]
+    },
+    {
+     "unit_template": "group[](text[_],text[grade _],text[](combobox[_ of _],button[Restow],button[Pull]))",
+     "path": "text/button",
+     "symbols": [
+      "click:button:Pull@T0",
+      "click:button:Restow@T0"
+     ]
+    }
+   ]
+  },
+  "climbing_seed13": {
+   "run": "runs/v2_falsification/climbing_seed13",
+   "symbol_source": "per-instance slot key (legacy)",
+   "action_symbols": 18,
+   "surface_contexts": 10,
+   "colliding_symbols": 1,
+   "colliding_occurrences": 8,
+   "incompatible_symbols": 0,
+   "incompatible_occurrences": 0,
+   "collisions_with_disjoint_option_vocabularies": 0,
+   "collisions": [
+    {
+     "symbol": {
+      "kind": "select",
+      "slot": "combobox#0",
+      "owner_type": 2
+     },
+     "incompatible": false,
+     "distinct_paths": [
+      "text/combobox"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "group[](text[_],text[grade _],text[](combobox[_ of _],button[Restow],button[Pull]))",
+       "path": "text/combobox",
+       "occurrences": 6,
+       "roles": [
+        "combobox"
+       ],
+       "option_vocabulary": [
+        "Cave 0 of 2",
+        "Cave 1 of 2",
+        "Cave 2 of 2",
+        "Island 1 of 2",
+        "Island 2 of 2",
+        "Moon 0 of 2",
+        "Moon 1 of 2"
+       ],
+       "option_vocabulary_size": 7
+      },
+      {
+       "unit_template": "group[](text[_],text[grade _ lead],text[](combobox[_ of _],button[Restow],button[Pull]))",
+       "path": "text/combobox",
+       "occurrences": 2,
+       "roles": [
+        "combobox"
+       ],
+       "option_vocabulary": [
+        "Cave 0 of 2",
+        "Island 1 of 2",
+        "Moon 1 of 2",
+        "Moon 2 of 2"
+       ],
+       "option_vocabulary_size": 4
+      }
+     ],
+     "distinct_surface_contexts": 2,
+     "option_vocabularies_disjoint": false,
+     "occurrences": 8
+    }
+   ],
+   "one_surface_context_many_symbols": [
+    {
+     "unit_template": "<static>",
+     "path": "button",
+     "symbols": [
+      "click:button:Confirm pull@TNone",
+      "click:button:Pull@TNone",
+      "click:button:Restow@TNone",
+      "click:button:Routes@TNone",
+      "click:button:Walls@TNone"
+     ]
+    },
+    {
+     "unit_template": "<static>",
+     "path": "combobox",
+     "symbols": [
+      "select:combobox#0@TNone",
+      "select:combobox#1@TNone",
+      "select:combobox#2@TNone"
+     ]
+    },
+    {
+     "unit_template": "row[](cell[_],cell[_](button[Bump],button[Ease]),cell[_],cell[](button[Open]))",
+     "path": "cell/button",
+     "symbols": [
+      "click:button:Bump@T3",
+      "click:button:Ease@T3",
+      "click:button:Open@T3"
+     ]
+    },
+    {
+     "unit_template": "group[](heading[_ of _],group[](button[_],combobox[_]))",
+     "path": "group/combobox",
+     "symbols": [
+      "select:combobox#0@T0",
+      "select:combobox#1@T0"
+     ]
+    }
+   ]
+  },
+  "climbing_loop_004": {
+   "run": "runs/v2_refinement/climbing_loop_004",
+   "symbol_source": "per-instance slot key (legacy)",
+   "action_symbols": 20,
+   "surface_contexts": 11,
+   "colliding_symbols": 2,
+   "colliding_occurrences": 38,
+   "incompatible_symbols": 0,
+   "incompatible_occurrences": 0,
+   "collisions_with_disjoint_option_vocabularies": 0,
+   "collisions": [
+    {
+     "symbol": {
+      "kind": "select",
+      "slot": "combobox#0",
+      "owner_type": 2
+     },
+     "incompatible": false,
+     "distinct_paths": [
+      "text/combobox"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "group[](text[_],text[grade _ lead],text[](combobox[_ of _],button[Restow],button[Pull]))",
+       "path": "text/combobox",
+       "occurrences": 23,
+       "roles": [
+        "combobox"
+       ],
+       "option_vocabulary": [
+        "Cave 0 of 2",
+        "Cave 1 of 2",
+        "Island 1 of 2",
+        "Island 2 of 2",
+        "Moon 0 of 2",
+        "Moon 1 of 2",
+        "Moon 2 of 2"
+       ],
+       "option_vocabulary_size": 7
+      },
+      {
+       "unit_template": "group[](text[_],text[grade _],text[](combobox[_ of _],button[Restow],button[Pull]))",
+       "path": "text/combobox",
+       "occurrences": 11,
+       "roles": [
+        "combobox"
+       ],
+       "option_vocabulary": [
+        "Cave 0 of 2",
+        "Cave 1 of 2",
+        "Island 1 of 2",
+        "Island 2 of 2",
+        "Moon 0 of 2",
+        "Moon 1 of 2",
+        "Moon 2 of 2"
+       ],
+       "option_vocabulary_size": 7
+      }
+     ],
+     "distinct_surface_contexts": 2,
+     "option_vocabularies_disjoint": false,
+     "occurrences": 34
+    },
+    {
+     "symbol": {
+      "kind": "click",
+      "slot": "button:Pull",
+      "owner_type": 2
+     },
+     "incompatible": false,
+     "distinct_paths": [
+      "text/button"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "group[](text[_],text[grade _],text[](combobox[_ of _],button[Restow],button[Pull]))",
+       "path": "text/button",
+       "occurrences": 3,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      },
+      {
+       "unit_template": "group[](text[_],text[grade _ lead],text[](combobox[_ of _],button[Restow],button[Pull]))",
+       "path": "text/button",
+       "occurrences": 1,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      }
+     ],
+     "distinct_surface_contexts": 2,
+     "option_vocabularies_disjoint": false,
+     "occurrences": 4
+    }
+   ],
+   "one_surface_context_many_symbols": [
+    {
+     "unit_template": "<static>",
+     "path": "button",
+     "symbols": [
+      "click:button:Cancel@TNone",
+      "click:button:Confirm pull@TNone",
+      "click:button:Pull@TNone",
+      "click:button:Restow@TNone",
+      "click:button:Routes@TNone",
+      "click:button:Walls@TNone"
+     ]
+    },
+    {
+     "unit_template": "group[](heading[_ of _],group[](button[_],combobox[_]))",
+     "path": "group/combobox",
+     "symbols": [
+      "select:combobox#0@T0",
+      "select:combobox#1@T0"
+     ]
+    },
+    {
+     "unit_template": "<static>",
+     "path": "combobox",
+     "symbols": [
+      "select:combobox#0@TNone",
+      "select:combobox#1@TNone",
+      "select:combobox#2@TNone"
+     ]
+    },
+    {
+     "unit_template": "group[](text[_],text[grade _ lead],text[](combobox[_ of _],button[Restow],button[Pull]))",
+     "path": "text/button",
+     "symbols": [
+      "click:button:Pull@T2",
+      "click:button:Restow@T2"
+     ]
+    },
+    {
+     "unit_template": "row[](cell[_],cell[_](button[Bump],button[Ease]),cell[_],cell[](button[Open]))",
+     "path": "cell/button",
+     "symbols": [
+      "click:button:Bump@T3",
+      "click:button:Ease@T3",
+      "click:button:Open@T3"
+     ]
+    }
+   ]
+  },
+  "observatory_seed11": {
+   "run": "runs/v2_stability/observatory_seed11",
+   "symbol_source": "per-instance slot key (legacy)",
+   "action_symbols": 18,
+   "surface_contexts": 6,
+   "colliding_symbols": 0,
+   "colliding_occurrences": 0,
+   "incompatible_symbols": 0,
+   "incompatible_occurrences": 0,
+   "collisions_with_disjoint_option_vocabularies": 0,
+   "collisions": [],
+   "one_surface_context_many_symbols": [
+    {
+     "unit_template": "<static>",
+     "path": "button",
+     "symbols": [
+      "click:button:Board@TNone",
+      "click:button:Cancel@TNone",
+      "click:button:Catalog@TNone",
+      "click:button:Clip@TNone",
+      "click:button:Confirm detach@TNone",
+      "click:button:Detach@TNone",
+      "click:button:Extend@TNone",
+      "click:button:Pointing@TNone",
+      "click:button:Retarget@TNone",
+      "click:button:open@TNone"
+     ]
+    },
+    {
+     "unit_template": "group[](text[_],text[_ aperture _ mag _],text[](button[Extend],button[Clip],text[duration _]),text[](combobox[_ mag _],button[Retarget],button[Detach]))",
+     "path": "text/button",
+     "symbols": [
+      "click:button:Clip@T1",
+      "click:button:Detach@T1",
+      "click:button:Extend@T1",
+      "click:button:Retarget@T1"
+     ]
+    }
+   ]
+  },
+  "observatory_seed12": {
+   "run": "runs/v2_falsification/observatory_seed12",
+   "symbol_source": "per-instance slot key (legacy)",
+   "action_symbols": 18,
+   "surface_contexts": 6,
+   "colliding_symbols": 0,
+   "colliding_occurrences": 0,
+   "incompatible_symbols": 0,
+   "incompatible_occurrences": 0,
+   "collisions_with_disjoint_option_vocabularies": 0,
+   "collisions": [],
+   "one_surface_context_many_symbols": [
+    {
+     "unit_template": "<static>",
+     "path": "button",
+     "symbols": [
+      "click:button:Board@TNone",
+      "click:button:Cancel@TNone",
+      "click:button:Catalog@TNone",
+      "click:button:Clip@TNone",
+      "click:button:Confirm detach@TNone",
+      "click:button:Detach@TNone",
+      "click:button:Extend@TNone",
+      "click:button:Pointing@TNone",
+      "click:button:Retarget@TNone",
+      "click:button:open@TNone"
+     ]
+    },
+    {
+     "unit_template": "group[](text[_],text[_ aperture _ mag _],text[](button[Extend],button[Clip],text[duration _]),text[](combobox[_ mag _],button[Retarget],button[Detach]))",
+     "path": "text/button",
+     "symbols": [
+      "click:button:Clip@T1",
+      "click:button:Detach@T1",
+      "click:button:Extend@T1",
+      "click:button:Retarget@T1"
+     ]
+    }
+   ]
+  },
+  "observatory_seed13": {
+   "run": "runs/v2_falsification/observatory_seed13",
+   "symbol_source": "per-instance slot key (legacy)",
+   "action_symbols": 18,
+   "surface_contexts": 6,
+   "colliding_symbols": 0,
+   "colliding_occurrences": 0,
+   "incompatible_symbols": 0,
+   "incompatible_occurrences": 0,
+   "collisions_with_disjoint_option_vocabularies": 0,
+   "collisions": [],
+   "one_surface_context_many_symbols": [
+    {
+     "unit_template": "<static>",
+     "path": "button",
+     "symbols": [
+      "click:button:Board@TNone",
+      "click:button:Cancel@TNone",
+      "click:button:Catalog@TNone",
+      "click:button:Clip@TNone",
+      "click:button:Confirm detach@TNone",
+      "click:button:Detach@TNone",
+      "click:button:Extend@TNone",
+      "click:button:Pointing@TNone",
+      "click:button:Retarget@TNone",
+      "click:button:open@TNone"
+     ]
+    },
+    {
+     "unit_template": "group[](text[_],text[_ aperture _ mag _],text[](button[Extend],button[Clip],text[duration _]),text[](combobox[_ mag _],button[Retarget],button[Detach]))",
+     "path": "text/button",
+     "symbols": [
+      "click:button:Clip@T1",
+      "click:button:Detach@T1",
+      "click:button:Extend@T1",
+      "click:button:Retarget@T1"
+     ]
+    }
+   ]
+  },
+  "observatory_loop_001": {
+   "run": "runs/v2_refinement/observatory_loop_001",
+   "symbol_source": "per-instance slot key (legacy)",
+   "action_symbols": 20,
+   "surface_contexts": 9,
+   "colliding_symbols": 1,
+   "colliding_occurrences": 24,
+   "incompatible_symbols": 0,
+   "incompatible_occurrences": 0,
+   "collisions_with_disjoint_option_vocabularies": 0,
+   "collisions": [
+    {
+     "symbol": {
+      "kind": "click",
+      "slot": "button#0",
+      "owner_type": 1
+     },
+     "incompatible": false,
+     "distinct_paths": [
+      "cell/button"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "row[](cell[_],cell[](button[_]))",
+       "path": "cell/button",
+       "occurrences": 16,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      },
+      {
+       "unit_template": "row[](cell[_],cell[](button[open]),cell[](button[_]))",
+       "path": "cell/button",
+       "occurrences": 5,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      },
+      {
+       "unit_template": "row[](cell[_],cell[](button[_]),cell[](button[open]))",
+       "path": "cell/button",
+       "occurrences": 3,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      }
+     ],
+     "distinct_surface_contexts": 3,
+     "option_vocabularies_disjoint": false,
+     "occurrences": 24
+    }
+   ],
+   "one_surface_context_many_symbols": [
+    {
+     "unit_template": "<static>",
+     "path": "button",
+     "symbols": [
+      "click:button#0@TNone",
+      "click:button:Board@TNone",
+      "click:button:Cancel@TNone",
+      "click:button:Catalog@TNone",
+      "click:button:Clip@TNone",
+      "click:button:Confirm detach@TNone",
+      "click:button:Detach@TNone",
+      "click:button:Extend@TNone",
+      "click:button:Pointing@TNone",
+      "click:button:Retarget@TNone"
+     ]
+    },
+    {
+     "unit_template": "row[](cell[_],cell[](button[_]))",
+     "path": "cell/button",
+     "symbols": [
+      "click:button#0@T1",
+      "click:button#1@T1"
+     ]
+    },
+    {
+     "unit_template": "group[](text[_],text[_ aperture _ mag _],text[](button[Extend],button[Clip],text[duration _]),text[](combobox[_ mag _],button[Retarget],button[Detach]))",
+     "path": "text/button",
+     "symbols": [
+      "click:button:Clip@T1",
+      "click:button:Detach@T1",
+      "click:button:Extend@T1",
+      "click:button:Retarget@T1"
+     ]
+    }
+   ]
+  },
+  "datacenter_context_loop_004": {
+   "run": "runs/v2_refinement/datacenter_context_loop_004",
+   "symbol_source": "per-instance slot key (legacy)",
+   "action_symbols": 27,
+   "surface_contexts": 13,
+   "colliding_symbols": 1,
+   "colliding_occurrences": 9,
+   "incompatible_symbols": 1,
+   "incompatible_occurrences": 9,
+   "collisions_with_disjoint_option_vocabularies": 1,
+   "collisions": [
+    {
+     "symbol": {
+      "kind": "select",
+      "slot": "combobox#0",
+      "owner_type": 3
+     },
+     "incompatible": true,
+     "distinct_paths": [
+      "group/text/combobox"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "group[](group[](button[_],button[Tickets]),group[](heading[Ticket _],table[](rowgroup[](row[](cell[_],cell[Action])),rowgroup[](row[](cell[_],cell[](button[Close])))),heading[_ Ticket],text[_](combobox[_ W]),text[_](combobox[_]),button[Open Ticket]),text[_])",
+       "path": "group/text/combobox",
+       "occurrences": 7,
+       "roles": [
+        "combobox"
+       ],
+       "option_vocabulary": [
+        "blade-02 (760 W)",
+        "blade-04 (350 W)",
+        "blade-12 (290 W)",
+        "blade-14 (750 W)",
+        "blade-15 (180 W)",
+        "blade-28 (430 W)",
+        "blade-31 (190 W)",
+        "blade-31 (230 W)",
+        "calc-01 (440 W)",
+        "calc-03 (520 W)",
+        "calc-07 (510 W)",
+        "calc-11 (560 W)"
+       ],
+       "option_vocabulary_size": 30
+      },
+      {
+       "unit_template": "group[](group[](button[_],button[Tickets]),group[](heading[_ Pool],group[](button[_ W],button[Take Offline]),heading[_],text[Selected unit _ W],text[Destination rack](combobox[_]),button[_],heading[_],group[_ W],group[edge-34 _ W]),text[_])",
+       "path": "group/text/combobox",
+       "occurrences": 2,
+       "roles": [
+        "combobox"
+       ],
+       "option_vocabulary": [
+        "D1",
+        "D3",
+        "D7"
+       ],
+       "option_vocabulary_size": 3
+      }
+     ],
+     "distinct_surface_contexts": 2,
+     "option_vocabularies_disjoint": true,
+     "occurrences": 9
+    }
+   ],
+   "one_surface_context_many_symbols": [
+    {
+     "unit_template": "<static>",
+     "path": "button",
+     "symbols": [
+      "click:button#0@TNone",
+      "click:button#1@TNone",
+      "click:button#2@TNone",
+      "click:button#3@TNone",
+      "click:button#4@TNone",
+      "click:button#5@TNone",
+      "click:button#6@TNone",
+      "click:button:Cancel@TNone",
+      "click:button:Confirm@TNone",
+      "click:button:Open Ticket@TNone",
+      "click:button:Take Offline@14@TNone",
+      "click:button:Take Offline@TNone",
+      "click:button:Tickets@TNone"
+     ]
+    },
+    {
+     "unit_template": "group[](group[](button[_],button[Tickets]),group[](heading[Ticket _],table[](rowgroup[](row[](cell[_],cell[Action])),rowgroup[](row[](cell[_],cell[](button[Close])))),heading[_ Ticket],text[_](combobox[_ W]),text[_](combobox[_]),button[Open Ticket]),text[_])",
+     "path": "group/button",
+     "symbols": [
+      "click:button#0@T3",
+      "click:button:Open Ticket@T3",
+      "click:button:Tickets@T3"
+     ]
+    },
+    {
+     "unit_template": "group[](text[_](button[_]),text[_],text[Load _ W of _ W],heading[_],group[](button[_],button[Take Offline]))",
+     "path": "group/button",
+     "symbols": [
+      "click:button#1@T2",
+      "click:button#2@T2"
+     ]
+    }
+   ]
+  },
+  "datacenter_seed11": {
+   "run": "runs/v2_stability/datacenter_seed11",
+   "symbol_source": "per-instance slot key (legacy)",
+   "action_symbols": 10,
+   "surface_contexts": 8,
+   "colliding_symbols": 1,
+   "colliding_occurrences": 17,
+   "incompatible_symbols": 0,
+   "incompatible_occurrences": 0,
+   "collisions_with_disjoint_option_vocabularies": 0,
+   "collisions": [
+    {
+     "symbol": {
+      "kind": "select",
+      "slot": "combobox#0",
+      "owner_type": 4
+     },
+     "incompatible": false,
+     "distinct_paths": [
+      "group/text/combobox"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "group[](group[](button[_],button[Tickets]),group[](heading[Ticket _],table[](rowgroup[](row[](cell[_],cell[State],cell[Action])),rowgroup[](row[](cell[_],cell[](button[Close])))),heading[_ Ticket],text[_](combobox[_ W]),text[_](combobox[_]),button[Open Ticket]),text[_])",
+       "path": "group/text/combobox",
+       "occurrences": 16,
+       "roles": [
+        "combobox"
+       ],
+       "option_vocabulary": [
+        "blade-04 (190 W)",
+        "blade-16 (170 W)",
+        "blade-16 (230 W)",
+        "blade-27 (210 W)",
+        "blade-27 (270 W)",
+        "blade-30 (450 W)",
+        "blade-32 (660 W)",
+        "calc-02 (290 W)",
+        "calc-02 (330 W)",
+        "calc-12 (280 W)",
+        "calc-27 (330 W)",
+        "calc-27 (390 W)"
+       ],
+       "option_vocabulary_size": 38
+      },
+      {
+       "unit_template": "group[](group[](button[_],button[Tickets]),group[](heading[Ticket _],table[](rowgroup[](row[](cell[_],cell[State],cell[Action])),rowgroup[](row[](cell[_],cell[](button[Close])))),heading[_ Ticket],text[_](combobox[srv-04 _ W]),text[_](combobox[_]),button[Open Ticket]),text[_])",
+       "path": "group/text/combobox",
+       "occurrences": 1,
+       "roles": [
+        "combobox"
+       ],
+       "option_vocabulary": [
+        "blade-30 (450 W)",
+        "edge-06 (560 W)",
+        "edge-19 (440 W)",
+        "node-20 (440 W)",
+        "srv-04 (370 W)",
+        "srv-15 (220 W)",
+        "srv-15 (260 W)"
+       ],
+       "option_vocabulary_size": 7
+      }
+     ],
+     "distinct_surface_contexts": 2,
+     "option_vocabularies_disjoint": false,
+     "occurrences": 17
+    }
+   ],
+   "one_surface_context_many_symbols": [
+    {
+     "unit_template": "button[_]",
+     "path": "button",
+     "symbols": [
+      "click:button#0@T0",
+      "click:button#0@TNone"
+     ]
+    },
+    {
+     "unit_template": "<static>",
+     "path": "button",
+     "symbols": [
+      "click:button:Open Ticket@TNone",
+      "click:button:Tickets@TNone"
+     ]
+    },
+    {
+     "unit_template": "group[](group[](button[_],button[Tickets]),group[](heading[Ticket _],table[](rowgroup[](row[](cell[_],cell[State],cell[Action])),rowgroup[](row[](cell[_],cell[](button[Close])))),heading[_ Ticket],text[_](combobox[_ W]),text[_](combobox[_]),button[Open Ticket]),text[_])",
+     "path": "group/button",
+     "symbols": [
+      "click:button:Open Ticket@T4",
+      "click:button:Tickets@T4"
+     ]
+    }
+   ]
+  },
+  "cpharmacy_baseline_001": {
+   "run": "runs/v2_refinement/cpharmacy_baseline_001",
+   "symbol_source": "per-instance slot key (legacy)",
+   "action_symbols": 24,
+   "surface_contexts": 6,
+   "colliding_symbols": 0,
+   "colliding_occurrences": 0,
+   "incompatible_symbols": 0,
+   "incompatible_occurrences": 0,
+   "collisions_with_disjoint_option_vocabularies": 0,
+   "collisions": [],
+   "one_surface_context_many_symbols": [
+    {
+     "unit_template": "<static>",
+     "path": "button",
+     "symbols": [
+      "click:button#0@TNone",
+      "click:button#1@TNone",
+      "click:button#2@TNone",
+      "click:button#3@TNone",
+      "click:button#4@TNone",
+      "click:button#5@TNone",
+      "click:button#6@TNone",
+      "click:button#7@TNone",
+      "click:button:+@TNone",
+      "click:button:Cancel@TNone",
+      "click:button:Confirm void@TNone",
+      "click:button:Fill counter@TNone",
+      "click:button:Fill@TNone",
+      "click:button:Patients@TNone",
+      "click:button:Restock@TNone"
+     ]
+    },
+    {
+     "unit_template": "<static>",
+     "path": "textbox",
+     "symbols": [
+      "type:textbox#0@TNone",
+      "type:textbox#1@TNone"
+     ]
+    },
+    {
+     "unit_template": "row[](cell[_],cell[](button[],text[Amount](textbox[_]),button[],button[Restock]))",
+     "path": "cell/button",
+     "symbols": [
+      "click:button:+@T0",
+      "click:button:-@T0",
+      "click:button:Restock@T0"
+     ]
+    },
+    {
+     "unit_template": "group[](heading[_ this prescription],group[_ refills _],group[This cannot be undone],button[Confirm void],button[Cancel])",
+     "path": "button",
+     "symbols": [
+      "click:button:Cancel@T0",
+      "click:button:Confirm void@T0"
+     ]
+    }
+   ]
+  },
+  "claude_01_airport_gates": {
+   "run": "runs/oracle/claude_01_airport_gates",
+   "symbol_source": "per-instance slot key (legacy)",
+   "action_symbols": 23,
+   "surface_contexts": 9,
+   "colliding_symbols": 0,
+   "colliding_occurrences": 0,
+   "incompatible_symbols": 0,
+   "incompatible_occurrences": 0,
+   "collisions_with_disjoint_option_vocabularies": 0,
+   "collisions": [],
+   "one_surface_context_many_symbols": [
+    {
+     "unit_template": "<static>",
+     "path": "button",
+     "symbols": [
+      "click:button:Assign to duty@TNone",
+      "click:button:Confirm cancellation@TNone",
+      "click:button:Crew roster@TNone",
+      "click:button:Flights@TNone",
+      "click:button:Gate board@TNone",
+      "click:button:Keep flight@TNone"
+     ]
+    },
+    {
+     "unit_template": "row[](cell[_],cell[](combobox[_],button[Dock],button[Undock],button[Advance],textbox[_],button[Delay],button[Cancel flight]))",
+     "path": "cell/button",
+     "symbols": [
+      "click:button:Advance@T1",
+      "click:button:Cancel flight@T1",
+      "click:button:Delay@T1",
+      "click:button:Dock@T1",
+      "click:button:Undock@T1"
+     ]
+    },
+    {
+     "unit_template": "<static>",
+     "path": "combobox",
+     "symbols": [
+      "select:combobox#0@TNone",
+      "select:combobox#1@TNone",
+      "select:combobox#2@TNone"
+     ]
+    },
+    {
+     "unit_template": "group[](group[_ removed from _],heading[Ground crew],table[](rowgroup[](row[](cell[Agent],cell[Shift],cell[Duty]),row[](cell[_],cell[](text[no active duty])),row[](cell[_],cell[_ as _](button[Unassign])),row[](cell[_],cell[](text[no active duty])))),group[](text[Assign],combobox[_],button[Assign to duty]))",
+     "path": "group/combobox",
+     "symbols": [
+      "select:combobox#0@T4",
+      "select:combobox#1@T4"
+     ]
+    },
+    {
+     "unit_template": "group[](group[_ removed from _],heading[Ground crew],table[](rowgroup[](row[](cell[Agent],cell[Shift],cell[Duty]),row[](cell[_],cell[](text[no active duty])))),group[](text[Assign],combobox[_],button[Assign to duty]))",
+     "path": "group/combobox",
+     "symbols": [
+      "select:combobox#0@T5",
+      "select:combobox#1@T5",
+      "select:combobox#2@T5"
+     ]
+    }
+   ]
+  },
+  "grok_01_apiary": {
+   "run": "runs/oracle/grok_01_apiary",
+   "symbol_source": "per-instance slot key (legacy)",
+   "action_symbols": 19,
+   "surface_contexts": 9,
+   "colliding_symbols": 5,
+   "colliding_occurrences": 156,
+   "incompatible_symbols": 0,
+   "incompatible_occurrences": 0,
+   "collisions_with_disjoint_option_vocabularies": 0,
+   "collisions": [
+    {
+     "symbol": {
+      "kind": "click",
+      "slot": "button:Add frame",
+      "owner_type": 1
+     },
+     "incompatible": false,
+     "distinct_paths": [
+      "text/button"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "group[](text[_],text[](button[Add frame],button[Take frame],text[frames _]),text[](combobox[_ of _],button[Perch],button[Unperch]),group[](text[_ loads _](button[Haul],button[Withdraw])))",
+       "path": "text/button",
+       "occurrences": 9,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      },
+      {
+       "unit_template": "group[](text[_],text[](button[Add frame],button[Take frame],text[frames _]),text[](combobox[_ of _],button[Perch],button[Unperch]))",
+       "path": "text/button",
+       "occurrences": 6,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      }
+     ],
+     "distinct_surface_contexts": 2,
+     "option_vocabularies_disjoint": false,
+     "occurrences": 15
+    },
+    {
+     "symbol": {
+      "kind": "click",
+      "slot": "button:Take frame",
+      "owner_type": 1
+     },
+     "incompatible": false,
+     "distinct_paths": [
+      "text/button"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "group[](text[_],text[](button[Add frame],button[Take frame],text[frames _]),text[](combobox[_ of _],button[Perch],button[Unperch]))",
+       "path": "text/button",
+       "occurrences": 11,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      },
+      {
+       "unit_template": "group[](text[_],text[](button[Add frame],button[Take frame],text[frames _]),text[](combobox[_ of _],button[Perch],button[Unperch]),group[](text[_ loads _](button[Haul],button[Withdraw])))",
+       "path": "text/button",
+       "occurrences": 7,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      }
+     ],
+     "distinct_surface_contexts": 2,
+     "option_vocabularies_disjoint": false,
+     "occurrences": 18
+    },
+    {
+     "symbol": {
+      "kind": "click",
+      "slot": "button:Perch",
+      "owner_type": 1
+     },
+     "incompatible": false,
+     "distinct_paths": [
+      "text/button"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "group[](text[_],text[](button[Add frame],button[Take frame],text[frames _]),text[](combobox[_ of _],button[Perch],button[Unperch]))",
+       "path": "text/button",
+       "occurrences": 9,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      },
+      {
+       "unit_template": "group[](text[_],text[](button[Add frame],button[Take frame],text[frames _]),text[](combobox[_ of _],button[Perch],button[Unperch]),group[](text[_ loads _](button[Haul],button[Withdraw])))",
+       "path": "text/button",
+       "occurrences": 4,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      }
+     ],
+     "distinct_surface_contexts": 2,
+     "option_vocabularies_disjoint": false,
+     "occurrences": 13
+    },
+    {
+     "symbol": {
+      "kind": "click",
+      "slot": "button:Unperch",
+      "owner_type": 1
+     },
+     "incompatible": false,
+     "distinct_paths": [
+      "text/button"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "group[](text[_],text[](button[Add frame],button[Take frame],text[frames _]),text[](combobox[_ of _],button[Perch],button[Unperch]),group[](text[_ loads _](button[Haul],button[Withdraw])))",
+       "path": "text/button",
+       "occurrences": 9,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      },
+      {
+       "unit_template": "group[](text[_],text[](button[Add frame],button[Take frame],text[frames _]),text[](combobox[_ of _],button[Perch],button[Unperch]))",
+       "path": "text/button",
+       "occurrences": 7,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      }
+     ],
+     "distinct_surface_contexts": 2,
+     "option_vocabularies_disjoint": false,
+     "occurrences": 16
+    },
+    {
+     "symbol": {
+      "kind": "select",
+      "slot": "combobox#0",
+      "owner_type": 1
+     },
+     "incompatible": false,
+     "distinct_paths": [
+      "text/combobox"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "group[](text[_],text[](button[Add frame],button[Take frame],text[frames _]),text[](combobox[_ of _],button[Perch],button[Unperch]),group[](text[_ loads _](button[Haul],button[Withdraw])))",
+       "path": "text/combobox",
+       "occurrences": 49,
+       "roles": [
+        "combobox"
+       ],
+       "option_vocabulary": [
+        "Mid 0 of 1",
+        "Mid 0 of 2",
+        "Mid 1 of 1",
+        "Mid 1 of 2",
+        "North 0 of 1",
+        "North 0 of 2",
+        "North 1 of 1",
+        "North 1 of 2",
+        "South 1 of 1",
+        "South 1 of 2",
+        "South 2 of 2"
+       ],
+       "option_vocabulary_size": 11
+      },
+      {
+       "unit_template": "group[](text[_],text[](button[Add frame],button[Take frame],text[frames _]),text[](combobox[_ of _],button[Perch],button[Unperch]))",
+       "path": "text/combobox",
+       "occurrences": 45,
+       "roles": [
+        "combobox"
+       ],
+       "option_vocabulary": [
+        "Mid 0 of 1",
+        "Mid 0 of 2",
+        "Mid 1 of 1",
+        "Mid 1 of 2",
+        "North 0 of 1",
+        "North 0 of 2",
+        "North 1 of 1",
+        "North 1 of 2",
+        "South 1 of 1",
+        "South 1 of 2",
+        "South 2 of 2"
+       ],
+       "option_vocabulary_size": 11
+      }
+     ],
+     "distinct_surface_contexts": 2,
+     "option_vocabularies_disjoint": false,
+     "occurrences": 94
+    }
+   ],
+   "one_surface_context_many_symbols": [
+    {
+     "unit_template": "<static>",
+     "path": "button",
+     "symbols": [
+      "click:button:Blooms@TNone",
+      "click:button:Cancel@TNone",
+      "click:button:Colony@TNone",
+      "click:button:Confirm withdraw@TNone",
+      "click:button:Map@TNone",
+      "click:button:Open forage@TNone"
+     ]
+    },
+    {
+     "unit_template": "group[](text[_],text[](button[Add frame],button[Take frame],text[frames _]),text[](combobox[_ of _],button[Perch],button[Unperch]),group[](text[_ loads _](button[Haul],button[Withdraw])))",
+     "path": "text/button",
+     "symbols": [
+      "click:button:Add frame@T1",
+      "click:button:Perch@T1",
+      "click:button:Take frame@T1",
+      "click:button:Unperch@T1"
+     ]
+    },
+    {
+     "unit_template": "text[_ loads _](button[Haul],button[Withdraw])",
+     "path": "button",
+     "symbols": [
+      "click:button:Haul@T3",
+      "click:button:Haul@TNone",
+      "click:button:Withdraw@TNone"
+     ]
+    },
+    {
+     "unit_template": "group[](text[_],text[](button[Add frame],button[Take frame],text[frames _]),text[](combobox[_ of _],button[Perch],button[Unperch]))",
+     "path": "text/button",
+     "symbols": [
+      "click:button:Add frame@T1",
+      "click:button:Perch@T1",
+      "click:button:Take frame@T1",
+      "click:button:Unperch@T1"
+     ]
+    },
+    {
+     "unit_template": "<static>",
+     "path": "combobox",
+     "symbols": [
+      "select:combobox#0@TNone",
+      "select:combobox#1@TNone",
+      "select:combobox#2@TNone"
+     ]
+    }
+   ]
+  },
+  "claude_03_museum_loans": {
+   "run": "runs/oracle/claude_03_museum_loans",
+   "symbol_source": "per-instance slot key (legacy)",
+   "action_symbols": 25,
+   "surface_contexts": 23,
+   "colliding_symbols": 6,
+   "colliding_occurrences": 154,
+   "incompatible_symbols": 0,
+   "incompatible_occurrences": 0,
+   "collisions_with_disjoint_option_vocabularies": 0,
+   "collisions": [
+    {
+     "symbol": {
+      "kind": "select",
+      "slot": "combobox#0",
+      "owner_type": 2
+     },
+     "incompatible": false,
+     "distinct_paths": [
+      "cell/combobox"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "row[](cell[_],cell[](combobox[_],button[Place],button[Take down]),cell[](button[Draft loan]))",
+       "path": "cell/combobox",
+       "occurrences": 44,
+       "roles": [
+        "combobox"
+       ],
+       "option_vocabulary": [
+        "Long Hall",
+        "North Cabinet",
+        "Rotunda",
+        "Sculpture Court",
+        "Undercroft",
+        "West Wing"
+       ],
+       "option_vocabulary_size": 6
+      },
+      {
+       "unit_template": "row[](cell[_ over _],cell[_],cell[](combobox[_],button[Place],button[Take down]),cell[](button[Draft loan]))",
+       "path": "cell/combobox",
+       "occurrences": 12,
+       "roles": [
+        "combobox"
+       ],
+       "option_vocabulary": [
+        "Long Hall",
+        "North Cabinet",
+        "Rotunda",
+        "Sculpture Court",
+        "Undercroft",
+        "West Wing"
+       ],
+       "option_vocabulary_size": 6
+      },
+      {
+       "unit_template": "row[](cell[Bronze Kore],cell[_],cell[](combobox[_],button[Place],button[Take down]),cell[](button[Draft loan]))",
+       "path": "cell/combobox",
+       "occurrences": 8,
+       "roles": [
+        "combobox"
+       ],
+       "option_vocabulary": [
+        "Long Hall",
+        "North Cabinet",
+        "Sculpture Court",
+        "Undercroft"
+       ],
+       "option_vocabulary_size": 4
+      },
+      {
+       "unit_template": "row[](cell[_ at _],cell[_],cell[](combobox[_],button[Place],button[Take down]),cell[](button[Draft loan]))",
+       "path": "cell/combobox",
+       "occurrences": 8,
+       "roles": [
+        "combobox"
+       ],
+       "option_vocabulary": [
+        "Long Hall",
+        "North Cabinet",
+        "Rotunda",
+        "Sculpture Court",
+        "Undercroft",
+        "West Wing"
+       ],
+       "option_vocabulary_size": 6
+      },
+      {
+       "unit_template": "row[](cell[_ of _],cell[_],cell[](combobox[_],button[Place],button[Take down]),cell[](button[Draft loan]))",
+       "path": "cell/combobox",
+       "occurrences": 6,
+       "roles": [
+        "combobox"
+       ],
+       "option_vocabulary": [
+        "Long Hall",
+        "North Cabinet",
+        "Rotunda",
+        "Sculpture Court",
+        "Undercroft",
+        "West Wing"
+       ],
+       "option_vocabulary_size": 6
+      },
+      {
+       "unit_template": "row[](cell[Two Sisters],cell[_],cell[](combobox[_],button[Place],button[Take down]),cell[](button[Draft loan]))",
+       "path": "cell/combobox",
+       "occurrences": 2,
+       "roles": [
+        "combobox"
+       ],
+       "option_vocabulary": [
+        "Long Hall",
+        "North Cabinet",
+        "West Wing"
+       ],
+       "option_vocabulary_size": 3
+      },
+      {
+       "unit_template": "row[](cell[_ Cartographer],cell[_],cell[](combobox[_],button[Place],button[Take down]),cell[](button[Draft loan]))",
+       "path": "cell/combobox",
+       "occurrences": 2,
+       "roles": [
+        "combobox"
+       ],
+       "option_vocabulary": [
+        "Long Hall",
+        "Rotunda",
+        "Sculpture Court"
+       ],
+       "option_vocabulary_size": 3
+      },
+      {
+       "unit_template": "row[](cell[Reliquary Casket],cell[_],cell[](combobox[_],button[Place],button[Take down]),cell[](button[Draft loan]))",
+       "path": "cell/combobox",
+       "occurrences": 2,
+       "roles": [
+        "combobox"
+       ],
+       "option_vocabulary": [
+        "Long Hall",
+        "North Cabinet",
+        "Sculpture Court",
+        "Undercroft"
+       ],
+       "option_vocabulary_size": 4
+      }
+     ],
+     "distinct_surface_contexts": 8,
+     "option_vocabularies_disjoint": false,
+     "occurrences": 84
+    },
+    {
+     "symbol": {
+      "kind": "click",
+      "slot": "button:Place",
+      "owner_type": 2
+     },
+     "incompatible": false,
+     "distinct_paths": [
+      "cell/button"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "row[](cell[_],cell[](combobox[_],button[Place],button[Take down]),cell[](button[Draft loan]))",
+       "path": "cell/button",
+       "occurrences": 13,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      },
+      {
+       "unit_template": "row[](cell[_ over _],cell[_],cell[](combobox[_],button[Place],button[Take down]),cell[](button[Draft loan]))",
+       "path": "cell/button",
+       "occurrences": 4,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      },
+      {
+       "unit_template": "row[](cell[Bronze Kore],cell[_],cell[](combobox[_],button[Place],button[Take down]),cell[](button[Draft loan]))",
+       "path": "cell/button",
+       "occurrences": 3,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      },
+      {
+       "unit_template": "row[](cell[_ at _],cell[_],cell[](combobox[_],button[Place],button[Take down]),cell[](button[Draft loan]))",
+       "path": "cell/button",
+       "occurrences": 2,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      },
+      {
+       "unit_template": "row[](cell[Reliquary Casket],cell[_],cell[](combobox[_],button[Place],button[Take down]),cell[](button[Draft loan]))",
+       "path": "cell/button",
+       "occurrences": 1,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      }
+     ],
+     "distinct_surface_contexts": 5,
+     "option_vocabularies_disjoint": false,
+     "occurrences": 23
+    },
+    {
+     "symbol": {
+      "kind": "click",
+      "slot": "button:Take down",
+      "owner_type": 2
+     },
+     "incompatible": false,
+     "distinct_paths": [
+      "cell/button"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "row[](cell[_],cell[](combobox[_],button[Place],button[Take down]),cell[](button[Draft loan]))",
+       "path": "cell/button",
+       "occurrences": 8,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      },
+      {
+       "unit_template": "row[](cell[Bronze Kore],cell[_],cell[](combobox[_],button[Place],button[Take down]),cell[](button[Draft loan]))",
+       "path": "cell/button",
+       "occurrences": 1,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      },
+      {
+       "unit_template": "row[](cell[_ over _],cell[_],cell[](combobox[_],button[Place],button[Take down]),cell[](button[Draft loan]))",
+       "path": "cell/button",
+       "occurrences": 1,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      },
+      {
+       "unit_template": "row[](cell[_ at _],cell[_],cell[](combobox[_],button[Place],button[Take down]),cell[](button[Draft loan]))",
+       "path": "cell/button",
+       "occurrences": 1,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      }
+     ],
+     "distinct_surface_contexts": 4,
+     "option_vocabularies_disjoint": false,
+     "occurrences": 11
+    },
+    {
+     "symbol": {
+      "kind": "click",
+      "slot": "button:Draft loan",
+      "owner_type": 2
+     },
+     "incompatible": false,
+     "distinct_paths": [
+      "cell/button"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "row[](cell[_],cell[](combobox[_],button[Place],button[Take down]),cell[](button[Draft loan]))",
+       "path": "cell/button",
+       "occurrences": 12,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      },
+      {
+       "unit_template": "row[](cell[_ at _],cell[_],cell[](combobox[_],button[Place],button[Take down]),cell[](button[Draft loan]))",
+       "path": "cell/button",
+       "occurrences": 5,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      },
+      {
+       "unit_template": "row[](cell[_ over _],cell[_],cell[](combobox[_],button[Place],button[Take down]),cell[](button[Draft loan]))",
+       "path": "cell/button",
+       "occurrences": 3,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      }
+     ],
+     "distinct_surface_contexts": 3,
+     "option_vocabularies_disjoint": false,
+     "occurrences": 20
+    },
+    {
+     "symbol": {
+      "kind": "click",
+      "slot": "button:Record proposal",
+      "owner_type": 4
+     },
+     "incompatible": false,
+     "distinct_paths": [
+      "button"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "group[](text[Proposal for _],text[_],combobox[_],text[_],textbox[_],text[_],textbox[],button[Record proposal],button[Discard draft])",
+       "path": "button",
+       "occurrences": 3,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      },
+      {
+       "unit_template": "group[](text[Proposal for _],text[_],combobox[_],text[_],textbox[_],text[_],textbox[_],button[Record proposal],button[Discard draft])",
+       "path": "button",
+       "occurrences": 1,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      }
+     ],
+     "distinct_surface_contexts": 2,
+     "option_vocabularies_disjoint": false,
+     "occurrences": 4
+    },
+    {
+     "symbol": {
+      "kind": "select",
+      "slot": "combobox#0",
+      "owner_type": 4
+     },
+     "incompatible": false,
+     "distinct_paths": [
+      "combobox"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "group[](text[Proposal for _],text[_],combobox[_],text[_],textbox[_],text[_],textbox[],button[Record proposal],button[Discard draft])",
+       "path": "combobox",
+       "occurrences": 11,
+       "roles": [
+        "combobox"
+       ],
+       "option_vocabulary": [
+        "Ashfield Museum",
+        "Fondazione Carrara",
+        "Kunsthalle Bremen",
+        "National Trust Depot"
+       ],
+       "option_vocabulary_size": 4
+      },
+      {
+       "unit_template": "group[](text[Proposal for _],text[_],combobox[_],text[_],textbox[_],text[_],textbox[_],button[Record proposal],button[Discard draft])",
+       "path": "combobox",
+       "occurrences": 1,
+       "roles": [
+        "combobox"
+       ],
+       "option_vocabulary": [
+        "Getty Loan Office",
+        "National Trust Depot"
+       ],
+       "option_vocabulary_size": 2
+      }
+     ],
+     "distinct_surface_contexts": 2,
+     "option_vocabularies_disjoint": false,
+     "occurrences": 12
+    }
+   ],
+   "one_surface_context_many_symbols": [
+    {
+     "unit_template": "<static>",
+     "path": "button",
+     "symbols": [
+      "click:button#0@TNone",
+      "click:button#1@TNone",
+      "click:button:Cancel proposal@TNone",
+      "click:button:Catalogue@TNone",
+      "click:button:Confirm approval@TNone",
+      "click:button:Discard draft@TNone",
+      "click:button:Floor plan@TNone",
+      "click:button:Keep as proposal@TNone",
+      "click:button:Record proposal@TNone",
+      "click:button:Return@TNone"
+     ]
+    },
+    {
+     "unit_template": "group[](group[_],button[Take down])",
+     "path": "button",
+     "symbols": [
+      "click:button:Take down@T6",
+      "click:button:Take down@TNone"
+     ]
+    },
+    {
+     "unit_template": "row[](cell[_ at _],cell[_],cell[](combobox[_],button[Place],button[Take down]),cell[](button[Draft loan]))",
+     "path": "cell/button",
+     "symbols": [
+      "click:button:Draft loan@T2",
+      "click:button:Place@T2",
+      "click:button:Take down@T2"
+     ]
+    },
+    {
+     "unit_template": "row[](cell[_],cell[](combobox[_],button[Place],button[Take down]),cell[](button[Draft loan]))",
+     "path": "cell/button",
+     "symbols": [
+      "click:button:Draft loan@T2",
+      "click:button:Place@T2",
+      "click:button:Take down@T2"
+     ]
+    },
+    {
+     "unit_template": "row[](cell[_ over _],cell[_],cell[](combobox[_],button[Place],button[Take down]),cell[](button[Draft loan]))",
+     "path": "cell/button",
+     "symbols": [
+      "click:button:Draft loan@T2",
+      "click:button:Place@T2",
+      "click:button:Take down@T2"
+     ]
+    },
+    {
+     "unit_template": "group[](text[Proposal for _],text[_],combobox[_],text[_],textbox[_],text[_],textbox[],button[Record proposal],button[Discard draft])",
+     "path": "textbox",
+     "symbols": [
+      "type:textbox#0@T4",
+      "type:textbox#1@T4"
+     ]
+    },
+    {
+     "unit_template": "group[](text[Proposal for _],text[_],combobox[_],text[_],textbox[_],text[_],textbox[],button[Record proposal],button[Discard draft])",
+     "path": "button",
+     "symbols": [
+      "click:button:Discard draft@T4",
+      "click:button:Record proposal@T4"
+     ]
+    },
+    {
+     "unit_template": "row[](cell[Bronze Kore],cell[_],cell[](combobox[_],button[Place],button[Take down]),cell[](button[Draft loan]))",
+     "path": "cell/button",
+     "symbols": [
+      "click:button:Place@T2",
+      "click:button:Take down@T2"
+     ]
+    },
+    {
+     "unit_template": "<static>",
+     "path": "textbox",
+     "symbols": [
+      "type:textbox#0@TNone",
+      "type:textbox#1@TNone"
+     ]
+    }
+   ]
+  },
+  "g1_01_kiln": {
+   "run": "runs/g1_01_kiln",
+   "symbol_source": "per-instance slot key (legacy)",
+   "action_symbols": 18,
+   "surface_contexts": 14,
+   "colliding_symbols": 4,
+   "colliding_occurrences": 39,
+   "incompatible_symbols": 0,
+   "incompatible_occurrences": 0,
+   "collisions_with_disjoint_option_vocabularies": 0,
+   "collisions": [
+    {
+     "symbol": {
+      "kind": "click",
+      "slot": "button:Heat",
+      "owner_type": 1
+     },
+     "incompatible": false,
+     "distinct_paths": [
+      "group/button"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "group[](heading[Pit _],text[hold _],list[],group[](button[Heat]))",
+       "path": "group/button",
+       "occurrences": 9,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      },
+      {
+       "unit_template": "group[](heading[Pit _],text[hold _],list[](listitem[](button[_])),group[](button[Heat]))",
+       "path": "group/button",
+       "occurrences": 3,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      },
+      {
+       "unit_template": "group[](heading[Pit _],text[hold _],list[],group[](button[Heat],button[Seat]))",
+       "path": "group/button",
+       "occurrences": 3,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      }
+     ],
+     "distinct_surface_contexts": 3,
+     "option_vocabularies_disjoint": false,
+     "occurrences": 15
+    },
+    {
+     "symbol": {
+      "kind": "click",
+      "slot": "button:Wash",
+      "owner_type": 3
+     },
+     "incompatible": false,
+     "distinct_paths": [
+      "group/button"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "group[](heading[Piece],text[_ bare],group[](text[_](textbox[_]),button[Call]),group[](text[wash](textbox[]),button[Wash]))",
+       "path": "group/button",
+       "occurrences": 4,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      },
+      {
+       "unit_template": "group[](heading[Piece],text[_],group[](text[_](textbox[_]),button[Call]),group[](text[wash](textbox[_]),button[Wash]))",
+       "path": "group/button",
+       "occurrences": 1,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      }
+     ],
+     "distinct_surface_contexts": 2,
+     "option_vocabularies_disjoint": false,
+     "occurrences": 5
+    },
+    {
+     "symbol": {
+      "kind": "type",
+      "slot": "textbox#1",
+      "owner_type": 3
+     },
+     "incompatible": false,
+     "distinct_paths": [
+      "group/text/textbox"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "group[](heading[Piece],text[_ bare],group[](text[_](textbox[_]),button[Call]),group[](text[wash](textbox[]),button[Wash]))",
+       "path": "group/text/textbox",
+       "occurrences": 1,
+       "roles": [
+        "textbox"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      },
+      {
+       "unit_template": "group[](heading[Piece],text[_],group[](text[_](textbox[_]),button[Call]),group[](text[wash](textbox[_]),button[Wash]))",
+       "path": "group/text/textbox",
+       "occurrences": 1,
+       "roles": [
+        "textbox"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      }
+     ],
+     "distinct_surface_contexts": 2,
+     "option_vocabularies_disjoint": false,
+     "occurrences": 2
+    },
+    {
+     "symbol": {
+      "kind": "click",
+      "slot": "button:Seat",
+      "owner_type": 1
+     },
+     "incompatible": false,
+     "distinct_paths": [
+      "group/button"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "group[](heading[Pit _],text[hold _],list[](listitem[](button[_])),group[](button[Heat],button[Seat]))",
+       "path": "group/button",
+       "occurrences": 9,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      },
+      {
+       "unit_template": "group[](heading[Pit _],text[hold _],list[],group[](button[Heat],button[Seat]))",
+       "path": "group/button",
+       "occurrences": 8,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      }
+     ],
+     "distinct_surface_contexts": 2,
+     "option_vocabularies_disjoint": false,
+     "occurrences": 17
+    }
+   ],
+   "one_surface_context_many_symbols": [
+    {
+     "unit_template": "<static>",
+     "path": "button",
+     "symbols": [
+      "click:button:Call@TNone",
+      "click:button:Lift@TNone",
+      "click:button:No@TNone",
+      "click:button:Pits@TNone",
+      "click:button:Raise@TNone",
+      "click:button:Wash@TNone",
+      "click:button:Yes@TNone"
+     ]
+    },
+    {
+     "unit_template": "group[](heading[Piece],text[_ bare],group[](text[_](textbox[_]),button[Call]),group[](text[wash](textbox[]),button[Wash]))",
+     "path": "group/button",
+     "symbols": [
+      "click:button:Call@T3",
+      "click:button:Wash@T3"
+     ]
+    },
+    {
+     "unit_template": "group[](heading[Piece],text[_ bare],group[](text[_](textbox[_]),button[Call]),group[](text[wash](textbox[]),button[Wash]))",
+     "path": "group/text/textbox",
+     "symbols": [
+      "type:textbox#0@T3",
+      "type:textbox#1@T3"
+     ]
+    },
+    {
+     "unit_template": "group[](heading[Pit _],text[hold _],list[],group[](button[Heat],button[Seat]))",
+     "path": "group/button",
+     "symbols": [
+      "click:button:Heat@T1",
+      "click:button:Seat@T1"
+     ]
+    }
+   ]
+  },
+  "g2_grok_04_climbing": {
+   "run": "runs/g2_grok_04_climbing",
+   "symbol_source": "per-instance slot key (legacy)",
+   "action_symbols": 19,
+   "surface_contexts": 11,
+   "colliding_symbols": 3,
+   "colliding_occurrences": 44,
+   "incompatible_symbols": 0,
+   "incompatible_occurrences": 0,
+   "collisions_with_disjoint_option_vocabularies": 0,
+   "collisions": [
+    {
+     "symbol": {
+      "kind": "select",
+      "slot": "combobox#0",
+      "owner_type": 2
+     },
+     "incompatible": false,
+     "distinct_paths": [
+      "text/combobox"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "group[](text[_],text[grade _],text[](combobox[_ of _],button[Restow],button[Pull]))",
+       "path": "text/combobox",
+       "occurrences": 20,
+       "roles": [
+        "combobox"
+       ],
+       "option_vocabulary": [
+        "Cave 0 of 2",
+        "Cave 1 of 2",
+        "Cave 2 of 2",
+        "Island 1 of 2",
+        "Island 2 of 2",
+        "Moon 0 of 2",
+        "Moon 1 of 2",
+        "Moon 2 of 2"
+       ],
+       "option_vocabulary_size": 8
+      },
+      {
+       "unit_template": "group[](text[_],text[grade _ lead],text[](combobox[_ of _],button[Restow],button[Pull]))",
+       "path": "text/combobox",
+       "occurrences": 13,
+       "roles": [
+        "combobox"
+       ],
+       "option_vocabulary": [
+        "Cave 0 of 2",
+        "Cave 2 of 2",
+        "Island 1 of 2",
+        "Moon 1 of 2",
+        "Moon 2 of 2"
+       ],
+       "option_vocabulary_size": 5
+      }
+     ],
+     "distinct_surface_contexts": 2,
+     "option_vocabularies_disjoint": false,
+     "occurrences": 33
+    },
+    {
+     "symbol": {
+      "kind": "click",
+      "slot": "button:Pull",
+      "owner_type": 2
+     },
+     "incompatible": false,
+     "distinct_paths": [
+      "text/button"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "group[](text[_],text[grade _],text[](combobox[_ of _],button[Restow],button[Pull]))",
+       "path": "text/button",
+       "occurrences": 5,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      },
+      {
+       "unit_template": "group[](text[_],text[grade _ lead],text[](combobox[_ of _],button[Restow],button[Pull]))",
+       "path": "text/button",
+       "occurrences": 2,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      }
+     ],
+     "distinct_surface_contexts": 2,
+     "option_vocabularies_disjoint": false,
+     "occurrences": 7
+    },
+    {
+     "symbol": {
+      "kind": "click",
+      "slot": "button:Restow",
+      "owner_type": 2
+     },
+     "incompatible": false,
+     "distinct_paths": [
+      "text/button"
+     ],
+     "surface_contexts": [
+      {
+       "unit_template": "group[](text[_],text[grade _ lead],text[](combobox[_ of _],button[Restow],button[Pull]))",
+       "path": "text/button",
+       "occurrences": 2,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      },
+      {
+       "unit_template": "group[](text[_],text[grade _],text[](combobox[_ of _],button[Restow],button[Pull]))",
+       "path": "text/button",
+       "occurrences": 2,
+       "roles": [
+        "button"
+       ],
+       "option_vocabulary": [],
+       "option_vocabulary_size": 0
+      }
+     ],
+     "distinct_surface_contexts": 2,
+     "option_vocabularies_disjoint": false,
+     "occurrences": 4
+    }
+   ],
+   "one_surface_context_many_symbols": [
+    {
+     "unit_template": "<static>",
+     "path": "button",
+     "symbols": [
+      "click:button:Cancel@TNone",
+      "click:button:Confirm pull@TNone",
+      "click:button:Pull@TNone",
+      "click:button:Restow@TNone",
+      "click:button:Routes@TNone",
+      "click:button:Walls@TNone"
+     ]
+    },
+    {
+     "unit_template": "group[](heading[_ of _],group[](button[_],combobox[_]))",
+     "path": "group/combobox",
+     "symbols": [
+      "select:combobox#0@T0",
+      "select:combobox#1@T0"
+     ]
+    },
+    {
+     "unit_template": "<static>",
+     "path": "combobox",
+     "symbols": [
+      "select:combobox#0@TNone",
+      "select:combobox#1@TNone"
+     ]
+    },
+    {
+     "unit_template": "group[](text[_],text[grade _],text[](combobox[_ of _],button[Restow],button[Pull]))",
+     "path": "text/button",
+     "symbols": [
+      "click:button:Pull@T2",
+      "click:button:Restow@T2"
+     ]
+    },
+    {
+     "unit_template": "row[](cell[_],cell[_](button[Bump],button[Ease]),cell[_],cell[](button[Open]))",
+     "path": "cell/button",
+     "symbols": [
+      "click:button:Bump@T4",
+      "click:button:Ease@T4",
+      "click:button:Open@T4"
+     ]
+    },
+    {
+     "unit_template": "group[](text[_],text[grade _ lead],text[](combobox[_ of _],button[Restow],button[Pull]))",
+     "path": "text/button",
+     "symbols": [
+      "click:button:Pull@T2",
+      "click:button:Restow@T2"
+     ]
+    }
+   ]
+  }
+ },
+ "summary": {
+  "runs": 16,
+  "runs_with_a_collision": 11,
+  "total_colliding_symbols": 28,
+  "total_colliding_occurrences": 536,
+  "runs_with_an_incompatible_symbol": 2,
+  "total_incompatible_symbols": 2,
+  "total_incompatible_occurrences": 38
+ }
+}

@@ -25,11 +25,21 @@ from semabi.compiler.evidence import EvidenceLog, Step
 class Locator:
     """Where a target element lives: inside an object of type owner_tid (bound
     to a param), inside a transient instance of type trans_tid whose text slot
-    equals a param value, or static (both None)."""
+    equals a param value, or static (both None).
+
+    `slot` is the control's semantic identity (a latent control family where the
+    abstractor induces them).  `ui_slot` is the state slot key of the occurrence that was
+    actually operated: provenance for reading the widget's current value and for replaying
+    the primitive, never part of the action's identity."""
     slot: str
     owner_tid: int | None = None
     trans_tid: int | None = None
     trans_slot: str | None = None  # slot of the transient instance that identifies it
+    ui_slot: str | None = field(default=None, compare=False)
+
+    @property
+    def state_slot(self) -> str:
+        return self.ui_slot or self.slot
 
     def __str__(self) -> str:
         if self.owner_tid is not None:
@@ -243,17 +253,28 @@ def _params_of(e: EffT) -> list[str]:
 
 @dataclass
 class TargetInfo:
-    slot: str | None
+    slot: str | None            # semantic control identity (latent family when available)
     owner: AbsObj | None  # persistent object containing the target
     trans_tid: int | None = None
     trans_slots: dict[str, Any] | None = None
+    ui_slot: str | None = None  # state slot key of the occurrence (provenance)
+
+
+def control_keys(abstractor, obs, po) -> dict[int, str]:
+    """Node -> semantic control identity, falling back to the state slot key.
+
+    Abstractors that induce latent control families provide them; the V0/V1 front ends do
+    not and keep their original per-instance slot keys."""
+    families = getattr(abstractor, "control_family", None)
+    return families(obs) if families is not None else po.node_key
 
 
 def describe_target(abstractor: Abstractor, state: AbstractState, obs, node: int | None) -> TargetInfo | None:
     if node is None:
         return None
     po = abstractor.parsed(obs)
-    slot = po.node_key.get(node)
+    ui_slot = po.node_key.get(node)
+    slot = control_keys(abstractor, obs, po).get(node, ui_slot)
     idx = po.node_instance.get(node)
     owner = None
     trans_tid = None
@@ -274,7 +295,7 @@ def describe_target(abstractor: Abstractor, state: AbstractState, obs, node: int
             trans_tid = inst.tid
             trans_slots = {k: v for k, (_, v) in inst.slots.items()}
         p = inst.parent
-    return TargetInfo(slot, owner, trans_tid, trans_slots)
+    return TargetInfo(slot, owner, trans_tid, trans_slots, ui_slot)
 
 
 # --------------------------------------------------------------------------
@@ -657,7 +678,7 @@ class Inducer:
                 continue
             loc_owner_tid = ti.owner.tid if ti.owner else None
             owner_p = obj_p(ti.owner.id) if ti.owner else None
-            loc = Locator(ti.slot or "", loc_owner_tid)
+            loc = Locator(ti.slot or "", loc_owner_tid, ui_slot=ti.ui_slot)
             if ti.owner is None and ti.trans_tid is not None and ti.trans_slots:
                 # transient instance: identify it by a slot whose value is an object key
                 ident = None
@@ -668,13 +689,13 @@ class Inducer:
                             ident = (k, oid)
                             break
                 if ident:
-                    loc = Locator(ti.slot or "", None, ti.trans_tid, ident[0])
+                    loc = Locator(ti.slot or "", None, ti.trans_tid, ident[0], ui_slot=ti.ui_slot)
                     owner_p = obj_p(ident[1])
             arg = None
             if s.action.kind == "type":
                 arg = str_p(s.action.text or "")
             elif s.action.kind == "select":
-                prefer = self.A.types[loc_owner_tid].refs.get(ti.slot) if loc_owner_tid is not None and ti.slot else None
+                prefer = self.A.types[loc_owner_tid].refs.get(ti.ui_slot) if loc_owner_tid is not None and ti.ui_slot else None
                 oid = key_lookup(s.action.text or "", st, prefer)
                 arg = obj_p(oid) if oid else str_p(s.action.text or "")
             acts.append(ActT(s.action.kind, loc, owner_p, arg))
@@ -818,10 +839,10 @@ class Inducer:
         for k, (_, v) in po.statics.items():
             if v == value:
                 if k.startswith("combobox"):
-                    return ("select", Locator(k))
+                    return ("select", Locator(k, ui_slot=k))
                 if k.startswith("textbox"):
-                    return ("type", Locator(k))
-                return ("context", Locator(k))
+                    return ("type", Locator(k, ui_slot=k))
+                return ("context", Locator(k, ui_slot=k))
         return None
 
     # ---------------------------------------------------------- clustering
@@ -1064,7 +1085,7 @@ class Inducer:
         if loc is None:
             return None
         if loc.owner_tid is None and loc.trans_tid is None:
-            v = po.statics.get(loc.slot)
+            v = po.statics.get(loc.state_slot)
             return v[1] if v else None
         if loc.owner_tid is not None:
             owner = bound.get(a.owner)
@@ -1073,7 +1094,7 @@ class Inducer:
                 o = by_node.get(inst.root)
                 if o is None or o.id != owner:
                     continue
-                v = inst.slots.get(loc.slot)
+                v = inst.slots.get(loc.state_slot)
                 return v[1] if v else None
         return None
 
@@ -1163,7 +1184,7 @@ class Inducer:
             if a.loc is None or a.loc.owner_tid is None or not a.owner:
                 continue
             ti = self.A.types[a.loc.owner_tid]
-            slot = a.loc.slot
+            slot = a.loc.state_slot
             if slot in ti.merged:
                 canon = ti.merged[slot]
                 val = ti.merged_map[slot].get(True)

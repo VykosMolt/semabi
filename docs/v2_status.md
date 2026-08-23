@@ -1,217 +1,259 @@
-# V2 status: independent-seed falsification checkpoint
+# V2 status: corrected action alphabet
 
-Status date: 2026-08-23. Every result below is on already-seen gauntlet-v2
-development applications. It is not fresh generalization evidence. Frozen V0/V1 tags
-and gauntlet history are unchanged, and this project has not authored gauntlet-v3.
+Status date: 2026-08-23. Every result below is on already-seen gauntlet-v2 development
+applications. It is not fresh generalization evidence. Frozen V0/V1 tags and gauntlet
+history are unchanged, and this project has not authored gauntlet-v3.
 
 Machine-readable evidence:
 
+- `docs/data/v2/control_collision_legacy_2026-08-23.json` (the alphabet that was replaced)
+- `docs/data/v2/control_collision_2026-08-23.json` (the alphabet that replaced it)
+- `docs/data/v2/action_alphabet_determinism_2026-08-23.json`
 - `docs/data/v2/falsification_2026-08-23.json` (per-seed prospective evidence)
 - `docs/data/v2/prospective_validation_2026-08-23.json`
 - `docs/data/v2/gate_reachability_2026-08-23.json`
-- `docs/data/v2/falsification_traces_2026-08-23.json` (new traces, cost + evaluator join)
+- `docs/data/v2/artifact_consistency_2026-08-23.json` (documents, artifacts and run records
+  checked against each other by `semabi/eval/v2_artifact_consistency.py`)
+- `docs/data/v2/falsification_traces_2026-08-23.json`
 - `docs/data/v2/counterexample_refinement_2026-08-23.json`
 - `docs/data/v2/operator_eligibility_2026-08-23.json`
-- `docs/data/v2/stability_seed11_2026-08-23.json`
-- `docs/data/v2/budget_curve_2026-08-23.json`
-- `docs/data/v2/llm_condition_2026-08-23.json`
+- `docs/data/v2/stability_seed11_2026-08-23.json`, `budget_curve_2026-08-23.json`,
+  `active_control_2026-08-23.json`, `llm_condition_2026-08-23.json` (unchanged by this
+  checkpoint; the budget curves and the matched controls predate the action rewrite and are
+  labelled historical development evidence)
 - per-run provenance under `runs/v2_refinement/`, `runs/v2_stability/`,
-  `runs/v2_validation/`, and `runs/v2_falsification/`
+  `runs/v2_validation/`, `runs/v2_falsification/`
 
 ## Outcome
 
-The previous checkpoint validated both principal refinements on **one** held-out trace
-each. Four further independent traces were collected (climbing seeds 12 and 13,
-observatory seeds 12 and 13; 3,218 primitives) and the audited validator was applied to
-each seed separately. One of the two validated abstractions did not survive.
+The previous checkpoint traced climbing's predictive failure to the *action alphabet*:
+a control was identified by the slot key its enclosing entity instance assigned it -- for
+an unlabelled widget a per-instance role ordinal such as `combobox#0` -- plus that
+entity's run-local type id. State abstraction had become more principled than the actions
+defined over it. This checkpoint replaces control identity with latent control families
+and recompiles everything; no earlier result was carried over.
 
-| source refinement | seed 11 | seed 12 | seed 13 | decision |
-|---|---|---|---|---|
-| climbing widget attachment + correspondence (`ref-a4fd4824b37a`) | `VALIDATED` (16 exact, 0 contradictions) | **`MISPREDICTED`** (20 exact, **8 contradictions**) | `VALIDATED` (11 exact, 0 contradictions) | **`MISPREDICTED`**, removed from the canonical abstraction |
-| observatory relational-record split (`ref-080835c578e1`) | `VALIDATED` (34 exact, 0) | `VALIDATED` (25 exact, 0) | `VALIDATED` (29 exact, 0) | `VALIDATED`, canonical |
-| datacenter context membership + correspondence | `INCONCLUSIVE` | - | - | `PROVISIONAL`; gate unreachable by construction (below) |
+| | before | after |
+|---|---|---|
+| action symbols covering >1 surface context (16 traces) | 28 | 28 |
+| symbols covering *incompatible* contexts | **2** | **0** |
+| performed actions under an incompatible symbol | **38** | **0** |
+| climbing `ref-a4fd4824b37a` | VALIDATED / MISPREDICTED / VALIDATED (seeds 11/12/13) | **MISPREDICTED on all three** |
+| observatory `ref-080835c578e1` | VALIDATED x3, 36 differential wins | **VALIDATED x3, 36 differential wins** |
+| datacenter | PROVISIONAL, decision inert on independent traces | unchanged |
 
-A decision is not carried by a majority: one applicable, rendered contradiction under a
-unique type mapping demotes it, and the two passing traces do not overturn it. Climbing's
-canonical model therefore reverts to the unrefined compile (RTC .000, registered-delta
-precision .167, view false-positive rate .757). Observatory's canonical model is
-unchanged (RTC .676, precision .885).
+The one abstraction that survived the previous falsification campaign survived a
+foundational correction to the representation it is stated in. The one that failed now
+fails everywhere, because the collision had been masking its real defect.
 
-`freeze_gate: PARTIAL_1_OF_3_CASES_HAVE_INDEPENDENT_PREDICTIVE_VALIDATION`. **V2 is not
-freeze-ready and was not tagged.**
+## What was wrong, measured before it was changed
 
-## Behavioral novelty versus structural novelty
+`semabi/eval/v2_control_collision.py` recovers, for every action the explorer actually
+performed, the symbol the inducer uses and the *surface context* of the target: the
+template of the innermost recurring unit containing the control and the role path from
+that unit's root. Over sixteen retained traces -- climbing, observatory, datacenter,
+pharmacy-c, three oracle runs, a gauntlet-v1 and a gauntlet-v2 trace -- 28 symbols cover
+more than one surface context across 536 performed actions.
 
-Baseline subtraction is structural: a candidate schema counts as refinement-introduced
-when no baseline schema has the same effective action and effect under a type mapping.
-That says nothing about whether the refinement *predicts* anything the unrefined model
-does not. A differential arm now answers the question directly: both models are compiled
-from the same held-out trace, their occurrences are paired by step index, and each held-out
-transition is classified by which model the environment selected. A candidate win requires
-the baseline to be contradicted on a transition where the candidate was confirmed, so the
-two cannot have predicted the same thing there; structural difference alone is never
-counted (`semabi/compiler/v2/differential.py`).
+Most are benign. Eight row variants of the museum loan table, two apiary card variants and
+three observatory row variants all expose one control at one path with overlapping option
+vocabularies; merging them is correct and splitting them would only fragment support.
 
-| case | seed | candidate correct / wrong | baseline correct / wrong | same prediction | candidate wins | baseline wins |
-|---|---|---:|---:|---:|---:|---:|
-| observatory | 11 | 35 / 0 | 22 / 18 | 21 | **14** | 0 |
-| observatory | 12 | 25 / 0 | 18 / 15 | 15 | **10** | 0 |
-| observatory | 13 | 29 / 0 | 19 / 17 | 17 | **12** | 0 |
-| climbing | 11 | 18 / 0 | 0 / 0 | 0 | 0 | 0 |
-| climbing | 12 | 21 / **8** | 0 / 0 | 0 | 0 | 0 |
-| climbing | 13 | 12 / 0 | 0 / 0 | 0 | 0 | 0 |
+Two are not benign, and both have disjoint option vocabularies:
 
-Observatory: `VALIDATED_INCREMENTAL_VALUE_CORRECTIVE`. All 36 wins are one mechanism, with
-full provenance in the records. The unrefined model identifies sessions at scope level, so
-it merges durations across nights and the frozen inducer emits two mutually contradictory
-precondition-free rules for the same lifted `Extend` (`duration := '2'` and
-`duration := '4'`). On every win the baseline confirms one and is contradicted on the
-other (`candidate_wins_where_baseline_also_had_a_confirmed_schema` = 36/36) while the
-record model states one conditioned rule and is never contradicted. Example: observatory
-seed 12 step 83, `click(button:Pointing)` then `click(button:Extend@T4[?o0])` with
-`?o0 = Mid|N6`; candidate `op2` confirmed `duration := '3'`, baseline `op9` predicted
-`'4'` and observed `'2'`. Five further seed-12 transitions have the baseline wrong where
-the candidate abstains; those are reported as `BASELINE_ONLY_PREDICTS_WRONG` and are **not**
-counted as wins.
+| run | symbol | contexts | evidence |
+|---|---|---|---|
+| climbing seed 12 | `select combobox#0 @T0` | grade selector at `group/combobox`; wall selector at `text/combobox` | `{black, pink, white, yellow}` vs `{Cave 0 of 2, Moon 1 of 2, ...}`, 29 actions |
+| datacenter loop 004 | `select combobox#0 @T3` | blade selector; pool selector, both at `group/text/combobox` | `{blade-02 (760 W), ...}` vs `{D1, D3, D7}`, 9 actions |
 
-Climbing: `VALIDATED_INCREMENTAL_VALUE_COVERAGE_ONLY` on seeds 11 and 13 and refuted on
-seed 12. There is no divergent comparable case in either direction on any climbing trace,
-because the unrefined climbing model has **no determinate schema at all** — all six of its
-schemas at support >= 2 claim effects on an object the action does not bind. The
-refinement is therefore the only source of testable claims about the grade widget; on
-seed 12 it is also the only source of false ones (8 of 29 determinate steps).
+The climbing collision is the one that produced seven false lifted claims. It is not a
+climbing phenomenon: the same representation defect is present in datacenter, and the
+benign cases show the same key over-splitting one control by instance ordinal at the same
+time.
 
-## Why climbing failed, exactly
+## Control families
 
-Seed 12 contradicts the refinement in two distinct ways, both diagnosed from
-compiler-visible evidence only.
+A surface control occurrence is now treated the way a UI fragment is treated for entities
+(`semabi/compiler/v2/controls.py`). A control mention keeps its provenance -- run,
+observation, node, role, options, enclosing unit -- and is assigned to a latent family
+described only by run-independent evidence:
 
-**1. Action-locator conflation (7 of 8 contradictions).** In seed 12 the baseline entity
-typing merges the wall-card and route-card unit templates into a single type: T0 carries
-five unit templates, against three in the source trace and in seed 11 — and this merge is
-present in the *unrefined* compile, so it is not caused by the refinement. Slot ids are
-per-instance role ordinals (`node_key` in `V2Abstractor.parse`) and `describe_target`
-records a control as (slot id, owner type). Consequently `select(combobox#0@T0[?o0], ?s0)`
-denotes the wall card's grade combobox in one unit and the route card's `_ of _` wall
-selector in another. The refinement, keyed by `(source_template, source_slot)`, then fires
-on the wall selector and asserts that the routes' colour becomes `"Moon 1 of 2"`; the page
-renders `yellow`, `pink`, `white`, `black`. Seven contradictions, all of this shape.
+* the interaction role;
+* the control's stable label, when it has one that is not entity data;
+* the role path from the root of the innermost recurring unit containing it.
 
-**2. Forall over-generalization (1 of 8).** At seed-12 step 411, selecting `yellow` in
-wall `Moon` recolours `Moon|R1` (confirmed) but leaves `Moon|R2` `white`. The learned
-schema quantifies over every attachment record of the wall
-(`forall x:T2 with rel:0(x)==?o0`), which was indistinguishable from the co-local reading
-while seed 11 and the source trace never rendered two routes of one wall at once. This is
-the small-entity-universe confound made concrete.
+Occurrences agreeing on all three are one family across unit-template variants, but only
+when the entity layer already groups those templates into one latent entity, and only when
+their option vocabularies are not disjoint. Structure, entity and values must all agree;
+any one disagreeing splits. The asymmetry is deliberate: a false merge fabricates lifted
+preconditions and universal rules, a false split only fragments support. Labels can only
+*separate* controls that already differ structurally -- no rule names a widget's meaning,
+and none was added for climbing. Nothing in the criterion reads a control's effects, so
+family identity remains selection evidence that behavioural validation can confirm or
+refute without circularity.
 
-Both defects are upstream of the refinement layer and neither is app-specific.
+A semantic action is `control family + bound entities/context + entered value`. The
+operated occurrence's own state slot survives on the locator as `ui_slot`, excluded from
+identity: it reads the widget's current value, names affordance preconditions, and replays
+the primitive. Where one family has several rendered occurrences inside one owner the
+executor picks one deterministically and the inducer reports the operator as
+underdetermined -- which is the honest description of an action that does not say which of
+two identical controls was used.
 
-## The predictive-counterexample loop, executed
+Controls outside every recurring unit keep the identity they already had, so view/sensing
+separation, the probe-based VIEW classification and the delayed-attribution rules are
+untouched. The V0 and V1 front ends induce no families and are bit-identical; the oracle
+ladder is unaffected.
 
-The failure was fed back through the generic machinery rather than patched.
+Family ids are run-local strings: a run that never rendered one template variant of a split
+family needs no disambiguating suffix and so names the family differently. Cross-run
+comparison therefore unifies families by descriptor (role, stable label, path) plus
+overlapping templates, injectively within an alignment -- the same discipline already used
+for entity types -- and a family the held-out run never rendered makes an occurrence
+`NOT_COMPARABLE`, never contradicted.
 
-1. `ref-a4fd4824b37a` -> `MISPREDICTED`; excluded from the canonical abstraction, with the
-   eight counterexamples retained in
-   `runs/v2_refinement/climbing_loop_004/predictive_counterexamples_v2.jsonl`.
-2. The originating ambiguity component `amb-9001cf88fce4` was reopened and its accepted
-   hypothesis `h-b0a5522b30c0` marked `CONTRADICTED` with the failure as evidence
-   (`reopen_from_predictive_counterexamples`).
-3. One honest iteration of the refinement loop was run on a copy of the source run
-   (`runs/v2_falsification/climbing_reopen_001`). The refuted component had no surviving
-   *refinement* alternative — only `VIEW_STATE`, which the persistence probe contradicts —
-   so the scheduler moved to the sibling widget component `amb-2e137996c883` and produced a
-   new decision `ref-47e12ddb5822` on the second grade combobox.
-4. The new decision was prospectively validated in isolation
-   (`runs/v2_falsification/climbing_reopen_002`): `PROVISIONAL` on seed 11 (recurrence
-   without a novel binding), **`MISPREDICTED` on seed 12** (7 contradictions), `PROVISIONAL`
-   on seed 13. Its hypothesis is now `CONTRADICTED` as well.
+Result over the same sixteen traces: incompatible symbols 2 -> 0, incompatible actions
+38 -> 0. Seven runs also lost an over-split symbol (airport 23 -> 20, museum 25 -> 24,
+kiln 18 -> 17, climbing seed 11 17 -> 16).
 
-The next refinement fails on the same seven page-selector cases, i.e. on defect 1 above.
-The deterministic generator's hypothesis space for climbing's widget ambiguity is now
-exhausted; repairing it would require changing what identifies a control, not adding
-another local alternative. Per the documented stop rule this is recorded as a negative
-result rather than patched with a layout-specific rule.
+## Residual raw-slot audit
 
-A loop defect was found while executing this: every diagnostic compile rebuilds ambiguity
-components from scratch and `write_components` overwrote the stored ones by id, so a
-refutation was erased before the next refinement pass could read it — the first reopened
-run re-selected the refuted hypothesis and reset it to `PROVISIONAL`. `write_components`
-now carries `CONTRADICTED` statuses and their evidence across refits
-(`_carry_refutations`), covered by `tests/test_v2_reopen.py`.
+The per-instance slot key still exists and still does three jobs: reading a widget's current
+value, naming an affordance precondition, and replaying the UI primitive. That is executable
+grounding. The audit asks whether it can still *define* semantic identity anywhere.
 
-## Datacenter: the gate is unreachable, not merely unmet
+| where identity could leak | result |
+|---|---|
+| control-family identity | descriptor is role + stable label + role path + template set; no ordinal, no type id, no node index |
+| lifted action identity | `Locator.ui_slot` is `compare=False`: two occurrences of one family with different concrete slots are the same `ActT` |
+| cross-unit merging | merging requires role, label, path, entity group and value vocabulary to agree; ordinals never participate |
+| cross-run alignment | families align by descriptor plus overlapping templates; the concrete slot is not consulted |
+| operator parameterization | parameters come from the action binding and learned reference preconditions, unchanged |
+| persistent semantic effects | effect slots are *state* attribute names and can still carry a positional suffix (`attr:group/combobox#0@7`); state-side, and cross-run it can only make an occurrence `NOT_COMPARABLE`, never confirm one |
+| learned precondition equivalence | affordance preconditions use `state_slot` by construction, i.e. grounding-side |
+| differential comparison | grounded claims are keyed by rendered DOM node, not by slot |
 
-The previous checkpoint reported datacenter's schema-level validation as `INCONCLUSIVE`
-because the source trace contains one retirement and no schema reaches the frozen
-inducer's support threshold, and named a second independent retirement as the next
-requirement. That requirement would not have decided anything.
+Measured on the retained runs: every action symbol a learned operator uses that lies inside
+a recurring unit is a control family, and families really do collapse concrete slots --
+climbing has 135 (observation, family) pairs covering two different concrete slots and
+datacenter up to three. The symbols that still have an ordinal shape (`checkbox#0`,
+`button#0`, `button#3`) are all controls *outside* every recurring unit, which by design
+keep the identity they had; that is the same namespace the view/sensing classification uses
+and the collision diagnostic finds no incompatible static symbol in any of the sixteen
+traces. This residual is documented rather than removed: extending families to controls
+that belong to no recurring unit is post-freeze work.
 
-`configure_hypotheses` installs `ATTACH_CONTEXT_MEMBERSHIP` and `ASSOCIATE_MENTION_TYPE`
-purely as `(observation signature, node)` assignments. Neither decision has any
-run-independent target key, so the bundle cannot state anything about a trace it did not
-see. Measured directly: the candidate compile of every independent datacenter trace is
-**bit-identical** to its baseline compile (`held_out_compile_changed_by_decisions: false`,
-same type/operator digest). Re-running the comparison with the support threshold lowered to
-1 — a diagnostic that can never promote — makes the retirement schema a prediction and it is
-`NOT_COMPARABLE` on all 8 held-out occurrences of the holdout run and all 1,090 of seed 11,
-because the held-out abstraction has no `attr:context` slot for it to map onto.
+Seven regression tests pin the boundary (`tests/test_v2_action_slot_boundary.py`): one
+family across different ordinals, two families at the same ordinal, the same ordinal under
+different unit structures, locator/action identity ignoring the concrete slot, cross-run
+alignment ignoring it, replay still reaching the recorded occurrence (and a deterministic
+fallback when there is none), and the V0/V1 fallback to state slots.
 
-Verdict `GATE_UNREACHABLE_DECISION_INERT_ON_INDEPENDENT_TRACE`
-(`docs/data/v2/gate_reachability_2026-08-23.json`). No further retirement primitives were
-spent: the outcome does not depend on them. The decision stays `PROVISIONAL` with its one
-passed direct novel-prediction test (11 primitives, rack `D4`, server `node-16`) attached
-as direct support, n = 1. The documented promotion rule is unchanged and was not weakened.
+## Determinism
 
-By contrast the two decisions that did reach the gate are template-keyed:
-`ATTACH_PERSISTENT_WIDGET` names `(source_template, source_slot, target_template)` and
-`SPLIT_RELATIONAL_RECORD` names anchor/context/target entity templates. Every validation
-record now reports which target keys are run-independent and whether the bundle changes the
-held-out compile at all.
+Twenty compiles -- climbing and observatory each as selection trace plus three held-out
+seeds, datacenter and pharmacy-c, refined and unrefined -- were run in a fresh interpreter
+under `PYTHONHASHSEED` 0, 1 and 7 and compared on a structural model digest *and* the full
+control-family registry (`semabi/eval/v2_determinism.py`). All twenty are identical across
+all three seeds; no compile differs.
 
-## Validator defects found and fixed this round
+The family registry is also stable across runs of one application, which is what makes
+cross-run alignment cheap in practice rather than merely possible: climbing induces the
+same nine families in its selection trace and in every one of its three held-out seeds,
+observatory the same seven, datacenter fourteen, pharmacy-c six -- refined and unrefined
+alike, so the alphabet does not depend on which refinements are applied.
 
-The gate was re-audited whenever it produced a verdict, and every historical verdict was
-re-run after each fix.
+## Climbing after the rewrite
 
-1. **Absence in a view that renders no object of the type was treated as decisive.** A
-   predicted change on an object missing from a partial after-state counted as
-   `CONTRADICTED`, and a predicted *removal* of such an object counted as confirmed — the
-   same UNKNOWN acting as FALSE in one direction and TRUE in the other. Absence is now
-   `UNOBSERVED` unless the type is rendered afterwards. This removed observatory seed 12's
-   single contradiction (a transition whose own lifted effects both set `duration := '3'`
-   and deleted the record) and made removal confirmations strictly harder. Climbing's
-   contradictions are value mismatches on rendered objects and are unaffected.
-2. **A lifted `set`/`rel` effect on an object the occurrence's own after-state does not
-   contain** is now reported as inconsistent provenance rather than silently becoming an
-   unexplained extra.
-3. **`decision_transfer.template_keyed` was hardcoded `true`**, which asserted something
-   false about the datacenter decisions. It is now derived from the decision's
-   run-independent target keys, alongside the empirical compile-digest comparison.
+The seven collision-driven false claims are gone: no wall-selector occurrence can match the
+grade-selector family, so `select(combobox#group/combobox@T0[?o0])` no longer predicts that
+a route's colour becomes `"Moon 1 of 2"`. The decision was not restored: it was re-tested,
+and under the corrected alphabet it is **MISPREDICTED on all three seeds**, not only on
+seed 12. The collision had been masking its real defect.
 
-`tests/test_v2_validation.py` covers each; the suite is 70 passed, 1 expected xfail.
+| seed | verdict | contradicted schema | contradictions | quantifier counterexamples |
+|---|---|---|---:|---:|
+| 11 | `MISPREDICTED` | `attr:group/combobox#0@7(?o0) := ?s0` | 4 | 6 |
+| 12 | `MISPREDICTED` | same | 3 | 3 |
+| 13 | `MISPREDICTED` | same | 4 | 2 |
 
-## Point estimate versus canonical model
+A wall card renders one grade combobox per route. The decision attaches *one* of them to
+its co-local route mention and leaves the sibling's value as an attribute of the wall, so
+the model claims that selecting a grade sets the wall's second grade slot -- false whenever
+the other control was the one used. The reopened refinement loop (refutation carried across
+the component refit, `_carry_refutations` still holding after the rewrite) skipped the
+refuted hypothesis, moved to the sibling component and produced `ref-47e12ddb5822`, exactly
+the missing half. Tested in isolation on the same three seeds it is **MISPREDICTED on all
+three** as well -- refuted by the mirror-image schema of the widget *it* leaves unrefined
+(5/2/2 contradictions on seeds 11/12/13). Neither half is canonical.
 
-| app | condition | RTC | registered-delta precision | view false-positive rate | recovered operators |
-|---|---|---:|---:|---:|---:|
-| climbing | no decision | 0.000 | 0.167 | 0.757 | 3 misleading matches |
-| climbing | former supported point estimate / provisional | **0.817** | 0.711 | 0.268 | 1 (`recolor`) |
-| climbing | canonical VALIDATED-only | **0.000** | 0.167 | 0.757 | 3 misleading matches |
-| observatory | no decision | 0.000 | 0.000 | 0.537 | 0 |
-| observatory | former supported point estimate / provisional | **0.676** | 0.885 | 0.314 | 1 (`extend`) |
-| observatory | canonical VALIDATED-only | **0.676** | 0.885 | 0.314 | 1 (`extend`) |
-| datacenter | no decision / canonical | 0.000 | 0.000 | 0.200 | 0 |
-| datacenter | provisional context/correspondence | 0.000 | 0.000 | 0.167 | 0 |
-| pharmacy-c | no decision | 0.345 | 0.909 | 0.267 | 0 |
+Applying both decisions together is not a promotion path (one of them is refuted and stays
+refuted) but it is a decisive diagnostic, and it was run: every false claim disappears and
+**nothing testable is left**. `INCONCLUSIVE` on all three seeds, with the recolor schemas
+reported as `UNDERDETERMINED_EFFECT_PARAMETER` or `UNSUPPORTED_UNIVERSAL_QUANTIFIER`. That
+is the honest state of knowledge: the action `select(grade family on wall W)` genuinely does
+not identify which route it acts on, because the locator's owner is the enclosing wall.
+The attachment refinement moves the *attribute* to the route mention but not the *action's
+bound entity*, so the two ambiguity components -- one per state slot -- are two occurrences
+of one control family and cannot be decided separately. This is the single strongest
+remaining falsification, and it is generic, not a climbing rule.
 
-The climbing point estimate of .817 is now known to be a development-trace fit: the same
-abstraction is contradicted on an independent trace. Keeping the three conditions separate
-is what made that visible. Matched-prefix causality, independent recurrence, and the point
-estimate still answer different questions and are still reported separately; the budget
-curves are unchanged (climbing moves only at +16 primitives, observatory at +9, controls
-flat).
+## The forall over-generalization, handled generically
 
-## Fresh traces and cost
+`forall x in R(anchor): effect(x)` is inferred because every observed member changed. If no
+positive transition ever contained two eligible members, the universal reading is
+observationally identical to a singular effect on the one member that was there: the
+evidence supports the effect, not the quantifier. Such a schema is now reported as
+`UNSUPPORTED_UNIVERSAL_QUANTIFIER` and is a prediction in neither direction. Climbing's
+recolor forall is exactly this case -- no wall in the selection trace ever rendered two
+routes at once -- and the rule is stated over the source evidence alone, never consulting
+the held-out trace.
+
+A held-out state with several eligible members that falsifies it is retained separately as
+a *quantifier counterexample* (11 across the three seeds) rather than as a refutation of the
+decision, because what it refutes is the inducer's quantifier, not the refinement's
+attachment claim. Conflating the two would blame the wrong component, which is what the
+previous checkpoint's single `MISPREDICTED` verdict did.
+
+## Observatory, re-earned
+
+Nothing was grandfathered: the decision was re-tested from scratch on the three existing
+independent seeds under the corrected alphabet, and on a fourth seed collected *after* the
+rewrite.
+
+| seed | verdict | exact recurrences | contradictions | novel bindings | candidate wins | baseline wins | baseline contradicted |
+|---|---|---:|---:|---:|---:|---:|---:|
+| 11 | `VALIDATED` | 34 | 0 | 7 | 14 | 0 | 18 |
+| 12 | `VALIDATED` | 25 | 0 | 12 | 10 | 0 | 15 |
+| 13 | `VALIDATED` | 29 | 0 | 8 | 12 | 0 | 17 |
+| 14 (new) | `VALIDATED` | 18 | 0 | 3 | 4 | 0 | 12 |
+| total | | **106** | **0** | **30** | **40** | **0** | **62** |
+
+Per-step, the refined model is determinate on 107 held-out transitions and wrong on none;
+the unrefined model is determinate on 138 and wrong on 62. The mechanism is unchanged and
+still corrective rather than structural: scope-level identity merges durations across
+nights, so the unrefined inducer emits two mutually contradictory precondition-free `Extend`
+rules and is contradicted on one of them at every win, while the record model states one
+conditioned rule. `VALIDATED_INCREMENTAL_VALUE_CORRECTIVE` on every seed.
+
+Observatory had no incompatible collisions, so seeds 11-13 give exactly the numbers of the
+previous checkpoint. That is the point: the result did not depend on the defect that was
+fixed, and it holds on a trace collected after the fix.
+
+## Datacenter
+
+Unchanged and still honest. `ATTACH_CONTEXT_MEMBERSHIP` and `ASSOCIATE_MENTION_TYPE`
+install only `(observation signature, node)` overrides, so the candidate compile of every
+independent datacenter trace remains bit-identical to its baseline and both cross-run tests
+are `INCONCLUSIVE` with no prediction from either model. The rewrite removed datacenter's
+own control collision (blade selector versus pool selector, 9 actions) but that collision
+was not what blocked its gate. The decisions stay `PROVISIONAL` with one passed direct
+novel-prediction test (n = 1). No datacenter primitives were spent this round.
+
+## Fresh trace and cost
+
+One new trace was collected, after the rewrite, to test the corrected compiler on evidence
+it had never seen: observatory seed 14, 834 primitives.
 
 | app | seed | primitives | broad | view/navigation | reloads | resets | diagnostic overhead | relevant operator instances (evaluator custody) |
 |---|---:|---:|---:|---:|---:|---:|---|---|
@@ -219,67 +261,129 @@ flat).
 | climbing | 13 | 741 | 370 | 295 | 70 | 6 | 365 (.493) | recolor 18, hang 1, bump 52, ease 47 |
 | observatory | 12 | 841 | 361 | 406 | 68 | 6 | 474 (.564) | extend 20, clip 14, detach 9, retarget 2 |
 | observatory | 13 | 885 | 358 | 454 | 67 | 6 | 521 (.589) | extend 21, clip 15, detach 7, retarget 4 |
+| observatory | 14 (new) | 834 | 366 | 396 | 66 | 6 | 462 (.554) | extend 16, clip 13, detach 8, retarget 4 |
 
-Overhead is unchanged and still dominated by repeated surveys and reloads; it did not grow
-with trace count. Every seed exercised the relevant behavior, so none is
-`INCONCLUSIVE_FOR_VALIDATION`. The reopened refinement loop cost 18 primitives on top of the 435-primitive source trace. No
-datacenter primitives were spent this round.
+Diagnostic overhead is unchanged at .49-.59 and did not grow with the rewrite. The reopened
+climbing loop cost 18 primitives on top of its 435-primitive source trace. No datacenter
+primitives were spent.
+
+## Point estimate versus canonical model
+
+The supported-point-estimate column applies the development decisions regardless of status;
+the canonical column loads only validated ones. Values are from the corrected compiler; the
+climbing point estimate is retained only as **historical development-trace evidence**.
+
+| app | condition | RTC | registered-delta precision | view false-positive rate | recovered operators |
+|---|---|---:|---:|---:|---:|
+| climbing | no decision | 0.000 | 0.167 | 0.757 | 3 misleading matches |
+| climbing | supported point estimate (historical) | 0.817 | 0.711 | 0.268 | 1 (`recolor`) |
+| climbing | canonical VALIDATED-only | **0.000** | 0.167 | 0.757 | 3 misleading matches |
+| observatory | no decision | 0.000 | 0.000 | 0.537 | 0 |
+| observatory | supported point estimate | 0.676 | 0.885 | 0.314 | 1 (`extend`) |
+| observatory | canonical VALIDATED-only | **0.676** | **0.885** | 0.314 | 1 (`extend`) |
+| datacenter | no decision / canonical | 0.000 | 0.000 | 0.200 | 0 |
+| datacenter | provisional | 0.000 | 0.000 | 0.167 | 0 |
+| pharmacy-c | no decision / canonical | 0.345 | 0.909 | 0.267 | 0 |
 
 ## Operator eligibility
 
-The 47-operator evaluator ledger is unchanged in aggregate: 42 exercised, 36 recovered
-under known vocabulary, 9 recovered by the canonical V2 model. Membership moved with the
-demotion: `recolor` is no longer canonically recovered and `climbing:pull` now is, so the
-count coincides by accident and not by substitution of like for like.
+Unchanged by the rewrite, as expected: the oracle rungs use the V0/V1 front end, which
+induces no families.
 
 ```text
+47 hidden operators, 42 exercised, 36 recovered under known vocabulary
+9 recovered by the canonical V2 model
 grounded correctly + expressible in frozen V0 + >=80% clean coverage/support
     = 3 eligible operators (airport cancel_flight, apiary unperch, pharmacy-g unstow)
     = 3 recovered
 ```
 
-All six exercised known-vocabulary failures remain accounted for by frozen effect-language
-limits and/or sparse repeated templates. There is still no evidence requiring a V0 inducer
-rewrite, and the effect language stays frozen. This checkpoint's failure is upstream of the
-inducer, not downstream of it.
+No known-vocabulary miss is unaccounted for after effect-language limits and sparse
+support. There is still no evidence requiring a V0 inducer rewrite, and the effect language
+stays frozen. Climbing's canonical recovery is `pull`, not `recolor`: the demotion is
+visible in the ledger rather than hidden by an unchanged headline count.
+
+## Validator work forced by the rewrite
+
+Changing the action alphabet forced two changes in the gate itself, both regression tested.
+
+1. **Cross-run action-family alignment.** Family ids are run-local. Comparing them as
+   strings would have recreated inside the evaluator exactly the defect the rewrite
+   removed from the compiler -- the same error the type-variable unification fixed a
+   checkpoint earlier. Alignment now matches descriptors plus overlapping templates,
+   injectively within an alignment, and an unmatched family yields `NOT_COMPARABLE`.
+   Adversarial cases covered: the same semantic control at a different surface position,
+   different semantic controls sharing a role and ordinal, one family under different
+   entity bindings, one family reached through a different view, and two families with
+   identical descriptors but no shared template.
+2. **The `mentioned` slot constraint.** `_mentioned_structure` used the locator's slot to
+   require that a held-out type carries the operated control. With families that string is
+   no longer a state slot, so the constraint would have silently become vacuous and
+   loosened the gate. It now uses the occurrence's `ui_slot`.
+
+No defect was found in the pre-existing comparison logic this round. One implementation
+error of my own -- a duplicated record field that silently shifted constructor arguments --
+was caught by the first artifact that read the record and fixed before any result was
+computed from it.
 
 ## What was falsified or withdrawn
 
-1. **One audited prospective pass is not enough.** The climbing refinement passed the
-   audited gate on seed 11 and is contradicted on seed 12. A single held-out trace can
-   agree with a wrong abstraction whose error the trace's entity universe cannot express.
-2. **The climbing widget attachment is withdrawn from the canonical abstraction.** Its
-   .817 RTC stands as a development-trace point estimate only.
-3. **Structural novelty is not behavioral novelty, and climbing never had the latter.**
-   The unrefined climbing model makes no determinate claim at all, so the refinement was
-   never shown to predict *better*; on seed 12 it predicts worse than silence.
-4. **Datacenter's schema-level gate is unreachable, not unmet.** Collecting a second
-   retirement would not have decided it. Reported honestly instead of as sparse evidence.
-5. **A refutation did not survive a refit.** Fixed; the loop now cannot re-select a
-   hypothesis a counterexample has refuted.
-6. **Absence was not treated three-valued.** The validator used absence from a partial
-   view as both FALSE and TRUE depending on direction. Fixed in both directions.
-7. **Identity-only sufficiency, the survey-cost result, and the absence of a case for a V0
-   rewrite** are unchanged.
+1. **Semantic action identity was being read off the surface.** A per-instance role ordinal
+   inside a run-local entity type is not an action; 28 symbols in sixteen traces covered
+   more than one control and two covered incompatible ones. The alphabet, not climbing, was
+   wrong.
+2. **Climbing's earlier per-seed verdicts are withdrawn.** `VALIDATED / MISPREDICTED /
+   VALIDATED` becomes `MISPREDICTED` on all three seeds: the collision was masking the real
+   defect on the two seeds that had passed.
+3. **The replacement refinement is refuted too.** Attaching either one of two co-located
+   grade widgets leaves the other's wall-level schema false. The two ambiguity components
+   are two occurrences of one control family and cannot be decided separately.
+4. **The universal quantifier was never earned.** Climbing's recolor forall is
+   observationally identical to a singular effect on the source evidence, and is now
+   reported as such rather than promoted or blamed.
+5. **Observatory's result did not depend on the defect that was fixed.** Re-earned from
+   scratch under the corrected alphabet: 106 exact recurrences, 0 contradictions, 30 novel
+   bindings, 40 differential wins, 0 losses over four independent seeds, one of them collected
+   after the rewrite.
+6. **Datacenter's gate stays unreachable by construction.** Its own control collision was
+   removed and nothing changed, which is the point: that collision was not what blocked it.
 
-What survives: observatory's relational-record split is prospectively validated on three
-independent traces with 88 exact recurrences, zero contradictions, 27 object-level novel
-bindings, and 36 held-out transitions where it is right and the unrefined model is wrong.
+## Freeze
 
-## Decision and next step
+| # | criterion | status |
+|---|---|---|
+| 1 | control identity not tied to run-local entity type + ordinal | met: family = role + stable label + role path, merged only with entity and value agreement |
+| 2 | known collisions resolved generically | met: incompatible symbols 2 -> 0, incompatible actions 38 -> 0 over sixteen traces, no app-specific rule |
+| 3 | action-family representation deterministic | met: identical models and family registries across `PYTHONHASHSEED` 0/1/7 |
+| 4 | observatory re-validates or is honestly demoted | met: re-validated from scratch on three independent seeds and on a fourth collected after the rewrite |
+| 5 | climbing's refuted decision stays refuted; a replacement must independently validate | met: refuted on all three seeds; the loop's replacement was tested and also refuted, so nothing was promoted |
+| 6 | the forall over-generalization prevented by a generic rule or correctly handled as a counterexample | met: both -- `UNSUPPORTED_UNIVERSAL_QUANTIFIER` plus retained quantifier counterexamples |
+| 7 | differential evidence of genuine predictive improvement for a canonical refinement | met: observatory, 40 wins, 0 losses over four seeds |
+| 8 | operator eligibility reveals no unaddressed downstream inducer defect | met: clean denominator unchanged, all known-vocabulary misses still accounted for |
+| 9 | datacenter has an honest status | met: `PROVISIONAL`, gate unreachable by construction, recorded |
+| 10 | full tests and compiler/evaluator boundaries pass | met |
+| 11 | documentation and machine artifacts agree | met |
 
-V2 is **not freeze-ready**. Freeze criterion 1 fails: climbing was refuted and the generic
-loop did not repair it. Criterion 3 is met by observatory alone. No tag was created, no
-gauntlet-v3 was authored, and no app-specific rule was added.
+V2 is frozen at this state. The canonical abstraction contains exactly one decision,
+observatory's relational-record split `ref-080835c578e1`. Climbing's two candidate
+refinements are refuted and excluded; datacenter's two remain provisional and inert.
 
-The single most important remaining falsification is **control identity**. Both climbing
-failures and the failure of the refinement that replaced it come from
-`select(combobox#0@T0[?o])` denoting different rendered controls in different traces, because
-entity typing merges unit templates trace-dependently and locators keep only (per-instance
-slot ordinal, owner type). The next step is to make a control's identity run-independent —
-template-qualified — and then re-run this entire prospective battery, including observatory,
-because that change alters every action locator and therefore every compiled model and every
-number above. Until then no widget-attachment refinement can be trusted across traces, and
-the observatory result should be treated as conditional on the current locator semantics.
+This is a development-set result. It says that counterexample-guided local refinement can
+produce an abstraction that keeps making correct, baseline-beating predictions on
+independently collected traces of the same application, after the representation those
+predictions are stated in was itself corrected. It does not say the method generalizes to
+an unseen application. That question needs an independently authored, compiler-blind suite;
+this project must not author it.
 
-Do not tag V2, do not author gauntlet-v3, and do not expand the frozen effect language.
+## The single strongest remaining falsification
+
+An attachment refinement moves a widget's *value* to the co-local mention it belongs to but
+leaves the *action's bound entity* as the enclosing unit. When one control family has
+several rendered occurrences inside one owner -- two routes in a wall card -- the action
+therefore cannot say which one it acted on, and any per-occurrence effect attributed to a
+specific object is right half the time. That is why both climbing half-refinements are
+refuted and why applying both leaves nothing testable: the model becomes correctly silent
+instead of confidently wrong. The next step is to bind the action to the mention the
+attachment already identified, so `select(grade, route)` replaces `select(grade, wall)`,
+and then to re-run this entire battery -- including observatory, which must not be
+grandfathered through that change either.

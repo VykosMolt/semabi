@@ -69,6 +69,8 @@ def _seed_row(record: dict, source: Path, with_cost: bool) -> dict:
                                   for row in object_novel}),
         "view_domain_leaks": len(record.get("view_domain_leaks", [])),
         "baseline_control": record.get("provenance", {}).get("baseline_control"),
+        "decisions_change_the_held_out_compile": record.get("provenance", {}).get(
+            "held_out_compile_changed_by_decisions"),
         "differential": {k: v for k, v in differential.items() if k != "cases"},
         "validated_decision_ids": record.get("provenance", {}).get("validated_decision_ids", []),
         "predictive_counterexamples_file": str(source / "predictive_counterexamples_v2.jsonl"),
@@ -113,10 +115,22 @@ def main() -> None:
         validations = json.loads(path.read_text()).get("validations", []) if path.exists() else []
         decisions = json.loads((source / "refinements_v2.json").read_text()).get("decisions", [])
         rows = [_seed_row(record, source, not args.no_cost) for record in validations]
+        canonical = [d["id"] for d in decisions if d["status"] == "VALIDATED"]
+        # why a case is not canonical, in one machine-readable place: refuted by evidence,
+        # or unable to state anything the baseline does not already state
+        if canonical:
+            reason = None
+        elif any(r["classification"] == "MISPREDICTED" for r in rows):
+            reason = "REFUTED_ON_AN_INDEPENDENT_TRACE"
+        elif rows and all(r.get("decisions_change_the_held_out_compile") is False for r in rows):
+            reason = "NO_INCREMENTAL_SEMANTIC_PREDICTION"
+        else:
+            reason = "NO_APPLICABLE_HELD_OUT_EVIDENCE"
         report["cases"][source.name] = {
             "source_run": str(source),
             "decision_statuses": {d["id"]: d["status"] for d in decisions},
-            "canonical_decision_ids": [d["id"] for d in decisions if d["status"] == "VALIDATED"],
+            "canonical_decision_ids": canonical,
+            "noncanonical_reason": reason,
             "held_out_traces": rows,
             "independent_traces_tested": len(rows),
             "mispredicted_traces": sum(r["classification"] == "MISPREDICTED" for r in rows),

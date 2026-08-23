@@ -1,0 +1,116 @@
+{
+ "version": 1,
+ "checks": [
+  {
+   "check": "collision: the rewrite removed every incompatible symbol",
+   "passed": true,
+   "detail": "2 -> 0"
+  },
+  {
+   "check": "collision: both arms cover the same runs",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "determinism: identical across every tested hash seed",
+   "passed": true,
+   "detail": "0,1,7"
+  },
+  {
+   "check": "ledger: no known-vocabulary miss is unaccounted for",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "ledger: the clean denominator is fully recovered",
+   "passed": true,
+   "detail": "3/3"
+  },
+  {
+   "check": "climbing_loop_004: decision statuses match the run record",
+   "passed": true,
+   "detail": "{'ref-a4fd4824b37a': 'MISPREDICTED'}"
+  },
+  {
+   "check": "climbing_loop_004: canonical set matches",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "climbing_loop_004: a contradiction on any trace leaves nothing canonical",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "observatory_loop_001: decision statuses match the run record",
+   "passed": true,
+   "detail": "{'ref-080835c578e1': 'VALIDATED'}"
+  },
+  {
+   "check": "observatory_loop_001: canonical set matches",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "observatory_loop_001: a contradiction on any trace leaves nothing canonical",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "datacenter_context_loop_004: decision statuses match the run record",
+   "passed": true,
+   "detail": "{'ref-2e782cb7889a': 'PROVISIONAL', 'ref-e89963ebd151': 'PROVISIONAL'}"
+  },
+  {
+   "check": "datacenter_context_loop_004: canonical set matches",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "datacenter_context_loop_004: a contradiction on any trace leaves nothing canonical",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "climbing_loop_004: non-canonical cases carry a machine-readable reason",
+   "passed": true,
+   "detail": "REFUTED_ON_AN_INDEPENDENT_TRACE"
+  },
+  {
+   "check": "observatory_loop_001: non-canonical cases carry a machine-readable reason",
+   "passed": true,
+   "detail": "None"
+  },
+  {
+   "check": "datacenter_context_loop_004: non-canonical cases carry a machine-readable reason",
+   "passed": true,
+   "detail": "NO_INCREMENTAL_SEMANTIC_PREDICTION"
+  },
+  {
+   "check": "climbing_reopen_004: non-canonical cases carry a machine-readable reason",
+   "passed": true,
+   "detail": "REFUTED_ON_AN_INDEPENDENT_TRACE"
+  },
+  {
+   "check": "climbing_reopen_003: non-canonical cases carry a machine-readable reason",
+   "passed": true,
+   "detail": "NO_APPLICABLE_HELD_OUT_EVIDENCE"
+  },
+  {
+   "check": "observatory: differential wins with no reverse case",
+   "passed": true,
+   "detail": "40/0"
+  },
+  {
+   "check": "status document quotes the collision result",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "check": "status document names every artifact it relies on",
+   "passed": true,
+   "detail": ""
+  }
+ ],
+ "all_consistent": true
+}

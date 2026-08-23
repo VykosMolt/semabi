@@ -244,10 +244,10 @@
       {
        "name": "op0",
        "support": 7,
-       "negative_examples": 50,
-       "unexplained_negative_examples": 27,
+       "negative_examples": 33,
+       "unexplained_negative_examples": 9,
        "actions": [
-        "click(button#0@T1[?o0])"
+        "click(button#button@bb8f76@T1[?o0])"
        ],
        "effects": [
         "rel:0(?o1) := 'T0:Cave'"
@@ -259,10 +259,10 @@
       {
        "name": "op1",
        "support": 5,
-       "negative_examples": 52,
-       "unexplained_negative_examples": 20,
+       "negative_examples": 35,
+       "unexplained_negative_examples": 8,
        "actions": [
-        "click(button#0@T1[?o0])"
+        "click(button#button@bb8f76@T1[?o0])"
        ],
        "effects": [
         "rel:0(?o1) := 'T0:Moon'"
@@ -275,10 +275,10 @@
       {
        "name": "op2",
        "support": 4,
-       "negative_examples": 53,
-       "unexplained_negative_examples": 12,
+       "negative_examples": 36,
+       "unexplained_negative_examples": 4,
        "actions": [
-        "click(button#0@T1[?o0])"
+        "click(button#button@bb8f76@T1[?o0])"
        ],
        "effects": [
         "rel:0(?o1) := 'T0:Island'"
@@ -307,10 +307,10 @@
       {
        "name": "op4",
        "support": 2,
-       "negative_examples": 37,
+       "negative_examples": 38,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T0[?o0])"
+        "click(button#button@9f41fc@T0[?o0])"
        ],
        "effects": [
         "in:0(?o1) := '?o0'"
@@ -338,10 +338,10 @@
       {
        "name": "op6",
        "support": 1,
-       "negative_examples": 56,
-       "unexplained_negative_examples": 39,
+       "negative_examples": 39,
+       "unexplained_negative_examples": 25,
        "actions": [
-        "click(button#0@T1[?o0])"
+        "click(button#button@bb8f76@T1[?o0])"
        ],
        "effects": [
         "?new0 := new T2(id=Arete) rel:0->T0:Moon"
@@ -366,10 +366,10 @@
       {
        "name": "op8",
        "support": 1,
-       "negative_examples": 56,
-       "unexplained_negative_examples": 33,
+       "negative_examples": 39,
+       "unexplained_negative_examples": 24,
        "actions": [
-        "click(button#0@T1[?o0])"
+        "click(button#button@bb8f76@T1[?o0])"
        ],
        "effects": [
         "?new0 := new T2(id=Arete) rel:0->T0:Island"
@@ -381,10 +381,10 @@
       {
        "name": "op9",
        "support": 1,
-       "negative_examples": 133,
+       "negative_examples": 156,
        "unexplained_negative_examples": 0,
        "actions": [
-        "select(combobox#0@T0[?o0], ?s0)"
+        "select(combobox#group/combobox@T0[?o0], ?s0)"
        ],
        "effects": [
         "?new0 := new T0(id=Moon, attr:group/combobox#0=None, attr:group/combobox#0@7=None, attr:of#1=None, attr:of#2=None)",
@@ -397,10 +397,10 @@
       {
        "name": "op10",
        "support": 1,
-       "negative_examples": 56,
-       "unexplained_negative_examples": 33,
+       "negative_examples": 39,
+       "unexplained_negative_examples": 24,
        "actions": [
-        "click(button#0@T1[?o0])"
+        "click(button#button@bb8f76@T1[?o0])"
        ],
        "effects": [
         "?new0 := new T0(id=Moon, attr:group/combobox#0=None, attr:group/combobox#0@7=None, attr:of#1=None, attr:of#2=None)",
@@ -428,10 +428,10 @@
       {
        "name": "op12",
        "support": 1,
-       "negative_examples": 133,
+       "negative_examples": 156,
        "unexplained_negative_examples": 0,
        "actions": [
-        "select(combobox#0@T0[?o0], ?s0)"
+        "select(combobox#group/combobox@T0[?o0], ?s0)"
        ],
        "effects": [
         "?new0 := new T0(id=Island, attr:group/combobox#0=None, attr:group/combobox#0@7=None, attr:of#1=None, attr:of#2=None)",
@@ -447,7 +447,7 @@
        "negative_examples": 2,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T1[?o0])",
+        "click(button#button@bb8f76@T1[?o0])",
         "click(button:Restow@T2[?o1])"
        ],
        "effects": [
@@ -856,7 +856,7 @@
     "comparable_abstraction_pairs": 0,
     "consistent_abstraction_pairs": 0,
     "contradictory_abstraction_pairs": 0,
-    "unresolved_abstraction_pairs_due_unknown": 42,
+    "unresolved_abstraction_pairs_due_unknown": 43,
     "argument_binding": {
      "recolor": {
       "successful_instances": 74,
@@ -1020,10 +1020,10 @@
       {
        "name": "op0",
        "support": 45,
-       "negative_examples": 124,
+       "negative_examples": 126,
        "unexplained_negative_examples": 0,
        "actions": [
-        "select(combobox#0@T0[?o0], ?s0)"
+        "select(combobox#group/combobox@T0[?o0], ?s0)"
        ],
        "effects": [
         "forall x:T2 with rel:0(x)==?o0: attr:attached:group/combobox#0(x) := '?s0'"
@@ -1035,10 +1035,10 @@
       {
        "name": "op1",
        "support": 16,
-       "negative_examples": 153,
+       "negative_examples": 155,
        "unexplained_negative_examples": 0,
        "actions": [
-        "select(combobox#0@T0[?o0], ?s0)"
+        "select(combobox#group/combobox@T0[?o0], ?s0)"
        ],
        "effects": [
         "attr:attached:group/combobox#0(?o1) := '?s0'"
@@ -1050,10 +1050,10 @@
       {
        "name": "op2",
        "support": 12,
-       "negative_examples": 157,
+       "negative_examples": 159,
        "unexplained_negative_examples": 0,
        "actions": [
-        "select(combobox#1@T0[?o0], ?s0)"
+        "select(combobox#group/combobox@T0[?o0], ?s0)"
        ],
        "effects": [
         "attr:group/combobox#0@7(?o0) := '?s0'"
@@ -1065,10 +1065,10 @@
       {
        "name": "op3",
        "support": 7,
-       "negative_examples": 35,
+       "negative_examples": 33,
        "unexplained_negative_examples": 3,
        "actions": [
-        "click(button#0@T2[?o0])"
+        "click(button#button@bb8f76@T2[?o0])"
        ],
        "effects": [
         "delete ?o1"
@@ -1082,10 +1082,10 @@
       {
        "name": "op4",
        "support": 5,
-       "negative_examples": 37,
+       "negative_examples": 35,
        "unexplained_negative_examples": 4,
        "actions": [
-        "click(button#0@T2[?o0])"
+        "click(button#button@bb8f76@T2[?o0])"
        ],
        "effects": [
         "rel:0(?o1) := 'T0:Cave'"
@@ -1098,10 +1098,10 @@
       {
        "name": "op5",
        "support": 4,
-       "negative_examples": 38,
-       "unexplained_negative_examples": 3,
+       "negative_examples": 36,
+       "unexplained_negative_examples": 1,
        "actions": [
-        "click(button#0@T2[?o0])"
+        "click(button#button@bb8f76@T2[?o0])"
        ],
        "effects": [
         "rel:0(?o1) := 'T0:Island'"
@@ -1131,10 +1131,10 @@
       {
        "name": "op7",
        "support": 2,
-       "negative_examples": 40,
+       "negative_examples": 38,
        "unexplained_negative_examples": 7,
        "actions": [
-        "click(button#0@T2[?o0])"
+        "click(button#button@bb8f76@T2[?o0])"
        ],
        "effects": [
         "id(?o1) := 'R2'",
@@ -1148,10 +1148,10 @@
       {
        "name": "op8",
        "support": 2,
-       "negative_examples": 40,
+       "negative_examples": 38,
        "unexplained_negative_examples": 1,
        "actions": [
-        "click(button#0@T2[?o0])"
+        "click(button#button@bb8f76@T2[?o0])"
        ],
        "effects": [
         "delete ?o1",
@@ -1164,18 +1164,18 @@
       {
        "name": "op9",
        "support": 2,
-       "negative_examples": 40,
+       "negative_examples": 38,
        "unexplained_negative_examples": 4,
        "actions": [
-        "click(button#0@T2[?o0])"
+        "click(button#button@bb8f76@T2[?o0])"
        ],
        "effects": [
         "rel:0(?o1) := 'T0:Moon'"
        ],
        "preconditions": [
         "('ref', '?o0', 'rel:1', '?o1')",
-        "('attr_ne', '?o0', 'id', 'T0:Island|T1:R2')",
-        "('attr', '?o1', 'attr:cell#0', None)"
+        "('attr', '?o1', 'attr:cell#0', None)",
+        "('attr_ne', '?o0', 'id', 'T0:Cave|T1:R2')"
        ]
       },
       {
@@ -1225,10 +1225,10 @@
       {
        "name": "op13",
        "support": 1,
-       "negative_examples": 41,
+       "negative_examples": 39,
        "unexplained_negative_examples": 1,
        "actions": [
-        "click(button#0@T2[?o0])"
+        "click(button#button@bb8f76@T2[?o0])"
        ],
        "effects": [
         "id(?o1) := 'R3'",
@@ -1264,10 +1264,10 @@
       {
        "name": "op15",
        "support": 1,
-       "negative_examples": 36,
-       "unexplained_negative_examples": 3,
+       "negative_examples": 39,
+       "unexplained_negative_examples": 4,
        "actions": [
-        "click(button#0@T0[?o0])"
+        "click(button#button@9f41fc@T0[?o0])"
        ],
        "effects": [
         "?new0 := new T2(id=T0:Cave|T1:R3, attr:attached:group/combobox#0=pink) rel:0->?o0 rel:1->T1:R3",
@@ -1281,10 +1281,10 @@
       {
        "name": "op16",
        "support": 1,
-       "negative_examples": 41,
+       "negative_examples": 39,
        "unexplained_negative_examples": 8,
        "actions": [
-        "click(button#0@T2[?o0])"
+        "click(button#button@bb8f76@T2[?o0])"
        ],
        "effects": [
         "?new0 := new T1(id=R1, attr:cell#0=None, attr:cell#0@2=None) rel:0->T0:Island",
@@ -1298,10 +1298,10 @@
       {
        "name": "op17",
        "support": 1,
-       "negative_examples": 41,
+       "negative_examples": 39,
        "unexplained_negative_examples": 5,
        "actions": [
-        "click(button#0@T2[?o0])"
+        "click(button#button@bb8f76@T2[?o0])"
        ],
        "effects": [
         "?new0 := new T1(id=R2, attr:cell#0=None, attr:cell#0@2=None) rel:0->T0:Moon",
@@ -1330,10 +1330,10 @@
       {
        "name": "op19",
        "support": 1,
-       "negative_examples": 168,
+       "negative_examples": 170,
        "unexplained_negative_examples": 0,
        "actions": [
-        "select(combobox#0@T0[?o0], ?s0)"
+        "select(combobox#group/combobox@T0[?o0], ?s0)"
        ],
        "effects": [
         "?new0 := new T0(id=Moon, attr:group/combobox#0@7=white, attr:of#1=2, attr:of#2=2)",
@@ -1348,10 +1348,10 @@
       {
        "name": "op20",
        "support": 1,
-       "negative_examples": 41,
+       "negative_examples": 39,
        "unexplained_negative_examples": 10,
        "actions": [
-        "click(button#0@T2[?o0])"
+        "click(button#button@bb8f76@T2[?o0])"
        ],
        "effects": [
         "?new0 := new T0(id=Moon, attr:group/combobox#0@7=white, attr:of#1=2, attr:of#2=2)",
@@ -1361,9 +1361,9 @@
        ],
        "preconditions": [
         "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'white')",
-        "('attr_ne', '?o0', 'id', 'T0:Island|T1:R2')",
         "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'pink')",
-        "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'yellow')"
+        "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'yellow')",
+        "('attr_ne', '?o0', 'id', 'T0:Island|T1:R2')"
        ]
       },
       {
@@ -1437,10 +1437,10 @@
       {
        "name": "op26",
        "support": 1,
-       "negative_examples": 41,
+       "negative_examples": 39,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T2[?o0])"
+        "click(button#button@bb8f76@T2[?o0])"
        ],
        "effects": [
         "delete ?o1",
@@ -1483,10 +1483,10 @@
       {
        "name": "op29",
        "support": 1,
-       "negative_examples": 36,
-       "unexplained_negative_examples": 23,
+       "negative_examples": 39,
+       "unexplained_negative_examples": 25,
        "actions": [
-        "click(button#0@T0[?o0])"
+        "click(button#button@9f41fc@T0[?o0])"
        ],
        "effects": [
         "?new0 := new T2(id=T0:Island|T1:R2, attr:attached:group/combobox#0=None) rel:0->?o0 rel:1->T1:R2",
@@ -1499,10 +1499,10 @@
       {
        "name": "op30",
        "support": 1,
-       "negative_examples": 36,
-       "unexplained_negative_examples": 3,
+       "negative_examples": 39,
+       "unexplained_negative_examples": 4,
        "actions": [
-        "click(button#0@T0[?o0])"
+        "click(button#button@9f41fc@T0[?o0])"
        ],
        "effects": [
         "?new0 := new T2(id=T0:Cave|T1:R2, attr:attached:group/combobox#0=pink) rel:0->?o0 rel:1->T1:R2",
@@ -1530,10 +1530,10 @@
       {
        "name": "op32",
        "support": 1,
-       "negative_examples": 41,
+       "negative_examples": 39,
        "unexplained_negative_examples": 1,
        "actions": [
-        "click(button#0@T2[?o0])"
+        "click(button#button@bb8f76@T2[?o0])"
        ],
        "effects": [
         "?new0 := new T1(id=R2, attr:cell#0=None, attr:cell#0@2=None) rel:0->T0:Island",
@@ -1549,10 +1549,10 @@
       {
        "name": "op33",
        "support": 1,
-       "negative_examples": 168,
+       "negative_examples": 170,
        "unexplained_negative_examples": 0,
        "actions": [
-        "select(combobox#0@T0[?o0], ?s0)"
+        "select(combobox#group/combobox@T0[?o0], ?s0)"
        ],
        "effects": [
         "?new0 := new T0(id=Island, attr:group/combobox#0@7=white, attr:of#1=2, attr:of#2=2)",
@@ -1932,7 +1932,7 @@
     "comparable_abstraction_pairs": 0,
     "consistent_abstraction_pairs": 0,
     "contradictory_abstraction_pairs": 0,
-    "unresolved_abstraction_pairs_due_unknown": 16,
+    "unresolved_abstraction_pairs_due_unknown": 17,
     "argument_binding": {
      "recolor": {
       "successful_instances": 74,
@@ -2105,10 +2105,10 @@
       {
        "name": "op0",
        "support": 45,
-       "negative_examples": 107,
+       "negative_examples": 126,
        "unexplained_negative_examples": 0,
        "actions": [
-        "select(combobox#0@T0[?o0], ?s0)"
+        "select(combobox#group/combobox@T0[?o0], ?s0)"
        ],
        "effects": [
         "forall x:T2 with rel:0(x)==?o0: attr:attached:group/combobox#0(x) := '?s0'"
@@ -2120,10 +2120,10 @@
       {
        "name": "op1",
        "support": 16,
-       "negative_examples": 136,
+       "negative_examples": 155,
        "unexplained_negative_examples": 0,
        "actions": [
-        "select(combobox#0@T0[?o0], ?s0)"
+        "select(combobox#group/combobox@T0[?o0], ?s0)"
        ],
        "effects": [
         "attr:attached:group/combobox#0(?o1) := '?s0'"
@@ -2135,10 +2135,10 @@
       {
        "name": "op2",
        "support": 12,
-       "negative_examples": 140,
+       "negative_examples": 159,
        "unexplained_negative_examples": 0,
        "actions": [
-        "select(combobox#1@T0[?o0], ?s0)"
+        "select(combobox#group/combobox@T0[?o0], ?s0)"
        ],
        "effects": [
         "attr:group/combobox#0@7(?o0) := '?s0'"
@@ -2150,10 +2150,10 @@
       {
        "name": "op3",
        "support": 6,
-       "negative_examples": 49,
-       "unexplained_negative_examples": 9,
+       "negative_examples": 34,
+       "unexplained_negative_examples": 3,
        "actions": [
-        "click(button#0@T2[?o0])"
+        "click(button#button@bb8f76@T2[?o0])"
        ],
        "effects": [
         "rel:0(?o1) := 'T0:Cave'"
@@ -2167,19 +2167,19 @@
       {
        "name": "op4",
        "support": 4,
-       "negative_examples": 51,
-       "unexplained_negative_examples": 5,
+       "negative_examples": 36,
+       "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T2[?o0])"
+        "click(button#button@bb8f76@T2[?o0])"
        ],
        "effects": [
         "rel:0(?o1) := 'T0:Island'"
        ],
        "preconditions": [
         "('ref', '?o0', 'rel:1', '?o1')",
-        "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'pink')",
         "('attr_ne', '?o1', 'id', 'R1')",
-        "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'black')"
+        "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'black')",
+        "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'pink')"
        ]
       },
       {
@@ -2201,10 +2201,10 @@
       {
        "name": "op6",
        "support": 3,
-       "negative_examples": 52,
-       "unexplained_negative_examples": 8,
+       "negative_examples": 37,
+       "unexplained_negative_examples": 3,
        "actions": [
-        "click(button#0@T2[?o0])"
+        "click(button#button@bb8f76@T2[?o0])"
        ],
        "effects": [
         "rel:0(?o1) := 'T0:Moon'"
@@ -2218,10 +2218,10 @@
       {
        "name": "op7",
        "support": 2,
-       "negative_examples": 53,
-       "unexplained_negative_examples": 12,
+       "negative_examples": 38,
+       "unexplained_negative_examples": 10,
        "actions": [
-        "click(button#0@T2[?o0])"
+        "click(button#button@bb8f76@T2[?o0])"
        ],
        "effects": [
         "?new0 := new T1(id=R2, attr:cell#0=None, attr:cell#0@2=None) rel:0->T0:Moon"
@@ -2230,8 +2230,7 @@
         "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'white')",
         "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'pink')",
         "('attr_ne', '?o0', 'attr:attached:group/combobox#0', 'black')",
-        "('attr_ne', '?o0', 'id', 'T0:Island|T1:R2')",
-        "('empty', '?o0')"
+        "('attr_ne', '?o0', 'id', 'T0:Island|T1:R2')"
        ]
       },
       {
@@ -2267,10 +2266,10 @@
       {
        "name": "op10",
        "support": 1,
-       "negative_examples": 36,
-       "unexplained_negative_examples": 3,
+       "negative_examples": 39,
+       "unexplained_negative_examples": 4,
        "actions": [
-        "click(button#0@T0[?o0])"
+        "click(button#button@9f41fc@T0[?o0])"
        ],
        "effects": [
         "?new0 := new T2(id=T0:Cave|T1:R3, attr:attached:group/combobox#0=pink) rel:0->?o0 rel:1->T1:R3",
@@ -2284,16 +2283,16 @@
       {
        "name": "op11",
        "support": 1,
-       "negative_examples": 54,
-       "unexplained_negative_examples": 43,
+       "negative_examples": 39,
+       "unexplained_negative_examples": 31,
        "actions": [
-        "click(button#0@T2[?o0])"
+        "click(button#button@bb8f76@T2[?o0])"
        ],
        "effects": [
         "?new0 := new T1(id=R1, attr:cell#0=None, attr:cell#0@2=None) rel:0->T0:Island"
        ],
        "preconditions": [
-        "('attr_ne', '?o0', 'id', 'T0:Cave|T1:R3')"
+        "('attr_ne', '?o0', 'id', 'T0:Cave|T1:R1')"
        ]
       },
       {
@@ -2312,10 +2311,10 @@
       {
        "name": "op13",
        "support": 1,
-       "negative_examples": 151,
+       "negative_examples": 170,
        "unexplained_negative_examples": 0,
        "actions": [
-        "select(combobox#0@T0[?o0], ?s0)"
+        "select(combobox#group/combobox@T0[?o0], ?s0)"
        ],
        "effects": [
         "?new0 := new T0(id=Moon, attr:group/combobox#0@7=white, attr:of#1=2, attr:of#2=2)",
@@ -2388,10 +2387,10 @@
       {
        "name": "op18",
        "support": 1,
-       "negative_examples": 36,
-       "unexplained_negative_examples": 23,
+       "negative_examples": 39,
+       "unexplained_negative_examples": 25,
        "actions": [
-        "click(button#0@T0[?o0])"
+        "click(button#button@9f41fc@T0[?o0])"
        ],
        "effects": [
         "?new0 := new T2(id=T0:Island|T1:R2, attr:attached:group/combobox#0=None) rel:0->?o0 rel:1->T1:R2",
@@ -2404,10 +2403,10 @@
       {
        "name": "op19",
        "support": 1,
-       "negative_examples": 36,
-       "unexplained_negative_examples": 3,
+       "negative_examples": 39,
+       "unexplained_negative_examples": 4,
        "actions": [
-        "click(button#0@T0[?o0])"
+        "click(button#button@9f41fc@T0[?o0])"
        ],
        "effects": [
         "?new0 := new T2(id=T0:Cave|T1:R2, attr:attached:group/combobox#0=pink) rel:0->?o0 rel:1->T1:R2",
@@ -2435,10 +2434,10 @@
       {
        "name": "op21",
        "support": 1,
-       "negative_examples": 151,
+       "negative_examples": 170,
        "unexplained_negative_examples": 0,
        "actions": [
-        "select(combobox#0@T0[?o0], ?s0)"
+        "select(combobox#group/combobox@T0[?o0], ?s0)"
        ],
        "effects": [
         "?new0 := new T0(id=Island, attr:group/combobox#0@7=white, attr:of#1=2, attr:of#2=2)",
@@ -2456,7 +2455,7 @@
        "negative_examples": 2,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T2[?o0])",
+        "click(button#button@bb8f76@T2[?o0])",
         "click(button:Restow@T1[?o1])"
        ],
        "effects": [
@@ -3018,10 +3017,10 @@
       {
        "name": "op0",
        "support": 7,
-       "negative_examples": 50,
-       "unexplained_negative_examples": 27,
+       "negative_examples": 33,
+       "unexplained_negative_examples": 9,
        "actions": [
-        "click(button#0@T1[?o0])"
+        "click(button#button@bb8f76@T1[?o0])"
        ],
        "effects": [
         "rel:0(?o1) := 'T0:Cave'"
@@ -3033,10 +3032,10 @@
       {
        "name": "op1",
        "support": 5,
-       "negative_examples": 52,
-       "unexplained_negative_examples": 20,
+       "negative_examples": 35,
+       "unexplained_negative_examples": 8,
        "actions": [
-        "click(button#0@T1[?o0])"
+        "click(button#button@bb8f76@T1[?o0])"
        ],
        "effects": [
         "rel:0(?o1) := 'T0:Moon'"
@@ -3049,10 +3048,10 @@
       {
        "name": "op2",
        "support": 4,
-       "negative_examples": 53,
-       "unexplained_negative_examples": 12,
+       "negative_examples": 36,
+       "unexplained_negative_examples": 4,
        "actions": [
-        "click(button#0@T1[?o0])"
+        "click(button#button@bb8f76@T1[?o0])"
        ],
        "effects": [
         "rel:0(?o1) := 'T0:Island'"
@@ -3081,10 +3080,10 @@
       {
        "name": "op4",
        "support": 2,
-       "negative_examples": 37,
+       "negative_examples": 38,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T0[?o0])"
+        "click(button#button@9f41fc@T0[?o0])"
        ],
        "effects": [
         "in:0(?o1) := '?o0'"
@@ -3112,10 +3111,10 @@
       {
        "name": "op6",
        "support": 1,
-       "negative_examples": 56,
-       "unexplained_negative_examples": 39,
+       "negative_examples": 39,
+       "unexplained_negative_examples": 25,
        "actions": [
-        "click(button#0@T1[?o0])"
+        "click(button#button@bb8f76@T1[?o0])"
        ],
        "effects": [
         "?new0 := new T2(id=Arete) rel:0->T0:Moon"
@@ -3140,10 +3139,10 @@
       {
        "name": "op8",
        "support": 1,
-       "negative_examples": 56,
-       "unexplained_negative_examples": 33,
+       "negative_examples": 39,
+       "unexplained_negative_examples": 24,
        "actions": [
-        "click(button#0@T1[?o0])"
+        "click(button#button@bb8f76@T1[?o0])"
        ],
        "effects": [
         "?new0 := new T2(id=Arete) rel:0->T0:Island"
@@ -3155,10 +3154,10 @@
       {
        "name": "op9",
        "support": 1,
-       "negative_examples": 133,
+       "negative_examples": 156,
        "unexplained_negative_examples": 0,
        "actions": [
-        "select(combobox#0@T0[?o0], ?s0)"
+        "select(combobox#group/combobox@T0[?o0], ?s0)"
        ],
        "effects": [
         "?new0 := new T0(id=Moon, attr:group/combobox#0=None, attr:group/combobox#0@7=None, attr:of#1=None, attr:of#2=None)",
@@ -3171,10 +3170,10 @@
       {
        "name": "op10",
        "support": 1,
-       "negative_examples": 56,
-       "unexplained_negative_examples": 33,
+       "negative_examples": 39,
+       "unexplained_negative_examples": 24,
        "actions": [
-        "click(button#0@T1[?o0])"
+        "click(button#button@bb8f76@T1[?o0])"
        ],
        "effects": [
         "?new0 := new T0(id=Moon, attr:group/combobox#0=None, attr:group/combobox#0@7=None, attr:of#1=None, attr:of#2=None)",
@@ -3202,10 +3201,10 @@
       {
        "name": "op12",
        "support": 1,
-       "negative_examples": 133,
+       "negative_examples": 156,
        "unexplained_negative_examples": 0,
        "actions": [
-        "select(combobox#0@T0[?o0], ?s0)"
+        "select(combobox#group/combobox@T0[?o0], ?s0)"
        ],
        "effects": [
         "?new0 := new T0(id=Island, attr:group/combobox#0=None, attr:group/combobox#0@7=None, attr:of#1=None, attr:of#2=None)",
@@ -3221,7 +3220,7 @@
        "negative_examples": 2,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T1[?o0])",
+        "click(button#button@bb8f76@T1[?o0])",
         "click(button:Restow@T2[?o1])"
        ],
        "effects": [
@@ -3798,10 +3797,10 @@
       {
        "name": "op0",
        "support": 7,
-       "negative_examples": 50,
-       "unexplained_negative_examples": 27,
+       "negative_examples": 33,
+       "unexplained_negative_examples": 9,
        "actions": [
-        "click(button#0@T1[?o0])"
+        "click(button#button@bb8f76@T1[?o0])"
        ],
        "effects": [
         "rel:0(?o1) := 'T0:Cave'"
@@ -3813,10 +3812,10 @@
       {
        "name": "op1",
        "support": 5,
-       "negative_examples": 52,
-       "unexplained_negative_examples": 20,
+       "negative_examples": 35,
+       "unexplained_negative_examples": 8,
        "actions": [
-        "click(button#0@T1[?o0])"
+        "click(button#button@bb8f76@T1[?o0])"
        ],
        "effects": [
         "rel:0(?o1) := 'T0:Moon'"
@@ -3829,10 +3828,10 @@
       {
        "name": "op2",
        "support": 4,
-       "negative_examples": 53,
-       "unexplained_negative_examples": 12,
+       "negative_examples": 36,
+       "unexplained_negative_examples": 4,
        "actions": [
-        "click(button#0@T1[?o0])"
+        "click(button#button@bb8f76@T1[?o0])"
        ],
        "effects": [
         "rel:0(?o1) := 'T0:Island'"
@@ -3861,10 +3860,10 @@
       {
        "name": "op4",
        "support": 2,
-       "negative_examples": 37,
+       "negative_examples": 38,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T0[?o0])"
+        "click(button#button@9f41fc@T0[?o0])"
        ],
        "effects": [
         "in:0(?o1) := '?o0'"
@@ -3892,10 +3891,10 @@
       {
        "name": "op6",
        "support": 1,
-       "negative_examples": 56,
-       "unexplained_negative_examples": 39,
+       "negative_examples": 39,
+       "unexplained_negative_examples": 25,
        "actions": [
-        "click(button#0@T1[?o0])"
+        "click(button#button@bb8f76@T1[?o0])"
        ],
        "effects": [
         "?new0 := new T2(id=Arete) rel:0->T0:Moon"
@@ -3920,10 +3919,10 @@
       {
        "name": "op8",
        "support": 1,
-       "negative_examples": 56,
-       "unexplained_negative_examples": 33,
+       "negative_examples": 39,
+       "unexplained_negative_examples": 24,
        "actions": [
-        "click(button#0@T1[?o0])"
+        "click(button#button@bb8f76@T1[?o0])"
        ],
        "effects": [
         "?new0 := new T2(id=Arete) rel:0->T0:Island"
@@ -3935,10 +3934,10 @@
       {
        "name": "op9",
        "support": 1,
-       "negative_examples": 133,
+       "negative_examples": 156,
        "unexplained_negative_examples": 0,
        "actions": [
-        "select(combobox#0@T0[?o0], ?s0)"
+        "select(combobox#group/combobox@T0[?o0], ?s0)"
        ],
        "effects": [
         "?new0 := new T0(id=Moon, attr:group/combobox#0=None, attr:group/combobox#0@7=None, attr:of#1=None, attr:of#2=None)",
@@ -3951,10 +3950,10 @@
       {
        "name": "op10",
        "support": 1,
-       "negative_examples": 56,
-       "unexplained_negative_examples": 33,
+       "negative_examples": 39,
+       "unexplained_negative_examples": 24,
        "actions": [
-        "click(button#0@T1[?o0])"
+        "click(button#button@bb8f76@T1[?o0])"
        ],
        "effects": [
         "?new0 := new T0(id=Moon, attr:group/combobox#0=None, attr:group/combobox#0@7=None, attr:of#1=None, attr:of#2=None)",
@@ -3982,10 +3981,10 @@
       {
        "name": "op12",
        "support": 1,
-       "negative_examples": 133,
+       "negative_examples": 156,
        "unexplained_negative_examples": 0,
        "actions": [
-        "select(combobox#0@T0[?o0], ?s0)"
+        "select(combobox#group/combobox@T0[?o0], ?s0)"
        ],
        "effects": [
         "?new0 := new T0(id=Island, attr:group/combobox#0=None, attr:group/combobox#0@7=None, attr:of#1=None, attr:of#2=None)",
@@ -4001,7 +4000,7 @@
        "negative_examples": 2,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T1[?o0])",
+        "click(button#button@bb8f76@T1[?o0])",
         "click(button:Restow@T2[?o1])"
        ],
        "effects": [
@@ -4389,12 +4388,12 @@
       ],
       "test_run": "runs/v2_stability/climbing_seed11",
       "test_trace_sha256": "e1255565ea4708475fbf719eae23ffc1006bc007ce48af3ef04c1e26293ecc54",
-      "status": "VALIDATED",
-      "tested_source_predictions": 2,
-      "prospectively_correct_predictions": 2,
-      "prospective_schema_accuracy": 1.0,
+      "status": "MISPREDICTED",
+      "tested_source_predictions": 1,
+      "prospectively_correct_predictions": 0,
+      "prospective_schema_accuracy": 0.0,
       "evidence_independent_of_selection": true,
-      "reason": "a refinement-introduced schema recurred exactly on an object binding or affected object absent from the source evidence, under a unique type mapping, with no contradiction and no unexplained visible effects"
+      "reason": "an applicable, rendered held-out occurrence contradicted a predicted effect literal"
      },
      {
       "decision_ids": [
@@ -4403,9 +4402,9 @@
       "test_run": "runs/v2_falsification/climbing_seed12",
       "test_trace_sha256": "2b318cbc14bfb476883baca709578ffec53c8e1d46bca54458a961ad45ae2aef",
       "status": "MISPREDICTED",
-      "tested_source_predictions": 2,
-      "prospectively_correct_predictions": 1,
-      "prospective_schema_accuracy": 0.5,
+      "tested_source_predictions": 1,
+      "prospectively_correct_predictions": 0,
+      "prospective_schema_accuracy": 0.0,
       "evidence_independent_of_selection": true,
       "reason": "an applicable, rendered held-out occurrence contradicted a predicted effect literal"
      },
@@ -4415,12 +4414,12 @@
       ],
       "test_run": "runs/v2_falsification/climbing_seed13",
       "test_trace_sha256": "2112a1a7862c21f971635135261a18fd60008310de927200089b031efc39e68a",
-      "status": "VALIDATED",
-      "tested_source_predictions": 2,
-      "prospectively_correct_predictions": 2,
-      "prospective_schema_accuracy": 1.0,
+      "status": "MISPREDICTED",
+      "tested_source_predictions": 1,
+      "prospectively_correct_predictions": 0,
+      "prospective_schema_accuracy": 0.0,
       "evidence_independent_of_selection": true,
-      "reason": "a refinement-introduced schema recurred exactly on an object binding or affected object absent from the source evidence, under a unique type mapping, with no contradiction and no unexplained visible effects"
+      "reason": "an applicable, rendered held-out occurrence contradicted a predicted effect literal"
      }
     ],
     "selected_ungrounded_domain_events": [
@@ -4486,7 +4485,7 @@
     "comparable_abstraction_pairs": 0,
     "consistent_abstraction_pairs": 0,
     "contradictory_abstraction_pairs": 0,
-    "unresolved_abstraction_pairs_due_unknown": 19,
+    "unresolved_abstraction_pairs_due_unknown": 27,
     "argument_binding": {
      "extend": {
       "successful_instances": 12,
@@ -4741,10 +4740,10 @@
       {
        "name": "op3",
        "support": 4,
-       "negative_examples": 30,
+       "negative_examples": 31,
        "unexplained_negative_examples": 13,
        "actions": [
-        "click(button#0@T1[?o0])"
+        "click(button#cell/button@T1[?o0])"
        ],
        "effects": [
         "rel:2(?o0) := 'T2:Vega'"
@@ -4757,19 +4756,18 @@
       {
        "name": "op4",
        "support": 4,
-       "negative_examples": 30,
-       "unexplained_negative_examples": 3,
+       "negative_examples": 31,
+       "unexplained_negative_examples": 10,
        "actions": [
-        "click(button#0@T1[?o0])"
+        "click(button#cell/button@T1[?o0])"
        ],
        "effects": [
         "rel:2(?o0) := 'T2:Mira'"
        ],
        "preconditions": [
-        "('attr_ne', '?o0', 'attr:aperture mag#2', '6')",
-        "('attr_ne', '?o0', 'id', 'W12')",
+        "('attr_ne', '?o0', 'attr:duration#0', '1')",
         "('attr_ne', '?o0', 'attr:aperture mag#2', '3')",
-        "('attr_ne', '?o0', 'attr:duration#0', '1')"
+        "('attr_ne', '?o0', 'attr:aperture mag#2', '6')"
        ]
       },
       {
@@ -4787,6 +4785,27 @@
       },
       {
        "name": "op6",
+       "support": 2,
+       "negative_examples": 33,
+       "unexplained_negative_examples": 5,
+       "actions": [
+        "click(button#cell/button@T1[?o0])"
+       ],
+       "effects": [
+        "attr:aperture mag#2(?o0) := '3'",
+        "attr:duration#0(?o0) := '2'",
+        "rel:0(?o0) := 'T0:First'",
+        "rel:2(?o0) := 'T2:Vega'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'attr:duration#0', '2')",
+        "('attr_ne', '?o0', 'id', 'N6')",
+        "('attr_ne', '?o0', 'attr:aperture mag#2', '4')",
+        "('attr_ne', '?o0', 'attr:aperture mag#2', '6')"
+       ]
+      },
+      {
+       "name": "op7",
        "support": 4,
        "negative_examples": 23,
        "unexplained_negative_examples": 0,
@@ -4802,7 +4821,7 @@
        ]
       },
       {
-       "name": "op7",
+       "name": "op8",
        "support": 2,
        "negative_examples": 19,
        "unexplained_negative_examples": 1,
@@ -4814,25 +4833,6 @@
        ],
        "preconditions": [
         "('empty', '?o0')"
-       ]
-      },
-      {
-       "name": "op8",
-       "support": 2,
-       "negative_examples": 32,
-       "unexplained_negative_examples": 5,
-       "actions": [
-        "click(button#0@T1[?o0])"
-       ],
-       "effects": [
-        "attr:aperture mag#2(?o0) := '3'",
-        "attr:duration#0(?o0) := '2'",
-        "rel:0(?o0) := 'T0:First'",
-        "rel:2(?o0) := 'T2:Vega'"
-       ],
-       "preconditions": [
-        "('attr_ne', '?o0', 'attr:duration#0', '2')",
-        "('attr_ne', '?o0', 'id', 'N6')"
        ]
       },
       {
@@ -4853,10 +4853,30 @@
       {
        "name": "op10",
        "support": 1,
-       "negative_examples": 33,
-       "unexplained_negative_examples": 3,
+       "negative_examples": 34,
+       "unexplained_negative_examples": 4,
        "actions": [
-        "click(button#0@T1[?o0])"
+        "click(button#cell/button@T1[?o0])"
+       ],
+       "effects": [
+        "attr:aperture mag#2(?o0) := '5'",
+        "attr:duration#0(?o0) := '1'",
+        "rel:0(?o0) := 'T0:Mid'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'N6')",
+        "('attr_ne', '?o0', 'attr:aperture mag#2', '4')",
+        "('attr_ne', '?o0', 'attr:duration#0', '1')",
+        "('attr_ne', '?o0', 'attr:aperture mag#2', '6')"
+       ]
+      },
+      {
+       "name": "op11",
+       "support": 1,
+       "negative_examples": 34,
+       "unexplained_negative_examples": 4,
+       "actions": [
+        "click(button#cell/button@T1[?o0])"
        ],
        "effects": [
         "attr:aperture mag#2(?o0) := '4'",
@@ -4866,33 +4886,36 @@
        "preconditions": [
         "('attr_ne', '?o0', 'id', 'N6')",
         "('attr_ne', '?o0', 'attr:aperture mag#2', '4')",
-        "('attr_ne', '?o0', 'attr:duration#0', '1')"
+        "('attr_ne', '?o0', 'attr:duration#0', '1')",
+        "('attr_ne', '?o0', 'attr:aperture mag#2', '3')"
        ]
       },
       {
-       "name": "op11",
+       "name": "op12",
        "support": 1,
-       "negative_examples": 20,
-       "unexplained_negative_examples": 5,
+       "negative_examples": 34,
+       "unexplained_negative_examples": 9,
        "actions": [
-        "click(button#1@T1[?o0])"
+        "click(button#cell/button@T1[?o0])"
        ],
        "effects": [
         "attr:aperture mag#2(?o0) := '6'",
         "rel:0(?o0) := 'T0:Mid'"
        ],
        "preconditions": [
+        "('attr_ne', '?o0', 'id', 'N6')",
         "('attr_ne', '?o0', 'attr:duration#0', '1')",
+        "('attr_ne', '?o0', 'attr:aperture mag#2', '3')",
         "('attr_ne', '?o0', 'attr:aperture mag#2', '6')"
        ]
       },
       {
-       "name": "op12",
+       "name": "op13",
        "support": 1,
-       "negative_examples": 33,
-       "unexplained_negative_examples": 5,
+       "negative_examples": 34,
+       "unexplained_negative_examples": 6,
        "actions": [
-        "click(button#0@T1[?o0])"
+        "click(button#cell/button@T1[?o0])"
        ],
        "effects": [
         "attr:aperture mag#2(?o0) := '4'",
@@ -4902,16 +4925,18 @@
        ],
        "preconditions": [
         "('attr_ne', '?o0', 'attr:duration#0', '2')",
-        "('attr_ne', '?o0', 'id', 'N6')"
+        "('attr_ne', '?o0', 'id', 'N6')",
+        "('attr_ne', '?o0', 'attr:aperture mag#2', '4')",
+        "('attr_ne', '?o0', 'attr:aperture mag#2', '5')"
        ]
       },
       {
-       "name": "op13",
+       "name": "op14",
        "support": 1,
-       "negative_examples": 20,
-       "unexplained_negative_examples": 5,
+       "negative_examples": 34,
+       "unexplained_negative_examples": 9,
        "actions": [
-        "click(button#1@T1[?o0])"
+        "click(button#cell/button@T1[?o0])"
        ],
        "effects": [
         "attr:aperture mag#2(?o0) := '6'",
@@ -4919,17 +4944,19 @@
         "rel:0(?o0) := 'T0:Mid'"
        ],
        "preconditions": [
+        "('attr_ne', '?o0', 'id', 'N6')",
         "('attr_ne', '?o0', 'attr:duration#0', '1')",
+        "('attr_ne', '?o0', 'attr:aperture mag#2', '3')",
         "('attr_ne', '?o0', 'attr:aperture mag#2', '6')"
        ]
       },
       {
-       "name": "op14",
+       "name": "op15",
        "support": 1,
-       "negative_examples": 20,
-       "unexplained_negative_examples": 1,
+       "negative_examples": 34,
+       "unexplained_negative_examples": 8,
        "actions": [
-        "click(button#1@T1[?o0])"
+        "click(button#cell/button@T1[?o0])"
        ],
        "effects": [
         "attr:aperture mag#2(?o0) := '6'",
@@ -4937,11 +4964,12 @@
         "rel:0(?o0) := 'T0:Mid'"
        ],
        "preconditions": [
-        "('attr_ne', '?o0', 'id', 'P8')"
+        "('attr_ne', '?o0', 'id', 'P8')",
+        "('attr_ne', '?o0', 'attr:duration#0', '2')"
        ]
       },
       {
-       "name": "op15",
+       "name": "op16",
        "support": 1,
        "negative_examples": 3,
        "unexplained_negative_examples": 3,
@@ -4954,7 +4982,7 @@
        "preconditions": []
       },
       {
-       "name": "op16",
+       "name": "op17",
        "support": 1,
        "negative_examples": 20,
        "unexplained_negative_examples": 2,
@@ -4970,59 +4998,59 @@
        ]
       },
       {
-       "name": "op17",
+       "name": "op18",
        "support": 1,
-       "negative_examples": 33,
-       "unexplained_negative_examples": 6,
+       "negative_examples": 34,
+       "unexplained_negative_examples": 8,
        "actions": [
-        "click(button#0@T1[?o0])"
+        "click(button#cell/button@T1[?o0])"
        ],
        "effects": [
         "attr:duration#0(?o0) := '1'",
         "rel:0(?o0) := 'T0:First'"
        ],
        "preconditions": [
+        "('attr_ne', '?o0', 'id', 'P8')",
         "('attr_ne', '?o0', 'attr:aperture mag#2', '6')",
-        "('attr_ne', '?o0', 'attr:aperture mag#2', '4')",
-        "('attr_ne', '?o0', 'attr:duration#0', '1')",
-        "('attr_ne', '?o0', 'id', 'P8')"
-       ]
-      },
-      {
-       "name": "op18",
-       "support": 1,
-       "negative_examples": 20,
-       "unexplained_negative_examples": 1,
-       "actions": [
-        "click(button#1@T1[?o0])"
-       ],
-       "effects": [
-        "rel:0(?o0) := 'T0:Mid'"
-       ],
-       "preconditions": [
-        "('attr_ne', '?o0', 'id', 'P8')"
+        "('attr_ne', '?o0', 'attr:duration#0', '1')"
        ]
       },
       {
        "name": "op19",
        "support": 1,
-       "negative_examples": 33,
-       "unexplained_negative_examples": 6,
+       "negative_examples": 34,
+       "unexplained_negative_examples": 8,
        "actions": [
-        "click(button#0@T1[?o0])"
+        "click(button#cell/button@T1[?o0])"
+       ],
+       "effects": [
+        "rel:0(?o0) := 'T0:Mid'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'P8')",
+        "('attr_ne', '?o0', 'attr:aperture mag#2', '6')",
+        "('attr_ne', '?o0', 'attr:duration#0', '1')"
+       ]
+      },
+      {
+       "name": "op20",
+       "support": 1,
+       "negative_examples": 34,
+       "unexplained_negative_examples": 8,
+       "actions": [
+        "click(button#cell/button@T1[?o0])"
        ],
        "effects": [
         "rel:0(?o0) := 'T0:First'"
        ],
        "preconditions": [
+        "('attr_ne', '?o0', 'id', 'P8')",
         "('attr_ne', '?o0', 'attr:aperture mag#2', '6')",
-        "('attr_ne', '?o0', 'attr:aperture mag#2', '4')",
-        "('attr_ne', '?o0', 'attr:duration#0', '1')",
-        "('attr_ne', '?o0', 'id', 'P8')"
+        "('attr_ne', '?o0', 'attr:duration#0', '1')"
        ]
       },
       {
-       "name": "op20",
+       "name": "op21",
        "support": 1,
        "negative_examples": 3,
        "unexplained_negative_examples": 0,
@@ -5038,7 +5066,7 @@
        ]
       },
       {
-       "name": "op21",
+       "name": "op22",
        "support": 1,
        "negative_examples": 20,
        "unexplained_negative_examples": 2,
@@ -5054,7 +5082,7 @@
        ]
       },
       {
-       "name": "op22",
+       "name": "op23",
        "support": 1,
        "negative_examples": 22,
        "unexplained_negative_examples": 22,
@@ -5068,7 +5096,7 @@
        "preconditions": []
       },
       {
-       "name": "op23",
+       "name": "op24",
        "support": 1,
        "negative_examples": 20,
        "unexplained_negative_examples": 0,
@@ -5085,7 +5113,7 @@
        ]
       },
       {
-       "name": "op24",
+       "name": "op25",
        "support": 1,
        "negative_examples": 5,
        "unexplained_negative_examples": 0,
@@ -5100,7 +5128,7 @@
        ]
       },
       {
-       "name": "op25",
+       "name": "op26",
        "support": 1,
        "negative_examples": 20,
        "unexplained_negative_examples": 17,
@@ -5115,10 +5143,10 @@
        ]
       },
       {
-       "name": "op26",
+       "name": "op27",
        "support": 1,
-       "negative_examples": 49,
-       "unexplained_negative_examples": 4,
+       "negative_examples": 28,
+       "unexplained_negative_examples": 0,
        "actions": [
         "click(button:Pointing)"
        ],
@@ -5130,29 +5158,30 @@
         "rel:2(?o0) := 'T2:Vega'"
        ],
        "preconditions": [
-        "('empty', '?o0')",
-        "('attr_ne', '?o0', 'attr:aperture mag#0', 'North')",
-        "('attr_ne', '?o0', 'attr:aperture mag#2', '6')"
+        "('empty', '?o0')"
        ]
       },
       {
-       "name": "op27",
+       "name": "op28",
        "support": 1,
-       "negative_examples": 33,
-       "unexplained_negative_examples": 5,
+       "negative_examples": 34,
+       "unexplained_negative_examples": 4,
        "actions": [
-        "click(button#0@T1[?o0])"
+        "click(button#cell/button@T1[?o0])"
        ],
        "effects": [
         "rel:2(?o0) := 'T2:M31'"
        ],
        "preconditions": [
         "('attr_ne', '?o0', 'attr:duration#0', '2')",
-        "('attr_ne', '?o0', 'id', 'N6')"
+        "('attr_ne', '?o0', 'id', 'N6')",
+        "('attr_ne', '?o0', 'attr:aperture mag#2', '4')",
+        "('attr_ne', '?o0', 'attr:aperture mag#2', '5')",
+        "('attr_ne', '?o0', 'attr:aperture mag#2', '6')"
        ]
       },
       {
-       "name": "op28",
+       "name": "op29",
        "support": 1,
        "negative_examples": 5,
        "unexplained_negative_examples": 0,
@@ -5166,22 +5195,6 @@
        "preconditions": [
         "('attr_ne', '?o0', 'attr:aperture mag#0', 'North')"
        ]
-      },
-      {
-       "name": "op29",
-       "support": 1,
-       "negative_examples": 0,
-       "unexplained_negative_examples": 0,
-       "actions": [
-        "click(button:Board)",
-        "click(button#1@T1[?o0])"
-       ],
-       "effects": [
-        "attr:aperture mag#2(?o0) := '5'",
-        "attr:duration#0(?o0) := '1'",
-        "rel:0(?o0) := 'T0:Mid'"
-       ],
-       "preconditions": []
       },
       {
        "name": "op30",
@@ -5253,16 +5266,18 @@
       {
        "name": "op34",
        "support": 1,
-       "negative_examples": 0,
+       "negative_examples": 2,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#1@T1[?o0])",
+        "click(button#cell/button@T1[?o0])",
         "click(button:Clip@T1[?o0])"
        ],
        "effects": [
         "attr:duration#0(?o0) := '2'"
        ],
-       "preconditions": []
+       "preconditions": [
+        "('attr_ne', '?o0', 'attr:aperture mag#0', 'North')"
+       ]
       },
       {
        "name": "op35",
@@ -5736,7 +5751,7 @@
     "comparable_abstraction_pairs": 5,
     "consistent_abstraction_pairs": 5,
     "contradictory_abstraction_pairs": 0,
-    "unresolved_abstraction_pairs_due_unknown": 36,
+    "unresolved_abstraction_pairs_due_unknown": 40,
     "argument_binding": {
      "extend": {
       "successful_instances": 12,
@@ -6048,7 +6063,7 @@
        "negative_examples": 25,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T3[?o0])"
+        "click(button#cell/button@T3[?o0])"
        ],
        "effects": [
         "delete ?o1",
@@ -6062,7 +6077,7 @@
       {
        "name": "op1",
        "support": 5,
-       "negative_examples": 31,
+       "negative_examples": 24,
        "unexplained_negative_examples": 0,
        "actions": [
         "click(button:Pointing)"
@@ -6082,7 +6097,7 @@
        "negative_examples": 30,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T3[?o0])"
+        "click(button#cell/button@T3[?o0])"
        ],
        "effects": [
         "delete ?o1",
@@ -6171,8 +6186,8 @@
       {
        "name": "op8",
        "support": 3,
-       "negative_examples": 33,
-       "unexplained_negative_examples": 3,
+       "negative_examples": 26,
+       "unexplained_negative_examples": 2,
        "actions": [
         "click(button:Pointing)"
        ],
@@ -6181,7 +6196,6 @@
        ],
        "preconditions": [
         "('empty', '?o0')",
-        "('attr_ne', '?o0', 'attr:duration#0', '2')",
         "('attr_ne', '?o0', 'id', 'N6')"
        ]
       },
@@ -6208,7 +6222,7 @@
        "negative_examples": 33,
        "unexplained_negative_examples": 4,
        "actions": [
-        "click(button#0@T3[?o0])"
+        "click(button#cell/button@T3[?o0])"
        ],
        "effects": [
         "delete ?o1"
@@ -6268,7 +6282,7 @@
        "negative_examples": 33,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T3[?o0])"
+        "click(button#cell/button@T3[?o0])"
        ],
        "effects": [
         "?new0 := new T1(id=N6, attr:aperture mag#0=None, attr:aperture mag#1=None)",
@@ -6302,7 +6316,7 @@
       {
        "name": "op16",
        "support": 1,
-       "negative_examples": 35,
+       "negative_examples": 28,
        "unexplained_negative_examples": 0,
        "actions": [
         "click(button:Pointing)"
@@ -6325,7 +6339,7 @@
        "negative_examples": 34,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T3[?o0])"
+        "click(button#cell/button@T3[?o0])"
        ],
        "effects": [
         "?new0 := new T1(id=N6, attr:aperture mag#0=None, attr:aperture mag#1=None)",
@@ -6342,7 +6356,7 @@
       {
        "name": "op18",
        "support": 3,
-       "negative_examples": 33,
+       "negative_examples": 26,
        "unexplained_negative_examples": 0,
        "actions": [
         "click(button:Pointing)"
@@ -6363,7 +6377,7 @@
        "negative_examples": 34,
        "unexplained_negative_examples": 1,
        "actions": [
-        "click(button#0@T3[?o0])"
+        "click(button#cell/button@T3[?o0])"
        ],
        "effects": [
         "delete ?o1",
@@ -6427,7 +6441,7 @@
        "negative_examples": 34,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T3[?o0])"
+        "click(button#cell/button@T3[?o0])"
        ],
        "effects": [
         "?new0 := new T3(id=T0:First|T1:N6, attr:duration#0=None) rel:0->T0:First rel:1->T1:N6 rel:2->T2:M31",
@@ -6475,7 +6489,7 @@
       {
        "name": "op26",
        "support": 1,
-       "negative_examples": 35,
+       "negative_examples": 28,
        "unexplained_negative_examples": 0,
        "actions": [
         "click(button:Pointing)"
@@ -6572,7 +6586,7 @@
        "negative_examples": 34,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T3[?o0])"
+        "click(button#cell/button@T3[?o0])"
        ],
        "effects": [
         "?new0 := new T1(id=W12, attr:aperture mag#0=None, attr:aperture mag#1=None)",
@@ -6588,7 +6602,7 @@
        "negative_examples": 34,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T3[?o0])"
+        "click(button#cell/button@T3[?o0])"
        ],
        "effects": [
         "?new0 := new T1(id=N6, attr:aperture mag#0=None, attr:aperture mag#1=None)",
@@ -6606,9 +6620,9 @@
        "name": "op34",
        "support": 10,
        "negative_examples": 25,
-       "unexplained_negative_examples": 4,
+       "unexplained_negative_examples": 5,
        "actions": [
-        "click(button#0@T3[?o0])"
+        "click(button#cell/button@T3[?o0])"
        ],
        "effects": [
         "delete ?o1",
@@ -6616,8 +6630,8 @@
         "forall x:T3 with rel:1(x)==?o1: delete x"
        ],
        "preconditions": [
-        "('empty', '?o2')",
         "('attr_ne', '?o0', 'id', 'T0:Mid|T1:P8')",
+        "('empty', '?o2')",
         "('attr_ne', '?o1', 'id', 'T0:Mid|T1:P8')"
        ]
       },
@@ -6639,7 +6653,7 @@
       {
        "name": "op36",
        "support": 1,
-       "negative_examples": 35,
+       "negative_examples": 28,
        "unexplained_negative_examples": 0,
        "actions": [
         "click(button:Pointing)"
@@ -6664,7 +6678,7 @@
        "negative_examples": 34,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T3[?o0])"
+        "click(button#cell/button@T3[?o0])"
        ],
        "effects": [
         "delete ?o1",
@@ -7386,7 +7400,7 @@
        "negative_examples": 5,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T3[?o0])",
+        "click(button#cell/button@T3[?o0])",
         "click(button:Extend@T3[?o0])"
        ],
        "effects": [
@@ -7402,7 +7416,7 @@
        "negative_examples": 5,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T3[?o0])",
+        "click(button#cell/button@T3[?o0])",
         "click(button:Extend@T3[?o0])"
        ],
        "effects": [
@@ -7418,7 +7432,7 @@
        "negative_examples": 4,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T3[?o0])",
+        "click(button#cell/button@T3[?o0])",
         "click(button:Clip@T3[?o0])"
        ],
        "effects": [
@@ -7631,7 +7645,7 @@
        "negative_examples": 6,
        "unexplained_negative_examples": 1,
        "actions": [
-        "click(button#0@T3[?o0])",
+        "click(button#cell/button@T3[?o0])",
         "click(button:Clip@T3[?o0])"
        ],
        "effects": [
@@ -7678,7 +7692,7 @@
        "negative_examples": 8,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T3[?o0])",
+        "click(button#cell/button@T3[?o0])",
         "click(button:Extend@T3[?o0])"
        ],
        "effects": [
@@ -7695,7 +7709,7 @@
        "negative_examples": 6,
        "unexplained_negative_examples": 1,
        "actions": [
-        "click(button#0@T3[?o0])",
+        "click(button#cell/button@T3[?o0])",
         "click(button:Clip@T3[?o0])"
        ],
        "effects": [
@@ -8278,7 +8292,7 @@
        "negative_examples": 5,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T3[?o0])",
+        "click(button#cell/button@T3[?o0])",
         "click(button:Extend@T3[?o0])"
        ],
        "effects": [
@@ -8294,7 +8308,7 @@
        "negative_examples": 5,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T3[?o0])",
+        "click(button#cell/button@T3[?o0])",
         "click(button:Extend@T3[?o0])"
        ],
        "effects": [
@@ -8310,7 +8324,7 @@
        "negative_examples": 4,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T3[?o0])",
+        "click(button#cell/button@T3[?o0])",
         "click(button:Clip@T3[?o0])"
        ],
        "effects": [
@@ -8523,7 +8537,7 @@
        "negative_examples": 6,
        "unexplained_negative_examples": 1,
        "actions": [
-        "click(button#0@T3[?o0])",
+        "click(button#cell/button@T3[?o0])",
         "click(button:Clip@T3[?o0])"
        ],
        "effects": [
@@ -8570,7 +8584,7 @@
        "negative_examples": 8,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T3[?o0])",
+        "click(button#cell/button@T3[?o0])",
         "click(button:Extend@T3[?o0])"
        ],
        "effects": [
@@ -8587,7 +8601,7 @@
        "negative_examples": 6,
        "unexplained_negative_examples": 1,
        "actions": [
-        "click(button#0@T3[?o0])",
+        "click(button#cell/button@T3[?o0])",
         "click(button:Clip@T3[?o0])"
        ],
        "effects": [
@@ -9170,7 +9184,7 @@
        "negative_examples": 5,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T3[?o0])",
+        "click(button#cell/button@T3[?o0])",
         "click(button:Extend@T3[?o0])"
        ],
        "effects": [
@@ -9186,7 +9200,7 @@
        "negative_examples": 5,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T3[?o0])",
+        "click(button#cell/button@T3[?o0])",
         "click(button:Extend@T3[?o0])"
        ],
        "effects": [
@@ -9202,7 +9216,7 @@
        "negative_examples": 4,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T3[?o0])",
+        "click(button#cell/button@T3[?o0])",
         "click(button:Clip@T3[?o0])"
        ],
        "effects": [
@@ -9415,7 +9429,7 @@
        "negative_examples": 6,
        "unexplained_negative_examples": 1,
        "actions": [
-        "click(button#0@T3[?o0])",
+        "click(button#cell/button@T3[?o0])",
         "click(button:Clip@T3[?o0])"
        ],
        "effects": [
@@ -9462,7 +9476,7 @@
        "negative_examples": 8,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T3[?o0])",
+        "click(button#cell/button@T3[?o0])",
         "click(button:Extend@T3[?o0])"
        ],
        "effects": [
@@ -9479,7 +9493,7 @@
        "negative_examples": 6,
        "unexplained_negative_examples": 1,
        "actions": [
-        "click(button#0@T3[?o0])",
+        "click(button#cell/button@T3[?o0])",
         "click(button:Clip@T3[?o0])"
        ],
        "effects": [
@@ -10048,8 +10062,8 @@
       {
        "name": "op0",
        "support": 1,
-       "negative_examples": 22,
-       "unexplained_negative_examples": 1,
+       "negative_examples": 21,
+       "unexplained_negative_examples": 0,
        "actions": [
         "click(button#3)"
        ],
@@ -10094,7 +10108,7 @@
        "negative_examples": 0,
        "unexplained_negative_examples": 0,
        "actions": [
-        "select(combobox#0@T0[?o0], ?s0)",
+        "select(combobox#combobox@T0[?o0], ?s0)",
         "click(button:Close@T1[?o1])",
         "click(button:Open Ticket@T3[?o2])"
        ],
@@ -10110,7 +10124,7 @@
        "unexplained_negative_examples": 0,
        "actions": [
         "click(button:Tickets)",
-        "select(combobox#0@T0[?o0], ?s0)",
+        "select(combobox#combobox@T0[?o0], ?s0)",
         "click(button:Open Ticket)"
        ],
        "effects": [
@@ -10534,7 +10548,7 @@
     "relations_recovered": 0,
     "operators_recovered": 0,
     "operators_observed": 3,
-    "learned_operators": 9,
+    "learned_operators": 10,
     "operator_names_recovered": [],
     "operators_with_any_explanation": [],
     "gtc": 0.0,
@@ -10560,7 +10574,7 @@
     "comparable_abstraction_pairs": 5,
     "consistent_abstraction_pairs": 5,
     "contradictory_abstraction_pairs": 0,
-    "unresolved_abstraction_pairs_due_unknown": 26,
+    "unresolved_abstraction_pairs_due_unknown": 29,
     "argument_binding": {
      "open_ticket": {
       "successful_instances": 4,
@@ -10662,7 +10676,7 @@
     "induction": {
      "transitions": 53,
      "no_op_segments": 377,
-     "hypotheses_before_min_support": 25,
+     "hypotheses_before_min_support": 26,
      "reattributed_domain_changes": 1,
      "unattributed_sensing_changes": [
       {
@@ -10680,36 +10694,54 @@
      "hypotheses": [
       {
        "name": "op0",
-       "support": 18,
-       "negative_examples": 4,
-       "unexplained_negative_examples": 4,
+       "support": 10,
+       "negative_examples": 2,
+       "unexplained_negative_examples": 0,
        "actions": [
         "click(button#0@T4[?o0])"
        ],
        "effects": [
         "delete ?o1"
        ],
-       "preconditions": []
+       "preconditions": [
+        "('empty', '?o1')"
+       ]
       },
       {
        "name": "op1",
-       "support": 3,
+       "support": 8,
        "negative_examples": 8,
-       "unexplained_negative_examples": 1,
+       "unexplained_negative_examples": 5,
        "actions": [
-        "click(button#1@T4[?o0])"
+        "click(button#group/button@0f91d6@T4[?o0])"
+       ],
+       "effects": [
+        "delete ?o1"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'node-30')"
+       ]
+      },
+      {
+       "name": "op2",
+       "support": 3,
+       "negative_examples": 13,
+       "unexplained_negative_examples": 3,
+       "actions": [
+        "click(button#text/button@cea4db@T4[?o0])"
        ],
        "effects": [
         "?new0 := new T4(id=calc-29, attr::#0=None, attr::#1=None, attr:context=None)"
        ],
        "preconditions": [
-        "('attr_ne', '?o0', 'attr::#1', 'R2')",
         "('attr_ne', '?o0', 'attr::#1', 'A3')",
+        "('attr_ne', '?o0', 'attr::#1', 'R2')",
+        "('attr_ne', '?o0', 'attr::#1', 'A1')",
         "('attr_ne', '?o0', 'id', 'calc-29')"
        ]
       },
       {
-       "name": "op2",
+       "name": "op3",
        "support": 3,
        "negative_examples": 18,
        "unexplained_negative_examples": 0,
@@ -10725,39 +10757,41 @@
        ]
       },
       {
-       "name": "op3",
+       "name": "op4",
        "support": 2,
-       "negative_examples": 9,
-       "unexplained_negative_examples": 1,
+       "negative_examples": 14,
+       "unexplained_negative_examples": 4,
        "actions": [
-        "click(button#1@T4[?o0])"
+        "click(button#text/button@cea4db@T4[?o0])"
        ],
        "effects": [
         "?new0 := new T4(id=edge-02, attr::#0=None, attr::#1=None, attr:context=None)"
        ],
        "preconditions": [
         "('attr_ne', '?o0', 'attr::#1', 'K5')",
-        "('attr_ne', '?o0', 'attr::#1', 'R2')"
+        "('attr_ne', '?o0', 'attr::#1', 'R2')",
+        "('attr_ne', '?o0', 'attr::#1', 'A1')"
        ]
       },
       {
-       "name": "op4",
+       "name": "op5",
        "support": 2,
-       "negative_examples": 9,
-       "unexplained_negative_examples": 2,
+       "negative_examples": 14,
+       "unexplained_negative_examples": 4,
        "actions": [
-        "click(button#1@T4[?o0])"
+        "click(button#text/button@cea4db@T4[?o0])"
        ],
        "effects": [
         "?new0 := new T4(id=calc-12, attr::#0=None, attr::#1=None, attr:context=None)"
        ],
        "preconditions": [
         "('attr_ne', '?o0', 'attr::#1', 'K5')",
-        "('attr_ne', '?o0', 'attr::#1', 'A3')"
+        "('attr_ne', '?o0', 'attr::#1', 'A3')",
+        "('attr_ne', '?o0', 'attr::#1', 'A1')"
        ]
       },
       {
-       "name": "op5",
+       "name": "op6",
        "support": 2,
        "negative_examples": 18,
        "unexplained_negative_examples": 1,
@@ -10772,7 +10806,7 @@
        ]
       },
       {
-       "name": "op6",
+       "name": "op7",
        "support": 2,
        "negative_examples": 16,
        "unexplained_negative_examples": 1,
@@ -10787,24 +10821,25 @@
        ]
       },
       {
-       "name": "op7",
+       "name": "op8",
        "support": 2,
-       "negative_examples": 9,
-       "unexplained_negative_examples": 1,
+       "negative_examples": 14,
+       "unexplained_negative_examples": 3,
        "actions": [
-        "click(button#1@T4[?o0])"
+        "click(button#text/button@cea4db@T4[?o0])"
        ],
        "effects": [
         "?new0 := new T4(id=srv-09, attr::#0=None, attr::#1=None, attr:context=None)"
        ],
        "preconditions": [
+        "('attr_ne', '?o0', 'attr::#1', 'A3')",
         "('attr_ne', '?o0', 'attr::#1', 'R2')",
         "('attr_ne', '?o0', 'id', 'srv-09')",
-        "('attr_ne', '?o0', 'attr::#1', 'A3')"
+        "('attr_ne', '?o0', 'attr::#1', 'A1')"
        ]
       },
       {
-       "name": "op8",
+       "name": "op9",
        "support": 1,
        "negative_examples": 0,
        "unexplained_negative_examples": 0,
@@ -10819,12 +10854,12 @@
        "preconditions": []
       },
       {
-       "name": "op9",
+       "name": "op10",
        "support": 1,
-       "negative_examples": 10,
-       "unexplained_negative_examples": 1,
+       "negative_examples": 15,
+       "unexplained_negative_examples": 3,
        "actions": [
-        "click(button#1@T4[?o0])"
+        "click(button#text/button@cea4db@T4[?o0])"
        ],
        "effects": [
         "?new0 := new T4(id=calc-11, attr::#0=None, attr::#1=None, attr:context=None)"
@@ -10832,11 +10867,12 @@
        "preconditions": [
         "('attr_ne', '?o0', 'attr::#1', 'K5')",
         "('attr_ne', '?o0', 'attr::#1', 'A3')",
+        "('attr_ne', '?o0', 'attr::#1', 'A1')",
         "('attr_ne', '?o0', 'id', 'calc-11')"
        ]
       },
       {
-       "name": "op10",
+       "name": "op11",
        "support": 3,
        "negative_examples": 18,
        "unexplained_negative_examples": 1,
@@ -10852,7 +10888,7 @@
        ]
       },
       {
-       "name": "op11",
+       "name": "op12",
        "support": 1,
        "negative_examples": 19,
        "unexplained_negative_examples": 0,
@@ -10868,7 +10904,7 @@
        ]
       },
       {
-       "name": "op12",
+       "name": "op13",
        "support": 1,
        "negative_examples": 17,
        "unexplained_negative_examples": 0,
@@ -10884,24 +10920,24 @@
        ]
       },
       {
-       "name": "op13",
+       "name": "op14",
        "support": 1,
-       "negative_examples": 10,
-       "unexplained_negative_examples": 0,
+       "negative_examples": 15,
+       "unexplained_negative_examples": 4,
        "actions": [
-        "click(button#1@T4[?o0])"
+        "click(button#text/button@cea4db@T4[?o0])"
        ],
        "effects": [
         "?new0 := new T4(id=blade-19, attr::#0=None, attr::#1=None, attr:context=None)"
        ],
        "preconditions": [
         "('attr_ne', '?o0', 'attr::#1', 'K5')",
-        "('attr_ne', '?o0', 'attr::#1', 'R2')",
-        "('attr_ne', '?o0', 'attr::#1', 'A3')"
+        "('attr_ne', '?o0', 'attr::#1', 'A3')",
+        "('attr_ne', '?o0', 'attr::#1', 'R2')"
        ]
       },
       {
-       "name": "op14",
+       "name": "op15",
        "support": 1,
        "negative_examples": 20,
        "unexplained_negative_examples": 0,
@@ -10917,7 +10953,7 @@
        ]
       },
       {
-       "name": "op15",
+       "name": "op16",
        "support": 1,
        "negative_examples": 2,
        "unexplained_negative_examples": 2,
@@ -10931,12 +10967,12 @@
        "preconditions": []
       },
       {
-       "name": "op16",
+       "name": "op17",
        "support": 1,
        "negative_examples": 0,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#2@T4[?o0])",
+        "click(button#button@T4[?o0])",
         "click(button:Confirm)"
        ],
        "effects": [
@@ -10945,7 +10981,7 @@
        "preconditions": []
       },
       {
-       "name": "op17",
+       "name": "op18",
        "support": 1,
        "negative_examples": 2,
        "unexplained_negative_examples": 0,
@@ -10961,12 +10997,12 @@
        ]
       },
       {
-       "name": "op18",
+       "name": "op19",
        "support": 1,
        "negative_examples": 0,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#1@T3[?o0])",
+        "click(button#group/button@0fd45e@T3[?o0])",
         "click(button#3)"
        ],
        "effects": [
@@ -10975,7 +11011,7 @@
        "preconditions": []
       },
       {
-       "name": "op19",
+       "name": "op20",
        "support": 1,
        "negative_examples": 2,
        "unexplained_negative_examples": 2,
@@ -10989,7 +11025,7 @@
        "preconditions": []
       },
       {
-       "name": "op20",
+       "name": "op21",
        "support": 1,
        "negative_examples": 0,
        "unexplained_negative_examples": 0,
@@ -11003,7 +11039,7 @@
        "preconditions": []
       },
       {
-       "name": "op21",
+       "name": "op22",
        "support": 1,
        "negative_examples": 10,
        "unexplained_negative_examples": 0,
@@ -11019,7 +11055,7 @@
        ]
       },
       {
-       "name": "op22",
+       "name": "op23",
        "support": 1,
        "negative_examples": 2,
        "unexplained_negative_examples": 0,
@@ -11035,12 +11071,12 @@
        ]
       },
       {
-       "name": "op23",
+       "name": "op24",
        "support": 1,
        "negative_examples": 0,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#0@T2[?o0])",
+        "click(button#text/button@765ac3@T2[?o0])",
         "click(button#2)"
        ],
        "effects": [
@@ -11049,13 +11085,13 @@
        "preconditions": []
       },
       {
-       "name": "op24",
+       "name": "op25",
        "support": 1,
        "negative_examples": 2,
        "unexplained_negative_examples": 0,
        "actions": [
         "click(button:Tickets)",
-        "select(combobox#0@T0[?o0], ?s0)",
+        "select(combobox#combobox@T0[?o0], ?s0)",
         "click(button:Open Ticket)"
        ],
        "effects": [
@@ -11626,8 +11662,8 @@
       {
        "name": "op0",
        "support": 1,
-       "negative_examples": 18,
-       "unexplained_negative_examples": 1,
+       "negative_examples": 17,
+       "unexplained_negative_examples": 0,
        "actions": [
         "click(button#3)"
        ],
@@ -11658,7 +11694,7 @@
        "negative_examples": 0,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#2@T4[?o0])",
+        "click(button#button@T4[?o0])",
         "click(button:Confirm)"
        ],
        "effects": [
@@ -11686,7 +11722,7 @@
        "negative_examples": 0,
        "unexplained_negative_examples": 0,
        "actions": [
-        "select(combobox#0@T0[?o0], ?s0)",
+        "select(combobox#combobox@T0[?o0], ?s0)",
         "click(button:Close@T1[?o1])",
         "click(button:Open Ticket@T3[?o2])"
        ],
@@ -11702,7 +11738,7 @@
        "unexplained_negative_examples": 0,
        "actions": [
         "click(button:Tickets)",
-        "select(combobox#0@T0[?o0], ?s0)",
+        "select(combobox#combobox@T0[?o0], ?s0)",
         "click(button:Open Ticket)"
        ],
        "effects": [
@@ -12273,8 +12309,8 @@
       {
        "name": "op0",
        "support": 1,
-       "negative_examples": 18,
-       "unexplained_negative_examples": 1,
+       "negative_examples": 17,
+       "unexplained_negative_examples": 0,
        "actions": [
         "click(button#3)"
        ],
@@ -12305,7 +12341,7 @@
        "negative_examples": 0,
        "unexplained_negative_examples": 0,
        "actions": [
-        "click(button#2@T4[?o0])",
+        "click(button#button@T4[?o0])",
         "click(button:Confirm)"
        ],
        "effects": [
@@ -12333,7 +12369,7 @@
        "negative_examples": 0,
        "unexplained_negative_examples": 0,
        "actions": [
-        "select(combobox#0@T0[?o0], ?s0)",
+        "select(combobox#combobox@T0[?o0], ?s0)",
         "click(button:Close@T1[?o1])",
         "click(button:Open Ticket@T3[?o2])"
        ],
@@ -12349,7 +12385,7 @@
        "unexplained_negative_examples": 0,
        "actions": [
         "click(button:Tickets)",
-        "select(combobox#0@T0[?o0], ?s0)",
+        "select(combobox#combobox@T0[?o0], ?s0)",
         "click(button:Open Ticket)"
        ],
        "effects": [
@@ -12908,8 +12944,8 @@
       {
        "name": "op0",
        "support": 1,
-       "negative_examples": 22,
-       "unexplained_negative_examples": 1,
+       "negative_examples": 21,
+       "unexplained_negative_examples": 0,
        "actions": [
         "click(button#3)"
        ],
@@ -12954,7 +12990,7 @@
        "negative_examples": 0,
        "unexplained_negative_examples": 0,
        "actions": [
-        "select(combobox#0@T0[?o0], ?s0)",
+        "select(combobox#combobox@T0[?o0], ?s0)",
         "click(button:Close@T1[?o1])",
         "click(button:Open Ticket@T3[?o2])"
        ],
@@ -12970,7 +13006,7 @@
        "unexplained_negative_examples": 0,
        "actions": [
         "click(button:Tickets)",
-        "select(combobox#0@T0[?o0], ?s0)",
+        "select(combobox#combobox@T0[?o0], ?s0)",
         "click(button:Open Ticket)"
        ],
        "effects": [
@@ -13621,6 +13657,21 @@
       {
        "name": "op1",
        "support": 2,
+       "negative_examples": 2,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "type(textbox#cell/text/textbox@T0[?o0], ?s0)"
+       ],
+       "effects": [
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('attr', '?o0', 'attr:cell#0@3', '0')"
+       ]
+      },
+      {
+       "name": "op2",
+       "support": 2,
        "negative_examples": 14,
        "unexplained_negative_examples": 0,
        "actions": [
@@ -13636,7 +13687,7 @@
        ]
       },
       {
-       "name": "op2",
+       "name": "op3",
        "support": 2,
        "negative_examples": 14,
        "unexplained_negative_examples": 5,
@@ -13653,7 +13704,7 @@
        ]
       },
       {
-       "name": "op3",
+       "name": "op4",
        "support": 2,
        "negative_examples": 14,
        "unexplained_negative_examples": 5,
@@ -13670,26 +13721,10 @@
        ]
       },
       {
-       "name": "op4",
-       "support": 2,
-       "negative_examples": 20,
-       "unexplained_negative_examples": 0,
-       "actions": [
-        "click(button#0)",
-        "type(textbox#0@T0[?o0], ?s0)"
-       ],
-       "effects": [
-        "delete ?o0"
-       ],
-       "preconditions": [
-        "('attr', '?o0', 'attr:cell#0@3', '0')"
-       ]
-      },
-      {
        "name": "op5",
        "support": 1,
-       "negative_examples": 21,
-       "unexplained_negative_examples": 1,
+       "negative_examples": 17,
+       "unexplained_negative_examples": 0,
        "actions": [
         "click(button#0)"
        ],
@@ -13697,8 +13732,7 @@
         "attr:cell#0@3(?o0) := '3'"
        ],
        "preconditions": [
-        "('empty', '?o0')",
-        "('attr_ne', '?o0', 'attr:cell#0@2', 'tablet')"
+        "('empty', '?o0')"
        ]
       },
       {
@@ -14239,6 +14273,21 @@
       {
        "name": "op1",
        "support": 2,
+       "negative_examples": 2,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "type(textbox#cell/text/textbox@T0[?o0], ?s0)"
+       ],
+       "effects": [
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('attr', '?o0', 'attr:cell#0@3', '0')"
+       ]
+      },
+      {
+       "name": "op2",
+       "support": 2,
        "negative_examples": 14,
        "unexplained_negative_examples": 0,
        "actions": [
@@ -14254,7 +14303,7 @@
        ]
       },
       {
-       "name": "op2",
+       "name": "op3",
        "support": 2,
        "negative_examples": 14,
        "unexplained_negative_examples": 5,
@@ -14271,7 +14320,7 @@
        ]
       },
       {
-       "name": "op3",
+       "name": "op4",
        "support": 2,
        "negative_examples": 14,
        "unexplained_negative_examples": 5,
@@ -14288,26 +14337,10 @@
        ]
       },
       {
-       "name": "op4",
-       "support": 2,
-       "negative_examples": 20,
-       "unexplained_negative_examples": 0,
-       "actions": [
-        "click(button#0)",
-        "type(textbox#0@T0[?o0], ?s0)"
-       ],
-       "effects": [
-        "delete ?o0"
-       ],
-       "preconditions": [
-        "('attr', '?o0', 'attr:cell#0@3', '0')"
-       ]
-      },
-      {
        "name": "op5",
        "support": 1,
-       "negative_examples": 21,
-       "unexplained_negative_examples": 1,
+       "negative_examples": 17,
+       "unexplained_negative_examples": 0,
        "actions": [
         "click(button#0)"
        ],
@@ -14315,8 +14348,7 @@
         "attr:cell#0@3(?o0) := '3'"
        ],
        "preconditions": [
-        "('empty', '?o0')",
-        "('attr_ne', '?o0', 'attr:cell#0@2', 'tablet')"
+        "('empty', '?o0')"
        ]
       },
       {
@@ -14913,6 +14945,21 @@
       {
        "name": "op1",
        "support": 2,
+       "negative_examples": 2,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "type(textbox#cell/text/textbox@T0[?o0], ?s0)"
+       ],
+       "effects": [
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('attr', '?o0', 'attr:cell#0@3', '0')"
+       ]
+      },
+      {
+       "name": "op2",
+       "support": 2,
        "negative_examples": 14,
        "unexplained_negative_examples": 0,
        "actions": [
@@ -14928,7 +14975,7 @@
        ]
       },
       {
-       "name": "op2",
+       "name": "op3",
        "support": 2,
        "negative_examples": 14,
        "unexplained_negative_examples": 5,
@@ -14945,7 +14992,7 @@
        ]
       },
       {
-       "name": "op3",
+       "name": "op4",
        "support": 2,
        "negative_examples": 14,
        "unexplained_negative_examples": 5,
@@ -14962,26 +15009,10 @@
        ]
       },
       {
-       "name": "op4",
-       "support": 2,
-       "negative_examples": 20,
-       "unexplained_negative_examples": 0,
-       "actions": [
-        "click(button#0)",
-        "type(textbox#0@T0[?o0], ?s0)"
-       ],
-       "effects": [
-        "delete ?o0"
-       ],
-       "preconditions": [
-        "('attr', '?o0', 'attr:cell#0@3', '0')"
-       ]
-      },
-      {
        "name": "op5",
        "support": 1,
-       "negative_examples": 21,
-       "unexplained_negative_examples": 1,
+       "negative_examples": 17,
+       "unexplained_negative_examples": 0,
        "actions": [
         "click(button#0)"
        ],
@@ -14989,8 +15020,7 @@
         "attr:cell#0@3(?o0) := '3'"
        ],
        "preconditions": [
-        "('empty', '?o0')",
-        "('attr_ne', '?o0', 'attr:cell#0@2', 'tablet')"
+        "('empty', '?o0')"
        ]
       },
       {
@@ -15531,6 +15561,21 @@
       {
        "name": "op1",
        "support": 2,
+       "negative_examples": 2,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "type(textbox#cell/text/textbox@T0[?o0], ?s0)"
+       ],
+       "effects": [
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('attr', '?o0', 'attr:cell#0@3', '0')"
+       ]
+      },
+      {
+       "name": "op2",
+       "support": 2,
        "negative_examples": 14,
        "unexplained_negative_examples": 0,
        "actions": [
@@ -15546,7 +15591,7 @@
        ]
       },
       {
-       "name": "op2",
+       "name": "op3",
        "support": 2,
        "negative_examples": 14,
        "unexplained_negative_examples": 5,
@@ -15563,7 +15608,7 @@
        ]
       },
       {
-       "name": "op3",
+       "name": "op4",
        "support": 2,
        "negative_examples": 14,
        "unexplained_negative_examples": 5,
@@ -15580,26 +15625,10 @@
        ]
       },
       {
-       "name": "op4",
-       "support": 2,
-       "negative_examples": 20,
-       "unexplained_negative_examples": 0,
-       "actions": [
-        "click(button#0)",
-        "type(textbox#0@T0[?o0], ?s0)"
-       ],
-       "effects": [
-        "delete ?o0"
-       ],
-       "preconditions": [
-        "('attr', '?o0', 'attr:cell#0@3', '0')"
-       ]
-      },
-      {
        "name": "op5",
        "support": 1,
-       "negative_examples": 21,
-       "unexplained_negative_examples": 1,
+       "negative_examples": 17,
+       "unexplained_negative_examples": 0,
        "actions": [
         "click(button#0)"
        ],
@@ -15607,8 +15636,7 @@
         "attr:cell#0@3(?o0) := '3'"
        ],
        "preconditions": [
-        "('empty', '?o0')",
-        "('attr_ne', '?o0', 'attr:cell#0@2', 'tablet')"
+        "('empty', '?o0')"
        ]
       },
       {
@@ -16149,6 +16177,21 @@
       {
        "name": "op1",
        "support": 2,
+       "negative_examples": 2,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "type(textbox#cell/text/textbox@T0[?o0], ?s0)"
+       ],
+       "effects": [
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('attr', '?o0', 'attr:cell#0@3', '0')"
+       ]
+      },
+      {
+       "name": "op2",
+       "support": 2,
        "negative_examples": 14,
        "unexplained_negative_examples": 0,
        "actions": [
@@ -16164,7 +16207,7 @@
        ]
       },
       {
-       "name": "op2",
+       "name": "op3",
        "support": 2,
        "negative_examples": 14,
        "unexplained_negative_examples": 5,
@@ -16181,7 +16224,7 @@
        ]
       },
       {
-       "name": "op3",
+       "name": "op4",
        "support": 2,
        "negative_examples": 14,
        "unexplained_negative_examples": 5,
@@ -16198,26 +16241,10 @@
        ]
       },
       {
-       "name": "op4",
-       "support": 2,
-       "negative_examples": 20,
-       "unexplained_negative_examples": 0,
-       "actions": [
-        "click(button#0)",
-        "type(textbox#0@T0[?o0], ?s0)"
-       ],
-       "effects": [
-        "delete ?o0"
-       ],
-       "preconditions": [
-        "('attr', '?o0', 'attr:cell#0@3', '0')"
-       ]
-      },
-      {
        "name": "op5",
        "support": 1,
-       "negative_examples": 21,
-       "unexplained_negative_examples": 1,
+       "negative_examples": 17,
+       "unexplained_negative_examples": 0,
        "actions": [
         "click(button#0)"
        ],
@@ -16225,8 +16252,7 @@
         "attr:cell#0@3(?o0) := '3'"
        ],
        "preconditions": [
-        "('empty', '?o0')",
-        "('attr_ne', '?o0', 'attr:cell#0@2', 'tablet')"
+        "('empty', '?o0')"
        ]
       },
       {

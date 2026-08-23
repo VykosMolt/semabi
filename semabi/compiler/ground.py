@@ -9,7 +9,7 @@ from semabi.compiler.abstract import Abstractor, AbstractState
 from semabi.compiler.belief import Tracker, make_tracker
 from semabi.compiler.browser import Browser, Primitive
 from semabi.compiler.evidence import EvidenceLog
-from semabi.compiler.induce import ActT, Locator
+from semabi.compiler.induce import ActT, Locator, control_keys
 from semabi.compiler.observation import Observation
 
 
@@ -141,11 +141,23 @@ class Live:
     # -------------------------------------------------------------- locate
     def locate(self, loc: Locator, owner_key: Any) -> int | None:
         po = self.A.parsed(self.obs)
+        # A semantic action names a control family; several rendered occurrences of that
+        # family may sit inside one owner (two routes of one wall).  Executable grounding
+        # therefore picks one deterministically, preferring the occurrence whose own state
+        # slot matches the recorded provenance.  Which one it is is not part of the
+        # action's identity: an operator that depends on the choice is underdetermined and
+        # the inducer reports it as such.
+        keys = control_keys(self.A, self.obs, po)
+
+        def pick(nodes: list[int]) -> int | None:
+            if not nodes:
+                return None
+            exact = [n for n in nodes if po.node_key.get(n) == loc.ui_slot]
+            return min(exact or nodes)
+
         if loc.owner_tid is None and loc.trans_tid is None:
-            for node, key in po.node_key.items():
-                if key == loc.slot and node not in po.node_instance:
-                    return node
-            return None
+            return pick([node for node, key in sorted(keys.items())
+                         if key == loc.slot and node not in po.node_instance])
         if loc.owner_tid is not None:
             ti = self.A.types[loc.owner_tid]
             by_node = {o.node: o for o in self.state.objs.values()} if self.state else {}
@@ -157,18 +169,20 @@ class Live:
                     key = by_node[inst.root].key
                 if key != owner_key:
                     continue
-                for node, k in po.node_key.items():
-                    if k == loc.slot and self._owner_idx(po, node) == idx:
-                        return node
+                node = pick([node for node, k in sorted(keys.items())
+                             if k == loc.slot and self._owner_idx(po, node) == idx])
+                if node is not None:
+                    return node
             return None
         for idx, inst in enumerate(po.instances):
             if inst.tid != loc.trans_tid:
                 continue
             if inst.slots.get(loc.trans_slot, (None, None))[1] != owner_key:
                 continue
-            for node, k in po.node_key.items():
-                if k == loc.slot and po.node_instance.get(node) == idx:
-                    return node
+            node = pick([node for node, k in sorted(keys.items())
+                         if k == loc.slot and po.node_instance.get(node) == idx])
+            if node is not None:
+                return node
         return None
 
     def _owner_idx(self, po, node: int) -> int | None:

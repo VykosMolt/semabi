@@ -7564,6 +7564,2329 @@
      }
     ]
    }
+  },
+  "observatory_seed14": {
+   "run": "runs/v2_falsification/observatory_seed14",
+   "compiler_only": {
+    "primitive_steps": 834,
+    "successful_primitive_steps": 834,
+    "episodes": 7,
+    "action_kinds": {
+     "click": 588,
+     "press": 19,
+     "reload": 66,
+     "reset": 6,
+     "select": 155
+    },
+    "probe_records": 54,
+    "primitive_cost": {
+     "total_primitives": 834,
+     "broad_behavior_generating_primitives": 366,
+     "view_survey_or_navigation_primitives": 396,
+     "reload_probe_primitives": 66,
+     "reset_primitives": 6,
+     "automatic_probe_trigger_actions": 54,
+     "counterexample_targeted_probe_trigger_actions": 0,
+     "diagnostic_overhead_primitives": 462,
+     "diagnostic_overhead_rate": 0.554,
+     "recurrent_static_view_controls": [
+      "Board",
+      "Catalog",
+      "Pointing"
+     ],
+     "probe_verified_view_controls": [],
+     "attribution_note": "reloads and clicks on recurrent outside-unit survey controls are counted as diagnostic overhead; probe-classified VIEW actions are preserved separately and are not automatically charged as surveys"
+    },
+    "counterexample_status_counts": {
+     "EXPLAINED": 116,
+     "UNDETERMINED": 281,
+     "UNGROUNDED": 41,
+     "UNOBSERVABLE": 53,
+     "VIEW_ONLY": 186
+    },
+    "eligible_ungrounded_counterexamples": 41,
+    "candidate_components_generated": 1,
+    "candidate_hypothesis_kinds": {
+     "ATTRIBUTE_ON_ENCLOSING_MENTION": 1,
+     "VIEW_STATE": 1
+    },
+    "counterexample_resolution": {
+     "eligible_ungrounded_encountered": 41,
+     "selected_for_refinement": 0,
+     "resolved": 0,
+     "resolved_per_100_diagnostic_primitives": 0.0
+    },
+    "behavioral_repeats": {
+     "version": 2,
+     "candidate_repeat_groups": 18,
+     "comparable_groups": 2,
+     "consistent_groups": 0,
+     "contradictory_groups": 2,
+     "unresolved_repeat_pairs_due_unknown": 151,
+     "abstraction_contradiction_rate": 1.0,
+     "comparable_transition_pairs": 4,
+     "consistent_transition_pairs": 1,
+     "contradictory_transition_pairs": 3,
+     "pair_contradiction_rate": 0.75,
+     "contradictions": [
+      {
+       "id": "behavior-a625ddb0c4ba",
+       "state_signature": "55613274bf606b63",
+       "action_signature": [
+        [
+         "click",
+         "button:Board",
+         null,
+         null
+        ]
+       ],
+       "transition_steps": [
+        [
+         563
+        ],
+        [
+         568
+        ],
+        [
+         574
+        ]
+       ],
+       "outcomes": [
+        {
+         "effect": {
+          "added": [],
+          "removed": [],
+          "attributes": [],
+          "relations": [
+           [
+            [
+             1,
+             "P8"
+            ],
+            "rel:0",
+            [
+             0,
+             "First"
+            ],
+            null
+           ],
+           [
+            [
+             1,
+             "P8"
+            ],
+            "rel:2",
+            [
+             2,
+             "Vega"
+            ],
+            null
+           ]
+          ]
+         },
+         "transition_steps": [
+          [
+           563
+          ],
+          [
+           568
+          ]
+         ]
+        },
+        {
+         "effect": {
+          "added": [],
+          "removed": [],
+          "attributes": [
+           [
+            [
+             0,
+             "First"
+            ],
+            "attr:of#1",
+            "1",
+            "0"
+           ]
+          ],
+          "relations": []
+         },
+         "transition_steps": [
+          [
+           574
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "id": "behavior-b2f28cd94ac6",
+       "state_signature": "40071a61aef6f366",
+       "action_signature": [
+        [
+         "click",
+         "button:Board",
+         null,
+         null
+        ]
+       ],
+       "transition_steps": [
+        [
+         640
+        ],
+        [
+         670
+        ]
+       ],
+       "outcomes": [
+        {
+         "effect": {
+          "added": [],
+          "removed": [],
+          "attributes": [],
+          "relations": [
+           [
+            [
+             1,
+             "N6"
+            ],
+            "rel:0",
+            [
+             0,
+             "First"
+            ],
+            null
+           ],
+           [
+            [
+             1,
+             "N6"
+            ],
+            "rel:2",
+            [
+             2,
+             "Mira"
+            ],
+            null
+           ]
+          ]
+         },
+         "transition_steps": [
+          [
+           640
+          ]
+         ]
+        },
+        {
+         "effect": {
+          "added": [],
+          "removed": [],
+          "attributes": [
+           [
+            [
+             0,
+             "First"
+            ],
+            "attr:of#1",
+            "1",
+            "0"
+           ]
+          ],
+          "relations": []
+         },
+         "transition_steps": [
+          [
+           670
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "unresolved_repeat_provenance_sample": [
+      {
+       "transition_steps": [
+        [
+         4
+        ],
+        [
+         17
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         4
+        ],
+        [
+         19
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         17
+        ],
+        [
+         19
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         5
+        ],
+        [
+         9
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         5
+        ],
+        [
+         18
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         9
+        ],
+        [
+         18
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         6
+        ],
+        [
+         31
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         6
+        ],
+        [
+         33
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         31
+        ],
+        [
+         33
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         7
+        ],
+        [
+         32
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         61
+        ],
+        [
+         107
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         61
+        ],
+        [
+         135
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         107
+        ],
+        [
+         135
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         76
+        ],
+        [
+         146
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         92
+        ],
+        [
+         131
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         147
+        ],
+        [
+         171
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         147
+        ],
+        [
+         193
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         171
+        ],
+        [
+         193
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         225
+        ],
+        [
+         230
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         225
+        ],
+        [
+         236
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         230
+        ],
+        [
+         236
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         238
+        ],
+        [
+         263
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         240
+        ],
+        [
+         245
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         240
+        ],
+        [
+         251
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         240
+        ],
+        [
+         256
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         240
+        ],
+        [
+         261
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         240
+        ],
+        [
+         265
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         240
+        ],
+        [
+         270
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         240
+        ],
+        [
+         276
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         245
+        ],
+        [
+         251
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         245
+        ],
+        [
+         256
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         245
+        ],
+        [
+         261
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         245
+        ],
+        [
+         265
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         245
+        ],
+        [
+         270
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         245
+        ],
+        [
+         276
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         251
+        ],
+        [
+         256
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         251
+        ],
+        [
+         261
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         251
+        ],
+        [
+         265
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         251
+        ],
+        [
+         270
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         251
+        ],
+        [
+         276
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         256
+        ],
+        [
+         261
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         256
+        ],
+        [
+         265
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         256
+        ],
+        [
+         270
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         256
+        ],
+        [
+         276
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         261
+        ],
+        [
+         265
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         261
+        ],
+        [
+         270
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         261
+        ],
+        [
+         276
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         265
+        ],
+        [
+         270
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         265
+        ],
+        [
+         276
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         270
+        ],
+        [
+         276
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         492
+        ],
+        [
+         497
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         492
+        ],
+        [
+         502
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         492
+        ],
+        [
+         507
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         492
+        ],
+        [
+         512
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         492
+        ],
+        [
+         518
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         492
+        ],
+        [
+         524
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         492
+        ],
+        [
+         529
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         492
+        ],
+        [
+         533
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         492
+        ],
+        [
+         539
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         492
+        ],
+        [
+         543
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         497
+        ],
+        [
+         502
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         497
+        ],
+        [
+         507
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         497
+        ],
+        [
+         512
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         497
+        ],
+        [
+         518
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         497
+        ],
+        [
+         524
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         497
+        ],
+        [
+         529
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         497
+        ],
+        [
+         533
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         497
+        ],
+        [
+         539
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         497
+        ],
+        [
+         543
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         502
+        ],
+        [
+         507
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         502
+        ],
+        [
+         512
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         502
+        ],
+        [
+         518
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         502
+        ],
+        [
+         524
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         502
+        ],
+        [
+         529
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         502
+        ],
+        [
+         533
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         502
+        ],
+        [
+         539
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         502
+        ],
+        [
+         543
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         507
+        ],
+        [
+         512
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         507
+        ],
+        [
+         518
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         507
+        ],
+        [
+         524
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         507
+        ],
+        [
+         529
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         507
+        ],
+        [
+         533
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         507
+        ],
+        [
+         539
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         507
+        ],
+        [
+         543
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         512
+        ],
+        [
+         518
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         512
+        ],
+        [
+         524
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         512
+        ],
+        [
+         529
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         512
+        ],
+        [
+         533
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         512
+        ],
+        [
+         539
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         512
+        ],
+        [
+         543
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         518
+        ],
+        [
+         524
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         518
+        ],
+        [
+         529
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         518
+        ],
+        [
+         533
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         518
+        ],
+        [
+         539
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         518
+        ],
+        [
+         543
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         524
+        ],
+        [
+         529
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         524
+        ],
+        [
+         533
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         524
+        ],
+        [
+         539
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         524
+        ],
+        [
+         543
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      },
+      {
+       "transition_steps": [
+        [
+         529
+        ],
+        [
+         533
+        ]
+       ],
+       "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+       "same_registered_outcome": true
+      }
+     ],
+     "provenance_sample_limit": 100
+    }
+   },
+   "evaluator_join": {
+    "protocol": "hidden records loaded only after compile/counterexample/candidate generation completed",
+    "metrics": {
+     "types_recovered": 3,
+     "attributes_recovered": 3,
+     "relations_recovered": 0,
+     "operators_recovered": 0,
+     "operators_observed": 4,
+     "learned_operators": 16,
+     "operator_names_recovered": [],
+     "operators_with_any_explanation": [],
+     "gtc": 0.0,
+     "rtc": 0.0,
+     "rtc_any": 0.0,
+     "registered_deltas": 45,
+     "registered_delta_precision": 0.0,
+     "strict_registered_delta_precision": 0.0,
+     "false_registered_delta_categories": {
+      "incorrect_persistence": 1,
+      "spurious_relation": 9,
+      "wrong_attribute_attachment": 35
+     },
+     "spurious_registered_delta_rate": 1.0,
+     "mention_pair_precision": 1.0,
+     "mention_pair_recall": 1.0,
+     "duplicate_name_separation": null,
+     "cross_view_identity": 0.667,
+     "view_false_positive_rate": 0.687,
+     "abstraction_contradiction_rate": 1.0,
+     "comparable_abstraction_groups": 2,
+     "consistent_abstraction_groups": 0,
+     "contradictory_abstraction_groups": 2,
+     "comparable_abstraction_pairs": 4,
+     "consistent_abstraction_pairs": 1,
+     "contradictory_abstraction_pairs": 3,
+     "unresolved_abstraction_pairs_due_unknown": 151,
+     "argument_binding": {
+      "extend": {
+       "successful_instances": 16,
+       "with_abstract_transition": 16,
+       "all_arguments_bound": 0,
+       "action_arguments_grounded": 0,
+       "all_arguments_bound_rate": 0.0,
+       "action_arguments_grounded_rate": 0.0,
+       "conditional_all_arguments_bound_rate": 0.0,
+       "conditional_action_arguments_grounded_rate": 0.0
+      },
+      "clip": {
+       "successful_instances": 13,
+       "with_abstract_transition": 12,
+       "all_arguments_bound": 0,
+       "action_arguments_grounded": 0,
+       "all_arguments_bound_rate": 0.0,
+       "action_arguments_grounded_rate": 0.0,
+       "conditional_all_arguments_bound_rate": 0.0,
+       "conditional_action_arguments_grounded_rate": 0.0
+      },
+      "retarget": {
+       "successful_instances": 4,
+       "with_abstract_transition": 4,
+       "all_arguments_bound": 0,
+       "action_arguments_grounded": 0,
+       "all_arguments_bound_rate": 0.0,
+       "action_arguments_grounded_rate": 0.0,
+       "conditional_all_arguments_bound_rate": 0.0,
+       "conditional_action_arguments_grounded_rate": 0.0
+      },
+      "detach": {
+       "successful_instances": 8,
+       "with_abstract_transition": 4,
+       "all_arguments_bound": 0,
+       "action_arguments_grounded": 0,
+       "all_arguments_bound_rate": 0.0,
+       "action_arguments_grounded_rate": 0.0,
+       "conditional_all_arguments_bound_rate": 0.0,
+       "conditional_action_arguments_grounded_rate": 0.0
+      }
+     },
+     "per_operator": {
+      "book": {
+       "successes": 0,
+       "failures": 0,
+       "explained": 0,
+       "invisible": 0,
+       "rejected": 0,
+       "unbound_failures": 0
+      },
+      "extend": {
+       "n": 16,
+       "full": 0,
+       "any": 0,
+       "registered_deltas": 16,
+       "matched_registered_deltas": 0,
+       "strict_matched_registered_deltas": 0,
+       "registered_delta_precision": 0.0,
+       "strict_registered_delta_precision": 0.0,
+       "successes": 16,
+       "failures": 2,
+       "explained": 0,
+       "invisible": 16,
+       "rejected": 0,
+       "unbound_failures": 0
+      },
+      "clip": {
+       "n": 13,
+       "full": 0,
+       "any": 0,
+       "registered_deltas": 12,
+       "matched_registered_deltas": 0,
+       "strict_matched_registered_deltas": 0,
+       "registered_delta_precision": 0.0,
+       "strict_registered_delta_precision": 0.0,
+       "successes": 13,
+       "failures": 4,
+       "explained": 0,
+       "invisible": 13,
+       "rejected": 0,
+       "unbound_failures": 0
+      },
+      "retarget": {
+       "n": 4,
+       "full": 0,
+       "any": 0,
+       "registered_deltas": 5,
+       "matched_registered_deltas": 0,
+       "strict_matched_registered_deltas": 0,
+       "registered_delta_precision": 0.0,
+       "strict_registered_delta_precision": 0.0,
+       "successes": 4,
+       "failures": 17,
+       "explained": 0,
+       "invisible": 4,
+       "rejected": 0,
+       "unbound_failures": 0
+      },
+      "detach": {
+       "n": 8,
+       "full": 0,
+       "any": 0,
+       "registered_deltas": 12,
+       "matched_registered_deltas": 0,
+       "strict_matched_registered_deltas": 0,
+       "registered_delta_precision": 0.0,
+       "strict_registered_delta_precision": 0.0,
+       "successes": 8,
+       "failures": 0,
+       "explained": 0,
+       "invisible": 0,
+       "rejected": 0,
+       "unbound_failures": 0
+      }
+     },
+     "induction": {},
+     "counterexamples": {}
+    },
+    "operator_reach": {
+     "book": {
+      "successful_instances": 0,
+      "failed_or_refused_instances": 0,
+      "explained_instances": 0
+     },
+     "extend": {
+      "successful_instances": 16,
+      "failed_or_refused_instances": 2,
+      "explained_instances": 0
+     },
+     "clip": {
+      "successful_instances": 13,
+      "failed_or_refused_instances": 4,
+      "explained_instances": 0
+     },
+     "retarget": {
+      "successful_instances": 4,
+      "failed_or_refused_instances": 17,
+      "explained_instances": 0
+     },
+     "detach": {
+      "successful_instances": 8,
+      "failed_or_refused_instances": 0,
+      "explained_instances": 0
+     }
+    },
+    "counterexamples": [
+     {
+      "step": 15,
+      "status": "UNGROUNDED",
+      "probe_status": null,
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 26,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": "retarget",
+      "candidate_component_ids": []
+     },
+     {
+      "step": 82,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": "retarget",
+      "candidate_component_ids": []
+     },
+     {
+      "step": 112,
+      "status": "UNGROUNDED",
+      "probe_status": "UNDETERMINED",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": [
+       "amb-dadb57e3839a"
+      ]
+     },
+     {
+      "step": 142,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": "retarget",
+      "candidate_component_ids": []
+     },
+     {
+      "step": 143,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": "retarget",
+      "candidate_component_ids": []
+     },
+     {
+      "step": 145,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": "retarget",
+      "candidate_component_ids": []
+     },
+     {
+      "step": 155,
+      "status": "UNGROUNDED",
+      "probe_status": "UNDETERMINED",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": [
+       "amb-dadb57e3839a"
+      ]
+     },
+     {
+      "step": 160,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": "extend",
+      "candidate_component_ids": []
+     },
+     {
+      "step": 165,
+      "status": "UNGROUNDED",
+      "probe_status": "UNDETERMINED",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 177,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": "retarget",
+      "candidate_component_ids": []
+     },
+     {
+      "step": 180,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": "retarget",
+      "candidate_component_ids": []
+     },
+     {
+      "step": 181,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": "extend",
+      "candidate_component_ids": []
+     },
+     {
+      "step": 196,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": "retarget",
+      "candidate_component_ids": []
+     },
+     {
+      "step": 201,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": "retarget",
+      "candidate_component_ids": []
+     },
+     {
+      "step": 231,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": "retarget",
+      "candidate_component_ids": []
+     },
+     {
+      "step": 232,
+      "status": "UNGROUNDED",
+      "probe_status": "UNDETERMINED",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": [
+       "amb-dadb57e3839a"
+      ]
+     },
+     {
+      "step": 241,
+      "status": "UNGROUNDED",
+      "probe_status": "UNDETERMINED",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": [
+       "amb-dadb57e3839a"
+      ]
+     },
+     {
+      "step": 284,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": "detach",
+      "candidate_component_ids": []
+     },
+     {
+      "step": 286,
+      "status": "UNGROUNDED",
+      "probe_status": "UNDETERMINED",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 292,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 293,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 295,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 296,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 297,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 306,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 307,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 308,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 313,
+      "status": "UNGROUNDED",
+      "probe_status": "UNDETERMINED",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 318,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 325,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 326,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 328,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 333,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 334,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 336,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 337,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 343,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 344,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 346,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 349,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 354,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 355,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 356,
+      "status": "UNGROUNDED",
+      "probe_status": null,
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 412,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 443,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": "clip",
+      "candidate_component_ids": []
+     },
+     {
+      "step": 445,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": "clip",
+      "candidate_component_ids": []
+     },
+     {
+      "step": 471,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": "retarget",
+      "candidate_component_ids": []
+     },
+     {
+      "step": 482,
+      "status": "UNGROUNDED",
+      "probe_status": "UNDETERMINED",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": [
+       "amb-dadb57e3839a"
+      ]
+     },
+     {
+      "step": 555,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 573,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": "detach",
+      "candidate_component_ids": []
+     },
+     {
+      "step": 579,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 582,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 584,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 589,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 591,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 592,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 597,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 598,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 599,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 608,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 609,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 610,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 635,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": "retarget",
+      "candidate_component_ids": []
+     },
+     {
+      "step": 644,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": "clip",
+      "candidate_component_ids": []
+     },
+     {
+      "step": 646,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": "detach",
+      "candidate_component_ids": []
+     },
+     {
+      "step": 647,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 648,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 649,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 654,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 659,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 660,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 662,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 666,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 668,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 679,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 680,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 686,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 689,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 697,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 729,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": "clip",
+      "candidate_component_ids": []
+     },
+     {
+      "step": 730,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": "retarget",
+      "candidate_component_ids": []
+     },
+     {
+      "step": 764,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": "retarget",
+      "candidate_component_ids": []
+     },
+     {
+      "step": 765,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": "retarget",
+      "candidate_component_ids": []
+     },
+     {
+      "step": 785,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": "detach",
+      "candidate_component_ids": []
+     },
+     {
+      "step": 790,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 798,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 799,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 800,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 801,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 802,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 803,
+      "status": "UNOBSERVABLE",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 828,
+      "status": "UNGROUNDED",
+      "probe_status": "DOMAIN",
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     },
+     {
+      "step": 832,
+      "status": "UNGROUNDED",
+      "probe_status": null,
+      "hidden_operator_evaluator_only": null,
+      "candidate_component_ids": []
+     }
+    ],
+    "candidate_components": [
+     {
+      "id": "amb-dadb57e3839a",
+      "counterexample_steps": [
+       112,
+       155,
+       232,
+       241,
+       482
+      ],
+      "hidden_operators_evaluator_only": [],
+      "hypotheses": [
+       {
+        "id": "h-b692021c48ed",
+        "kind": "VIEW_STATE",
+        "status": "UNTESTED",
+        "complexity": 0
+       },
+       {
+        "id": "h-36d107883a67",
+        "kind": "ATTRIBUTE_ON_ENCLOSING_MENTION",
+        "status": "UNTESTED",
+        "complexity": 1
+       }
+      ]
+     }
+    ]
+   }
   }
  }
 }

@@ -32,6 +32,7 @@ class V2Abstractor(Abstractor):
         self.merge_mentions = merge_mentions
         self.conservative_belief = conservative_belief
         self.data = G.data_set()
+        self._controls = None
         self.tid_map: dict[int, int] = {}  # hypothesis tid -> abstract tid (link types merged)
         self.link_pairs: dict[frozenset, int] = {}
         self.record_by_anchor: dict[int, dict] = {}
@@ -220,6 +221,24 @@ class V2Abstractor(Abstractor):
         if sig not in self._cache:
             self._cache[sig] = self._parse(obs, sig)
         return self._cache[sig]
+
+    @property
+    def controls(self):
+        """Latent control families of this run (induced once, after unit fitting)."""
+        if self._controls is None:
+            from semabi.compiler.v2 import controls
+            self._controls = controls.induce(self.G, self.H, self.data)
+        return self._controls
+
+    def control_family(self, obs: Observation) -> dict[int, str]:
+        """Node -> semantic action identity for this observation.
+
+        Controls outside every recurring unit keep the slot key they already had, so view
+        and navigation actions are unaffected."""
+        sig = self.ensure(obs)
+        po = self.parsed(obs)
+        families = self.controls.by_node.get(sig, {})
+        return {node: families.get(node, key) for node, key in po.node_key.items()}
 
     def entity_key(self, et: EntityType, ui: UnitInstance, keys_by_tid: dict[int, dict[str, str]]) -> str | None:
         t = ui.template
