@@ -1,0 +1,16 @@
+[
+ {
+  "cmd": "/home/moloch/semabi/.venv/bin/python -m semabi.eval.v2_ablation --run /home/moloch/semabi/runs/v3/sonnet_02_barter_market_loop --output /home/moloch/semabi/docs/data/v3/ablation_sonnet_02_barter_market.json",
+  "returncode": 0,
+  "seconds": 99.8,
+  "tail": "== /home/moloch/semabi/runs/v3/sonnet_02_barter_market_loop\n   baseline                 rtc=0.038 precision=0.023 gtc=0.094 ops=0 view-fp=0.595\n   supported_point_estimate_legacy_belief rtc=0.038 precision=0.023 gtc=0.094 ops=0 view-fp=0.595\n   supported_point_estimate rtc=0.038 precision=0.023 gtc=0.094 ops=0 view-fp=0.595\n   provisional              rtc=0.038 precision=0.023 gtc=0.094 ops=0 view-fp=0.595\n   validated                rtc=0.038 precision=0.023 gtc=0.094 ops=0 view-fp=0.595\n",
+  "stage": "metrics"
+ },
+ {
+  "cmd": "/home/moloch/semabi/.venv/bin/python -m semabi.eval.v2_falsification_report --source /home/moloch/semabi/runs/v3/sonnet_02_barter_market_loop --output /home/moloch/semabi/docs/data/v3/falsification_sonnet_02_barter_market.json",
+  "returncode": 0,
+  "seconds": 62.3,
+  "tail": "{\n \"cases\": 1,\n \"cases_with_a_contradiction_on_any_independent_trace\": 0,\n \"cases_with_corrective_behavioral_novelty\": 0,\n \"total_candidate_wins\": 0,\n \"total_baseline_wins\": 0\n}\n",
+  "stage": "metrics"
+ }
+]

@@ -1,0 +1,149 @@
+{
+ "version": 1,
+ "finding": "the frozen observation layer cannot survive a full-page navigation caused by an action",
+ "mechanism": "both applications answer every operator with fetch(/api/do) followed by location.href = '/?n=...'; semabi/compiler/browser.py::observe evaluates page JS immediately after the action, and when the document is being replaced playwright raises 'Execution context was destroyed'. There is no retry.",
+ "is_a_contract_violation": false,
+ "why_not": "the contract requires the DOM to be fully updated within ~100ms and forbids randomness, animation and network access; it never required a single-page application, and a fetch-then-navigate response is an ordinary web pattern. The compliance check hit this same exception before any V2 run and the checker was hardened to tolerate navigation, i.e. the app was judged compliant before the compiler's behaviour on it was known.",
+ "consequence": "no trace, therefore no semantic evidence of any kind for these two applications",
+ "apps": [
+  {
+   "app": "grok_01_landing_board",
+   "port": 8900,
+   "outcome": "CRASH_NO_TRACE_COLLECTED",
+   "attempts": [
+    {
+     "run": "runs/v3/grok_01_landing_board_loop",
+     "primitives_before_crash": 40
+    },
+    {
+     "run": "runs/v3/grok_01_landing_board_seed11",
+     "primitives_before_crash": 4
+    },
+    {
+     "run": "runs/v3/grok_01_landing_board_crashcheck1",
+     "primitives_before_crash": 2
+    },
+    {
+     "run": "runs/v3/grok_01_landing_board_crashcheck2",
+     "primitives_before_crash": 4
+    }
+   ],
+   "n_attempts": 4,
+   "n_attempts_that_crashed": 4,
+   "max_primitives_before_crash": 40,
+   "exception": [
+    "Page.evaluate: Execution context was destroyed, most likely because of a navigation",
+    "Page.evaluate: Execution context was destroyed, most likely because of a navigation."
+   ],
+   "compiler_frames": [
+    [
+     "/home/moloch/semabi/semabi/compiler/browser.py",
+     "125",
+     "_raw_snapshot"
+    ],
+    [
+     "/home/moloch/semabi/semabi/compiler/browser.py",
+     "135",
+     "observe"
+    ],
+    [
+     "/home/moloch/semabi/semabi/compiler/browser.py",
+     "189",
+     "act"
+    ],
+    [
+     "/home/moloch/semabi/semabi/compiler/explorer.py",
+     "56",
+     "step"
+    ],
+    [
+     "/home/moloch/semabi/semabi/compiler/explorer.py",
+     "97",
+     "run"
+    ],
+    [
+     "/home/moloch/semabi/semabi/compiler/v2/explore.py",
+     "222",
+     "run"
+    ]
+   ]
+  },
+  {
+   "app": "grok_02_blend_book",
+   "port": 8901,
+   "outcome": "CRASH_NO_TRACE_COLLECTED",
+   "attempts": [
+    {
+     "run": "runs/v3/grok_02_blend_book_loop",
+     "primitives_before_crash": 1
+    },
+    {
+     "run": "runs/v3/grok_02_blend_book_seed11",
+     "primitives_before_crash": 50
+    },
+    {
+     "run": "runs/v3/grok_02_blend_book_crashcheck1",
+     "primitives_before_crash": 8
+    },
+    {
+     "run": "runs/v3/grok_02_blend_book_crashcheck2",
+     "primitives_before_crash": 19
+    }
+   ],
+   "n_attempts": 4,
+   "n_attempts_that_crashed": 4,
+   "max_primitives_before_crash": 50,
+   "exception": [
+    "Page.evaluate: Execution context was destroyed, most likely because of a navigation",
+    "Page.evaluate: Execution context was destroyed, most likely because of a navigation."
+   ],
+   "compiler_frames": [
+    [
+     "/home/moloch/semabi/semabi/compiler/browser.py",
+     "125",
+     "_raw_snapshot"
+    ],
+    [
+     "/home/moloch/semabi/semabi/compiler/browser.py",
+     "135",
+     "observe"
+    ],
+    [
+     "/home/moloch/semabi/semabi/compiler/browser.py",
+     "189",
+     "act"
+    ],
+    [
+     "/home/moloch/semabi/semabi/compiler/explorer.py",
+     "125",
+     "view_sweep"
+    ],
+    [
+     "/home/moloch/semabi/semabi/compiler/explorer.py",
+     "56",
+     "step"
+    ],
+    [
+     "/home/moloch/semabi/semabi/compiler/explorer.py",
+     "97",
+     "run"
+    ],
+    [
+     "/home/moloch/semabi/semabi/compiler/v2/explore.py",
+     "107",
+     "probe"
+    ],
+    [
+     "/home/moloch/semabi/semabi/compiler/v2/explore.py",
+     "232",
+     "run"
+    ],
+    [
+     "/home/moloch/semabi/semabi/compiler/v2/explore.py",
+     "87",
+     "survey"
+    ]
+   ]
+  }
+ ]
+}

@@ -1,0 +1,3930 @@
+{
+ "version": 2,
+ "protocol": {
+  "compiler_inputs": "rendered observations, actions, compiler probe evidence, and local refinement decisions",
+  "evaluator_only": "hidden transition records and alignment labels are read only by semabi.eval.oracle.evaluate",
+  "min_support": 2,
+  "variants": [
+   {
+    "name": "baseline",
+    "apply_refinements": false,
+    "conservative_belief": true,
+    "decision_mode": "none"
+   },
+   {
+    "name": "supported_point_estimate_legacy_belief",
+    "apply_refinements": true,
+    "conservative_belief": false,
+    "decision_mode": "all"
+   },
+   {
+    "name": "supported_point_estimate",
+    "apply_refinements": true,
+    "conservative_belief": true,
+    "decision_mode": "all"
+   },
+   {
+    "name": "provisional",
+    "apply_refinements": true,
+    "conservative_belief": true,
+    "decision_mode": "provisional"
+   },
+   {
+    "name": "validated",
+    "apply_refinements": true,
+    "conservative_belief": true,
+    "decision_mode": "validated"
+   }
+  ]
+ },
+ "runs": {
+  "opus_01_harbour_loop": {
+   "baseline": {
+    "types_recovered": 3,
+    "attributes_recovered": 2,
+    "relations_recovered": 1,
+    "operators_recovered": 0,
+    "operators_observed": 5,
+    "learned_operators": 5,
+    "operator_names_recovered": [],
+    "operators_with_any_explanation": [],
+    "gtc": 0.172,
+    "rtc": 0.0,
+    "rtc_any": 0.0,
+    "registered_deltas": 47,
+    "registered_delta_precision": 0.0,
+    "strict_registered_delta_precision": 0.0,
+    "false_registered_delta_categories": {
+     "incorrect_persistence": 22,
+     "spurious_relation": 25
+    },
+    "spurious_registered_delta_rate": 1.0,
+    "mention_pair_precision": null,
+    "mention_pair_recall": null,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null,
+    "view_false_positive_rate": 0.0,
+    "abstraction_contradiction_rate": null,
+    "comparable_abstraction_groups": 0,
+    "consistent_abstraction_groups": 0,
+    "contradictory_abstraction_groups": 0,
+    "comparable_abstraction_pairs": 0,
+    "consistent_abstraction_pairs": 0,
+    "contradictory_abstraction_pairs": 0,
+    "unresolved_abstraction_pairs_due_unknown": 7,
+    "argument_binding": {
+     "set_berth_closed": {
+      "successful_instances": 21,
+      "with_abstract_transition": 20,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "schedule_call": {
+      "successful_instances": 10,
+      "with_abstract_transition": 9,
+      "all_arguments_bound": 4,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.4,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.444,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "set_pilot_duty": {
+      "successful_instances": 23,
+      "with_abstract_transition": 0,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": null,
+      "conditional_action_arguments_grounded_rate": null
+     },
+     "record_departure": {
+      "successful_instances": 3,
+      "with_abstract_transition": 3,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "assign_pilot": {
+      "successful_instances": 1,
+      "with_abstract_transition": 1,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     }
+    },
+    "per_operator": {
+     "schedule_call": {
+      "n": 10,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 17,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 10,
+      "failures": 15,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "assign_berth": {
+      "successes": 0,
+      "failures": 4,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "assign_pilot": {
+      "n": 1,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 1,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 1,
+      "failures": 2,
+      "explained": 0,
+      "invisible": 1,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "bring_alongside": {
+      "successes": 0,
+      "failures": 10,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "record_departure": {
+      "n": 3,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 9,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 3,
+      "failures": 8,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "set_berth_closed": {
+      "n": 21,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 20,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 21,
+      "failures": 31,
+      "explained": 0,
+      "invisible": 21,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "set_pilot_duty": {
+      "n": 23,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 0,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": null,
+      "strict_registered_delta_precision": null,
+      "successes": 23,
+      "failures": 28,
+      "explained": 0,
+      "invisible": 23,
+      "rejected": 0,
+      "unbound_failures": 0
+     }
+    },
+    "induction": {
+     "transitions": 33,
+     "no_op_segments": 287,
+     "hypotheses_before_min_support": 18,
+     "reattributed_domain_changes": 0,
+     "unattributed_sensing_changes": [],
+     "delayed_object_resolutions": [],
+     "hypotheses": [
+      {
+       "name": "op0",
+       "support": 5,
+       "negative_examples": 9,
+       "unexplained_negative_examples": 9,
+       "actions": [
+        "click(button:Close@54dcf8@T7[?o0])"
+       ],
+       "effects": [
+        "rel:1(?o0) := 'T1:closed'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op1",
+       "support": 5,
+       "negative_examples": 3,
+       "unexplained_negative_examples": 3,
+       "actions": [
+        "click(button:Close@dbf5c5@T2[?o0])"
+       ],
+       "effects": [
+        "rel:1(?o0) := 'T1:closed'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op2",
+       "support": 4,
+       "negative_examples": 5,
+       "unexplained_negative_examples": 5,
+       "actions": [
+        "click(button:Reopen@dbf5c5@T2[?o0])"
+       ],
+       "effects": [
+        "rel:1(?o0) := 'T1:open'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op3",
+       "support": 4,
+       "negative_examples": 9,
+       "unexplained_negative_examples": 9,
+       "actions": [
+        "click(button:Reopen@54dcf8@T7[?o0])"
+       ],
+       "effects": [
+        "rel:1(?o0) := 'T1:open'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op4",
+       "support": 2,
+       "negative_examples": 3,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Close@9de9dd@T1[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=closed, attr:cell#0=W1, attr:cell#0@4=yes, attr:m#0=140) rel:5->None"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'closed')"
+       ]
+      },
+      {
+       "name": "op5",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Schedule call@c81a06)"
+       ],
+       "effects": [
+        "?new0 := new T12(id=T0:expected|col:Call, attr:col=Call) rel:5->T5:C-102"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op6",
+       "support": 1,
+       "negative_examples": 2,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Schedule call@c0316d@T9[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T12(id=T0:Nordkapp|col:Call, attr:col=Call) rel:0->T0:Nordkapp rel:5->None",
+        "delete ?o1",
+        "rel:11(?o0) := 'T11:C-103'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'attr:cell#0@6', '3')"
+       ]
+      },
+      {
+       "name": "op7",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Schedule call@625bea@T4[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T12(id=T0:Hafnarfjord|col:Call, attr:col=Call) rel:0->T0:Hafnarfjord rel:5->T5:C-102"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op8",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Schedule call@625bea@T4[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Hafnarfjord, attr:cell#0@5=None, attr:m#0=112) rel:10->T10:expected",
+        "?new1 := new T12(id=T0:Hafnarfjord|col:Call, attr:col=Call) rel:0->?new0 rel:5->T5:C-102"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op9",
+       "support": 1,
+       "negative_examples": 2,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Schedule call@eb75ae@T8[?o0])"
+       ],
+       "effects": [
+        "rel:11(?o0) := 'T11:C-103'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'attr:cell#0@6', '0')"
+       ]
+      },
+      {
+       "name": "op10",
+       "support": 1,
+       "negative_examples": 0,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(cell#19, ?o0)",
+        "click(button:Schedule call@c0316d@T9[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Nordkapp, attr:cell#0@5=None, attr:m#0=132) rel:10->?o0",
+        "?new1 := new T12(id=T0:Nordkapp|col:Call, attr:col=Call) rel:0->?new0 rel:5->None",
+        "rel:11(?o1) := 'T11:C-103'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op11",
+       "support": 1,
+       "negative_examples": 0,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(cell#19, ?o0)",
+        "click(button:Schedule call@eba99e@T3[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Selkie, attr:cell#0@5=None, attr:m#0=64) rel:10->?o0",
+        "?new1 := new T12(id=T0:Selkie|col:Call, attr:col=Call) rel:0->?new0 rel:5->None",
+        "rel:11(?o1) := 'T11:C-103'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op12",
+       "support": 1,
+       "negative_examples": 0,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "select(combobox#text/combobox@e5a89b@T11[?o0], ?s0)",
+        "click(button:Book pilot)"
+       ],
+       "effects": [
+        "delete ?o1"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op13",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(cell#7, ?o0)",
+        "click(button:Schedule call@c5a5f1)"
+       ],
+       "effects": [
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('empty', '?o0')"
+       ]
+      },
+      {
+       "name": "op14",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "context(cell#11, ?o0)",
+        "click(button:Schedule call@c5a5f1)"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Bregagh, attr:cell#0@5=None, attr:m#0=88) rel:10->?o0",
+        "?new1 := new T12(id=T0:Bregagh|col:Call, attr:col=Call) rel:0->?new0 rel:5->None"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op15",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "context(cell#21, ?o0)",
+        "click(button#button@T12[?o1])",
+        "click(button:Record departure)"
+       ],
+       "effects": [
+        "?new0 := new T8(id=Kittiwake|1, attr:cell#0=Kittiwake, attr:cell#0@2=Norway, attr:cell#0@4=no, attr:cell#0@6=1, attr:m#0=78) rel:11->None",
+        "delete ?o1",
+        "rel:5(?o0) := None"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op16",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "context(cell#21, ?o0)",
+        "click(button#button@T12[?o1])",
+        "click(button:Record departure)"
+       ],
+       "effects": [
+        "delete ?o2",
+        "rel:5(?o0) := None"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op17",
+       "support": 1,
+       "negative_examples": 0,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(cell#27, ?o0)",
+        "context(cell#15, ?o1)",
+        "click(button#button@T12[?o2])",
+        "click(button:Record departure)"
+       ],
+       "effects": [
+        "?new0 := new T4(id=Hafnarfjord|5, attr:cell#0=Hafnarfjord, attr:cell#0@2=Iceland, attr:cell#0@4=no, attr:cell#0@6=5, attr:m#0=112) rel:12->None",
+        "delete ?o1",
+        "delete ?o2",
+        "rel:5(?o0) := None"
+       ],
+       "preconditions": []
+      }
+     ]
+    },
+    "counterexamples": {
+     "status_counts": {
+      "VIEW_ONLY": 7,
+      "UNDETERMINED": 231,
+      "EXPLAINED": 33,
+      "UNGROUNDED": 30
+     },
+     "by_step": {
+      "375": "VIEW_ONLY",
+      "2": "UNDETERMINED",
+      "3": "EXPLAINED",
+      "4": "UNDETERMINED",
+      "5": "UNDETERMINED",
+      "6": "UNDETERMINED",
+      "7": "EXPLAINED",
+      "8": "UNDETERMINED",
+      "9": "UNDETERMINED",
+      "10": "UNDETERMINED",
+      "11": "EXPLAINED",
+      "12": "UNDETERMINED",
+      "13": "UNDETERMINED",
+      "14": "UNDETERMINED",
+      "15": "UNDETERMINED",
+      "16": "EXPLAINED",
+      "17": "UNDETERMINED",
+      "18": "UNDETERMINED",
+      "19": "UNGROUNDED",
+      "21": "UNDETERMINED",
+      "22": "UNGROUNDED",
+      "24": "UNDETERMINED",
+      "25": "UNDETERMINED",
+      "26": "UNDETERMINED",
+      "27": "UNDETERMINED",
+      "28": "UNDETERMINED",
+      "29": "UNDETERMINED",
+      "30": "UNDETERMINED",
+      "31": "UNDETERMINED",
+      "32": "EXPLAINED",
+      "33": "UNDETERMINED",
+      "35": "UNDETERMINED",
+      "37": "UNDETERMINED",
+      "38": "EXPLAINED",
+      "39": "UNDETERMINED",
+      "40": "EXPLAINED",
+      "41": "UNDETERMINED",
+      "42": "EXPLAINED",
+      "43": "UNDETERMINED",
+      "44": "UNDETERMINED",
+      "45": "UNDETERMINED",
+      "46": "UNDETERMINED",
+      "47": "UNDETERMINED",
+      "48": "UNDETERMINED",
+      "49": "UNDETERMINED",
+      "51": "UNDETERMINED",
+      "52": "UNDETERMINED",
+      "53": "UNDETERMINED",
+      "54": "UNDETERMINED",
+      "56": "UNDETERMINED",
+      "57": "EXPLAINED",
+      "58": "UNDETERMINED",
+      "59": "UNDETERMINED",
+      "60": "UNDETERMINED",
+      "61": "UNGROUNDED",
+      "64": "UNDETERMINED",
+      "65": "UNDETERMINED",
+      "66": "UNDETERMINED",
+      "67": "EXPLAINED",
+      "70": "UNDETERMINED",
+      "71": "UNDETERMINED",
+      "72": "UNGROUNDED",
+      "74": "UNDETERMINED",
+      "75": "UNDETERMINED",
+      "76": "UNDETERMINED",
+      "77": "UNGROUNDED",
+      "80": "UNDETERMINED",
+      "81": "UNDETERMINED",
+      "82": "UNDETERMINED",
+      "83": "EXPLAINED",
+      "85": "UNDETERMINED",
+      "86": "UNDETERMINED",
+      "87": "UNDETERMINED",
+      "88": "UNDETERMINED",
+      "89": "UNDETERMINED",
+      "90": "UNDETERMINED",
+      "91": "UNDETERMINED",
+      "92": "UNGROUNDED",
+      "94": "VIEW_ONLY",
+      "96": "UNDETERMINED",
+      "97": "UNDETERMINED",
+      "99": "UNDETERMINED",
+      "100": "UNDETERMINED",
+      "101": "UNDETERMINED",
+      "102": "UNDETERMINED",
+      "103": "UNDETERMINED",
+      "104": "UNDETERMINED",
+      "105": "UNDETERMINED",
+      "106": "UNDETERMINED",
+      "107": "EXPLAINED",
+      "108": "UNGROUNDED",
+      "110": "EXPLAINED",
+      "111": "UNDETERMINED",
+      "112": "EXPLAINED",
+      "113": "UNDETERMINED",
+      "114": "UNDETERMINED",
+      "115": "UNDETERMINED",
+      "118": "UNDETERMINED",
+      "119": "UNDETERMINED",
+      "120": "UNDETERMINED",
+      "121": "UNDETERMINED",
+      "123": "UNGROUNDED",
+      "126": "UNDETERMINED",
+      "127": "UNDETERMINED",
+      "128": "UNDETERMINED",
+      "129": "UNDETERMINED",
+      "130": "UNDETERMINED",
+      "131": "UNDETERMINED",
+      "132": "UNDETERMINED",
+      "133": "UNDETERMINED",
+      "134": "UNDETERMINED",
+      "135": "UNDETERMINED",
+      "138": "UNDETERMINED",
+      "139": "EXPLAINED",
+      "140": "UNDETERMINED",
+      "141": "UNDETERMINED",
+      "143": "UNDETERMINED",
+      "144": "UNDETERMINED",
+      "145": "UNGROUNDED",
+      "147": "UNDETERMINED",
+      "148": "UNDETERMINED",
+      "149": "UNGROUNDED",
+      "152": "UNDETERMINED",
+      "153": "UNDETERMINED",
+      "154": "EXPLAINED",
+      "156": "VIEW_ONLY",
+      "158": "EXPLAINED",
+      "159": "UNDETERMINED",
+      "160": "UNDETERMINED",
+      "161": "EXPLAINED",
+      "162": "UNDETERMINED",
+      "163": "UNDETERMINED",
+      "164": "UNDETERMINED",
+      "165": "UNDETERMINED",
+      "166": "UNDETERMINED",
+      "167": "UNGROUNDED",
+      "169": "VIEW_ONLY",
+      "172": "UNDETERMINED",
+      "173": "UNDETERMINED",
+      "174": "UNDETERMINED",
+      "175": "UNDETERMINED",
+      "176": "UNDETERMINED",
+      "177": "UNDETERMINED",
+      "179": "UNDETERMINED",
+      "180": "UNDETERMINED",
+      "181": "UNDETERMINED",
+      "182": "UNGROUNDED",
+      "184": "UNDETERMINED",
+      "185": "UNGROUNDED",
+      "188": "UNDETERMINED",
+      "189": "EXPLAINED",
+      "191": "UNDETERMINED",
+      "192": "UNDETERMINED",
+      "193": "UNDETERMINED",
+      "194": "UNDETERMINED",
+      "195": "UNDETERMINED",
+      "196": "UNDETERMINED",
+      "197": "UNDETERMINED",
+      "198": "UNDETERMINED",
+      "199": "UNDETERMINED",
+      "200": "UNDETERMINED",
+      "201": "UNDETERMINED",
+      "202": "EXPLAINED",
+      "203": "UNDETERMINED",
+      "204": "UNGROUNDED",
+      "206": "VIEW_ONLY",
+      "208": "UNDETERMINED",
+      "209": "UNDETERMINED",
+      "210": "UNDETERMINED",
+      "211": "UNDETERMINED",
+      "212": "UNDETERMINED",
+      "213": "UNDETERMINED",
+      "214": "EXPLAINED",
+      "215": "EXPLAINED",
+      "216": "UNDETERMINED",
+      "217": "UNDETERMINED",
+      "218": "UNDETERMINED",
+      "219": "UNDETERMINED",
+      "220": "UNDETERMINED",
+      "221": "UNDETERMINED",
+      "222": "UNDETERMINED",
+      "223": "UNDETERMINED",
+      "224": "UNDETERMINED",
+      "225": "UNDETERMINED",
+      "227": "UNDETERMINED",
+      "228": "EXPLAINED",
+      "231": "UNDETERMINED",
+      "232": "UNDETERMINED",
+      "233": "UNDETERMINED",
+      "234": "UNDETERMINED",
+      "235": "UNGROUNDED",
+      "237": "VIEW_ONLY",
+      "239": "UNDETERMINED",
+      "240": "UNDETERMINED",
+      "241": "UNDETERMINED",
+      "242": "UNDETERMINED",
+      "243": "UNDETERMINED",
+      "244": "UNDETERMINED",
+      "245": "UNDETERMINED",
+      "246": "UNDETERMINED",
+      "247": "UNGROUNDED",
+      "250": "EXPLAINED",
+      "251": "UNDETERMINED",
+      "252": "UNDETERMINED",
+      "253": "EXPLAINED",
+      "254": "UNDETERMINED",
+      "255": "UNDETERMINED",
+      "256": "UNDETERMINED",
+      "257": "UNGROUNDED",
+      "259": "UNDETERMINED",
+      "260": "UNDETERMINED",
+      "261": "UNDETERMINED",
+      "262": "UNDETERMINED",
+      "263": "UNDETERMINED",
+      "264": "UNDETERMINED",
+      "265": "UNDETERMINED",
+      "266": "UNDETERMINED",
+      "267": "UNDETERMINED",
+      "268": "UNDETERMINED",
+      "269": "UNDETERMINED",
+      "270": "UNDETERMINED",
+      "271": "UNGROUNDED",
+      "274": "VIEW_ONLY",
+      "276": "UNDETERMINED",
+      "278": "UNGROUNDED",
+      "280": "UNDETERMINED",
+      "281": "UNDETERMINED",
+      "282": "UNGROUNDED",
+      "284": "UNDETERMINED",
+      "285": "EXPLAINED",
+      "286": "UNDETERMINED",
+      "287": "UNDETERMINED",
+      "288": "UNDETERMINED",
+      "289": "UNDETERMINED",
+      "290": "UNDETERMINED",
+      "291": "UNDETERMINED",
+      "292": "UNDETERMINED",
+      "293": "UNDETERMINED",
+      "294": "UNDETERMINED",
+      "295": "UNDETERMINED",
+      "296": "UNDETERMINED",
+      "297": "UNDETERMINED",
+      "299": "UNGROUNDED",
+      "302": "UNDETERMINED",
+      "303": "UNDETERMINED",
+      "304": "UNDETERMINED",
+      "305": "UNDETERMINED",
+      "306": "UNGROUNDED",
+      "308": "UNDETERMINED",
+      "309": "EXPLAINED",
+      "312": "UNDETERMINED",
+      "313": "UNDETERMINED",
+      "314": "UNDETERMINED",
+      "315": "UNDETERMINED",
+      "316": "UNDETERMINED",
+      "317": "EXPLAINED",
+      "318": "UNDETERMINED",
+      "319": "UNDETERMINED",
+      "320": "UNDETERMINED",
+      "321": "UNDETERMINED",
+      "322": "UNGROUNDED",
+      "324": "UNGROUNDED",
+      "326": "UNDETERMINED",
+      "327": "UNDETERMINED",
+      "328": "UNDETERMINED",
+      "329": "UNDETERMINED",
+      "330": "UNDETERMINED",
+      "331": "EXPLAINED",
+      "332": "UNDETERMINED",
+      "333": "UNDETERMINED",
+      "334": "UNDETERMINED",
+      "335": "UNDETERMINED",
+      "336": "UNDETERMINED",
+      "337": "UNDETERMINED",
+      "338": "UNGROUNDED",
+      "340": "EXPLAINED",
+      "341": "UNDETERMINED",
+      "342": "EXPLAINED",
+      "343": "EXPLAINED",
+      "344": "UNDETERMINED",
+      "345": "UNDETERMINED",
+      "346": "UNDETERMINED",
+      "347": "EXPLAINED",
+      "348": "UNDETERMINED",
+      "349": "UNDETERMINED",
+      "350": "UNDETERMINED",
+      "351": "UNDETERMINED",
+      "352": "UNDETERMINED",
+      "353": "UNDETERMINED",
+      "354": "UNDETERMINED",
+      "355": "UNDETERMINED",
+      "356": "UNGROUNDED",
+      "358": "UNGROUNDED",
+      "360": "UNDETERMINED",
+      "361": "UNGROUNDED",
+      "363": "UNDETERMINED",
+      "364": "UNDETERMINED",
+      "365": "UNGROUNDED",
+      "369": "UNDETERMINED",
+      "370": "UNDETERMINED",
+      "371": "UNGROUNDED"
+     }
+    }
+   },
+   "supported_point_estimate_legacy_belief": {
+    "types_recovered": 3,
+    "attributes_recovered": 2,
+    "relations_recovered": 1,
+    "operators_recovered": 0,
+    "operators_observed": 5,
+    "learned_operators": 4,
+    "operator_names_recovered": [],
+    "operators_with_any_explanation": [],
+    "gtc": 0.172,
+    "rtc": 0.0,
+    "rtc_any": 0.0,
+    "registered_deltas": 52,
+    "registered_delta_precision": 0.0,
+    "strict_registered_delta_precision": 0.0,
+    "false_registered_delta_categories": {
+     "incorrect_persistence": 22,
+     "spurious_relation": 27,
+     "wrong_attribute_attachment": 3
+    },
+    "spurious_registered_delta_rate": 1.0,
+    "mention_pair_precision": null,
+    "mention_pair_recall": null,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null,
+    "view_false_positive_rate": 0.0,
+    "abstraction_contradiction_rate": null,
+    "comparable_abstraction_groups": 0,
+    "consistent_abstraction_groups": 0,
+    "contradictory_abstraction_groups": 0,
+    "comparable_abstraction_pairs": 0,
+    "consistent_abstraction_pairs": 0,
+    "contradictory_abstraction_pairs": 0,
+    "unresolved_abstraction_pairs_due_unknown": 7,
+    "argument_binding": {
+     "set_berth_closed": {
+      "successful_instances": 21,
+      "with_abstract_transition": 21,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "schedule_call": {
+      "successful_instances": 10,
+      "with_abstract_transition": 9,
+      "all_arguments_bound": 4,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.4,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.444,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "set_pilot_duty": {
+      "successful_instances": 23,
+      "with_abstract_transition": 0,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": null,
+      "conditional_action_arguments_grounded_rate": null
+     },
+     "record_departure": {
+      "successful_instances": 3,
+      "with_abstract_transition": 3,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "assign_pilot": {
+      "successful_instances": 1,
+      "with_abstract_transition": 0,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": null,
+      "conditional_action_arguments_grounded_rate": null
+     }
+    },
+    "per_operator": {
+     "schedule_call": {
+      "n": 10,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 18,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 10,
+      "failures": 15,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "assign_berth": {
+      "successes": 0,
+      "failures": 4,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "assign_pilot": {
+      "n": 1,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 0,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": null,
+      "strict_registered_delta_precision": null,
+      "successes": 1,
+      "failures": 2,
+      "explained": 0,
+      "invisible": 1,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "bring_alongside": {
+      "successes": 0,
+      "failures": 10,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "record_departure": {
+      "n": 3,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 11,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 3,
+      "failures": 8,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "set_berth_closed": {
+      "n": 21,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 23,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 21,
+      "failures": 31,
+      "explained": 0,
+      "invisible": 21,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "set_pilot_duty": {
+      "n": 23,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 0,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": null,
+      "strict_registered_delta_precision": null,
+      "successes": 23,
+      "failures": 28,
+      "explained": 0,
+      "invisible": 23,
+      "rejected": 0,
+      "unbound_failures": 0
+     }
+    },
+    "induction": {
+     "transitions": 33,
+     "no_op_segments": 287,
+     "hypotheses_before_min_support": 19,
+     "reattributed_domain_changes": 0,
+     "unattributed_sensing_changes": [],
+     "delayed_object_resolutions": [],
+     "hypotheses": [
+      {
+       "name": "op0",
+       "support": 5,
+       "negative_examples": 9,
+       "unexplained_negative_examples": 9,
+       "actions": [
+        "click(button:Close@54dcf8@T7[?o0])"
+       ],
+       "effects": [
+        "rel:1(?o0) := 'T1:closed'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op1",
+       "support": 5,
+       "negative_examples": 3,
+       "unexplained_negative_examples": 3,
+       "actions": [
+        "click(button:Close@dbf5c5@T2[?o0])"
+       ],
+       "effects": [
+        "rel:1(?o0) := 'T1:closed'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op2",
+       "support": 4,
+       "negative_examples": 5,
+       "unexplained_negative_examples": 5,
+       "actions": [
+        "click(button:Reopen@dbf5c5@T2[?o0])"
+       ],
+       "effects": [
+        "rel:1(?o0) := 'T1:open'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op3",
+       "support": 4,
+       "negative_examples": 9,
+       "unexplained_negative_examples": 9,
+       "actions": [
+        "click(button:Reopen@54dcf8@T7[?o0])"
+       ],
+       "effects": [
+        "rel:1(?o0) := 'T1:open'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op4",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Schedule call@c81a06)"
+       ],
+       "effects": [
+        "?new0 := new T12(id=T0:expected|col:Call, attr:col=Call) rel:5->T5:C-102"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op5",
+       "support": 1,
+       "negative_examples": 2,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Schedule call@c0316d@T9[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T12(id=T0:Nordkapp|col:Call, attr:col=Call) rel:0->T0:Nordkapp rel:5->None",
+        "delete ?o1",
+        "rel:11(?o0) := 'T11:C-103'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'attr:cell#0@6', '3')"
+       ]
+      },
+      {
+       "name": "op6",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Schedule call@625bea@T4[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T12(id=T0:Hafnarfjord|col:Call, attr:col=Call) rel:0->T0:Hafnarfjord rel:5->T5:C-102"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op7",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Schedule call@625bea@T4[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Hafnarfjord, attr:cell#0@5=None, attr:m#0=112) rel:10->T10:expected",
+        "?new1 := new T12(id=T0:Hafnarfjord|col:Call, attr:col=Call) rel:0->?new0 rel:5->T5:C-102"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op8",
+       "support": 1,
+       "negative_examples": 4,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Close@9de9dd@T1[?o0])"
+       ],
+       "effects": [
+        "id(?o0) := 'closed'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'closed')"
+       ]
+      },
+      {
+       "name": "op9",
+       "support": 1,
+       "negative_examples": 4,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Close@9de9dd@T1[?o0])"
+       ],
+       "effects": [
+        "id(?o0) := 'closed'",
+        "rel:1(?o1) := '?o0'"
+       ],
+       "preconditions": [
+        "('empty', '?o1')"
+       ]
+      },
+      {
+       "name": "op10",
+       "support": 1,
+       "negative_examples": 2,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Reopen@9de9dd@T1[?o0])"
+       ],
+       "effects": [
+        "id(?o0) := 'open'",
+        "rel:1(?o1) := '?o0'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'open')"
+       ]
+      },
+      {
+       "name": "op11",
+       "support": 1,
+       "negative_examples": 2,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Schedule call@eb75ae@T8[?o0])"
+       ],
+       "effects": [
+        "rel:11(?o0) := 'T11:C-103'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'attr:cell#0@6', '0')"
+       ]
+      },
+      {
+       "name": "op12",
+       "support": 1,
+       "negative_examples": 0,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(cell#19, ?o0)",
+        "click(button:Schedule call@c0316d@T9[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Nordkapp, attr:cell#0@5=None, attr:m#0=132) rel:10->?o0",
+        "?new1 := new T12(id=T0:Nordkapp|col:Call, attr:col=Call) rel:0->?new0 rel:5->None",
+        "rel:11(?o1) := 'T11:C-103'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op13",
+       "support": 1,
+       "negative_examples": 0,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(cell#19, ?o0)",
+        "click(button:Schedule call@eba99e@T3[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Selkie, attr:cell#0@5=None, attr:m#0=64) rel:10->?o0",
+        "?new1 := new T12(id=T0:Selkie|col:Call, attr:col=Call) rel:0->?new0 rel:5->None",
+        "rel:11(?o1) := 'T11:C-103'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op14",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "context(cell#7, ?o0)",
+        "click(button:Schedule call@c5a5f1)"
+       ],
+       "effects": [
+        "delete ?o0",
+        "forall x:T12 with rel:0(x)==?o0: delete x"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op15",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "context(cell#11, ?o0)",
+        "click(button:Schedule call@c5a5f1)"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Bregagh, attr:cell#0@5=None, attr:m#0=88) rel:10->?o0",
+        "?new1 := new T12(id=T0:Bregagh|col:Call, attr:col=Call) rel:0->?new0 rel:5->None"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op16",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "context(cell#21, ?o0)",
+        "click(button#button@T12[?o1])",
+        "click(button:Record departure)"
+       ],
+       "effects": [
+        "?new0 := new T8(id=Kittiwake|1, attr:cell#0=Kittiwake, attr:cell#0@2=Norway, attr:cell#0@4=no, attr:cell#0@6=1, attr:m#0=78) rel:11->None",
+        "delete ?o1",
+        "delete ?o2",
+        "rel:5(?o0) := None"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op17",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "context(cell#21, ?o0)",
+        "click(button#button@T12[?o1])",
+        "click(button:Record departure)"
+       ],
+       "effects": [
+        "delete ?o2",
+        "rel:5(?o0) := None"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op18",
+       "support": 1,
+       "negative_examples": 0,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(cell#27, ?o0)",
+        "context(cell#15, ?o1)",
+        "click(button#button@T12[?o2])",
+        "click(button:Record departure)"
+       ],
+       "effects": [
+        "?new0 := new T4(id=Hafnarfjord|5, attr:cell#0=Hafnarfjord, attr:cell#0@2=Iceland, attr:cell#0@4=no, attr:cell#0@6=5, attr:m#0=112) rel:12->None",
+        "delete ?o1",
+        "delete ?o2",
+        "delete ?o3",
+        "rel:5(?o0) := None"
+       ],
+       "preconditions": []
+      }
+     ]
+    },
+    "counterexamples": {
+     "status_counts": {
+      "VIEW_ONLY": 7,
+      "UNDETERMINED": 231,
+      "EXPLAINED": 33,
+      "UNGROUNDED": 30
+     },
+     "by_step": {
+      "375": "VIEW_ONLY",
+      "2": "UNDETERMINED",
+      "3": "EXPLAINED",
+      "4": "UNDETERMINED",
+      "5": "UNDETERMINED",
+      "6": "UNDETERMINED",
+      "7": "EXPLAINED",
+      "8": "UNDETERMINED",
+      "9": "UNDETERMINED",
+      "10": "UNDETERMINED",
+      "11": "EXPLAINED",
+      "12": "UNDETERMINED",
+      "13": "UNDETERMINED",
+      "14": "UNDETERMINED",
+      "15": "UNDETERMINED",
+      "16": "EXPLAINED",
+      "17": "UNDETERMINED",
+      "18": "UNDETERMINED",
+      "19": "UNGROUNDED",
+      "21": "UNDETERMINED",
+      "22": "UNGROUNDED",
+      "24": "UNDETERMINED",
+      "25": "UNDETERMINED",
+      "26": "UNDETERMINED",
+      "27": "UNDETERMINED",
+      "28": "UNDETERMINED",
+      "29": "UNDETERMINED",
+      "30": "UNDETERMINED",
+      "31": "UNDETERMINED",
+      "32": "EXPLAINED",
+      "33": "UNDETERMINED",
+      "35": "UNDETERMINED",
+      "37": "UNDETERMINED",
+      "38": "EXPLAINED",
+      "39": "UNDETERMINED",
+      "40": "EXPLAINED",
+      "41": "UNDETERMINED",
+      "42": "EXPLAINED",
+      "43": "UNDETERMINED",
+      "44": "UNDETERMINED",
+      "45": "UNDETERMINED",
+      "46": "UNDETERMINED",
+      "47": "UNDETERMINED",
+      "48": "UNDETERMINED",
+      "49": "UNDETERMINED",
+      "51": "UNDETERMINED",
+      "52": "UNDETERMINED",
+      "53": "UNDETERMINED",
+      "54": "UNDETERMINED",
+      "56": "UNDETERMINED",
+      "57": "EXPLAINED",
+      "58": "UNDETERMINED",
+      "59": "UNDETERMINED",
+      "60": "UNDETERMINED",
+      "61": "UNGROUNDED",
+      "64": "UNDETERMINED",
+      "65": "UNDETERMINED",
+      "66": "UNDETERMINED",
+      "67": "EXPLAINED",
+      "70": "UNDETERMINED",
+      "71": "UNDETERMINED",
+      "72": "UNGROUNDED",
+      "74": "UNDETERMINED",
+      "75": "UNDETERMINED",
+      "76": "UNDETERMINED",
+      "77": "UNGROUNDED",
+      "80": "UNDETERMINED",
+      "81": "UNDETERMINED",
+      "82": "UNDETERMINED",
+      "83": "EXPLAINED",
+      "85": "UNDETERMINED",
+      "86": "UNDETERMINED",
+      "87": "UNDETERMINED",
+      "88": "UNDETERMINED",
+      "89": "UNDETERMINED",
+      "90": "UNDETERMINED",
+      "91": "UNDETERMINED",
+      "92": "UNGROUNDED",
+      "94": "VIEW_ONLY",
+      "96": "UNDETERMINED",
+      "97": "UNDETERMINED",
+      "99": "UNDETERMINED",
+      "100": "UNDETERMINED",
+      "101": "UNDETERMINED",
+      "102": "UNDETERMINED",
+      "103": "UNDETERMINED",
+      "104": "UNDETERMINED",
+      "105": "UNDETERMINED",
+      "106": "UNDETERMINED",
+      "107": "EXPLAINED",
+      "108": "UNGROUNDED",
+      "110": "EXPLAINED",
+      "111": "UNDETERMINED",
+      "112": "EXPLAINED",
+      "113": "UNDETERMINED",
+      "114": "UNDETERMINED",
+      "115": "UNDETERMINED",
+      "118": "UNDETERMINED",
+      "119": "UNDETERMINED",
+      "120": "UNDETERMINED",
+      "121": "UNDETERMINED",
+      "123": "UNGROUNDED",
+      "126": "UNDETERMINED",
+      "127": "UNDETERMINED",
+      "128": "UNDETERMINED",
+      "129": "UNDETERMINED",
+      "130": "UNDETERMINED",
+      "131": "UNDETERMINED",
+      "132": "UNDETERMINED",
+      "133": "UNDETERMINED",
+      "134": "UNDETERMINED",
+      "135": "UNDETERMINED",
+      "138": "UNDETERMINED",
+      "139": "EXPLAINED",
+      "140": "UNDETERMINED",
+      "141": "UNDETERMINED",
+      "143": "UNDETERMINED",
+      "144": "UNDETERMINED",
+      "145": "UNGROUNDED",
+      "147": "UNDETERMINED",
+      "148": "UNDETERMINED",
+      "149": "UNGROUNDED",
+      "152": "UNDETERMINED",
+      "153": "UNDETERMINED",
+      "154": "EXPLAINED",
+      "156": "VIEW_ONLY",
+      "158": "EXPLAINED",
+      "159": "UNDETERMINED",
+      "160": "UNDETERMINED",
+      "161": "EXPLAINED",
+      "162": "UNDETERMINED",
+      "163": "UNDETERMINED",
+      "164": "UNDETERMINED",
+      "165": "UNDETERMINED",
+      "166": "UNDETERMINED",
+      "167": "UNGROUNDED",
+      "169": "VIEW_ONLY",
+      "172": "UNDETERMINED",
+      "173": "UNDETERMINED",
+      "174": "UNDETERMINED",
+      "175": "UNDETERMINED",
+      "176": "UNDETERMINED",
+      "177": "UNDETERMINED",
+      "179": "UNDETERMINED",
+      "180": "UNDETERMINED",
+      "181": "UNDETERMINED",
+      "182": "UNGROUNDED",
+      "184": "UNDETERMINED",
+      "185": "UNGROUNDED",
+      "188": "UNDETERMINED",
+      "189": "EXPLAINED",
+      "191": "UNDETERMINED",
+      "192": "UNDETERMINED",
+      "193": "UNDETERMINED",
+      "194": "UNDETERMINED",
+      "195": "UNDETERMINED",
+      "196": "UNDETERMINED",
+      "197": "UNDETERMINED",
+      "198": "UNDETERMINED",
+      "199": "UNDETERMINED",
+      "200": "UNDETERMINED",
+      "201": "UNDETERMINED",
+      "202": "UNDETERMINED",
+      "203": "UNDETERMINED",
+      "204": "UNGROUNDED",
+      "206": "VIEW_ONLY",
+      "208": "UNDETERMINED",
+      "209": "UNDETERMINED",
+      "210": "UNDETERMINED",
+      "211": "UNDETERMINED",
+      "212": "UNDETERMINED",
+      "213": "UNDETERMINED",
+      "214": "EXPLAINED",
+      "215": "EXPLAINED",
+      "216": "UNDETERMINED",
+      "217": "UNDETERMINED",
+      "218": "UNDETERMINED",
+      "219": "UNDETERMINED",
+      "220": "UNDETERMINED",
+      "221": "UNDETERMINED",
+      "222": "UNDETERMINED",
+      "223": "UNDETERMINED",
+      "224": "UNDETERMINED",
+      "225": "UNDETERMINED",
+      "227": "UNDETERMINED",
+      "228": "EXPLAINED",
+      "231": "UNDETERMINED",
+      "232": "UNDETERMINED",
+      "233": "UNDETERMINED",
+      "234": "UNDETERMINED",
+      "235": "UNGROUNDED",
+      "237": "VIEW_ONLY",
+      "239": "UNDETERMINED",
+      "240": "UNDETERMINED",
+      "241": "UNDETERMINED",
+      "242": "UNDETERMINED",
+      "243": "UNDETERMINED",
+      "244": "UNDETERMINED",
+      "245": "UNDETERMINED",
+      "246": "UNDETERMINED",
+      "247": "UNGROUNDED",
+      "250": "EXPLAINED",
+      "251": "UNDETERMINED",
+      "252": "UNDETERMINED",
+      "253": "EXPLAINED",
+      "254": "UNDETERMINED",
+      "255": "UNDETERMINED",
+      "256": "UNDETERMINED",
+      "257": "UNGROUNDED",
+      "259": "UNDETERMINED",
+      "260": "UNDETERMINED",
+      "261": "UNDETERMINED",
+      "262": "UNDETERMINED",
+      "263": "UNDETERMINED",
+      "264": "UNDETERMINED",
+      "265": "UNDETERMINED",
+      "266": "UNDETERMINED",
+      "267": "UNDETERMINED",
+      "268": "UNDETERMINED",
+      "269": "UNDETERMINED",
+      "270": "UNDETERMINED",
+      "271": "UNGROUNDED",
+      "274": "VIEW_ONLY",
+      "276": "UNDETERMINED",
+      "278": "UNGROUNDED",
+      "280": "UNDETERMINED",
+      "281": "UNDETERMINED",
+      "282": "UNGROUNDED",
+      "284": "UNDETERMINED",
+      "285": "EXPLAINED",
+      "286": "UNDETERMINED",
+      "287": "UNDETERMINED",
+      "288": "UNDETERMINED",
+      "289": "UNDETERMINED",
+      "290": "UNDETERMINED",
+      "291": "UNDETERMINED",
+      "292": "UNDETERMINED",
+      "293": "UNDETERMINED",
+      "294": "UNDETERMINED",
+      "295": "UNDETERMINED",
+      "296": "UNDETERMINED",
+      "297": "UNDETERMINED",
+      "299": "UNGROUNDED",
+      "302": "UNDETERMINED",
+      "303": "UNDETERMINED",
+      "304": "UNDETERMINED",
+      "305": "UNDETERMINED",
+      "306": "UNGROUNDED",
+      "308": "UNDETERMINED",
+      "309": "EXPLAINED",
+      "312": "UNDETERMINED",
+      "313": "UNDETERMINED",
+      "314": "UNDETERMINED",
+      "315": "UNDETERMINED",
+      "316": "UNDETERMINED",
+      "317": "EXPLAINED",
+      "318": "EXPLAINED",
+      "319": "UNDETERMINED",
+      "320": "UNDETERMINED",
+      "321": "UNDETERMINED",
+      "322": "UNGROUNDED",
+      "324": "UNGROUNDED",
+      "326": "UNDETERMINED",
+      "327": "UNDETERMINED",
+      "328": "UNDETERMINED",
+      "329": "UNDETERMINED",
+      "330": "UNDETERMINED",
+      "331": "EXPLAINED",
+      "332": "UNDETERMINED",
+      "333": "UNDETERMINED",
+      "334": "UNDETERMINED",
+      "335": "UNDETERMINED",
+      "336": "UNDETERMINED",
+      "337": "UNDETERMINED",
+      "338": "UNGROUNDED",
+      "340": "EXPLAINED",
+      "341": "UNDETERMINED",
+      "342": "EXPLAINED",
+      "343": "EXPLAINED",
+      "344": "UNDETERMINED",
+      "345": "UNDETERMINED",
+      "346": "UNDETERMINED",
+      "347": "EXPLAINED",
+      "348": "UNDETERMINED",
+      "349": "UNDETERMINED",
+      "350": "UNDETERMINED",
+      "351": "UNDETERMINED",
+      "352": "UNDETERMINED",
+      "353": "UNDETERMINED",
+      "354": "UNDETERMINED",
+      "355": "UNDETERMINED",
+      "356": "UNGROUNDED",
+      "358": "UNGROUNDED",
+      "360": "UNDETERMINED",
+      "361": "UNGROUNDED",
+      "363": "UNDETERMINED",
+      "364": "UNDETERMINED",
+      "365": "UNGROUNDED",
+      "369": "UNDETERMINED",
+      "370": "UNDETERMINED",
+      "371": "UNGROUNDED"
+     }
+    }
+   },
+   "supported_point_estimate": {
+    "types_recovered": 3,
+    "attributes_recovered": 2,
+    "relations_recovered": 1,
+    "operators_recovered": 0,
+    "operators_observed": 5,
+    "learned_operators": 5,
+    "operator_names_recovered": [],
+    "operators_with_any_explanation": [],
+    "gtc": 0.172,
+    "rtc": 0.0,
+    "rtc_any": 0.0,
+    "registered_deltas": 47,
+    "registered_delta_precision": 0.0,
+    "strict_registered_delta_precision": 0.0,
+    "false_registered_delta_categories": {
+     "incorrect_persistence": 22,
+     "spurious_relation": 25
+    },
+    "spurious_registered_delta_rate": 1.0,
+    "mention_pair_precision": null,
+    "mention_pair_recall": null,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null,
+    "view_false_positive_rate": 0.0,
+    "abstraction_contradiction_rate": null,
+    "comparable_abstraction_groups": 0,
+    "consistent_abstraction_groups": 0,
+    "contradictory_abstraction_groups": 0,
+    "comparable_abstraction_pairs": 0,
+    "consistent_abstraction_pairs": 0,
+    "contradictory_abstraction_pairs": 0,
+    "unresolved_abstraction_pairs_due_unknown": 7,
+    "argument_binding": {
+     "set_berth_closed": {
+      "successful_instances": 21,
+      "with_abstract_transition": 20,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "schedule_call": {
+      "successful_instances": 10,
+      "with_abstract_transition": 9,
+      "all_arguments_bound": 4,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.4,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.444,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "set_pilot_duty": {
+      "successful_instances": 23,
+      "with_abstract_transition": 0,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": null,
+      "conditional_action_arguments_grounded_rate": null
+     },
+     "record_departure": {
+      "successful_instances": 3,
+      "with_abstract_transition": 3,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "assign_pilot": {
+      "successful_instances": 1,
+      "with_abstract_transition": 1,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     }
+    },
+    "per_operator": {
+     "schedule_call": {
+      "n": 10,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 17,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 10,
+      "failures": 15,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "assign_berth": {
+      "successes": 0,
+      "failures": 4,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "assign_pilot": {
+      "n": 1,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 1,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 1,
+      "failures": 2,
+      "explained": 0,
+      "invisible": 1,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "bring_alongside": {
+      "successes": 0,
+      "failures": 10,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "record_departure": {
+      "n": 3,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 9,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 3,
+      "failures": 8,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "set_berth_closed": {
+      "n": 21,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 20,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 21,
+      "failures": 31,
+      "explained": 0,
+      "invisible": 21,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "set_pilot_duty": {
+      "n": 23,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 0,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": null,
+      "strict_registered_delta_precision": null,
+      "successes": 23,
+      "failures": 28,
+      "explained": 0,
+      "invisible": 23,
+      "rejected": 0,
+      "unbound_failures": 0
+     }
+    },
+    "induction": {
+     "transitions": 33,
+     "no_op_segments": 287,
+     "hypotheses_before_min_support": 18,
+     "reattributed_domain_changes": 0,
+     "unattributed_sensing_changes": [],
+     "delayed_object_resolutions": [],
+     "hypotheses": [
+      {
+       "name": "op0",
+       "support": 5,
+       "negative_examples": 9,
+       "unexplained_negative_examples": 9,
+       "actions": [
+        "click(button:Close@54dcf8@T7[?o0])"
+       ],
+       "effects": [
+        "rel:1(?o0) := 'T1:closed'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op1",
+       "support": 5,
+       "negative_examples": 3,
+       "unexplained_negative_examples": 3,
+       "actions": [
+        "click(button:Close@dbf5c5@T2[?o0])"
+       ],
+       "effects": [
+        "rel:1(?o0) := 'T1:closed'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op2",
+       "support": 4,
+       "negative_examples": 5,
+       "unexplained_negative_examples": 5,
+       "actions": [
+        "click(button:Reopen@dbf5c5@T2[?o0])"
+       ],
+       "effects": [
+        "rel:1(?o0) := 'T1:open'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op3",
+       "support": 4,
+       "negative_examples": 9,
+       "unexplained_negative_examples": 9,
+       "actions": [
+        "click(button:Reopen@54dcf8@T7[?o0])"
+       ],
+       "effects": [
+        "rel:1(?o0) := 'T1:open'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op4",
+       "support": 2,
+       "negative_examples": 3,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Close@9de9dd@T1[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=closed, attr:cell#0=W1, attr:cell#0@4=yes, attr:m#0=140) rel:5->None"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'closed')"
+       ]
+      },
+      {
+       "name": "op5",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Schedule call@c81a06)"
+       ],
+       "effects": [
+        "?new0 := new T12(id=T0:expected|col:Call, attr:col=Call) rel:5->T5:C-102"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op6",
+       "support": 1,
+       "negative_examples": 2,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Schedule call@c0316d@T9[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T12(id=T0:Nordkapp|col:Call, attr:col=Call) rel:0->T0:Nordkapp rel:5->None",
+        "delete ?o1",
+        "rel:11(?o0) := 'T11:C-103'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'attr:cell#0@6', '3')"
+       ]
+      },
+      {
+       "name": "op7",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Schedule call@625bea@T4[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T12(id=T0:Hafnarfjord|col:Call, attr:col=Call) rel:0->T0:Hafnarfjord rel:5->T5:C-102"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op8",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Schedule call@625bea@T4[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Hafnarfjord, attr:cell#0@5=None, attr:m#0=112) rel:10->T10:expected",
+        "?new1 := new T12(id=T0:Hafnarfjord|col:Call, attr:col=Call) rel:0->?new0 rel:5->T5:C-102"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op9",
+       "support": 1,
+       "negative_examples": 2,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Schedule call@eb75ae@T8[?o0])"
+       ],
+       "effects": [
+        "rel:11(?o0) := 'T11:C-103'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'attr:cell#0@6', '0')"
+       ]
+      },
+      {
+       "name": "op10",
+       "support": 1,
+       "negative_examples": 0,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(cell#19, ?o0)",
+        "click(button:Schedule call@c0316d@T9[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Nordkapp, attr:cell#0@5=None, attr:m#0=132) rel:10->?o0",
+        "?new1 := new T12(id=T0:Nordkapp|col:Call, attr:col=Call) rel:0->?new0 rel:5->None",
+        "rel:11(?o1) := 'T11:C-103'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op11",
+       "support": 1,
+       "negative_examples": 0,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(cell#19, ?o0)",
+        "click(button:Schedule call@eba99e@T3[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Selkie, attr:cell#0@5=None, attr:m#0=64) rel:10->?o0",
+        "?new1 := new T12(id=T0:Selkie|col:Call, attr:col=Call) rel:0->?new0 rel:5->None",
+        "rel:11(?o1) := 'T11:C-103'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op12",
+       "support": 1,
+       "negative_examples": 0,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "select(combobox#text/combobox@e5a89b@T11[?o0], ?s0)",
+        "click(button:Book pilot)"
+       ],
+       "effects": [
+        "delete ?o1"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op13",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(cell#7, ?o0)",
+        "click(button:Schedule call@c5a5f1)"
+       ],
+       "effects": [
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('empty', '?o0')"
+       ]
+      },
+      {
+       "name": "op14",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "context(cell#11, ?o0)",
+        "click(button:Schedule call@c5a5f1)"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Bregagh, attr:cell#0@5=None, attr:m#0=88) rel:10->?o0",
+        "?new1 := new T12(id=T0:Bregagh|col:Call, attr:col=Call) rel:0->?new0 rel:5->None"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op15",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "context(cell#21, ?o0)",
+        "click(button#button@T12[?o1])",
+        "click(button:Record departure)"
+       ],
+       "effects": [
+        "?new0 := new T8(id=Kittiwake|1, attr:cell#0=Kittiwake, attr:cell#0@2=Norway, attr:cell#0@4=no, attr:cell#0@6=1, attr:m#0=78) rel:11->None",
+        "delete ?o1",
+        "rel:5(?o0) := None"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op16",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "context(cell#21, ?o0)",
+        "click(button#button@T12[?o1])",
+        "click(button:Record departure)"
+       ],
+       "effects": [
+        "delete ?o2",
+        "rel:5(?o0) := None"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op17",
+       "support": 1,
+       "negative_examples": 0,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(cell#27, ?o0)",
+        "context(cell#15, ?o1)",
+        "click(button#button@T12[?o2])",
+        "click(button:Record departure)"
+       ],
+       "effects": [
+        "?new0 := new T4(id=Hafnarfjord|5, attr:cell#0=Hafnarfjord, attr:cell#0@2=Iceland, attr:cell#0@4=no, attr:cell#0@6=5, attr:m#0=112) rel:12->None",
+        "delete ?o1",
+        "delete ?o2",
+        "rel:5(?o0) := None"
+       ],
+       "preconditions": []
+      }
+     ]
+    },
+    "counterexamples": {
+     "status_counts": {
+      "VIEW_ONLY": 7,
+      "UNDETERMINED": 231,
+      "EXPLAINED": 33,
+      "UNGROUNDED": 30
+     },
+     "by_step": {
+      "375": "VIEW_ONLY",
+      "2": "UNDETERMINED",
+      "3": "EXPLAINED",
+      "4": "UNDETERMINED",
+      "5": "UNDETERMINED",
+      "6": "UNDETERMINED",
+      "7": "EXPLAINED",
+      "8": "UNDETERMINED",
+      "9": "UNDETERMINED",
+      "10": "UNDETERMINED",
+      "11": "EXPLAINED",
+      "12": "UNDETERMINED",
+      "13": "UNDETERMINED",
+      "14": "UNDETERMINED",
+      "15": "UNDETERMINED",
+      "16": "EXPLAINED",
+      "17": "UNDETERMINED",
+      "18": "UNDETERMINED",
+      "19": "UNGROUNDED",
+      "21": "UNDETERMINED",
+      "22": "UNGROUNDED",
+      "24": "UNDETERMINED",
+      "25": "UNDETERMINED",
+      "26": "UNDETERMINED",
+      "27": "UNDETERMINED",
+      "28": "UNDETERMINED",
+      "29": "UNDETERMINED",
+      "30": "UNDETERMINED",
+      "31": "UNDETERMINED",
+      "32": "EXPLAINED",
+      "33": "UNDETERMINED",
+      "35": "UNDETERMINED",
+      "37": "UNDETERMINED",
+      "38": "EXPLAINED",
+      "39": "UNDETERMINED",
+      "40": "EXPLAINED",
+      "41": "UNDETERMINED",
+      "42": "EXPLAINED",
+      "43": "UNDETERMINED",
+      "44": "UNDETERMINED",
+      "45": "UNDETERMINED",
+      "46": "UNDETERMINED",
+      "47": "UNDETERMINED",
+      "48": "UNDETERMINED",
+      "49": "UNDETERMINED",
+      "51": "UNDETERMINED",
+      "52": "UNDETERMINED",
+      "53": "UNDETERMINED",
+      "54": "UNDETERMINED",
+      "56": "UNDETERMINED",
+      "57": "EXPLAINED",
+      "58": "UNDETERMINED",
+      "59": "UNDETERMINED",
+      "60": "UNDETERMINED",
+      "61": "UNGROUNDED",
+      "64": "UNDETERMINED",
+      "65": "UNDETERMINED",
+      "66": "UNDETERMINED",
+      "67": "EXPLAINED",
+      "70": "UNDETERMINED",
+      "71": "UNDETERMINED",
+      "72": "UNGROUNDED",
+      "74": "UNDETERMINED",
+      "75": "UNDETERMINED",
+      "76": "UNDETERMINED",
+      "77": "UNGROUNDED",
+      "80": "UNDETERMINED",
+      "81": "UNDETERMINED",
+      "82": "UNDETERMINED",
+      "83": "EXPLAINED",
+      "85": "UNDETERMINED",
+      "86": "UNDETERMINED",
+      "87": "UNDETERMINED",
+      "88": "UNDETERMINED",
+      "89": "UNDETERMINED",
+      "90": "UNDETERMINED",
+      "91": "UNDETERMINED",
+      "92": "UNGROUNDED",
+      "94": "VIEW_ONLY",
+      "96": "UNDETERMINED",
+      "97": "UNDETERMINED",
+      "99": "UNDETERMINED",
+      "100": "UNDETERMINED",
+      "101": "UNDETERMINED",
+      "102": "UNDETERMINED",
+      "103": "UNDETERMINED",
+      "104": "UNDETERMINED",
+      "105": "UNDETERMINED",
+      "106": "UNDETERMINED",
+      "107": "EXPLAINED",
+      "108": "UNGROUNDED",
+      "110": "EXPLAINED",
+      "111": "UNDETERMINED",
+      "112": "EXPLAINED",
+      "113": "UNDETERMINED",
+      "114": "UNDETERMINED",
+      "115": "UNDETERMINED",
+      "118": "UNDETERMINED",
+      "119": "UNDETERMINED",
+      "120": "UNDETERMINED",
+      "121": "UNDETERMINED",
+      "123": "UNGROUNDED",
+      "126": "UNDETERMINED",
+      "127": "UNDETERMINED",
+      "128": "UNDETERMINED",
+      "129": "UNDETERMINED",
+      "130": "UNDETERMINED",
+      "131": "UNDETERMINED",
+      "132": "UNDETERMINED",
+      "133": "UNDETERMINED",
+      "134": "UNDETERMINED",
+      "135": "UNDETERMINED",
+      "138": "UNDETERMINED",
+      "139": "EXPLAINED",
+      "140": "UNDETERMINED",
+      "141": "UNDETERMINED",
+      "143": "UNDETERMINED",
+      "144": "UNDETERMINED",
+      "145": "UNGROUNDED",
+      "147": "UNDETERMINED",
+      "148": "UNDETERMINED",
+      "149": "UNGROUNDED",
+      "152": "UNDETERMINED",
+      "153": "UNDETERMINED",
+      "154": "EXPLAINED",
+      "156": "VIEW_ONLY",
+      "158": "EXPLAINED",
+      "159": "UNDETERMINED",
+      "160": "UNDETERMINED",
+      "161": "EXPLAINED",
+      "162": "UNDETERMINED",
+      "163": "UNDETERMINED",
+      "164": "UNDETERMINED",
+      "165": "UNDETERMINED",
+      "166": "UNDETERMINED",
+      "167": "UNGROUNDED",
+      "169": "VIEW_ONLY",
+      "172": "UNDETERMINED",
+      "173": "UNDETERMINED",
+      "174": "UNDETERMINED",
+      "175": "UNDETERMINED",
+      "176": "UNDETERMINED",
+      "177": "UNDETERMINED",
+      "179": "UNDETERMINED",
+      "180": "UNDETERMINED",
+      "181": "UNDETERMINED",
+      "182": "UNGROUNDED",
+      "184": "UNDETERMINED",
+      "185": "UNGROUNDED",
+      "188": "UNDETERMINED",
+      "189": "EXPLAINED",
+      "191": "UNDETERMINED",
+      "192": "UNDETERMINED",
+      "193": "UNDETERMINED",
+      "194": "UNDETERMINED",
+      "195": "UNDETERMINED",
+      "196": "UNDETERMINED",
+      "197": "UNDETERMINED",
+      "198": "UNDETERMINED",
+      "199": "UNDETERMINED",
+      "200": "UNDETERMINED",
+      "201": "UNDETERMINED",
+      "202": "EXPLAINED",
+      "203": "UNDETERMINED",
+      "204": "UNGROUNDED",
+      "206": "VIEW_ONLY",
+      "208": "UNDETERMINED",
+      "209": "UNDETERMINED",
+      "210": "UNDETERMINED",
+      "211": "UNDETERMINED",
+      "212": "UNDETERMINED",
+      "213": "UNDETERMINED",
+      "214": "EXPLAINED",
+      "215": "EXPLAINED",
+      "216": "UNDETERMINED",
+      "217": "UNDETERMINED",
+      "218": "UNDETERMINED",
+      "219": "UNDETERMINED",
+      "220": "UNDETERMINED",
+      "221": "UNDETERMINED",
+      "222": "UNDETERMINED",
+      "223": "UNDETERMINED",
+      "224": "UNDETERMINED",
+      "225": "UNDETERMINED",
+      "227": "UNDETERMINED",
+      "228": "EXPLAINED",
+      "231": "UNDETERMINED",
+      "232": "UNDETERMINED",
+      "233": "UNDETERMINED",
+      "234": "UNDETERMINED",
+      "235": "UNGROUNDED",
+      "237": "VIEW_ONLY",
+      "239": "UNDETERMINED",
+      "240": "UNDETERMINED",
+      "241": "UNDETERMINED",
+      "242": "UNDETERMINED",
+      "243": "UNDETERMINED",
+      "244": "UNDETERMINED",
+      "245": "UNDETERMINED",
+      "246": "UNDETERMINED",
+      "247": "UNGROUNDED",
+      "250": "EXPLAINED",
+      "251": "UNDETERMINED",
+      "252": "UNDETERMINED",
+      "253": "EXPLAINED",
+      "254": "UNDETERMINED",
+      "255": "UNDETERMINED",
+      "256": "UNDETERMINED",
+      "257": "UNGROUNDED",
+      "259": "UNDETERMINED",
+      "260": "UNDETERMINED",
+      "261": "UNDETERMINED",
+      "262": "UNDETERMINED",
+      "263": "UNDETERMINED",
+      "264": "UNDETERMINED",
+      "265": "UNDETERMINED",
+      "266": "UNDETERMINED",
+      "267": "UNDETERMINED",
+      "268": "UNDETERMINED",
+      "269": "UNDETERMINED",
+      "270": "UNDETERMINED",
+      "271": "UNGROUNDED",
+      "274": "VIEW_ONLY",
+      "276": "UNDETERMINED",
+      "278": "UNGROUNDED",
+      "280": "UNDETERMINED",
+      "281": "UNDETERMINED",
+      "282": "UNGROUNDED",
+      "284": "UNDETERMINED",
+      "285": "EXPLAINED",
+      "286": "UNDETERMINED",
+      "287": "UNDETERMINED",
+      "288": "UNDETERMINED",
+      "289": "UNDETERMINED",
+      "290": "UNDETERMINED",
+      "291": "UNDETERMINED",
+      "292": "UNDETERMINED",
+      "293": "UNDETERMINED",
+      "294": "UNDETERMINED",
+      "295": "UNDETERMINED",
+      "296": "UNDETERMINED",
+      "297": "UNDETERMINED",
+      "299": "UNGROUNDED",
+      "302": "UNDETERMINED",
+      "303": "UNDETERMINED",
+      "304": "UNDETERMINED",
+      "305": "UNDETERMINED",
+      "306": "UNGROUNDED",
+      "308": "UNDETERMINED",
+      "309": "EXPLAINED",
+      "312": "UNDETERMINED",
+      "313": "UNDETERMINED",
+      "314": "UNDETERMINED",
+      "315": "UNDETERMINED",
+      "316": "UNDETERMINED",
+      "317": "EXPLAINED",
+      "318": "UNDETERMINED",
+      "319": "UNDETERMINED",
+      "320": "UNDETERMINED",
+      "321": "UNDETERMINED",
+      "322": "UNGROUNDED",
+      "324": "UNGROUNDED",
+      "326": "UNDETERMINED",
+      "327": "UNDETERMINED",
+      "328": "UNDETERMINED",
+      "329": "UNDETERMINED",
+      "330": "UNDETERMINED",
+      "331": "EXPLAINED",
+      "332": "UNDETERMINED",
+      "333": "UNDETERMINED",
+      "334": "UNDETERMINED",
+      "335": "UNDETERMINED",
+      "336": "UNDETERMINED",
+      "337": "UNDETERMINED",
+      "338": "UNGROUNDED",
+      "340": "EXPLAINED",
+      "341": "UNDETERMINED",
+      "342": "EXPLAINED",
+      "343": "EXPLAINED",
+      "344": "UNDETERMINED",
+      "345": "UNDETERMINED",
+      "346": "UNDETERMINED",
+      "347": "EXPLAINED",
+      "348": "UNDETERMINED",
+      "349": "UNDETERMINED",
+      "350": "UNDETERMINED",
+      "351": "UNDETERMINED",
+      "352": "UNDETERMINED",
+      "353": "UNDETERMINED",
+      "354": "UNDETERMINED",
+      "355": "UNDETERMINED",
+      "356": "UNGROUNDED",
+      "358": "UNGROUNDED",
+      "360": "UNDETERMINED",
+      "361": "UNGROUNDED",
+      "363": "UNDETERMINED",
+      "364": "UNDETERMINED",
+      "365": "UNGROUNDED",
+      "369": "UNDETERMINED",
+      "370": "UNDETERMINED",
+      "371": "UNGROUNDED"
+     }
+    }
+   },
+   "provisional": {
+    "types_recovered": 3,
+    "attributes_recovered": 2,
+    "relations_recovered": 1,
+    "operators_recovered": 0,
+    "operators_observed": 5,
+    "learned_operators": 5,
+    "operator_names_recovered": [],
+    "operators_with_any_explanation": [],
+    "gtc": 0.172,
+    "rtc": 0.0,
+    "rtc_any": 0.0,
+    "registered_deltas": 47,
+    "registered_delta_precision": 0.0,
+    "strict_registered_delta_precision": 0.0,
+    "false_registered_delta_categories": {
+     "incorrect_persistence": 22,
+     "spurious_relation": 25
+    },
+    "spurious_registered_delta_rate": 1.0,
+    "mention_pair_precision": null,
+    "mention_pair_recall": null,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null,
+    "view_false_positive_rate": 0.0,
+    "abstraction_contradiction_rate": null,
+    "comparable_abstraction_groups": 0,
+    "consistent_abstraction_groups": 0,
+    "contradictory_abstraction_groups": 0,
+    "comparable_abstraction_pairs": 0,
+    "consistent_abstraction_pairs": 0,
+    "contradictory_abstraction_pairs": 0,
+    "unresolved_abstraction_pairs_due_unknown": 7,
+    "argument_binding": {
+     "set_berth_closed": {
+      "successful_instances": 21,
+      "with_abstract_transition": 20,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "schedule_call": {
+      "successful_instances": 10,
+      "with_abstract_transition": 9,
+      "all_arguments_bound": 4,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.4,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.444,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "set_pilot_duty": {
+      "successful_instances": 23,
+      "with_abstract_transition": 0,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": null,
+      "conditional_action_arguments_grounded_rate": null
+     },
+     "record_departure": {
+      "successful_instances": 3,
+      "with_abstract_transition": 3,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "assign_pilot": {
+      "successful_instances": 1,
+      "with_abstract_transition": 1,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     }
+    },
+    "per_operator": {
+     "schedule_call": {
+      "n": 10,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 17,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 10,
+      "failures": 15,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "assign_berth": {
+      "successes": 0,
+      "failures": 4,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "assign_pilot": {
+      "n": 1,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 1,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 1,
+      "failures": 2,
+      "explained": 0,
+      "invisible": 1,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "bring_alongside": {
+      "successes": 0,
+      "failures": 10,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "record_departure": {
+      "n": 3,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 9,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 3,
+      "failures": 8,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "set_berth_closed": {
+      "n": 21,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 20,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 21,
+      "failures": 31,
+      "explained": 0,
+      "invisible": 21,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "set_pilot_duty": {
+      "n": 23,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 0,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": null,
+      "strict_registered_delta_precision": null,
+      "successes": 23,
+      "failures": 28,
+      "explained": 0,
+      "invisible": 23,
+      "rejected": 0,
+      "unbound_failures": 0
+     }
+    },
+    "induction": {
+     "transitions": 33,
+     "no_op_segments": 287,
+     "hypotheses_before_min_support": 18,
+     "reattributed_domain_changes": 0,
+     "unattributed_sensing_changes": [],
+     "delayed_object_resolutions": [],
+     "hypotheses": [
+      {
+       "name": "op0",
+       "support": 5,
+       "negative_examples": 9,
+       "unexplained_negative_examples": 9,
+       "actions": [
+        "click(button:Close@54dcf8@T7[?o0])"
+       ],
+       "effects": [
+        "rel:1(?o0) := 'T1:closed'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op1",
+       "support": 5,
+       "negative_examples": 3,
+       "unexplained_negative_examples": 3,
+       "actions": [
+        "click(button:Close@dbf5c5@T2[?o0])"
+       ],
+       "effects": [
+        "rel:1(?o0) := 'T1:closed'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op2",
+       "support": 4,
+       "negative_examples": 5,
+       "unexplained_negative_examples": 5,
+       "actions": [
+        "click(button:Reopen@dbf5c5@T2[?o0])"
+       ],
+       "effects": [
+        "rel:1(?o0) := 'T1:open'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op3",
+       "support": 4,
+       "negative_examples": 9,
+       "unexplained_negative_examples": 9,
+       "actions": [
+        "click(button:Reopen@54dcf8@T7[?o0])"
+       ],
+       "effects": [
+        "rel:1(?o0) := 'T1:open'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op4",
+       "support": 2,
+       "negative_examples": 3,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Close@9de9dd@T1[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=closed, attr:cell#0=W1, attr:cell#0@4=yes, attr:m#0=140) rel:5->None"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'closed')"
+       ]
+      },
+      {
+       "name": "op5",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Schedule call@c81a06)"
+       ],
+       "effects": [
+        "?new0 := new T12(id=T0:expected|col:Call, attr:col=Call) rel:5->T5:C-102"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op6",
+       "support": 1,
+       "negative_examples": 2,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Schedule call@c0316d@T9[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T12(id=T0:Nordkapp|col:Call, attr:col=Call) rel:0->T0:Nordkapp rel:5->None",
+        "delete ?o1",
+        "rel:11(?o0) := 'T11:C-103'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'attr:cell#0@6', '3')"
+       ]
+      },
+      {
+       "name": "op7",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Schedule call@625bea@T4[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T12(id=T0:Hafnarfjord|col:Call, attr:col=Call) rel:0->T0:Hafnarfjord rel:5->T5:C-102"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op8",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Schedule call@625bea@T4[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Hafnarfjord, attr:cell#0@5=None, attr:m#0=112) rel:10->T10:expected",
+        "?new1 := new T12(id=T0:Hafnarfjord|col:Call, attr:col=Call) rel:0->?new0 rel:5->T5:C-102"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op9",
+       "support": 1,
+       "negative_examples": 2,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Schedule call@eb75ae@T8[?o0])"
+       ],
+       "effects": [
+        "rel:11(?o0) := 'T11:C-103'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'attr:cell#0@6', '0')"
+       ]
+      },
+      {
+       "name": "op10",
+       "support": 1,
+       "negative_examples": 0,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(cell#19, ?o0)",
+        "click(button:Schedule call@c0316d@T9[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Nordkapp, attr:cell#0@5=None, attr:m#0=132) rel:10->?o0",
+        "?new1 := new T12(id=T0:Nordkapp|col:Call, attr:col=Call) rel:0->?new0 rel:5->None",
+        "rel:11(?o1) := 'T11:C-103'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op11",
+       "support": 1,
+       "negative_examples": 0,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(cell#19, ?o0)",
+        "click(button:Schedule call@eba99e@T3[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Selkie, attr:cell#0@5=None, attr:m#0=64) rel:10->?o0",
+        "?new1 := new T12(id=T0:Selkie|col:Call, attr:col=Call) rel:0->?new0 rel:5->None",
+        "rel:11(?o1) := 'T11:C-103'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op12",
+       "support": 1,
+       "negative_examples": 0,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "select(combobox#text/combobox@e5a89b@T11[?o0], ?s0)",
+        "click(button:Book pilot)"
+       ],
+       "effects": [
+        "delete ?o1"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op13",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(cell#7, ?o0)",
+        "click(button:Schedule call@c5a5f1)"
+       ],
+       "effects": [
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('empty', '?o0')"
+       ]
+      },
+      {
+       "name": "op14",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "context(cell#11, ?o0)",
+        "click(button:Schedule call@c5a5f1)"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Bregagh, attr:cell#0@5=None, attr:m#0=88) rel:10->?o0",
+        "?new1 := new T12(id=T0:Bregagh|col:Call, attr:col=Call) rel:0->?new0 rel:5->None"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op15",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "context(cell#21, ?o0)",
+        "click(button#button@T12[?o1])",
+        "click(button:Record departure)"
+       ],
+       "effects": [
+        "?new0 := new T8(id=Kittiwake|1, attr:cell#0=Kittiwake, attr:cell#0@2=Norway, attr:cell#0@4=no, attr:cell#0@6=1, attr:m#0=78) rel:11->None",
+        "delete ?o1",
+        "rel:5(?o0) := None"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op16",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "context(cell#21, ?o0)",
+        "click(button#button@T12[?o1])",
+        "click(button:Record departure)"
+       ],
+       "effects": [
+        "delete ?o2",
+        "rel:5(?o0) := None"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op17",
+       "support": 1,
+       "negative_examples": 0,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(cell#27, ?o0)",
+        "context(cell#15, ?o1)",
+        "click(button#button@T12[?o2])",
+        "click(button:Record departure)"
+       ],
+       "effects": [
+        "?new0 := new T4(id=Hafnarfjord|5, attr:cell#0=Hafnarfjord, attr:cell#0@2=Iceland, attr:cell#0@4=no, attr:cell#0@6=5, attr:m#0=112) rel:12->None",
+        "delete ?o1",
+        "delete ?o2",
+        "rel:5(?o0) := None"
+       ],
+       "preconditions": []
+      }
+     ]
+    },
+    "counterexamples": {
+     "status_counts": {
+      "VIEW_ONLY": 7,
+      "UNDETERMINED": 231,
+      "EXPLAINED": 33,
+      "UNGROUNDED": 30
+     },
+     "by_step": {
+      "375": "VIEW_ONLY",
+      "2": "UNDETERMINED",
+      "3": "EXPLAINED",
+      "4": "UNDETERMINED",
+      "5": "UNDETERMINED",
+      "6": "UNDETERMINED",
+      "7": "EXPLAINED",
+      "8": "UNDETERMINED",
+      "9": "UNDETERMINED",
+      "10": "UNDETERMINED",
+      "11": "EXPLAINED",
+      "12": "UNDETERMINED",
+      "13": "UNDETERMINED",
+      "14": "UNDETERMINED",
+      "15": "UNDETERMINED",
+      "16": "EXPLAINED",
+      "17": "UNDETERMINED",
+      "18": "UNDETERMINED",
+      "19": "UNGROUNDED",
+      "21": "UNDETERMINED",
+      "22": "UNGROUNDED",
+      "24": "UNDETERMINED",
+      "25": "UNDETERMINED",
+      "26": "UNDETERMINED",
+      "27": "UNDETERMINED",
+      "28": "UNDETERMINED",
+      "29": "UNDETERMINED",
+      "30": "UNDETERMINED",
+      "31": "UNDETERMINED",
+      "32": "EXPLAINED",
+      "33": "UNDETERMINED",
+      "35": "UNDETERMINED",
+      "37": "UNDETERMINED",
+      "38": "EXPLAINED",
+      "39": "UNDETERMINED",
+      "40": "EXPLAINED",
+      "41": "UNDETERMINED",
+      "42": "EXPLAINED",
+      "43": "UNDETERMINED",
+      "44": "UNDETERMINED",
+      "45": "UNDETERMINED",
+      "46": "UNDETERMINED",
+      "47": "UNDETERMINED",
+      "48": "UNDETERMINED",
+      "49": "UNDETERMINED",
+      "51": "UNDETERMINED",
+      "52": "UNDETERMINED",
+      "53": "UNDETERMINED",
+      "54": "UNDETERMINED",
+      "56": "UNDETERMINED",
+      "57": "EXPLAINED",
+      "58": "UNDETERMINED",
+      "59": "UNDETERMINED",
+      "60": "UNDETERMINED",
+      "61": "UNGROUNDED",
+      "64": "UNDETERMINED",
+      "65": "UNDETERMINED",
+      "66": "UNDETERMINED",
+      "67": "EXPLAINED",
+      "70": "UNDETERMINED",
+      "71": "UNDETERMINED",
+      "72": "UNGROUNDED",
+      "74": "UNDETERMINED",
+      "75": "UNDETERMINED",
+      "76": "UNDETERMINED",
+      "77": "UNGROUNDED",
+      "80": "UNDETERMINED",
+      "81": "UNDETERMINED",
+      "82": "UNDETERMINED",
+      "83": "EXPLAINED",
+      "85": "UNDETERMINED",
+      "86": "UNDETERMINED",
+      "87": "UNDETERMINED",
+      "88": "UNDETERMINED",
+      "89": "UNDETERMINED",
+      "90": "UNDETERMINED",
+      "91": "UNDETERMINED",
+      "92": "UNGROUNDED",
+      "94": "VIEW_ONLY",
+      "96": "UNDETERMINED",
+      "97": "UNDETERMINED",
+      "99": "UNDETERMINED",
+      "100": "UNDETERMINED",
+      "101": "UNDETERMINED",
+      "102": "UNDETERMINED",
+      "103": "UNDETERMINED",
+      "104": "UNDETERMINED",
+      "105": "UNDETERMINED",
+      "106": "UNDETERMINED",
+      "107": "EXPLAINED",
+      "108": "UNGROUNDED",
+      "110": "EXPLAINED",
+      "111": "UNDETERMINED",
+      "112": "EXPLAINED",
+      "113": "UNDETERMINED",
+      "114": "UNDETERMINED",
+      "115": "UNDETERMINED",
+      "118": "UNDETERMINED",
+      "119": "UNDETERMINED",
+      "120": "UNDETERMINED",
+      "121": "UNDETERMINED",
+      "123": "UNGROUNDED",
+      "126": "UNDETERMINED",
+      "127": "UNDETERMINED",
+      "128": "UNDETERMINED",
+      "129": "UNDETERMINED",
+      "130": "UNDETERMINED",
+      "131": "UNDETERMINED",
+      "132": "UNDETERMINED",
+      "133": "UNDETERMINED",
+      "134": "UNDETERMINED",
+      "135": "UNDETERMINED",
+      "138": "UNDETERMINED",
+      "139": "EXPLAINED",
+      "140": "UNDETERMINED",
+      "141": "UNDETERMINED",
+      "143": "UNDETERMINED",
+      "144": "UNDETERMINED",
+      "145": "UNGROUNDED",
+      "147": "UNDETERMINED",
+      "148": "UNDETERMINED",
+      "149": "UNGROUNDED",
+      "152": "UNDETERMINED",
+      "153": "UNDETERMINED",
+      "154": "EXPLAINED",
+      "156": "VIEW_ONLY",
+      "158": "EXPLAINED",
+      "159": "UNDETERMINED",
+      "160": "UNDETERMINED",
+      "161": "EXPLAINED",
+      "162": "UNDETERMINED",
+      "163": "UNDETERMINED",
+      "164": "UNDETERMINED",
+      "165": "UNDETERMINED",
+      "166": "UNDETERMINED",
+      "167": "UNGROUNDED",
+      "169": "VIEW_ONLY",
+      "172": "UNDETERMINED",
+      "173": "UNDETERMINED",
+      "174": "UNDETERMINED",
+      "175": "UNDETERMINED",
+      "176": "UNDETERMINED",
+      "177": "UNDETERMINED",
+      "179": "UNDETERMINED",
+      "180": "UNDETERMINED",
+      "181": "UNDETERMINED",
+      "182": "UNGROUNDED",
+      "184": "UNDETERMINED",
+      "185": "UNGROUNDED",
+      "188": "UNDETERMINED",
+      "189": "EXPLAINED",
+      "191": "UNDETERMINED",
+      "192": "UNDETERMINED",
+      "193": "UNDETERMINED",
+      "194": "UNDETERMINED",
+      "195": "UNDETERMINED",
+      "196": "UNDETERMINED",
+      "197": "UNDETERMINED",
+      "198": "UNDETERMINED",
+      "199": "UNDETERMINED",
+      "200": "UNDETERMINED",
+      "201": "UNDETERMINED",
+      "202": "EXPLAINED",
+      "203": "UNDETERMINED",
+      "204": "UNGROUNDED",
+      "206": "VIEW_ONLY",
+      "208": "UNDETERMINED",
+      "209": "UNDETERMINED",
+      "210": "UNDETERMINED",
+      "211": "UNDETERMINED",
+      "212": "UNDETERMINED",
+      "213": "UNDETERMINED",
+      "214": "EXPLAINED",
+      "215": "EXPLAINED",
+      "216": "UNDETERMINED",
+      "217": "UNDETERMINED",
+      "218": "UNDETERMINED",
+      "219": "UNDETERMINED",
+      "220": "UNDETERMINED",
+      "221": "UNDETERMINED",
+      "222": "UNDETERMINED",
+      "223": "UNDETERMINED",
+      "224": "UNDETERMINED",
+      "225": "UNDETERMINED",
+      "227": "UNDETERMINED",
+      "228": "EXPLAINED",
+      "231": "UNDETERMINED",
+      "232": "UNDETERMINED",
+      "233": "UNDETERMINED",
+      "234": "UNDETERMINED",
+      "235": "UNGROUNDED",
+      "237": "VIEW_ONLY",
+      "239": "UNDETERMINED",
+      "240": "UNDETERMINED",
+      "241": "UNDETERMINED",
+      "242": "UNDETERMINED",
+      "243": "UNDETERMINED",
+      "244": "UNDETERMINED",
+      "245": "UNDETERMINED",
+      "246": "UNDETERMINED",
+      "247": "UNGROUNDED",
+      "250": "EXPLAINED",
+      "251": "UNDETERMINED",
+      "252": "UNDETERMINED",
+      "253": "EXPLAINED",
+      "254": "UNDETERMINED",
+      "255": "UNDETERMINED",
+      "256": "UNDETERMINED",
+      "257": "UNGROUNDED",
+      "259": "UNDETERMINED",
+      "260": "UNDETERMINED",
+      "261": "UNDETERMINED",
+      "262": "UNDETERMINED",
+      "263": "UNDETERMINED",
+      "264": "UNDETERMINED",
+      "265": "UNDETERMINED",
+      "266": "UNDETERMINED",
+      "267": "UNDETERMINED",
+      "268": "UNDETERMINED",
+      "269": "UNDETERMINED",
+      "270": "UNDETERMINED",
+      "271": "UNGROUNDED",
+      "274": "VIEW_ONLY",
+      "276": "UNDETERMINED",
+      "278": "UNGROUNDED",
+      "280": "UNDETERMINED",
+      "281": "UNDETERMINED",
+      "282": "UNGROUNDED",
+      "284": "UNDETERMINED",
+      "285": "EXPLAINED",
+      "286": "UNDETERMINED",
+      "287": "UNDETERMINED",
+      "288": "UNDETERMINED",
+      "289": "UNDETERMINED",
+      "290": "UNDETERMINED",
+      "291": "UNDETERMINED",
+      "292": "UNDETERMINED",
+      "293": "UNDETERMINED",
+      "294": "UNDETERMINED",
+      "295": "UNDETERMINED",
+      "296": "UNDETERMINED",
+      "297": "UNDETERMINED",
+      "299": "UNGROUNDED",
+      "302": "UNDETERMINED",
+      "303": "UNDETERMINED",
+      "304": "UNDETERMINED",
+      "305": "UNDETERMINED",
+      "306": "UNGROUNDED",
+      "308": "UNDETERMINED",
+      "309": "EXPLAINED",
+      "312": "UNDETERMINED",
+      "313": "UNDETERMINED",
+      "314": "UNDETERMINED",
+      "315": "UNDETERMINED",
+      "316": "UNDETERMINED",
+      "317": "EXPLAINED",
+      "318": "UNDETERMINED",
+      "319": "UNDETERMINED",
+      "320": "UNDETERMINED",
+      "321": "UNDETERMINED",
+      "322": "UNGROUNDED",
+      "324": "UNGROUNDED",
+      "326": "UNDETERMINED",
+      "327": "UNDETERMINED",
+      "328": "UNDETERMINED",
+      "329": "UNDETERMINED",
+      "330": "UNDETERMINED",
+      "331": "EXPLAINED",
+      "332": "UNDETERMINED",
+      "333": "UNDETERMINED",
+      "334": "UNDETERMINED",
+      "335": "UNDETERMINED",
+      "336": "UNDETERMINED",
+      "337": "UNDETERMINED",
+      "338": "UNGROUNDED",
+      "340": "EXPLAINED",
+      "341": "UNDETERMINED",
+      "342": "EXPLAINED",
+      "343": "EXPLAINED",
+      "344": "UNDETERMINED",
+      "345": "UNDETERMINED",
+      "346": "UNDETERMINED",
+      "347": "EXPLAINED",
+      "348": "UNDETERMINED",
+      "349": "UNDETERMINED",
+      "350": "UNDETERMINED",
+      "351": "UNDETERMINED",
+      "352": "UNDETERMINED",
+      "353": "UNDETERMINED",
+      "354": "UNDETERMINED",
+      "355": "UNDETERMINED",
+      "356": "UNGROUNDED",
+      "358": "UNGROUNDED",
+      "360": "UNDETERMINED",
+      "361": "UNGROUNDED",
+      "363": "UNDETERMINED",
+      "364": "UNDETERMINED",
+      "365": "UNGROUNDED",
+      "369": "UNDETERMINED",
+      "370": "UNDETERMINED",
+      "371": "UNGROUNDED"
+     }
+    }
+   },
+   "validated": {
+    "types_recovered": 3,
+    "attributes_recovered": 2,
+    "relations_recovered": 1,
+    "operators_recovered": 0,
+    "operators_observed": 5,
+    "learned_operators": 5,
+    "operator_names_recovered": [],
+    "operators_with_any_explanation": [],
+    "gtc": 0.172,
+    "rtc": 0.0,
+    "rtc_any": 0.0,
+    "registered_deltas": 47,
+    "registered_delta_precision": 0.0,
+    "strict_registered_delta_precision": 0.0,
+    "false_registered_delta_categories": {
+     "incorrect_persistence": 22,
+     "spurious_relation": 25
+    },
+    "spurious_registered_delta_rate": 1.0,
+    "mention_pair_precision": null,
+    "mention_pair_recall": null,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null,
+    "view_false_positive_rate": 0.0,
+    "abstraction_contradiction_rate": null,
+    "comparable_abstraction_groups": 0,
+    "consistent_abstraction_groups": 0,
+    "contradictory_abstraction_groups": 0,
+    "comparable_abstraction_pairs": 0,
+    "consistent_abstraction_pairs": 0,
+    "contradictory_abstraction_pairs": 0,
+    "unresolved_abstraction_pairs_due_unknown": 7,
+    "argument_binding": {
+     "set_berth_closed": {
+      "successful_instances": 21,
+      "with_abstract_transition": 20,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "schedule_call": {
+      "successful_instances": 10,
+      "with_abstract_transition": 9,
+      "all_arguments_bound": 4,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.4,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.444,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "set_pilot_duty": {
+      "successful_instances": 23,
+      "with_abstract_transition": 0,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": null,
+      "conditional_action_arguments_grounded_rate": null
+     },
+     "record_departure": {
+      "successful_instances": 3,
+      "with_abstract_transition": 3,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "assign_pilot": {
+      "successful_instances": 1,
+      "with_abstract_transition": 1,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     }
+    },
+    "per_operator": {
+     "schedule_call": {
+      "n": 10,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 17,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 10,
+      "failures": 15,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "assign_berth": {
+      "successes": 0,
+      "failures": 4,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "assign_pilot": {
+      "n": 1,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 1,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 1,
+      "failures": 2,
+      "explained": 0,
+      "invisible": 1,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "bring_alongside": {
+      "successes": 0,
+      "failures": 10,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "record_departure": {
+      "n": 3,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 9,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 3,
+      "failures": 8,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "set_berth_closed": {
+      "n": 21,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 20,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 21,
+      "failures": 31,
+      "explained": 0,
+      "invisible": 21,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "set_pilot_duty": {
+      "n": 23,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 0,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": null,
+      "strict_registered_delta_precision": null,
+      "successes": 23,
+      "failures": 28,
+      "explained": 0,
+      "invisible": 23,
+      "rejected": 0,
+      "unbound_failures": 0
+     }
+    },
+    "induction": {
+     "transitions": 33,
+     "no_op_segments": 287,
+     "hypotheses_before_min_support": 18,
+     "reattributed_domain_changes": 0,
+     "unattributed_sensing_changes": [],
+     "delayed_object_resolutions": [],
+     "hypotheses": [
+      {
+       "name": "op0",
+       "support": 5,
+       "negative_examples": 9,
+       "unexplained_negative_examples": 9,
+       "actions": [
+        "click(button:Close@54dcf8@T7[?o0])"
+       ],
+       "effects": [
+        "rel:1(?o0) := 'T1:closed'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op1",
+       "support": 5,
+       "negative_examples": 3,
+       "unexplained_negative_examples": 3,
+       "actions": [
+        "click(button:Close@dbf5c5@T2[?o0])"
+       ],
+       "effects": [
+        "rel:1(?o0) := 'T1:closed'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op2",
+       "support": 4,
+       "negative_examples": 5,
+       "unexplained_negative_examples": 5,
+       "actions": [
+        "click(button:Reopen@dbf5c5@T2[?o0])"
+       ],
+       "effects": [
+        "rel:1(?o0) := 'T1:open'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op3",
+       "support": 4,
+       "negative_examples": 9,
+       "unexplained_negative_examples": 9,
+       "actions": [
+        "click(button:Reopen@54dcf8@T7[?o0])"
+       ],
+       "effects": [
+        "rel:1(?o0) := 'T1:open'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op4",
+       "support": 2,
+       "negative_examples": 3,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Close@9de9dd@T1[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=closed, attr:cell#0=W1, attr:cell#0@4=yes, attr:m#0=140) rel:5->None"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'closed')"
+       ]
+      },
+      {
+       "name": "op5",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Schedule call@c81a06)"
+       ],
+       "effects": [
+        "?new0 := new T12(id=T0:expected|col:Call, attr:col=Call) rel:5->T5:C-102"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op6",
+       "support": 1,
+       "negative_examples": 2,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Schedule call@c0316d@T9[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T12(id=T0:Nordkapp|col:Call, attr:col=Call) rel:0->T0:Nordkapp rel:5->None",
+        "delete ?o1",
+        "rel:11(?o0) := 'T11:C-103'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'attr:cell#0@6', '3')"
+       ]
+      },
+      {
+       "name": "op7",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Schedule call@625bea@T4[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T12(id=T0:Hafnarfjord|col:Call, attr:col=Call) rel:0->T0:Hafnarfjord rel:5->T5:C-102"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op8",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Schedule call@625bea@T4[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Hafnarfjord, attr:cell#0@5=None, attr:m#0=112) rel:10->T10:expected",
+        "?new1 := new T12(id=T0:Hafnarfjord|col:Call, attr:col=Call) rel:0->?new0 rel:5->T5:C-102"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op9",
+       "support": 1,
+       "negative_examples": 2,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Schedule call@eb75ae@T8[?o0])"
+       ],
+       "effects": [
+        "rel:11(?o0) := 'T11:C-103'"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'attr:cell#0@6', '0')"
+       ]
+      },
+      {
+       "name": "op10",
+       "support": 1,
+       "negative_examples": 0,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(cell#19, ?o0)",
+        "click(button:Schedule call@c0316d@T9[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Nordkapp, attr:cell#0@5=None, attr:m#0=132) rel:10->?o0",
+        "?new1 := new T12(id=T0:Nordkapp|col:Call, attr:col=Call) rel:0->?new0 rel:5->None",
+        "rel:11(?o1) := 'T11:C-103'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op11",
+       "support": 1,
+       "negative_examples": 0,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(cell#19, ?o0)",
+        "click(button:Schedule call@eba99e@T3[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Selkie, attr:cell#0@5=None, attr:m#0=64) rel:10->?o0",
+        "?new1 := new T12(id=T0:Selkie|col:Call, attr:col=Call) rel:0->?new0 rel:5->None",
+        "rel:11(?o1) := 'T11:C-103'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op12",
+       "support": 1,
+       "negative_examples": 0,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "select(combobox#text/combobox@e5a89b@T11[?o0], ?s0)",
+        "click(button:Book pilot)"
+       ],
+       "effects": [
+        "delete ?o1"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op13",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(cell#7, ?o0)",
+        "click(button:Schedule call@c5a5f1)"
+       ],
+       "effects": [
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('empty', '?o0')"
+       ]
+      },
+      {
+       "name": "op14",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "context(cell#11, ?o0)",
+        "click(button:Schedule call@c5a5f1)"
+       ],
+       "effects": [
+        "?new0 := new T0(id=Bregagh, attr:cell#0@5=None, attr:m#0=88) rel:10->?o0",
+        "?new1 := new T12(id=T0:Bregagh|col:Call, attr:col=Call) rel:0->?new0 rel:5->None"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op15",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "context(cell#21, ?o0)",
+        "click(button#button@T12[?o1])",
+        "click(button:Record departure)"
+       ],
+       "effects": [
+        "?new0 := new T8(id=Kittiwake|1, attr:cell#0=Kittiwake, attr:cell#0@2=Norway, attr:cell#0@4=no, attr:cell#0@6=1, attr:m#0=78) rel:11->None",
+        "delete ?o1",
+        "rel:5(?o0) := None"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op16",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "context(cell#21, ?o0)",
+        "click(button#button@T12[?o1])",
+        "click(button:Record departure)"
+       ],
+       "effects": [
+        "delete ?o2",
+        "rel:5(?o0) := None"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op17",
+       "support": 1,
+       "negative_examples": 0,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(cell#27, ?o0)",
+        "context(cell#15, ?o1)",
+        "click(button#button@T12[?o2])",
+        "click(button:Record departure)"
+       ],
+       "effects": [
+        "?new0 := new T4(id=Hafnarfjord|5, attr:cell#0=Hafnarfjord, attr:cell#0@2=Iceland, attr:cell#0@4=no, attr:cell#0@6=5, attr:m#0=112) rel:12->None",
+        "delete ?o1",
+        "delete ?o2",
+        "rel:5(?o0) := None"
+       ],
+       "preconditions": []
+      }
+     ]
+    },
+    "counterexamples": {
+     "status_counts": {
+      "VIEW_ONLY": 7,
+      "UNDETERMINED": 231,
+      "EXPLAINED": 33,
+      "UNGROUNDED": 30
+     },
+     "by_step": {
+      "375": "VIEW_ONLY",
+      "2": "UNDETERMINED",
+      "3": "EXPLAINED",
+      "4": "UNDETERMINED",
+      "5": "UNDETERMINED",
+      "6": "UNDETERMINED",
+      "7": "EXPLAINED",
+      "8": "UNDETERMINED",
+      "9": "UNDETERMINED",
+      "10": "UNDETERMINED",
+      "11": "EXPLAINED",
+      "12": "UNDETERMINED",
+      "13": "UNDETERMINED",
+      "14": "UNDETERMINED",
+      "15": "UNDETERMINED",
+      "16": "EXPLAINED",
+      "17": "UNDETERMINED",
+      "18": "UNDETERMINED",
+      "19": "UNGROUNDED",
+      "21": "UNDETERMINED",
+      "22": "UNGROUNDED",
+      "24": "UNDETERMINED",
+      "25": "UNDETERMINED",
+      "26": "UNDETERMINED",
+      "27": "UNDETERMINED",
+      "28": "UNDETERMINED",
+      "29": "UNDETERMINED",
+      "30": "UNDETERMINED",
+      "31": "UNDETERMINED",
+      "32": "EXPLAINED",
+      "33": "UNDETERMINED",
+      "35": "UNDETERMINED",
+      "37": "UNDETERMINED",
+      "38": "EXPLAINED",
+      "39": "UNDETERMINED",
+      "40": "EXPLAINED",
+      "41": "UNDETERMINED",
+      "42": "EXPLAINED",
+      "43": "UNDETERMINED",
+      "44": "UNDETERMINED",
+      "45": "UNDETERMINED",
+      "46": "UNDETERMINED",
+      "47": "UNDETERMINED",
+      "48": "UNDETERMINED",
+      "49": "UNDETERMINED",
+      "51": "UNDETERMINED",
+      "52": "UNDETERMINED",
+      "53": "UNDETERMINED",
+      "54": "UNDETERMINED",
+      "56": "UNDETERMINED",
+      "57": "EXPLAINED",
+      "58": "UNDETERMINED",
+      "59": "UNDETERMINED",
+      "60": "UNDETERMINED",
+      "61": "UNGROUNDED",
+      "64": "UNDETERMINED",
+      "65": "UNDETERMINED",
+      "66": "UNDETERMINED",
+      "67": "EXPLAINED",
+      "70": "UNDETERMINED",
+      "71": "UNDETERMINED",
+      "72": "UNGROUNDED",
+      "74": "UNDETERMINED",
+      "75": "UNDETERMINED",
+      "76": "UNDETERMINED",
+      "77": "UNGROUNDED",
+      "80": "UNDETERMINED",
+      "81": "UNDETERMINED",
+      "82": "UNDETERMINED",
+      "83": "EXPLAINED",
+      "85": "UNDETERMINED",
+      "86": "UNDETERMINED",
+      "87": "UNDETERMINED",
+      "88": "UNDETERMINED",
+      "89": "UNDETERMINED",
+      "90": "UNDETERMINED",
+      "91": "UNDETERMINED",
+      "92": "UNGROUNDED",
+      "94": "VIEW_ONLY",
+      "96": "UNDETERMINED",
+      "97": "UNDETERMINED",
+      "99": "UNDETERMINED",
+      "100": "UNDETERMINED",
+      "101": "UNDETERMINED",
+      "102": "UNDETERMINED",
+      "103": "UNDETERMINED",
+      "104": "UNDETERMINED",
+      "105": "UNDETERMINED",
+      "106": "UNDETERMINED",
+      "107": "EXPLAINED",
+      "108": "UNGROUNDED",
+      "110": "EXPLAINED",
+      "111": "UNDETERMINED",
+      "112": "EXPLAINED",
+      "113": "UNDETERMINED",
+      "114": "UNDETERMINED",
+      "115": "UNDETERMINED",
+      "118": "UNDETERMINED",
+      "119": "UNDETERMINED",
+      "120": "UNDETERMINED",
+      "121": "UNDETERMINED",
+      "123": "UNGROUNDED",
+      "126": "UNDETERMINED",
+      "127": "UNDETERMINED",
+      "128": "UNDETERMINED",
+      "129": "UNDETERMINED",
+      "130": "UNDETERMINED",
+      "131": "UNDETERMINED",
+      "132": "UNDETERMINED",
+      "133": "UNDETERMINED",
+      "134": "UNDETERMINED",
+      "135": "UNDETERMINED",
+      "138": "UNDETERMINED",
+      "139": "EXPLAINED",
+      "140": "UNDETERMINED",
+      "141": "UNDETERMINED",
+      "143": "UNDETERMINED",
+      "144": "UNDETERMINED",
+      "145": "UNGROUNDED",
+      "147": "UNDETERMINED",
+      "148": "UNDETERMINED",
+      "149": "UNGROUNDED",
+      "152": "UNDETERMINED",
+      "153": "UNDETERMINED",
+      "154": "EXPLAINED",
+      "156": "VIEW_ONLY",
+      "158": "EXPLAINED",
+      "159": "UNDETERMINED",
+      "160": "UNDETERMINED",
+      "161": "EXPLAINED",
+      "162": "UNDETERMINED",
+      "163": "UNDETERMINED",
+      "164": "UNDETERMINED",
+      "165": "UNDETERMINED",
+      "166": "UNDETERMINED",
+      "167": "UNGROUNDED",
+      "169": "VIEW_ONLY",
+      "172": "UNDETERMINED",
+      "173": "UNDETERMINED",
+      "174": "UNDETERMINED",
+      "175": "UNDETERMINED",
+      "176": "UNDETERMINED",
+      "177": "UNDETERMINED",
+      "179": "UNDETERMINED",
+      "180": "UNDETERMINED",
+      "181": "UNDETERMINED",
+      "182": "UNGROUNDED",
+      "184": "UNDETERMINED",
+      "185": "UNGROUNDED",
+      "188": "UNDETERMINED",
+      "189": "EXPLAINED",
+      "191": "UNDETERMINED",
+      "192": "UNDETERMINED",
+      "193": "UNDETERMINED",
+      "194": "UNDETERMINED",
+      "195": "UNDETERMINED",
+      "196": "UNDETERMINED",
+      "197": "UNDETERMINED",
+      "198": "UNDETERMINED",
+      "199": "UNDETERMINED",
+      "200": "UNDETERMINED",
+      "201": "UNDETERMINED",
+      "202": "EXPLAINED",
+      "203": "UNDETERMINED",
+      "204": "UNGROUNDED",
+      "206": "VIEW_ONLY",
+      "208": "UNDETERMINED",
+      "209": "UNDETERMINED",
+      "210": "UNDETERMINED",
+      "211": "UNDETERMINED",
+      "212": "UNDETERMINED",
+      "213": "UNDETERMINED",
+      "214": "EXPLAINED",
+      "215": "EXPLAINED",
+      "216": "UNDETERMINED",
+      "217": "UNDETERMINED",
+      "218": "UNDETERMINED",
+      "219": "UNDETERMINED",
+      "220": "UNDETERMINED",
+      "221": "UNDETERMINED",
+      "222": "UNDETERMINED",
+      "223": "UNDETERMINED",
+      "224": "UNDETERMINED",
+      "225": "UNDETERMINED",
+      "227": "UNDETERMINED",
+      "228": "EXPLAINED",
+      "231": "UNDETERMINED",
+      "232": "UNDETERMINED",
+      "233": "UNDETERMINED",
+      "234": "UNDETERMINED",
+      "235": "UNGROUNDED",
+      "237": "VIEW_ONLY",
+      "239": "UNDETERMINED",
+      "240": "UNDETERMINED",
+      "241": "UNDETERMINED",
+      "242": "UNDETERMINED",
+      "243": "UNDETERMINED",
+      "244": "UNDETERMINED",
+      "245": "UNDETERMINED",
+      "246": "UNDETERMINED",
+      "247": "UNGROUNDED",
+      "250": "EXPLAINED",
+      "251": "UNDETERMINED",
+      "252": "UNDETERMINED",
+      "253": "EXPLAINED",
+      "254": "UNDETERMINED",
+      "255": "UNDETERMINED",
+      "256": "UNDETERMINED",
+      "257": "UNGROUNDED",
+      "259": "UNDETERMINED",
+      "260": "UNDETERMINED",
+      "261": "UNDETERMINED",
+      "262": "UNDETERMINED",
+      "263": "UNDETERMINED",
+      "264": "UNDETERMINED",
+      "265": "UNDETERMINED",
+      "266": "UNDETERMINED",
+      "267": "UNDETERMINED",
+      "268": "UNDETERMINED",
+      "269": "UNDETERMINED",
+      "270": "UNDETERMINED",
+      "271": "UNGROUNDED",
+      "274": "VIEW_ONLY",
+      "276": "UNDETERMINED",
+      "278": "UNGROUNDED",
+      "280": "UNDETERMINED",
+      "281": "UNDETERMINED",
+      "282": "UNGROUNDED",
+      "284": "UNDETERMINED",
+      "285": "EXPLAINED",
+      "286": "UNDETERMINED",
+      "287": "UNDETERMINED",
+      "288": "UNDETERMINED",
+      "289": "UNDETERMINED",
+      "290": "UNDETERMINED",
+      "291": "UNDETERMINED",
+      "292": "UNDETERMINED",
+      "293": "UNDETERMINED",
+      "294": "UNDETERMINED",
+      "295": "UNDETERMINED",
+      "296": "UNDETERMINED",
+      "297": "UNDETERMINED",
+      "299": "UNGROUNDED",
+      "302": "UNDETERMINED",
+      "303": "UNDETERMINED",
+      "304": "UNDETERMINED",
+      "305": "UNDETERMINED",
+      "306": "UNGROUNDED",
+      "308": "UNDETERMINED",
+      "309": "EXPLAINED",
+      "312": "UNDETERMINED",
+      "313": "UNDETERMINED",
+      "314": "UNDETERMINED",
+      "315": "UNDETERMINED",
+      "316": "UNDETERMINED",
+      "317": "EXPLAINED",
+      "318": "UNDETERMINED",
+      "319": "UNDETERMINED",
+      "320": "UNDETERMINED",
+      "321": "UNDETERMINED",
+      "322": "UNGROUNDED",
+      "324": "UNGROUNDED",
+      "326": "UNDETERMINED",
+      "327": "UNDETERMINED",
+      "328": "UNDETERMINED",
+      "329": "UNDETERMINED",
+      "330": "UNDETERMINED",
+      "331": "EXPLAINED",
+      "332": "UNDETERMINED",
+      "333": "UNDETERMINED",
+      "334": "UNDETERMINED",
+      "335": "UNDETERMINED",
+      "336": "UNDETERMINED",
+      "337": "UNDETERMINED",
+      "338": "UNGROUNDED",
+      "340": "EXPLAINED",
+      "341": "UNDETERMINED",
+      "342": "EXPLAINED",
+      "343": "EXPLAINED",
+      "344": "UNDETERMINED",
+      "345": "UNDETERMINED",
+      "346": "UNDETERMINED",
+      "347": "EXPLAINED",
+      "348": "UNDETERMINED",
+      "349": "UNDETERMINED",
+      "350": "UNDETERMINED",
+      "351": "UNDETERMINED",
+      "352": "UNDETERMINED",
+      "353": "UNDETERMINED",
+      "354": "UNDETERMINED",
+      "355": "UNDETERMINED",
+      "356": "UNGROUNDED",
+      "358": "UNGROUNDED",
+      "360": "UNDETERMINED",
+      "361": "UNGROUNDED",
+      "363": "UNDETERMINED",
+      "364": "UNDETERMINED",
+      "365": "UNGROUNDED",
+      "369": "UNDETERMINED",
+      "370": "UNDETERMINED",
+      "371": "UNGROUNDED"
+     }
+    }
+   },
+   "refinement_process": null
+  }
+ }
+}

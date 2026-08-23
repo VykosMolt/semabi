@@ -1,0 +1,16 @@
+[
+ {"id": "A_grok", "model": "Grok 4.6", "vendor": "xAI", "cli": "grok -p --permission-mode auto --output-format plain",
+  "apps": ["01_landing_board", "02_blend_book"],
+  "compiler_access": false, "read_outside_own_directory": false,
+  "transcript": "~/.grok/sessions/%2Fhome%2Fmoloch%2Fsemabi-gauntlet-v3%2Fauthors%2FA_grok"},
+ {"id": "B_claude_opus", "model": "Claude Opus 5", "vendor": "Anthropic", "cli": "claude -p --model opus --safe-mode --permission-mode auto",
+  "apps": ["01_harbour", "02_cellar"],
+  "compiler_access": false, "read_outside_own_directory": false,
+  "incidental_exposure": "a ps listing showed the directory name semabi-gauntlet-v2 and four of its app directory names; no content was opened",
+  "transcript": "~/.claude/projects/-home-moloch-semabi-gauntlet-v3-authors-B-claude-opus"},
+ {"id": "C_claude_sonnet", "model": "Claude Sonnet 5", "vendor": "Anthropic", "cli": "claude -p --model sonnet --safe-mode --permission-mode auto",
+  "apps": ["01_vet_clinic", "02_barter_market"],
+  "compiler_access": false, "read_outside_own_directory": false,
+  "incidental_exposure": "a ps listing showed the directory name semabi-gauntlet-v2 and four of its app directory names; no content was opened",
+  "transcript": "~/.claude/projects/-home-moloch-semabi-gauntlet-v3-authors-C-claude-sonnet"}
+]

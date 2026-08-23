@@ -1,0 +1,9 @@
+[
+ {
+  "cmd": "/home/moloch/semabi/.venv/bin/python -m semabi.eval.v2_refinement_run --run /home/moloch/semabi/runs/v3/sonnet_01_vet_clinic_loop --base http://127.0.0.1:8920 --seed 0 --max-attempts 6",
+  "returncode": 1,
+  "seconds": 19.1,
+  "tail": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 198, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/home/moloch/semabi/semabi/eval/v2_refinement_run.py\", line 45, in <module>\n    main()\n  File \"/home/moloch/semabi/semabi/eval/v2_refinement_run.py\", line 29, in main\n    report = run_loop(run_dir, args.base, args.seed, args.max_attempts,\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/moloch/semabi/semabi/run_v2_refine.py\", line 817, in run_loop\n    raise RuntimeError(\"no local widget/entity ambiguity was generated from an UNGROUNDED transition\")\nRuntimeError: no local widget/entity ambiguity was generated from an UNGROUNDED transition\n",
+  "stage": "refinement_loop"
+ }
+]

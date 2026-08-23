@@ -1,0 +1,406 @@
+{
+ "version": 1,
+ "question": "do the currently VALIDATED refinements keep predicting correctly on further independent traces, and do they predict anything the unrefined model does not?",
+ "method": {
+  "per_seed": "every held-out trace is reported individually; nothing is averaged",
+  "inconclusive": "a trace that exercises no refinement-introduced schema is INCONCLUSIVE_FOR_VALIDATION, never a pass",
+  "differential": "candidate and baseline models are compiled from the same held-out trace and paired by step index; a candidate win requires the baseline to be contradicted on a transition where the candidate was confirmed",
+  "hidden_evaluator_labels_used": false
+ },
+ "cases": {
+  "sonnet_02_barter_market_loop": {
+   "source_run": "/home/moloch/semabi/runs/v3/sonnet_02_barter_market_loop",
+   "decision_statuses": {
+    "ref-5bfe14781299": "PROVISIONAL"
+   },
+   "canonical_decision_ids": [],
+   "noncanonical_reason": "NO_INCREMENTAL_SEMANTIC_PREDICTION",
+   "held_out_traces": [
+    {
+     "test_run": "/home/moloch/semabi/runs/v3/sonnet_02_barter_market_seed11",
+     "test_trace_sha256": "a687dcb424596e630427adcc73ec5e7d655647de616fc0df95f102b26ffe8e13",
+     "independent_of_selection_trace": true,
+     "independence": {
+      "independent": true,
+      "source_trace_sha256": "776b263416d833126e4393040330e53eaae6f3bd4572f009b37012f0110be40d",
+      "test_trace_sha256": "a687dcb424596e630427adcc73ec5e7d655647de616fc0df95f102b26ffe8e13",
+      "shared_step_prefix": 0,
+      "test_step_triples_present_in_source": 0.0,
+      "test_observation_signatures_present_in_source": 0.006,
+      "source_reset_seeds": [
+       "0",
+       "1",
+       "2",
+       "3",
+       "4",
+       "5"
+      ],
+      "test_reset_seeds": [
+       "1100",
+       "1101",
+       "1102",
+       "1103",
+       "1104",
+       "1105"
+      ]
+     },
+     "status": "INCONCLUSIVE",
+     "reason": "the held-out trace did not exercise a testable refinement-introduced schema",
+     "refinement_introduced_predictions": 0,
+     "predictions_with_an_applicable_held_out_occurrence": 0,
+     "outcome_counts_over_prediction_x_occurrence": {},
+     "exact_recurrences": 0,
+     "contradictions": 0,
+     "not_comparable": 0,
+     "inapplicable": 0,
+     "novel_binding_matches": 0,
+     "object_level_novel_matches_under_a_unique_mapping": 0,
+     "novel_bindings": [],
+     "view_domain_leaks": 0,
+     "baseline_control": {
+      "predictions": 11,
+      "underdetermined": 5,
+      "outcome_counts": {
+       "INAPPLICABLE": 167,
+       "CONTRADICTED": 14,
+       "EXACT": 5,
+       "PREDICTED_WITH_VISIBLE_EXTRAS": 11,
+       "UNKNOWN_APPLICABILITY": 18
+      }
+     },
+     "decisions_change_the_held_out_compile": false,
+     "differential": {
+      "counts": {
+       "CANDIDATE_CORRECT_BASELINE_WRONG": 0,
+       "CANDIDATE_WRONG_BASELINE_CORRECT": 0,
+       "BOTH_CORRECT": 0,
+       "BOTH_WRONG": 14,
+       "SAME_PREDICTION": 16,
+       "NOT_COMPARABLE": 0
+      },
+      "not_comparable_detail": {},
+      "held_out_steps_with_a_determinate_prediction": 30,
+      "steps_where_the_silent_model_never_segmented_an_occurrence": 0,
+      "occurrence_pairing": {
+       "candidate_occurrences": 538,
+       "baseline_occurrences": 538,
+       "paired": 538,
+       "candidate_only": 0,
+       "baseline_only": 0
+      },
+      "candidate": {
+       "steps_determinate": 30,
+       "steps_correct": 16,
+       "steps_wrong": 14,
+       "steps_silent": 0
+      },
+      "baseline": {
+       "steps_determinate": 30,
+       "steps_correct": 16,
+       "steps_wrong": 14,
+       "steps_silent": 0
+      },
+      "candidate_wins_where_baseline_also_had_a_confirmed_schema": 0,
+      "candidate_wins": 0,
+      "baseline_wins": 0,
+      "divergent_comparable_cases": 0,
+      "candidate_win_fraction": null,
+      "candidate_wins_attributed_to_refinement_introduced_schema": 0,
+      "candidate_only_correct_where_baseline_silent": 0,
+      "candidate_only_correct_attributed_to_refinement_introduced_schema": 0,
+      "behavioral_novelty": "NOT_DEMONSTRATED_NO_DIVERGENT_COMPARABLE_CASE",
+      "incremental_value_class": "PREDICTION_ONLY_NO_DEMONSTRATED_ADVANTAGE_OVER_BASELINE",
+      "interpretation": "candidate_wins counts held-out transitions where the candidate model's applicable determinate schemas were confirmed against the rendered after-state and the baseline model's were contradicted on the same transition; the two models therefore did not predict the same thing there. Structural schema difference alone is never counted.",
+      "candidate_determinate_schemas": 11,
+      "baseline_determinate_schemas": 11,
+      "candidate_outcome_counts": {
+       "INAPPLICABLE": 167,
+       "CONTRADICTED": 14,
+       "EXACT": 5,
+       "PREDICTED_WITH_VISIBLE_EXTRAS": 11,
+       "UNKNOWN_APPLICABILITY": 18
+      }
+     },
+     "validated_decision_ids": [],
+     "predictive_counterexamples_file": "/home/moloch/semabi/runs/v3/sonnet_02_barter_market_loop/predictive_counterexamples_v2.jsonl",
+     "classification": "INCONCLUSIVE_FOR_VALIDATION",
+     "classification_why": "the held-out trace exercised no refinement-introduced schema with a determinate outcome",
+     "primitive_cost": {
+      "total_primitives": 656,
+      "broad_behavior_generating_primitives": 274,
+      "view_survey_or_navigation_primitives": 303,
+      "reload_probe_primitives": 73,
+      "reset_primitives": 6,
+      "automatic_probe_trigger_actions": 60,
+      "counterexample_targeted_probe_trigger_actions": 0,
+      "diagnostic_overhead_primitives": 376,
+      "diagnostic_overhead_rate": 0.573
+     }
+    },
+    {
+     "test_run": "/home/moloch/semabi/runs/v3/sonnet_02_barter_market_seed12",
+     "test_trace_sha256": "88136a91f371fe4eb98d8f01154c17ba30ebfccf2655a3957ffbc7984c9de685",
+     "independent_of_selection_trace": true,
+     "independence": {
+      "independent": true,
+      "source_trace_sha256": "776b263416d833126e4393040330e53eaae6f3bd4572f009b37012f0110be40d",
+      "test_trace_sha256": "88136a91f371fe4eb98d8f01154c17ba30ebfccf2655a3957ffbc7984c9de685",
+      "shared_step_prefix": 0,
+      "test_step_triples_present_in_source": 0.0,
+      "test_observation_signatures_present_in_source": 0.0,
+      "source_reset_seeds": [
+       "0",
+       "1",
+       "2",
+       "3",
+       "4",
+       "5"
+      ],
+      "test_reset_seeds": [
+       "1200",
+       "1201",
+       "1202",
+       "1203",
+       "1204",
+       "1205"
+      ]
+     },
+     "status": "INCONCLUSIVE",
+     "reason": "the held-out trace did not exercise a testable refinement-introduced schema",
+     "refinement_introduced_predictions": 0,
+     "predictions_with_an_applicable_held_out_occurrence": 0,
+     "outcome_counts_over_prediction_x_occurrence": {},
+     "exact_recurrences": 0,
+     "contradictions": 0,
+     "not_comparable": 0,
+     "inapplicable": 0,
+     "novel_binding_matches": 0,
+     "object_level_novel_matches_under_a_unique_mapping": 0,
+     "novel_bindings": [],
+     "view_domain_leaks": 0,
+     "baseline_control": {
+      "predictions": 11,
+      "underdetermined": 5,
+      "outcome_counts": {
+       "EXACT": 22,
+       "PREDICTED_WITH_VISIBLE_EXTRAS": 4,
+       "PREDICTED_WITH_UNOBSERVED_EXTRAS": 2,
+       "CONTRADICTED": 13,
+       "INAPPLICABLE": 121,
+       "UNOBSERVED_OUTCOME": 1,
+       "UNKNOWN_APPLICABILITY": 54
+      }
+     },
+     "decisions_change_the_held_out_compile": false,
+     "differential": {
+      "counts": {
+       "CANDIDATE_CORRECT_BASELINE_WRONG": 0,
+       "CANDIDATE_WRONG_BASELINE_CORRECT": 0,
+       "BOTH_CORRECT": 0,
+       "BOTH_WRONG": 13,
+       "SAME_PREDICTION": 28,
+       "NOT_COMPARABLE": 0
+      },
+      "not_comparable_detail": {},
+      "held_out_steps_with_a_determinate_prediction": 41,
+      "steps_where_the_silent_model_never_segmented_an_occurrence": 0,
+      "occurrence_pairing": {
+       "candidate_occurrences": 532,
+       "baseline_occurrences": 532,
+       "paired": 532,
+       "candidate_only": 0,
+       "baseline_only": 0
+      },
+      "candidate": {
+       "steps_determinate": 41,
+       "steps_correct": 28,
+       "steps_wrong": 13,
+       "steps_silent": 0
+      },
+      "baseline": {
+       "steps_determinate": 41,
+       "steps_correct": 28,
+       "steps_wrong": 13,
+       "steps_silent": 0
+      },
+      "candidate_wins_where_baseline_also_had_a_confirmed_schema": 0,
+      "candidate_wins": 0,
+      "baseline_wins": 0,
+      "divergent_comparable_cases": 0,
+      "candidate_win_fraction": null,
+      "candidate_wins_attributed_to_refinement_introduced_schema": 0,
+      "candidate_only_correct_where_baseline_silent": 0,
+      "candidate_only_correct_attributed_to_refinement_introduced_schema": 0,
+      "behavioral_novelty": "NOT_DEMONSTRATED_NO_DIVERGENT_COMPARABLE_CASE",
+      "incremental_value_class": "PREDICTION_ONLY_NO_DEMONSTRATED_ADVANTAGE_OVER_BASELINE",
+      "interpretation": "candidate_wins counts held-out transitions where the candidate model's applicable determinate schemas were confirmed against the rendered after-state and the baseline model's were contradicted on the same transition; the two models therefore did not predict the same thing there. Structural schema difference alone is never counted.",
+      "candidate_determinate_schemas": 11,
+      "baseline_determinate_schemas": 11,
+      "candidate_outcome_counts": {
+       "EXACT": 22,
+       "PREDICTED_WITH_VISIBLE_EXTRAS": 4,
+       "PREDICTED_WITH_UNOBSERVED_EXTRAS": 2,
+       "CONTRADICTED": 13,
+       "INAPPLICABLE": 121,
+       "UNOBSERVED_OUTCOME": 1,
+       "UNKNOWN_APPLICABILITY": 54
+      }
+     },
+     "validated_decision_ids": [],
+     "predictive_counterexamples_file": "/home/moloch/semabi/runs/v3/sonnet_02_barter_market_loop/predictive_counterexamples_v2.jsonl",
+     "classification": "INCONCLUSIVE_FOR_VALIDATION",
+     "classification_why": "the held-out trace exercised no refinement-introduced schema with a determinate outcome",
+     "primitive_cost": {
+      "total_primitives": 633,
+      "broad_behavior_generating_primitives": 265,
+      "view_survey_or_navigation_primitives": 286,
+      "reload_probe_primitives": 76,
+      "reset_primitives": 6,
+      "automatic_probe_trigger_actions": 63,
+      "counterexample_targeted_probe_trigger_actions": 0,
+      "diagnostic_overhead_primitives": 362,
+      "diagnostic_overhead_rate": 0.572
+     }
+    },
+    {
+     "test_run": "/home/moloch/semabi/runs/v3/sonnet_02_barter_market_seed13",
+     "test_trace_sha256": "53517091ee09f7cbe4cb219926e61c08e083b07a5f48dbe38d65ee0151bb5155",
+     "independent_of_selection_trace": true,
+     "independence": {
+      "independent": true,
+      "source_trace_sha256": "776b263416d833126e4393040330e53eaae6f3bd4572f009b37012f0110be40d",
+      "test_trace_sha256": "53517091ee09f7cbe4cb219926e61c08e083b07a5f48dbe38d65ee0151bb5155",
+      "shared_step_prefix": 0,
+      "test_step_triples_present_in_source": 0.0,
+      "test_observation_signatures_present_in_source": 0.0,
+      "source_reset_seeds": [
+       "0",
+       "1",
+       "2",
+       "3",
+       "4",
+       "5"
+      ],
+      "test_reset_seeds": [
+       "1300",
+       "1301",
+       "1302",
+       "1303",
+       "1304",
+       "1305"
+      ]
+     },
+     "status": "INCONCLUSIVE",
+     "reason": "the held-out trace did not exercise a testable refinement-introduced schema",
+     "refinement_introduced_predictions": 0,
+     "predictions_with_an_applicable_held_out_occurrence": 0,
+     "outcome_counts_over_prediction_x_occurrence": {},
+     "exact_recurrences": 0,
+     "contradictions": 0,
+     "not_comparable": 0,
+     "inapplicable": 0,
+     "novel_binding_matches": 0,
+     "object_level_novel_matches_under_a_unique_mapping": 0,
+     "novel_bindings": [],
+     "view_domain_leaks": 0,
+     "baseline_control": {
+      "predictions": 11,
+      "underdetermined": 5,
+      "outcome_counts": {
+       "INAPPLICABLE": 87,
+       "CONTRADICTED": 8,
+       "PREDICTED_WITH_VISIBLE_EXTRAS": 2,
+       "EXACT": 26,
+       "VACUOUS": 1,
+       "UNOBSERVED_OUTCOME": 1,
+       "UNKNOWN_APPLICABILITY": 66
+      }
+     },
+     "decisions_change_the_held_out_compile": false,
+     "differential": {
+      "counts": {
+       "CANDIDATE_CORRECT_BASELINE_WRONG": 0,
+       "CANDIDATE_WRONG_BASELINE_CORRECT": 0,
+       "BOTH_CORRECT": 0,
+       "BOTH_WRONG": 8,
+       "SAME_PREDICTION": 28,
+       "NOT_COMPARABLE": 0
+      },
+      "not_comparable_detail": {},
+      "held_out_steps_with_a_determinate_prediction": 36,
+      "steps_where_the_silent_model_never_segmented_an_occurrence": 0,
+      "occurrence_pairing": {
+       "candidate_occurrences": 492,
+       "baseline_occurrences": 492,
+       "paired": 492,
+       "candidate_only": 0,
+       "baseline_only": 0
+      },
+      "candidate": {
+       "steps_determinate": 36,
+       "steps_correct": 28,
+       "steps_wrong": 8,
+       "steps_silent": 0
+      },
+      "baseline": {
+       "steps_determinate": 36,
+       "steps_correct": 28,
+       "steps_wrong": 8,
+       "steps_silent": 0
+      },
+      "candidate_wins_where_baseline_also_had_a_confirmed_schema": 0,
+      "candidate_wins": 0,
+      "baseline_wins": 0,
+      "divergent_comparable_cases": 0,
+      "candidate_win_fraction": null,
+      "candidate_wins_attributed_to_refinement_introduced_schema": 0,
+      "candidate_only_correct_where_baseline_silent": 0,
+      "candidate_only_correct_attributed_to_refinement_introduced_schema": 0,
+      "behavioral_novelty": "NOT_DEMONSTRATED_NO_DIVERGENT_COMPARABLE_CASE",
+      "incremental_value_class": "PREDICTION_ONLY_NO_DEMONSTRATED_ADVANTAGE_OVER_BASELINE",
+      "interpretation": "candidate_wins counts held-out transitions where the candidate model's applicable determinate schemas were confirmed against the rendered after-state and the baseline model's were contradicted on the same transition; the two models therefore did not predict the same thing there. Structural schema difference alone is never counted.",
+      "candidate_determinate_schemas": 11,
+      "baseline_determinate_schemas": 11,
+      "candidate_outcome_counts": {
+       "INAPPLICABLE": 87,
+       "CONTRADICTED": 8,
+       "PREDICTED_WITH_VISIBLE_EXTRAS": 2,
+       "EXACT": 26,
+       "VACUOUS": 1,
+       "UNOBSERVED_OUTCOME": 1,
+       "UNKNOWN_APPLICABILITY": 66
+      }
+     },
+     "validated_decision_ids": [],
+     "predictive_counterexamples_file": "/home/moloch/semabi/runs/v3/sonnet_02_barter_market_loop/predictive_counterexamples_v2.jsonl",
+     "classification": "INCONCLUSIVE_FOR_VALIDATION",
+     "classification_why": "the held-out trace exercised no refinement-introduced schema with a determinate outcome",
+     "primitive_cost": {
+      "total_primitives": 641,
+      "broad_behavior_generating_primitives": 278,
+      "view_survey_or_navigation_primitives": 283,
+      "reload_probe_primitives": 74,
+      "reset_primitives": 6,
+      "automatic_probe_trigger_actions": 60,
+      "counterexample_targeted_probe_trigger_actions": 0,
+      "diagnostic_overhead_primitives": 357,
+      "diagnostic_overhead_rate": 0.557
+     }
+    }
+   ],
+   "independent_traces_tested": 3,
+   "mispredicted_traces": 0,
+   "validated_traces": 0,
+   "inconclusive_traces": 3,
+   "candidate_wins_total": 0,
+   "baseline_wins_total": 0
+  }
+ },
+ "summary": {
+  "cases": 1,
+  "cases_with_a_contradiction_on_any_independent_trace": 0,
+  "cases_with_corrective_behavioral_novelty": 0,
+  "total_candidate_wins": 0,
+  "total_baseline_wins": 0
+ }
+}

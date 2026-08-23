@@ -1,0 +1,3224 @@
+{
+ "version": 2,
+ "decision_ids": [
+  "ref-5bfe14781299"
+ ],
+ "source_run": "/home/moloch/semabi/runs/v3/sonnet_02_barter_market_loop",
+ "test_run": "/home/moloch/semabi/runs/v3/sonnet_02_barter_market_seed11",
+ "source_trace_sha256": "776b263416d833126e4393040330e53eaae6f3bd4572f009b37012f0110be40d",
+ "test_trace_sha256": "a687dcb424596e630427adcc73ec5e7d655647de616fc0df95f102b26ffe8e13",
+ "status": "INCONCLUSIVE",
+ "tested_source_predictions": 0,
+ "prospectively_correct_predictions": 0,
+ "prospective_schema_accuracy": null,
+ "source_predictions": [],
+ "matched_predictions": [],
+ "novel_binding_matches": [],
+ "mispredictions": [],
+ "view_domain_leaks": [],
+ "evidence_independent_of_selection": true,
+ "reason": "the held-out trace did not exercise a testable refinement-introduced schema",
+ "provenance": {
+  "compiler_inputs_only": true,
+  "comparison_protocol": "type-variable unification over mentioned types; effective-action matching; three-valued preconditions; state-based effect checks with forall expansion",
+  "source_baseline_schemas": 78,
+  "source_candidate_schemas": 16,
+  "refinement_introduced_predictions": 0,
+  "test_baseline_schemas": 53,
+  "test_candidate_schemas": 53,
+  "held_out_occurrences": 538,
+  "baseline_view_domain_leaks_excluded": 0,
+  "view_probed_test_steps": 31,
+  "baseline_control": {
+   "predictions": 11,
+   "underdetermined": 5,
+   "outcome_counts": {
+    "INAPPLICABLE": 167,
+    "CONTRADICTED": 14,
+    "EXACT": 5,
+    "PREDICTED_WITH_VISIBLE_EXTRAS": 11,
+    "UNKNOWN_APPLICABILITY": 18
+   }
+  },
+  "held_out_compile_changed_by_decisions": false,
+  "held_out_compile_baseline": {
+   "types": 5,
+   "operators": 53,
+   "transitions": 87,
+   "digest": "ebfc6add91149606"
+  },
+  "held_out_compile_candidate": {
+   "types": 5,
+   "operators": 53,
+   "transitions": 87,
+   "digest": "ebfc6add91149606"
+  },
+  "differential_summary": {
+   "counts": {
+    "CANDIDATE_CORRECT_BASELINE_WRONG": 0,
+    "CANDIDATE_WRONG_BASELINE_CORRECT": 0,
+    "BOTH_CORRECT": 0,
+    "BOTH_WRONG": 14,
+    "SAME_PREDICTION": 16,
+    "NOT_COMPARABLE": 0
+   },
+   "not_comparable_detail": {},
+   "held_out_steps_with_a_determinate_prediction": 30,
+   "steps_where_the_silent_model_never_segmented_an_occurrence": 0,
+   "occurrence_pairing": {
+    "candidate_occurrences": 538,
+    "baseline_occurrences": 538,
+    "paired": 538,
+    "candidate_only": 0,
+    "baseline_only": 0
+   },
+   "candidate": {
+    "steps_determinate": 30,
+    "steps_correct": 16,
+    "steps_wrong": 14,
+    "steps_silent": 0
+   },
+   "baseline": {
+    "steps_determinate": 30,
+    "steps_correct": 16,
+    "steps_wrong": 14,
+    "steps_silent": 0
+   },
+   "candidate_wins_where_baseline_also_had_a_confirmed_schema": 0,
+   "candidate_wins": 0,
+   "baseline_wins": 0,
+   "divergent_comparable_cases": 0,
+   "candidate_win_fraction": null,
+   "candidate_wins_attributed_to_refinement_introduced_schema": 0,
+   "candidate_only_correct_where_baseline_silent": 0,
+   "candidate_only_correct_attributed_to_refinement_introduced_schema": 0,
+   "behavioral_novelty": "NOT_DEMONSTRATED_NO_DIVERGENT_COMPARABLE_CASE",
+   "incremental_value_class": "PREDICTION_ONLY_NO_DEMONSTRATED_ADVANTAGE_OVER_BASELINE",
+   "interpretation": "candidate_wins counts held-out transitions where the candidate model's applicable determinate schemas were confirmed against the rendered after-state and the baseline model's were contradicted on the same transition; the two models therefore did not predict the same thing there. Structural schema difference alone is never counted.",
+   "candidate_determinate_schemas": 11,
+   "baseline_determinate_schemas": 11,
+   "candidate_outcome_counts": {
+    "INAPPLICABLE": 167,
+    "CONTRADICTED": 14,
+    "EXACT": 5,
+    "PREDICTED_WITH_VISIBLE_EXTRAS": 11,
+    "UNKNOWN_APPLICABILITY": 18
+   }
+  },
+  "decision_transfer": {
+   "ref-5bfe14781299": {
+    "kind": "ASSOCIATE_MENTION_TYPE",
+    "run_independent_target_keys": [],
+    "transfers_by_template": false,
+    "observation_keyed_items": 185,
+    "observation_keyed_items_present_in_test": 1
+   }
+  },
+  "validated_decision_ids": [],
+  "decision_attribution": {},
+  "min_support_for_final_model": 2,
+  "prediction_origin": "schemas introduced on the source trace by the provisional decision bundle and not equivalent to any baseline schema",
+  "decision_endpoint_templates_backfilled": 0,
+  "validated_requires": "exact recurrence on an object-level novel binding or a novel affected object, unique type mapping, no contradiction, no unexplained visible extras, no VIEW leak",
+  "source_affected_objects_per_prediction": {}
+ },
+ "untestable_predictions": [
+  {
+   "name": "op5",
+   "effective_actions": [
+    "click(button:Register item)"
+   ],
+   "actions": [
+    "click(button:Register item)"
+   ],
+   "effects": [
+    "delete ?o0"
+   ],
+   "preconditions": [
+    "[\"attr\",\"?o0\",\"attr:cell#0\",null]"
+   ],
+   "action_params": [],
+   "determined_params": [],
+   "underdetermined_params": [
+    "?o0"
+   ],
+   "support": 2,
+   "transition_steps": [
+    [
+     30
+    ],
+    [
+     303
+    ]
+   ],
+   "why": "UNDERDETERMINED_EFFECT_PARAMETER",
+   "detail": "the action does not bind every object the schema claims to change"
+  },
+  {
+   "name": "op8",
+   "effective_actions": [
+    "click(button:Register item)"
+   ],
+   "actions": [
+    "click(button:Register item)"
+   ],
+   "effects": [
+    "delete ?o0"
+   ],
+   "preconditions": [
+    "[\"attr\",\"?o0\",\"attr:textbox#0\",\"10\"]"
+   ],
+   "action_params": [],
+   "determined_params": [],
+   "underdetermined_params": [
+    "?o0"
+   ],
+   "support": 2,
+   "transition_steps": [
+    [
+     56
+    ],
+    [
+     81
+    ]
+   ],
+   "why": "UNDERDETERMINED_EFFECT_PARAMETER",
+   "detail": "the action does not bind every object the schema claims to change"
+  },
+  {
+   "name": "op10",
+   "effective_actions": [
+    "click(button#button@T0[?o0])"
+   ],
+   "actions": [
+    "click(button#button@T0[?o0])"
+   ],
+   "effects": [
+    "delete ?o1",
+    "id(?o0) := 'Nadia Frost'"
+   ],
+   "preconditions": [
+    "[\"ref_ne\",\"?o1\",\"rel:1\",\"?o0\"]",
+    "[\"attr_ne\",\"?o1\",\"attr:\\u2014#1\",\"Furniture\"]",
+    "[\"empty\",\"?o0\"]",
+    "[\"attr_ne\",\"?o1\",\"attr:\\u2014#1\",\"Instrument\"]"
+   ],
+   "action_params": [
+    "?o0"
+   ],
+   "determined_params": [
+    "?o0"
+   ],
+   "underdetermined_params": [
+    "?o1"
+   ],
+   "support": 2,
+   "transition_steps": [
+    [
+     99
+    ],
+    [
+     149
+    ]
+   ],
+   "why": "UNDERDETERMINED_EFFECT_PARAMETER",
+   "detail": "the action does not bind every object the schema claims to change"
+  },
+  {
+   "name": "op11",
+   "effective_actions": [
+    "click(button#button@T0[?o0])"
+   ],
+   "actions": [
+    "click(button#button@T0[?o0])"
+   ],
+   "effects": [
+    "?new0 := new T3(id=Lantern, attr:textbox#0=10, attr:\u2014#1=Electronics) rel:1->T1:Lantern",
+    "delete ?o1",
+    "delete ?o2",
+    "id(?o0) := 'Bridget Lang'"
+   ],
+   "preconditions": [
+    "[\"ref_ne\",\"?o2\",\"rel:1\",\"?o0\"]",
+    "[\"empty\",\"?o0\"]"
+   ],
+   "action_params": [
+    "?o0"
+   ],
+   "determined_params": [
+    "?o0"
+   ],
+   "underdetermined_params": [
+    "?o1",
+    "?o2"
+   ],
+   "support": 2,
+   "transition_steps": [
+    [
+     101
+    ],
+    [
+     115
+    ]
+   ],
+   "why": "UNDERDETERMINED_EFFECT_PARAMETER",
+   "detail": "the action does not bind every object the schema claims to change"
+  },
+  {
+   "name": "op15",
+   "effective_actions": [
+    "click(button:Make offer@T1[?o0])"
+   ],
+   "actions": [
+    "click(button:Market)",
+    "click(button:Make offer@T1[?o0])"
+   ],
+   "effects": [
+    "delete ?o1"
+   ],
+   "preconditions": [
+    "[\"attr\",\"?o0\",\"attr:cell#0@4\",\"10\"]",
+    "[\"attr\",\"?o1\",\"attr:cell#0@4\",\"pending\"]"
+   ],
+   "action_params": [
+    "?o0"
+   ],
+   "determined_params": [
+    "?o0"
+   ],
+   "underdetermined_params": [
+    "?o1"
+   ],
+   "support": 2,
+   "transition_steps": [
+    [
+     93
+    ],
+    [
+     264
+    ]
+   ],
+   "why": "UNDERDETERMINED_EFFECT_PARAMETER",
+   "detail": "the action does not bind every object the schema claims to change"
+  }
+ ],
+ "baseline_shared_schemas": [
+  {
+   "name": "op0",
+   "effective_actions": [
+    "click(button#button@T0[?o0])"
+   ],
+   "actions": [
+    "click(button#button@T0[?o0])"
+   ],
+   "effects": [
+    "delete ?o0"
+   ],
+   "preconditions": [
+    "[\"attr_ne\",\"?o0\",\"id\",\"Marco Vidal\"]"
+   ],
+   "action_params": [
+    "?o0"
+   ],
+   "determined_params": [
+    "?o0"
+   ],
+   "underdetermined_params": [],
+   "support": 15,
+   "transition_steps": [
+    [
+     4
+    ],
+    [
+     17
+    ],
+    [
+     21
+    ],
+    [
+     38
+    ],
+    [
+     62
+    ],
+    [
+     79
+    ],
+    [
+     98
+    ],
+    [
+     128
+    ],
+    [
+     142
+    ],
+    [
+     163
+    ],
+    [
+     227
+    ],
+    [
+     242
+    ],
+    [
+     250
+    ],
+    [
+     284
+    ],
+    [
+     308
+    ]
+   ],
+   "baseline_schema": "op0",
+   "baseline_support": 15
+  },
+  {
+   "name": "op1",
+   "effective_actions": [
+    "click(button:Withdraw@5ee6ae@T1[?o0])"
+   ],
+   "actions": [
+    "click(button:Withdraw@5ee6ae@T1[?o0])"
+   ],
+   "effects": [
+    "attr:cell#0@5(?o0) := 'withdrawn'"
+   ],
+   "preconditions": [],
+   "action_params": [
+    "?o0"
+   ],
+   "determined_params": [
+    "?o0"
+   ],
+   "underdetermined_params": [],
+   "support": 7,
+   "transition_steps": [
+    [
+     89
+    ],
+    [
+     91
+    ],
+    [
+     199
+    ],
+    [
+     259
+    ],
+    [
+     260
+    ],
+    [
+     265
+    ],
+    [
+     324
+    ]
+   ],
+   "baseline_schema": "op1",
+   "baseline_support": 7
+  },
+  {
+   "name": "op2",
+   "effective_actions": [
+    "click(button:List for sale@911b3a@T3[?o0])"
+   ],
+   "actions": [
+    "click(button:List for sale@911b3a@T3[?o0])"
+   ],
+   "effects": [
+    "delete ?o0"
+   ],
+   "preconditions": [
+    "[\"attr_ne\",\"?o0\",\"attr:\\u2014#1\",\"Outdoor\"]",
+    "[\"attr_ne\",\"?o0\",\"attr:\\u2014#1\",\"Book\"]",
+    "[\"attr_ne\",\"?o0\",\"id\",\"Hand Drill\"]"
+   ],
+   "action_params": [
+    "?o0"
+   ],
+   "determined_params": [
+    "?o0"
+   ],
+   "underdetermined_params": [],
+   "support": 4,
+   "transition_steps": [
+    [
+     327
+    ],
+    [
+     330
+    ],
+    [
+     372
+    ],
+    [
+     390
+    ]
+   ],
+   "baseline_schema": "op2",
+   "baseline_support": 4
+  },
+  {
+   "name": "op3",
+   "effective_actions": [
+    "click(button#button@T0[?o0])"
+   ],
+   "actions": [
+    "click(button#button@T0[?o0])"
+   ],
+   "effects": [
+    "id(?o0) := 'Tamsin Reyes'"
+   ],
+   "preconditions": [
+    "[\"empty\",\"?o0\"]",
+    "[\"attr_ne\",\"?o0\",\"id\",\"Ines Sato\"]"
+   ],
+   "action_params": [
+    "?o0"
+   ],
+   "determined_params": [
+    "?o0"
+   ],
+   "underdetermined_params": [],
+   "support": 3,
+   "transition_steps": [
+    [
+     102
+    ],
+    [
+     132
+    ],
+    [
+     144
+    ]
+   ],
+   "baseline_schema": "op3",
+   "baseline_support": 3
+  },
+  {
+   "name": "op4",
+   "effective_actions": [
+    "click(button#button@T0[?o0])"
+   ],
+   "actions": [
+    "click(button#button@T0[?o0])"
+   ],
+   "effects": [
+    "id(?o0) := 'Nadia Frost'"
+   ],
+   "preconditions": [
+    "[\"empty\",\"?o0\"]",
+    "[\"attr_ne\",\"?o0\",\"id\",\"Nadia Frost\"]"
+   ],
+   "action_params": [
+    "?o0"
+   ],
+   "determined_params": [
+    "?o0"
+   ],
+   "underdetermined_params": [],
+   "support": 3,
+   "transition_steps": [
+    [
+     104
+    ],
+    [
+     129
+    ],
+    [
+     180
+    ]
+   ],
+   "baseline_schema": "op4",
+   "baseline_support": 3
+  },
+  {
+   "name": "op6",
+   "effective_actions": [
+    "click(button#button@T0[?o0])"
+   ],
+   "actions": [
+    "click(button#button@T0[?o0])"
+   ],
+   "effects": [
+    "?new0 := new T0(id=Ines Sato, attr:cell#0=None, attr:cell#0@3=None, attr:cell#0@4=None)",
+    "delete ?new0"
+   ],
+   "preconditions": [
+    "[\"empty\",\"?new0\"]"
+   ],
+   "action_params": [
+    "?o0"
+   ],
+   "determined_params": [
+    "?o0"
+   ],
+   "underdetermined_params": [],
+   "support": 2,
+   "transition_steps": [
+    [
+     411
+    ],
+    [
+     419
+    ]
+   ],
+   "baseline_schema": "op6",
+   "baseline_support": 2
+  },
+  {
+   "name": "op7",
+   "effective_actions": [
+    "click(button#button@T0[?o0])"
+   ],
+   "actions": [
+    "click(button#button@T0[?o0])"
+   ],
+   "effects": [
+    "id(?o0) := 'Callum Reid'"
+   ],
+   "preconditions": [
+    "[\"empty\",\"?o0\"]",
+    "[\"attr_ne\",\"?o0\",\"id\",\"Nadia Frost\"]"
+   ],
+   "action_params": [
+    "?o0"
+   ],
+   "determined_params": [
+    "?o0"
+   ],
+   "underdetermined_params": [],
+   "support": 2,
+   "transition_steps": [
+    [
+     53
+    ],
+    [
+     74
+    ]
+   ],
+   "baseline_schema": "op7",
+   "baseline_support": 2
+  },
+  {
+   "name": "op9",
+   "effective_actions": [
+    "click(button#button@T0[?o0])"
+   ],
+   "actions": [
+    "click(button#button@T0[?o0])"
+   ],
+   "effects": [
+    "id(?o0) := 'Ines Sato'"
+   ],
+   "preconditions": [
+    "[\"empty\",\"?o0\"]",
+    "[\"attr_ne\",\"?o0\",\"id\",\"Ines Sato\"]"
+   ],
+   "action_params": [
+    "?o0"
+   ],
+   "determined_params": [
+    "?o0"
+   ],
+   "underdetermined_params": [],
+   "support": 2,
+   "transition_steps": [
+    [
+     76
+    ],
+    [
+     231
+    ]
+   ],
+   "baseline_schema": "op9",
+   "baseline_support": 2
+  },
+  {
+   "name": "op12",
+   "effective_actions": [
+    "click(button#button@T0[?o0])"
+   ],
+   "actions": [
+    "click(button#button@T0[?o0])"
+   ],
+   "effects": [
+    "id(?o0) := 'Bridget Lang'"
+   ],
+   "preconditions": [
+    "[\"empty\",\"?o0\"]",
+    "[\"attr_ne\",\"?o0\",\"id\",\"Ines Sato\"]"
+   ],
+   "action_params": [
+    "?o0"
+   ],
+   "determined_params": [
+    "?o0"
+   ],
+   "underdetermined_params": [],
+   "support": 2,
+   "transition_steps": [
+    [
+     120
+    ],
+    [
+     251
+    ]
+   ],
+   "baseline_schema": "op12",
+   "baseline_support": 2
+  },
+  {
+   "name": "op13",
+   "effective_actions": [
+    "click(button#button@T0[?o0])"
+   ],
+   "actions": [
+    "click(button#button@T0[?o0])"
+   ],
+   "effects": [
+    "id(?o0) := 'Kwame Osei'"
+   ],
+   "preconditions": [
+    "[\"empty\",\"?o0\"]",
+    "[\"attr_ne\",\"?o0\",\"id\",\"Nadia Frost\"]"
+   ],
+   "action_params": [
+    "?o0"
+   ],
+   "determined_params": [
+    "?o0"
+   ],
+   "underdetermined_params": [],
+   "support": 2,
+   "transition_steps": [
+    [
+     232
+    ],
+    [
+     254
+    ]
+   ],
+   "baseline_schema": "op13",
+   "baseline_support": 2
+  },
+  {
+   "name": "op14",
+   "effective_actions": [
+    "click(button#button@T0[?o0])"
+   ],
+   "actions": [
+    "click(button#button@T0[?o0])"
+   ],
+   "effects": [
+    "?new0 := new T0(id=Kwame Osei, attr:cell#0=None, attr:cell#0@3=None, attr:cell#0@4=None)"
+   ],
+   "preconditions": [
+    "[\"attr_ne\",\"?o0\",\"id\",\"Ines Sato\"]"
+   ],
+   "action_params": [
+    "?o0"
+   ],
+   "determined_params": [
+    "?o0"
+   ],
+   "underdetermined_params": [],
+   "support": 2,
+   "transition_steps": [
+    [
+     306
+    ],
+    [
+     309
+    ]
+   ],
+   "baseline_schema": "op14",
+   "baseline_support": 2
+  }
+ ],
+ "independence": {
+  "independent": true,
+  "source_trace_sha256": "776b263416d833126e4393040330e53eaae6f3bd4572f009b37012f0110be40d",
+  "test_trace_sha256": "a687dcb424596e630427adcc73ec5e7d655647de616fc0df95f102b26ffe8e13",
+  "shared_step_prefix": 0,
+  "test_step_triples_present_in_source": 0.0,
+  "test_observation_signatures_present_in_source": 0.006,
+  "source_reset_seeds": [
+   "0",
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "test_reset_seeds": [
+   "1100",
+   "1101",
+   "1102",
+   "1103",
+   "1104",
+   "1105"
+  ]
+ },
+ "limitations": [
+  "CONTRADICTED cannot distinguish a wrong refinement from a held-out abstraction that lacks a state variable the source model implicitly conditions on; such cases need a controlled intervention.",
+  "Effects on objects the action does not bind are untestable here; they are reported as underdetermined.",
+  "Inverse relations, intermediate entities mentioned by the schema, and attribute-name drift across runs are not equated and make occurrences NOT_COMPARABLE rather than contradicted.",
+  "Unexplained held-out effects never contradict predicted literals; visible ones block VALIDATED only.",
+  "Baseline subtraction is structural: a candidate schema counts as refinement-introduced when no baseline schema has the same effective action and effect under a type mapping with equal relation arity; preconditions are ignored, so a baseline twin that differs only in which entity carries the attribute is not subtracted, and a schema differing only by a learned precondition is subtracted.",
+  "Both sides are compiled with the decision bundle; the test measures cross-run consistency of the refined abstraction. The baseline control arm reports the same test for the unrefined model.",
+  "The machinery confirms more readily than it refutes: a wrong refinement mostly degrades to NOT_COMPARABLE or UNKNOWN, and any single non-contradicting type/slot mapping suppresses a contradiction.",
+  "Decision parts keyed by source observation signatures (matrix cells, mention/context assignments) are inert on an independent trace; only template-keyed parts transfer. A decision with no run-independent target keys cannot reach the schema-level gate at all, whatever the evidence. See provenance.decision_transfer and provenance.held_out_compile_changed_by_decisions.",
+  "VIEW leaks are detectable only on probe-classified steps, which are few on held-out traces.",
+  "A universal effect whose source evidence never contained two eligible members is reported as UNSUPPORTED_UNIVERSAL_QUANTIFIER and is not a prediction in either direction; a held-out multi-member state that falsifies it is retained separately as a quantifier counterexample, because what it refutes is the inducer's quantifier, not the refinement's attachment claim.",
+  "Control families are aligned across runs by descriptor (role, stable label, role path inside the unit) plus overlapping unit templates, injectively per alignment. A family the held-out run never rendered makes an occurrence NOT_COMPARABLE, never contradicted.",
+  "Structural baseline subtraction does not establish behavioral novelty; the differential arm reports the held-out transitions where the two models' verdicts actually diverge. Its SAME_PREDICTION/BOTH_CORRECT split is approximate (grounded claims compared by rendered DOM node, reference-slot names ignored) and neither category counts as a win."
+ ],
+ "differential_evidence": {
+  "counts": {
+   "CANDIDATE_CORRECT_BASELINE_WRONG": 0,
+   "CANDIDATE_WRONG_BASELINE_CORRECT": 0,
+   "BOTH_CORRECT": 0,
+   "BOTH_WRONG": 14,
+   "SAME_PREDICTION": 16,
+   "NOT_COMPARABLE": 0
+  },
+  "not_comparable_detail": {},
+  "held_out_steps_with_a_determinate_prediction": 30,
+  "steps_where_the_silent_model_never_segmented_an_occurrence": 0,
+  "occurrence_pairing": {
+   "candidate_occurrences": 538,
+   "baseline_occurrences": 538,
+   "paired": 538,
+   "candidate_only": 0,
+   "baseline_only": 0
+  },
+  "candidate": {
+   "steps_determinate": 30,
+   "steps_correct": 16,
+   "steps_wrong": 14,
+   "steps_silent": 0
+  },
+  "baseline": {
+   "steps_determinate": 30,
+   "steps_correct": 16,
+   "steps_wrong": 14,
+   "steps_silent": 0
+  },
+  "candidate_wins_where_baseline_also_had_a_confirmed_schema": 0,
+  "candidate_wins": 0,
+  "baseline_wins": 0,
+  "divergent_comparable_cases": 0,
+  "candidate_win_fraction": null,
+  "candidate_wins_attributed_to_refinement_introduced_schema": 0,
+  "candidate_only_correct_where_baseline_silent": 0,
+  "candidate_only_correct_attributed_to_refinement_introduced_schema": 0,
+  "behavioral_novelty": "NOT_DEMONSTRATED_NO_DIVERGENT_COMPARABLE_CASE",
+  "incremental_value_class": "PREDICTION_ONLY_NO_DEMONSTRATED_ADVANTAGE_OVER_BASELINE",
+  "interpretation": "candidate_wins counts held-out transitions where the candidate model's applicable determinate schemas were confirmed against the rendered after-state and the baseline model's were contradicted on the same transition; the two models therefore did not predict the same thing there. Structural schema difference alone is never counted.",
+  "cases": [
+   {
+    "steps": [
+     4
+    ],
+    "category": "BOTH_WRONG",
+    "detail": null,
+    "candidate_verdict": "WRONG",
+    "baseline_verdict": "WRONG",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button#button@T0[?o0])"
+    ],
+    "candidate": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Owen Blackwell"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Owen Blackwell"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:16\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:16\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Owen Blackwell"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Owen Blackwell"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:16\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:16\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     6
+    ],
+    "category": "BOTH_WRONG",
+    "detail": null,
+    "candidate_verdict": "WRONG",
+    "baseline_verdict": "WRONG",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button#button@T0[?o0])"
+    ],
+    "candidate": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Bridget Lang"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Bridget Lang"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:16\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:16\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Bridget Lang"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Bridget Lang"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:16\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:16\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     17
+    ],
+    "category": "BOTH_WRONG",
+    "detail": null,
+    "candidate_verdict": "WRONG",
+    "baseline_verdict": "WRONG",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button#button@T0[?o0])"
+    ],
+    "candidate": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Owen Blackwell"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Owen Blackwell"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:16\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:16\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Owen Blackwell"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Owen Blackwell"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:16\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:16\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     21
+    ],
+    "category": "BOTH_WRONG",
+    "detail": null,
+    "candidate_verdict": "WRONG",
+    "baseline_verdict": "WRONG",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button#button@T0[?o0])"
+    ],
+    "candidate": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Bridget Lang"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Bridget Lang"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:16\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:16\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Bridget Lang"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Bridget Lang"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:16\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:16\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     86
+    ],
+    "category": "BOTH_WRONG",
+    "detail": null,
+    "candidate_verdict": "WRONG",
+    "baseline_verdict": "WRONG",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button#button@T0[?o0])"
+    ],
+    "candidate": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Nadia Frost"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Nadia Frost"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:11\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:11\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Nadia Frost"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Nadia Frost"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:11\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:11\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     93
+    ],
+    "category": "SAME_PREDICTION",
+    "detail": null,
+    "candidate_verdict": "CORRECT",
+    "baseline_verdict": "CORRECT",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button:Traders & Items)",
+     "click(button:List for sale@T4[?o0])"
+    ],
+    "candidate": {
+     "correct": [
+      {
+       "schema": "op2",
+       "outcome": "EXACT",
+       "binding": {
+        "?o0": [
+         3,
+         "Oak Stool"
+        ]
+       },
+       "type_mapping": {
+        "T3": "T4"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:19\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:19\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [
+      {
+       "schema": "op2",
+       "outcome": "EXACT",
+       "binding": {
+        "?o0": [
+         3,
+         "Oak Stool"
+        ]
+       },
+       "type_mapping": {
+        "T3": "T4"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:19\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:19\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     111
+    ],
+    "category": "SAME_PREDICTION",
+    "detail": null,
+    "candidate_verdict": "CORRECT",
+    "baseline_verdict": "CORRECT",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button#button@T0[?o0])"
+    ],
+    "candidate": {
+     "correct": [
+      {
+       "schema": "op0",
+       "outcome": "EXACT",
+       "binding": {
+        "?o0": [
+         0,
+         "Nadia Frost"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:11\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:11\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [
+      {
+       "schema": "op0",
+       "outcome": "EXACT",
+       "binding": {
+        "?o0": [
+         0,
+         "Nadia Frost"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:11\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:11\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     128
+    ],
+    "category": "SAME_PREDICTION",
+    "detail": null,
+    "candidate_verdict": "CORRECT",
+    "baseline_verdict": "CORRECT",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button#button@T0[?o0])"
+    ],
+    "candidate": {
+     "correct": [
+      {
+       "schema": "op0",
+       "outcome": "EXACT",
+       "binding": {
+        "?o0": [
+         0,
+         "Nadia Frost"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:11\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:11\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [
+      {
+       "schema": "op0",
+       "outcome": "EXACT",
+       "binding": {
+        "?o0": [
+         0,
+         "Nadia Frost"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:11\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:11\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     164
+    ],
+    "category": "BOTH_WRONG",
+    "detail": null,
+    "candidate_verdict": "WRONG",
+    "baseline_verdict": "WRONG",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button#button@T0[?o0])"
+    ],
+    "candidate": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Kwame Osei"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Kwame Osei"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:15\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:15\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Kwame Osei"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Kwame Osei"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:15\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:15\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     199
+    ],
+    "category": "BOTH_WRONG",
+    "detail": null,
+    "candidate_verdict": "WRONG",
+    "baseline_verdict": "WRONG",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button#button@T0[?o0])"
+    ],
+    "candidate": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Ines Sato"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Ines Sato"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:13\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:13\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Ines Sato"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Ines Sato"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:13\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:13\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     285
+    ],
+    "category": "BOTH_WRONG",
+    "detail": null,
+    "candidate_verdict": "WRONG",
+    "baseline_verdict": "WRONG",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button#button@T0[?o0])"
+    ],
+    "candidate": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Callum Reid"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Callum Reid"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:15\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:15\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Callum Reid"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Callum Reid"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:15\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:15\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     300
+    ],
+    "category": "BOTH_WRONG",
+    "detail": null,
+    "candidate_verdict": "WRONG",
+    "baseline_verdict": "WRONG",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button#button@T0[?o0])"
+    ],
+    "candidate": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Callum Reid"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Callum Reid"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:15\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:15\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Callum Reid"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Callum Reid"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:15\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:15\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     323
+    ],
+    "category": "SAME_PREDICTION",
+    "detail": null,
+    "candidate_verdict": "CORRECT",
+    "baseline_verdict": "CORRECT",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button:List for sale@T4[?o0])"
+    ],
+    "candidate": {
+     "correct": [
+      {
+       "schema": "op2",
+       "outcome": "EXACT",
+       "binding": {
+        "?o0": [
+         3,
+         "Banjo"
+        ]
+       },
+       "type_mapping": {
+        "T3": "T4"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:29\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:29\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [
+      {
+       "schema": "op2",
+       "outcome": "EXACT",
+       "binding": {
+        "?o0": [
+         3,
+         "Banjo"
+        ]
+       },
+       "type_mapping": {
+        "T3": "T4"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:29\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:29\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     386
+    ],
+    "category": "SAME_PREDICTION",
+    "detail": null,
+    "candidate_verdict": "CORRECT",
+    "baseline_verdict": "CORRECT",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button#button@T0[?o0])"
+    ],
+    "candidate": {
+     "correct": [
+      {
+       "schema": "op0",
+       "outcome": "PREDICTED_WITH_VISIBLE_EXTRAS",
+       "binding": {
+        "?o0": [
+         0,
+         "Kwame Osei"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:15\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:15\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [
+      {
+       "schema": "op0",
+       "outcome": "PREDICTED_WITH_VISIBLE_EXTRAS",
+       "binding": {
+        "?o0": [
+         0,
+         "Kwame Osei"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:15\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:15\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     406
+    ],
+    "category": "BOTH_WRONG",
+    "detail": null,
+    "candidate_verdict": "WRONG",
+    "baseline_verdict": "WRONG",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button#button@T0[?o0])"
+    ],
+    "candidate": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Ines Sato"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Ines Sato"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:11\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:11\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Ines Sato"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Ines Sato"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:11\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:11\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     417
+    ],
+    "category": "SAME_PREDICTION",
+    "detail": null,
+    "candidate_verdict": "CORRECT",
+    "baseline_verdict": "CORRECT",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button#button@T0[?o0])"
+    ],
+    "candidate": {
+     "correct": [
+      {
+       "schema": "op0",
+       "outcome": "PREDICTED_WITH_VISIBLE_EXTRAS",
+       "binding": {
+        "?o0": [
+         0,
+         "Kwame Osei"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:15\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:15\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [
+      {
+       "schema": "op0",
+       "outcome": "PREDICTED_WITH_VISIBLE_EXTRAS",
+       "binding": {
+        "?o0": [
+         0,
+         "Kwame Osei"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:15\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:15\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     419
+    ],
+    "category": "SAME_PREDICTION",
+    "detail": null,
+    "candidate_verdict": "CORRECT",
+    "baseline_verdict": "CORRECT",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button#button@T0[?o0])"
+    ],
+    "candidate": {
+     "correct": [
+      {
+       "schema": "op0",
+       "outcome": "PREDICTED_WITH_VISIBLE_EXTRAS",
+       "binding": {
+        "?o0": [
+         0,
+         "Ines Sato"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:11\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:11\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [
+      {
+       "schema": "op0",
+       "outcome": "PREDICTED_WITH_VISIBLE_EXTRAS",
+       "binding": {
+        "?o0": [
+         0,
+         "Ines Sato"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:11\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:11\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     499
+    ],
+    "category": "BOTH_WRONG",
+    "detail": null,
+    "candidate_verdict": "WRONG",
+    "baseline_verdict": "WRONG",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button#button@T0[?o0])"
+    ],
+    "candidate": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Tamsin Reyes"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Tamsin Reyes"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:16\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:16\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Tamsin Reyes"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Tamsin Reyes"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:16\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:16\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     504
+    ],
+    "category": "BOTH_WRONG",
+    "detail": null,
+    "candidate_verdict": "WRONG",
+    "baseline_verdict": "WRONG",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button#button@T0[?o0])"
+    ],
+    "candidate": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Tamsin Reyes"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Tamsin Reyes"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:16\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:16\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Tamsin Reyes"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Tamsin Reyes"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:16\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:16\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     511
+    ],
+    "category": "BOTH_WRONG",
+    "detail": null,
+    "candidate_verdict": "WRONG",
+    "baseline_verdict": "WRONG",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button#button@T0[?o0])"
+    ],
+    "candidate": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Bridget Lang"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Bridget Lang"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:11\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:11\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Bridget Lang"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Bridget Lang"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:11\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:11\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     516
+    ],
+    "category": "SAME_PREDICTION",
+    "detail": null,
+    "candidate_verdict": "CORRECT",
+    "baseline_verdict": "CORRECT",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button#button@T0[?o0])"
+    ],
+    "candidate": {
+     "correct": [
+      {
+       "schema": "op0",
+       "outcome": "PREDICTED_WITH_VISIBLE_EXTRAS",
+       "binding": {
+        "?o0": [
+         0,
+         "Ines Sato"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:15\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:15\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [
+      {
+       "schema": "op0",
+       "outcome": "PREDICTED_WITH_VISIBLE_EXTRAS",
+       "binding": {
+        "?o0": [
+         0,
+         "Ines Sato"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:15\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:15\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     533
+    ],
+    "category": "SAME_PREDICTION",
+    "detail": null,
+    "candidate_verdict": "CORRECT",
+    "baseline_verdict": "CORRECT",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button:Traders & Items)",
+     "click(button:List for sale@T4[?o0])"
+    ],
+    "candidate": {
+     "correct": [
+      {
+       "schema": "op2",
+       "outcome": "PREDICTED_WITH_VISIBLE_EXTRAS",
+       "binding": {
+        "?o0": [
+         3,
+         "Camp Stove"
+        ]
+       },
+       "type_mapping": {
+        "T3": "T4"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:19\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:19\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [
+      {
+       "schema": "op2",
+       "outcome": "PREDICTED_WITH_VISIBLE_EXTRAS",
+       "binding": {
+        "?o0": [
+         3,
+         "Camp Stove"
+        ]
+       },
+       "type_mapping": {
+        "T3": "T4"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:19\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:19\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     590
+    ],
+    "category": "BOTH_WRONG",
+    "detail": null,
+    "candidate_verdict": "WRONG",
+    "baseline_verdict": "WRONG",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button#button@T0[?o0])"
+    ],
+    "candidate": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Tamsin Reyes"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Tamsin Reyes"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:15\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:15\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [],
+     "wrong": [
+      {
+       "schema": "op0",
+       "outcome": "CONTRADICTED",
+       "binding": {
+        "?o0": [
+         0,
+         "Tamsin Reyes"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [],
+       "failures": [
+        {
+         "effect": "delete ?o0",
+         "object": [
+          0,
+          "Tamsin Reyes"
+         ],
+         "why": "object still rendered after action"
+        }
+       ],
+       "claims": [
+        "[\"remove\",\"node:15\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "claims": [
+      "[\"remove\",\"node:15\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     596
+    ],
+    "category": "SAME_PREDICTION",
+    "detail": null,
+    "candidate_verdict": "CORRECT",
+    "baseline_verdict": "CORRECT",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button#button@T0[?o0])"
+    ],
+    "candidate": {
+     "correct": [
+      {
+       "schema": "op0",
+       "outcome": "PREDICTED_WITH_VISIBLE_EXTRAS",
+       "binding": {
+        "?o0": [
+         0,
+         "Callum Reid"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:13\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:13\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [
+      {
+       "schema": "op0",
+       "outcome": "PREDICTED_WITH_VISIBLE_EXTRAS",
+       "binding": {
+        "?o0": [
+         0,
+         "Callum Reid"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:13\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:13\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     603
+    ],
+    "category": "SAME_PREDICTION",
+    "detail": null,
+    "candidate_verdict": "CORRECT",
+    "baseline_verdict": "CORRECT",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button#button@T0[?o0])"
+    ],
+    "candidate": {
+     "correct": [
+      {
+       "schema": "op0",
+       "outcome": "PREDICTED_WITH_VISIBLE_EXTRAS",
+       "binding": {
+        "?o0": [
+         0,
+         "Tamsin Reyes"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:15\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:15\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [
+      {
+       "schema": "op0",
+       "outcome": "PREDICTED_WITH_VISIBLE_EXTRAS",
+       "binding": {
+        "?o0": [
+         0,
+         "Tamsin Reyes"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:15\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:15\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     608
+    ],
+    "category": "SAME_PREDICTION",
+    "detail": null,
+    "candidate_verdict": "CORRECT",
+    "baseline_verdict": "CORRECT",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button#button@T0[?o0])"
+    ],
+    "candidate": {
+     "correct": [
+      {
+       "schema": "op0",
+       "outcome": "PREDICTED_WITH_VISIBLE_EXTRAS",
+       "binding": {
+        "?o0": [
+         0,
+         "Nadia Frost"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:11\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:11\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [
+      {
+       "schema": "op0",
+       "outcome": "PREDICTED_WITH_VISIBLE_EXTRAS",
+       "binding": {
+        "?o0": [
+         0,
+         "Nadia Frost"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:11\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:11\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     610
+    ],
+    "category": "SAME_PREDICTION",
+    "detail": null,
+    "candidate_verdict": "CORRECT",
+    "baseline_verdict": "CORRECT",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button#button@T0[?o0])"
+    ],
+    "candidate": {
+     "correct": [
+      {
+       "schema": "op0",
+       "outcome": "PREDICTED_WITH_VISIBLE_EXTRAS",
+       "binding": {
+        "?o0": [
+         0,
+         "Callum Reid"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:13\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:13\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [
+      {
+       "schema": "op0",
+       "outcome": "PREDICTED_WITH_VISIBLE_EXTRAS",
+       "binding": {
+        "?o0": [
+         0,
+         "Callum Reid"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:13\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:13\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     615
+    ],
+    "category": "SAME_PREDICTION",
+    "detail": null,
+    "candidate_verdict": "CORRECT",
+    "baseline_verdict": "CORRECT",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button#button@T0[?o0])"
+    ],
+    "candidate": {
+     "correct": [
+      {
+       "schema": "op0",
+       "outcome": "PREDICTED_WITH_VISIBLE_EXTRAS",
+       "binding": {
+        "?o0": [
+         0,
+         "Tamsin Reyes"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:15\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:15\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [
+      {
+       "schema": "op0",
+       "outcome": "PREDICTED_WITH_VISIBLE_EXTRAS",
+       "binding": {
+        "?o0": [
+         0,
+         "Tamsin Reyes"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:15\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:15\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     636
+    ],
+    "category": "SAME_PREDICTION",
+    "detail": null,
+    "candidate_verdict": "CORRECT",
+    "baseline_verdict": "CORRECT",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button#button@T0[?o0])"
+    ],
+    "candidate": {
+     "correct": [
+      {
+       "schema": "op0",
+       "outcome": "PREDICTED_WITH_VISIBLE_EXTRAS",
+       "binding": {
+        "?o0": [
+         0,
+         "Callum Reid"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:13\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:13\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [
+      {
+       "schema": "op0",
+       "outcome": "PREDICTED_WITH_VISIBLE_EXTRAS",
+       "binding": {
+        "?o0": [
+         0,
+         "Callum Reid"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:13\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:13\",\"__removed__\",null]"
+     ]
+    }
+   },
+   {
+    "steps": [
+     652
+    ],
+    "category": "SAME_PREDICTION",
+    "detail": null,
+    "candidate_verdict": "CORRECT",
+    "baseline_verdict": "CORRECT",
+    "candidate_mixed": false,
+    "baseline_mixed": false,
+    "refinement_introduced_schemas_confirmed": [],
+    "actions": [
+     "click(button#button@T0[?o0])"
+    ],
+    "candidate": {
+     "correct": [
+      {
+       "schema": "op0",
+       "outcome": "EXACT",
+       "binding": {
+        "?o0": [
+         0,
+         "Nadia Frost"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:11\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:11\",\"__removed__\",null]"
+     ]
+    },
+    "baseline": {
+     "correct": [
+      {
+       "schema": "op0",
+       "outcome": "EXACT",
+       "binding": {
+        "?o0": [
+         0,
+         "Nadia Frost"
+        ]
+       },
+       "type_mapping": {
+        "T0": "T0"
+       },
+       "confirmed": [
+        "delete ?o0"
+       ],
+       "failures": [],
+       "claims": [
+        "[\"remove\",\"node:11\",\"__removed__\",null]"
+       ],
+       "ambiguous_mapping": false
+      }
+     ],
+     "wrong": [],
+     "claims": [
+      "[\"remove\",\"node:11\",\"__removed__\",null]"
+     ]
+    }
+   }
+  ],
+  "candidate_determinate_schemas": 11,
+  "baseline_determinate_schemas": 11,
+  "candidate_outcome_counts": {
+   "INAPPLICABLE": 167,
+   "CONTRADICTED": 14,
+   "EXACT": 5,
+   "PREDICTED_WITH_VISIBLE_EXTRAS": 11,
+   "UNKNOWN_APPLICABILITY": 18
+  }
+ },
+ "quantifier_counterexamples": []
+}

@@ -1,0 +1,641 @@
+{
+ "version": 1,
+ "benchmark": "gauntlet-v3",
+ "root": "/home/moloch/semabi-gauntlet-v3",
+ "git_commit": "64393bce5f0bb13f15b0de13743d1fcceced4d08",
+ "frozen_at": "2026-08-23T21:35:00+0200",
+ "environment": {
+  "python": "3.12.13",
+  "platform": "linux",
+  "stdlib_only_apps": true
+ },
+ "authors": [
+  {
+   "id": "A_grok",
+   "model": "Grok 4.6",
+   "vendor": "xAI",
+   "cli": "grok -p --permission-mode auto --output-format plain",
+   "apps": [
+    "01_landing_board",
+    "02_blend_book"
+   ],
+   "compiler_access": false,
+   "read_outside_own_directory": false,
+   "transcript": "~/.grok/sessions/%2Fhome%2Fmoloch%2Fsemabi-gauntlet-v3%2Fauthors%2FA_grok"
+  },
+  {
+   "id": "B_claude_opus",
+   "model": "Claude Opus 5",
+   "vendor": "Anthropic",
+   "cli": "claude -p --model opus --safe-mode --permission-mode auto",
+   "apps": [
+    "01_harbour",
+    "02_cellar"
+   ],
+   "compiler_access": false,
+   "read_outside_own_directory": false,
+   "incidental_exposure": "a ps listing showed the directory name semabi-gauntlet-v2 and four of its app directory names; no content was opened",
+   "transcript": "~/.claude/projects/-home-moloch-semabi-gauntlet-v3-authors-B-claude-opus"
+  },
+  {
+   "id": "C_claude_sonnet",
+   "model": "Claude Sonnet 5",
+   "vendor": "Anthropic",
+   "cli": "claude -p --model sonnet --safe-mode --permission-mode auto",
+   "apps": [
+    "01_vet_clinic",
+    "02_barter_market"
+   ],
+   "compiler_access": false,
+   "read_outside_own_directory": false,
+   "incidental_exposure": "a ps listing showed the directory name semabi-gauntlet-v2 and four of its app directory names; no content was opened",
+   "transcript": "~/.claude/projects/-home-moloch-semabi-gauntlet-v3-authors-C-claude-sonnet"
+  }
+ ],
+ "apps": {
+  "grok_01_landing_board": {
+   "author": "A_grok",
+   "directory": "/home/moloch/semabi-gauntlet-v3/authors/A_grok/apps/01_landing_board",
+   "port": 8900,
+   "app_sha256": "1c455e8bc0f98c8969b072422f7b28d00e19d4edabe6a3c4a5a5d19844cfa67b",
+   "domain_name": "landing_board",
+   "types": [
+    "Craft",
+    "Slip",
+    "Handler"
+   ],
+   "n_types": 3,
+   "relations": [
+    "berthed_at",
+    "attended_by"
+   ],
+   "n_relations": 2,
+   "operators": [
+    "berth",
+    "warp",
+    "sail",
+    "post",
+    "stand_down",
+    "clock"
+   ],
+   "n_operators": 6,
+   "latent_note": "A municipal pontoon clerk's board. All attributes are rendered as visible text. Whether a craft is waiting or berthed is not stored as an attribute; it is the presence or absence of berthed_at. The page is a single view: a radio list of craft, a radio list of handlers, a card per slip with destination actions, and row actions to sail or clock. Selection radios are UI-only and are not domain state. Operators are attempted even when they will fail; the board does not hide invalid actions. POST /api/do with JSON {op, args} is the page's action endpoint; argument keys in that JSON and in the evaluator log use the '?' names from the operator params.",
+   "initial_states": {
+    "0": {
+     "objects": 12,
+     "by_type": {
+      "Craft": 5,
+      "Handler": 3,
+      "Slip": 4
+     },
+     "relation_edges": {
+      "attended_by": 0,
+      "berthed_at": 2
+     },
+     "state_sha256": "902f4baf6707cd113c72537718d93e9c20912e9c84a1228a28618621e7bb5726"
+    },
+    "11": {
+     "objects": 8,
+     "by_type": {
+      "Craft": 3,
+      "Handler": 2,
+      "Slip": 3
+     },
+     "relation_edges": {
+      "attended_by": 0,
+      "berthed_at": 2
+     },
+     "state_sha256": "b0c1eaad567ee3dbdfcba8e17e6a5d96c5a57105dc8046b7daddd9fc04077521"
+    },
+    "12": {
+     "objects": 11,
+     "by_type": {
+      "Craft": 4,
+      "Handler": 3,
+      "Slip": 4
+     },
+     "relation_edges": {
+      "attended_by": 0,
+      "berthed_at": 2
+     },
+     "state_sha256": "d4de3b9e32e3a3af0f5fb41d3e7c7b39c24285e2b75de9b99cb36b4cbb54d883"
+    },
+    "13": {
+     "objects": 10,
+     "by_type": {
+      "Craft": 5,
+      "Handler": 2,
+      "Slip": 3
+     },
+     "relation_edges": {
+      "attended_by": 0,
+      "berthed_at": 2
+     },
+     "state_sha256": "9cf8e3757c6a2e607001883c0f42acc96d4c4d637222d3d99aa380375930609c"
+    }
+   }
+  },
+  "grok_02_blend_book": {
+   "author": "A_grok",
+   "directory": "/home/moloch/semabi-gauntlet-v3/authors/A_grok/apps/02_blend_book",
+   "port": 8901,
+   "app_sha256": "62c40c91b750c6f1207df02930089a4d8249f9266a7a3d780145389a17e527ee",
+   "domain_name": "blend_book",
+   "types": [
+    "Vat",
+    "Blend",
+    "Draw"
+   ],
+   "n_types": 3,
+   "relations": [
+    "from_vat",
+    "into_blend"
+   ],
+   "n_relations": 2,
+   "operators": [
+    "draw",
+    "return_draw",
+    "close_vat",
+    "open_vat",
+    "bottle",
+    "disgorge"
+   ],
+   "n_operators": 6,
+   "latent_note": "A cellar clerk's blend book. Vats are sources; Blends are targets; a Draw is a link object recording how many gallons moved from one vat into one blend (many Draws may share a vat or a blend). All attributes are rendered, including Draw.ticket as 'Ticket N'. Remaining vat gallons change when drawing and returning. Committed gallons on a blend row are derived from its Draws, not stored. The page is a ledger: a draw ticket with three selects (vat, blend, gallons 1-4), a vat table, a blend table, and a draw table. POST /api/do with JSON {op, args} is the page's action endpoint; argument keys in that JSON and in the evaluator log use the '?' names from the operator params.",
+   "initial_states": {
+    "0": {
+     "objects": 7,
+     "by_type": {
+      "Blend": 2,
+      "Draw": 1,
+      "Vat": 4
+     },
+     "relation_edges": {
+      "from_vat": 1,
+      "into_blend": 1
+     },
+     "state_sha256": "e052913e81ce8d6e4e98d853a429176c325383ddf5c3803a2f0fe7a00b71acd5"
+    },
+    "11": {
+     "objects": 6,
+     "by_type": {
+      "Blend": 3,
+      "Vat": 3
+     },
+     "relation_edges": {
+      "from_vat": 0,
+      "into_blend": 0
+     },
+     "state_sha256": "4d1b5db8da9e999af81e218c24c122f53e97bed4eea801a53816fdd528d4fdd5"
+    },
+    "12": {
+     "objects": 7,
+     "by_type": {
+      "Blend": 2,
+      "Draw": 1,
+      "Vat": 4
+     },
+     "relation_edges": {
+      "from_vat": 1,
+      "into_blend": 1
+     },
+     "state_sha256": "355c5bed1e6b693199d2f11957630e3367401b2a859e96263fee3a91844776f2"
+    },
+    "13": {
+     "objects": 6,
+     "by_type": {
+      "Blend": 3,
+      "Vat": 3
+     },
+     "relation_edges": {
+      "from_vat": 0,
+      "into_blend": 0
+     },
+     "state_sha256": "46b09f3963af0a66ba38127676bcdd4381b9639c93b7a0b8ae29f8289b33325f"
+    }
+   }
+  },
+  "opus_01_harbour": {
+   "author": "B_claude_opus",
+   "directory": "/home/moloch/semabi-gauntlet-v3/authors/B_claude_opus/apps/01_harbour",
+   "port": 8910,
+   "app_sha256": "7a6cae9a3e25c4cf12c03eb22937e411098bace793db935b4420e244e60e0803",
+   "domain_name": "Ardnavie Harbour berth desk",
+   "types": [
+    "Vessel",
+    "Berth",
+    "Pilot",
+    "Visit"
+   ],
+   "n_types": 4,
+   "relations": [
+    "visit_vessel",
+    "visit_berth",
+    "visit_pilot"
+   ],
+   "n_relations": 3,
+   "operators": [
+    "schedule_call",
+    "assign_berth",
+    "assign_pilot",
+    "bring_alongside",
+    "record_departure",
+    "set_berth_closed",
+    "set_pilot_duty"
+   ],
+   "n_operators": 7,
+   "latent_note": "One page, no navigation. It is laid out as five blocks, top to bottom: a status line carrying the outcome message of the last attempt; 'Calls', a table of every Visit whose first cell is a button carrying the visit's ref; 'Call sheet', a detail panel for whichever call's ref button was pressed last (purely client-side selection, no hidden state, cleared by a page reload or by the deletion of the visit); 'Berths'; 'Pilots'; and 'Vessels'. Every attribute of every type is rendered somewhere: Vessel in the Vessels table and in the call sheet, Berth in the Berths table and in the berth select options, Pilot in the Pilots table and in the pilot select options, Visit in the Calls table and the call sheet. Booleans are rendered as the words yes/no, open/closed and on/off rather than as checkboxes",
+   "initial_states": {
+    "0": {
+     "objects": 9,
+     "by_type": {
+      "Berth": 3,
+      "Pilot": 2,
+      "Vessel": 3,
+      "Visit": 1
+     },
+     "relation_edges": {
+      "visit_berth": 1,
+      "visit_pilot": 0,
+      "visit_vessel": 1
+     },
+     "state_sha256": "5ca133ef3792a0abe753c6e17fe2afb3815cb146a21dd423da74f6b954955430"
+    },
+    "11": {
+     "objects": 11,
+     "by_type": {
+      "Berth": 3,
+      "Pilot": 3,
+      "Vessel": 4,
+      "Visit": 1
+     },
+     "relation_edges": {
+      "visit_berth": 0,
+      "visit_pilot": 0,
+      "visit_vessel": 1
+     },
+     "state_sha256": "5531b93abfc51485fdf0920385ac64cdd6f831a695e8fa070744f6ad4a08ea1c"
+    },
+    "12": {
+     "objects": 10,
+     "by_type": {
+      "Berth": 3,
+      "Pilot": 2,
+      "Vessel": 3,
+      "Visit": 2
+     },
+     "relation_edges": {
+      "visit_berth": 1,
+      "visit_pilot": 0,
+      "visit_vessel": 2
+     },
+     "state_sha256": "ba96a55dbcacad53bdbcbd161a62d7693f0ee7b1a110d7a409d023cd9eb4c88f"
+    },
+    "13": {
+     "objects": 11,
+     "by_type": {
+      "Berth": 3,
+      "Pilot": 2,
+      "Vessel": 4,
+      "Visit": 2
+     },
+     "relation_edges": {
+      "visit_berth": 0,
+      "visit_pilot": 1,
+      "visit_vessel": 2
+     },
+     "state_sha256": "6f0beb92d0727b4cc61cba871b16cef2ba189ca33ca9eadfd5a0c9ddcb598972"
+    }
+   }
+  },
+  "opus_02_cellar": {
+   "author": "B_claude_opus",
+   "directory": "/home/moloch/semabi-gauntlet-v3/authors/B_claude_opus/apps/02_cellar",
+   "port": 8911,
+   "app_sha256": "03e320573715c30600fe86e5d278bc249d7779173bde1cdea8d673dda6c1cbb9",
+   "domain_name": "Craigduff Cellar movements book",
+   "types": [
+    "Hall",
+    "Vessel",
+    "Block",
+    "Lot"
+   ],
+   "n_types": 4,
+   "relations": [
+    "vessel_hall",
+    "lot_vessel",
+    "lot_source"
+   ],
+   "n_relations": 3,
+   "operators": [
+    "receive_fruit",
+    "finish_ferment",
+    "rack",
+    "split",
+    "blend",
+    "bottle",
+    "clean_vessel",
+    "move_vessel"
+   ],
+   "n_operators": 8,
+   "latent_note": "The page has three views reached from a row of three buttons at the top: 'Cellar', 'Lots' and 'Intake'. Only one view is on screen at a time, so the learner must switch views to see all of the state; the current view is named by the heading under the buttons. Which view is showing is client-side only and is not part of the hidden state; a reload returns to 'Cellar'. A status line under the buttons carries the outcome message of the last attempt. Cellar view: one heading and one table per Hall, giving name, temp_c, max_vessels and how many vessels stand there, then that hall's vessels with code, kind, capacity_l, clean (shown as clean/dirty) and what the vessel holds. Lots view: one table of every Lot with code, variety, stage, volume_l, oaked (yes/no), the code of its vessel, the name of t",
+   "initial_states": {
+    "0": {
+     "objects": 9,
+     "by_type": {
+      "Block": 2,
+      "Hall": 2,
+      "Lot": 1,
+      "Vessel": 4
+     },
+     "relation_edges": {
+      "lot_source": 1,
+      "lot_vessel": 1,
+      "vessel_hall": 4
+     },
+     "state_sha256": "b9783fac90fe534bd9f978a59e69149f46bf3be00829951afe09f1ac194f4229"
+    },
+    "11": {
+     "objects": 11,
+     "by_type": {
+      "Block": 2,
+      "Hall": 3,
+      "Lot": 2,
+      "Vessel": 4
+     },
+     "relation_edges": {
+      "lot_source": 2,
+      "lot_vessel": 2,
+      "vessel_hall": 4
+     },
+     "state_sha256": "e5d118f0af8efc3f8b49763c8be64fd3c6e80ebba78f61384ee9c512b3fd4651"
+    },
+    "12": {
+     "objects": 11,
+     "by_type": {
+      "Block": 3,
+      "Hall": 2,
+      "Lot": 2,
+      "Vessel": 4
+     },
+     "relation_edges": {
+      "lot_source": 2,
+      "lot_vessel": 2,
+      "vessel_hall": 4
+     },
+     "state_sha256": "d80d47741a570240e2a6a4fcbe7fac32a200a5857aaa6a4e395e11f8c99bcb9c"
+    },
+    "13": {
+     "objects": 12,
+     "by_type": {
+      "Block": 3,
+      "Hall": 3,
+      "Lot": 2,
+      "Vessel": 4
+     },
+     "relation_edges": {
+      "lot_source": 2,
+      "lot_vessel": 2,
+      "vessel_hall": 4
+     },
+     "state_sha256": "4b2884f60e33b0aff47632826156e45868e1ee67aa183a48d8cf0d43c8e48a26"
+    }
+   }
+  },
+  "sonnet_01_vet_clinic": {
+   "author": "C_claude_sonnet",
+   "directory": "/home/moloch/semabi-gauntlet-v3/authors/C_claude_sonnet/apps/01_vet_clinic",
+   "port": 8920,
+   "app_sha256": "7b7037e92e8b5d2691fe4d87f5d37ca103517016ff182e6a0809c1ae063d44ac",
+   "domain_name": "Riverside Veterinary Clinic front desk",
+   "types": [
+    "Owner",
+    "Vet",
+    "Patient",
+    "Appointment"
+   ],
+   "n_types": 4,
+   "relations": [
+    "ownedBy",
+    "for",
+    "with"
+   ],
+   "n_relations": 3,
+   "operators": [
+    "RegisterPatient",
+    "ScheduleAppointment",
+    "AssignVet",
+    "CheckIn",
+    "StartExam",
+    "CompleteAppointment",
+    "CancelAppointment"
+   ],
+   "n_operators": 7,
+   "latent_note": "The UI has three views reachable from the top nav: 'Clients' (owners with their patients, and the Register Patient form), 'Vets' (a table including the onDuty attribute as visible text 'Yes'/'No'), and 'Appointments' (the Schedule Appointment form plus a table of all appointments with contextual action controls: an inline vet picker + Assign button, Check In, Start Exam, a notes field + Complete, and Cancel; each control is shown only when the corresponding operator's status precondition can possibly hold, but the server still re-checks all preconditions). No attribute is hidden from the UI. onDuty is never changed by any operator in this build; it is only set at reset time, so it is a fixed constraint the learner can observe by trying AssignVet against an off-duty vet.",
+   "initial_states": {
+    "0": {
+     "objects": 10,
+     "by_type": {
+      "Appointment": 2,
+      "Owner": 3,
+      "Patient": 3,
+      "Vet": 2
+     },
+     "relation_edges": {
+      "for": 2,
+      "ownedBy": 3,
+      "with": 1
+     },
+     "state_sha256": "8f97f1243463d23baae0852c55019319edeb5f1824063924e21443039c60ea03"
+    },
+    "11": {
+     "objects": 9,
+     "by_type": {
+      "Appointment": 2,
+      "Owner": 3,
+      "Patient": 2,
+      "Vet": 2
+     },
+     "relation_edges": {
+      "for": 2,
+      "ownedBy": 2,
+      "with": 1
+     },
+     "state_sha256": "56b5484d680c641e56ab332b408547a471904f7ae3dbb2cdc1aad7248d3696af"
+    },
+    "12": {
+     "objects": 10,
+     "by_type": {
+      "Appointment": 2,
+      "Owner": 3,
+      "Patient": 3,
+      "Vet": 2
+     },
+     "relation_edges": {
+      "for": 2,
+      "ownedBy": 3,
+      "with": 1
+     },
+     "state_sha256": "54ae014fc5660bacb0449c1de04fbe53ccec622bfbe97e8d1bb844b3d7c7caf6"
+    },
+    "13": {
+     "objects": 9,
+     "by_type": {
+      "Appointment": 2,
+      "Owner": 3,
+      "Patient": 2,
+      "Vet": 2
+     },
+     "relation_edges": {
+      "for": 2,
+      "ownedBy": 2,
+      "with": 1
+     },
+     "state_sha256": "8611ea562d1d833fe6df78b5a56e7b0528a443f67d288db6010647db099335c6"
+    }
+   }
+  },
+  "sonnet_02_barter_market": {
+   "author": "C_claude_sonnet",
+   "directory": "/home/moloch/semabi-gauntlet-v3/authors/C_claude_sonnet/apps/02_barter_market",
+   "port": 8921,
+   "app_sha256": "7af8b1b945dd30e3796e7d15bdb9ecc7748360a3715f1a0d13aa19d19b4e3962",
+   "domain_name": "Barter Market admin console",
+   "types": [
+    "Trader",
+    "Item",
+    "Listing",
+    "Offer"
+   ],
+   "n_types": 4,
+   "relations": [
+    "owner",
+    "item",
+    "seller",
+    "listing",
+    "buyer"
+   ],
+   "n_relations": 5,
+   "operators": [
+    "RegisterItem",
+    "CreateListing",
+    "WithdrawListing",
+    "MakeOffer",
+    "WithdrawOffer",
+    "DeclineOffer",
+    "AcceptOffer"
+   ],
+   "n_operators": 7,
+   "latent_note": "The UI has two views reachable from the top nav: 'Traders & Items' (click a trader in the left list to select them; the right panel shows the items they currently own, a form to register a new item for them, and for each unlisted item owned by the selected trader a price field + 'List for sale' button that issues CreateListing) and 'Market' (a table of all listings with seller, item, category, price, status, and, for open listings, a Withdraw button plus a trader picker + amount field + Make Offer button; and below it a table of all offers with buyer, listing summary, amount, status, and, for pending offers, Withdraw and Decline buttons). No attribute is hidden from the UI. Selecting a trader is a pure UI-side filter, not a semantic operator.",
+   "initial_states": {
+    "0": {
+     "objects": 10,
+     "by_type": {
+      "Item": 4,
+      "Listing": 2,
+      "Offer": 1,
+      "Trader": 3
+     },
+     "relation_edges": {
+      "buyer": 1,
+      "item": 2,
+      "listing": 1,
+      "owner": 4,
+      "seller": 2
+     },
+     "state_sha256": "68bc5aa7b812d802cc7a6da82926668f4a2f734573e818f2762a464ddda0acbe"
+    },
+    "11": {
+     "objects": 11,
+     "by_type": {
+      "Item": 5,
+      "Listing": 2,
+      "Offer": 1,
+      "Trader": 3
+     },
+     "relation_edges": {
+      "buyer": 1,
+      "item": 2,
+      "listing": 1,
+      "owner": 5,
+      "seller": 2
+     },
+     "state_sha256": "afccc1ce5c380307af728ddd7a948b0793f2705b65c0c00b2a39ffd272aa2902"
+    },
+    "12": {
+     "objects": 12,
+     "by_type": {
+      "Item": 6,
+      "Listing": 2,
+      "Offer": 1,
+      "Trader": 3
+     },
+     "relation_edges": {
+      "buyer": 1,
+      "item": 2,
+      "listing": 1,
+      "owner": 6,
+      "seller": 2
+     },
+     "state_sha256": "3f3b61ed0f85a6e0fc81077f91718c6826f49eb9cc0ed7f8074757bfda061a63"
+    },
+    "13": {
+     "objects": 12,
+     "by_type": {
+      "Item": 6,
+      "Listing": 2,
+      "Offer": 1,
+      "Trader": 3
+     },
+     "relation_edges": {
+      "buyer": 1,
+      "item": 2,
+      "listing": 1,
+      "owner": 6,
+      "seller": 2
+     },
+     "state_sha256": "18182d994605398bc52e0a949cbfc3bff8ba58d8ed410c39cd9175458fc737c7"
+    }
+   }
+  }
+ },
+ "files_sha256": {
+  "BENCHMARK_CONTRACT.md": "65a0833dd0a211ab7a9399fcef93a06cf57c9d77ab9badc35053f18c33b80898",
+  "PROVENANCE.md": "b2b7e8f853a57a27e4f927ea052fe7c1ecd3a72ae27d060df9e5a96aec00ba43",
+  "authors/A_grok/AUTHOR_BRIEF.md": "53dc6ae1fc6e17a8228596b7393efd52afe2b3c547891e6c451470aa5242090b",
+  "authors/A_grok/AUTHOR_NOTES.md": "512f05cad9fa6740337df4c320c99819fc84157aa2bc099ff92ee2fd458d3ac6",
+  "authors/A_grok/MANIFEST.json": "aa2ffa3ab69103c63120498531162b71abcb0897c1a48cb6c10e7c59fbf408f8",
+  "authors/A_grok/apps/01_landing_board/README.md": "9e390b6f429db10e6872f3b5327b975962fd0783193d4f6936dd91959d66bd98",
+  "authors/A_grok/apps/01_landing_board/app.py": "1c455e8bc0f98c8969b072422f7b28d00e19d4edabe6a3c4a5a5d19844cfa67b",
+  "authors/A_grok/apps/02_blend_book/README.md": "52a875d7fdd68bea01a728852e60d889fcb0f32eb253e4a158611f7094272789",
+  "authors/A_grok/apps/02_blend_book/app.py": "62c40c91b750c6f1207df02930089a4d8249f9266a7a3d780145389a17e527ee",
+  "authors/A_grok/author_session.log": "d0c44ef65c28614da83bfed52e734de08e72cb8f171be5121360a479bb47173f",
+  "authors/A_grok/run_all.sh": "8c234ca46ed6e0de75c1bb54e6d774c3078e61fd87ee05f52ee8fd8bd1fff147",
+  "authors/B_claude_opus/AUTHOR_BRIEF.md": "cc762f2ca0dde0e9c62948f08cfb462e21f2d02c0c34c92045890b7d57670885",
+  "authors/B_claude_opus/AUTHOR_NOTES.md": "3adb94fa73ab4ccaee72435ba57f6fa5ab8732f9d923c373bee6d3e14995cc91",
+  "authors/B_claude_opus/MANIFEST.json": "2286377103418e629d8518a47213e70c73ca63058132baa75b941e7ac96624a9",
+  "authors/B_claude_opus/apps/01_harbour/README.md": "5bc8f54e12d7a73b3fef9995dfce70379a9bc907a9e36cfcbcd0990919fd30f4",
+  "authors/B_claude_opus/apps/01_harbour/app.py": "7a6cae9a3e25c4cf12c03eb22937e411098bace793db935b4420e244e60e0803",
+  "authors/B_claude_opus/apps/02_cellar/README.md": "32324e40422c5a33bbf420e07cfd1dfcfe377b8ee2d2f53c6d184baaaec46839",
+  "authors/B_claude_opus/apps/02_cellar/app.py": "03e320573715c30600fe86e5d278bc249d7779173bde1cdea8d673dda6c1cbb9",
+  "authors/B_claude_opus/author_session.log": "145fb781594fb801aff59c188a7dfc663786bf54402c4377996f320bd08b4316",
+  "authors/B_claude_opus/run_all.sh": "a94ff4ffccfca8baf548a9fa49e8839020f8ed2e3d006a0176b87defc75e4192",
+  "authors/C_claude_sonnet/AUTHOR_BRIEF.md": "28debff8caddb6b947311753b2823bf8cdf08249dc17466ded669145827e4584",
+  "authors/C_claude_sonnet/AUTHOR_NOTES.md": "600164a795175afbb97179db11e2c82cc70bc9e3fdcfd1721e5e9d838ce39c8d",
+  "authors/C_claude_sonnet/MANIFEST.json": "bd248d2a87d92b7ae31b8909bc2697436747b1526b82df8147f61d83adbcfbc9",
+  "authors/C_claude_sonnet/apps/01_vet_clinic/README.md": "63896749a6e1d8a363a78d2e58cc33db759bb009512205a556c5ead2022eb0f6",
+  "authors/C_claude_sonnet/apps/01_vet_clinic/app.py": "7b7037e92e8b5d2691fe4d87f5d37ca103517016ff182e6a0809c1ae063d44ac",
+  "authors/C_claude_sonnet/apps/02_barter_market/README.md": "dbba0094f19dbdf30b2b36ed412b71bdf0d65ad2ed648e6a9ec1b06c6821b424",
+  "authors/C_claude_sonnet/apps/02_barter_market/app.py": "7af8b1b945dd30e3796e7d15bdb9ecc7748360a3715f1a0d13aa19d19b4e3962",
+  "authors/C_claude_sonnet/author_session.log": "65845ceba0a111906bf9e0783b0b92362fd06b2acfe69613f297f181ef921b90",
+  "authors/C_claude_sonnet/run_all.sh": "19db7370e5cdd442f74ac42e1d13dbb0bc99ebcb35fc40c91deea82d60384cdf",
+  "run_all.sh": "97a4e89fc771b03d75b40570652345277c3bd7d07d0a5392ab9c11fa885c334b"
+ },
+ "n_files": 30,
+ "totals": {
+  "apps": 6,
+  "types": 22,
+  "relations": 18,
+  "hidden_operators": 41
+ }
+}

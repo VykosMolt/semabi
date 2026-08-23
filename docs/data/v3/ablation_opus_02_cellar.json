@@ -1,0 +1,3775 @@
+{
+ "version": 2,
+ "protocol": {
+  "compiler_inputs": "rendered observations, actions, compiler probe evidence, and local refinement decisions",
+  "evaluator_only": "hidden transition records and alignment labels are read only by semabi.eval.oracle.evaluate",
+  "min_support": 2,
+  "variants": [
+   {
+    "name": "baseline",
+    "apply_refinements": false,
+    "conservative_belief": true,
+    "decision_mode": "none"
+   },
+   {
+    "name": "supported_point_estimate_legacy_belief",
+    "apply_refinements": true,
+    "conservative_belief": false,
+    "decision_mode": "all"
+   },
+   {
+    "name": "supported_point_estimate",
+    "apply_refinements": true,
+    "conservative_belief": true,
+    "decision_mode": "all"
+   },
+   {
+    "name": "provisional",
+    "apply_refinements": true,
+    "conservative_belief": true,
+    "decision_mode": "provisional"
+   },
+   {
+    "name": "validated",
+    "apply_refinements": true,
+    "conservative_belief": true,
+    "decision_mode": "validated"
+   }
+  ]
+ },
+ "runs": {
+  "opus_02_cellar_loop": {
+   "baseline": {
+    "types_recovered": 3,
+    "attributes_recovered": 6,
+    "relations_recovered": 0,
+    "operators_recovered": 0,
+    "operators_observed": 1,
+    "learned_operators": 3,
+    "operator_names_recovered": [],
+    "operators_with_any_explanation": [],
+    "gtc": 0.0,
+    "rtc": 0.0,
+    "rtc_any": 0.0,
+    "registered_deltas": 0,
+    "registered_delta_precision": null,
+    "strict_registered_delta_precision": null,
+    "false_registered_delta_categories": {},
+    "spurious_registered_delta_rate": null,
+    "mention_pair_precision": null,
+    "mention_pair_recall": null,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null,
+    "view_false_positive_rate": 1.0,
+    "abstraction_contradiction_rate": null,
+    "comparable_abstraction_groups": 0,
+    "consistent_abstraction_groups": 0,
+    "contradictory_abstraction_groups": 0,
+    "comparable_abstraction_pairs": 0,
+    "consistent_abstraction_pairs": 0,
+    "contradictory_abstraction_pairs": 0,
+    "unresolved_abstraction_pairs_due_unknown": 7,
+    "argument_binding": {
+     "move_vessel": {
+      "successful_instances": 2,
+      "with_abstract_transition": 0,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": null,
+      "conditional_action_arguments_grounded_rate": null
+     }
+    },
+    "per_operator": {
+     "receive_fruit": {
+      "successes": 0,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "finish_ferment": {
+      "successes": 0,
+      "failures": 5,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "rack": {
+      "successes": 0,
+      "failures": 1,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "split": {
+      "successes": 0,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "blend": {
+      "successes": 0,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "bottle": {
+      "successes": 0,
+      "failures": 1,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "clean_vessel": {
+      "successes": 0,
+      "failures": 6,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "move_vessel": {
+      "n": 2,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 0,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": null,
+      "strict_registered_delta_precision": null,
+      "successes": 2,
+      "failures": 2,
+      "explained": 0,
+      "invisible": 2,
+      "rejected": 0,
+      "unbound_failures": 0
+     }
+    },
+    "induction": {
+     "transitions": 16,
+     "no_op_segments": 324,
+     "hypotheses_before_min_support": 12,
+     "reattributed_domain_changes": 0,
+     "unattributed_sensing_changes": [
+      {
+       "revealing_step": 12,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        9
+       ],
+       "delta": "+T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T3' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '1500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Pinot Noir', 'attr:cell#2': 'wine', 'attr:cell#3': '1200', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Pinot Noir', 'attr:cell#0@3': 'wine', 'attr:cell#0@4': '1200', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T2', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->T3:'Tank Yard' rel:2->T2:'Chapel Bank'",
+       "observation": "fb329baa7ab57378"
+      },
+      {
+       "revealing_step": 18,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        16
+       ],
+       "delta": "-T1:'L-01' {'attr:cell#0@2': 'Pinot Noir', 'attr:cell#0@3': 'wine', 'attr:cell#0@4': '1200', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T2', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->T3:'Tank Yard' rel:2->T2:'Chapel Bank'",
+       "observation": "fb329baa7ab57378"
+      },
+      {
+       "revealing_step": 80,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        73
+       ],
+       "delta": "+T1:'T1' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '4000', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Bacchus', 'attr:cell#2': 'must', 'attr:cell#3': '1800', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Bacchus', 'attr:cell#0@3': 'must', 'attr:cell#0@4': '1800', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T1', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->T2:'Long Acre'",
+       "observation": "fdcd1c8fc2d904b0"
+      },
+      {
+       "revealing_step": 129,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        127
+       ],
+       "delta": "+T1:'T1' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '4000', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Bacchus', 'attr:cell#2': 'wine', 'attr:cell#3': '1800', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Bacchus', 'attr:cell#0@3': 'wine', 'attr:cell#0@4': '1800', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T1', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->T2:'Long Acre'",
+       "observation": "422c65e9707cc38d"
+      },
+      {
+       "revealing_step": 165,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        156
+       ],
+       "delta": "+T1:'T1' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '4000', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Bacchus', 'attr:cell#2': 'must', 'attr:cell#3': '1800', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Bacchus', 'attr:cell#0@3': 'must', 'attr:cell#0@4': '1800', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T1', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->T2:'Long Acre'",
+       "observation": "e2c8b8a9c93d2d0d"
+      },
+      {
+       "revealing_step": 261,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        256
+       ],
+       "delta": "+T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T3' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '1500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Bacchus', 'attr:cell#2': 'wine', 'attr:cell#3': '1800', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Bacchus', 'attr:cell#0@3': 'wine', 'attr:cell#0@4': '1800', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T2', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->T3:'Tank Yard' rel:2->T2:'Long Acre'",
+       "observation": "489c0601be52834f"
+      },
+      {
+       "revealing_step": 327,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        290
+       ],
+       "delta": "+T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Bacchus', 'attr:cell#2': 'must', 'attr:cell#3': '1800', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'T3' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '1500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Bacchus', 'attr:cell#0@3': 'must', 'attr:cell#0@4': '1800', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T2', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->T3:'Cold Store' rel:2->T2:'Long Acre'",
+       "observation": "a65188050e02019a"
+      },
+      {
+       "revealing_step": 365,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        347
+       ],
+       "delta": "+T1:'T3' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '1500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Pinot Noir', 'attr:cell#2': 'wine', 'attr:cell#3': '1200', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Pinot Noir', 'attr:cell#0@3': 'wine', 'attr:cell#0@4': '1200', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T2', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->T3:'Cold Store' rel:2->T2:'Chapel Bank'",
+       "observation": "5cc934c7e5a4a0e4"
+      }
+     ],
+     "delayed_object_resolutions": [],
+     "hypotheses": [
+      {
+       "name": "op0",
+       "support": 3,
+       "negative_examples": 3,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(heading#3, ?o0)",
+        "click(button#button@T0[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Pinot Noir, attr:cell#0@3=wine, attr:cell#0@4=1200, attr:cell#0@5=no, attr:cell#0@6=T2, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Chapel Bank rel:3->?o0",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4",
+        "delete ?o5"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'attr:. ; C. Room Temperature for here standing vessels#0', '9')"
+       ]
+      },
+      {
+       "name": "op1",
+       "support": 2,
+       "negative_examples": 17,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button#button@T0[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=B1, attr:cell#0@2=barrel, attr:cell#0@3=500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "?new1 := new T1(id=T3, attr:cell#0@2=tank, attr:cell#0@3=1500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "?new2 := new T1(id=T2, attr:cell#0@2=tank, attr:cell#0@3=2400, attr:cell#0@4=dirty, attr:cell#0@5=L-01, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=Pinot Noir, attr:cell#2=wine, attr:cell#3=1200, attr:cell#4=L) rel:2->None rel:3->None",
+        "?new3 := new T1(id=B2, attr:cell#0@2=barrel, attr:cell#0@3=500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "delete ?o1"
+       ],
+       "preconditions": [
+        "('empty', '?o1')",
+        "('attr_ne', '?o0', 'id', 'Lots')"
+       ]
+      },
+      {
+       "name": "op2",
+       "support": 2,
+       "negative_examples": 17,
+       "unexplained_negative_examples": 2,
+       "actions": [
+        "click(button#button@T0[?o0])"
+       ],
+       "effects": [
+        "delete ?o1",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4"
+       ],
+       "preconditions": [
+        "('attr', '?o2', 'attr:cell#0@2', 'tank')"
+       ]
+      },
+      {
+       "name": "op3",
+       "support": 1,
+       "negative_examples": 18,
+       "unexplained_negative_examples": 2,
+       "actions": [
+        "click(button#button@T0[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Bacchus, attr:cell#0@3=must, attr:cell#0@4=1800, attr:cell#0@5=no, attr:cell#0@6=T1, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Long Acre rel:3->None",
+        "delete ?o1",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4"
+       ],
+       "preconditions": [
+        "('empty', '?o2')",
+        "('attr_ne', '?o1', 'attr:cell#0@2', 'barrel')"
+       ]
+      },
+      {
+       "name": "op4",
+       "support": 1,
+       "negative_examples": 231,
+       "unexplained_negative_examples": 155,
+       "actions": [
+        "select(combobox#0, ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T3(id=Barrel Hall, attr:. ; C. Room Temperature for here standing vessels#0=17, attr:. ; C. Room Temperature for here standing vessels#1=3, attr:. ; C. Room Temperature for here standing vessels#2=1, attr:group/text/text#0=Vessel, attr:group/text/text#0@53=None, attr:group/text/text#0@59=None, attr:group/text/text#0@64=Hall, attr:group/text/text#0@70=Vessel, attr:heading#0=Press Hall, attr:heading#0@19=None, attr:heading#0@31=None, attr:heading#0@36=None, attr:heading#0@42=Tank Yard, attr:table/rowgroup/row/cell#0=Vessel, attr:table/rowgroup/row/cell#0@24=None, attr:table/rowgroup/row/cell#0@30=Vessel, attr:table/rowgroup/row/cell#0@36=None, attr:table/rowgroup/row/cell#0@41=None, attr:table/rowgroup/row/cell#0@47=Vessel, attr:text#0@20=None, attr:text#0@32=None, attr:text#0@37=None, attr:text#1@20=None, attr:text#1@32=None, attr:text#1@37=None, attr:text#2@20=None, attr:text#2@32=None, attr:text#2@37=None)"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op5",
+       "support": 1,
+       "negative_examples": 18,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button#button@T0[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Bacchus, attr:cell#0@3=wine, attr:cell#0@4=1800, attr:cell#0@5=no, attr:cell#0@6=T1, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Long Acre rel:3->None",
+        "delete ?o1",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4"
+       ],
+       "preconditions": [
+        "('empty', '?o2')",
+        "('attr_ne', '?o2', 'attr:cell#0@2', 'tank')"
+       ]
+      },
+      {
+       "name": "op6",
+       "support": 1,
+       "negative_examples": 231,
+       "unexplained_negative_examples": 155,
+       "actions": [
+        "select(combobox#0, ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T3(id=Tank Yard, attr:. ; C. Room Temperature for here standing vessels#0=9, attr:. ; C. Room Temperature for here standing vessels#1=2, attr:. ; C. Room Temperature for here standing vessels#2=1, attr:group/text/text#0=Vessel, attr:group/text/text#0@53=None, attr:group/text/text#0@59=None, attr:group/text/text#0@64=Hall, attr:group/text/text#0@70=Vessel, attr:heading#0=Press Hall, attr:heading#0@19=None, attr:heading#0@31=None, attr:heading#0@36=None, attr:heading#0@42=Cold Store, attr:table/rowgroup/row/cell#0=Vessel, attr:table/rowgroup/row/cell#0@24=None, attr:table/rowgroup/row/cell#0@30=Vessel, attr:table/rowgroup/row/cell#0@36=None, attr:table/rowgroup/row/cell#0@41=None, attr:table/rowgroup/row/cell#0@47=Vessel, attr:text#0@20=None, attr:text#0@32=None, attr:text#0@37=None, attr:text#1@20=None, attr:text#1@32=None, attr:text#1@37=None, attr:text#2@20=None, attr:text#2@32=None, attr:text#2@37=None)"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op7",
+       "support": 1,
+       "negative_examples": 231,
+       "unexplained_negative_examples": 152,
+       "actions": [
+        "select(combobox#2, ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T3(id=Cold Store, attr:. ; C. Room Temperature for here standing vessels#0=14, attr:. ; C. Room Temperature for here standing vessels#1=4, attr:. ; C. Room Temperature for here standing vessels#2=1, attr:group/text/text#0=Vessel, attr:group/text/text#0@53=None, attr:group/text/text#0@59=None, attr:group/text/text#0@64=Hall, attr:group/text/text#0@70=Vessel, attr:heading#0=Press Hall, attr:heading#0@19=None, attr:heading#0@31=None, attr:heading#0@36=None, attr:heading#0@42=Barrel Hall, attr:table/rowgroup/row/cell#0=Vessel, attr:table/rowgroup/row/cell#0@24=None, attr:table/rowgroup/row/cell#0@30=Vessel, attr:table/rowgroup/row/cell#0@36=None, attr:table/rowgroup/row/cell#0@41=None, attr:table/rowgroup/row/cell#0@47=Vessel, attr:text#0@20=None, attr:text#0@32=None, attr:text#0@37=None, attr:text#1@20=None, attr:text#1@32=None, attr:text#1@37=None, attr:text#2@20=None, attr:text#2@32=None, attr:text#2@37=None)"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op8",
+       "support": 1,
+       "negative_examples": 18,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button#button@T0[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Pinot Noir, attr:cell#0@3=wine, attr:cell#0@4=1200, attr:cell#0@5=no, attr:cell#0@6=T2, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Chapel Bank rel:3->T3:Cold Store",
+        "delete ?o1",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4"
+       ],
+       "preconditions": [
+        "('empty', '?o2')",
+        "('attr_ne', '?o1', 'attr:cell#0@2', 'tank')"
+       ]
+      },
+      {
+       "name": "op9",
+       "support": 1,
+       "negative_examples": 5,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "context(heading#3, ?o0)",
+        "click(button#button@T0[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Bacchus, attr:cell#0@3=wine, attr:cell#0@4=1800, attr:cell#0@5=no, attr:cell#0@6=T2, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Long Acre rel:3->?o0",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4",
+        "delete ?o5"
+       ],
+       "preconditions": [
+        "('ref_ne', '?o2', 'rel:2', '?o0')"
+       ]
+      },
+      {
+       "name": "op10",
+       "support": 1,
+       "negative_examples": 5,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(heading#3, ?o0)",
+        "click(button#button@T0[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Bacchus, attr:cell#0@3=wine, attr:cell#0@4=1800, attr:cell#0@5=no, attr:cell#0@6=T2, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Long Acre rel:3->?o0",
+        "?new1 := new T1(id=B1, attr:cell#0@2=barrel, attr:cell#0@3=500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "?new2 := new T1(id=T3, attr:cell#0@2=tank, attr:cell#0@3=1500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "?new3 := new T1(id=T2, attr:cell#0@2=tank, attr:cell#0@3=2400, attr:cell#0@4=dirty, attr:cell#0@5=L-01, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=Bacchus, attr:cell#2=wine, attr:cell#3=1800, attr:cell#4=L) rel:2->None rel:3->None",
+        "?new4 := new T1(id=B2, attr:cell#0@2=barrel, attr:cell#0@3=500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "delete ?new0",
+        "delete ?new1",
+        "delete ?new2",
+        "delete ?new3",
+        "delete ?new4"
+       ],
+       "preconditions": [
+        "('empty', '?new1')"
+       ]
+      },
+      {
+       "name": "op11",
+       "support": 1,
+       "negative_examples": 5,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "context(heading#3, ?o0)",
+        "click(button#button@T0[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Bacchus, attr:cell#0@3=must, attr:cell#0@4=1800, attr:cell#0@5=no, attr:cell#0@6=T2, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Long Acre rel:3->?o0",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4",
+        "delete ?o5"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o3', 'attr:cell#0@2', 'tank')"
+       ]
+      }
+     ]
+    },
+    "counterexamples": {
+     "status_counts": {
+      "EXPLAINED": 16,
+      "UNDETERMINED": 260,
+      "UNGROUNDED": 27,
+      "VIEW_ONLY": 5
+     },
+     "by_step": {
+      "2": "EXPLAINED",
+      "3": "EXPLAINED",
+      "4": "UNDETERMINED",
+      "5": "UNGROUNDED",
+      "7": "EXPLAINED",
+      "8": "EXPLAINED",
+      "9": "EXPLAINED",
+      "10": "UNDETERMINED",
+      "11": "UNGROUNDED",
+      "13": "UNDETERMINED",
+      "14": "UNDETERMINED",
+      "15": "UNDETERMINED",
+      "16": "EXPLAINED",
+      "17": "UNGROUNDED",
+      "20": "UNDETERMINED",
+      "21": "UNDETERMINED",
+      "22": "UNDETERMINED",
+      "23": "UNDETERMINED",
+      "24": "UNDETERMINED",
+      "25": "UNDETERMINED",
+      "26": "UNDETERMINED",
+      "27": "UNDETERMINED",
+      "28": "UNDETERMINED",
+      "29": "UNDETERMINED",
+      "30": "UNDETERMINED",
+      "31": "UNDETERMINED",
+      "32": "UNDETERMINED",
+      "33": "UNDETERMINED",
+      "34": "UNDETERMINED",
+      "35": "UNDETERMINED",
+      "36": "UNDETERMINED",
+      "37": "UNGROUNDED",
+      "39": "UNDETERMINED",
+      "40": "UNGROUNDED",
+      "42": "UNDETERMINED",
+      "43": "UNDETERMINED",
+      "44": "UNDETERMINED",
+      "45": "UNDETERMINED",
+      "46": "UNDETERMINED",
+      "47": "UNDETERMINED",
+      "49": "UNDETERMINED",
+      "50": "UNDETERMINED",
+      "51": "UNDETERMINED",
+      "53": "UNDETERMINED",
+      "56": "UNDETERMINED",
+      "58": "UNDETERMINED",
+      "59": "UNDETERMINED",
+      "60": "UNDETERMINED",
+      "61": "UNDETERMINED",
+      "62": "UNDETERMINED",
+      "63": "UNDETERMINED",
+      "64": "UNDETERMINED",
+      "65": "UNDETERMINED",
+      "67": "UNDETERMINED",
+      "69": "UNDETERMINED",
+      "70": "UNDETERMINED",
+      "71": "UNDETERMINED",
+      "72": "UNDETERMINED",
+      "73": "EXPLAINED",
+      "74": "UNDETERMINED",
+      "77": "UNDETERMINED",
+      "79": "UNGROUNDED",
+      "82": "EXPLAINED",
+      "83": "UNDETERMINED",
+      "84": "UNDETERMINED",
+      "85": "UNDETERMINED",
+      "86": "UNGROUNDED",
+      "88": "UNDETERMINED",
+      "89": "UNDETERMINED",
+      "90": "UNDETERMINED",
+      "91": "UNDETERMINED",
+      "92": "UNGROUNDED",
+      "94": "UNDETERMINED",
+      "95": "UNDETERMINED",
+      "96": "UNDETERMINED",
+      "97": "UNDETERMINED",
+      "98": "UNDETERMINED",
+      "99": "UNDETERMINED",
+      "100": "UNDETERMINED",
+      "101": "UNGROUNDED",
+      "103": "VIEW_ONLY",
+      "105": "UNDETERMINED",
+      "106": "UNDETERMINED",
+      "107": "UNDETERMINED",
+      "108": "UNDETERMINED",
+      "109": "UNDETERMINED",
+      "110": "UNDETERMINED",
+      "112": "UNDETERMINED",
+      "113": "UNDETERMINED",
+      "114": "UNDETERMINED",
+      "115": "UNDETERMINED",
+      "116": "UNDETERMINED",
+      "117": "UNGROUNDED",
+      "119": "UNDETERMINED",
+      "120": "UNDETERMINED",
+      "121": "UNDETERMINED",
+      "122": "UNDETERMINED",
+      "123": "UNDETERMINED",
+      "124": "UNDETERMINED",
+      "125": "UNDETERMINED",
+      "127": "EXPLAINED",
+      "131": "UNDETERMINED",
+      "132": "UNDETERMINED",
+      "133": "UNDETERMINED",
+      "134": "UNDETERMINED",
+      "135": "UNDETERMINED",
+      "137": "UNDETERMINED",
+      "138": "UNDETERMINED",
+      "139": "UNDETERMINED",
+      "140": "UNDETERMINED",
+      "141": "UNGROUNDED",
+      "144": "UNDETERMINED",
+      "145": "UNDETERMINED",
+      "146": "UNDETERMINED",
+      "147": "UNDETERMINED",
+      "148": "UNDETERMINED",
+      "149": "UNDETERMINED",
+      "150": "UNDETERMINED",
+      "151": "UNDETERMINED",
+      "152": "UNDETERMINED",
+      "153": "UNDETERMINED",
+      "154": "UNDETERMINED",
+      "155": "UNDETERMINED",
+      "156": "EXPLAINED",
+      "157": "UNDETERMINED",
+      "158": "UNDETERMINED",
+      "159": "UNDETERMINED",
+      "160": "UNDETERMINED",
+      "163": "UNDETERMINED",
+      "167": "UNDETERMINED",
+      "168": "UNDETERMINED",
+      "169": "UNDETERMINED",
+      "170": "UNDETERMINED",
+      "171": "UNDETERMINED",
+      "172": "UNDETERMINED",
+      "174": "UNDETERMINED",
+      "175": "UNDETERMINED",
+      "176": "UNDETERMINED",
+      "177": "UNGROUNDED",
+      "179": "UNDETERMINED",
+      "180": "UNDETERMINED",
+      "181": "UNDETERMINED",
+      "183": "UNDETERMINED",
+      "184": "UNDETERMINED",
+      "185": "UNDETERMINED",
+      "186": "UNDETERMINED",
+      "187": "UNDETERMINED",
+      "188": "UNDETERMINED",
+      "189": "UNDETERMINED",
+      "190": "UNDETERMINED",
+      "191": "UNGROUNDED",
+      "193": "UNDETERMINED",
+      "194": "UNDETERMINED",
+      "195": "UNDETERMINED",
+      "197": "UNGROUNDED",
+      "201": "UNDETERMINED",
+      "202": "UNDETERMINED",
+      "203": "UNGROUNDED",
+      "206": "UNDETERMINED",
+      "207": "UNDETERMINED",
+      "208": "UNDETERMINED",
+      "209": "UNDETERMINED",
+      "210": "UNDETERMINED",
+      "211": "EXPLAINED",
+      "212": "UNDETERMINED",
+      "213": "UNDETERMINED",
+      "214": "UNDETERMINED",
+      "215": "UNDETERMINED",
+      "216": "UNGROUNDED",
+      "218": "UNDETERMINED",
+      "219": "UNDETERMINED",
+      "220": "UNDETERMINED",
+      "221": "UNDETERMINED",
+      "222": "UNDETERMINED",
+      "223": "UNDETERMINED",
+      "224": "UNGROUNDED",
+      "227": "UNDETERMINED",
+      "228": "UNDETERMINED",
+      "229": "UNDETERMINED",
+      "230": "UNDETERMINED",
+      "231": "UNGROUNDED",
+      "233": "VIEW_ONLY",
+      "235": "UNDETERMINED",
+      "236": "UNDETERMINED",
+      "237": "UNDETERMINED",
+      "238": "UNDETERMINED",
+      "239": "UNDETERMINED",
+      "240": "UNDETERMINED",
+      "241": "UNDETERMINED",
+      "242": "UNDETERMINED",
+      "243": "UNDETERMINED",
+      "244": "UNDETERMINED",
+      "245": "UNDETERMINED",
+      "246": "UNDETERMINED",
+      "247": "UNDETERMINED",
+      "248": "UNDETERMINED",
+      "249": "UNDETERMINED",
+      "250": "UNGROUNDED",
+      "253": "UNDETERMINED",
+      "254": "UNDETERMINED",
+      "255": "UNDETERMINED",
+      "256": "EXPLAINED",
+      "257": "UNDETERMINED",
+      "258": "UNDETERMINED",
+      "259": "UNDETERMINED",
+      "260": "UNGROUNDED",
+      "262": "UNDETERMINED",
+      "263": "EXPLAINED",
+      "268": "VIEW_ONLY",
+      "270": "VIEW_ONLY",
+      "272": "UNDETERMINED",
+      "273": "UNDETERMINED",
+      "274": "UNGROUNDED",
+      "276": "UNDETERMINED",
+      "277": "UNDETERMINED",
+      "278": "UNDETERMINED",
+      "279": "UNDETERMINED",
+      "280": "UNDETERMINED",
+      "281": "UNDETERMINED",
+      "282": "UNDETERMINED",
+      "283": "UNDETERMINED",
+      "285": "UNDETERMINED",
+      "286": "UNDETERMINED",
+      "287": "UNDETERMINED",
+      "288": "UNDETERMINED",
+      "289": "UNDETERMINED",
+      "290": "EXPLAINED",
+      "291": "UNDETERMINED",
+      "292": "UNDETERMINED",
+      "293": "UNDETERMINED",
+      "294": "UNDETERMINED",
+      "296": "UNDETERMINED",
+      "297": "UNDETERMINED",
+      "298": "UNDETERMINED",
+      "299": "UNDETERMINED",
+      "301": "UNDETERMINED",
+      "302": "UNDETERMINED",
+      "303": "UNDETERMINED",
+      "304": "UNDETERMINED",
+      "305": "UNDETERMINED",
+      "306": "UNDETERMINED",
+      "307": "UNDETERMINED",
+      "309": "UNDETERMINED",
+      "310": "UNDETERMINED",
+      "311": "UNDETERMINED",
+      "312": "UNDETERMINED",
+      "313": "UNDETERMINED",
+      "314": "UNDETERMINED",
+      "315": "UNDETERMINED",
+      "316": "UNDETERMINED",
+      "317": "UNDETERMINED",
+      "318": "UNDETERMINED",
+      "319": "UNDETERMINED",
+      "320": "UNDETERMINED",
+      "321": "UNDETERMINED",
+      "322": "UNDETERMINED",
+      "323": "UNDETERMINED",
+      "325": "UNDETERMINED",
+      "326": "UNGROUNDED",
+      "330": "EXPLAINED",
+      "331": "UNDETERMINED",
+      "332": "UNDETERMINED",
+      "333": "UNDETERMINED",
+      "334": "UNDETERMINED",
+      "337": "VIEW_ONLY",
+      "340": "UNDETERMINED",
+      "341": "UNDETERMINED",
+      "342": "UNDETERMINED",
+      "343": "UNDETERMINED",
+      "344": "UNDETERMINED",
+      "345": "UNDETERMINED",
+      "346": "UNDETERMINED",
+      "347": "EXPLAINED",
+      "348": "UNDETERMINED",
+      "349": "UNDETERMINED",
+      "350": "UNDETERMINED",
+      "351": "UNDETERMINED",
+      "352": "UNDETERMINED",
+      "354": "UNDETERMINED",
+      "355": "UNDETERMINED",
+      "356": "UNDETERMINED",
+      "357": "UNDETERMINED",
+      "358": "UNDETERMINED",
+      "359": "UNDETERMINED",
+      "361": "UNDETERMINED",
+      "362": "UNDETERMINED",
+      "363": "UNDETERMINED",
+      "364": "UNGROUNDED",
+      "366": "UNDETERMINED",
+      "367": "UNGROUNDED",
+      "369": "UNDETERMINED",
+      "370": "UNDETERMINED",
+      "371": "UNDETERMINED",
+      "372": "UNDETERMINED",
+      "373": "UNDETERMINED",
+      "374": "UNDETERMINED",
+      "375": "UNDETERMINED",
+      "376": "UNDETERMINED",
+      "377": "UNGROUNDED",
+      "379": "UNDETERMINED",
+      "380": "UNDETERMINED",
+      "381": "UNDETERMINED",
+      "382": "UNDETERMINED",
+      "383": "UNDETERMINED",
+      "384": "UNDETERMINED",
+      "385": "UNGROUNDED",
+      "388": "UNDETERMINED",
+      "389": "UNGROUNDED"
+     }
+    }
+   },
+   "supported_point_estimate_legacy_belief": {
+    "types_recovered": 3,
+    "attributes_recovered": 6,
+    "relations_recovered": 0,
+    "operators_recovered": 0,
+    "operators_observed": 1,
+    "learned_operators": 3,
+    "operator_names_recovered": [],
+    "operators_with_any_explanation": [],
+    "gtc": 0.0,
+    "rtc": 0.0,
+    "rtc_any": 0.0,
+    "registered_deltas": 0,
+    "registered_delta_precision": null,
+    "strict_registered_delta_precision": null,
+    "false_registered_delta_categories": {},
+    "spurious_registered_delta_rate": null,
+    "mention_pair_precision": null,
+    "mention_pair_recall": null,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null,
+    "view_false_positive_rate": 1.0,
+    "abstraction_contradiction_rate": null,
+    "comparable_abstraction_groups": 0,
+    "consistent_abstraction_groups": 0,
+    "contradictory_abstraction_groups": 0,
+    "comparable_abstraction_pairs": 0,
+    "consistent_abstraction_pairs": 0,
+    "contradictory_abstraction_pairs": 0,
+    "unresolved_abstraction_pairs_due_unknown": 7,
+    "argument_binding": {
+     "move_vessel": {
+      "successful_instances": 2,
+      "with_abstract_transition": 0,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": null,
+      "conditional_action_arguments_grounded_rate": null
+     }
+    },
+    "per_operator": {
+     "receive_fruit": {
+      "successes": 0,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "finish_ferment": {
+      "successes": 0,
+      "failures": 5,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "rack": {
+      "successes": 0,
+      "failures": 1,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "split": {
+      "successes": 0,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "blend": {
+      "successes": 0,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "bottle": {
+      "successes": 0,
+      "failures": 1,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "clean_vessel": {
+      "successes": 0,
+      "failures": 6,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "move_vessel": {
+      "n": 2,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 0,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": null,
+      "strict_registered_delta_precision": null,
+      "successes": 2,
+      "failures": 2,
+      "explained": 0,
+      "invisible": 2,
+      "rejected": 0,
+      "unbound_failures": 0
+     }
+    },
+    "induction": {
+     "transitions": 16,
+     "no_op_segments": 324,
+     "hypotheses_before_min_support": 12,
+     "reattributed_domain_changes": 0,
+     "unattributed_sensing_changes": [
+      {
+       "revealing_step": 12,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        9
+       ],
+       "delta": "+T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T3' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '1500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Pinot Noir', 'attr:cell#2': 'wine', 'attr:cell#3': '1200', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Pinot Noir', 'attr:cell#0@3': 'wine', 'attr:cell#0@4': '1200', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T2', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->T3:'Tank Yard' rel:2->T2:'Chapel Bank'",
+       "observation": "fb329baa7ab57378"
+      },
+      {
+       "revealing_step": 18,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        16
+       ],
+       "delta": "-T1:'L-01' {'attr:cell#0@2': 'Pinot Noir', 'attr:cell#0@3': 'wine', 'attr:cell#0@4': '1200', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T2', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->T3:'Tank Yard' rel:2->T2:'Chapel Bank'",
+       "observation": "fb329baa7ab57378"
+      },
+      {
+       "revealing_step": 80,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        73
+       ],
+       "delta": "+T1:'T1' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '4000', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Bacchus', 'attr:cell#2': 'must', 'attr:cell#3': '1800', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Bacchus', 'attr:cell#0@3': 'must', 'attr:cell#0@4': '1800', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T1', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->T2:'Long Acre'",
+       "observation": "fdcd1c8fc2d904b0"
+      },
+      {
+       "revealing_step": 129,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        127
+       ],
+       "delta": "+T1:'T1' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '4000', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Bacchus', 'attr:cell#2': 'wine', 'attr:cell#3': '1800', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Bacchus', 'attr:cell#0@3': 'wine', 'attr:cell#0@4': '1800', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T1', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->T2:'Long Acre'",
+       "observation": "422c65e9707cc38d"
+      },
+      {
+       "revealing_step": 165,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        156
+       ],
+       "delta": "+T1:'T1' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '4000', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Bacchus', 'attr:cell#2': 'must', 'attr:cell#3': '1800', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Bacchus', 'attr:cell#0@3': 'must', 'attr:cell#0@4': '1800', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T1', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->T2:'Long Acre'",
+       "observation": "e2c8b8a9c93d2d0d"
+      },
+      {
+       "revealing_step": 261,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        256
+       ],
+       "delta": "+T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T3' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '1500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Bacchus', 'attr:cell#2': 'wine', 'attr:cell#3': '1800', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Bacchus', 'attr:cell#0@3': 'wine', 'attr:cell#0@4': '1800', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T2', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->T3:'Tank Yard' rel:2->T2:'Long Acre'",
+       "observation": "489c0601be52834f"
+      },
+      {
+       "revealing_step": 327,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        290
+       ],
+       "delta": "+T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Bacchus', 'attr:cell#2': 'must', 'attr:cell#3': '1800', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'T3' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '1500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Bacchus', 'attr:cell#0@3': 'must', 'attr:cell#0@4': '1800', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T2', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->T3:'Cold Store' rel:2->T2:'Long Acre'",
+       "observation": "a65188050e02019a"
+      },
+      {
+       "revealing_step": 365,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        347
+       ],
+       "delta": "+T1:'T3' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '1500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Pinot Noir', 'attr:cell#2': 'wine', 'attr:cell#3': '1200', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Pinot Noir', 'attr:cell#0@3': 'wine', 'attr:cell#0@4': '1200', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T2', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->T3:'Cold Store' rel:2->T2:'Chapel Bank'",
+       "observation": "5cc934c7e5a4a0e4"
+      }
+     ],
+     "delayed_object_resolutions": [],
+     "hypotheses": [
+      {
+       "name": "op0",
+       "support": 3,
+       "negative_examples": 3,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(heading#3, ?o0)",
+        "click(button#button@T0[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Pinot Noir, attr:cell#0@3=wine, attr:cell#0@4=1200, attr:cell#0@5=no, attr:cell#0@6=T2, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Chapel Bank rel:3->?o0",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4",
+        "delete ?o5"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'attr:. ; C. Room Temperature for here standing vessels#0', '9')"
+       ]
+      },
+      {
+       "name": "op1",
+       "support": 2,
+       "negative_examples": 17,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button#button@T0[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=B1, attr:cell#0@2=barrel, attr:cell#0@3=500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "?new1 := new T1(id=T3, attr:cell#0@2=tank, attr:cell#0@3=1500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "?new2 := new T1(id=T2, attr:cell#0@2=tank, attr:cell#0@3=2400, attr:cell#0@4=dirty, attr:cell#0@5=L-01, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=Pinot Noir, attr:cell#2=wine, attr:cell#3=1200, attr:cell#4=L) rel:2->None rel:3->None",
+        "?new3 := new T1(id=B2, attr:cell#0@2=barrel, attr:cell#0@3=500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "delete ?o1"
+       ],
+       "preconditions": [
+        "('empty', '?o1')",
+        "('attr_ne', '?o0', 'id', 'Lots')"
+       ]
+      },
+      {
+       "name": "op2",
+       "support": 2,
+       "negative_examples": 17,
+       "unexplained_negative_examples": 2,
+       "actions": [
+        "click(button#button@T0[?o0])"
+       ],
+       "effects": [
+        "delete ?o1",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4"
+       ],
+       "preconditions": [
+        "('attr', '?o2', 'attr:cell#0@2', 'tank')"
+       ]
+      },
+      {
+       "name": "op3",
+       "support": 1,
+       "negative_examples": 18,
+       "unexplained_negative_examples": 2,
+       "actions": [
+        "click(button#button@T0[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Bacchus, attr:cell#0@3=must, attr:cell#0@4=1800, attr:cell#0@5=no, attr:cell#0@6=T1, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Long Acre rel:3->None",
+        "delete ?o1",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4"
+       ],
+       "preconditions": [
+        "('empty', '?o2')",
+        "('attr_ne', '?o1', 'attr:cell#0@2', 'barrel')"
+       ]
+      },
+      {
+       "name": "op4",
+       "support": 1,
+       "negative_examples": 231,
+       "unexplained_negative_examples": 155,
+       "actions": [
+        "select(combobox#0, ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T3(id=Barrel Hall, attr:. ; C. Room Temperature for here standing vessels#0=17, attr:. ; C. Room Temperature for here standing vessels#1=3, attr:. ; C. Room Temperature for here standing vessels#2=1, attr:group/text/text#0=Vessel, attr:group/text/text#0@53=None, attr:group/text/text#0@59=None, attr:group/text/text#0@64=Hall, attr:group/text/text#0@70=Vessel, attr:heading#0=Press Hall, attr:heading#0@19=None, attr:heading#0@31=None, attr:heading#0@36=None, attr:heading#0@42=Tank Yard, attr:table/rowgroup/row/cell#0=Vessel, attr:table/rowgroup/row/cell#0@24=None, attr:table/rowgroup/row/cell#0@30=Vessel, attr:table/rowgroup/row/cell#0@36=None, attr:table/rowgroup/row/cell#0@41=None, attr:table/rowgroup/row/cell#0@47=Vessel, attr:text#0@20=None, attr:text#0@32=None, attr:text#0@37=None, attr:text#1@20=None, attr:text#1@32=None, attr:text#1@37=None, attr:text#2@20=None, attr:text#2@32=None, attr:text#2@37=None)"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op5",
+       "support": 1,
+       "negative_examples": 18,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button#button@T0[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Bacchus, attr:cell#0@3=wine, attr:cell#0@4=1800, attr:cell#0@5=no, attr:cell#0@6=T1, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Long Acre rel:3->None",
+        "delete ?o1",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4"
+       ],
+       "preconditions": [
+        "('empty', '?o2')",
+        "('attr_ne', '?o2', 'attr:cell#0@2', 'tank')"
+       ]
+      },
+      {
+       "name": "op6",
+       "support": 1,
+       "negative_examples": 231,
+       "unexplained_negative_examples": 155,
+       "actions": [
+        "select(combobox#0, ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T3(id=Tank Yard, attr:. ; C. Room Temperature for here standing vessels#0=9, attr:. ; C. Room Temperature for here standing vessels#1=2, attr:. ; C. Room Temperature for here standing vessels#2=1, attr:group/text/text#0=Vessel, attr:group/text/text#0@53=None, attr:group/text/text#0@59=None, attr:group/text/text#0@64=Hall, attr:group/text/text#0@70=Vessel, attr:heading#0=Press Hall, attr:heading#0@19=None, attr:heading#0@31=None, attr:heading#0@36=None, attr:heading#0@42=Cold Store, attr:table/rowgroup/row/cell#0=Vessel, attr:table/rowgroup/row/cell#0@24=None, attr:table/rowgroup/row/cell#0@30=Vessel, attr:table/rowgroup/row/cell#0@36=None, attr:table/rowgroup/row/cell#0@41=None, attr:table/rowgroup/row/cell#0@47=Vessel, attr:text#0@20=None, attr:text#0@32=None, attr:text#0@37=None, attr:text#1@20=None, attr:text#1@32=None, attr:text#1@37=None, attr:text#2@20=None, attr:text#2@32=None, attr:text#2@37=None)"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op7",
+       "support": 1,
+       "negative_examples": 231,
+       "unexplained_negative_examples": 152,
+       "actions": [
+        "select(combobox#2, ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T3(id=Cold Store, attr:. ; C. Room Temperature for here standing vessels#0=14, attr:. ; C. Room Temperature for here standing vessels#1=4, attr:. ; C. Room Temperature for here standing vessels#2=1, attr:group/text/text#0=Vessel, attr:group/text/text#0@53=None, attr:group/text/text#0@59=None, attr:group/text/text#0@64=Hall, attr:group/text/text#0@70=Vessel, attr:heading#0=Press Hall, attr:heading#0@19=None, attr:heading#0@31=None, attr:heading#0@36=None, attr:heading#0@42=Barrel Hall, attr:table/rowgroup/row/cell#0=Vessel, attr:table/rowgroup/row/cell#0@24=None, attr:table/rowgroup/row/cell#0@30=Vessel, attr:table/rowgroup/row/cell#0@36=None, attr:table/rowgroup/row/cell#0@41=None, attr:table/rowgroup/row/cell#0@47=Vessel, attr:text#0@20=None, attr:text#0@32=None, attr:text#0@37=None, attr:text#1@20=None, attr:text#1@32=None, attr:text#1@37=None, attr:text#2@20=None, attr:text#2@32=None, attr:text#2@37=None)"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op8",
+       "support": 1,
+       "negative_examples": 18,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button#button@T0[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Pinot Noir, attr:cell#0@3=wine, attr:cell#0@4=1200, attr:cell#0@5=no, attr:cell#0@6=T2, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Chapel Bank rel:3->T3:Cold Store",
+        "delete ?o1",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4"
+       ],
+       "preconditions": [
+        "('empty', '?o2')",
+        "('attr_ne', '?o1', 'attr:cell#0@2', 'tank')"
+       ]
+      },
+      {
+       "name": "op9",
+       "support": 1,
+       "negative_examples": 5,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "context(heading#3, ?o0)",
+        "click(button#button@T0[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Bacchus, attr:cell#0@3=wine, attr:cell#0@4=1800, attr:cell#0@5=no, attr:cell#0@6=T2, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Long Acre rel:3->?o0",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4",
+        "delete ?o5"
+       ],
+       "preconditions": [
+        "('ref_ne', '?o2', 'rel:2', '?o0')"
+       ]
+      },
+      {
+       "name": "op10",
+       "support": 1,
+       "negative_examples": 5,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(heading#3, ?o0)",
+        "click(button#button@T0[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Bacchus, attr:cell#0@3=wine, attr:cell#0@4=1800, attr:cell#0@5=no, attr:cell#0@6=T2, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Long Acre rel:3->?o0",
+        "?new1 := new T1(id=B1, attr:cell#0@2=barrel, attr:cell#0@3=500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "?new2 := new T1(id=T3, attr:cell#0@2=tank, attr:cell#0@3=1500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "?new3 := new T1(id=T2, attr:cell#0@2=tank, attr:cell#0@3=2400, attr:cell#0@4=dirty, attr:cell#0@5=L-01, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=Bacchus, attr:cell#2=wine, attr:cell#3=1800, attr:cell#4=L) rel:2->None rel:3->None",
+        "?new4 := new T1(id=B2, attr:cell#0@2=barrel, attr:cell#0@3=500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "delete ?new0",
+        "delete ?new1",
+        "delete ?new2",
+        "delete ?new3",
+        "delete ?new4"
+       ],
+       "preconditions": [
+        "('empty', '?new1')"
+       ]
+      },
+      {
+       "name": "op11",
+       "support": 1,
+       "negative_examples": 5,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "context(heading#3, ?o0)",
+        "click(button#button@T0[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Bacchus, attr:cell#0@3=must, attr:cell#0@4=1800, attr:cell#0@5=no, attr:cell#0@6=T2, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Long Acre rel:3->?o0",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4",
+        "delete ?o5"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o3', 'attr:cell#0@2', 'tank')"
+       ]
+      }
+     ]
+    },
+    "counterexamples": {
+     "status_counts": {
+      "EXPLAINED": 16,
+      "UNDETERMINED": 260,
+      "UNGROUNDED": 27,
+      "VIEW_ONLY": 5
+     },
+     "by_step": {
+      "2": "EXPLAINED",
+      "3": "EXPLAINED",
+      "4": "UNDETERMINED",
+      "5": "UNGROUNDED",
+      "7": "EXPLAINED",
+      "8": "EXPLAINED",
+      "9": "EXPLAINED",
+      "10": "UNDETERMINED",
+      "11": "UNGROUNDED",
+      "13": "UNDETERMINED",
+      "14": "UNDETERMINED",
+      "15": "UNDETERMINED",
+      "16": "EXPLAINED",
+      "17": "UNGROUNDED",
+      "20": "UNDETERMINED",
+      "21": "UNDETERMINED",
+      "22": "UNDETERMINED",
+      "23": "UNDETERMINED",
+      "24": "UNDETERMINED",
+      "25": "UNDETERMINED",
+      "26": "UNDETERMINED",
+      "27": "UNDETERMINED",
+      "28": "UNDETERMINED",
+      "29": "UNDETERMINED",
+      "30": "UNDETERMINED",
+      "31": "UNDETERMINED",
+      "32": "UNDETERMINED",
+      "33": "UNDETERMINED",
+      "34": "UNDETERMINED",
+      "35": "UNDETERMINED",
+      "36": "UNDETERMINED",
+      "37": "UNGROUNDED",
+      "39": "UNDETERMINED",
+      "40": "UNGROUNDED",
+      "42": "UNDETERMINED",
+      "43": "UNDETERMINED",
+      "44": "UNDETERMINED",
+      "45": "UNDETERMINED",
+      "46": "UNDETERMINED",
+      "47": "UNDETERMINED",
+      "49": "UNDETERMINED",
+      "50": "UNDETERMINED",
+      "51": "UNDETERMINED",
+      "53": "UNDETERMINED",
+      "56": "UNDETERMINED",
+      "58": "UNDETERMINED",
+      "59": "UNDETERMINED",
+      "60": "UNDETERMINED",
+      "61": "UNDETERMINED",
+      "62": "UNDETERMINED",
+      "63": "UNDETERMINED",
+      "64": "UNDETERMINED",
+      "65": "UNDETERMINED",
+      "67": "UNDETERMINED",
+      "69": "UNDETERMINED",
+      "70": "UNDETERMINED",
+      "71": "UNDETERMINED",
+      "72": "UNDETERMINED",
+      "73": "EXPLAINED",
+      "74": "UNDETERMINED",
+      "77": "UNDETERMINED",
+      "79": "UNGROUNDED",
+      "82": "EXPLAINED",
+      "83": "UNDETERMINED",
+      "84": "UNDETERMINED",
+      "85": "UNDETERMINED",
+      "86": "UNGROUNDED",
+      "88": "UNDETERMINED",
+      "89": "UNDETERMINED",
+      "90": "UNDETERMINED",
+      "91": "UNDETERMINED",
+      "92": "UNGROUNDED",
+      "94": "UNDETERMINED",
+      "95": "UNDETERMINED",
+      "96": "UNDETERMINED",
+      "97": "UNDETERMINED",
+      "98": "UNDETERMINED",
+      "99": "UNDETERMINED",
+      "100": "UNDETERMINED",
+      "101": "UNGROUNDED",
+      "103": "VIEW_ONLY",
+      "105": "UNDETERMINED",
+      "106": "UNDETERMINED",
+      "107": "UNDETERMINED",
+      "108": "UNDETERMINED",
+      "109": "UNDETERMINED",
+      "110": "UNDETERMINED",
+      "112": "UNDETERMINED",
+      "113": "UNDETERMINED",
+      "114": "UNDETERMINED",
+      "115": "UNDETERMINED",
+      "116": "UNDETERMINED",
+      "117": "UNGROUNDED",
+      "119": "UNDETERMINED",
+      "120": "UNDETERMINED",
+      "121": "UNDETERMINED",
+      "122": "UNDETERMINED",
+      "123": "UNDETERMINED",
+      "124": "UNDETERMINED",
+      "125": "UNDETERMINED",
+      "127": "EXPLAINED",
+      "131": "UNDETERMINED",
+      "132": "UNDETERMINED",
+      "133": "UNDETERMINED",
+      "134": "UNDETERMINED",
+      "135": "UNDETERMINED",
+      "137": "UNDETERMINED",
+      "138": "UNDETERMINED",
+      "139": "UNDETERMINED",
+      "140": "UNDETERMINED",
+      "141": "UNGROUNDED",
+      "144": "UNDETERMINED",
+      "145": "UNDETERMINED",
+      "146": "UNDETERMINED",
+      "147": "UNDETERMINED",
+      "148": "UNDETERMINED",
+      "149": "UNDETERMINED",
+      "150": "UNDETERMINED",
+      "151": "UNDETERMINED",
+      "152": "UNDETERMINED",
+      "153": "UNDETERMINED",
+      "154": "UNDETERMINED",
+      "155": "UNDETERMINED",
+      "156": "EXPLAINED",
+      "157": "UNDETERMINED",
+      "158": "UNDETERMINED",
+      "159": "UNDETERMINED",
+      "160": "UNDETERMINED",
+      "163": "UNDETERMINED",
+      "167": "UNDETERMINED",
+      "168": "UNDETERMINED",
+      "169": "UNDETERMINED",
+      "170": "UNDETERMINED",
+      "171": "UNDETERMINED",
+      "172": "UNDETERMINED",
+      "174": "UNDETERMINED",
+      "175": "UNDETERMINED",
+      "176": "UNDETERMINED",
+      "177": "UNGROUNDED",
+      "179": "UNDETERMINED",
+      "180": "UNDETERMINED",
+      "181": "UNDETERMINED",
+      "183": "UNDETERMINED",
+      "184": "UNDETERMINED",
+      "185": "UNDETERMINED",
+      "186": "UNDETERMINED",
+      "187": "UNDETERMINED",
+      "188": "UNDETERMINED",
+      "189": "UNDETERMINED",
+      "190": "UNDETERMINED",
+      "191": "UNGROUNDED",
+      "193": "UNDETERMINED",
+      "194": "UNDETERMINED",
+      "195": "UNDETERMINED",
+      "197": "UNGROUNDED",
+      "201": "UNDETERMINED",
+      "202": "UNDETERMINED",
+      "203": "UNGROUNDED",
+      "206": "UNDETERMINED",
+      "207": "UNDETERMINED",
+      "208": "UNDETERMINED",
+      "209": "UNDETERMINED",
+      "210": "UNDETERMINED",
+      "211": "EXPLAINED",
+      "212": "UNDETERMINED",
+      "213": "UNDETERMINED",
+      "214": "UNDETERMINED",
+      "215": "UNDETERMINED",
+      "216": "UNGROUNDED",
+      "218": "UNDETERMINED",
+      "219": "UNDETERMINED",
+      "220": "UNDETERMINED",
+      "221": "UNDETERMINED",
+      "222": "UNDETERMINED",
+      "223": "UNDETERMINED",
+      "224": "UNGROUNDED",
+      "227": "UNDETERMINED",
+      "228": "UNDETERMINED",
+      "229": "UNDETERMINED",
+      "230": "UNDETERMINED",
+      "231": "UNGROUNDED",
+      "233": "VIEW_ONLY",
+      "235": "UNDETERMINED",
+      "236": "UNDETERMINED",
+      "237": "UNDETERMINED",
+      "238": "UNDETERMINED",
+      "239": "UNDETERMINED",
+      "240": "UNDETERMINED",
+      "241": "UNDETERMINED",
+      "242": "UNDETERMINED",
+      "243": "UNDETERMINED",
+      "244": "UNDETERMINED",
+      "245": "UNDETERMINED",
+      "246": "UNDETERMINED",
+      "247": "UNDETERMINED",
+      "248": "UNDETERMINED",
+      "249": "UNDETERMINED",
+      "250": "UNGROUNDED",
+      "253": "UNDETERMINED",
+      "254": "UNDETERMINED",
+      "255": "UNDETERMINED",
+      "256": "EXPLAINED",
+      "257": "UNDETERMINED",
+      "258": "UNDETERMINED",
+      "259": "UNDETERMINED",
+      "260": "UNGROUNDED",
+      "262": "UNDETERMINED",
+      "263": "EXPLAINED",
+      "268": "VIEW_ONLY",
+      "270": "VIEW_ONLY",
+      "272": "UNDETERMINED",
+      "273": "UNDETERMINED",
+      "274": "UNGROUNDED",
+      "276": "UNDETERMINED",
+      "277": "UNDETERMINED",
+      "278": "UNDETERMINED",
+      "279": "UNDETERMINED",
+      "280": "UNDETERMINED",
+      "281": "UNDETERMINED",
+      "282": "UNDETERMINED",
+      "283": "UNDETERMINED",
+      "285": "UNDETERMINED",
+      "286": "UNDETERMINED",
+      "287": "UNDETERMINED",
+      "288": "UNDETERMINED",
+      "289": "UNDETERMINED",
+      "290": "EXPLAINED",
+      "291": "UNDETERMINED",
+      "292": "UNDETERMINED",
+      "293": "UNDETERMINED",
+      "294": "UNDETERMINED",
+      "296": "UNDETERMINED",
+      "297": "UNDETERMINED",
+      "298": "UNDETERMINED",
+      "299": "UNDETERMINED",
+      "301": "UNDETERMINED",
+      "302": "UNDETERMINED",
+      "303": "UNDETERMINED",
+      "304": "UNDETERMINED",
+      "305": "UNDETERMINED",
+      "306": "UNDETERMINED",
+      "307": "UNDETERMINED",
+      "309": "UNDETERMINED",
+      "310": "UNDETERMINED",
+      "311": "UNDETERMINED",
+      "312": "UNDETERMINED",
+      "313": "UNDETERMINED",
+      "314": "UNDETERMINED",
+      "315": "UNDETERMINED",
+      "316": "UNDETERMINED",
+      "317": "UNDETERMINED",
+      "318": "UNDETERMINED",
+      "319": "UNDETERMINED",
+      "320": "UNDETERMINED",
+      "321": "UNDETERMINED",
+      "322": "UNDETERMINED",
+      "323": "UNDETERMINED",
+      "325": "UNDETERMINED",
+      "326": "UNGROUNDED",
+      "330": "EXPLAINED",
+      "331": "UNDETERMINED",
+      "332": "UNDETERMINED",
+      "333": "UNDETERMINED",
+      "334": "UNDETERMINED",
+      "337": "VIEW_ONLY",
+      "340": "UNDETERMINED",
+      "341": "UNDETERMINED",
+      "342": "UNDETERMINED",
+      "343": "UNDETERMINED",
+      "344": "UNDETERMINED",
+      "345": "UNDETERMINED",
+      "346": "UNDETERMINED",
+      "347": "EXPLAINED",
+      "348": "UNDETERMINED",
+      "349": "UNDETERMINED",
+      "350": "UNDETERMINED",
+      "351": "UNDETERMINED",
+      "352": "UNDETERMINED",
+      "354": "UNDETERMINED",
+      "355": "UNDETERMINED",
+      "356": "UNDETERMINED",
+      "357": "UNDETERMINED",
+      "358": "UNDETERMINED",
+      "359": "UNDETERMINED",
+      "361": "UNDETERMINED",
+      "362": "UNDETERMINED",
+      "363": "UNDETERMINED",
+      "364": "UNGROUNDED",
+      "366": "UNDETERMINED",
+      "367": "UNGROUNDED",
+      "369": "UNDETERMINED",
+      "370": "UNDETERMINED",
+      "371": "UNDETERMINED",
+      "372": "UNDETERMINED",
+      "373": "UNDETERMINED",
+      "374": "UNDETERMINED",
+      "375": "UNDETERMINED",
+      "376": "UNDETERMINED",
+      "377": "UNGROUNDED",
+      "379": "UNDETERMINED",
+      "380": "UNDETERMINED",
+      "381": "UNDETERMINED",
+      "382": "UNDETERMINED",
+      "383": "UNDETERMINED",
+      "384": "UNDETERMINED",
+      "385": "UNGROUNDED",
+      "388": "UNDETERMINED",
+      "389": "UNGROUNDED"
+     }
+    }
+   },
+   "supported_point_estimate": {
+    "types_recovered": 3,
+    "attributes_recovered": 6,
+    "relations_recovered": 0,
+    "operators_recovered": 0,
+    "operators_observed": 1,
+    "learned_operators": 3,
+    "operator_names_recovered": [],
+    "operators_with_any_explanation": [],
+    "gtc": 0.0,
+    "rtc": 0.0,
+    "rtc_any": 0.0,
+    "registered_deltas": 0,
+    "registered_delta_precision": null,
+    "strict_registered_delta_precision": null,
+    "false_registered_delta_categories": {},
+    "spurious_registered_delta_rate": null,
+    "mention_pair_precision": null,
+    "mention_pair_recall": null,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null,
+    "view_false_positive_rate": 1.0,
+    "abstraction_contradiction_rate": null,
+    "comparable_abstraction_groups": 0,
+    "consistent_abstraction_groups": 0,
+    "contradictory_abstraction_groups": 0,
+    "comparable_abstraction_pairs": 0,
+    "consistent_abstraction_pairs": 0,
+    "contradictory_abstraction_pairs": 0,
+    "unresolved_abstraction_pairs_due_unknown": 7,
+    "argument_binding": {
+     "move_vessel": {
+      "successful_instances": 2,
+      "with_abstract_transition": 0,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": null,
+      "conditional_action_arguments_grounded_rate": null
+     }
+    },
+    "per_operator": {
+     "receive_fruit": {
+      "successes": 0,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "finish_ferment": {
+      "successes": 0,
+      "failures": 5,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "rack": {
+      "successes": 0,
+      "failures": 1,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "split": {
+      "successes": 0,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "blend": {
+      "successes": 0,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "bottle": {
+      "successes": 0,
+      "failures": 1,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "clean_vessel": {
+      "successes": 0,
+      "failures": 6,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "move_vessel": {
+      "n": 2,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 0,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": null,
+      "strict_registered_delta_precision": null,
+      "successes": 2,
+      "failures": 2,
+      "explained": 0,
+      "invisible": 2,
+      "rejected": 0,
+      "unbound_failures": 0
+     }
+    },
+    "induction": {
+     "transitions": 16,
+     "no_op_segments": 324,
+     "hypotheses_before_min_support": 12,
+     "reattributed_domain_changes": 0,
+     "unattributed_sensing_changes": [
+      {
+       "revealing_step": 12,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        9
+       ],
+       "delta": "+T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T3' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '1500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Pinot Noir', 'attr:cell#2': 'wine', 'attr:cell#3': '1200', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Pinot Noir', 'attr:cell#0@3': 'wine', 'attr:cell#0@4': '1200', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T2', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->T3:'Tank Yard' rel:2->T2:'Chapel Bank'",
+       "observation": "fb329baa7ab57378"
+      },
+      {
+       "revealing_step": 18,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        16
+       ],
+       "delta": "-T1:'L-01' {'attr:cell#0@2': 'Pinot Noir', 'attr:cell#0@3': 'wine', 'attr:cell#0@4': '1200', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T2', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->T3:'Tank Yard' rel:2->T2:'Chapel Bank'",
+       "observation": "fb329baa7ab57378"
+      },
+      {
+       "revealing_step": 80,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        73
+       ],
+       "delta": "+T1:'T1' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '4000', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Bacchus', 'attr:cell#2': 'must', 'attr:cell#3': '1800', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Bacchus', 'attr:cell#0@3': 'must', 'attr:cell#0@4': '1800', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T1', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->T2:'Long Acre'",
+       "observation": "fdcd1c8fc2d904b0"
+      },
+      {
+       "revealing_step": 129,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        127
+       ],
+       "delta": "+T1:'T1' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '4000', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Bacchus', 'attr:cell#2': 'wine', 'attr:cell#3': '1800', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Bacchus', 'attr:cell#0@3': 'wine', 'attr:cell#0@4': '1800', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T1', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->T2:'Long Acre'",
+       "observation": "422c65e9707cc38d"
+      },
+      {
+       "revealing_step": 165,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        156
+       ],
+       "delta": "+T1:'T1' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '4000', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Bacchus', 'attr:cell#2': 'must', 'attr:cell#3': '1800', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Bacchus', 'attr:cell#0@3': 'must', 'attr:cell#0@4': '1800', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T1', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->T2:'Long Acre'",
+       "observation": "e2c8b8a9c93d2d0d"
+      },
+      {
+       "revealing_step": 261,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        256
+       ],
+       "delta": "+T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T3' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '1500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Bacchus', 'attr:cell#2': 'wine', 'attr:cell#3': '1800', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Bacchus', 'attr:cell#0@3': 'wine', 'attr:cell#0@4': '1800', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T2', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->T3:'Tank Yard' rel:2->T2:'Long Acre'",
+       "observation": "489c0601be52834f"
+      },
+      {
+       "revealing_step": 327,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        290
+       ],
+       "delta": "+T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Bacchus', 'attr:cell#2': 'must', 'attr:cell#3': '1800', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'T3' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '1500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Bacchus', 'attr:cell#0@3': 'must', 'attr:cell#0@4': '1800', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T2', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->T3:'Cold Store' rel:2->T2:'Long Acre'",
+       "observation": "a65188050e02019a"
+      },
+      {
+       "revealing_step": 365,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        347
+       ],
+       "delta": "+T1:'T3' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '1500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Pinot Noir', 'attr:cell#2': 'wine', 'attr:cell#3': '1200', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Pinot Noir', 'attr:cell#0@3': 'wine', 'attr:cell#0@4': '1200', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T2', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->T3:'Cold Store' rel:2->T2:'Chapel Bank'",
+       "observation": "5cc934c7e5a4a0e4"
+      }
+     ],
+     "delayed_object_resolutions": [],
+     "hypotheses": [
+      {
+       "name": "op0",
+       "support": 3,
+       "negative_examples": 3,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(heading#3, ?o0)",
+        "click(button#button@T0[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Pinot Noir, attr:cell#0@3=wine, attr:cell#0@4=1200, attr:cell#0@5=no, attr:cell#0@6=T2, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Chapel Bank rel:3->?o0",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4",
+        "delete ?o5"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'attr:. ; C. Room Temperature for here standing vessels#0', '9')"
+       ]
+      },
+      {
+       "name": "op1",
+       "support": 2,
+       "negative_examples": 17,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button#button@T0[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=B1, attr:cell#0@2=barrel, attr:cell#0@3=500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "?new1 := new T1(id=T3, attr:cell#0@2=tank, attr:cell#0@3=1500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "?new2 := new T1(id=T2, attr:cell#0@2=tank, attr:cell#0@3=2400, attr:cell#0@4=dirty, attr:cell#0@5=L-01, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=Pinot Noir, attr:cell#2=wine, attr:cell#3=1200, attr:cell#4=L) rel:2->None rel:3->None",
+        "?new3 := new T1(id=B2, attr:cell#0@2=barrel, attr:cell#0@3=500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "delete ?o1"
+       ],
+       "preconditions": [
+        "('empty', '?o1')",
+        "('attr_ne', '?o0', 'id', 'Lots')"
+       ]
+      },
+      {
+       "name": "op2",
+       "support": 2,
+       "negative_examples": 17,
+       "unexplained_negative_examples": 2,
+       "actions": [
+        "click(button#button@T0[?o0])"
+       ],
+       "effects": [
+        "delete ?o1",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4"
+       ],
+       "preconditions": [
+        "('attr', '?o2', 'attr:cell#0@2', 'tank')"
+       ]
+      },
+      {
+       "name": "op3",
+       "support": 1,
+       "negative_examples": 18,
+       "unexplained_negative_examples": 2,
+       "actions": [
+        "click(button#button@T0[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Bacchus, attr:cell#0@3=must, attr:cell#0@4=1800, attr:cell#0@5=no, attr:cell#0@6=T1, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Long Acre rel:3->None",
+        "delete ?o1",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4"
+       ],
+       "preconditions": [
+        "('empty', '?o2')",
+        "('attr_ne', '?o1', 'attr:cell#0@2', 'barrel')"
+       ]
+      },
+      {
+       "name": "op4",
+       "support": 1,
+       "negative_examples": 231,
+       "unexplained_negative_examples": 155,
+       "actions": [
+        "select(combobox#0, ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T3(id=Barrel Hall, attr:. ; C. Room Temperature for here standing vessels#0=17, attr:. ; C. Room Temperature for here standing vessels#1=3, attr:. ; C. Room Temperature for here standing vessels#2=1, attr:group/text/text#0=Vessel, attr:group/text/text#0@53=None, attr:group/text/text#0@59=None, attr:group/text/text#0@64=Hall, attr:group/text/text#0@70=Vessel, attr:heading#0=Press Hall, attr:heading#0@19=None, attr:heading#0@31=None, attr:heading#0@36=None, attr:heading#0@42=Tank Yard, attr:table/rowgroup/row/cell#0=Vessel, attr:table/rowgroup/row/cell#0@24=None, attr:table/rowgroup/row/cell#0@30=Vessel, attr:table/rowgroup/row/cell#0@36=None, attr:table/rowgroup/row/cell#0@41=None, attr:table/rowgroup/row/cell#0@47=Vessel, attr:text#0@20=None, attr:text#0@32=None, attr:text#0@37=None, attr:text#1@20=None, attr:text#1@32=None, attr:text#1@37=None, attr:text#2@20=None, attr:text#2@32=None, attr:text#2@37=None)"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op5",
+       "support": 1,
+       "negative_examples": 18,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button#button@T0[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Bacchus, attr:cell#0@3=wine, attr:cell#0@4=1800, attr:cell#0@5=no, attr:cell#0@6=T1, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Long Acre rel:3->None",
+        "delete ?o1",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4"
+       ],
+       "preconditions": [
+        "('empty', '?o2')",
+        "('attr_ne', '?o2', 'attr:cell#0@2', 'tank')"
+       ]
+      },
+      {
+       "name": "op6",
+       "support": 1,
+       "negative_examples": 231,
+       "unexplained_negative_examples": 155,
+       "actions": [
+        "select(combobox#0, ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T3(id=Tank Yard, attr:. ; C. Room Temperature for here standing vessels#0=9, attr:. ; C. Room Temperature for here standing vessels#1=2, attr:. ; C. Room Temperature for here standing vessels#2=1, attr:group/text/text#0=Vessel, attr:group/text/text#0@53=None, attr:group/text/text#0@59=None, attr:group/text/text#0@64=Hall, attr:group/text/text#0@70=Vessel, attr:heading#0=Press Hall, attr:heading#0@19=None, attr:heading#0@31=None, attr:heading#0@36=None, attr:heading#0@42=Cold Store, attr:table/rowgroup/row/cell#0=Vessel, attr:table/rowgroup/row/cell#0@24=None, attr:table/rowgroup/row/cell#0@30=Vessel, attr:table/rowgroup/row/cell#0@36=None, attr:table/rowgroup/row/cell#0@41=None, attr:table/rowgroup/row/cell#0@47=Vessel, attr:text#0@20=None, attr:text#0@32=None, attr:text#0@37=None, attr:text#1@20=None, attr:text#1@32=None, attr:text#1@37=None, attr:text#2@20=None, attr:text#2@32=None, attr:text#2@37=None)"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op7",
+       "support": 1,
+       "negative_examples": 231,
+       "unexplained_negative_examples": 152,
+       "actions": [
+        "select(combobox#2, ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T3(id=Cold Store, attr:. ; C. Room Temperature for here standing vessels#0=14, attr:. ; C. Room Temperature for here standing vessels#1=4, attr:. ; C. Room Temperature for here standing vessels#2=1, attr:group/text/text#0=Vessel, attr:group/text/text#0@53=None, attr:group/text/text#0@59=None, attr:group/text/text#0@64=Hall, attr:group/text/text#0@70=Vessel, attr:heading#0=Press Hall, attr:heading#0@19=None, attr:heading#0@31=None, attr:heading#0@36=None, attr:heading#0@42=Barrel Hall, attr:table/rowgroup/row/cell#0=Vessel, attr:table/rowgroup/row/cell#0@24=None, attr:table/rowgroup/row/cell#0@30=Vessel, attr:table/rowgroup/row/cell#0@36=None, attr:table/rowgroup/row/cell#0@41=None, attr:table/rowgroup/row/cell#0@47=Vessel, attr:text#0@20=None, attr:text#0@32=None, attr:text#0@37=None, attr:text#1@20=None, attr:text#1@32=None, attr:text#1@37=None, attr:text#2@20=None, attr:text#2@32=None, attr:text#2@37=None)"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op8",
+       "support": 1,
+       "negative_examples": 18,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button#button@T0[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Pinot Noir, attr:cell#0@3=wine, attr:cell#0@4=1200, attr:cell#0@5=no, attr:cell#0@6=T2, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Chapel Bank rel:3->T3:Cold Store",
+        "delete ?o1",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4"
+       ],
+       "preconditions": [
+        "('empty', '?o2')",
+        "('attr_ne', '?o1', 'attr:cell#0@2', 'tank')"
+       ]
+      },
+      {
+       "name": "op9",
+       "support": 1,
+       "negative_examples": 5,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "context(heading#3, ?o0)",
+        "click(button#button@T0[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Bacchus, attr:cell#0@3=wine, attr:cell#0@4=1800, attr:cell#0@5=no, attr:cell#0@6=T2, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Long Acre rel:3->?o0",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4",
+        "delete ?o5"
+       ],
+       "preconditions": [
+        "('ref_ne', '?o2', 'rel:2', '?o0')"
+       ]
+      },
+      {
+       "name": "op10",
+       "support": 1,
+       "negative_examples": 5,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(heading#3, ?o0)",
+        "click(button#button@T0[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Bacchus, attr:cell#0@3=wine, attr:cell#0@4=1800, attr:cell#0@5=no, attr:cell#0@6=T2, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Long Acre rel:3->?o0",
+        "?new1 := new T1(id=B1, attr:cell#0@2=barrel, attr:cell#0@3=500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "?new2 := new T1(id=T3, attr:cell#0@2=tank, attr:cell#0@3=1500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "?new3 := new T1(id=T2, attr:cell#0@2=tank, attr:cell#0@3=2400, attr:cell#0@4=dirty, attr:cell#0@5=L-01, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=Bacchus, attr:cell#2=wine, attr:cell#3=1800, attr:cell#4=L) rel:2->None rel:3->None",
+        "?new4 := new T1(id=B2, attr:cell#0@2=barrel, attr:cell#0@3=500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "delete ?new0",
+        "delete ?new1",
+        "delete ?new2",
+        "delete ?new3",
+        "delete ?new4"
+       ],
+       "preconditions": [
+        "('empty', '?new1')"
+       ]
+      },
+      {
+       "name": "op11",
+       "support": 1,
+       "negative_examples": 5,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "context(heading#3, ?o0)",
+        "click(button#button@T0[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Bacchus, attr:cell#0@3=must, attr:cell#0@4=1800, attr:cell#0@5=no, attr:cell#0@6=T2, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Long Acre rel:3->?o0",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4",
+        "delete ?o5"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o3', 'attr:cell#0@2', 'tank')"
+       ]
+      }
+     ]
+    },
+    "counterexamples": {
+     "status_counts": {
+      "EXPLAINED": 16,
+      "UNDETERMINED": 260,
+      "UNGROUNDED": 27,
+      "VIEW_ONLY": 5
+     },
+     "by_step": {
+      "2": "EXPLAINED",
+      "3": "EXPLAINED",
+      "4": "UNDETERMINED",
+      "5": "UNGROUNDED",
+      "7": "EXPLAINED",
+      "8": "EXPLAINED",
+      "9": "EXPLAINED",
+      "10": "UNDETERMINED",
+      "11": "UNGROUNDED",
+      "13": "UNDETERMINED",
+      "14": "UNDETERMINED",
+      "15": "UNDETERMINED",
+      "16": "EXPLAINED",
+      "17": "UNGROUNDED",
+      "20": "UNDETERMINED",
+      "21": "UNDETERMINED",
+      "22": "UNDETERMINED",
+      "23": "UNDETERMINED",
+      "24": "UNDETERMINED",
+      "25": "UNDETERMINED",
+      "26": "UNDETERMINED",
+      "27": "UNDETERMINED",
+      "28": "UNDETERMINED",
+      "29": "UNDETERMINED",
+      "30": "UNDETERMINED",
+      "31": "UNDETERMINED",
+      "32": "UNDETERMINED",
+      "33": "UNDETERMINED",
+      "34": "UNDETERMINED",
+      "35": "UNDETERMINED",
+      "36": "UNDETERMINED",
+      "37": "UNGROUNDED",
+      "39": "UNDETERMINED",
+      "40": "UNGROUNDED",
+      "42": "UNDETERMINED",
+      "43": "UNDETERMINED",
+      "44": "UNDETERMINED",
+      "45": "UNDETERMINED",
+      "46": "UNDETERMINED",
+      "47": "UNDETERMINED",
+      "49": "UNDETERMINED",
+      "50": "UNDETERMINED",
+      "51": "UNDETERMINED",
+      "53": "UNDETERMINED",
+      "56": "UNDETERMINED",
+      "58": "UNDETERMINED",
+      "59": "UNDETERMINED",
+      "60": "UNDETERMINED",
+      "61": "UNDETERMINED",
+      "62": "UNDETERMINED",
+      "63": "UNDETERMINED",
+      "64": "UNDETERMINED",
+      "65": "UNDETERMINED",
+      "67": "UNDETERMINED",
+      "69": "UNDETERMINED",
+      "70": "UNDETERMINED",
+      "71": "UNDETERMINED",
+      "72": "UNDETERMINED",
+      "73": "EXPLAINED",
+      "74": "UNDETERMINED",
+      "77": "UNDETERMINED",
+      "79": "UNGROUNDED",
+      "82": "EXPLAINED",
+      "83": "UNDETERMINED",
+      "84": "UNDETERMINED",
+      "85": "UNDETERMINED",
+      "86": "UNGROUNDED",
+      "88": "UNDETERMINED",
+      "89": "UNDETERMINED",
+      "90": "UNDETERMINED",
+      "91": "UNDETERMINED",
+      "92": "UNGROUNDED",
+      "94": "UNDETERMINED",
+      "95": "UNDETERMINED",
+      "96": "UNDETERMINED",
+      "97": "UNDETERMINED",
+      "98": "UNDETERMINED",
+      "99": "UNDETERMINED",
+      "100": "UNDETERMINED",
+      "101": "UNGROUNDED",
+      "103": "VIEW_ONLY",
+      "105": "UNDETERMINED",
+      "106": "UNDETERMINED",
+      "107": "UNDETERMINED",
+      "108": "UNDETERMINED",
+      "109": "UNDETERMINED",
+      "110": "UNDETERMINED",
+      "112": "UNDETERMINED",
+      "113": "UNDETERMINED",
+      "114": "UNDETERMINED",
+      "115": "UNDETERMINED",
+      "116": "UNDETERMINED",
+      "117": "UNGROUNDED",
+      "119": "UNDETERMINED",
+      "120": "UNDETERMINED",
+      "121": "UNDETERMINED",
+      "122": "UNDETERMINED",
+      "123": "UNDETERMINED",
+      "124": "UNDETERMINED",
+      "125": "UNDETERMINED",
+      "127": "EXPLAINED",
+      "131": "UNDETERMINED",
+      "132": "UNDETERMINED",
+      "133": "UNDETERMINED",
+      "134": "UNDETERMINED",
+      "135": "UNDETERMINED",
+      "137": "UNDETERMINED",
+      "138": "UNDETERMINED",
+      "139": "UNDETERMINED",
+      "140": "UNDETERMINED",
+      "141": "UNGROUNDED",
+      "144": "UNDETERMINED",
+      "145": "UNDETERMINED",
+      "146": "UNDETERMINED",
+      "147": "UNDETERMINED",
+      "148": "UNDETERMINED",
+      "149": "UNDETERMINED",
+      "150": "UNDETERMINED",
+      "151": "UNDETERMINED",
+      "152": "UNDETERMINED",
+      "153": "UNDETERMINED",
+      "154": "UNDETERMINED",
+      "155": "UNDETERMINED",
+      "156": "EXPLAINED",
+      "157": "UNDETERMINED",
+      "158": "UNDETERMINED",
+      "159": "UNDETERMINED",
+      "160": "UNDETERMINED",
+      "163": "UNDETERMINED",
+      "167": "UNDETERMINED",
+      "168": "UNDETERMINED",
+      "169": "UNDETERMINED",
+      "170": "UNDETERMINED",
+      "171": "UNDETERMINED",
+      "172": "UNDETERMINED",
+      "174": "UNDETERMINED",
+      "175": "UNDETERMINED",
+      "176": "UNDETERMINED",
+      "177": "UNGROUNDED",
+      "179": "UNDETERMINED",
+      "180": "UNDETERMINED",
+      "181": "UNDETERMINED",
+      "183": "UNDETERMINED",
+      "184": "UNDETERMINED",
+      "185": "UNDETERMINED",
+      "186": "UNDETERMINED",
+      "187": "UNDETERMINED",
+      "188": "UNDETERMINED",
+      "189": "UNDETERMINED",
+      "190": "UNDETERMINED",
+      "191": "UNGROUNDED",
+      "193": "UNDETERMINED",
+      "194": "UNDETERMINED",
+      "195": "UNDETERMINED",
+      "197": "UNGROUNDED",
+      "201": "UNDETERMINED",
+      "202": "UNDETERMINED",
+      "203": "UNGROUNDED",
+      "206": "UNDETERMINED",
+      "207": "UNDETERMINED",
+      "208": "UNDETERMINED",
+      "209": "UNDETERMINED",
+      "210": "UNDETERMINED",
+      "211": "EXPLAINED",
+      "212": "UNDETERMINED",
+      "213": "UNDETERMINED",
+      "214": "UNDETERMINED",
+      "215": "UNDETERMINED",
+      "216": "UNGROUNDED",
+      "218": "UNDETERMINED",
+      "219": "UNDETERMINED",
+      "220": "UNDETERMINED",
+      "221": "UNDETERMINED",
+      "222": "UNDETERMINED",
+      "223": "UNDETERMINED",
+      "224": "UNGROUNDED",
+      "227": "UNDETERMINED",
+      "228": "UNDETERMINED",
+      "229": "UNDETERMINED",
+      "230": "UNDETERMINED",
+      "231": "UNGROUNDED",
+      "233": "VIEW_ONLY",
+      "235": "UNDETERMINED",
+      "236": "UNDETERMINED",
+      "237": "UNDETERMINED",
+      "238": "UNDETERMINED",
+      "239": "UNDETERMINED",
+      "240": "UNDETERMINED",
+      "241": "UNDETERMINED",
+      "242": "UNDETERMINED",
+      "243": "UNDETERMINED",
+      "244": "UNDETERMINED",
+      "245": "UNDETERMINED",
+      "246": "UNDETERMINED",
+      "247": "UNDETERMINED",
+      "248": "UNDETERMINED",
+      "249": "UNDETERMINED",
+      "250": "UNGROUNDED",
+      "253": "UNDETERMINED",
+      "254": "UNDETERMINED",
+      "255": "UNDETERMINED",
+      "256": "EXPLAINED",
+      "257": "UNDETERMINED",
+      "258": "UNDETERMINED",
+      "259": "UNDETERMINED",
+      "260": "UNGROUNDED",
+      "262": "UNDETERMINED",
+      "263": "EXPLAINED",
+      "268": "VIEW_ONLY",
+      "270": "VIEW_ONLY",
+      "272": "UNDETERMINED",
+      "273": "UNDETERMINED",
+      "274": "UNGROUNDED",
+      "276": "UNDETERMINED",
+      "277": "UNDETERMINED",
+      "278": "UNDETERMINED",
+      "279": "UNDETERMINED",
+      "280": "UNDETERMINED",
+      "281": "UNDETERMINED",
+      "282": "UNDETERMINED",
+      "283": "UNDETERMINED",
+      "285": "UNDETERMINED",
+      "286": "UNDETERMINED",
+      "287": "UNDETERMINED",
+      "288": "UNDETERMINED",
+      "289": "UNDETERMINED",
+      "290": "EXPLAINED",
+      "291": "UNDETERMINED",
+      "292": "UNDETERMINED",
+      "293": "UNDETERMINED",
+      "294": "UNDETERMINED",
+      "296": "UNDETERMINED",
+      "297": "UNDETERMINED",
+      "298": "UNDETERMINED",
+      "299": "UNDETERMINED",
+      "301": "UNDETERMINED",
+      "302": "UNDETERMINED",
+      "303": "UNDETERMINED",
+      "304": "UNDETERMINED",
+      "305": "UNDETERMINED",
+      "306": "UNDETERMINED",
+      "307": "UNDETERMINED",
+      "309": "UNDETERMINED",
+      "310": "UNDETERMINED",
+      "311": "UNDETERMINED",
+      "312": "UNDETERMINED",
+      "313": "UNDETERMINED",
+      "314": "UNDETERMINED",
+      "315": "UNDETERMINED",
+      "316": "UNDETERMINED",
+      "317": "UNDETERMINED",
+      "318": "UNDETERMINED",
+      "319": "UNDETERMINED",
+      "320": "UNDETERMINED",
+      "321": "UNDETERMINED",
+      "322": "UNDETERMINED",
+      "323": "UNDETERMINED",
+      "325": "UNDETERMINED",
+      "326": "UNGROUNDED",
+      "330": "EXPLAINED",
+      "331": "UNDETERMINED",
+      "332": "UNDETERMINED",
+      "333": "UNDETERMINED",
+      "334": "UNDETERMINED",
+      "337": "VIEW_ONLY",
+      "340": "UNDETERMINED",
+      "341": "UNDETERMINED",
+      "342": "UNDETERMINED",
+      "343": "UNDETERMINED",
+      "344": "UNDETERMINED",
+      "345": "UNDETERMINED",
+      "346": "UNDETERMINED",
+      "347": "EXPLAINED",
+      "348": "UNDETERMINED",
+      "349": "UNDETERMINED",
+      "350": "UNDETERMINED",
+      "351": "UNDETERMINED",
+      "352": "UNDETERMINED",
+      "354": "UNDETERMINED",
+      "355": "UNDETERMINED",
+      "356": "UNDETERMINED",
+      "357": "UNDETERMINED",
+      "358": "UNDETERMINED",
+      "359": "UNDETERMINED",
+      "361": "UNDETERMINED",
+      "362": "UNDETERMINED",
+      "363": "UNDETERMINED",
+      "364": "UNGROUNDED",
+      "366": "UNDETERMINED",
+      "367": "UNGROUNDED",
+      "369": "UNDETERMINED",
+      "370": "UNDETERMINED",
+      "371": "UNDETERMINED",
+      "372": "UNDETERMINED",
+      "373": "UNDETERMINED",
+      "374": "UNDETERMINED",
+      "375": "UNDETERMINED",
+      "376": "UNDETERMINED",
+      "377": "UNGROUNDED",
+      "379": "UNDETERMINED",
+      "380": "UNDETERMINED",
+      "381": "UNDETERMINED",
+      "382": "UNDETERMINED",
+      "383": "UNDETERMINED",
+      "384": "UNDETERMINED",
+      "385": "UNGROUNDED",
+      "388": "UNDETERMINED",
+      "389": "UNGROUNDED"
+     }
+    }
+   },
+   "provisional": {
+    "types_recovered": 3,
+    "attributes_recovered": 6,
+    "relations_recovered": 0,
+    "operators_recovered": 0,
+    "operators_observed": 1,
+    "learned_operators": 3,
+    "operator_names_recovered": [],
+    "operators_with_any_explanation": [],
+    "gtc": 0.0,
+    "rtc": 0.0,
+    "rtc_any": 0.0,
+    "registered_deltas": 0,
+    "registered_delta_precision": null,
+    "strict_registered_delta_precision": null,
+    "false_registered_delta_categories": {},
+    "spurious_registered_delta_rate": null,
+    "mention_pair_precision": null,
+    "mention_pair_recall": null,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null,
+    "view_false_positive_rate": 1.0,
+    "abstraction_contradiction_rate": null,
+    "comparable_abstraction_groups": 0,
+    "consistent_abstraction_groups": 0,
+    "contradictory_abstraction_groups": 0,
+    "comparable_abstraction_pairs": 0,
+    "consistent_abstraction_pairs": 0,
+    "contradictory_abstraction_pairs": 0,
+    "unresolved_abstraction_pairs_due_unknown": 7,
+    "argument_binding": {
+     "move_vessel": {
+      "successful_instances": 2,
+      "with_abstract_transition": 0,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": null,
+      "conditional_action_arguments_grounded_rate": null
+     }
+    },
+    "per_operator": {
+     "receive_fruit": {
+      "successes": 0,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "finish_ferment": {
+      "successes": 0,
+      "failures": 5,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "rack": {
+      "successes": 0,
+      "failures": 1,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "split": {
+      "successes": 0,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "blend": {
+      "successes": 0,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "bottle": {
+      "successes": 0,
+      "failures": 1,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "clean_vessel": {
+      "successes": 0,
+      "failures": 6,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "move_vessel": {
+      "n": 2,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 0,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": null,
+      "strict_registered_delta_precision": null,
+      "successes": 2,
+      "failures": 2,
+      "explained": 0,
+      "invisible": 2,
+      "rejected": 0,
+      "unbound_failures": 0
+     }
+    },
+    "induction": {
+     "transitions": 16,
+     "no_op_segments": 324,
+     "hypotheses_before_min_support": 12,
+     "reattributed_domain_changes": 0,
+     "unattributed_sensing_changes": [
+      {
+       "revealing_step": 12,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        9
+       ],
+       "delta": "+T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T3' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '1500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Pinot Noir', 'attr:cell#2': 'wine', 'attr:cell#3': '1200', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Pinot Noir', 'attr:cell#0@3': 'wine', 'attr:cell#0@4': '1200', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T2', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->T3:'Tank Yard' rel:2->T2:'Chapel Bank'",
+       "observation": "fb329baa7ab57378"
+      },
+      {
+       "revealing_step": 18,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        16
+       ],
+       "delta": "-T1:'L-01' {'attr:cell#0@2': 'Pinot Noir', 'attr:cell#0@3': 'wine', 'attr:cell#0@4': '1200', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T2', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->T3:'Tank Yard' rel:2->T2:'Chapel Bank'",
+       "observation": "fb329baa7ab57378"
+      },
+      {
+       "revealing_step": 80,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        73
+       ],
+       "delta": "+T1:'T1' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '4000', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Bacchus', 'attr:cell#2': 'must', 'attr:cell#3': '1800', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Bacchus', 'attr:cell#0@3': 'must', 'attr:cell#0@4': '1800', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T1', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->T2:'Long Acre'",
+       "observation": "fdcd1c8fc2d904b0"
+      },
+      {
+       "revealing_step": 129,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        127
+       ],
+       "delta": "+T1:'T1' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '4000', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Bacchus', 'attr:cell#2': 'wine', 'attr:cell#3': '1800', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Bacchus', 'attr:cell#0@3': 'wine', 'attr:cell#0@4': '1800', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T1', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->T2:'Long Acre'",
+       "observation": "422c65e9707cc38d"
+      },
+      {
+       "revealing_step": 165,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        156
+       ],
+       "delta": "+T1:'T1' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '4000', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Bacchus', 'attr:cell#2': 'must', 'attr:cell#3': '1800', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Bacchus', 'attr:cell#0@3': 'must', 'attr:cell#0@4': '1800', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T1', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->T2:'Long Acre'",
+       "observation": "e2c8b8a9c93d2d0d"
+      },
+      {
+       "revealing_step": 261,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        256
+       ],
+       "delta": "+T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T3' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '1500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Bacchus', 'attr:cell#2': 'wine', 'attr:cell#3': '1800', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Bacchus', 'attr:cell#0@3': 'wine', 'attr:cell#0@4': '1800', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T2', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->T3:'Tank Yard' rel:2->T2:'Long Acre'",
+       "observation": "489c0601be52834f"
+      },
+      {
+       "revealing_step": 327,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        290
+       ],
+       "delta": "+T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Bacchus', 'attr:cell#2': 'must', 'attr:cell#3': '1800', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'T3' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '1500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Bacchus', 'attr:cell#0@3': 'must', 'attr:cell#0@4': '1800', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T2', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->T3:'Cold Store' rel:2->T2:'Long Acre'",
+       "observation": "a65188050e02019a"
+      },
+      {
+       "revealing_step": 365,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        347
+       ],
+       "delta": "+T1:'T3' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '1500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Pinot Noir', 'attr:cell#2': 'wine', 'attr:cell#3': '1200', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Pinot Noir', 'attr:cell#0@3': 'wine', 'attr:cell#0@4': '1200', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T2', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->T3:'Cold Store' rel:2->T2:'Chapel Bank'",
+       "observation": "5cc934c7e5a4a0e4"
+      }
+     ],
+     "delayed_object_resolutions": [],
+     "hypotheses": [
+      {
+       "name": "op0",
+       "support": 3,
+       "negative_examples": 3,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(heading#3, ?o0)",
+        "click(button#button@T0[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Pinot Noir, attr:cell#0@3=wine, attr:cell#0@4=1200, attr:cell#0@5=no, attr:cell#0@6=T2, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Chapel Bank rel:3->?o0",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4",
+        "delete ?o5"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'attr:. ; C. Room Temperature for here standing vessels#0', '9')"
+       ]
+      },
+      {
+       "name": "op1",
+       "support": 2,
+       "negative_examples": 17,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button#button@T0[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=B1, attr:cell#0@2=barrel, attr:cell#0@3=500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "?new1 := new T1(id=T3, attr:cell#0@2=tank, attr:cell#0@3=1500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "?new2 := new T1(id=T2, attr:cell#0@2=tank, attr:cell#0@3=2400, attr:cell#0@4=dirty, attr:cell#0@5=L-01, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=Pinot Noir, attr:cell#2=wine, attr:cell#3=1200, attr:cell#4=L) rel:2->None rel:3->None",
+        "?new3 := new T1(id=B2, attr:cell#0@2=barrel, attr:cell#0@3=500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "delete ?o1"
+       ],
+       "preconditions": [
+        "('empty', '?o1')",
+        "('attr_ne', '?o0', 'id', 'Lots')"
+       ]
+      },
+      {
+       "name": "op2",
+       "support": 2,
+       "negative_examples": 17,
+       "unexplained_negative_examples": 2,
+       "actions": [
+        "click(button#button@T0[?o0])"
+       ],
+       "effects": [
+        "delete ?o1",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4"
+       ],
+       "preconditions": [
+        "('attr', '?o2', 'attr:cell#0@2', 'tank')"
+       ]
+      },
+      {
+       "name": "op3",
+       "support": 1,
+       "negative_examples": 18,
+       "unexplained_negative_examples": 2,
+       "actions": [
+        "click(button#button@T0[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Bacchus, attr:cell#0@3=must, attr:cell#0@4=1800, attr:cell#0@5=no, attr:cell#0@6=T1, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Long Acre rel:3->None",
+        "delete ?o1",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4"
+       ],
+       "preconditions": [
+        "('empty', '?o2')",
+        "('attr_ne', '?o1', 'attr:cell#0@2', 'barrel')"
+       ]
+      },
+      {
+       "name": "op4",
+       "support": 1,
+       "negative_examples": 231,
+       "unexplained_negative_examples": 155,
+       "actions": [
+        "select(combobox#0, ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T3(id=Barrel Hall, attr:. ; C. Room Temperature for here standing vessels#0=17, attr:. ; C. Room Temperature for here standing vessels#1=3, attr:. ; C. Room Temperature for here standing vessels#2=1, attr:group/text/text#0=Vessel, attr:group/text/text#0@53=None, attr:group/text/text#0@59=None, attr:group/text/text#0@64=Hall, attr:group/text/text#0@70=Vessel, attr:heading#0=Press Hall, attr:heading#0@19=None, attr:heading#0@31=None, attr:heading#0@36=None, attr:heading#0@42=Tank Yard, attr:table/rowgroup/row/cell#0=Vessel, attr:table/rowgroup/row/cell#0@24=None, attr:table/rowgroup/row/cell#0@30=Vessel, attr:table/rowgroup/row/cell#0@36=None, attr:table/rowgroup/row/cell#0@41=None, attr:table/rowgroup/row/cell#0@47=Vessel, attr:text#0@20=None, attr:text#0@32=None, attr:text#0@37=None, attr:text#1@20=None, attr:text#1@32=None, attr:text#1@37=None, attr:text#2@20=None, attr:text#2@32=None, attr:text#2@37=None)"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op5",
+       "support": 1,
+       "negative_examples": 18,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button#button@T0[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Bacchus, attr:cell#0@3=wine, attr:cell#0@4=1800, attr:cell#0@5=no, attr:cell#0@6=T1, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Long Acre rel:3->None",
+        "delete ?o1",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4"
+       ],
+       "preconditions": [
+        "('empty', '?o2')",
+        "('attr_ne', '?o2', 'attr:cell#0@2', 'tank')"
+       ]
+      },
+      {
+       "name": "op6",
+       "support": 1,
+       "negative_examples": 231,
+       "unexplained_negative_examples": 155,
+       "actions": [
+        "select(combobox#0, ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T3(id=Tank Yard, attr:. ; C. Room Temperature for here standing vessels#0=9, attr:. ; C. Room Temperature for here standing vessels#1=2, attr:. ; C. Room Temperature for here standing vessels#2=1, attr:group/text/text#0=Vessel, attr:group/text/text#0@53=None, attr:group/text/text#0@59=None, attr:group/text/text#0@64=Hall, attr:group/text/text#0@70=Vessel, attr:heading#0=Press Hall, attr:heading#0@19=None, attr:heading#0@31=None, attr:heading#0@36=None, attr:heading#0@42=Cold Store, attr:table/rowgroup/row/cell#0=Vessel, attr:table/rowgroup/row/cell#0@24=None, attr:table/rowgroup/row/cell#0@30=Vessel, attr:table/rowgroup/row/cell#0@36=None, attr:table/rowgroup/row/cell#0@41=None, attr:table/rowgroup/row/cell#0@47=Vessel, attr:text#0@20=None, attr:text#0@32=None, attr:text#0@37=None, attr:text#1@20=None, attr:text#1@32=None, attr:text#1@37=None, attr:text#2@20=None, attr:text#2@32=None, attr:text#2@37=None)"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op7",
+       "support": 1,
+       "negative_examples": 231,
+       "unexplained_negative_examples": 152,
+       "actions": [
+        "select(combobox#2, ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T3(id=Cold Store, attr:. ; C. Room Temperature for here standing vessels#0=14, attr:. ; C. Room Temperature for here standing vessels#1=4, attr:. ; C. Room Temperature for here standing vessels#2=1, attr:group/text/text#0=Vessel, attr:group/text/text#0@53=None, attr:group/text/text#0@59=None, attr:group/text/text#0@64=Hall, attr:group/text/text#0@70=Vessel, attr:heading#0=Press Hall, attr:heading#0@19=None, attr:heading#0@31=None, attr:heading#0@36=None, attr:heading#0@42=Barrel Hall, attr:table/rowgroup/row/cell#0=Vessel, attr:table/rowgroup/row/cell#0@24=None, attr:table/rowgroup/row/cell#0@30=Vessel, attr:table/rowgroup/row/cell#0@36=None, attr:table/rowgroup/row/cell#0@41=None, attr:table/rowgroup/row/cell#0@47=Vessel, attr:text#0@20=None, attr:text#0@32=None, attr:text#0@37=None, attr:text#1@20=None, attr:text#1@32=None, attr:text#1@37=None, attr:text#2@20=None, attr:text#2@32=None, attr:text#2@37=None)"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op8",
+       "support": 1,
+       "negative_examples": 18,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button#button@T0[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Pinot Noir, attr:cell#0@3=wine, attr:cell#0@4=1200, attr:cell#0@5=no, attr:cell#0@6=T2, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Chapel Bank rel:3->T3:Cold Store",
+        "delete ?o1",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4"
+       ],
+       "preconditions": [
+        "('empty', '?o2')",
+        "('attr_ne', '?o1', 'attr:cell#0@2', 'tank')"
+       ]
+      },
+      {
+       "name": "op9",
+       "support": 1,
+       "negative_examples": 5,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "context(heading#3, ?o0)",
+        "click(button#button@T0[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Bacchus, attr:cell#0@3=wine, attr:cell#0@4=1800, attr:cell#0@5=no, attr:cell#0@6=T2, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Long Acre rel:3->?o0",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4",
+        "delete ?o5"
+       ],
+       "preconditions": [
+        "('ref_ne', '?o2', 'rel:2', '?o0')"
+       ]
+      },
+      {
+       "name": "op10",
+       "support": 1,
+       "negative_examples": 5,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(heading#3, ?o0)",
+        "click(button#button@T0[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Bacchus, attr:cell#0@3=wine, attr:cell#0@4=1800, attr:cell#0@5=no, attr:cell#0@6=T2, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Long Acre rel:3->?o0",
+        "?new1 := new T1(id=B1, attr:cell#0@2=barrel, attr:cell#0@3=500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "?new2 := new T1(id=T3, attr:cell#0@2=tank, attr:cell#0@3=1500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "?new3 := new T1(id=T2, attr:cell#0@2=tank, attr:cell#0@3=2400, attr:cell#0@4=dirty, attr:cell#0@5=L-01, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=Bacchus, attr:cell#2=wine, attr:cell#3=1800, attr:cell#4=L) rel:2->None rel:3->None",
+        "?new4 := new T1(id=B2, attr:cell#0@2=barrel, attr:cell#0@3=500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "delete ?new0",
+        "delete ?new1",
+        "delete ?new2",
+        "delete ?new3",
+        "delete ?new4"
+       ],
+       "preconditions": [
+        "('empty', '?new1')"
+       ]
+      },
+      {
+       "name": "op11",
+       "support": 1,
+       "negative_examples": 5,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "context(heading#3, ?o0)",
+        "click(button#button@T0[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Bacchus, attr:cell#0@3=must, attr:cell#0@4=1800, attr:cell#0@5=no, attr:cell#0@6=T2, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Long Acre rel:3->?o0",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4",
+        "delete ?o5"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o3', 'attr:cell#0@2', 'tank')"
+       ]
+      }
+     ]
+    },
+    "counterexamples": {
+     "status_counts": {
+      "EXPLAINED": 16,
+      "UNDETERMINED": 260,
+      "UNGROUNDED": 27,
+      "VIEW_ONLY": 5
+     },
+     "by_step": {
+      "2": "EXPLAINED",
+      "3": "EXPLAINED",
+      "4": "UNDETERMINED",
+      "5": "UNGROUNDED",
+      "7": "EXPLAINED",
+      "8": "EXPLAINED",
+      "9": "EXPLAINED",
+      "10": "UNDETERMINED",
+      "11": "UNGROUNDED",
+      "13": "UNDETERMINED",
+      "14": "UNDETERMINED",
+      "15": "UNDETERMINED",
+      "16": "EXPLAINED",
+      "17": "UNGROUNDED",
+      "20": "UNDETERMINED",
+      "21": "UNDETERMINED",
+      "22": "UNDETERMINED",
+      "23": "UNDETERMINED",
+      "24": "UNDETERMINED",
+      "25": "UNDETERMINED",
+      "26": "UNDETERMINED",
+      "27": "UNDETERMINED",
+      "28": "UNDETERMINED",
+      "29": "UNDETERMINED",
+      "30": "UNDETERMINED",
+      "31": "UNDETERMINED",
+      "32": "UNDETERMINED",
+      "33": "UNDETERMINED",
+      "34": "UNDETERMINED",
+      "35": "UNDETERMINED",
+      "36": "UNDETERMINED",
+      "37": "UNGROUNDED",
+      "39": "UNDETERMINED",
+      "40": "UNGROUNDED",
+      "42": "UNDETERMINED",
+      "43": "UNDETERMINED",
+      "44": "UNDETERMINED",
+      "45": "UNDETERMINED",
+      "46": "UNDETERMINED",
+      "47": "UNDETERMINED",
+      "49": "UNDETERMINED",
+      "50": "UNDETERMINED",
+      "51": "UNDETERMINED",
+      "53": "UNDETERMINED",
+      "56": "UNDETERMINED",
+      "58": "UNDETERMINED",
+      "59": "UNDETERMINED",
+      "60": "UNDETERMINED",
+      "61": "UNDETERMINED",
+      "62": "UNDETERMINED",
+      "63": "UNDETERMINED",
+      "64": "UNDETERMINED",
+      "65": "UNDETERMINED",
+      "67": "UNDETERMINED",
+      "69": "UNDETERMINED",
+      "70": "UNDETERMINED",
+      "71": "UNDETERMINED",
+      "72": "UNDETERMINED",
+      "73": "EXPLAINED",
+      "74": "UNDETERMINED",
+      "77": "UNDETERMINED",
+      "79": "UNGROUNDED",
+      "82": "EXPLAINED",
+      "83": "UNDETERMINED",
+      "84": "UNDETERMINED",
+      "85": "UNDETERMINED",
+      "86": "UNGROUNDED",
+      "88": "UNDETERMINED",
+      "89": "UNDETERMINED",
+      "90": "UNDETERMINED",
+      "91": "UNDETERMINED",
+      "92": "UNGROUNDED",
+      "94": "UNDETERMINED",
+      "95": "UNDETERMINED",
+      "96": "UNDETERMINED",
+      "97": "UNDETERMINED",
+      "98": "UNDETERMINED",
+      "99": "UNDETERMINED",
+      "100": "UNDETERMINED",
+      "101": "UNGROUNDED",
+      "103": "VIEW_ONLY",
+      "105": "UNDETERMINED",
+      "106": "UNDETERMINED",
+      "107": "UNDETERMINED",
+      "108": "UNDETERMINED",
+      "109": "UNDETERMINED",
+      "110": "UNDETERMINED",
+      "112": "UNDETERMINED",
+      "113": "UNDETERMINED",
+      "114": "UNDETERMINED",
+      "115": "UNDETERMINED",
+      "116": "UNDETERMINED",
+      "117": "UNGROUNDED",
+      "119": "UNDETERMINED",
+      "120": "UNDETERMINED",
+      "121": "UNDETERMINED",
+      "122": "UNDETERMINED",
+      "123": "UNDETERMINED",
+      "124": "UNDETERMINED",
+      "125": "UNDETERMINED",
+      "127": "EXPLAINED",
+      "131": "UNDETERMINED",
+      "132": "UNDETERMINED",
+      "133": "UNDETERMINED",
+      "134": "UNDETERMINED",
+      "135": "UNDETERMINED",
+      "137": "UNDETERMINED",
+      "138": "UNDETERMINED",
+      "139": "UNDETERMINED",
+      "140": "UNDETERMINED",
+      "141": "UNGROUNDED",
+      "144": "UNDETERMINED",
+      "145": "UNDETERMINED",
+      "146": "UNDETERMINED",
+      "147": "UNDETERMINED",
+      "148": "UNDETERMINED",
+      "149": "UNDETERMINED",
+      "150": "UNDETERMINED",
+      "151": "UNDETERMINED",
+      "152": "UNDETERMINED",
+      "153": "UNDETERMINED",
+      "154": "UNDETERMINED",
+      "155": "UNDETERMINED",
+      "156": "EXPLAINED",
+      "157": "UNDETERMINED",
+      "158": "UNDETERMINED",
+      "159": "UNDETERMINED",
+      "160": "UNDETERMINED",
+      "163": "UNDETERMINED",
+      "167": "UNDETERMINED",
+      "168": "UNDETERMINED",
+      "169": "UNDETERMINED",
+      "170": "UNDETERMINED",
+      "171": "UNDETERMINED",
+      "172": "UNDETERMINED",
+      "174": "UNDETERMINED",
+      "175": "UNDETERMINED",
+      "176": "UNDETERMINED",
+      "177": "UNGROUNDED",
+      "179": "UNDETERMINED",
+      "180": "UNDETERMINED",
+      "181": "UNDETERMINED",
+      "183": "UNDETERMINED",
+      "184": "UNDETERMINED",
+      "185": "UNDETERMINED",
+      "186": "UNDETERMINED",
+      "187": "UNDETERMINED",
+      "188": "UNDETERMINED",
+      "189": "UNDETERMINED",
+      "190": "UNDETERMINED",
+      "191": "UNGROUNDED",
+      "193": "UNDETERMINED",
+      "194": "UNDETERMINED",
+      "195": "UNDETERMINED",
+      "197": "UNGROUNDED",
+      "201": "UNDETERMINED",
+      "202": "UNDETERMINED",
+      "203": "UNGROUNDED",
+      "206": "UNDETERMINED",
+      "207": "UNDETERMINED",
+      "208": "UNDETERMINED",
+      "209": "UNDETERMINED",
+      "210": "UNDETERMINED",
+      "211": "EXPLAINED",
+      "212": "UNDETERMINED",
+      "213": "UNDETERMINED",
+      "214": "UNDETERMINED",
+      "215": "UNDETERMINED",
+      "216": "UNGROUNDED",
+      "218": "UNDETERMINED",
+      "219": "UNDETERMINED",
+      "220": "UNDETERMINED",
+      "221": "UNDETERMINED",
+      "222": "UNDETERMINED",
+      "223": "UNDETERMINED",
+      "224": "UNGROUNDED",
+      "227": "UNDETERMINED",
+      "228": "UNDETERMINED",
+      "229": "UNDETERMINED",
+      "230": "UNDETERMINED",
+      "231": "UNGROUNDED",
+      "233": "VIEW_ONLY",
+      "235": "UNDETERMINED",
+      "236": "UNDETERMINED",
+      "237": "UNDETERMINED",
+      "238": "UNDETERMINED",
+      "239": "UNDETERMINED",
+      "240": "UNDETERMINED",
+      "241": "UNDETERMINED",
+      "242": "UNDETERMINED",
+      "243": "UNDETERMINED",
+      "244": "UNDETERMINED",
+      "245": "UNDETERMINED",
+      "246": "UNDETERMINED",
+      "247": "UNDETERMINED",
+      "248": "UNDETERMINED",
+      "249": "UNDETERMINED",
+      "250": "UNGROUNDED",
+      "253": "UNDETERMINED",
+      "254": "UNDETERMINED",
+      "255": "UNDETERMINED",
+      "256": "EXPLAINED",
+      "257": "UNDETERMINED",
+      "258": "UNDETERMINED",
+      "259": "UNDETERMINED",
+      "260": "UNGROUNDED",
+      "262": "UNDETERMINED",
+      "263": "EXPLAINED",
+      "268": "VIEW_ONLY",
+      "270": "VIEW_ONLY",
+      "272": "UNDETERMINED",
+      "273": "UNDETERMINED",
+      "274": "UNGROUNDED",
+      "276": "UNDETERMINED",
+      "277": "UNDETERMINED",
+      "278": "UNDETERMINED",
+      "279": "UNDETERMINED",
+      "280": "UNDETERMINED",
+      "281": "UNDETERMINED",
+      "282": "UNDETERMINED",
+      "283": "UNDETERMINED",
+      "285": "UNDETERMINED",
+      "286": "UNDETERMINED",
+      "287": "UNDETERMINED",
+      "288": "UNDETERMINED",
+      "289": "UNDETERMINED",
+      "290": "EXPLAINED",
+      "291": "UNDETERMINED",
+      "292": "UNDETERMINED",
+      "293": "UNDETERMINED",
+      "294": "UNDETERMINED",
+      "296": "UNDETERMINED",
+      "297": "UNDETERMINED",
+      "298": "UNDETERMINED",
+      "299": "UNDETERMINED",
+      "301": "UNDETERMINED",
+      "302": "UNDETERMINED",
+      "303": "UNDETERMINED",
+      "304": "UNDETERMINED",
+      "305": "UNDETERMINED",
+      "306": "UNDETERMINED",
+      "307": "UNDETERMINED",
+      "309": "UNDETERMINED",
+      "310": "UNDETERMINED",
+      "311": "UNDETERMINED",
+      "312": "UNDETERMINED",
+      "313": "UNDETERMINED",
+      "314": "UNDETERMINED",
+      "315": "UNDETERMINED",
+      "316": "UNDETERMINED",
+      "317": "UNDETERMINED",
+      "318": "UNDETERMINED",
+      "319": "UNDETERMINED",
+      "320": "UNDETERMINED",
+      "321": "UNDETERMINED",
+      "322": "UNDETERMINED",
+      "323": "UNDETERMINED",
+      "325": "UNDETERMINED",
+      "326": "UNGROUNDED",
+      "330": "EXPLAINED",
+      "331": "UNDETERMINED",
+      "332": "UNDETERMINED",
+      "333": "UNDETERMINED",
+      "334": "UNDETERMINED",
+      "337": "VIEW_ONLY",
+      "340": "UNDETERMINED",
+      "341": "UNDETERMINED",
+      "342": "UNDETERMINED",
+      "343": "UNDETERMINED",
+      "344": "UNDETERMINED",
+      "345": "UNDETERMINED",
+      "346": "UNDETERMINED",
+      "347": "EXPLAINED",
+      "348": "UNDETERMINED",
+      "349": "UNDETERMINED",
+      "350": "UNDETERMINED",
+      "351": "UNDETERMINED",
+      "352": "UNDETERMINED",
+      "354": "UNDETERMINED",
+      "355": "UNDETERMINED",
+      "356": "UNDETERMINED",
+      "357": "UNDETERMINED",
+      "358": "UNDETERMINED",
+      "359": "UNDETERMINED",
+      "361": "UNDETERMINED",
+      "362": "UNDETERMINED",
+      "363": "UNDETERMINED",
+      "364": "UNGROUNDED",
+      "366": "UNDETERMINED",
+      "367": "UNGROUNDED",
+      "369": "UNDETERMINED",
+      "370": "UNDETERMINED",
+      "371": "UNDETERMINED",
+      "372": "UNDETERMINED",
+      "373": "UNDETERMINED",
+      "374": "UNDETERMINED",
+      "375": "UNDETERMINED",
+      "376": "UNDETERMINED",
+      "377": "UNGROUNDED",
+      "379": "UNDETERMINED",
+      "380": "UNDETERMINED",
+      "381": "UNDETERMINED",
+      "382": "UNDETERMINED",
+      "383": "UNDETERMINED",
+      "384": "UNDETERMINED",
+      "385": "UNGROUNDED",
+      "388": "UNDETERMINED",
+      "389": "UNGROUNDED"
+     }
+    }
+   },
+   "validated": {
+    "types_recovered": 3,
+    "attributes_recovered": 6,
+    "relations_recovered": 0,
+    "operators_recovered": 0,
+    "operators_observed": 1,
+    "learned_operators": 3,
+    "operator_names_recovered": [],
+    "operators_with_any_explanation": [],
+    "gtc": 0.0,
+    "rtc": 0.0,
+    "rtc_any": 0.0,
+    "registered_deltas": 0,
+    "registered_delta_precision": null,
+    "strict_registered_delta_precision": null,
+    "false_registered_delta_categories": {},
+    "spurious_registered_delta_rate": null,
+    "mention_pair_precision": null,
+    "mention_pair_recall": null,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null,
+    "view_false_positive_rate": 1.0,
+    "abstraction_contradiction_rate": null,
+    "comparable_abstraction_groups": 0,
+    "consistent_abstraction_groups": 0,
+    "contradictory_abstraction_groups": 0,
+    "comparable_abstraction_pairs": 0,
+    "consistent_abstraction_pairs": 0,
+    "contradictory_abstraction_pairs": 0,
+    "unresolved_abstraction_pairs_due_unknown": 7,
+    "argument_binding": {
+     "move_vessel": {
+      "successful_instances": 2,
+      "with_abstract_transition": 0,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": null,
+      "conditional_action_arguments_grounded_rate": null
+     }
+    },
+    "per_operator": {
+     "receive_fruit": {
+      "successes": 0,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "finish_ferment": {
+      "successes": 0,
+      "failures": 5,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "rack": {
+      "successes": 0,
+      "failures": 1,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "split": {
+      "successes": 0,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "blend": {
+      "successes": 0,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "bottle": {
+      "successes": 0,
+      "failures": 1,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "clean_vessel": {
+      "successes": 0,
+      "failures": 6,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "move_vessel": {
+      "n": 2,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 0,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": null,
+      "strict_registered_delta_precision": null,
+      "successes": 2,
+      "failures": 2,
+      "explained": 0,
+      "invisible": 2,
+      "rejected": 0,
+      "unbound_failures": 0
+     }
+    },
+    "induction": {
+     "transitions": 16,
+     "no_op_segments": 324,
+     "hypotheses_before_min_support": 12,
+     "reattributed_domain_changes": 0,
+     "unattributed_sensing_changes": [
+      {
+       "revealing_step": 12,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        9
+       ],
+       "delta": "+T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T3' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '1500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Pinot Noir', 'attr:cell#2': 'wine', 'attr:cell#3': '1200', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Pinot Noir', 'attr:cell#0@3': 'wine', 'attr:cell#0@4': '1200', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T2', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->T3:'Tank Yard' rel:2->T2:'Chapel Bank'",
+       "observation": "fb329baa7ab57378"
+      },
+      {
+       "revealing_step": 18,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        16
+       ],
+       "delta": "-T1:'L-01' {'attr:cell#0@2': 'Pinot Noir', 'attr:cell#0@3': 'wine', 'attr:cell#0@4': '1200', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T2', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->T3:'Tank Yard' rel:2->T2:'Chapel Bank'",
+       "observation": "fb329baa7ab57378"
+      },
+      {
+       "revealing_step": 80,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        73
+       ],
+       "delta": "+T1:'T1' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '4000', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Bacchus', 'attr:cell#2': 'must', 'attr:cell#3': '1800', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Bacchus', 'attr:cell#0@3': 'must', 'attr:cell#0@4': '1800', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T1', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->T2:'Long Acre'",
+       "observation": "fdcd1c8fc2d904b0"
+      },
+      {
+       "revealing_step": 129,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        127
+       ],
+       "delta": "+T1:'T1' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '4000', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Bacchus', 'attr:cell#2': 'wine', 'attr:cell#3': '1800', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Bacchus', 'attr:cell#0@3': 'wine', 'attr:cell#0@4': '1800', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T1', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->T2:'Long Acre'",
+       "observation": "422c65e9707cc38d"
+      },
+      {
+       "revealing_step": 165,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        156
+       ],
+       "delta": "+T1:'T1' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '4000', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Bacchus', 'attr:cell#2': 'must', 'attr:cell#3': '1800', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Bacchus', 'attr:cell#0@3': 'must', 'attr:cell#0@4': '1800', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T1', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->T2:'Long Acre'",
+       "observation": "e2c8b8a9c93d2d0d"
+      },
+      {
+       "revealing_step": 261,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        256
+       ],
+       "delta": "+T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T3' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '1500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Bacchus', 'attr:cell#2': 'wine', 'attr:cell#3': '1800', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Bacchus', 'attr:cell#0@3': 'wine', 'attr:cell#0@4': '1800', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T2', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->T3:'Tank Yard' rel:2->T2:'Long Acre'",
+       "observation": "489c0601be52834f"
+      },
+      {
+       "revealing_step": 327,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        290
+       ],
+       "delta": "+T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Bacchus', 'attr:cell#2': 'must', 'attr:cell#3': '1800', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'T3' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '1500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Bacchus', 'attr:cell#0@3': 'must', 'attr:cell#0@4': '1800', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T2', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->T3:'Cold Store' rel:2->T2:'Long Acre'",
+       "observation": "a65188050e02019a"
+      },
+      {
+       "revealing_step": 365,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        347
+       ],
+       "delta": "+T1:'T3' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '1500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'T2' {'attr:cell#0@2': 'tank', 'attr:cell#0@3': '2400', 'attr:cell#0@4': 'dirty', 'attr:cell#0@5': 'L-01', 'attr:cell#1': 'L', 'attr:cell#1@5': 'Pinot Noir', 'attr:cell#2': 'wine', 'attr:cell#3': '1200', 'attr:cell#4': 'L', 'attr:cell#0@6': None} rel:3->None rel:2->None; +T1:'B1' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; +T1:'B2' {'attr:cell#0@2': 'barrel', 'attr:cell#0@3': '500', 'attr:cell#0@4': 'clean', 'attr:cell#1': 'L', 'attr:cell#0@5': None, 'attr:cell#0@6': None, 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->None rel:2->None; -T1:'L-01' {'attr:cell#0@2': 'Pinot Noir', 'attr:cell#0@3': 'wine', 'attr:cell#0@4': '1200', 'attr:cell#0@5': 'no', 'attr:cell#0@6': 'T2', 'attr:cell#1': 'L', 'attr:cell#1@5': None, 'attr:cell#2': None, 'attr:cell#3': None, 'attr:cell#4': None} rel:3->T3:'Cold Store' rel:2->T2:'Chapel Bank'",
+       "observation": "5cc934c7e5a4a0e4"
+      }
+     ],
+     "delayed_object_resolutions": [],
+     "hypotheses": [
+      {
+       "name": "op0",
+       "support": 3,
+       "negative_examples": 3,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(heading#3, ?o0)",
+        "click(button#button@T0[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Pinot Noir, attr:cell#0@3=wine, attr:cell#0@4=1200, attr:cell#0@5=no, attr:cell#0@6=T2, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Chapel Bank rel:3->?o0",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4",
+        "delete ?o5"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'attr:. ; C. Room Temperature for here standing vessels#0', '9')"
+       ]
+      },
+      {
+       "name": "op1",
+       "support": 2,
+       "negative_examples": 17,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button#button@T0[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=B1, attr:cell#0@2=barrel, attr:cell#0@3=500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "?new1 := new T1(id=T3, attr:cell#0@2=tank, attr:cell#0@3=1500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "?new2 := new T1(id=T2, attr:cell#0@2=tank, attr:cell#0@3=2400, attr:cell#0@4=dirty, attr:cell#0@5=L-01, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=Pinot Noir, attr:cell#2=wine, attr:cell#3=1200, attr:cell#4=L) rel:2->None rel:3->None",
+        "?new3 := new T1(id=B2, attr:cell#0@2=barrel, attr:cell#0@3=500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "delete ?o1"
+       ],
+       "preconditions": [
+        "('empty', '?o1')",
+        "('attr_ne', '?o0', 'id', 'Lots')"
+       ]
+      },
+      {
+       "name": "op2",
+       "support": 2,
+       "negative_examples": 17,
+       "unexplained_negative_examples": 2,
+       "actions": [
+        "click(button#button@T0[?o0])"
+       ],
+       "effects": [
+        "delete ?o1",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4"
+       ],
+       "preconditions": [
+        "('attr', '?o2', 'attr:cell#0@2', 'tank')"
+       ]
+      },
+      {
+       "name": "op3",
+       "support": 1,
+       "negative_examples": 18,
+       "unexplained_negative_examples": 2,
+       "actions": [
+        "click(button#button@T0[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Bacchus, attr:cell#0@3=must, attr:cell#0@4=1800, attr:cell#0@5=no, attr:cell#0@6=T1, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Long Acre rel:3->None",
+        "delete ?o1",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4"
+       ],
+       "preconditions": [
+        "('empty', '?o2')",
+        "('attr_ne', '?o1', 'attr:cell#0@2', 'barrel')"
+       ]
+      },
+      {
+       "name": "op4",
+       "support": 1,
+       "negative_examples": 231,
+       "unexplained_negative_examples": 155,
+       "actions": [
+        "select(combobox#0, ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T3(id=Barrel Hall, attr:. ; C. Room Temperature for here standing vessels#0=17, attr:. ; C. Room Temperature for here standing vessels#1=3, attr:. ; C. Room Temperature for here standing vessels#2=1, attr:group/text/text#0=Vessel, attr:group/text/text#0@53=None, attr:group/text/text#0@59=None, attr:group/text/text#0@64=Hall, attr:group/text/text#0@70=Vessel, attr:heading#0=Press Hall, attr:heading#0@19=None, attr:heading#0@31=None, attr:heading#0@36=None, attr:heading#0@42=Tank Yard, attr:table/rowgroup/row/cell#0=Vessel, attr:table/rowgroup/row/cell#0@24=None, attr:table/rowgroup/row/cell#0@30=Vessel, attr:table/rowgroup/row/cell#0@36=None, attr:table/rowgroup/row/cell#0@41=None, attr:table/rowgroup/row/cell#0@47=Vessel, attr:text#0@20=None, attr:text#0@32=None, attr:text#0@37=None, attr:text#1@20=None, attr:text#1@32=None, attr:text#1@37=None, attr:text#2@20=None, attr:text#2@32=None, attr:text#2@37=None)"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op5",
+       "support": 1,
+       "negative_examples": 18,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button#button@T0[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Bacchus, attr:cell#0@3=wine, attr:cell#0@4=1800, attr:cell#0@5=no, attr:cell#0@6=T1, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Long Acre rel:3->None",
+        "delete ?o1",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4"
+       ],
+       "preconditions": [
+        "('empty', '?o2')",
+        "('attr_ne', '?o2', 'attr:cell#0@2', 'tank')"
+       ]
+      },
+      {
+       "name": "op6",
+       "support": 1,
+       "negative_examples": 231,
+       "unexplained_negative_examples": 155,
+       "actions": [
+        "select(combobox#0, ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T3(id=Tank Yard, attr:. ; C. Room Temperature for here standing vessels#0=9, attr:. ; C. Room Temperature for here standing vessels#1=2, attr:. ; C. Room Temperature for here standing vessels#2=1, attr:group/text/text#0=Vessel, attr:group/text/text#0@53=None, attr:group/text/text#0@59=None, attr:group/text/text#0@64=Hall, attr:group/text/text#0@70=Vessel, attr:heading#0=Press Hall, attr:heading#0@19=None, attr:heading#0@31=None, attr:heading#0@36=None, attr:heading#0@42=Cold Store, attr:table/rowgroup/row/cell#0=Vessel, attr:table/rowgroup/row/cell#0@24=None, attr:table/rowgroup/row/cell#0@30=Vessel, attr:table/rowgroup/row/cell#0@36=None, attr:table/rowgroup/row/cell#0@41=None, attr:table/rowgroup/row/cell#0@47=Vessel, attr:text#0@20=None, attr:text#0@32=None, attr:text#0@37=None, attr:text#1@20=None, attr:text#1@32=None, attr:text#1@37=None, attr:text#2@20=None, attr:text#2@32=None, attr:text#2@37=None)"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op7",
+       "support": 1,
+       "negative_examples": 231,
+       "unexplained_negative_examples": 152,
+       "actions": [
+        "select(combobox#2, ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T3(id=Cold Store, attr:. ; C. Room Temperature for here standing vessels#0=14, attr:. ; C. Room Temperature for here standing vessels#1=4, attr:. ; C. Room Temperature for here standing vessels#2=1, attr:group/text/text#0=Vessel, attr:group/text/text#0@53=None, attr:group/text/text#0@59=None, attr:group/text/text#0@64=Hall, attr:group/text/text#0@70=Vessel, attr:heading#0=Press Hall, attr:heading#0@19=None, attr:heading#0@31=None, attr:heading#0@36=None, attr:heading#0@42=Barrel Hall, attr:table/rowgroup/row/cell#0=Vessel, attr:table/rowgroup/row/cell#0@24=None, attr:table/rowgroup/row/cell#0@30=Vessel, attr:table/rowgroup/row/cell#0@36=None, attr:table/rowgroup/row/cell#0@41=None, attr:table/rowgroup/row/cell#0@47=Vessel, attr:text#0@20=None, attr:text#0@32=None, attr:text#0@37=None, attr:text#1@20=None, attr:text#1@32=None, attr:text#1@37=None, attr:text#2@20=None, attr:text#2@32=None, attr:text#2@37=None)"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op8",
+       "support": 1,
+       "negative_examples": 18,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button#button@T0[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Pinot Noir, attr:cell#0@3=wine, attr:cell#0@4=1200, attr:cell#0@5=no, attr:cell#0@6=T2, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Chapel Bank rel:3->T3:Cold Store",
+        "delete ?o1",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4"
+       ],
+       "preconditions": [
+        "('empty', '?o2')",
+        "('attr_ne', '?o1', 'attr:cell#0@2', 'tank')"
+       ]
+      },
+      {
+       "name": "op9",
+       "support": 1,
+       "negative_examples": 5,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "context(heading#3, ?o0)",
+        "click(button#button@T0[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Bacchus, attr:cell#0@3=wine, attr:cell#0@4=1800, attr:cell#0@5=no, attr:cell#0@6=T2, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Long Acre rel:3->?o0",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4",
+        "delete ?o5"
+       ],
+       "preconditions": [
+        "('ref_ne', '?o2', 'rel:2', '?o0')"
+       ]
+      },
+      {
+       "name": "op10",
+       "support": 1,
+       "negative_examples": 5,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(heading#3, ?o0)",
+        "click(button#button@T0[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Bacchus, attr:cell#0@3=wine, attr:cell#0@4=1800, attr:cell#0@5=no, attr:cell#0@6=T2, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Long Acre rel:3->?o0",
+        "?new1 := new T1(id=B1, attr:cell#0@2=barrel, attr:cell#0@3=500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "?new2 := new T1(id=T3, attr:cell#0@2=tank, attr:cell#0@3=1500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "?new3 := new T1(id=T2, attr:cell#0@2=tank, attr:cell#0@3=2400, attr:cell#0@4=dirty, attr:cell#0@5=L-01, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=Bacchus, attr:cell#2=wine, attr:cell#3=1800, attr:cell#4=L) rel:2->None rel:3->None",
+        "?new4 := new T1(id=B2, attr:cell#0@2=barrel, attr:cell#0@3=500, attr:cell#0@4=clean, attr:cell#0@5=None, attr:cell#0@6=None, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->None rel:3->None",
+        "delete ?new0",
+        "delete ?new1",
+        "delete ?new2",
+        "delete ?new3",
+        "delete ?new4"
+       ],
+       "preconditions": [
+        "('empty', '?new1')"
+       ]
+      },
+      {
+       "name": "op11",
+       "support": 1,
+       "negative_examples": 5,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "context(heading#3, ?o0)",
+        "click(button#button@T0[?o1])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=L-01, attr:cell#0@2=Bacchus, attr:cell#0@3=must, attr:cell#0@4=1800, attr:cell#0@5=no, attr:cell#0@6=T2, attr:cell#1=L, attr:cell#1@5=None, attr:cell#2=None, attr:cell#3=None, attr:cell#4=None) rel:2->T2:Long Acre rel:3->?o0",
+        "delete ?o2",
+        "delete ?o3",
+        "delete ?o4",
+        "delete ?o5"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o3', 'attr:cell#0@2', 'tank')"
+       ]
+      }
+     ]
+    },
+    "counterexamples": {
+     "status_counts": {
+      "EXPLAINED": 16,
+      "UNDETERMINED": 260,
+      "UNGROUNDED": 27,
+      "VIEW_ONLY": 5
+     },
+     "by_step": {
+      "2": "EXPLAINED",
+      "3": "EXPLAINED",
+      "4": "UNDETERMINED",
+      "5": "UNGROUNDED",
+      "7": "EXPLAINED",
+      "8": "EXPLAINED",
+      "9": "EXPLAINED",
+      "10": "UNDETERMINED",
+      "11": "UNGROUNDED",
+      "13": "UNDETERMINED",
+      "14": "UNDETERMINED",
+      "15": "UNDETERMINED",
+      "16": "EXPLAINED",
+      "17": "UNGROUNDED",
+      "20": "UNDETERMINED",
+      "21": "UNDETERMINED",
+      "22": "UNDETERMINED",
+      "23": "UNDETERMINED",
+      "24": "UNDETERMINED",
+      "25": "UNDETERMINED",
+      "26": "UNDETERMINED",
+      "27": "UNDETERMINED",
+      "28": "UNDETERMINED",
+      "29": "UNDETERMINED",
+      "30": "UNDETERMINED",
+      "31": "UNDETERMINED",
+      "32": "UNDETERMINED",
+      "33": "UNDETERMINED",
+      "34": "UNDETERMINED",
+      "35": "UNDETERMINED",
+      "36": "UNDETERMINED",
+      "37": "UNGROUNDED",
+      "39": "UNDETERMINED",
+      "40": "UNGROUNDED",
+      "42": "UNDETERMINED",
+      "43": "UNDETERMINED",
+      "44": "UNDETERMINED",
+      "45": "UNDETERMINED",
+      "46": "UNDETERMINED",
+      "47": "UNDETERMINED",
+      "49": "UNDETERMINED",
+      "50": "UNDETERMINED",
+      "51": "UNDETERMINED",
+      "53": "UNDETERMINED",
+      "56": "UNDETERMINED",
+      "58": "UNDETERMINED",
+      "59": "UNDETERMINED",
+      "60": "UNDETERMINED",
+      "61": "UNDETERMINED",
+      "62": "UNDETERMINED",
+      "63": "UNDETERMINED",
+      "64": "UNDETERMINED",
+      "65": "UNDETERMINED",
+      "67": "UNDETERMINED",
+      "69": "UNDETERMINED",
+      "70": "UNDETERMINED",
+      "71": "UNDETERMINED",
+      "72": "UNDETERMINED",
+      "73": "EXPLAINED",
+      "74": "UNDETERMINED",
+      "77": "UNDETERMINED",
+      "79": "UNGROUNDED",
+      "82": "EXPLAINED",
+      "83": "UNDETERMINED",
+      "84": "UNDETERMINED",
+      "85": "UNDETERMINED",
+      "86": "UNGROUNDED",
+      "88": "UNDETERMINED",
+      "89": "UNDETERMINED",
+      "90": "UNDETERMINED",
+      "91": "UNDETERMINED",
+      "92": "UNGROUNDED",
+      "94": "UNDETERMINED",
+      "95": "UNDETERMINED",
+      "96": "UNDETERMINED",
+      "97": "UNDETERMINED",
+      "98": "UNDETERMINED",
+      "99": "UNDETERMINED",
+      "100": "UNDETERMINED",
+      "101": "UNGROUNDED",
+      "103": "VIEW_ONLY",
+      "105": "UNDETERMINED",
+      "106": "UNDETERMINED",
+      "107": "UNDETERMINED",
+      "108": "UNDETERMINED",
+      "109": "UNDETERMINED",
+      "110": "UNDETERMINED",
+      "112": "UNDETERMINED",
+      "113": "UNDETERMINED",
+      "114": "UNDETERMINED",
+      "115": "UNDETERMINED",
+      "116": "UNDETERMINED",
+      "117": "UNGROUNDED",
+      "119": "UNDETERMINED",
+      "120": "UNDETERMINED",
+      "121": "UNDETERMINED",
+      "122": "UNDETERMINED",
+      "123": "UNDETERMINED",
+      "124": "UNDETERMINED",
+      "125": "UNDETERMINED",
+      "127": "EXPLAINED",
+      "131": "UNDETERMINED",
+      "132": "UNDETERMINED",
+      "133": "UNDETERMINED",
+      "134": "UNDETERMINED",
+      "135": "UNDETERMINED",
+      "137": "UNDETERMINED",
+      "138": "UNDETERMINED",
+      "139": "UNDETERMINED",
+      "140": "UNDETERMINED",
+      "141": "UNGROUNDED",
+      "144": "UNDETERMINED",
+      "145": "UNDETERMINED",
+      "146": "UNDETERMINED",
+      "147": "UNDETERMINED",
+      "148": "UNDETERMINED",
+      "149": "UNDETERMINED",
+      "150": "UNDETERMINED",
+      "151": "UNDETERMINED",
+      "152": "UNDETERMINED",
+      "153": "UNDETERMINED",
+      "154": "UNDETERMINED",
+      "155": "UNDETERMINED",
+      "156": "EXPLAINED",
+      "157": "UNDETERMINED",
+      "158": "UNDETERMINED",
+      "159": "UNDETERMINED",
+      "160": "UNDETERMINED",
+      "163": "UNDETERMINED",
+      "167": "UNDETERMINED",
+      "168": "UNDETERMINED",
+      "169": "UNDETERMINED",
+      "170": "UNDETERMINED",
+      "171": "UNDETERMINED",
+      "172": "UNDETERMINED",
+      "174": "UNDETERMINED",
+      "175": "UNDETERMINED",
+      "176": "UNDETERMINED",
+      "177": "UNGROUNDED",
+      "179": "UNDETERMINED",
+      "180": "UNDETERMINED",
+      "181": "UNDETERMINED",
+      "183": "UNDETERMINED",
+      "184": "UNDETERMINED",
+      "185": "UNDETERMINED",
+      "186": "UNDETERMINED",
+      "187": "UNDETERMINED",
+      "188": "UNDETERMINED",
+      "189": "UNDETERMINED",
+      "190": "UNDETERMINED",
+      "191": "UNGROUNDED",
+      "193": "UNDETERMINED",
+      "194": "UNDETERMINED",
+      "195": "UNDETERMINED",
+      "197": "UNGROUNDED",
+      "201": "UNDETERMINED",
+      "202": "UNDETERMINED",
+      "203": "UNGROUNDED",
+      "206": "UNDETERMINED",
+      "207": "UNDETERMINED",
+      "208": "UNDETERMINED",
+      "209": "UNDETERMINED",
+      "210": "UNDETERMINED",
+      "211": "EXPLAINED",
+      "212": "UNDETERMINED",
+      "213": "UNDETERMINED",
+      "214": "UNDETERMINED",
+      "215": "UNDETERMINED",
+      "216": "UNGROUNDED",
+      "218": "UNDETERMINED",
+      "219": "UNDETERMINED",
+      "220": "UNDETERMINED",
+      "221": "UNDETERMINED",
+      "222": "UNDETERMINED",
+      "223": "UNDETERMINED",
+      "224": "UNGROUNDED",
+      "227": "UNDETERMINED",
+      "228": "UNDETERMINED",
+      "229": "UNDETERMINED",
+      "230": "UNDETERMINED",
+      "231": "UNGROUNDED",
+      "233": "VIEW_ONLY",
+      "235": "UNDETERMINED",
+      "236": "UNDETERMINED",
+      "237": "UNDETERMINED",
+      "238": "UNDETERMINED",
+      "239": "UNDETERMINED",
+      "240": "UNDETERMINED",
+      "241": "UNDETERMINED",
+      "242": "UNDETERMINED",
+      "243": "UNDETERMINED",
+      "244": "UNDETERMINED",
+      "245": "UNDETERMINED",
+      "246": "UNDETERMINED",
+      "247": "UNDETERMINED",
+      "248": "UNDETERMINED",
+      "249": "UNDETERMINED",
+      "250": "UNGROUNDED",
+      "253": "UNDETERMINED",
+      "254": "UNDETERMINED",
+      "255": "UNDETERMINED",
+      "256": "EXPLAINED",
+      "257": "UNDETERMINED",
+      "258": "UNDETERMINED",
+      "259": "UNDETERMINED",
+      "260": "UNGROUNDED",
+      "262": "UNDETERMINED",
+      "263": "EXPLAINED",
+      "268": "VIEW_ONLY",
+      "270": "VIEW_ONLY",
+      "272": "UNDETERMINED",
+      "273": "UNDETERMINED",
+      "274": "UNGROUNDED",
+      "276": "UNDETERMINED",
+      "277": "UNDETERMINED",
+      "278": "UNDETERMINED",
+      "279": "UNDETERMINED",
+      "280": "UNDETERMINED",
+      "281": "UNDETERMINED",
+      "282": "UNDETERMINED",
+      "283": "UNDETERMINED",
+      "285": "UNDETERMINED",
+      "286": "UNDETERMINED",
+      "287": "UNDETERMINED",
+      "288": "UNDETERMINED",
+      "289": "UNDETERMINED",
+      "290": "EXPLAINED",
+      "291": "UNDETERMINED",
+      "292": "UNDETERMINED",
+      "293": "UNDETERMINED",
+      "294": "UNDETERMINED",
+      "296": "UNDETERMINED",
+      "297": "UNDETERMINED",
+      "298": "UNDETERMINED",
+      "299": "UNDETERMINED",
+      "301": "UNDETERMINED",
+      "302": "UNDETERMINED",
+      "303": "UNDETERMINED",
+      "304": "UNDETERMINED",
+      "305": "UNDETERMINED",
+      "306": "UNDETERMINED",
+      "307": "UNDETERMINED",
+      "309": "UNDETERMINED",
+      "310": "UNDETERMINED",
+      "311": "UNDETERMINED",
+      "312": "UNDETERMINED",
+      "313": "UNDETERMINED",
+      "314": "UNDETERMINED",
+      "315": "UNDETERMINED",
+      "316": "UNDETERMINED",
+      "317": "UNDETERMINED",
+      "318": "UNDETERMINED",
+      "319": "UNDETERMINED",
+      "320": "UNDETERMINED",
+      "321": "UNDETERMINED",
+      "322": "UNDETERMINED",
+      "323": "UNDETERMINED",
+      "325": "UNDETERMINED",
+      "326": "UNGROUNDED",
+      "330": "EXPLAINED",
+      "331": "UNDETERMINED",
+      "332": "UNDETERMINED",
+      "333": "UNDETERMINED",
+      "334": "UNDETERMINED",
+      "337": "VIEW_ONLY",
+      "340": "UNDETERMINED",
+      "341": "UNDETERMINED",
+      "342": "UNDETERMINED",
+      "343": "UNDETERMINED",
+      "344": "UNDETERMINED",
+      "345": "UNDETERMINED",
+      "346": "UNDETERMINED",
+      "347": "EXPLAINED",
+      "348": "UNDETERMINED",
+      "349": "UNDETERMINED",
+      "350": "UNDETERMINED",
+      "351": "UNDETERMINED",
+      "352": "UNDETERMINED",
+      "354": "UNDETERMINED",
+      "355": "UNDETERMINED",
+      "356": "UNDETERMINED",
+      "357": "UNDETERMINED",
+      "358": "UNDETERMINED",
+      "359": "UNDETERMINED",
+      "361": "UNDETERMINED",
+      "362": "UNDETERMINED",
+      "363": "UNDETERMINED",
+      "364": "UNGROUNDED",
+      "366": "UNDETERMINED",
+      "367": "UNGROUNDED",
+      "369": "UNDETERMINED",
+      "370": "UNDETERMINED",
+      "371": "UNDETERMINED",
+      "372": "UNDETERMINED",
+      "373": "UNDETERMINED",
+      "374": "UNDETERMINED",
+      "375": "UNDETERMINED",
+      "376": "UNDETERMINED",
+      "377": "UNGROUNDED",
+      "379": "UNDETERMINED",
+      "380": "UNDETERMINED",
+      "381": "UNDETERMINED",
+      "382": "UNDETERMINED",
+      "383": "UNDETERMINED",
+      "384": "UNDETERMINED",
+      "385": "UNGROUNDED",
+      "388": "UNDETERMINED",
+      "389": "UNGROUNDED"
+     }
+    }
+   },
+   "refinement_process": null
+  }
+ }
+}

@@ -1,0 +1,4971 @@
+{
+ "version": 2,
+ "protocol": {
+  "compiler_inputs": "rendered observations, actions, compiler probe evidence, and local refinement decisions",
+  "evaluator_only": "hidden transition records and alignment labels are read only by semabi.eval.oracle.evaluate",
+  "min_support": 2,
+  "variants": [
+   {
+    "name": "baseline",
+    "apply_refinements": false,
+    "conservative_belief": true,
+    "decision_mode": "none"
+   },
+   {
+    "name": "supported_point_estimate_legacy_belief",
+    "apply_refinements": true,
+    "conservative_belief": false,
+    "decision_mode": "all"
+   },
+   {
+    "name": "supported_point_estimate",
+    "apply_refinements": true,
+    "conservative_belief": true,
+    "decision_mode": "all"
+   },
+   {
+    "name": "provisional",
+    "apply_refinements": true,
+    "conservative_belief": true,
+    "decision_mode": "provisional"
+   },
+   {
+    "name": "validated",
+    "apply_refinements": true,
+    "conservative_belief": true,
+    "decision_mode": "validated"
+   }
+  ]
+ },
+ "runs": {
+  "sonnet_01_vet_clinic_loop": {
+   "baseline": {
+    "types_recovered": 2,
+    "attributes_recovered": 1,
+    "relations_recovered": 0,
+    "operators_recovered": 0,
+    "operators_observed": 6,
+    "learned_operators": 9,
+    "operator_names_recovered": [],
+    "operators_with_any_explanation": [],
+    "gtc": 0.417,
+    "rtc": 0.0,
+    "rtc_any": 0.0,
+    "registered_deltas": 23,
+    "registered_delta_precision": 0.0,
+    "strict_registered_delta_precision": 0.0,
+    "false_registered_delta_categories": {
+     "incorrect_persistence": 20,
+     "spurious_relation": 1,
+     "wrong_attribute_attachment": 2
+    },
+    "spurious_registered_delta_rate": 1.0,
+    "mention_pair_precision": null,
+    "mention_pair_recall": null,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null,
+    "view_false_positive_rate": 0.852,
+    "abstraction_contradiction_rate": null,
+    "comparable_abstraction_groups": 0,
+    "consistent_abstraction_groups": 0,
+    "contradictory_abstraction_groups": 0,
+    "comparable_abstraction_pairs": 0,
+    "consistent_abstraction_pairs": 0,
+    "contradictory_abstraction_pairs": 0,
+    "unresolved_abstraction_pairs_due_unknown": 136,
+    "argument_binding": {
+     "RegisterPatient": {
+      "successful_instances": 10,
+      "with_abstract_transition": 10,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "CheckIn": {
+      "successful_instances": 5,
+      "with_abstract_transition": 1,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "AssignVet": {
+      "successful_instances": 5,
+      "with_abstract_transition": 0,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": null,
+      "conditional_action_arguments_grounded_rate": null
+     },
+     "CancelAppointment": {
+      "successful_instances": 3,
+      "with_abstract_transition": 1,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "StartExam": {
+      "successful_instances": 2,
+      "with_abstract_transition": 0,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": null,
+      "conditional_action_arguments_grounded_rate": null
+     },
+     "CompleteAppointment": {
+      "successful_instances": 1,
+      "with_abstract_transition": 0,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": null,
+      "conditional_action_arguments_grounded_rate": null
+     }
+    },
+    "per_operator": {
+     "RegisterPatient": {
+      "n": 10,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 20,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 10,
+      "failures": 13,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "ScheduleAppointment": {
+      "successes": 0,
+      "failures": 4,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "AssignVet": {
+      "n": 3,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 0,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": null,
+      "strict_registered_delta_precision": null,
+      "successes": 5,
+      "failures": 1,
+      "explained": 0,
+      "invisible": 5,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "CheckIn": {
+      "n": 5,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 2,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 5,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 5,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "StartExam": {
+      "n": 2,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 0,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": null,
+      "strict_registered_delta_precision": null,
+      "successes": 2,
+      "failures": 2,
+      "explained": 0,
+      "invisible": 2,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "CompleteAppointment": {
+      "n": 1,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 0,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": null,
+      "strict_registered_delta_precision": null,
+      "successes": 1,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 1,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "CancelAppointment": {
+      "n": 3,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 1,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 3,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 3,
+      "rejected": 0,
+      "unbound_failures": 0
+     }
+    },
+    "induction": {
+     "transitions": 81,
+     "no_op_segments": 272,
+     "hypotheses_before_min_support": 17,
+     "reattributed_domain_changes": 0,
+     "unattributed_sensing_changes": [
+      {
+       "revealing_step": 22,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        19
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "e8b3aa3083384e63"
+      },
+      {
+       "revealing_step": 68,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        66
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "9eb6509a2e0ba026"
+      },
+      {
+       "revealing_step": 90,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        87
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "1e3dd9e754bc83d7"
+      },
+      {
+       "revealing_step": 152,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        150
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "81b730fc236be9f7"
+      },
+      {
+       "revealing_step": 184,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        179
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "1b10a0e441be5acf"
+      },
+      {
+       "revealing_step": 203,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        197
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "1b10a0e441be5acf"
+      },
+      {
+       "revealing_step": 214,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        205
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "1b10a0e441be5acf"
+      },
+      {
+       "revealing_step": 238,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        232
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T2:'Name' {'attr:textbox#0': None}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "ccdeb2f4ef8c2d94"
+      },
+      {
+       "revealing_step": 251,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        243
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "ccdeb2f4ef8c2d94"
+      },
+      {
+       "revealing_step": 263,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        258
+       ],
+       "delta": "+T1:'Name' {}; -T2:'Name' {'attr:textbox#0': None}",
+       "observation": "ccdeb2f4ef8c2d94"
+      },
+      {
+       "revealing_step": 281,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        279
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "06730f5b33b1758c"
+      },
+      {
+       "revealing_step": 298,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        294
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "06730f5b33b1758c"
+      },
+      {
+       "revealing_step": 323,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        315
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "aabd3587b2e74ca5"
+      },
+      {
+       "revealing_step": 338,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        328
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "aabd3587b2e74ca5"
+      },
+      {
+       "revealing_step": 377,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        369
+       ],
+       "delta": "+T1:'Name' {}; -T2:'Name' {'attr:textbox#0': None}",
+       "observation": "ee3c7cb8bf7dabcf"
+      },
+      {
+       "revealing_step": 381,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        379
+       ],
+       "delta": "+T1:'Name' {}; -T2:'Name' {'attr:textbox#0': None}",
+       "observation": "ee3c7cb8bf7dabcf"
+      },
+      {
+       "revealing_step": 400,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        398
+       ],
+       "delta": "+T1:'Owner' {}; +T1:'Species' {}",
+       "observation": "ee3c7cb8bf7dabcf"
+      }
+     ],
+     "delayed_object_resolutions": [],
+     "hypotheses": [
+      {
+       "name": "op0",
+       "support": 16,
+       "negative_examples": 8,
+       "unexplained_negative_examples": 2,
+       "actions": [
+        "click(button:Vets)"
+       ],
+       "effects": [
+        "delete ?o0",
+        "delete ?o1"
+       ],
+       "preconditions": [
+        "('empty', '?o0')"
+       ]
+      },
+      {
+       "name": "op1",
+       "support": 15,
+       "negative_examples": 207,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "type(textbox#textbox@0af5a3@T1[?o0], ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T2(id=Name, attr:textbox#0=None)",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op2",
+       "support": 10,
+       "negative_examples": 13,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Register patient)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Name)",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('empty', '?o0')"
+       ]
+      },
+      {
+       "name": "op3",
+       "support": 9,
+       "negative_examples": 16,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "delete ?o0",
+        "delete ?o1"
+       ],
+       "preconditions": [
+        "('empty', '?o1')"
+       ]
+      },
+      {
+       "name": "op4",
+       "support": 8,
+       "negative_examples": 13,
+       "unexplained_negative_examples": 13,
+       "actions": [
+        "click(button:Clients)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Owner)",
+        "?new1 := new T1(id=Species)"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op5",
+       "support": 7,
+       "negative_examples": 18,
+       "unexplained_negative_examples": 7,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "?new2 := new T1(id=Owner)",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('empty', '?o0')",
+        "('attr_ne', '?o0', 'id', 'Species')"
+       ]
+      },
+      {
+       "name": "op6",
+       "support": 4,
+       "negative_examples": 21,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "?new2 := new T1(id=Name)",
+        "?new3 := new T1(id=Species)",
+        "delete ?new0",
+        "delete ?new1",
+        "delete ?new2",
+        "delete ?new3"
+       ],
+       "preconditions": [
+        "('empty', '?new2')"
+       ]
+      },
+      {
+       "name": "op7",
+       "support": 2,
+       "negative_examples": 19,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Clients)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Name)",
+        "?new1 := new T1(id=Species)",
+        "delete ?o0",
+        "delete ?o1"
+       ],
+       "preconditions": [
+        "('empty', '?o0')"
+       ]
+      },
+      {
+       "name": "op8",
+       "support": 2,
+       "negative_examples": 220,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "type(textbox#textbox@0af5a3@T1[?o0], ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T2(id=Name, attr:textbox#0=None)",
+        "?new1 := new T1(id=Name)",
+        "delete ?new0",
+        "delete ?new1"
+       ],
+       "preconditions": [
+        "('empty', '?new1')"
+       ]
+      },
+      {
+       "name": "op9",
+       "support": 1,
+       "negative_examples": 23,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Vets)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Name)",
+        "?new1 := new T1(id=Owner)",
+        "?new2 := new T1(id=Species)",
+        "delete ?new1",
+        "delete ?o0",
+        "delete ?o1"
+       ],
+       "preconditions": [
+        "('empty', '?new1')"
+       ]
+      },
+      {
+       "name": "op10",
+       "support": 1,
+       "negative_examples": 23,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Vets)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Name)",
+        "delete ?o0",
+        "delete ?o1",
+        "delete ?o2"
+       ],
+       "preconditions": [
+        "('empty', '?o2')"
+       ]
+      },
+      {
+       "name": "op11",
+       "support": 1,
+       "negative_examples": 24,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "?new2 := new T1(id=Owner)",
+        "?new3 := new T1(id=Name)",
+        "?new4 := new T1(id=Species)",
+        "delete ?new0",
+        "delete ?new1",
+        "delete ?new3"
+       ],
+       "preconditions": [
+        "('empty', '?new3')"
+       ]
+      },
+      {
+       "name": "op12",
+       "support": 1,
+       "negative_examples": 24,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "?new2 := new T1(id=Name)",
+        "?new3 := new T1(id=Species)",
+        "delete ?new0",
+        "delete ?new1",
+        "delete ?new3",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('empty', '?new3')"
+       ]
+      },
+      {
+       "name": "op13",
+       "support": 1,
+       "negative_examples": 23,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Vets)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Owner)",
+        "?new1 := new T1(id=Species)",
+        "delete ?new0",
+        "delete ?new1"
+       ],
+       "preconditions": [
+        "('empty', '?new0')"
+       ]
+      },
+      {
+       "name": "op14",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Cancel@b1b9fa@T6[?o0])"
+       ],
+       "effects": [
+        "attr:cell#0@4(?o0) := 'cancelled'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op15",
+       "support": 1,
+       "negative_examples": 24,
+       "unexplained_negative_examples": 3,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'Name')",
+        "('empty', '?o0')"
+       ]
+      },
+      {
+       "name": "op16",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(cell#4, ?o0)",
+        "click(button:Check in)"
+       ],
+       "effects": [
+        "attr:cell#0@4(?o0) := 'checked_in'",
+        "rel:3(?o0) := 'T3:Omar Reyes'"
+       ],
+       "preconditions": [
+        "('empty', '?o0')"
+       ]
+      }
+     ]
+    },
+    "counterexamples": {
+     "status_counts": {
+      "EXPLAINED": 81,
+      "UNDETERMINED": 200,
+      "UNGROUNDED": 17,
+      "VIEW_ONLY": 2
+     },
+     "by_step": {
+      "2": "EXPLAINED",
+      "3": "EXPLAINED",
+      "4": "EXPLAINED",
+      "5": "EXPLAINED",
+      "9": "EXPLAINED",
+      "10": "EXPLAINED",
+      "11": "EXPLAINED",
+      "12": "EXPLAINED",
+      "13": "EXPLAINED",
+      "15": "EXPLAINED",
+      "16": "EXPLAINED",
+      "17": "EXPLAINED",
+      "18": "EXPLAINED",
+      "19": "EXPLAINED",
+      "26": "EXPLAINED",
+      "27": "EXPLAINED",
+      "31": "UNDETERMINED",
+      "32": "UNDETERMINED",
+      "33": "UNDETERMINED",
+      "34": "UNDETERMINED",
+      "35": "UNDETERMINED",
+      "36": "UNDETERMINED",
+      "37": "UNDETERMINED",
+      "38": "UNDETERMINED",
+      "39": "UNDETERMINED",
+      "41": "UNDETERMINED",
+      "42": "UNDETERMINED",
+      "43": "UNDETERMINED",
+      "45": "UNDETERMINED",
+      "49": "UNDETERMINED",
+      "50": "UNDETERMINED",
+      "51": "EXPLAINED",
+      "55": "EXPLAINED",
+      "56": "UNDETERMINED",
+      "57": "UNDETERMINED",
+      "58": "EXPLAINED",
+      "60": "EXPLAINED",
+      "61": "UNDETERMINED",
+      "62": "UNDETERMINED",
+      "63": "UNDETERMINED",
+      "64": "UNDETERMINED",
+      "65": "UNDETERMINED",
+      "66": "EXPLAINED",
+      "67": "UNGROUNDED",
+      "69": "UNDETERMINED",
+      "70": "UNDETERMINED",
+      "71": "UNDETERMINED",
+      "72": "UNDETERMINED",
+      "73": "UNDETERMINED",
+      "74": "EXPLAINED",
+      "76": "EXPLAINED",
+      "77": "EXPLAINED",
+      "79": "UNDETERMINED",
+      "80": "UNDETERMINED",
+      "81": "UNGROUNDED",
+      "83": "UNDETERMINED",
+      "84": "UNDETERMINED",
+      "85": "EXPLAINED",
+      "86": "EXPLAINED",
+      "87": "EXPLAINED",
+      "93": "UNDETERMINED",
+      "94": "UNDETERMINED",
+      "95": "UNDETERMINED",
+      "96": "UNDETERMINED",
+      "97": "UNGROUNDED",
+      "99": "UNDETERMINED",
+      "100": "UNDETERMINED",
+      "101": "UNDETERMINED",
+      "102": "UNDETERMINED",
+      "103": "UNDETERMINED",
+      "104": "UNDETERMINED",
+      "105": "EXPLAINED",
+      "106": "EXPLAINED",
+      "107": "EXPLAINED",
+      "109": "UNDETERMINED",
+      "110": "UNDETERMINED",
+      "112": "UNDETERMINED",
+      "113": "UNDETERMINED",
+      "117": "UNDETERMINED",
+      "118": "UNDETERMINED",
+      "119": "UNDETERMINED",
+      "120": "EXPLAINED",
+      "121": "EXPLAINED",
+      "122": "UNDETERMINED",
+      "123": "EXPLAINED",
+      "125": "EXPLAINED",
+      "127": "UNDETERMINED",
+      "128": "UNDETERMINED",
+      "129": "UNDETERMINED",
+      "130": "UNDETERMINED",
+      "131": "EXPLAINED",
+      "132": "EXPLAINED",
+      "134": "UNDETERMINED",
+      "135": "UNDETERMINED",
+      "136": "UNDETERMINED",
+      "138": "EXPLAINED",
+      "141": "EXPLAINED",
+      "142": "UNDETERMINED",
+      "143": "UNDETERMINED",
+      "144": "UNDETERMINED",
+      "145": "EXPLAINED",
+      "147": "UNDETERMINED",
+      "148": "UNDETERMINED",
+      "149": "EXPLAINED",
+      "150": "EXPLAINED",
+      "151": "UNGROUNDED",
+      "154": "UNDETERMINED",
+      "155": "UNDETERMINED",
+      "156": "UNDETERMINED",
+      "157": "UNDETERMINED",
+      "158": "UNDETERMINED",
+      "159": "UNDETERMINED",
+      "160": "UNDETERMINED",
+      "161": "UNDETERMINED",
+      "162": "UNDETERMINED",
+      "163": "UNDETERMINED",
+      "164": "UNDETERMINED",
+      "165": "UNDETERMINED",
+      "166": "UNGROUNDED",
+      "170": "VIEW_ONLY",
+      "172": "UNDETERMINED",
+      "173": "UNDETERMINED",
+      "174": "UNDETERMINED",
+      "175": "UNGROUNDED",
+      "177": "EXPLAINED",
+      "178": "UNDETERMINED",
+      "179": "EXPLAINED",
+      "180": "UNDETERMINED",
+      "181": "UNDETERMINED",
+      "182": "UNDETERMINED",
+      "183": "UNGROUNDED",
+      "185": "UNDETERMINED",
+      "186": "UNDETERMINED",
+      "187": "UNDETERMINED",
+      "188": "UNDETERMINED",
+      "190": "UNDETERMINED",
+      "191": "UNDETERMINED",
+      "192": "UNDETERMINED",
+      "193": "UNDETERMINED",
+      "194": "UNDETERMINED",
+      "195": "UNDETERMINED",
+      "196": "EXPLAINED",
+      "197": "EXPLAINED",
+      "198": "UNDETERMINED",
+      "199": "UNDETERMINED",
+      "200": "UNDETERMINED",
+      "201": "UNDETERMINED",
+      "204": "EXPLAINED",
+      "205": "EXPLAINED",
+      "206": "UNDETERMINED",
+      "207": "UNDETERMINED",
+      "208": "UNDETERMINED",
+      "210": "UNDETERMINED",
+      "211": "UNDETERMINED",
+      "212": "UNDETERMINED",
+      "213": "UNGROUNDED",
+      "216": "UNDETERMINED",
+      "217": "UNDETERMINED",
+      "218": "UNDETERMINED",
+      "219": "EXPLAINED",
+      "221": "UNDETERMINED",
+      "222": "EXPLAINED",
+      "225": "UNDETERMINED",
+      "226": "UNDETERMINED",
+      "228": "EXPLAINED",
+      "229": "UNDETERMINED",
+      "230": "EXPLAINED",
+      "232": "EXPLAINED",
+      "233": "UNDETERMINED",
+      "234": "UNDETERMINED",
+      "235": "UNDETERMINED",
+      "236": "UNDETERMINED",
+      "237": "UNGROUNDED",
+      "239": "UNDETERMINED",
+      "240": "EXPLAINED",
+      "243": "EXPLAINED",
+      "244": "UNDETERMINED",
+      "245": "UNDETERMINED",
+      "246": "UNDETERMINED",
+      "247": "UNDETERMINED",
+      "248": "UNDETERMINED",
+      "249": "UNDETERMINED",
+      "250": "UNGROUNDED",
+      "252": "UNDETERMINED",
+      "253": "UNDETERMINED",
+      "254": "UNDETERMINED",
+      "255": "UNDETERMINED",
+      "256": "UNDETERMINED",
+      "257": "UNDETERMINED",
+      "258": "EXPLAINED",
+      "259": "UNDETERMINED",
+      "260": "UNDETERMINED",
+      "261": "UNDETERMINED",
+      "264": "UNDETERMINED",
+      "265": "EXPLAINED",
+      "266": "UNDETERMINED",
+      "268": "EXPLAINED",
+      "269": "UNDETERMINED",
+      "271": "UNDETERMINED",
+      "272": "UNDETERMINED",
+      "273": "EXPLAINED",
+      "274": "EXPLAINED",
+      "275": "EXPLAINED",
+      "278": "UNDETERMINED",
+      "279": "EXPLAINED",
+      "280": "UNGROUNDED",
+      "283": "UNDETERMINED",
+      "284": "UNDETERMINED",
+      "285": "UNDETERMINED",
+      "286": "UNDETERMINED",
+      "287": "UNDETERMINED",
+      "288": "UNDETERMINED",
+      "289": "UNDETERMINED",
+      "290": "UNDETERMINED",
+      "292": "EXPLAINED",
+      "294": "EXPLAINED",
+      "295": "UNDETERMINED",
+      "296": "UNDETERMINED",
+      "297": "UNGROUNDED",
+      "299": "UNDETERMINED",
+      "300": "UNDETERMINED",
+      "301": "EXPLAINED",
+      "302": "EXPLAINED",
+      "303": "UNDETERMINED",
+      "304": "UNDETERMINED",
+      "305": "UNDETERMINED",
+      "306": "UNDETERMINED",
+      "307": "UNDETERMINED",
+      "310": "EXPLAINED",
+      "311": "EXPLAINED",
+      "312": "UNDETERMINED",
+      "313": "EXPLAINED",
+      "314": "UNDETERMINED",
+      "315": "EXPLAINED",
+      "316": "UNDETERMINED",
+      "317": "UNDETERMINED",
+      "318": "UNDETERMINED",
+      "319": "UNDETERMINED",
+      "320": "UNDETERMINED",
+      "321": "UNDETERMINED",
+      "322": "UNGROUNDED",
+      "324": "EXPLAINED",
+      "328": "EXPLAINED",
+      "329": "UNDETERMINED",
+      "331": "UNDETERMINED",
+      "332": "UNDETERMINED",
+      "333": "UNDETERMINED",
+      "334": "UNDETERMINED",
+      "335": "UNDETERMINED",
+      "336": "UNDETERMINED",
+      "337": "UNGROUNDED",
+      "340": "UNDETERMINED",
+      "341": "UNDETERMINED",
+      "342": "UNDETERMINED",
+      "343": "UNDETERMINED",
+      "344": "UNDETERMINED",
+      "345": "UNDETERMINED",
+      "346": "UNDETERMINED",
+      "347": "EXPLAINED",
+      "350": "EXPLAINED",
+      "351": "UNDETERMINED",
+      "352": "UNDETERMINED",
+      "353": "UNDETERMINED",
+      "354": "UNDETERMINED",
+      "355": "UNDETERMINED",
+      "356": "UNDETERMINED",
+      "357": "VIEW_ONLY",
+      "359": "UNDETERMINED",
+      "360": "UNDETERMINED",
+      "361": "EXPLAINED",
+      "362": "EXPLAINED",
+      "363": "UNDETERMINED",
+      "364": "UNDETERMINED",
+      "365": "UNDETERMINED",
+      "366": "EXPLAINED",
+      "367": "UNDETERMINED",
+      "368": "EXPLAINED",
+      "369": "EXPLAINED",
+      "370": "UNDETERMINED",
+      "371": "UNDETERMINED",
+      "372": "UNDETERMINED",
+      "373": "UNDETERMINED",
+      "374": "UNDETERMINED",
+      "375": "UNDETERMINED",
+      "376": "UNGROUNDED",
+      "379": "EXPLAINED",
+      "380": "UNGROUNDED",
+      "382": "EXPLAINED",
+      "384": "UNDETERMINED",
+      "385": "UNDETERMINED",
+      "388": "UNDETERMINED",
+      "389": "UNDETERMINED",
+      "390": "UNDETERMINED",
+      "391": "UNDETERMINED",
+      "392": "UNGROUNDED",
+      "394": "UNDETERMINED",
+      "395": "UNDETERMINED",
+      "396": "UNDETERMINED",
+      "397": "UNDETERMINED",
+      "398": "EXPLAINED"
+     }
+    }
+   },
+   "supported_point_estimate_legacy_belief": {
+    "types_recovered": 2,
+    "attributes_recovered": 1,
+    "relations_recovered": 0,
+    "operators_recovered": 0,
+    "operators_observed": 6,
+    "learned_operators": 9,
+    "operator_names_recovered": [],
+    "operators_with_any_explanation": [],
+    "gtc": 0.417,
+    "rtc": 0.0,
+    "rtc_any": 0.0,
+    "registered_deltas": 33,
+    "registered_delta_precision": 0.0,
+    "strict_registered_delta_precision": 0.0,
+    "false_registered_delta_categories": {
+     "incorrect_persistence": 30,
+     "spurious_relation": 1,
+     "wrong_attribute_attachment": 2
+    },
+    "spurious_registered_delta_rate": 1.0,
+    "mention_pair_precision": null,
+    "mention_pair_recall": null,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null,
+    "view_false_positive_rate": 0.831,
+    "abstraction_contradiction_rate": null,
+    "comparable_abstraction_groups": 0,
+    "consistent_abstraction_groups": 0,
+    "contradictory_abstraction_groups": 0,
+    "comparable_abstraction_pairs": 0,
+    "consistent_abstraction_pairs": 0,
+    "contradictory_abstraction_pairs": 0,
+    "unresolved_abstraction_pairs_due_unknown": 136,
+    "argument_binding": {
+     "RegisterPatient": {
+      "successful_instances": 10,
+      "with_abstract_transition": 10,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "CheckIn": {
+      "successful_instances": 5,
+      "with_abstract_transition": 2,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "AssignVet": {
+      "successful_instances": 5,
+      "with_abstract_transition": 1,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "CancelAppointment": {
+      "successful_instances": 3,
+      "with_abstract_transition": 1,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "StartExam": {
+      "successful_instances": 2,
+      "with_abstract_transition": 0,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": null,
+      "conditional_action_arguments_grounded_rate": null
+     },
+     "CompleteAppointment": {
+      "successful_instances": 1,
+      "with_abstract_transition": 0,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": null,
+      "conditional_action_arguments_grounded_rate": null
+     }
+    },
+    "per_operator": {
+     "RegisterPatient": {
+      "n": 10,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 20,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 10,
+      "failures": 13,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "ScheduleAppointment": {
+      "successes": 0,
+      "failures": 4,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "AssignVet": {
+      "n": 3,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 5,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 5,
+      "failures": 1,
+      "explained": 0,
+      "invisible": 5,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "CheckIn": {
+      "n": 5,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 7,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 5,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 5,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "StartExam": {
+      "n": 2,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 0,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": null,
+      "strict_registered_delta_precision": null,
+      "successes": 2,
+      "failures": 2,
+      "explained": 0,
+      "invisible": 2,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "CompleteAppointment": {
+      "n": 1,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 0,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": null,
+      "strict_registered_delta_precision": null,
+      "successes": 1,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 1,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "CancelAppointment": {
+      "n": 3,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 1,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 3,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 3,
+      "rejected": 0,
+      "unbound_failures": 0
+     }
+    },
+    "induction": {
+     "transitions": 83,
+     "no_op_segments": 270,
+     "hypotheses_before_min_support": 19,
+     "reattributed_domain_changes": 0,
+     "unattributed_sensing_changes": [
+      {
+       "revealing_step": 22,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        19
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "e8b3aa3083384e63"
+      },
+      {
+       "revealing_step": 90,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        87
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "1e3dd9e754bc83d7"
+      },
+      {
+       "revealing_step": 184,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        179
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "1b10a0e441be5acf"
+      },
+      {
+       "revealing_step": 203,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        197
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "1b10a0e441be5acf"
+      },
+      {
+       "revealing_step": 214,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        205
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "1b10a0e441be5acf"
+      },
+      {
+       "revealing_step": 238,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        232
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T2:'Name' {'attr:textbox#0': None}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "ccdeb2f4ef8c2d94"
+      },
+      {
+       "revealing_step": 251,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        243
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "ccdeb2f4ef8c2d94"
+      },
+      {
+       "revealing_step": 263,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        258
+       ],
+       "delta": "+T1:'Name' {}; -T2:'Name' {'attr:textbox#0': None}",
+       "observation": "ccdeb2f4ef8c2d94"
+      },
+      {
+       "revealing_step": 281,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        279
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "06730f5b33b1758c"
+      },
+      {
+       "revealing_step": 298,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        294
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "06730f5b33b1758c"
+      },
+      {
+       "revealing_step": 323,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        315
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "aabd3587b2e74ca5"
+      },
+      {
+       "revealing_step": 338,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        328
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "aabd3587b2e74ca5"
+      },
+      {
+       "revealing_step": 377,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        369
+       ],
+       "delta": "+T1:'Name' {}; -T2:'Name' {'attr:textbox#0': None}",
+       "observation": "ee3c7cb8bf7dabcf"
+      },
+      {
+       "revealing_step": 381,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        379
+       ],
+       "delta": "+T1:'Name' {}; -T2:'Name' {'attr:textbox#0': None}",
+       "observation": "ee3c7cb8bf7dabcf"
+      },
+      {
+       "revealing_step": 400,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        398
+       ],
+       "delta": "+T1:'Owner' {}; +T1:'Species' {}",
+       "observation": "ee3c7cb8bf7dabcf"
+      }
+     ],
+     "delayed_object_resolutions": [],
+     "hypotheses": [
+      {
+       "name": "op0",
+       "support": 16,
+       "negative_examples": 8,
+       "unexplained_negative_examples": 2,
+       "actions": [
+        "click(button:Vets)"
+       ],
+       "effects": [
+        "delete ?o0",
+        "delete ?o1"
+       ],
+       "preconditions": [
+        "('empty', '?o0')"
+       ]
+      },
+      {
+       "name": "op1",
+       "support": 15,
+       "negative_examples": 207,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "type(textbox#textbox@0af5a3@T1[?o0], ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T2(id=Name, attr:textbox#0=None)",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op2",
+       "support": 10,
+       "negative_examples": 13,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Register patient)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Name)",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('empty', '?o0')"
+       ]
+      },
+      {
+       "name": "op3",
+       "support": 9,
+       "negative_examples": 16,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "delete ?o0",
+        "delete ?o1"
+       ],
+       "preconditions": [
+        "('empty', '?o1')"
+       ]
+      },
+      {
+       "name": "op4",
+       "support": 8,
+       "negative_examples": 13,
+       "unexplained_negative_examples": 13,
+       "actions": [
+        "click(button:Clients)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Owner)",
+        "?new1 := new T1(id=Species)"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op5",
+       "support": 7,
+       "negative_examples": 18,
+       "unexplained_negative_examples": 7,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "?new2 := new T1(id=Owner)",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('empty', '?o0')",
+        "('attr_ne', '?o0', 'id', 'Species')"
+       ]
+      },
+      {
+       "name": "op6",
+       "support": 4,
+       "negative_examples": 21,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "?new2 := new T1(id=Name)",
+        "?new3 := new T1(id=Species)",
+        "delete ?new0",
+        "delete ?new1",
+        "delete ?new2",
+        "delete ?new3"
+       ],
+       "preconditions": [
+        "('empty', '?new2')"
+       ]
+      },
+      {
+       "name": "op7",
+       "support": 2,
+       "negative_examples": 19,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Clients)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Name)",
+        "?new1 := new T1(id=Species)",
+        "delete ?o0",
+        "delete ?o1"
+       ],
+       "preconditions": [
+        "('empty', '?o0')"
+       ]
+      },
+      {
+       "name": "op8",
+       "support": 2,
+       "negative_examples": 220,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "type(textbox#textbox@0af5a3@T1[?o0], ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T2(id=Name, attr:textbox#0=None)",
+        "?new1 := new T1(id=Name)",
+        "delete ?new0",
+        "delete ?new1"
+       ],
+       "preconditions": [
+        "('empty', '?new1')"
+       ]
+      },
+      {
+       "name": "op9",
+       "support": 1,
+       "negative_examples": 23,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Vets)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Name)",
+        "?new1 := new T1(id=Owner)",
+        "?new2 := new T1(id=Species)",
+        "delete ?new1",
+        "delete ?o0",
+        "delete ?o1"
+       ],
+       "preconditions": [
+        "('empty', '?new1')"
+       ]
+      },
+      {
+       "name": "op10",
+       "support": 1,
+       "negative_examples": 23,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Vets)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Name)",
+        "delete ?o0",
+        "delete ?o1",
+        "delete ?o2"
+       ],
+       "preconditions": [
+        "('empty', '?o2')"
+       ]
+      },
+      {
+       "name": "op11",
+       "support": 1,
+       "negative_examples": 24,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "?new2 := new T1(id=Owner)",
+        "?new3 := new T1(id=Name)",
+        "?new4 := new T1(id=Species)",
+        "delete ?new0",
+        "delete ?new1",
+        "delete ?new3"
+       ],
+       "preconditions": [
+        "('empty', '?new3')"
+       ]
+      },
+      {
+       "name": "op12",
+       "support": 1,
+       "negative_examples": 0,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Check in@422e7e@T6[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Name)",
+        "?new1 := new T1(id=Species)",
+        "delete ?o0",
+        "delete ?o1",
+        "delete ?o2"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op13",
+       "support": 1,
+       "negative_examples": 24,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "?new2 := new T1(id=Name)",
+        "?new3 := new T1(id=Species)",
+        "delete ?new0",
+        "delete ?new1",
+        "delete ?new3",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('empty', '?new3')"
+       ]
+      },
+      {
+       "name": "op14",
+       "support": 1,
+       "negative_examples": 23,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Vets)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Owner)",
+        "?new1 := new T1(id=Species)",
+        "delete ?new0",
+        "delete ?new1"
+       ],
+       "preconditions": [
+        "('empty', '?new0')"
+       ]
+      },
+      {
+       "name": "op15",
+       "support": 1,
+       "negative_examples": 0,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Assign vet@b1b9fa@T6[?o0])"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Name)",
+        "?new1 := new T1(id=Species)",
+        "delete ?o0",
+        "delete ?o1",
+        "delete ?o2"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op16",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Cancel@b1b9fa@T6[?o0])"
+       ],
+       "effects": [
+        "attr:cell#0@4(?o0) := 'cancelled'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op17",
+       "support": 1,
+       "negative_examples": 24,
+       "unexplained_negative_examples": 3,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'Name')",
+        "('empty', '?o0')"
+       ]
+      },
+      {
+       "name": "op18",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(cell#4, ?o0)",
+        "click(button:Check in)"
+       ],
+       "effects": [
+        "attr:cell#0@4(?o0) := 'checked_in'",
+        "rel:3(?o0) := 'T3:Omar Reyes'"
+       ],
+       "preconditions": [
+        "('empty', '?o0')"
+       ]
+      }
+     ]
+    },
+    "counterexamples": {
+     "status_counts": {
+      "EXPLAINED": 83,
+      "UNDETERMINED": 200,
+      "UNGROUNDED": 15,
+      "VIEW_ONLY": 2
+     },
+     "by_step": {
+      "2": "EXPLAINED",
+      "3": "EXPLAINED",
+      "4": "EXPLAINED",
+      "5": "EXPLAINED",
+      "9": "EXPLAINED",
+      "10": "EXPLAINED",
+      "11": "EXPLAINED",
+      "12": "EXPLAINED",
+      "13": "EXPLAINED",
+      "15": "EXPLAINED",
+      "16": "EXPLAINED",
+      "17": "EXPLAINED",
+      "18": "EXPLAINED",
+      "19": "EXPLAINED",
+      "26": "EXPLAINED",
+      "27": "EXPLAINED",
+      "31": "UNDETERMINED",
+      "32": "UNDETERMINED",
+      "33": "UNDETERMINED",
+      "34": "UNDETERMINED",
+      "35": "UNDETERMINED",
+      "36": "UNDETERMINED",
+      "37": "UNDETERMINED",
+      "38": "UNDETERMINED",
+      "39": "UNDETERMINED",
+      "41": "UNDETERMINED",
+      "42": "UNDETERMINED",
+      "43": "UNDETERMINED",
+      "45": "UNDETERMINED",
+      "49": "UNDETERMINED",
+      "50": "UNDETERMINED",
+      "51": "EXPLAINED",
+      "55": "EXPLAINED",
+      "56": "UNDETERMINED",
+      "57": "UNDETERMINED",
+      "58": "EXPLAINED",
+      "60": "EXPLAINED",
+      "61": "UNDETERMINED",
+      "62": "UNDETERMINED",
+      "63": "UNDETERMINED",
+      "64": "UNDETERMINED",
+      "65": "UNDETERMINED",
+      "66": "EXPLAINED",
+      "67": "EXPLAINED",
+      "69": "UNDETERMINED",
+      "70": "UNDETERMINED",
+      "71": "UNDETERMINED",
+      "72": "UNDETERMINED",
+      "73": "UNDETERMINED",
+      "74": "EXPLAINED",
+      "76": "EXPLAINED",
+      "77": "EXPLAINED",
+      "79": "UNDETERMINED",
+      "80": "UNDETERMINED",
+      "81": "UNGROUNDED",
+      "83": "UNDETERMINED",
+      "84": "UNDETERMINED",
+      "85": "EXPLAINED",
+      "86": "EXPLAINED",
+      "87": "EXPLAINED",
+      "93": "UNDETERMINED",
+      "94": "UNDETERMINED",
+      "95": "UNDETERMINED",
+      "96": "UNDETERMINED",
+      "97": "UNGROUNDED",
+      "99": "UNDETERMINED",
+      "100": "UNDETERMINED",
+      "101": "UNDETERMINED",
+      "102": "UNDETERMINED",
+      "103": "UNDETERMINED",
+      "104": "UNDETERMINED",
+      "105": "EXPLAINED",
+      "106": "EXPLAINED",
+      "107": "EXPLAINED",
+      "109": "UNDETERMINED",
+      "110": "UNDETERMINED",
+      "112": "UNDETERMINED",
+      "113": "UNDETERMINED",
+      "117": "UNDETERMINED",
+      "118": "UNDETERMINED",
+      "119": "UNDETERMINED",
+      "120": "EXPLAINED",
+      "121": "EXPLAINED",
+      "122": "UNDETERMINED",
+      "123": "EXPLAINED",
+      "125": "EXPLAINED",
+      "127": "UNDETERMINED",
+      "128": "UNDETERMINED",
+      "129": "UNDETERMINED",
+      "130": "UNDETERMINED",
+      "131": "EXPLAINED",
+      "132": "EXPLAINED",
+      "134": "UNDETERMINED",
+      "135": "UNDETERMINED",
+      "136": "UNDETERMINED",
+      "138": "EXPLAINED",
+      "141": "EXPLAINED",
+      "142": "UNDETERMINED",
+      "143": "UNDETERMINED",
+      "144": "UNDETERMINED",
+      "145": "EXPLAINED",
+      "147": "UNDETERMINED",
+      "148": "UNDETERMINED",
+      "149": "EXPLAINED",
+      "150": "EXPLAINED",
+      "151": "EXPLAINED",
+      "154": "UNDETERMINED",
+      "155": "UNDETERMINED",
+      "156": "UNDETERMINED",
+      "157": "UNDETERMINED",
+      "158": "UNDETERMINED",
+      "159": "UNDETERMINED",
+      "160": "UNDETERMINED",
+      "161": "UNDETERMINED",
+      "162": "UNDETERMINED",
+      "163": "UNDETERMINED",
+      "164": "UNDETERMINED",
+      "165": "UNDETERMINED",
+      "166": "UNGROUNDED",
+      "170": "VIEW_ONLY",
+      "172": "UNDETERMINED",
+      "173": "UNDETERMINED",
+      "174": "UNDETERMINED",
+      "175": "UNGROUNDED",
+      "177": "EXPLAINED",
+      "178": "UNDETERMINED",
+      "179": "EXPLAINED",
+      "180": "UNDETERMINED",
+      "181": "UNDETERMINED",
+      "182": "UNDETERMINED",
+      "183": "UNGROUNDED",
+      "185": "UNDETERMINED",
+      "186": "UNDETERMINED",
+      "187": "UNDETERMINED",
+      "188": "UNDETERMINED",
+      "190": "UNDETERMINED",
+      "191": "UNDETERMINED",
+      "192": "UNDETERMINED",
+      "193": "UNDETERMINED",
+      "194": "UNDETERMINED",
+      "195": "UNDETERMINED",
+      "196": "EXPLAINED",
+      "197": "EXPLAINED",
+      "198": "UNDETERMINED",
+      "199": "UNDETERMINED",
+      "200": "UNDETERMINED",
+      "201": "UNDETERMINED",
+      "204": "EXPLAINED",
+      "205": "EXPLAINED",
+      "206": "UNDETERMINED",
+      "207": "UNDETERMINED",
+      "208": "UNDETERMINED",
+      "210": "UNDETERMINED",
+      "211": "UNDETERMINED",
+      "212": "UNDETERMINED",
+      "213": "UNGROUNDED",
+      "216": "UNDETERMINED",
+      "217": "UNDETERMINED",
+      "218": "UNDETERMINED",
+      "219": "EXPLAINED",
+      "221": "UNDETERMINED",
+      "222": "EXPLAINED",
+      "225": "UNDETERMINED",
+      "226": "UNDETERMINED",
+      "228": "EXPLAINED",
+      "229": "UNDETERMINED",
+      "230": "EXPLAINED",
+      "232": "EXPLAINED",
+      "233": "UNDETERMINED",
+      "234": "UNDETERMINED",
+      "235": "UNDETERMINED",
+      "236": "UNDETERMINED",
+      "237": "UNGROUNDED",
+      "239": "UNDETERMINED",
+      "240": "EXPLAINED",
+      "243": "EXPLAINED",
+      "244": "UNDETERMINED",
+      "245": "UNDETERMINED",
+      "246": "UNDETERMINED",
+      "247": "UNDETERMINED",
+      "248": "UNDETERMINED",
+      "249": "UNDETERMINED",
+      "250": "UNGROUNDED",
+      "252": "UNDETERMINED",
+      "253": "UNDETERMINED",
+      "254": "UNDETERMINED",
+      "255": "UNDETERMINED",
+      "256": "UNDETERMINED",
+      "257": "UNDETERMINED",
+      "258": "EXPLAINED",
+      "259": "UNDETERMINED",
+      "260": "UNDETERMINED",
+      "261": "UNDETERMINED",
+      "264": "UNDETERMINED",
+      "265": "EXPLAINED",
+      "266": "UNDETERMINED",
+      "268": "EXPLAINED",
+      "269": "UNDETERMINED",
+      "271": "UNDETERMINED",
+      "272": "UNDETERMINED",
+      "273": "EXPLAINED",
+      "274": "EXPLAINED",
+      "275": "EXPLAINED",
+      "278": "UNDETERMINED",
+      "279": "EXPLAINED",
+      "280": "UNGROUNDED",
+      "283": "UNDETERMINED",
+      "284": "UNDETERMINED",
+      "285": "UNDETERMINED",
+      "286": "UNDETERMINED",
+      "287": "UNDETERMINED",
+      "288": "UNDETERMINED",
+      "289": "UNDETERMINED",
+      "290": "UNDETERMINED",
+      "292": "EXPLAINED",
+      "294": "EXPLAINED",
+      "295": "UNDETERMINED",
+      "296": "UNDETERMINED",
+      "297": "UNGROUNDED",
+      "299": "UNDETERMINED",
+      "300": "UNDETERMINED",
+      "301": "EXPLAINED",
+      "302": "EXPLAINED",
+      "303": "UNDETERMINED",
+      "304": "UNDETERMINED",
+      "305": "UNDETERMINED",
+      "306": "UNDETERMINED",
+      "307": "UNDETERMINED",
+      "310": "EXPLAINED",
+      "311": "EXPLAINED",
+      "312": "UNDETERMINED",
+      "313": "EXPLAINED",
+      "314": "UNDETERMINED",
+      "315": "EXPLAINED",
+      "316": "UNDETERMINED",
+      "317": "UNDETERMINED",
+      "318": "UNDETERMINED",
+      "319": "UNDETERMINED",
+      "320": "UNDETERMINED",
+      "321": "UNDETERMINED",
+      "322": "UNGROUNDED",
+      "324": "EXPLAINED",
+      "328": "EXPLAINED",
+      "329": "UNDETERMINED",
+      "331": "UNDETERMINED",
+      "332": "UNDETERMINED",
+      "333": "UNDETERMINED",
+      "334": "UNDETERMINED",
+      "335": "UNDETERMINED",
+      "336": "UNDETERMINED",
+      "337": "UNGROUNDED",
+      "340": "UNDETERMINED",
+      "341": "UNDETERMINED",
+      "342": "UNDETERMINED",
+      "343": "UNDETERMINED",
+      "344": "UNDETERMINED",
+      "345": "UNDETERMINED",
+      "346": "UNDETERMINED",
+      "347": "EXPLAINED",
+      "350": "EXPLAINED",
+      "351": "UNDETERMINED",
+      "352": "UNDETERMINED",
+      "353": "UNDETERMINED",
+      "354": "UNDETERMINED",
+      "355": "UNDETERMINED",
+      "356": "UNDETERMINED",
+      "357": "VIEW_ONLY",
+      "359": "UNDETERMINED",
+      "360": "UNDETERMINED",
+      "361": "EXPLAINED",
+      "362": "EXPLAINED",
+      "363": "UNDETERMINED",
+      "364": "UNDETERMINED",
+      "365": "UNDETERMINED",
+      "366": "EXPLAINED",
+      "367": "UNDETERMINED",
+      "368": "EXPLAINED",
+      "369": "EXPLAINED",
+      "370": "UNDETERMINED",
+      "371": "UNDETERMINED",
+      "372": "UNDETERMINED",
+      "373": "UNDETERMINED",
+      "374": "UNDETERMINED",
+      "375": "UNDETERMINED",
+      "376": "UNGROUNDED",
+      "379": "EXPLAINED",
+      "380": "UNGROUNDED",
+      "382": "EXPLAINED",
+      "384": "UNDETERMINED",
+      "385": "UNDETERMINED",
+      "388": "UNDETERMINED",
+      "389": "UNDETERMINED",
+      "390": "UNDETERMINED",
+      "391": "UNDETERMINED",
+      "392": "UNGROUNDED",
+      "394": "UNDETERMINED",
+      "395": "UNDETERMINED",
+      "396": "UNDETERMINED",
+      "397": "UNDETERMINED",
+      "398": "EXPLAINED"
+     }
+    }
+   },
+   "supported_point_estimate": {
+    "types_recovered": 2,
+    "attributes_recovered": 1,
+    "relations_recovered": 0,
+    "operators_recovered": 0,
+    "operators_observed": 6,
+    "learned_operators": 9,
+    "operator_names_recovered": [],
+    "operators_with_any_explanation": [],
+    "gtc": 0.417,
+    "rtc": 0.0,
+    "rtc_any": 0.0,
+    "registered_deltas": 23,
+    "registered_delta_precision": 0.0,
+    "strict_registered_delta_precision": 0.0,
+    "false_registered_delta_categories": {
+     "incorrect_persistence": 20,
+     "spurious_relation": 1,
+     "wrong_attribute_attachment": 2
+    },
+    "spurious_registered_delta_rate": 1.0,
+    "mention_pair_precision": null,
+    "mention_pair_recall": null,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null,
+    "view_false_positive_rate": 0.852,
+    "abstraction_contradiction_rate": null,
+    "comparable_abstraction_groups": 0,
+    "consistent_abstraction_groups": 0,
+    "contradictory_abstraction_groups": 0,
+    "comparable_abstraction_pairs": 0,
+    "consistent_abstraction_pairs": 0,
+    "contradictory_abstraction_pairs": 0,
+    "unresolved_abstraction_pairs_due_unknown": 136,
+    "argument_binding": {
+     "RegisterPatient": {
+      "successful_instances": 10,
+      "with_abstract_transition": 10,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "CheckIn": {
+      "successful_instances": 5,
+      "with_abstract_transition": 1,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "AssignVet": {
+      "successful_instances": 5,
+      "with_abstract_transition": 0,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": null,
+      "conditional_action_arguments_grounded_rate": null
+     },
+     "CancelAppointment": {
+      "successful_instances": 3,
+      "with_abstract_transition": 1,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "StartExam": {
+      "successful_instances": 2,
+      "with_abstract_transition": 0,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": null,
+      "conditional_action_arguments_grounded_rate": null
+     },
+     "CompleteAppointment": {
+      "successful_instances": 1,
+      "with_abstract_transition": 0,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": null,
+      "conditional_action_arguments_grounded_rate": null
+     }
+    },
+    "per_operator": {
+     "RegisterPatient": {
+      "n": 10,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 20,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 10,
+      "failures": 13,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "ScheduleAppointment": {
+      "successes": 0,
+      "failures": 4,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "AssignVet": {
+      "n": 3,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 0,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": null,
+      "strict_registered_delta_precision": null,
+      "successes": 5,
+      "failures": 1,
+      "explained": 0,
+      "invisible": 5,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "CheckIn": {
+      "n": 5,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 2,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 5,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 5,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "StartExam": {
+      "n": 2,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 0,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": null,
+      "strict_registered_delta_precision": null,
+      "successes": 2,
+      "failures": 2,
+      "explained": 0,
+      "invisible": 2,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "CompleteAppointment": {
+      "n": 1,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 0,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": null,
+      "strict_registered_delta_precision": null,
+      "successes": 1,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 1,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "CancelAppointment": {
+      "n": 3,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 1,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 3,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 3,
+      "rejected": 0,
+      "unbound_failures": 0
+     }
+    },
+    "induction": {
+     "transitions": 81,
+     "no_op_segments": 272,
+     "hypotheses_before_min_support": 17,
+     "reattributed_domain_changes": 0,
+     "unattributed_sensing_changes": [
+      {
+       "revealing_step": 22,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        19
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "e8b3aa3083384e63"
+      },
+      {
+       "revealing_step": 68,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        66
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "9eb6509a2e0ba026"
+      },
+      {
+       "revealing_step": 90,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        87
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "1e3dd9e754bc83d7"
+      },
+      {
+       "revealing_step": 152,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        150
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "81b730fc236be9f7"
+      },
+      {
+       "revealing_step": 184,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        179
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "1b10a0e441be5acf"
+      },
+      {
+       "revealing_step": 203,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        197
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "1b10a0e441be5acf"
+      },
+      {
+       "revealing_step": 214,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        205
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "1b10a0e441be5acf"
+      },
+      {
+       "revealing_step": 238,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        232
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T2:'Name' {'attr:textbox#0': None}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "ccdeb2f4ef8c2d94"
+      },
+      {
+       "revealing_step": 251,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        243
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "ccdeb2f4ef8c2d94"
+      },
+      {
+       "revealing_step": 263,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        258
+       ],
+       "delta": "+T1:'Name' {}; -T2:'Name' {'attr:textbox#0': None}",
+       "observation": "ccdeb2f4ef8c2d94"
+      },
+      {
+       "revealing_step": 281,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        279
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "06730f5b33b1758c"
+      },
+      {
+       "revealing_step": 298,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        294
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "06730f5b33b1758c"
+      },
+      {
+       "revealing_step": 323,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        315
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "aabd3587b2e74ca5"
+      },
+      {
+       "revealing_step": 338,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        328
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "aabd3587b2e74ca5"
+      },
+      {
+       "revealing_step": 377,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        369
+       ],
+       "delta": "+T1:'Name' {}; -T2:'Name' {'attr:textbox#0': None}",
+       "observation": "ee3c7cb8bf7dabcf"
+      },
+      {
+       "revealing_step": 381,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        379
+       ],
+       "delta": "+T1:'Name' {}; -T2:'Name' {'attr:textbox#0': None}",
+       "observation": "ee3c7cb8bf7dabcf"
+      },
+      {
+       "revealing_step": 400,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        398
+       ],
+       "delta": "+T1:'Owner' {}; +T1:'Species' {}",
+       "observation": "ee3c7cb8bf7dabcf"
+      }
+     ],
+     "delayed_object_resolutions": [],
+     "hypotheses": [
+      {
+       "name": "op0",
+       "support": 16,
+       "negative_examples": 8,
+       "unexplained_negative_examples": 2,
+       "actions": [
+        "click(button:Vets)"
+       ],
+       "effects": [
+        "delete ?o0",
+        "delete ?o1"
+       ],
+       "preconditions": [
+        "('empty', '?o0')"
+       ]
+      },
+      {
+       "name": "op1",
+       "support": 15,
+       "negative_examples": 207,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "type(textbox#textbox@0af5a3@T1[?o0], ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T2(id=Name, attr:textbox#0=None)",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op2",
+       "support": 10,
+       "negative_examples": 13,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Register patient)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Name)",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('empty', '?o0')"
+       ]
+      },
+      {
+       "name": "op3",
+       "support": 9,
+       "negative_examples": 16,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "delete ?o0",
+        "delete ?o1"
+       ],
+       "preconditions": [
+        "('empty', '?o1')"
+       ]
+      },
+      {
+       "name": "op4",
+       "support": 8,
+       "negative_examples": 13,
+       "unexplained_negative_examples": 13,
+       "actions": [
+        "click(button:Clients)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Owner)",
+        "?new1 := new T1(id=Species)"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op5",
+       "support": 7,
+       "negative_examples": 18,
+       "unexplained_negative_examples": 7,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "?new2 := new T1(id=Owner)",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('empty', '?o0')",
+        "('attr_ne', '?o0', 'id', 'Species')"
+       ]
+      },
+      {
+       "name": "op6",
+       "support": 4,
+       "negative_examples": 21,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "?new2 := new T1(id=Name)",
+        "?new3 := new T1(id=Species)",
+        "delete ?new0",
+        "delete ?new1",
+        "delete ?new2",
+        "delete ?new3"
+       ],
+       "preconditions": [
+        "('empty', '?new2')"
+       ]
+      },
+      {
+       "name": "op7",
+       "support": 2,
+       "negative_examples": 19,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Clients)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Name)",
+        "?new1 := new T1(id=Species)",
+        "delete ?o0",
+        "delete ?o1"
+       ],
+       "preconditions": [
+        "('empty', '?o0')"
+       ]
+      },
+      {
+       "name": "op8",
+       "support": 2,
+       "negative_examples": 220,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "type(textbox#textbox@0af5a3@T1[?o0], ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T2(id=Name, attr:textbox#0=None)",
+        "?new1 := new T1(id=Name)",
+        "delete ?new0",
+        "delete ?new1"
+       ],
+       "preconditions": [
+        "('empty', '?new1')"
+       ]
+      },
+      {
+       "name": "op9",
+       "support": 1,
+       "negative_examples": 23,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Vets)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Name)",
+        "?new1 := new T1(id=Owner)",
+        "?new2 := new T1(id=Species)",
+        "delete ?new1",
+        "delete ?o0",
+        "delete ?o1"
+       ],
+       "preconditions": [
+        "('empty', '?new1')"
+       ]
+      },
+      {
+       "name": "op10",
+       "support": 1,
+       "negative_examples": 23,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Vets)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Name)",
+        "delete ?o0",
+        "delete ?o1",
+        "delete ?o2"
+       ],
+       "preconditions": [
+        "('empty', '?o2')"
+       ]
+      },
+      {
+       "name": "op11",
+       "support": 1,
+       "negative_examples": 24,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "?new2 := new T1(id=Owner)",
+        "?new3 := new T1(id=Name)",
+        "?new4 := new T1(id=Species)",
+        "delete ?new0",
+        "delete ?new1",
+        "delete ?new3"
+       ],
+       "preconditions": [
+        "('empty', '?new3')"
+       ]
+      },
+      {
+       "name": "op12",
+       "support": 1,
+       "negative_examples": 24,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "?new2 := new T1(id=Name)",
+        "?new3 := new T1(id=Species)",
+        "delete ?new0",
+        "delete ?new1",
+        "delete ?new3",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('empty', '?new3')"
+       ]
+      },
+      {
+       "name": "op13",
+       "support": 1,
+       "negative_examples": 23,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Vets)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Owner)",
+        "?new1 := new T1(id=Species)",
+        "delete ?new0",
+        "delete ?new1"
+       ],
+       "preconditions": [
+        "('empty', '?new0')"
+       ]
+      },
+      {
+       "name": "op14",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Cancel@b1b9fa@T6[?o0])"
+       ],
+       "effects": [
+        "attr:cell#0@4(?o0) := 'cancelled'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op15",
+       "support": 1,
+       "negative_examples": 24,
+       "unexplained_negative_examples": 3,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'Name')",
+        "('empty', '?o0')"
+       ]
+      },
+      {
+       "name": "op16",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(cell#4, ?o0)",
+        "click(button:Check in)"
+       ],
+       "effects": [
+        "attr:cell#0@4(?o0) := 'checked_in'",
+        "rel:3(?o0) := 'T3:Omar Reyes'"
+       ],
+       "preconditions": [
+        "('empty', '?o0')"
+       ]
+      }
+     ]
+    },
+    "counterexamples": {
+     "status_counts": {
+      "EXPLAINED": 81,
+      "UNDETERMINED": 200,
+      "UNGROUNDED": 17,
+      "VIEW_ONLY": 2
+     },
+     "by_step": {
+      "2": "EXPLAINED",
+      "3": "EXPLAINED",
+      "4": "EXPLAINED",
+      "5": "EXPLAINED",
+      "9": "EXPLAINED",
+      "10": "EXPLAINED",
+      "11": "EXPLAINED",
+      "12": "EXPLAINED",
+      "13": "EXPLAINED",
+      "15": "EXPLAINED",
+      "16": "EXPLAINED",
+      "17": "EXPLAINED",
+      "18": "EXPLAINED",
+      "19": "EXPLAINED",
+      "26": "EXPLAINED",
+      "27": "EXPLAINED",
+      "31": "UNDETERMINED",
+      "32": "UNDETERMINED",
+      "33": "UNDETERMINED",
+      "34": "UNDETERMINED",
+      "35": "UNDETERMINED",
+      "36": "UNDETERMINED",
+      "37": "UNDETERMINED",
+      "38": "UNDETERMINED",
+      "39": "UNDETERMINED",
+      "41": "UNDETERMINED",
+      "42": "UNDETERMINED",
+      "43": "UNDETERMINED",
+      "45": "UNDETERMINED",
+      "49": "UNDETERMINED",
+      "50": "UNDETERMINED",
+      "51": "EXPLAINED",
+      "55": "EXPLAINED",
+      "56": "UNDETERMINED",
+      "57": "UNDETERMINED",
+      "58": "EXPLAINED",
+      "60": "EXPLAINED",
+      "61": "UNDETERMINED",
+      "62": "UNDETERMINED",
+      "63": "UNDETERMINED",
+      "64": "UNDETERMINED",
+      "65": "UNDETERMINED",
+      "66": "EXPLAINED",
+      "67": "UNGROUNDED",
+      "69": "UNDETERMINED",
+      "70": "UNDETERMINED",
+      "71": "UNDETERMINED",
+      "72": "UNDETERMINED",
+      "73": "UNDETERMINED",
+      "74": "EXPLAINED",
+      "76": "EXPLAINED",
+      "77": "EXPLAINED",
+      "79": "UNDETERMINED",
+      "80": "UNDETERMINED",
+      "81": "UNGROUNDED",
+      "83": "UNDETERMINED",
+      "84": "UNDETERMINED",
+      "85": "EXPLAINED",
+      "86": "EXPLAINED",
+      "87": "EXPLAINED",
+      "93": "UNDETERMINED",
+      "94": "UNDETERMINED",
+      "95": "UNDETERMINED",
+      "96": "UNDETERMINED",
+      "97": "UNGROUNDED",
+      "99": "UNDETERMINED",
+      "100": "UNDETERMINED",
+      "101": "UNDETERMINED",
+      "102": "UNDETERMINED",
+      "103": "UNDETERMINED",
+      "104": "UNDETERMINED",
+      "105": "EXPLAINED",
+      "106": "EXPLAINED",
+      "107": "EXPLAINED",
+      "109": "UNDETERMINED",
+      "110": "UNDETERMINED",
+      "112": "UNDETERMINED",
+      "113": "UNDETERMINED",
+      "117": "UNDETERMINED",
+      "118": "UNDETERMINED",
+      "119": "UNDETERMINED",
+      "120": "EXPLAINED",
+      "121": "EXPLAINED",
+      "122": "UNDETERMINED",
+      "123": "EXPLAINED",
+      "125": "EXPLAINED",
+      "127": "UNDETERMINED",
+      "128": "UNDETERMINED",
+      "129": "UNDETERMINED",
+      "130": "UNDETERMINED",
+      "131": "EXPLAINED",
+      "132": "EXPLAINED",
+      "134": "UNDETERMINED",
+      "135": "UNDETERMINED",
+      "136": "UNDETERMINED",
+      "138": "EXPLAINED",
+      "141": "EXPLAINED",
+      "142": "UNDETERMINED",
+      "143": "UNDETERMINED",
+      "144": "UNDETERMINED",
+      "145": "EXPLAINED",
+      "147": "UNDETERMINED",
+      "148": "UNDETERMINED",
+      "149": "EXPLAINED",
+      "150": "EXPLAINED",
+      "151": "UNGROUNDED",
+      "154": "UNDETERMINED",
+      "155": "UNDETERMINED",
+      "156": "UNDETERMINED",
+      "157": "UNDETERMINED",
+      "158": "UNDETERMINED",
+      "159": "UNDETERMINED",
+      "160": "UNDETERMINED",
+      "161": "UNDETERMINED",
+      "162": "UNDETERMINED",
+      "163": "UNDETERMINED",
+      "164": "UNDETERMINED",
+      "165": "UNDETERMINED",
+      "166": "UNGROUNDED",
+      "170": "VIEW_ONLY",
+      "172": "UNDETERMINED",
+      "173": "UNDETERMINED",
+      "174": "UNDETERMINED",
+      "175": "UNGROUNDED",
+      "177": "EXPLAINED",
+      "178": "UNDETERMINED",
+      "179": "EXPLAINED",
+      "180": "UNDETERMINED",
+      "181": "UNDETERMINED",
+      "182": "UNDETERMINED",
+      "183": "UNGROUNDED",
+      "185": "UNDETERMINED",
+      "186": "UNDETERMINED",
+      "187": "UNDETERMINED",
+      "188": "UNDETERMINED",
+      "190": "UNDETERMINED",
+      "191": "UNDETERMINED",
+      "192": "UNDETERMINED",
+      "193": "UNDETERMINED",
+      "194": "UNDETERMINED",
+      "195": "UNDETERMINED",
+      "196": "EXPLAINED",
+      "197": "EXPLAINED",
+      "198": "UNDETERMINED",
+      "199": "UNDETERMINED",
+      "200": "UNDETERMINED",
+      "201": "UNDETERMINED",
+      "204": "EXPLAINED",
+      "205": "EXPLAINED",
+      "206": "UNDETERMINED",
+      "207": "UNDETERMINED",
+      "208": "UNDETERMINED",
+      "210": "UNDETERMINED",
+      "211": "UNDETERMINED",
+      "212": "UNDETERMINED",
+      "213": "UNGROUNDED",
+      "216": "UNDETERMINED",
+      "217": "UNDETERMINED",
+      "218": "UNDETERMINED",
+      "219": "EXPLAINED",
+      "221": "UNDETERMINED",
+      "222": "EXPLAINED",
+      "225": "UNDETERMINED",
+      "226": "UNDETERMINED",
+      "228": "EXPLAINED",
+      "229": "UNDETERMINED",
+      "230": "EXPLAINED",
+      "232": "EXPLAINED",
+      "233": "UNDETERMINED",
+      "234": "UNDETERMINED",
+      "235": "UNDETERMINED",
+      "236": "UNDETERMINED",
+      "237": "UNGROUNDED",
+      "239": "UNDETERMINED",
+      "240": "EXPLAINED",
+      "243": "EXPLAINED",
+      "244": "UNDETERMINED",
+      "245": "UNDETERMINED",
+      "246": "UNDETERMINED",
+      "247": "UNDETERMINED",
+      "248": "UNDETERMINED",
+      "249": "UNDETERMINED",
+      "250": "UNGROUNDED",
+      "252": "UNDETERMINED",
+      "253": "UNDETERMINED",
+      "254": "UNDETERMINED",
+      "255": "UNDETERMINED",
+      "256": "UNDETERMINED",
+      "257": "UNDETERMINED",
+      "258": "EXPLAINED",
+      "259": "UNDETERMINED",
+      "260": "UNDETERMINED",
+      "261": "UNDETERMINED",
+      "264": "UNDETERMINED",
+      "265": "EXPLAINED",
+      "266": "UNDETERMINED",
+      "268": "EXPLAINED",
+      "269": "UNDETERMINED",
+      "271": "UNDETERMINED",
+      "272": "UNDETERMINED",
+      "273": "EXPLAINED",
+      "274": "EXPLAINED",
+      "275": "EXPLAINED",
+      "278": "UNDETERMINED",
+      "279": "EXPLAINED",
+      "280": "UNGROUNDED",
+      "283": "UNDETERMINED",
+      "284": "UNDETERMINED",
+      "285": "UNDETERMINED",
+      "286": "UNDETERMINED",
+      "287": "UNDETERMINED",
+      "288": "UNDETERMINED",
+      "289": "UNDETERMINED",
+      "290": "UNDETERMINED",
+      "292": "EXPLAINED",
+      "294": "EXPLAINED",
+      "295": "UNDETERMINED",
+      "296": "UNDETERMINED",
+      "297": "UNGROUNDED",
+      "299": "UNDETERMINED",
+      "300": "UNDETERMINED",
+      "301": "EXPLAINED",
+      "302": "EXPLAINED",
+      "303": "UNDETERMINED",
+      "304": "UNDETERMINED",
+      "305": "UNDETERMINED",
+      "306": "UNDETERMINED",
+      "307": "UNDETERMINED",
+      "310": "EXPLAINED",
+      "311": "EXPLAINED",
+      "312": "UNDETERMINED",
+      "313": "EXPLAINED",
+      "314": "UNDETERMINED",
+      "315": "EXPLAINED",
+      "316": "UNDETERMINED",
+      "317": "UNDETERMINED",
+      "318": "UNDETERMINED",
+      "319": "UNDETERMINED",
+      "320": "UNDETERMINED",
+      "321": "UNDETERMINED",
+      "322": "UNGROUNDED",
+      "324": "EXPLAINED",
+      "328": "EXPLAINED",
+      "329": "UNDETERMINED",
+      "331": "UNDETERMINED",
+      "332": "UNDETERMINED",
+      "333": "UNDETERMINED",
+      "334": "UNDETERMINED",
+      "335": "UNDETERMINED",
+      "336": "UNDETERMINED",
+      "337": "UNGROUNDED",
+      "340": "UNDETERMINED",
+      "341": "UNDETERMINED",
+      "342": "UNDETERMINED",
+      "343": "UNDETERMINED",
+      "344": "UNDETERMINED",
+      "345": "UNDETERMINED",
+      "346": "UNDETERMINED",
+      "347": "EXPLAINED",
+      "350": "EXPLAINED",
+      "351": "UNDETERMINED",
+      "352": "UNDETERMINED",
+      "353": "UNDETERMINED",
+      "354": "UNDETERMINED",
+      "355": "UNDETERMINED",
+      "356": "UNDETERMINED",
+      "357": "VIEW_ONLY",
+      "359": "UNDETERMINED",
+      "360": "UNDETERMINED",
+      "361": "EXPLAINED",
+      "362": "EXPLAINED",
+      "363": "UNDETERMINED",
+      "364": "UNDETERMINED",
+      "365": "UNDETERMINED",
+      "366": "EXPLAINED",
+      "367": "UNDETERMINED",
+      "368": "EXPLAINED",
+      "369": "EXPLAINED",
+      "370": "UNDETERMINED",
+      "371": "UNDETERMINED",
+      "372": "UNDETERMINED",
+      "373": "UNDETERMINED",
+      "374": "UNDETERMINED",
+      "375": "UNDETERMINED",
+      "376": "UNGROUNDED",
+      "379": "EXPLAINED",
+      "380": "UNGROUNDED",
+      "382": "EXPLAINED",
+      "384": "UNDETERMINED",
+      "385": "UNDETERMINED",
+      "388": "UNDETERMINED",
+      "389": "UNDETERMINED",
+      "390": "UNDETERMINED",
+      "391": "UNDETERMINED",
+      "392": "UNGROUNDED",
+      "394": "UNDETERMINED",
+      "395": "UNDETERMINED",
+      "396": "UNDETERMINED",
+      "397": "UNDETERMINED",
+      "398": "EXPLAINED"
+     }
+    }
+   },
+   "provisional": {
+    "types_recovered": 2,
+    "attributes_recovered": 1,
+    "relations_recovered": 0,
+    "operators_recovered": 0,
+    "operators_observed": 6,
+    "learned_operators": 9,
+    "operator_names_recovered": [],
+    "operators_with_any_explanation": [],
+    "gtc": 0.417,
+    "rtc": 0.0,
+    "rtc_any": 0.0,
+    "registered_deltas": 23,
+    "registered_delta_precision": 0.0,
+    "strict_registered_delta_precision": 0.0,
+    "false_registered_delta_categories": {
+     "incorrect_persistence": 20,
+     "spurious_relation": 1,
+     "wrong_attribute_attachment": 2
+    },
+    "spurious_registered_delta_rate": 1.0,
+    "mention_pair_precision": null,
+    "mention_pair_recall": null,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null,
+    "view_false_positive_rate": 0.852,
+    "abstraction_contradiction_rate": null,
+    "comparable_abstraction_groups": 0,
+    "consistent_abstraction_groups": 0,
+    "contradictory_abstraction_groups": 0,
+    "comparable_abstraction_pairs": 0,
+    "consistent_abstraction_pairs": 0,
+    "contradictory_abstraction_pairs": 0,
+    "unresolved_abstraction_pairs_due_unknown": 136,
+    "argument_binding": {
+     "RegisterPatient": {
+      "successful_instances": 10,
+      "with_abstract_transition": 10,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "CheckIn": {
+      "successful_instances": 5,
+      "with_abstract_transition": 1,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "AssignVet": {
+      "successful_instances": 5,
+      "with_abstract_transition": 0,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": null,
+      "conditional_action_arguments_grounded_rate": null
+     },
+     "CancelAppointment": {
+      "successful_instances": 3,
+      "with_abstract_transition": 1,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "StartExam": {
+      "successful_instances": 2,
+      "with_abstract_transition": 0,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": null,
+      "conditional_action_arguments_grounded_rate": null
+     },
+     "CompleteAppointment": {
+      "successful_instances": 1,
+      "with_abstract_transition": 0,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": null,
+      "conditional_action_arguments_grounded_rate": null
+     }
+    },
+    "per_operator": {
+     "RegisterPatient": {
+      "n": 10,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 20,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 10,
+      "failures": 13,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "ScheduleAppointment": {
+      "successes": 0,
+      "failures": 4,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "AssignVet": {
+      "n": 3,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 0,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": null,
+      "strict_registered_delta_precision": null,
+      "successes": 5,
+      "failures": 1,
+      "explained": 0,
+      "invisible": 5,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "CheckIn": {
+      "n": 5,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 2,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 5,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 5,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "StartExam": {
+      "n": 2,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 0,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": null,
+      "strict_registered_delta_precision": null,
+      "successes": 2,
+      "failures": 2,
+      "explained": 0,
+      "invisible": 2,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "CompleteAppointment": {
+      "n": 1,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 0,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": null,
+      "strict_registered_delta_precision": null,
+      "successes": 1,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 1,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "CancelAppointment": {
+      "n": 3,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 1,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 3,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 3,
+      "rejected": 0,
+      "unbound_failures": 0
+     }
+    },
+    "induction": {
+     "transitions": 81,
+     "no_op_segments": 272,
+     "hypotheses_before_min_support": 17,
+     "reattributed_domain_changes": 0,
+     "unattributed_sensing_changes": [
+      {
+       "revealing_step": 22,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        19
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "e8b3aa3083384e63"
+      },
+      {
+       "revealing_step": 68,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        66
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "9eb6509a2e0ba026"
+      },
+      {
+       "revealing_step": 90,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        87
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "1e3dd9e754bc83d7"
+      },
+      {
+       "revealing_step": 152,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        150
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "81b730fc236be9f7"
+      },
+      {
+       "revealing_step": 184,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        179
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "1b10a0e441be5acf"
+      },
+      {
+       "revealing_step": 203,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        197
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "1b10a0e441be5acf"
+      },
+      {
+       "revealing_step": 214,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        205
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "1b10a0e441be5acf"
+      },
+      {
+       "revealing_step": 238,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        232
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T2:'Name' {'attr:textbox#0': None}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "ccdeb2f4ef8c2d94"
+      },
+      {
+       "revealing_step": 251,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        243
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "ccdeb2f4ef8c2d94"
+      },
+      {
+       "revealing_step": 263,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        258
+       ],
+       "delta": "+T1:'Name' {}; -T2:'Name' {'attr:textbox#0': None}",
+       "observation": "ccdeb2f4ef8c2d94"
+      },
+      {
+       "revealing_step": 281,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        279
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "06730f5b33b1758c"
+      },
+      {
+       "revealing_step": 298,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        294
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "06730f5b33b1758c"
+      },
+      {
+       "revealing_step": 323,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        315
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "aabd3587b2e74ca5"
+      },
+      {
+       "revealing_step": 338,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        328
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "aabd3587b2e74ca5"
+      },
+      {
+       "revealing_step": 377,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        369
+       ],
+       "delta": "+T1:'Name' {}; -T2:'Name' {'attr:textbox#0': None}",
+       "observation": "ee3c7cb8bf7dabcf"
+      },
+      {
+       "revealing_step": 381,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        379
+       ],
+       "delta": "+T1:'Name' {}; -T2:'Name' {'attr:textbox#0': None}",
+       "observation": "ee3c7cb8bf7dabcf"
+      },
+      {
+       "revealing_step": 400,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        398
+       ],
+       "delta": "+T1:'Owner' {}; +T1:'Species' {}",
+       "observation": "ee3c7cb8bf7dabcf"
+      }
+     ],
+     "delayed_object_resolutions": [],
+     "hypotheses": [
+      {
+       "name": "op0",
+       "support": 16,
+       "negative_examples": 8,
+       "unexplained_negative_examples": 2,
+       "actions": [
+        "click(button:Vets)"
+       ],
+       "effects": [
+        "delete ?o0",
+        "delete ?o1"
+       ],
+       "preconditions": [
+        "('empty', '?o0')"
+       ]
+      },
+      {
+       "name": "op1",
+       "support": 15,
+       "negative_examples": 207,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "type(textbox#textbox@0af5a3@T1[?o0], ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T2(id=Name, attr:textbox#0=None)",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op2",
+       "support": 10,
+       "negative_examples": 13,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Register patient)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Name)",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('empty', '?o0')"
+       ]
+      },
+      {
+       "name": "op3",
+       "support": 9,
+       "negative_examples": 16,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "delete ?o0",
+        "delete ?o1"
+       ],
+       "preconditions": [
+        "('empty', '?o1')"
+       ]
+      },
+      {
+       "name": "op4",
+       "support": 8,
+       "negative_examples": 13,
+       "unexplained_negative_examples": 13,
+       "actions": [
+        "click(button:Clients)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Owner)",
+        "?new1 := new T1(id=Species)"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op5",
+       "support": 7,
+       "negative_examples": 18,
+       "unexplained_negative_examples": 7,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "?new2 := new T1(id=Owner)",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('empty', '?o0')",
+        "('attr_ne', '?o0', 'id', 'Species')"
+       ]
+      },
+      {
+       "name": "op6",
+       "support": 4,
+       "negative_examples": 21,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "?new2 := new T1(id=Name)",
+        "?new3 := new T1(id=Species)",
+        "delete ?new0",
+        "delete ?new1",
+        "delete ?new2",
+        "delete ?new3"
+       ],
+       "preconditions": [
+        "('empty', '?new2')"
+       ]
+      },
+      {
+       "name": "op7",
+       "support": 2,
+       "negative_examples": 19,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Clients)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Name)",
+        "?new1 := new T1(id=Species)",
+        "delete ?o0",
+        "delete ?o1"
+       ],
+       "preconditions": [
+        "('empty', '?o0')"
+       ]
+      },
+      {
+       "name": "op8",
+       "support": 2,
+       "negative_examples": 220,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "type(textbox#textbox@0af5a3@T1[?o0], ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T2(id=Name, attr:textbox#0=None)",
+        "?new1 := new T1(id=Name)",
+        "delete ?new0",
+        "delete ?new1"
+       ],
+       "preconditions": [
+        "('empty', '?new1')"
+       ]
+      },
+      {
+       "name": "op9",
+       "support": 1,
+       "negative_examples": 23,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Vets)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Name)",
+        "?new1 := new T1(id=Owner)",
+        "?new2 := new T1(id=Species)",
+        "delete ?new1",
+        "delete ?o0",
+        "delete ?o1"
+       ],
+       "preconditions": [
+        "('empty', '?new1')"
+       ]
+      },
+      {
+       "name": "op10",
+       "support": 1,
+       "negative_examples": 23,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Vets)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Name)",
+        "delete ?o0",
+        "delete ?o1",
+        "delete ?o2"
+       ],
+       "preconditions": [
+        "('empty', '?o2')"
+       ]
+      },
+      {
+       "name": "op11",
+       "support": 1,
+       "negative_examples": 24,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "?new2 := new T1(id=Owner)",
+        "?new3 := new T1(id=Name)",
+        "?new4 := new T1(id=Species)",
+        "delete ?new0",
+        "delete ?new1",
+        "delete ?new3"
+       ],
+       "preconditions": [
+        "('empty', '?new3')"
+       ]
+      },
+      {
+       "name": "op12",
+       "support": 1,
+       "negative_examples": 24,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "?new2 := new T1(id=Name)",
+        "?new3 := new T1(id=Species)",
+        "delete ?new0",
+        "delete ?new1",
+        "delete ?new3",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('empty', '?new3')"
+       ]
+      },
+      {
+       "name": "op13",
+       "support": 1,
+       "negative_examples": 23,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Vets)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Owner)",
+        "?new1 := new T1(id=Species)",
+        "delete ?new0",
+        "delete ?new1"
+       ],
+       "preconditions": [
+        "('empty', '?new0')"
+       ]
+      },
+      {
+       "name": "op14",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Cancel@b1b9fa@T6[?o0])"
+       ],
+       "effects": [
+        "attr:cell#0@4(?o0) := 'cancelled'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op15",
+       "support": 1,
+       "negative_examples": 24,
+       "unexplained_negative_examples": 3,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'Name')",
+        "('empty', '?o0')"
+       ]
+      },
+      {
+       "name": "op16",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(cell#4, ?o0)",
+        "click(button:Check in)"
+       ],
+       "effects": [
+        "attr:cell#0@4(?o0) := 'checked_in'",
+        "rel:3(?o0) := 'T3:Omar Reyes'"
+       ],
+       "preconditions": [
+        "('empty', '?o0')"
+       ]
+      }
+     ]
+    },
+    "counterexamples": {
+     "status_counts": {
+      "EXPLAINED": 81,
+      "UNDETERMINED": 200,
+      "UNGROUNDED": 17,
+      "VIEW_ONLY": 2
+     },
+     "by_step": {
+      "2": "EXPLAINED",
+      "3": "EXPLAINED",
+      "4": "EXPLAINED",
+      "5": "EXPLAINED",
+      "9": "EXPLAINED",
+      "10": "EXPLAINED",
+      "11": "EXPLAINED",
+      "12": "EXPLAINED",
+      "13": "EXPLAINED",
+      "15": "EXPLAINED",
+      "16": "EXPLAINED",
+      "17": "EXPLAINED",
+      "18": "EXPLAINED",
+      "19": "EXPLAINED",
+      "26": "EXPLAINED",
+      "27": "EXPLAINED",
+      "31": "UNDETERMINED",
+      "32": "UNDETERMINED",
+      "33": "UNDETERMINED",
+      "34": "UNDETERMINED",
+      "35": "UNDETERMINED",
+      "36": "UNDETERMINED",
+      "37": "UNDETERMINED",
+      "38": "UNDETERMINED",
+      "39": "UNDETERMINED",
+      "41": "UNDETERMINED",
+      "42": "UNDETERMINED",
+      "43": "UNDETERMINED",
+      "45": "UNDETERMINED",
+      "49": "UNDETERMINED",
+      "50": "UNDETERMINED",
+      "51": "EXPLAINED",
+      "55": "EXPLAINED",
+      "56": "UNDETERMINED",
+      "57": "UNDETERMINED",
+      "58": "EXPLAINED",
+      "60": "EXPLAINED",
+      "61": "UNDETERMINED",
+      "62": "UNDETERMINED",
+      "63": "UNDETERMINED",
+      "64": "UNDETERMINED",
+      "65": "UNDETERMINED",
+      "66": "EXPLAINED",
+      "67": "UNGROUNDED",
+      "69": "UNDETERMINED",
+      "70": "UNDETERMINED",
+      "71": "UNDETERMINED",
+      "72": "UNDETERMINED",
+      "73": "UNDETERMINED",
+      "74": "EXPLAINED",
+      "76": "EXPLAINED",
+      "77": "EXPLAINED",
+      "79": "UNDETERMINED",
+      "80": "UNDETERMINED",
+      "81": "UNGROUNDED",
+      "83": "UNDETERMINED",
+      "84": "UNDETERMINED",
+      "85": "EXPLAINED",
+      "86": "EXPLAINED",
+      "87": "EXPLAINED",
+      "93": "UNDETERMINED",
+      "94": "UNDETERMINED",
+      "95": "UNDETERMINED",
+      "96": "UNDETERMINED",
+      "97": "UNGROUNDED",
+      "99": "UNDETERMINED",
+      "100": "UNDETERMINED",
+      "101": "UNDETERMINED",
+      "102": "UNDETERMINED",
+      "103": "UNDETERMINED",
+      "104": "UNDETERMINED",
+      "105": "EXPLAINED",
+      "106": "EXPLAINED",
+      "107": "EXPLAINED",
+      "109": "UNDETERMINED",
+      "110": "UNDETERMINED",
+      "112": "UNDETERMINED",
+      "113": "UNDETERMINED",
+      "117": "UNDETERMINED",
+      "118": "UNDETERMINED",
+      "119": "UNDETERMINED",
+      "120": "EXPLAINED",
+      "121": "EXPLAINED",
+      "122": "UNDETERMINED",
+      "123": "EXPLAINED",
+      "125": "EXPLAINED",
+      "127": "UNDETERMINED",
+      "128": "UNDETERMINED",
+      "129": "UNDETERMINED",
+      "130": "UNDETERMINED",
+      "131": "EXPLAINED",
+      "132": "EXPLAINED",
+      "134": "UNDETERMINED",
+      "135": "UNDETERMINED",
+      "136": "UNDETERMINED",
+      "138": "EXPLAINED",
+      "141": "EXPLAINED",
+      "142": "UNDETERMINED",
+      "143": "UNDETERMINED",
+      "144": "UNDETERMINED",
+      "145": "EXPLAINED",
+      "147": "UNDETERMINED",
+      "148": "UNDETERMINED",
+      "149": "EXPLAINED",
+      "150": "EXPLAINED",
+      "151": "UNGROUNDED",
+      "154": "UNDETERMINED",
+      "155": "UNDETERMINED",
+      "156": "UNDETERMINED",
+      "157": "UNDETERMINED",
+      "158": "UNDETERMINED",
+      "159": "UNDETERMINED",
+      "160": "UNDETERMINED",
+      "161": "UNDETERMINED",
+      "162": "UNDETERMINED",
+      "163": "UNDETERMINED",
+      "164": "UNDETERMINED",
+      "165": "UNDETERMINED",
+      "166": "UNGROUNDED",
+      "170": "VIEW_ONLY",
+      "172": "UNDETERMINED",
+      "173": "UNDETERMINED",
+      "174": "UNDETERMINED",
+      "175": "UNGROUNDED",
+      "177": "EXPLAINED",
+      "178": "UNDETERMINED",
+      "179": "EXPLAINED",
+      "180": "UNDETERMINED",
+      "181": "UNDETERMINED",
+      "182": "UNDETERMINED",
+      "183": "UNGROUNDED",
+      "185": "UNDETERMINED",
+      "186": "UNDETERMINED",
+      "187": "UNDETERMINED",
+      "188": "UNDETERMINED",
+      "190": "UNDETERMINED",
+      "191": "UNDETERMINED",
+      "192": "UNDETERMINED",
+      "193": "UNDETERMINED",
+      "194": "UNDETERMINED",
+      "195": "UNDETERMINED",
+      "196": "EXPLAINED",
+      "197": "EXPLAINED",
+      "198": "UNDETERMINED",
+      "199": "UNDETERMINED",
+      "200": "UNDETERMINED",
+      "201": "UNDETERMINED",
+      "204": "EXPLAINED",
+      "205": "EXPLAINED",
+      "206": "UNDETERMINED",
+      "207": "UNDETERMINED",
+      "208": "UNDETERMINED",
+      "210": "UNDETERMINED",
+      "211": "UNDETERMINED",
+      "212": "UNDETERMINED",
+      "213": "UNGROUNDED",
+      "216": "UNDETERMINED",
+      "217": "UNDETERMINED",
+      "218": "UNDETERMINED",
+      "219": "EXPLAINED",
+      "221": "UNDETERMINED",
+      "222": "EXPLAINED",
+      "225": "UNDETERMINED",
+      "226": "UNDETERMINED",
+      "228": "EXPLAINED",
+      "229": "UNDETERMINED",
+      "230": "EXPLAINED",
+      "232": "EXPLAINED",
+      "233": "UNDETERMINED",
+      "234": "UNDETERMINED",
+      "235": "UNDETERMINED",
+      "236": "UNDETERMINED",
+      "237": "UNGROUNDED",
+      "239": "UNDETERMINED",
+      "240": "EXPLAINED",
+      "243": "EXPLAINED",
+      "244": "UNDETERMINED",
+      "245": "UNDETERMINED",
+      "246": "UNDETERMINED",
+      "247": "UNDETERMINED",
+      "248": "UNDETERMINED",
+      "249": "UNDETERMINED",
+      "250": "UNGROUNDED",
+      "252": "UNDETERMINED",
+      "253": "UNDETERMINED",
+      "254": "UNDETERMINED",
+      "255": "UNDETERMINED",
+      "256": "UNDETERMINED",
+      "257": "UNDETERMINED",
+      "258": "EXPLAINED",
+      "259": "UNDETERMINED",
+      "260": "UNDETERMINED",
+      "261": "UNDETERMINED",
+      "264": "UNDETERMINED",
+      "265": "EXPLAINED",
+      "266": "UNDETERMINED",
+      "268": "EXPLAINED",
+      "269": "UNDETERMINED",
+      "271": "UNDETERMINED",
+      "272": "UNDETERMINED",
+      "273": "EXPLAINED",
+      "274": "EXPLAINED",
+      "275": "EXPLAINED",
+      "278": "UNDETERMINED",
+      "279": "EXPLAINED",
+      "280": "UNGROUNDED",
+      "283": "UNDETERMINED",
+      "284": "UNDETERMINED",
+      "285": "UNDETERMINED",
+      "286": "UNDETERMINED",
+      "287": "UNDETERMINED",
+      "288": "UNDETERMINED",
+      "289": "UNDETERMINED",
+      "290": "UNDETERMINED",
+      "292": "EXPLAINED",
+      "294": "EXPLAINED",
+      "295": "UNDETERMINED",
+      "296": "UNDETERMINED",
+      "297": "UNGROUNDED",
+      "299": "UNDETERMINED",
+      "300": "UNDETERMINED",
+      "301": "EXPLAINED",
+      "302": "EXPLAINED",
+      "303": "UNDETERMINED",
+      "304": "UNDETERMINED",
+      "305": "UNDETERMINED",
+      "306": "UNDETERMINED",
+      "307": "UNDETERMINED",
+      "310": "EXPLAINED",
+      "311": "EXPLAINED",
+      "312": "UNDETERMINED",
+      "313": "EXPLAINED",
+      "314": "UNDETERMINED",
+      "315": "EXPLAINED",
+      "316": "UNDETERMINED",
+      "317": "UNDETERMINED",
+      "318": "UNDETERMINED",
+      "319": "UNDETERMINED",
+      "320": "UNDETERMINED",
+      "321": "UNDETERMINED",
+      "322": "UNGROUNDED",
+      "324": "EXPLAINED",
+      "328": "EXPLAINED",
+      "329": "UNDETERMINED",
+      "331": "UNDETERMINED",
+      "332": "UNDETERMINED",
+      "333": "UNDETERMINED",
+      "334": "UNDETERMINED",
+      "335": "UNDETERMINED",
+      "336": "UNDETERMINED",
+      "337": "UNGROUNDED",
+      "340": "UNDETERMINED",
+      "341": "UNDETERMINED",
+      "342": "UNDETERMINED",
+      "343": "UNDETERMINED",
+      "344": "UNDETERMINED",
+      "345": "UNDETERMINED",
+      "346": "UNDETERMINED",
+      "347": "EXPLAINED",
+      "350": "EXPLAINED",
+      "351": "UNDETERMINED",
+      "352": "UNDETERMINED",
+      "353": "UNDETERMINED",
+      "354": "UNDETERMINED",
+      "355": "UNDETERMINED",
+      "356": "UNDETERMINED",
+      "357": "VIEW_ONLY",
+      "359": "UNDETERMINED",
+      "360": "UNDETERMINED",
+      "361": "EXPLAINED",
+      "362": "EXPLAINED",
+      "363": "UNDETERMINED",
+      "364": "UNDETERMINED",
+      "365": "UNDETERMINED",
+      "366": "EXPLAINED",
+      "367": "UNDETERMINED",
+      "368": "EXPLAINED",
+      "369": "EXPLAINED",
+      "370": "UNDETERMINED",
+      "371": "UNDETERMINED",
+      "372": "UNDETERMINED",
+      "373": "UNDETERMINED",
+      "374": "UNDETERMINED",
+      "375": "UNDETERMINED",
+      "376": "UNGROUNDED",
+      "379": "EXPLAINED",
+      "380": "UNGROUNDED",
+      "382": "EXPLAINED",
+      "384": "UNDETERMINED",
+      "385": "UNDETERMINED",
+      "388": "UNDETERMINED",
+      "389": "UNDETERMINED",
+      "390": "UNDETERMINED",
+      "391": "UNDETERMINED",
+      "392": "UNGROUNDED",
+      "394": "UNDETERMINED",
+      "395": "UNDETERMINED",
+      "396": "UNDETERMINED",
+      "397": "UNDETERMINED",
+      "398": "EXPLAINED"
+     }
+    }
+   },
+   "validated": {
+    "types_recovered": 2,
+    "attributes_recovered": 1,
+    "relations_recovered": 0,
+    "operators_recovered": 0,
+    "operators_observed": 6,
+    "learned_operators": 9,
+    "operator_names_recovered": [],
+    "operators_with_any_explanation": [],
+    "gtc": 0.417,
+    "rtc": 0.0,
+    "rtc_any": 0.0,
+    "registered_deltas": 23,
+    "registered_delta_precision": 0.0,
+    "strict_registered_delta_precision": 0.0,
+    "false_registered_delta_categories": {
+     "incorrect_persistence": 20,
+     "spurious_relation": 1,
+     "wrong_attribute_attachment": 2
+    },
+    "spurious_registered_delta_rate": 1.0,
+    "mention_pair_precision": null,
+    "mention_pair_recall": null,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null,
+    "view_false_positive_rate": 0.852,
+    "abstraction_contradiction_rate": null,
+    "comparable_abstraction_groups": 0,
+    "consistent_abstraction_groups": 0,
+    "contradictory_abstraction_groups": 0,
+    "comparable_abstraction_pairs": 0,
+    "consistent_abstraction_pairs": 0,
+    "contradictory_abstraction_pairs": 0,
+    "unresolved_abstraction_pairs_due_unknown": 136,
+    "argument_binding": {
+     "RegisterPatient": {
+      "successful_instances": 10,
+      "with_abstract_transition": 10,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "CheckIn": {
+      "successful_instances": 5,
+      "with_abstract_transition": 1,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "AssignVet": {
+      "successful_instances": 5,
+      "with_abstract_transition": 0,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": null,
+      "conditional_action_arguments_grounded_rate": null
+     },
+     "CancelAppointment": {
+      "successful_instances": 3,
+      "with_abstract_transition": 1,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": 0.0,
+      "conditional_action_arguments_grounded_rate": 0.0
+     },
+     "StartExam": {
+      "successful_instances": 2,
+      "with_abstract_transition": 0,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": null,
+      "conditional_action_arguments_grounded_rate": null
+     },
+     "CompleteAppointment": {
+      "successful_instances": 1,
+      "with_abstract_transition": 0,
+      "all_arguments_bound": 0,
+      "action_arguments_grounded": 0,
+      "all_arguments_bound_rate": 0.0,
+      "action_arguments_grounded_rate": 0.0,
+      "conditional_all_arguments_bound_rate": null,
+      "conditional_action_arguments_grounded_rate": null
+     }
+    },
+    "per_operator": {
+     "RegisterPatient": {
+      "n": 10,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 20,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 10,
+      "failures": 13,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "ScheduleAppointment": {
+      "successes": 0,
+      "failures": 4,
+      "explained": 0,
+      "invisible": 0,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "AssignVet": {
+      "n": 3,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 0,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": null,
+      "strict_registered_delta_precision": null,
+      "successes": 5,
+      "failures": 1,
+      "explained": 0,
+      "invisible": 5,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "CheckIn": {
+      "n": 5,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 2,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 5,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 5,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "StartExam": {
+      "n": 2,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 0,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": null,
+      "strict_registered_delta_precision": null,
+      "successes": 2,
+      "failures": 2,
+      "explained": 0,
+      "invisible": 2,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "CompleteAppointment": {
+      "n": 1,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 0,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": null,
+      "strict_registered_delta_precision": null,
+      "successes": 1,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 1,
+      "rejected": 0,
+      "unbound_failures": 0
+     },
+     "CancelAppointment": {
+      "n": 3,
+      "full": 0,
+      "any": 0,
+      "registered_deltas": 1,
+      "matched_registered_deltas": 0,
+      "strict_matched_registered_deltas": 0,
+      "registered_delta_precision": 0.0,
+      "strict_registered_delta_precision": 0.0,
+      "successes": 3,
+      "failures": 0,
+      "explained": 0,
+      "invisible": 3,
+      "rejected": 0,
+      "unbound_failures": 0
+     }
+    },
+    "induction": {
+     "transitions": 81,
+     "no_op_segments": 272,
+     "hypotheses_before_min_support": 17,
+     "reattributed_domain_changes": 0,
+     "unattributed_sensing_changes": [
+      {
+       "revealing_step": 22,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        19
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "e8b3aa3083384e63"
+      },
+      {
+       "revealing_step": 68,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        66
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "9eb6509a2e0ba026"
+      },
+      {
+       "revealing_step": 90,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        87
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "1e3dd9e754bc83d7"
+      },
+      {
+       "revealing_step": 152,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        150
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "81b730fc236be9f7"
+      },
+      {
+       "revealing_step": 184,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        179
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "1b10a0e441be5acf"
+      },
+      {
+       "revealing_step": 203,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        197
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "1b10a0e441be5acf"
+      },
+      {
+       "revealing_step": 214,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        205
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "1b10a0e441be5acf"
+      },
+      {
+       "revealing_step": 238,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        232
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T2:'Name' {'attr:textbox#0': None}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "ccdeb2f4ef8c2d94"
+      },
+      {
+       "revealing_step": 251,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        243
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "ccdeb2f4ef8c2d94"
+      },
+      {
+       "revealing_step": 263,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        258
+       ],
+       "delta": "+T1:'Name' {}; -T2:'Name' {'attr:textbox#0': None}",
+       "observation": "ccdeb2f4ef8c2d94"
+      },
+      {
+       "revealing_step": 281,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        279
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "06730f5b33b1758c"
+      },
+      {
+       "revealing_step": 298,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        294
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "06730f5b33b1758c"
+      },
+      {
+       "revealing_step": 323,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        315
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "aabd3587b2e74ca5"
+      },
+      {
+       "revealing_step": 338,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        328
+       ],
+       "delta": "+T1:'Name' {}; +T1:'Species' {}; -T1:'Patient' {}; -T1:'Reason' {}",
+       "observation": "aabd3587b2e74ca5"
+      },
+      {
+       "revealing_step": 377,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        369
+       ],
+       "delta": "+T1:'Name' {}; -T2:'Name' {'attr:textbox#0': None}",
+       "observation": "ee3c7cb8bf7dabcf"
+      },
+      {
+       "revealing_step": 381,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        379
+       ],
+       "delta": "+T1:'Name' {}; -T2:'Name' {'attr:textbox#0': None}",
+       "observation": "ee3c7cb8bf7dabcf"
+      },
+      {
+       "revealing_step": 400,
+       "kind": "reload_after_intervening_actions",
+       "last_transition_steps": [
+        398
+       ],
+       "delta": "+T1:'Owner' {}; +T1:'Species' {}",
+       "observation": "ee3c7cb8bf7dabcf"
+      }
+     ],
+     "delayed_object_resolutions": [],
+     "hypotheses": [
+      {
+       "name": "op0",
+       "support": 16,
+       "negative_examples": 8,
+       "unexplained_negative_examples": 2,
+       "actions": [
+        "click(button:Vets)"
+       ],
+       "effects": [
+        "delete ?o0",
+        "delete ?o1"
+       ],
+       "preconditions": [
+        "('empty', '?o0')"
+       ]
+      },
+      {
+       "name": "op1",
+       "support": 15,
+       "negative_examples": 207,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "type(textbox#textbox@0af5a3@T1[?o0], ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T2(id=Name, attr:textbox#0=None)",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('nonempty_str', '?s0')"
+       ]
+      },
+      {
+       "name": "op2",
+       "support": 10,
+       "negative_examples": 13,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Register patient)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Name)",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('empty', '?o0')"
+       ]
+      },
+      {
+       "name": "op3",
+       "support": 9,
+       "negative_examples": 16,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "delete ?o0",
+        "delete ?o1"
+       ],
+       "preconditions": [
+        "('empty', '?o1')"
+       ]
+      },
+      {
+       "name": "op4",
+       "support": 8,
+       "negative_examples": 13,
+       "unexplained_negative_examples": 13,
+       "actions": [
+        "click(button:Clients)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Owner)",
+        "?new1 := new T1(id=Species)"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op5",
+       "support": 7,
+       "negative_examples": 18,
+       "unexplained_negative_examples": 7,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "?new2 := new T1(id=Owner)",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('empty', '?o0')",
+        "('attr_ne', '?o0', 'id', 'Species')"
+       ]
+      },
+      {
+       "name": "op6",
+       "support": 4,
+       "negative_examples": 21,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "?new2 := new T1(id=Name)",
+        "?new3 := new T1(id=Species)",
+        "delete ?new0",
+        "delete ?new1",
+        "delete ?new2",
+        "delete ?new3"
+       ],
+       "preconditions": [
+        "('empty', '?new2')"
+       ]
+      },
+      {
+       "name": "op7",
+       "support": 2,
+       "negative_examples": 19,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Clients)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Name)",
+        "?new1 := new T1(id=Species)",
+        "delete ?o0",
+        "delete ?o1"
+       ],
+       "preconditions": [
+        "('empty', '?o0')"
+       ]
+      },
+      {
+       "name": "op8",
+       "support": 2,
+       "negative_examples": 220,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "type(textbox#textbox@0af5a3@T1[?o0], ?s0)"
+       ],
+       "effects": [
+        "?new0 := new T2(id=Name, attr:textbox#0=None)",
+        "?new1 := new T1(id=Name)",
+        "delete ?new0",
+        "delete ?new1"
+       ],
+       "preconditions": [
+        "('empty', '?new1')"
+       ]
+      },
+      {
+       "name": "op9",
+       "support": 1,
+       "negative_examples": 23,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Vets)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Name)",
+        "?new1 := new T1(id=Owner)",
+        "?new2 := new T1(id=Species)",
+        "delete ?new1",
+        "delete ?o0",
+        "delete ?o1"
+       ],
+       "preconditions": [
+        "('empty', '?new1')"
+       ]
+      },
+      {
+       "name": "op10",
+       "support": 1,
+       "negative_examples": 23,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Vets)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Name)",
+        "delete ?o0",
+        "delete ?o1",
+        "delete ?o2"
+       ],
+       "preconditions": [
+        "('empty', '?o2')"
+       ]
+      },
+      {
+       "name": "op11",
+       "support": 1,
+       "negative_examples": 24,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "?new2 := new T1(id=Owner)",
+        "?new3 := new T1(id=Name)",
+        "?new4 := new T1(id=Species)",
+        "delete ?new0",
+        "delete ?new1",
+        "delete ?new3"
+       ],
+       "preconditions": [
+        "('empty', '?new3')"
+       ]
+      },
+      {
+       "name": "op12",
+       "support": 1,
+       "negative_examples": 24,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "?new2 := new T1(id=Name)",
+        "?new3 := new T1(id=Species)",
+        "delete ?new0",
+        "delete ?new1",
+        "delete ?new3",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('empty', '?new3')"
+       ]
+      },
+      {
+       "name": "op13",
+       "support": 1,
+       "negative_examples": 23,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "click(button:Vets)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Owner)",
+        "?new1 := new T1(id=Species)",
+        "delete ?new0",
+        "delete ?new1"
+       ],
+       "preconditions": [
+        "('empty', '?new0')"
+       ]
+      },
+      {
+       "name": "op14",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 1,
+       "actions": [
+        "click(button:Cancel@b1b9fa@T6[?o0])"
+       ],
+       "effects": [
+        "attr:cell#0@4(?o0) := 'cancelled'"
+       ],
+       "preconditions": []
+      },
+      {
+       "name": "op15",
+       "support": 1,
+       "negative_examples": 24,
+       "unexplained_negative_examples": 3,
+       "actions": [
+        "click(button:Appointments)"
+       ],
+       "effects": [
+        "?new0 := new T1(id=Patient)",
+        "?new1 := new T1(id=Reason)",
+        "delete ?o0"
+       ],
+       "preconditions": [
+        "('attr_ne', '?o0', 'id', 'Name')",
+        "('empty', '?o0')"
+       ]
+      },
+      {
+       "name": "op16",
+       "support": 1,
+       "negative_examples": 1,
+       "unexplained_negative_examples": 0,
+       "actions": [
+        "context(cell#4, ?o0)",
+        "click(button:Check in)"
+       ],
+       "effects": [
+        "attr:cell#0@4(?o0) := 'checked_in'",
+        "rel:3(?o0) := 'T3:Omar Reyes'"
+       ],
+       "preconditions": [
+        "('empty', '?o0')"
+       ]
+      }
+     ]
+    },
+    "counterexamples": {
+     "status_counts": {
+      "EXPLAINED": 81,
+      "UNDETERMINED": 200,
+      "UNGROUNDED": 17,
+      "VIEW_ONLY": 2
+     },
+     "by_step": {
+      "2": "EXPLAINED",
+      "3": "EXPLAINED",
+      "4": "EXPLAINED",
+      "5": "EXPLAINED",
+      "9": "EXPLAINED",
+      "10": "EXPLAINED",
+      "11": "EXPLAINED",
+      "12": "EXPLAINED",
+      "13": "EXPLAINED",
+      "15": "EXPLAINED",
+      "16": "EXPLAINED",
+      "17": "EXPLAINED",
+      "18": "EXPLAINED",
+      "19": "EXPLAINED",
+      "26": "EXPLAINED",
+      "27": "EXPLAINED",
+      "31": "UNDETERMINED",
+      "32": "UNDETERMINED",
+      "33": "UNDETERMINED",
+      "34": "UNDETERMINED",
+      "35": "UNDETERMINED",
+      "36": "UNDETERMINED",
+      "37": "UNDETERMINED",
+      "38": "UNDETERMINED",
+      "39": "UNDETERMINED",
+      "41": "UNDETERMINED",
+      "42": "UNDETERMINED",
+      "43": "UNDETERMINED",
+      "45": "UNDETERMINED",
+      "49": "UNDETERMINED",
+      "50": "UNDETERMINED",
+      "51": "EXPLAINED",
+      "55": "EXPLAINED",
+      "56": "UNDETERMINED",
+      "57": "UNDETERMINED",
+      "58": "EXPLAINED",
+      "60": "EXPLAINED",
+      "61": "UNDETERMINED",
+      "62": "UNDETERMINED",
+      "63": "UNDETERMINED",
+      "64": "UNDETERMINED",
+      "65": "UNDETERMINED",
+      "66": "EXPLAINED",
+      "67": "UNGROUNDED",
+      "69": "UNDETERMINED",
+      "70": "UNDETERMINED",
+      "71": "UNDETERMINED",
+      "72": "UNDETERMINED",
+      "73": "UNDETERMINED",
+      "74": "EXPLAINED",
+      "76": "EXPLAINED",
+      "77": "EXPLAINED",
+      "79": "UNDETERMINED",
+      "80": "UNDETERMINED",
+      "81": "UNGROUNDED",
+      "83": "UNDETERMINED",
+      "84": "UNDETERMINED",
+      "85": "EXPLAINED",
+      "86": "EXPLAINED",
+      "87": "EXPLAINED",
+      "93": "UNDETERMINED",
+      "94": "UNDETERMINED",
+      "95": "UNDETERMINED",
+      "96": "UNDETERMINED",
+      "97": "UNGROUNDED",
+      "99": "UNDETERMINED",
+      "100": "UNDETERMINED",
+      "101": "UNDETERMINED",
+      "102": "UNDETERMINED",
+      "103": "UNDETERMINED",
+      "104": "UNDETERMINED",
+      "105": "EXPLAINED",
+      "106": "EXPLAINED",
+      "107": "EXPLAINED",
+      "109": "UNDETERMINED",
+      "110": "UNDETERMINED",
+      "112": "UNDETERMINED",
+      "113": "UNDETERMINED",
+      "117": "UNDETERMINED",
+      "118": "UNDETERMINED",
+      "119": "UNDETERMINED",
+      "120": "EXPLAINED",
+      "121": "EXPLAINED",
+      "122": "UNDETERMINED",
+      "123": "EXPLAINED",
+      "125": "EXPLAINED",
+      "127": "UNDETERMINED",
+      "128": "UNDETERMINED",
+      "129": "UNDETERMINED",
+      "130": "UNDETERMINED",
+      "131": "EXPLAINED",
+      "132": "EXPLAINED",
+      "134": "UNDETERMINED",
+      "135": "UNDETERMINED",
+      "136": "UNDETERMINED",
+      "138": "EXPLAINED",
+      "141": "EXPLAINED",
+      "142": "UNDETERMINED",
+      "143": "UNDETERMINED",
+      "144": "UNDETERMINED",
+      "145": "EXPLAINED",
+      "147": "UNDETERMINED",
+      "148": "UNDETERMINED",
+      "149": "EXPLAINED",
+      "150": "EXPLAINED",
+      "151": "UNGROUNDED",
+      "154": "UNDETERMINED",
+      "155": "UNDETERMINED",
+      "156": "UNDETERMINED",
+      "157": "UNDETERMINED",
+      "158": "UNDETERMINED",
+      "159": "UNDETERMINED",
+      "160": "UNDETERMINED",
+      "161": "UNDETERMINED",
+      "162": "UNDETERMINED",
+      "163": "UNDETERMINED",
+      "164": "UNDETERMINED",
+      "165": "UNDETERMINED",
+      "166": "UNGROUNDED",
+      "170": "VIEW_ONLY",
+      "172": "UNDETERMINED",
+      "173": "UNDETERMINED",
+      "174": "UNDETERMINED",
+      "175": "UNGROUNDED",
+      "177": "EXPLAINED",
+      "178": "UNDETERMINED",
+      "179": "EXPLAINED",
+      "180": "UNDETERMINED",
+      "181": "UNDETERMINED",
+      "182": "UNDETERMINED",
+      "183": "UNGROUNDED",
+      "185": "UNDETERMINED",
+      "186": "UNDETERMINED",
+      "187": "UNDETERMINED",
+      "188": "UNDETERMINED",
+      "190": "UNDETERMINED",
+      "191": "UNDETERMINED",
+      "192": "UNDETERMINED",
+      "193": "UNDETERMINED",
+      "194": "UNDETERMINED",
+      "195": "UNDETERMINED",
+      "196": "EXPLAINED",
+      "197": "EXPLAINED",
+      "198": "UNDETERMINED",
+      "199": "UNDETERMINED",
+      "200": "UNDETERMINED",
+      "201": "UNDETERMINED",
+      "204": "EXPLAINED",
+      "205": "EXPLAINED",
+      "206": "UNDETERMINED",
+      "207": "UNDETERMINED",
+      "208": "UNDETERMINED",
+      "210": "UNDETERMINED",
+      "211": "UNDETERMINED",
+      "212": "UNDETERMINED",
+      "213": "UNGROUNDED",
+      "216": "UNDETERMINED",
+      "217": "UNDETERMINED",
+      "218": "UNDETERMINED",
+      "219": "EXPLAINED",
+      "221": "UNDETERMINED",
+      "222": "EXPLAINED",
+      "225": "UNDETERMINED",
+      "226": "UNDETERMINED",
+      "228": "EXPLAINED",
+      "229": "UNDETERMINED",
+      "230": "EXPLAINED",
+      "232": "EXPLAINED",
+      "233": "UNDETERMINED",
+      "234": "UNDETERMINED",
+      "235": "UNDETERMINED",
+      "236": "UNDETERMINED",
+      "237": "UNGROUNDED",
+      "239": "UNDETERMINED",
+      "240": "EXPLAINED",
+      "243": "EXPLAINED",
+      "244": "UNDETERMINED",
+      "245": "UNDETERMINED",
+      "246": "UNDETERMINED",
+      "247": "UNDETERMINED",
+      "248": "UNDETERMINED",
+      "249": "UNDETERMINED",
+      "250": "UNGROUNDED",
+      "252": "UNDETERMINED",
+      "253": "UNDETERMINED",
+      "254": "UNDETERMINED",
+      "255": "UNDETERMINED",
+      "256": "UNDETERMINED",
+      "257": "UNDETERMINED",
+      "258": "EXPLAINED",
+      "259": "UNDETERMINED",
+      "260": "UNDETERMINED",
+      "261": "UNDETERMINED",
+      "264": "UNDETERMINED",
+      "265": "EXPLAINED",
+      "266": "UNDETERMINED",
+      "268": "EXPLAINED",
+      "269": "UNDETERMINED",
+      "271": "UNDETERMINED",
+      "272": "UNDETERMINED",
+      "273": "EXPLAINED",
+      "274": "EXPLAINED",
+      "275": "EXPLAINED",
+      "278": "UNDETERMINED",
+      "279": "EXPLAINED",
+      "280": "UNGROUNDED",
+      "283": "UNDETERMINED",
+      "284": "UNDETERMINED",
+      "285": "UNDETERMINED",
+      "286": "UNDETERMINED",
+      "287": "UNDETERMINED",
+      "288": "UNDETERMINED",
+      "289": "UNDETERMINED",
+      "290": "UNDETERMINED",
+      "292": "EXPLAINED",
+      "294": "EXPLAINED",
+      "295": "UNDETERMINED",
+      "296": "UNDETERMINED",
+      "297": "UNGROUNDED",
+      "299": "UNDETERMINED",
+      "300": "UNDETERMINED",
+      "301": "EXPLAINED",
+      "302": "EXPLAINED",
+      "303": "UNDETERMINED",
+      "304": "UNDETERMINED",
+      "305": "UNDETERMINED",
+      "306": "UNDETERMINED",
+      "307": "UNDETERMINED",
+      "310": "EXPLAINED",
+      "311": "EXPLAINED",
+      "312": "UNDETERMINED",
+      "313": "EXPLAINED",
+      "314": "UNDETERMINED",
+      "315": "EXPLAINED",
+      "316": "UNDETERMINED",
+      "317": "UNDETERMINED",
+      "318": "UNDETERMINED",
+      "319": "UNDETERMINED",
+      "320": "UNDETERMINED",
+      "321": "UNDETERMINED",
+      "322": "UNGROUNDED",
+      "324": "EXPLAINED",
+      "328": "EXPLAINED",
+      "329": "UNDETERMINED",
+      "331": "UNDETERMINED",
+      "332": "UNDETERMINED",
+      "333": "UNDETERMINED",
+      "334": "UNDETERMINED",
+      "335": "UNDETERMINED",
+      "336": "UNDETERMINED",
+      "337": "UNGROUNDED",
+      "340": "UNDETERMINED",
+      "341": "UNDETERMINED",
+      "342": "UNDETERMINED",
+      "343": "UNDETERMINED",
+      "344": "UNDETERMINED",
+      "345": "UNDETERMINED",
+      "346": "UNDETERMINED",
+      "347": "EXPLAINED",
+      "350": "EXPLAINED",
+      "351": "UNDETERMINED",
+      "352": "UNDETERMINED",
+      "353": "UNDETERMINED",
+      "354": "UNDETERMINED",
+      "355": "UNDETERMINED",
+      "356": "UNDETERMINED",
+      "357": "VIEW_ONLY",
+      "359": "UNDETERMINED",
+      "360": "UNDETERMINED",
+      "361": "EXPLAINED",
+      "362": "EXPLAINED",
+      "363": "UNDETERMINED",
+      "364": "UNDETERMINED",
+      "365": "UNDETERMINED",
+      "366": "EXPLAINED",
+      "367": "UNDETERMINED",
+      "368": "EXPLAINED",
+      "369": "EXPLAINED",
+      "370": "UNDETERMINED",
+      "371": "UNDETERMINED",
+      "372": "UNDETERMINED",
+      "373": "UNDETERMINED",
+      "374": "UNDETERMINED",
+      "375": "UNDETERMINED",
+      "376": "UNGROUNDED",
+      "379": "EXPLAINED",
+      "380": "UNGROUNDED",
+      "382": "EXPLAINED",
+      "384": "UNDETERMINED",
+      "385": "UNDETERMINED",
+      "388": "UNDETERMINED",
+      "389": "UNDETERMINED",
+      "390": "UNDETERMINED",
+      "391": "UNDETERMINED",
+      "392": "UNGROUNDED",
+      "394": "UNDETERMINED",
+      "395": "UNDETERMINED",
+      "396": "UNDETERMINED",
+      "397": "UNDETERMINED",
+      "398": "EXPLAINED"
+     }
+    }
+   },
+   "refinement_process": null
+  }
+ }
+}
