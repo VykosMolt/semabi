@@ -1,0 +1,772 @@
+{
+ "run": "runs/v4/sonnet_02_barter_market_dev",
+ "tag": "sonnet_02_barter_market",
+ "conditions": {
+  "v2": {
+   "rtc": 0.038,
+   "registered_transitions": 53,
+   "registered_deltas": 87,
+   "matched_registered_deltas": 2,
+   "strict_registered_delta_precision": 0.023,
+   "false_delta_categories": {
+    "incorrect_persistence": 68,
+    "wrong_attribute_attachment": 17
+   },
+   "gtc": 0.094,
+   "view_false_positive_rate": 0.595,
+   "types": {
+    "hidden": 4,
+    "learned": 5,
+    "recovered": 2,
+    "map": {
+     "T3": "Item",
+     "T2": "Trader"
+    }
+   },
+   "predicates": {
+    "hidden_attrs": 11,
+    "recovered_attrs": 1,
+    "hidden_rels": 9,
+    "recovered_rels": 0,
+    "attr_map": {
+     "T3.attr:\u2014#1": "category"
+    },
+    "rel_map": {}
+   },
+   "operators": {
+    "hidden": 7,
+    "observed_in_trace": 7,
+    "recovered": 0,
+    "recovered_ops": [],
+    "learned": 16,
+    "spurious_learned": [
+     "op0",
+     "op1",
+     "op2",
+     "op3",
+     "op4",
+     "op5",
+     "op6",
+     "op7",
+     "op8",
+     "op9",
+     "op10",
+     "op11",
+     "op12",
+     "op13",
+     "op14",
+     "op15"
+    ],
+    "precision": 0.0,
+    "failure_rejection_rate": 0.0
+   },
+   "operators_per_op": {
+    "RegisterItem": [
+     5,
+     0
+    ],
+    "CreateListing": [
+     18,
+     0
+    ],
+    "WithdrawListing": [
+     7,
+     0
+    ],
+    "MakeOffer": [
+     10,
+     0
+    ],
+    "WithdrawOffer": [
+     2,
+     0
+    ],
+    "DeclineOffer": [
+     4,
+     0
+    ],
+    "AcceptOffer": [
+     7,
+     0
+    ]
+   },
+   "object_layer": {
+    "grounded_frac": null,
+    "pair_precision": null,
+    "pair_recall": null,
+    "learned_keys_merging_entities": 0,
+    "entities_split_across_keys": 0,
+    "entities_grounded": 0,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null
+   },
+   "argument_binding": {
+    "CreateListing": 0.0,
+    "RegisterItem": 0.0,
+    "WithdrawListing": 0.0,
+    "AcceptOffer": 0.0,
+    "MakeOffer": 0.0,
+    "WithdrawOffer": 0.0,
+    "DeclineOffer": 0.0
+   },
+   "cost_primitives": 415
+  },
+  "v4": {
+   "rtc": 0.0,
+   "registered_transitions": 53,
+   "registered_deltas": 76,
+   "matched_registered_deltas": 0,
+   "strict_registered_delta_precision": 0.0,
+   "false_delta_categories": {
+    "incorrect_persistence": 59,
+    "wrong_attribute_attachment": 17
+   },
+   "gtc": 0.094,
+   "view_false_positive_rate": 0.639,
+   "types": {
+    "hidden": 4,
+    "learned": 3,
+    "recovered": 2,
+    "map": {
+     "T1": "Item",
+     "T2": "Trader"
+    }
+   },
+   "predicates": {
+    "hidden_attrs": 11,
+    "recovered_attrs": 1,
+    "hidden_rels": 9,
+    "recovered_rels": 0,
+    "attr_map": {
+     "T1.attr:cell#0@2": "category"
+    },
+    "rel_map": {}
+   },
+   "operators": {
+    "hidden": 7,
+    "observed_in_trace": 7,
+    "recovered": 0,
+    "recovered_ops": [],
+    "learned": 17,
+    "spurious_learned": [
+     "op0",
+     "op1",
+     "op2",
+     "op3",
+     "op4",
+     "op5",
+     "op6",
+     "op7",
+     "op8",
+     "op9",
+     "op10",
+     "op11",
+     "op12",
+     "op13",
+     "op14",
+     "op15",
+     "op16"
+    ],
+    "precision": 0.0,
+    "failure_rejection_rate": 0.0
+   },
+   "operators_per_op": {
+    "RegisterItem": [
+     5,
+     0
+    ],
+    "CreateListing": [
+     18,
+     0
+    ],
+    "WithdrawListing": [
+     7,
+     0
+    ],
+    "MakeOffer": [
+     10,
+     0
+    ],
+    "WithdrawOffer": [
+     2,
+     0
+    ],
+    "DeclineOffer": [
+     4,
+     0
+    ],
+    "AcceptOffer": [
+     7,
+     0
+    ]
+   },
+   "object_layer": {
+    "grounded_frac": null,
+    "pair_precision": null,
+    "pair_recall": null,
+    "learned_keys_merging_entities": 0,
+    "entities_split_across_keys": 0,
+    "entities_grounded": 0,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null
+   },
+   "argument_binding": {
+    "CreateListing": 0.0,
+    "RegisterItem": 0.0,
+    "WithdrawListing": 0.0,
+    "AcceptOffer": 0.0,
+    "MakeOffer": 0.0,
+    "WithdrawOffer": 0.0,
+    "DeclineOffer": 0.0
+   },
+   "cost_primitives": 415
+  }
+ },
+ "prospective": null,
+ "v4_search": {
+  "initial": {
+   "contradictions": 18,
+   "churn": 21,
+   "visibility": 20,
+   "unexplained": 30,
+   "spurious": 0,
+   "explained": 86,
+   "complexity": 42,
+   "steps": 423,
+   "churn_steps": [
+    101,
+    113,
+    115,
+    116,
+    205,
+    218,
+    220,
+    268,
+    274,
+    280,
+    281,
+    285,
+    294,
+    310,
+    346,
+    361,
+    374,
+    377,
+    384,
+    388,
+    397
+   ],
+   "contradiction_steps": [
+    412,
+    420,
+    59,
+    78,
+    112,
+    127,
+    137,
+    139,
+    158,
+    175,
+    220,
+    225,
+    238,
+    245,
+    281,
+    292,
+    344,
+    406
+   ],
+   "visibility_steps": [
+    8,
+    12,
+    25,
+    28,
+    96,
+    98,
+    99,
+    121,
+    128,
+    149,
+    186,
+    187,
+    202,
+    213,
+    215,
+    267,
+    299,
+    325,
+    360,
+    404
+   ]
+  },
+  "final": {
+   "contradictions": 17,
+   "churn": 0,
+   "visibility": 13,
+   "unexplained": 22,
+   "spurious": 0,
+   "explained": 101,
+   "complexity": 25,
+   "steps": 423,
+   "churn_steps": [],
+   "contradiction_steps": [
+    412,
+    420,
+    59,
+    78,
+    112,
+    127,
+    137,
+    139,
+    158,
+    175,
+    220,
+    225,
+    238,
+    245,
+    281,
+    344,
+    406
+   ],
+   "visibility_steps": [
+    12,
+    25,
+    96,
+    98,
+    128,
+    186,
+    187,
+    202,
+    213,
+    215,
+    267,
+    325,
+    404
+   ]
+  },
+  "moves": [
+   {
+    "move": "identity",
+    "family": "listitem[_](text[_],textbox[_],button[_],text[_])",
+    "templates": 1,
+    "key_slot": "text#1",
+    "status": "SUPPORTED",
+    "score": {
+     "contradictions": 18,
+     "churn": 19,
+     "visibility": 19,
+     "unexplained": 30,
+     "spurious": 0,
+     "explained": 88,
+     "complexity": 41,
+     "steps": 423,
+     "churn_steps": [
+      101,
+      113,
+      115,
+      116,
+      205,
+      218,
+      220,
+      274,
+      280,
+      285,
+      294,
+      310,
+      346,
+      361,
+      374,
+      377,
+      384,
+      388,
+      397
+     ],
+     "contradiction_steps": [
+      412,
+      420,
+      59,
+      78,
+      112,
+      127,
+      137,
+      139,
+      158,
+      175,
+      220,
+      225,
+      238,
+      245,
+      281,
+      292,
+      344,
+      406
+     ],
+     "visibility_steps": [
+      12,
+      25,
+      28,
+      96,
+      98,
+      99,
+      121,
+      128,
+      149,
+      186,
+      187,
+      202,
+      213,
+      215,
+      267,
+      299,
+      325,
+      360,
+      404
+     ]
+    }
+   },
+   {
+    "move": "identity",
+    "family": "listitem[_](text[_],textbox[_],button[_],text[_])",
+    "templates": 1,
+    "key_slot": null,
+    "status": "NO_IDENTITY",
+    "score": {
+     "contradictions": 17,
+     "churn": 0,
+     "visibility": 13,
+     "unexplained": 22,
+     "spurious": 0,
+     "explained": 101,
+     "complexity": 34,
+     "steps": 423,
+     "churn_steps": [],
+     "contradiction_steps": [
+      412,
+      420,
+      59,
+      78,
+      112,
+      127,
+      137,
+      139,
+      158,
+      175,
+      220,
+      225,
+      238,
+      245,
+      281,
+      344,
+      406
+     ],
+     "visibility_steps": [
+      12,
+      25,
+      96,
+      98,
+      128,
+      186,
+      187,
+      202,
+      213,
+      215,
+      267,
+      325,
+      404
+     ]
+    }
+   },
+   {
+    "move": "identity",
+    "family": "listitem[_](text[_],textbox[_],button[_],text[_])@ctx0)",
+    "templates": 1,
+    "key_slot": null,
+    "status": "NO_IDENTITY",
+    "score": {
+     "contradictions": 17,
+     "churn": 0,
+     "visibility": 13,
+     "unexplained": 22,
+     "spurious": 0,
+     "explained": 101,
+     "complexity": 25,
+     "steps": 423,
+     "churn_steps": [],
+     "contradiction_steps": [
+      412,
+      420,
+      59,
+      78,
+      112,
+      127,
+      137,
+      139,
+      158,
+      175,
+      220,
+      225,
+      238,
+      245,
+      281,
+      344,
+      406
+     ],
+     "visibility_steps": [
+      12,
+      25,
+      96,
+      98,
+      128,
+      186,
+      187,
+      202,
+      213,
+      215,
+      267,
+      325,
+      404
+     ]
+    }
+   }
+  ],
+  "open_questions": [
+   {
+    "template": "button[_]",
+    "left": {
+     "template": "button[_]",
+     "key_slot": "button#0",
+     "status": "SUPPORTED",
+     "why": "separates 216/216 co-present pairs, 8 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 216,
+      "separated_pairs": 216,
+      "discrimination": 1.0,
+      "coverage": 1.0,
+      "distinct_values": 8,
+      "constant_share": 0.21,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "button[_]",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "why": "no identity-bearing observation claimed",
+     "evidence": {
+      "copresent_pairs": 216,
+      "separated_pairs": 0,
+      "discrimination": 0.0,
+      "coverage": 0.0,
+      "distinct_values": 0,
+      "constant_share": 0.0,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "reason": "undecided: chosen explains 86 with 59 errors, the alternative explains 40 with 37"
+   },
+   {
+    "template": "listitem[_](text[_],textbox[_],button[_],text[_])",
+    "left": {
+     "template": "listitem[_](text[_],textbox[_],button[_],text[_])",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "why": "no identity-bearing observation claimed",
+     "evidence": {
+      "copresent_pairs": 69,
+      "separated_pairs": 0,
+      "discrimination": 0.0,
+      "coverage": 0.0,
+      "distinct_values": 0,
+      "constant_share": 0.0,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "listitem[_](text[_],textbox[_],button[_],text[_])",
+     "key_slot": "textbox#0",
+     "status": "CONTRADICTED",
+     "why": "one value only: it names no instance in particular",
+     "evidence": {
+      "copresent_pairs": 69,
+      "separated_pairs": 0,
+      "discrimination": 0.0,
+      "coverage": 1.0,
+      "distinct_values": 1,
+      "constant_share": 1.0,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 1.0
+     }
+    },
+    "reason": "undecided: chosen explains 101 with 30 errors, the alternative explains 108 with 34"
+   },
+   {
+    "template": "row[_](cell[_])",
+    "left": {
+     "template": "row[_](cell[_])",
+     "key_slot": "cell#0|cell#0@3",
+     "status": "SUPPORTED",
+     "why": "separates 297/299 co-present pairs, 26 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 299,
+      "separated_pairs": 297,
+      "discrimination": 0.9933110367892977,
+      "coverage": 1.0,
+      "distinct_values": 26,
+      "constant_share": 0.1,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "row[_](cell[_])",
+     "key_slot": "cell#0@3|cell#0@4",
+     "status": "SUPPORTED",
+     "why": "separates 299/299 co-present pairs, 23 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 299,
+      "separated_pairs": 299,
+      "discrimination": 1.0,
+      "coverage": 1.0,
+      "distinct_values": 23,
+      "constant_share": 0.1,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "reason": "undecided: chosen explains 101 with 30 errors, the alternative explains 98 with 27"
+   },
+   {
+    "template": "row[_](cell[_])",
+    "left": {
+     "template": "row[_](cell[_])",
+     "key_slot": "cell#0|cell#0@3",
+     "status": "SUPPORTED",
+     "why": "separates 297/299 co-present pairs, 26 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 299,
+      "separated_pairs": 297,
+      "discrimination": 0.9933110367892977,
+      "coverage": 1.0,
+      "distinct_values": 26,
+      "constant_share": 0.1,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "row[_](cell[_])",
+     "key_slot": "cell#0",
+     "status": "SUPPORTED",
+     "why": "separates 273/299 co-present pairs, 19 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 299,
+      "separated_pairs": 273,
+      "discrimination": 0.9130434782608695,
+      "coverage": 1.0,
+      "distinct_values": 19,
+      "constant_share": 0.22,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "reason": "undecided: chosen explains 101 with 30 errors, the alternative explains 98 with 21"
+   },
+   {
+    "template": "row[_](cell[_],cell[_](button[_],text[_]))",
+    "left": {
+     "template": "row[_](cell[_],cell[_](button[_],text[_]))",
+     "key_slot": "cell#0",
+     "status": "SUPPORTED",
+     "why": "separates 3/7 co-present pairs, 6 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 7,
+      "separated_pairs": 3,
+      "discrimination": 0.42857142857142855,
+      "coverage": 1.0,
+      "distinct_values": 6,
+      "constant_share": 0.261,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "row[_](cell[_],cell[_](button[_],text[_]))",
+     "key_slot": "cell#0@3",
+     "status": "SUPPORTED",
+     "why": "separates 6/7 co-present pairs, 8 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 7,
+      "separated_pairs": 6,
+      "discrimination": 0.8571428571428571,
+      "coverage": 1.0,
+      "distinct_values": 8,
+      "constant_share": 0.261,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 1.0
+     }
+    },
+    "reason": "the trace so far scores both readings identically"
+   },
+   {
+    "template": "row[_](cell[_],cell[_](button[_],text[_]))",
+    "left": {
+     "template": "row[_](cell[_],cell[_](button[_],text[_]))",
+     "key_slot": "cell#0",
+     "status": "SUPPORTED",
+     "why": "separates 3/7 co-present pairs, 6 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 7,
+      "separated_pairs": 3,
+      "discrimination": 0.42857142857142855,
+      "coverage": 1.0,
+      "distinct_values": 6,
+      "constant_share": 0.261,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "row[_](cell[_],cell[_](button[_],text[_]))",
+     "key_slot": "cell#0@3|cell#0@4",
+     "status": "SUPPORTED",
+     "why": "separates 6/7 co-present pairs, 8 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 7,
+      "separated_pairs": 6,
+      "discrimination": 0.8571428571428571,
+      "coverage": 1.0,
+      "distinct_values": 8,
+      "constant_share": 0.261,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "reason": "the trace so far scores both readings identically"
+   }
+  ],
+  "families": {
+   "button[_]": 1,
+   "group[_](heading[_],list[_](listitem[_](text[_],textbox[_],button[_],text[_]),listitem[_](text[_])),heading[_],textbox[_],combobox[_],button[_],text[_])": 1,
+   "listitem[_](text[_],textbox[_],button[_],text[_])": 1,
+   "listitem[_](text[_],textbox[_],button[_],text[_])@ctx0)": 1,
+   "row[_](cell[_])": 2,
+   "row[_](cell[_],cell[_](button[_],text[_]))": 1,
+   "row[_](cell[_],cell[_](button[_],combobox[_],textbox[_],button[_],text[_]))": 1
+  }
+ }
+}

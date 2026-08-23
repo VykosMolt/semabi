@@ -1,0 +1,483 @@
+{
+ "run": "runs/v4/vet_clinic_dev",
+ "tag": "sonnet_01_vet_clinic",
+ "conditions": {
+  "v2": {
+   "rtc": 0.0,
+   "registered_transitions": 24,
+   "registered_deltas": 23,
+   "matched_registered_deltas": 0,
+   "strict_registered_delta_precision": 0.0,
+   "false_delta_categories": {
+    "incorrect_persistence": 20,
+    "spurious_relation": 1,
+    "wrong_attribute_attachment": 2
+   },
+   "gtc": 0.417,
+   "view_false_positive_rate": 0.854,
+   "types": {
+    "hidden": 4,
+    "learned": 7,
+    "recovered": 2,
+    "map": {
+     "T0": "Owner",
+     "T6": "Patient"
+    }
+   },
+   "predicates": {
+    "hidden_attrs": 13,
+    "recovered_attrs": 1,
+    "hidden_rels": 5,
+    "recovered_rels": 0,
+    "attr_map": {
+     "T0.attr:\u2014#1": "phone",
+     "T0.attr:list/listitem#0@5": "phone"
+    },
+    "rel_map": {}
+   },
+   "operators": {
+    "hidden": 7,
+    "observed_in_trace": 6,
+    "recovered": 0,
+    "recovered_ops": [],
+    "learned": 9,
+    "spurious_learned": [
+     "op0",
+     "op1",
+     "op2",
+     "op3",
+     "op4",
+     "op5",
+     "op6",
+     "op7",
+     "op8"
+    ],
+    "precision": 0.0,
+    "failure_rejection_rate": 0.0
+   },
+   "operators_per_op": {
+    "RegisterPatient": [
+     10,
+     0
+    ],
+    "ScheduleAppointment": [
+     0,
+     0
+    ],
+    "AssignVet": [
+     5,
+     0
+    ],
+    "CheckIn": [
+     5,
+     0
+    ],
+    "StartExam": [
+     2,
+     0
+    ],
+    "CompleteAppointment": [
+     1,
+     0
+    ],
+    "CancelAppointment": [
+     3,
+     0
+    ]
+   },
+   "object_layer": {
+    "grounded_frac": 0.76,
+    "pair_precision": 0.759,
+    "pair_recall": 1.0,
+    "learned_keys_merging_entities": 14,
+    "entities_split_across_keys": 13,
+    "entities_grounded": 14,
+    "duplicate_name_separation": null,
+    "cross_view_identity": 1.0
+   },
+   "argument_binding": {
+    "RegisterPatient": 0.0,
+    "CheckIn": 0.0,
+    "AssignVet": 0.0,
+    "CancelAppointment": 0.0,
+    "StartExam": 0.0,
+    "CompleteAppointment": 0.0
+   },
+   "cost_primitives": 397
+  },
+  "v4": {
+   "rtc": 0.0,
+   "registered_transitions": 24,
+   "registered_deltas": 13,
+   "matched_registered_deltas": 0,
+   "strict_registered_delta_precision": 0.0,
+   "false_delta_categories": {
+    "incorrect_persistence": 10,
+    "spurious_relation": 1,
+    "wrong_attribute_attachment": 2
+   },
+   "gtc": 0.417,
+   "view_false_positive_rate": 0.667,
+   "types": {
+    "hidden": 4,
+    "learned": 6,
+    "recovered": 1,
+    "map": {
+     "T5": "Patient"
+    }
+   },
+   "predicates": {
+    "hidden_attrs": 13,
+    "recovered_attrs": 0,
+    "hidden_rels": 5,
+    "recovered_rels": 0,
+    "attr_map": {},
+    "rel_map": {}
+   },
+   "operators": {
+    "hidden": 7,
+    "observed_in_trace": 6,
+    "recovered": 0,
+    "recovered_ops": [],
+    "learned": 4,
+    "spurious_learned": [
+     "op0",
+     "op1",
+     "op2",
+     "op3"
+    ],
+    "precision": 0.0,
+    "failure_rejection_rate": 0.0
+   },
+   "operators_per_op": {
+    "RegisterPatient": [
+     10,
+     0
+    ],
+    "ScheduleAppointment": [
+     0,
+     0
+    ],
+    "AssignVet": [
+     5,
+     0
+    ],
+    "CheckIn": [
+     5,
+     0
+    ],
+    "StartExam": [
+     2,
+     0
+    ],
+    "CompleteAppointment": [
+     1,
+     0
+    ],
+    "CancelAppointment": [
+     3,
+     0
+    ]
+   },
+   "object_layer": {
+    "grounded_frac": 0.446,
+    "pair_precision": 0.826,
+    "pair_recall": 1.0,
+    "learned_keys_merging_entities": 7,
+    "entities_split_across_keys": 5,
+    "entities_grounded": 5,
+    "duplicate_name_separation": null,
+    "cross_view_identity": 1.0
+   },
+   "argument_binding": {
+    "RegisterPatient": 0.0,
+    "CheckIn": 0.0,
+    "AssignVet": 0.0,
+    "CancelAppointment": 0.0,
+    "StartExam": 0.0,
+    "CompleteAppointment": 0.0
+   },
+   "cost_primitives": 397
+  }
+ },
+ "prospective": null,
+ "v4_search": {
+  "initial": {
+   "contradictions": 6,
+   "churn": 1,
+   "visibility": 74,
+   "unexplained": 12,
+   "spurious": 0,
+   "explained": 29,
+   "complexity": 51,
+   "steps": 403,
+   "churn_steps": [
+    401
+   ],
+   "contradiction_steps": [
+    402,
+    220,
+    263,
+    276,
+    377,
+    381
+   ],
+   "visibility_steps": [
+    2,
+    3,
+    4,
+    5,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    22,
+    26,
+    27,
+    28,
+    51,
+    55,
+    66,
+    68,
+    74,
+    76,
+    77,
+    78,
+    87,
+    90,
+    105,
+    106,
+    107,
+    108,
+    125,
+    126,
+    138,
+    141,
+    145,
+    146,
+    149
+   ]
+  },
+  "final": {
+   "contradictions": 6,
+   "churn": 0,
+   "visibility": 8,
+   "unexplained": 58,
+   "spurious": 0,
+   "explained": 30,
+   "complexity": 39,
+   "steps": 403,
+   "churn_steps": [],
+   "contradiction_steps": [
+    402,
+    220,
+    263,
+    276,
+    377,
+    381
+   ],
+   "visibility_steps": [
+    4,
+    66,
+    107,
+    126,
+    177,
+    238,
+    279,
+    382
+   ]
+  },
+  "moves": [
+   {
+    "move": "identity",
+    "family": "cell[_]",
+    "templates": 1,
+    "key_slot": null,
+    "status": "NO_IDENTITY",
+    "score": {
+     "contradictions": 6,
+     "churn": 1,
+     "visibility": 44,
+     "unexplained": 40,
+     "spurious": 0,
+     "explained": 29,
+     "complexity": 56,
+     "steps": 403,
+     "churn_steps": [
+      401
+     ],
+     "contradiction_steps": [
+      402,
+      220,
+      263,
+      276,
+      377,
+      381
+     ],
+     "visibility_steps": [
+      4,
+      5,
+      12,
+      14,
+      15,
+      16,
+      17,
+      22,
+      27,
+      28,
+      66,
+      68,
+      77,
+      78,
+      87,
+      90,
+      107,
+      108,
+      125,
+      126,
+      150,
+      152,
+      177,
+      184,
+      197,
+      203,
+      205,
+      214,
+      232,
+      238,
+      243,
+      251,
+      279,
+      281,
+      292,
+      293,
+      294,
+      298,
+      313,
+      323
+     ]
+    }
+   },
+   {
+    "move": "identity",
+    "family": "group[_](heading[_],list[_](listitem[_]))",
+    "templates": 2,
+    "key_slot": null,
+    "status": "NO_IDENTITY",
+    "score": {
+     "contradictions": 6,
+     "churn": 0,
+     "visibility": 44,
+     "unexplained": 40,
+     "spurious": 0,
+     "explained": 30,
+     "complexity": 44,
+     "steps": 403,
+     "churn_steps": [],
+     "contradiction_steps": [
+      402,
+      220,
+      263,
+      276,
+      377,
+      381
+     ],
+     "visibility_steps": [
+      4,
+      5,
+      12,
+      14,
+      15,
+      16,
+      17,
+      22,
+      27,
+      28,
+      66,
+      68,
+      77,
+      78,
+      87,
+      90,
+      107,
+      108,
+      125,
+      126,
+      150,
+      152,
+      177,
+      184,
+      197,
+      203,
+      205,
+      214,
+      232,
+      238,
+      243,
+      251,
+      279,
+      281,
+      292,
+      293,
+      294,
+      298,
+      313,
+      323
+     ]
+    }
+   },
+   {
+    "move": "identity",
+    "family": "text[_](combobox[_])",
+    "templates": 1,
+    "key_slot": null,
+    "status": "NO_IDENTITY",
+    "score": {
+     "contradictions": 6,
+     "churn": 0,
+     "visibility": 8,
+     "unexplained": 58,
+     "spurious": 0,
+     "explained": 30,
+     "complexity": 39,
+     "steps": 403,
+     "churn_steps": [],
+     "contradiction_steps": [
+      402,
+      220,
+      263,
+      276,
+      377,
+      381
+     ],
+     "visibility_steps": [
+      4,
+      66,
+      107,
+      126,
+      177,
+      238,
+      279,
+      382
+     ]
+    }
+   }
+  ],
+  "open_questions": [],
+  "families": {
+   "cell[_]": 1,
+   "group[_](heading[_],list[_](listitem[_]))": 2,
+   "row[_](cell[_])": 2,
+   "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": 6,
+   "text[_](combobox[_])": 1,
+   "text[_](textbox[_])": 2
+  }
+ }
+}

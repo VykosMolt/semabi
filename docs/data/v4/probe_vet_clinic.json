@@ -1,0 +1,217 @@
+{
+ "run": "runs/v4/vet_clinic_dev",
+ "open_questions": [
+  {
+   "template": "text[_](textbox[_])",
+   "left": {
+    "template": "text[_](textbox[_])",
+    "key_slot": "text#0",
+    "status": "SUPPORTED",
+    "why": "separates 118/118 co-present pairs, 3 values, coverage 1.00",
+    "evidence": {
+     "copresent_pairs": 118,
+     "separated_pairs": 118,
+     "discrimination": 1.0,
+     "coverage": 1.0,
+     "distinct_values": 3,
+     "constant_share": 0.414,
+     "reload_stability": 1.0,
+     "cross_view_values": 0,
+     "numeric_share": 0.0
+    }
+   },
+   "right": {
+    "template": "text[_](textbox[_])",
+    "key_slot": null,
+    "status": "NO_IDENTITY",
+    "why": "no identity-bearing observation claimed",
+    "evidence": {
+     "copresent_pairs": 118,
+     "separated_pairs": 0,
+     "discrimination": 0.0,
+     "coverage": 0.0,
+     "distinct_values": 0,
+     "constant_share": 0.0,
+     "reload_stability": null,
+     "cross_view_values": 0,
+     "numeric_share": 0.0
+    }
+   },
+   "reason": "undecided: chosen explains 29 with 13 errors, the alternative explains 2 with 0"
+  }
+ ],
+ "probes": [
+  {
+   "question": {
+    "template": "text[_](textbox[_])",
+    "left": {
+     "template": "text[_](textbox[_])",
+     "key_slot": "text#0",
+     "status": "SUPPORTED",
+     "why": "separates 118/118 co-present pairs, 3 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 118,
+      "separated_pairs": 118,
+      "discrimination": 1.0,
+      "coverage": 1.0,
+      "distinct_values": 3,
+      "constant_share": 0.414,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "text[_](textbox[_])",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "why": "no identity-bearing observation claimed",
+     "evidence": {
+      "copresent_pairs": 118,
+      "separated_pairs": 0,
+      "discrimination": 0.0,
+      "coverage": 0.0,
+      "distinct_values": 0,
+      "constant_share": 0.0,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "reason": "undecided: chosen explains 29 with 13 errors, the alternative explains 2 with 0"
+   },
+   "probe": {
+    "family": "text[_](textbox[_])",
+    "contested_slot": "text#0",
+    "sig": "0d45545e6b7ab655",
+    "node": 24,
+    "kind": "type",
+    "text": "probe34",
+    "rationale": "change what this instance shows, then ask whether it persisted",
+    "predictions": {}
+   },
+   "reached_observation": true,
+   "executed": {
+    "ok": true,
+    "error": null,
+    "page_changed": true,
+    "survived_reload": false
+   },
+   "scores": {
+    "left": {
+     "key_slot": "text#0",
+     "before": {
+      "contradictions": 5,
+      "churn": 0,
+      "visibility": 8,
+      "unexplained": 65,
+      "spurious": 0,
+      "explained": 29,
+      "delta_atoms": 29,
+      "complexity": 64,
+      "steps": 401,
+      "churn_steps": [],
+      "contradiction_steps": [
+       220,
+       263,
+       276,
+       377,
+       381
+      ],
+      "visibility_steps": [
+       4,
+       66,
+       107,
+       126,
+       177,
+       238,
+       279,
+       382
+      ]
+     },
+     "after": {
+      "contradictions": 6,
+      "churn": 0,
+      "visibility": 8,
+      "unexplained": 65,
+      "spurious": 0,
+      "explained": 30,
+      "delta_atoms": 30,
+      "complexity": 64,
+      "steps": 403,
+      "churn_steps": [],
+      "contradiction_steps": [
+       402,
+       220,
+       263,
+       276,
+       377,
+       381
+      ],
+      "visibility_steps": [
+       4,
+       66,
+       107,
+       126,
+       177,
+       238,
+       279,
+       382
+      ]
+     }
+    },
+    "right": {
+     "key_slot": null,
+     "before": {
+      "contradictions": 0,
+      "churn": 0,
+      "visibility": 0,
+      "unexplained": 71,
+      "spurious": 0,
+      "explained": 2,
+      "delta_atoms": 2,
+      "complexity": 53,
+      "steps": 401,
+      "churn_steps": [],
+      "contradiction_steps": [],
+      "visibility_steps": []
+     },
+     "after": {
+      "contradictions": 0,
+      "churn": 0,
+      "visibility": 0,
+      "unexplained": 71,
+      "spurious": 0,
+      "explained": 2,
+      "delta_atoms": 2,
+      "complexity": 53,
+      "steps": 403,
+      "churn_steps": [],
+      "contradiction_steps": [],
+      "visibility_steps": []
+     }
+    }
+   },
+   "probe_evidence": {
+    "left": {
+     "contradictions": 1,
+     "churn": 0,
+     "visibility": 0,
+     "explained": 1
+    },
+    "right": {
+     "contradictions": 0,
+     "churn": 0,
+     "visibility": 0,
+     "explained": 0
+    }
+   },
+   "outcome": "RIGHT_SURVIVES",
+   "eliminated": "text#0",
+   "why": "the probe made the chosen reading claim a domain change that the reload did not keep",
+   "steps_now": 403
+  }
+ ],
+ "primitives_spent": 2,
+ "outcome": "RESOLVED"
+}

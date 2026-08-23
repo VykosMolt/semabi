@@ -24,6 +24,10 @@ from semabi.eval import oracle
 # that every attribute is rendered somewhere; the cellar has exactly one attribute that
 # is never rendered and never read by a precondition or effect.
 V3_LATENT = {
+    # the two applications the V2 runtime could not trace at all; both authors state that
+    # every attribute is rendered somewhere (their /_evaluator/domain notes)
+    "grok_01_landing_board": set(),
+    "grok_02_blend_book": set(),
     "opus_01_harbour": set(),
     "opus_02_cellar": {("Block", "rootstock")},
     "sonnet_01_vet_clinic": set(),

@@ -1,0 +1,819 @@
+{
+ "run": "runs/v4/vet_clinic_seed11",
+ "tag": "sonnet_01_vet_clinic",
+ "conditions": {
+  "v2": {
+   "rtc": 0.225,
+   "registered_transitions": 71,
+   "registered_deltas": 90,
+   "matched_registered_deltas": 16,
+   "strict_registered_delta_precision": 0.178,
+   "false_delta_categories": {
+    "duplicate_or_redundant_atom": 1,
+    "incorrect_persistence": 45,
+    "spurious_relation": 1,
+    "wrong_attribute_attachment": 27
+   },
+   "gtc": 0.817,
+   "view_false_positive_rate": 0.865,
+   "types": {
+    "hidden": 4,
+    "learned": 9,
+    "recovered": 3,
+    "map": {
+     "T4": "Patient",
+     "T0": "Owner",
+     "T7": "Appointment"
+    }
+   },
+   "predicates": {
+    "hidden_attrs": 13,
+    "recovered_attrs": 3,
+    "hidden_rels": 5,
+    "recovered_rels": 1,
+    "attr_map": {
+     "T4.attr:cell#0@6": "species",
+     "T0.attr:\u2014#1": "phone",
+     "T0.attr:list/listitem#1@4": "phone",
+     "T0.attr:list/listitem#2@4": "phone",
+     "T7.attr:cell#0@4": "status"
+    },
+    "rel_map": {
+     "ref_7_rel:4": "for"
+    }
+   },
+   "operators": {
+    "hidden": 7,
+    "observed_in_trace": 6,
+    "recovered": 1,
+    "recovered_ops": [
+     "CancelAppointment"
+    ],
+    "learned": 17,
+    "spurious_learned": [
+     "op0",
+     "op1",
+     "op2",
+     "op3",
+     "op4",
+     "op5",
+     "op6",
+     "op8",
+     "op9",
+     "op10",
+     "op11",
+     "op12",
+     "op13",
+     "op14",
+     "op15",
+     "op16"
+    ],
+    "precision": 0.06,
+    "failure_rejection_rate": 0.0
+   },
+   "operators_per_op": {
+    "RegisterPatient": [
+     0,
+     0
+    ],
+    "ScheduleAppointment": [
+     13,
+     0
+    ],
+    "AssignVet": [
+     18,
+     0
+    ],
+    "CheckIn": [
+     13,
+     0
+    ],
+    "StartExam": [
+     11,
+     0
+    ],
+    "CompleteAppointment": [
+     11,
+     0
+    ],
+    "CancelAppointment": [
+     15,
+     15
+    ]
+   },
+   "object_layer": {
+    "grounded_frac": null,
+    "pair_precision": null,
+    "pair_recall": null,
+    "learned_keys_merging_entities": 0,
+    "entities_split_across_keys": 0,
+    "entities_grounded": 0,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null
+   },
+   "argument_binding": {
+    "CancelAppointment": 0.267,
+    "AssignVet": 0.0,
+    "StartExam": 0.0,
+    "CompleteAppointment": 0.0,
+    "ScheduleAppointment": 0.0,
+    "CheckIn": 0.231
+   },
+   "cost_primitives": 861
+  },
+  "v4": {
+   "rtc": 0.225,
+   "registered_transitions": 71,
+   "registered_deltas": 71,
+   "matched_registered_deltas": 16,
+   "strict_registered_delta_precision": 0.225,
+   "false_delta_categories": {
+    "duplicate_or_redundant_atom": 1,
+    "incorrect_persistence": 13,
+    "spurious_relation": 22,
+    "wrong_attribute_attachment": 19
+   },
+   "gtc": 0.817,
+   "view_false_positive_rate": 0.603,
+   "types": {
+    "hidden": 4,
+    "learned": 9,
+    "recovered": 2,
+    "map": {
+     "T3": "Patient",
+     "T6": "Appointment"
+    }
+   },
+   "predicates": {
+    "hidden_attrs": 13,
+    "recovered_attrs": 2,
+    "hidden_rels": 5,
+    "recovered_rels": 1,
+    "attr_map": {
+     "T3.attr:cell#0@6": "species",
+     "T6.attr:cell#0@4": "status"
+    },
+    "rel_map": {
+     "ref_6_rel:3": "for"
+    }
+   },
+   "operators": {
+    "hidden": 7,
+    "observed_in_trace": 6,
+    "recovered": 1,
+    "recovered_ops": [
+     "CancelAppointment"
+    ],
+    "learned": 18,
+    "spurious_learned": [
+     "op0",
+     "op1",
+     "op2",
+     "op3",
+     "op4",
+     "op5",
+     "op6",
+     "op8",
+     "op9",
+     "op10",
+     "op11",
+     "op12",
+     "op13",
+     "op14",
+     "op15",
+     "op16",
+     "op17"
+    ],
+    "precision": 0.06,
+    "failure_rejection_rate": 0.0
+   },
+   "operators_per_op": {
+    "RegisterPatient": [
+     0,
+     0
+    ],
+    "ScheduleAppointment": [
+     13,
+     0
+    ],
+    "AssignVet": [
+     18,
+     0
+    ],
+    "CheckIn": [
+     13,
+     0
+    ],
+    "StartExam": [
+     11,
+     0
+    ],
+    "CompleteAppointment": [
+     11,
+     0
+    ],
+    "CancelAppointment": [
+     15,
+     15
+    ]
+   },
+   "object_layer": {
+    "grounded_frac": null,
+    "pair_precision": null,
+    "pair_recall": null,
+    "learned_keys_merging_entities": 0,
+    "entities_split_across_keys": 0,
+    "entities_grounded": 0,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null
+   },
+   "argument_binding": {
+    "CancelAppointment": 0.267,
+    "AssignVet": 0.0,
+    "StartExam": 0.0,
+    "CompleteAppointment": 0.0,
+    "ScheduleAppointment": 0.0,
+    "CheckIn": 0.231
+   },
+   "cost_primitives": 861
+  },
+  "v4_pinned": {
+   "rtc": 0.0,
+   "registered_transitions": 71,
+   "registered_deltas": 86,
+   "matched_registered_deltas": 0,
+   "strict_registered_delta_precision": 0.0,
+   "false_delta_categories": {
+    "incorrect_persistence": 81,
+    "spurious_relation": 5
+   },
+   "gtc": 0.0,
+   "view_false_positive_rate": 0.033,
+   "types": {
+    "hidden": 4,
+    "learned": 5,
+    "recovered": 0,
+    "map": {}
+   },
+   "predicates": {
+    "hidden_attrs": 13,
+    "recovered_attrs": 0,
+    "hidden_rels": 5,
+    "recovered_rels": 0,
+    "attr_map": {},
+    "rel_map": {}
+   },
+   "operators": {
+    "hidden": 7,
+    "observed_in_trace": 6,
+    "recovered": 0,
+    "recovered_ops": [],
+    "learned": 5,
+    "spurious_learned": [
+     "op0",
+     "op1",
+     "op2",
+     "op3",
+     "op4"
+    ],
+    "precision": 0.0,
+    "failure_rejection_rate": 0.0
+   },
+   "operators_per_op": {
+    "RegisterPatient": [
+     0,
+     0
+    ],
+    "ScheduleAppointment": [
+     13,
+     0
+    ],
+    "AssignVet": [
+     18,
+     0
+    ],
+    "CheckIn": [
+     13,
+     0
+    ],
+    "StartExam": [
+     11,
+     0
+    ],
+    "CompleteAppointment": [
+     11,
+     0
+    ],
+    "CancelAppointment": [
+     15,
+     0
+    ]
+   },
+   "object_layer": {
+    "grounded_frac": null,
+    "pair_precision": null,
+    "pair_recall": null,
+    "learned_keys_merging_entities": 0,
+    "entities_split_across_keys": 0,
+    "entities_grounded": 0,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null
+   },
+   "argument_binding": {
+    "CancelAppointment": 0.0,
+    "AssignVet": 0.0,
+    "StartExam": 0.0,
+    "CompleteAppointment": 0.0,
+    "ScheduleAppointment": 0.0,
+    "CheckIn": 0.0
+   },
+   "cost_primitives": 861
+  }
+ },
+ "prospective": {
+  "identity_from": "runs/v4/vet_clinic_dev",
+  "pinned_families": 6,
+  "keyed_by": "family"
+ },
+ "v4_search": {
+  "initial": {
+   "contradictions": 0,
+   "churn": 0,
+   "visibility": 132,
+   "unexplained": 3,
+   "spurious": 1,
+   "explained": 24,
+   "complexity": 62,
+   "steps": 260,
+   "churn_steps": [],
+   "contradiction_steps": [],
+   "visibility_steps": [
+    2,
+    3,
+    4,
+    5,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    22,
+    26,
+    27,
+    28,
+    34,
+    35,
+    37,
+    39,
+    40,
+    43,
+    45,
+    46,
+    48,
+    50,
+    51,
+    53,
+    55,
+    56,
+    59,
+    61,
+    62,
+    64,
+    66,
+    67,
+    71
+   ]
+  },
+  "final": {
+   "contradictions": 0,
+   "churn": 0,
+   "visibility": 2,
+   "unexplained": 92,
+   "spurious": 1,
+   "explained": 33,
+   "complexity": 64,
+   "steps": 260,
+   "churn_steps": [],
+   "contradiction_steps": [],
+   "visibility_steps": [
+    4,
+    102
+   ]
+  },
+  "moves": [
+   {
+    "move": "identity",
+    "family": "cell[_]",
+    "templates": 1,
+    "key_slot": null,
+    "status": "NO_IDENTITY",
+    "score": {
+     "contradictions": 0,
+     "churn": 0,
+     "visibility": 85,
+     "unexplained": 50,
+     "spurious": 1,
+     "explained": 24,
+     "complexity": 67,
+     "steps": 260,
+     "churn_steps": [],
+     "contradiction_steps": [],
+     "visibility_steps": [
+      4,
+      5,
+      12,
+      14,
+      15,
+      16,
+      17,
+      22,
+      27,
+      28,
+      35,
+      37,
+      40,
+      43,
+      46,
+      48,
+      51,
+      53,
+      56,
+      59,
+      62,
+      64,
+      67,
+      71,
+      74,
+      76,
+      79,
+      81,
+      84,
+      91,
+      94,
+      95,
+      100,
+      102,
+      103,
+      105,
+      111,
+      114,
+      117,
+      120
+     ]
+    }
+   },
+   {
+    "move": "identity",
+    "family": "group[_](heading[_],list[_](listitem[_]))",
+    "templates": 2,
+    "key_slot": null,
+    "status": "NO_IDENTITY",
+    "score": {
+     "contradictions": 0,
+     "churn": 0,
+     "visibility": 85,
+     "unexplained": 50,
+     "spurious": 1,
+     "explained": 24,
+     "complexity": 58,
+     "steps": 260,
+     "churn_steps": [],
+     "contradiction_steps": [],
+     "visibility_steps": [
+      4,
+      5,
+      12,
+      14,
+      15,
+      16,
+      17,
+      22,
+      27,
+      28,
+      35,
+      37,
+      40,
+      43,
+      46,
+      48,
+      51,
+      53,
+      56,
+      59,
+      62,
+      64,
+      67,
+      71,
+      74,
+      76,
+      79,
+      81,
+      84,
+      91,
+      94,
+      95,
+      100,
+      102,
+      103,
+      105,
+      111,
+      114,
+      117,
+      120
+     ]
+    }
+   },
+   {
+    "move": "identity",
+    "family": "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))",
+    "templates": 5,
+    "key_slot": "cell#0@5",
+    "status": "CONTRADICTED",
+    "score": {
+     "contradictions": 0,
+     "churn": 0,
+     "visibility": 85,
+     "unexplained": 44,
+     "spurious": 1,
+     "explained": 30,
+     "complexity": 69,
+     "steps": 260,
+     "churn_steps": [],
+     "contradiction_steps": [],
+     "visibility_steps": [
+      4,
+      5,
+      12,
+      14,
+      15,
+      16,
+      17,
+      22,
+      27,
+      28,
+      35,
+      37,
+      40,
+      43,
+      46,
+      48,
+      51,
+      53,
+      56,
+      59,
+      62,
+      64,
+      67,
+      71,
+      74,
+      76,
+      79,
+      81,
+      84,
+      91,
+      94,
+      95,
+      100,
+      102,
+      103,
+      105,
+      111,
+      114,
+      117,
+      120
+     ]
+    }
+   },
+   {
+    "move": "identity",
+    "family": "text[_](combobox[_])",
+    "templates": 1,
+    "key_slot": null,
+    "status": "NO_IDENTITY",
+    "score": {
+     "contradictions": 0,
+     "churn": 0,
+     "visibility": 2,
+     "unexplained": 92,
+     "spurious": 1,
+     "explained": 33,
+     "complexity": 64,
+     "steps": 260,
+     "churn_steps": [],
+     "contradiction_steps": [],
+     "visibility_steps": [
+      4,
+      102
+     ]
+    }
+   }
+  ],
+  "open_questions": [
+   {
+    "template": "row[_](cell[_])",
+    "left": {
+     "template": "row[_](cell[_])",
+     "key_slot": "cell#0|cell#0@4",
+     "status": "SUPPORTED",
+     "why": "separates 299/400 co-present pairs, 11 values, coverage 0.97",
+     "evidence": {
+      "copresent_pairs": 400,
+      "separated_pairs": 299,
+      "discrimination": 0.7475,
+      "coverage": 0.971,
+      "distinct_values": 11,
+      "constant_share": 0.242,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "row[_](cell[_])",
+     "key_slot": "cell#0",
+     "status": "SUPPORTED",
+     "why": "separates 253/400 co-present pairs, 12 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 400,
+      "separated_pairs": 253,
+      "discrimination": 0.6325,
+      "coverage": 1.0,
+      "distinct_values": 12,
+      "constant_share": 0.235,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "reason": "undecided: chosen explains 24 with 86 errors, the alternative explains 23 with 85"
+   },
+   {
+    "template": "row[_](cell[_])",
+    "left": {
+     "template": "row[_](cell[_])",
+     "key_slot": "cell#0|cell#0@4",
+     "status": "SUPPORTED",
+     "why": "separates 299/400 co-present pairs, 11 values, coverage 0.97",
+     "evidence": {
+      "copresent_pairs": 400,
+      "separated_pairs": 299,
+      "discrimination": 0.7475,
+      "coverage": 0.971,
+      "distinct_values": 11,
+      "constant_share": 0.242,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "row[_](cell[_])",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "why": "no identity-bearing observation claimed",
+     "evidence": {
+      "copresent_pairs": 400,
+      "separated_pairs": 0,
+      "discrimination": 0.0,
+      "coverage": 0.0,
+      "distinct_values": 0,
+      "constant_share": 0.0,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "reason": "undecided: chosen explains 24 with 86 errors, the alternative explains 17 with 85"
+   },
+   {
+    "template": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+    "left": {
+     "template": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+     "key_slot": "cell#0",
+     "status": "SUPPORTED",
+     "why": "separates 38/47 co-present pairs, 10 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 47,
+      "separated_pairs": 38,
+      "discrimination": 0.8085106382978723,
+      "coverage": 1.0,
+      "distinct_values": 10,
+      "constant_share": 0.302,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+     "key_slot": "cell#0@4",
+     "status": "SUPPORTED",
+     "why": "separates 30/47 co-present pairs, 2 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 47,
+      "separated_pairs": 30,
+      "discrimination": 0.6382978723404256,
+      "coverage": 1.0,
+      "distinct_values": 2,
+      "constant_share": 0.579,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "reason": "undecided: chosen explains 24 with 86 errors, the alternative explains 18 with 85"
+   },
+   {
+    "template": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+    "left": {
+     "template": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+     "key_slot": "cell#0",
+     "status": "SUPPORTED",
+     "why": "separates 38/47 co-present pairs, 10 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 47,
+      "separated_pairs": 38,
+      "discrimination": 0.8085106382978723,
+      "coverage": 1.0,
+      "distinct_values": 10,
+      "constant_share": 0.302,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "why": "no identity-bearing observation claimed",
+     "evidence": {
+      "copresent_pairs": 47,
+      "separated_pairs": 0,
+      "discrimination": 0.0,
+      "coverage": 0.0,
+      "distinct_values": 0,
+      "constant_share": 0.0,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "reason": "undecided: chosen explains 24 with 86 errors, the alternative explains 12 with 85"
+   },
+   {
+    "template": "text[_](textbox[_])",
+    "left": {
+     "template": "text[_](textbox[_])",
+     "key_slot": "text#0",
+     "status": "SUPPORTED",
+     "why": "separates 9/9 co-present pairs, 3 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 9,
+      "separated_pairs": 9,
+      "discrimination": 1.0,
+      "coverage": 1.0,
+      "distinct_values": 3,
+      "constant_share": 0.92,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "text[_](textbox[_])",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "why": "no identity-bearing observation claimed",
+     "evidence": {
+      "copresent_pairs": 9,
+      "separated_pairs": 0,
+      "discrimination": 0.0,
+      "coverage": 0.0,
+      "distinct_values": 0,
+      "constant_share": 0.0,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "reason": "undecided: chosen explains 33 with 3 errors, the alternative explains 26 with 1"
+   }
+  ],
+  "families": {
+   "cell[_]": 1,
+   "group[_](heading[_],list[_](listitem[_]))": 2,
+   "row[_](cell[_])": 7,
+   "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": 14,
+   "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))": 5,
+   "text[_](combobox[_])": 1,
+   "text[_](textbox[_])": 2
+  }
+ }
+}

@@ -3,6 +3,19 @@
 The compiler sees: roles, accessible names/text, input values, checked state,
 select options, placeholders, bounding boxes, and tree structure. It does not
 see ids, classes, data attributes, network traffic, or JS state.
+
+Observation settling (V4).  An action may answer by replacing the document rather than
+mutating it -- ``fetch(...).then(() => location.href = ...)`` is an ordinary page pattern --
+and the snapshot script runs inside the document it is about to lose.  Two of the six
+gauntlet-v3 applications do exactly this and ended every V2 run with
+``Execution context was destroyed`` (docs/v3_result.md).  Settling is therefore stated in
+terms of two observable conditions rather than a delay: the request count the page has
+outstanding must be zero, and three consecutive snapshots must agree.  A context destroyed
+by a document swap is a transient failure with a definite end, so it is waited out under a
+bounded budget and restarts the agreement count; every other browser error is raised
+unchanged.  Only the *number* of outstanding requests is used, never their addresses or
+contents -- the same idleness signal playwright's own ``networkidle`` load state is built
+on, which this wrapper already used for navigation and reload.
 """
 from __future__ import annotations
 
@@ -62,6 +75,21 @@ SNAPSHOT_JS = r"""
 """
 
 
+_NAVIGATION_SIGNATURES = (
+    "execution context was destroyed",
+    "cannot find context with specified id",
+    "execution context is not available",
+    "frame was detached",
+    "navigating and changing the document",
+)
+
+
+def _is_navigation_error(exc: BaseException) -> bool:
+    """True only for a context lost to a document swap, never for a permanent failure."""
+    text = str(exc).lower()
+    return any(signature in text for signature in _NAVIGATION_SIGNATURES)
+
+
 @dataclass
 class ActionResult:
     ok: bool
@@ -100,11 +128,14 @@ class Browser:
     """Primitive interface. `hooks` (evaluator-side) may be attached to observe
     step boundaries; the compiler never reads from them."""
 
-    def __init__(self, url: str, reset_url: str, headless: bool = True, settle_ms: int = 150, max_settle_ms: int = 3000):
+    def __init__(self, url: str, reset_url: str, headless: bool = True, settle_ms: int = 150,
+                 max_settle_ms: int = 3000, navigation_ms: int = 5000, max_navigations: int = 4):
         self.url = url
         self.reset_url = reset_url
         self.settle_ms = settle_ms
         self.max_settle_ms = max_settle_ms
+        self.navigation_ms = navigation_ms
+        self.max_navigations = max_navigations
         self._pw = sync_playwright().start()
         self._browser = self._pw.chromium.launch(headless=headless)
         self._page = self._browser.new_page(viewport={"width": 1400, "height": 1000})
@@ -113,6 +144,26 @@ class Browser:
         self.episode = 0
         self.step_hooks: list = []
         self._last_obs: Observation | None = None
+        # settling telemetry; provenance only, never an input to induction
+        self.n_navigations = 0          # document swaps waited out during an observation
+        self.n_navigation_waits = 0     # snapshot attempts lost to a destroyed context
+        self.n_settle_timeouts = 0      # observations that hit their budget unsettled
+        self._inflight = 0              # requests the page has outstanding (count only)
+        self._page.on("request", self._on_request)
+        self._page.on("requestfinished", self._on_request_done)
+        self._page.on("requestfailed", self._on_request_done)
+
+    # ------------------------------------------------------- settling signals
+    def _on_request(self, _request) -> None:
+        self._inflight += 1
+
+    def _on_request_done(self, _request) -> None:
+        self._inflight = max(0, self._inflight - 1)
+
+    @property
+    def quiet(self) -> bool:
+        """No request outstanding, so a fetch-then-navigate answer cannot still be coming."""
+        return self._inflight == 0
 
     def close(self):
         try:
@@ -127,24 +178,69 @@ class Browser:
                       d.get("options"), d.get("placeholder"), d.get("current"), tuple(d["bbox"])) for d in raw]
         return Observation(nodes, self._page.url)
 
+    def _snapshot(self, deadline: float) -> Observation:
+        """One raw snapshot, waiting out a document swap that happens underneath it.
+
+        A navigation destroys the execution context the snapshot script runs in.  That is a
+        transient condition with a definite end -- the next document -- so it is waited out
+        until `deadline`, and only for errors that name a context or frame swap.  Anything
+        else (a closed target, a crashed browser, a script error) is raised unchanged, so a
+        permanent failure is never silently turned into an observation."""
+        while True:
+            try:
+                return self._raw_snapshot()
+            except Exception as exc:  # noqa: BLE001 - re-raised unless it is a document swap
+                if not _is_navigation_error(exc) or time.time() >= deadline:
+                    raise
+                self.n_navigation_waits += 1
+                remaining = deadline - time.time()
+                try:
+                    self._page.wait_for_load_state("domcontentloaded",
+                                                   timeout=max(50.0, remaining * 1000))
+                except Exception:  # noqa: BLE001 - the budget, not this wait, is the bound
+                    pass
+                time.sleep(min(self.settle_ms / 1000, max(0.01, deadline - time.time())))
+
     def observe(self) -> Observation:
-        """Snapshot after the page has settled: three identical consecutive snapshots
-        `settle_ms` apart (apps that re-render after an asynchronous fetch need more than
-        one quiet interval; V0/V1 used two snapshots 40 ms apart, see docs/v2_design.md)."""
+        """Snapshot after the page has settled.
+
+        Settled means two things at once: the page has no request outstanding, so an answer
+        that arrives as `fetch(...).then(() => location.href = ...)` cannot still be in
+        flight; and three consecutive snapshots `settle_ms` apart agree.  A document swap
+        observed while snapshotting restarts the agreement count and extends the budget once,
+        up to `max_navigations` times, because the page that has to settle is a new one."""
         t0 = time.time()
-        prev = self._raw_snapshot()
+        hard_deadline = t0 + (self.max_settle_ms + self.navigation_ms * self.max_navigations) / 1000
+        settle_deadline = t0 + self.max_settle_ms / 1000
+        waits = self.n_navigation_waits
+        grants = 0
+        prev = self._snapshot(hard_deadline)
         stable = 0
         while True:
             time.sleep(self.settle_ms / 1000)
-            cur = self._raw_snapshot()
-            if cur.structural_signature() == prev.structural_signature():
+            cur = self._snapshot(hard_deadline)
+            if self.n_navigation_waits > waits:
+                # the document was replaced under the snapshot: a different page now has to
+                # settle, so agreement restarts and the budget is extended once per swap
+                waits = self.n_navigation_waits
+                stable = 0
+                if grants < self.max_navigations:
+                    grants += 1
+                    self.n_navigations += 1
+                    settle_deadline = time.time() + (self.max_settle_ms + self.navigation_ms) / 1000
+            elif not self.quiet:
+                # a request is outstanding; whatever it answers has not been rendered yet
+                stable = 0
+            elif cur.structural_signature() == prev.structural_signature():
                 stable += 1
                 if stable >= 2:
                     break
             else:
                 stable = 0
             prev = cur
-            if (time.time() - t0) * 1000 > self.max_settle_ms:
+            now = time.time()
+            if now > settle_deadline or now > hard_deadline:
+                self.n_settle_timeouts += 1
                 break
         self._last_obs = cur
         return cur

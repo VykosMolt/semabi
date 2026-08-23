@@ -88,6 +88,7 @@ class Hypotheses:
         self.G = G
         self.memo: dict = {}
         self.unit_types: dict[str, UnitType] = {}
+        self.promoted: set[str] = set()  # V4: leaf templates on trial as objects
         self.units: dict[str, UnitHyp] = {}
         self.entity_types: dict[int, EntityType] = {}
         self.tid_of_template: dict[str, int] = {}
@@ -120,7 +121,10 @@ class Hypotheses:
     def is_unit_template(self, t: str, role: str, has_children: bool, header_cell: bool = False) -> bool:
         if role in ("combobox", "textbox") or t in self.transient:
             return False  # input widgets are slots of their enclosing unit, never units
-        if not has_children and role not in WIDGET and not header_cell:
+        if t in self.promoted:
+            return True   # V4: this leaf is being read as an object rather than as a value of
+            # its container, on trial; whether it stays is decided behaviourally
+        if not has_children and header_cell is False and role not in WIDGET:
             return False  # a childless text node is a slot of its enclosing unit (header cells of a
             # matrix, whose text varies, are mentions like buttons)
         if self.allowed is not None:

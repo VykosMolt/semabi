@@ -13,8 +13,12 @@ def forbidden(name: str) -> bool:
 
 def compiler_files():
     # The V2 compiler lives in nested packages.  A shallow glob left exactly the new
-    # decision/refinement boundary outside this gate.
-    return list((ROOT / "compiler").rglob("*.py")) + [ROOT / "relmodel.py", ROOT / "eval_free_canon.py"]
+    # decision/refinement boundary outside this gate.  The compiler-side runners drive the
+    # browser and must be inside it too: V4's probe runner executes experiments against a
+    # live application and would be the natural place for hidden state to leak in.
+    runners = [ROOT / "run_v2_refine.py", ROOT / "run_v2_validate.py", ROOT / "run_v4_probe.py"]
+    return (list((ROOT / "compiler").rglob("*.py")) + [ROOT / "relmodel.py", ROOT / "eval_free_canon.py"]
+            + [r for r in runners if r.exists()])
 
 
 def test_compiler_imports_are_clean():

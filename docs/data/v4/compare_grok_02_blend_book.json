@@ -1,0 +1,488 @@
+{
+ "run": "runs/v4/grok_02_blend_book_dev",
+ "tag": "grok_02_blend_book",
+ "conditions": {
+  "v2": {
+   "rtc": 0.692,
+   "registered_transitions": 52,
+   "registered_deltas": 73,
+   "matched_registered_deltas": 42,
+   "strict_registered_delta_precision": 0.575,
+   "false_delta_categories": {
+    "incorrect_persistence": 8,
+    "spurious_relation": 7,
+    "wrong_attribute_attachment": 9,
+    "wrong_entity_correspondence": 7
+   },
+   "gtc": 0.808,
+   "view_false_positive_rate": 0.386,
+   "types": {
+    "hidden": 3,
+    "learned": 5,
+    "recovered": 2,
+    "map": {
+     "T3": "Blend",
+     "T1": "Vat"
+    }
+   },
+   "predicates": {
+    "hidden_attrs": 12,
+    "recovered_attrs": 5,
+    "hidden_rels": 4,
+    "recovered_rels": 1,
+    "attr_map": {
+     "T3.attr:cell#0@2": "year",
+     "T3.attr:cell#0@4": "has_into_blend",
+     "T1.attr:cell#0@2": "varietal",
+     "T1.attr:cell#0@3": "gallons",
+     "T1.attr:cell#0@4": "closed"
+    },
+    "rel_map": {
+     "ref_1_rel:3": "from_vat~into_blend"
+    }
+   },
+   "operators": {
+    "hidden": 6,
+    "observed_in_trace": 6,
+    "recovered": 1,
+    "recovered_ops": [
+     "close_vat"
+    ],
+    "learned": 8,
+    "spurious_learned": [
+     "op1",
+     "op2",
+     "op3",
+     "op4",
+     "op5",
+     "op6",
+     "op7"
+    ],
+    "precision": 0.12,
+    "failure_rejection_rate": 0.21
+   },
+   "operators_per_op": {
+    "draw": [
+     3,
+     0
+    ],
+    "return_draw": [
+     4,
+     0
+    ],
+    "close_vat": [
+     24,
+     24
+    ],
+    "open_vat": [
+     18,
+     0
+    ],
+    "bottle": [
+     2,
+     0
+    ],
+    "disgorge": [
+     1,
+     0
+    ]
+   },
+   "object_layer": {
+    "grounded_frac": null,
+    "pair_precision": null,
+    "pair_recall": null,
+    "learned_keys_merging_entities": 0,
+    "entities_split_across_keys": 0,
+    "entities_grounded": 0,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null
+   },
+   "argument_binding": {
+    "draw": 0.0,
+    "close_vat": 0.833,
+    "open_vat": 0.0,
+    "bottle": 1.0,
+    "disgorge": 0.0,
+    "return_draw": 0.0
+   },
+   "cost_primitives": 369
+  },
+  "v4": {
+   "rtc": 0.692,
+   "registered_transitions": 52,
+   "registered_deltas": 66,
+   "matched_registered_deltas": 43,
+   "strict_registered_delta_precision": 0.652,
+   "false_delta_categories": {
+    "spurious_relation": 7,
+    "wrong_attribute_attachment": 10,
+    "wrong_entity_correspondence": 6
+   },
+   "gtc": 0.808,
+   "view_false_positive_rate": 0.02,
+   "types": {
+    "hidden": 3,
+    "learned": 6,
+    "recovered": 1,
+    "map": {
+     "T0": "Vat"
+    }
+   },
+   "predicates": {
+    "hidden_attrs": 12,
+    "recovered_attrs": 3,
+    "hidden_rels": 4,
+    "recovered_rels": 0,
+    "attr_map": {
+     "T0.attr:cell#0": "name",
+     "T0.attr:cell#0@3": "gallons",
+     "T0.attr:cell#0@4": "closed"
+    },
+    "rel_map": {}
+   },
+   "operators": {
+    "hidden": 6,
+    "observed_in_trace": 6,
+    "recovered": 2,
+    "recovered_ops": [
+     "close_vat",
+     "open_vat"
+    ],
+    "learned": 4,
+    "spurious_learned": [
+     "op2",
+     "op3"
+    ],
+    "precision": 0.5,
+    "failure_rejection_rate": 0.37
+   },
+   "operators_per_op": {
+    "draw": [
+     3,
+     0
+    ],
+    "return_draw": [
+     4,
+     0
+    ],
+    "close_vat": [
+     24,
+     22
+    ],
+    "open_vat": [
+     18,
+     16
+    ],
+    "bottle": [
+     2,
+     0
+    ],
+    "disgorge": [
+     1,
+     0
+    ]
+   },
+   "object_layer": {
+    "grounded_frac": null,
+    "pair_precision": null,
+    "pair_recall": null,
+    "learned_keys_merging_entities": 0,
+    "entities_split_across_keys": 0,
+    "entities_grounded": 0,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null
+   },
+   "argument_binding": {
+    "draw": 0.0,
+    "close_vat": 0.833,
+    "open_vat": 0.667,
+    "bottle": 0.0,
+    "disgorge": 0.0,
+    "return_draw": 0.0
+   },
+   "cost_primitives": 369
+  }
+ },
+ "prospective": null,
+ "v4_search": {
+  "initial": {
+   "contradictions": 0,
+   "churn": 0,
+   "visibility": 0,
+   "unexplained": 29,
+   "spurious": 32,
+   "explained": 51,
+   "delta_atoms": 73,
+   "complexity": 58,
+   "steps": 375,
+   "churn_steps": [],
+   "contradiction_steps": [],
+   "visibility_steps": []
+  },
+  "final": {
+   "contradictions": 0,
+   "churn": 0,
+   "visibility": 0,
+   "unexplained": 11,
+   "spurious": 0,
+   "explained": 51,
+   "delta_atoms": 67,
+   "complexity": 72,
+   "steps": 375,
+   "churn_steps": [],
+   "contradiction_steps": [],
+   "visibility_steps": []
+  },
+  "moves": [
+   {
+    "move": "identity",
+    "family": "button[_]",
+    "templates": 4,
+    "key_slot": null,
+    "status": "NO_IDENTITY",
+    "score": {
+     "contradictions": 0,
+     "churn": 0,
+     "visibility": 0,
+     "unexplained": 29,
+     "spurious": 32,
+     "explained": 51,
+     "delta_atoms": 73,
+     "complexity": 50,
+     "steps": 375,
+     "churn_steps": [],
+     "contradiction_steps": [],
+     "visibility_steps": []
+    }
+   },
+   {
+    "move": "identity",
+    "family": "cell[_]",
+    "templates": 1,
+    "key_slot": null,
+    "status": "NO_IDENTITY",
+    "score": {
+     "contradictions": 0,
+     "churn": 0,
+     "visibility": 0,
+     "unexplained": 29,
+     "spurious": 32,
+     "explained": 51,
+     "delta_atoms": 73,
+     "complexity": 46,
+     "steps": 375,
+     "churn_steps": [],
+     "contradiction_steps": [],
+     "visibility_steps": []
+    }
+   },
+   {
+    "move": "identity",
+    "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+    "templates": 3,
+    "key_slot": "group/group/text#0",
+    "status": "UNSUPPORTED",
+    "score": {
+     "contradictions": 0,
+     "churn": 0,
+     "visibility": 0,
+     "unexplained": 31,
+     "spurious": 30,
+     "explained": 51,
+     "delta_atoms": 77,
+     "complexity": 83,
+     "steps": 375,
+     "churn_steps": [],
+     "contradiction_steps": [],
+     "visibility_steps": []
+    }
+   },
+   {
+    "move": "identity",
+    "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+    "templates": 3,
+    "key_slot": "group/group/text#0@9",
+    "status": "UNSUPPORTED",
+    "score": {
+     "contradictions": 0,
+     "churn": 0,
+     "visibility": 0,
+     "unexplained": 31,
+     "spurious": 30,
+     "explained": 51,
+     "delta_atoms": 77,
+     "complexity": 82,
+     "steps": 375,
+     "churn_steps": [],
+     "contradiction_steps": [],
+     "visibility_steps": []
+    }
+   },
+   {
+    "move": "identity",
+    "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+    "templates": 4,
+    "key_slot": null,
+    "status": "NO_IDENTITY",
+    "score": {
+     "contradictions": 0,
+     "churn": 0,
+     "visibility": 0,
+     "unexplained": 11,
+     "spurious": 2,
+     "explained": 51,
+     "delta_atoms": 69,
+     "complexity": 67,
+     "steps": 375,
+     "churn_steps": [],
+     "contradiction_steps": [],
+     "visibility_steps": []
+    }
+   },
+   {
+    "move": "identity",
+    "family": "row[_](cell[_],cell[_](button[_]))",
+    "templates": 4,
+    "key_slot": "cell#0@2",
+    "status": "SUPPORTED",
+    "score": {
+     "contradictions": 0,
+     "churn": 0,
+     "visibility": 0,
+     "unexplained": 11,
+     "spurious": 0,
+     "explained": 51,
+     "delta_atoms": 67,
+     "complexity": 72,
+     "steps": 375,
+     "churn_steps": [],
+     "contradiction_steps": [],
+     "visibility_steps": []
+    }
+   }
+  ],
+  "open_questions": [
+   {
+    "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+    "left": {
+     "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+     "key_slot": "group/group/text#0@9",
+     "status": "UNSUPPORTED",
+     "why": "the family never rendered two instances at once, so nothing shows this value distinguishes instances",
+     "evidence": {
+      "copresent_pairs": 0,
+      "separated_pairs": 0,
+      "discrimination": null,
+      "coverage": 1.0,
+      "distinct_values": 1,
+      "constant_share": 1.0,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+     "key_slot": "group/table/rowgroup/row/cell#0",
+     "status": "UNSUPPORTED",
+     "why": "the family never rendered two instances at once, so nothing shows this value distinguishes instances",
+     "evidence": {
+      "copresent_pairs": 0,
+      "separated_pairs": 0,
+      "discrimination": null,
+      "coverage": 1.0,
+      "distinct_values": 1,
+      "constant_share": 1.0,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "reason": "the trace so far scores both readings identically"
+   },
+   {
+    "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+    "left": {
+     "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "why": "no identity-bearing observation claimed",
+     "evidence": {
+      "copresent_pairs": 0,
+      "separated_pairs": 0,
+      "discrimination": null,
+      "coverage": 0.0,
+      "distinct_values": 0,
+      "constant_share": 0.0,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+     "key_slot": "group/group/text#0",
+     "status": "UNSUPPORTED",
+     "why": "the family never rendered two instances at once, so nothing shows this value distinguishes instances",
+     "evidence": {
+      "copresent_pairs": 0,
+      "separated_pairs": 0,
+      "discrimination": null,
+      "coverage": 1.0,
+      "distinct_values": 1,
+      "constant_share": 1.0,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "reason": "undecided: chosen explains 51 with 2 errors, the alternative explains 60 with 17"
+   },
+   {
+    "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+    "left": {
+     "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "why": "no identity-bearing observation claimed",
+     "evidence": {
+      "copresent_pairs": 0,
+      "separated_pairs": 0,
+      "discrimination": null,
+      "coverage": 0.0,
+      "distinct_values": 0,
+      "constant_share": 0.0,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+     "key_slot": "group/group/text#0@7",
+     "status": "UNSUPPORTED",
+     "why": "the family never rendered two instances at once, so nothing shows this value distinguishes instances",
+     "evidence": {
+      "copresent_pairs": 0,
+      "separated_pairs": 0,
+      "discrimination": null,
+      "coverage": 1.0,
+      "distinct_values": 1,
+      "constant_share": 1.0,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "reason": "undecided: chosen explains 51 with 2 errors, the alternative explains 60 with 17"
+   }
+  ],
+  "families": {
+   "button[_]": 4,
+   "cell[_]": 1,
+   "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": 4,
+   "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": 3,
+   "row[_](cell[_],cell[_](button[_]))": 4
+  }
+ }
+}
