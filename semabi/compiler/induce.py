@@ -297,6 +297,8 @@ class Inducer:
         self.view_ops: list[ViewOp] = []
         self._view_steps: set[int] = set()
         self.reattributed = 0  # domain changes revealed by view switches / reloads
+        self.delayed_resolutions: list[dict[str, Any]] = []
+        self.unattributed_sensing_changes: list[dict[str, Any]] = []
 
     def state(self, sig: str) -> AbstractState:
         if sig not in self._state_cache:
@@ -314,27 +316,84 @@ class Inducer:
             self._tracked_before[steps[0].step] = prev
             last_change_i = -1
             pending: list[tuple[Transition, AbsObj, set]] = []  # (transition, vanished object, visited snapshot)
+            pending_domain: tuple[Transition, int] | None = None
+
+            def realize_pending_domain(item, delta, after_state):
+                """Attach a change first revealed by sensing to its verified domain action."""
+                ptr, domain_i = item
+                ptr.after = after_state
+                ptr.d.added += delta.added
+                ptr.d.removed += delta.removed
+                ptr.d.attr_changes += delta.attr_changes
+                ptr.d.rel_changes += delta.rel_changes
+                for obj in delta.added:
+                    ptr.after.objs[obj.id] = obj
+                if ptr.ext:
+                    ptr.macro = list(ptr.steps)
+                    self._extend_macro(ptr, *ptr.ext)
+                self.transitions.append(ptr)
+                self._changing_steps.add(ptr.steps[-1])
+                self.reattributed += 1
+                return domain_i
+
             for i, s in enumerate(steps):
                 st, discovered = tracker.observe(self.log.obs(s.after), s.action.kind)
                 self._tracked_after[s.step] = st
                 if i + 1 < len(steps):
                     self._tracked_before[steps[i + 1].step] = st
                 if s.action.kind in ("reload", "reset"):
-                    if s.action.kind == "reload" and getattr(st, "unknown_is_none", False) and self.transitions and self.transitions[-1].episode == ep:
-                        # a reload reveals changes the last operation made in views not visited since
+                    if s.action.kind == "reload" and pending_domain is not None:
                         d = diff(prev, st)
+                        d.added = [o for o in d.added if o.id not in discovered]
+                        if d.domain_changed:
+                            last_change_i = realize_pending_domain(pending_domain, d, st)
+                            pending_domain = None
+                    elif s.action.kind == "reload" and getattr(st, "unknown_is_none", False) and self.transitions and self.transitions[-1].episode == ep:
+                        # A reload re-renders the current view from persistent state.  Only a
+                        # reload that directly follows the last domain transition (no other
+                        # action in between) can attribute a newly rendered fact to that
+                        # transition.  After intervening actions the cause is not identifiable:
+                        # the same rule as for view navigation applies and the fact stays
+                        # explicitly unattributed.
+                        d = diff(prev, st)
+                        d.added = [o for o in d.added if o.id not in discovered]
                         if d.domain_changed:
                             last = self.transitions[-1]
-                            last.d.added += d.added
-                            last.d.removed += d.removed
-                            last.d.attr_changes += d.attr_changes
-                            last.d.rel_changes += d.rel_changes
-                            if last.ext:
-                                last.macro = list(last.steps)
-                                self._extend_macro(last, *last.ext)
+                            immediate = i > 0 and last.steps[-1] == steps[i - 1].step
+                            if immediate:
+                                last.d.added += d.added
+                                last.d.removed += d.removed
+                                last.d.attr_changes += d.attr_changes
+                                last.d.rel_changes += d.rel_changes
+                                # keep the transition's after-state consistent with its diff
+                                for obj in d.added:
+                                    last.after.objs[obj.id] = obj
+                                for obj in d.removed:
+                                    last.after.objs.pop(obj.id, None)
+                                for oid, k, _a, b in d.attr_changes:
+                                    if oid in last.after.objs:
+                                        last.after.objs[oid].attrs[k] = b
+                                for oid, k, _a, b in d.rel_changes:
+                                    if oid in last.after.objs:
+                                        if k == "parent":
+                                            last.after.objs[oid].parent = b
+                                        else:
+                                            last.after.objs[oid].refs[k] = b
+                                if last.ext:
+                                    last.macro = list(last.steps)
+                                    self._extend_macro(last, *last.ext)
+                            else:
+                                self.unattributed_sensing_changes.append({
+                                    "revealing_step": s.step,
+                                    "kind": "reload_after_intervening_actions",
+                                    "last_transition_steps": list(last.steps),
+                                    "delta": str(d),
+                                    "observation": s.after,
+                                })
                     prev, last_change_i = st, i
                     if s.action.kind == "reset":
                         pending = []
+                        pending_domain = None
                     continue
                 if not st.clean:
                     prev = st
@@ -346,6 +405,14 @@ class Inducer:
                 for o in list(d.added):
                     for ptr, po_, snap in list(pending):
                         if po_.id == o.id:
+                            self.delayed_resolutions.append({
+                                "causal_transition_steps": list(ptr.steps),
+                                "revealing_step": s.step,
+                                "object": list(o.id),
+                                "object_present_in_transition_before": o.id in ptr.before.objs,
+                                "old_attrs": dict(po_.attrs), "new_attrs": dict(o.attrs),
+                                "old_refs": dict(po_.refs), "new_refs": dict(o.refs),
+                            })
                             ptr.d.removed = [x for x in ptr.d.removed if x.id != o.id]
                             for k in set(po_.refs) | set(o.refs):
                                 if po_.refs.get(k) != o.refs.get(k):
@@ -368,22 +435,31 @@ class Inducer:
                     if tracker.all_scopes_visited_since(snap):
                         ptr.ambiguous = [x for x in ptr.ambiguous if x != po_.id]
                         pending.remove((ptr, po_, snap))
-                tr = Transition(ep, [s.step], [s.step], prev, st, d)
-                if d.domain_changed and self._is_view_control_click(s) and self.transitions and self.transitions[-1].episode == ep:
-                    # a pure view switch revealed changes made by the last domain transition
-                    last = self.transitions[-1]
-                    last.d.added += d.added
-                    last.d.removed += d.removed
-                    last.d.attr_changes += d.attr_changes
-                    last.d.rel_changes += d.rel_changes
-                    for o in d.added:
-                        last.after.objs[o.id] = o
-                    if last.ext:
-                        last.macro = list(last.steps)
-                        self._extend_macro(last, *last.ext)
-                    self.reattributed += 1
+                sensing_step = d.domain_changed and self._is_view_control_click(s)
+                sensing_reveal = sensing_step and pending_domain is not None
+                if sensing_reveal:
+                    last_change_i = realize_pending_domain(pending_domain, d, st)
+                    pending_domain = None
                     d = Diff([], [], [], [], d.view_changes)
-                    tr = Transition(ep, [s.step], [s.step], prev, st, d)
+                elif sensing_step:
+                    # A sensing action can reveal a persistent fact without having caused
+                    # it.  The old fallback attached every such delta to the most recent
+                    # learned transition, even across unrelated actions, which fragmented
+                    # operator effects and made view navigation appear causal.  Preserve
+                    # the evidence, but leave its cause unresolved unless a controlled
+                    # DOMAIN probe established the pending action above.
+                    self.unattributed_sensing_changes.append({
+                        "revealing_step": s.step,
+                        "delta": str(d),
+                        "observation": s.after,
+                    })
+                    d = Diff([], [], [], [], d.view_changes)
+                elif d.domain_changed and pending_domain is not None:
+                    # Another domain-looking action intervened before the missing fact was
+                    # observed, so causal attribution is no longer identifiable.
+                    pending_domain = None
+
+                tr = Transition(ep, [s.step], [s.step], prev, st, d)
                 if d.domain_changed:
                     self._changing_steps.add(s.step)
                     tr.ext = (steps, last_change_i + 1, i - 1, self._episode_anchor(steps, i))
@@ -396,6 +472,19 @@ class Inducer:
                             tr.ambiguous.append(o.id)
                             pending.append((tr, o, tracker.step))
                 else:
+                    probe = getattr(self.A, "probe_by_step", {}).get(s.step, {})
+                    if probe.get("status") == "DOMAIN":
+                        # A controlled action/reload/survey says a persistent change
+                        # occurred, but the changed fact is not in the current view.  Hold
+                        # the causal action until a verified sensing step reveals it.
+                        tr.ext = (steps, last_change_i + 1, i - 1,
+                                  self._episode_anchor(steps, i))
+                        pending_domain = (tr, i)
+                        last_change_i = i
+                        prev = st
+                        continue
+                    if pending_domain is not None and not self._is_view_control_click(s):
+                        pending_domain = None
                     self._extend_macro(tr, steps, i, i - 1, enabling_lo=self._episode_anchor(steps, i))
                     self.noops.append(tr)
                     # view transition: a context slot changed to an object key
@@ -410,6 +499,8 @@ class Inducer:
         cat = getattr(self.A, "cat", None)
         if cat is None or s.action.kind != "click" or not s.action.target_desc:
             return False
+        if getattr(self.A, "probe_by_step", {}).get(s.step, {}).get("status") == "VIEW":
+            return True
         if s.action.target_desc.get("name") in cat.view_controls:
             return True
         # a click on a static entity mention (object-named tab / selector) is a view action

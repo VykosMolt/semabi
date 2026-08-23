@@ -14,7 +14,9 @@ from semabi.compiler.v2.hypotheses import Hypotheses
 
 def compile_v2(run_dir: Path, min_support: int = 1, refine_hypotheses: bool = False, llm: str | None = "opus",
                apply_refinements: bool = True, write_diagnostics: bool = True,
-               conservative_belief: bool = True) -> Compiled:
+               conservative_belief: bool = True,
+               include_provisional_refinements: bool = False,
+               refinement_decisions: list[dict] | None = None) -> Compiled:
     run_dir = Path(run_dir)
     log = EvidenceLog(run_dir)
     G = ObsGraph()
@@ -24,7 +26,9 @@ def compile_v2(run_dir: Path, min_support: int = 1, refine_hypotheses: bool = Fa
     merge_mentions = False
     if apply_refinements:
         from semabi.compiler.v2.refinement import configure_hypotheses, load_decisions
-        merge_mentions = configure_hypotheses(H, load_decisions(run_dir))
+        decisions = (refinement_decisions if refinement_decisions is not None else
+                     load_decisions(run_dir, include_provisional=include_provisional_refinements))
+        merge_mentions = configure_hypotheses(H, decisions)
     H.fit(step_sigs=[s.after for s in log.steps], step_targets=[(s.before, s.action.target) for s in log.steps], step_kinds=[s.action.kind for s in log.steps], reload_pairs=[(s.before, s.after) for i, s in enumerate(log.steps)
                         if s.action.kind == "reload" and i > 0 and log.steps[i - 1].action.kind not in ("reset", "reload")])
     if llm:

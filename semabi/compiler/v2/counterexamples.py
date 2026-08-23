@@ -51,6 +51,7 @@ class Counterexample:
     probe_evidence: dict = field(default_factory=dict)
     abstraction_delta: str | None = None
     why_unrepresentable: list[str] = field(default_factory=list)
+    causal_attribution: dict = field(default_factory=dict)
 
 
 @dataclass
@@ -108,6 +109,18 @@ def classify_unregistered(probe_status: str | None, reload_observed: bool,
 
 
 def classify(A: V2Abstractor, log: EvidenceLog) -> list[Counterexample]:
+    def is_sensing_step(step) -> bool:
+        if step.action.kind != "click" or step.action.target is None:
+            return False
+        if getattr(A, "probe_by_step", {}).get(step.step, {}).get("status") == "VIEW":
+            return True
+        name = (step.action.target_desc or {}).get("name")
+        if name in A.verified_view_controls:
+            return True
+        parsed = A.parsed(log.obs(step.before))
+        idx = parsed.node_instance.get(step.action.target)
+        return idx is not None and parsed.instances[idx].anchor == "static"
+
     out: list[Counterexample] = []
     by_ep: dict[int, list] = defaultdict(list)
     for s in log.steps:
@@ -115,9 +128,12 @@ def classify(A: V2Abstractor, log: EvidenceLog) -> list[Counterexample]:
     for ep, ss in by_ep.items():
         tracker = A.make_tracker()
         prev, _ = tracker.observe(log.obs(ss[0].before), "reset")
+        pending_domain: Counterexample | None = None
         for j, s in enumerate(ss):
             st, discovered = tracker.observe(log.obs(s.after), s.action.kind)
             if s.action.kind in ("reset", "reload"):
+                if s.action.kind == "reset":
+                    pending_domain = None
                 prev = st
                 continue
             d = diff(prev, st)
@@ -163,7 +179,26 @@ def classify(A: V2Abstractor, log: EvidenceLog) -> list[Counterexample]:
                 nxt = log.obs(ss[j + 1].after)
                 ce.reverted_by_reload = nxt.structural_signature() == before.structural_signature()
 
-            if d.domain_changed:
+            if d.domain_changed and pending_domain is not None and is_sensing_step(s):
+                pending_domain.status = "EXPLAINED"
+                pending_domain.abstraction_delta = str(d)
+                pending_domain.why_unrepresentable = []
+                pending_domain.causal_attribution = {
+                    "kind": "DELAYED_SENSING_REVEAL",
+                    "domain_action_step": pending_domain.step,
+                    "revealing_sensing_step": s.step,
+                    "revealing_observation": s.after,
+                    "probe_evidence": pending_domain.probe_evidence,
+                }
+                ce.status = "VIEW_ONLY"
+                ce.abstraction_delta = None
+                ce.causal_attribution = {
+                    "kind": "REVEALS_PRIOR_DOMAIN_CHANGE",
+                    "domain_action_step": pending_domain.step,
+                }
+                pending_domain = None
+            elif d.domain_changed:
+                pending_domain = None
                 unattached_persistent_widget = probe_status == "DOMAIN" and any(
                     ch.channel == "WIDGET" and ch.unit is None for ch in changes
                 )
@@ -191,6 +226,10 @@ def classify(A: V2Abstractor, log: EvidenceLog) -> list[Counterexample]:
                     ce.why_unrepresentable.append(
                         "no controlled probe or immediate reload evidence establishes whether the rendered delta is persistent"
                     )
+                if ce.status == "UNGROUNDED" and probe_status == "DOMAIN":
+                    pending_domain = ce
+                elif pending_domain is not None and not is_sensing_step(s):
+                    pending_domain = None
             out.append(ce)
             prev = st
     return out
@@ -205,6 +244,7 @@ def abstraction_contradictions(inducer) -> dict:
     environment is deterministic or choose a refinement.
     """
     groups: dict[str, list[tuple]] = defaultdict(list)
+    by_action: dict[str, list[tuple]] = defaultdict(list)
 
     def stable(value):
         return json.dumps(value, sort_keys=True, default=str, separators=(",", ":"))
@@ -218,6 +258,50 @@ def abstraction_contradictions(inducer) -> dict:
             }
             for oid, o in sorted(state.objs.items(), key=lambda x: stable(x[0]))
         ]
+
+    def has_explicit_unknown(state):
+        """Whether equality of two recovered states still contains an UNKNOWN fact.
+
+        ``partial`` alone is not sufficient: the V2 tracker carries previously confirmed
+        objects through partial views.  Explicit ``None`` values under the conservative
+        belief convention, provisional identities, and unidentified mentions are the
+        cases where the represented belief itself says that equality is unresolved.
+        """
+        if state.unidentified or state.provisional:
+            return True
+        if not state.unknown_is_none:
+            return False
+        return any(
+            value is None
+            for obj in state.objs.values()
+            for value in [*obj.attrs.values(), *obj.refs.values()]
+        )
+
+    def known_compatible(a, b):
+        """Can two beliefs denote one state after ignoring explicitly unknown facts?"""
+        ids = set(a.objs) | set(b.objs)
+        for oid in ids:
+            oa, ob = a.objs.get(oid), b.objs.get(oid)
+            if oa is None or ob is None:
+                # Absence from a partial observation is UNKNOWN, not FALSE.
+                if (oa is None and a.partial) or (ob is None and b.partial):
+                    continue
+                return False
+            for slot in set(oa.attrs) | set(ob.attrs):
+                va, vb = oa.attrs.get(slot), ob.attrs.get(slot)
+                if (a.unknown_is_none and va is None) or (b.unknown_is_none and vb is None):
+                    continue
+                if va != vb:
+                    return False
+            if oa.parent != ob.parent and oa.parent is not None and ob.parent is not None:
+                return False
+            for slot in set(oa.refs) | set(ob.refs):
+                va, vb = oa.refs.get(slot), ob.refs.get(slot)
+                if (a.unknown_is_none and va is None) or (b.unknown_is_none and vb is None):
+                    continue
+                if va != vb:
+                    return False
+        return True
 
     def grounded_actions(tr):
         def ground(value):
@@ -245,35 +329,85 @@ def abstraction_contradictions(inducer) -> dict:
             continue
         state = state_payload(tr.before)
         key = stable([state, actions])
-        groups[key].append((tr, state, actions, outcome(tr)))
+        record = (tr, state, actions, outcome(tr), has_explicit_unknown(tr.before))
+        groups[key].append(record)
+        by_action[stable(actions)].append(record)
 
     comparable = [xs for xs in groups.values() if len(xs) >= 2]
     contradictions: list[BehavioralContradiction] = []
-    comparable_pairs = contradictory_pairs = 0
+    comparable_pairs = consistent_pairs = contradictory_pairs = 0
+    unresolved_pairs: list[dict] = []
+    seen_unresolved: set[tuple[int, int]] = set()
     for xs in comparable:
-        outcome_keys = {stable(x[3]) for x in xs}
-        comparable_pairs += len(xs) * (len(xs) - 1) // 2
-        contradictory_pairs += sum(stable(a[3]) != stable(b[3]) for a, b in combinations(xs, 2))
+        known_xs = [x for x in xs if not x[4]]
+        unknown_xs = [x for x in xs if x[4]]
+        for a, b in combinations(known_xs, 2):
+            comparable_pairs += 1
+            if stable(a[3]) == stable(b[3]):
+                consistent_pairs += 1
+            else:
+                contradictory_pairs += 1
+        for a, b in combinations(xs, 2):
+            if a in unknown_xs or b in unknown_xs:
+                key = tuple(sorted((id(a[0]), id(b[0]))))
+                seen_unresolved.add(key)
+                unresolved_pairs.append({
+                    "transition_steps": [a[0].steps, b[0].steps],
+                    "reason": "EXPLICIT_UNKNOWN_IN_PERSISTENT_BELIEF",
+                    "same_registered_outcome": stable(a[3]) == stable(b[3]),
+                })
+        outcome_keys = {stable(x[3]) for x in known_xs}
         if len(outcome_keys) < 2:
             continue
-        state_sig = hashlib.sha1(stable(xs[0][1]).encode()).hexdigest()[:16]
-        cid = "behavior-" + hashlib.sha1(stable([state_sig, xs[0][2]]).encode()).hexdigest()[:12]
+        state_sig = hashlib.sha1(stable(known_xs[0][1]).encode()).hexdigest()[:16]
+        cid = "behavior-" + hashlib.sha1(stable([state_sig, known_xs[0][2]]).encode()).hexdigest()[:12]
         by_outcome: dict[str, dict] = {}
-        for tr, _state, _actions, effect in xs:
+        for tr, _state, _actions, effect, _unknown in known_xs:
             k = stable(effect)
             record = by_outcome.setdefault(k, {"effect": effect, "transition_steps": []})
             record["transition_steps"].append(tr.steps)
         contradictions.append(BehavioralContradiction(
-            cid, state_sig, xs[0][2], [x[0].steps for x in xs], list(by_outcome.values()),
+            cid, state_sig, known_xs[0][2], [x[0].steps for x in known_xs], list(by_outcome.values()),
         ))
+
+    # A second class cannot be called contradictory: the two beliefs differ only in
+    # UNKNOWN material.  Preserve exact provenance so a later sensing action can turn
+    # the pair into a comparable repeat rather than silently treating absence as false.
+    for xs in by_action.values():
+        for a, b in combinations(xs, 2):
+            key = tuple(sorted((id(a[0]), id(b[0]))))
+            if key in seen_unresolved or stable(a[1]) == stable(b[1]):
+                continue
+            if not known_compatible(a[0].before, b[0].before):
+                continue
+            unresolved_pairs.append({
+                "transition_steps": [a[0].steps, b[0].steps],
+                "reason": "BELIEFS_COMPATIBLE_ONLY_UNDER_UNKNOWN",
+                "same_registered_outcome": stable(a[3]) == stable(b[3]),
+            })
+            seen_unresolved.add(key)
+
+    comparable_groups = sum(
+        1 for xs in comparable if sum(not x[4] for x in xs) >= 2
+    )
+    consistent_groups = sum(
+        1 for xs in comparable
+        if sum(not x[4] for x in xs) >= 2
+        and len({stable(x[3]) for x in xs if not x[4]}) == 1
+    )
     return {
-        "version": 1,
-        "comparable_groups": len(comparable),
+        "version": 2,
+        "candidate_repeat_groups": len(comparable),
+        "comparable_groups": comparable_groups,
+        "consistent_groups": consistent_groups,
         "contradictory_groups": len(contradictions),
-        "abstraction_contradiction_rate": round(len(contradictions) / len(comparable), 3) if comparable else None,
+        "unresolved_repeat_pairs_due_unknown": len(unresolved_pairs),
+        "abstraction_contradiction_rate": round(len(contradictions) / comparable_groups, 3) if comparable_groups else None,
         "comparable_transition_pairs": comparable_pairs,
+        "consistent_transition_pairs": consistent_pairs,
         "contradictory_transition_pairs": contradictory_pairs,
         "pair_contradiction_rate": round(contradictory_pairs / comparable_pairs, 3) if comparable_pairs else None,
+        "unresolved_repeats": unresolved_pairs,
         "contradictions": [asdict(c) for c in contradictions],
     }
 

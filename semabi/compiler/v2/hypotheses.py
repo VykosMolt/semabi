@@ -106,6 +106,9 @@ class Hypotheses:
         # These are accepted local data-association decisions, not global template merges.
         self.raw_mention_assignments: dict[tuple[str, int], tuple[str, str]] = {}
         # (observation, DOM node) -> (target entity template, associated entity key).
+        self.raw_context_assignments: dict[tuple[str, int], tuple[str, str, str]] = {}
+        # (observation, DOM node) -> (target entity template, entity key, rendered
+        # heading/region context).  Populated only by a verified local intervention.
         self.record_splits: list[dict] = []
         self._split_done = False
         self.frozen = False

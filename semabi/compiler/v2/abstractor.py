@@ -37,6 +37,16 @@ class V2Abstractor(Abstractor):
         self.record_by_anchor: dict[int, dict] = {}
         self.explicit_link_types: dict[int, list[int]] = {}
         self._build_types()
+        for target_template, _key, _context in H.raw_context_assignments.values():
+            target_et = H.tid_of_template.get(target_template)
+            if target_et is None or target_et not in self.tid_map:
+                continue
+            tid = self.tid_map[target_et]
+            if "attr:context" not in self.types[tid].slots:
+                self.types[tid].slots["attr:context"] = SlotInfo(
+                    "attr:context", n_present=1, n_total=1, seen_after_reload=1,
+                    value_kept=1, present_with_key=1, n_identified=1,
+                )
         self.view_controls: set[str] = set()
         self.verified_view_controls: set[str] = set()
         self.heuristic_view_controls: set[str] = set()
@@ -102,13 +112,15 @@ class V2Abstractor(Abstractor):
                 ti.slots["id"] = SlotInfo("id", n_present=1, n_total=1, seen_after_reload=1, value_kept=1, present_with_key=1, n_identified=1)
                 self.types[tid] = ti
             for t in et.units:
-                for sid in et.attr_slots[t]:
+                # attr_slots is a set: iterate in sorted order so slot insertion order, and
+                # therefore every first-match lookup downstream, is hash-seed independent
+                for sid in sorted(et.attr_slots[t]):
                     name = self.attr_name(et, t, sid)
                     si = ti.slots.setdefault(name, SlotInfo(name, n_present=1, n_total=1, seen_after_reload=1, value_kept=1, present_with_key=1, n_identified=1))
                     for v, c in H.units[t].slots[sid].values.items():
                         si.values[v] += c
                         si.values_with_key[v] += c
-                for (t2, sid), tgt in et.ref_slots.items():
+                for (t2, sid), tgt in sorted(et.ref_slots.items(), key=lambda kv: (kv[0][0], kv[0][1])):
                     if t2 == t and tgt in self.tid_map:
                         ti.refs[f"rel:{self.tid_map[tgt]}"] = self.tid_map[tgt]
                 if t in et.contain:
@@ -116,14 +128,20 @@ class V2Abstractor(Abstractor):
                 if t in et.link_parent:
                     ti.refs[f"rel:{self.tid_map[et.link_parent[t]]}"] = self.tid_map[et.link_parent[t]]
         for spec in H.record_splits:
-            anchor_et = spec["anchor_entity_tid"]
-            if anchor_et not in self.tid_map:
+            anchor_et = self._resolve_split_entity(H, spec, "anchor")
+            context_et = self._resolve_split_entity(H, spec, "context")
+            target_et = self._resolve_split_entity(H, spec, "target")
+            if anchor_et is None or context_et is None or target_et is None:
+                continue
+            if anchor_et not in self.tid_map or context_et not in self.tid_map or target_et not in self.tid_map:
                 continue
             detail = spec["detail_template"]
+            if detail not in H.units:
+                continue
             et = H.entity_types[anchor_et]
             anchor_tid = self.tid_map[anchor_et]
-            context_tid = self.tid_map[spec["context_entity_tid"]]
-            target_tid = self.tid_map[spec["target_entity_tid"]]
+            context_tid = self.tid_map[context_et]
+            target_tid = self.tid_map[target_et]
             record_tid = max(self.types, default=-1) + 1
             record = dict(spec)
             record.update({"record_tid": record_tid, "anchor_tid": anchor_tid,
@@ -153,6 +171,23 @@ class V2Abstractor(Abstractor):
                     del anchor_type.slots[name]
             anchor_type.refs.pop(f"rel:{context_tid}", None)
             anchor_type.refs.pop(f"rel:{target_tid}", None)
+
+    @staticmethod
+    def _resolve_split_entity(H, spec: dict, role: str) -> int | None:
+        """Resolve a record-split endpoint in this run.
+
+        Entity tids in a stored decision are run-local.  When the decision records the
+        endpoint's unit templates, the entity type realising any of those templates in
+        the current run is used; a stored tid is accepted only as a legacy fallback when
+        no template information exists (same-run replay).  Ambiguous or absent
+        resolutions leave the split unapplied rather than attaching it positionally.
+        """
+        templates = spec.get(f"{role}_entity_templates")
+        if templates:
+            hits = {tid for tid, et in H.entity_types.items() if set(et.units) & set(templates)}
+            return next(iter(hits)) if len(hits) == 1 else None
+        tid = spec.get(f"{role}_entity_tid")
+        return tid if tid in H.entity_types else None
 
     def attr_name(self, et: EntityType, t: str, sid: str) -> str:
         """Attribute names are shared across templates by their label context (the label
@@ -264,10 +299,14 @@ class V2Abstractor(Abstractor):
             attr_slots = et.attr_slots[ui.template]
             if record_spec is not None:
                 attr_slots = set(record_spec["anchor_attr_slots"]) if ui.template == record_spec["detail_template"] else set()
-            for sid in attr_slots:
+            # Distinct slots can share one label-context attribute name; iterate in sorted
+            # order so the surviving value is deterministic rather than hash-seed dependent.
+            for sid in sorted(attr_slots):
                 if sid in ui.slots:
                     inst.slots[self.attr_name(et, ui.template, sid)] = ("", ui.slots[sid])
-            for (t2, sid), tgt in et.ref_slots.items():
+            # Several displayed slots can feed one reference slot (a row listing two
+            # targets); iterate in sorted order so the surviving value is deterministic.
+            for (t2, sid), tgt in sorted(et.ref_slots.items(), key=lambda kv: (kv[0][0], kv[0][1])):
                 if record_spec is not None:
                     continue
                 if t2 == ui.template and tgt in self.tid_map:
@@ -298,6 +337,30 @@ class V2Abstractor(Abstractor):
                 parent = obs.node(parent).parent
             inst = Instance(node_i, self.tid_map[target_et], idx_of_root.get(parent), {}, {}, "v2-raw-association")
             inst.slots["id"] = ("", associated_key)
+            instances.append(inst)
+            idx_of_root[node_i] = len(instances) - 1
+            ordinals[idx_of_root[node_i]] = Counter()
+        # A verified action/reload/survey probe may show the same entity mention moving
+        # between rendered heading/region contexts.  Context is then a persistent
+        # categorical observation attached to that mention, not an ontology label.
+        for (assigned_sig, node_i), (target_template, associated_key, context) in H.raw_context_assignments.items():
+            if assigned_sig != sig or node_i >= len(obs.nodes):
+                continue
+            target_et = H.tid_of_template.get(target_template)
+            if target_et is None:
+                continue
+            tid = self.tid_map[target_et]
+            idx = idx_of_root.get(node_i)
+            if idx is not None and instances[idx].tid == tid \
+                    and instances[idx].slots.get("id", (None, None))[1] == associated_key:
+                instances[idx].slots["attr:context"] = ("", context)
+                continue
+            parent = obs.node(node_i).parent
+            while parent >= 0 and parent not in idx_of_root:
+                parent = obs.node(parent).parent
+            inst = Instance(node_i, tid, idx_of_root.get(parent), {}, {}, "v2-context-association")
+            inst.slots["id"] = ("", associated_key)
+            inst.slots["attr:context"] = ("", context)
             instances.append(inst)
             idx_of_root[node_i] = len(instances) - 1
             ordinals[idx_of_root[node_i]] = Counter()
@@ -479,10 +542,32 @@ class V2Abstractor(Abstractor):
                 j = json.loads(line)
                 if "step" in j:
                     probe_by_step[int(j["step"])] = j
+                for sensing_step in j.get("sensing_steps", []):
+                    probe_by_step[int(sensing_step)] = {
+                        "status": "VIEW",
+                        "controlled": True,
+                        "kind": "DIAGNOSTIC_SURVEY_SENSING_STEP",
+                        "originating_probe_step": j.get("step"),
+                        "component_id": j.get("component_id"),
+                    }
                 k = tuple(j["key"])
                 probe_by_key[k].append(j)
                 if len(k) >= 3 and k[0] == "click" and k[1] == "button":
                     probe_status[k[2]].add(j["status"])
+                for sensing in j.get("sensing_actions", []):
+                    sensing_key = tuple(sensing["key"])
+                    sensing_record = {
+                        **sensing,
+                        "controlled": True,
+                        "kind": "DIAGNOSTIC_SURVEY_SENSING_STEP",
+                        "originating_probe_step": j.get("step"),
+                        "component_id": j.get("component_id"),
+                    }
+                    probe_by_step[int(sensing["step"])] = sensing_record
+                    probe_by_key[sensing_key].append(sensing_record)
+                    if (len(sensing_key) >= 3 and sensing_key[0] == "click"
+                            and sensing_key[1] == "button"):
+                        probe_status[sensing_key[2]].add("VIEW")
         # A controlled persistence result also supplies evidence for earlier occurrences
         # of the exact same compiler-visible affordance key.  Keep the originating probe
         # step and scope explicit; DOMAIN dominates, while VIEW is generalized only when

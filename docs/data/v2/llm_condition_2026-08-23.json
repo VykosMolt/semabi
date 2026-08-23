@@ -1,0 +1,27 @@
+{
+ "version": 1,
+ "date": "2026-08-23",
+ "condition": "local counterexample proposal after deterministic candidate exhaustion",
+ "case": {
+  "app": "pharmacy-c",
+  "run": "runs/v2_refinement/cpharmacy_baseline_001",
+  "counterexample_step": 317,
+  "counterexample_status": "UNGROUNDED",
+  "deterministic_candidate_components": 0
+ },
+ "request": {
+  "model_alias": "opus",
+  "prompt_sha256": "2d59742cd469433f8398aadd4bbc90c80d6c00b8b585afad321dab3608c13923",
+  "scope": "local rendered before/after observation graph, current abstraction, unexplained transition, candidate mentions, and compiler-visible probe evidence",
+  "hidden_simulator_evidence_in_prompt": false,
+  "cache_only_check": "MISS"
+ },
+ "result": {
+  "status": "BLOCKED_EXTERNAL_TRACE_TRANSMISSION_NOT_AUTHORIZED",
+  "proposal": "NOT_RUN",
+  "verification": "NOT_RUN",
+  "payload_sent": false,
+  "reason": "The retained cache did not contain the exact prompt. External invocation would transmit local trace evidence off-machine and was not authorized, so no substitute model or uncached call was used."
+ },
+ "interpretation": "A natural deterministic-proposal failure exists, but the genuine LLM-plus-execution condition remains blocked. This is not evidence for or against LLM proposal recall."
+}

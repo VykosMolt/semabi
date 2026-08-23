@@ -9,14 +9,14 @@ from __future__ import annotations
 
 import hashlib
 import json
-from collections import Counter
+from collections import Counter, defaultdict
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any
 
 from semabi.compiler.evidence import EvidenceLog
 from semabi.compiler.v2.counterexamples import Counterexample
-from semabi.compiler.v2.graph import tokens
+from semabi.compiler.v2.graph import node_text, tokens
 
 
 HYPOTHESES_FILE = "hypotheses_v2.json"
@@ -500,6 +500,11 @@ def _matrix_record_components(A, log: EvidenceLog, counterexamples: list[Counter
                 "detail_template": detail, "detail_context_slot": detail_context,
                 "detail_target_slot": detail_target, "context_entity_tid": context_tid,
                 "target_entity_tid": target_tid, "record_attr_slots": sorted(record_attrs),
+                # Entity tids are run-local.  A decision transferred to an independently
+                # collected trace must resolve its endpoints by unit template, never by id.
+                "anchor_entity_templates": sorted(et.units),
+                "context_entity_templates": sorted(H.entity_types[context_tid].units),
+                "target_entity_templates": sorted(H.entity_types[target_tid].units),
                 "anchor_attr_slots": sorted(stable_attrs), "matrix_cells": cells,
                 "contradiction_evidence": {
                     "kind": "ONE_ANCHOR_KEY_HAS_MULTIPLE_SIMULTANEOUS_RECORD_CONTEXTS",
@@ -525,6 +530,291 @@ def _matrix_record_components(A, log: EvidenceLog, counterexamples: list[Counter
     return out
 
 
+def _preceding_heading_context(obs, node_i: int) -> str | None:
+    """Nearest preceding heading at any enclosing sibling level.
+
+    This is a generic observation relation, not a claim that the heading is an entity.
+    It gives the refinement layer a local alternative for mentions that move between
+    rendered regions after an action.
+    """
+    child = node_i
+    parent = obs.node(child).parent
+    while parent >= 0:
+        siblings = obs.children(parent)
+        if child in siblings:
+            for sibling in reversed(siblings[:siblings.index(child)]):
+                if obs.node(sibling).role == "heading":
+                    value = node_text(obs.node(sibling))
+                    if value:
+                        return value
+        child, parent = parent, obs.node(parent).parent
+    return None
+
+
+def _embedded_key(value: str | None, candidates: set[str]) -> str | None:
+    value_tokens = tokens(value or "")
+    matches = []
+    for candidate in candidates:
+        needle = tokens(candidate)
+        if needle and any(value_tokens[i:i + len(needle)] == needle
+                          for i in range(len(value_tokens) - len(needle) + 1)):
+            matches.append(candidate)
+    # Longest exact token sequence wins only if it is unique at that length.  This lets a
+    # composite key dominate one of its components without silently resolving duplicates.
+    if not matches:
+        return None
+    width = max(len(tokens(x)) for x in matches)
+    best = [x for x in matches if len(tokens(x)) == width]
+    return best[0] if len(best) == 1 else None
+
+
+def _context_membership_components(A, log: EvidenceLog,
+                                   counterexamples: list[Counterexample]) -> list[AmbiguityComponent]:
+    """Local alternatives for an entity mention moving between heading contexts.
+
+    A before/after context move is only a proposal.  The view-state and duplicate-mention
+    alternatives remain live until an action -> reload -> cross-view survey shows that the
+    same mention stays in the new context and no copy remains in the old one.
+    """
+    proposals: dict[tuple, dict[str, Any]] = {}
+
+    def mentions(obs, keys):
+        out: dict[str, list[tuple[int, str, str]]] = defaultdict(list)
+        for node in obs.nodes:
+            if node.role not in ("button", "link", "group", "text"):
+                continue
+            context = _preceding_heading_context(obs, node.i)
+            key = _embedded_key(node_text(node), keys)
+            if context is not None and key is not None:
+                out[key].append((node.i, context, node_text(node) or ""))
+        return out
+
+    def anchored_mentions(sig, template, keys):
+        """Key mentions from the existing rich entity representation only.
+
+        Accessible names elsewhere on the screen often repeat an entity key beneath a
+        page-level heading.  Treating all of those as source memberships would turn UI
+        chrome into candidate domain state.  The current entity hypothesis already gives
+        us a narrower, generic proposal anchor: its key-slot node.  The destination remains
+        a raw mention because discovering an alternative representation is the purpose of
+        the refinement.
+        """
+        obs = A.G.obs[sig]
+        unit = A.H.units[template]
+        first_key_slot = unit.key_slot.split("|")[0] if unit.key_slot else None
+        out: dict[str, list[tuple[int, str, str]]] = defaultdict(list)
+        if first_key_slot is None:
+            return out
+        for ui in A.H.parse_units(sig):
+            if ui.template != template:
+                continue
+            key = ui.slots.get(first_key_slot)
+            node_i = ui.slot_nodes.get(first_key_slot)
+            if key not in keys or node_i is None:
+                continue
+            context = _preceding_heading_context(obs, node_i)
+            if context is not None:
+                out[key].append((node_i, context, node_text(obs.node(node_i)) or ""))
+        return out
+
+    for et in A.H.entity_types.values():
+        keys = {
+            value for template in et.units
+            for value in A.H.units[template].primary_key_values()
+            if isinstance(value, str) and value
+        }
+        if len(keys) < 2:
+            continue
+        # Prefer the richest existing representation as the entity type anchor.  Raw
+        # contextual mentions contribute identity/context only.
+        target_template = max(
+            et.units,
+            key=lambda template: max((len(A.G.obs[x.sig].subtree(x.root))
+                                      for x in A.H.units[template].instances), default=0),
+        )
+        if max((len(A.G.obs[x.sig].subtree(x.root))
+                for x in A.H.units[target_template].instances), default=0) < 4:
+            continue
+        for ce in counterexamples:
+            if ce.status not in ("UNDETERMINED", "UNGROUNDED"):
+                continue
+            step = log.steps[ce.step]
+            if step.action.kind not in ("click", "press"):
+                continue
+            before = log.obs(step.before)
+            mb = anchored_mentions(step.before, target_template, keys)
+            future = []
+            for later_i in range(ce.step, min(len(log.steps), ce.step + 13)):
+                later = log.steps[later_i]
+                if later.episode != step.episode:
+                    break
+                future.append((later_i, later.after, mentions(log.obs(later.after), keys)))
+            for key in sorted(mb):
+                if len(mb[key]) != 1:
+                    continue
+                # The candidate action must remove the current rich representation.  If
+                # that representation remains visible, a later occurrence in another
+                # context is not evidence about this action (it can be caused by one of
+                # the intervening sensing actions instead).
+                if key in anchored_mentions(step.after, target_template, keys):
+                    continue
+                source_node, source_context, source_text = mb[key][0]
+                revealed = None
+                for later_i, later_sig, ma in future:
+                    candidates = [x for x in ma.get(key, []) if x[1] != source_context]
+                    if len(candidates) == 1:
+                        revealed = (later_i, later_sig, candidates[0])
+                        break
+                if revealed is None:
+                    continue
+                reveal_step, reveal_sig, (target_node, target_context, target_text) = revealed
+                if source_context == target_context:
+                    continue
+                # Locate the action that selected this mention, then retain only the short
+                # displayed control tail ending in the candidate state-changing step.
+                start = None
+                for prior_i in range(ce.step - 1, max(-1, ce.step - 7), -1):
+                    prior = log.steps[prior_i]
+                    if prior.episode != step.episode or prior.action.kind in ("reset", "reload"):
+                        break
+                    if prior.action.target is None:
+                        continue
+                    prior_obs = log.obs(prior.before)
+                    if _embedded_key(node_text(prior_obs.node(prior.action.target)), {key}) == key:
+                        start = prior_i
+                        break
+                if start is None:
+                    continue
+                boundary = start - 1
+                while boundary >= 0 and log.steps[boundary].episode == step.episode \
+                        and log.steps[boundary].action.kind not in ("reset", "reload"):
+                    boundary -= 1
+                prefix = []
+                replayable = True
+                for action_step in log.steps[boundary + 1:start + 1]:
+                    action = action_step.action
+                    desc = action.target_desc or {}
+                    if action.kind not in ("click", "press") or (action.kind == "click" and not desc.get("role")):
+                        replayable = False
+                        break
+                    prefix.append({"kind": action.kind, "role": desc.get("role"),
+                                   "name": desc.get("name"), "text": action.text})
+                tail = []
+                for action_step in log.steps[start + 1:ce.step + 1]:
+                    action = action_step.action
+                    desc = action.target_desc or {}
+                    if action.kind not in ("click", "press") or (action.kind == "click" and not desc.get("role")):
+                        replayable = False
+                        break
+                    tail.append({"kind": action.kind, "role": desc.get("role"),
+                                 "name": desc.get("name"), "text": action.text})
+                if not replayable or not prefix or not tail:
+                    continue
+                reset_seed = None
+                for prior in reversed(log.steps[:start + 1]):
+                    if prior.episode != step.episode:
+                        continue
+                    if prior.action.kind == "reset":
+                        reset_seed = prior.action.text
+                        break
+                pkey = (target_template, source_context, target_context,
+                        json.dumps(prefix, sort_keys=True), json.dumps(tail, sort_keys=True))
+                proposal = proposals.setdefault(pkey, {
+                    "target_entity_tid": et.tid, "target_template": target_template,
+                    "keys": keys, "source_context": source_context,
+                    "target_context": target_context, "replay_prefix": prefix,
+                    "replay_tail": tail,
+                    "reset_seed": reset_seed, "events": [],
+                })
+                proposal["events"].append({
+                    "step": ce.step, "key": key,
+                    "source_node": source_node, "target_node": target_node,
+                    "source_text": source_text, "target_text": target_text,
+                    "target_role": log.obs(reveal_sig).node(target_node).role,
+                    "before_sig": step.before, "after_sig": reveal_sig,
+                    "reveal_step": reveal_step, "reveal_delay": reveal_step - ce.step,
+                })
+
+    out = []
+    for (_target, _source_context, _target_context, _prefix, _tail), proposal in proposals.items():
+        keys = proposal.pop("keys")
+        target_template = proposal["target_template"]
+        # Observation-scoped assignments transfer the verified relation pattern while
+        # refusing keys that occur in more than one context in one observation.
+        assignments = []
+        conflicts = []
+        for sig, obs in A.G.obs.items():
+            by_key: dict[str, list[tuple[int, str, str]]] = defaultdict(list)
+            allowed_contexts = {proposal["source_context"], proposal["target_context"]}
+            for node in obs.nodes:
+                if node.role not in ("button", "link", "group", "text"):
+                    continue
+                context = _preceding_heading_context(obs, node.i)
+                key = _embedded_key(node_text(node), keys)
+                if context in allowed_contexts and key is not None:
+                    by_key[key].append((node.i, context, node.role))
+            for key, rows in by_key.items():
+                rows = list({(node, context, role) for node, context, role in rows})
+                contexts = {x[1] for x in rows}
+                if len(contexts) != 1:
+                    conflicts.append({"sig": sig, "key": key, "contexts": sorted(contexts)})
+                    continue
+                # Prefer an actionable leaf over its accessible-name container.
+                role_order = {"button": 0, "link": 0, "group": 1, "text": 2}
+                rows.sort(key=lambda x: (role_order.get(x[2], 3), x[0]))
+                node, context, _role = rows[0]
+                assignments.append({
+                    "sig": sig, "node": node, "target_template": target_template,
+                    "key": key, "context": context,
+                })
+        events = proposal["events"]
+        component_id = "amb-" + _id(
+            "context-membership", target_template, proposal["source_context"],
+            proposal["target_context"], proposal["replay_prefix"], proposal["replay_tail"],
+        )
+        scope = {
+            **proposal, "context_assignments": assignments,
+            "assignment_conflicts": conflicts,
+            "observed_keys": sorted({x["key"] for x in events}),
+            "max_reveal_delay": max(x["reveal_delay"] for x in events),
+            "destination_is_non_actionable": any(
+                x["target_role"] not in ("button", "link") for x in events
+            ),
+        }
+        view = LocalHypothesis(
+            "h-" + _id(component_id, "view"), "CONTEXT_IS_VIEW_STATE", "UNTESTED", 0,
+            dict(scope), {"after_reload_context": proposal["source_context"],
+                          "persistent_domain_delta": False},
+        )
+        duplicate = LocalHypothesis(
+            "h-" + _id(component_id, "duplicate"), "DISTINCT_SAME_KEY_MENTIONS", "UNTESTED", 1,
+            dict(scope), {"after_survey_contexts": [proposal["source_context"], proposal["target_context"]]},
+        )
+        persistent = LocalHypothesis(
+            "h-" + _id(component_id, "persistent"), "PERSISTENT_CONTEXT_MEMBERSHIP", "UNTESTED", 1,
+            dict(scope), {"after_reload_context": proposal["target_context"],
+                          "old_context_absent": True, "persistent_domain_delta": True},
+            [EvidenceContribution(
+                "UNDETERMINED", "direct_before_after_context_move", x["step"],
+                [x["before_sig"], x["after_sig"]],
+                {"key": x["key"], "source_context": proposal["source_context"],
+                 "target_context": proposal["target_context"]},
+            ) for x in events],
+        )
+        out.append(AmbiguityComponent(
+            component_id, [x["step"] for x in events], scope,
+            [view, duplicate, persistent], {
+                "kind": "CONTEXT_MEMBERSHIP_PERSISTENCE_PROBE",
+                "disagreement_score": 3,
+                "cost": len(proposal["replay_prefix"]) + len(proposal["replay_tail"]) + 2,
+                "risk": "RESETTABLE_DOMAIN_ACTION",
+                "target_hypotheses": [view.id, duplicate.id, persistent.id],
+                "predictions": {x.id: x.predicted_outcomes for x in (view, duplicate, persistent)},
+            },
+        ))
+    return out
+
+
 def build_components(A, log: EvidenceLog, counterexamples: list[Counterexample]) -> list[AmbiguityComponent]:
     """Build factorized alternatives; identical local scopes share one component."""
     by_id: dict[str, AmbiguityComponent] = {}
@@ -541,6 +831,8 @@ def build_components(A, log: EvidenceLog, counterexamples: list[Counterexample])
     for comp in _reveal_correspondence_components(A, log, counterexamples):
         by_id.setdefault(comp.id, comp)
     for comp in _matrix_record_components(A, log, counterexamples):
+        by_id.setdefault(comp.id, comp)
+    for comp in _context_membership_components(A, log, counterexamples):
         by_id.setdefault(comp.id, comp)
     return list(by_id.values())
 
@@ -559,6 +851,28 @@ def select_intervention(component: AmbiguityComponent) -> dict[str, Any]:
     }
     component.selected_intervention = plan
     return plan
+
+
+def intervention_utility(component: AmbiguityComponent) -> float:
+    """Crude discrimination per estimated primitive, used only for scheduling."""
+    plan = component.selected_intervention or select_intervention(component)
+    disagreement = max(0.0, float(plan.get("disagreement_score", 0)))
+    cost = max(1.0, float(plan.get("cost", 1)))
+    return disagreement / cost
+
+
+def choose_intervention_component(components: list[AmbiguityComponent]) -> AmbiguityComponent | None:
+    """Prefer high disagreement per primitive without inventing semantic confidence."""
+    if not components:
+        return None
+    return sorted(
+        components,
+        key=lambda component: (
+            -intervention_utility(component),
+            -len(component.counterexample_steps),
+            component.id,
+        ),
+    )[0]
 
 
 def apply_intervention_result(component: AmbiguityComponent, result: dict[str, Any]) -> RefinementDecision | None:
@@ -590,8 +904,51 @@ def apply_intervention_result(component: AmbiguityComponent, result: dict[str, A
     target["merge_compatible_mentions"] = True
     return RefinementDecision(
         "ref-" + _id(component.id, h.id, result.get("action_step")), component.id,
-        "ATTACH_PERSISTENT_WIDGET", "SUPPORTED", target, h.id,
+        "ATTACH_PERSISTENT_WIDGET", "PROVISIONAL", target, h.id,
         [{"intervention": result}, *[asdict(e) for e in h.evidence]],
+    )
+
+
+def apply_context_membership_result(component: AmbiguityComponent,
+                                    result: dict[str, Any]) -> RefinementDecision | None:
+    """Accept contextual state only after reload/survey eliminates local alternatives."""
+    supported = (result.get("target_context_persisted") is True
+                 and result.get("source_context_absent") is True
+                 and result.get("same_key_in_both_contexts") is False)
+    if not supported:
+        return None
+    for hypothesis in component.hypotheses:
+        if hypothesis.kind == "PERSISTENT_CONTEXT_MEMBERSHIP":
+            hypothesis.status = "SUPPORTED"
+            evidence_class = "DOMAIN_SUPPORT"
+        elif hypothesis.kind == "CONTEXT_IS_VIEW_STATE":
+            hypothesis.status = "CONTRADICTED"
+            evidence_class = "VIEW_DOMAIN_LEAK_CONTRADICTION"
+        elif hypothesis.kind == "DISTINCT_SAME_KEY_MENTIONS":
+            hypothesis.status = "CONTRADICTED"
+            evidence_class = "DOMAIN_CONTRADICTION"
+        else:
+            continue
+        hypothesis.evidence.append(EvidenceContribution(
+            evidence_class, "controlled_context_membership_probe",
+            result.get("action_step"),
+            [x for x in (result.get("before_sig"), result.get("after_sig"),
+                         result.get("reload_sig")) if x],
+            {"entity_key": result.get("entity_key"),
+             "affordance_key": result.get("key"),
+             "before_contexts": result.get("before_contexts"),
+             "after_contexts": result.get("after_contexts")},
+        ))
+    accepted = next((h for h in component.hypotheses
+                     if h.kind == "PERSISTENT_CONTEXT_MEMBERSHIP"
+                     and h.status == "SUPPORTED"), None)
+    if accepted is None:
+        return None
+    return RefinementDecision(
+        "ref-" + _id(component.id, accepted.id, result.get("action_step")),
+        component.id, "ATTACH_CONTEXT_MEMBERSHIP", "PROVISIONAL",
+        dict(accepted.target), accepted.id,
+        [{"intervention": result}, *[asdict(e) for e in accepted.evidence]],
     )
 
 
@@ -613,7 +970,7 @@ def apply_correspondence_result(component: AmbiguityComponent, result: dict[str,
     target["merge_compatible_mentions"] = True
     return RefinementDecision(
         "ref-" + _id(component.id, accepted.id, result.get("step")), component.id,
-        "ASSOCIATE_MENTION_TYPE", "SUPPORTED", target, accepted.id,
+        "ASSOCIATE_MENTION_TYPE", "PROVISIONAL", target, accepted.id,
         [{"intervention": result}, *[asdict(e) for e in accepted.evidence]],
     )
 
@@ -633,7 +990,7 @@ def apply_matrix_record_result(component: AmbiguityComponent, result: dict[str, 
     ))
     return RefinementDecision(
         "ref-" + _id(component.id, accepted.id, result.get("step")), component.id,
-        "SPLIT_RELATIONAL_RECORD", "SUPPORTED", dict(accepted.target), accepted.id,
+        "SPLIT_RELATIONAL_RECORD", "PROVISIONAL", dict(accepted.target), accepted.id,
         [{"intervention": result}, *[asdict(e) for e in accepted.evidence]],
     )
 
@@ -669,18 +1026,31 @@ def read_components(run_dir: Path) -> list[AmbiguityComponent]:
 
 
 def write_decisions(run_dir: Path, decisions: list[RefinementDecision]) -> None:
-    (Path(run_dir) / DECISIONS_FILE).write_text(json.dumps({"version": 1, "decisions": [asdict(d) for d in decisions]}, indent=1))
+    (Path(run_dir) / DECISIONS_FILE).write_text(json.dumps({"version": 2, "decisions": [asdict(d) for d in decisions]}, indent=1))
 
 
-def load_decisions(run_dir: Path) -> list[dict[str, Any]]:
+def read_decisions(run_dir: Path) -> list[dict[str, Any]]:
     path = Path(run_dir) / DECISIONS_FILE
     if not path.exists():
         return []
-    return [d for d in json.loads(path.read_text()).get("decisions", []) if d.get("status") == "SUPPORTED"]
+    return json.loads(path.read_text()).get("decisions", [])
+
+
+def load_decisions(run_dir: Path, include_provisional: bool = False) -> list[dict[str, Any]]:
+    """Load canonical decisions, optionally including candidates under validation.
+
+    ``SUPPORTED`` is the legacy spelling for a probe-supported decision.  It is treated
+    as PROVISIONAL, never as canonical, so old development artifacts cannot silently
+    bypass the independent-prediction gate.
+    """
+    allowed = {"VALIDATED"}
+    if include_provisional:
+        allowed.update({"PROVISIONAL", "SUPPORTED"})
+    return [d for d in read_decisions(run_dir) if d.get("status") in allowed]
 
 
 def configure_hypotheses(H, decisions: list[dict[str, Any]]) -> bool:
-    """Install supported local choices before fitting; return mention-merge policy."""
+    """Install caller-authorized local choices before fitting; return merge policy."""
     merge_mentions = False
     for d in decisions:
         if d.get("kind") == "ASSOCIATE_MENTION_TYPE":
@@ -696,6 +1066,13 @@ def configure_hypotheses(H, decisions: list[dict[str, Any]]) -> bool:
             continue
         if d.get("kind") == "SPLIT_RELATIONAL_RECORD":
             H.record_splits.append(dict(d["target"]))
+            continue
+        if d.get("kind") == "ATTACH_CONTEXT_MEMBERSHIP":
+            for assignment in d["target"].get("context_assignments", []):
+                H.raw_context_assignments[(assignment["sig"], assignment["node"])] = (
+                    assignment["target_template"], assignment["key"], assignment["context"],
+                )
+            merge_mentions = True
             continue
         if d.get("kind") != "ATTACH_PERSISTENT_WIDGET":
             continue

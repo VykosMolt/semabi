@@ -13,22 +13,27 @@ from pathlib import Path
 
 from semabi.compiler.browser import Browser, Primitive
 from semabi.compiler.compile_v2 import compile_v2
+from semabi.compiler.explorer import affordance_key
 from semabi.compiler.v2.counterexamples import classify
 from semabi.compiler.v2.explore import SurveyExplorer
 from semabi.compiler.v2.refinement import (
     RefinementDecision,
     apply_correspondence_result,
+    apply_context_membership_result,
     apply_intervention_result,
     apply_matrix_record_result,
     build_components,
-    load_decisions,
+    choose_intervention_component,
+    read_decisions,
     read_components,
     select_intervention,
     write_components,
     write_decisions,
+    _embedded_key,
     _matrix_context,
+    _preceding_heading_context,
 )
-from semabi.compiler.v2.graph import tokens
+from semabi.compiler.v2.graph import node_text, tokens
 
 
 def _candidate_targets(A, obs, component) -> list[dict]:
@@ -385,12 +390,13 @@ def _run_reveal_loop(run_dir, base, seed, baseline, before_counterexamples, comp
     if fresh is not None:
         decision.target["mention_assignments"] = fresh.scope["mention_assignments"]
         decision.target["observed_keys"] = fresh.scope["observed_keys"]
-    existing = [RefinementDecision(**d) for d in load_decisions(run_dir)]
+    existing = [RefinementDecision(**d) for d in read_decisions(run_dir)]
     decisions = [d for d in existing if d.component_id != decision.component_id] + [decision]
     write_components(run_dir, [component])
     write_decisions(run_dir, decisions)
 
-    refined = compile_v2(run_dir, llm=None, apply_refinements=True)
+    refined = compile_v2(run_dir, llm=None, apply_refinements=True,
+                         include_provisional_refinements=True)
     after_counterexamples = classify(refined.abstractor, refined.log)
     before_status = {c.step: c.status for c in before_counterexamples}
     after_status = {c.step: c.status for c in after_counterexamples}
@@ -523,11 +529,12 @@ def _run_matrix_loop(run_dir, base, seed, baseline, before_counterexamples, comp
     fresh = next((c for c in fresh_components if c.id == component.id), None)
     if fresh is not None:
         decision.target = dict(fresh.scope)
-    existing = [RefinementDecision(**d) for d in load_decisions(run_dir)]
+    existing = [RefinementDecision(**d) for d in read_decisions(run_dir)]
     decisions = [d for d in existing if d.component_id != decision.component_id] + [decision]
     write_components(run_dir, [component])
     write_decisions(run_dir, decisions)
-    refined = compile_v2(run_dir, llm=None, apply_refinements=True)
+    refined = compile_v2(run_dir, llm=None, apply_refinements=True,
+                         include_provisional_refinements=True)
     after_counterexamples = classify(refined.abstractor, refined.log)
     before_status = {c.step: c.status for c in before_counterexamples}
     after_status = {c.step: c.status for c in after_counterexamples}
@@ -550,22 +557,265 @@ def _run_matrix_loop(run_dir, base, seed, baseline, before_counterexamples, comp
     return report
 
 
-def run_loop(run_dir: Path, base: str, seed: int = 0, max_attempts: int = 6) -> dict:
+def _run_context_probe(explorer, browser, A, component, seed):
+    """Replay one rendered local action pattern, then reload and survey all views."""
+    scope = component.scope
+    key = scope["observed_keys"][seed % len(scope["observed_keys"])]
+    reset_seed = scope.get("reset_seed")
+    obs = browser._last_obs or browser.observe()
+    obs = explorer.step(obs, browser.episode + 1,
+                        Primitive("reset", text=str(reset_seed if reset_seed is not None else seed)))
+    episode = browser.episode
+    explorer.note(obs)
+    explorer.last_view_obs = {}
+    explorer.pending = []
+    explorer.last_reload_obs = obs.structural_signature()
+    if explorer.default_skeleton is None:
+        explorer.default_skeleton = explorer.skeleton(obs)
+    obs, _ = explorer.survey(obs, episode)
+    baseline_views = dict(explorer.last_view_obs)
+    explorer.post_reload_views = dict(baseline_views)
+    obs = explorer.step(obs, episode, Primitive("reload"))
+    explorer.note(obs)
+
+    executed_affordance_keys = []
+
+    def replay_rendered_action(current, action):
+        if action["kind"] == "press":
+            primitive = Primitive("press", text=action.get("text"))
+        else:
+            target = next((n for n in current.nodes
+                           if n.role == action.get("role") and n.name == action.get("name")), None)
+            if target is None:
+                return None
+            primitive = Primitive("click", target.i)
+        executed_affordance_keys.append(list(affordance_key(current, primitive)))
+        updated = explorer.step(current, episode, primitive)
+        explorer.note(updated)
+        return updated
+
+    def live_mentions(current, context):
+        A.ensure(current)
+        return [
+            node.i for node in current.nodes
+            if node.role in ("button", "link", "group", "text")
+            and _embedded_key(node_text(node), {key}) == key
+            and _preceding_heading_context(current, node.i) == context
+        ]
+
+    replay_prefix = scope.get("replay_prefix", [])
+    if replay_prefix:
+        # Replay the complete rendered navigation/selection prefix recovered from the
+        # counterexample.  The source-context mention can be non-actionable text in the
+        # selected detail view, so clicking the mention itself is not a semantic premise.
+        for action in replay_prefix:
+            obs = replay_rendered_action(obs, action)
+            if obs is None:
+                return None
+        if not live_mentions(obs, scope["source_context"]):
+            return None
+        before_sig = obs.structural_signature()
+    else:
+        if not live_mentions(obs, scope["source_context"]):
+            for name in explorer.nav_names():
+                target = next((n for n in explorer._static_buttons(obs) if n.name == name), None)
+                if target is None:
+                    continue
+                obs = explorer.step(obs, episode, Primitive("click", target.i))
+                explorer.note(obs)
+                if live_mentions(obs, scope["source_context"]):
+                    break
+        sources = live_mentions(obs, scope["source_context"])
+        if not sources:
+            return None
+        # Prefer the actionable mention; containers remain candidate observations but are
+        # not directly clicked when a child control carries the same key.
+        sources.sort(key=lambda i: (obs.node(i).role not in ("button", "link"), i))
+        before_sig = obs.structural_signature()
+        obs = explorer.step(obs, episode, Primitive("click", sources[0]))
+        explorer.note(obs)
+    action_step = None
+    for action in scope["replay_tail"]:
+        action_step = len(explorer.log.steps)
+        obs = replay_rendered_action(obs, action)
+        if obs is None:
+            return None
+    if action_step is None:
+        return None
+    after_sig = obs.structural_signature()
+
+    reloaded = explorer.step(obs, episode, Primitive("reload"))
+    explorer.note(reloaded)
+    reload_sig = reloaded.structural_signature()
+    survey_start = len(explorer.log.steps)
+    surveyed, _ = explorer.survey(reloaded, episode)
+    sensing_steps = list(range(survey_start, len(explorer.log.steps)))
+    sensing_actions = []
+    for sensing_step in sensing_steps:
+        logged = explorer.log.steps[sensing_step]
+        sensing_actions.append({
+            "step": sensing_step,
+            "key": list(affordance_key(explorer.log.obs(logged.before), logged.action)),
+            "status": "VIEW",
+        })
+    after_views = dict(explorer.last_view_obs)
+
+    def contexts(view_sigs, extra_sigs=()):
+        found = set()
+        for sig in [*view_sigs.values(), *extra_sigs]:
+            try:
+                view = A.G.obs.get(sig) or explorer.log.obs(sig)
+            except KeyError:
+                continue
+            A.ensure(view)
+            for node in view.nodes:
+                if node.role not in ("button", "link", "group", "text"):
+                    continue
+                if _embedded_key(node_text(node), {key}) != key:
+                    continue
+                context = _preceding_heading_context(view, node.i)
+                if context is not None:
+                    found.add(context)
+        return sorted(found)
+
+    before_contexts = contexts(baseline_views, [before_sig])
+    after_contexts = contexts(after_views, [after_sig, reload_sig])
+    target_persisted = scope["target_context"] in after_contexts
+    source_absent = scope["source_context"] not in after_contexts
+    both = scope["source_context"] in after_contexts and scope["target_context"] in after_contexts
+    status = "DOMAIN" if target_persisted and source_absent and not both else "UNDETERMINED"
+    record = {
+        "step": action_step, "action_step": action_step, "status": status,
+        "controlled": True, "kind": "CONTEXT_MEMBERSHIP_PERSISTENCE_PROBE",
+        "component_id": component.id,
+        "key": executed_affordance_keys[-1], "entity_key": key,
+        "target_hypotheses": component.selected_intervention.get("target_hypotheses", [])
+        if component.selected_intervention else [],
+        "predictions": component.selected_intervention.get("predictions", {})
+        if component.selected_intervention else {},
+        "source_context": scope["source_context"], "target_context": scope["target_context"],
+        "before_contexts": before_contexts, "after_contexts": after_contexts,
+        "target_context_persisted": target_persisted,
+        "source_context_absent": source_absent,
+        "same_key_in_both_contexts": both,
+        "before_sig": before_sig, "after_sig": after_sig, "reload_sig": reload_sig,
+        "sensing_steps": sensing_steps,
+        "sensing_actions": sensing_actions,
+        "changed_views": sorted(name for name, sig in after_views.items()
+                                if name in baseline_views and baseline_views[name] != sig),
+        "reset_seed": reset_seed, "replay_prefix": replay_prefix,
+        "replay_tail": scope["replay_tail"],
+        "replayed_actions": [*replay_prefix, *scope["replay_tail"]],
+    }
+    with (Path(explorer.log.dir) / "interventions_v2.jsonl").open("a") as f:
+        f.write(json.dumps(record, sort_keys=True) + "\n")
+    with explorer.probes_path.open("a") as f:
+        f.write(json.dumps(record, sort_keys=True) + "\n")
+    return surveyed, record
+
+
+def _run_context_loop(run_dir, base, seed, baseline, before_counterexamples, components,
+                      browser_hook=None):
+    # Prefer a candidate whose alternative representation had to be deliberately
+    # rediscovered after the action.  Immediate context swaps are usually ordinary view
+    # transitions; delayed reveal after sensing is the stronger persistence ambiguity.
+    components.sort(key=lambda c: (-int(c.scope.get("destination_is_non_actionable", False)),
+                                   -c.scope.get("max_reveal_delay", 0),
+                                   -len(c.counterexample_steps), c.id))
+    component = components[0]
+    browser = Browser(base.rstrip("/") + "/", base.rstrip("/") + "/reset")
+    if browser_hook is not None:
+        browser.step_hooks.append(browser_hook)
+    explorer = SurveyExplorer(browser, baseline.log, seed=seed, survey_prob=0.0)
+    for obs in baseline.log.observations.values():
+        explorer.note(obs)
+    try:
+        browser.goto()
+        browser.observe()
+        probed = _run_context_probe(explorer, browser, baseline.abstractor, component, seed)
+    finally:
+        browser.close()
+    if probed is None:
+        raise RuntimeError("the selected context-membership probe could not be executed")
+    _surveyed, intervention = probed
+    if intervention["status"] != "DOMAIN":
+        raise RuntimeError("the context-membership intervention remained UNDETERMINED")
+
+    # Refit before accepting anything.  The probe's final domain action must itself be an
+    # eligible UNGROUNDED counterexample under the point model, and the new observation
+    # signatures provide the exact assignment provenance used by the decision.
+    refreshed = compile_v2(run_dir, llm=None, apply_refinements=False, write_diagnostics=False)
+    refreshed_counterexamples = classify(refreshed.abstractor, refreshed.log)
+    refreshed_components = build_components(
+        refreshed.abstractor, refreshed.log, refreshed_counterexamples,
+    )
+    fresh = next((c for c in refreshed_components if c.id == component.id), None)
+    if fresh is None:
+        raise RuntimeError("the context ambiguity did not survive refitting over its probe evidence")
+    fresh.selected_intervention = component.selected_intervention
+    decision = apply_context_membership_result(fresh, intervention)
+    if decision is None:
+        raise RuntimeError("the context intervention did not support a persistent membership refinement")
+    existing = [RefinementDecision(**d) for d in read_decisions(run_dir)]
+    decisions = [d for d in existing if d.component_id != decision.component_id] + [decision]
+    write_components(run_dir, [fresh])
+    write_decisions(run_dir, decisions)
+
+    refined = compile_v2(run_dir, llm=None, apply_refinements=True,
+                         include_provisional_refinements=True)
+    after_counterexamples = classify(refined.abstractor, refined.log)
+    before_status = {c.step: c.status for c in refreshed_counterexamples}
+    after_status = {c.step: c.status for c in after_counterexamples}
+    selected = [intervention["action_step"]]
+    resolved = [step for step in selected
+                if before_status.get(step) == "UNGROUNDED" and after_status.get(step) == "EXPLAINED"]
+    report = {
+        "version": 1, "run": str(run_dir), "component_id": component.id,
+        "selected_counterexamples": selected,
+        "affected_counterexamples": fresh.counterexample_steps,
+        "resolved_counterexamples": resolved,
+        "counterexample_resolution_rate": round(len(resolved) / len(selected), 3),
+        "resolution_mode": "DIAGNOSTIC_INTERVENTION",
+        "before_status_counts": _status_counts(refreshed_counterexamples),
+        "after_status_counts": _status_counts(after_counterexamples),
+        "intervention": intervention, "decision": decision.__dict__,
+        "historical_candidate_statuses": {
+            str(step): {"before": before_status.get(step), "after": after_status.get(step)}
+            for step in component.counterexample_steps
+        },
+        "mention_conflicts": refined.abstractor.mention_conflicts[:100],
+    }
+    (Path(run_dir) / "refinement_result_v2.json").write_text(
+        json.dumps(report, indent=1, default=str)
+    )
+    return report
+
+
+def run_loop(run_dir: Path, base: str, seed: int = 0, max_attempts: int = 6,
+             browser_hook=None) -> dict:
     run_dir = Path(run_dir)
     baseline = compile_v2(run_dir, llm=None, apply_refinements=False)
     before_counterexamples = classify(baseline.abstractor, baseline.log)
     before_status = {c.step: c.status for c in before_counterexamples}
     components = read_components(run_dir)
+    context_components = [c for c in components
+                          if any(h.kind == "PERSISTENT_CONTEXT_MEMBERSHIP" for h in c.hypotheses)]
     widget_components = [c for c in components if any(h.kind == "ATTRIBUTE_ON_COLOCAL_MENTION" for h in c.hypotheses)]
-    if not widget_components:
-        matrix_components = [c for c in components if any(h.kind == "RELATIONAL_RECORD_SPLIT" for h in c.hypotheses)]
-        if matrix_components:
-            return _run_matrix_loop(run_dir, base, seed, baseline, before_counterexamples, matrix_components)
-        reveal_components = [c for c in components if any(h.kind == "SAME_ENTITY_MENTION_SET" for h in c.hypotheses)]
-        if reveal_components:
-            return _run_reveal_loop(run_dir, base, seed, baseline, before_counterexamples, reveal_components)
+    matrix_components = [c for c in components if any(h.kind == "RELATIONAL_RECORD_SPLIT" for h in c.hypotheses)]
+    reveal_components = [c for c in components if any(h.kind == "SAME_ENTITY_MENTION_SET" for h in c.hypotheses)]
+    selected = choose_intervention_component([
+        *context_components, *widget_components, *matrix_components, *reveal_components,
+    ])
+    if selected in context_components:
+        return _run_context_loop(run_dir, base, seed, baseline,
+                                 before_counterexamples, [selected], browser_hook)
+    if selected in matrix_components:
+        return _run_matrix_loop(run_dir, base, seed, baseline, before_counterexamples, [selected])
+    if selected in reveal_components:
+        return _run_reveal_loop(run_dir, base, seed, baseline, before_counterexamples, [selected])
+    if selected is None:
         raise RuntimeError("no local widget/entity ambiguity was generated from an UNGROUNDED transition")
-    components = widget_components
+    components = [selected]
     components.sort(key=lambda c: (-len(c.counterexample_steps), c.id))
     component = components[0]
     plan = select_intervention(component)
@@ -652,12 +902,13 @@ def run_loop(run_dir: Path, base: str, seed: int = 0, max_attempts: int = 6) -> 
         decision.evidence.append({"evidence_class": "VIEW_INVARIANCE_SUPPORT",
                                   "source": "controlled_identity_correspondence_probe",
                                   "intervention": correspondence})
-    existing = [RefinementDecision(**d) for d in load_decisions(run_dir)]
+    existing = [RefinementDecision(**d) for d in read_decisions(run_dir)]
     decisions = [d for d in existing if d.component_id != decision.component_id] + [decision]
     write_components(run_dir, components)
     write_decisions(run_dir, decisions)
 
-    refined = compile_v2(run_dir, llm=None, apply_refinements=True)
+    refined = compile_v2(run_dir, llm=None, apply_refinements=True,
+                         include_provisional_refinements=True)
     after_counterexamples = classify(refined.abstractor, refined.log)
     after_status = {c.step: c.status for c in after_counterexamples}
     # One representative counterexample was selected for this intervention.  Other

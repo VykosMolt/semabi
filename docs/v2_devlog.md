@@ -68,3 +68,93 @@ C = 1.0 everywhere.
   single-seed dev curves; LLM conditions are `NOT_RUN` because neither loop used an LLM
   proposal. Also fixed evaluator latent-attribute lookup for renamed/copy run directories
   by stable hidden-domain name; regenerated V2 and active artifacts retain headline values.
+- 2026-08-23 g: evaluator-only per-app localization and 47-operator eligibility ledger.
+  Datacenter gains decisively at Bv->C (RTC .364->1.0; decommission/open-ticket recover),
+  not at learned identity; pharmacy-c reaches .759 at B and 1.0 at C. All six exercised
+  known-vocabulary failures are accounted for by frozen-language limits and/or sparse
+  effect templates. The clean grounded/expressible/well-supported denominator is 2/2
+  recovered, so V0 remains frozen. Added strict one-to-one registered-delta precision,
+  false-atom categories, argument diagnostics, and UNKNOWN-aware repeat provenance.
+- 2026-08-23 h: generic datacenter context-membership alternatives completed the
+  mechanical loop (`UNGROUNDED` -> persistence/context probe -> `EXPLAINED`), but strict
+  precision and RTC remained zero: the learned delta was `context: Unit -> Retired`
+  while the evaluator expected server status/rack changes. This was not called wrong from
+  ontology mismatch alone. It triggered a stronger gate: support makes a decision
+  PROVISIONAL; only a novel predictive test can make it VALIDATED; held-out failure makes
+  it MISPREDICTED. Delayed sensing attribution was also corrected so facts discovered by
+  unrelated later view switches no longer attach to the last domain action.
+- 2026-08-23 i: completed independent seed-11 traces before pausing further seeds:
+  climbing 747 primitives/86 UNGROUNDED/2 components, observatory 885/41/1, datacenter
+  1302/18/4; every unrefined trace remained RTC 0. Cross-run compiler-only validation
+  demoted climbing (0/1 applicable supported source prediction correct) and observatory
+  (1/2 correct)
+  to MISPREDICTED despite their former .817/.676 point-estimate RTC. Exact prediction,
+  action/effect, binding, and step provenance is retained; canonical compilation now
+  loads only VALIDATED decisions. No decision is currently validated.
+- 2026-08-23 j: probe-cost audit inferred recurrent static view controls from rendered
+  recurrence/outside-unit structure. Survey+reload overhead was 373/747 (.499) climbing,
+  508/885 (.574) observatory, and 922/1302 (.708) datacenter. Scheduling now prefers
+  hypothesis disagreement per estimated primitive. A bounded novel datacenter retirement
+  test on a different seed/container/server was prepared but executed zero primitives:
+  the required local Playwright launch was rejected when external execution authority was
+  unavailable. Datacenter remains PROVISIONAL/INCONCLUSIVE. The natural pharmacy-c LLM
+  prompt also remains blocked on an exact cache miss; no trace payload was sent.
+- 2026-08-23 k: adversarial audit of the prospective validator before accepting its
+  verdicts. The first implementation compared neighbour-propagating type fingerprints and
+  exact effect/action strings. On seed 11 that rejected behaviorally identical effects:
+  climbing's attachment type hashed differently only because the unrelated route type was
+  factored through an intermediate style entity; every candidate schema looked
+  refinement-introduced because baseline/candidate fingerprints differ globally; 25
+  held-out Extend exercises were never comparable because the macro carried a `Pointing`
+  tab click; and observatory's only "tested" prediction was the Board tab credited with a
+  preceding Confirm-detach effect, whose changed object the action never binds. The
+  validator was rewritten around type-variable unification over mentioned types,
+  effective-action subsequence alignment, three-valued preconditions, an underdetermined
+  parameter gate, baseline subtraction under the same mapping, state-based effect checks
+  with forall expansion, visibility-classified extras, a differential VIEW-leak check, and
+  a stronger independence test. Thirteen targeted tests cover the audit questions.
+  Corrected verdicts: climbing VALIDATED (recolor forall: 10 exact recurrences, 0
+  contradictions, novel affected record Island|R1; grade combobox on wall Cave novel),
+  observatory VALIDATED (Extend/Clip on night x scope records: 10+13+11 exact, 0
+  contradictions, novel record bindings First|P8 and Mid|N6), datacenter INCONCLUSIVE
+  (no source schema reaches support 2). The earlier MISPREDICTED verdicts are withdrawn as
+  validator artifacts, not as new behavioral evidence.
+- 2026-08-23 l: three general defects found by the audit. (1) The inducer's reload branch
+  still attached reload-revealed deltas to the last transition after unrelated view
+  navigation, fabricating `delete` effects on rendered objects (32 cases in observatory
+  seed 11); only an immediately following reload may attribute now, and the transition's
+  after-state is kept consistent with its diff. (2) `SPLIT_RELATIONAL_RECORD` decisions
+  carried run-local entity tids; transfer now resolves endpoints by unit template with the
+  tid as legacy fallback, and validation backfills templates into stored decisions. (3)
+  `V2Abstractor` iterated two string sets, so compiled models depended on PYTHONHASHSEED
+  (17-19 operators, 0-4 VIEW leaks for the same datacenter trace); both loops are sorted
+  and compilation is now seed-independent. Point estimates after these fixes: climbing
+  .817/.711 precision, observatory .676/.885, unchanged RTC. Playwright and localhost
+  binding work in this workspace again, so the full suite runs (41 passed, 1 xfailed) and
+  the bounded datacenter retirement test executed: 11 primitives, novel rack D4, novel
+  server node-16, seed 11; the frozen prediction (context `Retired`, `Unit` absent after
+  reload and survey) held. It is recorded as direct novel-prediction support (n=1); the
+  decision stays PROVISIONAL because the documented rule also required schema-level
+  cross-validation, which the support gate leaves INCONCLUSIVE. The blocked attempt record
+  is preserved alongside.
+- 2026-08-23 m: independent adversarial review of the rewritten gate (Opus specialist,
+  read-only, reproductions under scratch copies). It could not break the climbing or
+  observatory verdicts in either direction, but confirmed seven generic hazards, all now
+  fixed with regression tests: precondition constants with run-local type prefixes were
+  compared raw (an `attr_ne` key exclusion became always-true cross-run); a missing
+  source object constant produced CONTRADICTED instead of untestable; reference-slot
+  ties were broken by name so "unique mapping" was not unique; a value unknown before the
+  action could confirm a NO_REGISTERED_DELTA occurrence; alignment could skip the
+  held-out transition's own state-changing click as navigation; promotion overwrote a
+  retained MISPREDICTED and promoted whole bundles; the VIEW-leak subtraction keyed on
+  steps only. Two honest-statement gaps became record fields: a baseline control arm and
+  a decision-transfer report. The control arm is decisive for observatory: the unrefined
+  model's own seven testable schemas are contradicted 18 times on seed 11 (36 exact),
+  because scope-level identity merges durations across nights and yields precondition-free
+  `Clip -> 1` / `Extend -> 4` schemas, while the record model has 0 contradictions in 34
+  exact recurrences. Climbing's baseline has no testable schema at all. One more
+  determinism leak (two buttons feeding one reference slot, winner by dict order) was
+  sorted; all eight development compiles are now identical across hash seeds. Records
+  also report how much of each decision transfers by template: observatory's record split
+  carries 91 observation-keyed matrix cells of which 4 occur in seed 11, so only its
+  template-keyed detail branch is exercised there.

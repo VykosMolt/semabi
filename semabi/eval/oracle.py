@@ -1044,6 +1044,10 @@ def registered_transition_coverage(C: Compiled, recs: list[dict | None], hidden_
     for tr in C.inducer.transitions:
         for st in tr.steps:
             by_step[st] = tr
+    hypotheses_by_transition: dict[int, list[str]] = defaultdict(list)
+    for hypothesis in C.inducer.operators:
+        for tr in hypothesis.positives:
+            hypotheses_by_transition[id(tr)].append(hypothesis.name)
 
     def learned_atoms(tr) -> set:
         out = set()
@@ -1089,8 +1093,64 @@ def registered_transition_coverage(C: Compiled, recs: list[dict | None], hidden_
 
     n = full = partial = 0
     registered_atoms = matched_registered_atoms = 0
+    strict_matched_registered_atoms = 0
     transitions_with_spurious_atoms = 0
-    per_op: dict[str, list[int]] = defaultdict(lambda: [0, 0, 0])
+    # n, full, any, registered atoms, legacy matched atoms, strict matched atoms
+    per_op: dict[str, list[int]] = defaultdict(lambda: [0, 0, 0, 0, 0, 0])
+    false_categories: Counter = Counter()
+    false_details: list[dict] = []
+    effect_signatures: dict[str, set[str]] = defaultdict(set)
+
+    def atom_json(atom):
+        if atom is None:
+            return None
+        return [sorted(x) if isinstance(x, frozenset) else x for x in atom]
+
+    def atom_matches(got_atom, wanted_atom):
+        if wanted_atom is None:
+            return False
+        if wanted_atom[0] == "create":
+            return got_atom[0] == "create" and got_atom[1] == wanted_atom[1]
+        if wanted_atom[0] == "rel*":
+            return (got_atom[0] == "rel" and got_atom[1] == wanted_atom[1]
+                    and got_atom[2] in wanted_atom[2] and got_atom[3] == wanted_atom[3])
+        return got_atom == wanted_atom
+
+    def one_to_one_matches(got_atoms, expected_atoms):
+        """Maximum bipartite match, exposing redundant atoms hidden by recall-style RTC."""
+        assigned: dict[int, int] = {}
+
+        def augment(got_i, seen):
+            for expected_i, wanted in enumerate(expected_atoms):
+                if expected_i in seen or not atom_matches(got_atoms[got_i], wanted):
+                    continue
+                seen.add(expected_i)
+                if expected_i not in assigned or augment(assigned[expected_i], seen):
+                    assigned[expected_i] = got_i
+                    return True
+            return False
+
+        for got_i in range(len(got_atoms)):
+            augment(got_i, set())
+        return set(assigned.values())
+
+    def false_category(got_atom, expected_atoms, matched_anywhere):
+        if matched_anywhere:
+            return "duplicate_or_redundant_atom"
+        same_kind_type = [x for x in expected_atoms if x is not None
+                          and x[0] == got_atom[0] and x[1] == got_atom[1]]
+        if got_atom[0] == "rel":
+            if any(x[3] == got_atom[3] and x[2] != got_atom[2] for x in same_kind_type):
+                return "wrong_entity_correspondence"
+            return "spurious_relation"
+        if got_atom[0] == "attr":
+            if any(x[3] == got_atom[3] and x[2] != got_atom[2] for x in same_kind_type):
+                return "wrong_entity_correspondence"
+            return "wrong_attribute_attachment"
+        if got_atom[0] in ("create", "delete"):
+            return "wrong_entity_correspondence" if same_kind_type else "incorrect_persistence"
+        return "other"
+
     for st, r in enumerate(recs):
         prev = recs[st - 1] if st > 0 else None
         if r is None or prev is None or r["episode"] != prev["episode"] or r["log_len"] != prev["log_len"] + 1:
@@ -1138,23 +1198,186 @@ def registered_transition_coverage(C: Compiled, recs: list[dict | None], hidden_
             return False
 
         matched_got = sum(got_matches(g) for g in got)
+        got_list = sorted(got, key=str)
+        strict_matches = one_to_one_matches(got_list, expected)
+        strict_matched = len(strict_matches)
         registered_atoms += len(got)
         matched_registered_atoms += matched_got
-        transitions_with_spurious_atoms += matched_got < len(got)
+        strict_matched_registered_atoms += strict_matched
+        per_op[op][3] += len(got)
+        per_op[op][4] += matched_got
+        per_op[op][5] += strict_matched
+        transitions_with_spurious_atoms += strict_matched < len(got)
+        if tr is not None:
+            effect_signatures[op].add(json.dumps(sorted(str(e) for e in tr.effs)))
+        for got_i, atom in enumerate(got_list):
+            if got_i in strict_matches:
+                continue
+            matched_anywhere = any(atom_matches(atom, wanted) for wanted in expected)
+            category = false_category(atom, expected, matched_anywhere)
+            false_categories[category] += 1
+            false_details.append({
+                "step": st,
+                "operator": op,
+                "category": category,
+                "registered_atom": atom_json(atom),
+                "expected_atoms": [atom_json(x) for x in expected],
+                "hidden_changes": [atom_json(x) for x in ch],
+                "transition_steps": list(tr.steps) if tr else [],
+                "macro_steps": list(tr.macro) if tr else [],
+                "induced_hypotheses": sorted(hypotheses_by_transition.get(id(tr), [])) if tr else [],
+                "learned_effect_signature": sorted(str(e) for e in tr.effs) if tr else [],
+            })
         if all(hits):
             full += 1
             per_op[op][1] += 1
         if any(hits):
             partial += 1
             per_op[op][2] += 1
+    for item in false_details:
+        variants = len(effect_signatures[item["operator"]])
+        item["effect_signature_variants_for_operator"] = variants
+        if not item["induced_hypotheses"]:
+            item["downstream_risk"] = "NOT_IN_SUPPORTED_HYPOTHESIS"
+        elif variants > 1:
+            item["downstream_risk"] = "EFFECT_SIGNATURE_FRAGMENTATION"
+        else:
+            item["downstream_risk"] = "EXTRA_EFFECT_IN_SUPPORTED_HYPOTHESIS"
     return {"transitions": n, "fully_registered": full, "partly_registered": partial,
             "rtc": round(full / n, 3) if n else None, "rtc_any": round(partial / n, 3) if n else None,
             "registered_deltas": registered_atoms,
             "matched_registered_deltas": matched_registered_atoms,
             "registered_delta_precision": round(matched_registered_atoms / registered_atoms, 3) if registered_atoms else None,
+            "strict_matched_registered_deltas": strict_matched_registered_atoms,
+            "strict_registered_delta_precision": round(strict_matched_registered_atoms / registered_atoms, 3) if registered_atoms else None,
+            "redundant_registered_deltas": matched_registered_atoms - strict_matched_registered_atoms,
             "spurious_registered_delta_rate": round((registered_atoms - matched_registered_atoms) / registered_atoms, 3) if registered_atoms else None,
             "transitions_with_spurious_deltas": transitions_with_spurious_atoms,
-            "per_op": {k: {"n": v[0], "full": v[1], "any": v[2]} for k, v in per_op.items()}}
+            "false_registered_delta_diagnostics": {
+                "classification_counts": dict(sorted(false_categories.items())),
+                "events": false_details,
+                "note": "legacy registered_delta_precision is recall-style and can credit redundant atoms; strict precision uses one-to-one atom matching",
+            },
+            "per_op": {
+                k: {
+                    "n": v[0], "full": v[1], "any": v[2],
+                    "registered_deltas": v[3], "matched_registered_deltas": v[4],
+                    "strict_matched_registered_deltas": v[5],
+                    "registered_delta_precision": round(v[4] / v[3], 3) if v[3] else None,
+                    "strict_registered_delta_precision": round(v[5] / v[3], 3) if v[3] else None,
+                }
+                for k, v in per_op.items()
+            }}
+
+
+def argument_binding_metrics(C: Compiled, recs: list[dict | None], hidden_dom: rm.Domain,
+                             m: Mapping) -> dict:
+    """Evaluator-only audit of whether hidden action arguments exist in V2 bindings.
+
+    This does not give arguments to the compiler.  It aligns each successful hidden
+    invocation after compilation and asks two progressively stronger questions: is every
+    argument present anywhere in the induced transition binding, and is it used by the
+    grounded action sequence rather than appearing only in an effect-side binding?
+    Duplicate hidden entities mapping to one learned id are rejected as non-distinct.
+    """
+    A = C.abstractor
+    inv_type = {H: L for L, H in m.type_map.items()}
+    tid_of_L = {type_name(t): t for t in A.types}
+    by_step = {
+        step: tr
+        for tr in C.inducer.transitions
+        for step in tr.steps
+    }
+    totals: dict[str, list[int]] = defaultdict(lambda: [0, 0, 0, 0])
+    failures: list[dict] = []
+
+    def learned_id(oid: str, state: rm.State):
+        obj = state.objects.get(oid)
+        if obj is None:
+            return None
+        learned_type = inv_type.get(obj.type)
+        if learned_type is None or learned_type not in tid_of_L:
+            return None
+        spec = m.key_attr.get(learned_type)
+        if spec is None:
+            return None
+        key = (link_key(state, obj, learned_type, m, C.model)
+               if spec == LINK_KEY else hidden_key(obj, spec))
+        return (tid_of_L[learned_type], key)
+
+    for step, rec in enumerate(recs):
+        prev = recs[step - 1] if step else None
+        if rec is None or prev is None or rec["episode"] != prev["episode"]:
+            continue
+        if rec["log_len"] != prev["log_len"] + 1 or not rec.get("last_op"):
+            continue
+        entry = rec["last_op"]
+        if not entry.get("ok", True) or entry.get("op") not in hidden_dom.operators:
+            continue
+        op_name = entry["op"]
+        totals[op_name][0] += 1
+        tr = by_step.get(step)
+        if tr is None:
+            failures.append({"step": step, "operator": op_name,
+                             "reason": "NO_ABSTRACT_TRANSITION", "arguments": []})
+            continue
+        totals[op_name][1] += 1
+        state = hidden_state(prev["state"])
+        learned_ids = {oid: learned_id(oid, state) for oid in state.objects}
+        collision_count = Counter(x for x in learned_ids.values() if x is not None)
+        all_values = set(tr.binding.values())
+        action_params = {
+            p for action in tr.acts for p in (action.owner, action.arg)
+            if isinstance(p, str) and p.startswith("?")
+        }
+        action_values = {tr.binding[p] for p in action_params if p in tr.binding}
+        argument_rows = []
+        all_bound = action_grounded = distinct = True
+        raw_args = entry.get("args", {})
+        for param, param_type in hidden_dom.operators[op_name].params:
+            raw = raw_args.get(param.lstrip("?"), raw_args.get(param))
+            if param_type == "str":
+                expected = _norm(raw)
+                unambiguous = True
+            else:
+                expected = learned_ids.get(raw)
+                unambiguous = expected is not None and collision_count[expected] == 1
+            bound = expected is not None and expected in all_values
+            grounded = expected is not None and expected in action_values
+            all_bound &= bound
+            action_grounded &= grounded
+            distinct &= unambiguous
+            argument_rows.append({
+                "parameter": param, "type": param_type, "hidden_value": raw,
+                "expected_learned_value": list(expected) if isinstance(expected, tuple) else expected,
+                "bound": bound, "used_by_grounded_action": grounded,
+                "distinct_entity_mapping": unambiguous,
+            })
+        totals[op_name][2] += int(all_bound and distinct)
+        totals[op_name][3] += int(action_grounded and distinct)
+        if not (all_bound and action_grounded and distinct):
+            failures.append({
+                "step": step, "operator": op_name,
+                "reason": "ARGUMENT_BINDING_INCOMPLETE_OR_AMBIGUOUS",
+                "transition_steps": list(tr.steps), "macro_steps": list(tr.macro),
+                "arguments": argument_rows,
+            })
+
+    return {
+        "per_op": {
+            name: {
+                "successful_instances": v[0], "with_abstract_transition": v[1],
+                "all_arguments_bound": v[2], "action_arguments_grounded": v[3],
+                "all_arguments_bound_rate": round(v[2] / v[0], 3) if v[0] else None,
+                "action_arguments_grounded_rate": round(v[3] / v[0], 3) if v[0] else None,
+                "conditional_all_arguments_bound_rate": round(v[2] / v[1], 3) if v[1] else None,
+                "conditional_action_arguments_grounded_rate": round(v[3] / v[1], 3) if v[1] else None,
+            }
+            for name, v in totals.items()
+        },
+        "failures": failures,
+        "note": "computed only after compilation; hidden argument values never enter compiler-visible state",
+    }
 
 
 def object_layer_metrics(C: Compiled, recs: list[dict | None], v1: bool, m: Mapping) -> dict:
@@ -1428,6 +1651,7 @@ def evaluate(C: Compiled, run_dir: Path, recs: list[dict | None], v1_like: bool,
         res["gtc"] = grounded_transition_coverage(hidden, hidden_dom, C.model, m, latent)
         res["rtc"] = registered_transition_coverage(C, recs, hidden_dom, m, latent)
     res["object_layer"] = object_layer_metrics(C, recs, v1_like, m)
+    res["argument_binding"] = argument_binding_metrics(C, recs, hidden_dom, m)
     res["view_false_positives"] = view_false_positives(C, recs)
     from semabi.compiler.v2.counterexamples import abstraction_contradictions
     res["abstraction_contradictions"] = abstraction_contradictions(C.inducer)

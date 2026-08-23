@@ -11,9 +11,15 @@ from semabi.compiler.v2.refinement import (
     AmbiguityComponent,
     EvidenceContribution,
     LocalHypothesis,
+    RefinementDecision,
+    apply_context_membership_result,
+    choose_intervention_component,
+    load_decisions,
     read_components,
+    write_decisions,
     write_components,
 )
+from semabi.compiler.v2.validation import ValidationRecord, promote_from_validation
 
 
 class EmptyGraph:
@@ -146,6 +152,94 @@ def test_behavioral_contradiction_requires_same_state_and_grounded_action():
     assert report["contradictory_groups"] == 1
     assert report["pair_contradiction_rate"] == 1.0
     assert report["contradictions"][0]["transition_steps"] == [[1], [2]]
+
+
+def test_behavioral_repeat_with_explicit_unknown_is_not_called_contradictory():
+    before = _state("A")
+    before.objs[(0, "A")].attrs["hidden"] = None
+    act = (ActT("click", Locator("button@1", owner_tid=0), "?o0"),)
+    transitions = [
+        SimpleNamespace(
+            before=before, acts=act, binding={"?o0": "A"}, steps=[step],
+            d=Diff([], [], [((0, "A"), "color", "a", value)], [], {}),
+        )
+        for step, value in ((1, "red"), (2, "blue"))
+    ]
+
+    report = abstraction_contradictions(SimpleNamespace(transitions=transitions))
+
+    assert report["comparable_groups"] == 0
+    assert report["contradictory_groups"] == 0
+    assert report["unresolved_repeat_pairs_due_unknown"] == 1
+
+
+def test_context_membership_requires_executed_persistence_and_keeps_provenance():
+    scope = {"context_assignments": [], "source_context": "Before", "target_context": "After"}
+    hypotheses = [
+        LocalHypothesis("view", "CONTEXT_IS_VIEW_STATE", "UNTESTED", 0, scope, {}),
+        LocalHypothesis("duplicate", "DISTINCT_SAME_KEY_MENTIONS", "UNTESTED", 1, scope, {}),
+        LocalHypothesis("persistent", "PERSISTENT_CONTEXT_MEMBERSHIP", "UNTESTED", 1, scope, {}),
+    ]
+    component = AmbiguityComponent("context", [4], scope, hypotheses)
+    result = {
+        "action_step": 9, "entity_key": "E1",
+        "key": ["click", "button", "Confirm", None],
+        "target_context_persisted": True, "source_context_absent": True,
+        "same_key_in_both_contexts": False,
+        "before_contexts": ["Before"], "after_contexts": ["After"],
+        "before_sig": "a", "after_sig": "b", "reload_sig": "c",
+    }
+
+    decision = apply_context_membership_result(component, result)
+
+    assert decision is not None
+    assert decision.kind == "ATTACH_CONTEXT_MEMBERSHIP"
+    assert decision.status == "PROVISIONAL"
+    assert [h.status for h in hypotheses] == ["CONTRADICTED", "CONTRADICTED", "SUPPORTED"]
+    evidence = decision.evidence[-1]
+    assert evidence["detail"]["entity_key"] == "E1"
+    assert evidence["detail"]["affordance_key"][2] == "Confirm"
+
+
+def test_probe_supported_decision_is_not_canonical_until_independently_validated(tmp_path):
+    provisional = RefinementDecision("p", "c", "ATTACH_CONTEXT_MEMBERSHIP", "PROVISIONAL", {}, "h", [])
+    validated = RefinementDecision("v", "c2", "ATTACH_CONTEXT_MEMBERSHIP", "VALIDATED", {}, "h2", [])
+    legacy = RefinementDecision("old", "c3", "ATTACH_CONTEXT_MEMBERSHIP", "SUPPORTED", {}, "h3", [])
+    write_decisions(tmp_path, [provisional, validated, legacy])
+
+    assert [x["id"] for x in load_decisions(tmp_path)] == ["v"]
+    assert [x["id"] for x in load_decisions(tmp_path, include_provisional=True)] == ["p", "v", "old"]
+
+
+def test_mispredicted_validation_demotes_decision_and_retains_provenance():
+    decision = {
+        "id": "p", "component_id": "c", "kind": "ATTACH_PERSISTENT_WIDGET",
+        "status": "PROVISIONAL", "target": {}, "accepted_hypothesis": "h", "evidence": [],
+    }
+    record = ValidationRecord(
+        1, ["p"], "source", "heldout", "a", "b", "MISPREDICTED",
+        1, 0, 0.0, [], [], [], [{"reason": "different effect"}], [], True,
+        "held-out effect differed", {},
+    )
+
+    updated = promote_from_validation([decision], record)
+
+    assert updated[0]["status"] == "MISPREDICTED"
+    assert updated[0]["evidence"][-1]["evidence_class"] == "DOMAIN_CONTRADICTION"
+    assert updated[0]["evidence"][-1]["test_trace_sha256"] == "b"
+
+
+def test_probe_scheduler_prefers_disagreement_per_estimated_primitive():
+    cheap = AmbiguityComponent(
+        "cheap", [1], {}, [],
+        {"disagreement_score": 2, "cost": 2},
+    )
+    expensive = AmbiguityComponent(
+        "expensive", [1, 2, 3], {}, [],
+        {"disagreement_score": 3, "cost": 12},
+    )
+
+    assert choose_intervention_component([expensive, cheap]) is cheap
 
 
 def test_ungrounded_requires_persistence_evidence():

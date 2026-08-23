@@ -80,6 +80,7 @@ def evaluate_prefix(run_dir: Path, decision_available: bool) -> dict:
     compiled = compile_v2(
         run_dir, min_support=2, llm=None,
         apply_refinements=decision_available,
+        include_provisional_refinements=decision_available,
         conservative_belief=True, write_diagnostics=False,
     )
     records = align_records(compiled.log, load_records(run_dir))
