@@ -1,0 +1,69 @@
+{
+ "schema": "semabi.v4.rejected-successor-review.v1",
+ "candidate_commit": "98db1bd1fc7a3303b3fe805c814ddcf453b02a2c",
+ "captured_at": "2026-08-24T14:31:08+02:00",
+ "verdict": "REJECT",
+ "candidate_artifacts": {
+  "docs/data/v4/frontier_vet_clinic.json": "8541d06f5635515de465a0fbcca0b82ec0191e50cb37c993264bb24385d9693f",
+  "docs/data/v4/frontier_harbour.json": "2d376cbc6979064d5edcb92b2c1de4045c54df362b72c4312807a9fba3d0b50d",
+  "docs/data/v4/frontier_blend_book.json": "2a9135e2ea61fa67b3732cfb9cc83db7306559cbe24186ace5a73f4e5ae04b1d",
+  "docs/data/v4/frontier_summary.json": "14f0de262105f5e4944ff0f742d46ea312b4fd39c0c68e90907d7a2da793b4ad"
+ },
+ "mechanical_evidence": {
+  "all_pairs_transfer_frontiers": "RECONSTRUCTED_EXACTLY",
+  "fresh_clone_replay": "BYTE_IDENTICAL",
+  "tests": "PASS_170_XFAIL_1_IN_PERMITTED_LOOPBACK_CONTEXT",
+  "v2_custody": "PASS_65_OF_65_EXACTLY_TWO_DECLARED_WORKTREE_DIVERGENCES"
+ },
+ "rejection_findings": [
+  {
+   "severity": "HIGH",
+   "code": "SLOT_ABSENT_FALSE_IDENTITY_REFUTATION",
+   "summary": "a key recorded as slot_absent is also tested as 0-of-N REFUTED, so uninstantiated evidence can create a loss"
+  },
+  {
+   "severity": "HIGH",
+   "code": "EXECUTED_IMPLEMENTATION_NOT_AUTHENTICATED",
+   "summary": "repo-root can name a tree other than the imported tree and the frozen implementation list omits executed local modules"
+  },
+  {
+   "severity": "HIGH",
+   "code": "VERIFIED_INPUTS_NOT_BOUND_TO_CONSUMPTION",
+   "summary": "role paths are verified and then reopened per candidate without immutable isolation or post-consumption verification"
+  },
+  {
+   "severity": "MEDIUM",
+   "code": "ROLE_DISTINCTNESS_INCLUDES_UNCONSUMED_BYTES",
+   "summary": "unused probes, sidecars, or file modes can satisfy role distinctness even if observations and steps are identical"
+  },
+  {
+   "severity": "MEDIUM",
+   "code": "HOLDOUT_CONFIRMATION_IGNORES_PARTIAL_COVERAGE_AND_REFUTATION",
+   "summary": "unqualified CONFIRMED can be emitted with partial applicability or a refuted identity claim"
+  },
+  {
+   "severity": "MEDIUM",
+   "code": "ROLE_SEMANTICS_OVERSTATE_FRESHNESS",
+   "summary": "reports call spent retroactive histories fresh or validation despite chronology being NOT_ESTABLISHED"
+  },
+  {
+   "severity": "MEDIUM",
+   "code": "LOAD_BEARING_BOUNDARIES_UNTESTED",
+   "summary": "tests omit hidden_domain runner coverage and the adversarial integrity mechanisms above"
+  },
+  {
+   "severity": "LOW",
+   "code": "STALE_TEST_COUNT",
+   "summary": "handoff says 168 passed while the reviewed candidate produced 170 passed and 1 xfailed"
+  }
+ ],
+ "claim_boundary": {
+  "transfer_frontier_algorithm": "MECHANICALLY_ESTABLISHED_ON_RETAINED_CURRENT_BYTES",
+  "transfer_survivor_counts": "2_VET_3_HARBOUR_2_BLEND_ON_RETAINED_CURRENT_BYTES",
+  "unique_transfer_selection": "NOT_ESTABLISHED",
+  "vet_holdout_pairwise_preference": "NOT_ESTABLISHED_FALSE_SLOT_ABSENT_REFUTATION",
+  "authenticated_replay": "NOT_ESTABLISHED",
+  "prospective_chronology": "NOT_ESTABLISHED",
+  "representation_transport": "NOT_ESTABLISHED_RTC_ZERO"
+ }
+}
