@@ -1,0 +1,64 @@
+{
+ "schema": "semabi.v4.rejected-successor-review.v1",
+ "candidate_commit": "72e68191f71580bb1f5479a74614ef698a05fa4c",
+ "captured_at": "2026-08-24T17:01:44+02:00",
+ "verdict": "REJECT",
+ "candidate_artifacts": {
+  "docs/data/v4/frontier_vet_clinic.json": "8ed7d18be204b98af47e67a19eff483b479032ce858104a8123bd772a88961e6",
+  "docs/data/v4/frontier_harbour.json": "68985ed3d26b5482d084d795d600825cfc9b0c9065a1ac8718f8a17a300056eb",
+  "docs/data/v4/frontier_blend_book.json": "aad633a1d226d7d802b284628d4fe3cc61874446197bb46d0b3e649f4b998f41",
+  "docs/data/v4/frontier_summary.json": "127d7314189fac37b74ac88d8e692d9890a6d87a5c33977c573224f0543211b0"
+ },
+ "mechanical_evidence": {
+  "fresh_clone_replay": "BYTE_IDENTICAL",
+  "tests": "PASS_186_XFAIL_1_IN_PERMITTED_LOOPBACK_CONTEXT",
+  "v2_custody": "PASS_65_OF_65_EXACTLY_TWO_DECLARED_WORKTREE_DIVERGENCES",
+  "independent_verifier": "PASS_WITH_LIMITATIONS"
+ },
+ "rejection_findings": [
+  {
+   "severity": "HIGH",
+   "code": "RETAINED_REPLAY_REOPENS_LIVE_PROBES",
+   "summary": "the retained log points at the original role directory, so fit_view_controls reopens mutable probes.jsonl instead of consuming authenticated retained bytes"
+  },
+  {
+   "severity": "HIGH",
+   "code": "SOURCE_REFUTATION_BYPASSED_BY_PROMOTION",
+   "summary": "promotion generation can reintroduce an exact family and key already refuted by SOURCE evidence, and strict manifest loading does not reject the conflict"
+  },
+  {
+   "severity": "HIGH",
+   "code": "SOURCE_MANIFEST_REOPEN_TOCTOU",
+   "summary": "chain validation, runner candidate loading, and report authority hash the source manifest through separate path reads rather than one retained byte object"
+  },
+  {
+   "severity": "MEDIUM",
+   "code": "ALTERNATIVE_PROVENANCE_METADATA_INCORRECT",
+   "summary": "variant and promotion readings copy incumbent status and discrimination instead of authenticating the alternative evidence that generated them"
+  },
+  {
+   "severity": "MEDIUM",
+   "code": "HOLDOUT_CONFIRMATION_IGNORES_PARTIAL_SEPARATION",
+   "summary": "full applicability plus behavioral support can emit unqualified CONFIRMED even when the identity separation record is only PARTIAL"
+  },
+  {
+   "severity": "MEDIUM",
+   "code": "ROUNDED_APPLICABILITY_NOT_DECISION_PRESERVING",
+   "summary": "live decisions compare raw floats while reports retain three-decimal applicability, allowing retained reconstruction to disagree for distinct exact fractions"
+  },
+  {
+   "severity": "MEDIUM",
+   "code": "SOURCE_GENERATOR_MISSING_FROM_NONINTERFERENCE_SCAN",
+   "summary": "the boundary gate omits scripts/v4_freeze_source_candidates.py, so a direct evaluator-file read would pass current scans"
+  }
+ ],
+ "claim_boundary": {
+  "current_report_reproduction": "BYTE_IDENTICAL_ON_RETAINED_CURRENT_BYTES",
+  "transfer_survivor_counts": "2_VET_3_HARBOUR_2_BLEND_ON_RETAINED_CURRENT_BYTES",
+  "unique_transfer_selection": "NOT_ESTABLISHED",
+  "authenticated_replay": "NOT_ESTABLISHED_LIVE_PROBE_AND_MANIFEST_REOPEN",
+  "prospective_chronology": "NOT_ESTABLISHED",
+  "fresh_generalization": "NOT_ESTABLISHED",
+  "representation_transport": "NOT_ESTABLISHED_RTC_ZERO"
+ }
+}
