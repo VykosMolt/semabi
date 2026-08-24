@@ -16,7 +16,12 @@ def compiler_files():
     # decision/refinement boundary outside this gate.  The compiler-side runners drive the
     # browser and must be inside it too: V4's probe runner executes experiments against a
     # live application and would be the natural place for hidden state to leak in.
-    runners = [ROOT / "run_v2_refine.py", ROOT / "run_v2_validate.py", ROOT / "run_v4_probe.py"]
+    runners = [
+        ROOT / "run_v2_refine.py",
+        ROOT / "run_v2_validate.py",
+        ROOT / "run_v4_probe.py",
+        ROOT / "run_v4_transfer.py",
+    ]
     return (list((ROOT / "compiler").rglob("*.py")) + [ROOT / "relmodel.py", ROOT / "eval_free_canon.py"]
             + [r for r in runners if r.exists()])
 

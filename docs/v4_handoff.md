@@ -1,164 +1,154 @@
-# Handoff: SemABI V4, cross-trace custody phase
+# Handoff: SemABI V4, authenticated cross-trace frontier
 
-Written for whoever continues this work. The filesystem is authoritative; verify everything
-below rather than trusting it.
+Written for whoever continues this work. The filesystem and retained machine artifacts are
+authoritative; verify them rather than trusting this summary.
 
-## Custody, first
+## Custody first
 
-* **V2 is frozen and must stay frozen.** Tag `v2.0-causal-abstraction` =
-  `79af7bca4a40d7bd4778e973c8155a71fca8061e`. Do not modify, move or retag it.
-* `scripts/v4_custody.py` verifies the freeze manifest against the blobs *the tag points
-  at*, not the working tree, because V4 deliberately changes two files the manifest covers
-  (`semabi/compiler/browser.py`, `semabi/compiler/v2/hypotheses.py`). Run it; it must print
-  `frozen_intact: true` and list exactly those two divergences.
-* The official frozen-V2 V3 result (`54adf05`) and its diagnosis (`fc31fbf`) are immutable.
-  **gauntlet-v3 is a development suite now**: every V4-on-V3 number is development
-  evidence and must never be called fresh generalization.
-* Do not author a fresh benchmark yet. Do not rewrite the V0 inducer or the effect
-  language. Do not add app/layout-specific entity detectors.
+* **V2 is frozen.** Tag `v2.0-causal-abstraction` is
+  `79af7bca4a40d7bd4778e973c8155a71fca8061e`. `scripts/v4_custody.py` must report the tag
+  intact over 65/65 blobs and exactly two deliberate working-tree divergences:
+  `semabi/compiler/browser.py` and `semabi/compiler/v2/hypotheses.py`.
+* The official frozen-V2 V3 result (`54adf05`) and diagnosis (`fc31fbf`) are immutable.
+  gauntlet-v3 is development evidence throughout V4, never fresh generalization.
+* Branch: `v4-joint-observation-model`. Commit `1e20ef2` immutably preserves the rejected
+  sequential separation successor and its review. Do not rewrite or delete that checkpoint.
+* The current raw histories are now retained in Git, but their snapshots were made after
+  collection. Every chain therefore says exactly
+  `RETROACTIVE_SNAPSHOT_CHRONOLOGY_NOT_ESTABLISHED`. The bytes and replay are reproducible;
+  prospective chronology is **NOT_ESTABLISHED**.
+* Compiler custody selects only `observations.jsonl`, `steps.jsonl`, existing `probes.jsonl`,
+  and the SOURCE refutation sidecar when present. Evaluator custody separately selects only
+  its two raw inputs. Generated models, identity reports and search logs are not inputs.
 
-## Where the line is
+## Read these artifacts first
 
-Branch `v4-joint-observation-model`. Commits, newest first:
+For each application, the source manifest freezes the explicit incumbent, all six complete
+`PinnedReading` objects, their decision fingerprints, full-reading SHA-256 hashes, the exact
+SOURCE input snapshot, and the complete source-generation implementation hash surface. The
+chain manifest adds role-distinct TRANSFER/HOLDOUT snapshots, `min_support=2`, the replay code
+hash surface, and the custody timing state.
 
-    b308d1a  cross-trace custody: pinned readings, transfer evidence, SOURCE/TRANSFER/HOLDOUT
-    8a14d93  V4 summary over twelve traces
-    3b5dbb8  V4 development evidence
-    4d581ad  V4 mechanism: navigation-robust observation, joint identity/observation inference
+    docs/data/v4/manifests/vet_clinic_source_candidates.json
+    docs/data/v4/manifests/harbour_source_candidates.json
+    docs/data/v4/manifests/blend_book_source_candidates.json
+    docs/data/v4/manifests/vet_clinic_chain.json
+    docs/data/v4/manifests/harbour_chain.json
+    docs/data/v4/manifests/blend_book_chain.json
+    docs/data/v4/manifests/evaluator_inputs.json   # explicitly EVALUATOR_ONLY
 
-Read `docs/v4_design.md` (architecture and the two theses), then `docs/v4_devlog.md`
-(what was actually measured, including the negatives). Machine artifacts in
-`docs/data/v4/`; frozen readings in `docs/data/v4/readings/`.
+The authenticated reports are new files. The older `transfer_*.json` files belong to the
+rejected sequential checkpoint and remain historical evidence.
 
-## What works
+    docs/data/v4/frontier_vet_clinic.json
+    docs/data/v4/frontier_harbour.json
+    docs/data/v4/frontier_blend_book.json
 
-* All six gauntlet-v3 applications are traceable; the two that crashed frozen V2 produce
-  full traces (373 and 375 primitives).
-* The local mechanism — literal-free families, identity readings with a real discrimination
-  denominator, an objective that refuses to trade explanation against error, retained ties,
-  probes derived from disagreement, refutations that retire a reading — improves the object
-  layer wherever ground truth allows a check.
-* **Cross-trace selection is real, but its validation is mixed.** A frozen reading carried
-  to a history it was not fitted to can be refuted or confirmed there, and on three
-  applications by three independent authors the transfer history changed the source's own
-  choice, each time for a compiler-visible reason. The evaluator, consulted only afterwards,
-  strongly agrees with the `vet_clinic` ordering; the completed `harbour` diagnosis is mixed
-  and `blend_book` lacks entity-level annotations on this history.
-* Leaf promotion, which had perfect within-trace discrimination over ~400 comparisons, was
-  **refuted** by transfer and is indeed the worst transported reading. Within-trace
-  discrimination strength does not predict transportability.
+## What the repaired protocol establishes
 
-## What does not work, precisely
+Replay never regenerates SOURCE candidates. It authenticates the manifests, compiles every
+frozen candidate on TRANSFER, decides every unordered pair once in canonical name order, and
+retains every candidate with zero explicit pairwise losses. A singleton is emitted only when
+exactly one undefeated reading exists. `UNDECIDED` and inconclusive comparisons create no
+loss; there is no win count, iteration order, runner-up fallback, or synthetic selection.
 
-**A transported reading scores RTC 0.000 on a fresh history**, while the same mechanism
-re-derived in place on that history scores .459 (`harbour` transfer) and .423
-(`vet_clinic` holdout). Selection transports; the representation does not.
+The pairwise rule is still a vector dominance rule. It validates exact separation records
+before any comparison, preserves refutation/applicability/behavioral precedence, compares
+same-family separation fractions by integer cross-products, returns `UNDECIDED` immediately
+when different families favor opposite readings, and uses cost only for identical per-step
+verdicts. Full verdict maps and every exact comparison are retained in the reports.
 
-Two hypotheses were tested. Slot ids are *not* the problem — `cell#0` denotes vessel names
-in both harbour histories, `cell#0@3` lengths, `cell#0@4` the hazardous flag. The problem
-found instead: `harbour`'s source history pinned **`cell#0@4`, a two-valued yes/no column,
-as the identity of its rows**, and no error term notices, because a merging key does not
-contradict anything — it fails to separate.
+All three SOURCE incumbents suffer an explicit TRANSFER loss and are rejected. **None of the
+three applications has a unique TRANSFER survivor.**
 
-## What the separation continuation established
+| application | undefeated TRANSFER set | unresolved comparison | HOLDOUT evidence |
+|---|---|---|---|
+| `vet_clinic` | `promote cell[_]=cell#0`; `row[_](cell[_])=None` | asymmetric applicability, 0.83 versus 1.00 | both individually `PARTIALLY_CONTRADICTED`; the pairwise HOLDOUT frontier favors the row reading because the promoted reading has one refuted identity claim |
+| `harbour` | `promote cell[_]=cell#0`; both row-family `cell#0` variants | promoted reading is at 0.60 applicability versus 1.00; the two row variants improve opposite families | all three individually `PARTIALLY_CONTRADICTED`; no HOLDOUT pair produces a loss among them |
+| `blend_book` | `cell[_]=cell#0`; `promote cell[_]=cell#0` | asymmetric applicability, 0.80 versus 0.60 | the first is individually `CONFIRMED`, the promoted reading `PARTIALLY_CONTRADICTED`; their pairwise comparison remains applicability-inconclusive |
 
-`semabi/compiler/v4/transfer.py` now compares exact separation fractions only for tested
-claims on the same literal-free family. It uses integer cross-products, never the rounded
-display rate or an absolute threshold. A reading wins only when it is strictly better on at
-least one shared family and worse on none; conflicting family directions stay undecided.
-Applicability and behavioural contradiction/error evidence retain precedence. The machine
-artifacts carry the exact comparisons under `separation_differential`.
+HOLDOUT is validation after TRANSFER, not a second selection history. Its mechanical frontier
+is retained, but it cannot promote one member of an ambiguous TRANSFER set. Thus vet_clinic's
+HOLDOUT preference and blend_book's individual confirmation are useful diagnosis, not
+permission to serialize a winner.
 
-All three retained chains were replayed. Selections and holdout statuses are unchanged:
-`vet_clinic` remains `PARTIALLY_CONTRADICTED`, `harbour` remains
-`PARTIALLY_CONTRADICTED`, and `blend_book` remains `CONFIRMED`. The meaningful change is
-that harbour's decisive comparison now prefers 400/400 over 238/400 on the same row family,
-rather than counting confirmed claims across families. On blend-book, a rival's 358/400
-against 356/400 does not override its one fresh behavioural contradiction.
+This supersedes three earlier claims:
 
-This sharpens selection but does not repair transport. The final harbour candidates improve
-opposite row families: the selected one fixes the 238/400 family and retains the 199/400
-yes/no key; the other fixes the 199/400 family and leaves the first at 238/400. Dominance
-correctly returns `UNDECIDED`, and the selected transported representation still has RTC
-0.000.
+* “selection transports” is **NOT_ESTABLISHED**; only cross-trace rejection is established;
+* harbour has three undefeated readings, not a selected reading plus one runner-up;
+* blend_book's confirmed reading is not a unique transferred selection because a less
+  applicable promoted reading was not put to the same test.
 
-## The single strongest next step
+## What still fails
 
-No frozen SOURCE candidate contains both harbour improvements. Combining them now would use
-TRANSFER to construct a new reading, violating custody. The next lawful experiment is a
-bounded, app-agnostic **joint alternative generator that runs on SOURCE only**, with its
-candidate cap and combination rule frozen before any new transfer evidence is inspected.
-Then collect new, separately authored TRANSFER and HOLDOUT histories. The current three
-chains, including their holdouts and evaluator diagnoses, are spent for designing this
-successor and may be used only as development evidence.
+Historical evaluator diagnoses of the previously serialized candidates remain valid as
+diagnoses of those candidate conditions, but their `selected` labels are historical. The
+transported representations score RTC 0.000 where the mechanism re-derived in place scored
+.459 (`harbour` TRANSFER) and .423 (`vet_clinic` HOLDOUT). The completed harbour diagnosis is
+mixed; blend_book lacks entity-level annotations. None of those evaluator values entered the
+compiler rule or resolves the authenticated frontier.
 
-Do not turn this into an exhaustive Cartesian search or a transfer-time repair. The source
-rule needs a deterministic bound and must include the incumbent and single-family controls,
-so any gain can be attributed to composing independently plausible source alternatives.
+The operator ledger is unchanged: 29 operators, 19 exercised, 11 recoverable under known
+vocabulary, **0 eligible and 0 recovered**; all 19 still fail at
+`STATE_DELTA_UNREPRESENTABLE`. V0 and the effect language remain untouched.
 
-## How to run things
+## Strongest lawful next experiment
 
-    # custody
-    .venv/bin/python scripts/v4_custody.py
+The present TRANSFER and HOLDOUT histories, diagnoses, and frontiers are spent development
+evidence. Do not tune another threshold on them and do not combine harbour's two row fixes
+after seeing TRANSFER.
 
-    # one full chain (roles are separate histories; seeds 0 / 12 / 13)
+Before collecting anything new, freeze a prospective SOURCE-only successor with two explicit
+controls:
+
+1. a bounded joint-alternative generator containing the incumbent, every single-family
+   control, and deterministic source-plausible combinations; and
+2. a finite acquisition/coverage protocol derived only from the frozen candidate manifest,
+   which attempts to render every candidate family in TRANSFER before comparison and reports
+   any remaining applicability asymmetry rather than penalizing it.
+
+Then collect new, separately authored SOURCE/TRANSFER/HOLDOUT histories. The two controls are
+both necessary in the current evidence: joint alternatives address harbour's opposing row
+families, while prospective coverage addresses the lower-applicability promoted readings
+that keep all three frontiers non-singleton. Candidate caps, combination rules, acquisition
+budget, stop conditions, and failure states must be frozen before new TRANSFER evidence.
+
+## Reproduction
+
+    # V2 custody (expects the two deliberate V4 divergences)
+    PYTHONPATH=. .venv/bin/python scripts/v4_custody.py
+
+    # manifest-only replay; no raw role-path bypass exists
     PYTHONPATH=. .venv/bin/python -m semabi.run_v4_transfer \
-        --source runs/v4/vet_clinic_dev \
-        --transfer runs/v4/vet_clinic_transfer \
-        --holdout runs/v4/vet_clinic_holdout \
-        --output docs/data/v4/transfer_vet_clinic.json
+        --manifest docs/data/v4/manifests/vet_clinic_chain.json \
+        --output docs/data/v4/frontier_vet_clinic.json
 
-    # evaluator diagnosis of a transported reading (hidden truth, after the fact only)
-    PYTHONPATH=. .venv/bin/python -m semabi.eval.v4_compare \
-        --run runs/v4/vet_clinic_holdout --tag sonnet_01_vet_clinic \
-        --pinned selected=docs/data/v4/readings/vet_clinic_selected.json \
-        --output docs/data/v4/diagnosis_vet_clinic_holdout.json
+    PYTHONPATH=. .venv/bin/python -m semabi.run_v4_transfer \
+        --manifest docs/data/v4/manifests/harbour_chain.json \
+        --output docs/data/v4/frontier_harbour.json
 
-    # active acquisition of a named missing observation
-    PYTHONPATH=. .venv/bin/python -m semabi.run_v4_probe --run runs/v4/harbour_acquire \
-        --base http://127.0.0.1:8981 --mode acquire --output docs/data/v4/acquire_harbour.json
+    PYTHONPATH=. .venv/bin/python -m semabi.run_v4_transfer \
+        --manifest docs/data/v4/manifests/blend_book_chain.json \
+        --output docs/data/v4/frontier_blend_book.json
 
-Applications: gauntlet-v3 originals on 8900/8901 (Grok), 8910/8911 (Opus), 8920/8921
-(Sonnet); instrumented evaluator-only copies with `data-eid` annotations on 8980
-(vet_clinic) and 8981 (harbour). `~/semabi-gauntlet-v3/run_all.sh` starts the originals.
+    # full suite; loopback access is needed by three existing network tests
+    .venv/bin/python -m pytest -q
 
-**One application instance holds one hidden state.** Never run two explorers against the
-same port at once; collect its histories one after another and parallelise across
-applications. This bug has been introduced twice.
+Current verification: `168 passed, 1 xfailed`; compiler/evaluator boundary `4/4`. No LLM
+proposal was used. The phase retained 4,373 collected primitives plus the earlier one-primitive
+harbour acquisition; no new primitives were collected by this repair.
 
-## Rules that are not negotiable
+## Non-negotiable boundaries
 
-* Hidden V3 truth is for diagnosis after the compiler has decided. It may never enter a
-  compiler-visible score. `tests/test_boundary.py` gates the compiler and the compiler-side
-  runners.
-* A history used to select a reading is spent: it is not validation afterwards. Keep
-  SOURCE / TRANSFER / HOLDOUT distinct in code, artifacts and prose.
-* A reading that cannot be instantiated has not been tested — do not let cheapness win.
-* If the evidence needed to separate two readings was never collected, say so
-  (`INSUFFICIENT_EVIDENCE` plus the specific deficit) and try to acquire it. `harbour`'s
-  remaining ambiguity needs cross-view recurrence, which that application cannot supply at
-  all — an honest limit, not a failure.
-
-## State of the ledger
-
-29 operators, 19 exercised, 11 recoverable under known vocabulary, **0 eligible, 0
-recovered**, all failing at `STATE_DELTA_UNREPRESENTABLE`. Until that denominator becomes
-nontrivial there is no evidence for touching downstream induction, and it was not touched.
-
-Tests: 136 passed, 1 xfailed. The separation successor adds exact-rate, symmetry,
-cross-family, conflicting-direction, precedence and audit-shape controls. Boundary 4/4.
-
-## Completed evaluator-only diagnoses
-
-The two diagnoses that were in flight are complete:
-
-    docs/data/v4/diagnosis_harbour_holdout.json
-    docs/data/v4/diagnosis_blend_book_holdout.json
-
-`harbour`: selected and source-choice RTC are both 0.000. Selected improves pair precision
-to 1.000 from .967, but has 24 merging learned keys against 14 and 47 false deltas against
-42. `blend_book`: selected and source-choice RTC are both 0.000 with the same 477
-wrong-attribute deltas; entity-level metrics are unavailable. These findings are mixed and
-did not enter selection. The files have the same shape as
-`docs/data/v4/diagnosis_vet_clinic_holdout.json`; rerunning `v4_compare` is idempotent and
-reads no compiler state.
+* Hidden truth and `docs/data/v4/manifests/evaluator_inputs.json` are evaluator-only. They may
+  never enter compiler selection or acquisition policy.
+* SOURCE, TRANSFER and HOLDOUT are distinct evidence roles. SOURCE proposes; TRANSFER creates
+  losses/frontiers; HOLDOUT classifies the retained frontier and cannot select within it.
+* A reading instantiated to a different extent has not faced the same test. Preserve
+  `INCONCLUSIVE_ASYMMETRIC_APPLICABILITY`; do not let cheapness or raw error totals cross it.
+* Preserve every `UNDECIDED`, `INCONCLUSIVE`, `NOT_ESTABLISHED`, and empty-frontier state
+  exactly. Never manufacture a singleton.
+* One application instance holds one hidden state. Never run two collectors against the same
+  port concurrently.
+* Do not modify V0, the effect language, V2's tag, the V3 frozen result, the rejected
+  `1e20ef2` checkpoint, or the current spent histories.

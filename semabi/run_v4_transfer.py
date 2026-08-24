@@ -1,188 +1,307 @@
-"""SOURCE -> TRANSFER -> HOLDOUT: choose a reading with evidence it was not fitted to.
+"""Replay a retained V4 SOURCE/TRANSFER/HOLDOUT chain.
 
-Compiler side.  Hidden state is never read here; the evaluator looks at the result
-afterwards and says whether the reading that transported was also the right one.
-
-The three roles are kept apart in code because they are different kinds of evidence and
-collapsing them is how a fit gets mistaken for a prediction:
-
-* SOURCE may generate readings and reject obviously bad ones locally;
-* TRANSFER may compare frozen source readings and refute them, and may never afterwards be
-  called independent validation;
-* HOLDOUT may confirm or contradict the reading that transfer selected, and takes no part
-  in selecting it.
+This module is the compiler-side replay boundary. Candidate generation happened before
+the source manifest was frozen; replay authenticates that manifest, carries each retained
+reading to TRANSFER, and reports the complete order-independent comparison. HOLDOUT is
+only used after that comparison to classify every undefeated survivor.
 """
 from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
+from typing import Any, Mapping
 
-from semabi.compiler.compile_v4 import build_hypotheses, compile_v4
-from semabi.compiler.evidence import EvidenceLog
-from semabi.compiler.v4 import objective, pinned as v4_pinned, promote, sufficiency, transfer
-from semabi.compiler.v4 import search as v4_search
-from semabi.compiler.v4.identity import family_key, family_readings
-
-MAX_CANDIDATES = 6
+from semabi.compiler.compile_v4 import compile_v4
+from semabi.compiler.v4 import custody, manifests, objective, pinned as v4_pinned, transfer
 
 
-def _source_candidates(source: Path, log: EvidenceLog, max_candidates: int = MAX_CANDIDATES):
-    """Every reading the source history makes plausible, frozen, including the one it
-    prefers.  Generating alternatives is the source's job; deciding between them is not."""
-    H, G = build_hypotheses(source, log)
-    result = v4_search.search(H, G, log, log_fn=lambda _m: None, run_dir=source)
-    incumbent = v4_pinned.from_search(result, source, "source_choice")
-    candidates = [incumbent]
-    notes = []
-
-    # Readings that promote a repeated leaf to an object of its own come first.  The local
-    # objective declines exactly these, which is the reason this whole comparison exists, so
-    # they must not be the ones a candidate cap truncates.
-    reload_pairs = v4_search._reload_pairs(log)
-    view_of = v4_search._view_of(H)
-    for leaf in promote.candidates(H, G):
-        leaf_family = family_key(leaf)
-        if leaf_family in incumbent.promoted_families:
-            continue
-        promoted_H, _ = build_hypotheses(source, log, {leaf})
-        unit = promoted_H.units.get(leaf)
-        if unit is None:
-            continue
-        best = next((r for r in family_readings([unit], reload_pairs, view_of, allow_prose=True)
-                     if r.is_identity and r.status == "SUPPORTED"), None)
-        if best is None:
-            continue
-        name = f"promote {leaf_family[:22]}={best.key_slot}"
-        candidates.append(incumbent.with_promotion(leaf_family, best.key_slot, name))
-        notes.append({"family": leaf_family, "promotion": best.key_slot,
-                      "discrimination": best.evidence.discrimination,
-                      "copresent_pairs": best.evidence.copresent_pairs})
-        if len(candidates) >= max_candidates:
-            return result, candidates[:max_candidates], notes, H, G
-
-    for family, templates in sorted(result.families.items()):
-        chosen = result.chosen[templates[0]]
-        for alternative in result.readings.get(templates[0], []):
-            if alternative.key_slot == chosen.key_slot or alternative.status == "REFUTED":
-                continue
-            if alternative.status not in ("SUPPORTED", "NO_IDENTITY"):
-                continue
-            name = f"{family[:24]}={alternative.key_slot}"
-            candidates.append(incumbent.variant(family, alternative.key_slot, name))
-            notes.append({"family": family, "alternative": alternative.key_slot,
-                          "status": alternative.status,
-                          "discrimination": alternative.evidence.discrimination})
-            break            # one alternative per family keeps the comparison small
-        if len(candidates) >= max_candidates:
-            break
-    return result, candidates[:max_candidates], notes, H, G
+ROLE_SEMANTICS = {
+    "SOURCE": "retained the candidate readings; it is not validation",
+    "TRANSFER": "compared the retained readings on a fresh history; it is not validation",
+    "HOLDOUT": "classified the undefeated transfer survivors after selection",
+}
 
 
-def _evidence(run: Path, reading: v4_pinned.PinnedReading, min_support: int) -> transfer.TransferEvidence:
-    compiled = compile_v4(run, min_support=min_support, write_diagnostics=False, pinned=reading)
+def _evidence(run: Path, reading: v4_pinned.PinnedReading,
+              min_support: int) -> transfer.TransferEvidence:
+    """Compile one retained reading against one role without selecting a key."""
+    compiled = compile_v4(
+        Path(run),
+        min_support=min_support,
+        write_diagnostics=False,
+        pinned=reading,
+    )
     behaviour = objective.evaluate(compiled.abstractor, compiled.log, None)
-    keys = {f: r.key_slot for f, r in sorted(reading.families.items())}
-    # the frozen reading's identity claims, put to this history: does each named value still
-    # separate the instances it names?  Nothing is re-chosen; the claim is only tested.
+    keys = {family: row.key_slot for family, row in sorted(reading.families.items())}
     separated = v4_pinned.separation(compiled.hypotheses, reading)
-    return transfer.from_behaviour(reading.name, behaviour, compiled.transport, keys, separated)
+    return transfer.from_behaviour(
+        reading.name,
+        behaviour,
+        compiled.transport,
+        keys,
+        separated,
+    )
+
+
+def _role_path(chain: manifests.ChainManifest, role: str) -> Path:
+    """Resolve an authenticated role path relative to its chain manifest."""
+    row = chain.roles[role]
+    value = row["path"]
+    path = Path(value)
+    if path.is_absolute() or path.as_posix() != value:
+        raise manifests.ManifestError(f"{role} path is not a relative POSIX path")
+    return (chain.manifest_path.parent / path).resolve(strict=True)
+
+
+def _candidate_fingerprint(candidate: Any) -> str:
+    value = getattr(candidate, "fingerprint")
+    return value() if callable(value) else value
+
+
+def _candidate_full_hash(candidate: Any) -> str:
+    value = getattr(candidate, "full_reading_sha256", None)
+    if value is not None:
+        return value
+    return manifests.full_reading_sha256(candidate.reading)
+
+
+def _candidate_json(candidate: manifests.SourceCandidate) -> dict[str, Any]:
+    """Serialize a candidate together with both identity bindings."""
+    return {
+        "name": candidate.name,
+        "fingerprint": _candidate_fingerprint(candidate),
+        "decision_fingerprint": _candidate_fingerprint(candidate),
+        "full_reading_sha256": _candidate_full_hash(candidate),
+        "promoted_families": list(candidate.reading.promoted_families),
+        "reading": candidate.reading.to_json(),
+    }
+
+
+def _portable_path(path: Path, repo_root: Path) -> str:
+    """Render an authenticated path independently of the checkout location."""
+    return Path(os.path.relpath(Path(path).resolve(), repo_root.resolve())).as_posix()
+
+
+def _authority(
+    chain: manifests.ChainManifest,
+    source: manifests.SourceManifest,
+    repo_root: Path,
+) -> dict[str, Any]:
+    """Return all retained byte and role bindings used by replay."""
+    roles: dict[str, Any] = {}
+    for role in ("SOURCE", "TRANSFER", "HOLDOUT"):
+        row = chain.roles[role]
+        snapshot = row["snapshot"]
+        roles[role] = {
+            "path": row["path"],
+            "path_base": "CHAIN_MANIFEST_PARENT",
+            "snapshot": snapshot,
+            "content_tree_sha256": snapshot["content_tree_sha256"],
+            "role_bound_sha256": snapshot["role_bound_sha256"],
+        }
+
+    chain_path = chain.manifest_path.resolve()
+    source_path = source.manifest_path.resolve()
+    return {
+        "chain_manifest": {
+            "path": _portable_path(chain_path, repo_root),
+            "sha256": custody.sha256_file(chain_path),
+        },
+        "source_manifest": {
+            "path": _portable_path(source_path, repo_root),
+            "sha256": custody.sha256_file(source_path),
+        },
+        "roles": roles,
+        "custody_timing": chain.custody_timing,
+        "min_support": chain.min_support,
+        "replay_implementation_files": dict(sorted(chain.implementation_files.items())),
+    }
+
+
+def _holdout_classification(evidence: transfer.TransferEvidence) -> str:
+    """Preserve the per-reading holdout classification used by the V4 report."""
+    if evidence.applicability == 0.0:
+        return "INCONCLUSIVE_NOT_APPLICABLE"
+    if not evidence.makes_predictions:
+        return "INCONCLUSIVE_NO_PREDICTIONS"
+    if evidence.errors == 0 and evidence.explained > 0:
+        return "CONFIRMED"
+    if evidence.explained > 0:
+        return "PARTIALLY_CONTRADICTED"
+    return "CONTRADICTED"
+
+
+def _evidence_payload(
+    evidence: Mapping[str, transfer.TransferEvidence],
+) -> dict[str, Any]:
+    payload: dict[str, Any] = {}
+    for name in sorted(evidence):
+        row = evidence[name].to_json()
+        row["verdicts"] = {
+            str(step): evidence[name].verdicts[step]
+            for step in sorted(evidence[name].verdicts)
+        }
+        payload[name] = row
+    return payload
+
+
+def _write_report(path: Path, report: Mapping[str, Any]) -> None:
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(
+            report,
+            indent=1,
+            sort_keys=True,
+            ensure_ascii=False,
+            allow_nan=False,
+        ) + "\n",
+        encoding="utf-8",
+    )
+
+
+def replay(
+    manifest_path: Path,
+    output_path: Path,
+    *,
+    repo_root: Path | None = None,
+) -> dict[str, Any]:
+    """Replay one authenticated chain manifest and write its canonical report."""
+    manifest_path = Path(manifest_path)
+    chain = manifests.load_chain_manifest(manifest_path, repo_root=repo_root)
+    # Loading explicitly at the replay boundary makes the source handoff visible and
+    # keeps source candidate generation out of this process.
+    source = manifests.load_source_manifest(chain.source_manifest_path, repo_root=repo_root)
+    display_root = (
+        Path(repo_root).resolve() if repo_root is not None
+        else Path(__file__).resolve().parents[1]
+    )
+    roles = {role: _role_path(chain, role) for role in ("SOURCE", "TRANSFER", "HOLDOUT")}
+    candidates = list(source.candidates)
+    if not candidates:
+        raise manifests.ManifestError("source manifest contains no candidates")
+
+    authority = _authority(chain, source, display_root)
+    authority["candidates"] = [
+        {
+            "name": candidate.name,
+            "decision_fingerprint": _candidate_fingerprint(candidate),
+            "full_reading_sha256": _candidate_full_hash(candidate),
+        }
+        for candidate in candidates
+    ]
+
+    transfer_evidence = {
+        candidate.name: _evidence(roles["TRANSFER"], candidate.reading, chain.min_support)
+        for candidate in candidates
+    }
+    transfer_frontier = transfer.all_pairs_frontier(transfer_evidence.values())
+    candidate_by_name = {candidate.name: candidate for candidate in candidates}
+    source_choice = candidate_by_name[source.incumbent]
+    source_choice_name = source_choice.name
+    survivor_candidates = [candidate_by_name[name] for name in transfer_frontier.survivors]
+    unique = transfer_frontier.outcome == "UNIQUE_SURVIVOR"
+    selected_candidate = (
+        candidate_by_name[transfer_frontier.selection]
+        if unique and transfer_frontier.selection is not None
+        else None
+    )
+    source_choice_rejected = source_choice_name not in transfer_frontier.survivors
+
+    report: dict[str, Any] = {
+        "authority": authority,
+        "roles": {
+            role: chain.roles[role]["path"]
+            for role in roles
+        },
+        "role_semantics": dict(ROLE_SEMANTICS),
+        "source": {
+            "manifest": {
+                "path": authority["source_manifest"]["path"],
+                "sha256": authority["source_manifest"]["sha256"],
+            },
+            "summary": source.source_summary,
+            "source_choice": _candidate_json(source_choice),
+            "candidates": [_candidate_json(candidate) for candidate in candidates],
+        },
+        "transfer": {
+            "evidence": _evidence_payload(transfer_evidence),
+            "frontier": transfer_frontier.to_json(),
+        },
+        # These aliases keep the pairwise evidence easy to locate for existing consumers.
+        "transfer_decisions": transfer_frontier.decisions,
+        "transfer_frontier": transfer_frontier.to_json(),
+        "survivors": [_candidate_json(candidate) for candidate in survivor_candidates],
+        "survivor_names": list(transfer_frontier.survivors),
+        "outcome": transfer_frontier.outcome,
+        "selected": _candidate_json(selected_candidate) if selected_candidate else None,
+        "selection_changed": (
+            selected_candidate.name != source_choice_name if selected_candidate else None
+        ),
+        "selection_changed_the_source_choice": (
+            selected_candidate.name != source_choice_name if selected_candidate else None
+        ),
+        "source_choice_rejected": source_choice_rejected,
+    }
+
+    holdout_evidence: dict[str, transfer.TransferEvidence] = {}
+    holdout_frontier: transfer.FrontierResult | None = None
+    holdout_classifications: dict[str, str] = {}
+    if survivor_candidates:
+        holdout_evidence = {
+            candidate.name: _evidence(roles["HOLDOUT"], candidate.reading, chain.min_support)
+            for candidate in survivor_candidates
+        }
+        holdout_classifications = {
+            name: _holdout_classification(holdout_evidence[name])
+            for name in sorted(holdout_evidence)
+        }
+        if len(holdout_evidence) > 1:
+            holdout_frontier = transfer.all_pairs_frontier(holdout_evidence.values())
+
+    if not survivor_candidates:
+        holdout_outcome = "NO_UNDEFEATED_READING"
+    elif len(survivor_candidates) > 1:
+        # A holdout comparison is evidence, not permission to select among an ambiguous
+        # transfer frontier.  Keep its mechanical frontier below, but do not promote it.
+        holdout_outcome = "AMBIGUOUS_SURVIVOR_SET"
+    else:
+        holdout_outcome = holdout_classifications[survivor_candidates[0].name]
+
+    report["holdout"] = {
+        "evidence": _evidence_payload(holdout_evidence),
+        "classifications": holdout_classifications,
+        "frontier": holdout_frontier.to_json() if holdout_frontier else None,
+        "outcome": holdout_outcome,
+        "selected": None,
+    }
+    report["holdout_evidence"] = _evidence_payload(holdout_evidence)
+    report["holdout_frontier"] = holdout_frontier.to_json() if holdout_frontier else None
+    report["holdout_outcome"] = holdout_outcome
+
+    _write_report(Path(output_path), report)
+    return report
 
 
 def main() -> None:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--source", required=True)
-    ap.add_argument("--transfer", required=True)
-    ap.add_argument("--holdout")
-    ap.add_argument("--min-support", type=int, default=2)
-    ap.add_argument("--output", required=True)
-    a = ap.parse_args()
-    source, transfer_run = Path(a.source), Path(a.transfer)
-    holdout = Path(a.holdout) if a.holdout else None
-
-    log = EvidenceLog(source)
-    result, candidates, notes, H, G = _source_candidates(source, log)
-    report: dict = {
-        "roles": {"SOURCE": str(source), "TRANSFER": str(transfer_run),
-                  "HOLDOUT": str(holdout) if holdout else None},
-        "role_semantics": {
-            "SOURCE": "generated the readings and rejected some locally; not validation",
-            "TRANSFER": "compared frozen readings and may refute them; not validation",
-            "HOLDOUT": "took no part in selection; the only evidence that validates"},
-        "source": {"local_final": result.final.to_json(),
-                   "families": {f: len(t) for f, t in sorted(result.families.items())},
-                   "open_questions": [q.to_json() for q in result.open_questions],
-                   "alternatives_generated": notes},
-        "candidates": [{"name": c.name, "fingerprint": c.fingerprint(),
-                        "promoted": c.promoted_families,
-                        "reading": c.to_json()} for c in candidates],
-    }
-
-    if len(candidates) < 2:
-        report["outcome"] = "NO_COMPETING_READING"
-        Path(a.output).parent.mkdir(parents=True, exist_ok=True)
-        Path(a.output).write_text(json.dumps(report, indent=1))
-        print(json.dumps({"outcome": report["outcome"]}, indent=1))
-        return
-
-    evidence = {c.name: _evidence(transfer_run, c, a.min_support) for c in candidates}
-    report["transfer"] = {name: ev.to_json() for name, ev in evidence.items()}
-
-    incumbent = candidates[0]
-    decisions = []
-    for candidate in candidates[1:]:
-        decision = transfer.decide(evidence[incumbent.name], evidence[candidate.name])
-        decisions.append({"left": incumbent.name, "right": candidate.name, **decision.to_json()})
-        if decision.outcome == "RIGHT":
-            incumbent = candidate
-    report["transfer_decisions"] = decisions
-    report["selected"] = {"name": incumbent.name, "fingerprint": incumbent.fingerprint(),
-                          "reading": incumbent.to_json()}
-    report["selection_changed_the_source_choice"] = incumbent.name != candidates[0].name
-
-    # what the transfer history could not answer, and what it would have taken
-    targeted = sufficiency.targeted_families(H, log)
-    unresolved = []
-    for question in result.open_questions:
-        templates = result.families.get(question.template, [])
-        reading = result.chosen.get(templates[0]) if templates else None
-        if reading is None:
-            continue
-        present = question.template in {f for f in evidence[incumbent.name].transport.get("applied", {})}
-        unresolved.append(sufficiency.assess(reading, targeted, present).to_json())
-    report["evidence_sufficiency"] = unresolved
-
-    if holdout is not None:
-        runner_up = next((c for c in candidates if c.name != incumbent.name), None)
-        held = {incumbent.name: _evidence(holdout, incumbent, a.min_support)}
-        if runner_up is not None:
-            held[runner_up.name] = _evidence(holdout, runner_up, a.min_support)
-        report["holdout"] = {name: ev.to_json() for name, ev in held.items()}
-        chosen_ev = held[incumbent.name]
-        if runner_up is not None:
-            verdict = transfer.decide(chosen_ev, held[runner_up.name])
-            report["holdout_differential"] = verdict.to_json()
-        if chosen_ev.applicability == 0.0:
-            report["holdout_outcome"] = "INCONCLUSIVE_NOT_APPLICABLE"
-        elif not chosen_ev.makes_predictions:
-            report["holdout_outcome"] = "INCONCLUSIVE_NO_PREDICTIONS"
-        elif chosen_ev.errors == 0 and chosen_ev.explained > 0:
-            report["holdout_outcome"] = "CONFIRMED"
-        elif chosen_ev.explained > 0:
-            report["holdout_outcome"] = "PARTIALLY_CONTRADICTED"
-        else:
-            report["holdout_outcome"] = "CONTRADICTED"
-
-    report["outcome"] = "SELECTED"
-    Path(a.output).parent.mkdir(parents=True, exist_ok=True)
-    Path(a.output).write_text(json.dumps(report, indent=1))
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--manifest", required=True, type=Path)
+    parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument(
+        "--repo-root",
+        type=Path,
+        default=None,
+        help="repository root used to verify retained implementation hashes",
+    )
+    args = parser.parse_args()
+    report = replay(args.manifest, args.output, repo_root=args.repo_root)
     print(json.dumps({
-        "candidates": [c.name for c in candidates],
-        "decisions": [{k: d[k] for k in ("left", "right", "outcome", "reason")} for d in decisions],
-        "selected": incumbent.name,
-        "changed": report["selection_changed_the_source_choice"],
-        "holdout_outcome": report.get("holdout_outcome"),
-    }, indent=1))
+        "outcome": report["outcome"],
+        "survivors": report["survivor_names"],
+        "holdout_outcome": report["holdout_outcome"],
+    }, sort_keys=True, indent=1))
 
 
 if __name__ == "__main__":

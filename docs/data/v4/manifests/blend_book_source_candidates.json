@@ -1,0 +1,515 @@
+{
+ "candidates": [
+  {
+   "fingerprint": "32ce86a55a72ab0e",
+   "full_reading_sha256": "e201749a26a4ae446f8644610adede8bc763cf5fcec0bd4ed93dd0c5b92e656a",
+   "name": "source_choice",
+   "reading": {
+    "families": {
+     "button[_]": {
+      "discrimination": 0.0,
+      "family": "button[_]",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "cell[_]": {
+      "discrimination": 0.0,
+      "family": "cell[_]",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": {
+      "discrimination": null,
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+      "key_slot": "group/group/text#0@9",
+      "status": "UNSUPPORTED"
+     },
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": {
+      "discrimination": null,
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "row[_](cell[_],cell[_](button[_]))": {
+      "discrimination": 0.9825,
+      "family": "row[_](cell[_],cell[_](button[_]))",
+      "key_slot": "cell#0@2",
+      "status": "SUPPORTED"
+     }
+    },
+    "name": "source_choice",
+    "promoted_families": [],
+    "provenance": {
+     "role": "SOURCE",
+     "source_run": "runs/v4/grok_02_blend_book_dev"
+    },
+    "refuted": {},
+    "version": 1
+   }
+  },
+  {
+   "fingerprint": "dfab0b576d5e5485",
+   "full_reading_sha256": "364649c9d5c76a92bb2a649805d535792d26dd6b63ea6fae878ca9d50dc25905",
+   "name": "promote cell[_]=cell#0",
+   "reading": {
+    "families": {
+     "button[_]": {
+      "discrimination": 0.0,
+      "family": "button[_]",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "cell[_]": {
+      "discrimination": 0.0,
+      "family": "cell[_]",
+      "key_slot": "cell#0",
+      "status": "NO_IDENTITY"
+     },
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": {
+      "discrimination": null,
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+      "key_slot": "group/group/text#0@9",
+      "status": "UNSUPPORTED"
+     },
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": {
+      "discrimination": null,
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "row[_](cell[_],cell[_](button[_]))": {
+      "discrimination": 0.9825,
+      "family": "row[_](cell[_],cell[_](button[_]))",
+      "key_slot": "cell#0@2",
+      "status": "SUPPORTED"
+     }
+    },
+    "name": "promote cell[_]=cell#0",
+    "promoted_families": [
+     "cell[_]"
+    ],
+    "provenance": {
+     "role": "SOURCE",
+     "source_run": "runs/v4/grok_02_blend_book_dev"
+    },
+    "refuted": {},
+    "version": 1
+   }
+  },
+  {
+   "fingerprint": "339f2214197b0b71",
+   "full_reading_sha256": "51e871d2d8e0202ad8e1a885c4ecf96d39329eb70ee273c1b80aecf9431f3e01",
+   "name": "button[_]=button#0",
+   "reading": {
+    "families": {
+     "button[_]": {
+      "discrimination": 0.0,
+      "family": "button[_]",
+      "key_slot": "button#0",
+      "status": "NO_IDENTITY"
+     },
+     "cell[_]": {
+      "discrimination": 0.0,
+      "family": "cell[_]",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": {
+      "discrimination": null,
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+      "key_slot": "group/group/text#0@9",
+      "status": "UNSUPPORTED"
+     },
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": {
+      "discrimination": null,
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "row[_](cell[_],cell[_](button[_]))": {
+      "discrimination": 0.9825,
+      "family": "row[_](cell[_],cell[_](button[_]))",
+      "key_slot": "cell#0@2",
+      "status": "SUPPORTED"
+     }
+    },
+    "name": "button[_]=button#0",
+    "promoted_families": [],
+    "provenance": {
+     "role": "SOURCE",
+     "source_run": "runs/v4/grok_02_blend_book_dev"
+    },
+    "refuted": {},
+    "version": 1
+   }
+  },
+  {
+   "fingerprint": "2b2cabacf05f5418",
+   "full_reading_sha256": "145437f6d207fd56c25c98c2bc84cafe8b88a37b1c9d7e163f7f6a2739242948",
+   "name": "cell[_]=cell#0",
+   "reading": {
+    "families": {
+     "button[_]": {
+      "discrimination": 0.0,
+      "family": "button[_]",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "cell[_]": {
+      "discrimination": 0.0,
+      "family": "cell[_]",
+      "key_slot": "cell#0",
+      "status": "NO_IDENTITY"
+     },
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": {
+      "discrimination": null,
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+      "key_slot": "group/group/text#0@9",
+      "status": "UNSUPPORTED"
+     },
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": {
+      "discrimination": null,
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "row[_](cell[_],cell[_](button[_]))": {
+      "discrimination": 0.9825,
+      "family": "row[_](cell[_],cell[_](button[_]))",
+      "key_slot": "cell#0@2",
+      "status": "SUPPORTED"
+     }
+    },
+    "name": "cell[_]=cell#0",
+    "promoted_families": [],
+    "provenance": {
+     "role": "SOURCE",
+     "source_run": "runs/v4/grok_02_blend_book_dev"
+    },
+    "refuted": {},
+    "version": 1
+   }
+  },
+  {
+   "fingerprint": "11a9ad004dda5443",
+   "full_reading_sha256": "1dbe71ad3f6da4941e263c61b5c1d2fbffa5de622f7e377e149007475edcaab3",
+   "name": "group[_](status[_],group=None",
+   "reading": {
+    "families": {
+     "button[_]": {
+      "discrimination": 0.0,
+      "family": "button[_]",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "cell[_]": {
+      "discrimination": 0.0,
+      "family": "cell[_]",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": {
+      "discrimination": null,
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+      "key_slot": null,
+      "status": "UNSUPPORTED"
+     },
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": {
+      "discrimination": null,
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "row[_](cell[_],cell[_](button[_]))": {
+      "discrimination": 0.9825,
+      "family": "row[_](cell[_],cell[_](button[_]))",
+      "key_slot": "cell#0@2",
+      "status": "SUPPORTED"
+     }
+    },
+    "name": "group[_](status[_],group=None",
+    "promoted_families": [],
+    "provenance": {
+     "role": "SOURCE",
+     "source_run": "runs/v4/grok_02_blend_book_dev"
+    },
+    "refuted": {},
+    "version": 1
+   }
+  },
+  {
+   "fingerprint": "fa2c4209c248287e",
+   "full_reading_sha256": "ff0da8a2ede084d197c60cd220d053119688785cd7d9cc0b528eb62493d88d8d",
+   "name": "row[_](cell[_],cell[_](b=cell#0",
+   "reading": {
+    "families": {
+     "button[_]": {
+      "discrimination": 0.0,
+      "family": "button[_]",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "cell[_]": {
+      "discrimination": 0.0,
+      "family": "cell[_]",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": {
+      "discrimination": null,
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+      "key_slot": "group/group/text#0@9",
+      "status": "UNSUPPORTED"
+     },
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": {
+      "discrimination": null,
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "row[_](cell[_],cell[_](button[_]))": {
+      "discrimination": 0.9825,
+      "family": "row[_](cell[_],cell[_](button[_]))",
+      "key_slot": "cell#0",
+      "status": "SUPPORTED"
+     }
+    },
+    "name": "row[_](cell[_],cell[_](b=cell#0",
+    "promoted_families": [],
+    "provenance": {
+     "role": "SOURCE",
+     "source_run": "runs/v4/grok_02_blend_book_dev"
+    },
+    "refuted": {},
+    "version": 1
+   }
+  }
+ ],
+ "generation": {
+  "implementation_files": {
+   "scripts/v4_freeze_source_candidates.py": "de11fd80d4ed51c6a9c9ca8cbb6d54abdea8303f6d0f8bdaa27f3c39b314e3fc",
+   "semabi/compiler/abstract.py": "07fd8b41fcfdfe3d563e6b5f28d6fbb0229fb706f944dbfe7626a363ade633f8",
+   "semabi/compiler/belief.py": "10996cf9f5f2264ecbe8e28235718e81fc606ed249d8c2708f50541a73a8aa5c",
+   "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+   "semabi/compiler/compile.py": "fa0e4b4237658dc2e5d41cf715fe8ca884b0b2ec9b714cde4f1917318c9f920f",
+   "semabi/compiler/compile_v4.py": "8474c48d7d8843106d3de3405698f04d48b191a36d5e8e36318205bd69ef9d27",
+   "semabi/compiler/evidence.py": "b4a5d0c9208f9b6c4588317078f8270a7bd0766bcb1a2e52722f72be74a90e51",
+   "semabi/compiler/explorer.py": "16827d3735c9eab4d51a60c585790226be3e692bb63b01794df29a9ba8c8c807",
+   "semabi/compiler/induce.py": "46075088d34187ea121c77c3522055260e710a71199fd97de338f36f0c212b3e",
+   "semabi/compiler/model.py": "31b2d1207d678c05b743e70249db7947d7bb25759f668f2d013aef218aca6f36",
+   "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+   "semabi/compiler/parse.py": "c609e78b0f020f09bc22686168f22392cb54cea163a2ff84ab917528cb0ca922",
+   "semabi/compiler/v2/abstractor.py": "8ef5620e76fbfd6047879814453d9cb1761d0d5f3641f354fa81dd9978110499",
+   "semabi/compiler/v2/controls.py": "593eaaacfae90a3b688b403ea78e7651461a319dcb8f0fa3c148fcf21cc96f06",
+   "semabi/compiler/v2/graph.py": "feb2ee73faca3bd5eaa91b3685bf84c047bf90027dddc56d02713b26a5501b6a",
+   "semabi/compiler/v2/hypotheses.py": "fcb47e96015115c02efc56c9994fbcc1d2dcb2728d8b9ab51a89bfda5cffb92a",
+   "semabi/compiler/v2/score.py": "292ea78f2237e7b86dbbc943d624024ca9213218ead327b88080b71aebaaa95c",
+   "semabi/compiler/v2/units.py": "c1a94e811f8259742e65e24d4beea8b869868bec6a2901f5420a96d60d5d7d58",
+   "semabi/compiler/v4/custody.py": "41a5e047964550c2871ecdafa3159dde2a299e409845b240f9bd95ea1309c851",
+   "semabi/compiler/v4/identity.py": "4e718dd8b3d2ade2126c31c5e88a3d5d7b91662a08e1a95077f342c030039c05",
+   "semabi/compiler/v4/manifests.py": "633b6dee9692281906b3a050c49677543e168b083c97ce4da0abe5c8e634a646",
+   "semabi/compiler/v4/objective.py": "4dd902f9bb288e967ae1333f581631e5c6edbd507a841bf45efe569b758fc065",
+   "semabi/compiler/v4/pinned.py": "03e10aecbe04122612c235bf363376152a15cd35db5faf575ae664248f96d2dc",
+   "semabi/compiler/v4/promote.py": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65",
+   "semabi/compiler/v4/search.py": "47f3751cbd325278b9afecc0d4e6ed8fbc55e3af592344a3f45e610593b40f72",
+   "semabi/compiler/v4/source_candidates.py": "5115f50a3e49e26f0165ed92054ed5210b6c0fa3059fb912954752e0f8cf7379",
+   "semabi/relmodel.py": "22ffbfe51a95a2b77307b9a2e0f3ba297dd58b2efd045ce7ab0263602abd74cf"
+  },
+  "max_candidates": 6
+ },
+ "incumbent": "source_choice",
+ "role": "SOURCE",
+ "schema": "semabi.v4.source-candidates.v1",
+ "source_path": "../../../../runs/v4/grok_02_blend_book_dev",
+ "source_snapshot": {
+  "content_tree_sha256": "516ee05267ba75f700a626fface4b850afbb9b7961b9555c21f5403032750b87",
+  "files": [
+   {
+    "mode": 420,
+    "path": "observations.jsonl",
+    "sha256": "eb1a9fac8a2be4dbb7ae2b159eff52c0cf5378f75948b40e8503d876526eb57a",
+    "size": 2626239
+   },
+   {
+    "mode": 420,
+    "path": "steps.jsonl",
+    "sha256": "3d56a1fdd6bc2e5c0006e9dd8f3334d105dd53cb7f376fb9f3775753e8f3b87c",
+    "size": 96210
+   }
+  ],
+  "role": "SOURCE",
+  "role_bound_sha256": "7cf7472becd6f8fe373b441e08ed5eb432d6c72d27d7a7bbba879f34d1f896ec",
+  "schema": "semabi.v4.compiler-snapshot.v1"
+ },
+ "source_summary": {
+  "alternatives_generated": [
+   {
+    "copresent_pairs": 400,
+    "discrimination": 0.845,
+    "family": "cell[_]",
+    "promotion": "cell#0"
+   },
+   {
+    "alternative": "button#0",
+    "discrimination": 0.965,
+    "family": "button[_]",
+    "status": "SUPPORTED"
+   },
+   {
+    "alternative": "cell#0",
+    "discrimination": 1.0,
+    "family": "cell[_]",
+    "status": "SUPPORTED"
+   },
+   {
+    "alternative": null,
+    "discrimination": null,
+    "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+    "status": "NO_IDENTITY"
+   },
+   {
+    "alternative": "cell#0",
+    "discrimination": 1.0,
+    "family": "row[_](cell[_],cell[_](button[_]))",
+    "status": "SUPPORTED"
+   }
+  ],
+  "families": {
+   "button[_]": 4,
+   "cell[_]": 1,
+   "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": 3,
+   "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": 4,
+   "row[_](cell[_],cell[_](button[_]))": 4
+  },
+  "local_final": {
+   "churn": 0,
+   "churn_steps": [],
+   "complexity": 72,
+   "contradiction_steps": [],
+   "contradictions": 0,
+   "delta_atoms": 67,
+   "explained": 51,
+   "spurious": 0,
+   "steps": 375,
+   "unexplained": 11,
+   "visibility": 0,
+   "visibility_steps": []
+  },
+  "open_questions": [
+   {
+    "left": {
+     "evidence": {
+      "constant_share": 1.0,
+      "copresent_pairs": 0,
+      "coverage": 1.0,
+      "cross_view_values": 0,
+      "discrimination": null,
+      "distinct_values": 1,
+      "numeric_share": 0.0,
+      "reload_stability": 1.0,
+      "separated_pairs": 0
+     },
+     "key_slot": "group/group/text#0@9",
+     "status": "UNSUPPORTED",
+     "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+     "why": "the family never rendered two instances at once, so nothing shows this value distinguishes instances"
+    },
+    "reason": "the trace so far scores both readings identically",
+    "right": {
+     "evidence": {
+      "constant_share": 1.0,
+      "copresent_pairs": 0,
+      "coverage": 1.0,
+      "cross_view_values": 0,
+      "discrimination": null,
+      "distinct_values": 1,
+      "numeric_share": 0.0,
+      "reload_stability": 1.0,
+      "separated_pairs": 0
+     },
+     "key_slot": "group/table/rowgroup/row/cell#0",
+     "status": "UNSUPPORTED",
+     "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+     "why": "the family never rendered two instances at once, so nothing shows this value distinguishes instances"
+    },
+    "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))"
+   },
+   {
+    "left": {
+     "evidence": {
+      "constant_share": 0.0,
+      "copresent_pairs": 0,
+      "coverage": 0.0,
+      "cross_view_values": 0,
+      "discrimination": null,
+      "distinct_values": 0,
+      "numeric_share": 0.0,
+      "reload_stability": null,
+      "separated_pairs": 0
+     },
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+     "why": "no identity-bearing observation claimed"
+    },
+    "reason": "undecided: chosen explains 51 with 2 errors, the alternative explains 60 with 17",
+    "right": {
+     "evidence": {
+      "constant_share": 1.0,
+      "copresent_pairs": 0,
+      "coverage": 1.0,
+      "cross_view_values": 0,
+      "discrimination": null,
+      "distinct_values": 1,
+      "numeric_share": 0.0,
+      "reload_stability": 1.0,
+      "separated_pairs": 0
+     },
+     "key_slot": "group/group/text#0",
+     "status": "UNSUPPORTED",
+     "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+     "why": "the family never rendered two instances at once, so nothing shows this value distinguishes instances"
+    },
+    "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))"
+   },
+   {
+    "left": {
+     "evidence": {
+      "constant_share": 0.0,
+      "copresent_pairs": 0,
+      "coverage": 0.0,
+      "cross_view_values": 0,
+      "discrimination": null,
+      "distinct_values": 0,
+      "numeric_share": 0.0,
+      "reload_stability": null,
+      "separated_pairs": 0
+     },
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+     "why": "no identity-bearing observation claimed"
+    },
+    "reason": "undecided: chosen explains 51 with 2 errors, the alternative explains 60 with 17",
+    "right": {
+     "evidence": {
+      "constant_share": 1.0,
+      "copresent_pairs": 0,
+      "coverage": 1.0,
+      "cross_view_values": 0,
+      "discrimination": null,
+      "distinct_values": 1,
+      "numeric_share": 0.0,
+      "reload_stability": 1.0,
+      "separated_pairs": 0
+     },
+     "key_slot": "group/group/text#0@7",
+     "status": "UNSUPPORTED",
+     "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+     "why": "the family never rendered two instances at once, so nothing shows this value distinguishes instances"
+    },
+    "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))"
+   }
+  ]
+ }
+}

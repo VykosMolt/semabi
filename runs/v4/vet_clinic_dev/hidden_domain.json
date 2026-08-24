@@ -1,0 +1,157 @@
+{
+ "name": "Riverside Veterinary Clinic front desk",
+ "types": [
+  {
+   "name": "Owner",
+   "attrs": {
+    "name": "str",
+    "phone": "str"
+   }
+  },
+  {
+   "name": "Vet",
+   "attrs": {
+    "name": "str",
+    "specialty": "str",
+    "onDuty": "bool"
+   }
+  },
+  {
+   "name": "Patient",
+   "attrs": {
+    "name": "str",
+    "species": "str",
+    "age": "int"
+   }
+  },
+  {
+   "name": "Appointment",
+   "attrs": {
+    "reason": "str",
+    "status": "str",
+    "notes": "str"
+   }
+  }
+ ],
+ "relations": [
+  {
+   "name": "ownedBy",
+   "src": "Patient",
+   "dst": "Owner"
+  },
+  {
+   "name": "for",
+   "src": "Appointment",
+   "dst": "Patient"
+  },
+  {
+   "name": "with",
+   "src": "Appointment",
+   "dst": "Vet"
+  }
+ ],
+ "operators": [
+  {
+   "name": "RegisterPatient",
+   "params": [
+    [
+     "?owner",
+     "Owner"
+    ],
+    [
+     "name",
+     "str"
+    ],
+    [
+     "species",
+     "str"
+    ],
+    [
+     "age",
+     "int"
+    ]
+   ],
+   "precondition": "owner refers to an existing Owner; name is non-empty; species is one of Dog, Cat, Rabbit, Bird, Ferret; age is an integer strictly between 0 and 30.",
+   "effect": "Creates a new Patient with the given name, species and age, and sets its ownedBy relation to owner."
+  },
+  {
+   "name": "ScheduleAppointment",
+   "params": [
+    [
+     "?patient",
+     "Patient"
+    ],
+    [
+     "reason",
+     "str"
+    ]
+   ],
+   "precondition": "patient refers to an existing Patient; reason is non-empty.",
+   "effect": "Creates a new Appointment with status 'scheduled', empty notes, sets its 'for' relation to patient. The appointment has no 'with' (vet) relation yet."
+  },
+  {
+   "name": "AssignVet",
+   "params": [
+    [
+     "?appointment",
+     "Appointment"
+    ],
+    [
+     "?vet",
+     "Vet"
+    ]
+   ],
+   "precondition": "appointment refers to an existing Appointment whose status is 'scheduled' or 'checked_in'; vet refers to an existing Vet whose onDuty attribute is true.",
+   "effect": "Sets the appointment's 'with' relation to vet (replacing any previous vet assignment)."
+  },
+  {
+   "name": "CheckIn",
+   "params": [
+    [
+     "?appointment",
+     "Appointment"
+    ]
+   ],
+   "precondition": "appointment refers to an existing Appointment whose status is 'scheduled'.",
+   "effect": "Sets the appointment's status to 'checked_in'."
+  },
+  {
+   "name": "StartExam",
+   "params": [
+    [
+     "?appointment",
+     "Appointment"
+    ]
+   ],
+   "precondition": "appointment refers to an existing Appointment whose status is 'checked_in' and which has a vet assigned (a 'with' relation).",
+   "effect": "Sets the appointment's status to 'in_progress'."
+  },
+  {
+   "name": "CompleteAppointment",
+   "params": [
+    [
+     "?appointment",
+     "Appointment"
+    ],
+    [
+     "notes",
+     "str"
+    ]
+   ],
+   "precondition": "appointment refers to an existing Appointment whose status is 'in_progress'.",
+   "effect": "Sets the appointment's status to 'completed' and its notes attribute to notes."
+  },
+  {
+   "name": "CancelAppointment",
+   "params": [
+    [
+     "?appointment",
+     "Appointment"
+    ]
+   ],
+   "precondition": "appointment refers to an existing Appointment whose status is 'scheduled' or 'checked_in'.",
+   "effect": "Sets the appointment's status to 'cancelled'."
+  }
+ ],
+ "notes": "The UI has three views reachable from the top nav: 'Clients' (owners with their patients, and the Register Patient form), 'Vets' (a table including the onDuty attribute as visible text 'Yes'/'No'), and 'Appointments' (the Schedule Appointment form plus a table of all appointments with contextual action controls: an inline vet picker + Assign button, Check In, Start Exam, a notes field + Complete, and Cancel; each control is shown only when the corresponding operator's status precondition can possibly hold, but the server still re-checks all preconditions). No attribute is hidden from the UI. onDuty is never changed by any operator in this build; it is only set at reset time, so it is a fixed constraint the learner can observe by trying AssignVet against an off-duty vet."
+}

@@ -5,7 +5,12 @@ what the source history was chosen for and is exactly what does not travel, so i
 decide a transfer comparison.  Contradiction is what eliminates; silence proves nothing;
 and where the fresh history says nothing about the difference, the ambiguity is kept.
 """
+from itertools import permutations
+
+import pytest
+
 from semabi.compiler.v4.transfer import TransferEvidence, classify, decide, differential
+from semabi.compiler.v4.transfer import all_pairs_frontier
 
 
 def _ev(name, verdicts, *, complexity=10, applicability=1.0):
@@ -19,8 +24,13 @@ def _ev(name, verdicts, *, complexity=10, applicability=1.0):
         explained=counts.get("EXPLAINED", 0), silent=counts.get("SILENT", 0))
 
 
-def _sep(family, key_slot, separated_pairs, copresent_pairs, *, status="PARTIAL"):
+def _sep(family, key_slot, separated_pairs, copresent_pairs, *, status=None):
     rate = None if copresent_pairs == 0 else round(separated_pairs / copresent_pairs, 3)
+    if status is None:
+        status = ("UNTESTED" if copresent_pairs == 0 else
+                  "REFUTED" if separated_pairs == 0 else
+                  "CONFIRMED" if separated_pairs == copresent_pairs else
+                  "PARTIAL")
     return {"family": family, "key_slot": key_slot, "status": status,
             "copresent_pairs": copresent_pairs, "separated_pairs": separated_pairs,
             "rate": rate}
@@ -198,7 +208,7 @@ def test_cross_family_rates_are_not_comparable():
     left = _ev("left", {1: "EXPLAINED"})
     left.separation = [_sep("row[_]", "cell#0", 1, 2)]
     right = _ev("right", {1: "EXPLAINED"})
-    right.separation = [_sep("other[_]", "cell#0", 2, 2)]
+    right.separation = [_sep("other[_]", "cell#0", 1, 2)]
 
     decision = decide(left, right)
 
@@ -239,7 +249,7 @@ def test_untested_identity_is_ignored_by_separation_comparison():
     left = _ev("left", {1: "EXPLAINED"})
     left.separation = [_sep("row[_]", "cell#0", 0, 0, status="UNTESTED")]
     right = _ev("right", {1: "EXPLAINED"})
-    right.separation = [_sep("row[_]", "cell#1", 1, 1)]
+    right.separation = [_sep("row[_]", "cell#1", 1, 2)]
 
     decision = decide(left, right)
 
@@ -284,3 +294,120 @@ def test_total_errors_remain_higher_priority_than_separation():
     assert decision.outcome == "RIGHT"
     assert "fewer errors" in decision.reason
     assert decision.separation_diff.left_better == 1
+
+
+@pytest.mark.parametrize("record", [
+    {"family": "f", "key_slot": "k", "status": "PARTIAL",
+     "copresent_pairs": True, "separated_pairs": 1},
+    {"family": "f", "key_slot": "k", "status": "PARTIAL",
+     "copresent_pairs": 2.0, "separated_pairs": 1},
+    {"family": "f", "key_slot": "k", "status": "REFUTED",
+     "copresent_pairs": 2, "separated_pairs": -1},
+    {"family": "f", "key_slot": "k", "status": "CONFIRMED",
+     "copresent_pairs": 2, "separated_pairs": 3},
+    {"family": "f", "key_slot": "k", "status": "PARTIAL",
+     "copresent_pairs": 0, "separated_pairs": 0},
+    {"family": "f", "key_slot": "k", "status": "CONFIRMED",
+     "copresent_pairs": 2, "separated_pairs": 1},
+    {"family": "f", "key_slot": "k", "status": "PARTIAL",
+     "copresent_pairs": 3, "separated_pairs": 1, "rate": 0.5},
+    {"family": "f", "key_slot": "k", "status": "UNTESTED",
+     "copresent_pairs": 0, "separated_pairs": 0, "rate": 0.0},
+])
+def test_malformed_separation_records_fail_before_decision(record):
+    left = _ev("left", {1: "EXPLAINED"})
+    left.separation = [record]
+    right = _ev("right", {1: "EXPLAINED"})
+
+    with pytest.raises(ValueError):
+        decide(left, right)
+
+
+def test_duplicate_separation_families_are_a_hard_error():
+    left = _ev("left", {1: "EXPLAINED"})
+    left.separation = [_sep("f", "k0", 1, 2), _sep("f", "k1", 1, 2)]
+
+    with pytest.raises(ValueError, match="duplicate"):
+        decide(left, _ev("right", {1: "EXPLAINED"}))
+
+
+def test_conflicting_separation_directions_do_not_fall_through_to_confirmed_count():
+    left = _ev("left", {1: "EXPLAINED"})
+    left.separation = [_sep("a", "ka", 4, 4), _sep("b", "kb", 1, 4)]
+    right = _ev("right", {1: "EXPLAINED"})
+    right.separation = [_sep("a", "ra", 1, 4), _sep("b", "rb", 4, 4),
+                        _sep("c", "rc", 4, 4)]
+
+    decision = decide(left, right)
+
+    assert decision.outcome == "UNDECIDED"
+    assert decision.separation_diff.left_better == 1
+    assert decision.separation_diff.right_better == 1
+    assert left.separation_confirmed == 1
+    assert right.separation_confirmed == 2
+
+
+def test_conflicting_separation_directions_do_not_fall_through_to_cost():
+    left = _ev("left", {1: "EXPLAINED"}, complexity=1)
+    left.separation = [_sep("a", "ka", 4, 4), _sep("b", "kb", 1, 4)]
+    right = _ev("right", {1: "EXPLAINED"}, complexity=100)
+    right.separation = [_sep("a", "ra", 1, 4), _sep("b", "rb", 4, 4)]
+
+    assert decide(left, right).outcome == "UNDECIDED"
+
+
+def test_frontier_is_order_invariant_and_keeps_harbour_survivor_set():
+    source = _ev("source", {1: "CONTRADICTION"})
+    first = _ev("reading_a", {1: "EXPLAINED"})
+    second = _ev("reading_b", {1: "EXPLAINED"})
+    readings = [source, first, second]
+
+    frontiers = [all_pairs_frontier(order) for order in permutations(readings)]
+
+    assert {f.outcome for f in frontiers} == {"AMBIGUOUS_SURVIVOR_SET"}
+    assert {tuple(f.survivors) for f in frontiers} == {("reading_a", "reading_b")}
+    result = frontiers[0]
+    assert result.losses["source"] == ["reading_a", "reading_b"]
+    assert result.winners["reading_a"] == ["source"]
+    assert result.winners["reading_b"] == ["source"]
+    assert all(d["left_name"] < d["right_name"] for d in result.decisions)
+    assert all("decision" in d and "outcome" in d["decision"] for d in result.decisions)
+    assert all(f.to_json() == result.to_json() for f in frontiers)
+
+
+def test_frontier_reports_unique_vet_blend_like_survivor():
+    selected = _ev("selected", {1: "EXPLAINED"})
+    rejected = _ev("rejected", {1: "CONTRADICTION"})
+
+    result = all_pairs_frontier([rejected, selected])
+
+    assert result.outcome == "UNIQUE_SURVIVOR"
+    assert result.survivors == ["selected"]
+    assert result.selection == "selected"
+    assert result.to_json()["selected"] == "selected"
+
+
+def test_frontier_reports_no_undefeated_reading_for_a_cycle():
+    def with_separation(name, records):
+        ev = _ev(name, {1: "EXPLAINED"})
+        ev.separation = records
+        return ev
+
+    a = with_separation("a", [_sep("x", "a-x", 1, 1), _sep("z", "a-z", 0, 1)])
+    b = with_separation("b", [_sep("x", "b-x", 0, 1), _sep("y", "b-y", 1, 1)])
+    c = with_separation("c", [_sep("y", "c-y", 0, 1), _sep("z", "c-z", 1, 1)])
+
+    result = all_pairs_frontier([c, a, b])
+
+    assert result.outcome == "NO_UNDEFEATED_READING"
+    assert result.survivors == []
+    assert result.selection is None
+    assert result.losses == {"a": ["c"], "b": ["a"], "c": ["b"]}
+
+
+def test_frontier_rejects_duplicate_evidence_names():
+    left = _ev("same", {1: "EXPLAINED"})
+    right = _ev("same", {1: "SILENT"})
+
+    with pytest.raises(ValueError, match="duplicate"):
+        all_pairs_frontier([left, right])

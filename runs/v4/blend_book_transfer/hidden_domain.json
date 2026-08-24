@@ -1,0 +1,119 @@
+{
+ "name": "blend_book",
+ "types": [
+  {
+   "name": "Vat",
+   "attrs": {
+    "name": "str",
+    "varietal": "str",
+    "gallons": "int",
+    "closed": "bool"
+   }
+  },
+  {
+   "name": "Blend",
+   "attrs": {
+    "name": "str",
+    "year": "int",
+    "single_varietal": "bool",
+    "bottled": "bool"
+   }
+  },
+  {
+   "name": "Draw",
+   "attrs": {
+    "ticket": "int",
+    "gallons": "int"
+   }
+  }
+ ],
+ "relations": [
+  {
+   "name": "from_vat",
+   "src": "Draw",
+   "dst": "Vat"
+  },
+  {
+   "name": "into_blend",
+   "src": "Draw",
+   "dst": "Blend"
+  }
+ ],
+ "operators": [
+  {
+   "name": "draw",
+   "params": [
+    [
+     "?vat",
+     "Vat"
+    ],
+    [
+     "?blend",
+     "Blend"
+    ],
+    [
+     "?gallons",
+     "int"
+    ]
+   ],
+   "precondition": "?vat is a Vat, ?blend is a Blend, ?gallons is an integer of at least 1, ?blend.bottled is false, ?vat.closed is false, ?vat.gallons is at least ?gallons, the world contains fewer than 12 objects, and if ?blend.single_varietal is true and any Draw already points into ?blend then ?vat.varietal equals the varietal of every Vat already drawn into ?blend.",
+   "effect": "Create a new Draw whose ticket is the next unused positive integer in this episode and whose gallons is ?gallons; set from_vat of that Draw to ?vat and into_blend of that Draw to ?blend; subtract ?gallons from ?vat.gallons. New Draw ids are draw-1, draw-2, ... in creation order since the last reset and are not reused after return_draw."
+  },
+  {
+   "name": "return_draw",
+   "params": [
+    [
+     "?draw",
+     "Draw"
+    ]
+   ],
+   "precondition": "?draw is a Draw and the Blend at into_blend of ?draw is not bottled.",
+   "effect": "Add ?draw.gallons back to the Vat at from_vat of ?draw; remove from_vat and into_blend for ?draw; delete ?draw."
+  },
+  {
+   "name": "close_vat",
+   "params": [
+    [
+     "?vat",
+     "Vat"
+    ]
+   ],
+   "precondition": "?vat is a Vat and ?vat.closed is false.",
+   "effect": "Set ?vat.closed to true."
+  },
+  {
+   "name": "open_vat",
+   "params": [
+    [
+     "?vat",
+     "Vat"
+    ]
+   ],
+   "precondition": "?vat is a Vat and ?vat.closed is true.",
+   "effect": "Set ?vat.closed to false."
+  },
+  {
+   "name": "bottle",
+   "params": [
+    [
+     "?blend",
+     "Blend"
+    ]
+   ],
+   "precondition": "?blend is a Blend, ?blend.bottled is false, at least one Draw has into_blend ?blend, and the sum of gallons on those Draws is at least 2.",
+   "effect": "Set ?blend.bottled to true."
+  },
+  {
+   "name": "disgorge",
+   "params": [
+    [
+     "?blend",
+     "Blend"
+    ]
+   ],
+   "precondition": "?blend is a Blend and ?blend.bottled is true.",
+   "effect": "Set ?blend.bottled to false."
+  }
+ ],
+ "notes": "A cellar clerk's blend book. Vats are sources; Blends are targets; a Draw is a link object recording how many gallons moved from one vat into one blend (many Draws may share a vat or a blend). All attributes are rendered, including Draw.ticket as 'Ticket N'. Remaining vat gallons change when drawing and returning. Committed gallons on a blend row are derived from its Draws, not stored. The page is a ledger: a draw ticket with three selects (vat, blend, gallons 1-4), a vat table, a blend table, and a draw table. POST /api/do with JSON {op, args} is the page's action endpoint; argument keys in that JSON and in the evaluator log use the '?' names from the operator params."
+}

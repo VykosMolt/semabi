@@ -271,8 +271,10 @@ survey explorer at seeds 12 and 13.
 | `opus_01_harbour` | Opus 5 | 373 | 459 | 461 |
 | `grok_02_blend_book` | Grok 4.6 | 375 | 839 | 831 |
 
-**In all three the transfer history changed the source's own choice**, and in all three it
-did so for a compiler-visible reason:
+The first, sequential runner reported that **all three transfer histories changed the
+source's own choice**, each for a compiler-visible reason. This table is the historical
+checkpoint, not the accepted frontier result: commit `1e20ef2` preserves the later review
+that rejected its one-pass incumbent semantics.
 
 | application | selected reading | why the fresh history preferred it | holdout |
 |---|---|---|---|
@@ -292,14 +294,15 @@ among the three transported readings:
 
 | transported reading | false deltas | view FP | pair precision | merges | splits |
 |---|---:|---:|---:|---:|---:|
-| transfer-selected | **39** | **0.034** | **0.951** | 10 | **6** |
+| sequentially serialized candidate | **39** | **0.034** | **0.951** | 10 | **6** |
 | source's own choice | 90 | 0.048 | 0.876 | 17 | 9 |
 | promoted leaf | 124 | 0.723 | 0.911 | 21 | 12 |
 
-The reading transfer chose is the best of the three on every object-layer measure, and the
-reading transfer refuted is the worst. **Within-trace discrimination strength is not a
-predictor of transportability** — that is the finding, and the mechanism reached it without
-looking at any of these numbers.
+The candidate the sequential runner serialized is the best of these three diagnosed
+conditions on every object-layer measure, and the candidate it refuted is the worst.
+**Within-trace discrimination strength is not a predictor of transportability** in this
+comparison. The later all-pairs frontier does not relabel this diagnosis as a unique
+selection.
 
 ### Transport still costs the behavioural result
 
@@ -312,8 +315,9 @@ in place on those histories is the best result V4 has:
 | `harbour` transfer (459) | .392 / .518 | **.459 / .667** | .000 / .000 |
 | `vet_clinic` holdout (886) | .423 / .330 | .423 / **.500** | .000 / .000 |
 
-So selection transports and the representation does not. The transported readings are less
-wrong in the order the rule predicts, and none of them is right.
+So the sequential rule produced a useful candidate ordering while the representation did
+not transport. The all-pairs repair below narrows that claim further: cross-trace rejection
+is established, but unique transferred selection is not.
 
 Two hypotheses were tested and one was killed. Slot ids are positional ordinals, so they
 might have denoted different columns across histories — they do not: `cell#0` holds vessel
@@ -341,34 +345,60 @@ remain unresolved. Refutation, applicability, and behavioural contradiction/erro
 retain precedence. Every decision artifact now records the exact family, keys, numerators,
 denominators, cross-products and direction under `separation_differential`.
 
-All three chains were replayed from their retained SOURCE / TRANSFER / HOLDOUT histories:
+The first replay retained the old sequential incumbent loop. Review showed that an
+`UNDECIDED` challenger was discarded, the reported harbour runner-up was not the actual
+unresolved rival, and candidate order could manufacture a singleton. That implementation
+and its artifacts are preserved as rejected at `1e20ef2`.
 
-| application | selected reading changed? | holdout | effect of the new gate |
+The accepted successor authenticates a frozen SOURCE candidate manifest, decides every
+unordered TRANSFER pair once, and retains the zero-loss frontier. It emits a selection only
+for exactly one survivor. The repaired results are:
+
+| application | SOURCE incumbent | undefeated TRANSFER frontier | HOLDOUT |
 |---|---|---|---|
-| `vet_clinic` | no | `PARTIALLY_CONTRADICTED` | none; the one unequal shared-family rate is still behind asymmetric applicability |
-| `harbour` | no | `PARTIALLY_CONTRADICTED` | the decisive preference is now the aligned comparison: 400/400 against 238/400 on the same row family |
-| `blend_book` | no | `CONFIRMED` | none; the 358/400 candidate remains behind the selected 356/400 reading because it is contradicted on one fresh step |
+| `vet_clinic` | rejected | promoted-cell reading plus `row[_](cell[_])=None` | both individually partially contradicted; HOLDOUT pairwise evidence favors the row reading, but cannot perform selection |
+| `harbour` | rejected | promoted-cell reading plus both row-key variants | all three individually partially contradicted; pairwise frontier remains three-way ambiguous |
+| `blend_book` | rejected | `cell[_]=cell#0` plus promoted-cell reading | first individually confirmed, second partially contradicted; pair remains applicability-inconclusive |
 
-The harbour result is a sharper reason for the same selection, not a representation repair.
-The final two frozen candidates improve different row families: one is 400/400 versus
-238/400 on the first and ties the source's 199/400 key on the second; the other is 400/400
-versus 199/400 on the second but leaves the first at 238/400. The directions conflict, so
-the dominance rule correctly leaves that comparison `UNDECIDED`. No frozen source candidate
-contains both improvements, and constructing one after seeing TRANSFER would violate the
-pin rather than complete it.
+The promoted-cell controls survive because the histories do not put them to the same test as
+their rivals: applicability is 0.83 versus 1.00 on vet_clinic, 0.60 versus 1.00 on harbour,
+and 0.60 versus 0.80 on blend_book. Their often worse raw errors cannot cross the frozen
+asymmetric-applicability gate. This is missing comparison evidence, not evidence that the
+promoted readings are better.
+
+Harbour retains the separate conflict identified by review. The two full-applicability row
+variants improve opposite families, so their exact same-family separation directions oppose
+one another and remain `UNDECIDED`. No frozen source candidate contains both improvements,
+and constructing one after seeing TRANSFER would violate the pin.
 
 The two evaluator-only diagnoses that were in flight also completed. They do not rescue the
-result. On `harbour` HOLDOUT, the transfer-selected reading and source choice both have RTC
-0.000. The selected reading has pair precision 1.000 against .967 and view FP 0 for both,
+result. On `harbour` HOLDOUT, the historically serialized reading and source choice both
+have RTC 0.000. That candidate has pair precision 1.000 against .967 and view FP 0 for both,
 but it also has 24 learned keys merging entities against 14 and 47 false deltas against 42;
 the comparison is mixed. On `blend_book`, both transported readings have RTC 0.000 and 477
 wrong-attribute deltas; entity-level object metrics are unavailable on that unannotated
 history. These are diagnosis after selection and did not enter the compiler rule.
 
-The next lawful experiment is therefore not another separation threshold. It is a frozen,
-source-only way to generate bounded joint alternatives before TRANSFER sees them, followed
-by new separately collected TRANSFER and HOLDOUT histories. The current histories are spent
-for this mechanism, and combining the two harbour fixes now would be post-transfer refitting.
+The next lawful experiment is therefore not another separation threshold. It must freeze,
+before new evidence, both a source-only bounded joint-alternative generator and a finite
+candidate-manifest-derived acquisition protocol that attempts symmetric family coverage on
+TRANSFER. Then it needs new separately collected SOURCE/TRANSFER/HOLDOUT histories. The
+current histories are spent; combining harbour's fixes or tuning coverage after inspecting
+them would be post-transfer refitting.
+
+### Custody and replay repair
+
+The nine role histories are now retained as exact raw inputs rather than mutable ignored
+paths. Compiler snapshots bind observations, steps, probes, and the one existing SOURCE
+refutation sidecar. A separate `EVALUATOR_ONLY` manifest binds hidden-domain and oracle bytes;
+those names never enter compiler modules or the transfer runner. Source manifests bind an
+explicit incumbent, every complete pinned reading, source bytes, and generator code hashes.
+Chain manifests add distinct role snapshots, replay code hashes, and `min_support=2`.
+
+This is a retroactive freeze. The exact state is
+`RETROACTIVE_SNAPSHOT_CHRONOLOGY_NOT_ESTABLISHED`: current bytes and replay are reproducible,
+but prospective collection chronology is not established. Reports use portable paths and
+retain complete per-step verdicts so every pairwise count can be recomputed.
 
 ### Evidence sufficiency and acquisition
 

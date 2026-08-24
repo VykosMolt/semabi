@@ -16,12 +16,15 @@ from __future__ import annotations
 
 from collections import Counter
 from dataclasses import dataclass, field
+from itertools import combinations
+import math
 from typing import Any
 
 # what a reading said about one step of the transfer trace
 WRONG = ("CONTRADICTION", "CHURN", "VISIBILITY", "SPURIOUS")
 RIGHT = ("EXPLAINED",)
 QUIET = ("SILENT", "NOTHING")
+SEPARATION_STATUSES = ("UNTESTED", "REFUTED", "PARTIAL", "CONFIRMED")
 
 
 @dataclass
@@ -48,14 +51,17 @@ class TransferEvidence:
     @property
     def separation_refuted(self) -> int:
         """Identity claims this history shows do not separate anything they name."""
+        _validate_separation_records(self)
         return sum(1 for r in self.separation if r["status"] == "REFUTED")
 
     @property
     def separation_confirmed(self) -> int:
+        _validate_separation_records(self)
         return sum(1 for r in self.separation if r["status"] == "CONFIRMED")
 
     @property
     def separation_tested(self) -> int:
+        _validate_separation_records(self)
         return sum(1 for r in self.separation if r["status"] != "UNTESTED")
 
     @property
@@ -64,6 +70,7 @@ class TransferEvidence:
         return self.explained > 0 or self.errors > 0 or self.separation_tested > 0
 
     def to_json(self) -> dict[str, Any]:
+        _validate_separation_records(self)
         return {"name": self.name, "key_slots": self.key_slot_summary,
                 "hard_contradictions": self.hard_contradictions, "churn": self.churn,
                 "visibility": self.visibility, "spurious": self.spurious,
@@ -88,6 +95,77 @@ def from_behaviour(name: str, behaviour, transport, key_slots: dict[str, str | N
         applicability=transport.applicability if transport is not None else 1.0,
         transport=transport.to_json() if transport is not None else {},
         verdicts=dict(behaviour.verdicts))
+
+
+def _validate_separation_records(evidence: TransferEvidence) -> None:
+    """Validate all separation records before any evidence can decide.
+
+    The counts are deliberately kept as exact integers.  In particular, ``bool`` is
+    an ``int`` subclass in Python, so it must be rejected explicitly rather than
+    accepted as a count.  The status is a derived field, not an independent claim.
+    """
+    records = evidence.separation
+    if not isinstance(records, (list, tuple)):
+        raise ValueError(f"{evidence.name!r}: separation must be a list of records")
+
+    seen_families: set[str] = set()
+    for index, record in enumerate(records):
+        prefix = f"{evidence.name!r} separation[{index}]"
+        if not isinstance(record, dict):
+            raise ValueError(f"{prefix} must be an object")
+        expected_fields = {
+            "family", "key_slot", "status", "copresent_pairs", "separated_pairs", "rate"
+        }
+        if set(record) != expected_fields:
+            raise ValueError(
+                f"{prefix} fields must be exactly {sorted(expected_fields)}")
+
+        family = record.get("family")
+        if not isinstance(family, str) or not family:
+            raise ValueError(f"{prefix} family must be a nonempty string")
+        if family in seen_families:
+            raise ValueError(f"{evidence.name!r}: duplicate separation family {family!r}")
+        seen_families.add(family)
+
+        key_slot = record.get("key_slot")
+        if not isinstance(key_slot, str) or not key_slot:
+            raise ValueError(f"{prefix} key_slot must be a nonempty string")
+
+        separated_pairs = record.get("separated_pairs")
+        copresent_pairs = record.get("copresent_pairs")
+        if type(separated_pairs) is not int or type(copresent_pairs) is not int:
+            raise ValueError(f"{prefix} pair counts must be exact non-bool integers")
+        if separated_pairs < 0 or copresent_pairs < 0:
+            raise ValueError(f"{prefix} pair counts must be non-negative")
+        if separated_pairs > copresent_pairs:
+            raise ValueError(f"{prefix} separated_pairs cannot exceed copresent_pairs")
+
+        status = record.get("status")
+        if status not in SEPARATION_STATUSES:
+            raise ValueError(f"{prefix} has unknown separation status {status!r}")
+        if copresent_pairs == 0:
+            if status != "UNTESTED" or separated_pairs != 0:
+                raise ValueError(
+                    f"{prefix} zero co-present pairs require UNTESTED and separated_pairs=0")
+            if record["rate"] is not None:
+                raise ValueError(f"{prefix} UNTESTED rate must be null")
+            continue
+
+        expected_status = (
+            "REFUTED" if separated_pairs == 0 else
+            "CONFIRMED" if separated_pairs == copresent_pairs else
+            "PARTIAL")
+        if status != expected_status:
+            raise ValueError(
+                f"{prefix} status {status!r} does not match counts "
+                f"({separated_pairs}/{copresent_pairs}: {expected_status})")
+        rate = record["rate"]
+        expected_rate = round(separated_pairs / copresent_pairs, 3)
+        if isinstance(rate, bool) or not isinstance(rate, (int, float)):
+            raise ValueError(f"{prefix} tested rate must be numeric")
+        if not math.isfinite(float(rate)) or float(rate) != expected_rate:
+            raise ValueError(
+                f"{prefix} rate {rate!r} does not match rounded counts {expected_rate!r}")
 
 
 CLASSES = ("LEFT_CORRECT_RIGHT_WRONG", "RIGHT_CORRECT_LEFT_WRONG", "BOTH_COMPATIBLE",
@@ -140,6 +218,8 @@ class Differential:
 
 
 def differential(left: TransferEvidence, right: TransferEvidence) -> Differential:
+    _validate_separation_records(left)
+    _validate_separation_records(right)
     out = Differential()
     for step in sorted(set(left.verdicts) | set(right.verdicts)):
         a = left.verdicts.get(step, "NOTHING")
@@ -196,6 +276,7 @@ def _tested_separation_by_family(evidence: TransferEvidence) -> dict[str, dict[s
     matched by key slot: the point of this evidence is to compare competing
     keys for the same family.
     """
+    _validate_separation_records(evidence)
     tested: dict[str, dict[str, Any]] = {}
     for record in evidence.separation:
         family = record.get("family")
@@ -205,10 +286,7 @@ def _tested_separation_by_family(evidence: TransferEvidence) -> dict[str, dict[s
             continue
         if copresent_pairs <= 0:
             continue
-        # ``separation`` is produced with one record per family.  Keep the
-        # first record if malformed input repeats a family, making the result
-        # deterministic without inventing a cross-family comparison.
-        tested.setdefault(family, record)
+        tested[family] = record
     return tested
 
 
@@ -226,10 +304,10 @@ def separation_differential(left: TransferEvidence,
     for family in sorted(left_claims.keys() & right_claims.keys()):
         left_record = left_claims[family]
         right_record = right_claims[family]
-        left_separated = int(left_record.get("separated_pairs", 0))
-        left_copresent = int(left_record["copresent_pairs"])
-        right_separated = int(right_record.get("separated_pairs", 0))
-        right_copresent = int(right_record["copresent_pairs"])
+        left_separated = left_record["separated_pairs"]
+        left_copresent = left_record["copresent_pairs"]
+        right_separated = right_record["separated_pairs"]
+        right_copresent = right_record["copresent_pairs"]
         left_cross_product = left_separated * right_copresent
         right_cross_product = right_separated * left_copresent
         if left_cross_product > right_cross_product:
@@ -286,27 +364,37 @@ class Decision:
 
 
 def decide(left: TransferEvidence, right: TransferEvidence) -> Decision:
-    """The narrowest rule consistent with the discipline, in order:
+    """Apply the executable transfer rule in this exact order:
 
-    1. a reading neither of whose claims could be instantiated here has not been tested here;
-    2. if neither reading predicts anything here, the history does not decide;
-    3. if one reading could be instantiated less completely than the other, the comparison is
-       not between equals and the less applicable one cannot win it.  A reading whose
-       families this history never renders has not earned anything by being cheap;
-    4. an identity claim that separates none of the peers it names is refuted;
-    5. a reading this history hard-contradicts where its rival is not contradicted is
-       demoted -- contradiction is the only behavioural evidence that eliminates;
-    6. otherwise fewer contradicted steps, then fewer errors overall;
-    7. among otherwise surviving readings, exact separation fractions discriminate only
-       on the same family, and only when one reading is strictly better somewhere and worse
-       nowhere across the shared tested families;
-    8. explaining more steps is *not* a reason to prefer a reading here.  It is what the
-       source history was for, and it is exactly the quantity that does not transport;
-    9. complexity breaks a tie only when the readings said the *same thing at every step*.
-       Anything less is not a tie: it is a difference this history did not resolve, and
-       resolving it by cost would systematically reward representing less;
-    10. anything else keeps the ambiguity.
+    1. Validate every separation record on both readings. Invalid counts,
+       statuses, keys, or duplicate families raise ``ValueError`` before any
+       comparison is made.
+    2. If both readings are not applicable, return
+       ``INCONCLUSIVE_NOT_APPLICABLE``.
+    3. If neither reading makes predictions, return
+       ``INCONCLUSIVE_NO_PREDICTIONS``.
+    4. If the counts of zero-separation (``REFUTED``) claims differ, prefer
+       the reading with fewer refutations.
+    5. If applicability differs, return
+       ``INCONCLUSIVE_ASYMMETRIC_APPLICABILITY``.
+    6. Use the behavioural differential: a reading contradicted where its
+       rival is not contradicted loses; otherwise fewer contradicted steps
+       wins when the counts differ.
+    7. If total behavioural errors differ, prefer fewer errors.
+    8. If same-family exact separation has both ``LEFT`` and ``RIGHT``
+       directions, return ``UNDECIDED`` immediately; confirmed-claim count
+       and cost must not collapse that conflict.
+    9. Otherwise, strict same-family separation dominance decides when one
+       side is better on at least one shared family and worse on none.
+    10. Otherwise, a larger confirmed-claim count wins.
+    11. Otherwise, cost breaks a tie only when verdicts match at every step.
+    12. Otherwise, return ``UNDECIDED``.
     """
+    # This must precede differential(), makes_predictions, and every other
+    # decision gate. It also prevents malformed records from being partially
+    # consumed by a separation comparison.
+    _validate_separation_records(left)
+    _validate_separation_records(right)
     diff = differential(left, right)
     separation_diff = separation_differential(left, right)
     if left.applicability == 0.0 and right.applicability == 0.0:
@@ -358,6 +446,11 @@ def decide(left: TransferEvidence, right: TransferEvidence) -> Decision:
                                 f"({min(left.errors, right.errors)} against "
                                 f"{max(left.errors, right.errors)})", left, right, diff,
                         separation_diff)
+    if separation_diff.left_better > 0 and separation_diff.right_better > 0:
+        return Decision("UNDECIDED",
+                        "same-family separation favors each reading on a different "
+                        "shared family; the conflict is unresolved",
+                        left, right, diff, separation_diff)
     if separation_diff.left_dominant:
         return Decision("LEFT", f"strictly better separation on {separation_diff.left_better} "
                         "shared family claims and no worse shared family", left, right, diff,
@@ -385,3 +478,135 @@ def decide(left: TransferEvidence, right: TransferEvidence) -> Decision:
                         left, right, diff, separation_diff)
     return Decision("UNDECIDED", "the fresh history does not tell these readings apart",
                     left, right, diff, separation_diff)
+
+
+FRONTIER_OUTCOMES = ("UNIQUE_SURVIVOR", "AMBIGUOUS_SURVIVOR_SET",
+                     "NO_UNDEFEATED_READING")
+
+
+@dataclass
+class FrontierResult:
+    """Order-invariant result of deciding every unordered candidate pair once.
+
+    ``losses`` and ``winners`` retain the opponent names, rather than only a
+    count, so the undefeated set is auditable.  A pair that is undecided or
+    inconclusive contributes neither a loss nor a win.
+    """
+
+    candidates: list[str]
+    decisions: list[dict[str, Any]]
+    losses: dict[str, list[str]]
+    winners: dict[str, list[str]]
+    survivors: list[str]
+    outcome: str
+    selection: str | None = None
+
+    @property
+    def selected(self) -> str | None:
+        """Compatibility alias for callers that call the unique choice selected."""
+        return self.selection
+
+    @property
+    def loss_counts(self) -> dict[str, int]:
+        return {name: len(self.losses[name]) for name in self.candidates}
+
+    @property
+    def winner_counts(self) -> dict[str, int]:
+        return {name: len(self.winners[name]) for name in self.candidates}
+
+    def to_json(self) -> dict[str, Any]:
+        """Return deterministic machine-readable frontier evidence."""
+        return {
+            "candidates": list(self.candidates),
+            "decisions": list(self.decisions),
+            "losses": {name: list(self.losses[name]) for name in self.candidates},
+            "winners": {name: list(self.winners[name]) for name in self.candidates},
+            "loss_counts": self.loss_counts,
+            "winner_counts": self.winner_counts,
+            "survivors": list(self.survivors),
+            "outcome": self.outcome,
+            "selection": self.selection,
+            "selected": self.selection,
+        }
+
+
+def all_pairs_frontier(evidence) -> FrontierResult:
+    """Decide every unordered pair of uniquely named readings exactly once.
+
+    Candidate names are sorted before pairing, so both the pair orientation and
+    the resulting machine JSON are independent of the caller's input order.
+    Only explicit ``LEFT``/``RIGHT`` decisions create a pairwise win and loss;
+    no survivor is selected by iteration order or by the number of wins.
+    """
+    if isinstance(evidence, dict):
+        evidence = list(evidence.values())
+    else:
+        try:
+            evidence = list(evidence)
+        except TypeError as exc:
+            raise ValueError("frontier evidence must be an iterable of TransferEvidence") from exc
+
+    by_name: dict[str, TransferEvidence] = {}
+    for item in evidence:
+        if not isinstance(item, TransferEvidence):
+            raise ValueError("frontier evidence must contain TransferEvidence objects")
+        if not isinstance(item.name, str) or not item.name:
+            raise ValueError("frontier evidence names must be nonempty strings")
+        if item.name in by_name:
+            raise ValueError(f"duplicate frontier evidence name {item.name!r}")
+        # Validate every record for every candidate before the first pairwise
+        # decision is made.  This matters when a later candidate is malformed.
+        _validate_separation_records(item)
+        by_name[item.name] = item
+
+    ordered = [by_name[name] for name in sorted(by_name)]
+    losses = {name: [] for name in by_name}
+    winners = {name: [] for name in by_name}
+    pair_decisions: list[dict[str, Any]] = []
+
+    for left, right in combinations(ordered, 2):
+        decision = decide(left, right)
+        decision_json = decision.to_json()
+        pair_decisions.append({
+            "left_name": left.name,
+            "right_name": right.name,
+            "decision": decision_json,
+        })
+        if decision.outcome == "LEFT":
+            winners[left.name].append(right.name)
+            losses[right.name].append(left.name)
+        elif decision.outcome == "RIGHT":
+            winners[right.name].append(left.name)
+            losses[left.name].append(right.name)
+
+    # Pair generation is canonical, and every opponent list is sorted again
+    # here to make the invariant explicit rather than relying on combinations.
+    names = sorted(by_name)
+    for name in names:
+        losses[name].sort()
+        winners[name].sort()
+    survivors = [name for name in names if not losses[name]]
+    if len(survivors) == 1:
+        outcome = "UNIQUE_SURVIVOR"
+        selection = survivors[0]
+    elif survivors:
+        outcome = "AMBIGUOUS_SURVIVOR_SET"
+        selection = None
+    else:
+        outcome = "NO_UNDEFEATED_READING"
+        selection = None
+
+    return FrontierResult(names, pair_decisions, losses, winners, survivors, outcome, selection)
+
+
+# Keep the short spellings available to callers while retaining one canonical
+# implementation and schema.
+def decide_frontier(evidence) -> FrontierResult:
+    return all_pairs_frontier(evidence)
+
+
+def frontier(evidence) -> FrontierResult:
+    return all_pairs_frontier(evidence)
+
+
+all_pairs = all_pairs_frontier

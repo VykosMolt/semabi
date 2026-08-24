@@ -279,6 +279,19 @@ The decision is a dominance rule, in this order:
 No coefficient is calibrated on gauntlet-v3, and a candidate cannot earn transfer support
 by making no predictions.
 
+The rule is applied to **every unordered candidate pair**, in canonical name order. An
+explicit `LEFT` or `RIGHT` creates one loss; `UNDECIDED` and every inconclusive state create
+none. The retained frontier is the set of readings with zero losses. It is independent of
+candidate iteration order and produces a serialized selection only when that set has exactly
+one member. Multiple undefeated readings are `AMBIGUOUS_SURVIVOR_SET`; a cycle with no
+undefeated reading is `NO_UNDEFEATED_READING`. Win counts, sequential incumbents, and
+runner-up fallbacks are not selection rules.
+
+HOLDOUT evaluates every undefeated TRANSFER reading. Its per-reading classifications and
+mechanical pairwise frontier are evidence about the frozen set, but HOLDOUT cannot collapse
+an ambiguous TRANSFER frontier: doing so would turn validation into a second selection
+history.
+
 ## Evidence sufficiency
 
 `semabi/compiler/v4/sufficiency.py` turns "unresolved" into a statement about what was not

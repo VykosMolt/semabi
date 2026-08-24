@@ -1,0 +1,121 @@
+{
+ "custody_timing": "RETROACTIVE_SNAPSHOT_CHRONOLOGY_NOT_ESTABLISHED",
+ "implementation_files": {
+  "semabi/compiler/abstract.py": "07fd8b41fcfdfe3d563e6b5f28d6fbb0229fb706f944dbfe7626a363ade633f8",
+  "semabi/compiler/belief.py": "10996cf9f5f2264ecbe8e28235718e81fc606ed249d8c2708f50541a73a8aa5c",
+  "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+  "semabi/compiler/compile.py": "fa0e4b4237658dc2e5d41cf715fe8ca884b0b2ec9b714cde4f1917318c9f920f",
+  "semabi/compiler/compile_v4.py": "8474c48d7d8843106d3de3405698f04d48b191a36d5e8e36318205bd69ef9d27",
+  "semabi/compiler/evidence.py": "b4a5d0c9208f9b6c4588317078f8270a7bd0766bcb1a2e52722f72be74a90e51",
+  "semabi/compiler/explorer.py": "16827d3735c9eab4d51a60c585790226be3e692bb63b01794df29a9ba8c8c807",
+  "semabi/compiler/induce.py": "46075088d34187ea121c77c3522055260e710a71199fd97de338f36f0c212b3e",
+  "semabi/compiler/model.py": "31b2d1207d678c05b743e70249db7947d7bb25759f668f2d013aef218aca6f36",
+  "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+  "semabi/compiler/parse.py": "c609e78b0f020f09bc22686168f22392cb54cea163a2ff84ab917528cb0ca922",
+  "semabi/compiler/v2/abstractor.py": "8ef5620e76fbfd6047879814453d9cb1761d0d5f3641f354fa81dd9978110499",
+  "semabi/compiler/v2/controls.py": "593eaaacfae90a3b688b403ea78e7651461a319dcb8f0fa3c148fcf21cc96f06",
+  "semabi/compiler/v2/graph.py": "feb2ee73faca3bd5eaa91b3685bf84c047bf90027dddc56d02713b26a5501b6a",
+  "semabi/compiler/v2/hypotheses.py": "fcb47e96015115c02efc56c9994fbcc1d2dcb2728d8b9ab51a89bfda5cffb92a",
+  "semabi/compiler/v2/score.py": "292ea78f2237e7b86dbbc943d624024ca9213218ead327b88080b71aebaaa95c",
+  "semabi/compiler/v2/units.py": "c1a94e811f8259742e65e24d4beea8b869868bec6a2901f5420a96d60d5d7d58",
+  "semabi/compiler/v4/custody.py": "41a5e047964550c2871ecdafa3159dde2a299e409845b240f9bd95ea1309c851",
+  "semabi/compiler/v4/identity.py": "4e718dd8b3d2ade2126c31c5e88a3d5d7b91662a08e1a95077f342c030039c05",
+  "semabi/compiler/v4/manifests.py": "633b6dee9692281906b3a050c49677543e168b083c97ce4da0abe5c8e634a646",
+  "semabi/compiler/v4/objective.py": "4dd902f9bb288e967ae1333f581631e5c6edbd507a841bf45efe569b758fc065",
+  "semabi/compiler/v4/pinned.py": "03e10aecbe04122612c235bf363376152a15cd35db5faf575ae664248f96d2dc",
+  "semabi/compiler/v4/promote.py": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65",
+  "semabi/compiler/v4/search.py": "47f3751cbd325278b9afecc0d4e6ed8fbc55e3af592344a3f45e610593b40f72",
+  "semabi/compiler/v4/transfer.py": "1d7934b7318b9a4364a0d08400cc72bde343a293e9b8d62d82c112da67f2d1da",
+  "semabi/relmodel.py": "22ffbfe51a95a2b77307b9a2e0f3ba297dd58b2efd045ce7ab0263602abd74cf",
+  "semabi/run_v4_transfer.py": "dff2a8869b7463a8cd235a6c5308a751013791a24771e47f73130bdb435efa78"
+ },
+ "min_support": 2,
+ "roles": {
+  "HOLDOUT": {
+   "path": "../../../../runs/v4/blend_book_holdout",
+   "snapshot": {
+    "content_tree_sha256": "a48bb26e14d7019bf774d4664b53bf9641e4c4089ba471e9d9a34010fc278a3e",
+    "files": [
+     {
+      "mode": 420,
+      "path": "observations.jsonl",
+      "sha256": "5c02d8225a265bb7204c03fce6e6eaea7d9a8d5fcbabb2974dbe78c2d3dad6b6",
+      "size": 5374595
+     },
+     {
+      "mode": 420,
+      "path": "probes.jsonl",
+      "sha256": "c382d4c787b2fc24735087d5d0ad8c4dd9dc373cded3b80f0e02e6fbf1419d55",
+      "size": 43949
+     },
+     {
+      "mode": 420,
+      "path": "steps.jsonl",
+      "sha256": "de7cde55841033280d4a2831023aaef7df7df169878cdc33f387f1d969fdd3ce",
+      "size": 202648
+     }
+    ],
+    "role": "HOLDOUT",
+    "role_bound_sha256": "d05348ea43c610bedca3a72a03a61b32a9b57f2aeecbeb01c0dd90cfca852d6b",
+    "schema": "semabi.v4.compiler-snapshot.v1"
+   }
+  },
+  "SOURCE": {
+   "path": "../../../../runs/v4/grok_02_blend_book_dev",
+   "snapshot": {
+    "content_tree_sha256": "516ee05267ba75f700a626fface4b850afbb9b7961b9555c21f5403032750b87",
+    "files": [
+     {
+      "mode": 420,
+      "path": "observations.jsonl",
+      "sha256": "eb1a9fac8a2be4dbb7ae2b159eff52c0cf5378f75948b40e8503d876526eb57a",
+      "size": 2626239
+     },
+     {
+      "mode": 420,
+      "path": "steps.jsonl",
+      "sha256": "3d56a1fdd6bc2e5c0006e9dd8f3334d105dd53cb7f376fb9f3775753e8f3b87c",
+      "size": 96210
+     }
+    ],
+    "role": "SOURCE",
+    "role_bound_sha256": "7cf7472becd6f8fe373b441e08ed5eb432d6c72d27d7a7bbba879f34d1f896ec",
+    "schema": "semabi.v4.compiler-snapshot.v1"
+   }
+  },
+  "TRANSFER": {
+   "path": "../../../../runs/v4/blend_book_transfer",
+   "snapshot": {
+    "content_tree_sha256": "46ad365fb0036a548c65c0c7824bcb736d65af8925042e7f322b5eb2e2031ac3",
+    "files": [
+     {
+      "mode": 420,
+      "path": "observations.jsonl",
+      "sha256": "a8819b9013a00627046a1066b33dbf79ef6be3b6b265d7f7bbbf867865f164e5",
+      "size": 5733510
+     },
+     {
+      "mode": 420,
+      "path": "probes.jsonl",
+      "sha256": "5c18fff0e2394914364aecd100b442eb95bd2a8fd9256d711ade2986d009d9fb",
+      "size": 45837
+     },
+     {
+      "mode": 420,
+      "path": "steps.jsonl",
+      "sha256": "22e7be1d2a809d081218f9daa1828a753be3857b08eff1848aba7d864dd29dbe",
+      "size": 203634
+     }
+    ],
+    "role": "TRANSFER",
+    "role_bound_sha256": "685ed71db34a15c57fbba39bd167a0d63c3c7272a71c712472a704e9a9f957eb",
+    "schema": "semabi.v4.compiler-snapshot.v1"
+   }
+  }
+ },
+ "schema": "semabi.v4.chain.v1",
+ "source_manifest": {
+  "path": "blend_book_source_candidates.json",
+  "sha256": "0311a817e4ba07f1ede3a280766d5bbaae556272eebbfe662a3be4a0d141396f"
+ }
+}
