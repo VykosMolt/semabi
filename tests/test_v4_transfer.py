@@ -19,6 +19,13 @@ def _ev(name, verdicts, *, complexity=10, applicability=1.0):
         explained=counts.get("EXPLAINED", 0), silent=counts.get("SILENT", 0))
 
 
+def _sep(family, key_slot, separated_pairs, copresent_pairs, *, status="PARTIAL"):
+    rate = None if copresent_pairs == 0 else round(separated_pairs / copresent_pairs, 3)
+    return {"family": family, "key_slot": key_slot, "status": status,
+            "copresent_pairs": copresent_pairs, "separated_pairs": separated_pairs,
+            "rate": rate}
+
+
 def test_a_step_where_one_reading_is_right_and_the_other_wrong_is_the_comparable_one():
     assert classify("EXPLAINED", "CONTRADICTION") == "LEFT_CORRECT_RIGHT_WRONG"
     assert classify("CHURN", "EXPLAINED") == "RIGHT_CORRECT_LEFT_WRONG"
@@ -133,3 +140,147 @@ def test_a_confirmed_identity_claim_beats_making_no_claim_at_all():
     decision = decide(committed, silent)
     assert decision.outcome == "LEFT"
     assert "confirms" in decision.reason
+
+
+def test_same_family_separation_fraction_prefers_four_hundred_over_199():
+    left = _ev("left", {1: "EXPLAINED", 2: "EXPLAINED"})
+    left.separation = [_sep("row[_]", "cell#0@4", 199, 400)]
+    right = _ev("right", {1: "EXPLAINED", 2: "EXPLAINED"})
+    right.separation = [_sep("row[_]", "cell#0", 400, 400)]
+
+    decision = decide(left, right)
+
+    assert decision.outcome == "RIGHT"
+    assert decision.separation_diff.left_better == 0
+    assert decision.separation_diff.right_better == 1
+    case = decision.to_json()["separation_differential"]["cases"][0]
+    assert case["family"] == "row[_]"
+    assert case["left"]["key_slot"] == "cell#0@4"
+    assert case["left"]["separated_pairs"] == 199
+    assert case["left"]["copresent_pairs"] == 400
+    assert case["right"]["key_slot"] == "cell#0"
+    assert case["right"]["separated_pairs"] == 400
+    assert case["right"]["copresent_pairs"] == 400
+    assert case["direction"] == "RIGHT"
+
+
+def test_separation_comparison_is_symmetric():
+    left = _ev("left", {1: "EXPLAINED"})
+    left.separation = [_sep("row[_]", "cell#0@4", 199, 400)]
+    right = _ev("right", {1: "EXPLAINED"})
+    right.separation = [_sep("row[_]", "cell#0", 400, 400)]
+
+    forward = decide(left, right)
+    reverse = decide(right, left)
+
+    assert forward.outcome == "RIGHT"
+    assert reverse.outcome == "LEFT"
+    assert forward.separation_diff.to_json()["cases"][0]["direction"] == "RIGHT"
+    assert reverse.separation_diff.to_json()["cases"][0]["direction"] == "LEFT"
+
+
+def test_separation_uses_exact_cross_products_not_rounded_rates():
+    left = _ev("left", {1: "EXPLAINED"})
+    left.separation = [_sep("row[_]", "cell#0", 1, 200)]
+    right = _ev("right", {1: "EXPLAINED"})
+    right.separation = [_sep("row[_]", "cell#1", 1, 201)]
+
+    # Both records round to 0.005 in the artifact, but 1/200 is strictly
+    # greater than 1/201 under the exact cross-product comparison.
+    assert left.separation[0]["rate"] == right.separation[0]["rate"] == 0.005
+    decision = decide(left, right)
+    assert decision.outcome == "LEFT"
+    case = decision.separation_diff.cases[0]
+    assert case["left_cross_product"] > case["right_cross_product"]
+
+
+def test_cross_family_rates_are_not_comparable():
+    left = _ev("left", {1: "EXPLAINED"})
+    left.separation = [_sep("row[_]", "cell#0", 1, 2)]
+    right = _ev("right", {1: "EXPLAINED"})
+    right.separation = [_sep("other[_]", "cell#0", 2, 2)]
+
+    decision = decide(left, right)
+
+    assert decision.outcome == "UNDECIDED"
+    assert decision.separation_diff.cases == []
+
+
+def test_conflicting_shared_family_directions_do_not_decide():
+    left = _ev("left", {1: "EXPLAINED"})
+    left.separation = [_sep("family_a", "cell#0", 3, 4),
+                       _sep("family_b", "cell#1", 1, 4)]
+    right = _ev("right", {1: "EXPLAINED"})
+    right.separation = [_sep("family_a", "cell#2", 1, 4),
+                        _sep("family_b", "cell#3", 3, 4)]
+
+    decision = decide(left, right)
+
+    assert decision.outcome == "UNDECIDED"
+    assert decision.separation_diff.left_better == 1
+    assert decision.separation_diff.right_better == 1
+    assert [case["direction"] for case in decision.separation_diff.cases] == ["LEFT", "RIGHT"]
+
+
+def test_equal_exact_separation_fractions_do_not_decide():
+    left = _ev("left", {1: "EXPLAINED"})
+    left.separation = [_sep("row[_]", "cell#0", 1, 3)]
+    right = _ev("right", {1: "EXPLAINED"})
+    right.separation = [_sep("row[_]", "cell#1", 2, 6)]
+
+    decision = decide(left, right)
+
+    assert decision.outcome == "UNDECIDED"
+    assert decision.separation_diff.equal == 1
+    assert decision.separation_diff.cases[0]["direction"] == "EQUAL"
+
+
+def test_untested_identity_is_ignored_by_separation_comparison():
+    left = _ev("left", {1: "EXPLAINED"})
+    left.separation = [_sep("row[_]", "cell#0", 0, 0, status="UNTESTED")]
+    right = _ev("right", {1: "EXPLAINED"})
+    right.separation = [_sep("row[_]", "cell#1", 1, 1)]
+
+    decision = decide(left, right)
+
+    assert decision.outcome == "UNDECIDED"
+    assert decision.separation_diff.cases == []
+
+
+def test_asymmetric_applicability_remains_inconclusive_despite_separation():
+    left = _ev("left", {1: "EXPLAINED"}, applicability=0.6)
+    left.separation = [_sep("row[_]", "cell#0", 400, 400)]
+    right = _ev("right", {1: "EXPLAINED"}, applicability=1.0)
+    right.separation = [_sep("row[_]", "cell#1", 199, 400)]
+
+    decision = decide(left, right)
+
+    assert decision.outcome == "INCONCLUSIVE_ASYMMETRIC_APPLICABILITY"
+    assert decision.separation_diff.left_better == 1
+
+
+def test_contradiction_remains_higher_priority_than_separation():
+    left = _ev("left", {1: "CONTRADICTION", 2: "EXPLAINED"})
+    left.separation = [_sep("row[_]", "cell#0", 400, 400)]
+    right = _ev("right", {1: "SILENT", 2: "EXPLAINED"})
+    right.separation = [_sep("row[_]", "cell#1", 199, 400)]
+
+    decision = decide(left, right)
+
+    assert decision.outcome == "RIGHT"
+    assert "contradict" in decision.reason
+    assert decision.separation_diff.left_better == 1
+
+
+def test_total_errors_remain_higher_priority_than_separation():
+    left = _ev("left", {1: "EXPLAINED"})
+    left.separation = [_sep("row[_]", "cell#0", 400, 400)]
+    left.spurious = 1
+    right = _ev("right", {1: "EXPLAINED"})
+    right.separation = [_sep("row[_]", "cell#1", 199, 400)]
+
+    decision = decide(left, right)
+
+    assert decision.outcome == "RIGHT"
+    assert "fewer errors" in decision.reason
+    assert decision.separation_diff.left_better == 1

@@ -151,6 +151,115 @@ def differential(left: TransferEvidence, right: TransferEvidence) -> Differentia
     return out
 
 
+@dataclass
+class SeparationDifferential:
+    """Exact comparisons between identity claims on the same family.
+
+    A separation rate is only evidence when both readings make a claim about the
+    same literal-free family on this history.  The counts are retained rather
+    than reduced to the rounded ``rate`` field in the transfer artifact so that
+    the comparison remains an exact comparison of fractions.
+    """
+
+    cases: list[dict[str, Any]] = field(default_factory=list)
+    left_better: int = 0
+    right_better: int = 0
+    equal: int = 0
+
+    @property
+    def left_dominant(self) -> bool:
+        return self.left_better > 0 and self.right_better == 0
+
+    @property
+    def right_dominant(self) -> bool:
+        return self.right_better > 0 and self.left_better == 0
+
+    def to_json(self) -> dict[str, Any]:
+        return {
+            "comparable_families": len(self.cases),
+            "counts": {"LEFT": self.left_better, "RIGHT": self.right_better,
+                       "EQUAL": self.equal},
+            "left_better": self.left_better,
+            "right_better": self.right_better,
+            "equal": self.equal,
+            "left_dominant": self.left_dominant,
+            "right_dominant": self.right_dominant,
+            "cases": self.cases,
+        }
+
+
+def _tested_separation_by_family(evidence: TransferEvidence) -> dict[str, dict[str, Any]]:
+    """Return tested identity claims, keyed by their exact family name.
+
+    ``UNTESTED`` records (including records with no co-present denominator) do
+    not put a family into the comparison.  A family is intentionally not
+    matched by key slot: the point of this evidence is to compare competing
+    keys for the same family.
+    """
+    tested: dict[str, dict[str, Any]] = {}
+    for record in evidence.separation:
+        family = record.get("family")
+        key_slot = record.get("key_slot")
+        copresent_pairs = record.get("copresent_pairs", 0)
+        if not family or key_slot is None or record.get("status") == "UNTESTED":
+            continue
+        if copresent_pairs <= 0:
+            continue
+        # ``separation`` is produced with one record per family.  Keep the
+        # first record if malformed input repeats a family, making the result
+        # deterministic without inventing a cross-family comparison.
+        tested.setdefault(family, record)
+    return tested
+
+
+def separation_differential(left: TransferEvidence,
+                            right: TransferEvidence) -> SeparationDifferential:
+    """Compare exact separation fractions for shared, tested families.
+
+    For ``a/b`` versus ``c/d`` the comparison is ``a*d`` versus ``c*b``.
+    No rounded rate or absolute threshold participates.  Every shared tested
+    family is retained as an auditable case, including equal fractions.
+    """
+    out = SeparationDifferential()
+    left_claims = _tested_separation_by_family(left)
+    right_claims = _tested_separation_by_family(right)
+    for family in sorted(left_claims.keys() & right_claims.keys()):
+        left_record = left_claims[family]
+        right_record = right_claims[family]
+        left_separated = int(left_record.get("separated_pairs", 0))
+        left_copresent = int(left_record["copresent_pairs"])
+        right_separated = int(right_record.get("separated_pairs", 0))
+        right_copresent = int(right_record["copresent_pairs"])
+        left_cross_product = left_separated * right_copresent
+        right_cross_product = right_separated * left_copresent
+        if left_cross_product > right_cross_product:
+            direction = "LEFT"
+            out.left_better += 1
+        elif right_cross_product > left_cross_product:
+            direction = "RIGHT"
+            out.right_better += 1
+        else:
+            direction = "EQUAL"
+            out.equal += 1
+        out.cases.append({
+            "family": family,
+            "left": {
+                "key_slot": left_record.get("key_slot"),
+                "separated_pairs": left_separated,
+                "copresent_pairs": left_copresent,
+            },
+            "right": {
+                "key_slot": right_record.get("key_slot"),
+                "separated_pairs": right_separated,
+                "copresent_pairs": right_copresent,
+            },
+            "left_cross_product": left_cross_product,
+            "right_cross_product": right_cross_product,
+            "direction": direction,
+        })
+    return out
+
+
 DECISIONS = ("LEFT", "RIGHT", "UNDECIDED", "INCONCLUSIVE_NO_PREDICTIONS",
              "INCONCLUSIVE_NOT_APPLICABLE", "INCONCLUSIVE_ASYMMETRIC_APPLICABILITY")
 
@@ -162,11 +271,18 @@ class Decision:
     left: TransferEvidence
     right: TransferEvidence
     diff: Differential
+    separation_diff: SeparationDifferential = field(default_factory=SeparationDifferential)
+
+    @property
+    def separation_differential(self) -> SeparationDifferential:
+        """Alias exposing the named evidence alongside the legacy ``diff``."""
+        return self.separation_diff
 
     def to_json(self) -> dict[str, Any]:
         return {"outcome": self.outcome, "reason": self.reason,
                 "left": self.left.to_json(), "right": self.right.to_json(),
-                "differential": self.diff.to_json()}
+                "differential": self.diff.to_json(),
+                "separation_differential": self.separation_diff.to_json()}
 
 
 def decide(left: TransferEvidence, right: TransferEvidence) -> Decision:
@@ -177,24 +293,30 @@ def decide(left: TransferEvidence, right: TransferEvidence) -> Decision:
     3. if one reading could be instantiated less completely than the other, the comparison is
        not between equals and the less applicable one cannot win it.  A reading whose
        families this history never renders has not earned anything by being cheap;
-    4. a reading this history hard-contradicts where its rival is not contradicted is
-       demoted -- contradiction is the only thing that eliminates;
-    5. otherwise fewer contradicted steps, then fewer errors overall;
-    6. explaining more steps is *not* a reason to prefer a reading here.  It is what the
+    4. an identity claim that separates none of the peers it names is refuted;
+    5. a reading this history hard-contradicts where its rival is not contradicted is
+       demoted -- contradiction is the only behavioural evidence that eliminates;
+    6. otherwise fewer contradicted steps, then fewer errors overall;
+    7. among otherwise surviving readings, exact separation fractions discriminate only
+       on the same family, and only when one reading is strictly better somewhere and worse
+       nowhere across the shared tested families;
+    8. explaining more steps is *not* a reason to prefer a reading here.  It is what the
        source history was for, and it is exactly the quantity that does not transport;
-    7. complexity breaks a tie only when the readings said the *same thing at every step*.
+    9. complexity breaks a tie only when the readings said the *same thing at every step*.
        Anything less is not a tie: it is a difference this history did not resolve, and
        resolving it by cost would systematically reward representing less;
-    8. anything else keeps the ambiguity.
+    10. anything else keeps the ambiguity.
     """
     diff = differential(left, right)
+    separation_diff = separation_differential(left, right)
     if left.applicability == 0.0 and right.applicability == 0.0:
         return Decision("INCONCLUSIVE_NOT_APPLICABLE",
-                        "neither reading could be instantiated on this history", left, right, diff)
+                        "neither reading could be instantiated on this history", left, right, diff,
+                        separation_diff)
     if not left.makes_predictions and not right.makes_predictions:
         return Decision("INCONCLUSIVE_NO_PREDICTIONS",
                         "neither reading says anything this history could confirm or refute",
-                        left, right, diff)
+                        left, right, diff, separation_diff)
     # an identity claim this history shows separates nothing it names is refuted by it, in
     # the same way and for the same reason as a contradiction: the reading asserted that a
     # value distinguishes these objects and the page says it does not
@@ -205,7 +327,7 @@ def decide(left: TransferEvidence, right: TransferEvidence) -> Decision:
                                 f"claims of the other reading against "
                                 f"{min(left.separation_refuted, right.separation_refuted)} of this "
                                 f"one: a named value that separates none of the instances it "
-                                f"names is not naming them", left, right, diff)
+                                f"names is not naming them", left, right, diff, separation_diff)
     if left.applicability != right.applicability:
         weaker, stronger = (("left", "right") if left.applicability < right.applicability
                             else ("right", "left"))
@@ -214,25 +336,36 @@ def decide(left: TransferEvidence, right: TransferEvidence) -> Decision:
                         f"{min(left.applicability, right.applicability):.2f} of its claims here "
                         f"against {max(left.applicability, right.applicability):.2f} for the "
                         f"{stronger} one, so this history did not put them to the same test",
-                        left, right, diff)
+                        left, right, diff, separation_diff)
 
     left_bad, right_bad = diff.left_refuted_here, diff.right_refuted_here
     if left_bad and not right_bad:
         return Decision("RIGHT", f"the history contradicts the left reading at {left_bad} steps "
-                                 f"where the right one is not contradicted", left, right, diff)
+                                 f"where the right one is not contradicted", left, right, diff,
+                        separation_diff)
     if right_bad and not left_bad:
         return Decision("LEFT", f"the history contradicts the right reading at {right_bad} steps "
-                                f"where the left one is not contradicted", left, right, diff)
+                                f"where the left one is not contradicted", left, right, diff,
+                        separation_diff)
     if left_bad != right_bad:
         winner = "LEFT" if left_bad < right_bad else "RIGHT"
         return Decision(winner, f"contradicted at fewer steps where the readings differ "
                                 f"({min(left_bad, right_bad)} against {max(left_bad, right_bad)})",
-                        left, right, diff)
+                        left, right, diff, separation_diff)
     if left.errors != right.errors:
         winner = "LEFT" if left.errors < right.errors else "RIGHT"
         return Decision(winner, f"fewer errors on the fresh history "
                                 f"({min(left.errors, right.errors)} against "
-                                f"{max(left.errors, right.errors)})", left, right, diff)
+                                f"{max(left.errors, right.errors)})", left, right, diff,
+                        separation_diff)
+    if separation_diff.left_dominant:
+        return Decision("LEFT", f"strictly better separation on {separation_diff.left_better} "
+                        "shared family claims and no worse shared family", left, right, diff,
+                        separation_diff)
+    if separation_diff.right_dominant:
+        return Decision("RIGHT", f"strictly better separation on {separation_diff.right_better} "
+                        "shared family claims and no worse shared family", left, right, diff,
+                        separation_diff)
     # An identity claim this history confirms is evidence the rival does not have, when the
     # rival makes no such claim.  Without this the rule can only ever eliminate, so the
     # least committed reading survives every comparison it does not lose -- silence winning
@@ -243,11 +376,12 @@ def decide(left: TransferEvidence, right: TransferEvidence) -> Decision:
                                 f"{max(left.separation_confirmed, right.separation_confirmed)} "
                                 f"identity claims of this reading against "
                                 f"{min(left.separation_confirmed, right.separation_confirmed)} of "
-                                f"the other, on peers it had to tell apart here", left, right, diff)
+                                f"the other, on peers it had to tell apart here", left, right, diff,
+                        separation_diff)
     if left.verdicts == right.verdicts and left.complexity != right.complexity:
         winner = "LEFT" if left.complexity < right.complexity else "RIGHT"
         return Decision(winner, "the readings said the same thing at every step of this "
-                                "history; the tie is broken by representational cost",
-                        left, right, diff)
+                        "history; the tie is broken by representational cost",
+                        left, right, diff, separation_diff)
     return Decision("UNDECIDED", "the fresh history does not tell these readings apart",
-                    left, right, diff)
+                    left, right, diff, separation_diff)

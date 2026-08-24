@@ -38,12 +38,12 @@ Read `docs/v4_design.md` (architecture and the two theses), then `docs/v4_devlog
   denominator, an objective that refuses to trade explanation against error, retained ties,
   probes derived from disagreement, refutations that retire a reading — improves the object
   layer wherever ground truth allows a check.
-* **Cross-trace selection works.** A frozen reading carried to a history it was not fitted
-  to can be refuted or confirmed there, and on three applications by three independent
-  authors the transfer history changed the source's own choice, each time for a
-  compiler-visible reason. The evaluator, consulted only afterwards, agrees with the
-  ordering: the reading transfer chose is the best of the transported readings on every
-  object-layer measure and the one it refuted is the worst.
+* **Cross-trace selection is real, but its validation is mixed.** A frozen reading carried
+  to a history it was not fitted to can be refuted or confirmed there, and on three
+  applications by three independent authors the transfer history changed the source's own
+  choice, each time for a compiler-visible reason. The evaluator, consulted only afterwards,
+  strongly agrees with the `vet_clinic` ordering; the completed `harbour` diagnosis is mixed
+  and `blend_book` lacks entity-level annotations on this history.
 * Leaf promotion, which had perfect within-trace discrimination over ~400 comparisons, was
   **refuted** by transfer and is indeed the worst transported reading. Within-trace
   discrimination strength does not predict transportability.
@@ -60,23 +60,41 @@ found instead: `harbour`'s source history pinned **`cell#0@4`, a two-valued yes/
 as the identity of its rows**, and no error term notices, because a merging key does not
 contradict anything — it fails to separate.
 
+## What the separation continuation established
+
+`semabi/compiler/v4/transfer.py` now compares exact separation fractions only for tested
+claims on the same literal-free family. It uses integer cross-products, never the rounded
+display rate or an absolute threshold. A reading wins only when it is strictly better on at
+least one shared family and worse on none; conflicting family directions stay undecided.
+Applicability and behavioural contradiction/error evidence retain precedence. The machine
+artifacts carry the exact comparisons under `separation_differential`.
+
+All three retained chains were replayed. Selections and holdout statuses are unchanged:
+`vet_clinic` remains `PARTIALLY_CONTRADICTED`, `harbour` remains
+`PARTIALLY_CONTRADICTED`, and `blend_book` remains `CONFIRMED`. The meaningful change is
+that harbour's decisive comparison now prefers 400/400 over 238/400 on the same row family,
+rather than counting confirmed claims across families. On blend-book, a rival's 358/400
+against 356/400 does not override its one fresh behavioural contradiction.
+
+This sharpens selection but does not repair transport. The final harbour candidates improve
+opposite row families: the selected one fixes the 238/400 family and retains the 199/400
+yes/no key; the other fixes the 199/400 family and leaves the first at 238/400. Dominance
+correctly returns `UNDECIDED`, and the selected transported representation still has RTC
+0.000.
+
 ## The single strongest next step
 
-The separation test already sees it. On `harbour`'s transfer history the yes/no key scores
-**PARTIAL, 199 of 400 co-present pairs**, against CONFIRMED 400/400 for the readings that
-name rows properly. The decision rule in `semabi/compiler/v4/transfer.py` currently treats
-only `0-of-N` as `REFUTED`, so a half-separating key survives the comparison.
+No frozen SOURCE candidate contains both harbour improvements. Combining them now would use
+TRANSFER to construct a new reading, violating custody. The next lawful experiment is a
+bounded, app-agnostic **joint alternative generator that runs on SOURCE only**, with its
+candidate cap and combination rule frozen before any new transfer evidence is inspected.
+Then collect new, separately authored TRANSFER and HOLDOUT histories. The current three
+chains, including their holdouts and evaluator diagnoses, are spent for designing this
+successor and may be used only as development evidence.
 
-Making a *strictly worse separation rate on the same family* a discriminating comparison is
-the obvious next move, and it was deliberately left undone rather than tuned late at night.
-Two cautions if you take it:
-
-1. it must stay a comparison between readings on the same family, not a threshold on a
-   rate, or it becomes the arbitrary weighted metric this phase exists to avoid;
-2. re-run all three chains afterwards. Every rule change so far has had a consequence on an
-   application it was not aimed at — the first harbour run selected a reading that could not
-   even be instantiated (applicability 0.6) because a cost tie-break rewarded it for being
-   untested, which is why `INCONCLUSIVE_ASYMMETRIC_APPLICABILITY` exists.
+Do not turn this into an exhaustive Cartesian search or a transfer-time repair. The source
+rule needs a deterministic bound and must include the incumbent and single-family controls,
+so any gain can be attributed to composing independently plausible source alternatives.
 
 ## How to run things
 
@@ -127,18 +145,20 @@ applications. This bug has been introduced twice.
 recovered**, all failing at `STATE_DELTA_UNREPRESENTABLE`. Until that denominator becomes
 nontrivial there is no evidence for touching downstream induction, and it was not touched.
 
-Tests: 126 passed, 1 xfailed. Boundary 4/4.
+Tests: 136 passed, 1 xfailed. The separation successor adds exact-rate, symmetry,
+cross-family, conflicting-direction, precedence and audit-shape controls. Boundary 4/4.
 
-## In flight when this was written
+## Completed evaluator-only diagnoses
 
-Two evaluator-only diagnoses were still running and will land on their own; nothing depends
-on them:
+The two diagnoses that were in flight are complete:
 
     docs/data/v4/diagnosis_harbour_holdout.json
     docs/data/v4/diagnosis_blend_book_holdout.json
 
-They compare V2, V4-in-place and the transported readings on the holdout histories, in the
-same shape as `docs/data/v4/diagnosis_vet_clinic_holdout.json`, which is complete and is the
-one the object-layer table in the devlog is drawn from. If a diagnosis file is missing or
-truncated, re-run the `v4_compare` command shown above for that application; it is
-idempotent and reads no compiler state.
+`harbour`: selected and source-choice RTC are both 0.000. Selected improves pair precision
+to 1.000 from .967, but has 24 merging learned keys against 14 and 47 false deltas against
+42. `blend_book`: selected and source-choice RTC are both 0.000 with the same 477
+wrong-attribute deltas; entity-level metrics are unavailable. These findings are mixed and
+did not enter selection. The files have the same shape as
+`docs/data/v4/diagnosis_vet_clinic_holdout.json`; rerunning `v4_compare` is idempotent and
+reads no compiler state.

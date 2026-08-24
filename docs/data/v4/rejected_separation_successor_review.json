@@ -1,0 +1,57 @@
+{
+ "schema": "semabi.v4.rejected-successor-review.v1",
+ "base_commit": "9fdbaaa9cfca0c5a7fe72b1a1073b42f4cf0ee5e",
+ "captured_at": "2026-08-24T12:42:57+02:00",
+ "verdict": "REJECT",
+ "candidate_diff_sha256": "0734350d63072c5d9ac0aa636099946284d44d9646416bc4f28f49e3b8337491",
+ "candidate_files": {
+  "semabi/compiler/v4/transfer.py": "5df698936f652cf2a421878cb371e42ee490ad7f7b4b6b07c116f0223a79504a",
+  "tests/test_v4_transfer.py": "e23c12401ab800e25eca0c6a91d00e00fd6a14b1b4a475824368d00f075b7b74",
+  "semabi/run_v4_transfer.py": "219866b11c31d256f184b46d203c228a8e2f0775854df89c07da8a780f271ce9",
+  "docs/data/v4/transfer_vet_clinic.json": "f8d1d5db40f425a7ad33a3a4226dc210b52b0d3ddab7e29fdaed95a5536f6185",
+  "docs/data/v4/transfer_harbour.json": "d11742dde12efc7a1f4b874545791d92421416d25f342b3aaa7630368abebbd2",
+  "docs/data/v4/transfer_blend_book.json": "1b67dbe5ac413c51573ad8daf74ca9dc129f7b899b97ce105fd239c77e7c6fb5",
+  "docs/data/v4/diagnosis_harbour_holdout.json": "4d641a87d2418e63e9281b55a8b158bcdd4a64bfc056356a31137b259656acac",
+  "docs/data/v4/diagnosis_blend_book_holdout.json": "2e11b130e65f9f117f7289d011d9f754f7a03d4299a93f176de57beeb4b4a240"
+ },
+ "mechanical_evidence": {
+  "custody_at_v2_tag": "PASS_65_OF_65_EXACTLY_TWO_DECLARED_WORKTREE_DIVERGENCES",
+  "tests": "PASS_136_XFAIL_1_IN_PERMITTED_LOOPBACK_CONTEXT",
+  "decision_arithmetic": "PASS_FOR_RETAINED_WELL_FORMED_RECORDS",
+  "selection_and_holdout_tuples_unchanged_from_base": true
+ },
+ "rejection_findings": [
+  {
+   "severity": "HIGH",
+   "code": "ORDER_DEPENDENT_SINGLETON_SELECTION",
+   "summary": "harbour has two mutually undecided undefeated readings; the sequential incumbent loop chooses either one in 60 of 120 challenger orders"
+  },
+  {
+   "severity": "HIGH",
+   "code": "CONFLICT_FALLS_THROUGH",
+   "summary": "opposing same-family separation directions can still be collapsed by later confirmed-claim or cost gates"
+  },
+  {
+   "severity": "HIGH",
+   "code": "ROLE_AND_SOURCE_CUSTODY_NOT_DURABLE",
+   "summary": "replays regenerate SOURCE candidates from ignored mutable histories and bind neither raw role inputs nor the complete pinned decision"
+  },
+  {
+   "severity": "MEDIUM",
+   "code": "MALFORMED_SEPARATION_ACCEPTED",
+   "summary": "duplicate families, invalid counts and status-count contradictions are not rejected"
+  },
+  {
+   "severity": "MEDIUM",
+   "code": "TRANSFER_RUNNER_OMITTED_FROM_BOUNDARY",
+   "summary": "the compiler-side selection runner is absent from the hidden-evidence boundary inventory"
+  }
+ ],
+ "claim_boundary": {
+  "same_family_fraction_arithmetic": "MECHANICALLY_ESTABLISHED_ON_CURRENT_RECORDS",
+  "harbour_unique_selection": "NOT_ESTABLISHED",
+  "harbour_state": "TWO_READING_UNRESOLVED_SURVIVOR_SET",
+  "source_transfer_holdout_reproducible_custody": "NOT_ESTABLISHED",
+  "representation_transport": "NOT_ESTABLISHED_RTC_ZERO"
+ }
+}

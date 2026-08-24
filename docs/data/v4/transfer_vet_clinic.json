@@ -1337,6 +1337,37 @@
       "class": "RIGHT_WRONG_LEFT_SILENT"
      }
     ]
+   },
+   "separation_differential": {
+    "comparable_families": 1,
+    "counts": {
+     "LEFT": 0,
+     "RIGHT": 1,
+     "EQUAL": 0
+    },
+    "left_better": 0,
+    "right_better": 1,
+    "equal": 0,
+    "left_dominant": false,
+    "right_dominant": true,
+    "cases": [
+     {
+      "family": "row[_](cell[_])",
+      "left": {
+       "key_slot": "cell#0",
+       "separated_pairs": 262,
+       "copresent_pairs": 400
+      },
+      "right": {
+       "key_slot": "cell#0",
+       "separated_pairs": 2,
+       "copresent_pairs": 2
+      },
+      "left_cross_product": 524,
+      "right_cross_product": 800,
+      "direction": "RIGHT"
+     }
+    ]
    }
   },
   {
@@ -1848,6 +1879,53 @@
       "class": "RIGHT_WRONG_LEFT_SILENT"
      }
     ]
+   },
+   "separation_differential": {
+    "comparable_families": 2,
+    "counts": {
+     "LEFT": 0,
+     "RIGHT": 0,
+     "EQUAL": 2
+    },
+    "left_better": 0,
+    "right_better": 0,
+    "equal": 2,
+    "left_dominant": false,
+    "right_dominant": false,
+    "cases": [
+     {
+      "family": "row[_](cell[_])",
+      "left": {
+       "key_slot": "cell#0",
+       "separated_pairs": 262,
+       "copresent_pairs": 400
+      },
+      "right": {
+       "key_slot": "cell#0",
+       "separated_pairs": 262,
+       "copresent_pairs": 400
+      },
+      "left_cross_product": 104800,
+      "right_cross_product": 104800,
+      "direction": "EQUAL"
+     },
+     {
+      "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+      "left": {
+       "key_slot": "cell#0|cell#0@4",
+       "separated_pairs": 47,
+       "copresent_pairs": 47
+      },
+      "right": {
+       "key_slot": "cell#0|cell#0@4",
+       "separated_pairs": 47,
+       "copresent_pairs": 47
+      },
+      "left_cross_product": 2209,
+      "right_cross_product": 2209,
+      "direction": "EQUAL"
+     }
+    ]
    }
   },
   {
@@ -2352,6 +2430,53 @@
       "class": "RIGHT_WRONG_LEFT_SILENT"
      }
     ]
+   },
+   "separation_differential": {
+    "comparable_families": 2,
+    "counts": {
+     "LEFT": 0,
+     "RIGHT": 0,
+     "EQUAL": 2
+    },
+    "left_better": 0,
+    "right_better": 0,
+    "equal": 2,
+    "left_dominant": false,
+    "right_dominant": false,
+    "cases": [
+     {
+      "family": "row[_](cell[_])",
+      "left": {
+       "key_slot": "cell#0",
+       "separated_pairs": 262,
+       "copresent_pairs": 400
+      },
+      "right": {
+       "key_slot": "cell#0",
+       "separated_pairs": 262,
+       "copresent_pairs": 400
+      },
+      "left_cross_product": 104800,
+      "right_cross_product": 104800,
+      "direction": "EQUAL"
+     },
+     {
+      "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+      "left": {
+       "key_slot": "cell#0|cell#0@4",
+       "separated_pairs": 47,
+       "copresent_pairs": 47
+      },
+      "right": {
+       "key_slot": "cell#0|cell#0@4",
+       "separated_pairs": 47,
+       "copresent_pairs": 47
+      },
+      "left_cross_product": 2209,
+      "right_cross_product": 2209,
+      "direction": "EQUAL"
+     }
+    ]
    }
   },
   {
@@ -2637,6 +2762,53 @@
       "left": "CHURN",
       "right": "CHURN",
       "class": "BOTH_WRONG"
+     }
+    ]
+   },
+   "separation_differential": {
+    "comparable_families": 2,
+    "counts": {
+     "LEFT": 0,
+     "RIGHT": 0,
+     "EQUAL": 2
+    },
+    "left_better": 0,
+    "right_better": 0,
+    "equal": 2,
+    "left_dominant": false,
+    "right_dominant": false,
+    "cases": [
+     {
+      "family": "row[_](cell[_])",
+      "left": {
+       "key_slot": "cell#0",
+       "separated_pairs": 262,
+       "copresent_pairs": 400
+      },
+      "right": {
+       "key_slot": "cell#0",
+       "separated_pairs": 262,
+       "copresent_pairs": 400
+      },
+      "left_cross_product": 104800,
+      "right_cross_product": 104800,
+      "direction": "EQUAL"
+     },
+     {
+      "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+      "left": {
+       "key_slot": "cell#0|cell#0@4",
+       "separated_pairs": 47,
+       "copresent_pairs": 47
+      },
+      "right": {
+       "key_slot": "cell#0|cell#0@4",
+       "separated_pairs": 47,
+       "copresent_pairs": 47
+      },
+      "left_cross_product": 2209,
+      "right_cross_product": 2209,
+      "direction": "EQUAL"
      }
     ]
    }
@@ -3062,6 +3234,37 @@
       "left": "CHURN",
       "right": "EXPLAINED",
       "class": "RIGHT_CORRECT_LEFT_WRONG"
+     }
+    ]
+   },
+   "separation_differential": {
+    "comparable_families": 1,
+    "counts": {
+     "LEFT": 0,
+     "RIGHT": 0,
+     "EQUAL": 1
+    },
+    "left_better": 0,
+    "right_better": 0,
+    "equal": 1,
+    "left_dominant": false,
+    "right_dominant": false,
+    "cases": [
+     {
+      "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+      "left": {
+       "key_slot": "cell#0|cell#0@4",
+       "separated_pairs": 47,
+       "copresent_pairs": 47
+      },
+      "right": {
+       "key_slot": "cell#0|cell#0@4",
+       "separated_pairs": 47,
+       "copresent_pairs": 47
+      },
+      "left_cross_product": 2209,
+      "right_cross_product": 2209,
+      "direction": "EQUAL"
      }
     ]
    }
@@ -3657,6 +3860,37 @@
      "left": "NOTHING",
      "right": "EXPLAINED",
      "class": "RIGHT_PREDICTS_LEFT_SILENT"
+    }
+   ]
+  },
+  "separation_differential": {
+   "comparable_families": 1,
+   "counts": {
+    "LEFT": 0,
+    "RIGHT": 0,
+    "EQUAL": 1
+   },
+   "left_better": 0,
+   "right_better": 0,
+   "equal": 1,
+   "left_dominant": false,
+   "right_dominant": false,
+   "cases": [
+    {
+     "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+     "left": {
+      "key_slot": "cell#0|cell#0@4",
+      "separated_pairs": 76,
+      "copresent_pairs": 86
+     },
+     "right": {
+      "key_slot": "cell#0|cell#0@4",
+      "separated_pairs": 76,
+      "copresent_pairs": 86
+     },
+     "left_cross_product": 6536,
+     "right_cross_product": 6536,
+     "direction": "EQUAL"
     }
    ]
   }

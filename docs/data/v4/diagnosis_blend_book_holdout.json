@@ -1,0 +1,747 @@
+{
+ "run": "runs/v4/blend_book_holdout",
+ "tag": "grok_02_blend_book",
+ "conditions": {
+  "v2": {
+   "rtc": 0.0,
+   "registered_transitions": 234,
+   "registered_deltas": 545,
+   "matched_registered_deltas": 0,
+   "strict_registered_delta_precision": 0.0,
+   "false_delta_categories": {
+    "incorrect_persistence": 4,
+    "spurious_relation": 118,
+    "wrong_attribute_attachment": 423
+   },
+   "gtc": 0.0,
+   "view_false_positive_rate": 0.008,
+   "types": {
+    "hidden": 3,
+    "learned": 7,
+    "recovered": 0,
+    "map": {}
+   },
+   "predicates": {
+    "hidden_attrs": 12,
+    "recovered_attrs": 0,
+    "hidden_rels": 4,
+    "recovered_rels": 0,
+    "attr_map": {},
+    "rel_map": {}
+   },
+   "operators": {
+    "hidden": 6,
+    "observed_in_trace": 6,
+    "recovered": 0,
+    "recovered_ops": [],
+    "learned": 41,
+    "spurious_learned": [
+     "op0",
+     "op1",
+     "op2",
+     "op3",
+     "op4",
+     "op5",
+     "op6",
+     "op7",
+     "op8",
+     "op9",
+     "op10",
+     "op11",
+     "op12",
+     "op13",
+     "op14",
+     "op15",
+     "op16",
+     "op17",
+     "op18",
+     "op19",
+     "op20",
+     "op21",
+     "op22",
+     "op23",
+     "op24",
+     "op25",
+     "op26",
+     "op27",
+     "op28",
+     "op29",
+     "op30",
+     "op31",
+     "op32",
+     "op33",
+     "op34",
+     "op35",
+     "op36",
+     "op37",
+     "op38",
+     "op39",
+     "op40"
+    ],
+    "precision": 0.0,
+    "failure_rejection_rate": 0.0
+   },
+   "operators_per_op": {
+    "draw": [
+     99,
+     0
+    ],
+    "return_draw": [
+     79,
+     0
+    ],
+    "close_vat": [
+     23,
+     0
+    ],
+    "open_vat": [
+     23,
+     0
+    ],
+    "bottle": [
+     6,
+     0
+    ],
+    "disgorge": [
+     4,
+     0
+    ]
+   },
+   "object_layer": {
+    "grounded_frac": null,
+    "pair_precision": null,
+    "pair_recall": null,
+    "learned_keys_merging_entities": 0,
+    "entities_split_across_keys": 0,
+    "entities_grounded": 0,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null
+   },
+   "argument_binding": {
+    "draw": 0.0,
+    "open_vat": 0.0,
+    "return_draw": 0.0,
+    "bottle": 0.0,
+    "close_vat": 0.0,
+    "disgorge": 0.0
+   },
+   "cost_primitives": 825
+  },
+  "v4": {
+   "rtc": 0.0,
+   "registered_transitions": 234,
+   "registered_deltas": 559,
+   "matched_registered_deltas": 0,
+   "strict_registered_delta_precision": 0.0,
+   "false_delta_categories": {
+    "incorrect_persistence": 22,
+    "spurious_relation": 72,
+    "wrong_attribute_attachment": 465
+   },
+   "gtc": 0.0,
+   "view_false_positive_rate": 0.007,
+   "types": {
+    "hidden": 3,
+    "learned": 9,
+    "recovered": 2,
+    "map": {
+     "T3": "Blend",
+     "T4": "Vat"
+    }
+   },
+   "predicates": {
+    "hidden_attrs": 12,
+    "recovered_attrs": 1,
+    "hidden_rels": 4,
+    "recovered_rels": 1,
+    "attr_map": {
+     "T3.attr:cell#0@2": "year"
+    },
+    "rel_map": {
+     "ref_4_rel:3": "from_vat~into_blend"
+    }
+   },
+   "operators": {
+    "hidden": 6,
+    "observed_in_trace": 6,
+    "recovered": 0,
+    "recovered_ops": [],
+    "learned": 42,
+    "spurious_learned": [
+     "op0",
+     "op1",
+     "op2",
+     "op3",
+     "op4",
+     "op5",
+     "op6",
+     "op7",
+     "op8",
+     "op9",
+     "op10",
+     "op11",
+     "op12",
+     "op13",
+     "op14",
+     "op15",
+     "op16",
+     "op17",
+     "op18",
+     "op19",
+     "op20",
+     "op21",
+     "op22",
+     "op23",
+     "op24",
+     "op25",
+     "op26",
+     "op27",
+     "op28",
+     "op29",
+     "op30",
+     "op31",
+     "op32",
+     "op33",
+     "op34",
+     "op35",
+     "op36",
+     "op37",
+     "op38",
+     "op39",
+     "op40",
+     "op41"
+    ],
+    "precision": 0.0,
+    "failure_rejection_rate": 0.0
+   },
+   "operators_per_op": {
+    "draw": [
+     99,
+     0
+    ],
+    "return_draw": [
+     79,
+     0
+    ],
+    "close_vat": [
+     23,
+     0
+    ],
+    "open_vat": [
+     23,
+     0
+    ],
+    "bottle": [
+     6,
+     0
+    ],
+    "disgorge": [
+     4,
+     0
+    ]
+   },
+   "object_layer": {
+    "grounded_frac": null,
+    "pair_precision": null,
+    "pair_recall": null,
+    "learned_keys_merging_entities": 0,
+    "entities_split_across_keys": 0,
+    "entities_grounded": 0,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null
+   },
+   "argument_binding": {
+    "draw": 0.0,
+    "open_vat": 0.0,
+    "return_draw": 0.0,
+    "bottle": 0.833,
+    "close_vat": 0.0,
+    "disgorge": 0.75
+   },
+   "cost_primitives": 825
+  },
+  "selected": {
+   "rtc": 0.0,
+   "registered_transitions": 234,
+   "registered_deltas": 477,
+   "matched_registered_deltas": 0,
+   "strict_registered_delta_precision": 0.0,
+   "false_delta_categories": {
+    "wrong_attribute_attachment": 477
+   },
+   "gtc": 0.0,
+   "view_false_positive_rate": 0.0,
+   "types": {
+    "hidden": 3,
+    "learned": 12,
+    "recovered": 1,
+    "map": {
+     "T8": "Vat"
+    }
+   },
+   "predicates": {
+    "hidden_attrs": 12,
+    "recovered_attrs": 0,
+    "hidden_rels": 4,
+    "recovered_rels": 0,
+    "attr_map": {},
+    "rel_map": {}
+   },
+   "operators": {
+    "hidden": 6,
+    "observed_in_trace": 6,
+    "recovered": 0,
+    "recovered_ops": [],
+    "learned": 32,
+    "spurious_learned": [
+     "op0",
+     "op1",
+     "op2",
+     "op3",
+     "op4",
+     "op5",
+     "op6",
+     "op7",
+     "op8",
+     "op9",
+     "op10",
+     "op11",
+     "op12",
+     "op13",
+     "op14",
+     "op15",
+     "op16",
+     "op17",
+     "op18",
+     "op19",
+     "op20",
+     "op21",
+     "op22",
+     "op23",
+     "op24",
+     "op25",
+     "op26",
+     "op27",
+     "op28",
+     "op29",
+     "op30",
+     "op38"
+    ],
+    "precision": 0.0,
+    "failure_rejection_rate": 0.0
+   },
+   "operators_per_op": {
+    "draw": [
+     99,
+     0
+    ],
+    "return_draw": [
+     79,
+     0
+    ],
+    "close_vat": [
+     23,
+     0
+    ],
+    "open_vat": [
+     23,
+     0
+    ],
+    "bottle": [
+     6,
+     0
+    ],
+    "disgorge": [
+     4,
+     0
+    ]
+   },
+   "object_layer": {
+    "grounded_frac": null,
+    "pair_precision": null,
+    "pair_recall": null,
+    "learned_keys_merging_entities": 0,
+    "entities_split_across_keys": 0,
+    "entities_grounded": 0,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null
+   },
+   "argument_binding": {
+    "draw": 0.0,
+    "open_vat": 0.0,
+    "return_draw": 0.0,
+    "bottle": 0.0,
+    "close_vat": 0.0,
+    "disgorge": 0.0
+   },
+   "cost_primitives": 825
+  },
+  "source_choice": {
+   "rtc": 0.0,
+   "registered_transitions": 234,
+   "registered_deltas": 477,
+   "matched_registered_deltas": 0,
+   "strict_registered_delta_precision": 0.0,
+   "false_delta_categories": {
+    "wrong_attribute_attachment": 477
+   },
+   "gtc": 0.0,
+   "view_false_positive_rate": 0.0,
+   "types": {
+    "hidden": 3,
+    "learned": 11,
+    "recovered": 1,
+    "map": {
+     "T7": "Vat"
+    }
+   },
+   "predicates": {
+    "hidden_attrs": 12,
+    "recovered_attrs": 0,
+    "hidden_rels": 4,
+    "recovered_rels": 0,
+    "attr_map": {},
+    "rel_map": {}
+   },
+   "operators": {
+    "hidden": 6,
+    "observed_in_trace": 6,
+    "recovered": 0,
+    "recovered_ops": [],
+    "learned": 32,
+    "spurious_learned": [
+     "op0",
+     "op1",
+     "op2",
+     "op3",
+     "op4",
+     "op5",
+     "op6",
+     "op7",
+     "op8",
+     "op9",
+     "op10",
+     "op11",
+     "op12",
+     "op13",
+     "op14",
+     "op15",
+     "op16",
+     "op17",
+     "op18",
+     "op19",
+     "op20",
+     "op21",
+     "op22",
+     "op23",
+     "op24",
+     "op25",
+     "op26",
+     "op27",
+     "op28",
+     "op29",
+     "op30",
+     "op38"
+    ],
+    "precision": 0.0,
+    "failure_rejection_rate": 0.0
+   },
+   "operators_per_op": {
+    "draw": [
+     99,
+     0
+    ],
+    "return_draw": [
+     79,
+     0
+    ],
+    "close_vat": [
+     23,
+     0
+    ],
+    "open_vat": [
+     23,
+     0
+    ],
+    "bottle": [
+     6,
+     0
+    ],
+    "disgorge": [
+     4,
+     0
+    ]
+   },
+   "object_layer": {
+    "grounded_frac": null,
+    "pair_precision": null,
+    "pair_recall": null,
+    "learned_keys_merging_entities": 0,
+    "entities_split_across_keys": 0,
+    "entities_grounded": 0,
+    "duplicate_name_separation": null,
+    "cross_view_identity": null
+   },
+   "argument_binding": {
+    "draw": 0.0,
+    "open_vat": 0.0,
+    "return_draw": 0.0,
+    "bottle": 0.0,
+    "close_vat": 0.0,
+    "disgorge": 0.0
+   },
+   "cost_primitives": 825
+  }
+ },
+ "prospective": null,
+ "transported": {
+  "selected": {
+   "fingerprint": "2b2cabacf05f5418",
+   "transport": {
+    "applied": {
+     "button[_]": null,
+     "cell[_]": "cell#0",
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+     "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+    },
+    "slot_absent": {},
+    "absent_in_transfer": [
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))"
+    ],
+    "unseen_in_source": [
+     "button[_]@ctx0",
+     "button[_]@ctx1"
+    ],
+    "promoted_applied": [],
+    "promoted_absent": [],
+    "applicability": 0.8
+   },
+   "source": {
+    "source_run": "runs/v4/grok_02_blend_book_dev",
+    "role": "SOURCE"
+   }
+  },
+  "source_choice": {
+   "fingerprint": "32ce86a55a72ab0e",
+   "transport": {
+    "applied": {
+     "button[_]": null,
+     "cell[_]": null,
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+     "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+    },
+    "slot_absent": {},
+    "absent_in_transfer": [
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))"
+    ],
+    "unseen_in_source": [
+     "button[_]@ctx0",
+     "button[_]@ctx1"
+    ],
+    "promoted_applied": [],
+    "promoted_absent": [],
+    "applicability": 0.8
+   },
+   "source": {
+    "source_run": "runs/v4/grok_02_blend_book_dev",
+    "role": "SOURCE"
+   }
+  }
+ },
+ "v4_search": {
+  "initial": {
+   "contradictions": 2,
+   "churn": 0,
+   "visibility": 0,
+   "unexplained": 11,
+   "spurious": 6,
+   "explained": 261,
+   "delta_atoms": 589,
+   "complexity": 156,
+   "steps": 831,
+   "churn_steps": [],
+   "contradiction_steps": [
+    321,
+    435
+   ],
+   "visibility_steps": []
+  },
+  "final": {
+   "contradictions": 2,
+   "churn": 0,
+   "visibility": 0,
+   "unexplained": 9,
+   "spurious": 0,
+   "explained": 269,
+   "delta_atoms": 619,
+   "complexity": 146,
+   "steps": 831,
+   "churn_steps": [],
+   "contradiction_steps": [
+    321,
+    435
+   ],
+   "visibility_steps": []
+  },
+  "moves": [
+   {
+    "move": "identity",
+    "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+    "templates": 8,
+    "key_slot": "group/table/rowgroup/row/cell#0@100",
+    "status": "UNSUPPORTED",
+    "score": {
+     "contradictions": 2,
+     "churn": 0,
+     "visibility": 0,
+     "unexplained": 10,
+     "spurious": 6,
+     "explained": 262,
+     "delta_atoms": 606,
+     "complexity": 174,
+     "steps": 831,
+     "churn_steps": [],
+     "contradiction_steps": [
+      321,
+      435
+     ],
+     "visibility_steps": []
+    }
+   },
+   {
+    "move": "identity",
+    "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+    "templates": 8,
+    "key_slot": "group/table/rowgroup/row/cell#0@99",
+    "status": "UNSUPPORTED",
+    "score": {
+     "contradictions": 2,
+     "churn": 0,
+     "visibility": 0,
+     "unexplained": 10,
+     "spurious": 0,
+     "explained": 268,
+     "delta_atoms": 663,
+     "complexity": 145,
+     "steps": 831,
+     "churn_steps": [],
+     "contradiction_steps": [
+      321,
+      435
+     ],
+     "visibility_steps": []
+    }
+   },
+   {
+    "move": "identity",
+    "family": "row[_](cell[_],cell[_](button[_]))",
+    "templates": 5,
+    "key_slot": "cell#0",
+    "status": "SUPPORTED",
+    "score": {
+     "contradictions": 2,
+     "churn": 0,
+     "visibility": 0,
+     "unexplained": 9,
+     "spurious": 0,
+     "explained": 269,
+     "delta_atoms": 619,
+     "complexity": 146,
+     "steps": 831,
+     "churn_steps": [],
+     "contradiction_steps": [
+      321,
+      435
+     ],
+     "visibility_steps": []
+    }
+   }
+  ],
+  "open_questions": [
+   {
+    "template": "button[_]",
+    "left": {
+     "template": "button[_]",
+     "key_slot": "button#0",
+     "status": "SUPPORTED",
+     "why": "separates 382/400 co-present pairs, 18 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 400,
+      "separated_pairs": 382,
+      "discrimination": 0.955,
+      "coverage": 1.0,
+      "distinct_values": 18,
+      "constant_share": 0.172,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "button[_]",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "why": "no identity-bearing observation claimed",
+     "evidence": {
+      "copresent_pairs": 400,
+      "separated_pairs": 0,
+      "discrimination": 0.0,
+      "coverage": 0.0,
+      "distinct_values": 0,
+      "constant_share": 0.0,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "reason": "undecided: chosen explains 261 with 8 errors, the alternative explains 258 with 7"
+   },
+   {
+    "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+    "left": {
+     "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+     "key_slot": "group/table/rowgroup/row/cell#0@99",
+     "status": "UNSUPPORTED",
+     "why": "the family never rendered two instances at once, so nothing shows this value distinguishes instances",
+     "evidence": {
+      "copresent_pairs": 0,
+      "separated_pairs": 0,
+      "discrimination": null,
+      "coverage": 1.0,
+      "distinct_values": 4,
+      "constant_share": 0.442,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 0.25
+     }
+    },
+    "right": {
+     "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+     "key_slot": "group/group/text#0",
+     "status": "UNSUPPORTED",
+     "why": "the family never rendered two instances at once, so nothing shows this value distinguishes instances",
+     "evidence": {
+      "copresent_pairs": 0,
+      "separated_pairs": 0,
+      "discrimination": null,
+      "coverage": 1.0,
+      "distinct_values": 1,
+      "constant_share": 1.0,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "reason": "undecided: chosen explains 268 with 2 errors, the alternative explains 231 with 1"
+   }
+  ],
+  "families": {
+   "button[_]": 4,
+   "button[_]@ctx0": 1,
+   "button[_]@ctx1": 1,
+   "cell[_]": 1,
+   "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": 8,
+   "row[_](cell[_],cell[_](button[_]))": 5
+  }
+ }
+}

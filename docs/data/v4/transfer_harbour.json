@@ -925,6 +925,37 @@
       "class": "RIGHT_PREDICTS_LEFT_SILENT"
      }
     ]
+   },
+   "separation_differential": {
+    "comparable_families": 1,
+    "counts": {
+     "LEFT": 0,
+     "RIGHT": 0,
+     "EQUAL": 1
+    },
+    "left_better": 0,
+    "right_better": 0,
+    "equal": 1,
+    "left_dominant": false,
+    "right_dominant": false,
+    "cases": [
+     {
+      "family": "button[_]",
+      "left": {
+       "key_slot": "button#0",
+       "separated_pairs": 400,
+       "copresent_pairs": 400
+      },
+      "right": {
+       "key_slot": "button#0",
+       "separated_pairs": 400,
+       "copresent_pairs": 400
+      },
+      "left_cross_product": 160000,
+      "right_cross_product": 160000,
+      "direction": "EQUAL"
+     }
+    ]
    }
   },
   {
@@ -1076,6 +1107,53 @@
       "left": "SILENT",
       "right": "EXPLAINED",
       "class": "RIGHT_PREDICTS_LEFT_SILENT"
+     }
+    ]
+   },
+   "separation_differential": {
+    "comparable_families": 2,
+    "counts": {
+     "LEFT": 0,
+     "RIGHT": 0,
+     "EQUAL": 2
+    },
+    "left_better": 0,
+    "right_better": 0,
+    "equal": 2,
+    "left_dominant": false,
+    "right_dominant": false,
+    "cases": [
+     {
+      "family": "row[_](cell[_](button[_]),cell[_])",
+      "left": {
+       "key_slot": "cell#0@7",
+       "separated_pairs": 238,
+       "copresent_pairs": 400
+      },
+      "right": {
+       "key_slot": "cell#0@7",
+       "separated_pairs": 238,
+       "copresent_pairs": 400
+      },
+      "left_cross_product": 95200,
+      "right_cross_product": 95200,
+      "direction": "EQUAL"
+     },
+     {
+      "family": "row[_](cell[_],cell[_](button[_]))",
+      "left": {
+       "key_slot": "cell#0@4",
+       "separated_pairs": 199,
+       "copresent_pairs": 400
+      },
+      "right": {
+       "key_slot": "cell#0@4",
+       "separated_pairs": 199,
+       "copresent_pairs": 400
+      },
+      "left_cross_product": 79600,
+      "right_cross_product": 79600,
+      "direction": "EQUAL"
      }
     ]
    }
@@ -1237,6 +1315,69 @@
       "class": "RIGHT_PREDICTS_LEFT_SILENT"
      }
     ]
+   },
+   "separation_differential": {
+    "comparable_families": 3,
+    "counts": {
+     "LEFT": 0,
+     "RIGHT": 0,
+     "EQUAL": 3
+    },
+    "left_better": 0,
+    "right_better": 0,
+    "equal": 3,
+    "left_dominant": false,
+    "right_dominant": false,
+    "cases": [
+     {
+      "family": "button[_]",
+      "left": {
+       "key_slot": "button#0",
+       "separated_pairs": 400,
+       "copresent_pairs": 400
+      },
+      "right": {
+       "key_slot": "button#0",
+       "separated_pairs": 400,
+       "copresent_pairs": 400
+      },
+      "left_cross_product": 160000,
+      "right_cross_product": 160000,
+      "direction": "EQUAL"
+     },
+     {
+      "family": "row[_](cell[_](button[_]),cell[_])",
+      "left": {
+       "key_slot": "cell#0@7",
+       "separated_pairs": 238,
+       "copresent_pairs": 400
+      },
+      "right": {
+       "key_slot": "cell#0@7",
+       "separated_pairs": 238,
+       "copresent_pairs": 400
+      },
+      "left_cross_product": 95200,
+      "right_cross_product": 95200,
+      "direction": "EQUAL"
+     },
+     {
+      "family": "row[_](cell[_],cell[_](button[_]))",
+      "left": {
+       "key_slot": "cell#0@4",
+       "separated_pairs": 199,
+       "copresent_pairs": 400
+      },
+      "right": {
+       "key_slot": "cell#0@4",
+       "separated_pairs": 199,
+       "copresent_pairs": 400
+      },
+      "left_cross_product": 79600,
+      "right_cross_product": 79600,
+      "direction": "EQUAL"
+     }
+    ]
    }
   },
   {
@@ -1379,7 +1520,7 @@
     "separation_tested": 3
    },
    "outcome": "RIGHT",
-   "reason": "the history confirms 2 identity claims of this reading against 1 of the other, on peers it had to tell apart here",
+   "reason": "strictly better separation on 1 shared family claims and no worse shared family",
    "differential": {
     "counts": {
      "BOTH_COMPATIBLE": 38,
@@ -1396,6 +1537,69 @@
       "left": "SILENT",
       "right": "EXPLAINED",
       "class": "RIGHT_PREDICTS_LEFT_SILENT"
+     }
+    ]
+   },
+   "separation_differential": {
+    "comparable_families": 3,
+    "counts": {
+     "LEFT": 0,
+     "RIGHT": 1,
+     "EQUAL": 2
+    },
+    "left_better": 0,
+    "right_better": 1,
+    "equal": 2,
+    "left_dominant": false,
+    "right_dominant": true,
+    "cases": [
+     {
+      "family": "button[_]",
+      "left": {
+       "key_slot": "button#0",
+       "separated_pairs": 400,
+       "copresent_pairs": 400
+      },
+      "right": {
+       "key_slot": "button#0",
+       "separated_pairs": 400,
+       "copresent_pairs": 400
+      },
+      "left_cross_product": 160000,
+      "right_cross_product": 160000,
+      "direction": "EQUAL"
+     },
+     {
+      "family": "row[_](cell[_](button[_]),cell[_])",
+      "left": {
+       "key_slot": "cell#0@7",
+       "separated_pairs": 238,
+       "copresent_pairs": 400
+      },
+      "right": {
+       "key_slot": "cell#0",
+       "separated_pairs": 400,
+       "copresent_pairs": 400
+      },
+      "left_cross_product": 95200,
+      "right_cross_product": 160000,
+      "direction": "RIGHT"
+     },
+     {
+      "family": "row[_](cell[_],cell[_](button[_]))",
+      "left": {
+       "key_slot": "cell#0@4",
+       "separated_pairs": 199,
+       "copresent_pairs": 400
+      },
+      "right": {
+       "key_slot": "cell#0@4",
+       "separated_pairs": 199,
+       "copresent_pairs": 400
+      },
+      "left_cross_product": 79600,
+      "right_cross_product": 79600,
+      "direction": "EQUAL"
      }
     ]
    }
@@ -1557,6 +1761,69 @@
       "left": "EXPLAINED",
       "right": "SILENT",
       "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     }
+    ]
+   },
+   "separation_differential": {
+    "comparable_families": 3,
+    "counts": {
+     "LEFT": 1,
+     "RIGHT": 1,
+     "EQUAL": 1
+    },
+    "left_better": 1,
+    "right_better": 1,
+    "equal": 1,
+    "left_dominant": false,
+    "right_dominant": false,
+    "cases": [
+     {
+      "family": "button[_]",
+      "left": {
+       "key_slot": "button#0",
+       "separated_pairs": 400,
+       "copresent_pairs": 400
+      },
+      "right": {
+       "key_slot": "button#0",
+       "separated_pairs": 400,
+       "copresent_pairs": 400
+      },
+      "left_cross_product": 160000,
+      "right_cross_product": 160000,
+      "direction": "EQUAL"
+     },
+     {
+      "family": "row[_](cell[_](button[_]),cell[_])",
+      "left": {
+       "key_slot": "cell#0",
+       "separated_pairs": 400,
+       "copresent_pairs": 400
+      },
+      "right": {
+       "key_slot": "cell#0@7",
+       "separated_pairs": 238,
+       "copresent_pairs": 400
+      },
+      "left_cross_product": 160000,
+      "right_cross_product": 95200,
+      "direction": "LEFT"
+     },
+     {
+      "family": "row[_](cell[_],cell[_](button[_]))",
+      "left": {
+       "key_slot": "cell#0@4",
+       "separated_pairs": 199,
+       "copresent_pairs": 400
+      },
+      "right": {
+       "key_slot": "cell#0",
+       "separated_pairs": 400,
+       "copresent_pairs": 400
+      },
+      "left_cross_product": 79600,
+      "right_cross_product": 160000,
+      "direction": "RIGHT"
      }
     ]
    }
@@ -1767,7 +2034,7 @@
  },
  "holdout_differential": {
   "outcome": "LEFT",
-  "reason": "the history confirms 2 identity claims of this reading against 1 of the other, on peers it had to tell apart here",
+  "reason": "strictly better separation on 1 shared family claims and no worse shared family",
   "left": {
    "name": "row[_](cell[_](button[_]=cell#0",
    "key_slots": {
@@ -1945,6 +2212,69 @@
      "left": "VISIBILITY",
      "right": "VISIBILITY",
      "class": "BOTH_WRONG"
+    }
+   ]
+  },
+  "separation_differential": {
+   "comparable_families": 3,
+   "counts": {
+    "LEFT": 1,
+    "RIGHT": 0,
+    "EQUAL": 2
+   },
+   "left_better": 1,
+   "right_better": 0,
+   "equal": 2,
+   "left_dominant": true,
+   "right_dominant": false,
+   "cases": [
+    {
+     "family": "button[_]",
+     "left": {
+      "key_slot": "button#0",
+      "separated_pairs": 400,
+      "copresent_pairs": 400
+     },
+     "right": {
+      "key_slot": "button#0",
+      "separated_pairs": 400,
+      "copresent_pairs": 400
+     },
+     "left_cross_product": 160000,
+     "right_cross_product": 160000,
+     "direction": "EQUAL"
+    },
+    {
+     "family": "row[_](cell[_](button[_]),cell[_])",
+     "left": {
+      "key_slot": "cell#0",
+      "separated_pairs": 400,
+      "copresent_pairs": 400
+     },
+     "right": {
+      "key_slot": "cell#0@7",
+      "separated_pairs": 237,
+      "copresent_pairs": 400
+     },
+     "left_cross_product": 160000,
+     "right_cross_product": 94800,
+     "direction": "LEFT"
+    },
+    {
+     "family": "row[_](cell[_],cell[_](button[_]))",
+     "left": {
+      "key_slot": "cell#0@4",
+      "separated_pairs": 175,
+      "copresent_pairs": 400
+     },
+     "right": {
+      "key_slot": "cell#0@4",
+      "separated_pairs": 175,
+      "copresent_pairs": 400
+     },
+     "left_cross_product": 70000,
+     "right_cross_product": 70000,
+     "direction": "EQUAL"
     }
    ]
   }

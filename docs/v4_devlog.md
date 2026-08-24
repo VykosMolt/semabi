@@ -327,9 +327,48 @@ That is what the separation test was added for: an identity claim is a predictio
 named value tells co-present instances apart, and a fresh history can refute it without any
 refitting. It is not a re-selection — no alternative is considered and nothing is changed.
 On `harbour` it scores the yes/no key **PARTIAL, 199 of 400 pairs**, against CONFIRMED
-400/400 for the two readings that name rows properly. The rule currently treats only 0-of-N
-as refutation, so a half-separating key survives; that is the sharpest concrete next step
-and it is left as one rather than tuned tonight.
+400/400 for the two readings that name rows properly. At this checkpoint the rule treated
+only 0-of-N as refutation, so a half-separating key survived. The continuation below takes
+that comparison without introducing a rate threshold.
+
+### Continuation: exact same-family separation dominance
+
+The successor rule compares separation only when both frozen readings make a tested claim
+about the same literal-free family. It compares the exact integer fractions by cross
+multiplication, never their rounded display rates. A reading wins this gate only when it is
+strictly better on at least one shared family and worse on none; opposing family directions
+remain unresolved. Refutation, applicability, and behavioural contradiction/error gates
+retain precedence. Every decision artifact now records the exact family, keys, numerators,
+denominators, cross-products and direction under `separation_differential`.
+
+All three chains were replayed from their retained SOURCE / TRANSFER / HOLDOUT histories:
+
+| application | selected reading changed? | holdout | effect of the new gate |
+|---|---|---|---|
+| `vet_clinic` | no | `PARTIALLY_CONTRADICTED` | none; the one unequal shared-family rate is still behind asymmetric applicability |
+| `harbour` | no | `PARTIALLY_CONTRADICTED` | the decisive preference is now the aligned comparison: 400/400 against 238/400 on the same row family |
+| `blend_book` | no | `CONFIRMED` | none; the 358/400 candidate remains behind the selected 356/400 reading because it is contradicted on one fresh step |
+
+The harbour result is a sharper reason for the same selection, not a representation repair.
+The final two frozen candidates improve different row families: one is 400/400 versus
+238/400 on the first and ties the source's 199/400 key on the second; the other is 400/400
+versus 199/400 on the second but leaves the first at 238/400. The directions conflict, so
+the dominance rule correctly leaves that comparison `UNDECIDED`. No frozen source candidate
+contains both improvements, and constructing one after seeing TRANSFER would violate the
+pin rather than complete it.
+
+The two evaluator-only diagnoses that were in flight also completed. They do not rescue the
+result. On `harbour` HOLDOUT, the transfer-selected reading and source choice both have RTC
+0.000. The selected reading has pair precision 1.000 against .967 and view FP 0 for both,
+but it also has 24 learned keys merging entities against 14 and 47 false deltas against 42;
+the comparison is mixed. On `blend_book`, both transported readings have RTC 0.000 and 477
+wrong-attribute deltas; entity-level object metrics are unavailable on that unannotated
+history. These are diagnosis after selection and did not enter the compiler rule.
+
+The next lawful experiment is therefore not another separation threshold. It is a frozen,
+source-only way to generate bounded joint alternatives before TRANSFER sees them, followed
+by new separately collected TRANSFER and HOLDOUT histories. The current histories are spent
+for this mechanism, and combining the two harbour fixes now would be post-transfer refitting.
 
 ### Evidence sufficiency and acquisition
 

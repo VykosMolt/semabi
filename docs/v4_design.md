@@ -261,13 +261,20 @@ The decision is a dominance rule, in this order:
 
 1. neither reading instantiable here → `INCONCLUSIVE_NOT_APPLICABLE`;
 2. neither reading says anything here → `INCONCLUSIVE_NO_PREDICTIONS`;
-3. a reading this history contradicts where its rival is not contradicted is demoted —
-   contradiction is the only thing that eliminates;
-4. otherwise the reading that is right where the other is wrong is preferred;
-5. **explaining more steps is not a reason to prefer a reading here.** That is what the
+3. an identity claim that separates none of the peers it names is refuted;
+4. readings instantiated to different extents →
+   `INCONCLUSIVE_ASYMMETRIC_APPLICABILITY`;
+5. a reading this history contradicts where its rival is not contradicted is demoted, then
+   fewer errors decides;
+6. exact separation fractions discriminate only between tested claims on the same family,
+   and only by dominance: strictly better somewhere and worse nowhere. Fractions are
+   compared from their integer counts, not their rounded display rate; opposing family
+   directions keep the ambiguity;
+7. more confirmed identity claims can beat making fewer such claims;
+8. **explaining more steps is not a reason to prefer a reading here.** That is what the
    source history was for, and it is exactly the quantity that does not transport;
-6. complexity breaks a true behavioural tie;
-7. anything else keeps the ambiguity.
+9. complexity breaks a true behavioural tie;
+10. anything else keeps the ambiguity.
 
 No coefficient is calibrated on gauntlet-v3, and a candidate cannot earn transfer support
 by making no predictions.
