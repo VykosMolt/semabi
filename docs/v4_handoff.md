@@ -128,3 +128,17 @@ recovered**, all failing at `STATE_DELTA_UNREPRESENTABLE`. Until that denominato
 nontrivial there is no evidence for touching downstream induction, and it was not touched.
 
 Tests: 126 passed, 1 xfailed. Boundary 4/4.
+
+## In flight when this was written
+
+Two evaluator-only diagnoses were still running and will land on their own; nothing depends
+on them:
+
+    docs/data/v4/diagnosis_harbour_holdout.json
+    docs/data/v4/diagnosis_blend_book_holdout.json
+
+They compare V2, V4-in-place and the transported readings on the holdout histories, in the
+same shape as `docs/data/v4/diagnosis_vet_clinic_holdout.json`, which is complete and is the
+one the object-layer table in the devlog is drawn from. If a diagnosis file is missing or
+truncated, re-run the `v4_compare` command shown above for that application; it is
+idempotent and reads no compiler state.
