@@ -3,12 +3,14 @@
 The rule these tests pin is the one the V4 checkpoint was missing: explaining more steps is
 what the source history was chosen for and is exactly what does not travel, so it must not
 decide a transfer comparison.  Contradiction is what eliminates; silence proves nothing;
-and where the fresh history says nothing about the difference, the ambiguity is kept.
+and where the comparison history says nothing about the difference, the ambiguity is kept.
 """
 from itertools import permutations
+from types import SimpleNamespace
 
 import pytest
 
+from semabi.compiler.v4 import pinned
 from semabi.compiler.v4.transfer import TransferEvidence, classify, decide, differential
 from semabi.compiler.v4.transfer import all_pairs_frontier
 
@@ -24,7 +26,8 @@ def _ev(name, verdicts, *, complexity=10, applicability=1.0):
         explained=counts.get("EXPLAINED", 0), silent=counts.get("SILENT", 0))
 
 
-def _sep(family, key_slot, separated_pairs, copresent_pairs, *, status=None):
+def _sep(family, key_slot, separated_pairs, copresent_pairs, *, status=None,
+         population_hash="0" * 64):
     rate = None if copresent_pairs == 0 else round(separated_pairs / copresent_pairs, 3)
     if status is None:
         status = ("UNTESTED" if copresent_pairs == 0 else
@@ -33,7 +36,7 @@ def _sep(family, key_slot, separated_pairs, copresent_pairs, *, status=None):
                   "PARTIAL")
     return {"family": family, "key_slot": key_slot, "status": status,
             "copresent_pairs": copresent_pairs, "separated_pairs": separated_pairs,
-            "rate": rate}
+            "rate": rate, "population_hash": population_hash}
 
 
 def test_a_step_where_one_reading_is_right_and_the_other_wrong_is_the_comparable_one():
@@ -117,11 +120,9 @@ def test_an_identity_that_separates_nothing_it_names_is_refuted_by_the_fresh_his
     contradict, it merely fails to separate -- so nothing in the error terms noticed."""
     same = {1: "EXPLAINED", 2: "EXPLAINED"}
     merging = _ev("merging", same)
-    merging.separation = [{"family": "row[_]", "key_slot": "cell#0@4", "status": "REFUTED",
-                           "copresent_pairs": 40, "separated_pairs": 0, "rate": 0.0}]
+    merging.separation = [_sep("row[_]", "cell#0@4", 0, 40)]
     naming = _ev("naming", same)
-    naming.separation = [{"family": "row[_]", "key_slot": "cell#0", "status": "CONFIRMED",
-                          "copresent_pairs": 40, "separated_pairs": 40, "rate": 1.0}]
+    naming.separation = [_sep("row[_]", "cell#0", 40, 40)]
     decision = decide(merging, naming)
     assert decision.outcome == "RIGHT"
     assert "not naming them" in decision.reason
@@ -129,11 +130,9 @@ def test_an_identity_that_separates_nothing_it_names_is_refuted_by_the_fresh_his
 
 def test_an_untested_identity_claim_is_not_counted_against_a_reading():
     quiet = _ev("quiet", {1: "EXPLAINED"})
-    quiet.separation = [{"family": "row[_]", "key_slot": "cell#0", "status": "UNTESTED",
-                         "copresent_pairs": 0, "separated_pairs": 0, "rate": None}]
+    quiet.separation = [_sep("row[_]", "cell#0", 0, 0)]
     other = _ev("other", {1: "EXPLAINED"})
-    other.separation = [{"family": "row[_]", "key_slot": "cell#1", "status": "UNTESTED",
-                         "copresent_pairs": 0, "separated_pairs": 0, "rate": None}]
+    other.separation = [_sep("row[_]", "cell#1", 0, 0)]
     assert decide(quiet, other).outcome == "UNDECIDED"
 
 
@@ -143,8 +142,7 @@ def test_a_confirmed_identity_claim_beats_making_no_claim_at_all():
     winning by default, pointing the other way."""
     same = {1: "EXPLAINED", 2: "EXPLAINED"}
     committed = _ev("committed", same)
-    committed.separation = [{"family": "row[_]", "key_slot": "cell#0", "status": "CONFIRMED",
-                             "copresent_pairs": 40, "separated_pairs": 40, "rate": 1.0}]
+    committed.separation = [_sep("row[_]", "cell#0", 40, 40)]
     silent = _ev("silent", same)
     silent.separation = []
     decision = decide(committed, silent)
@@ -214,6 +212,92 @@ def test_cross_family_rates_are_not_comparable():
 
     assert decision.outcome == "UNDECIDED"
     assert decision.separation_diff.cases == []
+
+
+def test_population_mismatch_is_retained_but_never_decides():
+    left = _ev("left", {1: "EXPLAINED"})
+    left.separation = [_sep("row[_]", "cell#0", 1, 2, population_hash="0" * 64)]
+    right = _ev("right", {1: "EXPLAINED"})
+    right.separation = [_sep("row[_]", "cell#1", 2, 4, population_hash="1" * 64)]
+
+    decision = decide(left, right)
+
+    assert decision.outcome == "UNDECIDED"
+    assert decision.separation_diff.left_better == 0
+    assert decision.separation_diff.right_better == 0
+    assert decision.separation_diff.population_mismatches == 1
+    case = decision.separation_diff.cases[0]
+    assert case["direction"] == "POPULATION_MISMATCH"
+    assert case["population_mismatch"] is True
+
+
+def test_population_hash_is_order_invariant_and_excludes_mutable_slot_values():
+    left = SimpleNamespace(sig="s", template="row", root=1, slots={"k": "one"})
+    right = SimpleNamespace(sig="s", template="row", root=2, slots={"k": "two"})
+    reverse_left = SimpleNamespace(sig="s", template="row", root=1, slots={"k": "changed"})
+    reverse_right = SimpleNamespace(sig="s", template="row", root=2, slots={"k": "also changed"})
+
+    assert pinned.population_hash([(left, right)]) == pinned.population_hash(
+        [(reverse_right, reverse_left)])
+
+
+def _separation_hypotheses():
+    family = "row[_](cell[_])"
+    units = SimpleNamespace(
+        units={
+            "row[](cell[_])": SimpleNamespace(
+                template="row[](cell[_])",
+                instances=[
+                    SimpleNamespace(sig="s0", template="row[](cell[_])", root=1,
+                                     slots={"cell#0": "a"}),
+                    SimpleNamespace(sig="s0", template="row[](cell[_])", root=2,
+                                     slots={"cell#0": "b"}),
+                ],
+            )
+        }
+    )
+    return family, units
+
+
+def test_slot_absent_claim_emits_no_separation_and_cannot_be_refuted():
+    family, hypotheses = _separation_hypotheses()
+    reading = pinned.PinnedReading(
+        {family: pinned.FamilyReading(family, "cell#9")}, name="slot-absent")
+    transport = pinned.Transport(slot_absent={family: "cell#9"})
+
+    records = pinned.separation(hypotheses, reading, transport)
+
+    assert records == []
+
+
+def test_transport_coherence_rejects_separation_for_slot_absent_family():
+    family = "row[_]"
+    ev = TransferEvidence(
+        name="malformed",
+        key_slot_summary={family: "cell#9"},
+        applicability=0.0,
+        transport=pinned.Transport(slot_absent={family: "cell#9"}).to_json(),
+        separation=[_sep(family, "cell#9", 0, 10)],
+        verdicts={1: "EXPLAINED"},
+    )
+
+    with pytest.raises(ValueError, match="separation families"):
+        decide(ev, _ev("other", {1: "EXPLAINED"}))
+
+
+def test_transport_coherence_rejects_mismatched_applied_key():
+    family = "row[_]"
+    ev = TransferEvidence(
+        name="malformed",
+        key_slot_summary={family: "cell#0"},
+        applicability=1.0,
+        transport=pinned.Transport(applied={family: "cell#1"}).to_json(),
+        separation=[_sep(family, "cell#1", 10, 10)],
+        verdicts={1: "EXPLAINED"},
+    )
+
+    with pytest.raises(ValueError, match="claim partitions|applied key mismatch"):
+        decide(ev, _ev("other", {1: "EXPLAINED"}))
 
 
 def test_conflicting_shared_family_directions_do_not_decide():

@@ -12,6 +12,7 @@ and therefore never runs search as a side effect.
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Mapping
 
 from semabi.compiler.compile_v4 import build_hypotheses
 from semabi.compiler.evidence import EvidenceLog
@@ -23,13 +24,25 @@ from semabi.compiler.v4.identity import family_key, family_readings
 MAX_CANDIDATES = 6
 
 
-def _source_candidates(source: Path, log: EvidenceLog, max_candidates: int = MAX_CANDIDATES):
+def _source_candidates(
+    source: Path,
+    log: EvidenceLog,
+    max_candidates: int = MAX_CANDIDATES,
+    *,
+    refuted: Mapping[str, set[str | None]] | None = None,
+):
     """Every reading the source history makes plausible, frozen, including the one it
     prefers.  Generating alternatives is the source's job; deciding between them is not.
     """
     H, G = build_hypotheses(source, log)
-    result = v4_search.search(H, G, log, log_fn=lambda _m: None, run_dir=source)
-    incumbent = v4_pinned.from_search(result, source, "source_choice")
+    result = v4_search.search(
+        H, G, log, log_fn=lambda _m: None,
+        run_dir=None if refuted is not None else source,
+        refuted=None if refuted is None else {k: set(v) for k, v in refuted.items()},
+    )
+    incumbent = v4_pinned.from_search(
+        result, source, "source_choice", refuted=refuted
+    )
     candidates = [incumbent]
     notes = []
 
@@ -79,4 +92,3 @@ def _source_candidates(source: Path, log: EvidenceLog, max_candidates: int = MAX
 # A public spelling is useful to freeze scripts and keeps the historical private name
 # available to callers that reproduce the previous runner exactly.
 source_candidates = _source_candidates
-

@@ -2,9 +2,14 @@
 
 A reading that explains one more transition than its rival on the history it was chosen
 from has told us almost nothing: it was chosen for that.  What distinguishes a description
-of the black-box system from a description of one run is whether it still describes a run
-it has never seen.  So competing readings are frozen, carried unchanged to another
-interaction history, and compared only where they say *different* things about it.
+of the black-box system from a description of one run is whether it still describes a
+separate comparison-role run.  So competing readings are frozen, carried unchanged to
+another interaction history, and compared only where they say *different* things about it;
+whether that role was prospectively fresh must be established by separate chronology.
+
+The retained phase does not establish prospective chronology: its SOURCE, TRANSFER, and
+HOLDOUT objects are separate spent development histories.  The mechanics below preserve
+those role boundaries without claiming that a current comparison was prospectively fresh.
 
 Two disciplines are borrowed from V2 deliberately.  Evidence is a vector, not a scalar, and
 the decision over it is a dominance rule rather than a weighted sum, so no coefficient has
@@ -18,6 +23,7 @@ from collections import Counter
 from dataclasses import dataclass, field
 from itertools import combinations
 import math
+import re
 from typing import Any
 
 # what a reading said about one step of the transfer trace
@@ -29,7 +35,7 @@ SEPARATION_STATUSES = ("UNTESTED", "REFUTED", "PARTIAL", "CONFIRMED")
 
 @dataclass
 class TransferEvidence:
-    """One frozen reading's record against one interaction history it never saw."""
+    """One frozen reading's record against a separate comparison-role history."""
     name: str
     key_slot_summary: dict[str, str | None] = field(default_factory=dict)
     hard_contradictions: int = 0
@@ -71,6 +77,7 @@ class TransferEvidence:
 
     def to_json(self) -> dict[str, Any]:
         _validate_separation_records(self)
+        _validate_transfer_coherence(self)
         return {"name": self.name, "key_slots": self.key_slot_summary,
                 "hard_contradictions": self.hard_contradictions, "churn": self.churn,
                 "visibility": self.visibility, "spurious": self.spurious,
@@ -85,16 +92,29 @@ class TransferEvidence:
 
 def from_behaviour(name: str, behaviour, transport, key_slots: dict[str, str | None],
                    separation: list | None = None) -> TransferEvidence:
-    return TransferEvidence(
+    if transport is None:
+        raise ValueError("from_behaviour requires a transport record")
+    try:
+        serialized_transport = transport.to_json()
+    except AttributeError as exc:
+        raise ValueError("from_behaviour requires a serializable transport record") from exc
+    if not isinstance(serialized_transport, dict) or not serialized_transport:
+        raise ValueError("from_behaviour requires a non-empty transport record")
+    evidence = TransferEvidence(
         separation=[r.to_json() for r in (separation or [])],
         name=name, key_slot_summary=key_slots,
         hard_contradictions=behaviour.contradictions, churn=behaviour.churn,
         visibility=behaviour.visibility, spurious=behaviour.spurious,
         explained=behaviour.explained, silent=behaviour.unexplained,
         complexity=behaviour.complexity,
-        applicability=transport.applicability if transport is not None else 1.0,
-        transport=transport.to_json() if transport is not None else {},
+        applicability=transport.applicability,
+        transport=serialized_transport,
         verdicts=dict(behaviour.verdicts))
+    # from_behaviour is the production evidence boundary.  Validate it before returning so
+    # malformed transport/separation combinations cannot enter a frontier artifact.
+    _validate_separation_records(evidence)
+    _validate_transfer_coherence(evidence)
+    return evidence
 
 
 def _validate_separation_records(evidence: TransferEvidence) -> None:
@@ -114,7 +134,8 @@ def _validate_separation_records(evidence: TransferEvidence) -> None:
         if not isinstance(record, dict):
             raise ValueError(f"{prefix} must be an object")
         expected_fields = {
-            "family", "key_slot", "status", "copresent_pairs", "separated_pairs", "rate"
+            "family", "key_slot", "status", "copresent_pairs", "separated_pairs", "rate",
+            "population_hash",
         }
         if set(record) != expected_fields:
             raise ValueError(
@@ -130,6 +151,11 @@ def _validate_separation_records(evidence: TransferEvidence) -> None:
         key_slot = record.get("key_slot")
         if not isinstance(key_slot, str) or not key_slot:
             raise ValueError(f"{prefix} key_slot must be a nonempty string")
+
+        population = record.get("population_hash")
+        if (not isinstance(population, str)
+                or re.fullmatch(r"[0-9a-fA-F]{64}", population) is None):
+            raise ValueError(f"{prefix} population_hash must be a nonempty 64-hex SHA-256")
 
         separated_pairs = record.get("separated_pairs")
         copresent_pairs = record.get("copresent_pairs")
@@ -166,6 +192,134 @@ def _validate_separation_records(evidence: TransferEvidence) -> None:
         if not math.isfinite(float(rate)) or float(rate) != expected_rate:
             raise ValueError(
                 f"{prefix} rate {rate!r} does not match rounded counts {expected_rate!r}")
+
+    _validate_transfer_coherence(evidence)
+
+
+def _validate_transfer_coherence(evidence: TransferEvidence) -> None:
+    """Validate the transport, key summary, applicability, and separation cross-fields.
+
+    Hand-built ``TransferEvidence`` instances with an empty transport remain available for
+    focused rule tests.  Any serialized transport, including every ``from_behaviour``
+    result, is required to carry a complete and internally coherent claim partition.
+    """
+    if evidence.transport == {}:
+        return
+    if not isinstance(evidence.transport, dict):
+        raise ValueError(f"{evidence.name!r}: transport must be an object")
+
+    expected_transport_fields = {
+        "applied", "slot_absent", "absent_in_transfer", "unseen_in_source",
+        "promoted_applied", "promoted_absent", "applicability",
+    }
+    if set(evidence.transport) != expected_transport_fields:
+        raise ValueError(
+            f"{evidence.name!r}: transport fields must be exactly "
+            f"{sorted(expected_transport_fields)}")
+
+    summary = evidence.key_slot_summary
+    if not isinstance(summary, dict):
+        raise ValueError(f"{evidence.name!r}: key_slot_summary must be an object")
+    for family, key in summary.items():
+        if not isinstance(family, str) or not family:
+            raise ValueError(f"{evidence.name!r}: claimed family must be a nonempty string")
+        if key is not None and (not isinstance(key, str) or not key):
+            raise ValueError(
+                f"{evidence.name!r}: claimed key for {family!r} must be a nonempty string or null")
+
+    applied = evidence.transport["applied"]
+    slot_absent = evidence.transport["slot_absent"]
+    absent = evidence.transport["absent_in_transfer"]
+    if not isinstance(applied, dict) or not isinstance(slot_absent, dict):
+        raise ValueError(f"{evidence.name!r}: applied and slot_absent must be objects")
+    if not isinstance(absent, list):
+        raise ValueError(f"{evidence.name!r}: absent_in_transfer must be a list")
+
+    def _families(mapping: dict, label: str) -> set[str]:
+        out: set[str] = set()
+        for family in mapping:
+            if not isinstance(family, str) or not family:
+                raise ValueError(f"{evidence.name!r}: {label} family must be a nonempty string")
+            if family in out:
+                raise ValueError(f"{evidence.name!r}: duplicate {label} family {family!r}")
+            out.add(family)
+        return out
+
+    applied_families = _families(applied, "applied")
+    slot_absent_families = _families(slot_absent, "slot_absent")
+    absent_families: set[str] = set()
+    for family in absent:
+        if not isinstance(family, str) or not family:
+            raise ValueError(
+                f"{evidence.name!r}: absent_in_transfer family must be a nonempty string")
+        if family in absent_families:
+            raise ValueError(f"{evidence.name!r}: duplicate absent family {family!r}")
+        absent_families.add(family)
+
+    if (applied_families & slot_absent_families or applied_families & absent_families
+            or slot_absent_families & absent_families):
+        raise ValueError(f"{evidence.name!r}: transport claim partitions overlap")
+    claimed_families = set(summary)
+    if applied_families | slot_absent_families | absent_families != claimed_families:
+        raise ValueError(
+            f"{evidence.name!r}: transport claim partitions do not equal key summary families")
+
+    for family, key in applied.items():
+        if key is not None and (not isinstance(key, str) or not key):
+            raise ValueError(f"{evidence.name!r}: applied key for {family!r} must be string or null")
+        if summary[family] != key:
+            raise ValueError(f"{evidence.name!r}: applied key mismatch for {family!r}")
+    for family, key in slot_absent.items():
+        if not isinstance(key, str) or not key:
+            raise ValueError(f"{evidence.name!r}: absent slot for {family!r} must be nonempty string")
+        if summary[family] != key:
+            raise ValueError(f"{evidence.name!r}: absent slot mismatch for {family!r}")
+    for family in absent_families:
+        if family not in summary:
+            raise ValueError(f"{evidence.name!r}: absent family {family!r} is not claimed")
+
+    for label in ("unseen_in_source", "promoted_applied", "promoted_absent"):
+        values = evidence.transport[label]
+        if not isinstance(values, list) or any(not isinstance(v, str) or not v for v in values):
+            raise ValueError(f"{evidence.name!r}: {label} must be a list of nonempty strings")
+        if len(values) != len(set(values)):
+            raise ValueError(f"{evidence.name!r}: {label} contains duplicates")
+    if set(evidence.transport["unseen_in_source"]) & claimed_families:
+        raise ValueError(f"{evidence.name!r}: unseen source families overlap claimed families")
+    if set(evidence.transport["promoted_applied"]) & set(evidence.transport["promoted_absent"]):
+        raise ValueError(f"{evidence.name!r}: promoted transport partitions overlap")
+
+    serialized_applicability = evidence.transport["applicability"]
+    if (isinstance(serialized_applicability, bool)
+            or not isinstance(serialized_applicability, (int, float))
+            or not math.isfinite(float(serialized_applicability))):
+        raise ValueError(f"{evidence.name!r}: transport applicability must be finite numeric")
+    if not 0.0 <= float(serialized_applicability) <= 1.0:
+        raise ValueError(f"{evidence.name!r}: transport applicability must be in [0, 1]")
+    claimed_count = len(claimed_families)
+    expected_applicability = round(
+        len(applied_families) / claimed_count if claimed_count else 0.0, 3)
+    if float(serialized_applicability) != expected_applicability:
+        raise ValueError(
+            f"{evidence.name!r}: transport applicability does not match claim arithmetic")
+    if (isinstance(evidence.applicability, bool)
+            or not isinstance(evidence.applicability, (int, float))
+            or not math.isfinite(float(evidence.applicability))
+            or round(float(evidence.applicability), 3) != expected_applicability):
+        raise ValueError(
+            f"{evidence.name!r}: evidence applicability does not match serialized transport")
+
+    expected_separation = {
+        family for family, key in applied.items() if key is not None
+    }
+    actual_separation = {record["family"] for record in evidence.separation}
+    if actual_separation != expected_separation:
+        raise ValueError(
+            f"{evidence.name!r}: separation families do not equal exact non-null applied claims")
+    for record in evidence.separation:
+        if record["key_slot"] != applied[record["family"]]:
+            raise ValueError(
+                f"{evidence.name!r}: separation key mismatch for {record['family']!r}")
 
 
 CLASSES = ("LEFT_CORRECT_RIGHT_WRONG", "RIGHT_CORRECT_LEFT_WRONG", "BOTH_COMPATIBLE",
@@ -245,6 +399,7 @@ class SeparationDifferential:
     left_better: int = 0
     right_better: int = 0
     equal: int = 0
+    population_mismatches: int = 0
 
     @property
     def left_dominant(self) -> bool:
@@ -256,12 +411,13 @@ class SeparationDifferential:
 
     def to_json(self) -> dict[str, Any]:
         return {
-            "comparable_families": len(self.cases),
+            "comparable_families": len(self.cases) - self.population_mismatches,
             "counts": {"LEFT": self.left_better, "RIGHT": self.right_better,
                        "EQUAL": self.equal},
             "left_better": self.left_better,
             "right_better": self.right_better,
             "equal": self.equal,
+            "population_mismatches": self.population_mismatches,
             "left_dominant": self.left_dominant,
             "right_dominant": self.right_dominant,
             "cases": self.cases,
@@ -308,6 +464,31 @@ def separation_differential(left: TransferEvidence,
         left_copresent = left_record["copresent_pairs"]
         right_separated = right_record["separated_pairs"]
         right_copresent = right_record["copresent_pairs"]
+        left_population = left_record["population_hash"]
+        right_population = right_record["population_hash"]
+        if left_population != right_population:
+            # A rate over a different pair population is not a comparison.  Keep the
+            # mismatch in the differential for auditability, but it contributes no
+            # direction and therefore cannot decide the reading.
+            out.population_mismatches += 1
+            out.cases.append({
+                "family": family,
+                "left": {
+                    "key_slot": left_record.get("key_slot"),
+                    "separated_pairs": left_separated,
+                    "copresent_pairs": left_copresent,
+                    "population_hash": left_population,
+                },
+                "right": {
+                    "key_slot": right_record.get("key_slot"),
+                    "separated_pairs": right_separated,
+                    "copresent_pairs": right_copresent,
+                    "population_hash": right_population,
+                },
+                "population_mismatch": True,
+                "direction": "POPULATION_MISMATCH",
+            })
+            continue
         left_cross_product = left_separated * right_copresent
         right_cross_product = right_separated * left_copresent
         if left_cross_product > right_cross_product:
@@ -325,11 +506,13 @@ def separation_differential(left: TransferEvidence,
                 "key_slot": left_record.get("key_slot"),
                 "separated_pairs": left_separated,
                 "copresent_pairs": left_copresent,
+                "population_hash": left_population,
             },
             "right": {
                 "key_slot": right_record.get("key_slot"),
                 "separated_pairs": right_separated,
                 "copresent_pairs": right_copresent,
+                "population_hash": right_population,
             },
             "left_cross_product": left_cross_product,
             "right_cross_product": right_cross_product,
@@ -442,7 +625,7 @@ def decide(left: TransferEvidence, right: TransferEvidence) -> Decision:
                         left, right, diff, separation_diff)
     if left.errors != right.errors:
         winner = "LEFT" if left.errors < right.errors else "RIGHT"
-        return Decision(winner, f"fewer errors on the fresh history "
+        return Decision(winner, f"fewer errors on the comparison history "
                                 f"({min(left.errors, right.errors)} against "
                                 f"{max(left.errors, right.errors)})", left, right, diff,
                         separation_diff)
@@ -476,7 +659,7 @@ def decide(left: TransferEvidence, right: TransferEvidence) -> Decision:
         return Decision(winner, "the readings said the same thing at every step of this "
                         "history; the tie is broken by representational cost",
                         left, right, diff, separation_diff)
-    return Decision("UNDECIDED", "the fresh history does not tell these readings apart",
+    return Decision("UNDECIDED", "the comparison history does not tell these readings apart",
                     left, right, diff, separation_diff)
 
 

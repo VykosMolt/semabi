@@ -140,8 +140,15 @@ def _build(Hx: Hypotheses, G: ObsGraph, log: EvidenceLog) -> V2Abstractor:
 
 
 def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None = None,
-           log_fn=lambda *_: None, run_dir: Path | None = None) -> SearchResult:
-    refuted = read_refutations(run_dir)
+           log_fn=lambda *_: None, run_dir: Path | None = None,
+           refuted: dict[str, set[str | None]] | None = None) -> SearchResult:
+    """Search using either retained refutations or the legacy run-dir sidecar.
+
+    Frozen SOURCE generation passes ``refuted`` parsed from the descriptor-bound
+    custody bytes.  Path-based sidecar loading remains for live/probe callers only.
+    """
+    if refuted is None:
+        refuted = read_refutations(run_dir)
     reload_pairs = _reload_pairs(log)
     view_of = _view_of(H)
     result = SearchResult()

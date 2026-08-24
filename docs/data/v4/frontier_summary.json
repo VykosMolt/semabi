@@ -5,6 +5,7 @@
  "custody_timing": "RETROACTIVE_SNAPSHOT_CHRONOLOGY_NOT_ESTABLISHED",
  "claims": {
   "cross_trace_source_incumbent_rejection": "ESTABLISHED_ON_THREE_RETAINED_DEVELOPMENT_CHAINS",
+  "current_byte_replay_authentication": "PENDING_INDEPENDENT_REVIEW",
   "unique_transfer_selection": "NOT_ESTABLISHED",
   "prospective_collection_chronology": "NOT_ESTABLISHED",
   "representation_transportability": "NOT_ESTABLISHED_RTC_ZERO_ON_DIAGNOSED_TRANSPORTS"
@@ -12,7 +13,7 @@
  "applications": {
   "blend_book": {
    "report": "docs/data/v4/frontier_blend_book.json",
-   "report_sha256": "2a9135e2ea61fa67b3732cfb9cc83db7306559cbe24186ace5a73f4e5ae04b1d",
+      "report_sha256": "aad633a1d226d7d802b284628d4fe3cc61874446197bb46d0b3e649f4b998f41",
    "source_choice_rejected": true,
    "transfer_outcome": "AMBIGUOUS_SURVIVOR_SET",
    "survivors": [
@@ -27,13 +28,13 @@
    ],
    "holdout_outcome": "AMBIGUOUS_SURVIVOR_SET",
    "holdout_classifications": {
-    "cell[_]=cell#0": "CONFIRMED",
+    "cell[_]=cell#0": "CONFIRMED_WHERE_APPLICABLE_PARTIAL_COVERAGE",
     "promote cell[_]=cell#0": "PARTIALLY_CONTRADICTED"
    }
   },
   "harbour": {
    "report": "docs/data/v4/frontier_harbour.json",
-   "report_sha256": "2d376cbc6979064d5edcb92b2c1de4045c54df362b72c4312807a9fba3d0b50d",
+      "report_sha256": "68985ed3d26b5482d084d795d600825cfc9b0c9065a1ac8718f8a17a300056eb",
    "source_choice_rejected": true,
    "transfer_outcome": "AMBIGUOUS_SURVIVOR_SET",
    "survivors": [
@@ -59,7 +60,7 @@
   },
   "vet_clinic": {
    "report": "docs/data/v4/frontier_vet_clinic.json",
-   "report_sha256": "8541d06f5635515de465a0fbcca0b82ec0191e50cb37c993264bb24385d9693f",
+      "report_sha256": "8ed7d18be204b98af47e67a19eff483b479032ce858104a8123bd772a88961e6",
    "source_choice_rejected": true,
    "transfer_outcome": "AMBIGUOUS_SURVIVOR_SET",
    "survivors": [
@@ -73,7 +74,7 @@
     }
    ],
    "holdout_outcome": "AMBIGUOUS_SURVIVOR_SET",
-   "holdout_pairwise_frontier": "UNIQUE_SURVIVOR",
+   "holdout_pairwise_frontier": "AMBIGUOUS_SURVIVOR_SET",
    "holdout_classifications": {
     "promote cell[_]=cell#0": "PARTIALLY_CONTRADICTED",
     "row[_](cell[_])=None": "PARTIALLY_CONTRADICTED"
@@ -82,6 +83,8 @@
  },
  "forbidden_inferences": [
   "HOLDOUT_MAY_NOT_SELECT_WITHIN_AN_AMBIGUOUS_TRANSFER_FRONTIER",
+  "UNINSTANTIATED_CLAIMS_ARE_NOT_REFUTATIONS",
+  "SEPARATION_RATES_REQUIRE_IDENTICAL_PAIR_POPULATIONS",
   "LOWER_APPLICABILITY_IS_NOT_A_LOSS",
   "RETROACTIVE_BYTE_CUSTODY_DOES_NOT_ESTABLISH_PROSPECTIVE_CHRONOLOGY",
   "DEVELOPMENT_CHAINS_DO_NOT_ESTABLISH_FRESH_GENERALIZATION"

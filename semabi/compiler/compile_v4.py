@@ -42,7 +42,8 @@ def build_hypotheses(run_dir: Path, log: EvidenceLog,
 def compile_v4(run_dir: Path, min_support: int = 1, conservative_belief: bool = True,
                max_steps: int | None = None, write_diagnostics: bool = True,
                identity: dict[str, str | None] | None = None,
-               pinned: "v4_pinned.PinnedReading | None" = None) -> Compiled:
+               pinned: "v4_pinned.PinnedReading | None" = None,
+               evidence_log: EvidenceLog | None = None) -> Compiled:
     """Compile with V4 identity selection.
 
     `pinned` carries a whole frozen reading from another interaction history and applies it
@@ -57,7 +58,12 @@ def compile_v4(run_dir: Path, min_support: int = 1, conservative_belief: bool = 
     When both are None the behavioural search decides locally.
     """
     run_dir = Path(run_dir)
-    log = EvidenceLog(run_dir)
+    log = evidence_log if evidence_log is not None else EvidenceLog(run_dir)
+    # A provided log is immutable custody evidence.  Diagnostics would write beside a
+    # potentially mutable path and are therefore disabled at this boundary.
+    if evidence_log is not None:
+        write_diagnostics = False
+    search_run_dir = None if evidence_log is not None else run_dir
     transport = None
     if pinned is not None:
         probe_H, probe_G = build_hypotheses(run_dir, log)
@@ -72,7 +78,7 @@ def compile_v4(run_dir: Path, min_support: int = 1, conservative_belief: bool = 
         result = None
     elif identity is None:
         result = v4_search.search(H, G, log, max_steps=max_steps, log_fn=notes.append,
-                                  run_dir=run_dir)
+                                  run_dir=search_run_dir)
         # whether a repeated leaf is a value of its container or an object of its own is the
         # other half of the observation model, and it is decided the same way: on trial,
         # kept only on a strict improvement
@@ -82,7 +88,7 @@ def compile_v4(run_dir: Path, min_support: int = 1, conservative_belief: bool = 
             trial_H, trial_G = build_hypotheses(run_dir, log, promoted | {candidate})
             try:
                 trial = v4_search.search(trial_H, trial_G, log, max_steps=max_steps,
-                                         log_fn=lambda _m: None, run_dir=run_dir)
+                                         log_fn=lambda _m: None, run_dir=search_run_dir)
             except Exception as exc:  # noqa: BLE001 - a promotion that cannot be built loses
                 notes.append(f"v4 promote {candidate}: build failed ({type(exc).__name__})")
                 continue

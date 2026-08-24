@@ -230,7 +230,7 @@ response is custody, not another coefficient.
   another history by instantiation only. A claim that cannot be instantiated is *recorded*,
   and a family the source never claimed does not keep the destination's own key. The earlier
   `identity=` map is kept for reproducing old numbers and documented as not being transport.
-* `v4/transfer.py` — an evidence vector per frozen reading against a history it never saw,
+* `v4/transfer.py` — an evidence vector per frozen reading against a separate role history,
   a per-step differential in the discipline V2 used for candidate-versus-baseline, and a
   dominance rule in which contradiction is the only thing that eliminates and *explaining
   more steps is not a reason to prefer a reading*.
@@ -260,12 +260,13 @@ Both are pinned by tests, including one that reproduces the harbour pathology di
 
 ### The chains
 
-Three applications by three independent authors, each with three interaction histories that
-were collected separately and never shared a role. Source histories are the existing
-development traces; transfer and holdout were collected for this phase with the frozen V4
-survey explorer at seeds 12 and 13.
+The phase report described three applications by three authors, each with three separately
+collected role histories. Source histories are the existing development traces; transfer and
+holdout were reported as using the frozen V4 survey explorer at seeds 12 and 13. The retained
+bytes establish distinct histories, but author identity, collection order, and seeds were not
+precommitted as machine authority and remain **NOT_ESTABLISHED**.
 
-| application | author | SOURCE | TRANSFER | HOLDOUT |
+| application | reported author | SOURCE | TRANSFER | HOLDOUT |
 |---|---|---:|---:|---:|
 | `sonnet_01_vet_clinic` | Sonnet 5 | 403 | 897 | 886 |
 | `opus_01_harbour` | Opus 5 | 373 | 459 | 461 |
@@ -276,7 +277,7 @@ source's own choice**, each for a compiler-visible reason. This table is the his
 checkpoint, not the accepted frontier result: commit `1e20ef2` preserves the later review
 that rejected its one-pass incumbent semantics.
 
-| application | selected reading | why the fresh history preferred it | holdout |
+| application | selected reading | why the then-described comparison history preferred it | holdout |
 |---|---|---|---|
 | `vet_clinic` | `row[_](cell[_])` read as no identity | contradicts the source choice at 24 steps where this one is not contradicted | **PARTIALLY_CONTRADICTED**: 6 errors against the source choice's 30 |
 | `harbour` | `row[_](cell[_](button[_]),cell[_])=cell#0` | confirms 2 of its identity claims against 1, on peers it had to tell apart | **PARTIALLY_CONTRADICTED**: 2 errors, 32 explained (source choice 2 / 30) |
@@ -307,7 +308,8 @@ selection.
 ### Transport still costs the behavioural result
 
 The same evaluator says the thing that must not be buried. A reading applied without
-refitting scores **RTC 0.000 on both fresh histories**, while the same mechanism re-derived
+refitting scores **RTC 0.000 on both separate histories** (prospective freshness was not
+retained), while the same mechanism re-derived
 in place on those histories is the best result V4 has:
 
 | history | V2 | V4 in place | V4 transported |
@@ -328,7 +330,7 @@ churn, visibility or spurious-delta counting noticed, because a merging key does
 contradict anything — it merely fails to separate.
 
 That is what the separation test was added for: an identity claim is a prediction that the
-named value tells co-present instances apart, and a fresh history can refute it without any
+named value tells co-present instances apart, and a separate history can refute it without any
 refitting. It is not a re-selection — no alternative is considered and nothing is changed.
 On `harbour` it scores the yes/no key **PARTIAL, 199 of 400 pairs**, against CONFIRMED
 400/400 for the two readings that name rows properly. At this checkpoint the rule treated
@@ -337,12 +339,13 @@ that comparison without introducing a rate threshold.
 
 ### Continuation: exact same-family separation dominance
 
-The successor rule compares separation only when both frozen readings make a tested claim
-about the same literal-free family. It compares the exact integer fractions by cross
-multiplication, never their rounded display rates. A reading wins this gate only when it is
-strictly better on at least one shared family and worse on none; opposing family directions
-remain unresolved. Refutation, applicability, and behavioural contradiction/error gates
-retain precedence. Every decision artifact now records the exact family, keys, numerators,
+The successor rule compares separation only when both frozen readings make an instantiated,
+tested claim about the same literal-free family over the identical SHA-256-bound co-present
+pair population. It compares the exact integer fractions by cross multiplication, never their
+rounded display rates. A reading wins this gate only when it is strictly better on at least
+one shared family and worse on none; opposing family directions remain unresolved.
+Refutation, applicability, and behavioural contradiction/error gates retain precedence.
+Every decision artifact records the exact family, keys, populations, numerators,
 denominators, cross-products and direction under `separation_differential`.
 
 The first replay retained the old sequential incumbent loop. Review showed that an
@@ -350,15 +353,21 @@ The first replay retained the old sequential incumbent loop. Review showed that 
 unresolved rival, and candidate order could manufacture a singleton. That implementation
 and its artifacts are preserved as rejected at `1e20ef2`.
 
-The accepted successor authenticates a frozen SOURCE candidate manifest, decides every
-unordered TRANSFER pair once, and retains the zero-loss frontier. It emits a selection only
-for exactly one survivor. The repaired results are:
+The first authenticated all-pairs candidate at `98db1bd` reproduced the zero-loss frontier,
+but adversarial review rejected its evidence-integrity claim: an uninstantiated key could be
+serialized as refuted, executed modules and consumed bytes were not fully bound, role
+distinctness included unconsumed bytes, and HOLDOUT labels overstated partial coverage. The
+candidate and exact rejection are retained at `98db1bd` and `5f229f3`.
+
+The current repair authenticates a frozen SOURCE candidate manifest, decides every unordered
+TRANSFER pair once, and retains the zero-loss frontier. It emits a selection only for exactly
+one survivor. Its current results, pending independent review, are:
 
 | application | SOURCE incumbent | undefeated TRANSFER frontier | HOLDOUT |
 |---|---|---|---|
-| `vet_clinic` | rejected | promoted-cell reading plus `row[_](cell[_])=None` | both individually partially contradicted; HOLDOUT pairwise evidence favors the row reading, but cannot perform selection |
+| `vet_clinic` | rejected | promoted-cell reading plus `row[_](cell[_])=None` | both individually partially contradicted; HOLDOUT pair remains applicability-inconclusive |
 | `harbour` | rejected | promoted-cell reading plus both row-key variants | all three individually partially contradicted; pairwise frontier remains three-way ambiguous |
-| `blend_book` | rejected | `cell[_]=cell#0` plus promoted-cell reading | first individually confirmed, second partially contradicted; pair remains applicability-inconclusive |
+| `blend_book` | rejected | `cell[_]=cell#0` plus promoted-cell reading | first confirmed only where applicable under partial coverage, second partially contradicted; pair remains applicability-inconclusive |
 
 The promoted-cell controls survive because the histories do not put them to the same test as
 their rivals: applicability is 0.83 versus 1.00 on vet_clinic, 0.60 versus 1.00 on harbour,
@@ -388,12 +397,14 @@ them would be post-transfer refitting.
 
 ### Custody and replay repair
 
-The nine role histories are now retained as exact raw inputs rather than mutable ignored
-paths. Compiler snapshots bind observations, steps, probes, and the one existing SOURCE
-refutation sidecar. A separate `EVALUATOR_ONLY` manifest binds hidden-domain and oracle bytes;
-those names never enter compiler modules or the transfer runner. Source manifests bind an
-explicit incumbent, every complete pinned reading, source bytes, and generator code hashes.
-Chain manifests add distinct role snapshots, replay code hashes, and `min_support=2`.
+The nine role histories are retained as exact raw inputs rather than mutable ignored paths.
+Compiler snapshots bind observations, steps, probes, and the one existing SOURCE refutation
+sidecar. Distinctness is decided only from observations and steps. Replay opens confined paths
+through no-follow descriptors, consumes each role once into immutable bytes, and builds an
+isolated in-memory parser object for every candidate. A separate `EVALUATOR_ONLY` manifest
+binds hidden-domain and oracle bytes; those names never enter compiler modules or the transfer
+runner. Source and chain manifests bind the exact Python runtime plus deterministic transitive
+local-import closures derived from the loaded checkout; an alternate `--repo-root` is rejected.
 
 This is a retroactive freeze. The exact state is
 `RETROACTIVE_SNAPSHOT_CHRONOLOGY_NOT_ESTABLISHED`: current bytes and replay are reproducible,

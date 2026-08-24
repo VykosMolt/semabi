@@ -34,46 +34,55 @@
   ],
   "chain_manifest": {
    "path": "docs/data/v4/manifests/blend_book_chain.json",
-   "sha256": "a0f8c60c33c29c40b0e7dfd469be74affa2c3a69b52d32094c6e5f27157ee975"
+   "sha256": "5adff8385df3dcb7de358af633925cc27edbf025dd873bee35adf5dd94fff194"
   },
   "custody_timing": "RETROACTIVE_SNAPSHOT_CHRONOLOGY_NOT_ESTABLISHED",
   "min_support": 2,
   "replay_implementation_files": {
+   "semabi/__init__.py": "0a6e61cf4d9d8dc368fef7bc2053e6db686e3fb70272d7f9e9f1e5b3f79f95e8",
+   "semabi/compiler/__init__.py": "5249623658aef7d2b87bd34d06fab3f181b1ef5bbb9dd70b827592bb01b02893",
    "semabi/compiler/abstract.py": "07fd8b41fcfdfe3d563e6b5f28d6fbb0229fb706f944dbfe7626a363ade633f8",
    "semabi/compiler/belief.py": "10996cf9f5f2264ecbe8e28235718e81fc606ed249d8c2708f50541a73a8aa5c",
    "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
    "semabi/compiler/compile.py": "fa0e4b4237658dc2e5d41cf715fe8ca884b0b2ec9b714cde4f1917318c9f920f",
-   "semabi/compiler/compile_v4.py": "8474c48d7d8843106d3de3405698f04d48b191a36d5e8e36318205bd69ef9d27",
+   "semabi/compiler/compile_v4.py": "cc0049796495f7d0c0b7a5a100e13f1981a36d662f78178fb62a48ff6c330118",
    "semabi/compiler/evidence.py": "b4a5d0c9208f9b6c4588317078f8270a7bd0766bcb1a2e52722f72be74a90e51",
    "semabi/compiler/explorer.py": "16827d3735c9eab4d51a60c585790226be3e692bb63b01794df29a9ba8c8c807",
+   "semabi/compiler/grounder.py": "d272260d2bacd64dcd7fc88f2094c2f84b989736c89924460cc0053b8e97ac06",
    "semabi/compiler/induce.py": "46075088d34187ea121c77c3522055260e710a71199fd97de338f36f0c212b3e",
+   "semabi/compiler/mentions.py": "800fa94e2e4f76bfc503c7557ec775f6d83a612f6634123a62f78a16de2b781c",
    "semabi/compiler/model.py": "31b2d1207d678c05b743e70249db7947d7bb25759f668f2d013aef218aca6f36",
    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
    "semabi/compiler/parse.py": "c609e78b0f020f09bc22686168f22392cb54cea163a2ff84ab917528cb0ca922",
+   "semabi/compiler/v2/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
    "semabi/compiler/v2/abstractor.py": "8ef5620e76fbfd6047879814453d9cb1761d0d5f3641f354fa81dd9978110499",
    "semabi/compiler/v2/controls.py": "593eaaacfae90a3b688b403ea78e7651461a319dcb8f0fa3c148fcf21cc96f06",
    "semabi/compiler/v2/graph.py": "feb2ee73faca3bd5eaa91b3685bf84c047bf90027dddc56d02713b26a5501b6a",
    "semabi/compiler/v2/hypotheses.py": "fcb47e96015115c02efc56c9994fbcc1d2dcb2728d8b9ab51a89bfda5cffb92a",
    "semabi/compiler/v2/score.py": "292ea78f2237e7b86dbbc943d624024ca9213218ead327b88080b71aebaaa95c",
    "semabi/compiler/v2/units.py": "c1a94e811f8259742e65e24d4beea8b869868bec6a2901f5420a96d60d5d7d58",
-   "semabi/compiler/v4/custody.py": "41a5e047964550c2871ecdafa3159dde2a299e409845b240f9bd95ea1309c851",
+   "semabi/compiler/v4/__init__.py": "c41acb8afd5f3306718e6b5bb242db1dae876bf512bcec1d6c49108e8fbcc38c",
+   "semabi/compiler/v4/custody.py": "51b7b47082f78c4873a92d31a734efc7940f625fde2a171d053e554d5205547c",
+   "semabi/compiler/v4/frozen_evidence.py": "53be3e92100bf032bd2ded2856a0b6f873171f7220a61a715dee4f00c7efb382",
    "semabi/compiler/v4/identity.py": "4e718dd8b3d2ade2126c31c5e88a3d5d7b91662a08e1a95077f342c030039c05",
-   "semabi/compiler/v4/manifests.py": "633b6dee9692281906b3a050c49677543e168b083c97ce4da0abe5c8e634a646",
+   "semabi/compiler/v4/manifests.py": "994dbd298edb8ac1a3a0090ceaa72be7c01a61cab08ea0582a085b0711639eb5",
    "semabi/compiler/v4/objective.py": "4dd902f9bb288e967ae1333f581631e5c6edbd507a841bf45efe569b758fc065",
-   "semabi/compiler/v4/pinned.py": "03e10aecbe04122612c235bf363376152a15cd35db5faf575ae664248f96d2dc",
+   "semabi/compiler/v4/pinned.py": "2ed0a864b517401417590189ec4dd81bd3119649e3fec5a69ca211352e3dcd71",
    "semabi/compiler/v4/promote.py": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65",
-   "semabi/compiler/v4/search.py": "47f3751cbd325278b9afecc0d4e6ed8fbc55e3af592344a3f45e610593b40f72",
-   "semabi/compiler/v4/transfer.py": "1d7934b7318b9a4364a0d08400cc72bde343a293e9b8d62d82c112da67f2d1da",
+   "semabi/compiler/v4/search.py": "32f3411b29e6a28e25bbfe799787fb171c32fedbb8dc56b6a61a41997506c767",
+   "semabi/compiler/v4/transfer.py": "46a6060525108a58f82de5c402a8d2b8f719560538a9087400905af145b04291",
    "semabi/relmodel.py": "22ffbfe51a95a2b77307b9a2e0f3ba297dd58b2efd045ce7ab0263602abd74cf",
-   "semabi/run_v4_transfer.py": "dff2a8869b7463a8cd235a6c5308a751013791a24771e47f73130bdb435efa78"
+   "semabi/run_v4_transfer.py": "e58afc4199b11e48acc8c3e1768e06461864933076ddbb0cf0d3bed92b473592"
   },
   "roles": {
    "HOLDOUT": {
+    "consumed_evidence_sha256": "715ec2e2580f7b76311e2be0b96c3c7b411d0133ad1dbc2092fe9d9aa07fed3f",
     "content_tree_sha256": "a48bb26e14d7019bf774d4664b53bf9641e4c4089ba471e9d9a34010fc278a3e",
     "path": "../../../../runs/v4/blend_book_holdout",
     "path_base": "CHAIN_MANIFEST_PARENT",
     "role_bound_sha256": "d05348ea43c610bedca3a72a03a61b32a9b57f2aeecbeb01c0dd90cfca852d6b",
     "snapshot": {
+     "consumed_evidence_sha256": "715ec2e2580f7b76311e2be0b96c3c7b411d0133ad1dbc2092fe9d9aa07fed3f",
      "content_tree_sha256": "a48bb26e14d7019bf774d4664b53bf9641e4c4089ba471e9d9a34010fc278a3e",
      "files": [
       {
@@ -97,15 +106,17 @@
      ],
      "role": "HOLDOUT",
      "role_bound_sha256": "d05348ea43c610bedca3a72a03a61b32a9b57f2aeecbeb01c0dd90cfca852d6b",
-     "schema": "semabi.v4.compiler-snapshot.v1"
+     "schema": "semabi.v4.compiler-snapshot.v2"
     }
    },
    "SOURCE": {
+    "consumed_evidence_sha256": "54f6b971cc33b7861b95b68d6f8ff00af6183259622c3a1b633bb72ef8c18610",
     "content_tree_sha256": "516ee05267ba75f700a626fface4b850afbb9b7961b9555c21f5403032750b87",
     "path": "../../../../runs/v4/grok_02_blend_book_dev",
     "path_base": "CHAIN_MANIFEST_PARENT",
     "role_bound_sha256": "7cf7472becd6f8fe373b441e08ed5eb432d6c72d27d7a7bbba879f34d1f896ec",
     "snapshot": {
+     "consumed_evidence_sha256": "54f6b971cc33b7861b95b68d6f8ff00af6183259622c3a1b633bb72ef8c18610",
      "content_tree_sha256": "516ee05267ba75f700a626fface4b850afbb9b7961b9555c21f5403032750b87",
      "files": [
       {
@@ -123,15 +134,17 @@
      ],
      "role": "SOURCE",
      "role_bound_sha256": "7cf7472becd6f8fe373b441e08ed5eb432d6c72d27d7a7bbba879f34d1f896ec",
-     "schema": "semabi.v4.compiler-snapshot.v1"
+     "schema": "semabi.v4.compiler-snapshot.v2"
     }
    },
    "TRANSFER": {
+    "consumed_evidence_sha256": "4212c20b61e05ad2ebd452f0f5388075bccfd024b3dff39139a147fd15185ff3",
     "content_tree_sha256": "46ad365fb0036a548c65c0c7824bcb736d65af8925042e7f322b5eb2e2031ac3",
     "path": "../../../../runs/v4/blend_book_transfer",
     "path_base": "CHAIN_MANIFEST_PARENT",
     "role_bound_sha256": "685ed71db34a15c57fbba39bd167a0d63c3c7272a71c712472a704e9a9f957eb",
     "snapshot": {
+     "consumed_evidence_sha256": "4212c20b61e05ad2ebd452f0f5388075bccfd024b3dff39139a147fd15185ff3",
      "content_tree_sha256": "46ad365fb0036a548c65c0c7824bcb736d65af8925042e7f322b5eb2e2031ac3",
      "files": [
       {
@@ -155,18 +168,26 @@
      ],
      "role": "TRANSFER",
      "role_bound_sha256": "685ed71db34a15c57fbba39bd167a0d63c3c7272a71c712472a704e9a9f957eb",
-     "schema": "semabi.v4.compiler-snapshot.v1"
+     "schema": "semabi.v4.compiler-snapshot.v2"
     }
    }
   },
+  "runtime": {
+   "implementation": "CPython",
+   "version": "3.12.13"
+  },
   "source_manifest": {
    "path": "docs/data/v4/manifests/blend_book_source_candidates.json",
-   "sha256": "0311a817e4ba07f1ede3a280766d5bbaae556272eebbfe662a3be4a0d141396f"
+   "sha256": "cf13384f4a96d05160c179e2c4c2b49ab9833bbd15d60ffe386cef86b8d41f33"
+  },
+  "source_runtime": {
+   "implementation": "CPython",
+   "version": "3.12.13"
   }
  },
  "holdout": {
   "classifications": {
-   "cell[_]=cell#0": "CONFIRMED",
+   "cell[_]=cell#0": "CONFIRMED_WHERE_APPLICABLE_PARTIAL_COVERAGE",
    "promote cell[_]=cell#0": "PARTIALLY_CONTRADICTED"
   },
   "evidence": {
@@ -190,6 +211,7 @@
       "copresent_pairs": 400,
       "family": "cell[_]",
       "key_slot": "cell#0",
+      "population_hash": "2fe48bc916ed8d9e36c81cb2163eed48bd5fd85faa4046d0a7b303b04e81ea19",
       "rate": 1.0,
       "separated_pairs": 400,
       "status": "CONFIRMED"
@@ -198,6 +220,7 @@
       "copresent_pairs": 0,
       "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
       "key_slot": "group/group/text#0@9",
+      "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "rate": null,
       "separated_pairs": 0,
       "status": "UNTESTED"
@@ -206,6 +229,7 @@
       "copresent_pairs": 400,
       "family": "row[_](cell[_],cell[_](button[_]))",
       "key_slot": "cell#0@2",
+      "population_hash": "9662312699ef9e1f54a69538e63b11aeeb55b55d857be5701d098f930cadf2cd",
       "rate": 0.94,
       "separated_pairs": 376,
       "status": "PARTIAL"
@@ -1084,6 +1108,7 @@
       "copresent_pairs": 400,
       "family": "cell[_]",
       "key_slot": "cell#0",
+      "population_hash": "9a651b40aa706191f6240a7f32c50874b5b6288e1a38eddb0685b37a03b8d8d7",
       "rate": 0.748,
       "separated_pairs": 299,
       "status": "PARTIAL"
@@ -1092,6 +1117,7 @@
       "copresent_pairs": 0,
       "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
       "key_slot": "group/group/text#0@9",
+      "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "rate": null,
       "separated_pairs": 0,
       "status": "UNTESTED"
@@ -2352,6 +2378,7 @@
          "copresent_pairs": 400,
          "family": "cell[_]",
          "key_slot": "cell#0",
+         "population_hash": "2fe48bc916ed8d9e36c81cb2163eed48bd5fd85faa4046d0a7b303b04e81ea19",
          "rate": 1.0,
          "separated_pairs": 400,
          "status": "CONFIRMED"
@@ -2360,6 +2387,7 @@
          "copresent_pairs": 0,
          "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
          "key_slot": "group/group/text#0@9",
+         "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
          "rate": null,
          "separated_pairs": 0,
          "status": "UNTESTED"
@@ -2368,6 +2396,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_],cell[_](button[_]))",
          "key_slot": "cell#0@2",
+         "population_hash": "9662312699ef9e1f54a69538e63b11aeeb55b55d857be5701d098f930cadf2cd",
          "rate": 0.94,
          "separated_pairs": 376,
          "status": "PARTIAL"
@@ -2421,6 +2450,7 @@
          "copresent_pairs": 400,
          "family": "cell[_]",
          "key_slot": "cell#0",
+         "population_hash": "9a651b40aa706191f6240a7f32c50874b5b6288e1a38eddb0685b37a03b8d8d7",
          "rate": 0.748,
          "separated_pairs": 299,
          "status": "PARTIAL"
@@ -2429,6 +2459,7 @@
          "copresent_pairs": 0,
          "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
          "key_slot": "group/group/text#0@9",
+         "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
          "rate": null,
          "separated_pairs": 0,
          "status": "UNTESTED"
@@ -2462,31 +2493,33 @@
       "separation_differential": {
        "cases": [
         {
-         "direction": "LEFT",
+         "direction": "POPULATION_MISMATCH",
          "family": "cell[_]",
          "left": {
           "copresent_pairs": 400,
           "key_slot": "cell#0",
+          "population_hash": "2fe48bc916ed8d9e36c81cb2163eed48bd5fd85faa4046d0a7b303b04e81ea19",
           "separated_pairs": 400
          },
-         "left_cross_product": 160000,
+         "population_mismatch": true,
          "right": {
           "copresent_pairs": 400,
           "key_slot": "cell#0",
+          "population_hash": "9a651b40aa706191f6240a7f32c50874b5b6288e1a38eddb0685b37a03b8d8d7",
           "separated_pairs": 299
-         },
-         "right_cross_product": 119600
+         }
         }
        ],
-       "comparable_families": 1,
+       "comparable_families": 0,
        "counts": {
         "EQUAL": 0,
-        "LEFT": 1,
+        "LEFT": 0,
         "RIGHT": 0
        },
        "equal": 0,
-       "left_better": 1,
-       "left_dominant": true,
+       "left_better": 0,
+       "left_dominant": false,
+       "population_mismatches": 1,
        "right_better": 0,
        "right_dominant": false
       }
@@ -2543,6 +2576,7 @@
      "copresent_pairs": 400,
      "family": "cell[_]",
      "key_slot": "cell#0",
+     "population_hash": "2fe48bc916ed8d9e36c81cb2163eed48bd5fd85faa4046d0a7b303b04e81ea19",
      "rate": 1.0,
      "separated_pairs": 400,
      "status": "CONFIRMED"
@@ -2551,6 +2585,7 @@
      "copresent_pairs": 0,
      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
      "key_slot": "group/group/text#0@9",
+     "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
      "rate": null,
      "separated_pairs": 0,
      "status": "UNTESTED"
@@ -2559,6 +2594,7 @@
      "copresent_pairs": 400,
      "family": "row[_](cell[_],cell[_](button[_]))",
      "key_slot": "cell#0@2",
+     "population_hash": "9662312699ef9e1f54a69538e63b11aeeb55b55d857be5701d098f930cadf2cd",
      "rate": 0.94,
      "separated_pairs": 376,
      "status": "PARTIAL"
@@ -3437,6 +3473,7 @@
      "copresent_pairs": 400,
      "family": "cell[_]",
      "key_slot": "cell#0",
+     "population_hash": "9a651b40aa706191f6240a7f32c50874b5b6288e1a38eddb0685b37a03b8d8d7",
      "rate": 0.748,
      "separated_pairs": 299,
      "status": "PARTIAL"
@@ -3445,6 +3482,7 @@
      "copresent_pairs": 0,
      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
      "key_slot": "group/group/text#0@9",
+     "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
      "rate": null,
      "separated_pairs": 0,
      "status": "UNTESTED"
@@ -4705,6 +4743,7 @@
         "copresent_pairs": 400,
         "family": "cell[_]",
         "key_slot": "cell#0",
+        "population_hash": "2fe48bc916ed8d9e36c81cb2163eed48bd5fd85faa4046d0a7b303b04e81ea19",
         "rate": 1.0,
         "separated_pairs": 400,
         "status": "CONFIRMED"
@@ -4713,6 +4752,7 @@
         "copresent_pairs": 0,
         "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
         "key_slot": "group/group/text#0@9",
+        "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "rate": null,
         "separated_pairs": 0,
         "status": "UNTESTED"
@@ -4721,6 +4761,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_],cell[_](button[_]))",
         "key_slot": "cell#0@2",
+        "population_hash": "9662312699ef9e1f54a69538e63b11aeeb55b55d857be5701d098f930cadf2cd",
         "rate": 0.94,
         "separated_pairs": 376,
         "status": "PARTIAL"
@@ -4774,6 +4815,7 @@
         "copresent_pairs": 400,
         "family": "cell[_]",
         "key_slot": "cell#0",
+        "population_hash": "9a651b40aa706191f6240a7f32c50874b5b6288e1a38eddb0685b37a03b8d8d7",
         "rate": 0.748,
         "separated_pairs": 299,
         "status": "PARTIAL"
@@ -4782,6 +4824,7 @@
         "copresent_pairs": 0,
         "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
         "key_slot": "group/group/text#0@9",
+        "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "rate": null,
         "separated_pairs": 0,
         "status": "UNTESTED"
@@ -4815,31 +4858,33 @@
      "separation_differential": {
       "cases": [
        {
-        "direction": "LEFT",
+        "direction": "POPULATION_MISMATCH",
         "family": "cell[_]",
         "left": {
          "copresent_pairs": 400,
          "key_slot": "cell#0",
+         "population_hash": "2fe48bc916ed8d9e36c81cb2163eed48bd5fd85faa4046d0a7b303b04e81ea19",
          "separated_pairs": 400
         },
-        "left_cross_product": 160000,
+        "population_mismatch": true,
         "right": {
          "copresent_pairs": 400,
          "key_slot": "cell#0",
+         "population_hash": "9a651b40aa706191f6240a7f32c50874b5b6288e1a38eddb0685b37a03b8d8d7",
          "separated_pairs": 299
-        },
-        "right_cross_product": 119600
+        }
        }
       ],
-      "comparable_families": 1,
+      "comparable_families": 0,
       "counts": {
        "EQUAL": 0,
-       "LEFT": 1,
+       "LEFT": 0,
        "RIGHT": 0
       },
       "equal": 0,
-      "left_better": 1,
-      "left_dominant": true,
+      "left_better": 0,
+      "left_dominant": false,
+      "population_mismatches": 1,
       "right_better": 0,
       "right_dominant": false
      }
@@ -4875,9 +4920,10 @@
  "holdout_outcome": "AMBIGUOUS_SURVIVOR_SET",
  "outcome": "AMBIGUOUS_SURVIVOR_SET",
  "role_semantics": {
-  "HOLDOUT": "classified the undefeated transfer survivors after selection",
-  "SOURCE": "retained the candidate readings; it is not validation",
-  "TRANSFER": "compared the retained readings on a fresh history; it is not validation"
+  "HOLDOUT": "post-TRANSFER development classification of survivors; not validation",
+  "SOURCE": "retained source candidate readings from spent development evidence; not validation",
+  "TRANSFER": "compared retained readings on a separate spent development history; prospective freshness NOT_ESTABLISHED",
+  "all": "SOURCE, TRANSFER, and HOLDOUT are separate retained spent development histories; prospective freshness is NOT_ESTABLISHED"
  },
  "roles": {
   "HOLDOUT": "../../../../runs/v4/blend_book_holdout",
@@ -5190,7 +5236,7 @@
   ],
   "manifest": {
    "path": "docs/data/v4/manifests/blend_book_source_candidates.json",
-   "sha256": "0311a817e4ba07f1ede3a280766d5bbaae556272eebbfe662a3be4a0d141396f"
+   "sha256": "cf13384f4a96d05160c179e2c4c2b49ab9833bbd15d60ffe386cef86b8d41f33"
   },
   "source_choice": {
    "decision_fingerprint": "32ce86a55a72ab0e",
@@ -5544,6 +5590,7 @@
       "copresent_pairs": 400,
       "family": "button[_]",
       "key_slot": "button#0",
+      "population_hash": "dc7a5d60e9a09a9bd18d9554ad27ed852ca98068bd2676ffb95be1b57241b34a",
       "rate": 0.963,
       "separated_pairs": 385,
       "status": "PARTIAL"
@@ -5552,6 +5599,7 @@
       "copresent_pairs": 0,
       "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
       "key_slot": "group/group/text#0@9",
+      "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "rate": null,
       "separated_pairs": 0,
       "status": "UNTESTED"
@@ -5560,6 +5608,7 @@
       "copresent_pairs": 400,
       "family": "row[_](cell[_],cell[_](button[_]))",
       "key_slot": "cell#0@2",
+      "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
       "rate": 0.89,
       "separated_pairs": 356,
       "status": "PARTIAL"
@@ -6443,6 +6492,7 @@
       "copresent_pairs": 400,
       "family": "cell[_]",
       "key_slot": "cell#0",
+      "population_hash": "362b3d5094c35c47ffe3eb8ed8d2f8bfecfb74f9cbfdc13970df5193430a7200",
       "rate": 1.0,
       "separated_pairs": 400,
       "status": "CONFIRMED"
@@ -6451,6 +6501,7 @@
       "copresent_pairs": 0,
       "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
       "key_slot": "group/group/text#0@9",
+      "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "rate": null,
       "separated_pairs": 0,
       "status": "UNTESTED"
@@ -6459,6 +6510,7 @@
       "copresent_pairs": 400,
       "family": "row[_](cell[_],cell[_](button[_]))",
       "key_slot": "cell#0@2",
+      "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
       "rate": 0.89,
       "separated_pairs": 356,
       "status": "PARTIAL"
@@ -7342,6 +7394,7 @@
       "copresent_pairs": 400,
       "family": "row[_](cell[_],cell[_](button[_]))",
       "key_slot": "cell#0@2",
+      "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
       "rate": 0.89,
       "separated_pairs": 356,
       "status": "PARTIAL"
@@ -8225,6 +8278,7 @@
       "copresent_pairs": 400,
       "family": "cell[_]",
       "key_slot": "cell#0",
+      "population_hash": "e8a2b45e9ccd52d0741a1668f4d6d1909107379396f28d91ec80846a086e2c91",
       "rate": 0.823,
       "separated_pairs": 329,
       "status": "PARTIAL"
@@ -8233,6 +8287,7 @@
       "copresent_pairs": 0,
       "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
       "key_slot": "group/group/text#0@9",
+      "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "rate": null,
       "separated_pairs": 0,
       "status": "UNTESTED"
@@ -9118,6 +9173,7 @@
       "copresent_pairs": 0,
       "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
       "key_slot": "group/group/text#0@9",
+      "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "rate": null,
       "separated_pairs": 0,
       "status": "UNTESTED"
@@ -9126,6 +9182,7 @@
       "copresent_pairs": 400,
       "family": "row[_](cell[_],cell[_](button[_]))",
       "key_slot": "cell#0",
+      "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
       "rate": 0.895,
       "separated_pairs": 358,
       "status": "PARTIAL"
@@ -10009,6 +10066,7 @@
       "copresent_pairs": 0,
       "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
       "key_slot": "group/group/text#0@9",
+      "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "rate": null,
       "separated_pairs": 0,
       "status": "UNTESTED"
@@ -10017,6 +10075,7 @@
       "copresent_pairs": 400,
       "family": "row[_](cell[_],cell[_](button[_]))",
       "key_slot": "cell#0@2",
+      "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
       "rate": 0.89,
       "separated_pairs": 356,
       "status": "PARTIAL"
@@ -10924,6 +10983,7 @@
          "copresent_pairs": 400,
          "family": "button[_]",
          "key_slot": "button#0",
+         "population_hash": "dc7a5d60e9a09a9bd18d9554ad27ed852ca98068bd2676ffb95be1b57241b34a",
          "rate": 0.963,
          "separated_pairs": 385,
          "status": "PARTIAL"
@@ -10932,6 +10992,7 @@
          "copresent_pairs": 0,
          "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
          "key_slot": "group/group/text#0@9",
+         "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
          "rate": null,
          "separated_pairs": 0,
          "status": "UNTESTED"
@@ -10940,6 +11001,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_],cell[_](button[_]))",
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "rate": 0.89,
          "separated_pairs": 356,
          "status": "PARTIAL"
@@ -10990,6 +11052,7 @@
          "copresent_pairs": 400,
          "family": "cell[_]",
          "key_slot": "cell#0",
+         "population_hash": "362b3d5094c35c47ffe3eb8ed8d2f8bfecfb74f9cbfdc13970df5193430a7200",
          "rate": 1.0,
          "separated_pairs": 400,
          "status": "CONFIRMED"
@@ -10998,6 +11061,7 @@
          "copresent_pairs": 0,
          "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
          "key_slot": "group/group/text#0@9",
+         "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
          "rate": null,
          "separated_pairs": 0,
          "status": "UNTESTED"
@@ -11006,6 +11070,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_],cell[_](button[_]))",
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "rate": 0.89,
          "separated_pairs": 356,
          "status": "PARTIAL"
@@ -11042,12 +11107,14 @@
          "left": {
           "copresent_pairs": 400,
           "key_slot": "cell#0@2",
+          "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
           "separated_pairs": 356
          },
          "left_cross_product": 142400,
          "right": {
           "copresent_pairs": 400,
           "key_slot": "cell#0@2",
+          "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
           "separated_pairs": 356
          },
          "right_cross_product": 142400
@@ -11062,6 +11129,7 @@
        "equal": 1,
        "left_better": 0,
        "left_dominant": false,
+       "population_mismatches": 0,
        "right_better": 0,
        "right_dominant": false
       }
@@ -11140,6 +11208,7 @@
          "copresent_pairs": 400,
          "family": "button[_]",
          "key_slot": "button#0",
+         "population_hash": "dc7a5d60e9a09a9bd18d9554ad27ed852ca98068bd2676ffb95be1b57241b34a",
          "rate": 0.963,
          "separated_pairs": 385,
          "status": "PARTIAL"
@@ -11148,6 +11217,7 @@
          "copresent_pairs": 0,
          "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
          "key_slot": "group/group/text#0@9",
+         "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
          "rate": null,
          "separated_pairs": 0,
          "status": "UNTESTED"
@@ -11156,6 +11226,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_],cell[_](button[_]))",
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "rate": 0.89,
          "separated_pairs": 356,
          "status": "PARTIAL"
@@ -11185,7 +11256,7 @@
        "visibility": 0
       },
       "outcome": "UNDECIDED",
-      "reason": "the fresh history does not tell these readings apart",
+      "reason": "the comparison history does not tell these readings apart",
       "right": {
        "applicability": 0.8,
        "churn": 0,
@@ -11206,6 +11277,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_],cell[_](button[_]))",
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "rate": 0.89,
          "separated_pairs": 356,
          "status": "PARTIAL"
@@ -11242,12 +11314,14 @@
          "left": {
           "copresent_pairs": 400,
           "key_slot": "cell#0@2",
+          "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
           "separated_pairs": 356
          },
          "left_cross_product": 142400,
          "right": {
           "copresent_pairs": 400,
           "key_slot": "cell#0@2",
+          "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
           "separated_pairs": 356
          },
          "right_cross_product": 142400
@@ -11262,6 +11336,7 @@
        "equal": 1,
        "left_better": 0,
        "left_dominant": false,
+       "population_mismatches": 0,
        "right_better": 0,
        "right_dominant": false
       }
@@ -11665,6 +11740,7 @@
          "copresent_pairs": 400,
          "family": "button[_]",
          "key_slot": "button#0",
+         "population_hash": "dc7a5d60e9a09a9bd18d9554ad27ed852ca98068bd2676ffb95be1b57241b34a",
          "rate": 0.963,
          "separated_pairs": 385,
          "status": "PARTIAL"
@@ -11673,6 +11749,7 @@
          "copresent_pairs": 0,
          "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
          "key_slot": "group/group/text#0@9",
+         "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
          "rate": null,
          "separated_pairs": 0,
          "status": "UNTESTED"
@@ -11681,6 +11758,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_],cell[_](button[_]))",
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "rate": 0.89,
          "separated_pairs": 356,
          "status": "PARTIAL"
@@ -11731,6 +11809,7 @@
          "copresent_pairs": 400,
          "family": "cell[_]",
          "key_slot": "cell#0",
+         "population_hash": "e8a2b45e9ccd52d0741a1668f4d6d1909107379396f28d91ec80846a086e2c91",
          "rate": 0.823,
          "separated_pairs": 329,
          "status": "PARTIAL"
@@ -11739,6 +11818,7 @@
          "copresent_pairs": 0,
          "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
          "key_slot": "group/group/text#0@9",
+         "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
          "rate": null,
          "separated_pairs": 0,
          "status": "UNTESTED"
@@ -11780,6 +11860,7 @@
        "equal": 0,
        "left_better": 0,
        "left_dominant": false,
+       "population_mismatches": 0,
        "right_better": 0,
        "right_dominant": false
       }
@@ -11828,6 +11909,7 @@
          "copresent_pairs": 400,
          "family": "button[_]",
          "key_slot": "button#0",
+         "population_hash": "dc7a5d60e9a09a9bd18d9554ad27ed852ca98068bd2676ffb95be1b57241b34a",
          "rate": 0.963,
          "separated_pairs": 385,
          "status": "PARTIAL"
@@ -11836,6 +11918,7 @@
          "copresent_pairs": 0,
          "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
          "key_slot": "group/group/text#0@9",
+         "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
          "rate": null,
          "separated_pairs": 0,
          "status": "UNTESTED"
@@ -11844,6 +11927,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_],cell[_](button[_]))",
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "rate": 0.89,
          "separated_pairs": 356,
          "status": "PARTIAL"
@@ -11894,6 +11978,7 @@
          "copresent_pairs": 0,
          "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
          "key_slot": "group/group/text#0@9",
+         "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
          "rate": null,
          "separated_pairs": 0,
          "status": "UNTESTED"
@@ -11902,6 +11987,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_],cell[_](button[_]))",
          "key_slot": "cell#0",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "rate": 0.895,
          "separated_pairs": 358,
          "status": "PARTIAL"
@@ -11938,12 +12024,14 @@
          "left": {
           "copresent_pairs": 400,
           "key_slot": "cell#0@2",
+          "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
           "separated_pairs": 356
          },
          "left_cross_product": 142400,
          "right": {
           "copresent_pairs": 400,
           "key_slot": "cell#0",
+          "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
           "separated_pairs": 358
          },
          "right_cross_product": 143200
@@ -11958,6 +12046,7 @@
        "equal": 0,
        "left_better": 0,
        "left_dominant": false,
+       "population_mismatches": 0,
        "right_better": 1,
        "right_dominant": true
       }
@@ -11998,6 +12087,7 @@
          "copresent_pairs": 400,
          "family": "button[_]",
          "key_slot": "button#0",
+         "population_hash": "dc7a5d60e9a09a9bd18d9554ad27ed852ca98068bd2676ffb95be1b57241b34a",
          "rate": 0.963,
          "separated_pairs": 385,
          "status": "PARTIAL"
@@ -12006,6 +12096,7 @@
          "copresent_pairs": 0,
          "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
          "key_slot": "group/group/text#0@9",
+         "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
          "rate": null,
          "separated_pairs": 0,
          "status": "UNTESTED"
@@ -12014,6 +12105,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_],cell[_](button[_]))",
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "rate": 0.89,
          "separated_pairs": 356,
          "status": "PARTIAL"
@@ -12064,6 +12156,7 @@
          "copresent_pairs": 0,
          "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
          "key_slot": "group/group/text#0@9",
+         "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
          "rate": null,
          "separated_pairs": 0,
          "status": "UNTESTED"
@@ -12072,6 +12165,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_],cell[_](button[_]))",
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "rate": 0.89,
          "separated_pairs": 356,
          "status": "PARTIAL"
@@ -12108,12 +12202,14 @@
          "left": {
           "copresent_pairs": 400,
           "key_slot": "cell#0@2",
+          "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
           "separated_pairs": 356
          },
          "left_cross_product": 142400,
          "right": {
           "copresent_pairs": 400,
           "key_slot": "cell#0@2",
+          "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
           "separated_pairs": 356
          },
          "right_cross_product": 142400
@@ -12128,6 +12224,7 @@
        "equal": 1,
        "left_better": 0,
        "left_dominant": false,
+       "population_mismatches": 0,
        "right_better": 0,
        "right_dominant": false
       }
@@ -12206,6 +12303,7 @@
          "copresent_pairs": 400,
          "family": "cell[_]",
          "key_slot": "cell#0",
+         "population_hash": "362b3d5094c35c47ffe3eb8ed8d2f8bfecfb74f9cbfdc13970df5193430a7200",
          "rate": 1.0,
          "separated_pairs": 400,
          "status": "CONFIRMED"
@@ -12214,6 +12312,7 @@
          "copresent_pairs": 0,
          "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
          "key_slot": "group/group/text#0@9",
+         "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
          "rate": null,
          "separated_pairs": 0,
          "status": "UNTESTED"
@@ -12222,6 +12321,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_],cell[_](button[_]))",
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "rate": 0.89,
          "separated_pairs": 356,
          "status": "PARTIAL"
@@ -12272,6 +12372,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_],cell[_](button[_]))",
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "rate": 0.89,
          "separated_pairs": 356,
          "status": "PARTIAL"
@@ -12308,12 +12409,14 @@
          "left": {
           "copresent_pairs": 400,
           "key_slot": "cell#0@2",
+          "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
           "separated_pairs": 356
          },
          "left_cross_product": 142400,
          "right": {
           "copresent_pairs": 400,
           "key_slot": "cell#0@2",
+          "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
           "separated_pairs": 356
          },
          "right_cross_product": 142400
@@ -12328,6 +12431,7 @@
        "equal": 1,
        "left_better": 0,
        "left_dominant": false,
+       "population_mismatches": 0,
        "right_better": 0,
        "right_dominant": false
       }
@@ -12731,6 +12835,7 @@
          "copresent_pairs": 400,
          "family": "cell[_]",
          "key_slot": "cell#0",
+         "population_hash": "362b3d5094c35c47ffe3eb8ed8d2f8bfecfb74f9cbfdc13970df5193430a7200",
          "rate": 1.0,
          "separated_pairs": 400,
          "status": "CONFIRMED"
@@ -12739,6 +12844,7 @@
          "copresent_pairs": 0,
          "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
          "key_slot": "group/group/text#0@9",
+         "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
          "rate": null,
          "separated_pairs": 0,
          "status": "UNTESTED"
@@ -12747,6 +12853,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_],cell[_](button[_]))",
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "rate": 0.89,
          "separated_pairs": 356,
          "status": "PARTIAL"
@@ -12797,6 +12904,7 @@
          "copresent_pairs": 400,
          "family": "cell[_]",
          "key_slot": "cell#0",
+         "population_hash": "e8a2b45e9ccd52d0741a1668f4d6d1909107379396f28d91ec80846a086e2c91",
          "rate": 0.823,
          "separated_pairs": 329,
          "status": "PARTIAL"
@@ -12805,6 +12913,7 @@
          "copresent_pairs": 0,
          "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
          "key_slot": "group/group/text#0@9",
+         "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
          "rate": null,
          "separated_pairs": 0,
          "status": "UNTESTED"
@@ -12838,31 +12947,33 @@
       "separation_differential": {
        "cases": [
         {
-         "direction": "LEFT",
+         "direction": "POPULATION_MISMATCH",
          "family": "cell[_]",
          "left": {
           "copresent_pairs": 400,
           "key_slot": "cell#0",
+          "population_hash": "362b3d5094c35c47ffe3eb8ed8d2f8bfecfb74f9cbfdc13970df5193430a7200",
           "separated_pairs": 400
          },
-         "left_cross_product": 160000,
+         "population_mismatch": true,
          "right": {
           "copresent_pairs": 400,
           "key_slot": "cell#0",
+          "population_hash": "e8a2b45e9ccd52d0741a1668f4d6d1909107379396f28d91ec80846a086e2c91",
           "separated_pairs": 329
-         },
-         "right_cross_product": 131600
+         }
         }
        ],
-       "comparable_families": 1,
+       "comparable_families": 0,
        "counts": {
         "EQUAL": 0,
-        "LEFT": 1,
+        "LEFT": 0,
         "RIGHT": 0
        },
        "equal": 0,
-       "left_better": 1,
-       "left_dominant": true,
+       "left_better": 0,
+       "left_dominant": false,
+       "population_mismatches": 1,
        "right_better": 0,
        "right_dominant": false
       }
@@ -12911,6 +13022,7 @@
          "copresent_pairs": 400,
          "family": "cell[_]",
          "key_slot": "cell#0",
+         "population_hash": "362b3d5094c35c47ffe3eb8ed8d2f8bfecfb74f9cbfdc13970df5193430a7200",
          "rate": 1.0,
          "separated_pairs": 400,
          "status": "CONFIRMED"
@@ -12919,6 +13031,7 @@
          "copresent_pairs": 0,
          "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
          "key_slot": "group/group/text#0@9",
+         "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
          "rate": null,
          "separated_pairs": 0,
          "status": "UNTESTED"
@@ -12927,6 +13040,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_],cell[_](button[_]))",
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "rate": 0.89,
          "separated_pairs": 356,
          "status": "PARTIAL"
@@ -12977,6 +13091,7 @@
          "copresent_pairs": 0,
          "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
          "key_slot": "group/group/text#0@9",
+         "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
          "rate": null,
          "separated_pairs": 0,
          "status": "UNTESTED"
@@ -12985,6 +13100,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_],cell[_](button[_]))",
          "key_slot": "cell#0",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "rate": 0.895,
          "separated_pairs": 358,
          "status": "PARTIAL"
@@ -13021,12 +13137,14 @@
          "left": {
           "copresent_pairs": 400,
           "key_slot": "cell#0@2",
+          "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
           "separated_pairs": 356
          },
          "left_cross_product": 142400,
          "right": {
           "copresent_pairs": 400,
           "key_slot": "cell#0",
+          "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
           "separated_pairs": 358
          },
          "right_cross_product": 143200
@@ -13041,6 +13159,7 @@
        "equal": 0,
        "left_better": 0,
        "left_dominant": false,
+       "population_mismatches": 0,
        "right_better": 1,
        "right_dominant": true
       }
@@ -13081,6 +13200,7 @@
          "copresent_pairs": 400,
          "family": "cell[_]",
          "key_slot": "cell#0",
+         "population_hash": "362b3d5094c35c47ffe3eb8ed8d2f8bfecfb74f9cbfdc13970df5193430a7200",
          "rate": 1.0,
          "separated_pairs": 400,
          "status": "CONFIRMED"
@@ -13089,6 +13209,7 @@
          "copresent_pairs": 0,
          "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
          "key_slot": "group/group/text#0@9",
+         "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
          "rate": null,
          "separated_pairs": 0,
          "status": "UNTESTED"
@@ -13097,6 +13218,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_],cell[_](button[_]))",
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "rate": 0.89,
          "separated_pairs": 356,
          "status": "PARTIAL"
@@ -13147,6 +13269,7 @@
          "copresent_pairs": 0,
          "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
          "key_slot": "group/group/text#0@9",
+         "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
          "rate": null,
          "separated_pairs": 0,
          "status": "UNTESTED"
@@ -13155,6 +13278,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_],cell[_](button[_]))",
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "rate": 0.89,
          "separated_pairs": 356,
          "status": "PARTIAL"
@@ -13191,12 +13315,14 @@
          "left": {
           "copresent_pairs": 400,
           "key_slot": "cell#0@2",
+          "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
           "separated_pairs": 356
          },
          "left_cross_product": 142400,
          "right": {
           "copresent_pairs": 400,
           "key_slot": "cell#0@2",
+          "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
           "separated_pairs": 356
          },
          "right_cross_product": 142400
@@ -13211,6 +13337,7 @@
        "equal": 1,
        "left_better": 0,
        "left_dominant": false,
+       "population_mismatches": 0,
        "right_better": 0,
        "right_dominant": false
       }
@@ -13614,6 +13741,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_],cell[_](button[_]))",
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "rate": 0.89,
          "separated_pairs": 356,
          "status": "PARTIAL"
@@ -13664,6 +13792,7 @@
          "copresent_pairs": 400,
          "family": "cell[_]",
          "key_slot": "cell#0",
+         "population_hash": "e8a2b45e9ccd52d0741a1668f4d6d1909107379396f28d91ec80846a086e2c91",
          "rate": 0.823,
          "separated_pairs": 329,
          "status": "PARTIAL"
@@ -13672,6 +13801,7 @@
          "copresent_pairs": 0,
          "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
          "key_slot": "group/group/text#0@9",
+         "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
          "rate": null,
          "separated_pairs": 0,
          "status": "UNTESTED"
@@ -13713,6 +13843,7 @@
        "equal": 0,
        "left_better": 0,
        "left_dominant": false,
+       "population_mismatches": 0,
        "right_better": 0,
        "right_dominant": false
       }
@@ -13798,6 +13929,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_],cell[_](button[_]))",
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "rate": 0.89,
          "separated_pairs": 356,
          "status": "PARTIAL"
@@ -13848,6 +13980,7 @@
          "copresent_pairs": 0,
          "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
          "key_slot": "group/group/text#0@9",
+         "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
          "rate": null,
          "separated_pairs": 0,
          "status": "UNTESTED"
@@ -13856,6 +13989,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_],cell[_](button[_]))",
          "key_slot": "cell#0",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "rate": 0.895,
          "separated_pairs": 358,
          "status": "PARTIAL"
@@ -13892,12 +14026,14 @@
          "left": {
           "copresent_pairs": 400,
           "key_slot": "cell#0@2",
+          "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
           "separated_pairs": 356
          },
          "left_cross_product": 142400,
          "right": {
           "copresent_pairs": 400,
           "key_slot": "cell#0",
+          "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
           "separated_pairs": 358
          },
          "right_cross_product": 143200
@@ -13912,6 +14048,7 @@
        "equal": 0,
        "left_better": 0,
        "left_dominant": false,
+       "population_mismatches": 0,
        "right_better": 1,
        "right_dominant": true
       }
@@ -13990,6 +14127,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_],cell[_](button[_]))",
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "rate": 0.89,
          "separated_pairs": 356,
          "status": "PARTIAL"
@@ -14019,7 +14157,7 @@
        "visibility": 0
       },
       "outcome": "UNDECIDED",
-      "reason": "the fresh history does not tell these readings apart",
+      "reason": "the comparison history does not tell these readings apart",
       "right": {
        "applicability": 0.8,
        "churn": 0,
@@ -14040,6 +14178,7 @@
          "copresent_pairs": 0,
          "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
          "key_slot": "group/group/text#0@9",
+         "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
          "rate": null,
          "separated_pairs": 0,
          "status": "UNTESTED"
@@ -14048,6 +14187,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_],cell[_](button[_]))",
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "rate": 0.89,
          "separated_pairs": 356,
          "status": "PARTIAL"
@@ -14084,12 +14224,14 @@
          "left": {
           "copresent_pairs": 400,
           "key_slot": "cell#0@2",
+          "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
           "separated_pairs": 356
          },
          "left_cross_product": 142400,
          "right": {
           "copresent_pairs": 400,
           "key_slot": "cell#0@2",
+          "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
           "separated_pairs": 356
          },
          "right_cross_product": 142400
@@ -14104,6 +14246,7 @@
        "equal": 1,
        "left_better": 0,
        "left_dominant": false,
+       "population_mismatches": 0,
        "right_better": 0,
        "right_dominant": false
       }
@@ -14508,6 +14651,7 @@
          "copresent_pairs": 400,
          "family": "cell[_]",
          "key_slot": "cell#0",
+         "population_hash": "e8a2b45e9ccd52d0741a1668f4d6d1909107379396f28d91ec80846a086e2c91",
          "rate": 0.823,
          "separated_pairs": 329,
          "status": "PARTIAL"
@@ -14516,6 +14660,7 @@
          "copresent_pairs": 0,
          "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
          "key_slot": "group/group/text#0@9",
+         "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
          "rate": null,
          "separated_pairs": 0,
          "status": "UNTESTED"
@@ -14568,6 +14713,7 @@
          "copresent_pairs": 0,
          "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
          "key_slot": "group/group/text#0@9",
+         "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
          "rate": null,
          "separated_pairs": 0,
          "status": "UNTESTED"
@@ -14576,6 +14722,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_],cell[_](button[_]))",
          "key_slot": "cell#0",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "rate": 0.895,
          "separated_pairs": 358,
          "status": "PARTIAL"
@@ -14615,6 +14762,7 @@
        "equal": 0,
        "left_better": 0,
        "left_dominant": false,
+       "population_mismatches": 0,
        "right_better": 0,
        "right_dominant": false
       }
@@ -15018,6 +15166,7 @@
          "copresent_pairs": 400,
          "family": "cell[_]",
          "key_slot": "cell#0",
+         "population_hash": "e8a2b45e9ccd52d0741a1668f4d6d1909107379396f28d91ec80846a086e2c91",
          "rate": 0.823,
          "separated_pairs": 329,
          "status": "PARTIAL"
@@ -15026,6 +15175,7 @@
          "copresent_pairs": 0,
          "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
          "key_slot": "group/group/text#0@9",
+         "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
          "rate": null,
          "separated_pairs": 0,
          "status": "UNTESTED"
@@ -15078,6 +15228,7 @@
          "copresent_pairs": 0,
          "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
          "key_slot": "group/group/text#0@9",
+         "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
          "rate": null,
          "separated_pairs": 0,
          "status": "UNTESTED"
@@ -15086,6 +15237,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_],cell[_](button[_]))",
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "rate": 0.89,
          "separated_pairs": 356,
          "status": "PARTIAL"
@@ -15125,6 +15277,7 @@
        "equal": 0,
        "left_better": 0,
        "left_dominant": false,
+       "population_mismatches": 0,
        "right_better": 0,
        "right_dominant": false
       }
@@ -15173,6 +15326,7 @@
          "copresent_pairs": 0,
          "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
          "key_slot": "group/group/text#0@9",
+         "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
          "rate": null,
          "separated_pairs": 0,
          "status": "UNTESTED"
@@ -15181,6 +15335,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_],cell[_](button[_]))",
          "key_slot": "cell#0",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "rate": 0.895,
          "separated_pairs": 358,
          "status": "PARTIAL"
@@ -15231,6 +15386,7 @@
          "copresent_pairs": 0,
          "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
          "key_slot": "group/group/text#0@9",
+         "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
          "rate": null,
          "separated_pairs": 0,
          "status": "UNTESTED"
@@ -15239,6 +15395,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_],cell[_](button[_]))",
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "rate": 0.89,
          "separated_pairs": 356,
          "status": "PARTIAL"
@@ -15275,12 +15432,14 @@
          "left": {
           "copresent_pairs": 400,
           "key_slot": "cell#0",
+          "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
           "separated_pairs": 358
          },
          "left_cross_product": 143200,
          "right": {
           "copresent_pairs": 400,
           "key_slot": "cell#0@2",
+          "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
           "separated_pairs": 356
          },
          "right_cross_product": 142400
@@ -15295,6 +15454,7 @@
        "equal": 0,
        "left_better": 1,
        "left_dominant": true,
+       "population_mismatches": 0,
        "right_better": 0,
        "right_dominant": false
       }
@@ -15402,6 +15562,7 @@
        "copresent_pairs": 400,
        "family": "button[_]",
        "key_slot": "button#0",
+       "population_hash": "dc7a5d60e9a09a9bd18d9554ad27ed852ca98068bd2676ffb95be1b57241b34a",
        "rate": 0.963,
        "separated_pairs": 385,
        "status": "PARTIAL"
@@ -15410,6 +15571,7 @@
        "copresent_pairs": 0,
        "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
        "key_slot": "group/group/text#0@9",
+       "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
        "rate": null,
        "separated_pairs": 0,
        "status": "UNTESTED"
@@ -15418,6 +15580,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_],cell[_](button[_]))",
        "key_slot": "cell#0@2",
+       "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
        "rate": 0.89,
        "separated_pairs": 356,
        "status": "PARTIAL"
@@ -15468,6 +15631,7 @@
        "copresent_pairs": 400,
        "family": "cell[_]",
        "key_slot": "cell#0",
+       "population_hash": "362b3d5094c35c47ffe3eb8ed8d2f8bfecfb74f9cbfdc13970df5193430a7200",
        "rate": 1.0,
        "separated_pairs": 400,
        "status": "CONFIRMED"
@@ -15476,6 +15640,7 @@
        "copresent_pairs": 0,
        "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
        "key_slot": "group/group/text#0@9",
+       "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
        "rate": null,
        "separated_pairs": 0,
        "status": "UNTESTED"
@@ -15484,6 +15649,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_],cell[_](button[_]))",
        "key_slot": "cell#0@2",
+       "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
        "rate": 0.89,
        "separated_pairs": 356,
        "status": "PARTIAL"
@@ -15520,12 +15686,14 @@
        "left": {
         "copresent_pairs": 400,
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "separated_pairs": 356
        },
        "left_cross_product": 142400,
        "right": {
         "copresent_pairs": 400,
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "separated_pairs": 356
        },
        "right_cross_product": 142400
@@ -15540,6 +15708,7 @@
      "equal": 1,
      "left_better": 0,
      "left_dominant": false,
+     "population_mismatches": 0,
      "right_better": 0,
      "right_dominant": false
     }
@@ -15618,6 +15787,7 @@
        "copresent_pairs": 400,
        "family": "button[_]",
        "key_slot": "button#0",
+       "population_hash": "dc7a5d60e9a09a9bd18d9554ad27ed852ca98068bd2676ffb95be1b57241b34a",
        "rate": 0.963,
        "separated_pairs": 385,
        "status": "PARTIAL"
@@ -15626,6 +15796,7 @@
        "copresent_pairs": 0,
        "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
        "key_slot": "group/group/text#0@9",
+       "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
        "rate": null,
        "separated_pairs": 0,
        "status": "UNTESTED"
@@ -15634,6 +15805,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_],cell[_](button[_]))",
        "key_slot": "cell#0@2",
+       "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
        "rate": 0.89,
        "separated_pairs": 356,
        "status": "PARTIAL"
@@ -15663,7 +15835,7 @@
      "visibility": 0
     },
     "outcome": "UNDECIDED",
-    "reason": "the fresh history does not tell these readings apart",
+    "reason": "the comparison history does not tell these readings apart",
     "right": {
      "applicability": 0.8,
      "churn": 0,
@@ -15684,6 +15856,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_],cell[_](button[_]))",
        "key_slot": "cell#0@2",
+       "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
        "rate": 0.89,
        "separated_pairs": 356,
        "status": "PARTIAL"
@@ -15720,12 +15893,14 @@
        "left": {
         "copresent_pairs": 400,
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "separated_pairs": 356
        },
        "left_cross_product": 142400,
        "right": {
         "copresent_pairs": 400,
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "separated_pairs": 356
        },
        "right_cross_product": 142400
@@ -15740,6 +15915,7 @@
      "equal": 1,
      "left_better": 0,
      "left_dominant": false,
+     "population_mismatches": 0,
      "right_better": 0,
      "right_dominant": false
     }
@@ -16143,6 +16319,7 @@
        "copresent_pairs": 400,
        "family": "button[_]",
        "key_slot": "button#0",
+       "population_hash": "dc7a5d60e9a09a9bd18d9554ad27ed852ca98068bd2676ffb95be1b57241b34a",
        "rate": 0.963,
        "separated_pairs": 385,
        "status": "PARTIAL"
@@ -16151,6 +16328,7 @@
        "copresent_pairs": 0,
        "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
        "key_slot": "group/group/text#0@9",
+       "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
        "rate": null,
        "separated_pairs": 0,
        "status": "UNTESTED"
@@ -16159,6 +16337,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_],cell[_](button[_]))",
        "key_slot": "cell#0@2",
+       "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
        "rate": 0.89,
        "separated_pairs": 356,
        "status": "PARTIAL"
@@ -16209,6 +16388,7 @@
        "copresent_pairs": 400,
        "family": "cell[_]",
        "key_slot": "cell#0",
+       "population_hash": "e8a2b45e9ccd52d0741a1668f4d6d1909107379396f28d91ec80846a086e2c91",
        "rate": 0.823,
        "separated_pairs": 329,
        "status": "PARTIAL"
@@ -16217,6 +16397,7 @@
        "copresent_pairs": 0,
        "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
        "key_slot": "group/group/text#0@9",
+       "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
        "rate": null,
        "separated_pairs": 0,
        "status": "UNTESTED"
@@ -16258,6 +16439,7 @@
      "equal": 0,
      "left_better": 0,
      "left_dominant": false,
+     "population_mismatches": 0,
      "right_better": 0,
      "right_dominant": false
     }
@@ -16306,6 +16488,7 @@
        "copresent_pairs": 400,
        "family": "button[_]",
        "key_slot": "button#0",
+       "population_hash": "dc7a5d60e9a09a9bd18d9554ad27ed852ca98068bd2676ffb95be1b57241b34a",
        "rate": 0.963,
        "separated_pairs": 385,
        "status": "PARTIAL"
@@ -16314,6 +16497,7 @@
        "copresent_pairs": 0,
        "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
        "key_slot": "group/group/text#0@9",
+       "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
        "rate": null,
        "separated_pairs": 0,
        "status": "UNTESTED"
@@ -16322,6 +16506,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_],cell[_](button[_]))",
        "key_slot": "cell#0@2",
+       "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
        "rate": 0.89,
        "separated_pairs": 356,
        "status": "PARTIAL"
@@ -16372,6 +16557,7 @@
        "copresent_pairs": 0,
        "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
        "key_slot": "group/group/text#0@9",
+       "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
        "rate": null,
        "separated_pairs": 0,
        "status": "UNTESTED"
@@ -16380,6 +16566,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_],cell[_](button[_]))",
        "key_slot": "cell#0",
+       "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
        "rate": 0.895,
        "separated_pairs": 358,
        "status": "PARTIAL"
@@ -16416,12 +16603,14 @@
        "left": {
         "copresent_pairs": 400,
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "separated_pairs": 356
        },
        "left_cross_product": 142400,
        "right": {
         "copresent_pairs": 400,
         "key_slot": "cell#0",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "separated_pairs": 358
        },
        "right_cross_product": 143200
@@ -16436,6 +16625,7 @@
      "equal": 0,
      "left_better": 0,
      "left_dominant": false,
+     "population_mismatches": 0,
      "right_better": 1,
      "right_dominant": true
     }
@@ -16476,6 +16666,7 @@
        "copresent_pairs": 400,
        "family": "button[_]",
        "key_slot": "button#0",
+       "population_hash": "dc7a5d60e9a09a9bd18d9554ad27ed852ca98068bd2676ffb95be1b57241b34a",
        "rate": 0.963,
        "separated_pairs": 385,
        "status": "PARTIAL"
@@ -16484,6 +16675,7 @@
        "copresent_pairs": 0,
        "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
        "key_slot": "group/group/text#0@9",
+       "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
        "rate": null,
        "separated_pairs": 0,
        "status": "UNTESTED"
@@ -16492,6 +16684,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_],cell[_](button[_]))",
        "key_slot": "cell#0@2",
+       "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
        "rate": 0.89,
        "separated_pairs": 356,
        "status": "PARTIAL"
@@ -16542,6 +16735,7 @@
        "copresent_pairs": 0,
        "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
        "key_slot": "group/group/text#0@9",
+       "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
        "rate": null,
        "separated_pairs": 0,
        "status": "UNTESTED"
@@ -16550,6 +16744,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_],cell[_](button[_]))",
        "key_slot": "cell#0@2",
+       "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
        "rate": 0.89,
        "separated_pairs": 356,
        "status": "PARTIAL"
@@ -16586,12 +16781,14 @@
        "left": {
         "copresent_pairs": 400,
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "separated_pairs": 356
        },
        "left_cross_product": 142400,
        "right": {
         "copresent_pairs": 400,
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "separated_pairs": 356
        },
        "right_cross_product": 142400
@@ -16606,6 +16803,7 @@
      "equal": 1,
      "left_better": 0,
      "left_dominant": false,
+     "population_mismatches": 0,
      "right_better": 0,
      "right_dominant": false
     }
@@ -16684,6 +16882,7 @@
        "copresent_pairs": 400,
        "family": "cell[_]",
        "key_slot": "cell#0",
+       "population_hash": "362b3d5094c35c47ffe3eb8ed8d2f8bfecfb74f9cbfdc13970df5193430a7200",
        "rate": 1.0,
        "separated_pairs": 400,
        "status": "CONFIRMED"
@@ -16692,6 +16891,7 @@
        "copresent_pairs": 0,
        "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
        "key_slot": "group/group/text#0@9",
+       "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
        "rate": null,
        "separated_pairs": 0,
        "status": "UNTESTED"
@@ -16700,6 +16900,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_],cell[_](button[_]))",
        "key_slot": "cell#0@2",
+       "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
        "rate": 0.89,
        "separated_pairs": 356,
        "status": "PARTIAL"
@@ -16750,6 +16951,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_],cell[_](button[_]))",
        "key_slot": "cell#0@2",
+       "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
        "rate": 0.89,
        "separated_pairs": 356,
        "status": "PARTIAL"
@@ -16786,12 +16988,14 @@
        "left": {
         "copresent_pairs": 400,
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "separated_pairs": 356
        },
        "left_cross_product": 142400,
        "right": {
         "copresent_pairs": 400,
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "separated_pairs": 356
        },
        "right_cross_product": 142400
@@ -16806,6 +17010,7 @@
      "equal": 1,
      "left_better": 0,
      "left_dominant": false,
+     "population_mismatches": 0,
      "right_better": 0,
      "right_dominant": false
     }
@@ -17209,6 +17414,7 @@
        "copresent_pairs": 400,
        "family": "cell[_]",
        "key_slot": "cell#0",
+       "population_hash": "362b3d5094c35c47ffe3eb8ed8d2f8bfecfb74f9cbfdc13970df5193430a7200",
        "rate": 1.0,
        "separated_pairs": 400,
        "status": "CONFIRMED"
@@ -17217,6 +17423,7 @@
        "copresent_pairs": 0,
        "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
        "key_slot": "group/group/text#0@9",
+       "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
        "rate": null,
        "separated_pairs": 0,
        "status": "UNTESTED"
@@ -17225,6 +17432,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_],cell[_](button[_]))",
        "key_slot": "cell#0@2",
+       "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
        "rate": 0.89,
        "separated_pairs": 356,
        "status": "PARTIAL"
@@ -17275,6 +17483,7 @@
        "copresent_pairs": 400,
        "family": "cell[_]",
        "key_slot": "cell#0",
+       "population_hash": "e8a2b45e9ccd52d0741a1668f4d6d1909107379396f28d91ec80846a086e2c91",
        "rate": 0.823,
        "separated_pairs": 329,
        "status": "PARTIAL"
@@ -17283,6 +17492,7 @@
        "copresent_pairs": 0,
        "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
        "key_slot": "group/group/text#0@9",
+       "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
        "rate": null,
        "separated_pairs": 0,
        "status": "UNTESTED"
@@ -17316,31 +17526,33 @@
     "separation_differential": {
      "cases": [
       {
-       "direction": "LEFT",
+       "direction": "POPULATION_MISMATCH",
        "family": "cell[_]",
        "left": {
         "copresent_pairs": 400,
         "key_slot": "cell#0",
+        "population_hash": "362b3d5094c35c47ffe3eb8ed8d2f8bfecfb74f9cbfdc13970df5193430a7200",
         "separated_pairs": 400
        },
-       "left_cross_product": 160000,
+       "population_mismatch": true,
        "right": {
         "copresent_pairs": 400,
         "key_slot": "cell#0",
+        "population_hash": "e8a2b45e9ccd52d0741a1668f4d6d1909107379396f28d91ec80846a086e2c91",
         "separated_pairs": 329
-       },
-       "right_cross_product": 131600
+       }
       }
      ],
-     "comparable_families": 1,
+     "comparable_families": 0,
      "counts": {
       "EQUAL": 0,
-      "LEFT": 1,
+      "LEFT": 0,
       "RIGHT": 0
      },
      "equal": 0,
-     "left_better": 1,
-     "left_dominant": true,
+     "left_better": 0,
+     "left_dominant": false,
+     "population_mismatches": 1,
      "right_better": 0,
      "right_dominant": false
     }
@@ -17389,6 +17601,7 @@
        "copresent_pairs": 400,
        "family": "cell[_]",
        "key_slot": "cell#0",
+       "population_hash": "362b3d5094c35c47ffe3eb8ed8d2f8bfecfb74f9cbfdc13970df5193430a7200",
        "rate": 1.0,
        "separated_pairs": 400,
        "status": "CONFIRMED"
@@ -17397,6 +17610,7 @@
        "copresent_pairs": 0,
        "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
        "key_slot": "group/group/text#0@9",
+       "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
        "rate": null,
        "separated_pairs": 0,
        "status": "UNTESTED"
@@ -17405,6 +17619,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_],cell[_](button[_]))",
        "key_slot": "cell#0@2",
+       "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
        "rate": 0.89,
        "separated_pairs": 356,
        "status": "PARTIAL"
@@ -17455,6 +17670,7 @@
        "copresent_pairs": 0,
        "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
        "key_slot": "group/group/text#0@9",
+       "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
        "rate": null,
        "separated_pairs": 0,
        "status": "UNTESTED"
@@ -17463,6 +17679,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_],cell[_](button[_]))",
        "key_slot": "cell#0",
+       "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
        "rate": 0.895,
        "separated_pairs": 358,
        "status": "PARTIAL"
@@ -17499,12 +17716,14 @@
        "left": {
         "copresent_pairs": 400,
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "separated_pairs": 356
        },
        "left_cross_product": 142400,
        "right": {
         "copresent_pairs": 400,
         "key_slot": "cell#0",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "separated_pairs": 358
        },
        "right_cross_product": 143200
@@ -17519,6 +17738,7 @@
      "equal": 0,
      "left_better": 0,
      "left_dominant": false,
+     "population_mismatches": 0,
      "right_better": 1,
      "right_dominant": true
     }
@@ -17559,6 +17779,7 @@
        "copresent_pairs": 400,
        "family": "cell[_]",
        "key_slot": "cell#0",
+       "population_hash": "362b3d5094c35c47ffe3eb8ed8d2f8bfecfb74f9cbfdc13970df5193430a7200",
        "rate": 1.0,
        "separated_pairs": 400,
        "status": "CONFIRMED"
@@ -17567,6 +17788,7 @@
        "copresent_pairs": 0,
        "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
        "key_slot": "group/group/text#0@9",
+       "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
        "rate": null,
        "separated_pairs": 0,
        "status": "UNTESTED"
@@ -17575,6 +17797,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_],cell[_](button[_]))",
        "key_slot": "cell#0@2",
+       "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
        "rate": 0.89,
        "separated_pairs": 356,
        "status": "PARTIAL"
@@ -17625,6 +17848,7 @@
        "copresent_pairs": 0,
        "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
        "key_slot": "group/group/text#0@9",
+       "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
        "rate": null,
        "separated_pairs": 0,
        "status": "UNTESTED"
@@ -17633,6 +17857,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_],cell[_](button[_]))",
        "key_slot": "cell#0@2",
+       "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
        "rate": 0.89,
        "separated_pairs": 356,
        "status": "PARTIAL"
@@ -17669,12 +17894,14 @@
        "left": {
         "copresent_pairs": 400,
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "separated_pairs": 356
        },
        "left_cross_product": 142400,
        "right": {
         "copresent_pairs": 400,
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "separated_pairs": 356
        },
        "right_cross_product": 142400
@@ -17689,6 +17916,7 @@
      "equal": 1,
      "left_better": 0,
      "left_dominant": false,
+     "population_mismatches": 0,
      "right_better": 0,
      "right_dominant": false
     }
@@ -18092,6 +18320,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_],cell[_](button[_]))",
        "key_slot": "cell#0@2",
+       "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
        "rate": 0.89,
        "separated_pairs": 356,
        "status": "PARTIAL"
@@ -18142,6 +18371,7 @@
        "copresent_pairs": 400,
        "family": "cell[_]",
        "key_slot": "cell#0",
+       "population_hash": "e8a2b45e9ccd52d0741a1668f4d6d1909107379396f28d91ec80846a086e2c91",
        "rate": 0.823,
        "separated_pairs": 329,
        "status": "PARTIAL"
@@ -18150,6 +18380,7 @@
        "copresent_pairs": 0,
        "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
        "key_slot": "group/group/text#0@9",
+       "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
        "rate": null,
        "separated_pairs": 0,
        "status": "UNTESTED"
@@ -18191,6 +18422,7 @@
      "equal": 0,
      "left_better": 0,
      "left_dominant": false,
+     "population_mismatches": 0,
      "right_better": 0,
      "right_dominant": false
     }
@@ -18276,6 +18508,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_],cell[_](button[_]))",
        "key_slot": "cell#0@2",
+       "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
        "rate": 0.89,
        "separated_pairs": 356,
        "status": "PARTIAL"
@@ -18326,6 +18559,7 @@
        "copresent_pairs": 0,
        "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
        "key_slot": "group/group/text#0@9",
+       "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
        "rate": null,
        "separated_pairs": 0,
        "status": "UNTESTED"
@@ -18334,6 +18568,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_],cell[_](button[_]))",
        "key_slot": "cell#0",
+       "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
        "rate": 0.895,
        "separated_pairs": 358,
        "status": "PARTIAL"
@@ -18370,12 +18605,14 @@
        "left": {
         "copresent_pairs": 400,
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "separated_pairs": 356
        },
        "left_cross_product": 142400,
        "right": {
         "copresent_pairs": 400,
         "key_slot": "cell#0",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "separated_pairs": 358
        },
        "right_cross_product": 143200
@@ -18390,6 +18627,7 @@
      "equal": 0,
      "left_better": 0,
      "left_dominant": false,
+     "population_mismatches": 0,
      "right_better": 1,
      "right_dominant": true
     }
@@ -18468,6 +18706,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_],cell[_](button[_]))",
        "key_slot": "cell#0@2",
+       "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
        "rate": 0.89,
        "separated_pairs": 356,
        "status": "PARTIAL"
@@ -18497,7 +18736,7 @@
      "visibility": 0
     },
     "outcome": "UNDECIDED",
-    "reason": "the fresh history does not tell these readings apart",
+    "reason": "the comparison history does not tell these readings apart",
     "right": {
      "applicability": 0.8,
      "churn": 0,
@@ -18518,6 +18757,7 @@
        "copresent_pairs": 0,
        "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
        "key_slot": "group/group/text#0@9",
+       "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
        "rate": null,
        "separated_pairs": 0,
        "status": "UNTESTED"
@@ -18526,6 +18766,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_],cell[_](button[_]))",
        "key_slot": "cell#0@2",
+       "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
        "rate": 0.89,
        "separated_pairs": 356,
        "status": "PARTIAL"
@@ -18562,12 +18803,14 @@
        "left": {
         "copresent_pairs": 400,
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "separated_pairs": 356
        },
        "left_cross_product": 142400,
        "right": {
         "copresent_pairs": 400,
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "separated_pairs": 356
        },
        "right_cross_product": 142400
@@ -18582,6 +18825,7 @@
      "equal": 1,
      "left_better": 0,
      "left_dominant": false,
+     "population_mismatches": 0,
      "right_better": 0,
      "right_dominant": false
     }
@@ -18986,6 +19230,7 @@
        "copresent_pairs": 400,
        "family": "cell[_]",
        "key_slot": "cell#0",
+       "population_hash": "e8a2b45e9ccd52d0741a1668f4d6d1909107379396f28d91ec80846a086e2c91",
        "rate": 0.823,
        "separated_pairs": 329,
        "status": "PARTIAL"
@@ -18994,6 +19239,7 @@
        "copresent_pairs": 0,
        "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
        "key_slot": "group/group/text#0@9",
+       "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
        "rate": null,
        "separated_pairs": 0,
        "status": "UNTESTED"
@@ -19046,6 +19292,7 @@
        "copresent_pairs": 0,
        "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
        "key_slot": "group/group/text#0@9",
+       "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
        "rate": null,
        "separated_pairs": 0,
        "status": "UNTESTED"
@@ -19054,6 +19301,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_],cell[_](button[_]))",
        "key_slot": "cell#0",
+       "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
        "rate": 0.895,
        "separated_pairs": 358,
        "status": "PARTIAL"
@@ -19093,6 +19341,7 @@
      "equal": 0,
      "left_better": 0,
      "left_dominant": false,
+     "population_mismatches": 0,
      "right_better": 0,
      "right_dominant": false
     }
@@ -19496,6 +19745,7 @@
        "copresent_pairs": 400,
        "family": "cell[_]",
        "key_slot": "cell#0",
+       "population_hash": "e8a2b45e9ccd52d0741a1668f4d6d1909107379396f28d91ec80846a086e2c91",
        "rate": 0.823,
        "separated_pairs": 329,
        "status": "PARTIAL"
@@ -19504,6 +19754,7 @@
        "copresent_pairs": 0,
        "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
        "key_slot": "group/group/text#0@9",
+       "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
        "rate": null,
        "separated_pairs": 0,
        "status": "UNTESTED"
@@ -19556,6 +19807,7 @@
        "copresent_pairs": 0,
        "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
        "key_slot": "group/group/text#0@9",
+       "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
        "rate": null,
        "separated_pairs": 0,
        "status": "UNTESTED"
@@ -19564,6 +19816,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_],cell[_](button[_]))",
        "key_slot": "cell#0@2",
+       "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
        "rate": 0.89,
        "separated_pairs": 356,
        "status": "PARTIAL"
@@ -19603,6 +19856,7 @@
      "equal": 0,
      "left_better": 0,
      "left_dominant": false,
+     "population_mismatches": 0,
      "right_better": 0,
      "right_dominant": false
     }
@@ -19651,6 +19905,7 @@
        "copresent_pairs": 0,
        "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
        "key_slot": "group/group/text#0@9",
+       "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
        "rate": null,
        "separated_pairs": 0,
        "status": "UNTESTED"
@@ -19659,6 +19914,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_],cell[_](button[_]))",
        "key_slot": "cell#0",
+       "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
        "rate": 0.895,
        "separated_pairs": 358,
        "status": "PARTIAL"
@@ -19709,6 +19965,7 @@
        "copresent_pairs": 0,
        "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
        "key_slot": "group/group/text#0@9",
+       "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
        "rate": null,
        "separated_pairs": 0,
        "status": "UNTESTED"
@@ -19717,6 +19974,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_],cell[_](button[_]))",
        "key_slot": "cell#0@2",
+       "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
        "rate": 0.89,
        "separated_pairs": 356,
        "status": "PARTIAL"
@@ -19753,12 +20011,14 @@
        "left": {
         "copresent_pairs": 400,
         "key_slot": "cell#0",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "separated_pairs": 358
        },
        "left_cross_product": 143200,
        "right": {
         "copresent_pairs": 400,
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "separated_pairs": 356
        },
        "right_cross_product": 142400
@@ -19773,6 +20033,7 @@
      "equal": 0,
      "left_better": 1,
      "left_dominant": true,
+     "population_mismatches": 0,
      "right_better": 0,
      "right_dominant": false
     }
@@ -19824,6 +20085,7 @@
         "copresent_pairs": 400,
         "family": "button[_]",
         "key_slot": "button#0",
+        "population_hash": "dc7a5d60e9a09a9bd18d9554ad27ed852ca98068bd2676ffb95be1b57241b34a",
         "rate": 0.963,
         "separated_pairs": 385,
         "status": "PARTIAL"
@@ -19832,6 +20094,7 @@
         "copresent_pairs": 0,
         "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
         "key_slot": "group/group/text#0@9",
+        "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "rate": null,
         "separated_pairs": 0,
         "status": "UNTESTED"
@@ -19840,6 +20103,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_],cell[_](button[_]))",
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "rate": 0.89,
         "separated_pairs": 356,
         "status": "PARTIAL"
@@ -19890,6 +20154,7 @@
         "copresent_pairs": 400,
         "family": "cell[_]",
         "key_slot": "cell#0",
+        "population_hash": "362b3d5094c35c47ffe3eb8ed8d2f8bfecfb74f9cbfdc13970df5193430a7200",
         "rate": 1.0,
         "separated_pairs": 400,
         "status": "CONFIRMED"
@@ -19898,6 +20163,7 @@
         "copresent_pairs": 0,
         "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
         "key_slot": "group/group/text#0@9",
+        "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "rate": null,
         "separated_pairs": 0,
         "status": "UNTESTED"
@@ -19906,6 +20172,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_],cell[_](button[_]))",
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "rate": 0.89,
         "separated_pairs": 356,
         "status": "PARTIAL"
@@ -19942,12 +20209,14 @@
         "left": {
          "copresent_pairs": 400,
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "separated_pairs": 356
         },
         "left_cross_product": 142400,
         "right": {
          "copresent_pairs": 400,
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "separated_pairs": 356
         },
         "right_cross_product": 142400
@@ -19962,6 +20231,7 @@
       "equal": 1,
       "left_better": 0,
       "left_dominant": false,
+      "population_mismatches": 0,
       "right_better": 0,
       "right_dominant": false
      }
@@ -20040,6 +20310,7 @@
         "copresent_pairs": 400,
         "family": "button[_]",
         "key_slot": "button#0",
+        "population_hash": "dc7a5d60e9a09a9bd18d9554ad27ed852ca98068bd2676ffb95be1b57241b34a",
         "rate": 0.963,
         "separated_pairs": 385,
         "status": "PARTIAL"
@@ -20048,6 +20319,7 @@
         "copresent_pairs": 0,
         "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
         "key_slot": "group/group/text#0@9",
+        "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "rate": null,
         "separated_pairs": 0,
         "status": "UNTESTED"
@@ -20056,6 +20328,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_],cell[_](button[_]))",
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "rate": 0.89,
         "separated_pairs": 356,
         "status": "PARTIAL"
@@ -20085,7 +20358,7 @@
       "visibility": 0
      },
      "outcome": "UNDECIDED",
-     "reason": "the fresh history does not tell these readings apart",
+     "reason": "the comparison history does not tell these readings apart",
      "right": {
       "applicability": 0.8,
       "churn": 0,
@@ -20106,6 +20379,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_],cell[_](button[_]))",
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "rate": 0.89,
         "separated_pairs": 356,
         "status": "PARTIAL"
@@ -20142,12 +20416,14 @@
         "left": {
          "copresent_pairs": 400,
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "separated_pairs": 356
         },
         "left_cross_product": 142400,
         "right": {
          "copresent_pairs": 400,
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "separated_pairs": 356
         },
         "right_cross_product": 142400
@@ -20162,6 +20438,7 @@
       "equal": 1,
       "left_better": 0,
       "left_dominant": false,
+      "population_mismatches": 0,
       "right_better": 0,
       "right_dominant": false
      }
@@ -20565,6 +20842,7 @@
         "copresent_pairs": 400,
         "family": "button[_]",
         "key_slot": "button#0",
+        "population_hash": "dc7a5d60e9a09a9bd18d9554ad27ed852ca98068bd2676ffb95be1b57241b34a",
         "rate": 0.963,
         "separated_pairs": 385,
         "status": "PARTIAL"
@@ -20573,6 +20851,7 @@
         "copresent_pairs": 0,
         "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
         "key_slot": "group/group/text#0@9",
+        "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "rate": null,
         "separated_pairs": 0,
         "status": "UNTESTED"
@@ -20581,6 +20860,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_],cell[_](button[_]))",
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "rate": 0.89,
         "separated_pairs": 356,
         "status": "PARTIAL"
@@ -20631,6 +20911,7 @@
         "copresent_pairs": 400,
         "family": "cell[_]",
         "key_slot": "cell#0",
+        "population_hash": "e8a2b45e9ccd52d0741a1668f4d6d1909107379396f28d91ec80846a086e2c91",
         "rate": 0.823,
         "separated_pairs": 329,
         "status": "PARTIAL"
@@ -20639,6 +20920,7 @@
         "copresent_pairs": 0,
         "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
         "key_slot": "group/group/text#0@9",
+        "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "rate": null,
         "separated_pairs": 0,
         "status": "UNTESTED"
@@ -20680,6 +20962,7 @@
       "equal": 0,
       "left_better": 0,
       "left_dominant": false,
+      "population_mismatches": 0,
       "right_better": 0,
       "right_dominant": false
      }
@@ -20728,6 +21011,7 @@
         "copresent_pairs": 400,
         "family": "button[_]",
         "key_slot": "button#0",
+        "population_hash": "dc7a5d60e9a09a9bd18d9554ad27ed852ca98068bd2676ffb95be1b57241b34a",
         "rate": 0.963,
         "separated_pairs": 385,
         "status": "PARTIAL"
@@ -20736,6 +21020,7 @@
         "copresent_pairs": 0,
         "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
         "key_slot": "group/group/text#0@9",
+        "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "rate": null,
         "separated_pairs": 0,
         "status": "UNTESTED"
@@ -20744,6 +21029,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_],cell[_](button[_]))",
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "rate": 0.89,
         "separated_pairs": 356,
         "status": "PARTIAL"
@@ -20794,6 +21080,7 @@
         "copresent_pairs": 0,
         "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
         "key_slot": "group/group/text#0@9",
+        "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "rate": null,
         "separated_pairs": 0,
         "status": "UNTESTED"
@@ -20802,6 +21089,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_],cell[_](button[_]))",
         "key_slot": "cell#0",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "rate": 0.895,
         "separated_pairs": 358,
         "status": "PARTIAL"
@@ -20838,12 +21126,14 @@
         "left": {
          "copresent_pairs": 400,
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "separated_pairs": 356
         },
         "left_cross_product": 142400,
         "right": {
          "copresent_pairs": 400,
          "key_slot": "cell#0",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "separated_pairs": 358
         },
         "right_cross_product": 143200
@@ -20858,6 +21148,7 @@
       "equal": 0,
       "left_better": 0,
       "left_dominant": false,
+      "population_mismatches": 0,
       "right_better": 1,
       "right_dominant": true
      }
@@ -20898,6 +21189,7 @@
         "copresent_pairs": 400,
         "family": "button[_]",
         "key_slot": "button#0",
+        "population_hash": "dc7a5d60e9a09a9bd18d9554ad27ed852ca98068bd2676ffb95be1b57241b34a",
         "rate": 0.963,
         "separated_pairs": 385,
         "status": "PARTIAL"
@@ -20906,6 +21198,7 @@
         "copresent_pairs": 0,
         "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
         "key_slot": "group/group/text#0@9",
+        "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "rate": null,
         "separated_pairs": 0,
         "status": "UNTESTED"
@@ -20914,6 +21207,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_],cell[_](button[_]))",
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "rate": 0.89,
         "separated_pairs": 356,
         "status": "PARTIAL"
@@ -20964,6 +21258,7 @@
         "copresent_pairs": 0,
         "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
         "key_slot": "group/group/text#0@9",
+        "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "rate": null,
         "separated_pairs": 0,
         "status": "UNTESTED"
@@ -20972,6 +21267,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_],cell[_](button[_]))",
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "rate": 0.89,
         "separated_pairs": 356,
         "status": "PARTIAL"
@@ -21008,12 +21304,14 @@
         "left": {
          "copresent_pairs": 400,
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "separated_pairs": 356
         },
         "left_cross_product": 142400,
         "right": {
          "copresent_pairs": 400,
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "separated_pairs": 356
         },
         "right_cross_product": 142400
@@ -21028,6 +21326,7 @@
       "equal": 1,
       "left_better": 0,
       "left_dominant": false,
+      "population_mismatches": 0,
       "right_better": 0,
       "right_dominant": false
      }
@@ -21106,6 +21405,7 @@
         "copresent_pairs": 400,
         "family": "cell[_]",
         "key_slot": "cell#0",
+        "population_hash": "362b3d5094c35c47ffe3eb8ed8d2f8bfecfb74f9cbfdc13970df5193430a7200",
         "rate": 1.0,
         "separated_pairs": 400,
         "status": "CONFIRMED"
@@ -21114,6 +21414,7 @@
         "copresent_pairs": 0,
         "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
         "key_slot": "group/group/text#0@9",
+        "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "rate": null,
         "separated_pairs": 0,
         "status": "UNTESTED"
@@ -21122,6 +21423,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_],cell[_](button[_]))",
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "rate": 0.89,
         "separated_pairs": 356,
         "status": "PARTIAL"
@@ -21172,6 +21474,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_],cell[_](button[_]))",
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "rate": 0.89,
         "separated_pairs": 356,
         "status": "PARTIAL"
@@ -21208,12 +21511,14 @@
         "left": {
          "copresent_pairs": 400,
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "separated_pairs": 356
         },
         "left_cross_product": 142400,
         "right": {
          "copresent_pairs": 400,
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "separated_pairs": 356
         },
         "right_cross_product": 142400
@@ -21228,6 +21533,7 @@
       "equal": 1,
       "left_better": 0,
       "left_dominant": false,
+      "population_mismatches": 0,
       "right_better": 0,
       "right_dominant": false
      }
@@ -21631,6 +21937,7 @@
         "copresent_pairs": 400,
         "family": "cell[_]",
         "key_slot": "cell#0",
+        "population_hash": "362b3d5094c35c47ffe3eb8ed8d2f8bfecfb74f9cbfdc13970df5193430a7200",
         "rate": 1.0,
         "separated_pairs": 400,
         "status": "CONFIRMED"
@@ -21639,6 +21946,7 @@
         "copresent_pairs": 0,
         "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
         "key_slot": "group/group/text#0@9",
+        "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "rate": null,
         "separated_pairs": 0,
         "status": "UNTESTED"
@@ -21647,6 +21955,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_],cell[_](button[_]))",
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "rate": 0.89,
         "separated_pairs": 356,
         "status": "PARTIAL"
@@ -21697,6 +22006,7 @@
         "copresent_pairs": 400,
         "family": "cell[_]",
         "key_slot": "cell#0",
+        "population_hash": "e8a2b45e9ccd52d0741a1668f4d6d1909107379396f28d91ec80846a086e2c91",
         "rate": 0.823,
         "separated_pairs": 329,
         "status": "PARTIAL"
@@ -21705,6 +22015,7 @@
         "copresent_pairs": 0,
         "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
         "key_slot": "group/group/text#0@9",
+        "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "rate": null,
         "separated_pairs": 0,
         "status": "UNTESTED"
@@ -21738,31 +22049,33 @@
      "separation_differential": {
       "cases": [
        {
-        "direction": "LEFT",
+        "direction": "POPULATION_MISMATCH",
         "family": "cell[_]",
         "left": {
          "copresent_pairs": 400,
          "key_slot": "cell#0",
+         "population_hash": "362b3d5094c35c47ffe3eb8ed8d2f8bfecfb74f9cbfdc13970df5193430a7200",
          "separated_pairs": 400
         },
-        "left_cross_product": 160000,
+        "population_mismatch": true,
         "right": {
          "copresent_pairs": 400,
          "key_slot": "cell#0",
+         "population_hash": "e8a2b45e9ccd52d0741a1668f4d6d1909107379396f28d91ec80846a086e2c91",
          "separated_pairs": 329
-        },
-        "right_cross_product": 131600
+        }
        }
       ],
-      "comparable_families": 1,
+      "comparable_families": 0,
       "counts": {
        "EQUAL": 0,
-       "LEFT": 1,
+       "LEFT": 0,
        "RIGHT": 0
       },
       "equal": 0,
-      "left_better": 1,
-      "left_dominant": true,
+      "left_better": 0,
+      "left_dominant": false,
+      "population_mismatches": 1,
       "right_better": 0,
       "right_dominant": false
      }
@@ -21811,6 +22124,7 @@
         "copresent_pairs": 400,
         "family": "cell[_]",
         "key_slot": "cell#0",
+        "population_hash": "362b3d5094c35c47ffe3eb8ed8d2f8bfecfb74f9cbfdc13970df5193430a7200",
         "rate": 1.0,
         "separated_pairs": 400,
         "status": "CONFIRMED"
@@ -21819,6 +22133,7 @@
         "copresent_pairs": 0,
         "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
         "key_slot": "group/group/text#0@9",
+        "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "rate": null,
         "separated_pairs": 0,
         "status": "UNTESTED"
@@ -21827,6 +22142,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_],cell[_](button[_]))",
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "rate": 0.89,
         "separated_pairs": 356,
         "status": "PARTIAL"
@@ -21877,6 +22193,7 @@
         "copresent_pairs": 0,
         "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
         "key_slot": "group/group/text#0@9",
+        "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "rate": null,
         "separated_pairs": 0,
         "status": "UNTESTED"
@@ -21885,6 +22202,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_],cell[_](button[_]))",
         "key_slot": "cell#0",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "rate": 0.895,
         "separated_pairs": 358,
         "status": "PARTIAL"
@@ -21921,12 +22239,14 @@
         "left": {
          "copresent_pairs": 400,
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "separated_pairs": 356
         },
         "left_cross_product": 142400,
         "right": {
          "copresent_pairs": 400,
          "key_slot": "cell#0",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "separated_pairs": 358
         },
         "right_cross_product": 143200
@@ -21941,6 +22261,7 @@
       "equal": 0,
       "left_better": 0,
       "left_dominant": false,
+      "population_mismatches": 0,
       "right_better": 1,
       "right_dominant": true
      }
@@ -21981,6 +22302,7 @@
         "copresent_pairs": 400,
         "family": "cell[_]",
         "key_slot": "cell#0",
+        "population_hash": "362b3d5094c35c47ffe3eb8ed8d2f8bfecfb74f9cbfdc13970df5193430a7200",
         "rate": 1.0,
         "separated_pairs": 400,
         "status": "CONFIRMED"
@@ -21989,6 +22311,7 @@
         "copresent_pairs": 0,
         "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
         "key_slot": "group/group/text#0@9",
+        "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "rate": null,
         "separated_pairs": 0,
         "status": "UNTESTED"
@@ -21997,6 +22320,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_],cell[_](button[_]))",
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "rate": 0.89,
         "separated_pairs": 356,
         "status": "PARTIAL"
@@ -22047,6 +22371,7 @@
         "copresent_pairs": 0,
         "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
         "key_slot": "group/group/text#0@9",
+        "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "rate": null,
         "separated_pairs": 0,
         "status": "UNTESTED"
@@ -22055,6 +22380,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_],cell[_](button[_]))",
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "rate": 0.89,
         "separated_pairs": 356,
         "status": "PARTIAL"
@@ -22091,12 +22417,14 @@
         "left": {
          "copresent_pairs": 400,
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "separated_pairs": 356
         },
         "left_cross_product": 142400,
         "right": {
          "copresent_pairs": 400,
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "separated_pairs": 356
         },
         "right_cross_product": 142400
@@ -22111,6 +22439,7 @@
       "equal": 1,
       "left_better": 0,
       "left_dominant": false,
+      "population_mismatches": 0,
       "right_better": 0,
       "right_dominant": false
      }
@@ -22514,6 +22843,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_],cell[_](button[_]))",
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "rate": 0.89,
         "separated_pairs": 356,
         "status": "PARTIAL"
@@ -22564,6 +22894,7 @@
         "copresent_pairs": 400,
         "family": "cell[_]",
         "key_slot": "cell#0",
+        "population_hash": "e8a2b45e9ccd52d0741a1668f4d6d1909107379396f28d91ec80846a086e2c91",
         "rate": 0.823,
         "separated_pairs": 329,
         "status": "PARTIAL"
@@ -22572,6 +22903,7 @@
         "copresent_pairs": 0,
         "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
         "key_slot": "group/group/text#0@9",
+        "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "rate": null,
         "separated_pairs": 0,
         "status": "UNTESTED"
@@ -22613,6 +22945,7 @@
       "equal": 0,
       "left_better": 0,
       "left_dominant": false,
+      "population_mismatches": 0,
       "right_better": 0,
       "right_dominant": false
      }
@@ -22698,6 +23031,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_],cell[_](button[_]))",
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "rate": 0.89,
         "separated_pairs": 356,
         "status": "PARTIAL"
@@ -22748,6 +23082,7 @@
         "copresent_pairs": 0,
         "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
         "key_slot": "group/group/text#0@9",
+        "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "rate": null,
         "separated_pairs": 0,
         "status": "UNTESTED"
@@ -22756,6 +23091,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_],cell[_](button[_]))",
         "key_slot": "cell#0",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "rate": 0.895,
         "separated_pairs": 358,
         "status": "PARTIAL"
@@ -22792,12 +23128,14 @@
         "left": {
          "copresent_pairs": 400,
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "separated_pairs": 356
         },
         "left_cross_product": 142400,
         "right": {
          "copresent_pairs": 400,
          "key_slot": "cell#0",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "separated_pairs": 358
         },
         "right_cross_product": 143200
@@ -22812,6 +23150,7 @@
       "equal": 0,
       "left_better": 0,
       "left_dominant": false,
+      "population_mismatches": 0,
       "right_better": 1,
       "right_dominant": true
      }
@@ -22890,6 +23229,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_],cell[_](button[_]))",
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "rate": 0.89,
         "separated_pairs": 356,
         "status": "PARTIAL"
@@ -22919,7 +23259,7 @@
       "visibility": 0
      },
      "outcome": "UNDECIDED",
-     "reason": "the fresh history does not tell these readings apart",
+     "reason": "the comparison history does not tell these readings apart",
      "right": {
       "applicability": 0.8,
       "churn": 0,
@@ -22940,6 +23280,7 @@
         "copresent_pairs": 0,
         "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
         "key_slot": "group/group/text#0@9",
+        "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "rate": null,
         "separated_pairs": 0,
         "status": "UNTESTED"
@@ -22948,6 +23289,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_],cell[_](button[_]))",
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "rate": 0.89,
         "separated_pairs": 356,
         "status": "PARTIAL"
@@ -22984,12 +23326,14 @@
         "left": {
          "copresent_pairs": 400,
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "separated_pairs": 356
         },
         "left_cross_product": 142400,
         "right": {
          "copresent_pairs": 400,
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "separated_pairs": 356
         },
         "right_cross_product": 142400
@@ -23004,6 +23348,7 @@
       "equal": 1,
       "left_better": 0,
       "left_dominant": false,
+      "population_mismatches": 0,
       "right_better": 0,
       "right_dominant": false
      }
@@ -23408,6 +23753,7 @@
         "copresent_pairs": 400,
         "family": "cell[_]",
         "key_slot": "cell#0",
+        "population_hash": "e8a2b45e9ccd52d0741a1668f4d6d1909107379396f28d91ec80846a086e2c91",
         "rate": 0.823,
         "separated_pairs": 329,
         "status": "PARTIAL"
@@ -23416,6 +23762,7 @@
         "copresent_pairs": 0,
         "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
         "key_slot": "group/group/text#0@9",
+        "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "rate": null,
         "separated_pairs": 0,
         "status": "UNTESTED"
@@ -23468,6 +23815,7 @@
         "copresent_pairs": 0,
         "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
         "key_slot": "group/group/text#0@9",
+        "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "rate": null,
         "separated_pairs": 0,
         "status": "UNTESTED"
@@ -23476,6 +23824,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_],cell[_](button[_]))",
         "key_slot": "cell#0",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "rate": 0.895,
         "separated_pairs": 358,
         "status": "PARTIAL"
@@ -23515,6 +23864,7 @@
       "equal": 0,
       "left_better": 0,
       "left_dominant": false,
+      "population_mismatches": 0,
       "right_better": 0,
       "right_dominant": false
      }
@@ -23918,6 +24268,7 @@
         "copresent_pairs": 400,
         "family": "cell[_]",
         "key_slot": "cell#0",
+        "population_hash": "e8a2b45e9ccd52d0741a1668f4d6d1909107379396f28d91ec80846a086e2c91",
         "rate": 0.823,
         "separated_pairs": 329,
         "status": "PARTIAL"
@@ -23926,6 +24277,7 @@
         "copresent_pairs": 0,
         "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
         "key_slot": "group/group/text#0@9",
+        "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "rate": null,
         "separated_pairs": 0,
         "status": "UNTESTED"
@@ -23978,6 +24330,7 @@
         "copresent_pairs": 0,
         "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
         "key_slot": "group/group/text#0@9",
+        "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "rate": null,
         "separated_pairs": 0,
         "status": "UNTESTED"
@@ -23986,6 +24339,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_],cell[_](button[_]))",
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "rate": 0.89,
         "separated_pairs": 356,
         "status": "PARTIAL"
@@ -24025,6 +24379,7 @@
       "equal": 0,
       "left_better": 0,
       "left_dominant": false,
+      "population_mismatches": 0,
       "right_better": 0,
       "right_dominant": false
      }
@@ -24073,6 +24428,7 @@
         "copresent_pairs": 0,
         "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
         "key_slot": "group/group/text#0@9",
+        "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "rate": null,
         "separated_pairs": 0,
         "status": "UNTESTED"
@@ -24081,6 +24437,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_],cell[_](button[_]))",
         "key_slot": "cell#0",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "rate": 0.895,
         "separated_pairs": 358,
         "status": "PARTIAL"
@@ -24131,6 +24488,7 @@
         "copresent_pairs": 0,
         "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
         "key_slot": "group/group/text#0@9",
+        "population_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         "rate": null,
         "separated_pairs": 0,
         "status": "UNTESTED"
@@ -24139,6 +24497,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_],cell[_](button[_]))",
         "key_slot": "cell#0@2",
+        "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
         "rate": 0.89,
         "separated_pairs": 356,
         "status": "PARTIAL"
@@ -24175,12 +24534,14 @@
         "left": {
          "copresent_pairs": 400,
          "key_slot": "cell#0",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "separated_pairs": 358
         },
         "left_cross_product": 143200,
         "right": {
          "copresent_pairs": 400,
          "key_slot": "cell#0@2",
+         "population_hash": "801eed6fcf981d8a9e3fc51cfd632587b61475f3c80cb01bed20a049ce324f0e",
          "separated_pairs": 356
         },
         "right_cross_product": 142400
@@ -24195,6 +24556,7 @@
       "equal": 0,
       "left_better": 1,
       "left_dominant": true,
+      "population_mismatches": 0,
       "right_better": 0,
       "right_dominant": false
      }

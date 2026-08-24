@@ -27,7 +27,7 @@ import hashlib
 import json
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterable, Mapping
 
 VERSION = 1
 
@@ -95,7 +95,8 @@ class PinnedReading:
         return out
 
 
-def from_search(result, run_dir: Path, name: str = "source") -> PinnedReading:
+def from_search(result, run_dir: Path, name: str = "source",
+                refuted: Mapping[str, Iterable[str | None]] | None = None) -> PinnedReading:
     """Freeze the reading a source search settled on."""
     from semabi.compiler.v4.identity import family_key
     from semabi.compiler.v4.search import read_refutations
@@ -107,8 +108,15 @@ def from_search(result, run_dir: Path, name: str = "source") -> PinnedReading:
         families[family] = FamilyReading(family, reading.key_slot, reading.status,
                                          reading.evidence.discrimination)
     promoted = sorted({family_key(t) for t in getattr(result, "promoted", [])})
-    refuted = {k: sorted(v, key=str) for k, v in read_refutations(run_dir).items()}
-    return PinnedReading(families, promoted, refuted,
+    # Source custody may supply the already parsed refutation sidecar bytes.  In that
+    # mode the descriptor-bound caller, rather than the current working tree, owns the
+    # input.  Keep the historical run-directory fallback for ordinary development calls.
+    frozen_refuted = (
+        {k: sorted(v, key=str) for k, v in refuted.items()}
+        if refuted is not None
+        else {k: sorted(v, key=str) for k, v in read_refutations(run_dir).items()}
+    )
+    return PinnedReading(families, promoted, frozen_refuted,
                          {"source_run": str(run_dir), "role": "SOURCE"}, name)
 
 
@@ -227,6 +235,7 @@ class Separation:
     key_slot: str
     copresent_pairs: int = 0
     separated_pairs: int = 0
+    population_hash: str = ""
 
     @property
     def status(self) -> str:
@@ -246,12 +255,47 @@ class Separation:
         return {"family": self.family, "key_slot": self.key_slot, "status": self.status,
                 "copresent_pairs": self.copresent_pairs,
                 "separated_pairs": self.separated_pairs,
-                "rate": None if self.rate is None else round(self.rate, 3)}
+                "rate": None if self.rate is None else round(self.rate, 3),
+                "population_hash": self.population_hash}
 
 
-def separation(H, reading: PinnedReading) -> list[Separation]:
-    """For every identity the frozen reading asserts here, does it still separate peers?"""
+def _stable_instance_identity(instance: Any) -> tuple[str, str, int]:
+    """Return only the stable fields allowed to identify a co-present instance."""
+    sig = getattr(instance, "sig", None)
+    template = getattr(instance, "template", None)
+    root = getattr(instance, "root", None)
+    if not isinstance(sig, str) or not isinstance(template, str) or type(root) is not int:
+        raise ValueError("separation instances require stable sig, template, and root fields")
+    return sig, template, root
+
+
+def population_hash(pairs: Iterable[tuple[Any, Any]]) -> str:
+    """Hash a canonical co-present population using stable instance identities only.
+
+    Pair orientation and population order are canonicalized before hashing.  Slot values,
+    object identity, and any mutable evidence fields are intentionally excluded.
+    """
+    canonical_pairs = []
+    for left, right in pairs:
+        identities = sorted((_stable_instance_identity(left), _stable_instance_identity(right)))
+        canonical_pairs.append([list(identities[0]), list(identities[1])])
+    canonical_pairs.sort(key=lambda pair: json.dumps(pair, ensure_ascii=False,
+                                                       separators=(",", ":")))
+    payload = json.dumps(canonical_pairs, ensure_ascii=False, separators=(",", ":"))
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def separation(H, reading: PinnedReading, transport: Transport) -> list[Separation]:
+    """For each non-null claim actually applied here, test separation of its peers.
+
+    The transport record is mandatory.  A source claim that was absent, had no usable
+    slot, or was applied as ``None`` is not an identity claim on this history and therefore
+    emits no separation record; in particular it cannot be refuted by a denominator that
+    was never valid for the claim.
+    """
     from semabi.compiler.v4.identity import _copresence_pairs, _value, family_key
+    if not isinstance(transport, Transport):
+        raise TypeError("separation requires the Transport produced by pinned.apply")
     grouped: dict[str, list] = {}
     for template, unit in sorted(H.units.items()):
         grouped.setdefault(family_key(template), []).append(unit)
@@ -260,10 +304,21 @@ def separation(H, reading: PinnedReading) -> list[Separation]:
         source = reading.families.get(family)
         if source is None or source.key_slot is None:
             continue
+        # Only the exact key that transport applied is eligible.  slot_absent and
+        # absent_in_transfer are deliberately skipped, never represented as REFUTED.
+        if family not in transport.applied:
+            continue
+        if transport.applied[family] is None:
+            continue
+        if transport.applied[family] != source.key_slot:
+            raise ValueError(
+                f"transport applied key for {family!r} does not match frozen reading key")
+        if family in transport.slot_absent or family in transport.absent_in_transfer:
+            continue
         slots = tuple(source.key_slot.split("|"))
         merged = _MergedFamily(family, units)
         pairs = _copresence_pairs(merged)
-        record = Separation(family, source.key_slot, len(pairs))
+        record = Separation(family, source.key_slot, len(pairs), 0, population_hash(pairs))
         for a, b in pairs:
             left, right = _value(a, slots), _value(b, slots)
             if left is not None and right is not None and left != right:

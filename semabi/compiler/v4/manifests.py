@@ -7,14 +7,17 @@ only validates retained bytes and metadata.  It never imports or invokes a searc
 
 The chain manifest adds independently snapshotted TRANSFER and HOLDOUT histories.
 Those roles are deliberately required to have both different resolved paths and
-different content trees.  The current phase uses retroactive snapshots, so chronology
-is explicit rather than implied.
+different consumed-evidence digests; ancillary bytes cannot establish independence.
+The current phase uses retroactive snapshots, so chronology is explicit rather than implied.
 """
 from __future__ import annotations
 
 import json
 import math
 import os
+import ast
+import platform
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
@@ -23,57 +26,236 @@ from semabi.compiler.v4 import custody
 from semabi.compiler.v4.pinned import PinnedReading
 
 
-SOURCE_MANIFEST_SCHEMA = "semabi.v4.source-candidates.v1"
-CHAIN_MANIFEST_SCHEMA = "semabi.v4.chain.v1"
+SOURCE_MANIFEST_SCHEMA = "semabi.v4.source-candidates.v2"
+CHAIN_MANIFEST_SCHEMA = "semabi.v4.chain.v2"
 CUSTODY_TIMING = "RETROACTIVE_SNAPSHOT_CHRONOLOGY_NOT_ESTABLISHED"
 MAX_CANDIDATES = 6
 MIN_SUPPORT = 2
 
-# These are the implementation units whose bytes determine source candidate generation
-# and pinned replay.  The evaluator boundary is intentionally absent from both lists and
-# from this module.  The shared surface is explicit so a manifest cannot silently begin
-# authenticating a newly discovered module from the ambient checkout.
-COMPILER_EXECUTION_FILES = (
-    "semabi/compiler/abstract.py",
-    "semabi/compiler/belief.py",
-    "semabi/compiler/browser.py",
-    "semabi/compiler/compile.py",
-    "semabi/compiler/compile_v4.py",
-    "semabi/compiler/evidence.py",
-    "semabi/compiler/explorer.py",
-    "semabi/compiler/induce.py",
-    "semabi/compiler/model.py",
-    "semabi/compiler/observation.py",
-    "semabi/compiler/parse.py",
-    "semabi/compiler/v2/abstractor.py",
-    "semabi/compiler/v2/controls.py",
-    "semabi/compiler/v2/graph.py",
-    "semabi/compiler/v2/hypotheses.py",
-    "semabi/compiler/v2/score.py",
-    "semabi/compiler/v2/units.py",
-    "semabi/compiler/v4/identity.py",
-    "semabi/compiler/v4/objective.py",
-    "semabi/compiler/v4/pinned.py",
-    "semabi/compiler/v4/promote.py",
-    "semabi/compiler/v4/search.py",
-    "semabi/relmodel.py",
-)
-GENERATOR_IMPLEMENTATION_FILES = COMPILER_EXECUTION_FILES + (
-    "scripts/v4_freeze_source_candidates.py",
-    "semabi/compiler/v4/custody.py",
-    "semabi/compiler/v4/manifests.py",
-    "semabi/compiler/v4/source_candidates.py",
-)
-REPLAY_IMPLEMENTATION_FILES = COMPILER_EXECUTION_FILES + (
-    "semabi/compiler/v4/custody.py",
-    "semabi/compiler/v4/manifests.py",
-    "semabi/compiler/v4/transfer.py",
-    "semabi/run_v4_transfer.py",
-)
+GENERATOR_ENTRYPOINTS = ("scripts/v4_freeze_source_candidates.py",)
+REPLAY_ENTRYPOINTS = ("semabi/run_v4_transfer.py",)
 
 
 class ManifestError(ValueError):
     """Raised when a retained manifest or its inputs are not authentic."""
+
+
+def _loaded_repo_root() -> Path:
+    """Derive the authenticated checkout from this loaded module's location."""
+
+    try:
+        path = Path(__file__).resolve(strict=True)
+    except OSError as exc:
+        raise ManifestError("loaded manifests module has no resolvable source path") from exc
+    # <repo>/semabi/compiler/v4/manifests.py
+    root = path.parents[3]
+    if not root.is_dir():
+        raise ManifestError(f"loaded module repository root is not a directory: {root}")
+    return root
+
+
+def _repo_root(repo_root: Path | None) -> Path:
+    actual = _loaded_repo_root()
+    if repo_root is None:
+        return actual
+    supplied = Path(repo_root)
+    try:
+        resolved = supplied.resolve(strict=True)
+    except OSError as exc:
+        raise ManifestError(f"supplied repository root does not resolve: {supplied}") from exc
+    if resolved != actual:
+        raise ManifestError(
+            f"supplied repository root {resolved} differs from loaded execution root {actual}"
+        )
+    return actual
+
+
+def runtime_binding() -> dict[str, str]:
+    """Return the exact Python implementation and major.minor.micro runtime."""
+
+    version = sys.version_info
+    return {
+        "implementation": platform.python_implementation(),
+        "version": f"{version.major}.{version.minor}.{version.micro}",
+    }
+
+
+def _validate_runtime(value: Any, label: str = "runtime") -> dict[str, str]:
+    expected = {"implementation", "version"}
+    _exact_keys(value, expected, label)
+    if not all(isinstance(value[key], str) and value[key] for key in expected):
+        raise ManifestError(f"{label} fields must be non-empty strings")
+    version = value["version"]
+    pieces = version.split(".")
+    if len(pieces) != 3 or any(not p.isdigit() for p in pieces):
+        raise ManifestError(f"{label}.version must be major.minor.micro")
+    actual = runtime_binding()
+    if dict(value) != actual:
+        raise ManifestError(
+            f"{label} does not match the executing Python runtime: {value!r} != {actual!r}"
+        )
+    return {"implementation": value["implementation"], "version": value["version"]}
+
+
+_EVALUATOR_PREFIXES = ("semabi.hidden", "semabi.env", "semabi.eval", "semabi.baselines")
+
+
+def _module_path(root: Path, module: str) -> Path | None:
+    """Resolve a local Python module without importing it."""
+
+    if not module or any(module == prefix or module.startswith(prefix + ".")
+                         for prefix in _EVALUATOR_PREFIXES):
+        raise ManifestError(f"evaluator-only local import in V4 closure: {module}")
+    parts = module.split(".")
+    if any(not part.isidentifier() for part in parts):
+        return None
+    package = root.joinpath(*parts)
+    module_file = package.with_suffix(".py")
+    package_init = package / "__init__.py"
+    if module_file.is_file():
+        return module_file
+    if package_init.is_file():
+        return package_init
+    return None
+
+
+def _module_name_for_path(root: Path, path: Path) -> str | None:
+    try:
+        rel = path.resolve(strict=True).relative_to(root.resolve(strict=True))
+    except (OSError, ValueError):
+        return None
+    if rel.suffix != ".py":
+        return None
+    parts = list(rel.with_suffix("").parts)
+    if parts and parts[-1] == "__init__":
+        parts.pop()
+    if not parts or not all(part.isidentifier() for part in parts):
+        return None
+    return ".".join(parts)
+
+
+def _relative_import(
+    module: str | None, level: int, imported: str, *, is_package: bool = False
+) -> str | None:
+    if level == 0:
+        return imported
+    if module is None:
+        return None
+    pieces = module.split(".")
+    # A module's own package is its parent; a package __init__ already names the package.
+    base = pieces if is_package else pieces[:-1]
+    if level > len(base) + 1:
+        return None
+    prefix = base[: len(base) - level + 1] if level else base
+    return ".".join([*prefix, imported] if imported else prefix)
+
+
+def _literal_imports(
+    tree: ast.AST, module: str | None, *, is_package: bool = False
+) -> set[str]:
+    """Collect imports, including function-local and literal dynamic imports."""
+
+    found: set[str] = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            found.update(alias.name for alias in node.names)
+        elif isinstance(node, ast.ImportFrom):
+            base = _relative_import(
+                module, node.level, node.module or "", is_package=is_package
+            )
+            if base:
+                found.add(base)
+                # ``from package import child`` may resolve to a local child module.
+                found.update(f"{base}.{alias.name}" for alias in node.names
+                             if alias.name != "*")
+        elif isinstance(node, ast.Call):
+            target = node.func
+            is_import = (
+                isinstance(target, ast.Name) and target.id == "__import__"
+            ) or (
+                isinstance(target, ast.Attribute)
+                and target.attr == "import_module"
+            )
+            if is_import and node.args:
+                try:
+                    value = ast.literal_eval(node.args[0])
+                except (ValueError, TypeError, SyntaxError):
+                    value = None
+                if isinstance(value, str):
+                    found.add(value)
+    return found
+
+
+def local_import_closure(
+    repo_root: Path | None = None,
+    entrypoints: Iterable[str] = GENERATOR_ENTRYPOINTS,
+) -> tuple[str, ...]:
+    """Compute the deterministic transitive closure of local imports.
+
+    Only files under the loaded repository root are retained; stdlib and third-party
+    modules are not implementation inputs.  Every package ``__init__.py`` on a local
+    module path is included, and all syntactic imports are traversed even when they
+    occur inside a function body.
+    """
+
+    root = _repo_root(repo_root)
+    queue: list[Path] = []
+    for entry in sorted(set(entrypoints)):
+        path = Path(entry)
+        if path.is_absolute() or path.as_posix() != entry:
+            raise ManifestError(f"closure entrypoint must be a relative POSIX path: {entry}")
+        candidate = root / path
+        try:
+            candidate = candidate.resolve(strict=True)
+        except OSError as exc:
+            raise ManifestError(f"closure entrypoint does not resolve: {entry}") from exc
+        try:
+            candidate.relative_to(root)
+        except ValueError as exc:
+            raise ManifestError(f"closure entrypoint escapes repository root: {entry}") from exc
+        if candidate.suffix != ".py" or not candidate.is_file():
+            raise ManifestError(f"closure entrypoint is not a Python file: {entry}")
+        queue.append(candidate)
+
+    seen: set[Path] = set()
+    while queue:
+        path = queue.pop(0)
+        if path in seen:
+            continue
+        seen.add(path)
+        try:
+            source = path.read_text(encoding="utf-8")
+            tree = ast.parse(source, filename=str(path))
+        except (OSError, SyntaxError, UnicodeError) as exc:
+            raise ManifestError(f"cannot parse closure file {path}: {exc}") from exc
+        module = _module_name_for_path(root, path)
+        for imported in sorted(
+            _literal_imports(tree, module, is_package=path.name == "__init__.py")
+        ):
+            local = _module_path(root, imported)
+            if local is None:
+                continue
+            # Include package initialisers from the root package down to this module.
+            rel_parts = list(local.relative_to(root).parts[:-1])
+            current = root
+            for part in rel_parts:
+                current = current / part
+                init = current / "__init__.py"
+                if init.is_file():
+                    queue.append(init.resolve(strict=True))
+            queue.append(local.resolve(strict=True))
+    return tuple(sorted(path.relative_to(root).as_posix() for path in seen))
+
+
+def _implementation_file_set(root: Path, entrypoints: Iterable[str]) -> tuple[str, ...]:
+    return local_import_closure(root, entrypoints)
+
+
+# These are computed from the loaded checkout, never copied from a hand-maintained list.
+# They remain public for reports/tests, while validation recomputes the sets afresh.
+_CLOSURE_ROOT = _loaded_repo_root()
+GENERATOR_IMPLEMENTATION_FILES = _implementation_file_set(_CLOSURE_ROOT, GENERATOR_ENTRYPOINTS)
+REPLAY_IMPLEMENTATION_FILES = _implementation_file_set(_CLOSURE_ROOT, REPLAY_ENTRYPOINTS)
 
 
 def canonical_bytes(value: Any) -> bytes:
@@ -110,9 +292,8 @@ def _exact_keys(value: Mapping[str, Any], expected: set[str], label: str) -> Non
 
 def _read_json(path: Path) -> dict[str, Any]:
     try:
-        custody.require_regular_file(path)
-        value = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
+        value = json.loads(custody.read_file_bytes(Path(path)))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError, custody.CustodyError) as exc:
         raise ManifestError(f"cannot read JSON manifest {path}: {exc}") from exc
     if not isinstance(value, dict):
         raise ManifestError(f"manifest root must be an object: {path}")
@@ -138,46 +319,138 @@ def _relative_path(path: Path, base: Path) -> str:
     return value
 
 
-def _resolve_relative(base: Path, value: Any, label: str) -> Path:
+def _confined_absolute(path: Path, root: Path, label: str) -> Path:
+    """Resolve an evidence/manifest path only when it is inside root."""
+
+    path = Path(path)
+    try:
+        raw = path.absolute()
+        if not raw.exists():
+            parent = _confined_absolute(raw.parent, root, f"{label} parent")
+            if raw.name in ("", ".", ".."):
+                raise ManifestError(f"{label} has an invalid final component: {path}")
+            return parent / raw.name
+        # Reuse the custody component check before resolution.  This catches a
+        # symlink in a parent directory as well as a symlink at the leaf.
+        custody._reject_symlink_components(raw)  # type: ignore[attr-defined]
+        resolved = raw.resolve(strict=True)
+    except (OSError, custody.CustodyError) as exc:
+        raise ManifestError(f"{label} does not resolve without symlinks: {path}") from exc
+    try:
+        resolved.relative_to(root)
+    except ValueError as exc:
+        raise ManifestError(f"{label} escapes authenticated repository root: {path}") from exc
+    return resolved
+
+
+def _manifest_path_root(manifest_path: Path, repo_root: Path) -> Path:
+    """Return the one confinement root: the checkout whose code is executing.
+
+    There is deliberately no external test-bundle or alternate-root compatibility
+    branch.  A manifest outside the loaded checkout is not an authenticated replay
+    authority, even if it contains otherwise well-formed hashes.
+    """
+
+    del manifest_path
+    return repo_root
+
+
+def _resolve_relative(
+    base: Path, value: Any, label: str, *, repo_root: Path | None = None
+) -> Path:
     if not isinstance(value, str) or not value or "\x00" in value:
         raise ManifestError(f"{label} must be a non-empty relative path")
     path = Path(value)
     if path.is_absolute() or path.as_posix() != value:
         raise ManifestError(f"{label} must be a relative POSIX path")
-    raw = Path(base) / path
-    if raw.is_symlink():
-        raise ManifestError(f"{label} must not point through a symlink: {value}")
+    base = Path(base)
+    raw = base / path
+    current = base
+    # Check the lexical path, including components that ``resolve`` would later
+    # normalise away, before resolving it.
+    for part in path.parts:
+        if part == ".":
+            continue
+        if part == "..":
+            current = current.parent
+            continue
+        current = current / part
+        try:
+            if current.is_symlink():
+                raise ManifestError(f"{label} must not point through a symlink: {value}")
+        except OSError as exc:
+            raise ManifestError(f"cannot inspect {label}: {value}") from exc
     try:
         resolved = raw.resolve(strict=True)
     except OSError as exc:
         raise ManifestError(f"{label} does not resolve: {value}") from exc
-    return resolved
-
-
-def _repo_root(repo_root: Path | None) -> Path:
     if repo_root is not None:
-        return Path(repo_root).resolve()
-    # manifests.py lives at <repo>/semabi/compiler/v4/manifests.py.
-    return Path(__file__).resolve().parents[3]
+        try:
+            root = Path(repo_root).resolve(strict=True)
+        except OSError as exc:
+            raise ManifestError(f"path confinement root does not resolve: {repo_root}") from exc
+        try:
+            resolved.relative_to(root)
+        except ValueError as exc:
+            raise ManifestError(f"{label} escapes authenticated repository root: {value}") from exc
+    return resolved
 
 
 def implementation_hashes(
     repo_root: Path | None = None,
-    implementation_files: Iterable[str] = GENERATOR_IMPLEMENTATION_FILES,
+    implementation_files: Iterable[str] | None = None,
+    *,
+    entrypoints: Iterable[str] = GENERATOR_ENTRYPOINTS,
 ) -> dict[str, str]:
-    """Hash generator implementation files from a clean repository root."""
+    """Hash the exact local-import closure from frozen entrypoints."""
 
     root = _repo_root(repo_root)
-    paths = sorted(set(implementation_files))
+    paths = sorted(set(implementation_files or local_import_closure(root, entrypoints)))
     if not paths:
-        raise ManifestError("source generation must bind at least one implementation file")
+        raise ManifestError("execution must bind at least one implementation file")
     out: dict[str, str] = {}
     for relative in paths:
-        if not isinstance(relative, str) or not relative or Path(relative).is_absolute():
-            raise ManifestError("implementation file names must be relative")
-        path = root / Path(relative)
-        out[Path(relative).as_posix()] = custody.sha256_file(path)
+        if not isinstance(relative, str) or not relative or Path(relative).is_absolute() \
+                or Path(relative).as_posix() != relative:
+            raise ManifestError("implementation file names must be relative POSIX paths")
+        path = _resolve_repo_relative(root, relative, "implementation file")
+        out[relative] = custody.sha256_file(path)
     return out
+
+
+def _resolve_repo_relative(root: Path, value: Any, label: str) -> Path:
+    """Resolve a path under root while rejecting every symlink component."""
+
+    if not isinstance(value, str) or not value or "\x00" in value:
+        raise ManifestError(f"{label} must be a non-empty relative path")
+    path = Path(value)
+    if path.is_absolute() or path.as_posix() != value:
+        raise ManifestError(f"{label} must be a relative POSIX path")
+    raw = Path(root) / path
+    # Inspect the lexical path before resolve so ``link/../file`` cannot hide a
+    # symlink component that a normalised path would discard.
+    current = Path(root)
+    for part in path.parts:
+        if part == ".":
+            continue
+        if part == "..":
+            current = current.parent
+        else:
+            current = current / part
+            try:
+                if current.is_symlink():
+                    raise ManifestError(f"{label} must not point through a symlink: {value}")
+            except OSError as exc:
+                raise ManifestError(f"cannot inspect {label}: {value}") from exc
+    try:
+        resolved = raw.resolve(strict=True)
+    except OSError as exc:
+        raise ManifestError(f"{label} does not resolve: {value}") from exc
+    try:
+        resolved.relative_to(Path(root))
+    except ValueError as exc:
+        raise ManifestError(f"{label} escapes authenticated repository root: {value}") from exc
+    return resolved
 
 
 def full_reading_sha256(reading: PinnedReading | Mapping[str, Any]) -> str:
@@ -314,6 +587,7 @@ class SourceManifest:
     manifest_path: Path
     source_path: Path
     source_snapshot: dict[str, Any]
+    runtime: dict[str, str]
     generation: dict[str, Any]
     source_summary: dict[str, Any]
     incumbent: str
@@ -361,22 +635,36 @@ def build_source_manifest(
     *,
     repo_root: Path | None = None,
     implementation_files: Iterable[str] = GENERATOR_IMPLEMENTATION_FILES,
+    source_snapshot: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Create a deterministic source manifest without writing it."""
 
     source_dir = Path(source_dir)
     manifest_path = Path(manifest_path)
     manifest_path.parent.mkdir(parents=True, exist_ok=True)
-    snapshot = custody.snapshot_run(source_dir, "SOURCE")
+    root = _repo_root(repo_root)
+    path_root = _manifest_path_root(manifest_path, root)
+    source_dir = _confined_absolute(source_dir, path_root, "SOURCE path")
+    manifest_path = _confined_absolute(manifest_path, path_root, "source manifest path")
+    snapshot = (
+        custody.validate_snapshot(source_snapshot)
+        if source_snapshot is not None
+        else custody.snapshot_run(source_dir, "SOURCE")
+    )
+    if snapshot["role"] != "SOURCE":
+        raise ManifestError("source snapshot must be SOURCE")
     generation = {
         "max_candidates": MAX_CANDIDATES,
-        "implementation_files": implementation_hashes(repo_root, implementation_files),
+        "implementation_files": implementation_hashes(
+            root, implementation_files, entrypoints=GENERATOR_ENTRYPOINTS
+        ),
     }
     source_summary_value = _validate_source_summary(dict(summary))
     rows = [candidate_record(reading) for reading in candidates]
     payload = {
         "schema": SOURCE_MANIFEST_SCHEMA,
         "role": "SOURCE",
+        "runtime": runtime_binding(),
         "source_path": _relative_path(source_dir, manifest_path.parent),
         "source_snapshot": snapshot,
         "generation": generation,
@@ -392,8 +680,10 @@ def build_source_manifest(
 def save_source_manifest(
     payload: Mapping[str, Any], path: Path, *, repo_root: Path | None = None
 ) -> None:
-    _validate_source_payload(dict(payload), manifest_path=Path(path), repo_root=repo_root)
-    _write_json(Path(path), payload)
+    root = _repo_root(repo_root)
+    confined = _confined_absolute(Path(path), root, "source manifest path")
+    _validate_source_payload(dict(payload), manifest_path=confined, repo_root=root)
+    _write_json(confined, payload)
 
 
 def _validate_source_payload(
@@ -402,6 +692,7 @@ def _validate_source_payload(
     expected = {
         "schema",
         "role",
+        "runtime",
         "source_path",
         "source_snapshot",
         "generation",
@@ -412,7 +703,12 @@ def _validate_source_payload(
     _exact_keys(payload, expected, "source manifest")
     if payload["schema"] != SOURCE_MANIFEST_SCHEMA or payload["role"] != "SOURCE":
         raise ManifestError("source manifest has the wrong schema or role")
-    source_path = _resolve_relative(Path(manifest_path).parent, payload["source_path"], "source_path")
+    _validate_runtime(payload["runtime"], "source manifest runtime")
+    root = _repo_root(repo_root)
+    path_root = _manifest_path_root(Path(manifest_path), root)
+    source_path = _resolve_relative(
+        Path(manifest_path).parent, payload["source_path"], "source_path", repo_root=path_root
+    )
     source_snapshot = custody.validate_snapshot(payload["source_snapshot"])
     if source_snapshot["role"] != "SOURCE":
         raise ManifestError("source compiler snapshot must be SOURCE")
@@ -425,12 +721,14 @@ def _validate_source_payload(
         raise ManifestError("source generation implementation hashes are required")
     if set(implementation) != set(GENERATOR_IMPLEMENTATION_FILES):
         raise ManifestError("source generation implementation file set is not frozen")
-    root = _repo_root(repo_root)
+    expected_generator = set(local_import_closure(root, GENERATOR_ENTRYPOINTS))
+    if set(implementation) != expected_generator:
+        raise ManifestError("source generation implementation closure is not frozen")
     for relative, digest in implementation.items():
         if not isinstance(relative, str) or not relative or Path(relative).is_absolute():
             raise ManifestError("implementation hash paths must be relative")
         expected_digest = _check_sha(digest, f"implementation hash for {relative}")
-        actual_digest = custody.sha256_file(root / Path(relative))
+        actual_digest = custody.sha256_file(_resolve_repo_relative(root, relative, "implementation file"))
         if actual_digest != expected_digest:
             raise ManifestError(f"implementation hash mismatch: {relative}")
     summary = _validate_source_summary(payload["source_summary"])
@@ -492,15 +790,17 @@ def _validate_source_payload(
 def load_source_manifest(path: Path, *, repo_root: Path | None = None) -> SourceManifest:
     """Load and authenticate a source manifest without invoking source generation."""
 
-    path = Path(path)
+    root = _repo_root(repo_root)
+    path = _confined_absolute(Path(path), root, "source manifest path")
     payload = _read_json(path)
     raw, source_path, candidates = _validate_source_payload(
-        payload, manifest_path=path, repo_root=repo_root
+        payload, manifest_path=path, repo_root=root
     )
     return SourceManifest(
         manifest_path=path.resolve(),
         source_path=source_path,
         source_snapshot=custody.validate_snapshot(raw["source_snapshot"]),
+        runtime=dict(raw["runtime"]),
         generation=dict(raw["generation"]),
         source_summary=dict(raw["source_summary"]),
         incumbent=raw["incumbent"],
@@ -520,6 +820,7 @@ read_source_manifest = load_source_manifest
 class ChainManifest:
     manifest_path: Path
     source_manifest_path: Path
+    runtime: dict[str, str]
     roles: dict[str, dict[str, Any]]
     min_support: int
     custody_timing: str
@@ -556,14 +857,22 @@ def build_chain_manifest(
         raise ManifestError("current chain protocol requires min_support=2")
     manifest_path = Path(manifest_path)
     manifest_path.parent.mkdir(parents=True, exist_ok=True)
-    source_manifest = load_source_manifest(Path(source_manifest_path), repo_root=repo_root)
+    root = _repo_root(repo_root)
+    path_root = _manifest_path_root(manifest_path, root)
+    manifest_path = _confined_absolute(manifest_path, path_root, "chain manifest path")
+    source_manifest_path = _confined_absolute(
+        Path(source_manifest_path), path_root, "source manifest path"
+    )
+    source_manifest = load_source_manifest(source_manifest_path, repo_root=root)
     source_path = source_manifest.source_path
     if source_dir is not None:
         if Path(source_dir).is_symlink():
             raise ManifestError("explicit SOURCE path must not be a symlink")
         if Path(source_dir).resolve() != source_path.resolve():
             raise ManifestError("explicit SOURCE path does not match the source manifest")
-    transfer_dir, holdout_dir = Path(transfer_dir), Path(holdout_dir)
+    transfer_dir = _confined_absolute(Path(transfer_dir), path_root, "TRANSFER path")
+    holdout_dir = _confined_absolute(Path(holdout_dir), path_root, "HOLDOUT path")
+    source_path = _confined_absolute(source_path, path_root, "SOURCE path")
     roles = {
         "SOURCE": _role_record(source_path, "SOURCE", manifest_path.parent),
         "TRANSFER": _role_record(transfer_dir, "TRANSFER", manifest_path.parent),
@@ -578,12 +887,13 @@ def build_chain_manifest(
     }
     payload = {
         "schema": CHAIN_MANIFEST_SCHEMA,
+        "runtime": runtime_binding(),
         "source_manifest": source_ref,
         "roles": roles,
         "min_support": MIN_SUPPORT,
         "custody_timing": CUSTODY_TIMING,
         "implementation_files": implementation_hashes(
-            repo_root, REPLAY_IMPLEMENTATION_FILES
+            root, REPLAY_IMPLEMENTATION_FILES, entrypoints=REPLAY_ENTRYPOINTS
         ),
     }
     _validate_chain_payload(payload, manifest_path=manifest_path, repo_root=repo_root)
@@ -593,8 +903,10 @@ def build_chain_manifest(
 def save_chain_manifest(
     payload: Mapping[str, Any], path: Path, *, repo_root: Path | None = None
 ) -> None:
-    _validate_chain_payload(dict(payload), manifest_path=Path(path), repo_root=repo_root)
-    _write_json(Path(path), payload)
+    root = _repo_root(repo_root)
+    confined = _confined_absolute(Path(path), root, "chain manifest path")
+    _validate_chain_payload(dict(payload), manifest_path=confined, repo_root=root)
+    _write_json(confined, payload)
 
 
 def _check_role_distinctness(roles: Mapping[str, Mapping[str, Any]]) -> None:
@@ -604,21 +916,24 @@ def _check_role_distinctness(roles: Mapping[str, Mapping[str, Any]]) -> None:
         # A relative spelling can differ while resolving to the same path, handled below.
         pass
     snapshots = [row["snapshot"] for row in roles.values()]
-    trees = [snapshot["content_tree_sha256"] for snapshot in snapshots]
-    if len(trees) != len(set(trees)):
-        raise ManifestError("SOURCE, TRANSFER, and HOLDOUT content trees must be distinct")
+    consumed = [snapshot["consumed_evidence_sha256"] for snapshot in snapshots]
+    if len(consumed) != len(set(consumed)):
+        raise ManifestError(
+            "SOURCE, TRANSFER, and HOLDOUT consumed evidence must be distinct"
+        )
 
 
 def _validate_chain_payload(
     payload: Mapping[str, Any], *, manifest_path: Path, repo_root: Path | None = None
 ) -> ChainManifest:
     expected = {
-        "schema", "source_manifest", "roles", "min_support", "custody_timing",
+        "schema", "runtime", "source_manifest", "roles", "min_support", "custody_timing",
         "implementation_files",
     }
     _exact_keys(payload, expected, "chain manifest")
     if payload["schema"] != CHAIN_MANIFEST_SCHEMA:
         raise ManifestError("wrong chain manifest schema")
+    _validate_runtime(payload["runtime"], "chain manifest runtime")
     if payload["min_support"] != MIN_SUPPORT:
         raise ManifestError("chain manifest min_support must be 2")
     if payload["custody_timing"] != CUSTODY_TIMING:
@@ -629,38 +944,46 @@ def _validate_chain_payload(
     ):
         raise ManifestError("chain replay implementation file set is not frozen")
     root = _repo_root(repo_root)
+    path_root = _manifest_path_root(Path(manifest_path), root)
+    expected_replay = set(local_import_closure(root, REPLAY_ENTRYPOINTS))
+    if set(implementation) != expected_replay:
+        raise ManifestError("chain replay implementation closure is not frozen")
     for relative, digest in implementation.items():
         expected_digest = _check_sha(digest, f"replay implementation hash for {relative}")
-        if custody.sha256_file(root / Path(relative)) != expected_digest:
+        if custody.sha256_file(_resolve_repo_relative(root, relative, "implementation file")) != expected_digest:
             raise ManifestError(f"replay implementation hash mismatch: {relative}")
     source_ref = payload["source_manifest"]
     _exact_keys(source_ref, {"path", "sha256"}, "source_manifest reference")
-    source_manifest_path = _resolve_relative(Path(manifest_path).parent, source_ref["path"], "source_manifest.path")
+    source_manifest_path = _resolve_relative(
+        Path(manifest_path).parent, source_ref["path"], "source_manifest.path", repo_root=path_root
+    )
     expected_source_manifest_hash = _check_sha(source_ref["sha256"], "source_manifest.sha256")
     if custody.sha256_file(source_manifest_path) != expected_source_manifest_hash:
         raise ManifestError("source manifest file hash mismatch")
-    source_manifest = load_source_manifest(source_manifest_path, repo_root=repo_root)
+    source_manifest = load_source_manifest(source_manifest_path, repo_root=root)
     roles = payload["roles"]
     if not isinstance(roles, Mapping) or set(roles) != {"SOURCE", "TRANSFER", "HOLDOUT"}:
         raise ManifestError("chain roles must be exactly SOURCE, TRANSFER, and HOLDOUT")
     normalized_roles: dict[str, dict[str, Any]] = {}
     resolved_paths: list[Path] = []
-    trees: list[str] = []
+    consumed: list[str] = []
     for role in ("SOURCE", "TRANSFER", "HOLDOUT"):
         row = roles[role]
         _exact_keys(row, {"path", "snapshot"}, f"chain role {role}")
-        path = _resolve_relative(Path(manifest_path).parent, row["path"], f"{role}.path")
+        path = _resolve_relative(
+            Path(manifest_path).parent, row["path"], f"{role}.path", repo_root=path_root
+        )
         snapshot = custody.validate_snapshot(row["snapshot"])
         if snapshot["role"] != role:
             raise ManifestError(f"{role} snapshot has the wrong role")
         custody.verify_snapshot(path, snapshot, role)
         normalized_roles[role] = {"path": row["path"], "snapshot": snapshot}
         resolved_paths.append(path)
-        trees.append(snapshot["content_tree_sha256"])
+        consumed.append(snapshot["consumed_evidence_sha256"])
     if len({path.resolve() for path in resolved_paths}) != 3:
         raise ManifestError("chain role paths must resolve to three distinct directories")
-    if len(set(trees)) != 3:
-        raise ManifestError("chain role content trees must be distinct")
+    if len(set(consumed)) != 3:
+        raise ManifestError("chain role consumed evidence must be distinct")
     source_role = normalized_roles["SOURCE"]
     if source_role["path"]:
         if resolved_paths[0].resolve() != source_manifest.source_path.resolve():
@@ -670,6 +993,7 @@ def _validate_chain_payload(
     return ChainManifest(
         manifest_path=Path(manifest_path).resolve(),
         source_manifest_path=source_manifest_path,
+        runtime=dict(payload["runtime"]),
         roles=normalized_roles,
         min_support=payload["min_support"],
         custody_timing=payload["custody_timing"],
@@ -681,9 +1005,10 @@ def _validate_chain_payload(
 def load_chain_manifest(path: Path, *, repo_root: Path | None = None) -> ChainManifest:
     """Load and authenticate all three compiler role snapshots."""
 
-    path = Path(path)
+    root = _repo_root(repo_root)
+    path = _confined_absolute(Path(path), root, "chain manifest path")
     payload = _read_json(path)
-    return _validate_chain_payload(payload, manifest_path=path, repo_root=repo_root)
+    return _validate_chain_payload(payload, manifest_path=path, repo_root=root)
 
 
 freeze_chain_manifest = build_chain_manifest

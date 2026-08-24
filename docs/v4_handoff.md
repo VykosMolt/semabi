@@ -12,22 +12,28 @@ authoritative; verify them rather than trusting this summary.
 * The official frozen-V2 V3 result (`54adf05`) and diagnosis (`fc31fbf`) are immutable.
   gauntlet-v3 is development evidence throughout V4, never fresh generalization.
 * Branch: `v4-joint-observation-model`. Commit `1e20ef2` immutably preserves the rejected
-  sequential separation successor and its review. Do not rewrite or delete that checkpoint.
+  sequential separation successor and its review. Commit `98db1bd` preserves the first
+  authenticated all-pairs candidate; its adversarial rejection is retained by `5f229f3`.
+  Do not rewrite or delete any of those checkpoints.
 * The current raw histories are now retained in Git, but their snapshots were made after
   collection. Every chain therefore says exactly
   `RETROACTIVE_SNAPSHOT_CHRONOLOGY_NOT_ESTABLISHED`. The bytes and replay are reproducible;
-  prospective chronology is **NOT_ESTABLISHED**.
-* Compiler custody selects only `observations.jsonl`, `steps.jsonl`, existing `probes.jsonl`,
-  and the SOURCE refutation sidecar when present. Evaluator custody separately selects only
-  its two raw inputs. Generated models, identity reports and search logs are not inputs.
+  prospective chronology is **NOT_ESTABLISHED**. Reported author identity, collection order,
+  and seeds are historical prose, not precommitted machine authority.
+* Compiler custody binds `observations.jsonl`, `steps.jsonl`, existing `probes.jsonl`, and the
+  SOURCE refutation sidecar when present. Role independence is stricter: it uses a digest of
+  only the observations and steps actually shared by every compiler role, so ancillary bytes
+  or file modes cannot manufacture a distinct history. Evaluator custody separately selects
+  only its two raw inputs. Generated models, identity reports and search logs are not inputs.
 
 ## Read these artifacts first
 
 For each application, the source manifest freezes the explicit incumbent, all six complete
 `PinnedReading` objects, their decision fingerprints, full-reading SHA-256 hashes, the exact
-SOURCE input snapshot, and the complete source-generation implementation hash surface. The
-chain manifest adds role-distinct TRANSFER/HOLDOUT snapshots, `min_support=2`, the replay code
-hash surface, and the custody timing state.
+SOURCE input snapshot, the exact Python runtime, and the complete transitive local-import
+closure used for source generation. The chain manifest adds role-distinct TRANSFER/HOLDOUT
+snapshots, `min_support=2`, the replay import closure, and the custody timing state. The code
+root is derived from the loaded module; `--repo-root` cannot point hashing at another checkout.
 
     docs/data/v4/manifests/vet_clinic_source_candidates.json
     docs/data/v4/manifests/harbour_source_candidates.json
@@ -52,32 +58,36 @@ retains every candidate with zero explicit pairwise losses. A singleton is emitt
 exactly one undefeated reading exists. `UNDECIDED` and inconclusive comparisons create no
 loss; there is no win count, iteration order, runner-up fallback, or synthetic selection.
 
-The pairwise rule is still a vector dominance rule. It validates exact separation records
-before any comparison, preserves refutation/applicability/behavioral precedence, compares
-same-family separation fractions by integer cross-products, returns `UNDECIDED` immediately
-when different families favor opposite readings, and uses cost only for identical per-step
-verdicts. Full verdict maps and every exact comparison are retained in the reports.
+The pairwise rule is still a vector dominance rule. It validates exact transport/separation
+coherence before any comparison. A slot recorded as absent is untested, never refuted.
+Same-family separation fractions are comparable only over an identical SHA-256-bound
+co-present pair population, then by integer cross-products. The rule preserves
+refutation/applicability/behavioral precedence, returns `UNDECIDED` immediately when different
+families favor opposite readings, and uses cost only for identical per-step verdicts. Full
+verdict maps and every exact comparison are retained in the reports.
 
 All three SOURCE incumbents suffer an explicit TRANSFER loss and are rejected. **None of the
 three applications has a unique TRANSFER survivor.**
 
 | application | undefeated TRANSFER set | unresolved comparison | HOLDOUT evidence |
 |---|---|---|---|
-| `vet_clinic` | `promote cell[_]=cell#0`; `row[_](cell[_])=None` | asymmetric applicability, 0.83 versus 1.00 | both individually `PARTIALLY_CONTRADICTED`; the pairwise HOLDOUT frontier favors the row reading because the promoted reading has one refuted identity claim |
+| `vet_clinic` | `promote cell[_]=cell#0`; `row[_](cell[_])=None` | asymmetric applicability, 0.83 versus 1.00 | both individually `PARTIALLY_CONTRADICTED`; pairwise HOLDOUT remains applicability-inconclusive |
 | `harbour` | `promote cell[_]=cell#0`; both row-family `cell#0` variants | promoted reading is at 0.60 applicability versus 1.00; the two row variants improve opposite families | all three individually `PARTIALLY_CONTRADICTED`; no HOLDOUT pair produces a loss among them |
-| `blend_book` | `cell[_]=cell#0`; `promote cell[_]=cell#0` | asymmetric applicability, 0.80 versus 0.60 | the first is individually `CONFIRMED`, the promoted reading `PARTIALLY_CONTRADICTED`; their pairwise comparison remains applicability-inconclusive |
+| `blend_book` | `cell[_]=cell#0`; `promote cell[_]=cell#0` | asymmetric applicability, 0.80 versus 0.60 | the first is `CONFIRMED_WHERE_APPLICABLE_PARTIAL_COVERAGE`, the promoted reading `PARTIALLY_CONTRADICTED`; their pairwise comparison remains applicability-inconclusive |
 
-HOLDOUT is validation after TRANSFER, not a second selection history. Its mechanical frontier
-is retained, but it cannot promote one member of an ambiguous TRANSFER set. Thus vet_clinic's
-HOLDOUT preference and blend_book's individual confirmation are useful diagnosis, not
-permission to serialize a winner.
+HOLDOUT is post-TRANSFER development classification, not validation and not a second selection
+history. Its mechanical frontier is retained, but it cannot promote one member of an
+ambiguous TRANSFER set. The current retroactive chronology does not establish that any role
+was prospectively fresh.
 
 This supersedes three earlier claims:
 
 * “selection transports” is **NOT_ESTABLISHED**; only cross-trace rejection is established;
 * harbour has three undefeated readings, not a selected reading plus one runner-up;
-* blend_book's confirmed reading is not a unique transferred selection because a less
-  applicable promoted reading was not put to the same test.
+* the former vet-clinic HOLDOUT preference was a false refutation of an uninstantiated key and
+  is **NOT_ESTABLISHED**;
+* blend_book has confirmation only where the reading applied, not unqualified confirmation,
+  and no unique transferred selection.
 
 ## What still fails
 
@@ -134,9 +144,11 @@ budget, stop conditions, and failure states must be frozen before new TRANSFER e
     # full suite; loopback access is needed by three existing network tests
     .venv/bin/python -m pytest -q
 
-Current verification: `168 passed, 1 xfailed`; compiler/evaluator boundary `4/4`. No LLM
-proposal was used. The phase retained 4,373 collected primitives plus the earlier one-primitive
-harbour acquisition; no new primitives were collected by this repair.
+Current local verification: retained-frontier/integrity/boundary subset `76 passed`; complete
+suite `186 passed, 1 xfailed`. Fresh-clone replay, independent review, and adjudication are
+pending for the current repair candidate. No LLM proposal was used. The
+phase retained 4,373 collected primitives plus the earlier one-primitive harbour acquisition;
+no new primitives were collected by this repair.
 
 ## Non-negotiable boundaries
 
@@ -146,9 +158,11 @@ harbour acquisition; no new primitives were collected by this repair.
   losses/frontiers; HOLDOUT classifies the retained frontier and cannot select within it.
 * A reading instantiated to a different extent has not faced the same test. Preserve
   `INCONCLUSIVE_ASYMMETRIC_APPLICABILITY`; do not let cheapness or raw error totals cross it.
+* A key under `slot_absent` is untested and cannot be a separation refutation. Separation
+  fractions from different co-present pair populations are not comparable.
 * Preserve every `UNDECIDED`, `INCONCLUSIVE`, `NOT_ESTABLISHED`, and empty-frontier state
   exactly. Never manufacture a singleton.
 * One application instance holds one hidden state. Never run two collectors against the same
   port concurrently.
 * Do not modify V0, the effect language, V2's tag, the V3 frozen result, the rejected
-  `1e20ef2` checkpoint, or the current spent histories.
+  `1e20ef2`/`98db1bd` checkpoints, or the current spent histories.

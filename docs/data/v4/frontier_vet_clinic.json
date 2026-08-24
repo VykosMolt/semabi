@@ -34,46 +34,55 @@
   ],
   "chain_manifest": {
    "path": "docs/data/v4/manifests/vet_clinic_chain.json",
-   "sha256": "3d5f5ef8165d71496178fcab6fd8df9613c46bcd2459d7b81f540b2e18a63189"
+   "sha256": "8874f8d475039c9bb82ddc053d2f3e76797f4f0b595ba021356d18d554c8bf51"
   },
   "custody_timing": "RETROACTIVE_SNAPSHOT_CHRONOLOGY_NOT_ESTABLISHED",
   "min_support": 2,
   "replay_implementation_files": {
+   "semabi/__init__.py": "0a6e61cf4d9d8dc368fef7bc2053e6db686e3fb70272d7f9e9f1e5b3f79f95e8",
+   "semabi/compiler/__init__.py": "5249623658aef7d2b87bd34d06fab3f181b1ef5bbb9dd70b827592bb01b02893",
    "semabi/compiler/abstract.py": "07fd8b41fcfdfe3d563e6b5f28d6fbb0229fb706f944dbfe7626a363ade633f8",
    "semabi/compiler/belief.py": "10996cf9f5f2264ecbe8e28235718e81fc606ed249d8c2708f50541a73a8aa5c",
    "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
    "semabi/compiler/compile.py": "fa0e4b4237658dc2e5d41cf715fe8ca884b0b2ec9b714cde4f1917318c9f920f",
-   "semabi/compiler/compile_v4.py": "8474c48d7d8843106d3de3405698f04d48b191a36d5e8e36318205bd69ef9d27",
+   "semabi/compiler/compile_v4.py": "cc0049796495f7d0c0b7a5a100e13f1981a36d662f78178fb62a48ff6c330118",
    "semabi/compiler/evidence.py": "b4a5d0c9208f9b6c4588317078f8270a7bd0766bcb1a2e52722f72be74a90e51",
    "semabi/compiler/explorer.py": "16827d3735c9eab4d51a60c585790226be3e692bb63b01794df29a9ba8c8c807",
+   "semabi/compiler/grounder.py": "d272260d2bacd64dcd7fc88f2094c2f84b989736c89924460cc0053b8e97ac06",
    "semabi/compiler/induce.py": "46075088d34187ea121c77c3522055260e710a71199fd97de338f36f0c212b3e",
+   "semabi/compiler/mentions.py": "800fa94e2e4f76bfc503c7557ec775f6d83a612f6634123a62f78a16de2b781c",
    "semabi/compiler/model.py": "31b2d1207d678c05b743e70249db7947d7bb25759f668f2d013aef218aca6f36",
    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
    "semabi/compiler/parse.py": "c609e78b0f020f09bc22686168f22392cb54cea163a2ff84ab917528cb0ca922",
+   "semabi/compiler/v2/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
    "semabi/compiler/v2/abstractor.py": "8ef5620e76fbfd6047879814453d9cb1761d0d5f3641f354fa81dd9978110499",
    "semabi/compiler/v2/controls.py": "593eaaacfae90a3b688b403ea78e7651461a319dcb8f0fa3c148fcf21cc96f06",
    "semabi/compiler/v2/graph.py": "feb2ee73faca3bd5eaa91b3685bf84c047bf90027dddc56d02713b26a5501b6a",
    "semabi/compiler/v2/hypotheses.py": "fcb47e96015115c02efc56c9994fbcc1d2dcb2728d8b9ab51a89bfda5cffb92a",
    "semabi/compiler/v2/score.py": "292ea78f2237e7b86dbbc943d624024ca9213218ead327b88080b71aebaaa95c",
    "semabi/compiler/v2/units.py": "c1a94e811f8259742e65e24d4beea8b869868bec6a2901f5420a96d60d5d7d58",
-   "semabi/compiler/v4/custody.py": "41a5e047964550c2871ecdafa3159dde2a299e409845b240f9bd95ea1309c851",
+   "semabi/compiler/v4/__init__.py": "c41acb8afd5f3306718e6b5bb242db1dae876bf512bcec1d6c49108e8fbcc38c",
+   "semabi/compiler/v4/custody.py": "51b7b47082f78c4873a92d31a734efc7940f625fde2a171d053e554d5205547c",
+   "semabi/compiler/v4/frozen_evidence.py": "53be3e92100bf032bd2ded2856a0b6f873171f7220a61a715dee4f00c7efb382",
    "semabi/compiler/v4/identity.py": "4e718dd8b3d2ade2126c31c5e88a3d5d7b91662a08e1a95077f342c030039c05",
-   "semabi/compiler/v4/manifests.py": "633b6dee9692281906b3a050c49677543e168b083c97ce4da0abe5c8e634a646",
+   "semabi/compiler/v4/manifests.py": "994dbd298edb8ac1a3a0090ceaa72be7c01a61cab08ea0582a085b0711639eb5",
    "semabi/compiler/v4/objective.py": "4dd902f9bb288e967ae1333f581631e5c6edbd507a841bf45efe569b758fc065",
-   "semabi/compiler/v4/pinned.py": "03e10aecbe04122612c235bf363376152a15cd35db5faf575ae664248f96d2dc",
+   "semabi/compiler/v4/pinned.py": "2ed0a864b517401417590189ec4dd81bd3119649e3fec5a69ca211352e3dcd71",
    "semabi/compiler/v4/promote.py": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65",
-   "semabi/compiler/v4/search.py": "47f3751cbd325278b9afecc0d4e6ed8fbc55e3af592344a3f45e610593b40f72",
-   "semabi/compiler/v4/transfer.py": "1d7934b7318b9a4364a0d08400cc72bde343a293e9b8d62d82c112da67f2d1da",
+   "semabi/compiler/v4/search.py": "32f3411b29e6a28e25bbfe799787fb171c32fedbb8dc56b6a61a41997506c767",
+   "semabi/compiler/v4/transfer.py": "46a6060525108a58f82de5c402a8d2b8f719560538a9087400905af145b04291",
    "semabi/relmodel.py": "22ffbfe51a95a2b77307b9a2e0f3ba297dd58b2efd045ce7ab0263602abd74cf",
-   "semabi/run_v4_transfer.py": "dff2a8869b7463a8cd235a6c5308a751013791a24771e47f73130bdb435efa78"
+   "semabi/run_v4_transfer.py": "e58afc4199b11e48acc8c3e1768e06461864933076ddbb0cf0d3bed92b473592"
   },
   "roles": {
    "HOLDOUT": {
+    "consumed_evidence_sha256": "186bee340dc452cb741fccd89eed041e42168c98dbdbf595a691706ad9bdf7bf",
     "content_tree_sha256": "6f9c5322557b756f2826bea2cc3008543f25b8da2b03881ab07238c5211e8a78",
     "path": "../../../../runs/v4/vet_clinic_holdout",
     "path_base": "CHAIN_MANIFEST_PARENT",
     "role_bound_sha256": "1411cca41f2321ca788b3c9e1a19c5475f76c5820566cbefd5e44b22a3d47ffe",
     "snapshot": {
+     "consumed_evidence_sha256": "186bee340dc452cb741fccd89eed041e42168c98dbdbf595a691706ad9bdf7bf",
      "content_tree_sha256": "6f9c5322557b756f2826bea2cc3008543f25b8da2b03881ab07238c5211e8a78",
      "files": [
       {
@@ -97,15 +106,17 @@
      ],
      "role": "HOLDOUT",
      "role_bound_sha256": "1411cca41f2321ca788b3c9e1a19c5475f76c5820566cbefd5e44b22a3d47ffe",
-     "schema": "semabi.v4.compiler-snapshot.v1"
+     "schema": "semabi.v4.compiler-snapshot.v2"
     }
    },
    "SOURCE": {
+    "consumed_evidence_sha256": "28accf878fbf5d7e8cbe9a47f2e37be0c8f744a26b198642b2db645a2c09160e",
     "content_tree_sha256": "6fdb985a1e250543594a7a1267493fac1ee7848f3519d9518249e52d7c7bd93a",
     "path": "../../../../runs/v4/vet_clinic_dev",
     "path_base": "CHAIN_MANIFEST_PARENT",
     "role_bound_sha256": "05e3fbffc797e40d4602a222f2ee943da79211cbf7aca52cfb02d18c9dcc86c9",
     "snapshot": {
+     "consumed_evidence_sha256": "28accf878fbf5d7e8cbe9a47f2e37be0c8f744a26b198642b2db645a2c09160e",
      "content_tree_sha256": "6fdb985a1e250543594a7a1267493fac1ee7848f3519d9518249e52d7c7bd93a",
      "files": [
       {
@@ -129,15 +140,17 @@
      ],
      "role": "SOURCE",
      "role_bound_sha256": "05e3fbffc797e40d4602a222f2ee943da79211cbf7aca52cfb02d18c9dcc86c9",
-     "schema": "semabi.v4.compiler-snapshot.v1"
+     "schema": "semabi.v4.compiler-snapshot.v2"
     }
    },
    "TRANSFER": {
+    "consumed_evidence_sha256": "d9957fa528b5ec8eddf031e76fa3afe9240e740d8a39c2463b5b7e84f3793961",
     "content_tree_sha256": "32eaccff0be3c24e4fd00c2413237f3c5950408f3dae139a04c474912ae38349",
     "path": "../../../../runs/v4/vet_clinic_transfer",
     "path_base": "CHAIN_MANIFEST_PARENT",
     "role_bound_sha256": "5cbd29521be61c49742f9457b07cae2893dff3b6460e875fbdf046bdd075402e",
     "snapshot": {
+     "consumed_evidence_sha256": "d9957fa528b5ec8eddf031e76fa3afe9240e740d8a39c2463b5b7e84f3793961",
      "content_tree_sha256": "32eaccff0be3c24e4fd00c2413237f3c5950408f3dae139a04c474912ae38349",
      "files": [
       {
@@ -161,13 +174,21 @@
      ],
      "role": "TRANSFER",
      "role_bound_sha256": "5cbd29521be61c49742f9457b07cae2893dff3b6460e875fbdf046bdd075402e",
-     "schema": "semabi.v4.compiler-snapshot.v1"
+     "schema": "semabi.v4.compiler-snapshot.v2"
     }
    }
   },
+  "runtime": {
+   "implementation": "CPython",
+   "version": "3.12.13"
+  },
   "source_manifest": {
    "path": "docs/data/v4/manifests/vet_clinic_source_candidates.json",
-   "sha256": "1740711a55fc9d0fd21008e9843d3c394b48ec7c44bd3a47ab860906d58ffdcc"
+   "sha256": "dbdeeb3d103f104185c9cb1f89eeae9fc95a8f3928880d3708766e692015f260"
+  },
+  "source_runtime": {
+   "implementation": "CPython",
+   "version": "3.12.13"
   }
  },
  "holdout": {
@@ -197,6 +218,7 @@
       "copresent_pairs": 400,
       "family": "cell[_]",
       "key_slot": "cell#0",
+      "population_hash": "d459885c7c35e92926b4ecdb69d1e16edaac503802b57cdde30d20c30213f2f7",
       "rate": 0.37,
       "separated_pairs": 148,
       "status": "PARTIAL"
@@ -205,22 +227,15 @@
       "copresent_pairs": 73,
       "family": "row[_](cell[_])",
       "key_slot": "cell#0",
+      "population_hash": "ed50cbb55c05a9d2de2ec695c3017adfc3ebc0896334562e0aef1fb0bddff0f3",
       "rate": 0.055,
       "separated_pairs": 4,
       "status": "PARTIAL"
-     },
-     {
-      "copresent_pairs": 7,
-      "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
-      "key_slot": "cell#0|cell#0@4",
-      "rate": 0.0,
-      "separated_pairs": 0,
-      "status": "REFUTED"
      }
     ],
     "separation_confirmed": 0,
-    "separation_refuted": 1,
-    "separation_tested": 3,
+    "separation_refuted": 0,
+    "separation_tested": 2,
     "silent": 79,
     "spurious": 8,
     "transport": {
@@ -1149,6 +1164,7 @@
       "copresent_pairs": 86,
       "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
       "key_slot": "cell#0|cell#0@4",
+      "population_hash": "bed3836b6a7d3bf9f2d920af3b8fc8578695a79b5b1513be08fc64c6e0a06fea",
       "rate": 0.884,
       "separated_pairs": 76,
       "status": "PARTIAL"
@@ -2469,6 +2485,7 @@
          "copresent_pairs": 400,
          "family": "cell[_]",
          "key_slot": "cell#0",
+         "population_hash": "d459885c7c35e92926b4ecdb69d1e16edaac503802b57cdde30d20c30213f2f7",
          "rate": 0.37,
          "separated_pairs": 148,
          "status": "PARTIAL"
@@ -2477,22 +2494,15 @@
          "copresent_pairs": 73,
          "family": "row[_](cell[_])",
          "key_slot": "cell#0",
+         "population_hash": "ed50cbb55c05a9d2de2ec695c3017adfc3ebc0896334562e0aef1fb0bddff0f3",
          "rate": 0.055,
          "separated_pairs": 4,
          "status": "PARTIAL"
-        },
-        {
-         "copresent_pairs": 7,
-         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
-         "key_slot": "cell#0|cell#0@4",
-         "rate": 0.0,
-         "separated_pairs": 0,
-         "status": "REFUTED"
         }
        ],
        "separation_confirmed": 0,
-       "separation_refuted": 1,
-       "separation_tested": 3,
+       "separation_refuted": 0,
+       "separation_tested": 2,
        "silent": 79,
        "spurious": 8,
        "transport": {
@@ -2518,8 +2528,8 @@
        },
        "visibility": 285
       },
-      "outcome": "RIGHT",
-      "reason": "the history refutes 1 identity claims of the other reading against 0 of this one: a named value that separates none of the instances it names is not naming them",
+      "outcome": "INCONCLUSIVE_ASYMMETRIC_APPLICABILITY",
+      "reason": "the left reading could be instantiated on 0.83 of its claims here against 1.00 for the right one, so this history did not put them to the same test",
       "right": {
        "applicability": 1.0,
        "churn": 2,
@@ -2541,6 +2551,7 @@
          "copresent_pairs": 86,
          "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "bed3836b6a7d3bf9f2d920af3b8fc8578695a79b5b1513be08fc64c6e0a06fea",
          "rate": 0.884,
          "separated_pairs": 76,
          "status": "PARTIAL"
@@ -2572,35 +2583,19 @@
        "visibility": 4
       },
       "separation_differential": {
-       "cases": [
-        {
-         "direction": "RIGHT",
-         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
-         "left": {
-          "copresent_pairs": 7,
-          "key_slot": "cell#0|cell#0@4",
-          "separated_pairs": 0
-         },
-         "left_cross_product": 0,
-         "right": {
-          "copresent_pairs": 86,
-          "key_slot": "cell#0|cell#0@4",
-          "separated_pairs": 76
-         },
-         "right_cross_product": 532
-        }
-       ],
-       "comparable_families": 1,
+       "cases": [],
+       "comparable_families": 0,
        "counts": {
         "EQUAL": 0,
         "LEFT": 0,
-        "RIGHT": 1
+        "RIGHT": 0
        },
        "equal": 0,
        "left_better": 0,
        "left_dominant": false,
-       "right_better": 1,
-       "right_dominant": true
+       "population_mismatches": 0,
+       "right_better": 0,
+       "right_dominant": false
       }
      },
      "left_name": "promote cell[_]=cell#0",
@@ -2608,30 +2603,27 @@
     }
    ],
    "loss_counts": {
-    "promote cell[_]=cell#0": 1,
+    "promote cell[_]=cell#0": 0,
     "row[_](cell[_])=None": 0
    },
    "losses": {
-    "promote cell[_]=cell#0": [
-     "row[_](cell[_])=None"
-    ],
+    "promote cell[_]=cell#0": [],
     "row[_](cell[_])=None": []
    },
-   "outcome": "UNIQUE_SURVIVOR",
-   "selected": "row[_](cell[_])=None",
-   "selection": "row[_](cell[_])=None",
+   "outcome": "AMBIGUOUS_SURVIVOR_SET",
+   "selected": null,
+   "selection": null,
    "survivors": [
+    "promote cell[_]=cell#0",
     "row[_](cell[_])=None"
    ],
    "winner_counts": {
     "promote cell[_]=cell#0": 0,
-    "row[_](cell[_])=None": 1
+    "row[_](cell[_])=None": 0
    },
    "winners": {
     "promote cell[_]=cell#0": [],
-    "row[_](cell[_])=None": [
-     "promote cell[_]=cell#0"
-    ]
+    "row[_](cell[_])=None": []
    }
   },
   "outcome": "AMBIGUOUS_SURVIVOR_SET",
@@ -2659,6 +2651,7 @@
      "copresent_pairs": 400,
      "family": "cell[_]",
      "key_slot": "cell#0",
+     "population_hash": "d459885c7c35e92926b4ecdb69d1e16edaac503802b57cdde30d20c30213f2f7",
      "rate": 0.37,
      "separated_pairs": 148,
      "status": "PARTIAL"
@@ -2667,22 +2660,15 @@
      "copresent_pairs": 73,
      "family": "row[_](cell[_])",
      "key_slot": "cell#0",
+     "population_hash": "ed50cbb55c05a9d2de2ec695c3017adfc3ebc0896334562e0aef1fb0bddff0f3",
      "rate": 0.055,
      "separated_pairs": 4,
      "status": "PARTIAL"
-    },
-    {
-     "copresent_pairs": 7,
-     "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
-     "key_slot": "cell#0|cell#0@4",
-     "rate": 0.0,
-     "separated_pairs": 0,
-     "status": "REFUTED"
     }
    ],
    "separation_confirmed": 0,
-   "separation_refuted": 1,
-   "separation_tested": 3,
+   "separation_refuted": 0,
+   "separation_tested": 2,
    "silent": 79,
    "spurious": 8,
    "transport": {
@@ -3611,6 +3597,7 @@
      "copresent_pairs": 86,
      "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
      "key_slot": "cell#0|cell#0@4",
+     "population_hash": "bed3836b6a7d3bf9f2d920af3b8fc8578695a79b5b1513be08fc64c6e0a06fea",
      "rate": 0.884,
      "separated_pairs": 76,
      "status": "PARTIAL"
@@ -4931,6 +4918,7 @@
         "copresent_pairs": 400,
         "family": "cell[_]",
         "key_slot": "cell#0",
+        "population_hash": "d459885c7c35e92926b4ecdb69d1e16edaac503802b57cdde30d20c30213f2f7",
         "rate": 0.37,
         "separated_pairs": 148,
         "status": "PARTIAL"
@@ -4939,22 +4927,15 @@
         "copresent_pairs": 73,
         "family": "row[_](cell[_])",
         "key_slot": "cell#0",
+        "population_hash": "ed50cbb55c05a9d2de2ec695c3017adfc3ebc0896334562e0aef1fb0bddff0f3",
         "rate": 0.055,
         "separated_pairs": 4,
         "status": "PARTIAL"
-       },
-       {
-        "copresent_pairs": 7,
-        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
-        "key_slot": "cell#0|cell#0@4",
-        "rate": 0.0,
-        "separated_pairs": 0,
-        "status": "REFUTED"
        }
       ],
       "separation_confirmed": 0,
-      "separation_refuted": 1,
-      "separation_tested": 3,
+      "separation_refuted": 0,
+      "separation_tested": 2,
       "silent": 79,
       "spurious": 8,
       "transport": {
@@ -4980,8 +4961,8 @@
       },
       "visibility": 285
      },
-     "outcome": "RIGHT",
-     "reason": "the history refutes 1 identity claims of the other reading against 0 of this one: a named value that separates none of the instances it names is not naming them",
+     "outcome": "INCONCLUSIVE_ASYMMETRIC_APPLICABILITY",
+     "reason": "the left reading could be instantiated on 0.83 of its claims here against 1.00 for the right one, so this history did not put them to the same test",
      "right": {
       "applicability": 1.0,
       "churn": 2,
@@ -5003,6 +4984,7 @@
         "copresent_pairs": 86,
         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "bed3836b6a7d3bf9f2d920af3b8fc8578695a79b5b1513be08fc64c6e0a06fea",
         "rate": 0.884,
         "separated_pairs": 76,
         "status": "PARTIAL"
@@ -5034,35 +5016,19 @@
       "visibility": 4
      },
      "separation_differential": {
-      "cases": [
-       {
-        "direction": "RIGHT",
-        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
-        "left": {
-         "copresent_pairs": 7,
-         "key_slot": "cell#0|cell#0@4",
-         "separated_pairs": 0
-        },
-        "left_cross_product": 0,
-        "right": {
-         "copresent_pairs": 86,
-         "key_slot": "cell#0|cell#0@4",
-         "separated_pairs": 76
-        },
-        "right_cross_product": 532
-       }
-      ],
-      "comparable_families": 1,
+      "cases": [],
+      "comparable_families": 0,
       "counts": {
        "EQUAL": 0,
        "LEFT": 0,
-       "RIGHT": 1
+       "RIGHT": 0
       },
       "equal": 0,
       "left_better": 0,
       "left_dominant": false,
-      "right_better": 1,
-      "right_dominant": true
+      "population_mismatches": 0,
+      "right_better": 0,
+      "right_dominant": false
      }
     },
     "left_name": "promote cell[_]=cell#0",
@@ -5070,38 +5036,36 @@
    }
   ],
   "loss_counts": {
-   "promote cell[_]=cell#0": 1,
+   "promote cell[_]=cell#0": 0,
    "row[_](cell[_])=None": 0
   },
   "losses": {
-   "promote cell[_]=cell#0": [
-    "row[_](cell[_])=None"
-   ],
+   "promote cell[_]=cell#0": [],
    "row[_](cell[_])=None": []
   },
-  "outcome": "UNIQUE_SURVIVOR",
-  "selected": "row[_](cell[_])=None",
-  "selection": "row[_](cell[_])=None",
+  "outcome": "AMBIGUOUS_SURVIVOR_SET",
+  "selected": null,
+  "selection": null,
   "survivors": [
+   "promote cell[_]=cell#0",
    "row[_](cell[_])=None"
   ],
   "winner_counts": {
    "promote cell[_]=cell#0": 0,
-   "row[_](cell[_])=None": 1
+   "row[_](cell[_])=None": 0
   },
   "winners": {
    "promote cell[_]=cell#0": [],
-   "row[_](cell[_])=None": [
-    "promote cell[_]=cell#0"
-   ]
+   "row[_](cell[_])=None": []
   }
  },
  "holdout_outcome": "AMBIGUOUS_SURVIVOR_SET",
  "outcome": "AMBIGUOUS_SURVIVOR_SET",
  "role_semantics": {
-  "HOLDOUT": "classified the undefeated transfer survivors after selection",
-  "SOURCE": "retained the candidate readings; it is not validation",
-  "TRANSFER": "compared the retained readings on a fresh history; it is not validation"
+  "HOLDOUT": "post-TRANSFER development classification of survivors; not validation",
+  "SOURCE": "retained source candidate readings from spent development evidence; not validation",
+  "TRANSFER": "compared retained readings on a separate spent development history; prospective freshness NOT_ESTABLISHED",
+  "all": "SOURCE, TRANSFER, and HOLDOUT are separate retained spent development histories; prospective freshness is NOT_ESTABLISHED"
  },
  "roles": {
   "HOLDOUT": "../../../../runs/v4/vet_clinic_holdout",
@@ -5484,7 +5448,7 @@
   ],
   "manifest": {
    "path": "docs/data/v4/manifests/vet_clinic_source_candidates.json",
-   "sha256": "1740711a55fc9d0fd21008e9843d3c394b48ec7c44bd3a47ab860906d58ffdcc"
+   "sha256": "dbdeeb3d103f104185c9cb1f89eeae9fc95a8f3928880d3708766e692015f260"
   },
   "source_choice": {
    "decision_fingerprint": "2dc9cce46cf67682",
@@ -5771,6 +5735,7 @@
       "copresent_pairs": 400,
       "family": "cell[_]",
       "key_slot": "cell#0",
+      "population_hash": "59bbba3b2617aee7a2ccf6b3075ad524a29295f657a0db96007fa83a1f7df9b1",
       "rate": 1.0,
       "separated_pairs": 400,
       "status": "CONFIRMED"
@@ -5779,6 +5744,7 @@
       "copresent_pairs": 400,
       "family": "row[_](cell[_])",
       "key_slot": "cell#0",
+      "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
       "rate": 0.655,
       "separated_pairs": 262,
       "status": "PARTIAL"
@@ -5787,6 +5753,7 @@
       "copresent_pairs": 47,
       "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
       "key_slot": "cell#0|cell#0@4",
+      "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
       "rate": 1.0,
       "separated_pairs": 47,
       "status": "CONFIRMED"
@@ -6731,6 +6698,7 @@
       "copresent_pairs": 30,
       "family": "group[_](heading[_],list[_](listitem[_]))",
       "key_slot": "heading#1",
+      "population_hash": "a67370ae3dca899e845e3cb734944dd8dd3d4e9a001feee9c5cf511594c8bb76",
       "rate": 1.0,
       "separated_pairs": 30,
       "status": "CONFIRMED"
@@ -6739,6 +6707,7 @@
       "copresent_pairs": 400,
       "family": "row[_](cell[_])",
       "key_slot": "cell#0",
+      "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
       "rate": 0.655,
       "separated_pairs": 262,
       "status": "PARTIAL"
@@ -6747,6 +6716,7 @@
       "copresent_pairs": 47,
       "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
       "key_slot": "cell#0|cell#0@4",
+      "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
       "rate": 1.0,
       "separated_pairs": 47,
       "status": "CONFIRMED"
@@ -7691,6 +7661,7 @@
       "copresent_pairs": 400,
       "family": "cell[_]",
       "key_slot": "cell#0",
+      "population_hash": "a7afff1eb5526fe07bd453d8bb48f15f1bef622d949746c3b8970ea2c90ed159",
       "rate": 0.38,
       "separated_pairs": 152,
       "status": "PARTIAL"
@@ -7699,17 +7670,10 @@
       "copresent_pairs": 2,
       "family": "row[_](cell[_])",
       "key_slot": "cell#0",
+      "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
       "rate": 1.0,
       "separated_pairs": 2,
       "status": "CONFIRMED"
-     },
-     {
-      "copresent_pairs": 0,
-      "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
-      "key_slot": "cell#0|cell#0@4",
-      "rate": null,
-      "separated_pairs": 0,
-      "status": "UNTESTED"
      }
     ],
     "separation_confirmed": 1,
@@ -8655,6 +8619,7 @@
       "copresent_pairs": 30,
       "family": "listitem[_]",
       "key_slot": "listitem#0!",
+      "population_hash": "550c230eb23fb11901a94cc913f0f8153a62d0e23891715434e0dbb36c3b1658",
       "rate": 1.0,
       "separated_pairs": 30,
       "status": "CONFIRMED"
@@ -8663,6 +8628,7 @@
       "copresent_pairs": 400,
       "family": "row[_](cell[_])",
       "key_slot": "cell#0",
+      "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
       "rate": 0.655,
       "separated_pairs": 262,
       "status": "PARTIAL"
@@ -8671,6 +8637,7 @@
       "copresent_pairs": 47,
       "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
       "key_slot": "cell#0|cell#0@4",
+      "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
       "rate": 1.0,
       "separated_pairs": 47,
       "status": "CONFIRMED"
@@ -9618,6 +9585,7 @@
       "copresent_pairs": 47,
       "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
       "key_slot": "cell#0|cell#0@4",
+      "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
       "rate": 1.0,
       "separated_pairs": 47,
       "status": "CONFIRMED"
@@ -10562,6 +10530,7 @@
       "copresent_pairs": 400,
       "family": "row[_](cell[_])",
       "key_slot": "cell#0",
+      "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
       "rate": 0.655,
       "separated_pairs": 262,
       "status": "PARTIAL"
@@ -10570,6 +10539,7 @@
       "copresent_pairs": 47,
       "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
       "key_slot": "cell#0|cell#0@4",
+      "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
       "rate": 1.0,
       "separated_pairs": 47,
       "status": "CONFIRMED"
@@ -11901,6 +11871,7 @@
          "copresent_pairs": 400,
          "family": "cell[_]",
          "key_slot": "cell#0",
+         "population_hash": "59bbba3b2617aee7a2ccf6b3075ad524a29295f657a0db96007fa83a1f7df9b1",
          "rate": 1.0,
          "separated_pairs": 400,
          "status": "CONFIRMED"
@@ -11909,6 +11880,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_])",
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "rate": 0.655,
          "separated_pairs": 262,
          "status": "PARTIAL"
@@ -11917,6 +11889,7 @@
          "copresent_pairs": 47,
          "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "rate": 1.0,
          "separated_pairs": 47,
          "status": "CONFIRMED"
@@ -11970,6 +11943,7 @@
          "copresent_pairs": 30,
          "family": "group[_](heading[_],list[_](listitem[_]))",
          "key_slot": "heading#1",
+         "population_hash": "a67370ae3dca899e845e3cb734944dd8dd3d4e9a001feee9c5cf511594c8bb76",
          "rate": 1.0,
          "separated_pairs": 30,
          "status": "CONFIRMED"
@@ -11978,6 +11952,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_])",
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "rate": 0.655,
          "separated_pairs": 262,
          "status": "PARTIAL"
@@ -11986,6 +11961,7 @@
          "copresent_pairs": 47,
          "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "rate": 1.0,
          "separated_pairs": 47,
          "status": "CONFIRMED"
@@ -12024,12 +12000,14 @@
          "left": {
           "copresent_pairs": 400,
           "key_slot": "cell#0",
+          "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
           "separated_pairs": 262
          },
          "left_cross_product": 104800,
          "right": {
           "copresent_pairs": 400,
           "key_slot": "cell#0",
+          "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
           "separated_pairs": 262
          },
          "right_cross_product": 104800
@@ -12040,12 +12018,14 @@
          "left": {
           "copresent_pairs": 47,
           "key_slot": "cell#0|cell#0@4",
+          "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
           "separated_pairs": 47
          },
          "left_cross_product": 2209,
          "right": {
           "copresent_pairs": 47,
           "key_slot": "cell#0|cell#0@4",
+          "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
           "separated_pairs": 47
          },
          "right_cross_product": 2209
@@ -12060,6 +12040,7 @@
        "equal": 2,
        "left_better": 0,
        "left_dominant": false,
+       "population_mismatches": 0,
        "right_better": 0,
        "right_dominant": false
       }
@@ -12468,6 +12449,7 @@
          "copresent_pairs": 400,
          "family": "cell[_]",
          "key_slot": "cell#0",
+         "population_hash": "59bbba3b2617aee7a2ccf6b3075ad524a29295f657a0db96007fa83a1f7df9b1",
          "rate": 1.0,
          "separated_pairs": 400,
          "status": "CONFIRMED"
@@ -12476,6 +12458,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_])",
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "rate": 0.655,
          "separated_pairs": 262,
          "status": "PARTIAL"
@@ -12484,6 +12467,7 @@
          "copresent_pairs": 47,
          "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "rate": 1.0,
          "separated_pairs": 47,
          "status": "CONFIRMED"
@@ -12537,6 +12521,7 @@
          "copresent_pairs": 400,
          "family": "cell[_]",
          "key_slot": "cell#0",
+         "population_hash": "a7afff1eb5526fe07bd453d8bb48f15f1bef622d949746c3b8970ea2c90ed159",
          "rate": 0.38,
          "separated_pairs": 152,
          "status": "PARTIAL"
@@ -12545,17 +12530,10 @@
          "copresent_pairs": 2,
          "family": "row[_](cell[_])",
          "key_slot": "cell#0",
+         "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
          "rate": 1.0,
          "separated_pairs": 2,
          "status": "CONFIRMED"
-        },
-        {
-         "copresent_pairs": 0,
-         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
-         "key_slot": "cell#0|cell#0@4",
-         "rate": null,
-         "separated_pairs": 0,
-         "status": "UNTESTED"
         }
        ],
        "separation_confirmed": 1,
@@ -12589,48 +12567,51 @@
       "separation_differential": {
        "cases": [
         {
-         "direction": "LEFT",
+         "direction": "POPULATION_MISMATCH",
          "family": "cell[_]",
          "left": {
           "copresent_pairs": 400,
           "key_slot": "cell#0",
+          "population_hash": "59bbba3b2617aee7a2ccf6b3075ad524a29295f657a0db96007fa83a1f7df9b1",
           "separated_pairs": 400
          },
-         "left_cross_product": 160000,
+         "population_mismatch": true,
          "right": {
           "copresent_pairs": 400,
           "key_slot": "cell#0",
+          "population_hash": "a7afff1eb5526fe07bd453d8bb48f15f1bef622d949746c3b8970ea2c90ed159",
           "separated_pairs": 152
-         },
-         "right_cross_product": 60800
+         }
         },
         {
-         "direction": "RIGHT",
+         "direction": "POPULATION_MISMATCH",
          "family": "row[_](cell[_])",
          "left": {
           "copresent_pairs": 400,
           "key_slot": "cell#0",
+          "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
           "separated_pairs": 262
          },
-         "left_cross_product": 524,
+         "population_mismatch": true,
          "right": {
           "copresent_pairs": 2,
           "key_slot": "cell#0",
+          "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
           "separated_pairs": 2
-         },
-         "right_cross_product": 800
+         }
         }
        ],
-       "comparable_families": 2,
+       "comparable_families": 0,
        "counts": {
         "EQUAL": 0,
-        "LEFT": 1,
-        "RIGHT": 1
+        "LEFT": 0,
+        "RIGHT": 0
        },
        "equal": 0,
-       "left_better": 1,
+       "left_better": 0,
        "left_dominant": false,
-       "right_better": 1,
+       "population_mismatches": 2,
+       "right_better": 0,
        "right_dominant": false
       }
      },
@@ -13037,6 +13018,7 @@
          "copresent_pairs": 400,
          "family": "cell[_]",
          "key_slot": "cell#0",
+         "population_hash": "59bbba3b2617aee7a2ccf6b3075ad524a29295f657a0db96007fa83a1f7df9b1",
          "rate": 1.0,
          "separated_pairs": 400,
          "status": "CONFIRMED"
@@ -13045,6 +13027,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_])",
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "rate": 0.655,
          "separated_pairs": 262,
          "status": "PARTIAL"
@@ -13053,6 +13036,7 @@
          "copresent_pairs": 47,
          "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "rate": 1.0,
          "separated_pairs": 47,
          "status": "CONFIRMED"
@@ -13107,6 +13091,7 @@
          "copresent_pairs": 30,
          "family": "listitem[_]",
          "key_slot": "listitem#0!",
+         "population_hash": "550c230eb23fb11901a94cc913f0f8153a62d0e23891715434e0dbb36c3b1658",
          "rate": 1.0,
          "separated_pairs": 30,
          "status": "CONFIRMED"
@@ -13115,6 +13100,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_])",
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "rate": 0.655,
          "separated_pairs": 262,
          "status": "PARTIAL"
@@ -13123,6 +13109,7 @@
          "copresent_pairs": 47,
          "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "rate": 1.0,
          "separated_pairs": 47,
          "status": "CONFIRMED"
@@ -13164,12 +13151,14 @@
          "left": {
           "copresent_pairs": 400,
           "key_slot": "cell#0",
+          "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
           "separated_pairs": 262
          },
          "left_cross_product": 104800,
          "right": {
           "copresent_pairs": 400,
           "key_slot": "cell#0",
+          "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
           "separated_pairs": 262
          },
          "right_cross_product": 104800
@@ -13180,12 +13169,14 @@
          "left": {
           "copresent_pairs": 47,
           "key_slot": "cell#0|cell#0@4",
+          "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
           "separated_pairs": 47
          },
          "left_cross_product": 2209,
          "right": {
           "copresent_pairs": 47,
           "key_slot": "cell#0|cell#0@4",
+          "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
           "separated_pairs": 47
          },
          "right_cross_product": 2209
@@ -13200,6 +13191,7 @@
        "equal": 2,
        "left_better": 0,
        "left_dominant": false,
+       "population_mismatches": 0,
        "right_better": 0,
        "right_dominant": false
       }
@@ -13605,6 +13597,7 @@
          "copresent_pairs": 400,
          "family": "cell[_]",
          "key_slot": "cell#0",
+         "population_hash": "59bbba3b2617aee7a2ccf6b3075ad524a29295f657a0db96007fa83a1f7df9b1",
          "rate": 1.0,
          "separated_pairs": 400,
          "status": "CONFIRMED"
@@ -13613,6 +13606,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_])",
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "rate": 0.655,
          "separated_pairs": 262,
          "status": "PARTIAL"
@@ -13621,6 +13615,7 @@
          "copresent_pairs": 47,
          "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "rate": 1.0,
          "separated_pairs": 47,
          "status": "CONFIRMED"
@@ -13674,6 +13669,7 @@
          "copresent_pairs": 47,
          "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "rate": 1.0,
          "separated_pairs": 47,
          "status": "CONFIRMED"
@@ -13712,12 +13708,14 @@
          "left": {
           "copresent_pairs": 47,
           "key_slot": "cell#0|cell#0@4",
+          "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
           "separated_pairs": 47
          },
          "left_cross_product": 2209,
          "right": {
           "copresent_pairs": 47,
           "key_slot": "cell#0|cell#0@4",
+          "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
           "separated_pairs": 47
          },
          "right_cross_product": 2209
@@ -13732,6 +13730,7 @@
        "equal": 1,
        "left_better": 0,
        "left_dominant": false,
+       "population_mismatches": 0,
        "right_better": 0,
        "right_dominant": false
       }
@@ -14136,6 +14135,7 @@
          "copresent_pairs": 400,
          "family": "cell[_]",
          "key_slot": "cell#0",
+         "population_hash": "59bbba3b2617aee7a2ccf6b3075ad524a29295f657a0db96007fa83a1f7df9b1",
          "rate": 1.0,
          "separated_pairs": 400,
          "status": "CONFIRMED"
@@ -14144,6 +14144,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_])",
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "rate": 0.655,
          "separated_pairs": 262,
          "status": "PARTIAL"
@@ -14152,6 +14153,7 @@
          "copresent_pairs": 47,
          "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "rate": 1.0,
          "separated_pairs": 47,
          "status": "CONFIRMED"
@@ -14205,6 +14207,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_])",
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "rate": 0.655,
          "separated_pairs": 262,
          "status": "PARTIAL"
@@ -14213,6 +14216,7 @@
          "copresent_pairs": 47,
          "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "rate": 1.0,
          "separated_pairs": 47,
          "status": "CONFIRMED"
@@ -14251,12 +14255,14 @@
          "left": {
           "copresent_pairs": 400,
           "key_slot": "cell#0",
+          "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
           "separated_pairs": 262
          },
          "left_cross_product": 104800,
          "right": {
           "copresent_pairs": 400,
           "key_slot": "cell#0",
+          "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
           "separated_pairs": 262
          },
          "right_cross_product": 104800
@@ -14267,12 +14273,14 @@
          "left": {
           "copresent_pairs": 47,
           "key_slot": "cell#0|cell#0@4",
+          "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
           "separated_pairs": 47
          },
          "left_cross_product": 2209,
          "right": {
           "copresent_pairs": 47,
           "key_slot": "cell#0|cell#0@4",
+          "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
           "separated_pairs": 47
          },
          "right_cross_product": 2209
@@ -14287,6 +14295,7 @@
        "equal": 2,
        "left_better": 0,
        "left_dominant": false,
+       "population_mismatches": 0,
        "right_better": 0,
        "right_dominant": false
       }
@@ -14695,6 +14704,7 @@
          "copresent_pairs": 30,
          "family": "group[_](heading[_],list[_](listitem[_]))",
          "key_slot": "heading#1",
+         "population_hash": "a67370ae3dca899e845e3cb734944dd8dd3d4e9a001feee9c5cf511594c8bb76",
          "rate": 1.0,
          "separated_pairs": 30,
          "status": "CONFIRMED"
@@ -14703,6 +14713,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_])",
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "rate": 0.655,
          "separated_pairs": 262,
          "status": "PARTIAL"
@@ -14711,6 +14722,7 @@
          "copresent_pairs": 47,
          "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "rate": 1.0,
          "separated_pairs": 47,
          "status": "CONFIRMED"
@@ -14764,6 +14776,7 @@
          "copresent_pairs": 400,
          "family": "cell[_]",
          "key_slot": "cell#0",
+         "population_hash": "a7afff1eb5526fe07bd453d8bb48f15f1bef622d949746c3b8970ea2c90ed159",
          "rate": 0.38,
          "separated_pairs": 152,
          "status": "PARTIAL"
@@ -14772,17 +14785,10 @@
          "copresent_pairs": 2,
          "family": "row[_](cell[_])",
          "key_slot": "cell#0",
+         "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
          "rate": 1.0,
          "separated_pairs": 2,
          "status": "CONFIRMED"
-        },
-        {
-         "copresent_pairs": 0,
-         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
-         "key_slot": "cell#0|cell#0@4",
-         "rate": null,
-         "separated_pairs": 0,
-         "status": "UNTESTED"
         }
        ],
        "separation_confirmed": 1,
@@ -14816,33 +14822,35 @@
       "separation_differential": {
        "cases": [
         {
-         "direction": "RIGHT",
+         "direction": "POPULATION_MISMATCH",
          "family": "row[_](cell[_])",
          "left": {
           "copresent_pairs": 400,
           "key_slot": "cell#0",
+          "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
           "separated_pairs": 262
          },
-         "left_cross_product": 524,
+         "population_mismatch": true,
          "right": {
           "copresent_pairs": 2,
           "key_slot": "cell#0",
+          "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
           "separated_pairs": 2
-         },
-         "right_cross_product": 800
+         }
         }
        ],
-       "comparable_families": 1,
+       "comparable_families": 0,
        "counts": {
         "EQUAL": 0,
         "LEFT": 0,
-        "RIGHT": 1
+        "RIGHT": 0
        },
        "equal": 0,
        "left_better": 0,
        "left_dominant": false,
-       "right_better": 1,
-       "right_dominant": true
+       "population_mismatches": 1,
+       "right_better": 0,
+       "right_dominant": false
       }
      },
      "left_name": "group[_](heading[_],list=heading#1",
@@ -15248,6 +15256,7 @@
          "copresent_pairs": 30,
          "family": "group[_](heading[_],list[_](listitem[_]))",
          "key_slot": "heading#1",
+         "population_hash": "a67370ae3dca899e845e3cb734944dd8dd3d4e9a001feee9c5cf511594c8bb76",
          "rate": 1.0,
          "separated_pairs": 30,
          "status": "CONFIRMED"
@@ -15256,6 +15265,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_])",
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "rate": 0.655,
          "separated_pairs": 262,
          "status": "PARTIAL"
@@ -15264,6 +15274,7 @@
          "copresent_pairs": 47,
          "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "rate": 1.0,
          "separated_pairs": 47,
          "status": "CONFIRMED"
@@ -15318,6 +15329,7 @@
          "copresent_pairs": 30,
          "family": "listitem[_]",
          "key_slot": "listitem#0!",
+         "population_hash": "550c230eb23fb11901a94cc913f0f8153a62d0e23891715434e0dbb36c3b1658",
          "rate": 1.0,
          "separated_pairs": 30,
          "status": "CONFIRMED"
@@ -15326,6 +15338,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_])",
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "rate": 0.655,
          "separated_pairs": 262,
          "status": "PARTIAL"
@@ -15334,6 +15347,7 @@
          "copresent_pairs": 47,
          "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "rate": 1.0,
          "separated_pairs": 47,
          "status": "CONFIRMED"
@@ -15375,12 +15389,14 @@
          "left": {
           "copresent_pairs": 400,
           "key_slot": "cell#0",
+          "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
           "separated_pairs": 262
          },
          "left_cross_product": 104800,
          "right": {
           "copresent_pairs": 400,
           "key_slot": "cell#0",
+          "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
           "separated_pairs": 262
          },
          "right_cross_product": 104800
@@ -15391,12 +15407,14 @@
          "left": {
           "copresent_pairs": 47,
           "key_slot": "cell#0|cell#0@4",
+          "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
           "separated_pairs": 47
          },
          "left_cross_product": 2209,
          "right": {
           "copresent_pairs": 47,
           "key_slot": "cell#0|cell#0@4",
+          "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
           "separated_pairs": 47
          },
          "right_cross_product": 2209
@@ -15411,6 +15429,7 @@
        "equal": 2,
        "left_better": 0,
        "left_dominant": false,
+       "population_mismatches": 0,
        "right_better": 0,
        "right_dominant": false
       }
@@ -15744,6 +15763,7 @@
          "copresent_pairs": 30,
          "family": "group[_](heading[_],list[_](listitem[_]))",
          "key_slot": "heading#1",
+         "population_hash": "a67370ae3dca899e845e3cb734944dd8dd3d4e9a001feee9c5cf511594c8bb76",
          "rate": 1.0,
          "separated_pairs": 30,
          "status": "CONFIRMED"
@@ -15752,6 +15772,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_])",
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "rate": 0.655,
          "separated_pairs": 262,
          "status": "PARTIAL"
@@ -15760,6 +15781,7 @@
          "copresent_pairs": 47,
          "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "rate": 1.0,
          "separated_pairs": 47,
          "status": "CONFIRMED"
@@ -15813,6 +15835,7 @@
          "copresent_pairs": 47,
          "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "rate": 1.0,
          "separated_pairs": 47,
          "status": "CONFIRMED"
@@ -15851,12 +15874,14 @@
          "left": {
           "copresent_pairs": 47,
           "key_slot": "cell#0|cell#0@4",
+          "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
           "separated_pairs": 47
          },
          "left_cross_product": 2209,
          "right": {
           "copresent_pairs": 47,
           "key_slot": "cell#0|cell#0@4",
+          "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
           "separated_pairs": 47
          },
          "right_cross_product": 2209
@@ -15871,6 +15896,7 @@
        "equal": 1,
        "left_better": 0,
        "left_dominant": false,
+       "population_mismatches": 0,
        "right_better": 0,
        "right_dominant": false
       }
@@ -16058,6 +16084,7 @@
          "copresent_pairs": 30,
          "family": "group[_](heading[_],list[_](listitem[_]))",
          "key_slot": "heading#1",
+         "population_hash": "a67370ae3dca899e845e3cb734944dd8dd3d4e9a001feee9c5cf511594c8bb76",
          "rate": 1.0,
          "separated_pairs": 30,
          "status": "CONFIRMED"
@@ -16066,6 +16093,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_])",
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "rate": 0.655,
          "separated_pairs": 262,
          "status": "PARTIAL"
@@ -16074,6 +16102,7 @@
          "copresent_pairs": 47,
          "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "rate": 1.0,
          "separated_pairs": 47,
          "status": "CONFIRMED"
@@ -16127,6 +16156,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_])",
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "rate": 0.655,
          "separated_pairs": 262,
          "status": "PARTIAL"
@@ -16135,6 +16165,7 @@
          "copresent_pairs": 47,
          "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "rate": 1.0,
          "separated_pairs": 47,
          "status": "CONFIRMED"
@@ -16173,12 +16204,14 @@
          "left": {
           "copresent_pairs": 400,
           "key_slot": "cell#0",
+          "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
           "separated_pairs": 262
          },
          "left_cross_product": 104800,
          "right": {
           "copresent_pairs": 400,
           "key_slot": "cell#0",
+          "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
           "separated_pairs": 262
          },
          "right_cross_product": 104800
@@ -16189,12 +16222,14 @@
          "left": {
           "copresent_pairs": 47,
           "key_slot": "cell#0|cell#0@4",
+          "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
           "separated_pairs": 47
          },
          "left_cross_product": 2209,
          "right": {
           "copresent_pairs": 47,
           "key_slot": "cell#0|cell#0@4",
+          "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
           "separated_pairs": 47
          },
          "right_cross_product": 2209
@@ -16209,6 +16244,7 @@
        "equal": 2,
        "left_better": 0,
        "left_dominant": false,
+       "population_mismatches": 0,
        "right_better": 0,
        "right_dominant": false
       }
@@ -16618,6 +16654,7 @@
          "copresent_pairs": 400,
          "family": "cell[_]",
          "key_slot": "cell#0",
+         "population_hash": "a7afff1eb5526fe07bd453d8bb48f15f1bef622d949746c3b8970ea2c90ed159",
          "rate": 0.38,
          "separated_pairs": 152,
          "status": "PARTIAL"
@@ -16626,17 +16663,10 @@
          "copresent_pairs": 2,
          "family": "row[_](cell[_])",
          "key_slot": "cell#0",
+         "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
          "rate": 1.0,
          "separated_pairs": 2,
          "status": "CONFIRMED"
-        },
-        {
-         "copresent_pairs": 0,
-         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
-         "key_slot": "cell#0|cell#0@4",
-         "rate": null,
-         "separated_pairs": 0,
-         "status": "UNTESTED"
         }
        ],
        "separation_confirmed": 1,
@@ -16691,6 +16721,7 @@
          "copresent_pairs": 30,
          "family": "listitem[_]",
          "key_slot": "listitem#0!",
+         "population_hash": "550c230eb23fb11901a94cc913f0f8153a62d0e23891715434e0dbb36c3b1658",
          "rate": 1.0,
          "separated_pairs": 30,
          "status": "CONFIRMED"
@@ -16699,6 +16730,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_])",
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "rate": 0.655,
          "separated_pairs": 262,
          "status": "PARTIAL"
@@ -16707,6 +16739,7 @@
          "copresent_pairs": 47,
          "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "rate": 1.0,
          "separated_pairs": 47,
          "status": "CONFIRMED"
@@ -16743,31 +16776,33 @@
       "separation_differential": {
        "cases": [
         {
-         "direction": "LEFT",
+         "direction": "POPULATION_MISMATCH",
          "family": "row[_](cell[_])",
          "left": {
           "copresent_pairs": 2,
           "key_slot": "cell#0",
+          "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
           "separated_pairs": 2
          },
-         "left_cross_product": 800,
+         "population_mismatch": true,
          "right": {
           "copresent_pairs": 400,
           "key_slot": "cell#0",
+          "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
           "separated_pairs": 262
-         },
-         "right_cross_product": 524
+         }
         }
        ],
-       "comparable_families": 1,
+       "comparable_families": 0,
        "counts": {
         "EQUAL": 0,
-        "LEFT": 1,
+        "LEFT": 0,
         "RIGHT": 0
        },
        "equal": 0,
-       "left_better": 1,
-       "left_dominant": true,
+       "left_better": 0,
+       "left_dominant": false,
+       "population_mismatches": 1,
        "right_better": 0,
        "right_dominant": false
       }
@@ -17173,6 +17208,7 @@
          "copresent_pairs": 400,
          "family": "cell[_]",
          "key_slot": "cell#0",
+         "population_hash": "a7afff1eb5526fe07bd453d8bb48f15f1bef622d949746c3b8970ea2c90ed159",
          "rate": 0.38,
          "separated_pairs": 152,
          "status": "PARTIAL"
@@ -17181,17 +17217,10 @@
          "copresent_pairs": 2,
          "family": "row[_](cell[_])",
          "key_slot": "cell#0",
+         "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
          "rate": 1.0,
          "separated_pairs": 2,
          "status": "CONFIRMED"
-        },
-        {
-         "copresent_pairs": 0,
-         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
-         "key_slot": "cell#0|cell#0@4",
-         "rate": null,
-         "separated_pairs": 0,
-         "status": "UNTESTED"
         }
        ],
        "separation_confirmed": 1,
@@ -17245,6 +17274,7 @@
          "copresent_pairs": 47,
          "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "rate": 1.0,
          "separated_pairs": 47,
          "status": "CONFIRMED"
@@ -17286,6 +17316,7 @@
        "equal": 0,
        "left_better": 0,
        "left_dominant": false,
+       "population_mismatches": 0,
        "right_better": 0,
        "right_dominant": false
       }
@@ -17694,6 +17725,7 @@
          "copresent_pairs": 400,
          "family": "cell[_]",
          "key_slot": "cell#0",
+         "population_hash": "a7afff1eb5526fe07bd453d8bb48f15f1bef622d949746c3b8970ea2c90ed159",
          "rate": 0.38,
          "separated_pairs": 152,
          "status": "PARTIAL"
@@ -17702,17 +17734,10 @@
          "copresent_pairs": 2,
          "family": "row[_](cell[_])",
          "key_slot": "cell#0",
+         "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
          "rate": 1.0,
          "separated_pairs": 2,
          "status": "CONFIRMED"
-        },
-        {
-         "copresent_pairs": 0,
-         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
-         "key_slot": "cell#0|cell#0@4",
-         "rate": null,
-         "separated_pairs": 0,
-         "status": "UNTESTED"
         }
        ],
        "separation_confirmed": 1,
@@ -17766,6 +17791,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_])",
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "rate": 0.655,
          "separated_pairs": 262,
          "status": "PARTIAL"
@@ -17774,6 +17800,7 @@
          "copresent_pairs": 47,
          "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "rate": 1.0,
          "separated_pairs": 47,
          "status": "CONFIRMED"
@@ -17807,31 +17834,33 @@
       "separation_differential": {
        "cases": [
         {
-         "direction": "LEFT",
+         "direction": "POPULATION_MISMATCH",
          "family": "row[_](cell[_])",
          "left": {
           "copresent_pairs": 2,
           "key_slot": "cell#0",
+          "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
           "separated_pairs": 2
          },
-         "left_cross_product": 800,
+         "population_mismatch": true,
          "right": {
           "copresent_pairs": 400,
           "key_slot": "cell#0",
+          "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
           "separated_pairs": 262
-         },
-         "right_cross_product": 524
+         }
         }
        ],
-       "comparable_families": 1,
+       "comparable_families": 0,
        "counts": {
         "EQUAL": 0,
-        "LEFT": 1,
+        "LEFT": 0,
         "RIGHT": 0
        },
        "equal": 0,
-       "left_better": 1,
-       "left_dominant": true,
+       "left_better": 0,
+       "left_dominant": false,
+       "population_mismatches": 1,
        "right_better": 0,
        "right_dominant": false
       }
@@ -18238,6 +18267,7 @@
          "copresent_pairs": 30,
          "family": "listitem[_]",
          "key_slot": "listitem#0!",
+         "population_hash": "550c230eb23fb11901a94cc913f0f8153a62d0e23891715434e0dbb36c3b1658",
          "rate": 1.0,
          "separated_pairs": 30,
          "status": "CONFIRMED"
@@ -18246,6 +18276,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_])",
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "rate": 0.655,
          "separated_pairs": 262,
          "status": "PARTIAL"
@@ -18254,6 +18285,7 @@
          "copresent_pairs": 47,
          "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "rate": 1.0,
          "separated_pairs": 47,
          "status": "CONFIRMED"
@@ -18310,6 +18342,7 @@
          "copresent_pairs": 47,
          "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "rate": 1.0,
          "separated_pairs": 47,
          "status": "CONFIRMED"
@@ -18348,12 +18381,14 @@
          "left": {
           "copresent_pairs": 47,
           "key_slot": "cell#0|cell#0@4",
+          "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
           "separated_pairs": 47
          },
          "left_cross_product": 2209,
          "right": {
           "copresent_pairs": 47,
           "key_slot": "cell#0|cell#0@4",
+          "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
           "separated_pairs": 47
          },
          "right_cross_product": 2209
@@ -18368,6 +18403,7 @@
        "equal": 1,
        "left_better": 0,
        "left_dominant": false,
+       "population_mismatches": 0,
        "right_better": 0,
        "right_dominant": false
       }
@@ -18776,6 +18812,7 @@
          "copresent_pairs": 30,
          "family": "listitem[_]",
          "key_slot": "listitem#0!",
+         "population_hash": "550c230eb23fb11901a94cc913f0f8153a62d0e23891715434e0dbb36c3b1658",
          "rate": 1.0,
          "separated_pairs": 30,
          "status": "CONFIRMED"
@@ -18784,6 +18821,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_])",
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "rate": 0.655,
          "separated_pairs": 262,
          "status": "PARTIAL"
@@ -18792,6 +18830,7 @@
          "copresent_pairs": 47,
          "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "rate": 1.0,
          "separated_pairs": 47,
          "status": "CONFIRMED"
@@ -18848,6 +18887,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_])",
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "rate": 0.655,
          "separated_pairs": 262,
          "status": "PARTIAL"
@@ -18856,6 +18896,7 @@
          "copresent_pairs": 47,
          "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "rate": 1.0,
          "separated_pairs": 47,
          "status": "CONFIRMED"
@@ -18894,12 +18935,14 @@
          "left": {
           "copresent_pairs": 400,
           "key_slot": "cell#0",
+          "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
           "separated_pairs": 262
          },
          "left_cross_product": 104800,
          "right": {
           "copresent_pairs": 400,
           "key_slot": "cell#0",
+          "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
           "separated_pairs": 262
          },
          "right_cross_product": 104800
@@ -18910,12 +18953,14 @@
          "left": {
           "copresent_pairs": 47,
           "key_slot": "cell#0|cell#0@4",
+          "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
           "separated_pairs": 47
          },
          "left_cross_product": 2209,
          "right": {
           "copresent_pairs": 47,
           "key_slot": "cell#0|cell#0@4",
+          "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
           "separated_pairs": 47
          },
          "right_cross_product": 2209
@@ -18930,6 +18975,7 @@
        "equal": 2,
        "left_better": 0,
        "left_dominant": false,
+       "population_mismatches": 0,
        "right_better": 0,
        "right_dominant": false
       }
@@ -19263,6 +19309,7 @@
          "copresent_pairs": 47,
          "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "rate": 1.0,
          "separated_pairs": 47,
          "status": "CONFIRMED"
@@ -19316,6 +19363,7 @@
          "copresent_pairs": 400,
          "family": "row[_](cell[_])",
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "rate": 0.655,
          "separated_pairs": 262,
          "status": "PARTIAL"
@@ -19324,6 +19372,7 @@
          "copresent_pairs": 47,
          "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "rate": 1.0,
          "separated_pairs": 47,
          "status": "CONFIRMED"
@@ -19362,12 +19411,14 @@
          "left": {
           "copresent_pairs": 47,
           "key_slot": "cell#0|cell#0@4",
+          "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
           "separated_pairs": 47
          },
          "left_cross_product": 2209,
          "right": {
           "copresent_pairs": 47,
           "key_slot": "cell#0|cell#0@4",
+          "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
           "separated_pairs": 47
          },
          "right_cross_product": 2209
@@ -19382,6 +19433,7 @@
        "equal": 1,
        "left_better": 0,
        "left_dominant": false,
+       "population_mismatches": 0,
        "right_better": 0,
        "right_dominant": false
       }
@@ -19857,6 +19909,7 @@
        "copresent_pairs": 400,
        "family": "cell[_]",
        "key_slot": "cell#0",
+       "population_hash": "59bbba3b2617aee7a2ccf6b3075ad524a29295f657a0db96007fa83a1f7df9b1",
        "rate": 1.0,
        "separated_pairs": 400,
        "status": "CONFIRMED"
@@ -19865,6 +19918,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_])",
        "key_slot": "cell#0",
+       "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
        "rate": 0.655,
        "separated_pairs": 262,
        "status": "PARTIAL"
@@ -19873,6 +19927,7 @@
        "copresent_pairs": 47,
        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
        "key_slot": "cell#0|cell#0@4",
+       "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
        "rate": 1.0,
        "separated_pairs": 47,
        "status": "CONFIRMED"
@@ -19926,6 +19981,7 @@
        "copresent_pairs": 30,
        "family": "group[_](heading[_],list[_](listitem[_]))",
        "key_slot": "heading#1",
+       "population_hash": "a67370ae3dca899e845e3cb734944dd8dd3d4e9a001feee9c5cf511594c8bb76",
        "rate": 1.0,
        "separated_pairs": 30,
        "status": "CONFIRMED"
@@ -19934,6 +19990,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_])",
        "key_slot": "cell#0",
+       "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
        "rate": 0.655,
        "separated_pairs": 262,
        "status": "PARTIAL"
@@ -19942,6 +19999,7 @@
        "copresent_pairs": 47,
        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
        "key_slot": "cell#0|cell#0@4",
+       "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
        "rate": 1.0,
        "separated_pairs": 47,
        "status": "CONFIRMED"
@@ -19980,12 +20038,14 @@
        "left": {
         "copresent_pairs": 400,
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "separated_pairs": 262
        },
        "left_cross_product": 104800,
        "right": {
         "copresent_pairs": 400,
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "separated_pairs": 262
        },
        "right_cross_product": 104800
@@ -19996,12 +20056,14 @@
        "left": {
         "copresent_pairs": 47,
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "separated_pairs": 47
        },
        "left_cross_product": 2209,
        "right": {
         "copresent_pairs": 47,
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "separated_pairs": 47
        },
        "right_cross_product": 2209
@@ -20016,6 +20078,7 @@
      "equal": 2,
      "left_better": 0,
      "left_dominant": false,
+     "population_mismatches": 0,
      "right_better": 0,
      "right_dominant": false
     }
@@ -20424,6 +20487,7 @@
        "copresent_pairs": 400,
        "family": "cell[_]",
        "key_slot": "cell#0",
+       "population_hash": "59bbba3b2617aee7a2ccf6b3075ad524a29295f657a0db96007fa83a1f7df9b1",
        "rate": 1.0,
        "separated_pairs": 400,
        "status": "CONFIRMED"
@@ -20432,6 +20496,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_])",
        "key_slot": "cell#0",
+       "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
        "rate": 0.655,
        "separated_pairs": 262,
        "status": "PARTIAL"
@@ -20440,6 +20505,7 @@
        "copresent_pairs": 47,
        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
        "key_slot": "cell#0|cell#0@4",
+       "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
        "rate": 1.0,
        "separated_pairs": 47,
        "status": "CONFIRMED"
@@ -20493,6 +20559,7 @@
        "copresent_pairs": 400,
        "family": "cell[_]",
        "key_slot": "cell#0",
+       "population_hash": "a7afff1eb5526fe07bd453d8bb48f15f1bef622d949746c3b8970ea2c90ed159",
        "rate": 0.38,
        "separated_pairs": 152,
        "status": "PARTIAL"
@@ -20501,17 +20568,10 @@
        "copresent_pairs": 2,
        "family": "row[_](cell[_])",
        "key_slot": "cell#0",
+       "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
        "rate": 1.0,
        "separated_pairs": 2,
        "status": "CONFIRMED"
-      },
-      {
-       "copresent_pairs": 0,
-       "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
-       "key_slot": "cell#0|cell#0@4",
-       "rate": null,
-       "separated_pairs": 0,
-       "status": "UNTESTED"
       }
      ],
      "separation_confirmed": 1,
@@ -20545,48 +20605,51 @@
     "separation_differential": {
      "cases": [
       {
-       "direction": "LEFT",
+       "direction": "POPULATION_MISMATCH",
        "family": "cell[_]",
        "left": {
         "copresent_pairs": 400,
         "key_slot": "cell#0",
+        "population_hash": "59bbba3b2617aee7a2ccf6b3075ad524a29295f657a0db96007fa83a1f7df9b1",
         "separated_pairs": 400
        },
-       "left_cross_product": 160000,
+       "population_mismatch": true,
        "right": {
         "copresent_pairs": 400,
         "key_slot": "cell#0",
+        "population_hash": "a7afff1eb5526fe07bd453d8bb48f15f1bef622d949746c3b8970ea2c90ed159",
         "separated_pairs": 152
-       },
-       "right_cross_product": 60800
+       }
       },
       {
-       "direction": "RIGHT",
+       "direction": "POPULATION_MISMATCH",
        "family": "row[_](cell[_])",
        "left": {
         "copresent_pairs": 400,
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "separated_pairs": 262
        },
-       "left_cross_product": 524,
+       "population_mismatch": true,
        "right": {
         "copresent_pairs": 2,
         "key_slot": "cell#0",
+        "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
         "separated_pairs": 2
-       },
-       "right_cross_product": 800
+       }
       }
      ],
-     "comparable_families": 2,
+     "comparable_families": 0,
      "counts": {
       "EQUAL": 0,
-      "LEFT": 1,
-      "RIGHT": 1
+      "LEFT": 0,
+      "RIGHT": 0
      },
      "equal": 0,
-     "left_better": 1,
+     "left_better": 0,
      "left_dominant": false,
-     "right_better": 1,
+     "population_mismatches": 2,
+     "right_better": 0,
      "right_dominant": false
     }
    },
@@ -20993,6 +21056,7 @@
        "copresent_pairs": 400,
        "family": "cell[_]",
        "key_slot": "cell#0",
+       "population_hash": "59bbba3b2617aee7a2ccf6b3075ad524a29295f657a0db96007fa83a1f7df9b1",
        "rate": 1.0,
        "separated_pairs": 400,
        "status": "CONFIRMED"
@@ -21001,6 +21065,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_])",
        "key_slot": "cell#0",
+       "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
        "rate": 0.655,
        "separated_pairs": 262,
        "status": "PARTIAL"
@@ -21009,6 +21074,7 @@
        "copresent_pairs": 47,
        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
        "key_slot": "cell#0|cell#0@4",
+       "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
        "rate": 1.0,
        "separated_pairs": 47,
        "status": "CONFIRMED"
@@ -21063,6 +21129,7 @@
        "copresent_pairs": 30,
        "family": "listitem[_]",
        "key_slot": "listitem#0!",
+       "population_hash": "550c230eb23fb11901a94cc913f0f8153a62d0e23891715434e0dbb36c3b1658",
        "rate": 1.0,
        "separated_pairs": 30,
        "status": "CONFIRMED"
@@ -21071,6 +21138,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_])",
        "key_slot": "cell#0",
+       "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
        "rate": 0.655,
        "separated_pairs": 262,
        "status": "PARTIAL"
@@ -21079,6 +21147,7 @@
        "copresent_pairs": 47,
        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
        "key_slot": "cell#0|cell#0@4",
+       "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
        "rate": 1.0,
        "separated_pairs": 47,
        "status": "CONFIRMED"
@@ -21120,12 +21189,14 @@
        "left": {
         "copresent_pairs": 400,
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "separated_pairs": 262
        },
        "left_cross_product": 104800,
        "right": {
         "copresent_pairs": 400,
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "separated_pairs": 262
        },
        "right_cross_product": 104800
@@ -21136,12 +21207,14 @@
        "left": {
         "copresent_pairs": 47,
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "separated_pairs": 47
        },
        "left_cross_product": 2209,
        "right": {
         "copresent_pairs": 47,
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "separated_pairs": 47
        },
        "right_cross_product": 2209
@@ -21156,6 +21229,7 @@
      "equal": 2,
      "left_better": 0,
      "left_dominant": false,
+     "population_mismatches": 0,
      "right_better": 0,
      "right_dominant": false
     }
@@ -21561,6 +21635,7 @@
        "copresent_pairs": 400,
        "family": "cell[_]",
        "key_slot": "cell#0",
+       "population_hash": "59bbba3b2617aee7a2ccf6b3075ad524a29295f657a0db96007fa83a1f7df9b1",
        "rate": 1.0,
        "separated_pairs": 400,
        "status": "CONFIRMED"
@@ -21569,6 +21644,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_])",
        "key_slot": "cell#0",
+       "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
        "rate": 0.655,
        "separated_pairs": 262,
        "status": "PARTIAL"
@@ -21577,6 +21653,7 @@
        "copresent_pairs": 47,
        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
        "key_slot": "cell#0|cell#0@4",
+       "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
        "rate": 1.0,
        "separated_pairs": 47,
        "status": "CONFIRMED"
@@ -21630,6 +21707,7 @@
        "copresent_pairs": 47,
        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
        "key_slot": "cell#0|cell#0@4",
+       "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
        "rate": 1.0,
        "separated_pairs": 47,
        "status": "CONFIRMED"
@@ -21668,12 +21746,14 @@
        "left": {
         "copresent_pairs": 47,
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "separated_pairs": 47
        },
        "left_cross_product": 2209,
        "right": {
         "copresent_pairs": 47,
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "separated_pairs": 47
        },
        "right_cross_product": 2209
@@ -21688,6 +21768,7 @@
      "equal": 1,
      "left_better": 0,
      "left_dominant": false,
+     "population_mismatches": 0,
      "right_better": 0,
      "right_dominant": false
     }
@@ -22092,6 +22173,7 @@
        "copresent_pairs": 400,
        "family": "cell[_]",
        "key_slot": "cell#0",
+       "population_hash": "59bbba3b2617aee7a2ccf6b3075ad524a29295f657a0db96007fa83a1f7df9b1",
        "rate": 1.0,
        "separated_pairs": 400,
        "status": "CONFIRMED"
@@ -22100,6 +22182,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_])",
        "key_slot": "cell#0",
+       "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
        "rate": 0.655,
        "separated_pairs": 262,
        "status": "PARTIAL"
@@ -22108,6 +22191,7 @@
        "copresent_pairs": 47,
        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
        "key_slot": "cell#0|cell#0@4",
+       "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
        "rate": 1.0,
        "separated_pairs": 47,
        "status": "CONFIRMED"
@@ -22161,6 +22245,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_])",
        "key_slot": "cell#0",
+       "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
        "rate": 0.655,
        "separated_pairs": 262,
        "status": "PARTIAL"
@@ -22169,6 +22254,7 @@
        "copresent_pairs": 47,
        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
        "key_slot": "cell#0|cell#0@4",
+       "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
        "rate": 1.0,
        "separated_pairs": 47,
        "status": "CONFIRMED"
@@ -22207,12 +22293,14 @@
        "left": {
         "copresent_pairs": 400,
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "separated_pairs": 262
        },
        "left_cross_product": 104800,
        "right": {
         "copresent_pairs": 400,
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "separated_pairs": 262
        },
        "right_cross_product": 104800
@@ -22223,12 +22311,14 @@
        "left": {
         "copresent_pairs": 47,
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "separated_pairs": 47
        },
        "left_cross_product": 2209,
        "right": {
         "copresent_pairs": 47,
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "separated_pairs": 47
        },
        "right_cross_product": 2209
@@ -22243,6 +22333,7 @@
      "equal": 2,
      "left_better": 0,
      "left_dominant": false,
+     "population_mismatches": 0,
      "right_better": 0,
      "right_dominant": false
     }
@@ -22651,6 +22742,7 @@
        "copresent_pairs": 30,
        "family": "group[_](heading[_],list[_](listitem[_]))",
        "key_slot": "heading#1",
+       "population_hash": "a67370ae3dca899e845e3cb734944dd8dd3d4e9a001feee9c5cf511594c8bb76",
        "rate": 1.0,
        "separated_pairs": 30,
        "status": "CONFIRMED"
@@ -22659,6 +22751,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_])",
        "key_slot": "cell#0",
+       "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
        "rate": 0.655,
        "separated_pairs": 262,
        "status": "PARTIAL"
@@ -22667,6 +22760,7 @@
        "copresent_pairs": 47,
        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
        "key_slot": "cell#0|cell#0@4",
+       "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
        "rate": 1.0,
        "separated_pairs": 47,
        "status": "CONFIRMED"
@@ -22720,6 +22814,7 @@
        "copresent_pairs": 400,
        "family": "cell[_]",
        "key_slot": "cell#0",
+       "population_hash": "a7afff1eb5526fe07bd453d8bb48f15f1bef622d949746c3b8970ea2c90ed159",
        "rate": 0.38,
        "separated_pairs": 152,
        "status": "PARTIAL"
@@ -22728,17 +22823,10 @@
        "copresent_pairs": 2,
        "family": "row[_](cell[_])",
        "key_slot": "cell#0",
+       "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
        "rate": 1.0,
        "separated_pairs": 2,
        "status": "CONFIRMED"
-      },
-      {
-       "copresent_pairs": 0,
-       "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
-       "key_slot": "cell#0|cell#0@4",
-       "rate": null,
-       "separated_pairs": 0,
-       "status": "UNTESTED"
       }
      ],
      "separation_confirmed": 1,
@@ -22772,33 +22860,35 @@
     "separation_differential": {
      "cases": [
       {
-       "direction": "RIGHT",
+       "direction": "POPULATION_MISMATCH",
        "family": "row[_](cell[_])",
        "left": {
         "copresent_pairs": 400,
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "separated_pairs": 262
        },
-       "left_cross_product": 524,
+       "population_mismatch": true,
        "right": {
         "copresent_pairs": 2,
         "key_slot": "cell#0",
+        "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
         "separated_pairs": 2
-       },
-       "right_cross_product": 800
+       }
       }
      ],
-     "comparable_families": 1,
+     "comparable_families": 0,
      "counts": {
       "EQUAL": 0,
       "LEFT": 0,
-      "RIGHT": 1
+      "RIGHT": 0
      },
      "equal": 0,
      "left_better": 0,
      "left_dominant": false,
-     "right_better": 1,
-     "right_dominant": true
+     "population_mismatches": 1,
+     "right_better": 0,
+     "right_dominant": false
     }
    },
    "left_name": "group[_](heading[_],list=heading#1",
@@ -23204,6 +23294,7 @@
        "copresent_pairs": 30,
        "family": "group[_](heading[_],list[_](listitem[_]))",
        "key_slot": "heading#1",
+       "population_hash": "a67370ae3dca899e845e3cb734944dd8dd3d4e9a001feee9c5cf511594c8bb76",
        "rate": 1.0,
        "separated_pairs": 30,
        "status": "CONFIRMED"
@@ -23212,6 +23303,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_])",
        "key_slot": "cell#0",
+       "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
        "rate": 0.655,
        "separated_pairs": 262,
        "status": "PARTIAL"
@@ -23220,6 +23312,7 @@
        "copresent_pairs": 47,
        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
        "key_slot": "cell#0|cell#0@4",
+       "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
        "rate": 1.0,
        "separated_pairs": 47,
        "status": "CONFIRMED"
@@ -23274,6 +23367,7 @@
        "copresent_pairs": 30,
        "family": "listitem[_]",
        "key_slot": "listitem#0!",
+       "population_hash": "550c230eb23fb11901a94cc913f0f8153a62d0e23891715434e0dbb36c3b1658",
        "rate": 1.0,
        "separated_pairs": 30,
        "status": "CONFIRMED"
@@ -23282,6 +23376,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_])",
        "key_slot": "cell#0",
+       "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
        "rate": 0.655,
        "separated_pairs": 262,
        "status": "PARTIAL"
@@ -23290,6 +23385,7 @@
        "copresent_pairs": 47,
        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
        "key_slot": "cell#0|cell#0@4",
+       "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
        "rate": 1.0,
        "separated_pairs": 47,
        "status": "CONFIRMED"
@@ -23331,12 +23427,14 @@
        "left": {
         "copresent_pairs": 400,
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "separated_pairs": 262
        },
        "left_cross_product": 104800,
        "right": {
         "copresent_pairs": 400,
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "separated_pairs": 262
        },
        "right_cross_product": 104800
@@ -23347,12 +23445,14 @@
        "left": {
         "copresent_pairs": 47,
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "separated_pairs": 47
        },
        "left_cross_product": 2209,
        "right": {
         "copresent_pairs": 47,
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "separated_pairs": 47
        },
        "right_cross_product": 2209
@@ -23367,6 +23467,7 @@
      "equal": 2,
      "left_better": 0,
      "left_dominant": false,
+     "population_mismatches": 0,
      "right_better": 0,
      "right_dominant": false
     }
@@ -23700,6 +23801,7 @@
        "copresent_pairs": 30,
        "family": "group[_](heading[_],list[_](listitem[_]))",
        "key_slot": "heading#1",
+       "population_hash": "a67370ae3dca899e845e3cb734944dd8dd3d4e9a001feee9c5cf511594c8bb76",
        "rate": 1.0,
        "separated_pairs": 30,
        "status": "CONFIRMED"
@@ -23708,6 +23810,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_])",
        "key_slot": "cell#0",
+       "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
        "rate": 0.655,
        "separated_pairs": 262,
        "status": "PARTIAL"
@@ -23716,6 +23819,7 @@
        "copresent_pairs": 47,
        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
        "key_slot": "cell#0|cell#0@4",
+       "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
        "rate": 1.0,
        "separated_pairs": 47,
        "status": "CONFIRMED"
@@ -23769,6 +23873,7 @@
        "copresent_pairs": 47,
        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
        "key_slot": "cell#0|cell#0@4",
+       "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
        "rate": 1.0,
        "separated_pairs": 47,
        "status": "CONFIRMED"
@@ -23807,12 +23912,14 @@
        "left": {
         "copresent_pairs": 47,
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "separated_pairs": 47
        },
        "left_cross_product": 2209,
        "right": {
         "copresent_pairs": 47,
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "separated_pairs": 47
        },
        "right_cross_product": 2209
@@ -23827,6 +23934,7 @@
      "equal": 1,
      "left_better": 0,
      "left_dominant": false,
+     "population_mismatches": 0,
      "right_better": 0,
      "right_dominant": false
     }
@@ -24014,6 +24122,7 @@
        "copresent_pairs": 30,
        "family": "group[_](heading[_],list[_](listitem[_]))",
        "key_slot": "heading#1",
+       "population_hash": "a67370ae3dca899e845e3cb734944dd8dd3d4e9a001feee9c5cf511594c8bb76",
        "rate": 1.0,
        "separated_pairs": 30,
        "status": "CONFIRMED"
@@ -24022,6 +24131,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_])",
        "key_slot": "cell#0",
+       "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
        "rate": 0.655,
        "separated_pairs": 262,
        "status": "PARTIAL"
@@ -24030,6 +24140,7 @@
        "copresent_pairs": 47,
        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
        "key_slot": "cell#0|cell#0@4",
+       "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
        "rate": 1.0,
        "separated_pairs": 47,
        "status": "CONFIRMED"
@@ -24083,6 +24194,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_])",
        "key_slot": "cell#0",
+       "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
        "rate": 0.655,
        "separated_pairs": 262,
        "status": "PARTIAL"
@@ -24091,6 +24203,7 @@
        "copresent_pairs": 47,
        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
        "key_slot": "cell#0|cell#0@4",
+       "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
        "rate": 1.0,
        "separated_pairs": 47,
        "status": "CONFIRMED"
@@ -24129,12 +24242,14 @@
        "left": {
         "copresent_pairs": 400,
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "separated_pairs": 262
        },
        "left_cross_product": 104800,
        "right": {
         "copresent_pairs": 400,
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "separated_pairs": 262
        },
        "right_cross_product": 104800
@@ -24145,12 +24260,14 @@
        "left": {
         "copresent_pairs": 47,
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "separated_pairs": 47
        },
        "left_cross_product": 2209,
        "right": {
         "copresent_pairs": 47,
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "separated_pairs": 47
        },
        "right_cross_product": 2209
@@ -24165,6 +24282,7 @@
      "equal": 2,
      "left_better": 0,
      "left_dominant": false,
+     "population_mismatches": 0,
      "right_better": 0,
      "right_dominant": false
     }
@@ -24574,6 +24692,7 @@
        "copresent_pairs": 400,
        "family": "cell[_]",
        "key_slot": "cell#0",
+       "population_hash": "a7afff1eb5526fe07bd453d8bb48f15f1bef622d949746c3b8970ea2c90ed159",
        "rate": 0.38,
        "separated_pairs": 152,
        "status": "PARTIAL"
@@ -24582,17 +24701,10 @@
        "copresent_pairs": 2,
        "family": "row[_](cell[_])",
        "key_slot": "cell#0",
+       "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
        "rate": 1.0,
        "separated_pairs": 2,
        "status": "CONFIRMED"
-      },
-      {
-       "copresent_pairs": 0,
-       "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
-       "key_slot": "cell#0|cell#0@4",
-       "rate": null,
-       "separated_pairs": 0,
-       "status": "UNTESTED"
       }
      ],
      "separation_confirmed": 1,
@@ -24647,6 +24759,7 @@
        "copresent_pairs": 30,
        "family": "listitem[_]",
        "key_slot": "listitem#0!",
+       "population_hash": "550c230eb23fb11901a94cc913f0f8153a62d0e23891715434e0dbb36c3b1658",
        "rate": 1.0,
        "separated_pairs": 30,
        "status": "CONFIRMED"
@@ -24655,6 +24768,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_])",
        "key_slot": "cell#0",
+       "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
        "rate": 0.655,
        "separated_pairs": 262,
        "status": "PARTIAL"
@@ -24663,6 +24777,7 @@
        "copresent_pairs": 47,
        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
        "key_slot": "cell#0|cell#0@4",
+       "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
        "rate": 1.0,
        "separated_pairs": 47,
        "status": "CONFIRMED"
@@ -24699,31 +24814,33 @@
     "separation_differential": {
      "cases": [
       {
-       "direction": "LEFT",
+       "direction": "POPULATION_MISMATCH",
        "family": "row[_](cell[_])",
        "left": {
         "copresent_pairs": 2,
         "key_slot": "cell#0",
+        "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
         "separated_pairs": 2
        },
-       "left_cross_product": 800,
+       "population_mismatch": true,
        "right": {
         "copresent_pairs": 400,
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "separated_pairs": 262
-       },
-       "right_cross_product": 524
+       }
       }
      ],
-     "comparable_families": 1,
+     "comparable_families": 0,
      "counts": {
       "EQUAL": 0,
-      "LEFT": 1,
+      "LEFT": 0,
       "RIGHT": 0
      },
      "equal": 0,
-     "left_better": 1,
-     "left_dominant": true,
+     "left_better": 0,
+     "left_dominant": false,
+     "population_mismatches": 1,
      "right_better": 0,
      "right_dominant": false
     }
@@ -25129,6 +25246,7 @@
        "copresent_pairs": 400,
        "family": "cell[_]",
        "key_slot": "cell#0",
+       "population_hash": "a7afff1eb5526fe07bd453d8bb48f15f1bef622d949746c3b8970ea2c90ed159",
        "rate": 0.38,
        "separated_pairs": 152,
        "status": "PARTIAL"
@@ -25137,17 +25255,10 @@
        "copresent_pairs": 2,
        "family": "row[_](cell[_])",
        "key_slot": "cell#0",
+       "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
        "rate": 1.0,
        "separated_pairs": 2,
        "status": "CONFIRMED"
-      },
-      {
-       "copresent_pairs": 0,
-       "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
-       "key_slot": "cell#0|cell#0@4",
-       "rate": null,
-       "separated_pairs": 0,
-       "status": "UNTESTED"
       }
      ],
      "separation_confirmed": 1,
@@ -25201,6 +25312,7 @@
        "copresent_pairs": 47,
        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
        "key_slot": "cell#0|cell#0@4",
+       "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
        "rate": 1.0,
        "separated_pairs": 47,
        "status": "CONFIRMED"
@@ -25242,6 +25354,7 @@
      "equal": 0,
      "left_better": 0,
      "left_dominant": false,
+     "population_mismatches": 0,
      "right_better": 0,
      "right_dominant": false
     }
@@ -25650,6 +25763,7 @@
        "copresent_pairs": 400,
        "family": "cell[_]",
        "key_slot": "cell#0",
+       "population_hash": "a7afff1eb5526fe07bd453d8bb48f15f1bef622d949746c3b8970ea2c90ed159",
        "rate": 0.38,
        "separated_pairs": 152,
        "status": "PARTIAL"
@@ -25658,17 +25772,10 @@
        "copresent_pairs": 2,
        "family": "row[_](cell[_])",
        "key_slot": "cell#0",
+       "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
        "rate": 1.0,
        "separated_pairs": 2,
        "status": "CONFIRMED"
-      },
-      {
-       "copresent_pairs": 0,
-       "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
-       "key_slot": "cell#0|cell#0@4",
-       "rate": null,
-       "separated_pairs": 0,
-       "status": "UNTESTED"
       }
      ],
      "separation_confirmed": 1,
@@ -25722,6 +25829,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_])",
        "key_slot": "cell#0",
+       "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
        "rate": 0.655,
        "separated_pairs": 262,
        "status": "PARTIAL"
@@ -25730,6 +25838,7 @@
        "copresent_pairs": 47,
        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
        "key_slot": "cell#0|cell#0@4",
+       "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
        "rate": 1.0,
        "separated_pairs": 47,
        "status": "CONFIRMED"
@@ -25763,31 +25872,33 @@
     "separation_differential": {
      "cases": [
       {
-       "direction": "LEFT",
+       "direction": "POPULATION_MISMATCH",
        "family": "row[_](cell[_])",
        "left": {
         "copresent_pairs": 2,
         "key_slot": "cell#0",
+        "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
         "separated_pairs": 2
        },
-       "left_cross_product": 800,
+       "population_mismatch": true,
        "right": {
         "copresent_pairs": 400,
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "separated_pairs": 262
-       },
-       "right_cross_product": 524
+       }
       }
      ],
-     "comparable_families": 1,
+     "comparable_families": 0,
      "counts": {
       "EQUAL": 0,
-      "LEFT": 1,
+      "LEFT": 0,
       "RIGHT": 0
      },
      "equal": 0,
-     "left_better": 1,
-     "left_dominant": true,
+     "left_better": 0,
+     "left_dominant": false,
+     "population_mismatches": 1,
      "right_better": 0,
      "right_dominant": false
     }
@@ -26194,6 +26305,7 @@
        "copresent_pairs": 30,
        "family": "listitem[_]",
        "key_slot": "listitem#0!",
+       "population_hash": "550c230eb23fb11901a94cc913f0f8153a62d0e23891715434e0dbb36c3b1658",
        "rate": 1.0,
        "separated_pairs": 30,
        "status": "CONFIRMED"
@@ -26202,6 +26314,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_])",
        "key_slot": "cell#0",
+       "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
        "rate": 0.655,
        "separated_pairs": 262,
        "status": "PARTIAL"
@@ -26210,6 +26323,7 @@
        "copresent_pairs": 47,
        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
        "key_slot": "cell#0|cell#0@4",
+       "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
        "rate": 1.0,
        "separated_pairs": 47,
        "status": "CONFIRMED"
@@ -26266,6 +26380,7 @@
        "copresent_pairs": 47,
        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
        "key_slot": "cell#0|cell#0@4",
+       "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
        "rate": 1.0,
        "separated_pairs": 47,
        "status": "CONFIRMED"
@@ -26304,12 +26419,14 @@
        "left": {
         "copresent_pairs": 47,
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "separated_pairs": 47
        },
        "left_cross_product": 2209,
        "right": {
         "copresent_pairs": 47,
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "separated_pairs": 47
        },
        "right_cross_product": 2209
@@ -26324,6 +26441,7 @@
      "equal": 1,
      "left_better": 0,
      "left_dominant": false,
+     "population_mismatches": 0,
      "right_better": 0,
      "right_dominant": false
     }
@@ -26732,6 +26850,7 @@
        "copresent_pairs": 30,
        "family": "listitem[_]",
        "key_slot": "listitem#0!",
+       "population_hash": "550c230eb23fb11901a94cc913f0f8153a62d0e23891715434e0dbb36c3b1658",
        "rate": 1.0,
        "separated_pairs": 30,
        "status": "CONFIRMED"
@@ -26740,6 +26859,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_])",
        "key_slot": "cell#0",
+       "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
        "rate": 0.655,
        "separated_pairs": 262,
        "status": "PARTIAL"
@@ -26748,6 +26868,7 @@
        "copresent_pairs": 47,
        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
        "key_slot": "cell#0|cell#0@4",
+       "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
        "rate": 1.0,
        "separated_pairs": 47,
        "status": "CONFIRMED"
@@ -26804,6 +26925,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_])",
        "key_slot": "cell#0",
+       "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
        "rate": 0.655,
        "separated_pairs": 262,
        "status": "PARTIAL"
@@ -26812,6 +26934,7 @@
        "copresent_pairs": 47,
        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
        "key_slot": "cell#0|cell#0@4",
+       "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
        "rate": 1.0,
        "separated_pairs": 47,
        "status": "CONFIRMED"
@@ -26850,12 +26973,14 @@
        "left": {
         "copresent_pairs": 400,
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "separated_pairs": 262
        },
        "left_cross_product": 104800,
        "right": {
         "copresent_pairs": 400,
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "separated_pairs": 262
        },
        "right_cross_product": 104800
@@ -26866,12 +26991,14 @@
        "left": {
         "copresent_pairs": 47,
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "separated_pairs": 47
        },
        "left_cross_product": 2209,
        "right": {
         "copresent_pairs": 47,
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "separated_pairs": 47
        },
        "right_cross_product": 2209
@@ -26886,6 +27013,7 @@
      "equal": 2,
      "left_better": 0,
      "left_dominant": false,
+     "population_mismatches": 0,
      "right_better": 0,
      "right_dominant": false
     }
@@ -27219,6 +27347,7 @@
        "copresent_pairs": 47,
        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
        "key_slot": "cell#0|cell#0@4",
+       "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
        "rate": 1.0,
        "separated_pairs": 47,
        "status": "CONFIRMED"
@@ -27272,6 +27401,7 @@
        "copresent_pairs": 400,
        "family": "row[_](cell[_])",
        "key_slot": "cell#0",
+       "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
        "rate": 0.655,
        "separated_pairs": 262,
        "status": "PARTIAL"
@@ -27280,6 +27410,7 @@
        "copresent_pairs": 47,
        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
        "key_slot": "cell#0|cell#0@4",
+       "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
        "rate": 1.0,
        "separated_pairs": 47,
        "status": "CONFIRMED"
@@ -27318,12 +27449,14 @@
        "left": {
         "copresent_pairs": 47,
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "separated_pairs": 47
        },
        "left_cross_product": 2209,
        "right": {
         "copresent_pairs": 47,
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "separated_pairs": 47
        },
        "right_cross_product": 2209
@@ -27338,6 +27471,7 @@
      "equal": 1,
      "left_better": 0,
      "left_dominant": false,
+     "population_mismatches": 0,
      "right_better": 0,
      "right_dominant": false
     }
@@ -27753,6 +27887,7 @@
         "copresent_pairs": 400,
         "family": "cell[_]",
         "key_slot": "cell#0",
+        "population_hash": "59bbba3b2617aee7a2ccf6b3075ad524a29295f657a0db96007fa83a1f7df9b1",
         "rate": 1.0,
         "separated_pairs": 400,
         "status": "CONFIRMED"
@@ -27761,6 +27896,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_])",
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "rate": 0.655,
         "separated_pairs": 262,
         "status": "PARTIAL"
@@ -27769,6 +27905,7 @@
         "copresent_pairs": 47,
         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "rate": 1.0,
         "separated_pairs": 47,
         "status": "CONFIRMED"
@@ -27822,6 +27959,7 @@
         "copresent_pairs": 30,
         "family": "group[_](heading[_],list[_](listitem[_]))",
         "key_slot": "heading#1",
+        "population_hash": "a67370ae3dca899e845e3cb734944dd8dd3d4e9a001feee9c5cf511594c8bb76",
         "rate": 1.0,
         "separated_pairs": 30,
         "status": "CONFIRMED"
@@ -27830,6 +27968,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_])",
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "rate": 0.655,
         "separated_pairs": 262,
         "status": "PARTIAL"
@@ -27838,6 +27977,7 @@
         "copresent_pairs": 47,
         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "rate": 1.0,
         "separated_pairs": 47,
         "status": "CONFIRMED"
@@ -27876,12 +28016,14 @@
         "left": {
          "copresent_pairs": 400,
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "separated_pairs": 262
         },
         "left_cross_product": 104800,
         "right": {
          "copresent_pairs": 400,
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "separated_pairs": 262
         },
         "right_cross_product": 104800
@@ -27892,12 +28034,14 @@
         "left": {
          "copresent_pairs": 47,
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "separated_pairs": 47
         },
         "left_cross_product": 2209,
         "right": {
          "copresent_pairs": 47,
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "separated_pairs": 47
         },
         "right_cross_product": 2209
@@ -27912,6 +28056,7 @@
       "equal": 2,
       "left_better": 0,
       "left_dominant": false,
+      "population_mismatches": 0,
       "right_better": 0,
       "right_dominant": false
      }
@@ -28320,6 +28465,7 @@
         "copresent_pairs": 400,
         "family": "cell[_]",
         "key_slot": "cell#0",
+        "population_hash": "59bbba3b2617aee7a2ccf6b3075ad524a29295f657a0db96007fa83a1f7df9b1",
         "rate": 1.0,
         "separated_pairs": 400,
         "status": "CONFIRMED"
@@ -28328,6 +28474,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_])",
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "rate": 0.655,
         "separated_pairs": 262,
         "status": "PARTIAL"
@@ -28336,6 +28483,7 @@
         "copresent_pairs": 47,
         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "rate": 1.0,
         "separated_pairs": 47,
         "status": "CONFIRMED"
@@ -28389,6 +28537,7 @@
         "copresent_pairs": 400,
         "family": "cell[_]",
         "key_slot": "cell#0",
+        "population_hash": "a7afff1eb5526fe07bd453d8bb48f15f1bef622d949746c3b8970ea2c90ed159",
         "rate": 0.38,
         "separated_pairs": 152,
         "status": "PARTIAL"
@@ -28397,17 +28546,10 @@
         "copresent_pairs": 2,
         "family": "row[_](cell[_])",
         "key_slot": "cell#0",
+        "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
         "rate": 1.0,
         "separated_pairs": 2,
         "status": "CONFIRMED"
-       },
-       {
-        "copresent_pairs": 0,
-        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
-        "key_slot": "cell#0|cell#0@4",
-        "rate": null,
-        "separated_pairs": 0,
-        "status": "UNTESTED"
        }
       ],
       "separation_confirmed": 1,
@@ -28441,48 +28583,51 @@
      "separation_differential": {
       "cases": [
        {
-        "direction": "LEFT",
+        "direction": "POPULATION_MISMATCH",
         "family": "cell[_]",
         "left": {
          "copresent_pairs": 400,
          "key_slot": "cell#0",
+         "population_hash": "59bbba3b2617aee7a2ccf6b3075ad524a29295f657a0db96007fa83a1f7df9b1",
          "separated_pairs": 400
         },
-        "left_cross_product": 160000,
+        "population_mismatch": true,
         "right": {
          "copresent_pairs": 400,
          "key_slot": "cell#0",
+         "population_hash": "a7afff1eb5526fe07bd453d8bb48f15f1bef622d949746c3b8970ea2c90ed159",
          "separated_pairs": 152
-        },
-        "right_cross_product": 60800
+        }
        },
        {
-        "direction": "RIGHT",
+        "direction": "POPULATION_MISMATCH",
         "family": "row[_](cell[_])",
         "left": {
          "copresent_pairs": 400,
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "separated_pairs": 262
         },
-        "left_cross_product": 524,
+        "population_mismatch": true,
         "right": {
          "copresent_pairs": 2,
          "key_slot": "cell#0",
+         "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
          "separated_pairs": 2
-        },
-        "right_cross_product": 800
+        }
        }
       ],
-      "comparable_families": 2,
+      "comparable_families": 0,
       "counts": {
        "EQUAL": 0,
-       "LEFT": 1,
-       "RIGHT": 1
+       "LEFT": 0,
+       "RIGHT": 0
       },
       "equal": 0,
-      "left_better": 1,
+      "left_better": 0,
       "left_dominant": false,
-      "right_better": 1,
+      "population_mismatches": 2,
+      "right_better": 0,
       "right_dominant": false
      }
     },
@@ -28889,6 +29034,7 @@
         "copresent_pairs": 400,
         "family": "cell[_]",
         "key_slot": "cell#0",
+        "population_hash": "59bbba3b2617aee7a2ccf6b3075ad524a29295f657a0db96007fa83a1f7df9b1",
         "rate": 1.0,
         "separated_pairs": 400,
         "status": "CONFIRMED"
@@ -28897,6 +29043,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_])",
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "rate": 0.655,
         "separated_pairs": 262,
         "status": "PARTIAL"
@@ -28905,6 +29052,7 @@
         "copresent_pairs": 47,
         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "rate": 1.0,
         "separated_pairs": 47,
         "status": "CONFIRMED"
@@ -28959,6 +29107,7 @@
         "copresent_pairs": 30,
         "family": "listitem[_]",
         "key_slot": "listitem#0!",
+        "population_hash": "550c230eb23fb11901a94cc913f0f8153a62d0e23891715434e0dbb36c3b1658",
         "rate": 1.0,
         "separated_pairs": 30,
         "status": "CONFIRMED"
@@ -28967,6 +29116,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_])",
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "rate": 0.655,
         "separated_pairs": 262,
         "status": "PARTIAL"
@@ -28975,6 +29125,7 @@
         "copresent_pairs": 47,
         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "rate": 1.0,
         "separated_pairs": 47,
         "status": "CONFIRMED"
@@ -29016,12 +29167,14 @@
         "left": {
          "copresent_pairs": 400,
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "separated_pairs": 262
         },
         "left_cross_product": 104800,
         "right": {
          "copresent_pairs": 400,
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "separated_pairs": 262
         },
         "right_cross_product": 104800
@@ -29032,12 +29185,14 @@
         "left": {
          "copresent_pairs": 47,
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "separated_pairs": 47
         },
         "left_cross_product": 2209,
         "right": {
          "copresent_pairs": 47,
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "separated_pairs": 47
         },
         "right_cross_product": 2209
@@ -29052,6 +29207,7 @@
       "equal": 2,
       "left_better": 0,
       "left_dominant": false,
+      "population_mismatches": 0,
       "right_better": 0,
       "right_dominant": false
      }
@@ -29457,6 +29613,7 @@
         "copresent_pairs": 400,
         "family": "cell[_]",
         "key_slot": "cell#0",
+        "population_hash": "59bbba3b2617aee7a2ccf6b3075ad524a29295f657a0db96007fa83a1f7df9b1",
         "rate": 1.0,
         "separated_pairs": 400,
         "status": "CONFIRMED"
@@ -29465,6 +29622,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_])",
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "rate": 0.655,
         "separated_pairs": 262,
         "status": "PARTIAL"
@@ -29473,6 +29631,7 @@
         "copresent_pairs": 47,
         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "rate": 1.0,
         "separated_pairs": 47,
         "status": "CONFIRMED"
@@ -29526,6 +29685,7 @@
         "copresent_pairs": 47,
         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "rate": 1.0,
         "separated_pairs": 47,
         "status": "CONFIRMED"
@@ -29564,12 +29724,14 @@
         "left": {
          "copresent_pairs": 47,
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "separated_pairs": 47
         },
         "left_cross_product": 2209,
         "right": {
          "copresent_pairs": 47,
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "separated_pairs": 47
         },
         "right_cross_product": 2209
@@ -29584,6 +29746,7 @@
       "equal": 1,
       "left_better": 0,
       "left_dominant": false,
+      "population_mismatches": 0,
       "right_better": 0,
       "right_dominant": false
      }
@@ -29988,6 +30151,7 @@
         "copresent_pairs": 400,
         "family": "cell[_]",
         "key_slot": "cell#0",
+        "population_hash": "59bbba3b2617aee7a2ccf6b3075ad524a29295f657a0db96007fa83a1f7df9b1",
         "rate": 1.0,
         "separated_pairs": 400,
         "status": "CONFIRMED"
@@ -29996,6 +30160,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_])",
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "rate": 0.655,
         "separated_pairs": 262,
         "status": "PARTIAL"
@@ -30004,6 +30169,7 @@
         "copresent_pairs": 47,
         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "rate": 1.0,
         "separated_pairs": 47,
         "status": "CONFIRMED"
@@ -30057,6 +30223,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_])",
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "rate": 0.655,
         "separated_pairs": 262,
         "status": "PARTIAL"
@@ -30065,6 +30232,7 @@
         "copresent_pairs": 47,
         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "rate": 1.0,
         "separated_pairs": 47,
         "status": "CONFIRMED"
@@ -30103,12 +30271,14 @@
         "left": {
          "copresent_pairs": 400,
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "separated_pairs": 262
         },
         "left_cross_product": 104800,
         "right": {
          "copresent_pairs": 400,
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "separated_pairs": 262
         },
         "right_cross_product": 104800
@@ -30119,12 +30289,14 @@
         "left": {
          "copresent_pairs": 47,
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "separated_pairs": 47
         },
         "left_cross_product": 2209,
         "right": {
          "copresent_pairs": 47,
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "separated_pairs": 47
         },
         "right_cross_product": 2209
@@ -30139,6 +30311,7 @@
       "equal": 2,
       "left_better": 0,
       "left_dominant": false,
+      "population_mismatches": 0,
       "right_better": 0,
       "right_dominant": false
      }
@@ -30547,6 +30720,7 @@
         "copresent_pairs": 30,
         "family": "group[_](heading[_],list[_](listitem[_]))",
         "key_slot": "heading#1",
+        "population_hash": "a67370ae3dca899e845e3cb734944dd8dd3d4e9a001feee9c5cf511594c8bb76",
         "rate": 1.0,
         "separated_pairs": 30,
         "status": "CONFIRMED"
@@ -30555,6 +30729,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_])",
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "rate": 0.655,
         "separated_pairs": 262,
         "status": "PARTIAL"
@@ -30563,6 +30738,7 @@
         "copresent_pairs": 47,
         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "rate": 1.0,
         "separated_pairs": 47,
         "status": "CONFIRMED"
@@ -30616,6 +30792,7 @@
         "copresent_pairs": 400,
         "family": "cell[_]",
         "key_slot": "cell#0",
+        "population_hash": "a7afff1eb5526fe07bd453d8bb48f15f1bef622d949746c3b8970ea2c90ed159",
         "rate": 0.38,
         "separated_pairs": 152,
         "status": "PARTIAL"
@@ -30624,17 +30801,10 @@
         "copresent_pairs": 2,
         "family": "row[_](cell[_])",
         "key_slot": "cell#0",
+        "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
         "rate": 1.0,
         "separated_pairs": 2,
         "status": "CONFIRMED"
-       },
-       {
-        "copresent_pairs": 0,
-        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
-        "key_slot": "cell#0|cell#0@4",
-        "rate": null,
-        "separated_pairs": 0,
-        "status": "UNTESTED"
        }
       ],
       "separation_confirmed": 1,
@@ -30668,33 +30838,35 @@
      "separation_differential": {
       "cases": [
        {
-        "direction": "RIGHT",
+        "direction": "POPULATION_MISMATCH",
         "family": "row[_](cell[_])",
         "left": {
          "copresent_pairs": 400,
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "separated_pairs": 262
         },
-        "left_cross_product": 524,
+        "population_mismatch": true,
         "right": {
          "copresent_pairs": 2,
          "key_slot": "cell#0",
+         "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
          "separated_pairs": 2
-        },
-        "right_cross_product": 800
+        }
        }
       ],
-      "comparable_families": 1,
+      "comparable_families": 0,
       "counts": {
        "EQUAL": 0,
        "LEFT": 0,
-       "RIGHT": 1
+       "RIGHT": 0
       },
       "equal": 0,
       "left_better": 0,
       "left_dominant": false,
-      "right_better": 1,
-      "right_dominant": true
+      "population_mismatches": 1,
+      "right_better": 0,
+      "right_dominant": false
      }
     },
     "left_name": "group[_](heading[_],list=heading#1",
@@ -31100,6 +31272,7 @@
         "copresent_pairs": 30,
         "family": "group[_](heading[_],list[_](listitem[_]))",
         "key_slot": "heading#1",
+        "population_hash": "a67370ae3dca899e845e3cb734944dd8dd3d4e9a001feee9c5cf511594c8bb76",
         "rate": 1.0,
         "separated_pairs": 30,
         "status": "CONFIRMED"
@@ -31108,6 +31281,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_])",
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "rate": 0.655,
         "separated_pairs": 262,
         "status": "PARTIAL"
@@ -31116,6 +31290,7 @@
         "copresent_pairs": 47,
         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "rate": 1.0,
         "separated_pairs": 47,
         "status": "CONFIRMED"
@@ -31170,6 +31345,7 @@
         "copresent_pairs": 30,
         "family": "listitem[_]",
         "key_slot": "listitem#0!",
+        "population_hash": "550c230eb23fb11901a94cc913f0f8153a62d0e23891715434e0dbb36c3b1658",
         "rate": 1.0,
         "separated_pairs": 30,
         "status": "CONFIRMED"
@@ -31178,6 +31354,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_])",
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "rate": 0.655,
         "separated_pairs": 262,
         "status": "PARTIAL"
@@ -31186,6 +31363,7 @@
         "copresent_pairs": 47,
         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "rate": 1.0,
         "separated_pairs": 47,
         "status": "CONFIRMED"
@@ -31227,12 +31405,14 @@
         "left": {
          "copresent_pairs": 400,
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "separated_pairs": 262
         },
         "left_cross_product": 104800,
         "right": {
          "copresent_pairs": 400,
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "separated_pairs": 262
         },
         "right_cross_product": 104800
@@ -31243,12 +31423,14 @@
         "left": {
          "copresent_pairs": 47,
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "separated_pairs": 47
         },
         "left_cross_product": 2209,
         "right": {
          "copresent_pairs": 47,
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "separated_pairs": 47
         },
         "right_cross_product": 2209
@@ -31263,6 +31445,7 @@
       "equal": 2,
       "left_better": 0,
       "left_dominant": false,
+      "population_mismatches": 0,
       "right_better": 0,
       "right_dominant": false
      }
@@ -31596,6 +31779,7 @@
         "copresent_pairs": 30,
         "family": "group[_](heading[_],list[_](listitem[_]))",
         "key_slot": "heading#1",
+        "population_hash": "a67370ae3dca899e845e3cb734944dd8dd3d4e9a001feee9c5cf511594c8bb76",
         "rate": 1.0,
         "separated_pairs": 30,
         "status": "CONFIRMED"
@@ -31604,6 +31788,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_])",
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "rate": 0.655,
         "separated_pairs": 262,
         "status": "PARTIAL"
@@ -31612,6 +31797,7 @@
         "copresent_pairs": 47,
         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "rate": 1.0,
         "separated_pairs": 47,
         "status": "CONFIRMED"
@@ -31665,6 +31851,7 @@
         "copresent_pairs": 47,
         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "rate": 1.0,
         "separated_pairs": 47,
         "status": "CONFIRMED"
@@ -31703,12 +31890,14 @@
         "left": {
          "copresent_pairs": 47,
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "separated_pairs": 47
         },
         "left_cross_product": 2209,
         "right": {
          "copresent_pairs": 47,
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "separated_pairs": 47
         },
         "right_cross_product": 2209
@@ -31723,6 +31912,7 @@
       "equal": 1,
       "left_better": 0,
       "left_dominant": false,
+      "population_mismatches": 0,
       "right_better": 0,
       "right_dominant": false
      }
@@ -31910,6 +32100,7 @@
         "copresent_pairs": 30,
         "family": "group[_](heading[_],list[_](listitem[_]))",
         "key_slot": "heading#1",
+        "population_hash": "a67370ae3dca899e845e3cb734944dd8dd3d4e9a001feee9c5cf511594c8bb76",
         "rate": 1.0,
         "separated_pairs": 30,
         "status": "CONFIRMED"
@@ -31918,6 +32109,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_])",
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "rate": 0.655,
         "separated_pairs": 262,
         "status": "PARTIAL"
@@ -31926,6 +32118,7 @@
         "copresent_pairs": 47,
         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "rate": 1.0,
         "separated_pairs": 47,
         "status": "CONFIRMED"
@@ -31979,6 +32172,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_])",
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "rate": 0.655,
         "separated_pairs": 262,
         "status": "PARTIAL"
@@ -31987,6 +32181,7 @@
         "copresent_pairs": 47,
         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "rate": 1.0,
         "separated_pairs": 47,
         "status": "CONFIRMED"
@@ -32025,12 +32220,14 @@
         "left": {
          "copresent_pairs": 400,
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "separated_pairs": 262
         },
         "left_cross_product": 104800,
         "right": {
          "copresent_pairs": 400,
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "separated_pairs": 262
         },
         "right_cross_product": 104800
@@ -32041,12 +32238,14 @@
         "left": {
          "copresent_pairs": 47,
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "separated_pairs": 47
         },
         "left_cross_product": 2209,
         "right": {
          "copresent_pairs": 47,
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "separated_pairs": 47
         },
         "right_cross_product": 2209
@@ -32061,6 +32260,7 @@
       "equal": 2,
       "left_better": 0,
       "left_dominant": false,
+      "population_mismatches": 0,
       "right_better": 0,
       "right_dominant": false
      }
@@ -32470,6 +32670,7 @@
         "copresent_pairs": 400,
         "family": "cell[_]",
         "key_slot": "cell#0",
+        "population_hash": "a7afff1eb5526fe07bd453d8bb48f15f1bef622d949746c3b8970ea2c90ed159",
         "rate": 0.38,
         "separated_pairs": 152,
         "status": "PARTIAL"
@@ -32478,17 +32679,10 @@
         "copresent_pairs": 2,
         "family": "row[_](cell[_])",
         "key_slot": "cell#0",
+        "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
         "rate": 1.0,
         "separated_pairs": 2,
         "status": "CONFIRMED"
-       },
-       {
-        "copresent_pairs": 0,
-        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
-        "key_slot": "cell#0|cell#0@4",
-        "rate": null,
-        "separated_pairs": 0,
-        "status": "UNTESTED"
        }
       ],
       "separation_confirmed": 1,
@@ -32543,6 +32737,7 @@
         "copresent_pairs": 30,
         "family": "listitem[_]",
         "key_slot": "listitem#0!",
+        "population_hash": "550c230eb23fb11901a94cc913f0f8153a62d0e23891715434e0dbb36c3b1658",
         "rate": 1.0,
         "separated_pairs": 30,
         "status": "CONFIRMED"
@@ -32551,6 +32746,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_])",
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "rate": 0.655,
         "separated_pairs": 262,
         "status": "PARTIAL"
@@ -32559,6 +32755,7 @@
         "copresent_pairs": 47,
         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "rate": 1.0,
         "separated_pairs": 47,
         "status": "CONFIRMED"
@@ -32595,31 +32792,33 @@
      "separation_differential": {
       "cases": [
        {
-        "direction": "LEFT",
+        "direction": "POPULATION_MISMATCH",
         "family": "row[_](cell[_])",
         "left": {
          "copresent_pairs": 2,
          "key_slot": "cell#0",
+         "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
          "separated_pairs": 2
         },
-        "left_cross_product": 800,
+        "population_mismatch": true,
         "right": {
          "copresent_pairs": 400,
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "separated_pairs": 262
-        },
-        "right_cross_product": 524
+        }
        }
       ],
-      "comparable_families": 1,
+      "comparable_families": 0,
       "counts": {
        "EQUAL": 0,
-       "LEFT": 1,
+       "LEFT": 0,
        "RIGHT": 0
       },
       "equal": 0,
-      "left_better": 1,
-      "left_dominant": true,
+      "left_better": 0,
+      "left_dominant": false,
+      "population_mismatches": 1,
       "right_better": 0,
       "right_dominant": false
      }
@@ -33025,6 +33224,7 @@
         "copresent_pairs": 400,
         "family": "cell[_]",
         "key_slot": "cell#0",
+        "population_hash": "a7afff1eb5526fe07bd453d8bb48f15f1bef622d949746c3b8970ea2c90ed159",
         "rate": 0.38,
         "separated_pairs": 152,
         "status": "PARTIAL"
@@ -33033,17 +33233,10 @@
         "copresent_pairs": 2,
         "family": "row[_](cell[_])",
         "key_slot": "cell#0",
+        "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
         "rate": 1.0,
         "separated_pairs": 2,
         "status": "CONFIRMED"
-       },
-       {
-        "copresent_pairs": 0,
-        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
-        "key_slot": "cell#0|cell#0@4",
-        "rate": null,
-        "separated_pairs": 0,
-        "status": "UNTESTED"
        }
       ],
       "separation_confirmed": 1,
@@ -33097,6 +33290,7 @@
         "copresent_pairs": 47,
         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "rate": 1.0,
         "separated_pairs": 47,
         "status": "CONFIRMED"
@@ -33138,6 +33332,7 @@
       "equal": 0,
       "left_better": 0,
       "left_dominant": false,
+      "population_mismatches": 0,
       "right_better": 0,
       "right_dominant": false
      }
@@ -33546,6 +33741,7 @@
         "copresent_pairs": 400,
         "family": "cell[_]",
         "key_slot": "cell#0",
+        "population_hash": "a7afff1eb5526fe07bd453d8bb48f15f1bef622d949746c3b8970ea2c90ed159",
         "rate": 0.38,
         "separated_pairs": 152,
         "status": "PARTIAL"
@@ -33554,17 +33750,10 @@
         "copresent_pairs": 2,
         "family": "row[_](cell[_])",
         "key_slot": "cell#0",
+        "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
         "rate": 1.0,
         "separated_pairs": 2,
         "status": "CONFIRMED"
-       },
-       {
-        "copresent_pairs": 0,
-        "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
-        "key_slot": "cell#0|cell#0@4",
-        "rate": null,
-        "separated_pairs": 0,
-        "status": "UNTESTED"
        }
       ],
       "separation_confirmed": 1,
@@ -33618,6 +33807,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_])",
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "rate": 0.655,
         "separated_pairs": 262,
         "status": "PARTIAL"
@@ -33626,6 +33816,7 @@
         "copresent_pairs": 47,
         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "rate": 1.0,
         "separated_pairs": 47,
         "status": "CONFIRMED"
@@ -33659,31 +33850,33 @@
      "separation_differential": {
       "cases": [
        {
-        "direction": "LEFT",
+        "direction": "POPULATION_MISMATCH",
         "family": "row[_](cell[_])",
         "left": {
          "copresent_pairs": 2,
          "key_slot": "cell#0",
+         "population_hash": "ceb19d61729690ab2506da4fbf4d3580e2f4cf8c08a18d3e8896eb31b33348e0",
          "separated_pairs": 2
         },
-        "left_cross_product": 800,
+        "population_mismatch": true,
         "right": {
          "copresent_pairs": 400,
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "separated_pairs": 262
-        },
-        "right_cross_product": 524
+        }
        }
       ],
-      "comparable_families": 1,
+      "comparable_families": 0,
       "counts": {
        "EQUAL": 0,
-       "LEFT": 1,
+       "LEFT": 0,
        "RIGHT": 0
       },
       "equal": 0,
-      "left_better": 1,
-      "left_dominant": true,
+      "left_better": 0,
+      "left_dominant": false,
+      "population_mismatches": 1,
       "right_better": 0,
       "right_dominant": false
      }
@@ -34090,6 +34283,7 @@
         "copresent_pairs": 30,
         "family": "listitem[_]",
         "key_slot": "listitem#0!",
+        "population_hash": "550c230eb23fb11901a94cc913f0f8153a62d0e23891715434e0dbb36c3b1658",
         "rate": 1.0,
         "separated_pairs": 30,
         "status": "CONFIRMED"
@@ -34098,6 +34292,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_])",
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "rate": 0.655,
         "separated_pairs": 262,
         "status": "PARTIAL"
@@ -34106,6 +34301,7 @@
         "copresent_pairs": 47,
         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "rate": 1.0,
         "separated_pairs": 47,
         "status": "CONFIRMED"
@@ -34162,6 +34358,7 @@
         "copresent_pairs": 47,
         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "rate": 1.0,
         "separated_pairs": 47,
         "status": "CONFIRMED"
@@ -34200,12 +34397,14 @@
         "left": {
          "copresent_pairs": 47,
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "separated_pairs": 47
         },
         "left_cross_product": 2209,
         "right": {
          "copresent_pairs": 47,
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "separated_pairs": 47
         },
         "right_cross_product": 2209
@@ -34220,6 +34419,7 @@
       "equal": 1,
       "left_better": 0,
       "left_dominant": false,
+      "population_mismatches": 0,
       "right_better": 0,
       "right_dominant": false
      }
@@ -34628,6 +34828,7 @@
         "copresent_pairs": 30,
         "family": "listitem[_]",
         "key_slot": "listitem#0!",
+        "population_hash": "550c230eb23fb11901a94cc913f0f8153a62d0e23891715434e0dbb36c3b1658",
         "rate": 1.0,
         "separated_pairs": 30,
         "status": "CONFIRMED"
@@ -34636,6 +34837,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_])",
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "rate": 0.655,
         "separated_pairs": 262,
         "status": "PARTIAL"
@@ -34644,6 +34846,7 @@
         "copresent_pairs": 47,
         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "rate": 1.0,
         "separated_pairs": 47,
         "status": "CONFIRMED"
@@ -34700,6 +34903,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_])",
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "rate": 0.655,
         "separated_pairs": 262,
         "status": "PARTIAL"
@@ -34708,6 +34912,7 @@
         "copresent_pairs": 47,
         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "rate": 1.0,
         "separated_pairs": 47,
         "status": "CONFIRMED"
@@ -34746,12 +34951,14 @@
         "left": {
          "copresent_pairs": 400,
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "separated_pairs": 262
         },
         "left_cross_product": 104800,
         "right": {
          "copresent_pairs": 400,
          "key_slot": "cell#0",
+         "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
          "separated_pairs": 262
         },
         "right_cross_product": 104800
@@ -34762,12 +34969,14 @@
         "left": {
          "copresent_pairs": 47,
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "separated_pairs": 47
         },
         "left_cross_product": 2209,
         "right": {
          "copresent_pairs": 47,
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "separated_pairs": 47
         },
         "right_cross_product": 2209
@@ -34782,6 +34991,7 @@
       "equal": 2,
       "left_better": 0,
       "left_dominant": false,
+      "population_mismatches": 0,
       "right_better": 0,
       "right_dominant": false
      }
@@ -35115,6 +35325,7 @@
         "copresent_pairs": 47,
         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "rate": 1.0,
         "separated_pairs": 47,
         "status": "CONFIRMED"
@@ -35168,6 +35379,7 @@
         "copresent_pairs": 400,
         "family": "row[_](cell[_])",
         "key_slot": "cell#0",
+        "population_hash": "7302b9919502568017011795bb75211cd9cbd11861e842d2097870d2128303fe",
         "rate": 0.655,
         "separated_pairs": 262,
         "status": "PARTIAL"
@@ -35176,6 +35388,7 @@
         "copresent_pairs": 47,
         "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
         "key_slot": "cell#0|cell#0@4",
+        "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
         "rate": 1.0,
         "separated_pairs": 47,
         "status": "CONFIRMED"
@@ -35214,12 +35427,14 @@
         "left": {
          "copresent_pairs": 47,
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "separated_pairs": 47
         },
         "left_cross_product": 2209,
         "right": {
          "copresent_pairs": 47,
          "key_slot": "cell#0|cell#0@4",
+         "population_hash": "af1877c3eabf9722e9823ccbcf494d9d62fc738a2456e394887c648bdec5f5b0",
          "separated_pairs": 47
         },
         "right_cross_product": 2209
@@ -35234,6 +35449,7 @@
       "equal": 1,
       "left_better": 0,
       "left_dominant": false,
+      "population_mismatches": 0,
       "right_better": 0,
       "right_dominant": false
      }

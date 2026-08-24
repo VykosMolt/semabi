@@ -3,12 +3,29 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import os
+import shutil
+import tempfile
 from pathlib import Path
 
 import pytest
 
 from semabi.compiler.v4 import custody, manifests
 from semabi.compiler.v4.pinned import FamilyReading, PinnedReading
+
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+@pytest.fixture
+def tmp_path():
+    """Keep manifest fixtures inside the one authenticated checkout root."""
+
+    path = Path(tempfile.mkdtemp(prefix=".pytest-v4-manifest-", dir=ROOT))
+    try:
+        yield path
+    finally:
+        shutil.rmtree(path)
 
 
 def _run(path: Path, marker: str, *, optional: bool = False) -> Path:
@@ -203,3 +220,74 @@ def test_evaluator_freeze_is_separate_from_compiler_manifests(tmp_path):
     )
     assert "hidden_domain.json" not in compiler_text
     assert "oracle.jsonl" not in compiler_text
+
+
+def test_supplied_repo_root_must_match_loaded_execution_root(tmp_path):
+    with pytest.raises(manifests.ManifestError, match="execution root"):
+        manifests.implementation_hashes(tmp_path)
+
+
+def test_external_manifest_bundle_is_rejected_even_when_self_contained():
+    with tempfile.TemporaryDirectory(prefix="semabi-external-manifest-") as directory:
+        external = Path(directory)
+        source = _run(external / "source", "source")
+        output = external / "source_manifest.json"
+        with pytest.raises(manifests.ManifestError, match="escapes authenticated"):
+            manifests.build_source_manifest(
+                source,
+                [_reading(source)],
+                _summary(),
+                output,
+                repo_root=ROOT,
+            )
+
+
+def test_parent_symlink_and_relative_escape_are_rejected(tmp_path):
+    run = _run(tmp_path / "repo" / "run", "safe")
+    outside = tmp_path / "outside"
+    outside.mkdir()
+    (outside / "observations.jsonl").write_bytes((run / "observations.jsonl").read_bytes())
+    (outside / "steps.jsonl").write_bytes((run / "steps.jsonl").read_bytes())
+    link_parent = tmp_path / "link"
+    link_parent.symlink_to(run.parent, target_is_directory=True)
+    with pytest.raises(custody.CustodyError):
+        custody.snapshot_run(link_parent / run.name, "SOURCE")
+    link = tmp_path / "lexical-link"
+    link.symlink_to(run.parent, target_is_directory=True)
+    with pytest.raises(custody.CustodyError):
+        custody.snapshot_run(link / ".." / "repo" / run.name, "SOURCE")
+
+    source = _run(tmp_path / "bundle" / "source", "source")
+    _run(tmp_path / "outside", "outside")
+    output = tmp_path / "bundle" / "source_manifest.json"
+    payload = manifests.build_source_manifest(
+        source, [_reading(source)], _summary(), output,
+        repo_root=Path(__file__).resolve().parents[1],
+    )
+    payload["source_path"] = Path(os.path.relpath("/tmp", output.parent)).as_posix()
+    with pytest.raises(manifests.ManifestError, match="escapes"):
+        manifests.save_source_manifest(payload, output)
+
+
+def test_role_distinctness_uses_consumed_evidence_not_ancillary_bytes(tmp_path):
+    source, source_manifest, _ = _source_manifest(tmp_path)
+    transfer = _run(tmp_path / "transfer", "same")
+    holdout = _run(tmp_path / "holdout", "same")
+    # Keep observations/steps byte-identical while varying only the optional sidecar.
+    (holdout / "probes.jsonl").write_text('{"ancillary":"different"}\n')
+    for name in ("observations.jsonl", "steps.jsonl"):
+        (holdout / name).write_bytes((transfer / name).read_bytes())
+    with pytest.raises(manifests.ManifestError, match="consumed evidence"):
+        manifests.build_chain_manifest(
+            source_manifest, transfer, holdout, tmp_path / "chain.json",
+            repo_root=Path(__file__).resolve().parents[1],
+        )
+
+
+def test_source_runtime_binding_is_verified(tmp_path):
+    _source, manifest, _ = _source_manifest(tmp_path)
+    bad = json.loads(manifest.read_text())
+    bad["runtime"]["version"] = "0.0.0"
+    manifest.write_text(json.dumps(bad))
+    with pytest.raises(manifests.ManifestError, match="runtime"):
+        manifests.load_source_manifest(manifest, repo_root=Path(__file__).resolve().parents[1])

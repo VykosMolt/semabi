@@ -5,6 +5,8 @@ import hashlib
 import json
 from pathlib import Path
 
+from semabi.compiler.v4 import manifests, transfer
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "docs" / "data" / "v4"
@@ -12,6 +14,28 @@ DATA = ROOT / "docs" / "data" / "v4"
 
 def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _evidence(rows: dict) -> list[transfer.TransferEvidence]:
+    out = []
+    for name in sorted(rows):
+        row = rows[name]
+        out.append(transfer.TransferEvidence(
+            name=row["name"],
+            key_slot_summary=dict(row["key_slots"]),
+            hard_contradictions=row["hard_contradictions"],
+            churn=row["churn"],
+            visibility=row["visibility"],
+            spurious=row["spurious"],
+            explained=row["explained"],
+            silent=row["silent"],
+            complexity=row["complexity"],
+            applicability=row["applicability"],
+            transport=dict(row["transport"]),
+            verdicts={int(step): verdict for step, verdict in row["verdicts"].items()},
+            separation=list(row["separation"]),
+        ))
+    return out
 
 
 def test_retained_frontier_summary_binds_complete_ambiguous_reports():
@@ -39,6 +63,13 @@ def test_retained_frontier_summary_binds_complete_ambiguous_reports():
         assert report["authority"]["custody_timing"] == summary["custody_timing"]
         assert all("verdicts" in row for row in report["transfer"]["evidence"].values())
         assert set(report["holdout"]["evidence"]) == set(report["survivor_names"])
+        assert transfer.all_pairs_frontier(
+            _evidence(report["transfer"]["evidence"])
+        ).to_json() == report["transfer_frontier"]
+        if len(report["holdout"]["evidence"]) > 1:
+            assert transfer.all_pairs_frontier(
+                _evidence(report["holdout"]["evidence"])
+            ).to_json() == report["holdout_frontier"]
         if app == "vet_clinic":
             assert report["holdout_frontier"]["outcome"] == expected[
                 "holdout_pairwise_frontier"
@@ -55,3 +86,19 @@ def test_retained_reports_bind_the_manifest_bytes_they_replay():
             retained_path = ROOT / record["path"]
             assert retained_path.is_file()
             assert _sha256(retained_path) == record["sha256"]
+
+
+def test_retained_manifests_authenticate_current_runtime_code_and_inputs():
+    manifest_dir = DATA / "manifests"
+    for source_path in sorted(manifest_dir.glob("*_source_candidates.json")):
+        source = manifests.load_source_manifest(source_path, repo_root=ROOT)
+        assert set(source.generation["implementation_files"]) == set(
+            manifests.GENERATOR_IMPLEMENTATION_FILES
+        )
+    for chain_path in sorted(manifest_dir.glob("*_chain.json")):
+        chain = manifests.load_chain_manifest(chain_path, repo_root=ROOT)
+        assert set(chain.implementation_files) == set(manifests.REPLAY_IMPLEMENTATION_FILES)
+        assert len({
+            chain.roles[role]["snapshot"]["consumed_evidence_sha256"]
+            for role in ("SOURCE", "TRANSFER", "HOLDOUT")
+        }) == 3

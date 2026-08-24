@@ -197,6 +197,9 @@ silence on four. Two findings from that checkpoint set this phase's direction.
 > model. Representation hypotheses must transport unchanged across independently collected
 > interaction histories and survive separate prospective validation.**
 
+This is the design requirement. The retained V4 phase is retroactively snapshotted spent
+development evidence and does **not** establish prospective validation chronology.
+
 The evidence is direct. A reading chosen in place on `harbour`'s 453-primitive history
 scores RTC .411; the reading chosen on its 377-primitive history and carried over scores
 .071. And on `vet_clinic` the local objective declines a reading that identifies patients
@@ -219,11 +222,12 @@ failure would be wrong — the distinction was never observable in it.
     SOURCE     generates readings; may reject some locally; is never validation
     TRANSFER   compares frozen source readings and may refute them;
                once used to select, it is not validation either
-    HOLDOUT    takes no part in selection; the only evidence that validates
+    HOLDOUT    takes no part in selection; classifies the retained frontier
 
-A history used to choose a reading has been spent. The roles are separate objects in the
-report rather than a convention, because the failure they guard against — calling the fit
-a prediction — is exactly what looks reasonable in prose.
+A history used to choose a reading has been spent. HOLDOUT can support validation only when
+its prospective chronology was precommitted and retained; that is **NOT_ESTABLISHED** here.
+The roles are separate objects in the report rather than a convention, because the failure
+they guard against — calling the fit a prediction — is exactly what looks reasonable in prose.
 
 ## What a pinned reading is
 
@@ -246,8 +250,8 @@ not being transport.
 
 ## What transfer evidence is
 
-`semabi/compiler/v4/transfer.py`. Not a scalar. Per frozen reading, against a history it
-never saw: hard contradictions, churn, visibility artifacts, spurious deltas, explained
+`semabi/compiler/v4/transfer.py`. Not a scalar. Per frozen reading, against a separate role
+history: hard contradictions, churn, visibility artifacts, spurious deltas, explained
 steps, silent steps, complexity, and *applicability* — the fraction of its claims the
 destination let it instantiate at all. A reading whose families are not rendered there has
 not been tested there and is not scored as though it had.
@@ -266,10 +270,11 @@ The decision is a dominance rule, in this order:
    `INCONCLUSIVE_ASYMMETRIC_APPLICABILITY`;
 5. a reading this history contradicts where its rival is not contradicted is demoted, then
    fewer errors decides;
-6. exact separation fractions discriminate only between tested claims on the same family,
-   and only by dominance: strictly better somewhere and worse nowhere. Fractions are
-   compared from their integer counts, not their rounded display rate; opposing family
-   directions keep the ambiguity;
+6. exact separation fractions discriminate only between instantiated tested claims on the
+   same family and the identical SHA-256-bound co-present pair population, and only by
+   dominance: strictly better somewhere and worse nowhere. Fractions are compared from their
+   integer counts, not their rounded display rate; opposing family directions keep the
+   ambiguity;
 7. more confirmed identity claims can beat making fewer such claims;
 8. **explaining more steps is not a reason to prefer a reading here.** That is what the
    source history was for, and it is exactly the quantity that does not transport;
@@ -288,9 +293,9 @@ undefeated reading is `NO_UNDEFEATED_READING`. Win counts, sequential incumbents
 runner-up fallbacks are not selection rules.
 
 HOLDOUT evaluates every undefeated TRANSFER reading. Its per-reading classifications and
-mechanical pairwise frontier are evidence about the frozen set, but HOLDOUT cannot collapse
-an ambiguous TRANSFER frontier: doing so would turn validation into a second selection
-history.
+mechanical pairwise frontier are development evidence about the frozen set, but HOLDOUT
+cannot collapse an ambiguous TRANSFER frontier. In this retroactive phase it is not called
+validation; prospective freshness is **NOT_ESTABLISHED**.
 
 ## Evidence sufficiency
 

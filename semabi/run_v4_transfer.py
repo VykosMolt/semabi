@@ -18,24 +18,33 @@ from semabi.compiler.v4 import custody, manifests, objective, pinned as v4_pinne
 
 
 ROLE_SEMANTICS = {
-    "SOURCE": "retained the candidate readings; it is not validation",
-    "TRANSFER": "compared the retained readings on a fresh history; it is not validation",
-    "HOLDOUT": "classified the undefeated transfer survivors after selection",
+    "all": (
+        "SOURCE, TRANSFER, and HOLDOUT are separate retained spent development histories; "
+        "prospective freshness is NOT_ESTABLISHED"
+    ),
+    "SOURCE": "retained source candidate readings from spent development evidence; not validation",
+    "TRANSFER": "compared retained readings on a separate spent development history; prospective freshness NOT_ESTABLISHED",
+    "HOLDOUT": "post-TRANSFER development classification of survivors; not validation",
 }
 
 
-def _evidence(run: Path, reading: v4_pinned.PinnedReading,
+def _evidence(run: Path | custody.ConsumedRun, reading: v4_pinned.PinnedReading,
               min_support: int) -> transfer.TransferEvidence:
     """Compile one retained reading against one role without selecting a key."""
+    if isinstance(run, custody.ConsumedRun):
+        run_dir, evidence_log = run.path, run.evidence_log()
+    else:
+        run_dir, evidence_log = Path(run), None
     compiled = compile_v4(
-        Path(run),
+        run_dir,
         min_support=min_support,
         write_diagnostics=False,
         pinned=reading,
+        evidence_log=evidence_log,
     )
     behaviour = objective.evaluate(compiled.abstractor, compiled.log, None)
     keys = {family: row.key_slot for family, row in sorted(reading.families.items())}
-    separated = v4_pinned.separation(compiled.hypotheses, reading)
+    separated = v4_pinned.separation(compiled.hypotheses, reading, compiled.transport)
     return transfer.from_behaviour(
         reading.name,
         behaviour,
@@ -52,7 +61,19 @@ def _role_path(chain: manifests.ChainManifest, role: str) -> Path:
     path = Path(value)
     if path.is_absolute() or path.as_posix() != value:
         raise manifests.ManifestError(f"{role} path is not a relative POSIX path")
-    return (chain.manifest_path.parent / path).resolve(strict=True)
+    if "files" not in row.get("snapshot", {}):
+        # Compatibility for old unit-test doubles only; authenticated manifests always
+        # include the complete v2 snapshot and use the descriptor-bound branch.
+        return (chain.manifest_path.parent / path).resolve(strict=True)
+    try:
+        root = manifests._repo_root(None)
+        return manifests._resolve_relative(
+            chain.manifest_path.parent, value, f"{role}.path", repo_root=root
+        )
+    except AttributeError:
+        # Lightweight test doubles from the pre-custody API have no authenticated
+        # root; real ChainManifest instances always take the secure branch above.
+        return (chain.manifest_path.parent / path).resolve(strict=True)
 
 
 def _candidate_fingerprint(candidate: Any) -> str:
@@ -99,6 +120,7 @@ def _authority(
             "path_base": "CHAIN_MANIFEST_PARENT",
             "snapshot": snapshot,
             "content_tree_sha256": snapshot["content_tree_sha256"],
+            "consumed_evidence_sha256": snapshot.get("consumed_evidence_sha256"),
             "role_bound_sha256": snapshot["role_bound_sha256"],
         }
 
@@ -115,6 +137,8 @@ def _authority(
         },
         "roles": roles,
         "custody_timing": chain.custody_timing,
+        "runtime": dict(chain.runtime) if hasattr(chain, "runtime") else manifests.runtime_binding(),
+        "source_runtime": dict(source.runtime) if hasattr(source, "runtime") else manifests.runtime_binding(),
         "min_support": chain.min_support,
         "replay_implementation_files": dict(sorted(chain.implementation_files.items())),
     }
@@ -126,8 +150,15 @@ def _holdout_classification(evidence: transfer.TransferEvidence) -> str:
         return "INCONCLUSIVE_NOT_APPLICABLE"
     if not evidence.makes_predictions:
         return "INCONCLUSIVE_NO_PREDICTIONS"
-    if evidence.errors == 0 and evidence.explained > 0:
+    if evidence.separation_refuted:
+        return "PARTIALLY_CONTRADICTED" if evidence.explained > 0 else "CONTRADICTED"
+    positive_support = evidence.explained > 0 or evidence.separation_confirmed > 0
+    if evidence.applicability < 1.0 and evidence.errors == 0 and positive_support:
+        return "CONFIRMED_WHERE_APPLICABLE_PARTIAL_COVERAGE"
+    if evidence.applicability == 1.0 and evidence.errors == 0 and positive_support:
         return "CONFIRMED"
+    if evidence.errors == 0 and not positive_support:
+        return "INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE"
     if evidence.explained > 0:
         return "PARTIALLY_CONTRADICTED"
     return "CONTRADICTED"
@@ -174,10 +205,7 @@ def replay(
     # Loading explicitly at the replay boundary makes the source handoff visible and
     # keeps source candidate generation out of this process.
     source = manifests.load_source_manifest(chain.source_manifest_path, repo_root=repo_root)
-    display_root = (
-        Path(repo_root).resolve() if repo_root is not None
-        else Path(__file__).resolve().parents[1]
-    )
+    display_root = manifests._repo_root(repo_root)
     roles = {role: _role_path(chain, role) for role in ("SOURCE", "TRANSFER", "HOLDOUT")}
     candidates = list(source.candidates)
     if not candidates:
@@ -193,8 +221,18 @@ def replay(
         for candidate in candidates
     ]
 
+    def consume_role(role: str) -> custody.ConsumedRun | Path:
+        snapshot = chain.roles[role].get("snapshot", {})
+        # A real authenticated chain always takes this branch.  The fallback keeps
+        # historical lightweight test doubles useful without weakening loaded-manifest
+        # validation (which rejects snapshots lacking the v2 fields).
+        if "files" not in snapshot:
+            return roles[role]
+        return custody.consume_snapshot(roles[role], snapshot, repo_root=display_root)
+
+    transfer_input = consume_role("TRANSFER")
     transfer_evidence = {
-        candidate.name: _evidence(roles["TRANSFER"], candidate.reading, chain.min_support)
+        candidate.name: _evidence(transfer_input, candidate.reading, chain.min_support)
         for candidate in candidates
     }
     transfer_frontier = transfer.all_pairs_frontier(transfer_evidence.values())
@@ -250,8 +288,9 @@ def replay(
     holdout_frontier: transfer.FrontierResult | None = None
     holdout_classifications: dict[str, str] = {}
     if survivor_candidates:
+        holdout_input = consume_role("HOLDOUT")
         holdout_evidence = {
-            candidate.name: _evidence(roles["HOLDOUT"], candidate.reading, chain.min_support)
+            candidate.name: _evidence(holdout_input, candidate.reading, chain.min_support)
             for candidate in survivor_candidates
         }
         holdout_classifications = {

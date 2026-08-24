@@ -5,16 +5,25 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from semabi.compiler.evidence import EvidenceLog
 from semabi.compiler.v4 import manifests, source_candidates
 
 
 def freeze(source: Path, output: Path, *, repo_root: Path | None = None) -> dict:
     source = Path(source)
     output = Path(output)
-    log = EvidenceLog(source)
+    # Freeze and consume SOURCE before search.  The parser receives descriptor-bound
+    # immutable bytes and never reopens the run directory while candidates are generated.
+    root = manifests._repo_root(repo_root)
+    initial_snapshot = manifests.custody.snapshot_run(source, "SOURCE")
+    consumed = manifests.custody.consume_snapshot(
+        source, initial_snapshot, repo_root=root
+    )
+    refuted = manifests.custody.parse_refutations(
+        consumed.files.get("identity_refutations_v4.json")
+    )
+    log = consumed.evidence_log()
     result, candidates, notes, _hypotheses, _graph = source_candidates._source_candidates(
-        source, log, max_candidates=manifests.MAX_CANDIDATES
+        source, log, max_candidates=manifests.MAX_CANDIDATES, refuted=refuted
     )
     readings = [candidate for candidate in candidates]
     payload = manifests.build_source_manifest(
@@ -22,7 +31,8 @@ def freeze(source: Path, output: Path, *, repo_root: Path | None = None) -> dict
         readings,
         manifests.source_summary(result, notes),
         output,
-        repo_root=repo_root,
+        repo_root=root,
+        source_snapshot=consumed.snapshot,
     )
     manifests.save_source_manifest(payload, output, repo_root=repo_root)
     return payload

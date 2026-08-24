@@ -228,3 +228,98 @@ def test_cli_does_not_accept_raw_role_paths(monkeypatch):
     with pytest.raises(SystemExit) as exc:
         runner.main()
     assert exc.value.code == 2
+
+
+def test_runner_has_no_hidden_domain_boundary_reference():
+    assert "hidden_domain.json" not in Path(runner.__file__).read_text()
+
+
+def _valid_run(path: Path, marker: str) -> Path:
+    path.mkdir(parents=True, exist_ok=True)
+    observation = {"url": "", "nodes": []}
+    (path / "observations.jsonl").write_text(
+        json.dumps({"sig": marker, "obs": observation}) + "\n"
+    )
+    (path / "steps.jsonl").write_text(json.dumps({
+        "step": 0,
+        "episode": 0,
+        "action": {"kind": "reload", "target": None, "text": None, "target_desc": None},
+        "ok": True,
+        "error": None,
+        "before": marker,
+        "after": marker,
+        "typed_tokens": [],
+    }) + "\n")
+    return path
+
+
+def test_descriptor_bound_consumption_survives_original_mutation(tmp_path):
+    repo = tmp_path / "repo"
+    role = _valid_run(repo / "role", "original")
+    snapshot = custody.snapshot_run(role, "TRANSFER")
+    consumed = custody.consume_snapshot(role, snapshot, repo_root=repo)
+    before_log = consumed.evidence_log()
+    before = (len(before_log.steps), dict(before_log.observations))
+
+    (role / "observations.jsonl").write_text("not-json\n")
+    (role / "steps.jsonl").write_text("also-not-json\n")
+    after_log = consumed.evidence_log()
+    assert len(after_log.steps) == before[0]
+    assert dict(after_log.observations) == before[1]
+    with pytest.raises(TypeError):
+        consumed.files["steps.jsonl"] = b"changed"  # type: ignore[index]
+    with pytest.raises(RuntimeError):
+        consumed.evidence_log().save_meta(test=True)
+
+
+def test_consumed_run_returns_candidate_isolated_parser_objects(tmp_path):
+    repo = tmp_path / "repo"
+    role = _valid_run(repo / "role", "original")
+    snapshot = custody.snapshot_run(role, "TRANSFER")
+    consumed = custody.consume_snapshot(role, snapshot, repo_root=repo)
+    first = consumed.evidence_log()
+    second = consumed.evidence_log()
+
+    assert first is not second
+    first.steps.clear()
+    first.observations.clear()
+    assert len(second.steps) == 1
+    assert set(second.observations) == {"original"}
+
+
+def _separation(status: str) -> list[dict]:
+    if status == "REFUTED":
+        separated, rate = 0, 0.0
+    else:
+        separated, rate = 1, 1.0
+    return [{
+        "family": "row[_]",
+        "key_slot": "cell#0",
+        "status": status,
+        "copresent_pairs": 1,
+        "separated_pairs": separated,
+        "rate": rate,
+        "population_hash": "0" * 64,
+    }]
+
+
+def test_holdout_labels_require_full_coverage_and_no_refuted_claims():
+    partial = transfer.TransferEvidence(
+        name="partial", explained=1, applicability=0.5,
+        separation=_separation("CONFIRMED"),
+    )
+    assert runner._holdout_classification(partial) == (
+        "CONFIRMED_WHERE_APPLICABLE_PARTIAL_COVERAGE"
+    )
+
+    refuted = transfer.TransferEvidence(
+        name="refuted", explained=1, applicability=1.0,
+        separation=_separation("REFUTED"),
+    )
+    assert runner._holdout_classification(refuted) == "PARTIALLY_CONTRADICTED"
+
+    confirmed = transfer.TransferEvidence(
+        name="confirmed", explained=1, applicability=1.0,
+        separation=_separation("CONFIRMED"),
+    )
+    assert runner._holdout_classification(confirmed) == "CONFIRMED"

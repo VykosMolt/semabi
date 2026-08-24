@@ -59,3 +59,19 @@ def test_compiler_never_reads_oracle_annotations():
         text = f.read_text()
         assert "data-eid" not in text and "data-erefs" not in text and "data-oid" not in text, f.name
         assert "oracle.jsonl" not in text, f.name
+        assert "hidden_domain.json" not in text, f.name
+
+
+def test_v4_closure_is_local_and_includes_function_local_compiler_modules():
+    from semabi.compiler.v4 import manifests
+
+    for closure in (manifests.GENERATOR_IMPLEMENTATION_FILES,
+                    manifests.REPLAY_IMPLEMENTATION_FILES):
+        assert "semabi/compiler/grounder.py" in closure
+        assert "semabi/compiler/mentions.py" in closure
+        assert "semabi/__init__.py" in closure
+        assert "semabi/compiler/__init__.py" in closure
+        assert "semabi/compiler/v2/__init__.py" in closure
+        assert "semabi/compiler/v4/__init__.py" in closure
+        assert all(not name.startswith(("semabi/hidden", "semabi/env", "semabi/eval/"))
+                   for name in closure)
