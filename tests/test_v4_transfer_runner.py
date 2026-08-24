@@ -57,6 +57,7 @@ def _chain_fixture(tmp_path: Path, names: list[str]):
     )
     source = SimpleNamespace(
         manifest_path=source_manifest_path,
+        manifest_sha256=custody.sha256_file(source_manifest_path),
         candidates=[_candidate(source_dir, name) for name in names],
         incumbent=names[0],
         source_summary={
@@ -66,6 +67,8 @@ def _chain_fixture(tmp_path: Path, names: list[str]):
             "alternatives_generated": [],
         },
     )
+    chain.source_manifest = source
+    chain.manifest_sha256 = custody.sha256_file(chain_manifest_path)
     return chain, source, {
         "SOURCE": source_dir,
         "TRANSFER": transfer_dir,
@@ -86,7 +89,13 @@ def _evidence(name: str, *, explained: int = 0, errors: int = 0) -> transfer.Tra
 
 def _patch_loaders(monkeypatch, chain, source):
     monkeypatch.setattr(runner.manifests, "load_chain_manifest", lambda *a, **k: chain)
-    monkeypatch.setattr(runner.manifests, "load_source_manifest", lambda *a, **k: source)
+    monkeypatch.setattr(
+        runner.manifests,
+        "load_source_manifest",
+        lambda *a, **k: (_ for _ in ()).throw(
+            AssertionError("runner must reuse the source object retained by the chain")
+        ),
+    )
 
 
 def test_replay_uses_retained_loaders_and_never_generates_candidates(tmp_path, monkeypatch):
@@ -236,7 +245,16 @@ def test_runner_has_no_hidden_domain_boundary_reference():
 
 def _valid_run(path: Path, marker: str) -> Path:
     path.mkdir(parents=True, exist_ok=True)
-    observation = {"url": "", "nodes": []}
+    observation = {
+        "url": "http://127.0.0.1/",
+        "nodes": [{
+            "i": 0,
+            "parent": -1,
+            "role": "group",
+            "name": "",
+            "bbox": [0, 0, 1, 1],
+        }],
+    }
     (path / "observations.jsonl").write_text(
         json.dumps({"sig": marker, "obs": observation}) + "\n"
     )
@@ -272,6 +290,26 @@ def test_descriptor_bound_consumption_survives_original_mutation(tmp_path):
         consumed.evidence_log().save_meta(test=True)
 
 
+def test_full_evidence_compile_uses_retained_probes_after_live_mutation(tmp_path):
+    repo = tmp_path / "repo"
+    role = _valid_run(repo / "role", "original")
+    (role / "probes.jsonl").write_text(
+        '{"key":["click","button","x"],"status":"VIEW"}\n'
+    )
+    snapshot = custody.snapshot_run(role, "TRANSFER")
+    consumed = custody.consume_snapshot(role, snapshot, repo_root=repo)
+    try:
+        (role / "probes.jsonl").write_text("not-json\n")
+        evidence = runner._evidence(
+            consumed,
+            pinned.PinnedReading(name="empty"),
+            min_support=2,
+        )
+        assert evidence.name == "empty"
+    finally:
+        consumed.close()
+
+
 def test_consumed_run_returns_candidate_isolated_parser_objects(tmp_path):
     repo = tmp_path / "repo"
     role = _valid_run(repo / "role", "original")
@@ -289,14 +327,16 @@ def test_consumed_run_returns_candidate_isolated_parser_objects(tmp_path):
 
 def _separation(status: str) -> list[dict]:
     if status == "REFUTED":
-        separated, rate = 0, 0.0
+        separated, copresent, rate = 0, 1, 0.0
+    elif status == "PARTIAL":
+        separated, copresent, rate = 1, 100, 0.01
     else:
-        separated, rate = 1, 1.0
+        separated, copresent, rate = 1, 1, 1.0
     return [{
         "family": "row[_]",
         "key_slot": "cell#0",
         "status": status,
-        "copresent_pairs": 1,
+        "copresent_pairs": copresent,
         "separated_pairs": separated,
         "rate": rate,
         "population_hash": "0" * 64,
@@ -323,3 +363,18 @@ def test_holdout_labels_require_full_coverage_and_no_refuted_claims():
         separation=_separation("CONFIRMED"),
     )
     assert runner._holdout_classification(confirmed) == "CONFIRMED"
+
+    partial_identity = transfer.TransferEvidence(
+        name="partial_identity", explained=1, applicability=1.0,
+        separation=_separation("PARTIAL"),
+    )
+    assert runner._holdout_classification(partial_identity) == (
+        "INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE"
+    )
+
+    behaviour_only = transfer.TransferEvidence(
+        name="behaviour_only", explained=1, applicability=1.0,
+    )
+    assert runner._holdout_classification(behaviour_only) == (
+        "CONFIRMED_BEHAVIOUR_WITHOUT_IDENTITY_CLAIM"
+    )

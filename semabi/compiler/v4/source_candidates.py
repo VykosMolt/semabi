@@ -24,6 +24,28 @@ from semabi.compiler.v4.identity import family_key, family_readings
 MAX_CANDIDATES = 6
 
 
+def _refuted(refuted: Mapping[str, set[str | None]], family: str,
+             key_slot: str | None) -> bool:
+    """Whether an exact SOURCE refutation covers one generated family/key claim."""
+    return key_slot in refuted.get(family, set())
+
+
+def _alternative_note(name: str, family: str, reading, *, copresent_pairs: int | None = None):
+    """Serialize the exact generated candidate metadata used by SOURCE custody."""
+    row = {
+        "candidate": name,
+        "family": family,
+        "status": reading.status,
+        "discrimination": reading.evidence.discrimination,
+    }
+    if copresent_pairs is not None:
+        row["promotion"] = reading.key_slot
+        row["copresent_pairs"] = copresent_pairs
+    else:
+        row["alternative"] = reading.key_slot
+    return row
+
+
 def _source_candidates(
     source: Path,
     log: EvidenceLog,
@@ -40,11 +62,18 @@ def _source_candidates(
         run_dir=None if refuted is not None else source,
         refuted=None if refuted is None else {k: set(v) for k, v in refuted.items()},
     )
+    exact_refuted = (
+        {family: set(keys) for family, keys in refuted.items()}
+        if refuted is not None
+        else {family: set(keys) for family, keys in v4_search.read_refutations(source).items()}
+    )
     incumbent = v4_pinned.from_search(
-        result, source, "source_choice", refuted=refuted
+        result, source, "source_choice", refuted=exact_refuted
     )
     candidates = [incumbent]
     notes = []
+    if max_candidates <= len(candidates):
+        return result, candidates[:max_candidates], notes, H, G
 
     # Readings that promote a repeated leaf to an object of its own come first.  The local
     # objective declines exactly these, which is the reason this whole comparison exists, so
@@ -64,10 +93,15 @@ def _source_candidates(
         if best is None:
             continue
         name = f"promote {leaf_family[:22]}={best.key_slot}"
-        candidates.append(incumbent.with_promotion(leaf_family, best.key_slot, name))
-        notes.append({"family": leaf_family, "promotion": best.key_slot,
-                      "discrimination": best.evidence.discrimination,
-                      "copresent_pairs": best.evidence.copresent_pairs})
+        if _refuted(exact_refuted, leaf_family, best.key_slot):
+            continue
+        family_reading = v4_pinned.FamilyReading(
+            leaf_family, best.key_slot, best.status, best.evidence.discrimination
+        )
+        candidates.append(incumbent.with_promotion(leaf_family, family_reading, name))
+        notes.append(_alternative_note(
+            name, leaf_family, best, copresent_pairs=best.evidence.copresent_pairs
+        ))
         if len(candidates) >= max_candidates:
             return result, candidates[:max_candidates], notes, H, G
 
@@ -79,10 +113,14 @@ def _source_candidates(
             if alternative.status not in ("SUPPORTED", "NO_IDENTITY"):
                 continue
             name = f"{family[:24]}={alternative.key_slot}"
-            candidates.append(incumbent.variant(family, alternative.key_slot, name))
-            notes.append({"family": family, "alternative": alternative.key_slot,
-                          "status": alternative.status,
-                          "discrimination": alternative.evidence.discrimination})
+            if _refuted(exact_refuted, family, alternative.key_slot):
+                continue
+            family_reading = v4_pinned.FamilyReading(
+                family, alternative.key_slot, alternative.status,
+                alternative.evidence.discrimination,
+            )
+            candidates.append(incumbent.variant(family, family_reading, name))
+            notes.append(_alternative_note(name, family, alternative))
             break            # one alternative per family keeps the comparison small
         if len(candidates) >= max_candidates:
             break

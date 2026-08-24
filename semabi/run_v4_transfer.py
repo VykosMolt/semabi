@@ -129,11 +129,11 @@ def _authority(
     return {
         "chain_manifest": {
             "path": _portable_path(chain_path, repo_root),
-            "sha256": custody.sha256_file(chain_path),
+            "sha256": chain.manifest_sha256,
         },
         "source_manifest": {
             "path": _portable_path(source_path, repo_root),
-            "sha256": custody.sha256_file(source_path),
+            "sha256": source.manifest_sha256,
         },
         "roles": roles,
         "custody_timing": chain.custody_timing,
@@ -152,10 +152,16 @@ def _holdout_classification(evidence: transfer.TransferEvidence) -> str:
         return "INCONCLUSIVE_NO_PREDICTIONS"
     if evidence.separation_refuted:
         return "PARTIALLY_CONTRADICTED" if evidence.explained > 0 else "CONTRADICTED"
+    separation_statuses = {row["status"] for row in evidence.separation}
+    if separation_statuses & {"PARTIAL", "UNTESTED"}:
+        return "INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE"
     positive_support = evidence.explained > 0 or evidence.separation_confirmed > 0
+    if not evidence.separation and evidence.errors == 0 and evidence.explained > 0:
+        return "CONFIRMED_BEHAVIOUR_WITHOUT_IDENTITY_CLAIM"
     if evidence.applicability < 1.0 and evidence.errors == 0 and positive_support:
         return "CONFIRMED_WHERE_APPLICABLE_PARTIAL_COVERAGE"
-    if evidence.applicability == 1.0 and evidence.errors == 0 and positive_support:
+    if (evidence.applicability == 1.0 and evidence.errors == 0 and positive_support
+            and separation_statuses == {"CONFIRMED"}):
         return "CONFIRMED"
     if evidence.errors == 0 and not positive_support:
         return "INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE"
@@ -202,9 +208,9 @@ def replay(
     """Replay one authenticated chain manifest and write its canonical report."""
     manifest_path = Path(manifest_path)
     chain = manifests.load_chain_manifest(manifest_path, repo_root=repo_root)
-    # Loading explicitly at the replay boundary makes the source handoff visible and
-    # keeps source candidate generation out of this process.
-    source = manifests.load_source_manifest(chain.source_manifest_path, repo_root=repo_root)
+    # Chain authentication reads, hashes, parses, and retains the source manifest once.
+    # Reuse that exact object: reopening the path would break the chain-bound byte identity.
+    source = chain.source_manifest
     display_root = manifests._repo_root(repo_root)
     roles = {role: _role_path(chain, role) for role in ("SOURCE", "TRANSFER", "HOLDOUT")}
     candidates = list(source.candidates)
@@ -231,10 +237,14 @@ def replay(
         return custody.consume_snapshot(roles[role], snapshot, repo_root=display_root)
 
     transfer_input = consume_role("TRANSFER")
-    transfer_evidence = {
-        candidate.name: _evidence(transfer_input, candidate.reading, chain.min_support)
-        for candidate in candidates
-    }
+    try:
+        transfer_evidence = {
+            candidate.name: _evidence(transfer_input, candidate.reading, chain.min_support)
+            for candidate in candidates
+        }
+    finally:
+        if isinstance(transfer_input, custody.ConsumedRun):
+            transfer_input.close()
     transfer_frontier = transfer.all_pairs_frontier(transfer_evidence.values())
     candidate_by_name = {candidate.name: candidate for candidate in candidates}
     source_choice = candidate_by_name[source.incumbent]
@@ -289,10 +299,14 @@ def replay(
     holdout_classifications: dict[str, str] = {}
     if survivor_candidates:
         holdout_input = consume_role("HOLDOUT")
-        holdout_evidence = {
-            candidate.name: _evidence(holdout_input, candidate.reading, chain.min_support)
-            for candidate in survivor_candidates
-        }
+        try:
+            holdout_evidence = {
+                candidate.name: _evidence(holdout_input, candidate.reading, chain.min_support)
+                for candidate in survivor_candidates
+            }
+        finally:
+            if isinstance(holdout_input, custody.ConsumedRun):
+                holdout_input.close()
         holdout_classifications = {
             name: _holdout_classification(holdout_evidence[name])
             for name in sorted(holdout_evidence)

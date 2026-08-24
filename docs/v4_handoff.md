@@ -14,17 +14,19 @@ authoritative; verify them rather than trusting this summary.
 * Branch: `v4-joint-observation-model`. Commit `1e20ef2` immutably preserves the rejected
   sequential separation successor and its review. Commit `98db1bd` preserves the first
   authenticated all-pairs candidate; its adversarial rejection is retained by `5f229f3`.
-  Do not rewrite or delete any of those checkpoints.
+  Commit `72e6819` preserves the first descriptor-bound integrity repair; its second
+  adversarial rejection is retained by `e894cac`. Do not rewrite or delete any checkpoint.
 * The current raw histories are now retained in Git, but their snapshots were made after
   collection. Every chain therefore says exactly
   `RETROACTIVE_SNAPSHOT_CHRONOLOGY_NOT_ESTABLISHED`. The bytes and replay are reproducible;
   prospective chronology is **NOT_ESTABLISHED**. Reported author identity, collection order,
   and seeds are historical prose, not precommitted machine authority.
 * Compiler custody binds `observations.jsonl`, `steps.jsonl`, existing `probes.jsonl`, and the
-  SOURCE refutation sidecar when present. Role independence is stricter: it uses a digest of
-  only the observations and steps actually shared by every compiler role, so ancillary bytes
-  or file modes cannot manufacture a distinct history. Evaluator custody separately selects
-  only its two raw inputs. Generated models, identity reports and search logs are not inputs.
+  SOURCE refutation sidecar when present. Role independence uses a digest of the exact replay
+  evidence: observations, steps, and probes when present; file modes and the SOURCE-only
+  refutation sidecar cannot manufacture a distinct history. Evaluator custody separately
+  selects only its two raw inputs. Generated models, identity reports and search logs are not
+  inputs.
 
 ## Read these artifacts first
 
@@ -71,9 +73,9 @@ three applications has a unique TRANSFER survivor.**
 
 | application | undefeated TRANSFER set | unresolved comparison | HOLDOUT evidence |
 |---|---|---|---|
-| `vet_clinic` | `promote cell[_]=cell#0`; `row[_](cell[_])=None` | asymmetric applicability, 0.83 versus 1.00 | both individually `PARTIALLY_CONTRADICTED`; pairwise HOLDOUT remains applicability-inconclusive |
-| `harbour` | `promote cell[_]=cell#0`; both row-family `cell#0` variants | promoted reading is at 0.60 applicability versus 1.00; the two row variants improve opposite families | all three individually `PARTIALLY_CONTRADICTED`; no HOLDOUT pair produces a loss among them |
-| `blend_book` | `cell[_]=cell#0`; `promote cell[_]=cell#0` | asymmetric applicability, 0.80 versus 0.60 | the first is `CONFIRMED_WHERE_APPLICABLE_PARTIAL_COVERAGE`, the promoted reading `PARTIALLY_CONTRADICTED`; their pairwise comparison remains applicability-inconclusive |
+| `vet_clinic` | `promote cell[_]=cell#0`; `row[_](cell[_])=None` | asymmetric applicability, 0.83 versus 1.00 | both `INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE`; pairwise HOLDOUT remains applicability-inconclusive |
+| `harbour` | `promote cell[_]=cell#0`; both row-family `cell#0` variants | promoted reading is at 0.60 applicability versus 1.00; the two row variants improve opposite families | all three `INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE`; no HOLDOUT pair produces a loss among them |
+| `blend_book` | `cell[_]=cell#0`; `promote cell[_]=cell#0` | asymmetric applicability, 0.80 versus 0.60 | both `INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE`; their pairwise comparison remains applicability-inconclusive |
 
 HOLDOUT is post-TRANSFER development classification, not validation and not a second selection
 history. Its mechanical frontier is retained, but it cannot promote one member of an
@@ -86,8 +88,8 @@ This supersedes three earlier claims:
 * harbour has three undefeated readings, not a selected reading plus one runner-up;
 * the former vet-clinic HOLDOUT preference was a false refutation of an uninstantiated key and
   is **NOT_ESTABLISHED**;
-* blend_book has confirmation only where the reading applied, not unqualified confirmation,
-  and no unique transferred selection.
+* blend_book has only partial identity separation, not confirmation, and no unique transferred
+  selection.
 
 ## What still fails
 
@@ -144,8 +146,8 @@ budget, stop conditions, and failure states must be frozen before new TRANSFER e
     # full suite; loopback access is needed by three existing network tests
     .venv/bin/python -m pytest -q
 
-Current local verification: retained-frontier/integrity/boundary subset `76 passed`; complete
-suite `186 passed, 1 xfailed`. Fresh-clone replay, independent review, and adjudication are
+Current local verification: retained-frontier/integrity/boundary subset `95 passed`; complete
+suite `205 passed, 1 xfailed`. Fresh-clone replay, independent review, and adjudication are
 pending for the current repair candidate. No LLM proposal was used. The
 phase retained 4,373 collected primitives plus the earlier one-primitive harbour acquisition;
 no new primitives were collected by this repair.

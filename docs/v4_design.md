@@ -254,7 +254,8 @@ not being transport.
 history: hard contradictions, churn, visibility artifacts, spurious deltas, explained
 steps, silent steps, complexity, and *applicability* — the fraction of its claims the
 destination let it instantiate at all. A reading whose families are not rendered there has
-not been tested there and is not scored as though it had.
+not been tested there and is not scored as though it had. Applicability is retained as an
+exact reduced numerator/denominator and compared exactly; the rounded decimal is display only.
 
 Readings are then compared only where they said different things about the same step, in
 the differential discipline V2 used for candidate-versus-baseline, with the compared
@@ -295,7 +296,9 @@ runner-up fallbacks are not selection rules.
 HOLDOUT evaluates every undefeated TRANSFER reading. Its per-reading classifications and
 mechanical pairwise frontier are development evidence about the frozen set, but HOLDOUT
 cannot collapse an ambiguous TRANSFER frontier. In this retroactive phase it is not called
-validation; prospective freshness is **NOT_ESTABLISHED**.
+validation; prospective freshness is **NOT_ESTABLISHED**. Unqualified `CONFIRMED` requires
+full applicability, no errors, and fully confirmed identity separation. PARTIAL separation is
+`INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE`, never confirmation.
 
 ## Evidence sufficiency
 

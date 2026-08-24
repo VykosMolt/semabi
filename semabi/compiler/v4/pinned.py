@@ -26,6 +26,7 @@ from __future__ import annotations
 import hashlib
 import json
 from dataclasses import dataclass, field
+from fractions import Fraction
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 
@@ -78,19 +79,40 @@ class PinnedReading:
                    "promoted_families": sorted(self.promoted_families)}
         return hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()[:16]
 
-    def variant(self, family: str, key_slot: str | None, name: str) -> "PinnedReading":
-        """The same reading with one family read differently: the unit of comparison."""
+    def variant(self, family: str,
+                alternative: str | None | FamilyReading,
+                name: str,
+                *,
+                status: str = "VARIANT",
+                discrimination: float | None = None) -> "PinnedReading":
+        """The same reading with one family read differently: the unit of comparison.
+
+        A generated alternative must carry its own evidential metadata.  When callers pass
+        only a key for legacy/development use, the metadata is explicitly marked ``VARIANT``
+        rather than silently inheriting the incumbent's status or discrimination.
+        """
         families = dict(self.families)
-        source = families.get(family)
-        families[family] = FamilyReading(family, key_slot,
-                                         (source.status if source else "VARIANT"),
-                                         (source.discrimination if source else None))
+        if isinstance(alternative, FamilyReading):
+            if alternative.family != family:
+                raise ValueError(
+                    f"alternative family {alternative.family!r} does not match {family!r}")
+            reading = alternative
+        else:
+            reading = FamilyReading(family, alternative, status, discrimination)
+        families[family] = reading
         return PinnedReading(families, list(self.promoted_families), dict(self.refuted),
                              dict(self.provenance), name)
 
-    def with_promotion(self, family: str, key_slot: str | None, name: str) -> "PinnedReading":
+    def with_promotion(self, family: str,
+                       alternative: str | None | FamilyReading,
+                       name: str,
+                       *,
+                       status: str = "VARIANT",
+                       discrimination: float | None = None) -> "PinnedReading":
+        """Add a promoted family while preserving that promotion's own evidence metadata."""
         promoted = sorted(set(self.promoted_families) | {family})
-        out = self.variant(family, key_slot, name)
+        out = self.variant(family, alternative, name,
+                           status=status, discrimination=discrimination)
         out.promoted_families = promoted
         return out
 
@@ -139,13 +161,29 @@ class Transport:
         claimed = len(self.applied) + len(self.slot_absent) + len(self.absent_in_transfer)
         return len(self.applied) / claimed if claimed else 0.0
 
+    @property
+    def applicability_counts(self) -> tuple[int, int]:
+        """Exact applied/claimed counts underlying the display applicability float."""
+        claimed = len(self.applied) + len(self.slot_absent) + len(self.absent_in_transfer)
+        return len(self.applied), claimed or 1
+
+    @property
+    def applicability_fraction(self) -> Fraction:
+        numerator, denominator = self.applicability_counts
+        return Fraction(numerator, denominator)
+
     def to_json(self) -> dict[str, Any]:
+        applicability = self.applicability_fraction
         return {"applied": self.applied, "slot_absent": self.slot_absent,
                 "absent_in_transfer": sorted(self.absent_in_transfer),
                 "unseen_in_source": sorted(self.unseen_in_source),
                 "promoted_applied": sorted(self.promoted_applied),
                 "promoted_absent": sorted(self.promoted_absent),
-                "applicability": round(self.applicability, 3)}
+                "applicability": round(float(applicability), 3),
+                "applicability_fraction": {
+                    "numerator": applicability.numerator,
+                    "denominator": applicability.denominator,
+                }}
 
 
 def promoted_templates(H, G, reading: PinnedReading) -> tuple[set[str], list[str]]:

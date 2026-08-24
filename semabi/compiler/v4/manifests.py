@@ -290,13 +290,24 @@ def _exact_keys(value: Mapping[str, Any], expected: set[str], label: str) -> Non
         raise ManifestError(f"{label} fields must be exactly {sorted(expected)}")
 
 
-def _read_json(path: Path) -> dict[str, Any]:
+def _read_manifest_once(path: Path) -> tuple[dict[str, Any], bytes, str]:
+    """Read, hash, and parse one manifest from the same descriptor-bound bytes."""
+
     try:
-        value = json.loads(custody.read_file_bytes(Path(path)))
+        raw = custody.read_file_bytes(Path(path))
+        digest = _digest(raw)
+        value = json.loads(raw.decode("utf-8"))
     except (OSError, UnicodeDecodeError, json.JSONDecodeError, custody.CustodyError) as exc:
         raise ManifestError(f"cannot read JSON manifest {path}: {exc}") from exc
     if not isinstance(value, dict):
         raise ManifestError(f"manifest root must be an object: {path}")
+    return value, raw, digest
+
+
+def _read_json(path: Path) -> dict[str, Any]:
+    """Compatibility wrapper for callers that only need the parsed payload."""
+
+    value, _raw, _digest_value = _read_manifest_once(path)
     return value
 
 
@@ -304,10 +315,40 @@ def _write_json(path: Path, value: Mapping[str, Any]) -> None:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     # Sorted keys and a terminal newline make repeated freezes byte-identical.
-    path.write_text(
-        json.dumps(value, indent=1, sort_keys=True, ensure_ascii=False, allow_nan=False) + "\n",
-        encoding="utf-8",
-    )
+    data = (
+        json.dumps(value, indent=1, sort_keys=True, ensure_ascii=False, allow_nan=False)
+        + "\n"
+    ).encode("utf-8")
+    try:
+        # The final manifest may be new, so inspect all existing parent
+        # components and separately reject an existing leaf symlink.
+        custody._reject_symlink_components(path.parent)  # type: ignore[attr-defined]
+        if path.is_symlink():
+            raise ManifestError(f"manifest output must not be a symlink: {path}")
+        absolute = Path(os.path.abspath(path))
+        parts = absolute.parts[1:]
+        if not parts:
+            raise ManifestError(f"manifest output has no final component: {path}")
+        directory_flags = os.O_RDONLY | os.O_DIRECTORY | os.O_CLOEXEC | os.O_NOFOLLOW
+        file_flags = os.O_WRONLY | os.O_CREAT | os.O_TRUNC | os.O_CLOEXEC | os.O_NOFOLLOW
+        directory_fd = os.open(absolute.anchor, directory_flags)
+        try:
+            for part in parts[:-1]:
+                next_fd = os.open(part, directory_flags, dir_fd=directory_fd)
+                os.close(directory_fd)
+                directory_fd = next_fd
+            file_fd = os.open(parts[-1], file_flags, 0o644, dir_fd=directory_fd)
+            try:
+                written = 0
+                while written < len(data):
+                    written += os.write(file_fd, data[written:])
+                os.fsync(file_fd)
+            finally:
+                os.close(file_fd)
+        finally:
+            os.close(directory_fd)
+    except (OSError, custody.CustodyError) as exc:
+        raise ManifestError(f"cannot securely write manifest {path}: {exc}") from exc
 
 
 def _relative_path(path: Path, base: Path) -> str:
@@ -566,6 +607,100 @@ def _validate_source_summary(value: Any) -> dict[str, Any]:
     return dict(value)
 
 
+def _validate_candidate_summary(
+    rows: Sequence[Any], candidates: Sequence["SourceCandidate"], incumbent: str
+) -> None:
+    """Bind every generated summary row to the exact frozen candidate it describes.
+
+    Source generation emits one row for every non-incumbent candidate.  The row is
+    provenance, not a free-form note: its family, key, status, and discrimination
+    must agree with the candidate's pinned family reading.  This catches a summary
+    copied from a different search, as well as the former variant/promotion bug that
+    silently inherited the incumbent's status and discrimination.
+    """
+
+    by_name = {candidate.name: candidate for candidate in candidates}
+    if len(rows) != len(candidates) - 1:
+        raise ManifestError(
+            "source_summary.alternatives_generated must contain exactly one row "
+            "for each non-incumbent candidate"
+        )
+    seen: set[str] = set()
+    for row in rows:
+        if not isinstance(row, Mapping):
+            raise ManifestError("source summary candidate rows must be objects")
+        keys = set(row)
+        required = {"candidate", "family", "status", "discrimination"}
+        if not required.issubset(keys) or not ("promotion" in keys) ^ ("alternative" in keys):
+            raise ManifestError(
+                "source summary candidate rows require candidate, family, one key "
+                "kind, status, and discrimination"
+            )
+        key_field = "promotion" if "promotion" in row else "alternative"
+        expected_keys = required | {key_field}
+        if key_field == "promotion":
+            expected_keys.add("copresent_pairs")
+        if keys != expected_keys:
+            raise ManifestError(
+                "source summary candidate row has unknown or missing provenance fields"
+            )
+        candidate_name = row["candidate"]
+        if not isinstance(candidate_name, str) or not candidate_name:
+            raise ManifestError("source summary candidate name must be non-empty")
+        if candidate_name == incumbent:
+            raise ManifestError("source summary cannot describe the incumbent as an alternative")
+        if candidate_name not in by_name:
+            raise ManifestError(
+                f"source summary names a candidate absent from the manifest: {candidate_name}"
+            )
+        if candidate_name in seen:
+            raise ManifestError(f"duplicate source summary candidate row: {candidate_name}")
+        seen.add(candidate_name)
+
+        family = row["family"]
+        if not isinstance(family, str) or not family:
+            raise ManifestError("source summary family must be a non-empty string")
+        reading = by_name[candidate_name].reading
+        family_reading = reading.families.get(family)
+        if family_reading is None:
+            raise ManifestError(
+                f"source summary family is absent from candidate {candidate_name}: {family}"
+            )
+        if row[key_field] != family_reading.key_slot:
+            raise ManifestError(
+                f"source summary key does not match candidate {candidate_name}: {family}"
+            )
+        if key_field == "promotion" and family not in reading.promoted_families:
+            raise ManifestError(
+                f"source summary promotion family is not promoted by candidate {candidate_name}"
+            )
+        if row["status"] != family_reading.status:
+            raise ManifestError(
+                f"source summary status does not match candidate {candidate_name}: {family}"
+            )
+        discrimination = row["discrimination"]
+        if discrimination is not None:
+            if isinstance(discrimination, bool) or not isinstance(discrimination, (int, float)):
+                raise ManifestError("source summary discrimination must be numeric or null")
+            if not math.isfinite(float(discrimination)) or not 0.0 <= float(discrimination) <= 1.0:
+                raise ManifestError("source summary discrimination is outside [0, 1]")
+        if discrimination != family_reading.discrimination:
+            raise ManifestError(
+                f"source summary discrimination does not match candidate {candidate_name}: {family}"
+            )
+        if key_field == "promotion":
+            pairs = row["copresent_pairs"]
+            if isinstance(pairs, bool) or not isinstance(pairs, int) or pairs < 0:
+                raise ManifestError("source summary copresent_pairs must be a non-negative integer")
+    expected = set(by_name) - {incumbent}
+    if seen != expected:
+        missing = sorted(expected - seen)
+        extra = sorted(seen - expected)
+        raise ManifestError(
+            f"source summary candidate linkage mismatch: missing={missing!r} extra={extra!r}"
+        )
+
+
 @dataclass(frozen=True)
 class SourceCandidate:
     name: str
@@ -593,6 +728,11 @@ class SourceManifest:
     incumbent: str
     candidates: list[SourceCandidate]
     raw: dict[str, Any]
+    # The authenticated manifest object is retained as the exact bytes that were
+    # parsed.  Callers must use these fields for authority instead of reopening the
+    # path (which would create a source-manifest TOCTOU window).
+    manifest_bytes: bytes
+    manifest_sha256: str
 
     def to_json(self) -> dict[str, Any]:
         return dict(self.raw)
@@ -641,11 +781,11 @@ def build_source_manifest(
 
     source_dir = Path(source_dir)
     manifest_path = Path(manifest_path)
-    manifest_path.parent.mkdir(parents=True, exist_ok=True)
     root = _repo_root(repo_root)
     path_root = _manifest_path_root(manifest_path, root)
     source_dir = _confined_absolute(source_dir, path_root, "SOURCE path")
     manifest_path = _confined_absolute(manifest_path, path_root, "source manifest path")
+    manifest_path.parent.mkdir(parents=True, exist_ok=True)
     snapshot = (
         custody.validate_snapshot(source_snapshot)
         if source_snapshot is not None
@@ -683,7 +823,7 @@ def save_source_manifest(
     root = _repo_root(repo_root)
     confined = _confined_absolute(Path(path), root, "source manifest path")
     _validate_source_payload(dict(payload), manifest_path=confined, repo_root=root)
-    _write_json(confined, payload)
+    _write_json(_confined_absolute(confined, root, "source manifest path"), payload)
 
 
 def _validate_source_payload(
@@ -771,6 +911,15 @@ def _validate_source_payload(
         )
         if reading.name != name:
             raise ManifestError(f"candidate name does not match its pinned reading: {name}")
+        for family, family_reading in reading.families.items():
+            if (
+                family_reading.key_slot is not None
+                and family_reading.key_slot in set(reading.refuted.get(family, []))
+            ):
+                raise ManifestError(
+                    f"candidate {name} activates a refuted family key: "
+                    f"{family}={family_reading.key_slot}"
+                )
         if reading.fingerprint() != fingerprint:
             raise ManifestError(f"decision fingerprint mismatch for {name}")
         if full_reading_sha256(row["reading"]) != full_hash:
@@ -781,21 +930,29 @@ def _validate_source_payload(
         candidates.append(SourceCandidate(name, fingerprint, full_hash, reading))
     if candidates[0].name != incumbent:
         raise ManifestError("source manifest incumbent must be the first frozen candidate")
+    _validate_candidate_summary(summary["alternatives_generated"], candidates, incumbent)
     # A source snapshot is verified only after the structure and implementation hashes have
     # passed, so a malformed manifest cannot make a path look authenticated.
     custody.verify_snapshot(source_path, source_snapshot, "SOURCE")
     return dict(payload), source_path, candidates
 
 
-def load_source_manifest(path: Path, *, repo_root: Path | None = None) -> SourceManifest:
-    """Load and authenticate a source manifest without invoking source generation."""
+def _source_manifest_from_payload(
+    payload: Mapping[str, Any],
+    *,
+    path: Path,
+    manifest_bytes: bytes,
+    manifest_sha256: str,
+    repo_root: Path,
+) -> SourceManifest:
+    """Validate one already-read source manifest byte object and retain it."""
 
-    root = _repo_root(repo_root)
-    path = _confined_absolute(Path(path), root, "source manifest path")
-    payload = _read_json(path)
     raw, source_path, candidates = _validate_source_payload(
-        payload, manifest_path=path, repo_root=root
+        payload, manifest_path=path, repo_root=repo_root
     )
+    retained_sha256 = _check_sha(manifest_sha256, "source manifest sha256")
+    if _digest(manifest_bytes) != retained_sha256:
+        raise ManifestError("retained source manifest bytes do not match their digest")
     return SourceManifest(
         manifest_path=path.resolve(),
         source_path=source_path,
@@ -806,6 +963,23 @@ def load_source_manifest(path: Path, *, repo_root: Path | None = None) -> Source
         incumbent=raw["incumbent"],
         candidates=candidates,
         raw=raw,
+        manifest_bytes=manifest_bytes,
+        manifest_sha256=retained_sha256,
+    )
+
+
+def load_source_manifest(path: Path, *, repo_root: Path | None = None) -> SourceManifest:
+    """Load and authenticate a source manifest without invoking source generation."""
+
+    root = _repo_root(repo_root)
+    path = _confined_absolute(Path(path), root, "source manifest path")
+    payload, manifest_bytes, manifest_sha256 = _read_manifest_once(path)
+    return _source_manifest_from_payload(
+        payload,
+        path=path,
+        manifest_bytes=manifest_bytes,
+        manifest_sha256=manifest_sha256,
+        repo_root=root,
     )
 
 
@@ -826,6 +1000,11 @@ class ChainManifest:
     custody_timing: str
     implementation_files: dict[str, str]
     raw: dict[str, Any]
+    # The source object and chain bytes are authenticated at one load boundary;
+    # replay must not reopen either manifest path to recover authority.
+    source_manifest: SourceManifest
+    manifest_bytes: bytes
+    manifest_sha256: str
 
     def to_json(self) -> dict[str, Any]:
         return dict(self.raw)
@@ -856,10 +1035,10 @@ def build_chain_manifest(
     if min_support != MIN_SUPPORT:
         raise ManifestError("current chain protocol requires min_support=2")
     manifest_path = Path(manifest_path)
-    manifest_path.parent.mkdir(parents=True, exist_ok=True)
     root = _repo_root(repo_root)
     path_root = _manifest_path_root(manifest_path, root)
     manifest_path = _confined_absolute(manifest_path, path_root, "chain manifest path")
+    manifest_path.parent.mkdir(parents=True, exist_ok=True)
     source_manifest_path = _confined_absolute(
         Path(source_manifest_path), path_root, "source manifest path"
     )
@@ -879,11 +1058,9 @@ def build_chain_manifest(
         "HOLDOUT": _role_record(holdout_dir, "HOLDOUT", manifest_path.parent),
     }
     _check_role_distinctness(roles)
-    source_manifest_path = Path(source_manifest_path)
-    custody.require_regular_file(source_manifest_path)
     source_ref = {
         "path": _relative_path(source_manifest_path, manifest_path.parent),
-        "sha256": custody.sha256_file(source_manifest_path),
+        "sha256": source_manifest.manifest_sha256,
     }
     payload = {
         "schema": CHAIN_MANIFEST_SCHEMA,
@@ -896,7 +1073,12 @@ def build_chain_manifest(
             root, REPLAY_IMPLEMENTATION_FILES, entrypoints=REPLAY_ENTRYPOINTS
         ),
     }
-    _validate_chain_payload(payload, manifest_path=manifest_path, repo_root=repo_root)
+    _validate_chain_payload(
+        payload,
+        manifest_path=manifest_path,
+        repo_root=repo_root,
+        source_manifest=source_manifest,
+    )
     return payload
 
 
@@ -906,7 +1088,7 @@ def save_chain_manifest(
     root = _repo_root(repo_root)
     confined = _confined_absolute(Path(path), root, "chain manifest path")
     _validate_chain_payload(dict(payload), manifest_path=confined, repo_root=root)
-    _write_json(confined, payload)
+    _write_json(_confined_absolute(confined, root, "chain manifest path"), payload)
 
 
 def _check_role_distinctness(roles: Mapping[str, Mapping[str, Any]]) -> None:
@@ -924,7 +1106,10 @@ def _check_role_distinctness(roles: Mapping[str, Mapping[str, Any]]) -> None:
 
 
 def _validate_chain_payload(
-    payload: Mapping[str, Any], *, manifest_path: Path, repo_root: Path | None = None
+    payload: Mapping[str, Any], *, manifest_path: Path, repo_root: Path | None = None,
+    source_manifest: SourceManifest | None = None,
+    manifest_bytes: bytes | None = None,
+    manifest_sha256: str | None = None,
 ) -> ChainManifest:
     expected = {
         "schema", "runtime", "source_manifest", "roles", "min_support", "custody_timing",
@@ -958,9 +1143,26 @@ def _validate_chain_payload(
         Path(manifest_path).parent, source_ref["path"], "source_manifest.path", repo_root=path_root
     )
     expected_source_manifest_hash = _check_sha(source_ref["sha256"], "source_manifest.sha256")
-    if custody.sha256_file(source_manifest_path) != expected_source_manifest_hash:
-        raise ManifestError("source manifest file hash mismatch")
-    source_manifest = load_source_manifest(source_manifest_path, repo_root=root)
+    if source_manifest is None:
+        # One descriptor-bound read supplies both the hash and the parsed payload.
+        # Never hash the path and then reopen it for parsing.
+        source_payload, source_bytes, source_manifest_hash = _read_manifest_once(
+            source_manifest_path
+        )
+        if source_manifest_hash != expected_source_manifest_hash:
+            raise ManifestError("source manifest file hash mismatch")
+        source_manifest = _source_manifest_from_payload(
+            source_payload,
+            path=source_manifest_path,
+            manifest_bytes=source_bytes,
+            manifest_sha256=source_manifest_hash,
+            repo_root=root,
+        )
+    else:
+        if source_manifest.manifest_path.resolve() != source_manifest_path.resolve():
+            raise ManifestError("retained source manifest path differs from chain reference")
+        if source_manifest.manifest_sha256 != expected_source_manifest_hash:
+            raise ManifestError("source manifest file hash mismatch")
     roles = payload["roles"]
     if not isinstance(roles, Mapping) or set(roles) != {"SOURCE", "TRANSFER", "HOLDOUT"}:
         raise ManifestError("chain roles must be exactly SOURCE, TRANSFER, and HOLDOUT")
@@ -990,6 +1192,14 @@ def _validate_chain_payload(
             raise ManifestError("chain SOURCE path differs from source manifest SOURCE path")
     if source_role["snapshot"] != source_manifest.source_snapshot:
         raise ManifestError("chain SOURCE snapshot differs from source manifest snapshot")
+    retained_chain_bytes = (
+        manifest_bytes if manifest_bytes is not None else canonical_bytes(payload)
+    )
+    retained_chain_sha256 = (
+        manifest_sha256 if manifest_sha256 is not None else _digest(retained_chain_bytes)
+    )
+    if _digest(retained_chain_bytes) != retained_chain_sha256:
+        raise ManifestError("retained chain manifest bytes do not match their digest")
     return ChainManifest(
         manifest_path=Path(manifest_path).resolve(),
         source_manifest_path=source_manifest_path,
@@ -999,6 +1209,9 @@ def _validate_chain_payload(
         custody_timing=payload["custody_timing"],
         implementation_files=dict(implementation),
         raw=dict(payload),
+        source_manifest=source_manifest,
+        manifest_bytes=retained_chain_bytes,
+        manifest_sha256=retained_chain_sha256,
     )
 
 
@@ -1007,8 +1220,14 @@ def load_chain_manifest(path: Path, *, repo_root: Path | None = None) -> ChainMa
 
     root = _repo_root(repo_root)
     path = _confined_absolute(Path(path), root, "chain manifest path")
-    payload = _read_json(path)
-    return _validate_chain_payload(payload, manifest_path=path, repo_root=root)
+    payload, manifest_bytes, manifest_sha256 = _read_manifest_once(path)
+    return _validate_chain_payload(
+        payload,
+        manifest_path=path,
+        repo_root=root,
+        manifest_bytes=manifest_bytes,
+        manifest_sha256=manifest_sha256,
+    )
 
 
 freeze_chain_manifest = build_chain_manifest

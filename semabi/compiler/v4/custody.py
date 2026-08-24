@@ -9,10 +9,11 @@ particular, this module deliberately has no knowledge of evaluator data.
 The snapshot format is intentionally boring and canonical.  File contents are
 bound to their relative name, mode, and size; the resulting content-tree digest is
 then bound to a role (SOURCE, TRANSFER, or HOLDOUT).  A second consumed-evidence
-digest covers only observations.jsonl and steps.jsonl, excluding modes and sidecars,
-and is the identity used for role independence. Verification re-enumerates that
-named input surface, so adding or removing an optional sidecar after a snapshot is a
-custody failure rather than an ignored change.
+digest covers observations.jsonl, steps.jsonl, and optional probes.jsonl, excluding
+modes and the refutation-only sidecar, and is the identity used for role
+independence. Verification re-enumerates that named input surface, so adding or
+removing an optional sidecar after a snapshot is a custody failure rather than an
+ignored change.
 """
 from __future__ import annotations
 
@@ -20,7 +21,9 @@ import hashlib
 import json
 import os
 import stat
-from dataclasses import dataclass
+import tempfile
+import threading
+from dataclasses import dataclass, field
 from types import MappingProxyType
 from pathlib import Path
 from typing import Any, Mapping
@@ -36,6 +39,10 @@ RECOGNIZED_INPUTS = frozenset(
     }
 )
 REQUIRED_INPUTS = frozenset({"observations.jsonl", "steps.jsonl"})
+# ``probes.jsonl`` is a compiler input when present.  The identity-refutation
+# sidecar is consumed by SOURCE generation, but it is not evidence used by replay
+# and therefore must not establish role independence.
+CONSUMED_INPUTS = REQUIRED_INPUTS | frozenset({"probes.jsonl"})
 
 
 class CustodyError(ValueError):
@@ -268,17 +275,19 @@ def content_tree_sha256(files: list[Mapping[str, Any]]) -> str:
 def consumed_evidence_sha256(files: list[Mapping[str, Any]]) -> str:
     """Digest only the evidence consumed by the compiler.
 
-    Modes and optional sidecars are intentionally absent.  This is the identity
-    used for role independence; ancillary bytes cannot make two histories distinct.
+    Modes and the refutation-only sidecar are intentionally absent.  The optional
+    probes file is compiler-visible evidence and is included when present.  This is
+    the identity used for role independence; ancillary bytes cannot make two
+    histories distinct.
     """
 
     normalized = [
         {"path": row["path"], "size": row["size"], "sha256": row["sha256"]}
         for row in files
-        if row["path"] in REQUIRED_INPUTS
+        if row["path"] in CONSUMED_INPUTS
     ]
     normalized.sort(key=lambda row: row["path"])
-    if {row["path"] for row in normalized} != REQUIRED_INPUTS:
+    if not REQUIRED_INPUTS.issubset({row["path"] for row in normalized}):
         raise CustodyError("consumed evidence requires observations.jsonl and steps.jsonl")
     return sha256_bytes(canonical_bytes(normalized))
 
@@ -409,13 +418,67 @@ def verify_snapshot(
     return current
 
 
-@dataclass(frozen=True)
+@dataclass
 class ConsumedRun:
     """A role whose authenticated compiler bytes are retained in memory once."""
 
     path: Path
     snapshot: dict[str, Any]
     files: Mapping[str, bytes]
+    # V2's frozen ``fit_view_controls`` implementation reads probes through
+    # ``Path(log.dir) / "probes.jsonl"``.  Keep that one compatibility file in a
+    # private temporary directory owned by this object; observations and steps are
+    # parsed directly from retained bytes and are never materialised on disk.
+    _tempdir: tempfile.TemporaryDirectory | None = field(
+        default=None, init=False, repr=False, compare=False
+    )
+    _lock: threading.RLock = field(
+        default_factory=threading.RLock, init=False, repr=False, compare=False
+    )
+
+    def _private_run_dir(self) -> Path:
+        """Return a private directory containing only authenticated probe bytes."""
+
+        if self._tempdir is None:
+            self._tempdir = tempfile.TemporaryDirectory(prefix="semabi-v4-retained-")
+        root = Path(self._tempdir.name)
+        # TemporaryDirectory owns this path.  Fail closed if a caller tampers with
+        # the private boundary or if an external cleanup removed it underneath us.
+        if root.is_symlink() or not root.is_dir():
+            raise CustodyError("retained evidence parser directory is not private")
+        return root
+
+    def _materialize_probes(self, root: Path) -> None:
+        """Refresh the parser-only probe file from retained bytes, without following links."""
+
+        raw = self.files.get("probes.jsonl")
+        path = root / "probes.jsonl"
+        if raw is None:
+            # An absent optional input must remain absent.  Do not unlink a path
+            # supplied by a caller: the directory is private and any such mutation
+            # is a custody error rather than a reason to touch another path.
+            if path.exists() or path.is_symlink():
+                raise CustodyError("unexpected probes file in retained parser directory")
+            return
+        try:
+            if path.is_symlink():
+                raise CustodyError("retained probes path must not be a symlink")
+            # O_NOFOLLOW prevents a replacement race from turning this into a write
+            # through a symlink.  If a previous parser or test changed the file,
+            # refresh it only after rejecting links and checking the private directory.
+            flags = os.O_WRONLY | os.O_CREAT | os.O_TRUNC | os.O_CLOEXEC | os.O_NOFOLLOW
+            fd = os.open(path, flags, 0o600)
+            try:
+                written = 0
+                while written < len(raw):
+                    written += os.write(fd, raw[written:])
+                os.fsync(fd)
+            finally:
+                os.close(fd)
+            if read_file_bytes(path) != raw:
+                raise CustodyError("retained probes bytes changed while materializing")
+        except OSError as exc:
+            raise CustodyError(f"cannot materialize retained probes: {exc}") from exc
 
     def evidence_log(self) -> Any:
         """Return a fresh parser object over the same retained immutable bytes.
@@ -427,11 +490,29 @@ class ConsumedRun:
 
         from semabi.compiler.v4.frozen_evidence import from_bytes
 
-        return from_bytes(
-            self.files["observations.jsonl"],
-            self.files["steps.jsonl"],
-            run_dir=self.path,
-        )
+        with self._lock:
+            root = self._private_run_dir()
+            self._materialize_probes(root)
+            return from_bytes(
+                self.files["observations.jsonl"],
+                self.files["steps.jsonl"],
+                run_dir=root,
+            )
+
+    def close(self) -> None:
+        """Release the parser-only temporary directory owned by this consumed role."""
+
+        with self._lock:
+            if self._tempdir is not None:
+                tempdir, self._tempdir = self._tempdir, None
+                tempdir.cleanup()
+
+    def __del__(self) -> None:
+        # Destructors must never mask the exception that triggered collection.
+        try:
+            self.close()
+        except Exception:
+            pass
 
 
 def parse_refutations(raw: bytes | None) -> dict[str, set[str | None]]:
@@ -459,6 +540,53 @@ def parse_refutations(raw: bytes | None) -> dict[str, set[str | None]]:
             raise CustodyError("identity refutation key_slot must be a string or null")
         out.setdefault(family, set()).add(key_slot)
     return out
+
+
+def _validate_probe_bytes(raw: bytes | None) -> None:
+    """Eagerly validate the JSONL shape consumed by V2's probe reader.
+
+    Probes are optional, but when retained they are compiler inputs.  Checking the
+    exact bytes at the consumption boundary prevents a later parser from silently
+    reopening or accepting a malformed mutable file.
+    """
+
+    if raw is None:
+        return
+    try:
+        lines = raw.decode("utf-8").splitlines()
+    except UnicodeDecodeError as exc:
+        raise CustodyError("probes.jsonl is not valid UTF-8 JSONL") from exc
+    for number, line in enumerate(lines, 1):
+        try:
+            row = json.loads(line)
+        except json.JSONDecodeError as exc:
+            raise CustodyError(f"probes.jsonl record {number} is malformed JSON") from exc
+        key = row.get("key") if isinstance(row, Mapping) else None
+        if not isinstance(row, Mapping) or not isinstance(key, list):
+            raise CustodyError(
+                f"probes.jsonl record {number} must contain a list-valued key"
+            )
+        if any(isinstance(item, (dict, list, set)) for item in key):
+            raise CustodyError(
+                f"probes.jsonl record {number} key values must be scalar"
+            )
+        for field_name in ("sensing_steps", "sensing_actions"):
+            value = row.get(field_name)
+            if value is not None and not isinstance(value, list):
+                raise CustodyError(
+                    f"probes.jsonl record {number} {field_name} must be a list"
+                )
+            if field_name == "sensing_actions" and value is not None:
+                for action in value:
+                    if not isinstance(action, Mapping) or not isinstance(action.get("key"), list):
+                        raise CustodyError(
+                            f"probes.jsonl record {number} sensing action is malformed"
+                        )
+            if field_name == "sensing_steps" and value is not None:
+                if any(isinstance(step, bool) or not isinstance(step, int) for step in value):
+                    raise CustodyError(
+                        f"probes.jsonl record {number} sensing step numbers are malformed"
+                    )
 
 
 def _actual_root(root: Path) -> Path:
@@ -597,13 +725,22 @@ def consume_snapshot(
     finally:
         os.close(path_fd)
 
+    consumed: ConsumedRun | None = None
     try:
+        _validate_probe_bytes(retained.get("probes.jsonl"))
         consumed = ConsumedRun(resolved, validated, MappingProxyType(retained))
         # Parse once at the boundary as an eager structural check.  Replay constructs a
         # fresh parser object per candidate through ``evidence_log``.
         consumed.evidence_log()
+    except CustodyError:
+        if consumed is not None:
+            consumed.close()
+        raise
     except (KeyError, TypeError, ValueError) as exc:
+        if consumed is not None:
+            consumed.close()
         raise CustodyError(f"retained compiler evidence is malformed: {exc}") from exc
+    assert consumed is not None
     return consumed
 
 

@@ -6,21 +6,23 @@ decide a transfer comparison.  Contradiction is what eliminates; silence proves 
 and where the comparison history says nothing about the difference, the ambiguity is kept.
 """
 from itertools import permutations
+from fractions import Fraction
 from types import SimpleNamespace
 
 import pytest
 
-from semabi.compiler.v4 import pinned
+from semabi.compiler.v4 import pinned, transfer
 from semabi.compiler.v4.transfer import TransferEvidence, classify, decide, differential
 from semabi.compiler.v4.transfer import all_pairs_frontier
 
 
-def _ev(name, verdicts, *, complexity=10, applicability=1.0):
+def _ev(name, verdicts, *, complexity=10, applicability=1.0, applicability_fraction=None):
     counts = {}
     for v in verdicts.values():
         counts[v] = counts.get(v, 0) + 1
     return TransferEvidence(
         name=name, verdicts=dict(verdicts), complexity=complexity, applicability=applicability,
+        applicability_fraction=applicability_fraction,
         hard_contradictions=counts.get("CONTRADICTION", 0), churn=counts.get("CHURN", 0),
         visibility=counts.get("VISIBILITY", 0), spurious=counts.get("SPURIOUS", 0),
         explained=counts.get("EXPLAINED", 0), silent=counts.get("SILENT", 0))
@@ -276,6 +278,7 @@ def test_transport_coherence_rejects_separation_for_slot_absent_family():
         name="malformed",
         key_slot_summary={family: "cell#9"},
         applicability=0.0,
+        applicability_fraction=Fraction(0, 1),
         transport=pinned.Transport(slot_absent={family: "cell#9"}).to_json(),
         separation=[_sep(family, "cell#9", 0, 10)],
         verdicts={1: "EXPLAINED"},
@@ -291,6 +294,7 @@ def test_transport_coherence_rejects_mismatched_applied_key():
         name="malformed",
         key_slot_summary={family: "cell#0"},
         applicability=1.0,
+        applicability_fraction=Fraction(1, 1),
         transport=pinned.Transport(applied={family: "cell#1"}).to_json(),
         separation=[_sep(family, "cell#1", 10, 10)],
         verdicts={1: "EXPLAINED"},
@@ -351,6 +355,129 @@ def test_asymmetric_applicability_remains_inconclusive_despite_separation():
 
     assert decision.outcome == "INCONCLUSIVE_ASYMMETRIC_APPLICABILITY"
     assert decision.separation_diff.left_better == 1
+
+
+def test_exact_applicability_fraction_survives_report_reconstruction():
+    left = _ev("left", {1: "EXPLAINED"}, applicability=1 / 3,
+                applicability_fraction=Fraction(1, 3))
+    right = _ev("right", {1: "EXPLAINED"}, applicability=333 / 1000,
+                 applicability_fraction=Fraction(333, 1000))
+
+    before = decide(left, right)
+    assert before.outcome == "INCONCLUSIVE_ASYMMETRIC_APPLICABILITY"
+
+    def reconstruct(row):
+        return TransferEvidence(
+            name=row["name"],
+            key_slot_summary=dict(row["key_slots"]),
+            hard_contradictions=row["hard_contradictions"],
+            churn=row["churn"],
+            visibility=row["visibility"],
+            spurious=row["spurious"],
+            explained=row["explained"],
+            silent=row["silent"],
+            complexity=row["complexity"],
+            applicability=row["applicability"],
+            applicability_fraction=dict(row["applicability_fraction"]),
+            transport=dict(row["transport"]),
+            verdicts={int(step): verdict for step, verdict in row.get("verdicts", {}).items()},
+            separation=list(row["separation"]),
+        )
+
+    left_report = left.to_json()
+    right_report = right.to_json()
+    left_report["verdicts"] = {str(step): verdict for step, verdict in left.verdicts.items()}
+    right_report["verdicts"] = {str(step): verdict for step, verdict in right.verdicts.items()}
+    after = decide(reconstruct(left_report), reconstruct(right_report))
+    assert after.outcome == before.outcome
+
+
+def test_current_production_report_reconstructs_canonical_applicability_fraction():
+    """A runner-style report must retain the exact fraction from Transport."""
+    behaviour = SimpleNamespace(
+        contradictions=0,
+        churn=0,
+        visibility=0,
+        spurious=0,
+        explained=1,
+        unexplained=0,
+        complexity=3,
+        verdicts={1: "EXPLAINED"},
+    )
+    transport = pinned.Transport(
+        applied={"row[_]": "cell#0"},
+        slot_absent={"family_b": "cell#0", "family_c": "cell#0"},
+    )
+    hypotheses = SimpleNamespace(units={
+        "row[]": SimpleNamespace(
+            instances=[
+                SimpleNamespace(sig="s", template="row[]", root=1,
+                                 slots={"cell#0": "a"}),
+                SimpleNamespace(sig="s", template="row[]", root=2,
+                                 slots={"cell#0": "b"}),
+            ]
+        )
+    })
+    reading = pinned.PinnedReading({
+        "row[_]": pinned.FamilyReading("row[_]", "cell#0"),
+    })
+    evidence = transfer.from_behaviour(
+        "production",
+        behaviour,
+        transport,
+        {"row[_]": "cell#0", "family_b": "cell#0", "family_c": "cell#0"},
+        pinned.separation(hypotheses, reading, transport),
+    )
+
+    report = evidence.to_json()
+    report["verdicts"] = {str(step): verdict for step, verdict in evidence.verdicts.items()}
+    reconstructed = TransferEvidence(
+        name=report["name"],
+        key_slot_summary=dict(report["key_slots"]),
+        hard_contradictions=report["hard_contradictions"],
+        churn=report["churn"],
+        visibility=report["visibility"],
+        spurious=report["spurious"],
+        explained=report["explained"],
+        silent=report["silent"],
+        complexity=report["complexity"],
+        applicability=report["applicability"],
+        applicability_fraction=dict(report["applicability_fraction"]),
+        transport=dict(report["transport"]),
+        verdicts={int(step): verdict for step, verdict in report["verdicts"].items()},
+        separation=list(report["separation"]),
+    )
+
+    assert report["applicability_fraction"] == {"numerator": 1, "denominator": 3}
+    assert reconstructed.to_json() == {
+        key: value for key, value in report.items() if key != "verdicts"
+    }
+
+
+@pytest.mark.parametrize(
+    "fraction",
+    [
+        {"numerator": 2, "denominator": 6},
+        {"numerator": 1, "denominator": 0},
+        {"numerator": True, "denominator": 1},
+    ],
+)
+def test_malformed_production_applicability_fraction_is_rejected(fraction):
+    family = "row[_]"
+    transport = pinned.Transport(applied={family: "cell#0"}).to_json()
+    transport["applicability_fraction"] = fraction
+    evidence = TransferEvidence(
+        name="malformed",
+        key_slot_summary={family: "cell#0"},
+        applicability=1.0,
+        applicability_fraction=Fraction(1, 1),
+        transport=transport,
+        separation=[_sep(family, "cell#0", 1, 1)],
+        verdicts={1: "EXPLAINED"},
+    )
+
+    with pytest.raises(ValueError):
+        decide(evidence, _ev("other", {1: "EXPLAINED"}))
 
 
 def test_contradiction_remains_higher_priority_than_separation():

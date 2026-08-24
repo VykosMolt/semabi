@@ -3,7 +3,8 @@ import ast
 import re
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1] / "semabi"
+REPO = Path(__file__).resolve().parents[1]
+ROOT = REPO / "semabi"
 FORBIDDEN = ("semabi.hidden", "semabi.env", "semabi.eval", "semabi.baselines")
 
 
@@ -17,6 +18,7 @@ def compiler_files():
     # browser and must be inside it too: V4's probe runner executes experiments against a
     # live application and would be the natural place for hidden state to leak in.
     runners = [
+        REPO / "scripts" / "v4_freeze_source_candidates.py",
         ROOT / "run_v2_refine.py",
         ROOT / "run_v2_validate.py",
         ROOT / "run_v4_probe.py",
@@ -60,6 +62,14 @@ def test_compiler_never_reads_oracle_annotations():
         assert "data-eid" not in text and "data-erefs" not in text and "data-oid" not in text, f.name
         assert "oracle.jsonl" not in text, f.name
         assert "hidden_domain.json" not in text, f.name
+
+
+def test_every_v4_execution_entrypoint_is_inside_the_forbidden_input_scan():
+    from semabi.compiler.v4 import manifests
+
+    scanned = {path.resolve() for path in compiler_files()}
+    for relative in (*manifests.GENERATOR_ENTRYPOINTS, *manifests.REPLAY_ENTRYPOINTS):
+        assert (REPO / relative).resolve() in scanned, relative
 
 
 def test_v4_closure_is_local_and_includes_function_local_compiler_modules():

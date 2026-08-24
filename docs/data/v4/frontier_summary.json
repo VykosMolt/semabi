@@ -13,7 +13,7 @@
  "applications": {
   "blend_book": {
    "report": "docs/data/v4/frontier_blend_book.json",
-      "report_sha256": "aad633a1d226d7d802b284628d4fe3cc61874446197bb46d0b3e649f4b998f41",
+      "report_sha256": "c8b956bd3203167bcefa46526a43d9c045e69bda7a8a464d9578c031ca7d8eb0",
    "source_choice_rejected": true,
    "transfer_outcome": "AMBIGUOUS_SURVIVOR_SET",
    "survivors": [
@@ -28,13 +28,13 @@
    ],
    "holdout_outcome": "AMBIGUOUS_SURVIVOR_SET",
    "holdout_classifications": {
-    "cell[_]=cell#0": "CONFIRMED_WHERE_APPLICABLE_PARTIAL_COVERAGE",
-    "promote cell[_]=cell#0": "PARTIALLY_CONTRADICTED"
+        "cell[_]=cell#0": "INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE",
+        "promote cell[_]=cell#0": "INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE"
    }
   },
   "harbour": {
    "report": "docs/data/v4/frontier_harbour.json",
-      "report_sha256": "68985ed3d26b5482d084d795d600825cfc9b0c9065a1ac8718f8a17a300056eb",
+      "report_sha256": "c2e7ef0a8cb5e892fbf9c9c150fd903b894842a7b409f20b902cbf2db0b12178",
    "source_choice_rejected": true,
    "transfer_outcome": "AMBIGUOUS_SURVIVOR_SET",
    "survivors": [
@@ -53,14 +53,14 @@
    ],
    "holdout_outcome": "AMBIGUOUS_SURVIVOR_SET",
    "holdout_classifications": {
-    "promote cell[_]=cell#0": "PARTIALLY_CONTRADICTED",
-    "row[_](cell[_](button[_]=cell#0": "PARTIALLY_CONTRADICTED",
-    "row[_](cell[_],cell[_](b=cell#0": "PARTIALLY_CONTRADICTED"
+        "promote cell[_]=cell#0": "INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE",
+        "row[_](cell[_](button[_]=cell#0": "INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE",
+        "row[_](cell[_],cell[_](b=cell#0": "INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE"
    }
   },
   "vet_clinic": {
    "report": "docs/data/v4/frontier_vet_clinic.json",
-      "report_sha256": "8ed7d18be204b98af47e67a19eff483b479032ce858104a8123bd772a88961e6",
+      "report_sha256": "cf7b5fa6bdddc2936854f0bc6606cbef5a1240c01227cf16087e707ba8202a5b",
    "source_choice_rejected": true,
    "transfer_outcome": "AMBIGUOUS_SURVIVOR_SET",
    "survivors": [
@@ -76,8 +76,8 @@
    "holdout_outcome": "AMBIGUOUS_SURVIVOR_SET",
    "holdout_pairwise_frontier": "AMBIGUOUS_SURVIVOR_SET",
    "holdout_classifications": {
-    "promote cell[_]=cell#0": "PARTIALLY_CONTRADICTED",
-    "row[_](cell[_])=None": "PARTIALLY_CONTRADICTED"
+        "promote cell[_]=cell#0": "INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE",
+        "row[_](cell[_])=None": "INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE"
    }
   }
  },

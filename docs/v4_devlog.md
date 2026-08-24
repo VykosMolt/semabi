@@ -359,15 +359,23 @@ serialized as refuted, executed modules and consumed bytes were not fully bound,
 distinctness included unconsumed bytes, and HOLDOUT labels overstated partial coverage. The
 candidate and exact rejection are retained at `98db1bd` and `5f229f3`.
 
+The first descriptor-bound integrity repair at `72e6819` also reproduced every current report
+byte-for-byte and passed its independent mechanical verifier, but adversarial review rejected
+it. Frozen replay still reopened live `probes.jsonl`; SOURCE promotions could bypass exact
+refutations; chain replay reopened the source manifest after authenticating it; alternative
+status/discrimination metadata was copied from the incumbent; HOLDOUT could overstate PARTIAL
+identity evidence; applicability reconstruction relied on rounded decimals; and the SOURCE
+generator was outside the evaluator-file scan. The exact rejection is retained at `e894cac`.
+
 The current repair authenticates a frozen SOURCE candidate manifest, decides every unordered
 TRANSFER pair once, and retains the zero-loss frontier. It emits a selection only for exactly
 one survivor. Its current results, pending independent review, are:
 
 | application | SOURCE incumbent | undefeated TRANSFER frontier | HOLDOUT |
 |---|---|---|---|
-| `vet_clinic` | rejected | promoted-cell reading plus `row[_](cell[_])=None` | both individually partially contradicted; HOLDOUT pair remains applicability-inconclusive |
-| `harbour` | rejected | promoted-cell reading plus both row-key variants | all three individually partially contradicted; pairwise frontier remains three-way ambiguous |
-| `blend_book` | rejected | `cell[_]=cell#0` plus promoted-cell reading | first confirmed only where applicable under partial coverage, second partially contradicted; pair remains applicability-inconclusive |
+| `vet_clinic` | rejected | promoted-cell reading plus `row[_](cell[_])=None` | both inconclusive on partial identity evidence; HOLDOUT pair remains applicability-inconclusive |
+| `harbour` | rejected | promoted-cell reading plus both row-key variants | all three inconclusive on partial identity evidence; pairwise frontier remains three-way ambiguous |
+| `blend_book` | rejected | `cell[_]=cell#0` plus promoted-cell reading | both inconclusive on partial identity evidence; pair remains applicability-inconclusive |
 
 The promoted-cell controls survive because the histories do not put them to the same test as
 their rivals: applicability is 0.83 versus 1.00 on vet_clinic, 0.60 versus 1.00 on harbour,
@@ -399,9 +407,11 @@ them would be post-transfer refitting.
 
 The nine role histories are retained as exact raw inputs rather than mutable ignored paths.
 Compiler snapshots bind observations, steps, probes, and the one existing SOURCE refutation
-sidecar. Distinctness is decided only from observations and steps. Replay opens confined paths
-through no-follow descriptors, consumes each role once into immutable bytes, and builds an
-isolated in-memory parser object for every candidate. A separate `EVALUATOR_ONLY` manifest
+sidecar. Distinctness is decided from observations, steps, and probes when present, but never
+from file modes or the SOURCE-only refutation sidecar. Replay opens confined paths through
+no-follow descriptors, consumes each role once into immutable bytes, and builds an isolated
+parser object for every candidate; the frozen V2 probe reader sees only a private file
+materialized from retained probe bytes, never the live role. A separate `EVALUATOR_ONLY` manifest
 binds hidden-domain and oracle bytes; those names never enter compiler modules or the transfer
 runner. Source and chain manifests bind the exact Python runtime plus deterministic transitive
 local-import closures derived from the loaded checkout; an alternate `--repo-root` is rejected.

@@ -22,6 +22,7 @@ from __future__ import annotations
 from collections import Counter
 from dataclasses import dataclass, field
 from itertools import combinations
+from fractions import Fraction
 import math
 import re
 from typing import Any
@@ -31,6 +32,58 @@ WRONG = ("CONTRADICTION", "CHURN", "VISIBILITY", "SPURIOUS")
 RIGHT = ("EXPLAINED",)
 QUIET = ("SILENT", "NOTHING")
 SEPARATION_STATUSES = ("UNTESTED", "REFUTED", "PARTIAL", "CONFIRMED")
+APPLICABILITY_FRACTION_FIELDS = {"numerator", "denominator"}
+
+
+def _fraction_payload(value: Fraction) -> dict[str, int]:
+    """Serialize a reduced non-negative Fraction in the canonical report shape."""
+    return {"numerator": value.numerator, "denominator": value.denominator}
+
+
+def _parse_fraction(value: Any, label: str, *, require_canonical: bool = True) -> Fraction:
+    """Parse and validate an exact non-negative fraction from Python or report JSON."""
+    if isinstance(value, Fraction):
+        fraction = value
+        raw_numerator, raw_denominator = fraction.numerator, fraction.denominator
+    elif isinstance(value, dict):
+        if set(value) != APPLICABILITY_FRACTION_FIELDS:
+            raise ValueError(
+                f"{label} must contain exactly numerator and denominator")
+        raw_numerator = value["numerator"]
+        raw_denominator = value["denominator"]
+        if type(raw_numerator) is not int or type(raw_denominator) is not int:
+            raise ValueError(f"{label} numerator and denominator must be exact integers")
+        if raw_denominator <= 0:
+            raise ValueError(f"{label} denominator must be positive")
+        fraction = Fraction(raw_numerator, raw_denominator)
+    elif isinstance(value, (tuple, list)) and len(value) == 2:
+        raw_numerator, raw_denominator = value
+        if type(raw_numerator) is not int or type(raw_denominator) is not int:
+            raise ValueError(f"{label} numerator and denominator must be exact integers")
+        if raw_denominator <= 0:
+            raise ValueError(f"{label} denominator must be positive")
+        fraction = Fraction(raw_numerator, raw_denominator)
+    else:
+        raise ValueError(f"{label} must be a numerator/denominator object")
+
+    if fraction < 0 or fraction > 1:
+        raise ValueError(f"{label} must be in [0, 1]")
+    if require_canonical and (
+        raw_numerator != fraction.numerator or raw_denominator != fraction.denominator
+    ):
+        raise ValueError(f"{label} must be reduced with a positive denominator")
+    return fraction
+
+
+def _safe_synthetic_fraction(value: Any, label: str) -> Fraction:
+    """Give legacy hand-built rule fixtures a deterministic exact fallback."""
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        raise ValueError(f"{label} must be finite numeric")
+    if not math.isfinite(float(value)):
+        raise ValueError(f"{label} must be finite numeric")
+    # A bounded denominator recovers intended simple ratios such as 1/3 from their
+    # display float while keeping old synthetic decimal fixtures (0.6, 0.8) exact.
+    return Fraction(str(float(value))).limit_denominator(1000)
 
 
 @dataclass
@@ -46,6 +99,7 @@ class TransferEvidence:
     silent: int = 0
     complexity: int = 0
     applicability: float = 0.0
+    applicability_fraction: Any = None
     transport: dict[str, Any] = field(default_factory=dict)
     verdicts: dict[int, str] = field(default_factory=dict)
     separation: list[dict] = field(default_factory=list)
@@ -78,12 +132,15 @@ class TransferEvidence:
     def to_json(self) -> dict[str, Any]:
         _validate_separation_records(self)
         _validate_transfer_coherence(self)
+        fraction = _evidence_applicability_fraction(self)
         return {"name": self.name, "key_slots": self.key_slot_summary,
                 "hard_contradictions": self.hard_contradictions, "churn": self.churn,
                 "visibility": self.visibility, "spurious": self.spurious,
                 "explained": self.explained, "silent": self.silent,
                 "errors": self.errors, "complexity": self.complexity,
-                "applicability": round(self.applicability, 3), "transport": self.transport,
+                "applicability": round(float(fraction), 3),
+                "applicability_fraction": _fraction_payload(fraction),
+                "transport": self.transport,
                 "separation": self.separation,
                 "separation_confirmed": self.separation_confirmed,
                 "separation_refuted": self.separation_refuted,
@@ -108,6 +165,7 @@ def from_behaviour(name: str, behaviour, transport, key_slots: dict[str, str | N
         explained=behaviour.explained, silent=behaviour.unexplained,
         complexity=behaviour.complexity,
         applicability=transport.applicability,
+        applicability_fraction=transport.applicability_fraction,
         transport=serialized_transport,
         verdicts=dict(behaviour.verdicts))
     # from_behaviour is the production evidence boundary.  Validate it before returning so
@@ -115,6 +173,17 @@ def from_behaviour(name: str, behaviour, transport, key_slots: dict[str, str | N
     _validate_separation_records(evidence)
     _validate_transfer_coherence(evidence)
     return evidence
+
+
+def _evidence_applicability_fraction(evidence: TransferEvidence) -> Fraction:
+    """Return the exact applicability used by all decision comparisons."""
+    if evidence.applicability_fraction is not None:
+        return _parse_fraction(evidence.applicability_fraction,
+                               f"{evidence.name!r} applicability_fraction")
+    if evidence.transport == {}:
+        return _safe_synthetic_fraction(evidence.applicability,
+                                         f"{evidence.name!r} applicability")
+    raise ValueError(f"{evidence.name!r}: production evidence requires applicability_fraction")
 
 
 def _validate_separation_records(evidence: TransferEvidence) -> None:
@@ -210,7 +279,7 @@ def _validate_transfer_coherence(evidence: TransferEvidence) -> None:
 
     expected_transport_fields = {
         "applied", "slot_absent", "absent_in_transfer", "unseen_in_source",
-        "promoted_applied", "promoted_absent", "applicability",
+        "promoted_applied", "promoted_absent", "applicability", "applicability_fraction",
     }
     if set(evidence.transport) != expected_transport_fields:
         raise ValueError(
@@ -302,12 +371,30 @@ def _validate_transfer_coherence(evidence: TransferEvidence) -> None:
     if float(serialized_applicability) != expected_applicability:
         raise ValueError(
             f"{evidence.name!r}: transport applicability does not match claim arithmetic")
+    expected_fraction = Fraction(len(applied_families), claimed_count or 1)
+    serialized_fraction = _parse_fraction(
+        evidence.transport["applicability_fraction"],
+        f"{evidence.name!r} transport applicability_fraction",
+    )
+    if serialized_fraction != expected_fraction:
+        raise ValueError(
+            f"{evidence.name!r}: transport applicability_fraction does not match "
+            "claim arithmetic")
+    evidence_fraction = _evidence_applicability_fraction(evidence)
+    if evidence_fraction != expected_fraction:
+        raise ValueError(
+            f"{evidence.name!r}: evidence applicability_fraction does not match "
+            "claim arithmetic")
     if (isinstance(evidence.applicability, bool)
             or not isinstance(evidence.applicability, (int, float))
             or not math.isfinite(float(evidence.applicability))
             or round(float(evidence.applicability), 3) != expected_applicability):
         raise ValueError(
-            f"{evidence.name!r}: evidence applicability does not match serialized transport")
+            f"{evidence.name!r}: evidence applicability display does not match "
+            "claim arithmetic")
+    if round(float(evidence_fraction), 3) != expected_applicability:
+        raise ValueError(
+            f"{evidence.name!r}: evidence applicability display does not match exact fraction")
 
     expected_separation = {
         family for family, key in applied.items() if key is not None
@@ -580,7 +667,9 @@ def decide(left: TransferEvidence, right: TransferEvidence) -> Decision:
     _validate_separation_records(right)
     diff = differential(left, right)
     separation_diff = separation_differential(left, right)
-    if left.applicability == 0.0 and right.applicability == 0.0:
+    left_applicability = _evidence_applicability_fraction(left)
+    right_applicability = _evidence_applicability_fraction(right)
+    if left_applicability == 0 and right_applicability == 0:
         return Decision("INCONCLUSIVE_NOT_APPLICABLE",
                         "neither reading could be instantiated on this history", left, right, diff,
                         separation_diff)
@@ -599,13 +688,13 @@ def decide(left: TransferEvidence, right: TransferEvidence) -> Decision:
                                 f"{min(left.separation_refuted, right.separation_refuted)} of this "
                                 f"one: a named value that separates none of the instances it "
                                 f"names is not naming them", left, right, diff, separation_diff)
-    if left.applicability != right.applicability:
-        weaker, stronger = (("left", "right") if left.applicability < right.applicability
+    if left_applicability != right_applicability:
+        weaker, stronger = (("left", "right") if left_applicability < right_applicability
                             else ("right", "left"))
         return Decision("INCONCLUSIVE_ASYMMETRIC_APPLICABILITY",
                         f"the {weaker} reading could be instantiated on "
-                        f"{min(left.applicability, right.applicability):.2f} of its claims here "
-                        f"against {max(left.applicability, right.applicability):.2f} for the "
+                        f"{float(min(left_applicability, right_applicability)):.2f} of its claims here "
+                        f"against {float(max(left_applicability, right_applicability)):.2f} for the "
                         f"{stronger} one, so this history did not put them to the same test",
                         left, right, diff, separation_diff)
 

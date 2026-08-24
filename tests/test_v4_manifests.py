@@ -38,6 +38,29 @@ def _run(path: Path, marker: str, *, optional: bool = False) -> Path:
     return path
 
 
+def _consumable_run(path: Path, marker: str, *, probes: str | None = None) -> Path:
+    """Create the smallest valid retained parser input for custody tests."""
+
+    path.mkdir(parents=True, exist_ok=True)
+    observation = {"url": "", "nodes": []}
+    (path / "observations.jsonl").write_text(
+        json.dumps({"sig": marker, "obs": observation}) + "\n"
+    )
+    (path / "steps.jsonl").write_text(json.dumps({
+        "step": 0,
+        "episode": 0,
+        "action": {"kind": "reload", "target": None, "text": None, "target_desc": None},
+        "ok": True,
+        "error": None,
+        "before": marker,
+        "after": marker,
+        "typed_tokens": [],
+    }) + "\n")
+    if probes is not None:
+        (path / "probes.jsonl").write_text(probes)
+    return path
+
+
 def _reading(source: Path, name: str = "source_choice") -> PinnedReading:
     family = "row[_]"
     return PinnedReading(
@@ -75,6 +98,66 @@ def test_compiler_snapshot_is_canonical_and_role_bound(tmp_path):
     assert source["files"] == sorted(source["files"], key=lambda row: row["path"])
     assert source["content_tree_sha256"] == transfer["content_tree_sha256"]
     assert source["role_bound_sha256"] != transfer["role_bound_sha256"]
+
+
+def test_consumed_digest_includes_probes_but_not_modes_or_refutation_sidecar(tmp_path):
+    base = _run(tmp_path / "base", "same")
+    with_probe = _run(tmp_path / "with-probe", "same")
+    (with_probe / "probes.jsonl").write_text(
+        '{"key":["click","button","x"],"status":"VIEW"}\n'
+    )
+    with_sidecar = _run(tmp_path / "with-sidecar", "same")
+    (with_sidecar / "identity_refutations_v4.json").write_text(
+        '{"refuted":[{"family":"row[_]","key_slot":"cell#0"}]}\n'
+    )
+    base_snapshot = custody.snapshot_run(base, "SOURCE")
+    probe_snapshot = custody.snapshot_run(with_probe, "SOURCE")
+    sidecar_snapshot = custody.snapshot_run(with_sidecar, "SOURCE")
+    assert base_snapshot["consumed_evidence_sha256"] != probe_snapshot[
+        "consumed_evidence_sha256"
+    ]
+    assert base_snapshot["consumed_evidence_sha256"] == sidecar_snapshot[
+        "consumed_evidence_sha256"
+    ]
+    (base / "observations.jsonl").chmod(0o600)
+    mode_snapshot = custody.snapshot_run(base, "SOURCE")
+    assert mode_snapshot["consumed_evidence_sha256"] == base_snapshot[
+        "consumed_evidence_sha256"
+    ]
+
+
+def test_consumed_run_retains_probe_bytes_outside_live_role(tmp_path):
+    repo = tmp_path / "repo"
+    role = _consumable_run(
+        repo / "role",
+        "original",
+        probes='{"key":["click","button","x"],"status":"VIEW"}\n',
+    )
+    snapshot = custody.snapshot_run(role, "TRANSFER")
+    consumed = custody.consume_snapshot(role, snapshot, repo_root=repo)
+    try:
+        first = consumed.evidence_log()
+        retained_path = Path(first.dir) / "probes.jsonl"
+        assert Path(first.dir).resolve() != role.resolve()
+        assert retained_path.read_bytes() == (role / "probes.jsonl").read_bytes()
+        (role / "probes.jsonl").write_text("not-json\n")
+        (role / "probes.jsonl").unlink()
+        second = consumed.evidence_log()
+        assert Path(second.dir).resolve() == retained_path.parent.resolve()
+        assert retained_path.read_bytes() == (
+            b'{"key":["click","button","x"],"status":"VIEW"}\n'
+        )
+    finally:
+        consumed.close()
+    assert not retained_path.parent.exists()
+
+
+def test_malformed_probe_bytes_fail_at_consumption(tmp_path):
+    repo = tmp_path / "repo"
+    role = _consumable_run(repo / "role", "bad", probes="not-json\n")
+    snapshot = custody.snapshot_run(role, "TRANSFER")
+    with pytest.raises(custody.CustodyError, match="probes.jsonl"):
+        custody.consume_snapshot(role, snapshot, repo_root=repo)
 
 
 def test_compiler_snapshot_ignores_outputs_but_rejects_named_input_symlink(tmp_path):
@@ -126,6 +209,57 @@ def test_source_manifest_binds_the_explicit_incumbent(tmp_path):
 
     with pytest.raises(manifests.ManifestError, match="incumbent"):
         manifests.load_source_manifest(manifest, repo_root=Path(__file__).resolve().parents[1])
+
+
+def _two_candidate_payload(tmp_path: Path):
+    source = _run(tmp_path / "source", "source")
+    incumbent = _reading(source)
+    alternative = incumbent.variant(
+        "row[_]", "cell#1", "alternative", status="SUPPORTED", discrimination=0.5
+    )
+    summary = {
+        "local_final": {},
+        "families": {"row[_]": 1},
+        "open_questions": [],
+        "alternatives_generated": [{
+            "candidate": "alternative",
+            "family": "row[_]",
+            "alternative": "cell#1",
+            "status": "SUPPORTED",
+            "discrimination": 0.5,
+        }],
+    }
+    output = tmp_path / "source_manifest.json"
+    payload = manifests.build_source_manifest(
+        source,
+        [incumbent, alternative],
+        summary,
+        output,
+        repo_root=ROOT,
+    )
+    manifests.save_source_manifest(payload, output, repo_root=ROOT)
+    return source, output, payload
+
+
+def test_source_manifest_rejects_active_refutation_conflict(tmp_path):
+    _source, manifest, _payload = _source_manifest(tmp_path)
+    bad = json.loads(manifest.read_text())
+    bad["candidates"][0]["reading"]["refuted"] = {"row[_]": ["cell#0"]}
+    with pytest.raises(manifests.ManifestError, match="refuted family key"):
+        manifests.save_source_manifest(bad, manifest, repo_root=ROOT)
+
+
+def test_source_summary_candidate_provenance_is_exact(tmp_path):
+    _source, manifest, _payload = _two_candidate_payload(tmp_path)
+    bad = json.loads(manifest.read_text())
+    bad["source_summary"]["alternatives_generated"][0]["discrimination"] = 1.0
+    with pytest.raises(manifests.ManifestError, match="discrimination"):
+        manifests.save_source_manifest(bad, manifest, repo_root=ROOT)
+
+    bad = json.loads(manifest.read_text())
+    bad["source_summary"]["alternatives_generated"][0]["candidate"] = "missing"
+    with pytest.raises(manifests.ManifestError, match="absent from the manifest"):
+        manifests.save_source_manifest(bad, manifest, repo_root=ROOT)
 
 
 def test_full_reading_hash_binds_non_decision_fields(tmp_path):
@@ -180,6 +314,43 @@ def test_chain_loader_binds_source_reference_and_distinct_role_content(tmp_path)
     (holdout / "steps.jsonl").write_text("changed\n")
     with pytest.raises((custody.CustodyError, manifests.ManifestError)):
         manifests.load_chain_manifest(chain_path, repo_root=Path(__file__).resolve().parents[1])
+
+
+def test_loaded_manifests_retain_one_authenticated_byte_object(tmp_path, monkeypatch):
+    source, source_manifest, _ = _source_manifest(tmp_path)
+    transfer = _run(tmp_path / "transfer", "transfer")
+    holdout = _run(tmp_path / "holdout", "holdout")
+    chain_path = tmp_path / "chain.json"
+    payload = manifests.build_chain_manifest(
+        source_manifest, transfer, holdout, chain_path,
+        repo_root=Path(__file__).resolve().parents[1],
+    )
+    manifests.save_chain_manifest(payload, chain_path)
+    source_bytes = source_manifest.read_bytes()
+    chain_bytes = chain_path.read_bytes()
+    calls: list[Path] = []
+    real_read = custody.read_file_bytes
+
+    def read_once(path: Path) -> bytes:
+        resolved = Path(path).resolve()
+        calls.append(resolved)
+        raw = real_read(path)
+        if resolved == source_manifest.resolve() and calls.count(resolved) == 1:
+            # A later path read would see this malformed replacement.  The loader
+            # must continue from the authenticated bytes it already retained.
+            source_manifest.write_text("{}\n")
+        return raw
+
+    monkeypatch.setattr(custody, "read_file_bytes", read_once)
+    loaded = manifests.load_chain_manifest(
+        chain_path, repo_root=Path(__file__).resolve().parents[1]
+    )
+    assert loaded.manifest_bytes == chain_bytes
+    assert loaded.manifest_sha256 == custody.sha256_bytes(chain_bytes)
+    assert loaded.source_manifest.manifest_bytes == source_bytes
+    assert loaded.source_manifest.manifest_sha256 == custody.sha256_bytes(source_bytes)
+    assert calls.count(chain_path.resolve()) == 1
+    assert calls.count(source_manifest.resolve()) == 1
 
 
 def test_chain_rejects_same_content_under_different_roles(tmp_path):
@@ -273,8 +444,10 @@ def test_role_distinctness_uses_consumed_evidence_not_ancillary_bytes(tmp_path):
     source, source_manifest, _ = _source_manifest(tmp_path)
     transfer = _run(tmp_path / "transfer", "same")
     holdout = _run(tmp_path / "holdout", "same")
-    # Keep observations/steps byte-identical while varying only the optional sidecar.
-    (holdout / "probes.jsonl").write_text('{"ancillary":"different"}\n')
+    # Keep observations/steps byte-identical while varying only the refutation-only
+    # sidecar.  ``probes.jsonl`` is compiler evidence and therefore does establish
+    # consumed-evidence identity when present.
+    (holdout / "identity_refutations_v4.json").write_text('{"refuted": []}\n')
     for name in ("observations.jsonl", "steps.jsonl"):
         (holdout / name).write_bytes((transfer / name).read_bytes())
     with pytest.raises(manifests.ManifestError, match="consumed evidence"):
@@ -291,3 +464,18 @@ def test_source_runtime_binding_is_verified(tmp_path):
     manifest.write_text(json.dumps(bad))
     with pytest.raises(manifests.ManifestError, match="runtime"):
         manifests.load_source_manifest(manifest, repo_root=Path(__file__).resolve().parents[1])
+
+
+def test_execution_closures_bind_local_packages_and_current_runtime():
+    for closure in (manifests.GENERATOR_IMPLEMENTATION_FILES, manifests.REPLAY_IMPLEMENTATION_FILES):
+        assert "semabi/compiler/grounder.py" in closure
+        assert "semabi/compiler/mentions.py" in closure
+        assert "semabi/__init__.py" in closure
+        assert "semabi/compiler/__init__.py" in closure
+        assert "semabi/compiler/v4/__init__.py" in closure
+        assert all(Path(name).is_relative_to(Path("semabi")) or name.startswith("scripts/")
+                   for name in closure)
+    assert manifests.runtime_binding() == {
+        "implementation": manifests.platform.python_implementation(),
+        "version": ".".join(str(x) for x in manifests.sys.version_info[:3]),
+    }

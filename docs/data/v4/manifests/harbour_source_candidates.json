@@ -43,7 +43,7 @@
   },
   {
    "fingerprint": "f42d60b42e65461b",
-   "full_reading_sha256": "a44ffbc2001092713209c0541a6b4a22f1e16e14d7c2a3a8aea580b68dcb3448",
+   "full_reading_sha256": "c79a9e9fd6d74fd2d8df25f476248dd8632823a964020e11f0c1f90292bcd21a",
    "name": "promote cell[_]=cell#0",
    "reading": {
     "families": {
@@ -54,10 +54,10 @@
       "status": "SUPPORTED"
      },
      "cell[_]": {
-      "discrimination": null,
+      "discrimination": 0.615,
       "family": "cell[_]",
       "key_slot": "cell#0",
-      "status": "VARIANT"
+      "status": "SUPPORTED"
      },
      "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))": {
       "discrimination": null,
@@ -92,15 +92,15 @@
   },
   {
    "fingerprint": "e163afa037a02cc7",
-   "full_reading_sha256": "b4b33ad8f008fe513e1d154131368f6a2e8960d4e0e1dc0c9ad63a82455e15a3",
+   "full_reading_sha256": "d22c9f9d5a40e9b128545ee8c2a9883910bb187c5ee6e1e6218f674ce5844536",
    "name": "button[_]=None",
    "reading": {
     "families": {
      "button[_]": {
-      "discrimination": 1.0,
+      "discrimination": 0.0,
       "family": "button[_]",
       "key_slot": null,
-      "status": "SUPPORTED"
+      "status": "NO_IDENTITY"
      },
      "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))": {
       "discrimination": null,
@@ -133,7 +133,7 @@
   },
   {
    "fingerprint": "6c5d5c101560ec91",
-   "full_reading_sha256": "43a83f28ddf4be7efa8b7635f75c13936919496fb7f07d3bf7eb5c3dffe68b69",
+   "full_reading_sha256": "9a20116f2adb790bbd766d8d410a7d11cbed19f7df777c5908e109f615b1c67b",
    "name": "group[_](heading[_],tabl=None",
    "reading": {
     "families": {
@@ -147,7 +147,7 @@
       "discrimination": null,
       "family": "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))",
       "key_slot": null,
-      "status": "UNSUPPORTED"
+      "status": "NO_IDENTITY"
      },
      "row[_](cell[_](button[_]),cell[_])": {
       "discrimination": 0.6875,
@@ -174,7 +174,7 @@
   },
   {
    "fingerprint": "b2b717832f125d2f",
-   "full_reading_sha256": "77c069a7d2e107e2d8e1020686e76de8da0f152184ecfc753977e31cd9b0828b",
+   "full_reading_sha256": "7c144c2ac71e7fa09970be16946e8fdafbf38d877f16186beede27f44fc76696",
    "name": "row[_](cell[_](button[_]=cell#0",
    "reading": {
     "families": {
@@ -191,7 +191,7 @@
       "status": "UNSUPPORTED"
      },
      "row[_](cell[_](button[_]),cell[_])": {
-      "discrimination": 0.6875,
+      "discrimination": 1.0,
       "family": "row[_](cell[_](button[_]),cell[_])",
       "key_slot": "cell#0",
       "status": "SUPPORTED"
@@ -215,7 +215,7 @@
   },
   {
    "fingerprint": "69454c53d498c754",
-   "full_reading_sha256": "ac1f267397873b8ed7130a5682dea0581d44e846ea001aacedabe30bb8da49b6",
+   "full_reading_sha256": "cbfd42fd06d34a6a4a6e761925846c4653b36d25bf75ca790657614cb6bde396",
    "name": "row[_](cell[_],cell[_](b=cell#0",
    "reading": {
     "families": {
@@ -238,7 +238,7 @@
       "status": "SUPPORTED"
      },
      "row[_](cell[_],cell[_](button[_]))": {
-      "discrimination": 0.5375,
+      "discrimination": 1.0,
       "family": "row[_](cell[_],cell[_](button[_]))",
       "key_slot": "cell#0",
       "status": "SUPPORTED"
@@ -281,15 +281,15 @@
    "semabi/compiler/v2/score.py": "292ea78f2237e7b86dbbc943d624024ca9213218ead327b88080b71aebaaa95c",
    "semabi/compiler/v2/units.py": "c1a94e811f8259742e65e24d4beea8b869868bec6a2901f5420a96d60d5d7d58",
    "semabi/compiler/v4/__init__.py": "c41acb8afd5f3306718e6b5bb242db1dae876bf512bcec1d6c49108e8fbcc38c",
-   "semabi/compiler/v4/custody.py": "51b7b47082f78c4873a92d31a734efc7940f625fde2a171d053e554d5205547c",
-   "semabi/compiler/v4/frozen_evidence.py": "53be3e92100bf032bd2ded2856a0b6f873171f7220a61a715dee4f00c7efb382",
+   "semabi/compiler/v4/custody.py": "83adb9cd0ea8d285e3250ca1fcfd5c0c3fcfee5263304a63e10f90c87080d8b3",
+   "semabi/compiler/v4/frozen_evidence.py": "603a8c1798e4b18e1f12a37316984eca538e192f432780ee66ead0228ff3ee48",
    "semabi/compiler/v4/identity.py": "4e718dd8b3d2ade2126c31c5e88a3d5d7b91662a08e1a95077f342c030039c05",
-   "semabi/compiler/v4/manifests.py": "994dbd298edb8ac1a3a0090ceaa72be7c01a61cab08ea0582a085b0711639eb5",
+   "semabi/compiler/v4/manifests.py": "8074c853c6f227ff94796a76b27a8dc0c80cc760afae88cee600dae6283392d5",
    "semabi/compiler/v4/objective.py": "4dd902f9bb288e967ae1333f581631e5c6edbd507a841bf45efe569b758fc065",
-   "semabi/compiler/v4/pinned.py": "2ed0a864b517401417590189ec4dd81bd3119649e3fec5a69ca211352e3dcd71",
+   "semabi/compiler/v4/pinned.py": "711305a95c1da238c4b9e4f213fb5f2421bf1757244b10bcbab5b14a83f8ad4d",
    "semabi/compiler/v4/promote.py": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65",
    "semabi/compiler/v4/search.py": "32f3411b29e6a28e25bbfe799787fb171c32fedbb8dc56b6a61a41997506c767",
-   "semabi/compiler/v4/source_candidates.py": "d4aab6f5f6b863912c60d86fb38fff413b4031966e443fa6f5bf667bbea9d734",
+   "semabi/compiler/v4/source_candidates.py": "a56f45d803cbd61e54d0c26740c30f6bee1bf0954a9b06316d3830b1cef98f6e",
    "semabi/relmodel.py": "22ffbfe51a95a2b77307b9a2e0f3ba297dd58b2efd045ce7ab0263602abd74cf"
   },
   "max_candidates": 6
@@ -326,31 +326,37 @@
  "source_summary": {
   "alternatives_generated": [
    {
+    "candidate": "promote cell[_]=cell#0",
     "copresent_pairs": 400,
     "discrimination": 0.615,
     "family": "cell[_]",
-    "promotion": "cell#0"
+    "promotion": "cell#0",
+    "status": "SUPPORTED"
    },
    {
     "alternative": null,
+    "candidate": "button[_]=None",
     "discrimination": 0.0,
     "family": "button[_]",
     "status": "NO_IDENTITY"
    },
    {
     "alternative": null,
+    "candidate": "group[_](heading[_],tabl=None",
     "discrimination": null,
     "family": "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))",
     "status": "NO_IDENTITY"
    },
    {
     "alternative": "cell#0",
+    "candidate": "row[_](cell[_](button[_]=cell#0",
     "discrimination": 1.0,
     "family": "row[_](cell[_](button[_]),cell[_])",
     "status": "SUPPORTED"
    },
    {
     "alternative": "cell#0",
+    "candidate": "row[_](cell[_],cell[_](b=cell#0",
     "discrimination": 1.0,
     "family": "row[_](cell[_],cell[_](button[_]))",
     "status": "SUPPORTED"

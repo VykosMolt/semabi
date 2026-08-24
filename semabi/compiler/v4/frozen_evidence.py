@@ -27,6 +27,21 @@ class RetainedEvidenceLog(EvidenceLog):
         del kwargs
         raise RuntimeError("retained V4 evidence is read-only")
 
+    @classmethod
+    def from_bytes(
+        cls,
+        observations: bytes,
+        steps: bytes,
+        *,
+        run_dir: Path,
+    ) -> "RetainedEvidenceLog":
+        """Construct a read-only parser from one retained byte object."""
+
+        retained = from_bytes(observations, steps, run_dir=run_dir)
+        if not isinstance(retained, cls):
+            raise TypeError("retained evidence class mismatch")
+        return retained
+
 
 def from_bytes(
     observations: bytes,

@@ -59,15 +59,15 @@
   },
   {
    "fingerprint": "47477133d9438fa0",
-   "full_reading_sha256": "587e0299af3657ba3f322b72c8791c76ee9ea747e37f3c055c963aedce9f089d",
+   "full_reading_sha256": "9daf43ae1a0243a31fb70201e828e74a69c61fb6b3df9613cd24335ca0da6c01",
    "name": "promote cell[_]=cell#0",
    "reading": {
     "families": {
      "cell[_]": {
-      "discrimination": 0.0,
+      "discrimination": 0.6525,
       "family": "cell[_]",
       "key_slot": "cell#0",
-      "status": "NO_IDENTITY"
+      "status": "SUPPORTED"
      },
      "group[_](heading[_],list[_](listitem[_]))": {
       "discrimination": 0.0,
@@ -118,7 +118,7 @@
   },
   {
    "fingerprint": "d6642195deed2820",
-   "full_reading_sha256": "5fc3b3281ea1e2fc7855c3358bbd8f065acf03fab144b25ea608170232b61e7f",
+   "full_reading_sha256": "d3695de0a5b148042c0c0c7aa89376ebd7f6950ce53e09737a667f7de61fc05f",
    "name": "promote listitem[_]=listitem#0!",
    "reading": {
     "families": {
@@ -135,10 +135,10 @@
       "status": "NO_IDENTITY"
      },
      "listitem[_]": {
-      "discrimination": null,
+      "discrimination": 1.0,
       "family": "listitem[_]",
       "key_slot": "listitem#0!",
-      "status": "VARIANT"
+      "status": "SUPPORTED"
      },
      "row[_](cell[_])": {
       "discrimination": 1.0,
@@ -183,15 +183,15 @@
   },
   {
    "fingerprint": "684c07c3caa4a14e",
-   "full_reading_sha256": "25a9a300a93ce5c3dca5b35d45e83688099d1ec266266bacb696482eaadb99e5",
+   "full_reading_sha256": "588a535d6ed36bd33eb9b0e678016df8728e304486403b61a8bfeec5933ab8d0",
    "name": "cell[_]=cell#0",
    "reading": {
     "families": {
      "cell[_]": {
-      "discrimination": 0.0,
+      "discrimination": 1.0,
       "family": "cell[_]",
       "key_slot": "cell#0",
-      "status": "NO_IDENTITY"
+      "status": "SUPPORTED"
      },
      "group[_](heading[_],list[_](listitem[_]))": {
       "discrimination": 0.0,
@@ -240,7 +240,7 @@
   },
   {
    "fingerprint": "d7a67a57bb78fbde",
-   "full_reading_sha256": "599298c45903af68ded8f408b1ce8545f93498767aabc2a5e4299815cdc5a45b",
+   "full_reading_sha256": "03dd4ed27ea205be7a32c557caed9b977d76c90a1825f5d680c97eecff7d0c3f",
    "name": "group[_](heading[_],list=heading#1",
    "reading": {
     "families": {
@@ -251,10 +251,10 @@
       "status": "NO_IDENTITY"
      },
      "group[_](heading[_],list[_](listitem[_]))": {
-      "discrimination": 0.0,
+      "discrimination": 1.0,
       "family": "group[_](heading[_],list[_](listitem[_]))",
       "key_slot": "heading#1",
-      "status": "NO_IDENTITY"
+      "status": "SUPPORTED"
      },
      "row[_](cell[_])": {
       "discrimination": 1.0,
@@ -297,7 +297,7 @@
   },
   {
    "fingerprint": "01f25b9f505de0d7",
-   "full_reading_sha256": "6b308c2cd5fbfa495557edde6f81cb6fb1fc51049bfc13bbba15ea45ecf3df55",
+   "full_reading_sha256": "254cd72801d3bd9de6a457762f350261fe20a04d4e742ea9bd500c547e777331",
    "name": "row[_](cell[_])=None",
    "reading": {
     "families": {
@@ -314,10 +314,10 @@
       "status": "NO_IDENTITY"
      },
      "row[_](cell[_])": {
-      "discrimination": 1.0,
+      "discrimination": 0.0,
       "family": "row[_](cell[_])",
       "key_slot": null,
-      "status": "SUPPORTED"
+      "status": "NO_IDENTITY"
      },
      "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": {
       "discrimination": 0.8529411764705882,
@@ -379,15 +379,15 @@
    "semabi/compiler/v2/score.py": "292ea78f2237e7b86dbbc943d624024ca9213218ead327b88080b71aebaaa95c",
    "semabi/compiler/v2/units.py": "c1a94e811f8259742e65e24d4beea8b869868bec6a2901f5420a96d60d5d7d58",
    "semabi/compiler/v4/__init__.py": "c41acb8afd5f3306718e6b5bb242db1dae876bf512bcec1d6c49108e8fbcc38c",
-   "semabi/compiler/v4/custody.py": "51b7b47082f78c4873a92d31a734efc7940f625fde2a171d053e554d5205547c",
-   "semabi/compiler/v4/frozen_evidence.py": "53be3e92100bf032bd2ded2856a0b6f873171f7220a61a715dee4f00c7efb382",
+   "semabi/compiler/v4/custody.py": "83adb9cd0ea8d285e3250ca1fcfd5c0c3fcfee5263304a63e10f90c87080d8b3",
+   "semabi/compiler/v4/frozen_evidence.py": "603a8c1798e4b18e1f12a37316984eca538e192f432780ee66ead0228ff3ee48",
    "semabi/compiler/v4/identity.py": "4e718dd8b3d2ade2126c31c5e88a3d5d7b91662a08e1a95077f342c030039c05",
-   "semabi/compiler/v4/manifests.py": "994dbd298edb8ac1a3a0090ceaa72be7c01a61cab08ea0582a085b0711639eb5",
+   "semabi/compiler/v4/manifests.py": "8074c853c6f227ff94796a76b27a8dc0c80cc760afae88cee600dae6283392d5",
    "semabi/compiler/v4/objective.py": "4dd902f9bb288e967ae1333f581631e5c6edbd507a841bf45efe569b758fc065",
-   "semabi/compiler/v4/pinned.py": "2ed0a864b517401417590189ec4dd81bd3119649e3fec5a69ca211352e3dcd71",
+   "semabi/compiler/v4/pinned.py": "711305a95c1da238c4b9e4f213fb5f2421bf1757244b10bcbab5b14a83f8ad4d",
    "semabi/compiler/v4/promote.py": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65",
    "semabi/compiler/v4/search.py": "32f3411b29e6a28e25bbfe799787fb171c32fedbb8dc56b6a61a41997506c767",
-   "semabi/compiler/v4/source_candidates.py": "d4aab6f5f6b863912c60d86fb38fff413b4031966e443fa6f5bf667bbea9d734",
+   "semabi/compiler/v4/source_candidates.py": "a56f45d803cbd61e54d0c26740c30f6bee1bf0954a9b06316d3830b1cef98f6e",
    "semabi/relmodel.py": "22ffbfe51a95a2b77307b9a2e0f3ba297dd58b2efd045ce7ab0263602abd74cf"
   },
   "max_candidates": 6
@@ -430,31 +430,38 @@
  "source_summary": {
   "alternatives_generated": [
    {
+    "candidate": "promote cell[_]=cell#0",
     "copresent_pairs": 400,
     "discrimination": 0.6525,
     "family": "cell[_]",
-    "promotion": "cell#0"
+    "promotion": "cell#0",
+    "status": "SUPPORTED"
    },
    {
+    "candidate": "promote listitem[_]=listitem#0!",
     "copresent_pairs": 400,
     "discrimination": 1.0,
     "family": "listitem[_]",
-    "promotion": "listitem#0!"
+    "promotion": "listitem#0!",
+    "status": "SUPPORTED"
    },
    {
     "alternative": "cell#0",
+    "candidate": "cell[_]=cell#0",
     "discrimination": 1.0,
     "family": "cell[_]",
     "status": "SUPPORTED"
    },
    {
     "alternative": "heading#1",
+    "candidate": "group[_](heading[_],list=heading#1",
     "discrimination": 1.0,
     "family": "group[_](heading[_],list[_](listitem[_]))",
     "status": "SUPPORTED"
    },
    {
     "alternative": null,
+    "candidate": "row[_](cell[_])=None",
     "discrimination": 0.0,
     "family": "row[_](cell[_])",
     "status": "NO_IDENTITY"

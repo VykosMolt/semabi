@@ -31,6 +31,7 @@ def _evidence(rows: dict) -> list[transfer.TransferEvidence]:
             silent=row["silent"],
             complexity=row["complexity"],
             applicability=row["applicability"],
+            applicability_fraction=dict(row["applicability_fraction"]),
             transport=dict(row["transport"]),
             verdicts={int(step): verdict for step, verdict in row["verdicts"].items()},
             separation=list(row["separation"]),
