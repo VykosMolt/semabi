@@ -1,0 +1,36 @@
+{
+ "version": 1,
+ "name": "source_choice",
+ "families": {
+  "button[_]": {
+   "family": "button[_]",
+   "key_slot": "button#0",
+   "status": "SUPPORTED",
+   "discrimination": 1.0
+  },
+  "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))": {
+   "family": "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))",
+   "key_slot": "heading#0",
+   "status": "UNSUPPORTED",
+   "discrimination": null
+  },
+  "row[_](cell[_](button[_]),cell[_])": {
+   "family": "row[_](cell[_](button[_]),cell[_])",
+   "key_slot": "cell#0@7",
+   "status": "SUPPORTED",
+   "discrimination": 0.6875
+  },
+  "row[_](cell[_],cell[_](button[_]))": {
+   "family": "row[_](cell[_],cell[_](button[_]))",
+   "key_slot": "cell#0@4",
+   "status": "SUPPORTED",
+   "discrimination": 0.5375
+  }
+ },
+ "promoted_families": [],
+ "refuted": {},
+ "provenance": {
+  "source_run": "runs/v4/harbour_dev",
+  "role": "SOURCE"
+ }
+}

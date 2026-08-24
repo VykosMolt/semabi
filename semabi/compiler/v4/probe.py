@@ -143,3 +143,47 @@ def locate(question, H, G, obs, sig: str, typed_tokens: list[str] | None = None)
                          f"probe{len(typed_tokens) + 1}",
                          "change what this instance shows, then ask whether it persisted")
     return None
+
+
+# --------------------------------------------------------------------------
+# probes aimed at missing evidence rather than at a disagreement
+#
+# An ambiguity can survive not because two readings are equally good but because the
+# observation that would separate them was never made.  That is a different situation and
+# it has a different remedy: go and make the observation.  What can be acquired this way is
+# limited and the limits are honest -- a peer instance cannot be conjured where the
+# application renders one, and saying so is better than guessing.
+
+ACQUIRABLE = {
+    "NO_RELOAD_WITNESS": "reach a page that renders the family and reload it",
+    "NO_CROSS_VIEW_RECURRENCE": "look for the family in the other views this page offers",
+}
+
+
+@dataclass
+class Acquisition:
+    """A bounded plan to collect one named kind of missing evidence."""
+    family: str
+    missing: str
+    plan: str
+    max_primitives: int = 8
+
+    def to_json(self) -> dict[str, Any]:
+        return {"family": self.family, "missing": self.missing, "plan": self.plan,
+                "max_primitives": self.max_primitives}
+
+
+def acquisition_for(family: str, missing: list[str]) -> Acquisition | None:
+    """The cheapest missing observation this environment can be asked for, if any."""
+    for code in missing:
+        if code in ACQUIRABLE:
+            return Acquisition(family, code, ACQUIRABLE[code])
+    return None
+
+
+def renders_family(H, G, obs, sig: str, family: str) -> bool:
+    """Is this family on screen right now?"""
+    from semabi.compiler.v4.identity import family_key
+    if sig not in G.obs:
+        G.add(sig, obs)
+    return any(family_key(i.template) == family for i in H.parse_units(sig))

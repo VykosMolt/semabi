@@ -14,6 +14,7 @@ from semabi.compiler.compile_v2 import compile_v2
 from semabi.compiler.compile_v4 import compile_v4
 from semabi.eval.oracle import evaluate
 from semabi.eval.oracle_hook import align_records, load_records
+from semabi.compiler.v4 import pinned as v4_pinned
 from semabi.eval import oracle
 from semabi.eval.v3_ladder import V3_LATENT
 
@@ -48,8 +49,13 @@ def main() -> None:
     ap.add_argument("--run", required=True)
     ap.add_argument("--tag", required=True, help="V3 app tag, for the latent declaration")
     ap.add_argument("--min-support", type=int, default=2)
-    ap.add_argument("--identity-from", help="pin the identity readings chosen on another run "
-                                            "(a prospective test: they were not chosen here)")
+    ap.add_argument("--identity-from", help="the older, weaker pin: a family-to-key map "
+                                            "applied on top of a hypothesis structure "
+                                            "otherwise refitted here (not transport)")
+    ap.add_argument("--pinned", action="append", default=[],
+                    help="name=path of a frozen reading to apply without refitting; "
+                         "repeatable, so a selected reading and its runner-up can be "
+                         "diagnosed side by side")
     ap.add_argument("--output", required=True)
     a = ap.parse_args()
     run = Path(a.run)
@@ -78,6 +84,17 @@ def main() -> None:
     if pinned is not None:
         conditions.append(("v4_pinned", compile_v4(run, min_support=a.min_support,
                                                    write_diagnostics=False, identity=pinned)))
+    for spec in a.pinned:
+        name, _, path = spec.partition("=")
+        reading = v4_pinned.load(Path(path))
+        compiled = compile_v4(run, min_support=a.min_support, write_diagnostics=False,
+                              pinned=reading)
+        out.setdefault("transported", {})[name] = {
+            "fingerprint": reading.fingerprint(),
+            "transport": compiled.transport.to_json(),
+            "source": reading.provenance,
+        }
+        conditions.append((name, compiled))
     for name, compiled in conditions:
         records = align_records(compiled.log, load_records(run))
         result = evaluate(compiled, run, records, v1_like=True, tag=name, abstr_ids=False)

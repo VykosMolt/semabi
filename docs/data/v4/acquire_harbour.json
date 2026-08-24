@@ -1,0 +1,78 @@
+{
+ "run": "runs/v4/harbour_acquire",
+ "open_questions": [
+  {
+   "template": "button[_]",
+   "left": {
+    "template": "button[_]",
+    "key_slot": "button#0",
+    "status": "SUPPORTED",
+    "why": "separates 400/400 co-present pairs, 3 values, coverage 1.00",
+    "evidence": {
+     "copresent_pairs": 400,
+     "separated_pairs": 400,
+     "discrimination": 1.0,
+     "coverage": 1.0,
+     "distinct_values": 3,
+     "constant_share": 0.404,
+     "reload_stability": 1.0,
+     "cross_view_values": 0,
+     "numeric_share": 0.0
+    }
+   },
+   "right": {
+    "template": "button[_]",
+    "key_slot": null,
+    "status": "NO_IDENTITY",
+    "why": "no identity-bearing observation claimed",
+    "evidence": {
+     "copresent_pairs": 400,
+     "separated_pairs": 0,
+     "discrimination": 0.0,
+     "coverage": 0.0,
+     "distinct_values": 0,
+     "constant_share": 0.0,
+     "reload_stability": null,
+     "cross_view_values": 0,
+     "numeric_share": 0.0
+    }
+   },
+   "reason": "undecided: chosen explains 31 with 3 errors, the alternative explains 29 with 1"
+  }
+ ],
+ "probes": [],
+ "primitives_spent": 1,
+ "mode": "acquire",
+ "deficits": [
+  {
+   "family": "button[_]",
+   "status": "INSUFFICIENT_EVIDENCE",
+   "missing": [
+    {
+     "code": "NO_CROSS_VIEW_RECURRENCE",
+     "means": "the family appears in one view only, so no value has had to be recognised again somewhere else"
+    }
+   ],
+   "have": [
+    "COPRESENT_PEER",
+    "RELOAD_WITNESS",
+    "ALTERNATIVE_VALUE",
+    "DISCRIMINATING_ACTION"
+   ]
+  }
+ ],
+ "acquisitions": [
+  {
+   "plan": {
+    "family": "button[_]",
+    "missing": "NO_CROSS_VIEW_RECURRENCE",
+    "plan": "look for the family in the other views this page offers",
+    "max_primitives": 8
+   },
+   "family_reached": true,
+   "outcome": "EVIDENCE_ACQUIRED",
+   "observation_kept": true
+  }
+ ],
+ "outcome": "ACQUIRED"
+}

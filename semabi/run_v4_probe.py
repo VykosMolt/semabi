@@ -22,12 +22,91 @@ def _score(run_dir: Path, identity: dict[str, str | None] | None, max_steps: int
     return objective.evaluate(compiled.abstractor, compiled.log, max_steps), compiled
 
 
+def _acquire(a, run_dir: Path, log: EvidenceLog, H, G, result, report: dict) -> None:
+    """Collect a named missing observation rather than settle a disagreement.
+
+    An ambiguity that survives because nobody ever reloaded the page while the family was
+    on screen is not a hard problem; it is an uncollected observation.  What can be acquired
+    is small and the limits are reported as limits.
+    """
+    from semabi.compiler.v4 import sufficiency
+    targeted = sufficiency.targeted_families(H, log)
+    report["mode"] = "acquire"
+    report["deficits"] = []
+    plans = []
+    for question in result.open_questions:
+        templates = result.families.get(question.template, [])
+        reading = result.chosen.get(templates[0]) if templates else None
+        if reading is None:
+            continue
+        assessment = sufficiency.assess(reading, targeted)
+        report["deficits"].append(assessment.to_json())
+        plan = probe_mod.acquisition_for(question.template, assessment.missing)
+        if plan is not None:
+            plans.append(plan)
+    if not plans:
+        report["outcome"] = ("NOTHING_UNDECIDED" if not result.open_questions
+                             else "NO_ACQUIRABLE_EVIDENCE")
+        Path(a.output).parent.mkdir(parents=True, exist_ok=True)
+        Path(a.output).write_text(json.dumps(report, indent=1))
+        print(json.dumps({"outcome": report["outcome"],
+                          "deficits": [d["family"] for d in report["deficits"]]}, indent=1))
+        return
+
+    browser = Browser(a.base.rstrip("/") + "/", a.base.rstrip("/") + "/reset")
+    spent = browser.n_primitives
+    acquired = []
+    try:
+        for plan in plans[:a.max_probes]:
+            browser.reset(a.seed)
+            obs = browser.observe()
+            found = probe_mod.renders_family(H, G, obs, obs.structural_signature(), plan.family)
+            visited = set()
+            for _ in range(plan.max_primitives):
+                if found:
+                    break
+                visited.add(obs.structural_signature())
+                targets = [n for n in obs.nodes if n.role in ("button", "link")]
+                if not targets:
+                    break
+                nxt = next((n for n in targets if n.i not in visited), targets[0])
+                browser.act(Primitive("click", target=nxt.i))
+                obs = browser.observe()
+                found = probe_mod.renders_family(H, G, obs, obs.structural_signature(), plan.family)
+            entry = {"plan": plan.to_json(), "family_reached": found}
+            if not found:
+                entry["outcome"] = "FAMILY_NOT_REACHED"
+                acquired.append(entry)
+                continue
+            log.add_observation(obs)
+            primitive = Primitive("reload")
+            res = browser.act(primitive)
+            after = browser.observe()
+            log.add_step(browser.episode, primitive, res.ok, res.error, obs, after)
+            entry["outcome"] = "EVIDENCE_ACQUIRED"
+            entry["observation_kept"] = obs.structural_signature() == after.structural_signature()
+            acquired.append(entry)
+    finally:
+        report["primitives_spent"] = browser.n_primitives - spent
+        browser.close()
+    report["acquisitions"] = acquired
+    report["outcome"] = ("ACQUIRED" if any(x["outcome"] == "EVIDENCE_ACQUIRED" for x in acquired)
+                         else "NOT_ACQUIRED")
+    Path(a.output).parent.mkdir(parents=True, exist_ok=True)
+    Path(a.output).write_text(json.dumps(report, indent=1))
+    print(json.dumps({"outcome": report["outcome"], "primitives": report["primitives_spent"],
+                      "acquisitions": [{k: x.get(k) for k in ("outcome", "family_reached")}
+                                       for x in acquired]}, indent=1))
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--run", required=True)
     ap.add_argument("--base", required=True)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--max-probes", type=int, default=2)
+    ap.add_argument("--mode", choices=("discriminate", "acquire"), default="discriminate",
+                    help="settle a disagreement, or go and collect a named missing observation")
     ap.add_argument("--max-steps", type=int, default=None)
     ap.add_argument("--output", required=True)
     a = ap.parse_args()
@@ -37,6 +116,10 @@ def main() -> None:
     result = v4_search.search(H, G, log, max_steps=a.max_steps)
     report: dict = {"run": str(run_dir), "open_questions": [q.to_json() for q in result.open_questions],
                     "probes": [], "primitives_spent": 0}
+
+    if a.mode == "acquire":
+        _acquire(a, run_dir, log, H, G, result, report)
+        return
 
     if not result.open_questions:
         report["outcome"] = "NOTHING_UNDECIDED"

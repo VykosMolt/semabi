@@ -182,3 +182,100 @@ document restated for a rendered rather than a pixel observation space.
 Nothing here claims V4 works. `docs/v4_devlog.md` records what has actually been measured,
 including where the mechanism improves precision by becoming silent rather than by becoming
 right, and the stop conditions that were set in advance.
+
+---
+
+# Addendum: cross-trace epistemic custody
+
+Added after the first V4 checkpoint, which was mixed: the mechanism improved the object
+layer wherever ground truth allowed a check, won on three development traces, and lost by
+silence on four. Two findings from that checkpoint set this phase's direction.
+
+## The two theses
+
+> **Single-trace explanatory fit is insufficient to identify a reusable latent observation
+> model. Representation hypotheses must transport unchanged across independently collected
+> interaction histories and survive separate prospective validation.**
+
+The evidence is direct. A reading chosen in place on `harbour`'s 453-primitive history
+scores RTC .411; the reading chosen on its 377-primitive history and carried over scores
+.071. And on `vet_clinic` the local objective declines a reading that identifies patients
+with perfect discrimination over ~400 co-presence comparisons, because it explains one
+fewer locally registered transition. The compiler can see that *a* domain change was
+registered. It cannot see, from the history it was fitted to, that the other reading
+registered the *right* one. No further scalar computed from that same history separated
+them; that is what makes it a custody problem rather than a scoring problem.
+
+> **Evidence sufficiency is a state of knowledge, not a failure score. When the observations
+> required to distinguish representations have not been collected, the learner should
+> identify and, when possible, actively acquire that missing evidence.**
+
+`harbour` again: RTC ~0 at 377 primitives and .411 at 453, under the same objective.
+Nothing about the reading changed; the history did. Calling the thin case a representation
+failure would be wrong — the distinction was never observable in it.
+
+## Three evidence roles
+
+    SOURCE     generates readings; may reject some locally; is never validation
+    TRANSFER   compares frozen source readings and may refute them;
+               once used to select, it is not validation either
+    HOLDOUT    takes no part in selection; the only evidence that validates
+
+A history used to choose a reading has been spent. The roles are separate objects in the
+report rather than a convention, because the failure they guard against — calling the fit
+a prediction — is exactly what looks reasonable in prose.
+
+## What a pinned reading is
+
+`semabi/compiler/v4/pinned.py`. A frozen reading carries the whole decision: which families
+exist (by literal-free family key, the only name that survives a different seed), what
+names each one, which leaves are read as objects rather than as values of their container,
+and which readings an experiment has already refuted. Applying it to another history may
+instantiate those decisions against what that history renders and may do nothing else. It
+may not choose a different key because one scores better there, rebuild the families and
+call them the same hypothesis, or drop a claim the destination makes inconvenient. A claim
+that cannot be instantiated — the family is not rendered, the value it names is not there —
+is *recorded* as a transport failure, and a family the source never claimed does not
+silently keep the destination's own idea of a key. `PinnedReading.fingerprint()` is a hash
+of the decision, not of its paperwork.
+
+The earlier transfer was none of this: it carried a family-to-key map onto a hypothesis
+structure otherwise rebuilt at the destination, so everything except the key was refitted
+there. That is kept as `identity=` for reproducing the earlier numbers and is documented as
+not being transport.
+
+## What transfer evidence is
+
+`semabi/compiler/v4/transfer.py`. Not a scalar. Per frozen reading, against a history it
+never saw: hard contradictions, churn, visibility artifacts, spurious deltas, explained
+steps, silent steps, complexity, and *applicability* — the fraction of its claims the
+destination let it instantiate at all. A reading whose families are not rendered there has
+not been tested there and is not scored as though it had.
+
+Readings are then compared only where they said different things about the same step, in
+the differential discipline V2 used for candidate-versus-baseline, with the compared
+objects now being competing observation models. Agreeing with something every candidate
+predicted is not evidence for any of them.
+
+The decision is a dominance rule, in this order:
+
+1. neither reading instantiable here → `INCONCLUSIVE_NOT_APPLICABLE`;
+2. neither reading says anything here → `INCONCLUSIVE_NO_PREDICTIONS`;
+3. a reading this history contradicts where its rival is not contradicted is demoted —
+   contradiction is the only thing that eliminates;
+4. otherwise the reading that is right where the other is wrong is preferred;
+5. **explaining more steps is not a reason to prefer a reading here.** That is what the
+   source history was for, and it is exactly the quantity that does not transport;
+6. complexity breaks a true behavioural tie;
+7. anything else keeps the ambiguity.
+
+No coefficient is calibrated on gauntlet-v3, and a candidate cannot earn transfer support
+by making no predictions.
+
+## Evidence sufficiency
+
+`semabi/compiler/v4/sufficiency.py` turns "unresolved" into a statement about what was not
+observed: no co-present peer, no reload witness while the family was on screen, no
+cross-view recurrence, no action ever aimed inside an instance, no alternative value, no
+occurrence in the transfer history at all. These are predicates over evidence collected,
+not thresholds, and they are what an active probe should be aimed at.

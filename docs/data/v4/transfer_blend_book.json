@@ -1,0 +1,2291 @@
+{
+ "roles": {
+  "SOURCE": "runs/v4/grok_02_blend_book_dev",
+  "TRANSFER": "runs/v4/blend_book_transfer",
+  "HOLDOUT": "runs/v4/blend_book_holdout"
+ },
+ "role_semantics": {
+  "SOURCE": "generated the readings and rejected some locally; not validation",
+  "TRANSFER": "compared frozen readings and may refute them; not validation",
+  "HOLDOUT": "took no part in selection; the only evidence that validates"
+ },
+ "source": {
+  "local_final": {
+   "contradictions": 0,
+   "churn": 0,
+   "visibility": 0,
+   "unexplained": 11,
+   "spurious": 0,
+   "explained": 51,
+   "delta_atoms": 67,
+   "complexity": 72,
+   "steps": 375,
+   "churn_steps": [],
+   "contradiction_steps": [],
+   "visibility_steps": []
+  },
+  "families": {
+   "button[_]": 4,
+   "cell[_]": 1,
+   "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": 3,
+   "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": 4,
+   "row[_](cell[_],cell[_](button[_]))": 4
+  },
+  "open_questions": [
+   {
+    "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+    "left": {
+     "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+     "key_slot": "group/group/text#0@9",
+     "status": "UNSUPPORTED",
+     "why": "the family never rendered two instances at once, so nothing shows this value distinguishes instances",
+     "evidence": {
+      "copresent_pairs": 0,
+      "separated_pairs": 0,
+      "discrimination": null,
+      "coverage": 1.0,
+      "distinct_values": 1,
+      "constant_share": 1.0,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+     "key_slot": "group/table/rowgroup/row/cell#0",
+     "status": "UNSUPPORTED",
+     "why": "the family never rendered two instances at once, so nothing shows this value distinguishes instances",
+     "evidence": {
+      "copresent_pairs": 0,
+      "separated_pairs": 0,
+      "discrimination": null,
+      "coverage": 1.0,
+      "distinct_values": 1,
+      "constant_share": 1.0,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "reason": "the trace so far scores both readings identically"
+   },
+   {
+    "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+    "left": {
+     "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "why": "no identity-bearing observation claimed",
+     "evidence": {
+      "copresent_pairs": 0,
+      "separated_pairs": 0,
+      "discrimination": null,
+      "coverage": 0.0,
+      "distinct_values": 0,
+      "constant_share": 0.0,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+     "key_slot": "group/group/text#0",
+     "status": "UNSUPPORTED",
+     "why": "the family never rendered two instances at once, so nothing shows this value distinguishes instances",
+     "evidence": {
+      "copresent_pairs": 0,
+      "separated_pairs": 0,
+      "discrimination": null,
+      "coverage": 1.0,
+      "distinct_values": 1,
+      "constant_share": 1.0,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "reason": "undecided: chosen explains 51 with 2 errors, the alternative explains 60 with 17"
+   },
+   {
+    "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+    "left": {
+     "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "why": "no identity-bearing observation claimed",
+     "evidence": {
+      "copresent_pairs": 0,
+      "separated_pairs": 0,
+      "discrimination": null,
+      "coverage": 0.0,
+      "distinct_values": 0,
+      "constant_share": 0.0,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+     "key_slot": "group/group/text#0@7",
+     "status": "UNSUPPORTED",
+     "why": "the family never rendered two instances at once, so nothing shows this value distinguishes instances",
+     "evidence": {
+      "copresent_pairs": 0,
+      "separated_pairs": 0,
+      "discrimination": null,
+      "coverage": 1.0,
+      "distinct_values": 1,
+      "constant_share": 1.0,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "reason": "undecided: chosen explains 51 with 2 errors, the alternative explains 60 with 17"
+   }
+  ],
+  "alternatives_generated": [
+   {
+    "family": "cell[_]",
+    "promotion": "cell#0",
+    "discrimination": 0.845,
+    "copresent_pairs": 400
+   },
+   {
+    "family": "button[_]",
+    "alternative": "button#0",
+    "status": "SUPPORTED",
+    "discrimination": 0.965
+   },
+   {
+    "family": "cell[_]",
+    "alternative": "cell#0",
+    "status": "SUPPORTED",
+    "discrimination": 1.0
+   },
+   {
+    "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+    "alternative": null,
+    "status": "NO_IDENTITY",
+    "discrimination": null
+   },
+   {
+    "family": "row[_](cell[_],cell[_](button[_]))",
+    "alternative": "cell#0",
+    "status": "SUPPORTED",
+    "discrimination": 1.0
+   }
+  ]
+ },
+ "candidates": [
+  {
+   "name": "source_choice",
+   "fingerprint": "32ce86a55a72ab0e",
+   "promoted": [],
+   "reading": {
+    "version": 1,
+    "name": "source_choice",
+    "families": {
+     "button[_]": {
+      "family": "button[_]",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "cell[_]": {
+      "family": "cell[_]",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": {
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+      "key_slot": "group/group/text#0@9",
+      "status": "UNSUPPORTED",
+      "discrimination": null
+     },
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": {
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": null
+     },
+     "row[_](cell[_],cell[_](button[_]))": {
+      "family": "row[_](cell[_],cell[_](button[_]))",
+      "key_slot": "cell#0@2",
+      "status": "SUPPORTED",
+      "discrimination": 0.9825
+     }
+    },
+    "promoted_families": [],
+    "refuted": {},
+    "provenance": {
+     "source_run": "runs/v4/grok_02_blend_book_dev",
+     "role": "SOURCE"
+    }
+   }
+  },
+  {
+   "name": "promote cell[_]=cell#0",
+   "fingerprint": "dfab0b576d5e5485",
+   "promoted": [
+    "cell[_]"
+   ],
+   "reading": {
+    "version": 1,
+    "name": "promote cell[_]=cell#0",
+    "families": {
+     "button[_]": {
+      "family": "button[_]",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "cell[_]": {
+      "family": "cell[_]",
+      "key_slot": "cell#0",
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": {
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+      "key_slot": "group/group/text#0@9",
+      "status": "UNSUPPORTED",
+      "discrimination": null
+     },
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": {
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": null
+     },
+     "row[_](cell[_],cell[_](button[_]))": {
+      "family": "row[_](cell[_],cell[_](button[_]))",
+      "key_slot": "cell#0@2",
+      "status": "SUPPORTED",
+      "discrimination": 0.9825
+     }
+    },
+    "promoted_families": [
+     "cell[_]"
+    ],
+    "refuted": {},
+    "provenance": {
+     "source_run": "runs/v4/grok_02_blend_book_dev",
+     "role": "SOURCE"
+    }
+   }
+  },
+  {
+   "name": "button[_]=button#0",
+   "fingerprint": "339f2214197b0b71",
+   "promoted": [],
+   "reading": {
+    "version": 1,
+    "name": "button[_]=button#0",
+    "families": {
+     "button[_]": {
+      "family": "button[_]",
+      "key_slot": "button#0",
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "cell[_]": {
+      "family": "cell[_]",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": {
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+      "key_slot": "group/group/text#0@9",
+      "status": "UNSUPPORTED",
+      "discrimination": null
+     },
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": {
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": null
+     },
+     "row[_](cell[_],cell[_](button[_]))": {
+      "family": "row[_](cell[_],cell[_](button[_]))",
+      "key_slot": "cell#0@2",
+      "status": "SUPPORTED",
+      "discrimination": 0.9825
+     }
+    },
+    "promoted_families": [],
+    "refuted": {},
+    "provenance": {
+     "source_run": "runs/v4/grok_02_blend_book_dev",
+     "role": "SOURCE"
+    }
+   }
+  },
+  {
+   "name": "cell[_]=cell#0",
+   "fingerprint": "2b2cabacf05f5418",
+   "promoted": [],
+   "reading": {
+    "version": 1,
+    "name": "cell[_]=cell#0",
+    "families": {
+     "button[_]": {
+      "family": "button[_]",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "cell[_]": {
+      "family": "cell[_]",
+      "key_slot": "cell#0",
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": {
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+      "key_slot": "group/group/text#0@9",
+      "status": "UNSUPPORTED",
+      "discrimination": null
+     },
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": {
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": null
+     },
+     "row[_](cell[_],cell[_](button[_]))": {
+      "family": "row[_](cell[_],cell[_](button[_]))",
+      "key_slot": "cell#0@2",
+      "status": "SUPPORTED",
+      "discrimination": 0.9825
+     }
+    },
+    "promoted_families": [],
+    "refuted": {},
+    "provenance": {
+     "source_run": "runs/v4/grok_02_blend_book_dev",
+     "role": "SOURCE"
+    }
+   }
+  },
+  {
+   "name": "group[_](status[_],group=None",
+   "fingerprint": "11a9ad004dda5443",
+   "promoted": [],
+   "reading": {
+    "version": 1,
+    "name": "group[_](status[_],group=None",
+    "families": {
+     "button[_]": {
+      "family": "button[_]",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "cell[_]": {
+      "family": "cell[_]",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": {
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+      "key_slot": null,
+      "status": "UNSUPPORTED",
+      "discrimination": null
+     },
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": {
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": null
+     },
+     "row[_](cell[_],cell[_](button[_]))": {
+      "family": "row[_](cell[_],cell[_](button[_]))",
+      "key_slot": "cell#0@2",
+      "status": "SUPPORTED",
+      "discrimination": 0.9825
+     }
+    },
+    "promoted_families": [],
+    "refuted": {},
+    "provenance": {
+     "source_run": "runs/v4/grok_02_blend_book_dev",
+     "role": "SOURCE"
+    }
+   }
+  },
+  {
+   "name": "row[_](cell[_],cell[_](b=cell#0",
+   "fingerprint": "fa2c4209c248287e",
+   "promoted": [],
+   "reading": {
+    "version": 1,
+    "name": "row[_](cell[_],cell[_](b=cell#0",
+    "families": {
+     "button[_]": {
+      "family": "button[_]",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "cell[_]": {
+      "family": "cell[_]",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": {
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+      "key_slot": "group/group/text#0@9",
+      "status": "UNSUPPORTED",
+      "discrimination": null
+     },
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": {
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": null
+     },
+     "row[_](cell[_],cell[_](button[_]))": {
+      "family": "row[_](cell[_],cell[_](button[_]))",
+      "key_slot": "cell#0",
+      "status": "SUPPORTED",
+      "discrimination": 0.9825
+     }
+    },
+    "promoted_families": [],
+    "refuted": {},
+    "provenance": {
+     "source_run": "runs/v4/grok_02_blend_book_dev",
+     "role": "SOURCE"
+    }
+   }
+  }
+ ],
+ "transfer": {
+  "source_choice": {
+   "name": "source_choice",
+   "key_slots": {
+    "button[_]": null,
+    "cell[_]": null,
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": null,
+    "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+   },
+   "hard_contradictions": 0,
+   "churn": 0,
+   "visibility": 0,
+   "spurious": 0,
+   "explained": 265,
+   "silent": 48,
+   "errors": 0,
+   "complexity": 133,
+   "applicability": 0.8,
+   "transport": {
+    "applied": {
+     "button[_]": null,
+     "cell[_]": null,
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+     "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+    },
+    "slot_absent": {},
+    "absent_in_transfer": [
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))"
+    ],
+    "unseen_in_source": [],
+    "promoted_applied": [],
+    "promoted_absent": [],
+    "applicability": 0.8
+   },
+   "separation": [
+    {
+     "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+     "key_slot": "group/group/text#0@9",
+     "status": "UNTESTED",
+     "copresent_pairs": 0,
+     "separated_pairs": 0,
+     "rate": null
+    },
+    {
+     "family": "row[_](cell[_],cell[_](button[_]))",
+     "key_slot": "cell#0@2",
+     "status": "PARTIAL",
+     "copresent_pairs": 400,
+     "separated_pairs": 356,
+     "rate": 0.89
+    }
+   ],
+   "separation_confirmed": 0,
+   "separation_refuted": 0,
+   "separation_tested": 1
+  },
+  "promote cell[_]=cell#0": {
+   "name": "promote cell[_]=cell#0",
+   "key_slots": {
+    "button[_]": null,
+    "cell[_]": "cell#0",
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": null,
+    "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+   },
+   "hard_contradictions": 0,
+   "churn": 209,
+   "visibility": 0,
+   "spurious": 0,
+   "explained": 64,
+   "silent": 40,
+   "errors": 209,
+   "complexity": 108,
+   "applicability": 0.6,
+   "transport": {
+    "applied": {
+     "button[_]": null,
+     "cell[_]": "cell#0",
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9"
+    },
+    "slot_absent": {},
+    "absent_in_transfer": [
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+     "row[_](cell[_],cell[_](button[_]))"
+    ],
+    "unseen_in_source": [],
+    "promoted_applied": [
+     "cell[_]"
+    ],
+    "promoted_absent": [],
+    "applicability": 0.6
+   },
+   "separation": [
+    {
+     "family": "cell[_]",
+     "key_slot": "cell#0",
+     "status": "PARTIAL",
+     "copresent_pairs": 400,
+     "separated_pairs": 329,
+     "rate": 0.823
+    },
+    {
+     "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+     "key_slot": "group/group/text#0@9",
+     "status": "UNTESTED",
+     "copresent_pairs": 0,
+     "separated_pairs": 0,
+     "rate": null
+    }
+   ],
+   "separation_confirmed": 0,
+   "separation_refuted": 0,
+   "separation_tested": 1
+  },
+  "button[_]=button#0": {
+   "name": "button[_]=button#0",
+   "key_slots": {
+    "button[_]": "button#0",
+    "cell[_]": null,
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": null,
+    "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+   },
+   "hard_contradictions": 0,
+   "churn": 0,
+   "visibility": 0,
+   "spurious": 0,
+   "explained": 265,
+   "silent": 48,
+   "errors": 0,
+   "complexity": 151,
+   "applicability": 0.8,
+   "transport": {
+    "applied": {
+     "button[_]": "button#0",
+     "cell[_]": null,
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+     "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+    },
+    "slot_absent": {},
+    "absent_in_transfer": [
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))"
+    ],
+    "unseen_in_source": [],
+    "promoted_applied": [],
+    "promoted_absent": [],
+    "applicability": 0.8
+   },
+   "separation": [
+    {
+     "family": "button[_]",
+     "key_slot": "button#0",
+     "status": "PARTIAL",
+     "copresent_pairs": 400,
+     "separated_pairs": 385,
+     "rate": 0.963
+    },
+    {
+     "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+     "key_slot": "group/group/text#0@9",
+     "status": "UNTESTED",
+     "copresent_pairs": 0,
+     "separated_pairs": 0,
+     "rate": null
+    },
+    {
+     "family": "row[_](cell[_],cell[_](button[_]))",
+     "key_slot": "cell#0@2",
+     "status": "PARTIAL",
+     "copresent_pairs": 400,
+     "separated_pairs": 356,
+     "rate": 0.89
+    }
+   ],
+   "separation_confirmed": 0,
+   "separation_refuted": 0,
+   "separation_tested": 2
+  },
+  "cell[_]=cell#0": {
+   "name": "cell[_]=cell#0",
+   "key_slots": {
+    "button[_]": null,
+    "cell[_]": "cell#0",
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": null,
+    "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+   },
+   "hard_contradictions": 0,
+   "churn": 0,
+   "visibility": 0,
+   "spurious": 0,
+   "explained": 265,
+   "silent": 48,
+   "errors": 0,
+   "complexity": 131,
+   "applicability": 0.8,
+   "transport": {
+    "applied": {
+     "button[_]": null,
+     "cell[_]": "cell#0",
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+     "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+    },
+    "slot_absent": {},
+    "absent_in_transfer": [
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))"
+    ],
+    "unseen_in_source": [],
+    "promoted_applied": [],
+    "promoted_absent": [],
+    "applicability": 0.8
+   },
+   "separation": [
+    {
+     "family": "cell[_]",
+     "key_slot": "cell#0",
+     "status": "CONFIRMED",
+     "copresent_pairs": 400,
+     "separated_pairs": 400,
+     "rate": 1.0
+    },
+    {
+     "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+     "key_slot": "group/group/text#0@9",
+     "status": "UNTESTED",
+     "copresent_pairs": 0,
+     "separated_pairs": 0,
+     "rate": null
+    },
+    {
+     "family": "row[_](cell[_],cell[_](button[_]))",
+     "key_slot": "cell#0@2",
+     "status": "PARTIAL",
+     "copresent_pairs": 400,
+     "separated_pairs": 356,
+     "rate": 0.89
+    }
+   ],
+   "separation_confirmed": 1,
+   "separation_refuted": 0,
+   "separation_tested": 2
+  },
+  "group[_](status[_],group=None": {
+   "name": "group[_](status[_],group=None",
+   "key_slots": {
+    "button[_]": null,
+    "cell[_]": null,
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": null,
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": null,
+    "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+   },
+   "hard_contradictions": 0,
+   "churn": 0,
+   "visibility": 0,
+   "spurious": 0,
+   "explained": 259,
+   "silent": 12,
+   "errors": 0,
+   "complexity": 31,
+   "applicability": 0.8,
+   "transport": {
+    "applied": {
+     "button[_]": null,
+     "cell[_]": null,
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": null,
+     "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+    },
+    "slot_absent": {},
+    "absent_in_transfer": [
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))"
+    ],
+    "unseen_in_source": [],
+    "promoted_applied": [],
+    "promoted_absent": [],
+    "applicability": 0.8
+   },
+   "separation": [
+    {
+     "family": "row[_](cell[_],cell[_](button[_]))",
+     "key_slot": "cell#0@2",
+     "status": "PARTIAL",
+     "copresent_pairs": 400,
+     "separated_pairs": 356,
+     "rate": 0.89
+    }
+   ],
+   "separation_confirmed": 0,
+   "separation_refuted": 0,
+   "separation_tested": 1
+  },
+  "row[_](cell[_],cell[_](b=cell#0": {
+   "name": "row[_](cell[_],cell[_](b=cell#0",
+   "key_slots": {
+    "button[_]": null,
+    "cell[_]": null,
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": null,
+    "row[_](cell[_],cell[_](button[_]))": "cell#0"
+   },
+   "hard_contradictions": 0,
+   "churn": 0,
+   "visibility": 0,
+   "spurious": 1,
+   "explained": 265,
+   "silent": 48,
+   "errors": 1,
+   "complexity": 135,
+   "applicability": 0.8,
+   "transport": {
+    "applied": {
+     "button[_]": null,
+     "cell[_]": null,
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+     "row[_](cell[_],cell[_](button[_]))": "cell#0"
+    },
+    "slot_absent": {},
+    "absent_in_transfer": [
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))"
+    ],
+    "unseen_in_source": [],
+    "promoted_applied": [],
+    "promoted_absent": [],
+    "applicability": 0.8
+   },
+   "separation": [
+    {
+     "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+     "key_slot": "group/group/text#0@9",
+     "status": "UNTESTED",
+     "copresent_pairs": 0,
+     "separated_pairs": 0,
+     "rate": null
+    },
+    {
+     "family": "row[_](cell[_],cell[_](button[_]))",
+     "key_slot": "cell#0",
+     "status": "PARTIAL",
+     "copresent_pairs": 400,
+     "separated_pairs": 358,
+     "rate": 0.895
+    }
+   ],
+   "separation_confirmed": 0,
+   "separation_refuted": 0,
+   "separation_tested": 1
+  }
+ },
+ "transfer_decisions": [
+  {
+   "left": {
+    "name": "source_choice",
+    "key_slots": {
+     "button[_]": null,
+     "cell[_]": null,
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": null,
+     "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+    },
+    "hard_contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "spurious": 0,
+    "explained": 265,
+    "silent": 48,
+    "errors": 0,
+    "complexity": 133,
+    "applicability": 0.8,
+    "transport": {
+     "applied": {
+      "button[_]": null,
+      "cell[_]": null,
+      "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+      "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+     },
+     "slot_absent": {},
+     "absent_in_transfer": [
+      "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))"
+     ],
+     "unseen_in_source": [],
+     "promoted_applied": [],
+     "promoted_absent": [],
+     "applicability": 0.8
+    },
+    "separation": [
+     {
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+      "key_slot": "group/group/text#0@9",
+      "status": "UNTESTED",
+      "copresent_pairs": 0,
+      "separated_pairs": 0,
+      "rate": null
+     },
+     {
+      "family": "row[_](cell[_],cell[_](button[_]))",
+      "key_slot": "cell#0@2",
+      "status": "PARTIAL",
+      "copresent_pairs": 400,
+      "separated_pairs": 356,
+      "rate": 0.89
+     }
+    ],
+    "separation_confirmed": 0,
+    "separation_refuted": 0,
+    "separation_tested": 1
+   },
+   "right": {
+    "name": "promote cell[_]=cell#0",
+    "key_slots": {
+     "button[_]": null,
+     "cell[_]": "cell#0",
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": null,
+     "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+    },
+    "hard_contradictions": 0,
+    "churn": 209,
+    "visibility": 0,
+    "spurious": 0,
+    "explained": 64,
+    "silent": 40,
+    "errors": 209,
+    "complexity": 108,
+    "applicability": 0.6,
+    "transport": {
+     "applied": {
+      "button[_]": null,
+      "cell[_]": "cell#0",
+      "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9"
+     },
+     "slot_absent": {},
+     "absent_in_transfer": [
+      "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+      "row[_](cell[_],cell[_](button[_]))"
+     ],
+     "unseen_in_source": [],
+     "promoted_applied": [
+      "cell[_]"
+     ],
+     "promoted_absent": [],
+     "applicability": 0.6
+    },
+    "separation": [
+     {
+      "family": "cell[_]",
+      "key_slot": "cell#0",
+      "status": "PARTIAL",
+      "copresent_pairs": 400,
+      "separated_pairs": 329,
+      "rate": 0.823
+     },
+     {
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+      "key_slot": "group/group/text#0@9",
+      "status": "UNTESTED",
+      "copresent_pairs": 0,
+      "separated_pairs": 0,
+      "rate": null
+     }
+    ],
+    "separation_confirmed": 0,
+    "separation_refuted": 0,
+    "separation_tested": 1
+   },
+   "outcome": "INCONCLUSIVE_ASYMMETRIC_APPLICABILITY",
+   "reason": "the right reading could be instantiated on 0.60 of its claims here against 0.80 for the left one, so this history did not put them to the same test",
+   "differential": {
+    "counts": {
+     "BOTH_COMPATIBLE": 56,
+     "LEFT_CORRECT_RIGHT_WRONG": 209,
+     "NOT_COMPARABLE": 560,
+     "RIGHT_PREDICTS_LEFT_SILENT": 8
+    },
+    "left_correct_where_right_wrong": 209,
+    "right_correct_where_left_wrong": 0,
+    "left_wrong_where_right_silent": 0,
+    "right_wrong_where_left_silent": 0,
+    "cases": [
+     {
+      "step": 1,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 8,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 11,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 17,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 20,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 24,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 30,
+      "left": "SILENT",
+      "right": "EXPLAINED",
+      "class": "RIGHT_PREDICTS_LEFT_SILENT"
+     },
+     {
+      "step": 36,
+      "left": "SILENT",
+      "right": "EXPLAINED",
+      "class": "RIGHT_PREDICTS_LEFT_SILENT"
+     },
+     {
+      "step": 60,
+      "left": "SILENT",
+      "right": "EXPLAINED",
+      "class": "RIGHT_PREDICTS_LEFT_SILENT"
+     },
+     {
+      "step": 65,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 69,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 71,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 74,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 76,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 84,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 86,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 96,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 98,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 101,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 103,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 105,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 107,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 113,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 115,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 116,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 118,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 119,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 121,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 123,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 124,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 126,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 129,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 131,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 134,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 161,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 165,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 168,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 171,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 178,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 180,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 184,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 186,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 190,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 192,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 193,
+      "left": "SILENT",
+      "right": "EXPLAINED",
+      "class": "RIGHT_PREDICTS_LEFT_SILENT"
+     },
+     {
+      "step": 230,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 232,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 233,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 235,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 241,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 243,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 244,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 246,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 247,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 249,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 253,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 255,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 259,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 261,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 262,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     }
+    ]
+   }
+  },
+  {
+   "left": {
+    "name": "source_choice",
+    "key_slots": {
+     "button[_]": null,
+     "cell[_]": null,
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": null,
+     "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+    },
+    "hard_contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "spurious": 0,
+    "explained": 265,
+    "silent": 48,
+    "errors": 0,
+    "complexity": 133,
+    "applicability": 0.8,
+    "transport": {
+     "applied": {
+      "button[_]": null,
+      "cell[_]": null,
+      "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+      "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+     },
+     "slot_absent": {},
+     "absent_in_transfer": [
+      "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))"
+     ],
+     "unseen_in_source": [],
+     "promoted_applied": [],
+     "promoted_absent": [],
+     "applicability": 0.8
+    },
+    "separation": [
+     {
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+      "key_slot": "group/group/text#0@9",
+      "status": "UNTESTED",
+      "copresent_pairs": 0,
+      "separated_pairs": 0,
+      "rate": null
+     },
+     {
+      "family": "row[_](cell[_],cell[_](button[_]))",
+      "key_slot": "cell#0@2",
+      "status": "PARTIAL",
+      "copresent_pairs": 400,
+      "separated_pairs": 356,
+      "rate": 0.89
+     }
+    ],
+    "separation_confirmed": 0,
+    "separation_refuted": 0,
+    "separation_tested": 1
+   },
+   "right": {
+    "name": "button[_]=button#0",
+    "key_slots": {
+     "button[_]": "button#0",
+     "cell[_]": null,
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": null,
+     "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+    },
+    "hard_contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "spurious": 0,
+    "explained": 265,
+    "silent": 48,
+    "errors": 0,
+    "complexity": 151,
+    "applicability": 0.8,
+    "transport": {
+     "applied": {
+      "button[_]": "button#0",
+      "cell[_]": null,
+      "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+      "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+     },
+     "slot_absent": {},
+     "absent_in_transfer": [
+      "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))"
+     ],
+     "unseen_in_source": [],
+     "promoted_applied": [],
+     "promoted_absent": [],
+     "applicability": 0.8
+    },
+    "separation": [
+     {
+      "family": "button[_]",
+      "key_slot": "button#0",
+      "status": "PARTIAL",
+      "copresent_pairs": 400,
+      "separated_pairs": 385,
+      "rate": 0.963
+     },
+     {
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+      "key_slot": "group/group/text#0@9",
+      "status": "UNTESTED",
+      "copresent_pairs": 0,
+      "separated_pairs": 0,
+      "rate": null
+     },
+     {
+      "family": "row[_](cell[_],cell[_](button[_]))",
+      "key_slot": "cell#0@2",
+      "status": "PARTIAL",
+      "copresent_pairs": 400,
+      "separated_pairs": 356,
+      "rate": 0.89
+     }
+    ],
+    "separation_confirmed": 0,
+    "separation_refuted": 0,
+    "separation_tested": 2
+   },
+   "outcome": "LEFT",
+   "reason": "the readings said the same thing at every step of this history; the tie is broken by representational cost",
+   "differential": {
+    "counts": {
+     "BOTH_COMPATIBLE": 265,
+     "NOT_COMPARABLE": 568
+    },
+    "left_correct_where_right_wrong": 0,
+    "right_correct_where_left_wrong": 0,
+    "left_wrong_where_right_silent": 0,
+    "right_wrong_where_left_silent": 0,
+    "cases": []
+   }
+  },
+  {
+   "left": {
+    "name": "source_choice",
+    "key_slots": {
+     "button[_]": null,
+     "cell[_]": null,
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": null,
+     "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+    },
+    "hard_contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "spurious": 0,
+    "explained": 265,
+    "silent": 48,
+    "errors": 0,
+    "complexity": 133,
+    "applicability": 0.8,
+    "transport": {
+     "applied": {
+      "button[_]": null,
+      "cell[_]": null,
+      "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+      "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+     },
+     "slot_absent": {},
+     "absent_in_transfer": [
+      "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))"
+     ],
+     "unseen_in_source": [],
+     "promoted_applied": [],
+     "promoted_absent": [],
+     "applicability": 0.8
+    },
+    "separation": [
+     {
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+      "key_slot": "group/group/text#0@9",
+      "status": "UNTESTED",
+      "copresent_pairs": 0,
+      "separated_pairs": 0,
+      "rate": null
+     },
+     {
+      "family": "row[_](cell[_],cell[_](button[_]))",
+      "key_slot": "cell#0@2",
+      "status": "PARTIAL",
+      "copresent_pairs": 400,
+      "separated_pairs": 356,
+      "rate": 0.89
+     }
+    ],
+    "separation_confirmed": 0,
+    "separation_refuted": 0,
+    "separation_tested": 1
+   },
+   "right": {
+    "name": "cell[_]=cell#0",
+    "key_slots": {
+     "button[_]": null,
+     "cell[_]": "cell#0",
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": null,
+     "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+    },
+    "hard_contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "spurious": 0,
+    "explained": 265,
+    "silent": 48,
+    "errors": 0,
+    "complexity": 131,
+    "applicability": 0.8,
+    "transport": {
+     "applied": {
+      "button[_]": null,
+      "cell[_]": "cell#0",
+      "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+      "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+     },
+     "slot_absent": {},
+     "absent_in_transfer": [
+      "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))"
+     ],
+     "unseen_in_source": [],
+     "promoted_applied": [],
+     "promoted_absent": [],
+     "applicability": 0.8
+    },
+    "separation": [
+     {
+      "family": "cell[_]",
+      "key_slot": "cell#0",
+      "status": "CONFIRMED",
+      "copresent_pairs": 400,
+      "separated_pairs": 400,
+      "rate": 1.0
+     },
+     {
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+      "key_slot": "group/group/text#0@9",
+      "status": "UNTESTED",
+      "copresent_pairs": 0,
+      "separated_pairs": 0,
+      "rate": null
+     },
+     {
+      "family": "row[_](cell[_],cell[_](button[_]))",
+      "key_slot": "cell#0@2",
+      "status": "PARTIAL",
+      "copresent_pairs": 400,
+      "separated_pairs": 356,
+      "rate": 0.89
+     }
+    ],
+    "separation_confirmed": 1,
+    "separation_refuted": 0,
+    "separation_tested": 2
+   },
+   "outcome": "RIGHT",
+   "reason": "the history confirms 1 identity claims of this reading against 0 of the other, on peers it had to tell apart here",
+   "differential": {
+    "counts": {
+     "BOTH_COMPATIBLE": 265,
+     "NOT_COMPARABLE": 568
+    },
+    "left_correct_where_right_wrong": 0,
+    "right_correct_where_left_wrong": 0,
+    "left_wrong_where_right_silent": 0,
+    "right_wrong_where_left_silent": 0,
+    "cases": []
+   }
+  },
+  {
+   "left": {
+    "name": "cell[_]=cell#0",
+    "key_slots": {
+     "button[_]": null,
+     "cell[_]": "cell#0",
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": null,
+     "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+    },
+    "hard_contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "spurious": 0,
+    "explained": 265,
+    "silent": 48,
+    "errors": 0,
+    "complexity": 131,
+    "applicability": 0.8,
+    "transport": {
+     "applied": {
+      "button[_]": null,
+      "cell[_]": "cell#0",
+      "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+      "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+     },
+     "slot_absent": {},
+     "absent_in_transfer": [
+      "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))"
+     ],
+     "unseen_in_source": [],
+     "promoted_applied": [],
+     "promoted_absent": [],
+     "applicability": 0.8
+    },
+    "separation": [
+     {
+      "family": "cell[_]",
+      "key_slot": "cell#0",
+      "status": "CONFIRMED",
+      "copresent_pairs": 400,
+      "separated_pairs": 400,
+      "rate": 1.0
+     },
+     {
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+      "key_slot": "group/group/text#0@9",
+      "status": "UNTESTED",
+      "copresent_pairs": 0,
+      "separated_pairs": 0,
+      "rate": null
+     },
+     {
+      "family": "row[_](cell[_],cell[_](button[_]))",
+      "key_slot": "cell#0@2",
+      "status": "PARTIAL",
+      "copresent_pairs": 400,
+      "separated_pairs": 356,
+      "rate": 0.89
+     }
+    ],
+    "separation_confirmed": 1,
+    "separation_refuted": 0,
+    "separation_tested": 2
+   },
+   "right": {
+    "name": "group[_](status[_],group=None",
+    "key_slots": {
+     "button[_]": null,
+     "cell[_]": null,
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": null,
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": null,
+     "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+    },
+    "hard_contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "spurious": 0,
+    "explained": 259,
+    "silent": 12,
+    "errors": 0,
+    "complexity": 31,
+    "applicability": 0.8,
+    "transport": {
+     "applied": {
+      "button[_]": null,
+      "cell[_]": null,
+      "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": null,
+      "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+     },
+     "slot_absent": {},
+     "absent_in_transfer": [
+      "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))"
+     ],
+     "unseen_in_source": [],
+     "promoted_applied": [],
+     "promoted_absent": [],
+     "applicability": 0.8
+    },
+    "separation": [
+     {
+      "family": "row[_](cell[_],cell[_](button[_]))",
+      "key_slot": "cell#0@2",
+      "status": "PARTIAL",
+      "copresent_pairs": 400,
+      "separated_pairs": 356,
+      "rate": 0.89
+     }
+    ],
+    "separation_confirmed": 0,
+    "separation_refuted": 0,
+    "separation_tested": 1
+   },
+   "outcome": "LEFT",
+   "reason": "the history confirms 1 identity claims of this reading against 0 of the other, on peers it had to tell apart here",
+   "differential": {
+    "counts": {
+     "BOTH_COMPATIBLE": 259,
+     "LEFT_PREDICTS_RIGHT_SILENT": 6,
+     "NOT_COMPARABLE": 568
+    },
+    "left_correct_where_right_wrong": 0,
+    "right_correct_where_left_wrong": 0,
+    "left_wrong_where_right_silent": 0,
+    "right_wrong_where_left_silent": 0,
+    "cases": [
+     {
+      "step": 137,
+      "left": "EXPLAINED",
+      "right": "SILENT",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 154,
+      "left": "EXPLAINED",
+      "right": "SILENT",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 227,
+      "left": "EXPLAINED",
+      "right": "SILENT",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 385,
+      "left": "EXPLAINED",
+      "right": "SILENT",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 468,
+      "left": "EXPLAINED",
+      "right": "NOTHING",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 528,
+      "left": "EXPLAINED",
+      "right": "NOTHING",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     }
+    ]
+   }
+  },
+  {
+   "left": {
+    "name": "cell[_]=cell#0",
+    "key_slots": {
+     "button[_]": null,
+     "cell[_]": "cell#0",
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": null,
+     "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+    },
+    "hard_contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "spurious": 0,
+    "explained": 265,
+    "silent": 48,
+    "errors": 0,
+    "complexity": 131,
+    "applicability": 0.8,
+    "transport": {
+     "applied": {
+      "button[_]": null,
+      "cell[_]": "cell#0",
+      "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+      "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+     },
+     "slot_absent": {},
+     "absent_in_transfer": [
+      "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))"
+     ],
+     "unseen_in_source": [],
+     "promoted_applied": [],
+     "promoted_absent": [],
+     "applicability": 0.8
+    },
+    "separation": [
+     {
+      "family": "cell[_]",
+      "key_slot": "cell#0",
+      "status": "CONFIRMED",
+      "copresent_pairs": 400,
+      "separated_pairs": 400,
+      "rate": 1.0
+     },
+     {
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+      "key_slot": "group/group/text#0@9",
+      "status": "UNTESTED",
+      "copresent_pairs": 0,
+      "separated_pairs": 0,
+      "rate": null
+     },
+     {
+      "family": "row[_](cell[_],cell[_](button[_]))",
+      "key_slot": "cell#0@2",
+      "status": "PARTIAL",
+      "copresent_pairs": 400,
+      "separated_pairs": 356,
+      "rate": 0.89
+     }
+    ],
+    "separation_confirmed": 1,
+    "separation_refuted": 0,
+    "separation_tested": 2
+   },
+   "right": {
+    "name": "row[_](cell[_],cell[_](b=cell#0",
+    "key_slots": {
+     "button[_]": null,
+     "cell[_]": null,
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": null,
+     "row[_](cell[_],cell[_](button[_]))": "cell#0"
+    },
+    "hard_contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "spurious": 1,
+    "explained": 265,
+    "silent": 48,
+    "errors": 1,
+    "complexity": 135,
+    "applicability": 0.8,
+    "transport": {
+     "applied": {
+      "button[_]": null,
+      "cell[_]": null,
+      "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+      "row[_](cell[_],cell[_](button[_]))": "cell#0"
+     },
+     "slot_absent": {},
+     "absent_in_transfer": [
+      "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))"
+     ],
+     "unseen_in_source": [],
+     "promoted_applied": [],
+     "promoted_absent": [],
+     "applicability": 0.8
+    },
+    "separation": [
+     {
+      "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+      "key_slot": "group/group/text#0@9",
+      "status": "UNTESTED",
+      "copresent_pairs": 0,
+      "separated_pairs": 0,
+      "rate": null
+     },
+     {
+      "family": "row[_](cell[_],cell[_](button[_]))",
+      "key_slot": "cell#0",
+      "status": "PARTIAL",
+      "copresent_pairs": 400,
+      "separated_pairs": 358,
+      "rate": 0.895
+     }
+    ],
+    "separation_confirmed": 0,
+    "separation_refuted": 0,
+    "separation_tested": 1
+   },
+   "outcome": "LEFT",
+   "reason": "the history contradicts the right reading at 1 steps where the left one is not contradicted",
+   "differential": {
+    "counts": {
+     "BOTH_COMPATIBLE": 265,
+     "NOT_COMPARABLE": 567,
+     "RIGHT_WRONG_LEFT_SILENT": 1
+    },
+    "left_correct_where_right_wrong": 0,
+    "right_correct_where_left_wrong": 0,
+    "left_wrong_where_right_silent": 0,
+    "right_wrong_where_left_silent": 1,
+    "cases": [
+     {
+      "step": 538,
+      "left": "NOTHING",
+      "right": "SPURIOUS",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     }
+    ]
+   }
+  }
+ ],
+ "selected": {
+  "name": "cell[_]=cell#0",
+  "fingerprint": "2b2cabacf05f5418",
+  "reading": {
+   "version": 1,
+   "name": "cell[_]=cell#0",
+   "families": {
+    "button[_]": {
+     "family": "button[_]",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "discrimination": 0.0
+    },
+    "cell[_]": {
+     "family": "cell[_]",
+     "key_slot": "cell#0",
+     "status": "NO_IDENTITY",
+     "discrimination": 0.0
+    },
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": {
+     "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+     "key_slot": "group/group/text#0@9",
+     "status": "UNSUPPORTED",
+     "discrimination": null
+    },
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": {
+     "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "discrimination": null
+    },
+    "row[_](cell[_],cell[_](button[_]))": {
+     "family": "row[_](cell[_],cell[_](button[_]))",
+     "key_slot": "cell#0@2",
+     "status": "SUPPORTED",
+     "discrimination": 0.9825
+    }
+   },
+   "promoted_families": [],
+   "refuted": {},
+   "provenance": {
+    "source_run": "runs/v4/grok_02_blend_book_dev",
+    "role": "SOURCE"
+   }
+  }
+ },
+ "selection_changed_the_source_choice": true,
+ "evidence_sufficiency": [
+  {
+   "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+   "status": "INSUFFICIENT_EVIDENCE",
+   "missing": [
+    {
+     "code": "NO_COPRESENT_PEER",
+     "means": "the family never rendered two instances at the same time, so no value has been given the chance to tell instances apart"
+    },
+    {
+     "code": "NO_CROSS_VIEW_RECURRENCE",
+     "means": "the family appears in one view only, so no value has had to be recognised again somewhere else"
+    },
+    {
+     "code": "NO_ALTERNATIVE_VALUE",
+     "means": "the contested value takes one value only, so changing it has never been possible"
+    }
+   ],
+   "have": [
+    "RELOAD_WITNESS",
+    "DISCRIMINATING_ACTION"
+   ]
+  },
+  {
+   "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+   "status": "INSUFFICIENT_EVIDENCE",
+   "missing": [
+    {
+     "code": "NO_COPRESENT_PEER",
+     "means": "the family never rendered two instances at the same time, so no value has been given the chance to tell instances apart"
+    },
+    {
+     "code": "NO_RELOAD_WITNESS",
+     "means": "no reload happened while the family was on screen, so nothing shows whether its values are facts or interface state"
+    },
+    {
+     "code": "NO_CROSS_VIEW_RECURRENCE",
+     "means": "the family appears in one view only, so no value has had to be recognised again somewhere else"
+    },
+    {
+     "code": "NO_ALTERNATIVE_VALUE",
+     "means": "the contested value takes one value only, so changing it has never been possible"
+    },
+    {
+     "code": "NO_TRANSFERABLE_OCCURRENCE",
+     "means": "the family is not rendered in the transfer history, so the reading could not be tested there"
+    }
+   ],
+   "have": [
+    "DISCRIMINATING_ACTION"
+   ]
+  },
+  {
+   "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+   "status": "INSUFFICIENT_EVIDENCE",
+   "missing": [
+    {
+     "code": "NO_COPRESENT_PEER",
+     "means": "the family never rendered two instances at the same time, so no value has been given the chance to tell instances apart"
+    },
+    {
+     "code": "NO_RELOAD_WITNESS",
+     "means": "no reload happened while the family was on screen, so nothing shows whether its values are facts or interface state"
+    },
+    {
+     "code": "NO_CROSS_VIEW_RECURRENCE",
+     "means": "the family appears in one view only, so no value has had to be recognised again somewhere else"
+    },
+    {
+     "code": "NO_ALTERNATIVE_VALUE",
+     "means": "the contested value takes one value only, so changing it has never been possible"
+    },
+    {
+     "code": "NO_TRANSFERABLE_OCCURRENCE",
+     "means": "the family is not rendered in the transfer history, so the reading could not be tested there"
+    }
+   ],
+   "have": [
+    "DISCRIMINATING_ACTION"
+   ]
+  }
+ ],
+ "holdout": {
+  "cell[_]=cell#0": {
+   "name": "cell[_]=cell#0",
+   "key_slots": {
+    "button[_]": null,
+    "cell[_]": "cell#0",
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": null,
+    "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+   },
+   "hard_contradictions": 0,
+   "churn": 0,
+   "visibility": 0,
+   "spurious": 0,
+   "explained": 228,
+   "silent": 50,
+   "errors": 0,
+   "complexity": 333,
+   "applicability": 0.8,
+   "transport": {
+    "applied": {
+     "button[_]": null,
+     "cell[_]": "cell#0",
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+     "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+    },
+    "slot_absent": {},
+    "absent_in_transfer": [
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))"
+    ],
+    "unseen_in_source": [
+     "button[_]@ctx0",
+     "button[_]@ctx1"
+    ],
+    "promoted_applied": [],
+    "promoted_absent": [],
+    "applicability": 0.8
+   },
+   "separation": [
+    {
+     "family": "cell[_]",
+     "key_slot": "cell#0",
+     "status": "CONFIRMED",
+     "copresent_pairs": 400,
+     "separated_pairs": 400,
+     "rate": 1.0
+    },
+    {
+     "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+     "key_slot": "group/group/text#0@9",
+     "status": "UNTESTED",
+     "copresent_pairs": 0,
+     "separated_pairs": 0,
+     "rate": null
+    },
+    {
+     "family": "row[_](cell[_],cell[_](button[_]))",
+     "key_slot": "cell#0@2",
+     "status": "PARTIAL",
+     "copresent_pairs": 400,
+     "separated_pairs": 376,
+     "rate": 0.94
+    }
+   ],
+   "separation_confirmed": 1,
+   "separation_refuted": 0,
+   "separation_tested": 2
+  },
+  "source_choice": {
+   "name": "source_choice",
+   "key_slots": {
+    "button[_]": null,
+    "cell[_]": null,
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": null,
+    "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+   },
+   "hard_contradictions": 0,
+   "churn": 0,
+   "visibility": 0,
+   "spurious": 0,
+   "explained": 228,
+   "silent": 50,
+   "errors": 0,
+   "complexity": 336,
+   "applicability": 0.8,
+   "transport": {
+    "applied": {
+     "button[_]": null,
+     "cell[_]": null,
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+     "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+    },
+    "slot_absent": {},
+    "absent_in_transfer": [
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))"
+    ],
+    "unseen_in_source": [
+     "button[_]@ctx0",
+     "button[_]@ctx1"
+    ],
+    "promoted_applied": [],
+    "promoted_absent": [],
+    "applicability": 0.8
+   },
+   "separation": [
+    {
+     "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+     "key_slot": "group/group/text#0@9",
+     "status": "UNTESTED",
+     "copresent_pairs": 0,
+     "separated_pairs": 0,
+     "rate": null
+    },
+    {
+     "family": "row[_](cell[_],cell[_](button[_]))",
+     "key_slot": "cell#0@2",
+     "status": "PARTIAL",
+     "copresent_pairs": 400,
+     "separated_pairs": 376,
+     "rate": 0.94
+    }
+   ],
+   "separation_confirmed": 0,
+   "separation_refuted": 0,
+   "separation_tested": 1
+  }
+ },
+ "holdout_differential": {
+  "outcome": "LEFT",
+  "reason": "the history confirms 1 identity claims of this reading against 0 of the other, on peers it had to tell apart here",
+  "left": {
+   "name": "cell[_]=cell#0",
+   "key_slots": {
+    "button[_]": null,
+    "cell[_]": "cell#0",
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": null,
+    "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+   },
+   "hard_contradictions": 0,
+   "churn": 0,
+   "visibility": 0,
+   "spurious": 0,
+   "explained": 228,
+   "silent": 50,
+   "errors": 0,
+   "complexity": 333,
+   "applicability": 0.8,
+   "transport": {
+    "applied": {
+     "button[_]": null,
+     "cell[_]": "cell#0",
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+     "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+    },
+    "slot_absent": {},
+    "absent_in_transfer": [
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))"
+    ],
+    "unseen_in_source": [
+     "button[_]@ctx0",
+     "button[_]@ctx1"
+    ],
+    "promoted_applied": [],
+    "promoted_absent": [],
+    "applicability": 0.8
+   },
+   "separation": [
+    {
+     "family": "cell[_]",
+     "key_slot": "cell#0",
+     "status": "CONFIRMED",
+     "copresent_pairs": 400,
+     "separated_pairs": 400,
+     "rate": 1.0
+    },
+    {
+     "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+     "key_slot": "group/group/text#0@9",
+     "status": "UNTESTED",
+     "copresent_pairs": 0,
+     "separated_pairs": 0,
+     "rate": null
+    },
+    {
+     "family": "row[_](cell[_],cell[_](button[_]))",
+     "key_slot": "cell#0@2",
+     "status": "PARTIAL",
+     "copresent_pairs": 400,
+     "separated_pairs": 376,
+     "rate": 0.94
+    }
+   ],
+   "separation_confirmed": 1,
+   "separation_refuted": 0,
+   "separation_tested": 2
+  },
+  "right": {
+   "name": "source_choice",
+   "key_slots": {
+    "button[_]": null,
+    "cell[_]": null,
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": null,
+    "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+   },
+   "hard_contradictions": 0,
+   "churn": 0,
+   "visibility": 0,
+   "spurious": 0,
+   "explained": 228,
+   "silent": 50,
+   "errors": 0,
+   "complexity": 336,
+   "applicability": 0.8,
+   "transport": {
+    "applied": {
+     "button[_]": null,
+     "cell[_]": null,
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": "group/group/text#0@9",
+     "row[_](cell[_],cell[_](button[_]))": "cell#0@2"
+    },
+    "slot_absent": {},
+    "absent_in_transfer": [
+     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))"
+    ],
+    "unseen_in_source": [
+     "button[_]@ctx0",
+     "button[_]@ctx1"
+    ],
+    "promoted_applied": [],
+    "promoted_absent": [],
+    "applicability": 0.8
+   },
+   "separation": [
+    {
+     "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+     "key_slot": "group/group/text#0@9",
+     "status": "UNTESTED",
+     "copresent_pairs": 0,
+     "separated_pairs": 0,
+     "rate": null
+    },
+    {
+     "family": "row[_](cell[_],cell[_](button[_]))",
+     "key_slot": "cell#0@2",
+     "status": "PARTIAL",
+     "copresent_pairs": 400,
+     "separated_pairs": 376,
+     "rate": 0.94
+    }
+   ],
+   "separation_confirmed": 0,
+   "separation_refuted": 0,
+   "separation_tested": 1
+  },
+  "differential": {
+   "counts": {
+    "BOTH_COMPATIBLE": 228,
+    "NOT_COMPARABLE": 597
+   },
+   "left_correct_where_right_wrong": 0,
+   "right_correct_where_left_wrong": 0,
+   "left_wrong_where_right_silent": 0,
+   "right_wrong_where_left_silent": 0,
+   "cases": []
+  }
+ },
+ "holdout_outcome": "CONFIRMED",
+ "outcome": "SELECTED"
+}

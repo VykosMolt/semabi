@@ -1,0 +1,479 @@
+{
+ "run": "runs/v4/harbour_transfer",
+ "tag": "opus_01_harbour",
+ "conditions": {
+  "v2": {
+   "rtc": 0.392,
+   "registered_transitions": 74,
+   "registered_deltas": 56,
+   "matched_registered_deltas": 29,
+   "strict_registered_delta_precision": 0.518,
+   "false_delta_categories": {
+    "incorrect_persistence": 18,
+    "spurious_relation": 3,
+    "wrong_attribute_attachment": 6
+   },
+   "gtc": 0.541,
+   "view_false_positive_rate": 0.049,
+   "types": {
+    "hidden": 4,
+    "learned": 8,
+    "recovered": 3,
+    "map": {
+     "T2": "Visit",
+     "T0": "Vessel",
+     "T5": "Berth"
+    }
+   },
+   "predicates": {
+    "hidden_attrs": 19,
+    "recovered_attrs": 3,
+    "hidden_rels": 9,
+    "recovered_rels": 1,
+    "attr_map": {
+     "T0.attr:m#0": "length_m",
+     "T5.attr:m#0": "max_length_m",
+     "T5.attr:cell#0@4": "max_length_m",
+     "T5.attr:cell#0@5": "closed"
+    },
+    "rel_map": {
+     "ref_5_rel:2": "visit_berth"
+    }
+   },
+   "operators": {
+    "hidden": 7,
+    "observed_in_trace": 3,
+    "recovered": 1,
+    "recovered_ops": [
+     "set_berth_closed"
+    ],
+    "learned": 5,
+    "spurious_learned": [
+     "op2",
+     "op3",
+     "op4"
+    ],
+    "precision": 0.4,
+    "failure_rejection_rate": 0.0
+   },
+   "operators_per_op": {
+    "schedule_call": [
+     12,
+     0
+    ],
+    "assign_berth": [
+     0,
+     0
+    ],
+    "assign_pilot": [
+     0,
+     0
+    ],
+    "bring_alongside": [
+     0,
+     0
+    ],
+    "record_departure": [
+     0,
+     0
+    ],
+    "set_berth_closed": [
+     28,
+     28
+    ],
+    "set_pilot_duty": [
+     34,
+     0
+    ]
+   },
+   "object_layer": {
+    "grounded_frac": 0.653,
+    "pair_precision": 0.887,
+    "pair_recall": 0.868,
+    "learned_keys_merging_entities": 19,
+    "entities_split_across_keys": 11,
+    "entities_grounded": 11,
+    "duplicate_name_separation": null,
+    "cross_view_identity": 1.0
+   },
+   "argument_binding": {
+    "set_pilot_duty": 0.0,
+    "schedule_call": 0.0,
+    "set_berth_closed": 0.0
+   },
+   "cost_primitives": 453
+  },
+  "v4": {
+   "rtc": 0.459,
+   "registered_transitions": 74,
+   "registered_deltas": 51,
+   "matched_registered_deltas": 34,
+   "strict_registered_delta_precision": 0.667,
+   "false_delta_categories": {
+    "spurious_relation": 11,
+    "wrong_attribute_attachment": 6
+   },
+   "gtc": 0.541,
+   "view_false_positive_rate": 0.0,
+   "types": {
+    "hidden": 4,
+    "learned": 10,
+    "recovered": 3,
+    "map": {
+     "T0": "Visit",
+     "T6": "Berth",
+     "T3": "Vessel"
+    }
+   },
+   "predicates": {
+    "hidden_attrs": 19,
+    "recovered_attrs": 3,
+    "hidden_rels": 9,
+    "recovered_rels": 2,
+    "attr_map": {
+     "T6.attr:m#0": "max_length_m",
+     "T6.attr:cell#0@4": "max_length_m",
+     "T6.attr:cell#0@5": "closed",
+     "T3.attr:cell#0@6": "calls_logged"
+    },
+    "rel_map": {
+     "ref_3_rel:0": "visit_vessel",
+     "ref_6_rel:0": "visit_berth"
+    }
+   },
+   "operators": {
+    "hidden": 7,
+    "observed_in_trace": 3,
+    "recovered": 1,
+    "recovered_ops": [
+     "set_berth_closed"
+    ],
+    "learned": 5,
+    "spurious_learned": [
+     "op2",
+     "op3",
+     "op4"
+    ],
+    "precision": 0.4,
+    "failure_rejection_rate": 0.0
+   },
+   "operators_per_op": {
+    "schedule_call": [
+     12,
+     0
+    ],
+    "assign_berth": [
+     0,
+     0
+    ],
+    "assign_pilot": [
+     0,
+     0
+    ],
+    "bring_alongside": [
+     0,
+     0
+    ],
+    "record_departure": [
+     0,
+     0
+    ],
+    "set_berth_closed": [
+     28,
+     28
+    ],
+    "set_pilot_duty": [
+     34,
+     0
+    ]
+   },
+   "object_layer": {
+    "grounded_frac": 0.519,
+    "pair_precision": 1.0,
+    "pair_recall": 1.0,
+    "learned_keys_merging_entities": 11,
+    "entities_split_across_keys": 7,
+    "entities_grounded": 11,
+    "duplicate_name_separation": null,
+    "cross_view_identity": 1.0
+   },
+   "argument_binding": {
+    "set_pilot_duty": 0.0,
+    "schedule_call": 0.25,
+    "set_berth_closed": 0.0
+   },
+   "cost_primitives": 453
+  },
+  "v4_transported": {
+   "rtc": 0.0,
+   "registered_transitions": 74,
+   "registered_deltas": 46,
+   "matched_registered_deltas": 0,
+   "strict_registered_delta_precision": 0.0,
+   "false_delta_categories": {
+    "incorrect_persistence": 13,
+    "spurious_relation": 5,
+    "wrong_attribute_attachment": 28
+   },
+   "gtc": 0.162,
+   "view_false_positive_rate": 0.0,
+   "types": {
+    "hidden": 4,
+    "learned": 13,
+    "recovered": 1,
+    "map": {
+     "T11": "Visit"
+    }
+   },
+   "predicates": {
+    "hidden_attrs": 19,
+    "recovered_attrs": 0,
+    "hidden_rels": 9,
+    "recovered_rels": 0,
+    "attr_map": {},
+    "rel_map": {}
+   },
+   "operators": {
+    "hidden": 7,
+    "observed_in_trace": 3,
+    "recovered": 0,
+    "recovered_ops": [],
+    "learned": 4,
+    "spurious_learned": [
+     "op0",
+     "op1",
+     "op2",
+     "op3"
+    ],
+    "precision": 0.0,
+    "failure_rejection_rate": 0.0
+   },
+   "operators_per_op": {
+    "schedule_call": [
+     12,
+     0
+    ],
+    "assign_berth": [
+     0,
+     0
+    ],
+    "assign_pilot": [
+     0,
+     0
+    ],
+    "bring_alongside": [
+     0,
+     0
+    ],
+    "record_departure": [
+     0,
+     0
+    ],
+    "set_berth_closed": [
+     28,
+     0
+    ],
+    "set_pilot_duty": [
+     34,
+     0
+    ]
+   },
+   "object_layer": {
+    "grounded_frac": 0.677,
+    "pair_precision": 0.984,
+    "pair_recall": 0.872,
+    "learned_keys_merging_entities": 15,
+    "entities_split_across_keys": 11,
+    "entities_grounded": 11,
+    "duplicate_name_separation": null,
+    "cross_view_identity": 1.0
+   },
+   "argument_binding": {
+    "set_pilot_duty": 0.0,
+    "schedule_call": 0.0,
+    "set_berth_closed": 0.0
+   },
+   "cost_primitives": 453
+  }
+ },
+ "prospective": null,
+ "transported": {
+  "v4_transported": {
+   "fingerprint": "9aa6f4dd131ed96b",
+   "transport": {
+    "applied": {
+     "button[_]": "button#0",
+     "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))": "heading#0",
+     "row[_](cell[_],cell[_](button[_]))": "cell#0@4",
+     "row[_](cell[_](button[_]),cell[_])": "cell#0@7"
+    },
+    "slot_absent": {},
+    "absent_in_transfer": [],
+    "unseen_in_source": [],
+    "promoted_applied": [],
+    "promoted_absent": [],
+    "applicability": 1.0
+   },
+   "source": {
+    "source_run": "runs/v4/harbour_dev",
+    "role": "SOURCE"
+   }
+  }
+ },
+ "v4_search": {
+  "initial": {
+   "contradictions": 0,
+   "churn": 0,
+   "visibility": 1,
+   "unexplained": 55,
+   "spurious": 0,
+   "explained": 40,
+   "delta_atoms": 57,
+   "complexity": 75,
+   "steps": 459,
+   "churn_steps": [],
+   "contradiction_steps": [],
+   "visibility_steps": [
+    206
+   ]
+  },
+  "final": {
+   "contradictions": 0,
+   "churn": 0,
+   "visibility": 0,
+   "unexplained": 0,
+   "spurious": 0,
+   "explained": 40,
+   "delta_atoms": 51,
+   "complexity": 93,
+   "steps": 459,
+   "churn_steps": [],
+   "contradiction_steps": [],
+   "visibility_steps": []
+  },
+  "moves": [
+   {
+    "move": "evidence_prior",
+    "score": {
+     "contradictions": 0,
+     "churn": 0,
+     "visibility": 0,
+     "unexplained": 0,
+     "spurious": 0,
+     "explained": 40,
+     "delta_atoms": 59,
+     "complexity": 109,
+     "steps": 459,
+     "churn_steps": [],
+     "contradiction_steps": [],
+     "visibility_steps": []
+    }
+   },
+   {
+    "move": "identity",
+    "family": "row[_](cell[_](button[_]),cell[_])",
+    "templates": 2,
+    "key_slot": null,
+    "status": "NO_IDENTITY",
+    "score": {
+     "contradictions": 0,
+     "churn": 0,
+     "visibility": 0,
+     "unexplained": 0,
+     "spurious": 0,
+     "explained": 40,
+     "delta_atoms": 51,
+     "complexity": 93,
+     "steps": 459,
+     "churn_steps": [],
+     "contradiction_steps": [],
+     "visibility_steps": []
+    }
+   }
+  ],
+  "open_questions": [
+   {
+    "template": "row[_](cell[_],cell[_](button[_]))",
+    "left": {
+     "template": "row[_](cell[_],cell[_](button[_]))",
+     "key_slot": "cell#0",
+     "status": "SUPPORTED",
+     "why": "separates 400/400 co-present pairs, 11 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 400,
+      "separated_pairs": 400,
+      "discrimination": 1.0,
+      "coverage": 1.0,
+      "distinct_values": 11,
+      "constant_share": 0.166,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "row[_](cell[_],cell[_](button[_]))",
+     "key_slot": "cell#0@3",
+     "status": "SUPPORTED",
+     "why": "separates 400/400 co-present pairs, 11 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 400,
+      "separated_pairs": 400,
+      "discrimination": 1.0,
+      "coverage": 1.0,
+      "distinct_values": 11,
+      "constant_share": 0.166,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 1.0
+     }
+    },
+    "reason": "the trace so far scores both readings identically"
+   },
+   {
+    "template": "row[_](cell[_],cell[_](button[_]))",
+    "left": {
+     "template": "row[_](cell[_],cell[_](button[_]))",
+     "key_slot": "cell#0",
+     "status": "SUPPORTED",
+     "why": "separates 400/400 co-present pairs, 11 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 400,
+      "separated_pairs": 400,
+      "discrimination": 1.0,
+      "coverage": 1.0,
+      "distinct_values": 11,
+      "constant_share": 0.166,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "row[_](cell[_],cell[_](button[_]))",
+     "key_slot": "cell#0@4",
+     "status": "SUPPORTED",
+     "why": "separates 199/400 co-present pairs, 2 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 400,
+      "separated_pairs": 199,
+      "discrimination": 0.4975,
+      "coverage": 1.0,
+      "distinct_values": 2,
+      "constant_share": 0.669,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "reason": "the trace so far scores both readings identically"
+   }
+  ],
+  "families": {
+   "button[_]": 1,
+   "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))": 7,
+   "row[_](cell[_],cell[_](button[_]))": 9,
+   "row[_](cell[_](button[_]),cell[_])": 2
+  }
+ }
+}

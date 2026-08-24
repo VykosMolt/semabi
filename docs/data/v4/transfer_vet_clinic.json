@@ -1,0 +1,3666 @@
+{
+ "roles": {
+  "SOURCE": "runs/v4/vet_clinic_dev",
+  "TRANSFER": "runs/v4/vet_clinic_transfer",
+  "HOLDOUT": "runs/v4/vet_clinic_holdout"
+ },
+ "role_semantics": {
+  "SOURCE": "generated the readings and rejected some locally; not validation",
+  "TRANSFER": "compared frozen readings and may refute them; not validation",
+  "HOLDOUT": "took no part in selection; the only evidence that validates"
+ },
+ "source": {
+  "local_final": {
+   "contradictions": 6,
+   "churn": 0,
+   "visibility": 8,
+   "unexplained": 58,
+   "spurious": 0,
+   "explained": 30,
+   "delta_atoms": 30,
+   "complexity": 42,
+   "steps": 403,
+   "churn_steps": [],
+   "contradiction_steps": [
+    402,
+    220,
+    263,
+    276,
+    377,
+    381
+   ],
+   "visibility_steps": [
+    4,
+    66,
+    107,
+    126,
+    177,
+    238,
+    279,
+    382
+   ]
+  },
+  "families": {
+   "cell[_]": 1,
+   "group[_](heading[_],list[_](listitem[_]))": 2,
+   "row[_](cell[_])": 2,
+   "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": 6,
+   "text[_](combobox[_])": 1,
+   "text[_](textbox[_])": 2
+  },
+  "open_questions": [],
+  "alternatives_generated": [
+   {
+    "family": "cell[_]",
+    "promotion": "cell#0",
+    "discrimination": 0.6525,
+    "copresent_pairs": 400
+   },
+   {
+    "family": "listitem[_]",
+    "promotion": "listitem#0!",
+    "discrimination": 1.0,
+    "copresent_pairs": 400
+   },
+   {
+    "family": "cell[_]",
+    "alternative": "cell#0",
+    "status": "SUPPORTED",
+    "discrimination": 1.0
+   },
+   {
+    "family": "group[_](heading[_],list[_](listitem[_]))",
+    "alternative": "heading#1",
+    "status": "SUPPORTED",
+    "discrimination": 1.0
+   },
+   {
+    "family": "row[_](cell[_])",
+    "alternative": null,
+    "status": "NO_IDENTITY",
+    "discrimination": 0.0
+   }
+  ]
+ },
+ "candidates": [
+  {
+   "name": "source_choice",
+   "fingerprint": "2dc9cce46cf67682",
+   "promoted": [],
+   "reading": {
+    "version": 1,
+    "name": "source_choice",
+    "families": {
+     "cell[_]": {
+      "family": "cell[_]",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "group[_](heading[_],list[_](listitem[_]))": {
+      "family": "group[_](heading[_],list[_](listitem[_]))",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "row[_](cell[_])": {
+      "family": "row[_](cell[_])",
+      "key_slot": "cell#0",
+      "status": "SUPPORTED",
+      "discrimination": 1.0
+     },
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": {
+      "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+      "key_slot": "cell#0|cell#0@4",
+      "status": "SUPPORTED",
+      "discrimination": 0.8529411764705882
+     },
+     "text[_](combobox[_])": {
+      "family": "text[_](combobox[_])",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "text[_](textbox[_])": {
+      "family": "text[_](textbox[_])",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     }
+    },
+    "promoted_families": [],
+    "refuted": {
+     "text[_](textbox[_])": [
+      "text#0"
+     ]
+    },
+    "provenance": {
+     "source_run": "runs/v4/vet_clinic_dev",
+     "role": "SOURCE"
+    }
+   }
+  },
+  {
+   "name": "promote cell[_]=cell#0",
+   "fingerprint": "47477133d9438fa0",
+   "promoted": [
+    "cell[_]"
+   ],
+   "reading": {
+    "version": 1,
+    "name": "promote cell[_]=cell#0",
+    "families": {
+     "cell[_]": {
+      "family": "cell[_]",
+      "key_slot": "cell#0",
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "group[_](heading[_],list[_](listitem[_]))": {
+      "family": "group[_](heading[_],list[_](listitem[_]))",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "row[_](cell[_])": {
+      "family": "row[_](cell[_])",
+      "key_slot": "cell#0",
+      "status": "SUPPORTED",
+      "discrimination": 1.0
+     },
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": {
+      "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+      "key_slot": "cell#0|cell#0@4",
+      "status": "SUPPORTED",
+      "discrimination": 0.8529411764705882
+     },
+     "text[_](combobox[_])": {
+      "family": "text[_](combobox[_])",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "text[_](textbox[_])": {
+      "family": "text[_](textbox[_])",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     }
+    },
+    "promoted_families": [
+     "cell[_]"
+    ],
+    "refuted": {
+     "text[_](textbox[_])": [
+      "text#0"
+     ]
+    },
+    "provenance": {
+     "source_run": "runs/v4/vet_clinic_dev",
+     "role": "SOURCE"
+    }
+   }
+  },
+  {
+   "name": "promote listitem[_]=listitem#0!",
+   "fingerprint": "d6642195deed2820",
+   "promoted": [
+    "listitem[_]"
+   ],
+   "reading": {
+    "version": 1,
+    "name": "promote listitem[_]=listitem#0!",
+    "families": {
+     "cell[_]": {
+      "family": "cell[_]",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "group[_](heading[_],list[_](listitem[_]))": {
+      "family": "group[_](heading[_],list[_](listitem[_]))",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "listitem[_]": {
+      "family": "listitem[_]",
+      "key_slot": "listitem#0!",
+      "status": "VARIANT",
+      "discrimination": null
+     },
+     "row[_](cell[_])": {
+      "family": "row[_](cell[_])",
+      "key_slot": "cell#0",
+      "status": "SUPPORTED",
+      "discrimination": 1.0
+     },
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": {
+      "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+      "key_slot": "cell#0|cell#0@4",
+      "status": "SUPPORTED",
+      "discrimination": 0.8529411764705882
+     },
+     "text[_](combobox[_])": {
+      "family": "text[_](combobox[_])",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "text[_](textbox[_])": {
+      "family": "text[_](textbox[_])",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     }
+    },
+    "promoted_families": [
+     "listitem[_]"
+    ],
+    "refuted": {
+     "text[_](textbox[_])": [
+      "text#0"
+     ]
+    },
+    "provenance": {
+     "source_run": "runs/v4/vet_clinic_dev",
+     "role": "SOURCE"
+    }
+   }
+  },
+  {
+   "name": "cell[_]=cell#0",
+   "fingerprint": "684c07c3caa4a14e",
+   "promoted": [],
+   "reading": {
+    "version": 1,
+    "name": "cell[_]=cell#0",
+    "families": {
+     "cell[_]": {
+      "family": "cell[_]",
+      "key_slot": "cell#0",
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "group[_](heading[_],list[_](listitem[_]))": {
+      "family": "group[_](heading[_],list[_](listitem[_]))",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "row[_](cell[_])": {
+      "family": "row[_](cell[_])",
+      "key_slot": "cell#0",
+      "status": "SUPPORTED",
+      "discrimination": 1.0
+     },
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": {
+      "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+      "key_slot": "cell#0|cell#0@4",
+      "status": "SUPPORTED",
+      "discrimination": 0.8529411764705882
+     },
+     "text[_](combobox[_])": {
+      "family": "text[_](combobox[_])",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "text[_](textbox[_])": {
+      "family": "text[_](textbox[_])",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     }
+    },
+    "promoted_families": [],
+    "refuted": {
+     "text[_](textbox[_])": [
+      "text#0"
+     ]
+    },
+    "provenance": {
+     "source_run": "runs/v4/vet_clinic_dev",
+     "role": "SOURCE"
+    }
+   }
+  },
+  {
+   "name": "group[_](heading[_],list=heading#1",
+   "fingerprint": "d7a67a57bb78fbde",
+   "promoted": [],
+   "reading": {
+    "version": 1,
+    "name": "group[_](heading[_],list=heading#1",
+    "families": {
+     "cell[_]": {
+      "family": "cell[_]",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "group[_](heading[_],list[_](listitem[_]))": {
+      "family": "group[_](heading[_],list[_](listitem[_]))",
+      "key_slot": "heading#1",
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "row[_](cell[_])": {
+      "family": "row[_](cell[_])",
+      "key_slot": "cell#0",
+      "status": "SUPPORTED",
+      "discrimination": 1.0
+     },
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": {
+      "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+      "key_slot": "cell#0|cell#0@4",
+      "status": "SUPPORTED",
+      "discrimination": 0.8529411764705882
+     },
+     "text[_](combobox[_])": {
+      "family": "text[_](combobox[_])",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "text[_](textbox[_])": {
+      "family": "text[_](textbox[_])",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     }
+    },
+    "promoted_families": [],
+    "refuted": {
+     "text[_](textbox[_])": [
+      "text#0"
+     ]
+    },
+    "provenance": {
+     "source_run": "runs/v4/vet_clinic_dev",
+     "role": "SOURCE"
+    }
+   }
+  },
+  {
+   "name": "row[_](cell[_])=None",
+   "fingerprint": "01f25b9f505de0d7",
+   "promoted": [],
+   "reading": {
+    "version": 1,
+    "name": "row[_](cell[_])=None",
+    "families": {
+     "cell[_]": {
+      "family": "cell[_]",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "group[_](heading[_],list[_](listitem[_]))": {
+      "family": "group[_](heading[_],list[_](listitem[_]))",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "row[_](cell[_])": {
+      "family": "row[_](cell[_])",
+      "key_slot": null,
+      "status": "SUPPORTED",
+      "discrimination": 1.0
+     },
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": {
+      "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+      "key_slot": "cell#0|cell#0@4",
+      "status": "SUPPORTED",
+      "discrimination": 0.8529411764705882
+     },
+     "text[_](combobox[_])": {
+      "family": "text[_](combobox[_])",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     },
+     "text[_](textbox[_])": {
+      "family": "text[_](textbox[_])",
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "discrimination": 0.0
+     }
+    },
+    "promoted_families": [],
+    "refuted": {
+     "text[_](textbox[_])": [
+      "text#0"
+     ]
+    },
+    "provenance": {
+     "source_run": "runs/v4/vet_clinic_dev",
+     "role": "SOURCE"
+    }
+   }
+  }
+ ],
+ "transfer": {
+  "source_choice": {
+   "name": "source_choice",
+   "key_slots": {
+    "cell[_]": null,
+    "group[_](heading[_],list[_](listitem[_]))": null,
+    "row[_](cell[_])": "cell#0",
+    "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+    "text[_](combobox[_])": null,
+    "text[_](textbox[_])": null
+   },
+   "hard_contradictions": 0,
+   "churn": 18,
+   "visibility": 6,
+   "spurious": 0,
+   "explained": 31,
+   "silent": 377,
+   "errors": 24,
+   "complexity": 24,
+   "applicability": 1.0,
+   "transport": {
+    "applied": {
+     "cell[_]": null,
+     "group[_](heading[_],list[_](listitem[_]))": null,
+     "row[_](cell[_])": "cell#0",
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+     "text[_](combobox[_])": null,
+     "text[_](textbox[_])": null
+    },
+    "slot_absent": {},
+    "absent_in_transfer": [],
+    "unseen_in_source": [
+     "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))"
+    ],
+    "promoted_applied": [],
+    "promoted_absent": [],
+    "applicability": 1.0
+   },
+   "separation": [
+    {
+     "family": "row[_](cell[_])",
+     "key_slot": "cell#0",
+     "status": "PARTIAL",
+     "copresent_pairs": 400,
+     "separated_pairs": 262,
+     "rate": 0.655
+    },
+    {
+     "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+     "key_slot": "cell#0|cell#0@4",
+     "status": "CONFIRMED",
+     "copresent_pairs": 47,
+     "separated_pairs": 47,
+     "rate": 1.0
+    }
+   ],
+   "separation_confirmed": 1,
+   "separation_refuted": 0,
+   "separation_tested": 2
+  },
+  "promote cell[_]=cell#0": {
+   "name": "promote cell[_]=cell#0",
+   "key_slots": {
+    "cell[_]": "cell#0",
+    "group[_](heading[_],list[_](listitem[_]))": null,
+    "row[_](cell[_])": "cell#0",
+    "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+    "text[_](combobox[_])": null,
+    "text[_](textbox[_])": null
+   },
+   "hard_contradictions": 0,
+   "churn": 10,
+   "visibility": 291,
+   "spurious": 8,
+   "explained": 43,
+   "silent": 73,
+   "errors": 309,
+   "complexity": 11,
+   "applicability": 0.833,
+   "transport": {
+    "applied": {
+     "cell[_]": "cell#0",
+     "group[_](heading[_],list[_](listitem[_]))": null,
+     "row[_](cell[_])": "cell#0",
+     "text[_](combobox[_])": null,
+     "text[_](textbox[_])": null
+    },
+    "slot_absent": {
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4"
+    },
+    "absent_in_transfer": [],
+    "unseen_in_source": [
+     "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))"
+    ],
+    "promoted_applied": [
+     "cell[_]"
+    ],
+    "promoted_absent": [],
+    "applicability": 0.833
+   },
+   "separation": [
+    {
+     "family": "cell[_]",
+     "key_slot": "cell#0",
+     "status": "PARTIAL",
+     "copresent_pairs": 400,
+     "separated_pairs": 152,
+     "rate": 0.38
+    },
+    {
+     "family": "row[_](cell[_])",
+     "key_slot": "cell#0",
+     "status": "CONFIRMED",
+     "copresent_pairs": 2,
+     "separated_pairs": 2,
+     "rate": 1.0
+    },
+    {
+     "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+     "key_slot": "cell#0|cell#0@4",
+     "status": "UNTESTED",
+     "copresent_pairs": 0,
+     "separated_pairs": 0,
+     "rate": null
+    }
+   ],
+   "separation_confirmed": 1,
+   "separation_refuted": 0,
+   "separation_tested": 2
+  },
+  "promote listitem[_]=listitem#0!": {
+   "name": "promote listitem[_]=listitem#0!",
+   "key_slots": {
+    "cell[_]": null,
+    "group[_](heading[_],list[_](listitem[_]))": null,
+    "listitem[_]": "listitem#0!",
+    "row[_](cell[_])": "cell#0",
+    "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+    "text[_](combobox[_])": null,
+    "text[_](textbox[_])": null
+   },
+   "hard_contradictions": 0,
+   "churn": 3,
+   "visibility": 167,
+   "spurious": 0,
+   "explained": 37,
+   "silent": 306,
+   "errors": 170,
+   "complexity": 34,
+   "applicability": 1.0,
+   "transport": {
+    "applied": {
+     "cell[_]": null,
+     "group[_](heading[_],list[_](listitem[_]))": null,
+     "listitem[_]": "listitem#0!",
+     "row[_](cell[_])": "cell#0",
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+     "text[_](combobox[_])": null,
+     "text[_](textbox[_])": null
+    },
+    "slot_absent": {},
+    "absent_in_transfer": [],
+    "unseen_in_source": [
+     "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))"
+    ],
+    "promoted_applied": [
+     "listitem[_]"
+    ],
+    "promoted_absent": [],
+    "applicability": 1.0
+   },
+   "separation": [
+    {
+     "family": "listitem[_]",
+     "key_slot": "listitem#0!",
+     "status": "CONFIRMED",
+     "copresent_pairs": 30,
+     "separated_pairs": 30,
+     "rate": 1.0
+    },
+    {
+     "family": "row[_](cell[_])",
+     "key_slot": "cell#0",
+     "status": "PARTIAL",
+     "copresent_pairs": 400,
+     "separated_pairs": 262,
+     "rate": 0.655
+    },
+    {
+     "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+     "key_slot": "cell#0|cell#0@4",
+     "status": "CONFIRMED",
+     "copresent_pairs": 47,
+     "separated_pairs": 47,
+     "rate": 1.0
+    }
+   ],
+   "separation_confirmed": 2,
+   "separation_refuted": 0,
+   "separation_tested": 3
+  },
+  "cell[_]=cell#0": {
+   "name": "cell[_]=cell#0",
+   "key_slots": {
+    "cell[_]": "cell#0",
+    "group[_](heading[_],list[_](listitem[_]))": null,
+    "row[_](cell[_])": "cell#0",
+    "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+    "text[_](combobox[_])": null,
+    "text[_](textbox[_])": null
+   },
+   "hard_contradictions": 0,
+   "churn": 18,
+   "visibility": 289,
+   "spurious": 0,
+   "explained": 31,
+   "silent": 94,
+   "errors": 307,
+   "complexity": 29,
+   "applicability": 1.0,
+   "transport": {
+    "applied": {
+     "cell[_]": "cell#0",
+     "group[_](heading[_],list[_](listitem[_]))": null,
+     "row[_](cell[_])": "cell#0",
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+     "text[_](combobox[_])": null,
+     "text[_](textbox[_])": null
+    },
+    "slot_absent": {},
+    "absent_in_transfer": [],
+    "unseen_in_source": [
+     "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))"
+    ],
+    "promoted_applied": [],
+    "promoted_absent": [],
+    "applicability": 1.0
+   },
+   "separation": [
+    {
+     "family": "cell[_]",
+     "key_slot": "cell#0",
+     "status": "CONFIRMED",
+     "copresent_pairs": 400,
+     "separated_pairs": 400,
+     "rate": 1.0
+    },
+    {
+     "family": "row[_](cell[_])",
+     "key_slot": "cell#0",
+     "status": "PARTIAL",
+     "copresent_pairs": 400,
+     "separated_pairs": 262,
+     "rate": 0.655
+    },
+    {
+     "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+     "key_slot": "cell#0|cell#0@4",
+     "status": "CONFIRMED",
+     "copresent_pairs": 47,
+     "separated_pairs": 47,
+     "rate": 1.0
+    }
+   ],
+   "separation_confirmed": 2,
+   "separation_refuted": 0,
+   "separation_tested": 3
+  },
+  "group[_](heading[_],list=heading#1": {
+   "name": "group[_](heading[_],list=heading#1",
+   "key_slots": {
+    "cell[_]": null,
+    "group[_](heading[_],list[_](listitem[_]))": "heading#1",
+    "row[_](cell[_])": "cell#0",
+    "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+    "text[_](combobox[_])": null,
+    "text[_](textbox[_])": null
+   },
+   "hard_contradictions": 0,
+   "churn": 18,
+   "visibility": 6,
+   "spurious": 0,
+   "explained": 31,
+   "silent": 377,
+   "errors": 24,
+   "complexity": 42,
+   "applicability": 1.0,
+   "transport": {
+    "applied": {
+     "cell[_]": null,
+     "group[_](heading[_],list[_](listitem[_]))": "heading#1",
+     "row[_](cell[_])": "cell#0",
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+     "text[_](combobox[_])": null,
+     "text[_](textbox[_])": null
+    },
+    "slot_absent": {},
+    "absent_in_transfer": [],
+    "unseen_in_source": [
+     "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))"
+    ],
+    "promoted_applied": [],
+    "promoted_absent": [],
+    "applicability": 1.0
+   },
+   "separation": [
+    {
+     "family": "group[_](heading[_],list[_](listitem[_]))",
+     "key_slot": "heading#1",
+     "status": "CONFIRMED",
+     "copresent_pairs": 30,
+     "separated_pairs": 30,
+     "rate": 1.0
+    },
+    {
+     "family": "row[_](cell[_])",
+     "key_slot": "cell#0",
+     "status": "PARTIAL",
+     "copresent_pairs": 400,
+     "separated_pairs": 262,
+     "rate": 0.655
+    },
+    {
+     "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+     "key_slot": "cell#0|cell#0@4",
+     "status": "CONFIRMED",
+     "copresent_pairs": 47,
+     "separated_pairs": 47,
+     "rate": 1.0
+    }
+   ],
+   "separation_confirmed": 2,
+   "separation_refuted": 0,
+   "separation_tested": 3
+  },
+  "row[_](cell[_])=None": {
+   "name": "row[_](cell[_])=None",
+   "key_slots": {
+    "cell[_]": null,
+    "group[_](heading[_],list[_](listitem[_]))": null,
+    "row[_](cell[_])": null,
+    "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+    "text[_](combobox[_])": null,
+    "text[_](textbox[_])": null
+   },
+   "hard_contradictions": 0,
+   "churn": 0,
+   "visibility": 0,
+   "spurious": 0,
+   "explained": 15,
+   "silent": 186,
+   "errors": 0,
+   "complexity": 9,
+   "applicability": 1.0,
+   "transport": {
+    "applied": {
+     "cell[_]": null,
+     "group[_](heading[_],list[_](listitem[_]))": null,
+     "row[_](cell[_])": null,
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+     "text[_](combobox[_])": null,
+     "text[_](textbox[_])": null
+    },
+    "slot_absent": {},
+    "absent_in_transfer": [],
+    "unseen_in_source": [
+     "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))"
+    ],
+    "promoted_applied": [],
+    "promoted_absent": [],
+    "applicability": 1.0
+   },
+   "separation": [
+    {
+     "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+     "key_slot": "cell#0|cell#0@4",
+     "status": "CONFIRMED",
+     "copresent_pairs": 47,
+     "separated_pairs": 47,
+     "rate": 1.0
+    }
+   ],
+   "separation_confirmed": 1,
+   "separation_refuted": 0,
+   "separation_tested": 1
+  }
+ },
+ "transfer_decisions": [
+  {
+   "left": {
+    "name": "source_choice",
+    "key_slots": {
+     "cell[_]": null,
+     "group[_](heading[_],list[_](listitem[_]))": null,
+     "row[_](cell[_])": "cell#0",
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+     "text[_](combobox[_])": null,
+     "text[_](textbox[_])": null
+    },
+    "hard_contradictions": 0,
+    "churn": 18,
+    "visibility": 6,
+    "spurious": 0,
+    "explained": 31,
+    "silent": 377,
+    "errors": 24,
+    "complexity": 24,
+    "applicability": 1.0,
+    "transport": {
+     "applied": {
+      "cell[_]": null,
+      "group[_](heading[_],list[_](listitem[_]))": null,
+      "row[_](cell[_])": "cell#0",
+      "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+      "text[_](combobox[_])": null,
+      "text[_](textbox[_])": null
+     },
+     "slot_absent": {},
+     "absent_in_transfer": [],
+     "unseen_in_source": [
+      "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))"
+     ],
+     "promoted_applied": [],
+     "promoted_absent": [],
+     "applicability": 1.0
+    },
+    "separation": [
+     {
+      "family": "row[_](cell[_])",
+      "key_slot": "cell#0",
+      "status": "PARTIAL",
+      "copresent_pairs": 400,
+      "separated_pairs": 262,
+      "rate": 0.655
+     },
+     {
+      "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+      "key_slot": "cell#0|cell#0@4",
+      "status": "CONFIRMED",
+      "copresent_pairs": 47,
+      "separated_pairs": 47,
+      "rate": 1.0
+     }
+    ],
+    "separation_confirmed": 1,
+    "separation_refuted": 0,
+    "separation_tested": 2
+   },
+   "right": {
+    "name": "promote cell[_]=cell#0",
+    "key_slots": {
+     "cell[_]": "cell#0",
+     "group[_](heading[_],list[_](listitem[_]))": null,
+     "row[_](cell[_])": "cell#0",
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+     "text[_](combobox[_])": null,
+     "text[_](textbox[_])": null
+    },
+    "hard_contradictions": 0,
+    "churn": 10,
+    "visibility": 291,
+    "spurious": 8,
+    "explained": 43,
+    "silent": 73,
+    "errors": 309,
+    "complexity": 11,
+    "applicability": 0.833,
+    "transport": {
+     "applied": {
+      "cell[_]": "cell#0",
+      "group[_](heading[_],list[_](listitem[_]))": null,
+      "row[_](cell[_])": "cell#0",
+      "text[_](combobox[_])": null,
+      "text[_](textbox[_])": null
+     },
+     "slot_absent": {
+      "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4"
+     },
+     "absent_in_transfer": [],
+     "unseen_in_source": [
+      "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))"
+     ],
+     "promoted_applied": [
+      "cell[_]"
+     ],
+     "promoted_absent": [],
+     "applicability": 0.833
+    },
+    "separation": [
+     {
+      "family": "cell[_]",
+      "key_slot": "cell#0",
+      "status": "PARTIAL",
+      "copresent_pairs": 400,
+      "separated_pairs": 152,
+      "rate": 0.38
+     },
+     {
+      "family": "row[_](cell[_])",
+      "key_slot": "cell#0",
+      "status": "CONFIRMED",
+      "copresent_pairs": 2,
+      "separated_pairs": 2,
+      "rate": 1.0
+     },
+     {
+      "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+      "key_slot": "cell#0|cell#0@4",
+      "status": "UNTESTED",
+      "copresent_pairs": 0,
+      "separated_pairs": 0,
+      "rate": null
+     }
+    ],
+    "separation_confirmed": 1,
+    "separation_refuted": 0,
+    "separation_tested": 2
+   },
+   "outcome": "INCONCLUSIVE_ASYMMETRIC_APPLICABILITY",
+   "reason": "the right reading could be instantiated on 0.83 of its claims here against 1.00 for the left one, so this history did not put them to the same test",
+   "differential": {
+    "counts": {
+     "BOTH_COMPATIBLE": 20,
+     "BOTH_WRONG": 11,
+     "LEFT_CORRECT_RIGHT_WRONG": 8,
+     "LEFT_PREDICTS_RIGHT_SILENT": 3,
+     "NOT_COMPARABLE": 536,
+     "RIGHT_CORRECT_LEFT_WRONG": 13,
+     "RIGHT_PREDICTS_LEFT_SILENT": 10,
+     "RIGHT_WRONG_LEFT_SILENT": 290
+    },
+    "left_correct_where_right_wrong": 8,
+    "right_correct_where_left_wrong": 13,
+    "left_wrong_where_right_silent": 0,
+    "right_wrong_where_left_silent": 290,
+    "cases": [
+     {
+      "step": 4,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 9,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 12,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 13,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 15,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 18,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 19,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 26,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 27,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 36,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 40,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 41,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 46,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 47,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 51,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 52,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 58,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 61,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 62,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 66,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 67,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 68,
+      "left": "EXPLAINED",
+      "right": "SPURIOUS",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 71,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 72,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 76,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 77,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 81,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 82,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 86,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 87,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 91,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 92,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 96,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 97,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 98,
+      "left": "SILENT",
+      "right": "EXPLAINED",
+      "class": "RIGHT_PREDICTS_LEFT_SILENT"
+     },
+     {
+      "step": 101,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 102,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 103,
+      "left": "CHURN",
+      "right": "CHURN",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 106,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 107,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 111,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 112,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 113,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 116,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 120,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 121,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 124,
+      "left": "VISIBILITY",
+      "right": "VISIBILITY",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 127,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 128,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 129,
+      "left": "EXPLAINED",
+      "right": "SPURIOUS",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 130,
+      "left": "CHURN",
+      "right": "EXPLAINED",
+      "class": "RIGHT_CORRECT_LEFT_WRONG"
+     },
+     {
+      "step": 134,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 135,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 137,
+      "left": "EXPLAINED",
+      "right": "CHURN",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 143,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 144,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 151,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 152,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 154,
+      "left": "EXPLAINED",
+      "right": "SPURIOUS",
+      "class": "LEFT_CORRECT_RIGHT_WRONG"
+     },
+     {
+      "step": 156,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     }
+    ]
+   }
+  },
+  {
+   "left": {
+    "name": "source_choice",
+    "key_slots": {
+     "cell[_]": null,
+     "group[_](heading[_],list[_](listitem[_]))": null,
+     "row[_](cell[_])": "cell#0",
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+     "text[_](combobox[_])": null,
+     "text[_](textbox[_])": null
+    },
+    "hard_contradictions": 0,
+    "churn": 18,
+    "visibility": 6,
+    "spurious": 0,
+    "explained": 31,
+    "silent": 377,
+    "errors": 24,
+    "complexity": 24,
+    "applicability": 1.0,
+    "transport": {
+     "applied": {
+      "cell[_]": null,
+      "group[_](heading[_],list[_](listitem[_]))": null,
+      "row[_](cell[_])": "cell#0",
+      "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+      "text[_](combobox[_])": null,
+      "text[_](textbox[_])": null
+     },
+     "slot_absent": {},
+     "absent_in_transfer": [],
+     "unseen_in_source": [
+      "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))"
+     ],
+     "promoted_applied": [],
+     "promoted_absent": [],
+     "applicability": 1.0
+    },
+    "separation": [
+     {
+      "family": "row[_](cell[_])",
+      "key_slot": "cell#0",
+      "status": "PARTIAL",
+      "copresent_pairs": 400,
+      "separated_pairs": 262,
+      "rate": 0.655
+     },
+     {
+      "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+      "key_slot": "cell#0|cell#0@4",
+      "status": "CONFIRMED",
+      "copresent_pairs": 47,
+      "separated_pairs": 47,
+      "rate": 1.0
+     }
+    ],
+    "separation_confirmed": 1,
+    "separation_refuted": 0,
+    "separation_tested": 2
+   },
+   "right": {
+    "name": "promote listitem[_]=listitem#0!",
+    "key_slots": {
+     "cell[_]": null,
+     "group[_](heading[_],list[_](listitem[_]))": null,
+     "listitem[_]": "listitem#0!",
+     "row[_](cell[_])": "cell#0",
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+     "text[_](combobox[_])": null,
+     "text[_](textbox[_])": null
+    },
+    "hard_contradictions": 0,
+    "churn": 3,
+    "visibility": 167,
+    "spurious": 0,
+    "explained": 37,
+    "silent": 306,
+    "errors": 170,
+    "complexity": 34,
+    "applicability": 1.0,
+    "transport": {
+     "applied": {
+      "cell[_]": null,
+      "group[_](heading[_],list[_](listitem[_]))": null,
+      "listitem[_]": "listitem#0!",
+      "row[_](cell[_])": "cell#0",
+      "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+      "text[_](combobox[_])": null,
+      "text[_](textbox[_])": null
+     },
+     "slot_absent": {},
+     "absent_in_transfer": [],
+     "unseen_in_source": [
+      "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))"
+     ],
+     "promoted_applied": [
+      "listitem[_]"
+     ],
+     "promoted_absent": [],
+     "applicability": 1.0
+    },
+    "separation": [
+     {
+      "family": "listitem[_]",
+      "key_slot": "listitem#0!",
+      "status": "CONFIRMED",
+      "copresent_pairs": 30,
+      "separated_pairs": 30,
+      "rate": 1.0
+     },
+     {
+      "family": "row[_](cell[_])",
+      "key_slot": "cell#0",
+      "status": "PARTIAL",
+      "copresent_pairs": 400,
+      "separated_pairs": 262,
+      "rate": 0.655
+     },
+     {
+      "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+      "key_slot": "cell#0|cell#0@4",
+      "status": "CONFIRMED",
+      "copresent_pairs": 47,
+      "separated_pairs": 47,
+      "rate": 1.0
+     }
+    ],
+    "separation_confirmed": 2,
+    "separation_refuted": 0,
+    "separation_tested": 3
+   },
+   "outcome": "LEFT",
+   "reason": "contradicted at fewer steps where the readings differ (15 against 80)",
+   "differential": {
+    "counts": {
+     "BOTH_COMPATIBLE": 26,
+     "BOTH_WRONG": 9,
+     "LEFT_PREDICTS_RIGHT_SILENT": 5,
+     "LEFT_WRONG_RIGHT_SILENT": 4,
+     "NOT_COMPARABLE": 756,
+     "RIGHT_CORRECT_LEFT_WRONG": 11,
+     "RIGHT_WRONG_LEFT_SILENT": 80
+    },
+    "left_correct_where_right_wrong": 0,
+    "right_correct_where_left_wrong": 11,
+    "left_wrong_where_right_silent": 4,
+    "right_wrong_where_left_silent": 80,
+    "cases": [
+     {
+      "step": 4,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 5,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 15,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 16,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 17,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 58,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 103,
+      "left": "CHURN",
+      "right": "SILENT",
+      "class": "LEFT_WRONG_RIGHT_SILENT"
+     },
+     {
+      "step": 124,
+      "left": "VISIBILITY",
+      "right": "VISIBILITY",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 130,
+      "left": "CHURN",
+      "right": "EXPLAINED",
+      "class": "RIGHT_CORRECT_LEFT_WRONG"
+     },
+     {
+      "step": 132,
+      "left": "EXPLAINED",
+      "right": "SILENT",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 133,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 155,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 159,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 163,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 169,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 180,
+      "left": "CHURN",
+      "right": "EXPLAINED",
+      "class": "RIGHT_CORRECT_LEFT_WRONG"
+     },
+     {
+      "step": 181,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 190,
+      "left": "EXPLAINED",
+      "right": "SILENT",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 238,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 242,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 252,
+      "left": "VISIBILITY",
+      "right": "VISIBILITY",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 268,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 280,
+      "left": "CHURN",
+      "right": "SILENT",
+      "class": "LEFT_WRONG_RIGHT_SILENT"
+     },
+     {
+      "step": 283,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 286,
+      "left": "CHURN",
+      "right": "EXPLAINED",
+      "class": "RIGHT_CORRECT_LEFT_WRONG"
+     },
+     {
+      "step": 287,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 303,
+      "left": "CHURN",
+      "right": "EXPLAINED",
+      "class": "RIGHT_CORRECT_LEFT_WRONG"
+     },
+     {
+      "step": 313,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 323,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 338,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 341,
+      "left": "CHURN",
+      "right": "EXPLAINED",
+      "class": "RIGHT_CORRECT_LEFT_WRONG"
+     },
+     {
+      "step": 380,
+      "left": "CHURN",
+      "right": "SILENT",
+      "class": "LEFT_WRONG_RIGHT_SILENT"
+     },
+     {
+      "step": 398,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 402,
+      "left": "EXPLAINED",
+      "right": "SILENT",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 403,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 411,
+      "left": "EXPLAINED",
+      "right": "SILENT",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 413,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 421,
+      "left": "CHURN",
+      "right": "EXPLAINED",
+      "class": "RIGHT_CORRECT_LEFT_WRONG"
+     },
+     {
+      "step": 423,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 447,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 452,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 457,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 462,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 469,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 476,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 483,
+      "left": "VISIBILITY",
+      "right": "VISIBILITY",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 487,
+      "left": "CHURN",
+      "right": "EXPLAINED",
+      "class": "RIGHT_CORRECT_LEFT_WRONG"
+     },
+     {
+      "step": 550,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 555,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 568,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 589,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 599,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 606,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 608,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 612,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 616,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 622,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 648,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 650,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 655,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     }
+    ]
+   }
+  },
+  {
+   "left": {
+    "name": "source_choice",
+    "key_slots": {
+     "cell[_]": null,
+     "group[_](heading[_],list[_](listitem[_]))": null,
+     "row[_](cell[_])": "cell#0",
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+     "text[_](combobox[_])": null,
+     "text[_](textbox[_])": null
+    },
+    "hard_contradictions": 0,
+    "churn": 18,
+    "visibility": 6,
+    "spurious": 0,
+    "explained": 31,
+    "silent": 377,
+    "errors": 24,
+    "complexity": 24,
+    "applicability": 1.0,
+    "transport": {
+     "applied": {
+      "cell[_]": null,
+      "group[_](heading[_],list[_](listitem[_]))": null,
+      "row[_](cell[_])": "cell#0",
+      "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+      "text[_](combobox[_])": null,
+      "text[_](textbox[_])": null
+     },
+     "slot_absent": {},
+     "absent_in_transfer": [],
+     "unseen_in_source": [
+      "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))"
+     ],
+     "promoted_applied": [],
+     "promoted_absent": [],
+     "applicability": 1.0
+    },
+    "separation": [
+     {
+      "family": "row[_](cell[_])",
+      "key_slot": "cell#0",
+      "status": "PARTIAL",
+      "copresent_pairs": 400,
+      "separated_pairs": 262,
+      "rate": 0.655
+     },
+     {
+      "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+      "key_slot": "cell#0|cell#0@4",
+      "status": "CONFIRMED",
+      "copresent_pairs": 47,
+      "separated_pairs": 47,
+      "rate": 1.0
+     }
+    ],
+    "separation_confirmed": 1,
+    "separation_refuted": 0,
+    "separation_tested": 2
+   },
+   "right": {
+    "name": "cell[_]=cell#0",
+    "key_slots": {
+     "cell[_]": "cell#0",
+     "group[_](heading[_],list[_](listitem[_]))": null,
+     "row[_](cell[_])": "cell#0",
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+     "text[_](combobox[_])": null,
+     "text[_](textbox[_])": null
+    },
+    "hard_contradictions": 0,
+    "churn": 18,
+    "visibility": 289,
+    "spurious": 0,
+    "explained": 31,
+    "silent": 94,
+    "errors": 307,
+    "complexity": 29,
+    "applicability": 1.0,
+    "transport": {
+     "applied": {
+      "cell[_]": "cell#0",
+      "group[_](heading[_],list[_](listitem[_]))": null,
+      "row[_](cell[_])": "cell#0",
+      "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+      "text[_](combobox[_])": null,
+      "text[_](textbox[_])": null
+     },
+     "slot_absent": {},
+     "absent_in_transfer": [],
+     "unseen_in_source": [
+      "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))"
+     ],
+     "promoted_applied": [],
+     "promoted_absent": [],
+     "applicability": 1.0
+    },
+    "separation": [
+     {
+      "family": "cell[_]",
+      "key_slot": "cell#0",
+      "status": "CONFIRMED",
+      "copresent_pairs": 400,
+      "separated_pairs": 400,
+      "rate": 1.0
+     },
+     {
+      "family": "row[_](cell[_])",
+      "key_slot": "cell#0",
+      "status": "PARTIAL",
+      "copresent_pairs": 400,
+      "separated_pairs": 262,
+      "rate": 0.655
+     },
+     {
+      "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+      "key_slot": "cell#0|cell#0@4",
+      "status": "CONFIRMED",
+      "copresent_pairs": 47,
+      "separated_pairs": 47,
+      "rate": 1.0
+     }
+    ],
+    "separation_confirmed": 2,
+    "separation_refuted": 0,
+    "separation_tested": 3
+   },
+   "outcome": "LEFT",
+   "reason": "the history contradicts the right reading at 283 steps where the left one is not contradicted",
+   "differential": {
+    "counts": {
+     "BOTH_COMPATIBLE": 31,
+     "BOTH_WRONG": 24,
+     "NOT_COMPARABLE": 553,
+     "RIGHT_WRONG_LEFT_SILENT": 283
+    },
+    "left_correct_where_right_wrong": 0,
+    "right_correct_where_left_wrong": 0,
+    "left_wrong_where_right_silent": 0,
+    "right_wrong_where_left_silent": 283,
+    "cases": [
+     {
+      "step": 4,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 9,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 12,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 13,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 15,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 18,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 19,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 26,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 27,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 36,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 40,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 41,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 46,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 47,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 51,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 52,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 61,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 62,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 66,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 67,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 71,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 72,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 76,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 77,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 81,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 82,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 86,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 87,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 91,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 92,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 96,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 97,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 101,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 102,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 103,
+      "left": "CHURN",
+      "right": "CHURN",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 106,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 107,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 111,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 112,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 113,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 116,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 120,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 121,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 124,
+      "left": "VISIBILITY",
+      "right": "VISIBILITY",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 127,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 128,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 130,
+      "left": "CHURN",
+      "right": "CHURN",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 134,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 135,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 143,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 144,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 151,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 152,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 156,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 157,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 160,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 161,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 164,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 165,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     },
+     {
+      "step": 170,
+      "left": "SILENT",
+      "right": "VISIBILITY",
+      "class": "RIGHT_WRONG_LEFT_SILENT"
+     }
+    ]
+   }
+  },
+  {
+   "left": {
+    "name": "source_choice",
+    "key_slots": {
+     "cell[_]": null,
+     "group[_](heading[_],list[_](listitem[_]))": null,
+     "row[_](cell[_])": "cell#0",
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+     "text[_](combobox[_])": null,
+     "text[_](textbox[_])": null
+    },
+    "hard_contradictions": 0,
+    "churn": 18,
+    "visibility": 6,
+    "spurious": 0,
+    "explained": 31,
+    "silent": 377,
+    "errors": 24,
+    "complexity": 24,
+    "applicability": 1.0,
+    "transport": {
+     "applied": {
+      "cell[_]": null,
+      "group[_](heading[_],list[_](listitem[_]))": null,
+      "row[_](cell[_])": "cell#0",
+      "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+      "text[_](combobox[_])": null,
+      "text[_](textbox[_])": null
+     },
+     "slot_absent": {},
+     "absent_in_transfer": [],
+     "unseen_in_source": [
+      "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))"
+     ],
+     "promoted_applied": [],
+     "promoted_absent": [],
+     "applicability": 1.0
+    },
+    "separation": [
+     {
+      "family": "row[_](cell[_])",
+      "key_slot": "cell#0",
+      "status": "PARTIAL",
+      "copresent_pairs": 400,
+      "separated_pairs": 262,
+      "rate": 0.655
+     },
+     {
+      "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+      "key_slot": "cell#0|cell#0@4",
+      "status": "CONFIRMED",
+      "copresent_pairs": 47,
+      "separated_pairs": 47,
+      "rate": 1.0
+     }
+    ],
+    "separation_confirmed": 1,
+    "separation_refuted": 0,
+    "separation_tested": 2
+   },
+   "right": {
+    "name": "group[_](heading[_],list=heading#1",
+    "key_slots": {
+     "cell[_]": null,
+     "group[_](heading[_],list[_](listitem[_]))": "heading#1",
+     "row[_](cell[_])": "cell#0",
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+     "text[_](combobox[_])": null,
+     "text[_](textbox[_])": null
+    },
+    "hard_contradictions": 0,
+    "churn": 18,
+    "visibility": 6,
+    "spurious": 0,
+    "explained": 31,
+    "silent": 377,
+    "errors": 24,
+    "complexity": 42,
+    "applicability": 1.0,
+    "transport": {
+     "applied": {
+      "cell[_]": null,
+      "group[_](heading[_],list[_](listitem[_]))": "heading#1",
+      "row[_](cell[_])": "cell#0",
+      "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+      "text[_](combobox[_])": null,
+      "text[_](textbox[_])": null
+     },
+     "slot_absent": {},
+     "absent_in_transfer": [],
+     "unseen_in_source": [
+      "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))"
+     ],
+     "promoted_applied": [],
+     "promoted_absent": [],
+     "applicability": 1.0
+    },
+    "separation": [
+     {
+      "family": "group[_](heading[_],list[_](listitem[_]))",
+      "key_slot": "heading#1",
+      "status": "CONFIRMED",
+      "copresent_pairs": 30,
+      "separated_pairs": 30,
+      "rate": 1.0
+     },
+     {
+      "family": "row[_](cell[_])",
+      "key_slot": "cell#0",
+      "status": "PARTIAL",
+      "copresent_pairs": 400,
+      "separated_pairs": 262,
+      "rate": 0.655
+     },
+     {
+      "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+      "key_slot": "cell#0|cell#0@4",
+      "status": "CONFIRMED",
+      "copresent_pairs": 47,
+      "separated_pairs": 47,
+      "rate": 1.0
+     }
+    ],
+    "separation_confirmed": 2,
+    "separation_refuted": 0,
+    "separation_tested": 3
+   },
+   "outcome": "RIGHT",
+   "reason": "the history confirms 2 identity claims of this reading against 1 of the other, on peers it had to tell apart here",
+   "differential": {
+    "counts": {
+     "BOTH_COMPATIBLE": 31,
+     "BOTH_WRONG": 24,
+     "NOT_COMPARABLE": 836
+    },
+    "left_correct_where_right_wrong": 0,
+    "right_correct_where_left_wrong": 0,
+    "left_wrong_where_right_silent": 0,
+    "right_wrong_where_left_silent": 0,
+    "cases": [
+     {
+      "step": 103,
+      "left": "CHURN",
+      "right": "CHURN",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 124,
+      "left": "VISIBILITY",
+      "right": "VISIBILITY",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 130,
+      "left": "CHURN",
+      "right": "CHURN",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 180,
+      "left": "CHURN",
+      "right": "CHURN",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 252,
+      "left": "VISIBILITY",
+      "right": "VISIBILITY",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 280,
+      "left": "CHURN",
+      "right": "CHURN",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 286,
+      "left": "CHURN",
+      "right": "CHURN",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 303,
+      "left": "CHURN",
+      "right": "CHURN",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 341,
+      "left": "CHURN",
+      "right": "CHURN",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 380,
+      "left": "CHURN",
+      "right": "CHURN",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 421,
+      "left": "CHURN",
+      "right": "CHURN",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 483,
+      "left": "VISIBILITY",
+      "right": "VISIBILITY",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 487,
+      "left": "CHURN",
+      "right": "CHURN",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 697,
+      "left": "VISIBILITY",
+      "right": "VISIBILITY",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 712,
+      "left": "CHURN",
+      "right": "CHURN",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 729,
+      "left": "VISIBILITY",
+      "right": "VISIBILITY",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 731,
+      "left": "CHURN",
+      "right": "CHURN",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 732,
+      "left": "CHURN",
+      "right": "CHURN",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 736,
+      "left": "CHURN",
+      "right": "CHURN",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 823,
+      "left": "CHURN",
+      "right": "CHURN",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 832,
+      "left": "CHURN",
+      "right": "CHURN",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 869,
+      "left": "CHURN",
+      "right": "CHURN",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 893,
+      "left": "VISIBILITY",
+      "right": "VISIBILITY",
+      "class": "BOTH_WRONG"
+     },
+     {
+      "step": 894,
+      "left": "CHURN",
+      "right": "CHURN",
+      "class": "BOTH_WRONG"
+     }
+    ]
+   }
+  },
+  {
+   "left": {
+    "name": "group[_](heading[_],list=heading#1",
+    "key_slots": {
+     "cell[_]": null,
+     "group[_](heading[_],list[_](listitem[_]))": "heading#1",
+     "row[_](cell[_])": "cell#0",
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+     "text[_](combobox[_])": null,
+     "text[_](textbox[_])": null
+    },
+    "hard_contradictions": 0,
+    "churn": 18,
+    "visibility": 6,
+    "spurious": 0,
+    "explained": 31,
+    "silent": 377,
+    "errors": 24,
+    "complexity": 42,
+    "applicability": 1.0,
+    "transport": {
+     "applied": {
+      "cell[_]": null,
+      "group[_](heading[_],list[_](listitem[_]))": "heading#1",
+      "row[_](cell[_])": "cell#0",
+      "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+      "text[_](combobox[_])": null,
+      "text[_](textbox[_])": null
+     },
+     "slot_absent": {},
+     "absent_in_transfer": [],
+     "unseen_in_source": [
+      "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))"
+     ],
+     "promoted_applied": [],
+     "promoted_absent": [],
+     "applicability": 1.0
+    },
+    "separation": [
+     {
+      "family": "group[_](heading[_],list[_](listitem[_]))",
+      "key_slot": "heading#1",
+      "status": "CONFIRMED",
+      "copresent_pairs": 30,
+      "separated_pairs": 30,
+      "rate": 1.0
+     },
+     {
+      "family": "row[_](cell[_])",
+      "key_slot": "cell#0",
+      "status": "PARTIAL",
+      "copresent_pairs": 400,
+      "separated_pairs": 262,
+      "rate": 0.655
+     },
+     {
+      "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+      "key_slot": "cell#0|cell#0@4",
+      "status": "CONFIRMED",
+      "copresent_pairs": 47,
+      "separated_pairs": 47,
+      "rate": 1.0
+     }
+    ],
+    "separation_confirmed": 2,
+    "separation_refuted": 0,
+    "separation_tested": 3
+   },
+   "right": {
+    "name": "row[_](cell[_])=None",
+    "key_slots": {
+     "cell[_]": null,
+     "group[_](heading[_],list[_](listitem[_]))": null,
+     "row[_](cell[_])": null,
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+     "text[_](combobox[_])": null,
+     "text[_](textbox[_])": null
+    },
+    "hard_contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "spurious": 0,
+    "explained": 15,
+    "silent": 186,
+    "errors": 0,
+    "complexity": 9,
+    "applicability": 1.0,
+    "transport": {
+     "applied": {
+      "cell[_]": null,
+      "group[_](heading[_],list[_](listitem[_]))": null,
+      "row[_](cell[_])": null,
+      "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+      "text[_](combobox[_])": null,
+      "text[_](textbox[_])": null
+     },
+     "slot_absent": {},
+     "absent_in_transfer": [],
+     "unseen_in_source": [
+      "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))"
+     ],
+     "promoted_applied": [],
+     "promoted_absent": [],
+     "applicability": 1.0
+    },
+    "separation": [
+     {
+      "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+      "key_slot": "cell#0|cell#0@4",
+      "status": "CONFIRMED",
+      "copresent_pairs": 47,
+      "separated_pairs": 47,
+      "rate": 1.0
+     }
+    ],
+    "separation_confirmed": 1,
+    "separation_refuted": 0,
+    "separation_tested": 1
+   },
+   "outcome": "RIGHT",
+   "reason": "the history contradicts the left reading at 24 steps where the right one is not contradicted",
+   "differential": {
+    "counts": {
+     "BOTH_COMPATIBLE": 7,
+     "LEFT_PREDICTS_RIGHT_SILENT": 24,
+     "LEFT_WRONG_RIGHT_SILENT": 16,
+     "NOT_COMPARABLE": 836,
+     "RIGHT_CORRECT_LEFT_WRONG": 8
+    },
+    "left_correct_where_right_wrong": 0,
+    "right_correct_where_left_wrong": 8,
+    "left_wrong_where_right_silent": 16,
+    "right_wrong_where_left_silent": 0,
+    "cases": [
+     {
+      "step": 37,
+      "left": "EXPLAINED",
+      "right": "SILENT",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 53,
+      "left": "EXPLAINED",
+      "right": "SILENT",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 68,
+      "left": "EXPLAINED",
+      "right": "SILENT",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 103,
+      "left": "CHURN",
+      "right": "NOTHING",
+      "class": "LEFT_WRONG_RIGHT_SILENT"
+     },
+     {
+      "step": 124,
+      "left": "VISIBILITY",
+      "right": "EXPLAINED",
+      "class": "RIGHT_CORRECT_LEFT_WRONG"
+     },
+     {
+      "step": 129,
+      "left": "EXPLAINED",
+      "right": "SILENT",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 130,
+      "left": "CHURN",
+      "right": "EXPLAINED",
+      "class": "RIGHT_CORRECT_LEFT_WRONG"
+     },
+     {
+      "step": 132,
+      "left": "EXPLAINED",
+      "right": "SILENT",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 137,
+      "left": "EXPLAINED",
+      "right": "NOTHING",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 154,
+      "left": "EXPLAINED",
+      "right": "SILENT",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 158,
+      "left": "EXPLAINED",
+      "right": "SILENT",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 180,
+      "left": "CHURN",
+      "right": "EXPLAINED",
+      "class": "RIGHT_CORRECT_LEFT_WRONG"
+     },
+     {
+      "step": 190,
+      "left": "EXPLAINED",
+      "right": "SILENT",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 218,
+      "left": "EXPLAINED",
+      "right": "SILENT",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 245,
+      "left": "EXPLAINED",
+      "right": "NOTHING",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 252,
+      "left": "VISIBILITY",
+      "right": "SILENT",
+      "class": "LEFT_WRONG_RIGHT_SILENT"
+     },
+     {
+      "step": 280,
+      "left": "CHURN",
+      "right": "NOTHING",
+      "class": "LEFT_WRONG_RIGHT_SILENT"
+     },
+     {
+      "step": 286,
+      "left": "CHURN",
+      "right": "EXPLAINED",
+      "class": "RIGHT_CORRECT_LEFT_WRONG"
+     },
+     {
+      "step": 303,
+      "left": "CHURN",
+      "right": "SILENT",
+      "class": "LEFT_WRONG_RIGHT_SILENT"
+     },
+     {
+      "step": 341,
+      "left": "CHURN",
+      "right": "EXPLAINED",
+      "class": "RIGHT_CORRECT_LEFT_WRONG"
+     },
+     {
+      "step": 380,
+      "left": "CHURN",
+      "right": "SILENT",
+      "class": "LEFT_WRONG_RIGHT_SILENT"
+     },
+     {
+      "step": 381,
+      "left": "EXPLAINED",
+      "right": "SILENT",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 402,
+      "left": "EXPLAINED",
+      "right": "SILENT",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 406,
+      "left": "EXPLAINED",
+      "right": "SILENT",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 411,
+      "left": "EXPLAINED",
+      "right": "SILENT",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 421,
+      "left": "CHURN",
+      "right": "SILENT",
+      "class": "LEFT_WRONG_RIGHT_SILENT"
+     },
+     {
+      "step": 483,
+      "left": "VISIBILITY",
+      "right": "SILENT",
+      "class": "LEFT_WRONG_RIGHT_SILENT"
+     },
+     {
+      "step": 487,
+      "left": "CHURN",
+      "right": "EXPLAINED",
+      "class": "RIGHT_CORRECT_LEFT_WRONG"
+     },
+     {
+      "step": 576,
+      "left": "EXPLAINED",
+      "right": "NOTHING",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 588,
+      "left": "EXPLAINED",
+      "right": "NOTHING",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 647,
+      "left": "EXPLAINED",
+      "right": "NOTHING",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 656,
+      "left": "EXPLAINED",
+      "right": "SILENT",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 660,
+      "left": "EXPLAINED",
+      "right": "SILENT",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 661,
+      "left": "EXPLAINED",
+      "right": "NOTHING",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 697,
+      "left": "VISIBILITY",
+      "right": "SILENT",
+      "class": "LEFT_WRONG_RIGHT_SILENT"
+     },
+     {
+      "step": 712,
+      "left": "CHURN",
+      "right": "SILENT",
+      "class": "LEFT_WRONG_RIGHT_SILENT"
+     },
+     {
+      "step": 714,
+      "left": "EXPLAINED",
+      "right": "SILENT",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 729,
+      "left": "VISIBILITY",
+      "right": "SILENT",
+      "class": "LEFT_WRONG_RIGHT_SILENT"
+     },
+     {
+      "step": 731,
+      "left": "CHURN",
+      "right": "SILENT",
+      "class": "LEFT_WRONG_RIGHT_SILENT"
+     },
+     {
+      "step": 732,
+      "left": "CHURN",
+      "right": "SILENT",
+      "class": "LEFT_WRONG_RIGHT_SILENT"
+     },
+     {
+      "step": 736,
+      "left": "CHURN",
+      "right": "SILENT",
+      "class": "LEFT_WRONG_RIGHT_SILENT"
+     },
+     {
+      "step": 823,
+      "left": "CHURN",
+      "right": "NOTHING",
+      "class": "LEFT_WRONG_RIGHT_SILENT"
+     },
+     {
+      "step": 832,
+      "left": "CHURN",
+      "right": "SILENT",
+      "class": "LEFT_WRONG_RIGHT_SILENT"
+     },
+     {
+      "step": 869,
+      "left": "CHURN",
+      "right": "EXPLAINED",
+      "class": "RIGHT_CORRECT_LEFT_WRONG"
+     },
+     {
+      "step": 873,
+      "left": "EXPLAINED",
+      "right": "SILENT",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 882,
+      "left": "EXPLAINED",
+      "right": "NOTHING",
+      "class": "LEFT_PREDICTS_RIGHT_SILENT"
+     },
+     {
+      "step": 893,
+      "left": "VISIBILITY",
+      "right": "SILENT",
+      "class": "LEFT_WRONG_RIGHT_SILENT"
+     },
+     {
+      "step": 894,
+      "left": "CHURN",
+      "right": "EXPLAINED",
+      "class": "RIGHT_CORRECT_LEFT_WRONG"
+     }
+    ]
+   }
+  }
+ ],
+ "selected": {
+  "name": "row[_](cell[_])=None",
+  "fingerprint": "01f25b9f505de0d7",
+  "reading": {
+   "version": 1,
+   "name": "row[_](cell[_])=None",
+   "families": {
+    "cell[_]": {
+     "family": "cell[_]",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "discrimination": 0.0
+    },
+    "group[_](heading[_],list[_](listitem[_]))": {
+     "family": "group[_](heading[_],list[_](listitem[_]))",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "discrimination": 0.0
+    },
+    "row[_](cell[_])": {
+     "family": "row[_](cell[_])",
+     "key_slot": null,
+     "status": "SUPPORTED",
+     "discrimination": 1.0
+    },
+    "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": {
+     "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+     "key_slot": "cell#0|cell#0@4",
+     "status": "SUPPORTED",
+     "discrimination": 0.8529411764705882
+    },
+    "text[_](combobox[_])": {
+     "family": "text[_](combobox[_])",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "discrimination": 0.0
+    },
+    "text[_](textbox[_])": {
+     "family": "text[_](textbox[_])",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "discrimination": 0.0
+    }
+   },
+   "promoted_families": [],
+   "refuted": {
+    "text[_](textbox[_])": [
+     "text#0"
+    ]
+   },
+   "provenance": {
+    "source_run": "runs/v4/vet_clinic_dev",
+    "role": "SOURCE"
+   }
+  }
+ },
+ "selection_changed_the_source_choice": true,
+ "evidence_sufficiency": [],
+ "holdout": {
+  "row[_](cell[_])=None": {
+   "name": "row[_](cell[_])=None",
+   "key_slots": {
+    "cell[_]": null,
+    "group[_](heading[_],list[_](listitem[_]))": null,
+    "row[_](cell[_])": null,
+    "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+    "text[_](combobox[_])": null,
+    "text[_](textbox[_])": null
+   },
+   "hard_contradictions": 0,
+   "churn": 2,
+   "visibility": 4,
+   "spurious": 0,
+   "explained": 23,
+   "silent": 192,
+   "errors": 6,
+   "complexity": 17,
+   "applicability": 1.0,
+   "transport": {
+    "applied": {
+     "cell[_]": null,
+     "group[_](heading[_],list[_](listitem[_]))": null,
+     "row[_](cell[_])": null,
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+     "text[_](combobox[_])": null,
+     "text[_](textbox[_])": null
+    },
+    "slot_absent": {},
+    "absent_in_transfer": [],
+    "unseen_in_source": [
+     "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))"
+    ],
+    "promoted_applied": [],
+    "promoted_absent": [],
+    "applicability": 1.0
+   },
+   "separation": [
+    {
+     "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+     "key_slot": "cell#0|cell#0@4",
+     "status": "PARTIAL",
+     "copresent_pairs": 86,
+     "separated_pairs": 76,
+     "rate": 0.884
+    }
+   ],
+   "separation_confirmed": 0,
+   "separation_refuted": 0,
+   "separation_tested": 1
+  },
+  "source_choice": {
+   "name": "source_choice",
+   "key_slots": {
+    "cell[_]": null,
+    "group[_](heading[_],list[_](listitem[_]))": null,
+    "row[_](cell[_])": "cell#0",
+    "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+    "text[_](combobox[_])": null,
+    "text[_](textbox[_])": null
+   },
+   "hard_contradictions": 0,
+   "churn": 25,
+   "visibility": 5,
+   "spurious": 0,
+   "explained": 32,
+   "silent": 372,
+   "errors": 30,
+   "complexity": 26,
+   "applicability": 1.0,
+   "transport": {
+    "applied": {
+     "cell[_]": null,
+     "group[_](heading[_],list[_](listitem[_]))": null,
+     "row[_](cell[_])": "cell#0",
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+     "text[_](combobox[_])": null,
+     "text[_](textbox[_])": null
+    },
+    "slot_absent": {},
+    "absent_in_transfer": [],
+    "unseen_in_source": [
+     "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))"
+    ],
+    "promoted_applied": [],
+    "promoted_absent": [],
+    "applicability": 1.0
+   },
+   "separation": [
+    {
+     "family": "row[_](cell[_])",
+     "key_slot": "cell#0",
+     "status": "PARTIAL",
+     "copresent_pairs": 400,
+     "separated_pairs": 207,
+     "rate": 0.517
+    },
+    {
+     "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+     "key_slot": "cell#0|cell#0@4",
+     "status": "PARTIAL",
+     "copresent_pairs": 86,
+     "separated_pairs": 76,
+     "rate": 0.884
+    }
+   ],
+   "separation_confirmed": 0,
+   "separation_refuted": 0,
+   "separation_tested": 2
+  }
+ },
+ "holdout_differential": {
+  "outcome": "LEFT",
+  "reason": "the history contradicts the right reading at 24 steps where the left one is not contradicted",
+  "left": {
+   "name": "row[_](cell[_])=None",
+   "key_slots": {
+    "cell[_]": null,
+    "group[_](heading[_],list[_](listitem[_]))": null,
+    "row[_](cell[_])": null,
+    "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+    "text[_](combobox[_])": null,
+    "text[_](textbox[_])": null
+   },
+   "hard_contradictions": 0,
+   "churn": 2,
+   "visibility": 4,
+   "spurious": 0,
+   "explained": 23,
+   "silent": 192,
+   "errors": 6,
+   "complexity": 17,
+   "applicability": 1.0,
+   "transport": {
+    "applied": {
+     "cell[_]": null,
+     "group[_](heading[_],list[_](listitem[_]))": null,
+     "row[_](cell[_])": null,
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+     "text[_](combobox[_])": null,
+     "text[_](textbox[_])": null
+    },
+    "slot_absent": {},
+    "absent_in_transfer": [],
+    "unseen_in_source": [
+     "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))"
+    ],
+    "promoted_applied": [],
+    "promoted_absent": [],
+    "applicability": 1.0
+   },
+   "separation": [
+    {
+     "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+     "key_slot": "cell#0|cell#0@4",
+     "status": "PARTIAL",
+     "copresent_pairs": 86,
+     "separated_pairs": 76,
+     "rate": 0.884
+    }
+   ],
+   "separation_confirmed": 0,
+   "separation_refuted": 0,
+   "separation_tested": 1
+  },
+  "right": {
+   "name": "source_choice",
+   "key_slots": {
+    "cell[_]": null,
+    "group[_](heading[_],list[_](listitem[_]))": null,
+    "row[_](cell[_])": "cell#0",
+    "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+    "text[_](combobox[_])": null,
+    "text[_](textbox[_])": null
+   },
+   "hard_contradictions": 0,
+   "churn": 25,
+   "visibility": 5,
+   "spurious": 0,
+   "explained": 32,
+   "silent": 372,
+   "errors": 30,
+   "complexity": 26,
+   "applicability": 1.0,
+   "transport": {
+    "applied": {
+     "cell[_]": null,
+     "group[_](heading[_],list[_](listitem[_]))": null,
+     "row[_](cell[_])": "cell#0",
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": "cell#0|cell#0@4",
+     "text[_](combobox[_])": null,
+     "text[_](textbox[_])": null
+    },
+    "slot_absent": {},
+    "absent_in_transfer": [],
+    "unseen_in_source": [
+     "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))"
+    ],
+    "promoted_applied": [],
+    "promoted_absent": [],
+    "applicability": 1.0
+   },
+   "separation": [
+    {
+     "family": "row[_](cell[_])",
+     "key_slot": "cell#0",
+     "status": "PARTIAL",
+     "copresent_pairs": 400,
+     "separated_pairs": 207,
+     "rate": 0.517
+    },
+    {
+     "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+     "key_slot": "cell#0|cell#0@4",
+     "status": "PARTIAL",
+     "copresent_pairs": 86,
+     "separated_pairs": 76,
+     "rate": 0.884
+    }
+   ],
+   "separation_confirmed": 0,
+   "separation_refuted": 0,
+   "separation_tested": 2
+  },
+  "differential": {
+   "counts": {
+    "BOTH_COMPATIBLE": 13,
+    "BOTH_WRONG": 6,
+    "LEFT_CORRECT_RIGHT_WRONG": 10,
+    "NOT_COMPARABLE": 818,
+    "RIGHT_PREDICTS_LEFT_SILENT": 19,
+    "RIGHT_WRONG_LEFT_SILENT": 14
+   },
+   "left_correct_where_right_wrong": 10,
+   "right_correct_where_left_wrong": 0,
+   "left_wrong_where_right_silent": 0,
+   "right_wrong_where_left_silent": 14,
+   "cases": [
+    {
+     "step": 38,
+     "left": "SILENT",
+     "right": "CHURN",
+     "class": "RIGHT_WRONG_LEFT_SILENT"
+    },
+    {
+     "step": 48,
+     "left": "SILENT",
+     "right": "EXPLAINED",
+     "class": "RIGHT_PREDICTS_LEFT_SILENT"
+    },
+    {
+     "step": 55,
+     "left": "NOTHING",
+     "right": "EXPLAINED",
+     "class": "RIGHT_PREDICTS_LEFT_SILENT"
+    },
+    {
+     "step": 71,
+     "left": "EXPLAINED",
+     "right": "CHURN",
+     "class": "LEFT_CORRECT_RIGHT_WRONG"
+    },
+    {
+     "step": 87,
+     "left": "SILENT",
+     "right": "EXPLAINED",
+     "class": "RIGHT_PREDICTS_LEFT_SILENT"
+    },
+    {
+     "step": 98,
+     "left": "SILENT",
+     "right": "EXPLAINED",
+     "class": "RIGHT_PREDICTS_LEFT_SILENT"
+    },
+    {
+     "step": 100,
+     "left": "NOTHING",
+     "right": "EXPLAINED",
+     "class": "RIGHT_PREDICTS_LEFT_SILENT"
+    },
+    {
+     "step": 102,
+     "left": "VISIBILITY",
+     "right": "VISIBILITY",
+     "class": "BOTH_WRONG"
+    },
+    {
+     "step": 113,
+     "left": "EXPLAINED",
+     "right": "CHURN",
+     "class": "LEFT_CORRECT_RIGHT_WRONG"
+    },
+    {
+     "step": 136,
+     "left": "SILENT",
+     "right": "CHURN",
+     "class": "RIGHT_WRONG_LEFT_SILENT"
+    },
+    {
+     "step": 180,
+     "left": "SILENT",
+     "right": "CHURN",
+     "class": "RIGHT_WRONG_LEFT_SILENT"
+    },
+    {
+     "step": 183,
+     "left": "EXPLAINED",
+     "right": "CHURN",
+     "class": "LEFT_CORRECT_RIGHT_WRONG"
+    },
+    {
+     "step": 193,
+     "left": "SILENT",
+     "right": "CHURN",
+     "class": "RIGHT_WRONG_LEFT_SILENT"
+    },
+    {
+     "step": 215,
+     "left": "CHURN",
+     "right": "CHURN",
+     "class": "BOTH_WRONG"
+    },
+    {
+     "step": 246,
+     "left": "EXPLAINED",
+     "right": "CHURN",
+     "class": "LEFT_CORRECT_RIGHT_WRONG"
+    },
+    {
+     "step": 257,
+     "left": "SILENT",
+     "right": "CHURN",
+     "class": "RIGHT_WRONG_LEFT_SILENT"
+    },
+    {
+     "step": 284,
+     "left": "SILENT",
+     "right": "EXPLAINED",
+     "class": "RIGHT_PREDICTS_LEFT_SILENT"
+    },
+    {
+     "step": 295,
+     "left": "NOTHING",
+     "right": "EXPLAINED",
+     "class": "RIGHT_PREDICTS_LEFT_SILENT"
+    },
+    {
+     "step": 308,
+     "left": "VISIBILITY",
+     "right": "VISIBILITY",
+     "class": "BOTH_WRONG"
+    },
+    {
+     "step": 310,
+     "left": "EXPLAINED",
+     "right": "CHURN",
+     "class": "LEFT_CORRECT_RIGHT_WRONG"
+    },
+    {
+     "step": 314,
+     "left": "SILENT",
+     "right": "CHURN",
+     "class": "RIGHT_WRONG_LEFT_SILENT"
+    },
+    {
+     "step": 329,
+     "left": "EXPLAINED",
+     "right": "CHURN",
+     "class": "LEFT_CORRECT_RIGHT_WRONG"
+    },
+    {
+     "step": 399,
+     "left": "NOTHING",
+     "right": "CHURN",
+     "class": "RIGHT_WRONG_LEFT_SILENT"
+    },
+    {
+     "step": 400,
+     "left": "SILENT",
+     "right": "CHURN",
+     "class": "RIGHT_WRONG_LEFT_SILENT"
+    },
+    {
+     "step": 418,
+     "left": "VISIBILITY",
+     "right": "VISIBILITY",
+     "class": "BOTH_WRONG"
+    },
+    {
+     "step": 439,
+     "left": "SILENT",
+     "right": "CHURN",
+     "class": "RIGHT_WRONG_LEFT_SILENT"
+    },
+    {
+     "step": 464,
+     "left": "SILENT",
+     "right": "EXPLAINED",
+     "class": "RIGHT_PREDICTS_LEFT_SILENT"
+    },
+    {
+     "step": 466,
+     "left": "SILENT",
+     "right": "EXPLAINED",
+     "class": "RIGHT_PREDICTS_LEFT_SILENT"
+    },
+    {
+     "step": 468,
+     "left": "SILENT",
+     "right": "EXPLAINED",
+     "class": "RIGHT_PREDICTS_LEFT_SILENT"
+    },
+    {
+     "step": 469,
+     "left": "CHURN",
+     "right": "CHURN",
+     "class": "BOTH_WRONG"
+    },
+    {
+     "step": 473,
+     "left": "SILENT",
+     "right": "CHURN",
+     "class": "RIGHT_WRONG_LEFT_SILENT"
+    },
+    {
+     "step": 537,
+     "left": "SILENT",
+     "right": "EXPLAINED",
+     "class": "RIGHT_PREDICTS_LEFT_SILENT"
+    },
+    {
+     "step": 545,
+     "left": "SILENT",
+     "right": "EXPLAINED",
+     "class": "RIGHT_PREDICTS_LEFT_SILENT"
+    },
+    {
+     "step": 549,
+     "left": "SILENT",
+     "right": "EXPLAINED",
+     "class": "RIGHT_PREDICTS_LEFT_SILENT"
+    },
+    {
+     "step": 566,
+     "left": "EXPLAINED",
+     "right": "CHURN",
+     "class": "LEFT_CORRECT_RIGHT_WRONG"
+    },
+    {
+     "step": 575,
+     "left": "SILENT",
+     "right": "EXPLAINED",
+     "class": "RIGHT_PREDICTS_LEFT_SILENT"
+    },
+    {
+     "step": 580,
+     "left": "SILENT",
+     "right": "CHURN",
+     "class": "RIGHT_WRONG_LEFT_SILENT"
+    },
+    {
+     "step": 596,
+     "left": "EXPLAINED",
+     "right": "CHURN",
+     "class": "LEFT_CORRECT_RIGHT_WRONG"
+    },
+    {
+     "step": 598,
+     "left": "SILENT",
+     "right": "EXPLAINED",
+     "class": "RIGHT_PREDICTS_LEFT_SILENT"
+    },
+    {
+     "step": 631,
+     "left": "SILENT",
+     "right": "CHURN",
+     "class": "RIGHT_WRONG_LEFT_SILENT"
+    },
+    {
+     "step": 673,
+     "left": "SILENT",
+     "right": "EXPLAINED",
+     "class": "RIGHT_PREDICTS_LEFT_SILENT"
+    },
+    {
+     "step": 677,
+     "left": "NOTHING",
+     "right": "EXPLAINED",
+     "class": "RIGHT_PREDICTS_LEFT_SILENT"
+    },
+    {
+     "step": 689,
+     "left": "VISIBILITY",
+     "right": "VISIBILITY",
+     "class": "BOTH_WRONG"
+    },
+    {
+     "step": 699,
+     "left": "SILENT",
+     "right": "CHURN",
+     "class": "RIGHT_WRONG_LEFT_SILENT"
+    },
+    {
+     "step": 723,
+     "left": "EXPLAINED",
+     "right": "VISIBILITY",
+     "class": "LEFT_CORRECT_RIGHT_WRONG"
+    },
+    {
+     "step": 724,
+     "left": "EXPLAINED",
+     "right": "CHURN",
+     "class": "LEFT_CORRECT_RIGHT_WRONG"
+    },
+    {
+     "step": 806,
+     "left": "SILENT",
+     "right": "CHURN",
+     "class": "RIGHT_WRONG_LEFT_SILENT"
+    },
+    {
+     "step": 807,
+     "left": "NOTHING",
+     "right": "EXPLAINED",
+     "class": "RIGHT_PREDICTS_LEFT_SILENT"
+    },
+    {
+     "step": 869,
+     "left": "NOTHING",
+     "right": "EXPLAINED",
+     "class": "RIGHT_PREDICTS_LEFT_SILENT"
+    }
+   ]
+  }
+ },
+ "holdout_outcome": "PARTIALLY_CONTRADICTED",
+ "outcome": "SELECTED"
+}

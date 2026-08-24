@@ -211,3 +211,143 @@ the selection traces: 29 operators, 19 exercised, 11 recoverable under known voc
 `STATE_DELTA_UNREPRESENTABLE`. V4 does not yet produce a clean denominator, so there is
 still no evidence for touching the frozen V0 inducer or its effect language, and neither
 was touched.
+
+---
+
+## j — cross-trace epistemic custody
+
+The checkpoint above left two linked failures: a reading chosen on one history did not keep
+its advantage when carried to another (`harbour` .411 in place against .071 pinned), and the
+local objective declined a reading that identifies patients with perfect discrimination over
+~400 co-presence comparisons because it explained one transition fewer. Both say the same
+thing — single-trace explanatory fit does not identify a reusable observation model — so the
+response is custody, not another coefficient.
+
+### What was built
+
+* `v4/pinned.py` — a frozen reading is the whole decision (families by literal-free key, what
+  names each, which leaves are objects, what an experiment already refuted), applied to
+  another history by instantiation only. A claim that cannot be instantiated is *recorded*,
+  and a family the source never claimed does not keep the destination's own key. The earlier
+  `identity=` map is kept for reproducing old numbers and documented as not being transport.
+* `v4/transfer.py` — an evidence vector per frozen reading against a history it never saw,
+  a per-step differential in the discipline V2 used for candidate-versus-baseline, and a
+  dominance rule in which contradiction is the only thing that eliminates and *explaining
+  more steps is not a reason to prefer a reading*.
+* `v4/sufficiency.py` — "unresolved" as a statement about what was never observed.
+* `run_v4_transfer.py` — SOURCE / TRANSFER / HOLDOUT as separate objects, with the semantics
+  written into the record so that a history used for selection can never later be described
+  as validation.
+* `run_v4_probe.py --mode acquire` — a probe aimed at a named missing observation rather
+  than at a disagreement.
+
+### The rule had to be narrowed once, and the run that forced it
+
+The first `harbour` transfer selected a reading whose families the destination rendered for
+only three of five claims — applicability 0.6 — because every candidate tied at zero errors
+and the tie-break was representational cost. A reading that could not be instantiated is
+cheap precisely because it was never tested, so cost rewarded it for that.
+
+Two changes, both narrowing:
+
+* readings instantiated to different extents are not compared —
+  `INCONCLUSIVE_ASYMMETRIC_APPLICABILITY`;
+* cost breaks a tie only when the readings said the *same thing at every step*. Anything
+  less is a difference the history did not resolve, and resolving it by cost would
+  systematically reward representing less.
+
+Both are pinned by tests, including one that reproduces the harbour pathology directly.
+
+### The chains
+
+Three applications by three independent authors, each with three interaction histories that
+were collected separately and never shared a role. Source histories are the existing
+development traces; transfer and holdout were collected for this phase with the frozen V4
+survey explorer at seeds 12 and 13.
+
+| application | author | SOURCE | TRANSFER | HOLDOUT |
+|---|---|---:|---:|---:|
+| `sonnet_01_vet_clinic` | Sonnet 5 | 403 | 897 | 886 |
+| `opus_01_harbour` | Opus 5 | 373 | 459 | 461 |
+| `grok_02_blend_book` | Grok 4.6 | 375 | 839 | 831 |
+
+**In all three the transfer history changed the source's own choice**, and in all three it
+did so for a compiler-visible reason:
+
+| application | selected reading | why the fresh history preferred it | holdout |
+|---|---|---|---|
+| `vet_clinic` | `row[_](cell[_])` read as no identity | contradicts the source choice at 24 steps where this one is not contradicted | **PARTIALLY_CONTRADICTED**: 6 errors against the source choice's 30 |
+| `harbour` | `row[_](cell[_](button[_]),cell[_])=cell#0` | confirms 2 of its identity claims against 1, on peers it had to tell apart | **PARTIALLY_CONTRADICTED**: 2 errors, 32 explained (source choice 2 / 30) |
+| `blend_book` | `cell[_]=cell#0` | confirms 1 identity claim against 0 | **CONFIRMED**: 0 errors, 228 explained |
+
+### Leaf promotion was refuted, not rescued
+
+The reading that promotes `vet_clinic`'s patients to objects of their own — the one the
+local objective declined, with perfect discrimination over ~400 co-presence comparisons —
+was carried to the transfer history unchanged and **contradicted at 80 steps where the
+incumbent is contradicted at 15** (170 errors against 24). It was rejected.
+
+The evaluator agrees, after the fact and taking no part in the decision. On the holdout,
+among the three transported readings:
+
+| transported reading | false deltas | view FP | pair precision | merges | splits |
+|---|---:|---:|---:|---:|---:|
+| transfer-selected | **39** | **0.034** | **0.951** | 10 | **6** |
+| source's own choice | 90 | 0.048 | 0.876 | 17 | 9 |
+| promoted leaf | 124 | 0.723 | 0.911 | 21 | 12 |
+
+The reading transfer chose is the best of the three on every object-layer measure, and the
+reading transfer refuted is the worst. **Within-trace discrimination strength is not a
+predictor of transportability** — that is the finding, and the mechanism reached it without
+looking at any of these numbers.
+
+### Transport still costs the behavioural result
+
+The same evaluator says the thing that must not be buried. A reading applied without
+refitting scores **RTC 0.000 on both fresh histories**, while the same mechanism re-derived
+in place on those histories is the best result V4 has:
+
+| history | V2 | V4 in place | V4 transported |
+|---|---|---|---|
+| `harbour` transfer (459) | .392 / .518 | **.459 / .667** | .000 / .000 |
+| `vet_clinic` holdout (886) | .423 / .330 | .423 / **.500** | .000 / .000 |
+
+So selection transports and the representation does not. The transported readings are less
+wrong in the order the rule predicts, and none of them is right.
+
+Two hypotheses were tested and one was killed. Slot ids are positional ordinals, so they
+might have denoted different columns across histories — they do not: `cell#0` holds vessel
+names in both harbour histories, `cell#0@3` lengths, `cell#0@4` the hazardous flag. What
+the diagnosis found instead is that `harbour`'s source history pinned **`cell#0@4`, a
+two-valued yes/no column, as the identity of its rows**, and nothing in contradiction,
+churn, visibility or spurious-delta counting noticed, because a merging key does not
+contradict anything — it merely fails to separate.
+
+That is what the separation test was added for: an identity claim is a prediction that the
+named value tells co-present instances apart, and a fresh history can refute it without any
+refitting. It is not a re-selection — no alternative is considered and nothing is changed.
+On `harbour` it scores the yes/no key **PARTIAL, 199 of 400 pairs**, against CONFIRMED
+400/400 for the two readings that name rows properly. The rule currently treats only 0-of-N
+as refutation, so a half-separating key survives; that is the sharpest concrete next step
+and it is left as one rather than tuned tonight.
+
+### Evidence sufficiency and acquisition
+
+`harbour`'s remaining ambiguity is reported as `INSUFFICIENT_EVIDENCE` with the specific
+deficit `NO_CROSS_VIEW_RECURRENCE`, alongside what it does have (co-present peers, a reload
+witness, an alternative value, a discriminating action). The acquisition probe reached the
+family and spent **1 primitive**; the deficit remains, because that application has one
+page and no navigation, so the missing observation is not merely uncollected — it is
+unobtainable there. Saying so is the point.
+
+### Ledger unchanged
+
+29 operators, 19 exercised, 11 recoverable under known vocabulary, **0 eligible and 0
+recovered**, all 19 still failing at `STATE_DELTA_UNREPRESENTABLE`. There is still no clean
+denominator, so the frozen V0 inducer and effect language stay frozen and were not touched.
+
+### Cost
+
+4,373 primitives of new interaction to collect six histories, plus 1 primitive of active
+evidence acquisition. No LLM proposal was used or needed: deterministic hypothesis
+generation produced 6 competing readings per application, which is what the rule needed.

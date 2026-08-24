@@ -59,6 +59,9 @@ class Behaviour:
     churn_steps: list[int] = field(default_factory=list)
     contradiction_steps: list[int] = field(default_factory=list)
     visibility_steps: list[int] = field(default_factory=list)
+    # what this reading said about each step, so that two readings can be compared where
+    # they actually disagree rather than by their totals
+    verdicts: dict[int, str] = field(default_factory=dict)
 
     @property
     def errors(self) -> int:
@@ -162,28 +165,37 @@ def evaluate(A: V2Abstractor, log: EvidenceLog, max_steps: int | None = None) ->
                     out.churn += 1
                     out.churn_steps.append(step.step)
 
+            verdict = "NOTHING"
             if step.action.kind in SENSING_KINDS:
                 # a reload that shows the same view again may reveal nothing new; a domain
                 # change there is a contradiction, not a discovery
                 if changed_domain and _same_view(log.obs(step.before), log.obs(step.after)):
                     out.contradictions += 1
                     out.contradiction_steps.append(step.step)
+                    verdict = "CONTRADICTION"
             elif sensing:
                 if changed_domain:
                     out.contradictions += 1
                     out.contradiction_steps.append(step.step)
+                    verdict = "CONTRADICTION"
             elif step.action.kind in ("click", "select", "press", "type"):
                 inside = _changed_inside_units(A, log, step)
                 if changed_domain and inside and not churned and not phantom:
                     out.explained += 1
                     out.delta_atoms += (len(delta.added) + len(delta.removed)
                                         + len(delta.attr_changes) + len(delta.rel_changes))
+                    verdict = "EXPLAINED"
                 elif changed_domain and inside:
-                    pass          # a re-keying or a visibility artifact explains nothing
+                    verdict = "CHURN" if churned else "VISIBILITY"
                 elif changed_domain and not inside:
                     out.spurious += 1
+                    verdict = "SPURIOUS"
                 elif inside and not changed_domain:
                     out.unexplained += 1
+                    verdict = "SILENT"
+            elif changed_domain and phantom:
+                verdict = "VISIBILITY"
+            out.verdicts[step.step] = verdict
             prev = state
 
     out.complexity = sum(5 + len([k for k in ti.slots if k != "id"]) + len(ti.refs)

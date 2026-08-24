@@ -17,7 +17,7 @@ from semabi.compiler.model import build_model, relation_names, type_name
 from semabi.compiler.v2.abstractor import V2Abstractor
 from semabi.compiler.v2.graph import ObsGraph
 from semabi.compiler.v2.hypotheses import Hypotheses
-from semabi.compiler.v4 import promote, search as v4_search
+from semabi.compiler.v4 import pinned as v4_pinned, promote, search as v4_search
 
 READINGS_FILE = "identity_readings_v4.json"
 
@@ -41,20 +41,36 @@ def build_hypotheses(run_dir: Path, log: EvidenceLog,
 
 def compile_v4(run_dir: Path, min_support: int = 1, conservative_belief: bool = True,
                max_steps: int | None = None, write_diagnostics: bool = True,
-               identity: dict[str, str | None] | None = None) -> Compiled:
+               identity: dict[str, str | None] | None = None,
+               pinned: "v4_pinned.PinnedReading | None" = None) -> Compiled:
     """Compile with V4 identity selection.
 
-    `identity` pins a chosen reading, keyed either by unit template or by family.  A
-    template string carries the tokens the page happened to render, so it does not survive
-    a different seed; the family does, which is why a reading is transferred to another
-    trace by family and never by template.  When `identity` is None the search decides.
+    `pinned` carries a whole frozen reading from another interaction history and applies it
+    here without searching: no key is re-chosen, no family is rebuilt as a hypothesis, and a
+    claim that cannot be instantiated is recorded rather than repaired.  This is the only
+    supported way to transport a reading.
+
+    `identity` is the older, weaker form -- a bare family-to-key map applied on top of a
+    hypothesis structure that was otherwise refitted here.  It is kept because the earlier
+    development evidence was produced with it, and it is not transport.
+
+    When both are None the behavioural search decides locally.
     """
     run_dir = Path(run_dir)
     log = EvidenceLog(run_dir)
-    H, G = build_hypotheses(run_dir, log)
+    transport = None
+    if pinned is not None:
+        probe_H, probe_G = build_hypotheses(run_dir, log)
+        leaves, absent = v4_pinned.promoted_templates(probe_H, probe_G, pinned)
+        H, G = build_hypotheses(run_dir, log, leaves) if leaves else (probe_H, probe_G)
+        transport = v4_pinned.apply(H, pinned, absent)
+    else:
+        H, G = build_hypotheses(run_dir, log)
 
     notes: list[str] = []
-    if identity is None:
+    if pinned is not None:
+        result = None
+    elif identity is None:
         result = v4_search.search(H, G, log, max_steps=max_steps, log_fn=notes.append,
                                   run_dir=run_dir)
         # whether a repeated leaf is a value of its container or an object of its own is the
@@ -121,6 +137,9 @@ def compile_v4(run_dir: Path, min_support: int = 1, conservative_belief: bool = 
               "belief_policy": "conservative_complete_collections" if conservative_belief else "legacy_visible_type_complete"}
     compiled = Compiled(log, None, A, I, M)
     compiled.v4 = result  # type: ignore[attr-defined]
+    compiled.transport = transport  # type: ignore[attr-defined]
+    compiled.pinned = pinned  # type: ignore[attr-defined]
+    compiled.hypotheses = H  # type: ignore[attr-defined]
     if write_diagnostics:
         M.save(run_dir / "model_v4.json")
         (run_dir / "model_v4.txt").write_text(str(M) + "\n\n" + I.report() + "\n\n" + A.summary())
