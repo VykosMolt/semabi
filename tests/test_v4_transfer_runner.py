@@ -53,6 +53,9 @@ def _chain_fixture(tmp_path: Path, names: list[str]):
         },
         min_support=2,
         custody_timing="RETROACTIVE_SNAPSHOT_CHRONOLOGY_NOT_ESTABLISHED",
+        construction_implementation_files={
+            "scripts/v4_freeze_chain_manifest.py": "3" * 64
+        },
         implementation_files={"semabi/run_v4_transfer.py": "2" * 64},
     )
     source = SimpleNamespace(
@@ -218,6 +221,9 @@ def test_every_survivor_is_evaluated_and_authority_is_present(tmp_path, monkeypa
     )
     assert report["authority"]["custody_timing"] == chain.custody_timing
     assert report["authority"]["min_support"] == chain.min_support
+    assert report["authority"]["chain_construction_implementation_files"] == (
+        chain.construction_implementation_files
+    )
     assert report["authority"]["replay_implementation_files"] == chain.implementation_files
     assert {row["name"] for row in report["authority"]["candidates"]} == {
         "source_choice", "alternative"

@@ -136,7 +136,7 @@ def test_refuted_alternative_is_suppressed_before_candidate_and_summary_emission
     assert notes == []
 
 
-def test_generated_promotion_carries_actual_metadata_and_copresent_count(monkeypatch, tmp_path):
+def test_generated_promotion_carries_only_bound_metadata(monkeypatch, tmp_path):
     leaf = "leaf[]"
     leaf_family = "leaf[_]"
     promoted_unit = SimpleNamespace(template=leaf)
@@ -171,5 +171,4 @@ def test_generated_promotion_carries_actual_metadata_and_copresent_count(monkeyp
         "promotion": best.key_slot,
         "status": best.status,
         "discrimination": best.evidence.discrimination,
-        "copresent_pairs": best.evidence.copresent_pairs,
     }]

@@ -140,6 +140,9 @@ def _authority(
         "runtime": dict(chain.runtime) if hasattr(chain, "runtime") else manifests.runtime_binding(),
         "source_runtime": dict(source.runtime) if hasattr(source, "runtime") else manifests.runtime_binding(),
         "min_support": chain.min_support,
+        "chain_construction_implementation_files": dict(
+            sorted(chain.construction_implementation_files.items())
+        ),
         "replay_implementation_files": dict(sorted(chain.implementation_files.items())),
     }
 

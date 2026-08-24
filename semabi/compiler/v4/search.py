@@ -20,9 +20,9 @@ from pathlib import Path
 from typing import Any
 
 from semabi.compiler.evidence import EvidenceLog
-from semabi.compiler.v2.abstractor import V2Abstractor
 from semabi.compiler.v2.graph import ObsGraph
 from semabi.compiler.v2.hypotheses import Hypotheses, SlotStat
+from semabi.compiler.v4.abstractor import V4Abstractor
 from semabi.compiler.v4 import objective
 from semabi.compiler.v4.identity import Reading, family_key, family_readings
 
@@ -132,9 +132,9 @@ def _materialise(unit, key_slot: str) -> None:
     unit.slots[key_slot] = stat
 
 
-def _build(Hx: Hypotheses, G: ObsGraph, log: EvidenceLog) -> V2Abstractor:
+def _build(Hx: Hypotheses, G: ObsGraph, log: EvidenceLog) -> V4Abstractor:
     Hx._build_entity_types()
-    A = V2Abstractor(G, Hx)
+    A = V4Abstractor(G, Hx)
     A.fit_view_controls(log)
     return A
 

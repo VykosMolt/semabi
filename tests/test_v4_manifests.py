@@ -30,10 +30,24 @@ def tmp_path():
 
 def _run(path: Path, marker: str, *, optional: bool = False) -> Path:
     path.mkdir(parents=True, exist_ok=True)
-    (path / "observations.jsonl").write_text('{"sig":"%s","obs":{}}\n' % marker)
-    (path / "steps.jsonl").write_text('{"step":0,"before":"%s","after":"%s"}\n' % (marker, marker))
+    observation = {"url": "", "nodes": []}
+    (path / "observations.jsonl").write_text(
+        json.dumps({"sig": marker, "obs": observation}) + "\n"
+    )
+    (path / "steps.jsonl").write_text(json.dumps({
+        "step": 0,
+        "episode": 0,
+        "action": {"kind": "reload", "target": None, "text": None, "target_desc": None},
+        "ok": True,
+        "error": None,
+        "before": marker,
+        "after": marker,
+        "typed_tokens": [],
+    }) + "\n")
     if optional:
-        (path / "probes.jsonl").write_text('{"probe":"%s"}\n' % marker)
+        (path / "probes.jsonl").write_text(
+            json.dumps({"key": ["probe", marker], "status": "VIEW"}) + "\n"
+        )
         (path / "identity_refutations_v4.json").write_text('{"refuted":[]}\n')
     return path
 
@@ -61,10 +75,17 @@ def _consumable_run(path: Path, marker: str, *, probes: str | None = None) -> Pa
     return path
 
 
-def _reading(source: Path, name: str = "source_choice") -> PinnedReading:
+def _reading(
+    source: Path,
+    name: str = "source_choice",
+    *,
+    key_slot: str | None = "cell#0",
+    refuted: dict[str, list[str | None]] | None = None,
+) -> PinnedReading:
     family = "row[_]"
     return PinnedReading(
-        {family: FamilyReading(family, "cell#0", "SUPPORTED", 1.0)},
+        {family: FamilyReading(family, key_slot, "SUPPORTED", 1.0)},
+        refuted={} if refuted is None else refuted,
         provenance={"source_run": str(source.resolve()), "role": "SOURCE"},
         name=name,
     )
@@ -126,7 +147,7 @@ def test_consumed_digest_includes_probes_but_not_modes_or_refutation_sidecar(tmp
     ]
 
 
-def test_consumed_run_retains_probe_bytes_outside_live_role(tmp_path):
+def test_consumed_run_retains_probe_bytes_in_memory_outside_live_role(tmp_path):
     repo = tmp_path / "repo"
     role = _consumable_run(
         repo / "role",
@@ -137,19 +158,18 @@ def test_consumed_run_retains_probe_bytes_outside_live_role(tmp_path):
     consumed = custody.consume_snapshot(role, snapshot, repo_root=repo)
     try:
         first = consumed.evidence_log()
-        retained_path = Path(first.dir) / "probes.jsonl"
-        assert Path(first.dir).resolve() != role.resolve()
-        assert retained_path.read_bytes() == (role / "probes.jsonl").read_bytes()
+        expected = [{"key": ["click", "button", "x"], "status": "VIEW"}]
+        assert first.probe_records == expected
+        assert not hasattr(consumed, "_tempdir")
+        assert not hasattr(consumed, "_lock")
         (role / "probes.jsonl").write_text("not-json\n")
         (role / "probes.jsonl").unlink()
         second = consumed.evidence_log()
-        assert Path(second.dir).resolve() == retained_path.parent.resolve()
-        assert retained_path.read_bytes() == (
-            b'{"key":["click","button","x"],"status":"VIEW"}\n'
-        )
+        assert second.probe_records == expected
+        first.probe_records[0]["key"].append("mutated")
+        assert second.probe_records == expected
     finally:
         consumed.close()
-    assert not retained_path.parent.exists()
 
 
 def test_malformed_probe_bytes_fail_at_consumption(tmp_path):
@@ -242,15 +262,82 @@ def _two_candidate_payload(tmp_path: Path):
 
 
 def test_source_manifest_rejects_active_refutation_conflict(tmp_path):
+    source = _run(tmp_path / "source", "source", optional=True)
+    refuted = {"row[_]": ["cell#1"]}
+    (source / "identity_refutations_v4.json").write_text(
+        json.dumps({"refuted": [{"family": "row[_]", "key_slot": "cell#1"}]}) + "\n"
+    )
+    manifest = tmp_path / "source_manifest.json"
+    payload = manifests.build_source_manifest(
+        source,
+        [_reading(source, key_slot="cell#0", refuted=refuted)],
+        _summary(),
+        manifest,
+        repo_root=ROOT,
+    )
+    manifests.save_source_manifest(payload, manifest, repo_root=ROOT)
+    bad = json.loads(manifest.read_text())
+    bad_reading = bad["candidates"][0]["reading"]
+    bad_reading["families"]["row[_]"]["key_slot"] = "cell#1"
+    parsed_bad = PinnedReading.from_json(bad_reading)
+    bad["candidates"][0]["fingerprint"] = parsed_bad.fingerprint()
+    bad["candidates"][0]["full_reading_sha256"] = manifests.full_reading_sha256(parsed_bad)
+    with pytest.raises(manifests.ManifestError, match="refuted family key"):
+        manifests.save_source_manifest(bad, manifest, repo_root=ROOT)
+
+
+def test_source_candidates_must_match_authenticated_refutation_sidecar(tmp_path):
+    source = _run(tmp_path / "source", "source", optional=True)
+    refuted = {"row[_]": ["cell#1"]}
+    (source / "identity_refutations_v4.json").write_text(
+        json.dumps({"refuted": [{"family": "row[_]", "key_slot": "cell#1"}]}) + "\n"
+    )
+    manifest = tmp_path / "source_manifest.json"
+    payload = manifests.build_source_manifest(
+        source,
+        [_reading(source, refuted=refuted)],
+        _summary(),
+        manifest,
+        repo_root=ROOT,
+    )
+    manifests.save_source_manifest(payload, manifest, repo_root=ROOT)
+
+    # The decision fingerprint does not include refutations, so recompute the full
+    # paperwork hash as an attacker would; the authenticated sidecar comparison still
+    # rejects omission.
+    bad = json.loads(manifest.read_text())
+    bad_reading = bad["candidates"][0]["reading"]
+    bad_reading["refuted"] = {}
+    bad["candidates"][0]["full_reading_sha256"] = manifests.full_reading_sha256(bad_reading)
+    with pytest.raises(manifests.ManifestError, match="does not match authenticated SOURCE sidecar"):
+        manifests.save_source_manifest(bad, manifest, repo_root=ROOT)
+
+    # Activation of a different key is equally invalid, even with a recomputed hash.
+    bad = json.loads(manifest.read_text())
+    bad_reading = bad["candidates"][0]["reading"]
+    bad_reading["refuted"] = {"row[_]": ["cell#0", "cell#1"]}
+    bad["candidates"][0]["full_reading_sha256"] = manifests.full_reading_sha256(bad_reading)
+    with pytest.raises(manifests.ManifestError, match="does not match authenticated SOURCE sidecar"):
+        manifests.save_source_manifest(bad, manifest, repo_root=ROOT)
+
+
+def test_source_candidate_provenance_change_is_rejected_after_recomputed_hash(tmp_path):
     _source, manifest, _payload = _source_manifest(tmp_path)
     bad = json.loads(manifest.read_text())
-    bad["candidates"][0]["reading"]["refuted"] = {"row[_]": ["cell#0"]}
-    with pytest.raises(manifests.ManifestError, match="refuted family key"):
+    bad_reading = bad["candidates"][0]["reading"]
+    bad_reading["provenance"]["source_run"] = str((tmp_path / "other").resolve())
+    bad["candidates"][0]["full_reading_sha256"] = manifests.full_reading_sha256(bad_reading)
+    with pytest.raises(manifests.ManifestError, match="provenance"):
         manifests.save_source_manifest(bad, manifest, repo_root=ROOT)
 
 
 def test_source_summary_candidate_provenance_is_exact(tmp_path):
     _source, manifest, _payload = _two_candidate_payload(tmp_path)
+    bad = json.loads(manifest.read_text())
+    bad["source_summary"]["alternatives_generated"][0]["copresent_pairs"] = 10
+    with pytest.raises(manifests.ManifestError, match="unknown or missing provenance"):
+        manifests.save_source_manifest(bad, manifest, repo_root=ROOT)
+
     bad = json.loads(manifest.read_text())
     bad["source_summary"]["alternatives_generated"][0]["discrimination"] = 1.0
     with pytest.raises(manifests.ManifestError, match="discrimination"):
@@ -310,10 +397,39 @@ def test_chain_loader_binds_source_reference_and_distinct_role_content(tmp_path)
     assert set(chain.roles) == {"SOURCE", "TRANSFER", "HOLDOUT"}
     assert chain.min_support == 2
     assert chain.custody_timing == manifests.CUSTODY_TIMING
+    assert set(chain.construction_implementation_files) == set(
+        manifests.CHAIN_BUILDER_IMPLEMENTATION_FILES
+    )
+    assert "scripts/v4_freeze_chain_manifest.py" in chain.construction_implementation_files
     assert set(chain.implementation_files) == set(manifests.REPLAY_IMPLEMENTATION_FILES)
     (holdout / "steps.jsonl").write_text("changed\n")
     with pytest.raises((custody.CustodyError, manifests.ManifestError)):
         manifests.load_chain_manifest(chain_path, repo_root=Path(__file__).resolve().parents[1])
+
+
+def test_chain_builder_implementation_binding_is_strict(tmp_path):
+    _source, source_manifest, _ = _source_manifest(tmp_path)
+    transfer = _run(tmp_path / "transfer", "transfer")
+    holdout = _run(tmp_path / "holdout", "holdout")
+    chain_path = tmp_path / "chain.json"
+    payload = manifests.build_chain_manifest(
+        source_manifest, transfer, holdout, chain_path, repo_root=ROOT
+    )
+    bad = json.loads(json.dumps(payload))
+    bad["runtime"]["version"] = "0.0.0"
+    with pytest.raises(manifests.ManifestError, match="runtime"):
+        manifests.save_chain_manifest(bad, chain_path, repo_root=ROOT)
+
+    bad = json.loads(json.dumps(payload))
+    bad.pop("construction_implementation_files")
+    with pytest.raises(manifests.ManifestError, match="exactly"):
+        manifests.save_chain_manifest(bad, chain_path, repo_root=ROOT)
+
+    bad = json.loads(json.dumps(payload))
+    first = next(iter(bad["construction_implementation_files"]))
+    bad["construction_implementation_files"][first] = "0" * 64
+    with pytest.raises(manifests.ManifestError, match="construction implementation hash mismatch"):
+        manifests.save_chain_manifest(bad, chain_path, repo_root=ROOT)
 
 
 def test_loaded_manifests_retain_one_authenticated_byte_object(tmp_path, monkeypatch):
@@ -467,7 +583,11 @@ def test_source_runtime_binding_is_verified(tmp_path):
 
 
 def test_execution_closures_bind_local_packages_and_current_runtime():
-    for closure in (manifests.GENERATOR_IMPLEMENTATION_FILES, manifests.REPLAY_IMPLEMENTATION_FILES):
+    for closure in (
+        manifests.GENERATOR_IMPLEMENTATION_FILES,
+        manifests.CHAIN_BUILDER_IMPLEMENTATION_FILES,
+        manifests.REPLAY_IMPLEMENTATION_FILES,
+    ):
         assert "semabi/compiler/grounder.py" in closure
         assert "semabi/compiler/mentions.py" in closure
         assert "semabi/__init__.py" in closure

@@ -21,9 +21,7 @@ import hashlib
 import json
 import os
 import stat
-import tempfile
-import threading
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from types import MappingProxyType
 from pathlib import Path
 from typing import Any, Mapping
@@ -425,60 +423,6 @@ class ConsumedRun:
     path: Path
     snapshot: dict[str, Any]
     files: Mapping[str, bytes]
-    # V2's frozen ``fit_view_controls`` implementation reads probes through
-    # ``Path(log.dir) / "probes.jsonl"``.  Keep that one compatibility file in a
-    # private temporary directory owned by this object; observations and steps are
-    # parsed directly from retained bytes and are never materialised on disk.
-    _tempdir: tempfile.TemporaryDirectory | None = field(
-        default=None, init=False, repr=False, compare=False
-    )
-    _lock: threading.RLock = field(
-        default_factory=threading.RLock, init=False, repr=False, compare=False
-    )
-
-    def _private_run_dir(self) -> Path:
-        """Return a private directory containing only authenticated probe bytes."""
-
-        if self._tempdir is None:
-            self._tempdir = tempfile.TemporaryDirectory(prefix="semabi-v4-retained-")
-        root = Path(self._tempdir.name)
-        # TemporaryDirectory owns this path.  Fail closed if a caller tampers with
-        # the private boundary or if an external cleanup removed it underneath us.
-        if root.is_symlink() or not root.is_dir():
-            raise CustodyError("retained evidence parser directory is not private")
-        return root
-
-    def _materialize_probes(self, root: Path) -> None:
-        """Refresh the parser-only probe file from retained bytes, without following links."""
-
-        raw = self.files.get("probes.jsonl")
-        path = root / "probes.jsonl"
-        if raw is None:
-            # An absent optional input must remain absent.  Do not unlink a path
-            # supplied by a caller: the directory is private and any such mutation
-            # is a custody error rather than a reason to touch another path.
-            if path.exists() or path.is_symlink():
-                raise CustodyError("unexpected probes file in retained parser directory")
-            return
-        try:
-            if path.is_symlink():
-                raise CustodyError("retained probes path must not be a symlink")
-            # O_NOFOLLOW prevents a replacement race from turning this into a write
-            # through a symlink.  If a previous parser or test changed the file,
-            # refresh it only after rejecting links and checking the private directory.
-            flags = os.O_WRONLY | os.O_CREAT | os.O_TRUNC | os.O_CLOEXEC | os.O_NOFOLLOW
-            fd = os.open(path, flags, 0o600)
-            try:
-                written = 0
-                while written < len(raw):
-                    written += os.write(fd, raw[written:])
-                os.fsync(fd)
-            finally:
-                os.close(fd)
-            if read_file_bytes(path) != raw:
-                raise CustodyError("retained probes bytes changed while materializing")
-        except OSError as exc:
-            raise CustodyError(f"cannot materialize retained probes: {exc}") from exc
 
     def evidence_log(self) -> Any:
         """Return a fresh parser object over the same retained immutable bytes.
@@ -490,29 +434,16 @@ class ConsumedRun:
 
         from semabi.compiler.v4.frozen_evidence import from_bytes
 
-        with self._lock:
-            root = self._private_run_dir()
-            self._materialize_probes(root)
-            return from_bytes(
-                self.files["observations.jsonl"],
-                self.files["steps.jsonl"],
-                run_dir=root,
-            )
+        return from_bytes(
+            self.files["observations.jsonl"],
+            self.files["steps.jsonl"],
+            probes=self.files.get("probes.jsonl"),
+            run_dir=self.path,
+        )
 
     def close(self) -> None:
-        """Release the parser-only temporary directory owned by this consumed role."""
-
-        with self._lock:
-            if self._tempdir is not None:
-                tempdir, self._tempdir = self._tempdir, None
-                tempdir.cleanup()
-
-    def __del__(self) -> None:
-        # Destructors must never mask the exception that triggered collection.
-        try:
-            self.close()
-        except Exception:
-            pass
+        """Remain an explicit no-op for callers that use close symmetry."""
+        return None
 
 
 def parse_refutations(raw: bytes | None) -> dict[str, set[str | None]]:

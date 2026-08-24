@@ -30,7 +30,7 @@ def _refuted(refuted: Mapping[str, set[str | None]], family: str,
     return key_slot in refuted.get(family, set())
 
 
-def _alternative_note(name: str, family: str, reading, *, copresent_pairs: int | None = None):
+def _alternative_note(name: str, family: str, reading, *, promotion: bool = False):
     """Serialize the exact generated candidate metadata used by SOURCE custody."""
     row = {
         "candidate": name,
@@ -38,9 +38,8 @@ def _alternative_note(name: str, family: str, reading, *, copresent_pairs: int |
         "status": reading.status,
         "discrimination": reading.evidence.discrimination,
     }
-    if copresent_pairs is not None:
+    if promotion:
         row["promotion"] = reading.key_slot
-        row["copresent_pairs"] = copresent_pairs
     else:
         row["alternative"] = reading.key_slot
     return row
@@ -99,9 +98,7 @@ def _source_candidates(
             leaf_family, best.key_slot, best.status, best.evidence.discrimination
         )
         candidates.append(incumbent.with_promotion(leaf_family, family_reading, name))
-        notes.append(_alternative_note(
-            name, leaf_family, best, copresent_pairs=best.evidence.copresent_pairs
-        ))
+        notes.append(_alternative_note(name, leaf_family, best, promotion=True))
         if len(candidates) >= max_candidates:
             return result, candidates[:max_candidates], notes, H, G
 

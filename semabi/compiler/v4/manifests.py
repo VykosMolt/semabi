@@ -26,14 +26,24 @@ from semabi.compiler.v4 import custody
 from semabi.compiler.v4.pinned import PinnedReading
 
 
-SOURCE_MANIFEST_SCHEMA = "semabi.v4.source-candidates.v2"
-CHAIN_MANIFEST_SCHEMA = "semabi.v4.chain.v2"
+SOURCE_MANIFEST_SCHEMA = "semabi.v4.source-candidates.v3"
+CHAIN_MANIFEST_SCHEMA = "semabi.v4.chain.v3"
 CUSTODY_TIMING = "RETROACTIVE_SNAPSHOT_CHRONOLOGY_NOT_ESTABLISHED"
 MAX_CANDIDATES = 6
 MIN_SUPPORT = 2
 
-GENERATOR_ENTRYPOINTS = ("scripts/v4_freeze_source_candidates.py",)
-REPLAY_ENTRYPOINTS = ("semabi/run_v4_transfer.py",)
+# This is the authoritative execution inventory.  Keep the three roles explicit:
+# source generation, chain construction, and replay.  Boundary tests intentionally
+# carry an independent literal copy so adding an entrypoint cannot silently remove
+# it from the scan by changing only this tuple.
+V4_EXECUTION_ENTRYPOINTS = (
+    "scripts/v4_freeze_source_candidates.py",
+    "scripts/v4_freeze_chain_manifest.py",
+    "semabi/run_v4_transfer.py",
+)
+GENERATOR_ENTRYPOINTS = (V4_EXECUTION_ENTRYPOINTS[0],)
+CHAIN_BUILDER_ENTRYPOINTS = (V4_EXECUTION_ENTRYPOINTS[1],)
+REPLAY_ENTRYPOINTS = (V4_EXECUTION_ENTRYPOINTS[2],)
 
 
 class ManifestError(ValueError):
@@ -206,8 +216,9 @@ def local_import_closure(
             raise ManifestError(f"closure entrypoint must be a relative POSIX path: {entry}")
         candidate = root / path
         try:
+            custody._reject_symlink_components(candidate)  # type: ignore[attr-defined]
             candidate = candidate.resolve(strict=True)
-        except OSError as exc:
+        except (OSError, custody.CustodyError) as exc:
             raise ManifestError(f"closure entrypoint does not resolve: {entry}") from exc
         try:
             candidate.relative_to(root)
@@ -242,8 +253,20 @@ def local_import_closure(
                 current = current / part
                 init = current / "__init__.py"
                 if init.is_file():
-                    queue.append(init.resolve(strict=True))
-            queue.append(local.resolve(strict=True))
+                    try:
+                        custody._reject_symlink_components(init)  # type: ignore[attr-defined]
+                        queue.append(init.resolve(strict=True))
+                    except (OSError, custody.CustodyError) as exc:
+                        raise ManifestError(
+                            f"local closure package initializer is not symlink-free: {init}"
+                        ) from exc
+            try:
+                custody._reject_symlink_components(local)  # type: ignore[attr-defined]
+                queue.append(local.resolve(strict=True))
+            except (OSError, custody.CustodyError) as exc:
+                raise ManifestError(
+                    f"local closure module is not symlink-free: {local}"
+                ) from exc
     return tuple(sorted(path.relative_to(root).as_posix() for path in seen))
 
 
@@ -255,6 +278,9 @@ def _implementation_file_set(root: Path, entrypoints: Iterable[str]) -> tuple[st
 # They remain public for reports/tests, while validation recomputes the sets afresh.
 _CLOSURE_ROOT = _loaded_repo_root()
 GENERATOR_IMPLEMENTATION_FILES = _implementation_file_set(_CLOSURE_ROOT, GENERATOR_ENTRYPOINTS)
+CHAIN_BUILDER_IMPLEMENTATION_FILES = _implementation_file_set(
+    _CLOSURE_ROOT, CHAIN_BUILDER_ENTRYPOINTS
+)
 REPLAY_IMPLEMENTATION_FILES = _implementation_file_set(_CLOSURE_ROOT, REPLAY_ENTRYPOINTS)
 
 
@@ -638,8 +664,6 @@ def _validate_candidate_summary(
             )
         key_field = "promotion" if "promotion" in row else "alternative"
         expected_keys = required | {key_field}
-        if key_field == "promotion":
-            expected_keys.add("copresent_pairs")
         if keys != expected_keys:
             raise ManifestError(
                 "source summary candidate row has unknown or missing provenance fields"
@@ -688,10 +712,6 @@ def _validate_candidate_summary(
             raise ManifestError(
                 f"source summary discrimination does not match candidate {candidate_name}: {family}"
             )
-        if key_field == "promotion":
-            pairs = row["copresent_pairs"]
-            if isinstance(pairs, bool) or not isinstance(pairs, int) or pairs < 0:
-                raise ManifestError("source summary copresent_pairs must be a non-negative integer")
     expected = set(by_name) - {incumbent}
     if seen != expected:
         missing = sorted(expected - seen)
@@ -765,6 +785,53 @@ def candidate_record(reading: PinnedReading) -> dict[str, Any]:
         "full_reading_sha256": full_reading_sha256(payload),
         "reading": payload,
     }
+
+
+def _canonical_refutations(
+    value: Mapping[str, Iterable[str | None]],
+) -> dict[str, tuple[str | None, ...]]:
+    """Canonicalise a refutation map for exact SOURCE-sidecar comparison.
+
+    The sidecar parser returns sets while pinned readings retain sorted lists.  Comparing
+    this normalized representation makes ordering irrelevant but preserves every family
+    and key claim, including an explicitly present empty family.
+    """
+
+    if not isinstance(value, Mapping):
+        raise ManifestError("refutation map must be an object")
+    normalized: dict[str, tuple[str | None, ...]] = {}
+    for family, slots in value.items():
+        if not isinstance(family, str) or not family:
+            raise ManifestError("refutation family names must be non-empty strings")
+        if isinstance(slots, (str, bytes)):
+            raise ManifestError("refutation slots must be iterable slot values")
+        try:
+            unique = set(slots)
+        except (TypeError, ValueError) as exc:
+            raise ManifestError("refutation slots must be strings or null") from exc
+        if any(slot is not None and not isinstance(slot, str) for slot in unique):
+            raise ManifestError("refutation slots must be strings or null")
+        normalized[family] = tuple(sorted(unique, key=str))
+    return {family: normalized[family] for family in sorted(normalized)}
+
+
+def _authenticated_source_refutations(
+    source_path: Path, source_snapshot: Mapping[str, Any], root: Path
+) -> dict[str, tuple[str | None, ...]]:
+    """Consume SOURCE once and return only its authenticated refutation sidecar map."""
+
+    consumed: custody.ConsumedRun | None = None
+    try:
+        consumed = custody.consume_snapshot(source_path, source_snapshot, repo_root=root)
+        parsed = custody.parse_refutations(
+            consumed.files.get("identity_refutations_v4.json")
+        )
+        return _canonical_refutations(parsed)
+    except (custody.CustodyError, TypeError, ValueError) as exc:
+        raise ManifestError(f"authenticated SOURCE refutations are invalid: {exc}") from exc
+    finally:
+        if consumed is not None:
+            consumed.close()
 
 
 def build_source_manifest(
@@ -852,6 +919,11 @@ def _validate_source_payload(
     source_snapshot = custody.validate_snapshot(payload["source_snapshot"])
     if source_snapshot["role"] != "SOURCE":
         raise ManifestError("source compiler snapshot must be SOURCE")
+    # The authenticated SOURCE sidecar is an input to candidate generation, not a
+    # per-candidate annotation.  Consume the frozen role through descriptors once and
+    # compare every candidate's retained map with those exact bytes below.  This also
+    # replaces the old end-of-validation live re-open of the role directory.
+    source_refutations = _authenticated_source_refutations(source_path, source_snapshot, root)
     generation = payload["generation"]
     _exact_keys(generation, {"max_candidates", "implementation_files"}, "generation")
     if generation["max_candidates"] != MAX_CANDIDATES:
@@ -911,6 +983,10 @@ def _validate_source_payload(
         )
         if reading.name != name:
             raise ManifestError(f"candidate name does not match its pinned reading: {name}")
+        if _canonical_refutations(reading.refuted) != source_refutations:
+            raise ManifestError(
+                f"candidate {name} refutation map does not match authenticated SOURCE sidecar"
+            )
         for family, family_reading in reading.families.items():
             if (
                 family_reading.key_slot is not None
@@ -931,9 +1007,6 @@ def _validate_source_payload(
     if candidates[0].name != incumbent:
         raise ManifestError("source manifest incumbent must be the first frozen candidate")
     _validate_candidate_summary(summary["alternatives_generated"], candidates, incumbent)
-    # A source snapshot is verified only after the structure and implementation hashes have
-    # passed, so a malformed manifest cannot make a path look authenticated.
-    custody.verify_snapshot(source_path, source_snapshot, "SOURCE")
     return dict(payload), source_path, candidates
 
 
@@ -998,6 +1071,7 @@ class ChainManifest:
     roles: dict[str, dict[str, Any]]
     min_support: int
     custody_timing: str
+    construction_implementation_files: dict[str, str]
     implementation_files: dict[str, str]
     raw: dict[str, Any]
     # The source object and chain bytes are authenticated at one load boundary;
@@ -1069,6 +1143,11 @@ def build_chain_manifest(
         "roles": roles,
         "min_support": MIN_SUPPORT,
         "custody_timing": CUSTODY_TIMING,
+        "construction_implementation_files": implementation_hashes(
+            root,
+            CHAIN_BUILDER_IMPLEMENTATION_FILES,
+            entrypoints=CHAIN_BUILDER_ENTRYPOINTS,
+        ),
         "implementation_files": implementation_hashes(
             root, REPLAY_IMPLEMENTATION_FILES, entrypoints=REPLAY_ENTRYPOINTS
         ),
@@ -1113,7 +1192,7 @@ def _validate_chain_payload(
 ) -> ChainManifest:
     expected = {
         "schema", "runtime", "source_manifest", "roles", "min_support", "custody_timing",
-        "implementation_files",
+        "construction_implementation_files", "implementation_files",
     }
     _exact_keys(payload, expected, "chain manifest")
     if payload["schema"] != CHAIN_MANIFEST_SCHEMA:
@@ -1123,13 +1202,29 @@ def _validate_chain_payload(
         raise ManifestError("chain manifest min_support must be 2")
     if payload["custody_timing"] != CUSTODY_TIMING:
         raise ManifestError("chain manifest custody_timing is not established for this phase")
+    root = _repo_root(repo_root)
+    path_root = _manifest_path_root(Path(manifest_path), root)
+    construction = payload["construction_implementation_files"]
+    if not isinstance(construction, Mapping) or set(construction) != set(
+        CHAIN_BUILDER_IMPLEMENTATION_FILES
+    ):
+        raise ManifestError("chain construction implementation file set is not frozen")
+    expected_construction = set(local_import_closure(root, CHAIN_BUILDER_ENTRYPOINTS))
+    if set(construction) != expected_construction:
+        raise ManifestError("chain construction implementation closure is not frozen")
+    for relative, digest in construction.items():
+        expected_digest = _check_sha(
+            digest, f"chain construction implementation hash for {relative}"
+        )
+        if custody.sha256_file(
+            _resolve_repo_relative(root, relative, "chain construction implementation file")
+        ) != expected_digest:
+            raise ManifestError(f"chain construction implementation hash mismatch: {relative}")
     implementation = payload["implementation_files"]
     if not isinstance(implementation, Mapping) or set(implementation) != set(
         REPLAY_IMPLEMENTATION_FILES
     ):
         raise ManifestError("chain replay implementation file set is not frozen")
-    root = _repo_root(repo_root)
-    path_root = _manifest_path_root(Path(manifest_path), root)
     expected_replay = set(local_import_closure(root, REPLAY_ENTRYPOINTS))
     if set(implementation) != expected_replay:
         raise ManifestError("chain replay implementation closure is not frozen")
@@ -1207,6 +1302,7 @@ def _validate_chain_payload(
         roles=normalized_roles,
         min_support=payload["min_support"],
         custody_timing=payload["custody_timing"],
+        construction_implementation_files=dict(construction),
         implementation_files=dict(implementation),
         raw=dict(payload),
         source_manifest=source_manifest,

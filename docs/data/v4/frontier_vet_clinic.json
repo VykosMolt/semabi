@@ -32,9 +32,41 @@
     "name": "row[_](cell[_])=None"
    }
   ],
+  "chain_construction_implementation_files": {
+   "scripts/v4_freeze_chain_manifest.py": "1e81664ca81336f0bc81796d1c83e36c644d4e6d18f170e739fd72ac4659abb7",
+   "semabi/__init__.py": "0a6e61cf4d9d8dc368fef7bc2053e6db686e3fb70272d7f9e9f1e5b3f79f95e8",
+   "semabi/compiler/__init__.py": "5249623658aef7d2b87bd34d06fab3f181b1ef5bbb9dd70b827592bb01b02893",
+   "semabi/compiler/abstract.py": "07fd8b41fcfdfe3d563e6b5f28d6fbb0229fb706f944dbfe7626a363ade633f8",
+   "semabi/compiler/belief.py": "10996cf9f5f2264ecbe8e28235718e81fc606ed249d8c2708f50541a73a8aa5c",
+   "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+   "semabi/compiler/evidence.py": "b4a5d0c9208f9b6c4588317078f8270a7bd0766bcb1a2e52722f72be74a90e51",
+   "semabi/compiler/explorer.py": "16827d3735c9eab4d51a60c585790226be3e692bb63b01794df29a9ba8c8c807",
+   "semabi/compiler/grounder.py": "d272260d2bacd64dcd7fc88f2094c2f84b989736c89924460cc0053b8e97ac06",
+   "semabi/compiler/induce.py": "46075088d34187ea121c77c3522055260e710a71199fd97de338f36f0c212b3e",
+   "semabi/compiler/mentions.py": "800fa94e2e4f76bfc503c7557ec775f6d83a612f6634123a62f78a16de2b781c",
+   "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+   "semabi/compiler/parse.py": "c609e78b0f020f09bc22686168f22392cb54cea163a2ff84ab917528cb0ca922",
+   "semabi/compiler/v2/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "semabi/compiler/v2/abstractor.py": "8ef5620e76fbfd6047879814453d9cb1761d0d5f3641f354fa81dd9978110499",
+   "semabi/compiler/v2/controls.py": "593eaaacfae90a3b688b403ea78e7651461a319dcb8f0fa3c148fcf21cc96f06",
+   "semabi/compiler/v2/graph.py": "feb2ee73faca3bd5eaa91b3685bf84c047bf90027dddc56d02713b26a5501b6a",
+   "semabi/compiler/v2/hypotheses.py": "fcb47e96015115c02efc56c9994fbcc1d2dcb2728d8b9ab51a89bfda5cffb92a",
+   "semabi/compiler/v2/score.py": "292ea78f2237e7b86dbbc943d624024ca9213218ead327b88080b71aebaaa95c",
+   "semabi/compiler/v2/units.py": "c1a94e811f8259742e65e24d4beea8b869868bec6a2901f5420a96d60d5d7d58",
+   "semabi/compiler/v4/__init__.py": "c41acb8afd5f3306718e6b5bb242db1dae876bf512bcec1d6c49108e8fbcc38c",
+   "semabi/compiler/v4/abstractor.py": "4e772cf28d002461de3449e4a939ced2b39a672e629b916612c83bb6ad0625f1",
+   "semabi/compiler/v4/custody.py": "75ec3a978d92f8d1e924e07ba76cb41294737c5c596210cd82fbecc3b2b55178",
+   "semabi/compiler/v4/frozen_evidence.py": "ff80dc759a450cc64c90c913df63fb7d9eb70bb652ebc733dd40637a74b73738",
+   "semabi/compiler/v4/identity.py": "4e718dd8b3d2ade2126c31c5e88a3d5d7b91662a08e1a95077f342c030039c05",
+   "semabi/compiler/v4/manifests.py": "b837e38c8c5b90c7a3dc536d8129fb014fba0c56068d1c13ffd71bbe2cd92a15",
+   "semabi/compiler/v4/objective.py": "4dd902f9bb288e967ae1333f581631e5c6edbd507a841bf45efe569b758fc065",
+   "semabi/compiler/v4/pinned.py": "711305a95c1da238c4b9e4f213fb5f2421bf1757244b10bcbab5b14a83f8ad4d",
+   "semabi/compiler/v4/promote.py": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65",
+   "semabi/compiler/v4/search.py": "c1ad0bc10a94d146120192d77ac01da95158ed7ea738af9e84e889397305c839"
+  },
   "chain_manifest": {
    "path": "docs/data/v4/manifests/vet_clinic_chain.json",
-   "sha256": "d0baa3fc70e4cf0489cb418b86081153d23f5aa8cdd15613250dc3b1c117d9b2"
+   "sha256": "f31253223b00e6f0fffcce1e2cd28c2c7dff9f282b9a7950d401ba3ec3d5808e"
   },
   "custody_timing": "RETROACTIVE_SNAPSHOT_CHRONOLOGY_NOT_ESTABLISHED",
   "min_support": 2,
@@ -45,7 +77,7 @@
    "semabi/compiler/belief.py": "10996cf9f5f2264ecbe8e28235718e81fc606ed249d8c2708f50541a73a8aa5c",
    "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
    "semabi/compiler/compile.py": "fa0e4b4237658dc2e5d41cf715fe8ca884b0b2ec9b714cde4f1917318c9f920f",
-   "semabi/compiler/compile_v4.py": "cc0049796495f7d0c0b7a5a100e13f1981a36d662f78178fb62a48ff6c330118",
+   "semabi/compiler/compile_v4.py": "dd6b17f26e98dc79291ececcbb35f1048a41f15f31e1793bf34ae443e592c778",
    "semabi/compiler/evidence.py": "b4a5d0c9208f9b6c4588317078f8270a7bd0766bcb1a2e52722f72be74a90e51",
    "semabi/compiler/explorer.py": "16827d3735c9eab4d51a60c585790226be3e692bb63b01794df29a9ba8c8c807",
    "semabi/compiler/grounder.py": "d272260d2bacd64dcd7fc88f2094c2f84b989736c89924460cc0053b8e97ac06",
@@ -62,17 +94,18 @@
    "semabi/compiler/v2/score.py": "292ea78f2237e7b86dbbc943d624024ca9213218ead327b88080b71aebaaa95c",
    "semabi/compiler/v2/units.py": "c1a94e811f8259742e65e24d4beea8b869868bec6a2901f5420a96d60d5d7d58",
    "semabi/compiler/v4/__init__.py": "c41acb8afd5f3306718e6b5bb242db1dae876bf512bcec1d6c49108e8fbcc38c",
-   "semabi/compiler/v4/custody.py": "83adb9cd0ea8d285e3250ca1fcfd5c0c3fcfee5263304a63e10f90c87080d8b3",
-   "semabi/compiler/v4/frozen_evidence.py": "603a8c1798e4b18e1f12a37316984eca538e192f432780ee66ead0228ff3ee48",
+   "semabi/compiler/v4/abstractor.py": "4e772cf28d002461de3449e4a939ced2b39a672e629b916612c83bb6ad0625f1",
+   "semabi/compiler/v4/custody.py": "75ec3a978d92f8d1e924e07ba76cb41294737c5c596210cd82fbecc3b2b55178",
+   "semabi/compiler/v4/frozen_evidence.py": "ff80dc759a450cc64c90c913df63fb7d9eb70bb652ebc733dd40637a74b73738",
    "semabi/compiler/v4/identity.py": "4e718dd8b3d2ade2126c31c5e88a3d5d7b91662a08e1a95077f342c030039c05",
-   "semabi/compiler/v4/manifests.py": "8074c853c6f227ff94796a76b27a8dc0c80cc760afae88cee600dae6283392d5",
+   "semabi/compiler/v4/manifests.py": "b837e38c8c5b90c7a3dc536d8129fb014fba0c56068d1c13ffd71bbe2cd92a15",
    "semabi/compiler/v4/objective.py": "4dd902f9bb288e967ae1333f581631e5c6edbd507a841bf45efe569b758fc065",
    "semabi/compiler/v4/pinned.py": "711305a95c1da238c4b9e4f213fb5f2421bf1757244b10bcbab5b14a83f8ad4d",
    "semabi/compiler/v4/promote.py": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65",
-   "semabi/compiler/v4/search.py": "32f3411b29e6a28e25bbfe799787fb171c32fedbb8dc56b6a61a41997506c767",
+   "semabi/compiler/v4/search.py": "c1ad0bc10a94d146120192d77ac01da95158ed7ea738af9e84e889397305c839",
    "semabi/compiler/v4/transfer.py": "70e342f46ecd4c246812fa1daebcae108db4b85b87a3f9f8a45b17b3a9d75991",
    "semabi/relmodel.py": "22ffbfe51a95a2b77307b9a2e0f3ba297dd58b2efd045ce7ab0263602abd74cf",
-   "semabi/run_v4_transfer.py": "5e2f15cf4d3f69109360cbccdc030bcdc1290dbbc1e50f988c6865d963e0754c"
+   "semabi/run_v4_transfer.py": "73734d93ca48defb147e5b37e01c50331fe6df87c8309faceb7208ff174f6279"
   },
   "roles": {
    "HOLDOUT": {
@@ -184,7 +217,7 @@
   },
   "source_manifest": {
    "path": "docs/data/v4/manifests/vet_clinic_source_candidates.json",
-   "sha256": "fb6531e4a42d4da916de0c889dd2e7bd7e977e7db4165f9340cc6279d1981186"
+   "sha256": "09cb8004f544ebcb0612dbdb5d67a881e80eb8fbf9ff0f3875caef7cf226b995"
   },
   "source_runtime": {
    "implementation": "CPython",
@@ -5512,7 +5545,7 @@
   ],
   "manifest": {
    "path": "docs/data/v4/manifests/vet_clinic_source_candidates.json",
-   "sha256": "fb6531e4a42d4da916de0c889dd2e7bd7e977e7db4165f9340cc6279d1981186"
+   "sha256": "09cb8004f544ebcb0612dbdb5d67a881e80eb8fbf9ff0f3875caef7cf226b995"
   },
   "source_choice": {
    "decision_fingerprint": "2dc9cce46cf67682",
@@ -5577,7 +5610,6 @@
    "alternatives_generated": [
     {
      "candidate": "promote cell[_]=cell#0",
-     "copresent_pairs": 400,
      "discrimination": 0.6525,
      "family": "cell[_]",
      "promotion": "cell#0",
@@ -5585,7 +5617,6 @@
     },
     {
      "candidate": "promote listitem[_]=listitem#0!",
-     "copresent_pairs": 400,
      "discrimination": 1.0,
      "family": "listitem[_]",
      "promotion": "listitem#0!",

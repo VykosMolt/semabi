@@ -15,7 +15,9 @@ authoritative; verify them rather than trusting this summary.
   sequential separation successor and its review. Commit `98db1bd` preserves the first
   authenticated all-pairs candidate; its adversarial rejection is retained by `5f229f3`.
   Commit `72e6819` preserves the first descriptor-bound integrity repair; its second
-  adversarial rejection is retained by `e894cac`. Do not rewrite or delete any checkpoint.
+  adversarial rejection is retained by `e894cac`. Commit `b489495` preserves the second
+  integrity repair; its adversarial rejection is retained by current checkpoint `a1642cc`.
+  Do not rewrite or delete any checkpoint.
 * The current raw histories are now retained in Git, but their snapshots were made after
   collection. Every chain therefore says exactly
   `RETROACTIVE_SNAPSHOT_CHRONOLOGY_NOT_ESTABLISHED`. The bytes and replay are reproducible;
@@ -27,15 +29,21 @@ authoritative; verify them rather than trusting this summary.
   refutation sidecar cannot manufacture a distinct history. Evaluator custody separately
   selects only its two raw inputs. Generated models, identity reports and search logs are not
   inputs.
+* Retained probe evidence is parsed from the authenticated `probes.jsonl` bytes into a fresh
+  in-memory record graph for each compilation. No compatibility file is materialized and no
+  retained compiler path is reopened. SOURCE candidate refutation maps must equal the exact
+  authenticated SOURCE sidecar before any active-key check.
 
 ## Read these artifacts first
 
 For each application, the source manifest freezes the explicit incumbent, all six complete
 `PinnedReading` objects, their decision fingerprints, full-reading SHA-256 hashes, the exact
 SOURCE input snapshot, the exact Python runtime, and the complete transitive local-import
-closure used for source generation. The chain manifest adds role-distinct TRANSFER/HOLDOUT
-snapshots, `min_support=2`, the replay import closure, and the custody timing state. The code
-root is derived from the loaded module; `--repo-root` cannot point hashing at another checkout.
+closure used for source generation. The schema-v3 chain manifest adds role-distinct
+TRANSFER/HOLDOUT snapshots, `min_support=2`, a separately hashed chain-construction closure,
+the replay import closure, and the custody timing state. The explicit execution inventory
+contains source freeze, chain freeze, and replay. The code root is derived from the loaded
+module; `--repo-root` cannot point hashing at another checkout.
 
     docs/data/v4/manifests/vet_clinic_source_candidates.json
     docs/data/v4/manifests/harbour_source_candidates.json
@@ -146,8 +154,8 @@ budget, stop conditions, and failure states must be frozen before new TRANSFER e
     # full suite; loopback access is needed by three existing network tests
     .venv/bin/python -m pytest -q
 
-Current local verification: retained-frontier/integrity/boundary subset `95 passed`; complete
-suite `205 passed, 1 xfailed`. Fresh-clone replay, independent review, and adjudication are
+Current local verification: V4/integrity/boundary subset `124 passed`; complete suite
+`211 passed, 1 xfailed`. Fresh-clone replay, independent review, and adjudication are
 pending for the current repair candidate. No LLM proposal was used. The
 phase retained 4,373 collected primitives plus the earlier one-primitive harbour acquisition;
 no new primitives were collected by this repair.
@@ -166,5 +174,5 @@ no new primitives were collected by this repair.
   exactly. Never manufacture a singleton.
 * One application instance holds one hidden state. Never run two collectors against the same
   port concurrently.
-* Do not modify V0, the effect language, V2's tag, the V3 frozen result, the rejected
-  `1e20ef2`/`98db1bd` checkpoints, or the current spent histories.
+* Do not modify V0, the effect language, V2's tag, the V3 frozen result, any rejected
+  `1e20ef2`/`98db1bd`/`72e6819`/`b489495` checkpoint, or the current spent histories.

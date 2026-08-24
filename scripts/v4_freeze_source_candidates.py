@@ -18,24 +18,27 @@ def freeze(source: Path, output: Path, *, repo_root: Path | None = None) -> dict
     consumed = manifests.custody.consume_snapshot(
         source, initial_snapshot, repo_root=root
     )
-    refuted = manifests.custody.parse_refutations(
-        consumed.files.get("identity_refutations_v4.json")
-    )
-    log = consumed.evidence_log()
-    result, candidates, notes, _hypotheses, _graph = source_candidates._source_candidates(
-        source, log, max_candidates=manifests.MAX_CANDIDATES, refuted=refuted
-    )
-    readings = [candidate for candidate in candidates]
-    payload = manifests.build_source_manifest(
-        source,
-        readings,
-        manifests.source_summary(result, notes),
-        output,
-        repo_root=root,
-        source_snapshot=consumed.snapshot,
-    )
-    manifests.save_source_manifest(payload, output, repo_root=repo_root)
-    return payload
+    try:
+        refuted = manifests.custody.parse_refutations(
+            consumed.files.get("identity_refutations_v4.json")
+        )
+        log = consumed.evidence_log()
+        result, candidates, notes, _hypotheses, _graph = source_candidates._source_candidates(
+            source, log, max_candidates=manifests.MAX_CANDIDATES, refuted=refuted
+        )
+        readings = [candidate for candidate in candidates]
+        payload = manifests.build_source_manifest(
+            source,
+            readings,
+            manifests.source_summary(result, notes),
+            output,
+            repo_root=root,
+            source_snapshot=consumed.snapshot,
+        )
+        manifests.save_source_manifest(payload, output, repo_root=repo_root)
+        return payload
+    finally:
+        consumed.close()
 
 
 def main() -> None:

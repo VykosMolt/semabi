@@ -367,9 +367,22 @@ status/discrimination metadata was copied from the incumbent; HOLDOUT could over
 identity evidence; applicability reconstruction relied on rounded decimals; and the SOURCE
 generator was outside the evaluator-file scan. The exact rejection is retained at `e894cac`.
 
-The current repair authenticates a frozen SOURCE candidate manifest, decides every unordered
-TRANSFER pair once, and retains the zero-loss frontier. It emits a selection only for exactly
-one survivor. Its current results, pending independent review, are:
+The second integrity repair at `b489495` closed those defects and again passed independent
+mechanical verification, including `205 passed, 1 xfailed` and byte-identical fresh-clone
+replay. Adversarial review nevertheless rejected it. The retained probe bytes were copied to
+a private temporary pathname and later reopened, leaving a substitution interval; candidate
+refutations were not required to equal the authenticated SOURCE sidecar; the promotion
+summary retained an unbound `copresent_pairs` count; and chain construction itself was not in
+the execution inventory or a separately hashed closure. The exact rejection is retained at
+`a1642cc`.
+
+The current repair consumes retained probes directly into fresh in-memory records, requires
+every candidate refutation map to equal the authenticated SOURCE sidecar, removes the unbound
+promotion count, and binds a separate chain-construction closure whose inventory includes the
+chain-freezing entrypoint. It authenticates a frozen SOURCE candidate manifest, decides every
+unordered TRANSFER pair once, and retains the zero-loss frontier. It emits a selection only
+for exactly one survivor. Its current results, pending fresh-clone verification and independent
+review, are:
 
 | application | SOURCE incumbent | undefeated TRANSFER frontier | HOLDOUT |
 |---|---|---|---|
@@ -410,11 +423,13 @@ Compiler snapshots bind observations, steps, probes, and the one existing SOURCE
 sidecar. Distinctness is decided from observations, steps, and probes when present, but never
 from file modes or the SOURCE-only refutation sidecar. Replay opens confined paths through
 no-follow descriptors, consumes each role once into immutable bytes, and builds an isolated
-parser object for every candidate; the frozen V2 probe reader sees only a private file
-materialized from retained probe bytes, never the live role. A separate `EVALUATOR_ONLY` manifest
-binds hidden-domain and oracle bytes; those names never enter compiler modules or the transfer
-runner. Source and chain manifests bind the exact Python runtime plus deterministic transitive
-local-import closures derived from the loaded checkout; an alternate `--repo-root` is rejected.
+parser object for every candidate. A V4-owned abstractor consumes retained probe records
+directly from memory while live non-retained logs preserve the frozen V2 pathname behavior;
+retained compilation never materializes or reopens a probe path. A separate `EVALUATOR_ONLY`
+manifest binds hidden-domain and oracle bytes; those names never enter compiler modules or the
+transfer runner. Source and chain manifests bind the exact Python runtime plus deterministic
+transitive local-import closures derived from the loaded checkout. Chain construction and
+replay have separate closures, and an alternate `--repo-root` is rejected.
 
 This is a retroactive freeze. The exact state is
 `RETROACTIVE_SNAPSHOT_CHRONOLOGY_NOT_ESTABLISHED`: current bytes and replay are reproducible,

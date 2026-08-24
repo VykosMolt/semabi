@@ -19,6 +19,7 @@ def compiler_files():
     # live application and would be the natural place for hidden state to leak in.
     runners = [
         REPO / "scripts" / "v4_freeze_source_candidates.py",
+        REPO / "scripts" / "v4_freeze_chain_manifest.py",
         ROOT / "run_v2_refine.py",
         ROOT / "run_v2_validate.py",
         ROOT / "run_v4_probe.py",
@@ -67,8 +68,14 @@ def test_compiler_never_reads_oracle_annotations():
 def test_every_v4_execution_entrypoint_is_inside_the_forbidden_input_scan():
     from semabi.compiler.v4 import manifests
 
+    expected = {
+        "scripts/v4_freeze_source_candidates.py",
+        "scripts/v4_freeze_chain_manifest.py",
+        "semabi/run_v4_transfer.py",
+    }
+    assert set(manifests.V4_EXECUTION_ENTRYPOINTS) == expected
     scanned = {path.resolve() for path in compiler_files()}
-    for relative in (*manifests.GENERATOR_ENTRYPOINTS, *manifests.REPLAY_ENTRYPOINTS):
+    for relative in expected:
         assert (REPO / relative).resolve() in scanned, relative
 
 
@@ -76,6 +83,7 @@ def test_v4_closure_is_local_and_includes_function_local_compiler_modules():
     from semabi.compiler.v4 import manifests
 
     for closure in (manifests.GENERATOR_IMPLEMENTATION_FILES,
+                    manifests.CHAIN_BUILDER_IMPLEMENTATION_FILES,
                     manifests.REPLAY_IMPLEMENTATION_FILES):
         assert "semabi/compiler/grounder.py" in closure
         assert "semabi/compiler/mentions.py" in closure

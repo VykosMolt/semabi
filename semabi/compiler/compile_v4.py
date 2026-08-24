@@ -14,9 +14,9 @@ from semabi.compiler.compile import Compiled
 from semabi.compiler.evidence import EvidenceLog
 from semabi.compiler.induce import Inducer
 from semabi.compiler.model import build_model, relation_names, type_name
-from semabi.compiler.v2.abstractor import V2Abstractor
 from semabi.compiler.v2.graph import ObsGraph
 from semabi.compiler.v2.hypotheses import Hypotheses
+from semabi.compiler.v4.abstractor import V4Abstractor
 from semabi.compiler.v4 import pinned as v4_pinned, promote, search as v4_search
 
 READINGS_FILE = "identity_readings_v4.json"
@@ -122,7 +122,7 @@ def compile_v4(run_dir: Path, min_support: int = 1, conservative_belief: bool = 
                 v4_search._materialise(unit, key_slot)
 
     H._build_entity_types()
-    A = V2Abstractor(G, H, conservative_belief=conservative_belief)
+    A = V4Abstractor(G, H, conservative_belief=conservative_belief)
     A.fit_view_controls(log)
     I = Inducer(A, log)
     I.run()
