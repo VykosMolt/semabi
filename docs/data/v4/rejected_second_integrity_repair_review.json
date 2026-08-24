@@ -1,0 +1,56 @@
+{
+ "schema": "semabi.v4.rejected-successor-review.v1",
+ "candidate_commit": "b4894952c04d616461f89bf601b804a54d98b7af",
+ "captured_at": "2026-08-24T18:46:20+02:00",
+ "verdict": "REJECT",
+ "candidate_artifacts": {
+  "docs/data/v4/frontier_vet_clinic.json": "cf7b5fa6bdddc2936854f0bc6606cbef5a1240c01227cf16087e707ba8202a5b",
+  "docs/data/v4/frontier_harbour.json": "c2e7ef0a8cb5e892fbf9c9c150fd903b894842a7b409f20b902cbf2db0b12178",
+  "docs/data/v4/frontier_blend_book.json": "c8b956bd3203167bcefa46526a43d9c045e69bda7a8a464d9578c031ca7d8eb0",
+  "docs/data/v4/frontier_summary.json": "96d2bd1e2b5e3f0e4bc464412b829daf35275379a898bf3b4bdeabefae48c9e7"
+ },
+ "mechanical_evidence": {
+  "fresh_clone_replay": "BYTE_IDENTICAL",
+  "tests": "PASS_205_XFAIL_1_IN_PERMITTED_LOOPBACK_CONTEXT",
+  "v2_custody": "PASS_65_OF_65_EXACTLY_TWO_DECLARED_WORKTREE_DIVERGENCES",
+  "independent_verifier": "PASS_WITH_LIMITATIONS"
+ },
+ "rejection_findings": [
+  {
+   "severity": "HIGH",
+   "code": "RETAINED_PROBES_REOPENED_THROUGH_TEMPORARY_PATH",
+   "summary": "authenticated probe bytes are materialized and then reopened through a mutable temporary pathname after the custody lock is released"
+  },
+  {
+   "severity": "HIGH",
+   "code": "CANDIDATE_REFUTATIONS_NOT_BOUND_TO_SOURCE_SIDECAR",
+   "summary": "strict loading checks a candidate against its own refutation map but does not require that map to equal the authenticated SOURCE sidecar"
+  },
+  {
+   "severity": "MEDIUM",
+   "code": "PROMOTION_COPRESENT_COUNT_UNBOUND",
+   "summary": "source-summary promotion copresent_pairs is shape-checked but not derived from or bound to retained candidate evidence"
+  },
+  {
+   "severity": "MEDIUM",
+   "code": "CHAIN_FREEZE_ENTRYPOINT_MISSING_FROM_INVENTORY",
+   "summary": "scripts/v4_freeze_chain_manifest.py is absent from the evaluator-file scan and from a chain-construction implementation closure"
+  },
+  {
+   "severity": "LOW",
+   "code": "SOURCE_CONSUMED_ROLE_DESTRUCTOR_CLEANUP",
+   "summary": "SOURCE freeze relies on destructor cleanup instead of explicitly closing its consumed role in a finally block"
+  }
+ ],
+ "claim_boundary": {
+  "current_report_reproduction": "BYTE_IDENTICAL_ON_RETAINED_CURRENT_BYTES",
+  "transfer_survivor_counts": "2_VET_3_HARBOUR_2_BLEND_ON_RETAINED_CURRENT_BYTES",
+  "holdout_classifications": "ALL_INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE",
+  "unique_transfer_selection": "NOT_ESTABLISHED",
+  "immutable_replay": "NOT_ESTABLISHED_TEMPORARY_PROBE_PATH_REOPEN",
+  "strict_source_refutation_binding": "NOT_ESTABLISHED",
+  "prospective_chronology": "NOT_ESTABLISHED",
+  "fresh_generalization": "NOT_ESTABLISHED",
+  "representation_transport": "NOT_ESTABLISHED_RTC_ZERO"
+ }
+}
