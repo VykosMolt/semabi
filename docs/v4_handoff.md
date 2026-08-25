@@ -272,13 +272,64 @@ experiment has been started.
 
     6c84aa5  candidate  -> REJECTED (2 defects)   rejection: 50582c7
     33d4ec3  candidate  -> REJECTED (1 blocking)  rejection: fb4f04c
-    b0013ac  candidate  -> primary mechanical verification PASS; review recorded separately
+    b0013ac  candidate  -> primary verification PASS; independent review ACCEPT (8 findings,
+                            none blocking); NOT ADJUDICATED
 
 `docs/data/v4/fifth_integrity_repair_verification.json` is the primary engineer's
 mechanical record for `b0013ac`: the pre-repair reproduction of the blocking defect, the
 artifact hashes, the test and custody results, the field-by-field scientific payload
 comparison against `fb4f04c`, the fresh-clone import-origin evidence, and the explicit
-claim boundary. It is **not** an adjudication and it is **not** an independent review.
+claim boundary.
+
+`docs/data/v4/fifth_integrity_repair_review.json` is the independent adversarial review of
+the same commit, from a separate context and its own no-hardlink clones. Its verdict is
+**ACCEPT**: no authenticate-versus-execute divergence was found inside the declared threat
+model after active attack, every attack failed closed, and all six previously rejected
+classes are closed with no fix weakened. It independently reproduced V2 custody 65/65, the
+full suite at `252 passed, 1 xfailed`, a 162-test focused subset, byte-identical in-place
+replay of all three reports and their attestations, all seven contract hashes, frontier
+reconstruction on all three applications, and every one of the nine attestations against
+`b0013ac`'s blobs with zero mismatches.
+
+**Neither record is an adjudication.** ACCEPT by one adversarial reviewer is not acceptance
+of V4, and nothing here licenses the next scientific step.
+
+### The eight findings, none blocking
+
+Read the review artifact for reproductions. In priority order for whoever continues:
+
+1. **F1, MEDIUM — repository-local Git configuration.** `scripts/v4_authority.py::_git`
+   neutralises system and global Git config but not **repo-local** config, which is the one
+   the declared attacker actually controls. `core.fsmonitor` makes Git execute an arbitrary
+   program during index refresh, and `--no-optional-locks` does not disable it; the reviewer
+   used it to authenticate a module absent from the candidate while the environment record
+   still reported `candidate_commit b0013ac` and `index_matches_head: true`. It does not
+   block, because a fresh clone does not inherit the source repository's config, all nine
+   attestations verify against the commit's blobs offline, and this checkout's
+   `.git/config` carries none of those knobs. **This is the first thing to repair.** The
+   reviewer's recommendation: treat repo-local config as attacker-controlled rather than
+   enumerating knobs, resolve membership from `HEAD`'s tree instead of the index so the
+   record's identity claim is self-consistent, and extend the attestation-versus-tree hash
+   test from three attestations to all nine.
+2. **F2, MEDIUM — the third-party carve-out is live, not vacuous.** Every authoritative run
+   executes **62** modules from the declared third-party directory, because
+   `semabi/compiler/browser.py` imports `playwright` at module scope; on this machine that
+   directory sits inside the checkout. Declared and disclosed, but the number belongs in
+   prose. The reviewer checked those three packages against their wheel `RECORD` hashes:
+   playwright 189/189, greenlet 100/100, pyee 15/15, zero mismatches.
+3. **F3–F8, LOW** — `--site-packages` accepts an untracked in-checkout directory; `attest`
+   without `--entry-kind` performs no closure check (labelled, and unretainable); the
+   `subprocesses` fields are hardcoded assertions rather than measurements; the "SHA-1 is
+   not load-bearing" wording is true of blob authentication but the commit id is still the
+   identity anchor; `closure_comparison` snapshots `executed` before `_declared_closure`
+   imports `manifests`, an unstated precondition rather than a live hole; and
+   `frontier_summary.json` is not an authoritative artifact and has no attestation.
+
+The reviewer also corrected one environment premise **against** the candidate's
+demonstration: this venv's editable installation is degenerate
+(`__editable___semabi_0_1_0_finder.MAPPING` is empty), so it could not have contaminated
+anything even without `-S`. The mechanism claim about `-S` is unaffected; the demonstration
+value of that particular threat is weaker than it looks.
 
 ### What rejected `33d4ec3`, and what was done about it
 
@@ -338,8 +389,9 @@ checkpoint.
 ### V4 has not been adjudicated
 
 This checkpoint records primary mechanical verification and one independent adversarial
-review. Neither is an adjudication, and no adjudication has been performed. A missing or
-unreturned verifier result is absence of evidence, never approval.
+review returning ACCEPT. Neither is an adjudication, and no adjudication has been
+performed. A missing or unreturned verifier result is absence of evidence, never approval,
+and an ACCEPT from one reviewer is not acceptance of V4.
 
 ### Do not start the next experiment
 

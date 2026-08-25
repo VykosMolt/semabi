@@ -1,0 +1,171 @@
+{
+ "attacks_that_failed_closed": {
+  "attest_of_evaluator_only_code_with_a_real_entry_kind": "EXECUTED_OUTSIDE_DECLARED_CLOSURE",
+  "committed_module_extending___path___to_an_untracked_dir": "PROJECT_MODULE_NOT_IN_CANDIDATE_TREE",
+  "committed_module_injecting_a_meta_path_finder": "META_PATH_DISPLACED",
+  "committed_module_pointing___path___at_semabi_eval": "EXECUTED_OUTSIDE_DECLARED_CLOSURE",
+  "modified_tracked_file": "PROJECT_MODULE_BYTES_DIFFER_FROM_CANDIDATE_TREE",
+  "module_name_path_traversal": "MODULE_NOT_FOUND_VIA_CPYTHONS_OWN_NAME_HANDLING",
+  "non_isolated_startup_including_-I_-B_without_-S": "NON_ISOLATED_STARTUP_NAMING_THE_MISSING_FLAG",
+  "note": "THE_THREE_COMMITTED_CODE_ATTACKS_LIE_INSIDE_THE_DECLARED_DISHONEST_COMMITTED_CODE_CARVE_OUT_AND_WERE_STILL_REFUSED",
+  "one_read_property_confirmed_by_code_reading": "EXACTLY_ONE_os.open_OF_A_PROJECT_ORIGIN_IN_scripts/v4_authority.py; THE_BYTES_READ_ARE_THE_BYTES_COMPARED_AND_THE_BYTES_COMPILED; NO_SECOND_READ_AND_NO_BYTECODE_PATH",
+  "poisoned_pycache_timestamp_hash_checked_and_hash_unchecked": "ALL_THREE_EXECUTE_UNDER_A_PLAIN_INTERPRETER; NONE_EXECUTES_UNDER_THE_AUTHORITY; ATTESTED_SHA256_EQUALS_THE_GIT_BLOB_IN_EVERY_CASE",
+  "project_extension_module": "DISALLOWED_PROJECT_LOADER_ExtensionFileLoader",
+  "pth_injecting_the_checkout_onto_sys_path": "INERT_UNDER_-S_CHECKOUT_NEVER_ON_SYS_PATH",
+  "reverse_shadow": "TRACKED_PACKAGE_AUTHENTICATED_UNTRACKED_FILE_NEVER_EXECUTES",
+  "round_four_critical_package_shadow": "PLAIN_INTERPRETER_EXECUTES_IT; AUTHORITY_PROJECT_MODULE_NOT_IN_CANDIDATE_TREE",
+  "site_directory_offering_the_project_name": "SITE_PACKAGES_PROVIDES_PROJECT_NAME",
+  "site_directory_overlapping_tracked_space": "SITE_PACKAGES_OVERLAPS_AUTHENTICATED_PROJECT_SPACE",
+  "sourceless_bytecode": "DISALLOWED_PROJECT_LOADER_SourcelessFileLoader",
+  "staged_evil_module": "AUTHENTICATED_BUT_index_matches_head_FALSE_AND_THE_PATH_NAMED_AS_DOCUMENTED",
+  "symlinked_origin": "SYMLINKED_PROJECT_ORIGIN",
+  "tampered_chain_min_support": "min_support_MUST_BE_2",
+  "tampered_source_incumbent": "SOURCE_MANIFEST_FILE_HASH_MISMATCH",
+  "tampered_transfer_observations": "CustodyError_SNAPSHOT_DOES_NOT_MATCH",
+  "tracked_symlink_python_path": "TRACKED_PYTHON_PATH_IS_NOT_A_REGULAR_FILE",
+  "untracked_namespace_portion": "NAMESPACE_PACKAGE_PORTION"
+ },
+ "candidate_commit": "b0013acfd6098701479edbab1adadfe9e341554b",
+ "captured_at": "2026-08-26T01:00:00+02:00",
+ "claim_boundary": {
+  "current_report_reproduction": "BYTE_IDENTICAL_THREE_OF_THREE_FROM_AN_INDEPENDENT_CLONE",
+  "executed_project_code_authority": "ESTABLISHED_UNDER_THE_DECLARED_THREAT_MODEL",
+  "fresh_generalization": "NOT_ESTABLISHED",
+  "holdout_classifications": "ALL_INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE",
+  "prospective_chronology": "NOT_ESTABLISHED",
+  "representation_transport": "NOT_ESTABLISHED_RTC_ZERO",
+  "transfer_outcomes": "ALL_AMBIGUOUS_SURVIVOR_SET",
+  "transfer_survivor_counts": "2_VET_3_HARBOUR_2_BLEND",
+  "unique_transfer_selection": "NOT_ESTABLISHED",
+  "v4_adjudication": "NOT_PERFORMED_AND_NOT_IMPLIED_BY_THIS_ACCEPT"
+ },
+ "environment_fact_corrected_by_the_reviewer": {
+  "affects_a_candidate_claim": false,
+  "code": "THE_EDITABLE_INSTALLATION_IN_THIS_VENV_IS_DEGENERATE",
+  "detail": "__editable___semabi_0_1_0_finder.MAPPING is empty, so importing semabi from outside the checkout fails even without -S. The mechanism claim about -S neutralising .pth import lines is correct, but this particular installation could not have contaminated anything in any case, which weakens the demonstration value of the editable-contamination threat rather than the defence itself."
+ },
+ "findings": [
+  {
+   "blocks_acceptance": false,
+   "code": "REPOSITORY_LOCAL_GIT_CONFIG_EXECUTES_PROGRAMS_AND_FORGES_THE_RUNS_CANDIDATE_IDENTITY",
+   "id": "F1",
+   "invariant_affected": "THE_ENVIRONMENT_RECORDS_candidate_commit_AND_index_matches_head_WHICH_THE_HANDOFF_DESIGNATES_AS_THE_EVIDENCE_THAT_A_RUN_WAS_INDEPENDENT; ALSO_FALSIFIES_THE_RECORDS_LITERAL_git_READ_ONLY_INDEX_AND_OBJECT_QUERIES_CLAIM",
+   "recommended_hardening": "pass -c core.fsmonitor=false and treat repo-local config as attacker-controlled in the threat model rather than enumerating knobs; resolve membership from HEAD's tree rather than the index so the record's identity claim is self-consistent; extend the attestation-versus-tree hash comparison in the retained-artifact test from the three frontier attestations to all nine.",
+   "reproduction": "At a detached commit M that adds semabi/compiler/v4/evil.py, set repo-local core.fsmonitor to a script that runs `git read-tree b0013ac` and writes b0013ac into .git/HEAD, then run the launcher. Observed: the hook ran four times; evil.py was authenticated and executed although it is not in b0013ac; the environment record reported candidate_commit b0013ac, index_matches_head true, and an empty index_paths_differing_from_head. Later hook invocations can delete the evidence.",
+   "root_cause": "REPO_LOCAL_GIT_CONFIG_IS_ATTACKER_CONTROLLED_AND_WAS_NOT_TREATED_AS_SUCH",
+   "scientific_claim_affected": "NONE_AUTHENTICATED_EQUALS_EXECUTED_THROUGHOUT",
+   "severity": "MEDIUM",
+   "summary": "_git() neutralises system and global Git configuration but not repository-local configuration, which is the only one the declared attacker controls. core.fsmonitor makes Git execute an arbitrary program during index refresh; --no-optional-locks does not disable it.",
+   "why_non_blocking": "git clone does not copy the source repository's config, so the candidate's own designated gate -- a fresh clone -- is immune, and the reviewer's clones were unaffected; all nine attestations were verified offline against b0013ac's blobs; /home/moloch/semabi/.git/config carries none of these knobs, so the retained runs were not subject to it; and the candidate already states that the ACTIVE label is not a signature and that independent re-execution from a clean clone is what makes it evidence."
+  },
+  {
+   "blocks_acceptance": false,
+   "code": "THE_DECLARED_THIRD_PARTY_CARVE_OUT_IS_LIVE_NOT_VACUOUS",
+   "id": "F2",
+   "invariant_affected": "NONE_THIS_IS_THE_DECLARED_TRUSTED_COMPUTING_BASE",
+   "reviewer_mitigation": "VERIFIED_THE_THREE_EXECUTED_PACKAGES_AGAINST_THEIR_WHEEL_RECORD_HASHES: playwright 189/189, greenlet 100/100, pyee 15/15, ZERO_MISMATCHES",
+   "root_cause": "MODULE_SCOPE_PLAYWRIGHT_IMPORT_IN_THE_AUTHORITATIVE_CLOSURE",
+   "scientific_claim_affected": "NONE",
+   "severity": "MEDIUM",
+   "summary": "Every authoritative run executes 62 modules from the declared third-party directory, because semabi/compiler/browser.py imports playwright at module scope. On the primary worktree that directory is inside the checkout. Declared and disclosed, but the number is not visible in the handoff prose."
+  },
+  {
+   "blocks_acceptance": false,
+   "code": "SITE_PACKAGES_FLAG_ACCEPTS_AN_UNTRACKED_DIRECTORY_INSIDE_THE_CHECKOUT",
+   "id": "F3",
+   "severity": "LOW",
+   "summary": "prepare_site_packages refuses an in-checkout directory only if it holds a tracked path or a project top-level name, so an untracked directory inside the checkout is accepted and its modules execute as declared third party. Operator-controlled, not attacker-controlled, and disclosed by inside_candidate_root, but a verifier has to read that field."
+  },
+  {
+   "blocks_acceptance": false,
+   "code": "ATTEST_WITHOUT_ENTRY_KIND_PERFORMS_NO_CLOSURE_CHECK",
+   "id": "F4",
+   "severity": "LOW",
+   "summary": "attest --module semabi.eval.v4_compare executes evaluator-only code and produces a green attestation. Honestly labelled (entrypoint.kind null, declared closure null) and unretainable, because the retained-attestation test requires a real entrypoint kind; with a real kind it is refused."
+  },
+  {
+   "blocks_acceptance": false,
+   "code": "SUBPROCESS_FIELDS_ARE_HARDCODED_ASSERTIONS_NOT_MEASUREMENTS",
+   "id": "F5",
+   "severity": "LOW",
+   "summary": "F1 falsifies the environment record's literal git subprocess claim."
+  },
+  {
+   "blocks_acceptance": false,
+   "code": "SHA1_WORDING_NUANCE_IN_THE_THREAT_MODEL",
+   "id": "F6",
+   "severity": "LOW",
+   "summary": "'SHA-1 collision resistance is not load-bearing anywhere in this mechanism' is true for blob authentication, where bytes are compared and object ids are lookup keys, but the commit id is the identity anchor for the whole review."
+  },
+  {
+   "blocks_acceptance": false,
+   "code": "ORDERING_FRAGILITY_IN_closure_comparison",
+   "id": "F7",
+   "severity": "LOW",
+   "summary": "executed is snapshotted before _declared_closure imports manifests, so a project module first imported by the closure computation itself would appear in project_modules but escape the executed-subset-of-declared check. Not exploitable today, because manifests is always already imported and the report-digest check would fail on the replay path, but the invariant rests on an unstated precondition."
+  },
+  {
+   "blocks_acceptance": false,
+   "code": "FRONTIER_SUMMARY_IS_NOT_AN_AUTHORITATIVE_ARTIFACT",
+   "id": "F8",
+   "severity": "LOW",
+   "summary": "docs/data/v4/frontier_summary.json is not produced by an authoritative run and has no attestation; its bindings are enforced only by tests. It does not claim otherwise."
+  }
+ ],
+ "honest_gaps_in_the_review": [
+  "NOTHING_WAS_SKIPPED_BLOCKED_FLAKY_OR_INCONCLUSIVE_ALL_LONG_RUNS_EXITED_ZERO",
+  "THE_CONCURRENT_WRITER_RACE_BETWEEN_THE_REALPATH_CHECK_AND_THE_SINGLE_READ_IS_ARGUED_NOT_DEMONSTRATED; NO_EXPLOIT_WAS_CONSTRUCTED_BECAUSE_SUBSTITUTED_CONTENT_IS_STILL_COMPARED_BYTE_FOR_BYTE_AGAINST_THE_TRACKED_BLOB",
+  "NO_INDEPENDENT_VIRTUALENV_WAS_BUILT; THE_62_THIRD_PARTY_MODULES_CAME_FROM_THE_PRIMARY_VENV_AND_WERE_MITIGATED_BY_WHEEL_RECORD_VERIFICATION_RATHER_THAN_ELIMINATED",
+  "docs/v4_devlog.md_WAS_DIFFED_AT_FILE_LEVEL_ONLY"
+ ],
+ "independence": {
+  "authority_run_candidate_root": "THE_REVIEWERS_OWN_CLONE",
+  "clone_method": "git clone --no-hardlinks",
+  "clones": {
+   "review/attack_clone": "b0013ac",
+   "review/clone": "e4c6d32 clean",
+   "review/replay_clone": "b0013ac clean"
+  },
+  "git_status_porcelain": "EMPTY_IN_ALL_THREE_BEFORE_AND_AFTER",
+  "index_matches_head_in_reviewer_clone": true,
+  "interpreter": "CPython 3.12.13 at /home/moloch/semabi/.venv/bin/python",
+  "isolated_sys_meta_path": [
+   "BuiltinImporter",
+   "FrozenImporter",
+   "PathFinder"
+  ],
+  "isolated_sys_path": "THREE_STDLIB_ENTRIES_ONLY",
+  "primary_worktree_written_to": false,
+  "pytest_semabi_origin": "THE_REVIEWERS_OWN_CLONE",
+  "tip_versus_candidate_diff_verified_by_the_reviewer": "ONLY_docs/data/v4/fifth_integrity_repair_verification.json_AND_docs/v4_handoff.md; NO_CODE_MANIFEST_REPORT_OR_ATTESTATION_DIFFERS"
+ },
+ "mechanical_reproduction": {
+  "attestations_versus_commit_blobs": "ALL_NINE_ATTESTATIONS_EVERY_project_modules_sha256_EQUALS_sha256_OF_git_cat_file_blob_AT_b0013ac_ZERO_MISMATCHES",
+  "contract_hashes_reproduced": "SEVEN_OF_SEVEN",
+  "focused_integrity_suite": "PASS_162_OVER_TWELVE_FILES",
+  "frontier_reconstruction": "all_pairs_frontier_OVER_RETAINED_EVIDENCE_REPRODUCES_transfer_frontier_AND_holdout_frontier_FOR_ALL_THREE",
+  "full_suite": "PASS_252_XFAIL_1_ZERO_SKIPPED",
+  "ordinary_execution_labels_itself": "NOT_ESTABLISHED_NO_V4_IMPORT_AUTHORITY",
+  "reports_replayed_in_place_from_the_candidate": "THREE_OF_THREE_BYTE_IDENTICAL_AND_THREE_OF_THREE_ATTESTATIONS_BYTE_IDENTICAL_CLONE_STATUS_EMPTY_AFTERWARDS",
+  "runtime_attestation_validation": "executed_outside_declared_closure_EMPTY_rejections_EMPTY_unauthorised_module_origins_EMPTY_35_PROJECT_MODULES_IDENTICAL_DIGEST",
+  "scientific_payload": "FIELD_BY_FIELD_IDENTICAL_TO_fb4f04c_FOR_ALL_THREE_APPS_ONLY_THE_authority_BLOCK_DIFFERS",
+  "strict_manifest_loading": "SIX_MANIFESTS_LOAD_min_support_2_THREE_DISTINCT_CONSUMED_DIGESTS",
+  "v2_custody": "PASS_65_OF_65_EXACTLY_TWO_DECLARED_WORKTREE_DIVERGENCES"
+ },
+ "previously_rejected_classes": {
+  "no_previous_fix_weakened": true,
+  "no_test_gate_or_threshold_relaxed": true,
+  "round_four_CRITICAL_module_resolution_shadow": "CLOSED_AT_RUNTIME_AND_IN_THE_DECLARATION",
+  "round_four_LOW_pyc_optimization_enumeration_not_exhaustive": "CLOSED_opt-3_AND_opt-zz_REFUSED",
+  "round_four_LOW_source_summary_exact_key_guard_untested": "CLOSED",
+  "round_four_MEDIUM_cache_check_inspects_disk_not_loaded_bytecode": "CLOSED_AS_DISCLOSURE",
+  "round_three_HIGH_bytecode_cache_defeats_implementation_authority": "CLOSED",
+  "round_three_MEDIUM_source_summary_fields_unbound": "CLOSED"
+ },
+ "reviewed_from_branch_tip": "e4c6d32f30899ca3ddfa630ef3e52535d5a30c57",
+ "reviewer": "INDEPENDENT_OPUS_5_CONTEXT_SEPARATE_FROM_THE_PRIMARY_ENGINEER",
+ "schema": "semabi.v4.independent-review.v1",
+ "summary": "No authenticate-versus-execute divergence was found within the declared threat model after sustained active attack. Every attack failed closed. Eight findings, none blocking.",
+ "verdict": "ACCEPT",
+ "verdict_scope": "ADVERSARIAL_REVIEW_ONLY_NOT_AN_ADJUDICATION_OF_V4"
+}
