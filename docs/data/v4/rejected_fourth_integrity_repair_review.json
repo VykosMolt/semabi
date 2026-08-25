@@ -1,0 +1,67 @@
+{
+ "schema": "semabi.v4.rejected-successor-review.v1",
+ "candidate_commit": "33d4ec393bbaa7b62db83b8337f9bf663ff8eb74",
+ "captured_at": "2026-08-25T00:00:00+02:00",
+ "verdict": "REJECT",
+ "candidate_artifacts": {
+  "docs/data/v4/frontier_vet_clinic.json": "ce37497bd7693f7fdd24b7234d888508a7eff30a14e05b7667c6b49a30dbfb26",
+  "docs/data/v4/frontier_harbour.json": "92b3753a2daef5b32003f284252dbe7f89ff438792b489ed25f20435f6656283",
+  "docs/data/v4/frontier_blend_book.json": "baef57aaf3cb0d8f52e96c15ac43c681da51f61ea4eafbe6b8a35ee8fe450200",
+  "docs/data/v4/frontier_summary.json": "135d57d6f2bbbe62463fb1c5c4ae5a3a46779a711be87a5b83fbb58d504bc431"
+ },
+ "mechanical_evidence": {
+  "independent_verifier": "NOT_RETURNED_BEFORE_CAMPAIGN_STOP_TREAT_AS_ABSENT_NOT_AS_APPROVAL",
+  "reviewer_baseline_replay": "BYTE_IDENTICAL_THREE_OF_THREE_UNDER_CACHE_COLD_RECIPE",
+  "tests": "PASS_217_XFAIL_1",
+  "focused_subset": "PASS_130",
+  "v2_custody": "PASS_65_OF_65_EXACTLY_TWO_DECLARED_WORKTREE_DIVERGENCES",
+  "custodian_reproduction_of_blocking_finding": "CONFIRMED_INDEPENDENTLY"
+ },
+ "rejection_findings": [
+  {
+   "severity": "CRITICAL",
+   "code": "MODULE_RESOLUTION_SHADOW_DEFEATS_IMPLEMENTATION_AUTHORITY",
+   "summary": "manifests._module_path resolves X.py before X/__init__.py while CPython resolves the directory package first, so a same-named package shadow executes in place of the authenticated module with every hash, the bytecode-cache check, the cache-cold gate, V2 custody and the full suite still green",
+   "demonstrated_effect": "source_choice_rejected flipped to false on vet_clinic, admitting the SOURCE incumbent into the TRANSFER frontier, with byte-reproducible replay",
+   "not_closed_by": "CACHE_COLD_RECIPE_NO_BYTECODE_CACHE_IS_INVOLVED",
+   "independently_reproduced_by_custodian": true,
+   "blocks_acceptance": true
+  },
+  {
+   "severity": "MEDIUM",
+   "code": "CACHE_CHECK_INSPECTS_DISK_NOT_LOADED_BYTECODE",
+   "summary": "a cache live at import time and stale at validation time is skipped as inert while its backdoored module object is already live in memory; every closure module is imported at module scope before load_chain_manifest runs",
+   "disclosure_defect": "handoff and devlog claim the in-process check closes the gap for every other closure file; it covers only caches still live on disk when validation runs",
+   "blocks_acceptance": false
+  },
+  {
+   "severity": "LOW",
+   "code": "PYC_OPTIMIZATION_ENUMERATION_NOT_EXHAUSTIVE",
+   "summary": "_PYC_OPTIMIZATIONS = ('', '1', '2') cannot be exhaustive; -OOO yields opt-3 and cache_from_source accepts any alphanumeric token, contradicting the comment and three prose artifacts that say every optimization level",
+   "blocks_acceptance": false
+  },
+  {
+   "severity": "LOW",
+   "code": "SOURCE_SUMMARY_EXACT_KEY_GUARD_UNTESTED",
+   "summary": "relaxing _validate_source_summary's exact-key check to a subset check leaves the suite green; runtime behaviour is correct but the regression guard is missing",
+   "blocks_acceptance": false
+  }
+ ],
+ "repairs_that_did_hold": {
+  "bytecode_cache_authentication": "VERIFIED_EFFECTIVE_AGAINST_THE_ROUND_THREE_ATTACK",
+  "marshal_version_2_comparison": "SOUND_UNDER_A_FIELD_SENSITIVITY_SWEEP_NO_FALSE_POSITIVE_OR_NEGATIVE_CONSTRUCTED",
+  "authority_check_placement": "SETTLES_BEFORE_ANY_RETAINED_ROLE_IS_OPENED_ON_BOTH_PATHS",
+  "non_authoritative_label": "ENFORCED_AGAINST_EIGHT_FORGERIES_AND_PROPAGATED_TO_ALL_THREE_REPORTS"
+ },
+ "claim_boundary": {
+  "current_report_reproduction": "BYTE_IDENTICAL_ON_RETAINED_CURRENT_BYTES",
+  "transfer_survivor_counts": "2_VET_3_HARBOUR_2_BLEND_ON_RETAINED_CURRENT_BYTES",
+  "transfer_outcomes": "ALL_AMBIGUOUS_SURVIVOR_SET",
+  "holdout_classifications": "ALL_INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE",
+  "unique_transfer_selection": "NOT_ESTABLISHED",
+  "executed_implementation_authority": "NOT_ESTABLISHED_MODULE_RESOLUTION_SHADOW",
+  "prospective_chronology": "NOT_ESTABLISHED",
+  "fresh_generalization": "NOT_ESTABLISHED",
+  "representation_transport": "NOT_ESTABLISHED_RTC_ZERO"
+ }
+}
