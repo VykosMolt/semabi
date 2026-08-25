@@ -16,7 +16,8 @@ authoritative; verify them rather than trusting this summary.
   authenticated all-pairs candidate; its adversarial rejection is retained by `5f229f3`.
   Commit `72e6819` preserves the first descriptor-bound integrity repair; its second
   adversarial rejection is retained by `e894cac`. Commit `b489495` preserves the second
-  integrity repair; its adversarial rejection is retained by current checkpoint `a1642cc`.
+  integrity repair; its adversarial rejection is retained by `a1642cc`. Commit `6c84aa5`
+  preserves the third integrity repair; its adversarial rejection is retained by `50582c7`.
   Do not rewrite or delete any checkpoint.
 * The current raw histories are now retained in Git, but their snapshots were made after
   collection. Every chain therefore says exactly
@@ -33,13 +34,31 @@ authoritative; verify them rather than trusting this summary.
   in-memory record graph for each compilation. No compatibility file is materialized and no
   retained compiler path is reopened. SOURCE candidate refutation maps must equal the exact
   authenticated SOURCE sidecar before any active-key check.
+* Implementation authority hashes `.py` source bytes, but CPython executes `__pycache__`
+  bytecode. Manifest loading therefore also checks every bytecode cache the interpreter would
+  actually load for every authenticated closure file, at every optimization level, and rejects
+  any that does not recompile to the authenticated source. A cache whose timestamp header no
+  longer matches its source is inert and is skipped; staleness is not forgery. Both closures
+  are authenticated before any retained role directory is opened or parsed.
+* **Residual limitation, stated plainly.** That check runs inside the process it is checking.
+  It cannot defend against a forged cache for the checking module itself
+  (`semabi/compiler/v4/manifests.py`), because a forged cache for that file replaces the check.
+  It closes the gap for every other closure file and catches accidental staleness; it is
+  defense in depth, not a closed bootstrap. **The authoritative gate is the cache-cold
+  Reproduction recipe below**, which points the interpreter at a private, empty cache prefix so
+  no repository `__pycache__` can be consulted at all.
 
 ## Read these artifacts first
 
 For each application, the source manifest freezes the explicit incumbent, all six complete
 `PinnedReading` objects, their decision fingerprints, full-reading SHA-256 hashes, the exact
 SOURCE input snapshot, the exact Python runtime, and the complete transitive local-import
-closure used for source generation. The schema-v3 chain manifest adds role-distinct
+closure used for source generation. In schema `semabi.v4.source-candidates.v4` its
+`source_summary` carries exactly two things: the `alternatives_generated` rows, each bound row
+by row to the frozen candidate it describes, and one `non_authoritative_source_diagnostics`
+object whose `authority` field reads `NON_AUTHORITATIVE_UNVERIFIED_SOURCE_SEARCH_DIAGNOSTICS`.
+Nothing under that object is authenticated by anything; it is retained search prose and is
+republished under that same label in every report. The schema-v3 chain manifest adds role-distinct
 TRANSFER/HOLDOUT snapshots, `min_support=2`, a separately hashed chain-construction closure,
 the replay import closure, and the custody timing state. The explicit execution inventory
 contains source freeze, chain freeze, and replay. The code root is derived from the loaded
@@ -135,28 +154,39 @@ budget, stop conditions, and failure states must be frozen before new TRANSFER e
 
 ## Reproduction
 
+Every command below is **cache-cold**: `PYTHONPYCACHEPREFIX` points the interpreter at a
+fresh empty directory and `-B` stops it writing one back, so no repository `__pycache__` is
+read or written and no bytecode can stand in for the authenticated sources. This is the
+authoritative gate, because the in-process cache check cannot verify its own module. Run the
+commands from the repository root; copy each block whole, since each `mktemp -d` allocates
+that command its own empty prefix.
+
     # V2 custody (expects the two deliberate V4 divergences)
-    PYTHONPATH=. .venv/bin/python scripts/v4_custody.py
+    PYTHONPATH=. PYTHONPYCACHEPREFIX="$(mktemp -d)" .venv/bin/python -B scripts/v4_custody.py
 
     # manifest-only replay; no raw role-path bypass exists
-    PYTHONPATH=. .venv/bin/python -m semabi.run_v4_transfer \
+    PYTHONPATH=. PYTHONPYCACHEPREFIX="$(mktemp -d)" .venv/bin/python -B -m semabi.run_v4_transfer \
         --manifest docs/data/v4/manifests/vet_clinic_chain.json \
         --output docs/data/v4/frontier_vet_clinic.json
 
-    PYTHONPATH=. .venv/bin/python -m semabi.run_v4_transfer \
+    PYTHONPATH=. PYTHONPYCACHEPREFIX="$(mktemp -d)" .venv/bin/python -B -m semabi.run_v4_transfer \
         --manifest docs/data/v4/manifests/harbour_chain.json \
         --output docs/data/v4/frontier_harbour.json
 
-    PYTHONPATH=. .venv/bin/python -m semabi.run_v4_transfer \
+    PYTHONPATH=. PYTHONPYCACHEPREFIX="$(mktemp -d)" .venv/bin/python -B -m semabi.run_v4_transfer \
         --manifest docs/data/v4/manifests/blend_book_chain.json \
         --output docs/data/v4/frontier_blend_book.json
 
     # full suite; loopback access is needed by three existing network tests
-    .venv/bin/python -m pytest -q
+    PYTHONPATH=. PYTHONPYCACHEPREFIX="$(mktemp -d)" .venv/bin/python -B -m pytest -q
 
-Current local verification: V4/integrity/boundary subset `124 passed`; complete suite
-`211 passed, 1 xfailed`. Fresh-clone replay, independent review, and adjudication are
-pending for the current repair candidate. No LLM proposal was used. The
+The freeze scripts, if the manifests are being rebuilt, take the same prefix; source manifests
+must be refrozen before the chain manifests that bind their SHA-256.
+
+Current local verification: V4/integrity/boundary subset `130 passed`; complete suite
+`217 passed, 1 xfailed`. Both manifest freezes reproduce byte-identical manifests on a second
+run, and replay reproduces each report byte for byte. Fresh-clone replay, independent review,
+and adjudication are pending for the current repair candidate. No LLM proposal was used. The
 phase retained 4,373 collected primitives plus the earlier one-primitive harbour acquisition;
 no new primitives were collected by this repair.
 

@@ -1,8 +1,10 @@
 """Custody and strict-manifest controls for the V4 handoff boundary."""
 from __future__ import annotations
 
+import contextlib
 import importlib.util
 import json
+import marshal
 import os
 import shutil
 import tempfile
@@ -92,8 +94,15 @@ def _reading(
 
 
 def _summary() -> dict:
-    return {"local_final": {}, "families": {"row[_]": 1}, "open_questions": [],
-            "alternatives_generated": []}
+    return {
+        "alternatives_generated": [],
+        manifests.SOURCE_DIAGNOSTICS_KEY: {
+            "authority": manifests.SOURCE_DIAGNOSTICS_AUTHORITY,
+            "local_final": {},
+            "families": {"row[_]": 1},
+            "open_questions": [],
+        },
+    }
 
 
 def _source_manifest(tmp_path: Path, *, optional: bool = False):
@@ -237,18 +246,14 @@ def _two_candidate_payload(tmp_path: Path):
     alternative = incumbent.variant(
         "row[_]", "cell#1", "alternative", status="SUPPORTED", discrimination=0.5
     )
-    summary = {
-        "local_final": {},
-        "families": {"row[_]": 1},
-        "open_questions": [],
-        "alternatives_generated": [{
-            "candidate": "alternative",
-            "family": "row[_]",
-            "alternative": "cell#1",
-            "status": "SUPPORTED",
-            "discrimination": 0.5,
-        }],
-    }
+    summary = _summary()
+    summary["alternatives_generated"] = [{
+        "candidate": "alternative",
+        "family": "row[_]",
+        "alternative": "cell#1",
+        "status": "SUPPORTED",
+        "discrimination": 0.5,
+    }]
     output = tmp_path / "source_manifest.json"
     payload = manifests.build_source_manifest(
         source,
@@ -599,3 +604,172 @@ def test_execution_closures_bind_local_packages_and_current_runtime():
         "implementation": manifests.platform.python_implementation(),
         "version": ".".join(str(x) for x in manifests.sys.version_info[:3]),
     }
+
+
+def _closure_file() -> str:
+    """Pick one authenticated generator-closure file to forge a cache for."""
+
+    relative = "semabi/compiler/v4/pinned.py"
+    assert relative in manifests.GENERATOR_IMPLEMENTATION_FILES
+    return relative
+
+
+@contextlib.contextmanager
+def _installed_cache(relative: str, data: bytes):
+    """Install one bytecode cache for a closure file and always restore the original.
+
+    Only the cache file is touched; the authenticated ``.py`` source and its mtime are
+    never modified, which is exactly the condition the repair defends against.
+    """
+
+    source = ROOT / relative
+    cache = Path(importlib.util.cache_from_source(str(source)))
+    original = cache.read_bytes() if cache.is_file() else None
+    cache.parent.mkdir(parents=True, exist_ok=True)
+    cache.write_bytes(data)
+    try:
+        yield cache
+    finally:
+        if original is None:
+            cache.unlink()
+        else:
+            cache.write_bytes(original)
+
+
+def _divergent_code(relative: str):
+    """Compile a backdoored variant of one authenticated source file."""
+
+    source = ROOT / relative
+    poisoned = source.read_bytes() + b"\nMANIFEST_TEST_BACKDOOR = True\n"
+    return compile(poisoned, str(source), "exec", dont_inherit=True, optimize=-1)
+
+
+def _timestamp_pyc(code, mtime: int, size: int, *, flags: int = 0) -> bytes:
+    return (
+        importlib.util.MAGIC_NUMBER
+        + flags.to_bytes(4, "little")
+        + (mtime & 0xFFFFFFFF).to_bytes(4, "little")
+        + (size & 0xFFFFFFFF).to_bytes(4, "little")
+        + marshal.dumps(code)
+    )
+
+
+def _hash_pyc(code, source_hash: bytes, *, flags: int = 0b1) -> bytes:
+    assert len(source_hash) == 8
+    return (
+        importlib.util.MAGIC_NUMBER
+        + flags.to_bytes(4, "little")
+        + source_hash
+        + marshal.dumps(code)
+    )
+
+
+def test_live_divergent_bytecode_cache_is_rejected(tmp_path):
+    """A forged cache the interpreter would execute must fail authentication.
+
+    Source hashing alone cannot see this: the ``.py`` bytes and the checkout stay
+    untouched while the executed decision procedure is replaced.
+    """
+
+    relative = _closure_file()
+    stat_result = (ROOT / relative).stat()
+    _source, manifest, _payload = _source_manifest(tmp_path)
+    # The manifest authenticates cleanly before the cache is forged.
+    manifests.load_source_manifest(manifest, repo_root=ROOT)
+    forged = _timestamp_pyc(
+        _divergent_code(relative), int(stat_result.st_mtime), stat_result.st_size
+    )
+    with _installed_cache(relative, forged):
+        with pytest.raises(manifests.ManifestError, match="diverges from authenticated source"):
+            manifests.load_source_manifest(manifest, repo_root=ROOT)
+    # The restored cache authenticates again.
+    manifests.load_source_manifest(manifest, repo_root=ROOT)
+
+
+def test_stale_bytecode_cache_is_not_rejected(tmp_path):
+    """A cache the interpreter would discard is inert, not a forgery."""
+
+    relative = _closure_file()
+    stat_result = (ROOT / relative).stat()
+    _source, manifest, _payload = _source_manifest(tmp_path)
+    stale = _timestamp_pyc(
+        _divergent_code(relative), int(stat_result.st_mtime) + 1, stat_result.st_size
+    )
+    with _installed_cache(relative, stale):
+        manifests.load_source_manifest(manifest, repo_root=ROOT)
+
+
+def test_hash_based_bytecode_cache_with_wrong_source_hash_is_rejected(tmp_path):
+    relative = _closure_file()
+    _source, manifest, _payload = _source_manifest(tmp_path)
+    forged = _hash_pyc(_divergent_code(relative), b"\x00" * 8)
+    with _installed_cache(relative, forged):
+        with pytest.raises(
+            manifests.ManifestError,
+            match="hash-based bytecode cache does not match authenticated source",
+        ):
+            manifests.load_source_manifest(manifest, repo_root=ROOT)
+
+
+def test_chain_replay_closure_also_rejects_a_live_divergent_cache(tmp_path):
+    """The same check guards chain construction and replay, not only generation."""
+
+    relative = "semabi/run_v4_transfer.py"
+    assert relative in manifests.REPLAY_IMPLEMENTATION_FILES
+    source = _run(tmp_path / "source", "source")
+    source_manifest_path = tmp_path / "source_manifest.json"
+    manifests.save_source_manifest(
+        manifests.build_source_manifest(
+            source, [_reading(source)], _summary(), source_manifest_path, repo_root=ROOT
+        ),
+        source_manifest_path,
+        repo_root=ROOT,
+    )
+    chain_path = tmp_path / "chain.json"
+    manifests.save_chain_manifest(
+        manifests.build_chain_manifest(
+            source_manifest_path,
+            _run(tmp_path / "transfer", "transfer"),
+            _run(tmp_path / "holdout", "holdout"),
+            chain_path,
+            repo_root=ROOT,
+        ),
+        chain_path,
+        repo_root=ROOT,
+    )
+    manifests.load_chain_manifest(chain_path, repo_root=ROOT)
+    stat_result = (ROOT / relative).stat()
+    forged = _timestamp_pyc(
+        _divergent_code(relative), int(stat_result.st_mtime), stat_result.st_size
+    )
+    with _installed_cache(relative, forged):
+        with pytest.raises(manifests.ManifestError, match="diverges from authenticated source"):
+            manifests.load_chain_manifest(chain_path, repo_root=ROOT)
+    manifests.load_chain_manifest(chain_path, repo_root=ROOT)
+
+
+def test_non_authoritative_source_diagnostics_label_is_enforced(tmp_path):
+    """The unbound search diagnostics must stay labelled and cannot be flattened."""
+
+    _source, manifest, _payload = _source_manifest(tmp_path)
+    retained = json.loads(manifest.read_text())
+    assert set(retained["source_summary"]) == {
+        "alternatives_generated", manifests.SOURCE_DIAGNOSTICS_KEY
+    }
+
+    dropped = json.loads(manifest.read_text())
+    del dropped["source_summary"][manifests.SOURCE_DIAGNOSTICS_KEY]["authority"]
+    with pytest.raises(manifests.ManifestError, match="fields must be exactly"):
+        manifests.save_source_manifest(dropped, manifest, repo_root=ROOT)
+
+    altered = json.loads(manifest.read_text())
+    altered["source_summary"][manifests.SOURCE_DIAGNOSTICS_KEY]["authority"] = "AUTHENTICATED"
+    with pytest.raises(manifests.ManifestError, match="authority must be exactly"):
+        manifests.save_source_manifest(altered, manifest, repo_root=ROOT)
+
+    flattened = json.loads(manifest.read_text())
+    diagnostics = flattened["source_summary"].pop(manifests.SOURCE_DIAGNOSTICS_KEY)
+    diagnostics.pop("authority")
+    flattened["source_summary"].update(diagnostics)
+    with pytest.raises(manifests.ManifestError, match="source_summary fields must be exactly"):
+        manifests.save_source_manifest(flattened, manifest, repo_root=ROOT)

@@ -58,7 +58,7 @@
    "semabi/compiler/v4/custody.py": "75ec3a978d92f8d1e924e07ba76cb41294737c5c596210cd82fbecc3b2b55178",
    "semabi/compiler/v4/frozen_evidence.py": "ff80dc759a450cc64c90c913df63fb7d9eb70bb652ebc733dd40637a74b73738",
    "semabi/compiler/v4/identity.py": "4e718dd8b3d2ade2126c31c5e88a3d5d7b91662a08e1a95077f342c030039c05",
-   "semabi/compiler/v4/manifests.py": "b837e38c8c5b90c7a3dc536d8129fb014fba0c56068d1c13ffd71bbe2cd92a15",
+   "semabi/compiler/v4/manifests.py": "77fb0b0c8dbbbea532cab552359474124bb7d388089ef03c571880229d3ffbef",
    "semabi/compiler/v4/objective.py": "4dd902f9bb288e967ae1333f581631e5c6edbd507a841bf45efe569b758fc065",
    "semabi/compiler/v4/pinned.py": "711305a95c1da238c4b9e4f213fb5f2421bf1757244b10bcbab5b14a83f8ad4d",
    "semabi/compiler/v4/promote.py": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65",
@@ -66,7 +66,7 @@
   },
   "chain_manifest": {
    "path": "docs/data/v4/manifests/harbour_chain.json",
-   "sha256": "78859a12733a4e00797aae5eb861ee5fdf63ddb835c40055b1569e9059cd1864"
+   "sha256": "6e14ee733b8854a6d3e26c15ce149d8c8c7dd47cb723499966fb4d9cf6d72158"
   },
   "custody_timing": "RETROACTIVE_SNAPSHOT_CHRONOLOGY_NOT_ESTABLISHED",
   "min_support": 2,
@@ -98,7 +98,7 @@
    "semabi/compiler/v4/custody.py": "75ec3a978d92f8d1e924e07ba76cb41294737c5c596210cd82fbecc3b2b55178",
    "semabi/compiler/v4/frozen_evidence.py": "ff80dc759a450cc64c90c913df63fb7d9eb70bb652ebc733dd40637a74b73738",
    "semabi/compiler/v4/identity.py": "4e718dd8b3d2ade2126c31c5e88a3d5d7b91662a08e1a95077f342c030039c05",
-   "semabi/compiler/v4/manifests.py": "b837e38c8c5b90c7a3dc536d8129fb014fba0c56068d1c13ffd71bbe2cd92a15",
+   "semabi/compiler/v4/manifests.py": "77fb0b0c8dbbbea532cab552359474124bb7d388089ef03c571880229d3ffbef",
    "semabi/compiler/v4/objective.py": "4dd902f9bb288e967ae1333f581631e5c6edbd507a841bf45efe569b758fc065",
    "semabi/compiler/v4/pinned.py": "711305a95c1da238c4b9e4f213fb5f2421bf1757244b10bcbab5b14a83f8ad4d",
    "semabi/compiler/v4/promote.py": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65",
@@ -211,7 +211,7 @@
   },
   "source_manifest": {
    "path": "docs/data/v4/manifests/harbour_source_candidates.json",
-   "sha256": "399121d4e0c71196c2c746d8a3c0735136d77d9bcf52f59e8296d319a5187563"
+   "sha256": "8ba9675080ad4b78429b6de23da53a2624cee89ab4df08909d21dc11f2165939"
   },
   "source_runtime": {
    "implementation": "CPython",
@@ -5320,7 +5320,7 @@
   ],
   "manifest": {
    "path": "docs/data/v4/manifests/harbour_source_candidates.json",
-   "sha256": "399121d4e0c71196c2c746d8a3c0735136d77d9bcf52f59e8296d319a5187563"
+   "sha256": "8ba9675080ad4b78429b6de23da53a2624cee89ab4df08909d21dc11f2165939"
   },
   "source_choice": {
    "decision_fingerprint": "9aa6f4dd131ed96b",
@@ -5403,70 +5403,73 @@
      "status": "SUPPORTED"
     }
    ],
-   "families": {
-    "button[_]": 1,
-    "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))": 2,
-    "row[_](cell[_](button[_]),cell[_])": 2,
-    "row[_](cell[_],cell[_](button[_]))": 10
-   },
-   "local_final": {
-    "churn": 0,
-    "churn_steps": [],
-    "complexity": 122,
-    "contradiction_steps": [],
-    "contradictions": 0,
-    "delta_atoms": 43,
-    "explained": 32,
-    "spurious": 0,
-    "steps": 373,
-    "unexplained": 17,
-    "visibility": 3,
-    "visibility_steps": [
-     32,
-     107,
-     285
+   "non_authoritative_source_diagnostics": {
+    "authority": "NON_AUTHORITATIVE_UNVERIFIED_SOURCE_SEARCH_DIAGNOSTICS",
+    "families": {
+     "button[_]": 1,
+     "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))": 2,
+     "row[_](cell[_](button[_]),cell[_])": 2,
+     "row[_](cell[_],cell[_](button[_]))": 10
+    },
+    "local_final": {
+     "churn": 0,
+     "churn_steps": [],
+     "complexity": 122,
+     "contradiction_steps": [],
+     "contradictions": 0,
+     "delta_atoms": 43,
+     "explained": 32,
+     "spurious": 0,
+     "steps": 373,
+     "unexplained": 17,
+     "visibility": 3,
+     "visibility_steps": [
+      32,
+      107,
+      285
+     ]
+    },
+    "open_questions": [
+     {
+      "left": {
+       "evidence": {
+        "constant_share": 0.404,
+        "copresent_pairs": 400,
+        "coverage": 1.0,
+        "cross_view_values": 0,
+        "discrimination": 1.0,
+        "distinct_values": 3,
+        "numeric_share": 0.0,
+        "reload_stability": 1.0,
+        "separated_pairs": 400
+       },
+       "key_slot": "button#0",
+       "status": "SUPPORTED",
+       "template": "button[_]",
+       "why": "separates 400/400 co-present pairs, 3 values, coverage 1.00"
+      },
+      "reason": "undecided: chosen explains 31 with 3 errors, the alternative explains 29 with 1",
+      "right": {
+       "evidence": {
+        "constant_share": 0.0,
+        "copresent_pairs": 400,
+        "coverage": 0.0,
+        "cross_view_values": 0,
+        "discrimination": 0.0,
+        "distinct_values": 0,
+        "numeric_share": 0.0,
+        "reload_stability": null,
+        "separated_pairs": 0
+       },
+       "key_slot": null,
+       "status": "NO_IDENTITY",
+       "template": "button[_]",
+       "why": "no identity-bearing observation claimed"
+      },
+      "template": "button[_]"
+     }
     ]
-   },
-   "open_questions": [
-    {
-     "left": {
-      "evidence": {
-       "constant_share": 0.404,
-       "copresent_pairs": 400,
-       "coverage": 1.0,
-       "cross_view_values": 0,
-       "discrimination": 1.0,
-       "distinct_values": 3,
-       "numeric_share": 0.0,
-       "reload_stability": 1.0,
-       "separated_pairs": 400
-      },
-      "key_slot": "button#0",
-      "status": "SUPPORTED",
-      "template": "button[_]",
-      "why": "separates 400/400 co-present pairs, 3 values, coverage 1.00"
-     },
-     "reason": "undecided: chosen explains 31 with 3 errors, the alternative explains 29 with 1",
-     "right": {
-      "evidence": {
-       "constant_share": 0.0,
-       "copresent_pairs": 400,
-       "coverage": 0.0,
-       "cross_view_values": 0,
-       "discrimination": 0.0,
-       "distinct_values": 0,
-       "numeric_share": 0.0,
-       "reload_stability": null,
-       "separated_pairs": 0
-      },
-      "key_slot": null,
-      "status": "NO_IDENTITY",
-      "template": "button[_]",
-      "why": "no identity-bearing observation claimed"
-     },
-     "template": "button[_]"
-    }
-   ]
+   }
   }
  },
  "source_choice_rejected": true,

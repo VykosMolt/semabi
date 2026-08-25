@@ -63,12 +63,9 @@ def _chain_fixture(tmp_path: Path, names: list[str]):
         manifest_sha256=custody.sha256_file(source_manifest_path),
         candidates=[_candidate(source_dir, name) for name in names],
         incumbent=names[0],
-        source_summary={
-            "local_final": None,
-            "families": {},
-            "open_questions": [],
-            "alternatives_generated": [],
-        },
+        source_summary=manifests.source_summary(
+            SimpleNamespace(final=None, families={}, open_questions=[]), []
+        ),
     )
     chain.source_manifest = source
     chain.manifest_sha256 = custody.sha256_file(chain_manifest_path)
@@ -384,3 +381,27 @@ def test_holdout_labels_require_full_coverage_and_no_refuted_claims():
     assert runner._holdout_classification(behaviour_only) == (
         "CONFIRMED_BEHAVIOUR_WITHOUT_IDENTITY_CLAIM"
     )
+
+
+def test_report_publishes_the_non_authoritative_source_summary_label(tmp_path, monkeypatch):
+    """No report reader may mistake the unbound search diagnostics for evidence."""
+
+    chain, source, _roles = _chain_fixture(tmp_path, ["source_choice", "alternative"])
+    _patch_loaders(monkeypatch, chain, source)
+    monkeypatch.setattr(
+        runner, "_evidence", lambda run, reading, min_support: _evidence(reading.name, explained=1)
+    )
+    output = tmp_path / "report.json"
+    report = runner.replay(tmp_path / "ignored.json", output)
+
+    published = json.loads(output.read_text())["source"]["summary"]
+    assert published == report["source"]["summary"]
+    assert set(published) == {
+        "alternatives_generated", manifests.SOURCE_DIAGNOSTICS_KEY
+    }
+    assert published[manifests.SOURCE_DIAGNOSTICS_KEY]["authority"] == (
+        manifests.SOURCE_DIAGNOSTICS_AUTHORITY
+    )
+    assert set(published[manifests.SOURCE_DIAGNOSTICS_KEY]) == {
+        "authority", "local_final", "families", "open_questions"
+    }

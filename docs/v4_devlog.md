@@ -456,3 +456,83 @@ denominator, so the frozen V0 inducer and effect language stay frozen and were n
 4,373 primitives of new interaction to collect six histories, plus 1 primitive of active
 evidence acquisition. No LLM proposal was used or needed: deterministic hypothesis
 generation produced 6 competing readings per application, which is what the rule needed.
+
+## k — 2026-08-25 — executed-bytecode authority and unbound summary fields
+
+Two integrity defects found by adversarial review of the previous checkpoint. Neither
+changes the scientific result, and the result did not improve: all three applications are
+still `AMBIGUOUS_SURVIVOR_SET` on TRANSFER and on HOLDOUT, every HOLDOUT classification is
+still `INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE`, and no application has a unique survivor.
+
+### Defect 1 — implementation authority did not cover the code that runs
+
+Manifest loading hashed the `.py` source bytes of every file in the frozen import closure.
+CPython does not execute those bytes: it executes the `__pycache__` bytecode whenever the
+cache header says the cache is current. A timestamp-forged `.pyc` therefore left every
+authenticated source hash correct and the checkout clean while replacing the executed
+decision procedure. Review reproduced this against all three chain manifests. It was
+reproduced again here, against a copy of the pre-repair checkout: a forged cache for
+`semabi/compiler/v4/transfer.py` demonstrably executed in place of the authenticated source
+while the vet_clinic chain manifest still loaded as authenticated under its unchanged digest.
+
+Loading now verifies, for every authenticated closure file and every optimization level
+CPython can cache, each bytecode cache the interpreter would actually load. A PEP 552
+hash-based cache must match `importlib.util.source_hash` of the authenticated bytes; a
+timestamp cache whose recorded mtime and size no longer match its source would be discarded
+by the interpreter and is skipped, because staleness is not forgery. Everything live is
+unmarshalled and compared against a fresh compile of the authenticated source bytes. Source
+manifest validation was reordered so this happens before the retained SOURCE role is opened
+and parsed: the parser is itself in the closure, so its authority has to be settled first.
+Chain validation already checked both closures before any role was touched.
+
+Two details were forced by measurement rather than chosen.
+
+First, the comparison compiles under the filename the cached object itself records.
+`co_filename` is a path string that cannot alter executed logic, and real caches legitimately
+record a different spelling, so naming the file any other way reports path differences as code
+differences: on this checkout, compiling under the absolute source path reported 17 of the 38
+closure files as divergent, and that count varies with which naive spelling is used, while
+letting the cache name itself reports zero.
+
+Second, the two code objects are compared as `marshal` **version 2** streams. Version 3 and
+later emit a back-reference for any object whose reference count happens to exceed one while
+it is being written, so their bytes depend on unrelated interpreter state; the same file was
+observed to compare equal or unequal depending only on what had been compiled earlier in the
+same process. Version 2 has no reference table and writes every field structurally, so it is
+deterministic. This is not a relaxation: instructions, constants, names, and flags all still
+have to agree, and a hash-based cache carrying a correct source hash but backdoored code is
+still rejected by it.
+
+The residual limitation is stated rather than papered over. The check runs inside the
+process it checks, so it cannot defend against a forged cache for
+`semabi/compiler/v4/manifests.py` itself — that cache would replace the check. It closes the
+gap for every other closure file and catches accidental staleness. The authoritative gate is
+now the cache-cold Reproduction recipe in the handoff, which gives the interpreter a private
+empty `PYTHONPYCACHEPREFIX` and `-B` so no repository `__pycache__` is consulted at all.
+
+### Defect 2 — three summary fields were published as if authenticated
+
+`source_summary` type-checked `local_final`, `families`, and `open_questions`, but nothing
+bound them to authenticated evidence; only `alternatives_generated` is bound, row by row, to
+the frozen candidates. All four were republished verbatim as `source.summary` in every
+frontier report, so forged values survived strict loading and a cold fresh-clone replay into
+every published report.
+
+Binding them would require re-running source generation inside the loader, and a
+self-referential hash of the fields is worthless because an attacker recomputes it. They are
+therefore labelled instead. `source_summary` now holds `alternatives_generated` plus one
+`non_authoritative_source_diagnostics` object carrying the three unbound fields under
+`"authority": "NON_AUTHORITATIVE_UNVERIFIED_SOURCE_SEARCH_DIAGNOSTICS"`. The exact literal is
+enforced on load, so it cannot be silently dropped or flattened away, and it propagates into
+every report. The source manifest schema moved to `semabi.v4.source-candidates.v4` because
+the payload shape changed.
+
+### Regeneration
+
+Changing `manifests.py` changes all three implementation closures, so the three source
+manifests, the three chain manifests that bind their SHA-256, and the three reports were
+refrozen in that order. The reports differ from the previous checkpoint only in the
+`manifests.py` implementation hash, the two manifest digests, and the relabelled
+`source.summary`; every survivor set, decision fingerprint, outcome, classification, and
+`selected`/`selection_changed` null is byte-identical. Independent review and adjudication
+of this repair are pending.

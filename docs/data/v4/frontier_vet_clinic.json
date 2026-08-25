@@ -58,7 +58,7 @@
    "semabi/compiler/v4/custody.py": "75ec3a978d92f8d1e924e07ba76cb41294737c5c596210cd82fbecc3b2b55178",
    "semabi/compiler/v4/frozen_evidence.py": "ff80dc759a450cc64c90c913df63fb7d9eb70bb652ebc733dd40637a74b73738",
    "semabi/compiler/v4/identity.py": "4e718dd8b3d2ade2126c31c5e88a3d5d7b91662a08e1a95077f342c030039c05",
-   "semabi/compiler/v4/manifests.py": "b837e38c8c5b90c7a3dc536d8129fb014fba0c56068d1c13ffd71bbe2cd92a15",
+   "semabi/compiler/v4/manifests.py": "77fb0b0c8dbbbea532cab552359474124bb7d388089ef03c571880229d3ffbef",
    "semabi/compiler/v4/objective.py": "4dd902f9bb288e967ae1333f581631e5c6edbd507a841bf45efe569b758fc065",
    "semabi/compiler/v4/pinned.py": "711305a95c1da238c4b9e4f213fb5f2421bf1757244b10bcbab5b14a83f8ad4d",
    "semabi/compiler/v4/promote.py": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65",
@@ -66,7 +66,7 @@
   },
   "chain_manifest": {
    "path": "docs/data/v4/manifests/vet_clinic_chain.json",
-   "sha256": "f31253223b00e6f0fffcce1e2cd28c2c7dff9f282b9a7950d401ba3ec3d5808e"
+   "sha256": "ac9354c5144e888bd85660b42594df77fbb40c9b2d39265cbd36a217e5700c07"
   },
   "custody_timing": "RETROACTIVE_SNAPSHOT_CHRONOLOGY_NOT_ESTABLISHED",
   "min_support": 2,
@@ -98,7 +98,7 @@
    "semabi/compiler/v4/custody.py": "75ec3a978d92f8d1e924e07ba76cb41294737c5c596210cd82fbecc3b2b55178",
    "semabi/compiler/v4/frozen_evidence.py": "ff80dc759a450cc64c90c913df63fb7d9eb70bb652ebc733dd40637a74b73738",
    "semabi/compiler/v4/identity.py": "4e718dd8b3d2ade2126c31c5e88a3d5d7b91662a08e1a95077f342c030039c05",
-   "semabi/compiler/v4/manifests.py": "b837e38c8c5b90c7a3dc536d8129fb014fba0c56068d1c13ffd71bbe2cd92a15",
+   "semabi/compiler/v4/manifests.py": "77fb0b0c8dbbbea532cab552359474124bb7d388089ef03c571880229d3ffbef",
    "semabi/compiler/v4/objective.py": "4dd902f9bb288e967ae1333f581631e5c6edbd507a841bf45efe569b758fc065",
    "semabi/compiler/v4/pinned.py": "711305a95c1da238c4b9e4f213fb5f2421bf1757244b10bcbab5b14a83f8ad4d",
    "semabi/compiler/v4/promote.py": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65",
@@ -217,7 +217,7 @@
   },
   "source_manifest": {
    "path": "docs/data/v4/manifests/vet_clinic_source_candidates.json",
-   "sha256": "09cb8004f544ebcb0612dbdb5d67a881e80eb8fbf9ff0f3875caef7cf226b995"
+   "sha256": "44e3b07989228e12646e2929b0d4d34732d801a914c12459684732d373550cb6"
   },
   "source_runtime": {
    "implementation": "CPython",
@@ -5545,7 +5545,7 @@
   ],
   "manifest": {
    "path": "docs/data/v4/manifests/vet_clinic_source_candidates.json",
-   "sha256": "09cb8004f544ebcb0612dbdb5d67a881e80eb8fbf9ff0f3875caef7cf226b995"
+   "sha256": "44e3b07989228e12646e2929b0d4d34732d801a914c12459684732d373550cb6"
   },
   "source_choice": {
    "decision_fingerprint": "2dc9cce46cf67682",
@@ -5644,45 +5644,48 @@
      "status": "NO_IDENTITY"
     }
    ],
-   "families": {
-    "cell[_]": 1,
-    "group[_](heading[_],list[_](listitem[_]))": 2,
-    "row[_](cell[_])": 2,
-    "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": 6,
-    "text[_](combobox[_])": 1,
-    "text[_](textbox[_])": 2
-   },
-   "local_final": {
-    "churn": 0,
-    "churn_steps": [],
-    "complexity": 42,
-    "contradiction_steps": [
-     402,
-     220,
-     263,
-     276,
-     377,
-     381
-    ],
-    "contradictions": 6,
-    "delta_atoms": 30,
-    "explained": 30,
-    "spurious": 0,
-    "steps": 403,
-    "unexplained": 58,
-    "visibility": 8,
-    "visibility_steps": [
-     4,
-     66,
-     107,
-     126,
-     177,
-     238,
-     279,
-     382
-    ]
-   },
-   "open_questions": []
+   "non_authoritative_source_diagnostics": {
+    "authority": "NON_AUTHORITATIVE_UNVERIFIED_SOURCE_SEARCH_DIAGNOSTICS",
+    "families": {
+     "cell[_]": 1,
+     "group[_](heading[_],list[_](listitem[_]))": 2,
+     "row[_](cell[_])": 2,
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": 6,
+     "text[_](combobox[_])": 1,
+     "text[_](textbox[_])": 2
+    },
+    "local_final": {
+     "churn": 0,
+     "churn_steps": [],
+     "complexity": 42,
+     "contradiction_steps": [
+      402,
+      220,
+      263,
+      276,
+      377,
+      381
+     ],
+     "contradictions": 6,
+     "delta_atoms": 30,
+     "explained": 30,
+     "spurious": 0,
+     "steps": 403,
+     "unexplained": 58,
+     "visibility": 8,
+     "visibility_steps": [
+      4,
+      66,
+      107,
+      126,
+      177,
+      238,
+      279,
+      382
+     ]
+    },
+    "open_questions": []
+   }
   }
  },
  "source_choice_rejected": true,

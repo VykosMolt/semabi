@@ -12,12 +12,15 @@ The current phase uses retroactive snapshots, so chronology is explicit rather t
 """
 from __future__ import annotations
 
+import importlib.util
 import json
+import marshal
 import math
 import os
 import ast
 import platform
 import sys
+import types
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
@@ -26,11 +29,26 @@ from semabi.compiler.v4 import custody
 from semabi.compiler.v4.pinned import PinnedReading
 
 
-SOURCE_MANIFEST_SCHEMA = "semabi.v4.source-candidates.v3"
+SOURCE_MANIFEST_SCHEMA = "semabi.v4.source-candidates.v4"
 CHAIN_MANIFEST_SCHEMA = "semabi.v4.chain.v3"
 CUSTODY_TIMING = "RETROACTIVE_SNAPSHOT_CHRONOLOGY_NOT_ESTABLISHED"
 MAX_CANDIDATES = 6
 MIN_SUPPORT = 2
+
+# Only ``alternatives_generated`` is bound to the frozen candidates.  The remaining
+# search diagnostics are unverifiable retained prose, so they are carried under one
+# object that names its own authority state.  The literal is enforced on load and is
+# republished verbatim in every report.
+SOURCE_DIAGNOSTICS_KEY = "non_authoritative_source_diagnostics"
+SOURCE_DIAGNOSTICS_AUTHORITY = "NON_AUTHORITATIVE_UNVERIFIED_SOURCE_SEARCH_DIAGNOSTICS"
+
+# ``__pycache__`` header layout: 4 magic bytes, a 32-bit flag word, then two 32-bit
+# words that are either (source mtime, source size) or a PEP 552 source hash.
+_PYC_HEADER_SIZE = 16
+_HASH_BASED_PYC_FLAG = 0b1
+_CHECK_SOURCE_PYC_FLAG = 0b10
+# Every optimization level CPython can materialise a separate cache for.
+_PYC_OPTIMIZATIONS = ("", "1", "2")
 
 # This is the authoritative execution inventory.  Keep the three roles explicit:
 # source generation, chain construction, and replay.  Boundary tests intentionally
@@ -520,6 +538,159 @@ def _resolve_repo_relative(root: Path, value: Any, label: str) -> Path:
     return resolved
 
 
+def _code_fingerprint(code: types.CodeType, label: str) -> bytes:
+    """Serialize one code object into a form that depends only on the code.
+
+    ``marshal`` version 3 and later emit a back-reference for any object whose
+    reference count happens to exceed one at the moment it is written, so their byte
+    stream for a single code object varies with unrelated interpreter state (which
+    modules are imported, what was compiled first).  Comparing those streams produces
+    spurious differences.  Version 2 has no reference table and writes every field
+    structurally, so equal code objects always serialize equally and any difference in
+    instructions, constants, names, or flags still shows up.
+    """
+
+    try:
+        return marshal.dumps(code, 2)
+    except (ValueError, TypeError) as exc:
+        raise ManifestError(
+            f"cannot serialize bytecode for comparison: {label}"
+        ) from exc
+
+
+def _verify_bytecode_cache_file(
+    relative: str,
+    cache_path: Path,
+    source_bytes: bytes,
+    stat_result: os.stat_result,
+    optimization: str,
+) -> None:
+    """Reject one ``__pycache__`` entry that the interpreter would execute unaltered.
+
+    A cache the interpreter would discard (a timestamp header that no longer matches
+    the source) cannot affect execution and is left alone; staleness is not forgery.
+    Everything the interpreter would load is recompiled from the authenticated source
+    bytes and compared.
+    """
+
+    try:
+        data = cache_path.read_bytes()
+    except OSError as exc:
+        raise ManifestError(
+            f"cannot read the bytecode cache of authenticated file {relative}: {exc}"
+        ) from exc
+    if len(data) < _PYC_HEADER_SIZE:
+        raise ManifestError(f"truncated bytecode cache for authenticated file {relative}")
+    if data[:4] != importlib.util.MAGIC_NUMBER:
+        raise ManifestError(
+            f"bytecode cache magic does not match this interpreter: {relative}"
+        )
+    flags = int.from_bytes(data[4:8], "little")
+    if flags & ~(_HASH_BASED_PYC_FLAG | _CHECK_SOURCE_PYC_FLAG):
+        raise ManifestError(f"bytecode cache has unknown header flags: {relative}")
+    first, second = data[8:12], data[12:16]
+    if flags & _HASH_BASED_PYC_FLAG:
+        # PEP 552.  CPython loads an *unchecked* hash-based cache without validating
+        # anything, so every hash-based cache is treated as live here.
+        if first + second != importlib.util.source_hash(source_bytes):
+            raise ManifestError(
+                f"hash-based bytecode cache does not match authenticated source: {relative}"
+            )
+    else:
+        recorded = (int.from_bytes(first, "little"), int.from_bytes(second, "little"))
+        actual = (
+            int(stat_result.st_mtime) & 0xFFFFFFFF,
+            stat_result.st_size & 0xFFFFFFFF,
+        )
+        if recorded != actual:
+            # The interpreter would recompile the source instead, so this cache is inert.
+            return
+    # These bytes are already unmarshalled by the import system for any module in the
+    # closure that is imported, so parsing them here adds no new exposure.
+    try:
+        cached = marshal.loads(data[_PYC_HEADER_SIZE:])
+    except (ValueError, EOFError, TypeError) as exc:
+        raise ManifestError(
+            f"cannot parse the live bytecode cache of authenticated file {relative}: {exc}"
+        ) from exc
+    if not isinstance(cached, types.CodeType):
+        raise ManifestError(
+            f"live bytecode cache does not contain a code object: {relative}"
+        )
+    try:
+        # ``co_filename`` is only the path string the cache was compiled under.  It
+        # cannot alter executed logic, and existing caches legitimately record a
+        # different spelling than the one used here, so let the cache name itself
+        # instead of reporting a path difference as a code difference.
+        fresh = compile(
+            source_bytes,
+            cached.co_filename,
+            "exec",
+            dont_inherit=True,
+            optimize=-1 if optimization == "" else int(optimization),
+        )
+    except (SyntaxError, ValueError, TypeError) as exc:
+        raise ManifestError(
+            f"cannot recompile authenticated source for cache comparison: {relative}"
+        ) from exc
+    if _code_fingerprint(cached, relative) != _code_fingerprint(fresh, relative):
+        raise ManifestError(
+            f"live bytecode cache diverges from authenticated source: {relative}"
+        )
+
+
+def _verify_bytecode_caches(
+    relative: str, path: Path, source_bytes: bytes, stat_result: os.stat_result
+) -> None:
+    """Check every cache variant CPython could execute in place of one source file.
+
+    Implementation authority hashes ``.py`` bytes, but the interpreter runs the cached
+    bytecode whenever the cache header says it is current.  A forged cache therefore
+    leaves every authenticated source hash correct, and the checkout clean, while
+    replacing the executed decision procedure.
+
+    This is defense in depth, not a closed bootstrap: an in-process check cannot
+    defend against a forged cache for the module performing the check.  The documented
+    authoritative gate is therefore run cache-cold.
+    """
+
+    for optimization in _PYC_OPTIMIZATIONS:
+        try:
+            # ``cache_from_source`` already honours ``sys.pycache_prefix``.
+            cache_path = Path(
+                importlib.util.cache_from_source(str(path), optimization=optimization)
+            )
+        except (ValueError, NotImplementedError) as exc:
+            raise ManifestError(
+                f"cannot resolve the bytecode cache path for {relative}: {exc}"
+            ) from exc
+        try:
+            present = cache_path.is_file()
+        except OSError as exc:
+            raise ManifestError(
+                f"cannot inspect the bytecode cache for {relative}: {exc}"
+            ) from exc
+        if present:
+            _verify_bytecode_cache_file(
+                relative, cache_path, source_bytes, stat_result, optimization
+            )
+
+
+def _verify_implementation_file(
+    root: Path, relative: str, expected_digest: str, label: str, mismatch: str
+) -> None:
+    """Authenticate one implementation file's source bytes and its executable cache."""
+
+    path = _resolve_repo_relative(root, relative, label)
+    try:
+        data, stat_result = custody._read_regular_descriptor(path)  # type: ignore[attr-defined]
+    except custody.CustodyError as exc:
+        raise ManifestError(f"cannot read {label}: {relative}") from exc
+    if custody.sha256_bytes(data) != expected_digest:
+        raise ManifestError(f"{mismatch}: {relative}")
+    _verify_bytecode_caches(relative, path, data, stat_result)
+
+
 def full_reading_sha256(reading: PinnedReading | Mapping[str, Any]) -> str:
     """Hash every field of a reading, including paperwork and provenance."""
 
@@ -616,21 +787,46 @@ def _validate_reading(
 
 
 def _validate_source_summary(value: Any) -> dict[str, Any]:
-    expected = {"local_final", "families", "open_questions", "alternatives_generated"}
-    _exact_keys(value, expected, "source_summary")
-    if value["local_final"] is not None and not isinstance(value["local_final"], Mapping):
-        raise ManifestError("source_summary.local_final must be an object or null")
-    families = value["families"]
-    if not isinstance(families, Mapping):
-        raise ManifestError("source_summary.families must be an object")
-    for name, count in families.items():
-        if not isinstance(name, str) or isinstance(count, bool) or not isinstance(count, int) or count < 0:
-            raise ManifestError("source_summary.families must map names to counts")
-    if not isinstance(value["open_questions"], list):
-        raise ManifestError("source_summary.open_questions must be a list")
+    """Validate the retained summary and keep its unbound fields labelled.
+
+    Only ``alternatives_generated`` is bound to the frozen candidates; see
+    :func:`_validate_candidate_summary`.  Nothing in a loaded manifest can establish
+    the remaining search diagnostics, and re-deriving them would mean re-running source
+    generation inside the loader.  They are therefore carried under one object that
+    states its own authority, whose exact literal is enforced here so it cannot be
+    silently dropped, and which is republished verbatim in every report.
+    """
+
+    _exact_keys(
+        value, {"alternatives_generated", SOURCE_DIAGNOSTICS_KEY}, "source_summary"
+    )
     if not isinstance(value["alternatives_generated"], list):
         raise ManifestError("source_summary.alternatives_generated must be a list")
-    return dict(value)
+    label = f"source_summary.{SOURCE_DIAGNOSTICS_KEY}"
+    diagnostics = value[SOURCE_DIAGNOSTICS_KEY]
+    _exact_keys(
+        diagnostics, {"authority", "local_final", "families", "open_questions"}, label
+    )
+    if diagnostics["authority"] != SOURCE_DIAGNOSTICS_AUTHORITY:
+        raise ManifestError(
+            f"{label}.authority must be exactly {SOURCE_DIAGNOSTICS_AUTHORITY}"
+        )
+    if diagnostics["local_final"] is not None and not isinstance(
+        diagnostics["local_final"], Mapping
+    ):
+        raise ManifestError(f"{label}.local_final must be an object or null")
+    families = diagnostics["families"]
+    if not isinstance(families, Mapping):
+        raise ManifestError(f"{label}.families must be an object")
+    for name, count in families.items():
+        if not isinstance(name, str) or isinstance(count, bool) or not isinstance(count, int) or count < 0:
+            raise ManifestError(f"{label}.families must map names to counts")
+    if not isinstance(diagnostics["open_questions"], list):
+        raise ManifestError(f"{label}.open_questions must be a list")
+    return {
+        "alternatives_generated": list(value["alternatives_generated"]),
+        SOURCE_DIAGNOSTICS_KEY: dict(diagnostics),
+    }
 
 
 def _validate_candidate_summary(
@@ -767,13 +963,21 @@ class SourceManifest:
 
 
 def source_summary(result: Any, alternatives_generated: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
-    """Build the stable summary retained alongside source candidates."""
+    """Build the stable summary retained alongside source candidates.
+
+    ``alternatives_generated`` is the only field a loader can bind to the frozen
+    candidates.  Everything else the local search reported is retained under the
+    explicitly non-authoritative diagnostics object.
+    """
 
     return {
-        "local_final": result.final.to_json() if getattr(result, "final", None) else None,
-        "families": {f: len(t) for f, t in sorted(result.families.items())},
-        "open_questions": [q.to_json() for q in result.open_questions],
         "alternatives_generated": [dict(row) for row in alternatives_generated],
+        SOURCE_DIAGNOSTICS_KEY: {
+            "authority": SOURCE_DIAGNOSTICS_AUTHORITY,
+            "local_final": result.final.to_json() if getattr(result, "final", None) else None,
+            "families": {f: len(t) for f, t in sorted(result.families.items())},
+            "open_questions": [q.to_json() for q in result.open_questions],
+        },
     }
 
 
@@ -919,11 +1123,9 @@ def _validate_source_payload(
     source_snapshot = custody.validate_snapshot(payload["source_snapshot"])
     if source_snapshot["role"] != "SOURCE":
         raise ManifestError("source compiler snapshot must be SOURCE")
-    # The authenticated SOURCE sidecar is an input to candidate generation, not a
-    # per-candidate annotation.  Consume the frozen role through descriptors once and
-    # compare every candidate's retained map with those exact bytes below.  This also
-    # replaces the old end-of-validation live re-open of the role directory.
-    source_refutations = _authenticated_source_refutations(source_path, source_snapshot, root)
+    # Authenticate the generator implementation, including the bytecode the interpreter
+    # would actually execute, before any retained evidence is opened or parsed.  The
+    # parser below is part of that closure, so its authority has to be settled first.
     generation = payload["generation"]
     _exact_keys(generation, {"max_candidates", "implementation_files"}, "generation")
     if generation["max_candidates"] != MAX_CANDIDATES:
@@ -940,9 +1142,18 @@ def _validate_source_payload(
         if not isinstance(relative, str) or not relative or Path(relative).is_absolute():
             raise ManifestError("implementation hash paths must be relative")
         expected_digest = _check_sha(digest, f"implementation hash for {relative}")
-        actual_digest = custody.sha256_file(_resolve_repo_relative(root, relative, "implementation file"))
-        if actual_digest != expected_digest:
-            raise ManifestError(f"implementation hash mismatch: {relative}")
+        _verify_implementation_file(
+            root,
+            relative,
+            expected_digest,
+            "implementation file",
+            "implementation hash mismatch",
+        )
+    # The authenticated SOURCE sidecar is an input to candidate generation, not a
+    # per-candidate annotation.  Consume the frozen role through descriptors once and
+    # compare every candidate's retained map with those exact bytes below.  This also
+    # replaces the old end-of-validation live re-open of the role directory.
+    source_refutations = _authenticated_source_refutations(source_path, source_snapshot, root)
     summary = _validate_source_summary(payload["source_summary"])
     incumbent = payload["incumbent"]
     if not isinstance(incumbent, str) or not incumbent:
@@ -1216,10 +1427,13 @@ def _validate_chain_payload(
         expected_digest = _check_sha(
             digest, f"chain construction implementation hash for {relative}"
         )
-        if custody.sha256_file(
-            _resolve_repo_relative(root, relative, "chain construction implementation file")
-        ) != expected_digest:
-            raise ManifestError(f"chain construction implementation hash mismatch: {relative}")
+        _verify_implementation_file(
+            root,
+            relative,
+            expected_digest,
+            "chain construction implementation file",
+            "chain construction implementation hash mismatch",
+        )
     implementation = payload["implementation_files"]
     if not isinstance(implementation, Mapping) or set(implementation) != set(
         REPLAY_IMPLEMENTATION_FILES
@@ -1230,8 +1444,13 @@ def _validate_chain_payload(
         raise ManifestError("chain replay implementation closure is not frozen")
     for relative, digest in implementation.items():
         expected_digest = _check_sha(digest, f"replay implementation hash for {relative}")
-        if custody.sha256_file(_resolve_repo_relative(root, relative, "implementation file")) != expected_digest:
-            raise ManifestError(f"replay implementation hash mismatch: {relative}")
+        _verify_implementation_file(
+            root,
+            relative,
+            expected_digest,
+            "implementation file",
+            "replay implementation hash mismatch",
+        )
     source_ref = payload["source_manifest"]
     _exact_keys(source_ref, {"path", "sha256"}, "source_manifest reference")
     source_manifest_path = _resolve_relative(
