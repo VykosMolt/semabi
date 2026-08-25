@@ -1,0 +1,282 @@
+{
+ "artifacts": {
+  "docs/data/v4/attestations/blend_book_chain.execution.json": "f64eabdcb9138ce02c33a2c2bae6f08d7025b8f64d9749cdf0de154e5170e96b",
+  "docs/data/v4/attestations/blend_book_source_candidates.execution.json": "6a9c8f8704c4926840d1689ce796458f379f50d5a4bd44e63e7d0563d37834ed",
+  "docs/data/v4/attestations/frontier_blend_book.execution.json": "12a9ff9a45d9f10c67eae90a9c36bc23725af474dd7ca1cb19dd70ba7bcd7fc4",
+  "docs/data/v4/attestations/frontier_harbour.execution.json": "c6bbd4ef49c7e07e52d8c27a031a5a51ab5444e51d7fa6784165c5fd31e3c30f",
+  "docs/data/v4/attestations/frontier_vet_clinic.execution.json": "e89d6a1e6a9eac14b85eb4619cb85361177364922ced61469ae457ce57f65a6d",
+  "docs/data/v4/attestations/harbour_chain.execution.json": "8c429f753305cb4254d26479fb2b7766d86eeceaf98588c99db8794ce683e78f",
+  "docs/data/v4/attestations/harbour_source_candidates.execution.json": "f1c9b3ec03fb510018b26902a137b1943417bad0e4a85f2f84d9b5d1c557d2f0",
+  "docs/data/v4/attestations/vet_clinic_chain.execution.json": "6b3357acab726a0c678f24015baa2572293d3fb05ea3f2f6b8d354fe60980849",
+  "docs/data/v4/attestations/vet_clinic_source_candidates.execution.json": "2ab4b73bc1bc5a48d660111b6068b1113cfcfb7803a4cce1ef39e503e69bf9b2",
+  "docs/data/v4/frontier_blend_book.json": "af3631ce94eb1b424764598022d32a5a0074906a68f803dbd0a4f8597592f7b3",
+  "docs/data/v4/frontier_harbour.json": "ef56348666ff76a87f90b826fe9c4fa6de42badc52bb9f81ffefd6ef3fe7b136",
+  "docs/data/v4/frontier_summary.json": "2d76a83ecb91bbe5a7c877cabbca524efb34ee80a3d46e2264c9c12689f2efa4",
+  "docs/data/v4/frontier_vet_clinic.json": "5ff116cd66743399c77ef822f1a4d5eaddc87fa2e3acda43f7527204505fa589",
+  "docs/data/v4/manifests/blend_book_chain.json": "3e71bcf34d6f249727cc3c33f78a0c4e1d235a9e474c7d9b747553f24587f156",
+  "docs/data/v4/manifests/blend_book_source_candidates.json": "abbfc5fea5506b7b8958421a89e9c2bd89143708236023fb8ed8a1079935bec1",
+  "docs/data/v4/manifests/harbour_chain.json": "25a2e9de5b45eae5947daa464b7e9f85f176bcf704c60b2280c309007dd939d4",
+  "docs/data/v4/manifests/harbour_source_candidates.json": "55106766d48ea6d1e5865ada720f5db10f62aa6f174c565c4be62de3dd2827bf",
+  "docs/data/v4/manifests/vet_clinic_chain.json": "26f8b184562c197622659c3cc466a1d6b5013f29ec527f9fa76e1d61410a453a",
+  "docs/data/v4/manifests/vet_clinic_source_candidates.json": "96687bd3e751197059687baf1d214551d7964e4725f741663a619f38b8871941",
+  "docs/v4_execution_authority.md": "4d7e0450c271c4a4859324c9eab83f52ed3083516b4121ccbf153aa0f1d6bcf9",
+  "scripts/v4_authority.py": "9bfb78c998a3ad9467f5c0d3dc3c0c2d2e9504df94cf591bc0fd79af5dd40848",
+  "semabi/compiler/v4/manifests.py": "007093a4fdb73663254f8627202a9c8ba151a9fbb6bc264dd9e6f00712b72fa9",
+  "semabi/run_v4_transfer.py": "6266c4362a1180cdefc124c18ada1a7888a83261ea24dc8b0860af9cca473ef7",
+  "tests/test_v4_execution_authority.py": "4cc3f9e97f5e806b17551b98a47df47658e10439e9b8817fef2e72e8f045ca37"
+ },
+ "candidate_commit": "b0013acfd6098701479edbab1adadfe9e341554b",
+ "candidate_commit_note": "this record is added by the commit that immediately follows the candidate, because a verification artifact cannot name the commit that contains it",
+ "claim_boundary": {
+  "adjudication": "NOT_PERFORMED",
+  "artifact_labels_are_not_signatures": "V4_IMPORT_AUTHORITY_ACTIVE_DESCRIBES_THE_RUN_THAT_WROTE_AN_ARTIFACT; ANYONE_WHO_CAN_RUN_PYTHON_CAN_WRITE_A_FILE_CARRYING_THAT_STRING; INDEPENDENT_RE_EXECUTION_FROM_A_CLEAN_CLONE_IS_WHAT_MAKES_IT_EVIDENCE",
+  "executed_project_code_authority": "ESTABLISHED_UNDER_THE_DECLARED_THREAT_MODEL_IN_docs/v4_execution_authority.md",
+  "fresh_generalization": "NOT_ESTABLISHED",
+  "honesty_of_authenticated_code": "OUT_OF_SCOPE_THE_PROPERTY_IS_IDENTITY_NOT_CORRECTNESS",
+  "independent_adversarial_review": "RECORDED_SEPARATELY",
+  "launcher_self_check": "DEFENCE_IN_DEPTH_ONLY_THE_LAUNCHER_IDENTITY_COMES_FROM_THE_CHECKOUT",
+  "prospective_chronology": "NOT_ESTABLISHED",
+  "representation_transportability": "NOT_ESTABLISHED_RTC_ZERO",
+  "static_closure": "DECLARATION_NOT_A_COMPLETENESS_PROOF_EXECUTED_SUBSET_OF_DECLARED_IS_ENFORCED",
+  "third_party_dependency_content": "TRUSTED_NOT_AUTHENTICATED",
+  "unique_transfer_selection": "NOT_ESTABLISHED"
+ },
+ "fresh_clone": {
+  "clone_clean_before": true,
+  "clone_has_its_own_virtualenv": false,
+  "clone_status_after_regenerating_every_artifact_in_place": "CLEAN",
+  "declared_but_not_executed": [],
+  "editable_pth_present_and_inert": [
+   "__editable__.semabi-0.1.0.pth"
+  ],
+  "every_project_module_origin_under_the_clone": true,
+  "executed_outside_declared_closure": [],
+  "final_sys_path": [
+   "/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python312.zip",
+   "/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12",
+   "/home/moloch/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/lib/python3.12/lib-dynload",
+   "/home/moloch/semabi/.venv/lib/python3.12/site-packages"
+  ],
+  "focused_subset": "150 passed",
+  "freeze_attestations_reproduced_byte_for_byte": "6_OF_6",
+  "full_suite": "252 passed, 1 xfailed",
+  "head_equals_candidate": true,
+  "index_matches_head": true,
+  "initial_sys_path": [
+   "/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python312.zip",
+   "/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12",
+   "/home/moloch/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/lib/python3.12/lib-dynload"
+  ],
+  "interpreter_flags": {
+   "dont_write_bytecode": true,
+   "ignore_environment": true,
+   "isolated": true,
+   "no_site": true,
+   "no_user_site": true,
+   "safe_path": true
+  },
+  "manifest_freezes_reproduced_byte_for_byte": "6_OF_6",
+  "method": "git clone --no-hardlinks of the primary, checked out at the candidate commit",
+  "project_execution_sha256": "a680ceceb452f3161fb55f34d067ad37ae6b75dcfdeff442993156f66df34efb",
+  "project_modules_executed": 35,
+  "project_modules_from_the_editable_installation": 0,
+  "project_modules_from_the_primary_worktree": 0,
+  "pth_processing": "DISABLED_BY_-S_NONE_READ_OR_EXECUTED",
+  "pytest_semabi_origin_under_the_clone": true,
+  "reports_replayed_byte_for_byte": "3_OF_3",
+  "root": "/tmp/claude-1000/-home-moloch-semabi/cf5f4c87-6283-4f94-aaad-3a29be508b51/scratchpad/candidate-clone",
+  "sys_executable": "/home/moloch/semabi/.venv/bin/python",
+  "sys_meta_path": [
+   "ProjectImportAuthority",
+   "BuiltinImporter",
+   "FrozenImporter",
+   "PathFinder"
+  ],
+  "third_party_inside_candidate_root": false,
+  "third_party_supplied_from": "/home/moloch/semabi/.venv/lib/python3.12/site-packages",
+  "third_party_top_level_executed": [
+   "greenlet",
+   "playwright",
+   "pyee"
+  ],
+  "unauthenticated_project_modules_executed": 0,
+  "v2_custody": "PASS_65_OF_65"
+ },
+ "mechanism": "scripts/v4_authority.py",
+ "preserved_rejected_candidates": {
+  "33d4ec393bbaa7b62db83b8337f9bf663ff8eb74": "fourth repair, REJECTED, rejection preserved by fb4f04c",
+  "6c84aa5d804a7b47e88b7ced191c7731bd78d348": "third repair, REJECTED, rejection preserved by 50582c7"
+ },
+ "primary_worktree_environment": {
+  "candidate_commit": "fb4f04c8ec3614e42937ff48a8a30b5fee061a28",
+  "candidate_root": "/home/moloch/semabi",
+  "declared_third_party": [
+   {
+    "contents": "TRUSTED_NOT_AUTHENTICATED_DECLARED_THIRD_PARTY",
+    "inside_candidate_root": true,
+    "path": "/home/moloch/semabi/.venv/lib/python3.12/site-packages",
+    "provides_project_top_level_name": false,
+    "pth_files_mentioning_the_project": [
+     "__editable__.semabi-0.1.0.pth"
+    ],
+    "pth_files_present": [
+     "__editable__.semabi-0.1.0.pth",
+     "_virtualenv.pth"
+    ],
+    "pth_processing": "DISABLED_BY_-S_NONE_READ_OR_EXECUTED",
+    "tracked_paths_inside": 0
+   }
+  ],
+  "final_sys_path": [
+   "/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python312.zip",
+   "/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12",
+   "/home/moloch/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/lib/python3.12/lib-dynload",
+   "/home/moloch/semabi/.venv/lib/python3.12/site-packages"
+  ],
+  "index_matches_head": false,
+  "index_paths_differing_from_head": [
+   "docs/data/v4/attestations/blend_book_chain.execution.json",
+   "docs/data/v4/attestations/blend_book_source_candidates.execution.json",
+   "docs/data/v4/attestations/harbour_chain.execution.json",
+   "docs/data/v4/attestations/harbour_source_candidates.execution.json",
+   "docs/data/v4/attestations/vet_clinic_chain.execution.json",
+   "docs/data/v4/attestations/vet_clinic_source_candidates.execution.json",
+   "docs/data/v4/frontier_vet_clinic.json",
+   "docs/data/v4/manifests/blend_book_chain.json",
+   "docs/data/v4/manifests/blend_book_source_candidates.json",
+   "docs/data/v4/manifests/harbour_chain.json",
+   "docs/data/v4/manifests/harbour_source_candidates.json",
+   "docs/data/v4/manifests/vet_clinic_chain.json",
+   "docs/data/v4/manifests/vet_clinic_source_candidates.json",
+   "docs/v4_devlog.md",
+   "docs/v4_execution_authority.md",
+   "docs/v4_handoff.md",
+   "scripts/v4_authority.py",
+   "semabi/compiler/v4/manifests.py",
+   "semabi/run_v4_transfer.py",
+   "tests/test_v4_execution_authority.py",
+   "tests/test_v4_manifests.py",
+   "tests/test_v4_transfer_runner.py"
+  ],
+  "initial_sys_path": [
+   "/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python312.zip",
+   "/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12",
+   "/home/moloch/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/lib/python3.12/lib-dynload"
+  ],
+  "interpreter_flags": {
+   "dont_write_bytecode": true,
+   "ignore_environment": true,
+   "isolated": true,
+   "no_site": true,
+   "no_user_site": true,
+   "safe_path": true
+  },
+  "launcher": {
+   "path": "scripts/v4_authority.py",
+   "tracked": true
+  },
+  "module_origin_counts": {
+   "builtin_or_frozen": 71,
+   "declared_third_party": 62,
+   "interpreter_stdlib": 129,
+   "project": 35
+  },
+  "note": "absolute paths, the checkout commit and interpreter locations are recorded here rather than in the attestation, so the attestation stays byte-identical across checkouts of the same code",
+  "reproducible": false,
+  "schema": "semabi.v4.execution-environment.v1",
+  "subprocesses": {
+   "git": "READ_ONLY_INDEX_AND_OBJECT_QUERIES_BY_THIS_LAUNCHER",
+   "python": "NONE_STARTED_BY_AUTHORITATIVE_CODE"
+  },
+  "sys_base_prefix": "/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu",
+  "sys_executable": "/home/moloch/semabi/.venv/bin/python",
+  "sys_meta_path": [
+   "ProjectImportAuthority",
+   "BuiltinImporter",
+   "FrozenImporter",
+   "PathFinder"
+  ],
+  "sys_path_hooks": [
+   "zipimporter",
+   "path_hook_for_FileFinder"
+  ],
+  "sys_prefix": "/home/moloch/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu",
+  "tracked_paths": 436
+ },
+ "repair": "FIFTH_V4_INTEGRITY_REPAIR_EXECUTION_AUTHORITY",
+ "reproduced_blocking_defect_before_repair": {
+  "after_the_repair": {
+   "extension_variant": "REFUSED_DISALLOWED_PROJECT_LOADER_ExtensionFileLoader",
+   "modified_tracked_variant": "REFUSED_PROJECT_MODULE_BYTES_DIFFER_FROM_CANDIDATE_TREE",
+   "runtime_guard": "REFUSED_PROJECT_MODULE_NOT_IN_CANDIDATE_TREE_naming_transfer/__init__.py",
+   "static_declaration": "REFUSED_ambiguous_local_module_semabi.compiler.v4.transfer"
+  },
+  "conditions": "CACHE_COLD_NO_BYTECODE_CACHE_INVOLVED_CLEAN_NO_HARDLINK_CLONE_OF_fb4f04c",
+  "observed": {
+   "blend_book": "STRICT_VALIDATION_PASSED_UNDETECTED",
+   "closure_names_the_shadow": false,
+   "closure_names_transfer_py": true,
+   "executed_module_file": "<clone>/semabi/compiler/v4/transfer/__init__.py",
+   "harbour": "STRICT_VALIDATION_PASSED_UNDETECTED",
+   "shadow_marker_present": "UNAUTHENTICATED_PACKAGE_SHADOW_EXECUTED",
+   "vet_clinic": "STRICT_VALIDATION_PASSED_UNDETECTED"
+  },
+  "reproduced_independently_before_the_repair": true,
+  "witness": "PACKAGE_SHADOW_semabi/compiler/v4/transfer/__init__.py_BESIDE_TRACKED_transfer.py"
+ },
+ "role": "PRIMARY_ENGINEER_MECHANICAL_VERIFICATION_NOT_ADJUDICATION",
+ "schema": "semabi.v4.integrity-repair-verification.v1",
+ "scientific_payload": {
+  "authority_keys_that_changed": [
+   "chain_construction_implementation_files",
+   "chain_manifest",
+   "execution_authority",
+   "replay_implementation_files",
+   "source_manifest"
+  ],
+  "comparison": "FIELD_BY_FIELD_AGAINST_fb4f04c_WITH_ONLY_THE_authority_BLOCK_AND_source.manifest_EXCLUDED",
+  "differing_top_level_report_keys": [],
+  "holdout_classifications": "ALL_INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE",
+  "holdout_outcomes": "ALL_AMBIGUOUS_SURVIVOR_SET",
+  "payload_identical_to_previous_checkpoint": true,
+  "selected": null,
+  "selection_changed": null,
+  "source_choice_rejected": {
+   "blend_book": true,
+   "harbour": true,
+   "vet_clinic": true
+  },
+  "survivors": {
+   "blend_book": 2,
+   "harbour": 3,
+   "vet_clinic": 2
+  },
+  "transfer_outcomes": "ALL_AMBIGUOUS_SURVIVOR_SET",
+  "transported_rtc": 0
+ },
+ "starting_head": "fb4f04c8ec3614e42937ff48a8a30b5fee061a28",
+ "tests": {
+  "focused_integrity_subset_fresh_clone": "150 passed",
+  "focused_integrity_subset_primary": "150 passed",
+  "full_suite_fresh_clone": "252 passed, 1 xfailed",
+  "full_suite_primary": "252 passed, 1 xfailed",
+  "guard_relaxation_checks": "source_summary_exact_key_guard_AND_pyc_optimization_enumeration_BOTH_VERIFIED_TO_FAIL_WHEN_THE_MECHANISM_IS_RELAXED",
+  "load_bearing_check": "EACH_ATTACK_RUN_TWICE_WHERE_MEANINGFUL_ONCE_UNDER_A_PLAIN_INTERPRETER_TO_SHOW_IT_CHANGES_WHAT_EXECUTES_AND_ONCE_UNDER_THE_LAUNCHER",
+  "new_execution_authority_regressions": 30,
+  "previous_checkpoint_full_suite": "217 passed, 1 xfailed"
+ },
+ "threat_model": "docs/v4_execution_authority.md",
+ "v2_custody": {
+  "checked": 65,
+  "commit": "79af7bca4a40d7bd4778e973c8155a71fca8061e",
+  "declared_working_tree_divergences": [
+   "semabi/compiler/browser.py",
+   "semabi/compiler/v2/hypotheses.py"
+  ],
+  "fresh_clone": "PASS_65_OF_65",
+  "mismatched_at_tag": [],
+  "primary": "PASS_65_OF_65",
+  "tag": "v2.0-causal-abstraction",
+  "tag_intact": true
+ }
+}

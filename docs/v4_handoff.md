@@ -272,7 +272,13 @@ experiment has been started.
 
     6c84aa5  candidate  -> REJECTED (2 defects)   rejection: 50582c7
     33d4ec3  candidate  -> REJECTED (1 blocking)  rejection: fb4f04c
-    <this>   candidate  -> primary verification PASS; independent review recorded separately
+    b0013ac  candidate  -> primary mechanical verification PASS; review recorded separately
+
+`docs/data/v4/fifth_integrity_repair_verification.json` is the primary engineer's
+mechanical record for `b0013ac`: the pre-repair reproduction of the blocking defect, the
+artifact hashes, the test and custody results, the field-by-field scientific payload
+comparison against `fb4f04c`, the fresh-clone import-origin evidence, and the explicit
+claim boundary. It is **not** an adjudication and it is **not** an independent review.
 
 ### What rejected `33d4ec3`, and what was done about it
 
