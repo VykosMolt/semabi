@@ -1,0 +1,63 @@
+{
+ "schema": "semabi.v4.rejected-successor-review.v1",
+ "candidate_commit": "6c84aa5d804a7b47e88b7ced191c7731bd78d348",
+ "captured_at": "2026-08-25T00:00:00+02:00",
+ "verdict": "REJECT",
+ "candidate_artifacts": {
+  "docs/data/v4/frontier_vet_clinic.json": "15eb30432bd811833f2c45879e75eda3b78e14be4b0f71c94d4a12c2cb602277",
+  "docs/data/v4/frontier_harbour.json": "40343406834f7b430e6c9fd1da1389ecd6926aab59fab7a433de03c770d3b09c",
+  "docs/data/v4/frontier_blend_book.json": "b3b6e3840cced7cf367e467804887f220264975b9da9fd3386f6dab6cd9cc23a",
+  "docs/data/v4/frontier_summary.json": "20df5c1d55283e3d761ee54be557cfbabac26d610d86471cd9e166a4d28ca826"
+ },
+ "mechanical_evidence": {
+  "independent_verifier": "PASS_ALL_20_CHECKS_NO_FAIL_NO_BLOCKED",
+  "fresh_clone_replay": "BYTE_IDENTICAL_THREE_OF_THREE",
+  "tests": "PASS_211_XFAIL_1_ZERO_SKIPPED_SLOW_SUBSET_EXECUTED",
+  "focused_subset": "PASS_124",
+  "v2_custody": "PASS_65_OF_65_EXACTLY_TWO_DECLARED_WORKTREE_DIVERGENCES",
+  "v3_benchmark_custody": "PASS_30_OF_30_EXTERNAL_REPO_AT_64393bce5f0bb13f15b0de13743d1fcceced4d08",
+  "closure_runtime_agreement": "TOUCHED_MODULE_SET_EQUALS_DECLARED_CLOSURE_UNION_38_FILES",
+  "order_invariance": "IDENTICAL_UNDER_ALL_720_PERMUTATIONS_PER_APPLICATION"
+ },
+ "rejection_findings": [
+  {
+   "severity": "HIGH",
+   "code": "BYTECODE_CACHE_DEFEATS_IMPLEMENTATION_AUTHORITY",
+   "summary": "implementation authority hashes .py source bytes while CPython executes __pycache__ bytecode; a timestamp-forged .pyc leaves every authenticated source hash correct and git status clean, yet changes the executed decision procedure",
+   "demonstrated_effect": "source_choice_rejected flipped to false on all three chains under strict validation and the documented warm-worktree replay recipe",
+   "independently_reproduced_by_custodian": true,
+   "blocks_acceptance": true
+  },
+  {
+   "severity": "MEDIUM",
+   "code": "SOURCE_SUMMARY_FIELDS_UNBOUND",
+   "summary": "source_summary.local_final, .families and .open_questions are type-checked only, never bound to authenticated evidence nor labelled non-authoritative, and are published verbatim as source.summary in every frontier report",
+   "demonstrated_effect": "forged provenance values survive strict loading and a cold fresh-clone replay into every published report",
+   "independently_reproduced_by_custodian": true,
+   "blocks_acceptance": true
+  },
+  {
+   "severity": "LOW",
+   "code": "TEST_SUITE_BINDS_NO_REPORT_CONTENT",
+   "summary": "the test suite alone does not bind report contents; replay is the sole load-bearing gate, which is correct by design but concentrates all authority in replay actually being executed",
+   "blocks_acceptance": false
+  }
+ ],
+ "not_compromised": {
+  "committed_evidence": "NO_DIVERGENT_BYTECODE_CACHE_PRESENT_IN_AUTHOR_WORKTREE_AT_REVIEW_TIME",
+  "recorded_result": "REPRODUCED_BYTE_IDENTICALLY_FROM_TWO_INDEPENDENT_COLD_FRESH_CLONES",
+  "defect_scope": "THE_ASSERTED_AUTHORITY_GUARANTEE_NOT_THE_RETAINED_SCIENTIFIC_RESULT"
+ },
+ "claim_boundary": {
+  "current_report_reproduction": "BYTE_IDENTICAL_ON_RETAINED_CURRENT_BYTES",
+  "transfer_survivor_counts": "2_VET_3_HARBOUR_2_BLEND_ON_RETAINED_CURRENT_BYTES",
+  "transfer_outcomes": "ALL_AMBIGUOUS_SURVIVOR_SET",
+  "holdout_classifications": "ALL_INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE",
+  "unique_transfer_selection": "NOT_ESTABLISHED",
+  "executed_implementation_authority": "NOT_ESTABLISHED_BYTECODE_CACHE_SHADOWS_AUTHENTICATED_SOURCE",
+  "source_provenance_binding": "NOT_ESTABLISHED_FOR_UNBOUND_SUMMARY_FIELDS",
+  "prospective_chronology": "NOT_ESTABLISHED",
+  "fresh_generalization": "NOT_ESTABLISHED",
+  "representation_transport": "NOT_ESTABLISHED_RTC_ZERO"
+ }
+}
