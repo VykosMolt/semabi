@@ -231,6 +231,32 @@ def test_every_survivor_is_evaluated_and_authority_is_present(tmp_path, monkeypa
     assert json.loads((tmp_path / "report.json").read_text()) == report
 
 
+def test_the_report_records_its_execution_regime_and_records_it_last(tmp_path, monkeypatch):
+    """The authority state must be captured after compilation, not before it.
+
+    ``_authority`` runs before any candidate is compiled, and compilation imports
+    further project modules lazily.  Recording the execution set there under-reports it,
+    which the authoritative launcher detects and refuses; the field is therefore left
+    unset by ``_authority`` and filled in immediately before the report is written.
+    """
+
+    chain, source, roles = _chain_fixture(tmp_path, ["source_choice", "alternative"])
+    _patch_loaders(monkeypatch, chain, source)
+    monkeypatch.setattr(runner, "_evidence", lambda run, reading, ms: _evidence(reading.name))
+
+    root = Path(__file__).resolve().parents[1]
+    assert runner._authority(chain, source, root)["execution_authority"] is None
+
+    report = runner.replay(tmp_path / "unused.json", tmp_path / "report.json")
+    state = report["authority"]["execution_authority"]
+    assert state == manifests.execution_authority()
+    assert state["state"] == manifests.EXECUTION_AUTHORITY_ABSENT
+    assert state["project_execution_sha256"] is None
+    assert json.loads((tmp_path / "report.json").read_text())["authority"][
+        "execution_authority"
+    ] == state
+
+
 def test_cli_does_not_accept_raw_role_paths(monkeypatch):
     monkeypatch.setattr(
         sys,

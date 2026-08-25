@@ -615,7 +615,7 @@ def _closure_file() -> str:
 
 
 @contextlib.contextmanager
-def _installed_cache(relative: str, data: bytes):
+def _installed_cache(relative: str, data: bytes, optimization: str = ""):
     """Install one bytecode cache for a closure file and always restore the original.
 
     Only the cache file is touched; the authenticated ``.py`` source and its mtime are
@@ -623,7 +623,7 @@ def _installed_cache(relative: str, data: bytes):
     """
 
     source = ROOT / relative
-    cache = Path(importlib.util.cache_from_source(str(source)))
+    cache = Path(importlib.util.cache_from_source(str(source), optimization=optimization))
     original = cache.read_bytes() if cache.is_file() else None
     cache.parent.mkdir(parents=True, exist_ok=True)
     cache.write_bytes(data)
@@ -711,6 +711,47 @@ def test_hash_based_bytecode_cache_with_wrong_source_hash_is_rejected(tmp_path):
             manifests.load_source_manifest(manifest, repo_root=ROOT)
 
 
+def test_every_optimization_level_present_on_disk_is_found_not_only_a_fixed_list(tmp_path):
+    """Cache variants are enumerated from the cache directory, not from a fixed tuple.
+
+    Round-four review found the previous fixed ``('', '1', '2')`` could not be
+    exhaustive: ``-OOO`` writes ``opt-3`` and ``cache_from_source`` accepts any
+    alphanumeric token.  A level whose bytecode ``compile`` cannot reproduce is now
+    refused rather than skipped, and a level it can reproduce is compared.
+    """
+
+    relative = _closure_file()
+    stat_result = (ROOT / relative).stat()
+    _source, manifest, _payload = _source_manifest(tmp_path)
+    manifests.load_source_manifest(manifest, repo_root=ROOT)
+
+    forged = _timestamp_pyc(
+        _divergent_code(relative), int(stat_result.st_mtime), stat_result.st_size
+    )
+    for optimization in ("1", "2"):
+        with _installed_cache(relative, forged, optimization):
+            with pytest.raises(
+                manifests.ManifestError, match="diverges from authenticated source"
+            ):
+                manifests.load_source_manifest(manifest, repo_root=ROOT)
+
+    with _installed_cache(relative, forged, "3"):
+        with pytest.raises(
+            manifests.ManifestError,
+            match="optimization level this check cannot reproduce",
+        ):
+            manifests.load_source_manifest(manifest, repo_root=ROOT)
+
+    with _installed_cache(relative, forged, "custom"):
+        with pytest.raises(
+            manifests.ManifestError,
+            match="optimization level this check cannot reproduce",
+        ):
+            manifests.load_source_manifest(manifest, repo_root=ROOT)
+
+    manifests.load_source_manifest(manifest, repo_root=ROOT)
+
+
 def test_chain_replay_closure_also_rejects_a_live_divergent_cache(tmp_path):
     """The same check guards chain construction and replay, not only generation."""
 
@@ -773,3 +814,26 @@ def test_non_authoritative_source_diagnostics_label_is_enforced(tmp_path):
     flattened["source_summary"].update(diagnostics)
     with pytest.raises(manifests.ManifestError, match="source_summary fields must be exactly"):
         manifests.save_source_manifest(flattened, manifest, repo_root=ROOT)
+
+
+def test_source_summary_key_sets_are_exact_not_merely_sufficient(tmp_path):
+    """A subset check would let unbound provenance be smuggled back in beside the label.
+
+    Round-four review found the exact-key guard had no test that fails when it is
+    relaxed: every existing case removed a key, which a subset check also rejects.
+    These two cases add one, which only an exact check rejects.
+    """
+
+    _source, manifest, _payload = _source_manifest(tmp_path)
+
+    extra_summary = json.loads(manifest.read_text())
+    extra_summary["source_summary"]["local_final"] = {"smuggled": True}
+    with pytest.raises(manifests.ManifestError, match="source_summary fields must be exactly"):
+        manifests.save_source_manifest(extra_summary, manifest, repo_root=ROOT)
+
+    extra_diagnostics = json.loads(manifest.read_text())
+    extra_diagnostics["source_summary"][manifests.SOURCE_DIAGNOSTICS_KEY][
+        "selected_by_search"
+    ] = "cell[_]=cell#0"
+    with pytest.raises(manifests.ManifestError, match="fields must be exactly"):
+        manifests.save_source_manifest(extra_diagnostics, manifest, repo_root=ROOT)

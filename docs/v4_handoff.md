@@ -19,7 +19,8 @@ authoritative; verify them rather than trusting this summary.
   integrity repair; its adversarial rejection is retained by `a1642cc`. Commit `6c84aa5`
   preserves the third integrity repair; its adversarial rejection is retained by `50582c7`.
   Commit `33d4ec3` preserves the fourth integrity repair; its adversarial rejection is
-  retained by the current checkpoint. Do not rewrite or delete any checkpoint.
+  retained by `fb4f04c`. The current checkpoint is the fifth integrity repair: the
+  execution-authority rewrite described below. Do not rewrite or delete any checkpoint.
 * The current raw histories are now retained in Git, but their snapshots were made after
   collection. Every chain therefore says exactly
   `RETROACTIVE_SNAPSHOT_CHRONOLOGY_NOT_ESTABLISHED`. The bytes and replay are reproducible;
@@ -35,28 +36,39 @@ authoritative; verify them rather than trusting this summary.
   in-memory record graph for each compilation. No compatibility file is materialized and no
   retained compiler path is reopened. SOURCE candidate refutation maps must equal the exact
   authenticated SOURCE sidecar before any active-key check.
-* Implementation authority hashes `.py` source bytes, but CPython executes `__pycache__`
-  bytecode. Manifest loading therefore also checks every bytecode cache the interpreter would
-  actually load for every authenticated closure file, at every optimization level, and rejects
-  any that does not recompile to the authenticated source. A cache whose timestamp header no
-  longer matches its source is inert and is skipped; staleness is not forgery. Both closures
-  are authenticated before any retained role directory is opened or parsed.
-* **Residual limitations, corrected.** An earlier revision of this file claimed the bytecode
-  check "closes the gap for every other closure file". Adversarial review disproved that, and
-  the accurate statement is narrower on two counts. First, the check runs inside the process it
-  is checking, so a forged cache for `semabi/compiler/v4/manifests.py` replaces the check.
-  Second, it inspects cache files **on disk at validation time**, not the bytecode the
-  interpreter already loaded: every closure module is imported at module scope by
-  `semabi/run_v4_transfer.py` before `load_chain_manifest` runs, so a cache that was live at
-  import and has since been made stale is skipped as inert while its module object is already
-  executing. The check is defense in depth against forgery and accidental staleness, not a
-  closed bootstrap. **The authoritative gate is the cache-cold Reproduction recipe below.**
-* **`_PYC_OPTIMIZATIONS` is not exhaustive.** It enumerates `''`, `'1'`, `'2'`; `-OOO` produces
-  `opt-3`, and `cache_from_source` accepts any alphanumeric token. Any prose claiming "every
-  optimization level" overstates it. No documented command runs under `-O`, and the cache-cold
-  recipe closes this regardless.
-* **Implementation authority does not yet cover module *resolution*.** See the campaign status
-  section at the end of this file: this is the open defect that rejected `33d4ec3`.
+* **Execution authority.** Authoritative V4 execution runs under `scripts/v4_authority.py`,
+  a stdlib-only launcher outside ordinary SemABI import execution that refuses to start
+  except under `python -I -S -B`. It controls the import environment, hands project-module
+  resolution to CPython inside it, authenticates the exact origin CPython selected against
+  the checkout's tracked blob content, reads those bytes once and executes them from memory
+  without reopening the path, and then audits every `sys.modules` entry to prove that
+  everything which actually executed was authenticated project code, interpreter stdlib, or
+  a declared third-party directory. **Read `docs/v4_execution_authority.md` before trusting
+  any claim here about what code ran**: it states the threat model, the trusted computing
+  base, and the explicit non-goals, including what is *not* defended.
+* Project bytecode is no longer a boundary to police; it is irrelevant. The authoritative
+  loader compiles authenticated source bytes in memory and never opens a project `.pyc`, so
+  `__pycache__`, stale, hash-based, timestamp and sourceless bytecode cannot substitute for
+  a source file there. The in-process cache check in `manifests.py` stays as a **secondary**
+  control for ordinary, non-authoritative execution. It now enumerates cache variants from
+  the cache directory rather than from a fixed list of optimization levels, and refuses any
+  level whose bytecode `compile` cannot reproduce, so nothing can be missed by enumeration.
+  Its two inherent limits stand and are stated in the code: it cannot defend against a forged
+  cache for the module performing it, and it inspects caches on disk at validation time
+  rather than the bytecode already loaded. Neither limit applies to the authoritative path.
+* The declared static import closure is a **declaration**, not a resolver and not a proof of
+  completeness. It is what the manifests hash, so `executed ⊆ declared` is enforced and any
+  project file executing outside it fails the run; `declared_but_not_executed` is recorded,
+  not rejected, because scanning legitimately over-approximates. `manifests._module_path`
+  keeps its discovery role and now refuses the names it cannot describe -- a directory
+  package beside a same-named module file, or any extension-module file -- instead of
+  silently choosing one. It is no longer anybody's model of Python import resolution.
+* Every report records `authority.execution_authority`. The retained reports say
+  `V4_IMPORT_AUTHORITY_ACTIVE` and carry the execution digest of the run that wrote them; an
+  ordinary `python -m` invocation or a unit test writes
+  `NOT_ESTABLISHED_NO_V4_IMPORT_AUTHORITY`. The launcher refuses to finish if the report does
+  not claim the authority, or if the report's digest differs from the final attestation --
+  which is what a module imported after the report was written would produce.
 
 ## Read these artifacts first
 
@@ -81,6 +93,22 @@ module; `--repo-root` cannot point hashing at another checkout.
     docs/data/v4/manifests/harbour_chain.json
     docs/data/v4/manifests/blend_book_chain.json
     docs/data/v4/manifests/evaluator_inputs.json   # explicitly EVALUATOR_ONLY
+
+Each authoritative freeze and replay retains a byte-reproducible execution attestation
+naming every project module that actually executed, its repo-relative path, its SHA-256, its
+loader, and the artifact it accompanies. These carry no absolute path and no commit id, so
+they reproduce identically from any checkout of the same code; the commit, interpreter and
+`sys.path` live in the non-reproducible environment record instead.
+
+    docs/data/v4/attestations/vet_clinic_source_candidates.execution.json
+    docs/data/v4/attestations/harbour_source_candidates.execution.json
+    docs/data/v4/attestations/blend_book_source_candidates.execution.json
+    docs/data/v4/attestations/vet_clinic_chain.execution.json
+    docs/data/v4/attestations/harbour_chain.execution.json
+    docs/data/v4/attestations/blend_book_chain.execution.json
+    docs/data/v4/attestations/frontier_vet_clinic.execution.json
+    docs/data/v4/attestations/frontier_harbour.execution.json
+    docs/data/v4/attestations/frontier_blend_book.execution.json
 
 The authenticated reports are new files. The older `transfer_*.json` files belong to the
 rejected sequential checkpoint and remain historical evidence.
@@ -164,43 +192,61 @@ budget, stop conditions, and failure states must be frozen before new TRANSFER e
 
 ## Reproduction
 
-Every command below is **cache-cold**: `PYTHONPYCACHEPREFIX` points the interpreter at a
-fresh empty directory and `-B` stops it writing one back, so no repository `__pycache__` is
-read or written and no bytecode can stand in for the authenticated sources. This is the
-authoritative gate, because the in-process cache check cannot verify its own module. Run the
-commands from the repository root; copy each block whole, since each `mktemp -d` allocates
-that command its own empty prefix.
+Every authoritative command runs under `scripts/v4_authority.py`, started by an isolated
+interpreter. `-I -S -B` is mandatory and the launcher refuses to run without it. Run from
+the repository root. Nothing needs `PYTHONPATH`, because the authority puts no project
+directory on `sys.path` at all: project modules are reachable only through the guard.
+
+    # replay all three retained reports, with their execution attestations
+    for app in vet_clinic harbour blend_book; do
+      .venv/bin/python -I -S -B scripts/v4_authority.py \
+          --attestation docs/data/v4/attestations/frontier_$app.execution.json \
+          replay --manifest docs/data/v4/manifests/${app}_chain.json \
+          --output docs/data/v4/frontier_$app.json
+    done
+
+Rebuilding the manifests, if that is needed, goes source-first because the chain manifests
+bind the source manifest SHA-256. `--source` for `freeze-source` is the SOURCE run
+directory named by the existing manifest's `source_path`.
+
+    .venv/bin/python -I -S -B scripts/v4_authority.py \
+        --attestation docs/data/v4/attestations/vet_clinic_source_candidates.execution.json \
+        freeze-source --source runs/v4/vet_clinic_dev \
+        --output docs/data/v4/manifests/vet_clinic_source_candidates.json
+
+    .venv/bin/python -I -S -B scripts/v4_authority.py \
+        --attestation docs/data/v4/attestations/vet_clinic_chain.execution.json \
+        freeze-chain --source-manifest docs/data/v4/manifests/vet_clinic_source_candidates.json \
+        --source runs/v4/vet_clinic_dev \
+        --transfer runs/v4/vet_clinic_transfer --holdout runs/v4/vet_clinic_holdout \
+        --output docs/data/v4/manifests/vet_clinic_chain.json
+
+Each command prints one JSON object: the byte-reproducible attestation it wrote, and the
+non-reproducible environment record (candidate commit, `sys.executable`, `sys.prefix`,
+interpreter flags, initial and final `sys.path`, `sys.meta_path`, `sys.path_hooks`, the
+declared third-party directory with its inert `.pth` inventory, module-origin counts, and
+the subprocess policy). Capture that output; it is the evidence that a given run was
+independent.
+
+**Authority membership is the checkout's staged content.** A code change must be `git
+add`ed before an authoritative run authenticates it, and any untracked or unstaged project
+module is refused. This is deliberate, and it is why regenerating artifacts happens with
+code staged and the artifacts committed afterwards; `index_matches_head` in the environment
+record states which situation a run was in.
+
+The two remaining checks are ordinary, non-authoritative verification, not authority. They
+still run cache-cold, because in-process manifest loading does consult `__pycache__`:
 
     # V2 custody (expects the two deliberate V4 divergences)
     PYTHONPATH=. PYTHONPYCACHEPREFIX="$(mktemp -d)" .venv/bin/python -B scripts/v4_custody.py
 
-    # manifest-only replay; no raw role-path bypass exists
-    PYTHONPATH=. PYTHONPYCACHEPREFIX="$(mktemp -d)" .venv/bin/python -B -m semabi.run_v4_transfer \
-        --manifest docs/data/v4/manifests/vet_clinic_chain.json \
-        --output docs/data/v4/frontier_vet_clinic.json
-
-    PYTHONPATH=. PYTHONPYCACHEPREFIX="$(mktemp -d)" .venv/bin/python -B -m semabi.run_v4_transfer \
-        --manifest docs/data/v4/manifests/harbour_chain.json \
-        --output docs/data/v4/frontier_harbour.json
-
-    PYTHONPATH=. PYTHONPYCACHEPREFIX="$(mktemp -d)" .venv/bin/python -B -m semabi.run_v4_transfer \
-        --manifest docs/data/v4/manifests/blend_book_chain.json \
-        --output docs/data/v4/frontier_blend_book.json
-
     # full suite; loopback access is needed by three existing network tests
     PYTHONPATH=. PYTHONPYCACHEPREFIX="$(mktemp -d)" .venv/bin/python -B -m pytest -q
 
-The freeze scripts, if the manifests are being rebuilt, take the same prefix; source manifests
-must be refrozen before the chain manifests that bind their SHA-256.
-
-Current local verification: V4/integrity/boundary subset `130 passed`; complete suite
-`217 passed, 1 xfailed`. Both manifest freezes reproduce byte-identical manifests on a second
-run, and replay reproduces each report byte for byte, including under the cache-cold recipe.
-Independent adversarial review of `33d4ec3` returned **REJECT**; see the campaign status
-section below. These counts are therefore the counts of a *rejected* candidate: they are
-accurate, and they are not acceptance. No LLM proposal was used. The phase retained 4,373
-collected primitives plus the earlier one-primitive harbour acquisition; no new primitives were
-collected by any integrity repair.
+Current local verification is recorded in `docs/data/v4/fifth_integrity_repair_verification.json`
+together with the fresh-clone import-origin evidence. No LLM proposal was used. The phase
+retained 4,373 collected primitives plus the earlier one-primitive harbour acquisition; no
+new primitives were collected by any integrity repair.
 
 ## Non-negotiable boundaries
 
@@ -219,110 +265,80 @@ collected by any integrity repair.
 * Do not modify V0, the effect language, V2's tag, the V3 frozen result, any rejected
   `1e20ef2`/`98db1bd`/`72e6819`/`b489495` checkpoint, or the current spent histories.
 
-## Campaign status at handoff — `33d4ec3` is REJECTED
+## Campaign status — the fifth integrity repair, awaiting adjudication
 
-The V4 evidence-integrity campaign stopped here deliberately. It did not reach adjudication.
-Nothing about the scientific result changed at any point in it, and no next experiment was
-started.
+Nothing about the scientific result has changed at any point in this campaign, and no next
+experiment has been started.
 
     6c84aa5  candidate  -> REJECTED (2 defects)   rejection: 50582c7
-    33d4ec3  candidate  -> REJECTED (1 blocking)  rejection: current checkpoint
+    33d4ec3  candidate  -> REJECTED (1 blocking)  rejection: fb4f04c
+    <this>   candidate  -> primary verification PASS; independent review recorded separately
 
-Round-3 review rejected `6c84aa5` for hashing `.py` bytes while CPython executes `__pycache__`
-bytecode, and for republishing unbound `source_summary` provenance. Both were repaired in
-`33d4ec3`, and independent review confirmed both repairs hold: the bytecode check defeats the
-attack that caused the rejection, its `marshal` version-2 comparison survived a field-
-sensitivity sweep with no false positive or negative, authority settles before any retained
-role is opened on both paths, and the non-authoritative label withstood eight forgeries and
-reaches all three reports.
+### What rejected `33d4ec3`, and what was done about it
 
-`33d4ec3` was then rejected for a strictly easier instance of the same underlying property.
+`manifests._module_path` resolved `X.py` before `X/__init__.py` while CPython's
+`FileFinder` resolves a directory package first, so an untracked
+`semabi/compiler/v4/transfer/__init__.py` executed while the closure authenticated
+`transfer.py` -- cache-cold, with no bytecode involved, and carried through to flipping
+`source_choice_rejected` to `false` on `vet_clinic`. The attack was reproduced
+independently again at the start of this session before anything was changed.
 
-### The open blocking defect
+The bounded repair the previous handoff proposed -- swap the two branches, reject ambiguity
+-- was **not** taken as the repair. It closes the witness and keeps the defect, which is
+that the integrity layer was predicting Python's import resolution rather than binding what
+the authoritative process actually resolves and executes. The ambiguity rejection was still
+added, but as a consistency check on the *declaration*, not as the authority.
 
-`manifests._module_path` resolves `X.py` before `X/__init__.py`:
+The repair is `scripts/v4_authority.py` and is described in the bullets at the top of this
+file and in full in `docs/v4_execution_authority.md`. Every previously known
+execution-authority attack now has a regression in `tests/test_v4_execution_authority.py`,
+each run twice where that is meaningful: once under a plain interpreter to show the attack
+really does change what executes, and once under the launcher, which must refuse it or
+authenticate the right file. A test that only ran the launcher would still pass if the
+mechanism were deleted.
 
-    module_file = package.with_suffix(".py")
-    package_init = package / "__init__.py"
-    if module_file.is_file():  return module_file
-    if package_init.is_file(): return package_init
+### What is authoritative and what is not
 
-CPython's `FileFinder` resolves the opposite way — a directory package wins over a same-named
-module file, and an extension module wins over both. So creating
-`semabi/compiler/v4/transfer/__init__.py` makes the interpreter execute bytes that nothing
-hashes, while the closure authenticates `transfer.py`. Reproduced independently, cache-cold,
-with no bytecode cache involved at all:
-
-    executed module file : .../semabi/compiler/v4/transfer/__init__.py
-    closure names transfer.py : True
-    vet_clinic / harbour / blend_book -> STRICT VALIDATION PASSED (undetected)
-
-Review carried it through to a flipped scientific claim: `source_choice_rejected` became
-`false` on `vet_clinic`, admitting the SOURCE incumbent into the TRANSFER frontier, while the
-full suite passed at `217 passed, 1 xfailed`, V2 custody passed 65/65, and replay was
-byte-reproducible. **The cache-cold recipe does not close this**, because no bytecode cache is
-involved. Extension shadowing (`pinned.cpython-312-x86_64-linux-gnu.so` beside `pinned.py`) is
-the same root cause and is likewise open.
-
-### The bounded repair the next session should perform
-
-Do not redesign anything else. Make authenticated resolution agree with CPython, and refuse
-ambiguity rather than picking a winner:
-
-1. In `_module_path`, resolve in CPython's real order, and **reject** rather than resolve when
-   a module name is ambiguous: if both `X.py` and `X/__init__.py` exist, raise `ManifestError`.
-   Verified to separate the attack from legitimate modules cleanly:
-
-       semabi.compiler.v4.transfer   py=True  init=True   AMBIGUOUS -> REJECT
-       semabi.compiler.v4.pinned     py=True  init=False  ok
-       semabi.compiler.v4            py=False init=True   ok
-
-2. Reject any extension-module file (`importlib.machinery.EXTENSION_SUFFIXES`, as `X<suffix>`
-   or `X/__init__<suffix>`) for any closure module name. Native code cannot be authenticated as
-   Python source and has no business in this closure.
-3. Add a loaded-module check: for every entry in `sys.modules` whose `__file__` lies under the
-   repository root, require that file to be exactly the authenticated closure path. This closes
-   the shadow variant for modules already imported, which the on-disk cache check cannot see.
-4. Replace the fixed `_PYC_OPTIMIZATIONS` tuple by enumerating the actual `__pycache__` entries
-   for each source file and checking every one whose interpreter tag matches, so no
-   optimization level can be missed by enumeration.
-5. Add the missing load-bearing test for the `source_summary` exact-key guard.
-
-Each of these needs a test that genuinely fails when the mechanism is disabled — the campaign's
-standing bar, and the reason the two repairs in `33d4ec3` were credited.
-
-Then regenerate authority artifacts in order (source manifests, then chain manifests, then the
-three reports, then reconcile `frontier_summary.json`'s `report_sha256` values), rerun the full
-suite and V2 custody, commit a NEW candidate without touching `6c84aa5` or `33d4ec3`, and run
-independent mechanical verification and a fresh adversarial review again before any
-adjudication. Round-2 mechanical verification of `33d4ec3` had not returned when the campaign
-stopped; a missing verifier result is absence of evidence, never approval.
+* **Authoritative**: the executed project code of a run under `scripts/v4_authority.py`,
+  bound to the staged content of the checkout it ran from, with the attestation as evidence.
+* **Not authoritative**: anything about *when* evidence was collected; the contents of the
+  declared third-party directory; the launcher's self-check, whose real force comes from
+  running a fresh clone of the exact candidate commit; and the static import closure, which
+  declares rather than proves.
+* "Fresh clone" is never used here as shorthand for independent execution. Independence is
+  claimed only where an attestation shows every executed project module bound to that clone.
 
 ### The scientific result is unchanged and remains negative
 
-No integrity repair has ever altered it, and none was permitted to. Across every candidate the
-retained payload is identical: `vet_clinic` 2 survivors, `harbour` 3, `blend_book` 2; every
-TRANSFER and HOLDOUT outcome `AMBIGUOUS_SURVIVOR_SET`; every HOLDOUT classification
+No integrity repair has ever altered it, and none was permitted to. Across every candidate
+the retained payload is identical: `vet_clinic` 2 survivors, `harbour` 3, `blend_book` 2;
+every TRANSFER and HOLDOUT outcome `AMBIGUOUS_SURVIVOR_SET`; every HOLDOUT classification
 `INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE`; `selected` null everywhere; every SOURCE incumbent
 carrying at least one explicit TRANSFER loss; transported RTC zero.
 
 SOURCE-local representation preference does not transport reliably across these retained
 histories. Independent TRANSFER evidence eliminates some hypotheses but leaves non-singleton
 survivor sets on all three applications, and current HOLDOUT evidence is insufficient to
-identify one unique transported representation. Unique transported representation, prospective
-transport validation, representation transportability and fresh generalization are all
-`NOT_ESTABLISHED`.
+identify one unique transported representation. Unique transported representation,
+prospective transport validation, representation transportability and fresh generalization
+are all `NOT_ESTABLISHED`.
 
-That negative result is not what the campaign was testing. The campaign was testing whether the
-chain is trustworthy enough to *report* it. As of `33d4ec3` it is not, for the narrow reason
-above — and note what the rejections do not say: every rejection so far has been about the
-authority of the evidence chain, never about the retained numbers, which have reproduced
-byte-for-byte from independent cold clones at every checkpoint.
+That negative result is not what the campaign was testing. The campaign was testing whether
+the chain is trustworthy enough to *report* it. Note what the rejections do not say: every
+rejection so far has been about the authority of the evidence chain, never about the
+retained numbers, which have reproduced byte-for-byte from independent cold clones at every
+checkpoint.
+
+### V4 has not been adjudicated
+
+This checkpoint records primary mechanical verification and one independent adversarial
+review. Neither is an adjudication, and no adjudication has been performed. A missing or
+unreturned verifier result is absence of evidence, never approval.
 
 ### Do not start the next experiment
 
 Active distinguishability / behavioral-equivalence work is **not** started and must not be
 started until this chain is closed. When it is, the next hypothesis is not a better transfer
-score; it is whether any reachable experiment makes the surviving hypotheses predict different
-observations, and if none does, treating them as a behavioral equivalence class rather than
-forcing a unique ontology.
+score; it is whether any reachable experiment makes the surviving hypotheses predict
+different observations, and if none does, treating them as a behavioral equivalence class
+rather than forcing a unique ontology.

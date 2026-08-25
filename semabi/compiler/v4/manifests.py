@@ -12,6 +12,7 @@ The current phase uses retroactive snapshots, so chronology is explicit rather t
 """
 from __future__ import annotations
 
+import importlib.machinery
 import importlib.util
 import json
 import marshal
@@ -47,8 +48,12 @@ SOURCE_DIAGNOSTICS_AUTHORITY = "NON_AUTHORITATIVE_UNVERIFIED_SOURCE_SEARCH_DIAGN
 _PYC_HEADER_SIZE = 16
 _HASH_BASED_PYC_FLAG = 0b1
 _CHECK_SOURCE_PYC_FLAG = 0b10
-# Every optimization level CPython can materialise a separate cache for.
-_PYC_OPTIMIZATIONS = ("", "1", "2")
+# Optimization tokens whose bytecode this check can reproduce.  ``compile`` accepts
+# optimize levels -1..2 only, so a cache carrying any other token (``-OOO`` writes
+# ``opt-3``, and ``cache_from_source`` accepts any alphanumeric token) cannot be
+# compared and is refused rather than skipped.  Caches are enumerated from the cache
+# directory itself, never from this tuple, so no level can be missed by enumeration.
+_COMPARABLE_PYC_OPTIMIZATIONS = {"": -1, "1": 1, "2": 2}
 
 # This is the authoritative execution inventory.  Keep the three roles explicit:
 # source generation, chain construction, and replay.  Boundary tests intentionally
@@ -66,6 +71,45 @@ REPLAY_ENTRYPOINTS = (V4_EXECUTION_ENTRYPOINTS[2],)
 
 class ManifestError(ValueError):
     """Raised when a retained manifest or its inputs are not authentic."""
+
+
+# The authoritative launcher publishes itself as an already-present ``sys.modules``
+# entry, never as an importable file, so this lookup cannot resolve anything on disk.
+V4_AUTHORITY_MODULE = "_semabi_v4_authority"
+EXECUTION_AUTHORITY_ACTIVE = "V4_IMPORT_AUTHORITY_ACTIVE"
+EXECUTION_AUTHORITY_ABSENT = "NOT_ESTABLISHED_NO_V4_IMPORT_AUTHORITY"
+
+
+def execution_authority() -> dict[str, Any]:
+    """Report whether this process runs under the V4 authoritative import guard.
+
+    Ordinary execution -- a unit test, an ad-hoc ``python -m`` run -- has no guard and
+    says so in the artifact it writes.  Only ``scripts/v4_authority.py`` can make an
+    artifact claim :data:`EXECUTION_AUTHORITY_ACTIVE`, and the launcher independently
+    rejects a report whose execution digest differs from its own attestation.
+    """
+
+    module = sys.modules.get(V4_AUTHORITY_MODULE)
+    state = getattr(module, "authority_state", None)
+    if not callable(state):
+        return {
+            "state": EXECUTION_AUTHORITY_ABSENT,
+            "attestation_schema": None,
+            "project_execution_sha256": None,
+        }
+    value = state()
+    if (
+        not isinstance(value, Mapping)
+        or value.get("state") != EXECUTION_AUTHORITY_ACTIVE
+        or not isinstance(value.get("project_execution_sha256"), str)
+        or not value["project_execution_sha256"]
+    ):
+        raise ManifestError("the V4 import authority published an unusable state")
+    return {
+        "state": EXECUTION_AUTHORITY_ACTIVE,
+        "attestation_schema": value.get("attestation_schema"),
+        "project_execution_sha256": value["project_execution_sha256"],
+    }
 
 
 def _loaded_repo_root() -> Path:
@@ -129,7 +173,18 @@ _EVALUATOR_PREFIXES = ("semabi.hidden", "semabi.env", "semabi.eval", "semabi.bas
 
 
 def _module_path(root: Path, module: str) -> Path | None:
-    """Resolve a local Python module without importing it."""
+    """Discover the local source file a module name *declares*, for the static closure.
+
+    This is dependency **discovery**, not an implementation of Python's import
+    resolution, and it is not the root of trust for what executes.  Authority over
+    execution belongs to ``scripts/v4_authority.py``, which hands resolution to CPython
+    and authenticates the origin CPython actually selected.
+
+    Because the declared closure is what the manifests hash, a name whose resolution
+    this scanner cannot describe is refused outright rather than resolved to a guess.
+    A directory package beside a same-named module file, or any extension-module file
+    for the name, means the declared closure would not describe what would execute.
+    """
 
     if not module or any(module == prefix or module.startswith(prefix + ".")
                          for prefix in _EVALUATOR_PREFIXES):
@@ -140,10 +195,23 @@ def _module_path(root: Path, module: str) -> Path | None:
     package = root.joinpath(*parts)
     module_file = package.with_suffix(".py")
     package_init = package / "__init__.py"
-    if module_file.is_file():
-        return module_file
+    for suffix in importlib.machinery.EXTENSION_SUFFIXES:
+        for native in (Path(str(package) + suffix), package / ("__init__" + suffix)):
+            if native.is_file():
+                raise ManifestError(
+                    f"local module {module} resolves to an extension module "
+                    f"({native.name}); native code cannot be authenticated as source"
+                )
+    if module_file.is_file() and package_init.is_file():
+        raise ManifestError(
+            f"local module {module} is ambiguous: both {module_file.name} and "
+            f"{package.name}/__init__.py exist, and CPython would execute the package"
+        )
+    # CPython's own order: a directory package wins over a same-named module file.
     if package_init.is_file():
         return package_init
+    if module_file.is_file():
+        return module_file
     return None
 
 
@@ -627,7 +695,7 @@ def _verify_bytecode_cache_file(
             cached.co_filename,
             "exec",
             dont_inherit=True,
-            optimize=-1 if optimization == "" else int(optimization),
+            optimize=_COMPARABLE_PYC_OPTIMIZATIONS[optimization],
         )
     except (SyntaxError, ValueError, TypeError) as exc:
         raise ManifestError(
@@ -639,41 +707,77 @@ def _verify_bytecode_cache_file(
         )
 
 
+def _cache_variants(path: Path) -> list[tuple[Path, str]]:
+    """Enumerate the cache files this interpreter could load for one source file.
+
+    The directory is listed rather than a fixed set of optimization levels probed, so
+    a level this module does not know about is still found.  Only caches carrying this
+    interpreter's own cache tag are candidates; another tag's cache is never loaded.
+    """
+
+    try:
+        # ``cache_from_source`` already honours ``sys.pycache_prefix``.
+        base = Path(importlib.util.cache_from_source(str(path), optimization=""))
+    except (ValueError, NotImplementedError) as exc:
+        raise ManifestError(
+            f"cannot resolve the bytecode cache path for {path.name}: {exc}"
+        ) from exc
+    tag = sys.implementation.cache_tag
+    if tag is None:
+        return []
+    prefix = f"{path.stem}.{tag}"
+    found: list[tuple[Path, str]] = []
+    try:
+        if not base.parent.is_dir():
+            return []
+        for entry in sorted(base.parent.iterdir()):
+            name = entry.name
+            if not name.startswith(prefix + ".") or not name.endswith(".pyc"):
+                continue
+            middle = name[len(prefix) + 1:-4]
+            if middle == "":
+                optimization = ""
+            elif middle.startswith("opt-"):
+                optimization = middle[4:]
+            else:
+                continue
+            if entry.is_file():
+                found.append((entry, optimization))
+    except OSError as exc:
+        raise ManifestError(
+            f"cannot inspect the bytecode cache directory for {path.name}: {exc}"
+        ) from exc
+    return found
+
+
 def _verify_bytecode_caches(
     relative: str, path: Path, source_bytes: bytes, stat_result: os.stat_result
 ) -> None:
     """Check every cache variant CPython could execute in place of one source file.
 
-    Implementation authority hashes ``.py`` bytes, but the interpreter runs the cached
-    bytecode whenever the cache header says it is current.  A forged cache therefore
-    leaves every authenticated source hash correct, and the checkout clean, while
-    replacing the executed decision procedure.
+    This is a **secondary** control.  Authoritative V4 execution runs under
+    ``scripts/v4_authority.py``, which compiles authenticated source bytes in memory and
+    never opens a project ``.pyc`` at all, so no cache can stand in for a source file
+    there.  This check covers ordinary, non-authoritative execution -- a unit test, an
+    ad-hoc ``python -m`` run -- where the interpreter does load cached bytecode whenever
+    the header says it is current.
 
-    This is defense in depth, not a closed bootstrap: an in-process check cannot
-    defend against a forged cache for the module performing the check.  The documented
-    authoritative gate is therefore run cache-cold.
+    Two limits are inherent and are not claimed away.  An in-process check cannot defend
+    against a forged cache for the module performing the check, and it inspects caches
+    **on disk at validation time**, not the bytecode the interpreter already loaded for
+    modules imported earlier.  Neither limit applies to the authoritative path, which is
+    why the authoritative path is the gate.
     """
 
-    for optimization in _PYC_OPTIMIZATIONS:
-        try:
-            # ``cache_from_source`` already honours ``sys.pycache_prefix``.
-            cache_path = Path(
-                importlib.util.cache_from_source(str(path), optimization=optimization)
-            )
-        except (ValueError, NotImplementedError) as exc:
+    for cache_path, optimization in _cache_variants(path):
+        if optimization not in _COMPARABLE_PYC_OPTIMIZATIONS:
             raise ManifestError(
-                f"cannot resolve the bytecode cache path for {relative}: {exc}"
-            ) from exc
-        try:
-            present = cache_path.is_file()
-        except OSError as exc:
-            raise ManifestError(
-                f"cannot inspect the bytecode cache for {relative}: {exc}"
-            ) from exc
-        if present:
-            _verify_bytecode_cache_file(
-                relative, cache_path, source_bytes, stat_result, optimization
+                f"bytecode cache at an optimization level this check cannot reproduce: "
+                f"{cache_path.name} for {relative}"
             )
+        _verify_bytecode_cache_file(
+            relative, cache_path, source_bytes, stat_result, optimization
+        )
 
 
 def _verify_implementation_file(

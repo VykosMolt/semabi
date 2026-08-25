@@ -58,7 +58,7 @@
    "semabi/compiler/v4/custody.py": "75ec3a978d92f8d1e924e07ba76cb41294737c5c596210cd82fbecc3b2b55178",
    "semabi/compiler/v4/frozen_evidence.py": "ff80dc759a450cc64c90c913df63fb7d9eb70bb652ebc733dd40637a74b73738",
    "semabi/compiler/v4/identity.py": "4e718dd8b3d2ade2126c31c5e88a3d5d7b91662a08e1a95077f342c030039c05",
-   "semabi/compiler/v4/manifests.py": "77fb0b0c8dbbbea532cab552359474124bb7d388089ef03c571880229d3ffbef",
+   "semabi/compiler/v4/manifests.py": "007093a4fdb73663254f8627202a9c8ba151a9fbb6bc264dd9e6f00712b72fa9",
    "semabi/compiler/v4/objective.py": "4dd902f9bb288e967ae1333f581631e5c6edbd507a841bf45efe569b758fc065",
    "semabi/compiler/v4/pinned.py": "711305a95c1da238c4b9e4f213fb5f2421bf1757244b10bcbab5b14a83f8ad4d",
    "semabi/compiler/v4/promote.py": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65",
@@ -66,9 +66,14 @@
   },
   "chain_manifest": {
    "path": "docs/data/v4/manifests/harbour_chain.json",
-   "sha256": "6e14ee733b8854a6d3e26c15ce149d8c8c7dd47cb723499966fb4d9cf6d72158"
+   "sha256": "25a2e9de5b45eae5947daa464b7e9f85f176bcf704c60b2280c309007dd939d4"
   },
   "custody_timing": "RETROACTIVE_SNAPSHOT_CHRONOLOGY_NOT_ESTABLISHED",
+  "execution_authority": {
+   "attestation_schema": "semabi.v4.execution-attestation.v1",
+   "project_execution_sha256": "a680ceceb452f3161fb55f34d067ad37ae6b75dcfdeff442993156f66df34efb",
+   "state": "V4_IMPORT_AUTHORITY_ACTIVE"
+  },
   "min_support": 2,
   "replay_implementation_files": {
    "semabi/__init__.py": "0a6e61cf4d9d8dc368fef7bc2053e6db686e3fb70272d7f9e9f1e5b3f79f95e8",
@@ -98,14 +103,14 @@
    "semabi/compiler/v4/custody.py": "75ec3a978d92f8d1e924e07ba76cb41294737c5c596210cd82fbecc3b2b55178",
    "semabi/compiler/v4/frozen_evidence.py": "ff80dc759a450cc64c90c913df63fb7d9eb70bb652ebc733dd40637a74b73738",
    "semabi/compiler/v4/identity.py": "4e718dd8b3d2ade2126c31c5e88a3d5d7b91662a08e1a95077f342c030039c05",
-   "semabi/compiler/v4/manifests.py": "77fb0b0c8dbbbea532cab552359474124bb7d388089ef03c571880229d3ffbef",
+   "semabi/compiler/v4/manifests.py": "007093a4fdb73663254f8627202a9c8ba151a9fbb6bc264dd9e6f00712b72fa9",
    "semabi/compiler/v4/objective.py": "4dd902f9bb288e967ae1333f581631e5c6edbd507a841bf45efe569b758fc065",
    "semabi/compiler/v4/pinned.py": "711305a95c1da238c4b9e4f213fb5f2421bf1757244b10bcbab5b14a83f8ad4d",
    "semabi/compiler/v4/promote.py": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65",
    "semabi/compiler/v4/search.py": "c1ad0bc10a94d146120192d77ac01da95158ed7ea738af9e84e889397305c839",
    "semabi/compiler/v4/transfer.py": "70e342f46ecd4c246812fa1daebcae108db4b85b87a3f9f8a45b17b3a9d75991",
    "semabi/relmodel.py": "22ffbfe51a95a2b77307b9a2e0f3ba297dd58b2efd045ce7ab0263602abd74cf",
-   "semabi/run_v4_transfer.py": "73734d93ca48defb147e5b37e01c50331fe6df87c8309faceb7208ff174f6279"
+   "semabi/run_v4_transfer.py": "6266c4362a1180cdefc124c18ada1a7888a83261ea24dc8b0860af9cca473ef7"
   },
   "roles": {
    "HOLDOUT": {
@@ -211,7 +216,7 @@
   },
   "source_manifest": {
    "path": "docs/data/v4/manifests/harbour_source_candidates.json",
-   "sha256": "8ba9675080ad4b78429b6de23da53a2624cee89ab4df08909d21dc11f2165939"
+   "sha256": "55106766d48ea6d1e5865ada720f5db10f62aa6f174c565c4be62de3dd2827bf"
   },
   "source_runtime": {
    "implementation": "CPython",
@@ -5320,7 +5325,7 @@
   ],
   "manifest": {
    "path": "docs/data/v4/manifests/harbour_source_candidates.json",
-   "sha256": "8ba9675080ad4b78429b6de23da53a2624cee89ab4df08909d21dc11f2165939"
+   "sha256": "55106766d48ea6d1e5865ada720f5db10f62aa6f174c565c4be62de3dd2827bf"
   },
   "source_choice": {
    "decision_fingerprint": "9aa6f4dd131ed96b",

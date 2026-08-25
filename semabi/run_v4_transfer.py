@@ -127,6 +127,10 @@ def _authority(
     chain_path = chain.manifest_path.resolve()
     source_path = source.manifest_path.resolve()
     return {
+        # ``execution_authority`` is filled in by :func:`replay` immediately before the
+        # report is written, not here: compilation imports further project modules
+        # lazily, and the recorded execution set has to include them.
+        "execution_authority": None,
         "chain_manifest": {
             "path": _portable_path(chain_path, repo_root),
             "sha256": chain.manifest_sha256,
@@ -336,6 +340,11 @@ def replay(
     report["holdout_evidence"] = _evidence_payload(holdout_evidence)
     report["holdout_frontier"] = holdout_frontier.to_json() if holdout_frontier else None
     report["holdout_outcome"] = holdout_outcome
+
+    # Last, so the recorded execution set covers every module this replay imported,
+    # including the ones compilation imports lazily.  The authoritative launcher
+    # independently refuses a report whose digest differs from its final attestation.
+    report["authority"]["execution_authority"] = manifests.execution_authority()
 
     _write_report(Path(output_path), report)
     return report

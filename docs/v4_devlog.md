@@ -536,3 +536,118 @@ refrozen in that order. The reports differ from the previous checkpoint only in 
 `source.summary`; every survivor set, decision fingerprint, outcome, classification, and
 `selected`/`selection_changed` null is byte-identical. Independent review and adjudication
 of this repair are pending.
+
+## l — 2026-08-25 — execution authority: authenticating what CPython actually resolves
+
+Round-four review rejected `33d4ec3` for a defect that both earlier bytecode repairs had
+walked past. `manifests._module_path` resolved `X.py` before `X/__init__.py`; CPython's
+`FileFinder` resolves a directory package first, and an extension module before either.
+An untracked `semabi/compiler/v4/transfer/__init__.py` therefore executed while the
+closure authenticated `semabi/compiler/v4/transfer.py`. Reproduced independently again
+before touching anything, cache-cold, with no bytecode cache involved:
+
+    executed module file        : <root>/semabi/compiler/v4/transfer/__init__.py
+    shadow marker present       : UNAUTHENTICATED_PACKAGE_SHADOW_EXECUTED
+    closure names transfer.py   : True
+    closure names the shadow    : False
+    vet_clinic / harbour / blend_book -> STRICT VALIDATION PASSED (undetected)
+
+The obvious repair — swap the two branches — was refused. It fixes the witness and keeps
+the defect, which is that **an integrity layer had been predicting Python's import
+resolution**. Python resolution is `sys.modules`, `sys.meta_path`, `PathFinder`, package
+`__path__`, `sys.path`, `sys.path_hooks`, `sys.path_importer_cache`, `ModuleSpec`,
+loaders, namespace packages and dynamic imports. A second implementation of it will keep
+disagreeing with the first one in ways nobody enumerated.
+
+### The inversion
+
+`scripts/v4_authority.py` is a stdlib-only launcher outside ordinary SemABI import
+execution. It controls the environment, hands resolution to CPython inside it, and
+authenticates what CPython selected:
+
+1. It refuses to start except under `python -I -S -B`. `-I` drops the script directory,
+   user site and `PYTHON*` variables; `-S` stops `site` running at all, so **no `.pth`
+   file is read and no `.pth` import line executes**, which is precisely the mechanism an
+   editable installation uses. `-B` is hygiene, never the bytecode boundary.
+2. The candidate root comes from the launcher's own resolved path. Authenticated content
+   comes from `git ls-files --stage` plus `git cat-file --batch`, so the comparison is
+   against the **stored bytes** of each tracked `*.py` blob. The Git object id is a lookup
+   key, never a security hash; SHA-1 collision resistance is load-bearing nowhere.
+3. No project directory is placed on `sys.path` at all. Project modules are reachable only
+   through a guard at `sys.meta_path[0]`, which asserts that position on every project
+   import.
+4. The guard asks CPython's own `importlib.machinery.FileFinder`, built with CPython's own
+   loader table — the exact triple `_get_supported_file_loaders()` returns, pinned by a
+   test — and cross-checks the answer against `PathFinder` over the same path. Ordering is
+   CPython's. Disagreement, which is what an injected path hook or a stale importer cache
+   produces, is a refusal.
+5. The selected `ModuleSpec` is then policed: only `SourceFileLoader`, no namespace
+   portion, no extension module, no symlinked origin, inside the candidate root, tracked,
+   and byte-identical to the stored blob.
+6. The origin is opened **once**, `O_NOFOLLOW`, read, compared, compiled, executed. The
+   path is never reopened and the verified loader has no disk read at all, so project
+   `__pycache__`, stale, hash-based, timestamp and sourceless bytecode all become
+   irrelevant rather than checked.
+7. An exit audit classifies every `sys.modules` entry — authenticated project, builtin,
+   stdlib, declared third-party — and fails on anything else, including any origin inside
+   the checkout that was not authenticated. That is the direction the campaign kept
+   losing: not "everything predicted was hashed" but "everything that ran was
+   authenticated".
+
+### What the static closure is now for
+
+The declared static closure is a *declaration*, not a resolver and not a completeness
+proof. It is what the manifests hash, so the enforced invariant is `executed ⊆ declared`;
+the converse is recorded, not rejected, because scanning legitimately over-approximates.
+On the replay entrypoint four declared files are never imported. `_module_path` keeps its
+discovery role and now refuses the names it cannot describe — a package beside a
+same-named module, or any extension-module file — instead of silently picking one.
+
+### The report says which regime produced it
+
+Every report records `authority.execution_authority`: `V4_IMPORT_AUTHORITY_ACTIVE` with
+the execution digest, or `NOT_ESTABLISHED_NO_V4_IMPORT_AUTHORITY` for any ordinary run.
+The launcher refuses to finish if the report does not claim the authority or if its digest
+differs from the final attestation, which is what a module imported after the report was
+written would produce. A retained report is therefore not byte-reproducible except under
+the launcher.
+
+That cross-check earned its place immediately. The first cut took the authority state in
+`_authority()`, which runs before any candidate is compiled; compilation then imports
+`grounder`, `mentions`, `controls` and `frozen_evidence` lazily, so the report under-reported
+the execution set by four modules. The launcher refused the run with
+`PROJECT_EXECUTION_SET_CHANGED_AFTER_THE_REPORT` and named both digests. The field is now
+filled in immediately before the report is written, and a runner test pins that `_authority`
+leaves it unset.
+
+Attestations are split deliberately. `docs/data/v4/attestations/*.execution.json` is
+byte-reproducible and carries no absolute path and no commit; the environment record with
+the commit, `sys.executable`, `sys.path`, `sys.meta_path` and the inert `.pth` inventory is
+printed and retained in the verification artifact. Putting the commit inside the retained
+attestation would make it differ between the run that generates it and any later
+verification of the commit that contains it.
+
+### Two non-blocking findings from round four, closed
+
+`_PYC_OPTIMIZATIONS = ('', '1', '2')` could not be exhaustive: `-OOO` writes `opt-3` and
+`cache_from_source` accepts any alphanumeric token. Cache variants are now enumerated from
+the cache directory, and a token whose bytecode `compile` cannot reproduce (`optimize`
+accepts −1..2) is refused rather than skipped. The `source_summary` exact-key guard now has
+the missing test: every prior case removed a key, which a subset check also rejects, so two
+cases that *add* one were added and verified to fail when the guard is relaxed.
+
+The cache check itself is reframed rather than removed. It is secondary — it covers
+ordinary non-authoritative execution — and its two inherent limits are stated: it cannot
+defend against a forged cache for the module performing it, and it inspects caches on disk
+at validation time rather than the bytecode already loaded. Neither applies to the
+authoritative path, which never opens project bytecode.
+
+### Regeneration and scope
+
+`manifests.py` changed, so all three source manifests, the three chain manifests binding
+their SHA-256, and the three reports were refrozen in that order, every one of them under
+the launcher. The scientific payload is unchanged and was checked field by field against
+the previous checkpoint: 2/3/2 survivors, every outcome `AMBIGUOUS_SURVIVOR_SET`, every
+HOLDOUT classification `INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE`, `selected` null, every
+SOURCE incumbent carrying an explicit TRANSFER loss, transported RTC zero. No scientific
+mechanism was touched and no next experiment was started.
