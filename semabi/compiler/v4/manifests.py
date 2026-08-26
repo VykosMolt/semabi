@@ -33,7 +33,7 @@ from semabi.compiler.v4.pinned import PinnedReading
 SOURCE_MANIFEST_SCHEMA = "semabi.v4.source-candidates.v4"
 CHAIN_MANIFEST_SCHEMA = "semabi.v4.chain.v3"
 CUSTODY_TIMING = "RETROACTIVE_SNAPSHOT_CHRONOLOGY_NOT_ESTABLISHED"
-MAX_CANDIDATES = 6
+MAX_CANDIDATES = 8
 MIN_SUPPORT = 2
 
 # Only ``alternatives_generated`` is bound to the frozen candidates.  The remaining
@@ -938,20 +938,35 @@ def _validate_candidate_summary(
 ) -> None:
     """Bind every generated summary row to the exact frozen candidate it describes.
 
-    Source generation emits one row for every non-incumbent candidate.  The row is
-    provenance, not a free-form note: its family, key, status, and discrimination
-    must agree with the candidate's pinned family reading.  This catches a summary
-    copied from a different search, as well as the former variant/promotion bug that
-    silently inherited the incumbent's status and discrimination.
+    Source generation emits a row for every family a non-incumbent candidate changes.
+    The row is provenance, not a free-form note: its family, key, status, and
+    discrimination must agree with the candidate's pinned family reading.  This catches a
+    summary copied from a different search, as well as the former variant/promotion bug
+    that silently inherited the incumbent's status and discrimination.
+
+    A candidate may change more than one family -- the joint reading does -- so the
+    cardinality is one row per changed family rather than one row per candidate.  The
+    binding is correspondingly stricter, not looser: the families a candidate's rows
+    describe must be *exactly* the families in which it differs from the incumbent, so a
+    joint candidate cannot leave one of its changes undocumented.
     """
 
     by_name = {candidate.name: candidate for candidate in candidates}
-    if len(rows) != len(candidates) - 1:
-        raise ManifestError(
-            "source_summary.alternatives_generated must contain exactly one row "
-            "for each non-incumbent candidate"
-        )
-    seen: set[str] = set()
+    if incumbent not in by_name:
+        raise ManifestError("source summary cannot be validated without the incumbent")
+    base = by_name[incumbent].reading
+
+    def changed_families(candidate) -> set[str]:
+        reading = candidate.reading
+        promoted = set(reading.promoted_families) - set(base.promoted_families)
+        out = set(promoted)
+        for family, family_reading in reading.families.items():
+            original = base.families.get(family)
+            if original is None or original.key_slot != family_reading.key_slot:
+                out.add(family)
+        return out
+
+    seen: set[tuple[str, str]] = set()
     for row in rows:
         if not isinstance(row, Mapping):
             raise ManifestError("source summary candidate rows must be objects")
@@ -977,13 +992,13 @@ def _validate_candidate_summary(
             raise ManifestError(
                 f"source summary names a candidate absent from the manifest: {candidate_name}"
             )
-        if candidate_name in seen:
-            raise ManifestError(f"duplicate source summary candidate row: {candidate_name}")
-        seen.add(candidate_name)
-
         family = row["family"]
         if not isinstance(family, str) or not family:
             raise ManifestError("source summary family must be a non-empty string")
+        if (candidate_name, family) in seen:
+            raise ManifestError(
+                f"duplicate source summary row: {candidate_name} / {family}")
+        seen.add((candidate_name, family))
         reading = by_name[candidate_name].reading
         family_reading = reading.families.get(family)
         if family_reading is None:
@@ -1012,7 +1027,9 @@ def _validate_candidate_summary(
             raise ManifestError(
                 f"source summary discrimination does not match candidate {candidate_name}: {family}"
             )
-    expected = set(by_name) - {incumbent}
+    expected = {(name, family)
+                for name, candidate in by_name.items() if name != incumbent
+                for family in changed_families(candidate)}
     if seen != expected:
         missing = sorted(expected - seen)
         extra = sorted(seen - expected)
@@ -1233,7 +1250,8 @@ def _validate_source_payload(
     generation = payload["generation"]
     _exact_keys(generation, {"max_candidates", "implementation_files"}, "generation")
     if generation["max_candidates"] != MAX_CANDIDATES:
-        raise ManifestError("source generation max_candidates must be 6")
+        raise ManifestError(
+            f"source generation max_candidates must be {MAX_CANDIDATES}")
     implementation = generation["implementation_files"]
     if not isinstance(implementation, Mapping) or not implementation:
         raise ManifestError("source generation implementation hashes are required")

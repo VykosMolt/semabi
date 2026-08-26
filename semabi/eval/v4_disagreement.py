@@ -148,6 +148,28 @@ def classify_pair(left: transfer.TransferEvidence, right: transfer.TransferEvide
     }
 
 
+def behavioural_classes(evidence: dict[str, transfer.TransferEvidence]) -> list[list[str]]:
+    """Group readings whose per-step verdict map is identical.
+
+    This is indistinguishability *by the transfer objective, on the steps this history
+    actually took*.  It is deliberately not called equivalence.  Two readings can agree on
+    every verdict while positing different object deltas behind them -- they induce
+    different models, with different complexity -- so identical verdicts are necessary for
+    behavioural equivalence and not sufficient for it.  Separating readings inside one of
+    these classes needs predictions at delta granularity, which the verdict vocabulary does
+    not carry, or an interaction this history never performed.
+
+    What the classes do establish is the operative fact: the comparison mechanism cannot
+    tell these readings apart on this evidence, so any preference between them came from
+    identity claims or from representational cost, not from behaviour.
+    """
+    groups: dict[tuple, list[str]] = {}
+    for name in sorted(evidence):
+        key = tuple(sorted(evidence[name].verdicts.items()))
+        groups.setdefault(key, []).append(name)
+    return sorted(groups.values(), key=lambda names: (-len(names), names[0]))
+
+
 def atlas(report_path: Path, *, survivors_only: bool = True) -> dict[str, Any]:
     """Build the disagreement atlas for one retained frontier report."""
     report = json.loads(Path(report_path).read_text())
@@ -159,12 +181,24 @@ def atlas(report_path: Path, *, survivors_only: bool = True) -> dict[str, Any]:
     for i, a in enumerate(names):
         for b in names[i + 1:]:
             pairs.append(classify_pair(evidence[a], evidence[b], readings[a], readings[b]))
+    classes = behavioural_classes(evidence)
+    survivor_classes = [[n for n in group if n in set(report["survivor_names"])]
+                        for group in classes]
+    survivor_classes = [group for group in survivor_classes if group]
     return {
         "report": str(report_path),
         "outcome": report["outcome"],
         "survivors": report["survivor_names"],
         "incumbent": report["source"]["source_choice"]["name"],
         "source_choice_rejected": report["source_choice_rejected"],
+        "behavioural_classes": {
+            "basis": "IDENTICAL_PER_STEP_VERDICT_MAP_ON_THIS_HISTORY_ONLY",
+            "not_a_claim_of": "MODEL_EQUIVALENCE_OR_EQUIVALENCE_UNDER_UNTAKEN_ACTIONS",
+            "classes": classes,
+            "distinct_classes": len(classes),
+            "survivor_classes": survivor_classes,
+            "distinct_survivor_classes": len(survivor_classes),
+        },
         "pairs": pairs,
         "coexistence_reasons": dict(Counter(p["coexistence_reason"] for p in pairs)),
     }
@@ -184,6 +218,12 @@ def main() -> None:
         args.output.write_text(text)
     for one in out:
         print(f"{Path(one['report']).stem}: {one['outcome']} survivors={one['survivors']}")
+        classes = one["behavioural_classes"]
+        print(f"   behavioural classes ({classes['distinct_classes']} distinct, "
+              f"{classes['distinct_survivor_classes']} among survivors):")
+        for group in classes["classes"]:
+            mark = "*" if len(group) > 1 else " "
+            print(f"     {mark} {group}")
         for pair in one["pairs"]:
             print(f"   {pair['left'][:30]!r:32s} vs {pair['right'][:30]!r:32s} "
                   f"{pair['verdict'][:12]:12s} {pair['coexistence_reason']}")

@@ -21,13 +21,46 @@ from semabi.compiler.v4 import search as v4_search
 from semabi.compiler.v4.identity import family_key, family_readings
 
 
-MAX_CANDIDATES = 6
+MAX_CANDIDATES = 8
 
 
 def _refuted(refuted: Mapping[str, set[str | None]], family: str,
              key_slot: str | None) -> bool:
     """Whether an exact SOURCE refutation covers one generated family/key claim."""
     return key_slot in refuted.get(family, set())
+
+
+def _better_discriminating(result) -> dict[str, object]:
+    """Per family, the alternative whose SOURCE discrimination beats the chosen key's.
+
+    The incumbent is what the behavioural objective preferred.  Discrimination is a
+    separate identity signal computed from the same source history: how often the named
+    value actually tells co-present instances apart.  The two do not have to agree, and
+    where they disagree the more discriminating key is a real rival, not noise.
+
+    ``None`` means the reading carries no discrimination evidence at all, and is never
+    treated as an improvement in either direction.
+    """
+    out: dict[str, object] = {}
+    for family, templates in sorted(result.families.items()):
+        chosen = result.chosen[templates[0]]
+        incumbent_discrimination = chosen.evidence.discrimination
+        if incumbent_discrimination is None:
+            continue
+        best = None
+        for alternative in result.readings.get(templates[0], []):
+            if alternative.key_slot == chosen.key_slot or alternative.status == "REFUTED":
+                continue
+            if alternative.status not in ("SUPPORTED", "NO_IDENTITY"):
+                continue
+            value = alternative.evidence.discrimination
+            if value is None or value <= incumbent_discrimination:
+                continue
+            if best is None or value > best.evidence.discrimination:
+                best = alternative
+        if best is not None:
+            out[family] = best
+    return out
 
 
 def _alternative_note(name: str, family: str, reading, *, promotion: bool = False):
@@ -101,6 +134,33 @@ def _source_candidates(
         notes.append(_alternative_note(name, leaf_family, best, promotion=True))
         if len(candidates) >= max_candidates:
             return result, candidates[:max_candidates], notes, H, G
+
+    # One reading the single-edit neighbourhood cannot express: take *every* family whose
+    # discrimination the source says is improvable, at once.  Generating alternatives one
+    # family at a time means two families that are each better keyed differently produce two
+    # rivals that disagree everywhere and a comparison history cannot order, while the
+    # reading that fixes both is never proposed.  This is computed from the source search
+    # alone; transfer and holdout are not passed to this module and cannot reach it.
+    improvable = _better_discriminating(result)
+    if len(improvable) > 1:
+        joint = incumbent
+        for family, alternative in sorted(improvable.items()):
+            family_reading = v4_pinned.FamilyReading(
+                family, alternative.key_slot, alternative.status,
+                alternative.evidence.discrimination,
+            )
+            joint = joint.variant(family, family_reading, "")
+        name = f"joint discrimination x{len(improvable)}"
+        joint.name = name
+        already = {c.fingerprint() for c in candidates}
+        refuted_here = any(_refuted(exact_refuted, family, alternative.key_slot)
+                           for family, alternative in improvable.items())
+        if joint.fingerprint() not in already and not refuted_here:
+            candidates.append(joint)
+            for family, alternative in sorted(improvable.items()):
+                notes.append(_alternative_note(name, family, alternative))
+            if len(candidates) >= max_candidates:
+                return result, candidates[:max_candidates], notes, H, G
 
     for family, templates in sorted(result.families.items()):
         chosen = result.chosen[templates[0]]

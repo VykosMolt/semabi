@@ -182,6 +182,63 @@
    }
   },
   {
+   "fingerprint": "8f3f8276104a95fa",
+   "full_reading_sha256": "cbd4e48d3d416a67a2e9d7a30d688873cbf8c63a66da94379a73e60ae4e3aa97",
+   "name": "joint discrimination x3",
+   "reading": {
+    "families": {
+     "cell[_]": {
+      "discrimination": 1.0,
+      "family": "cell[_]",
+      "key_slot": "cell#0",
+      "status": "SUPPORTED"
+     },
+     "group[_](heading[_],list[_](listitem[_]))": {
+      "discrimination": 1.0,
+      "family": "group[_](heading[_],list[_](listitem[_]))",
+      "key_slot": "heading#1",
+      "status": "SUPPORTED"
+     },
+     "row[_](cell[_])": {
+      "discrimination": 1.0,
+      "family": "row[_](cell[_])",
+      "key_slot": "cell#0",
+      "status": "SUPPORTED"
+     },
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": {
+      "discrimination": 0.8529411764705882,
+      "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+      "key_slot": "cell#0|cell#0@4",
+      "status": "SUPPORTED"
+     },
+     "text[_](combobox[_])": {
+      "discrimination": 1.0,
+      "family": "text[_](combobox[_])",
+      "key_slot": "text#0",
+      "status": "SUPPORTED"
+     },
+     "text[_](textbox[_])": {
+      "discrimination": 0.0,
+      "family": "text[_](textbox[_])",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     }
+    },
+    "name": "joint discrimination x3",
+    "promoted_families": [],
+    "provenance": {
+     "role": "SOURCE",
+     "source_run": "runs/v4/vet_clinic_dev"
+    },
+    "refuted": {
+     "text[_](textbox[_])": [
+      "text#0"
+     ]
+    },
+    "version": 1
+   }
+  },
+  {
    "fingerprint": "684c07c3caa4a14e",
    "full_reading_sha256": "588a535d6ed36bd33eb9b0e678016df8728e304486403b61a8bfeec5933ab8d0",
    "name": "cell[_]=cell#0",
@@ -351,6 +408,63 @@
     },
     "version": 1
    }
+  },
+  {
+   "fingerprint": "358bb333b5f8f0c5",
+   "full_reading_sha256": "554788b8b6b085a774388106431cb337a5ef11d7d6d157a0eeeb8f1a31da97d4",
+   "name": "row[_](cell[_],cell[_](c=cell#0@4",
+   "reading": {
+    "families": {
+     "cell[_]": {
+      "discrimination": 0.0,
+      "family": "cell[_]",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "group[_](heading[_],list[_](listitem[_]))": {
+      "discrimination": 0.0,
+      "family": "group[_](heading[_],list[_](listitem[_]))",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "row[_](cell[_])": {
+      "discrimination": 1.0,
+      "family": "row[_](cell[_])",
+      "key_slot": "cell#0",
+      "status": "SUPPORTED"
+     },
+     "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": {
+      "discrimination": 0.7352941176470589,
+      "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+      "key_slot": "cell#0@4",
+      "status": "SUPPORTED"
+     },
+     "text[_](combobox[_])": {
+      "discrimination": 0.0,
+      "family": "text[_](combobox[_])",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "text[_](textbox[_])": {
+      "discrimination": 0.0,
+      "family": "text[_](textbox[_])",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     }
+    },
+    "name": "row[_](cell[_],cell[_](c=cell#0@4",
+    "promoted_families": [],
+    "provenance": {
+     "role": "SOURCE",
+     "source_run": "runs/v4/vet_clinic_dev"
+    },
+    "refuted": {
+     "text[_](textbox[_])": [
+      "text#0"
+     ]
+    },
+    "version": 1
+   }
   }
  ],
  "generation": {
@@ -383,15 +497,15 @@
    "semabi/compiler/v4/custody.py": "75ec3a978d92f8d1e924e07ba76cb41294737c5c596210cd82fbecc3b2b55178",
    "semabi/compiler/v4/frozen_evidence.py": "ff80dc759a450cc64c90c913df63fb7d9eb70bb652ebc733dd40637a74b73738",
    "semabi/compiler/v4/identity.py": "4e718dd8b3d2ade2126c31c5e88a3d5d7b91662a08e1a95077f342c030039c05",
-   "semabi/compiler/v4/manifests.py": "007093a4fdb73663254f8627202a9c8ba151a9fbb6bc264dd9e6f00712b72fa9",
+   "semabi/compiler/v4/manifests.py": "f38b79557ae4553d9f03c64fb9b160c027a3763f2577869372d660dbfd417afb",
    "semabi/compiler/v4/objective.py": "4dd902f9bb288e967ae1333f581631e5c6edbd507a841bf45efe569b758fc065",
    "semabi/compiler/v4/pinned.py": "711305a95c1da238c4b9e4f213fb5f2421bf1757244b10bcbab5b14a83f8ad4d",
    "semabi/compiler/v4/promote.py": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65",
    "semabi/compiler/v4/search.py": "c1ad0bc10a94d146120192d77ac01da95158ed7ea738af9e84e889397305c839",
-   "semabi/compiler/v4/source_candidates.py": "2bbd72bfd0c89f4d1faf06421a28f718b77a503c25024fe3c15e940ecdeab8e8",
+   "semabi/compiler/v4/source_candidates.py": "c7a5626fbf2b7b92ad1c0c4b9ed6aadc791771f314a291d21f38c5121d90f41f",
    "semabi/relmodel.py": "22ffbfe51a95a2b77307b9a2e0f3ba297dd58b2efd045ce7ab0263602abd74cf"
   },
-  "max_candidates": 6
+  "max_candidates": 8
  },
  "incumbent": "source_choice",
  "role": "SOURCE",
@@ -446,6 +560,27 @@
    },
    {
     "alternative": "cell#0",
+    "candidate": "joint discrimination x3",
+    "discrimination": 1.0,
+    "family": "cell[_]",
+    "status": "SUPPORTED"
+   },
+   {
+    "alternative": "heading#1",
+    "candidate": "joint discrimination x3",
+    "discrimination": 1.0,
+    "family": "group[_](heading[_],list[_](listitem[_]))",
+    "status": "SUPPORTED"
+   },
+   {
+    "alternative": "text#0",
+    "candidate": "joint discrimination x3",
+    "discrimination": 1.0,
+    "family": "text[_](combobox[_])",
+    "status": "SUPPORTED"
+   },
+   {
+    "alternative": "cell#0",
     "candidate": "cell[_]=cell#0",
     "discrimination": 1.0,
     "family": "cell[_]",
@@ -464,6 +599,13 @@
     "discrimination": 0.0,
     "family": "row[_](cell[_])",
     "status": "NO_IDENTITY"
+   },
+   {
+    "alternative": "cell#0@4",
+    "candidate": "row[_](cell[_],cell[_](c=cell#0@4",
+    "discrimination": 0.7352941176470589,
+    "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+    "status": "SUPPORTED"
    }
   ],
   "non_authoritative_source_diagnostics": {

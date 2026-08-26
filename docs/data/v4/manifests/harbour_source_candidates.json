@@ -91,6 +91,47 @@
    }
   },
   {
+   "fingerprint": "d4aba37b5ad1da47",
+   "full_reading_sha256": "bf551ecd39695d6a52c43c259f5cfd1d66c53044ca3a417e6b4ab71f5ca7f613",
+   "name": "joint discrimination x2",
+   "reading": {
+    "families": {
+     "button[_]": {
+      "discrimination": 1.0,
+      "family": "button[_]",
+      "key_slot": "button#0",
+      "status": "SUPPORTED"
+     },
+     "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))": {
+      "discrimination": null,
+      "family": "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))",
+      "key_slot": "heading#0",
+      "status": "UNSUPPORTED"
+     },
+     "row[_](cell[_](button[_]),cell[_])": {
+      "discrimination": 1.0,
+      "family": "row[_](cell[_](button[_]),cell[_])",
+      "key_slot": "cell#0",
+      "status": "SUPPORTED"
+     },
+     "row[_](cell[_],cell[_](button[_]))": {
+      "discrimination": 1.0,
+      "family": "row[_](cell[_],cell[_](button[_]))",
+      "key_slot": "cell#0",
+      "status": "SUPPORTED"
+     }
+    },
+    "name": "joint discrimination x2",
+    "promoted_families": [],
+    "provenance": {
+     "role": "SOURCE",
+     "source_run": "runs/v4/harbour_dev"
+    },
+    "refuted": {},
+    "version": 1
+   }
+  },
+  {
    "fingerprint": "e163afa037a02cc7",
    "full_reading_sha256": "d22c9f9d5a40e9b128545ee8c2a9883910bb187c5ee6e1e6218f674ce5844536",
    "name": "button[_]=None",
@@ -285,15 +326,15 @@
    "semabi/compiler/v4/custody.py": "75ec3a978d92f8d1e924e07ba76cb41294737c5c596210cd82fbecc3b2b55178",
    "semabi/compiler/v4/frozen_evidence.py": "ff80dc759a450cc64c90c913df63fb7d9eb70bb652ebc733dd40637a74b73738",
    "semabi/compiler/v4/identity.py": "4e718dd8b3d2ade2126c31c5e88a3d5d7b91662a08e1a95077f342c030039c05",
-   "semabi/compiler/v4/manifests.py": "007093a4fdb73663254f8627202a9c8ba151a9fbb6bc264dd9e6f00712b72fa9",
+   "semabi/compiler/v4/manifests.py": "f38b79557ae4553d9f03c64fb9b160c027a3763f2577869372d660dbfd417afb",
    "semabi/compiler/v4/objective.py": "4dd902f9bb288e967ae1333f581631e5c6edbd507a841bf45efe569b758fc065",
    "semabi/compiler/v4/pinned.py": "711305a95c1da238c4b9e4f213fb5f2421bf1757244b10bcbab5b14a83f8ad4d",
    "semabi/compiler/v4/promote.py": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65",
    "semabi/compiler/v4/search.py": "c1ad0bc10a94d146120192d77ac01da95158ed7ea738af9e84e889397305c839",
-   "semabi/compiler/v4/source_candidates.py": "2bbd72bfd0c89f4d1faf06421a28f718b77a503c25024fe3c15e940ecdeab8e8",
+   "semabi/compiler/v4/source_candidates.py": "c7a5626fbf2b7b92ad1c0c4b9ed6aadc791771f314a291d21f38c5121d90f41f",
    "semabi/relmodel.py": "22ffbfe51a95a2b77307b9a2e0f3ba297dd58b2efd045ce7ab0263602abd74cf"
   },
-  "max_candidates": 6
+  "max_candidates": 8
  },
  "incumbent": "source_choice",
  "role": "SOURCE",
@@ -331,6 +372,20 @@
     "discrimination": 0.615,
     "family": "cell[_]",
     "promotion": "cell#0",
+    "status": "SUPPORTED"
+   },
+   {
+    "alternative": "cell#0",
+    "candidate": "joint discrimination x2",
+    "discrimination": 1.0,
+    "family": "row[_](cell[_](button[_]),cell[_])",
+    "status": "SUPPORTED"
+   },
+   {
+    "alternative": "cell#0",
+    "candidate": "joint discrimination x2",
+    "discrimination": 1.0,
+    "family": "row[_](cell[_],cell[_](button[_]))",
     "status": "SUPPORTED"
    },
    {
