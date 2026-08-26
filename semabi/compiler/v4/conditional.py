@@ -34,8 +34,10 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
 
-from semabi.compiler.v4.consequence import (ASSERTED, REFUTED, SUPPORTED, VALUE,
+from semabi.compiler.v4.consequence import (ASSERTED, EXISTENCE, REFUTED, SUPPORTED, VALUE,
                                             ScopedPrediction, fit, score)
+
+PAGE_CHECKS = (VALUE, EXISTENCE)
 
 NOTHING_TO_LEARN = "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN"
 NOT_EXPRESSIBLE = "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX"
@@ -75,11 +77,13 @@ def refine(run_dir: Path, reading, *, split: float = 0.6, min_support: int = 2,
 
     by_op_prefix: dict[str, list[ScopedPrediction]] = defaultdict(list)
     by_op_suffix: dict[str, list[ScopedPrediction]] = defaultdict(list)
+    # Both page checks, so that a reading whose rules only say what goes away is analysed
+    # rather than silently reported as having nothing to explain.
     for p in prefix.predictions:
-        if p.kind == VALUE and p.verdict in (SUPPORTED, REFUTED):
+        if p.kind in PAGE_CHECKS and p.verdict in (SUPPORTED, REFUTED):
             by_op_prefix[p.operator].append(p)
     for p in suffix.predictions:
-        if p.kind == VALUE and p.verdict in (SUPPORTED, REFUTED):
+        if p.kind in PAGE_CHECKS and p.verdict in (SUPPORTED, REFUTED):
             by_op_suffix[p.operator].append(p)
 
     rows: list[dict[str, Any]] = []

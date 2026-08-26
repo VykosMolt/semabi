@@ -614,7 +614,10 @@ def _existence_prediction(A, bridge, pre, post, step, control, op, binding, eff,
     continued it still says that name.
 
     Nothing is masked: the prediction is about the object being gone, not about a field
-    taking a value, so its rendered identity is evidence rather than the answer.
+    taking a value, so its rendered identity is evidence rather than the answer.  The
+    correspondence rule chosen for the value check does not apply here either -- survival is
+    always asked with the content layers, because that restriction is part of what the
+    question means rather than a setting.
     """
     subject = binding.get(eff.obj)
     if subject is None or subject.node is None or subject.node < 0:
