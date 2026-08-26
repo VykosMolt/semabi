@@ -880,3 +880,40 @@ precondition to the *reading's own* enclosing unit instance rather than a hard-c
 role -- each reading is then entitled to say where its own rule applies, while the outcome
 stays raw rendered text. That is the next mechanism, and it is what would let blend_book's
 class be tested rather than assumed.
+
+
+### The obvious generalisation of the scope does not work, and why
+
+Section `n` named the fix: scope a rule's precondition to the *reading's own* enclosing
+unit instance instead of a hard-coded `row`, so that each reading says where its own rule
+applies and the instrument stops being table-shaped. It was implemented and measured, and
+it is not adopted. Two results, both worth keeping.
+
+**It confirms the harbour finding from a different direction.** Under reading-scoping,
+`promote cell[_]=cell#0` goes to *zero* content predictions on harbour -- not because the
+instrument cannot reach it, but because under that reading the nearest object enclosing a
+Close button **is the button**, whose subtree contains no status at all. That reading has
+no object relating a control to the thing the control changes, which is exactly what the
+operator dump already showed: `click(button:Close@76)` with no owner parameter, against
+`click(button:Close@54dcf8@T6[?o0])`. Measured as a scope, it is the same defect.
+
+**It breaks on blend_book in a way that would have shipped a false claim.** Reading-scoping
+does reach blend_book -- and returns 607 refutations out of 607 tested predictions, zero
+supported, for two readings. A perfect failure rate is a broken instrument, not a perfect
+model failure. The predicted literals there are bare numerals -- `'5'`, `'3'`, `'1'` -- and
+333 of the refutations have the literal rendered zero times before *and* zero times after:
+`Record draw` sets derived counter slots whose values are not rendered node text at all. The
+CONTENT projection assumes an effect value is a string the page shows. Where it is not, the
+check is invalid rather than failing.
+
+Gating on whether a slot's values are ever rendered does not fix it either, because some of
+those numerals do appear somewhere on the page, so the slot passes the gate while every
+individual prediction remains meaningless: counting page-wide occurrences of `'5'` says
+nothing about whether a counter became 5.
+
+So the instrument stays row-scoped and blend_book stays honestly out of reach, rather than
+being brought into reach by a check that would report 607 refutations it cannot justify.
+What the generalisation actually needs is an outcome check scoped to the same region as the
+precondition -- "did *this object* come to render the value" rather than "did the page gain
+an occurrence" -- which requires relocating a scope across a transition. That is the real
+next mechanism, and it is a harder problem than swapping the ancestor role.
