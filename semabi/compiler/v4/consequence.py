@@ -271,6 +271,27 @@ def _single_click_operators(operators) -> dict[str, list]:
     return out
 
 
+def clicked_control(A, obs, step) -> str:
+    """The control identity a rule's locator names, for the control this step clicked.
+
+    A ``Locator.slot`` is the control's *family* under the reading, which is the rendered label
+    where the abstractor keys controls by label and a latent family key where it does not.
+    Comparing a rule's slot against the clicked node's rendered role and name therefore works
+    on an application whose buttons are labelled distinctly and silently matches nothing on one
+    whose buttons the abstractor groups: on the cellar application every single-click rule any
+    reading fits is for the family ``button#button`` while every held-out click is
+    ``button:Lots`` or ``button:Bottle``, so the instrument reported nothing at all and looked
+    like a fact about cellar.  Asking the abstractor which family the clicked node belongs to
+    is what the locator meant in the first place.
+    """
+    target = step.action.target
+    if target is not None:
+        family = A.control_family(obs).get(target)
+        if family:
+            return control_of(family)
+    return action_control(step)
+
+
 def _owner_object(A, po, state, node: int):
     idx = po.node_instance.get(node)
     if idx is None:
@@ -497,12 +518,12 @@ def score(model: Fit, *, mutate: Callable[[str], str] | None = None,
     for step in evaluated:
         if step.action.kind != "click" or step.action.target is None:
             continue
-        control = action_control(step)
-        rules = by_control.get(control)
+        pre, post = full.obs(step.before), full.obs(step.after)
+        control = clicked_control(A, pre, step)
+        rules = by_control.get(control) or by_control.get(action_control(step))
         if not rules:
             result.skipped["no rule fitted for this control"] += 1
             continue
-        pre, post = full.obs(step.before), full.obs(step.after)
         state = states.get(id(pre))
         if state is None:
             state = states[id(pre)] = A.abstract(pre)

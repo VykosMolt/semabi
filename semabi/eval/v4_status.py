@@ -187,7 +187,15 @@ def elimination(rows: list[dict], conditional: list[dict], readings: list[str]) 
     # same way by the same arithmetic, and removing them would empty the version space over a
     # failure none of them is responsible for.  Elimination is therefore relative to the
     # retained set -- a reading goes only when some other reading survives the same test.
-    survivor = [r for r in readings if r not in contradicted
+    reached = {r for r in readings
+               if any(row["value_coverage"]["tested"]
+                      + row.get("existence_coverage", {}).get("tested", 0)
+                      for row in rows if row["name"] == r and row["mutation"] == "none"
+                      and row["correspondence_rule"] == "masked")}
+    # The surviving reading has to have said something.  Without that, a reading that makes no
+    # testable claim would count as surviving the test and license removing one that made
+    # claims and got some of them wrong -- which is the vacuity pathology in a new place.
+    survivor = [r for r in readings if r not in contradicted and r in reached
                 and verdicts.get(r) not in (None, "NOT_ANALYSED")]
     removed = sorted(contradicted) if survivor else []
     return {"criterion": ("refuted on every history that reached it; no prefix-chosen literal "
