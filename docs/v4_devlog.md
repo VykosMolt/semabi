@@ -795,3 +795,88 @@ consistency checks — contradiction, churn, visibility, spurious — fire for n
 that needs either a criterion that adjudicates competing deltas at a step both readings
 explain, or an interaction whose outcome one of them cannot accommodate. That is the next
 piece of mechanism, and it is now a well-posed question rather than a direction.
+
+
+## n — 2026-08-26 — the instrument was testing the two survivors on different things
+
+Section `m` left harbour's two survivors separated by a prospective test, and reported that
+`joint discrimination x2` faced CONTENT while `promote cell[_]=cell#0` faced only POSITION.
+That asymmetry was described there as a consequence of the two ontologies. It was not. It
+was a defect in the instrument, and finding it started from the one loose end section `m`
+left open: blend_book returned a completely empty result.
+
+`required_value` read applicability off `op.pre`. That set is **discriminative**:
+`learn_pre` picks literals by greedy cover to exclude negatives, and it *manufactures*
+`attr_ne` candidates for exactly that purpose, so a positive equality survives into `pre`
+only when it happens to discriminate. Two measurements:
+
+    attr_ne : attr in pre, blend_book source_choice     229 : 2
+    projectable set-effects, harbour promote cell        0 of 13
+
+Zero. The reading was structurally incapable of being content-tested, and `learn_pre` line
+1148 says why in as many words -- an equality on a *key slot* is skipped, "identity
+constants never generalise" -- and that reading's effects are all on `id`. So CONTENT was
+dead for it by construction, and the two survivors were being compared on disjoint
+instruments.
+
+The repair is `op.common`: the **generative** invariant the same pass already computes one
+line earlier and stores before the `attr_ne` manufacturing mutates its local copy. Every
+literal true in all the positives the rule was fitted on -- computed from prefix positives
+only, so nothing leaks. Where both sources define a value they never disagree: across the
+corpus, `attr` equalities appearing in `pre` are always also in `common`, 0 exceptions.
+Coverage goes to 100% on harbour and 98-99% on blend_book, for every reading. Retaining
+`PRECONDITION` as a basis label reproduces the old instrument exactly, and that is kept as
+a control rather than deleted.
+
+**The conclusion of section `m` survives, and one of its supporting claims does not.**
+Under the shared instrument both readings are content-tested and both are refuted, and
+`local_separability` gives both the same verdict --
+`RULE_GAP_A_PRECONDITION_ON_THE_ACTED_ON_OBJECT_SEPARATES_THEM`, 0 contexts on both sides.
+Content does not separate them. What separates them is still the positional claim, at
+exactly the numbers reported before: POSITION refutations 12, 14, 15, 0, 0 across five
+chronological splits, `NOT_REPAIRABLE_LOCALLY` with 2 and 4 contexts on both sides. So the
+adjudication is unchanged and is now made by an instrument that points at both readings.
+
+Section `m` also said A was refuted "once per split". That is one *context* counted twice:
+A fits two rules for `click:Close`, both fail at step 367, and step 367 is a click that
+changed nothing at all -- `open` 3 and `closed` 0 before and after. One failure, two
+predictions.
+
+### A cheaper check that does not consult the page at all
+
+`action_effect_determinacy` asks something prior: taking the observable action key -- the
+clicked control's role and rendered name, from the accessibility tree -- do all the rules a
+reading fitted for that action agree on what it does? The grouping key is observable and
+the comparison is *internal* to each reading, so it never scores one reading's literals in
+another's vocabulary.
+
+    split   joint discrimination x2          promote cell[_]=cell#0
+    0.4     DETERMINATE, 2 and 1 rules       DETERMINATE, 4 and 3 rules
+    0.6     DETERMINATE, 2 rules             ORDINAL_AMBIGUOUS, 7 rules, 6 single-support
+    0.8     DETERMINATE, 2 rules, 0 single   ORDINAL_AMBIGUOUS, 9 rules, 5 single-support
+
+One reading consolidates as evidence grows and the other fragments into per-occurrence
+rules that contradict each other -- `click:Close` predicted to yield both `'closed'` and
+`'closed#2'`. More evidence consolidating a model is the expected direction; more evidence
+fragmenting it is the signature of a name that cannot carry identity.
+
+### blend_book is untested, not unrefuted
+
+The instrument scopes a rule's precondition to the clicked control's enclosing `row`. On
+blend_book **100% of CONTENT predictions are NOT_APPLICABLE for that one reason**: its
+clicked controls include `Record draw`, whose ancestry is `button < group < group < group <
+group` with no row anywhere. Coverage 0.00, `instrument_reached_this_application: False`.
+
+So blend_book's `SELECTED_WITHIN_AN_INDISTINGUISHABLE_CLASS` status is **not** corroborated
+by a second basis. The second basis cannot reach it. Results now carry a `silence` summary
+-- coverage, and the reasons for every NOT_APPLICABLE -- so an absence of refutations can
+never be read as having survived a test.
+
+That row-shaped scope is also a bias *toward* row ontologies, which is uncomfortable in an
+instrument used to adjudicate between a row ontology and a cell one. It does not affect
+harbour, where both readings are reached and reached about equally (coverage 0.38-0.62,
+within 0.02 of each other at every split). The principled fix is to scope a rule's
+precondition to the *reading's own* enclosing unit instance rather than a hard-coded DOM
+role -- each reading is then entitled to say where its own rule applies, while the outcome
+stays raw rendered text. That is the next mechanism, and it is what would let blend_book's
+class be tested rather than assumed.

@@ -1,17 +1,654 @@
 [
  {
   "content": {
-   "NOT_APPLICABLE": 66
+   "NOT_APPLICABLE": 23,
+   "REFUTED": 8,
+   "SUPPORTED": 28
+  },
+  "content_by_basis": {
+   "INVARIANT/support=1": {
+    "NOT_APPLICABLE": 4,
+    "REFUTED": 4,
+    "SUPPORTED": 9
+   },
+   "INVARIANT/support>=2": {
+    "NOT_APPLICABLE": 19,
+    "REFUTED": 4,
+    "SUPPORTED": 19
+   }
+  },
+  "content_silence": {
+   "coverage": 0.61,
+   "instrument_reached_this_application": true,
+   "predictions": 59,
+   "reasons": {
+    "the rule requires 'closed' where it was clicked; that row does not render it, so the rule does not apply here": 15,
+    "the rule requires 'open' where it was clicked; that row does not render it, so the rule does not apply here": 8
+   },
+   "tested": 36,
+   "untested": 23
+  },
+  "evaluated_steps": 276,
+  "fitted_on_steps": 183,
+  "local_separability": {
+   "CONTENT": {
+    "contexts_on_both_sides": 0,
+    "diagnosis": "RULE_GAP_A_PRECONDITION_ON_THE_ACTED_ON_OBJECT_SEPARATES_THEM",
+    "refuted_contexts": 1,
+    "separable_by_a_precondition_on_the_acted_on_object": true,
+    "supported_contexts": 6
+   },
+   "POSITION": {
+    "contexts_on_both_sides": 0,
+    "diagnosis": "NO_REFUTATIONS",
+    "refuted_contexts": 0,
+    "separable_by_a_precondition_on_the_acted_on_object": false,
+    "supported_contexts": 0
+   }
+  },
+  "name": "joint discrimination x2",
+  "operators": 8,
+  "position": {},
+  "position_by_basis": {},
+  "position_silence": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0,
+   "untested": 0
+  },
+  "reading": "joint discrimination x2",
+  "refutations": [
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed",
+    "operator": "op0",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 190,
+    "support": 4,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed",
+    "operator": "op4",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 190,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed",
+    "operator": "op0",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 192,
+    "support": 4,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed",
+    "operator": "op4",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 192,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed",
+    "operator": "op0",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 212,
+    "support": 4,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed",
+    "operator": "op4",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 212,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed",
+    "operator": "op0",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 4,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed",
+    "operator": "op4",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 1,
+    "verdict": "REFUTED"
+   }
+  ],
+  "split": 0.4
+ },
+ {
+  "content": {
+   "NOT_APPLICABLE": 61,
+   "REFUTED": 16,
+   "SUPPORTED": 66
+  },
+  "content_by_basis": {
+   "INVARIANT/support=1": {
+    "NOT_APPLICABLE": 42,
+    "REFUTED": 12,
+    "SUPPORTED": 47
+   },
+   "INVARIANT/support>=2": {
+    "NOT_APPLICABLE": 19,
+    "REFUTED": 4,
+    "SUPPORTED": 19
+   }
+  },
+  "content_silence": {
+   "coverage": 0.573,
+   "instrument_reached_this_application": true,
+   "predictions": 143,
+   "reasons": {
+    "the rule requires 'closed' where it was clicked; that row does not render it, so the rule does not apply here": 45,
+    "the rule requires 'open' where it was clicked; that row does not render it, so the rule does not apply here": 16
+   },
+   "tested": 82,
+   "untested": 61
+  },
+  "evaluated_steps": 276,
+  "fitted_on_steps": 183,
+  "local_separability": {
+   "CONTENT": {
+    "contexts_on_both_sides": 0,
+    "diagnosis": "RULE_GAP_A_PRECONDITION_ON_THE_ACTED_ON_OBJECT_SEPARATES_THEM",
+    "refuted_contexts": 1,
+    "separable_by_a_precondition_on_the_acted_on_object": true,
+    "supported_contexts": 6
+   },
+   "POSITION": {
+    "contexts_on_both_sides": 2,
+    "diagnosis": "NOT_REPAIRABLE_LOCALLY_THE_SAME_ACTED_ON_STATE_BOTH_SUCCEEDS_AND_FAILS",
+    "refuted_contexts": 2,
+    "separable_by_a_precondition_on_the_acted_on_object": false,
+    "supported_contexts": 6
+   }
+  },
+  "name": "promote cell[_]=cell#0",
+  "operators": 12,
+  "position": {
+   "NOT_APPLICABLE": 77,
+   "REFUTED": 12,
+   "SUPPORTED": 54
+  },
+  "position_by_basis": {
+   "INVARIANT/support=1": {
+    "NOT_APPLICABLE": 54,
+    "REFUTED": 9,
+    "SUPPORTED": 38
+   },
+   "INVARIANT/support>=2": {
+    "NOT_APPLICABLE": 23,
+    "REFUTED": 3,
+    "SUPPORTED": 16
+   }
+  },
+  "position_silence": {
+   "coverage": 0.462,
+   "instrument_reached_this_application": true,
+   "predictions": 143,
+   "reasons": {
+    "the predicted change did not occur": 77
+   },
+   "tested": 66,
+   "untested": 77
+  },
+  "reading": "promote cell[_]=cell#0",
+  "refutations": [
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op0",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 190,
+    "support": 2,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op3",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 190,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op6",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 190,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op11",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 190,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op0",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 192,
+    "support": 2,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op3",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 192,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op6",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 192,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op11",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 192,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule needs 'closed' to be rendered at least 2 times; the page renders it 1",
+    "kind": "POSITION",
+    "literal": "closed#2",
+    "operator": "op0",
+    "rendered_after": 1,
+    "rendered_before": 0,
+    "step": 196,
+    "support": 2,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule needs 'closed' to be rendered at least 2 times; the page renders it 1",
+    "kind": "POSITION",
+    "literal": "closed#2",
+    "operator": "op3",
+    "rendered_after": 1,
+    "rendered_before": 0,
+    "step": 196,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule needs 'closed' to be rendered at least 2 times; the page renders it 1",
+    "kind": "POSITION",
+    "literal": "closed#2",
+    "operator": "op6",
+    "rendered_after": 1,
+    "rendered_before": 0,
+    "step": 196,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule needs 'closed' to be rendered at least 2 times; the page renders it 1",
+    "kind": "POSITION",
+    "literal": "closed#2",
+    "operator": "op11",
+    "rendered_after": 1,
+    "rendered_before": 0,
+    "step": 196,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op0",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 212,
+    "support": 2,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op3",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 212,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op6",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 212,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op11",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 212,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule needs 'closed' to be rendered at least 2 times; the page renders it 1",
+    "kind": "POSITION",
+    "literal": "closed#2",
+    "operator": "op0",
+    "rendered_after": 1,
+    "rendered_before": 0,
+    "step": 236,
+    "support": 2,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule needs 'closed' to be rendered at least 2 times; the page renders it 1",
+    "kind": "POSITION",
+    "literal": "closed#2",
+    "operator": "op3",
+    "rendered_after": 1,
+    "rendered_before": 0,
+    "step": 236,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule needs 'closed' to be rendered at least 2 times; the page renders it 1",
+    "kind": "POSITION",
+    "literal": "closed#2",
+    "operator": "op6",
+    "rendered_after": 1,
+    "rendered_before": 0,
+    "step": 236,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule needs 'closed' to be rendered at least 2 times; the page renders it 1",
+    "kind": "POSITION",
+    "literal": "closed#2",
+    "operator": "op11",
+    "rendered_after": 1,
+    "rendered_before": 0,
+    "step": 236,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule needs 'closed' to be rendered at least 2 times; the page renders it 1",
+    "kind": "POSITION",
+    "literal": "closed#2",
+    "operator": "op0",
+    "rendered_after": 1,
+    "rendered_before": 0,
+    "step": 318,
+    "support": 2,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule needs 'closed' to be rendered at least 2 times; the page renders it 1",
+    "kind": "POSITION",
+    "literal": "closed#2",
+    "operator": "op3",
+    "rendered_after": 1,
+    "rendered_before": 0,
+    "step": 318,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule needs 'closed' to be rendered at least 2 times; the page renders it 1",
+    "kind": "POSITION",
+    "literal": "closed#2",
+    "operator": "op6",
+    "rendered_after": 1,
+    "rendered_before": 0,
+    "step": 318,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule needs 'closed' to be rendered at least 2 times; the page renders it 1",
+    "kind": "POSITION",
+    "literal": "closed#2",
+    "operator": "op11",
+    "rendered_after": 1,
+    "rendered_before": 0,
+    "step": 318,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op0",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 2,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op3",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op6",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op11",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 1,
+    "verdict": "REFUTED"
+   }
+  ],
+  "split": 0.4
+ },
+ {
+  "content": {
+   "NOT_APPLICABLE": 30,
+   "REFUTED": 2,
+   "SUPPORTED": 34
+  },
+  "content_by_basis": {
+   "INVARIANT/support=1": {
+    "NOT_APPLICABLE": 11,
+    "SUPPORTED": 9
+   },
+   "INVARIANT/support>=2": {
+    "NOT_APPLICABLE": 19,
+    "REFUTED": 2,
+    "SUPPORTED": 25
+   }
+  },
+  "content_silence": {
+   "coverage": 0.545,
+   "instrument_reached_this_application": true,
+   "predictions": 66,
+   "reasons": {
+    "the rule requires 'closed' where it was clicked; that row does not render it, so the rule does not apply here": 22,
+    "the rule requires 'open' where it was clicked; that row does not render it, so the rule does not apply here": 8
+   },
+   "tested": 36,
+   "untested": 30
   },
   "evaluated_steps": 230,
   "fitted_on_steps": 229,
   "local_separability": {
    "CONTENT": {
     "contexts_on_both_sides": 0,
-    "diagnosis": "NO_REFUTATIONS",
-    "refuted_contexts": 0,
-    "separable_by_a_precondition_on_the_acted_on_object": false,
-    "supported_contexts": 0
+    "diagnosis": "RULE_GAP_A_PRECONDITION_ON_THE_ACTED_ON_OBJECT_SEPARATES_THEM",
+    "refuted_contexts": 1,
+    "separable_by_a_precondition_on_the_acted_on_object": true,
+    "supported_contexts": 6
    },
    "POSITION": {
     "contexts_on_both_sides": 0,
@@ -24,23 +661,84 @@
   "name": "joint discrimination x2",
   "operators": 11,
   "position": {},
+  "position_by_basis": {},
+  "position_silence": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0,
+   "untested": 0
+  },
   "reading": "joint discrimination x2",
-  "refutations": [],
+  "refutations": [
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed",
+    "operator": "op0",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 4,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed",
+    "operator": "op2",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 2,
+    "verdict": "REFUTED"
+   }
+  ],
   "split": 0.5
  },
  {
   "content": {
-   "NOT_APPLICABLE": 145
+   "NOT_APPLICABLE": 64,
+   "REFUTED": 5,
+   "SUPPORTED": 76
+  },
+  "content_by_basis": {
+   "INVARIANT/support=1": {
+    "NOT_APPLICABLE": 49,
+    "REFUTED": 4,
+    "SUPPORTED": 59
+   },
+   "INVARIANT/support>=2": {
+    "NOT_APPLICABLE": 15,
+    "REFUTED": 1,
+    "SUPPORTED": 17
+   }
+  },
+  "content_silence": {
+   "coverage": 0.559,
+   "instrument_reached_this_application": true,
+   "predictions": 145,
+   "reasons": {
+    "the rule requires 'closed' where it was clicked; that row does not render it, so the rule does not apply here": 44,
+    "the rule requires 'open' where it was clicked; that row does not render it, so the rule does not apply here": 20
+   },
+   "tested": 81,
+   "untested": 64
   },
   "evaluated_steps": 230,
   "fitted_on_steps": 229,
   "local_separability": {
    "CONTENT": {
     "contexts_on_both_sides": 0,
-    "diagnosis": "NO_REFUTATIONS",
-    "refuted_contexts": 0,
-    "separable_by_a_precondition_on_the_acted_on_object": false,
-    "supported_contexts": 0
+    "diagnosis": "RULE_GAP_A_PRECONDITION_ON_THE_ACTED_ON_OBJECT_SEPARATES_THEM",
+    "refuted_contexts": 1,
+    "separable_by_a_precondition_on_the_acted_on_object": true,
+    "supported_contexts": 6
    },
    "POSITION": {
     "contexts_on_both_sides": 4,
@@ -57,9 +755,32 @@
    "REFUTED": 14,
    "SUPPORTED": 54
   },
+  "position_by_basis": {
+   "INVARIANT/support=1": {
+    "NOT_APPLICABLE": 48,
+    "REFUTED": 12,
+    "SUPPORTED": 39
+   },
+   "INVARIANT/support>=2": {
+    "NOT_APPLICABLE": 16,
+    "REFUTED": 2,
+    "SUPPORTED": 15
+   }
+  },
+  "position_silence": {
+   "coverage": 0.515,
+   "instrument_reached_this_application": true,
+   "predictions": 132,
+   "reasons": {
+    "the predicted change did not occur": 64
+   },
+   "tested": 68,
+   "untested": 64
+  },
   "reading": "promote cell[_]=cell#0",
   "refutations": [
    {
+    "basis": "INVARIANT",
     "control": "button:Close",
     "detail": "the rule needs 'closed' to be rendered at least 2 times; the page renders it 1",
     "kind": "POSITION",
@@ -68,9 +789,11 @@
     "rendered_after": 1,
     "rendered_before": 0,
     "step": 236,
+    "support": 2,
     "verdict": "REFUTED"
    },
    {
+    "basis": "INVARIANT",
     "control": "button:Close",
     "detail": "the rule needs 'closed' to be rendered at least 2 times; the page renders it 1",
     "kind": "POSITION",
@@ -79,9 +802,11 @@
     "rendered_after": 1,
     "rendered_before": 0,
     "step": 236,
+    "support": 1,
     "verdict": "REFUTED"
    },
    {
+    "basis": "INVARIANT",
     "control": "button:Close",
     "detail": "the rule needs 'closed' to be rendered at least 2 times; the page renders it 1",
     "kind": "POSITION",
@@ -90,9 +815,11 @@
     "rendered_after": 1,
     "rendered_before": 0,
     "step": 236,
+    "support": 1,
     "verdict": "REFUTED"
    },
    {
+    "basis": "INVARIANT",
     "control": "button:Close",
     "detail": "the rule needs 'closed' to be rendered at least 2 times; the page renders it 1",
     "kind": "POSITION",
@@ -101,9 +828,11 @@
     "rendered_after": 1,
     "rendered_before": 0,
     "step": 236,
+    "support": 1,
     "verdict": "REFUTED"
    },
    {
+    "basis": "INVARIANT",
     "control": "button:Reopen",
     "detail": "the rule needs 'open' to be rendered at least 3 times; the page renders it 2",
     "kind": "POSITION",
@@ -112,9 +841,11 @@
     "rendered_after": 2,
     "rendered_before": 1,
     "step": 270,
+    "support": 1,
     "verdict": "REFUTED"
    },
    {
+    "basis": "INVARIANT",
     "control": "button:Reopen",
     "detail": "the rule needs 'open' to be rendered at least 3 times; the page renders it 2",
     "kind": "POSITION",
@@ -123,9 +854,11 @@
     "rendered_after": 2,
     "rendered_before": 1,
     "step": 281,
+    "support": 1,
     "verdict": "REFUTED"
    },
    {
+    "basis": "INVARIANT",
     "control": "button:Reopen",
     "detail": "the rule needs 'open' to be rendered at least 3 times; the page renders it 2",
     "kind": "POSITION",
@@ -134,9 +867,11 @@
     "rendered_after": 2,
     "rendered_before": 1,
     "step": 292,
+    "support": 1,
     "verdict": "REFUTED"
    },
    {
+    "basis": "INVARIANT",
     "control": "button:Reopen",
     "detail": "the rule needs 'open' to be rendered at least 3 times; the page renders it 2",
     "kind": "POSITION",
@@ -145,9 +880,11 @@
     "rendered_after": 2,
     "rendered_before": 1,
     "step": 295,
+    "support": 1,
     "verdict": "REFUTED"
    },
    {
+    "basis": "INVARIANT",
     "control": "button:Reopen",
     "detail": "the rule needs 'open' to be rendered at least 3 times; the page renders it 2",
     "kind": "POSITION",
@@ -156,9 +893,11 @@
     "rendered_after": 2,
     "rendered_before": 1,
     "step": 298,
+    "support": 1,
     "verdict": "REFUTED"
    },
    {
+    "basis": "INVARIANT",
     "control": "button:Reopen",
     "detail": "the rule needs 'open' to be rendered at least 3 times; the page renders it 2",
     "kind": "POSITION",
@@ -167,9 +906,11 @@
     "rendered_after": 2,
     "rendered_before": 1,
     "step": 308,
+    "support": 1,
     "verdict": "REFUTED"
    },
    {
+    "basis": "INVARIANT",
     "control": "button:Close",
     "detail": "the rule needs 'closed' to be rendered at least 2 times; the page renders it 1",
     "kind": "POSITION",
@@ -178,9 +919,11 @@
     "rendered_after": 1,
     "rendered_before": 0,
     "step": 318,
+    "support": 2,
     "verdict": "REFUTED"
    },
    {
+    "basis": "INVARIANT",
     "control": "button:Close",
     "detail": "the rule needs 'closed' to be rendered at least 2 times; the page renders it 1",
     "kind": "POSITION",
@@ -189,9 +932,11 @@
     "rendered_after": 1,
     "rendered_before": 0,
     "step": 318,
+    "support": 1,
     "verdict": "REFUTED"
    },
    {
+    "basis": "INVARIANT",
     "control": "button:Close",
     "detail": "the rule needs 'closed' to be rendered at least 2 times; the page renders it 1",
     "kind": "POSITION",
@@ -200,9 +945,11 @@
     "rendered_after": 1,
     "rendered_before": 0,
     "step": 318,
+    "support": 1,
     "verdict": "REFUTED"
    },
    {
+    "basis": "INVARIANT",
     "control": "button:Close",
     "detail": "the rule needs 'closed' to be rendered at least 2 times; the page renders it 1",
     "kind": "POSITION",
@@ -211,6 +958,72 @@
     "rendered_after": 1,
     "rendered_before": 0,
     "step": 318,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op0",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 2,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op3",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op6",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op11",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed",
+    "operator": "op13",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 1,
     "verdict": "REFUTED"
    }
   ],
@@ -218,9 +1031,36 @@
  },
  {
   "content": {
-   "NOT_APPLICABLE": 32,
-   "REFUTED": 1,
-   "SUPPORTED": 13
+   "NOT_APPLICABLE": 18,
+   "REFUTED": 2,
+   "SUPPORTED": 26
+  },
+  "content_by_basis": {
+   "INVARIANT/support=1": {
+    "NOT_APPLICABLE": 8,
+    "SUPPORTED": 7
+   },
+   "INVARIANT/support>=2": {
+    "NOT_APPLICABLE": 1,
+    "REFUTED": 1,
+    "SUPPORTED": 6
+   },
+   "PRECONDITION/support>=2": {
+    "NOT_APPLICABLE": 9,
+    "REFUTED": 1,
+    "SUPPORTED": 13
+   }
+  },
+  "content_silence": {
+   "coverage": 0.609,
+   "instrument_reached_this_application": true,
+   "predictions": 46,
+   "reasons": {
+    "the rule requires 'closed' where it was clicked; that row does not render it, so the rule does not apply here": 16,
+    "the rule requires 'open' where it was clicked; that row does not render it, so the rule does not apply here": 2
+   },
+   "tested": 28,
+   "untested": 18
   },
   "evaluated_steps": 184,
   "fitted_on_steps": 275,
@@ -243,9 +1083,19 @@
   "name": "joint discrimination x2",
   "operators": 12,
   "position": {},
+  "position_by_basis": {},
+  "position_silence": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0,
+   "untested": 0
+  },
   "reading": "joint discrimination x2",
   "refutations": [
    {
+    "basis": "PRECONDITION",
     "control": "button:Close",
     "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
     "kind": "CONTENT",
@@ -254,6 +1104,20 @@
     "rendered_after": 0,
     "rendered_before": 0,
     "step": 367,
+    "support": 5,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed",
+    "operator": "op2",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 3,
     "verdict": "REFUTED"
    }
   ],
@@ -261,17 +1125,42 @@
  },
  {
   "content": {
-   "NOT_APPLICABLE": 146
+   "NOT_APPLICABLE": 55,
+   "REFUTED": 7,
+   "SUPPORTED": 84
+  },
+  "content_by_basis": {
+   "INVARIANT/support=1": {
+    "NOT_APPLICABLE": 46,
+    "REFUTED": 6,
+    "SUPPORTED": 71
+   },
+   "INVARIANT/support>=2": {
+    "NOT_APPLICABLE": 9,
+    "REFUTED": 1,
+    "SUPPORTED": 13
+   }
+  },
+  "content_silence": {
+   "coverage": 0.623,
+   "instrument_reached_this_application": true,
+   "predictions": 146,
+   "reasons": {
+    "the rule requires 'closed' where it was clicked; that row does not render it, so the rule does not apply here": 48,
+    "the rule requires 'open' where it was clicked; that row does not render it, so the rule does not apply here": 7
+   },
+   "tested": 91,
+   "untested": 55
   },
   "evaluated_steps": 184,
   "fitted_on_steps": 275,
   "local_separability": {
    "CONTENT": {
     "contexts_on_both_sides": 0,
-    "diagnosis": "NO_REFUTATIONS",
-    "refuted_contexts": 0,
-    "separable_by_a_precondition_on_the_acted_on_object": false,
-    "supported_contexts": 0
+    "diagnosis": "RULE_GAP_A_PRECONDITION_ON_THE_ACTED_ON_OBJECT_SEPARATES_THEM",
+    "refuted_contexts": 1,
+    "separable_by_a_precondition_on_the_acted_on_object": true,
+    "supported_contexts": 6
    },
    "POSITION": {
     "contexts_on_both_sides": 4,
@@ -288,9 +1177,32 @@
    "REFUTED": 15,
    "SUPPORTED": 57
   },
+  "position_by_basis": {
+   "INVARIANT/support=1": {
+    "NOT_APPLICABLE": 48,
+    "REFUTED": 14,
+    "SUPPORTED": 45
+   },
+   "INVARIANT/support>=2": {
+    "NOT_APPLICABLE": 10,
+    "REFUTED": 1,
+    "SUPPORTED": 12
+   }
+  },
+  "position_silence": {
+   "coverage": 0.554,
+   "instrument_reached_this_application": true,
+   "predictions": 130,
+   "reasons": {
+    "the predicted change did not occur": 58
+   },
+   "tested": 72,
+   "untested": 58
+  },
   "reading": "promote cell[_]=cell#0",
   "refutations": [
    {
+    "basis": "INVARIANT",
     "control": "button:Reopen",
     "detail": "the rule needs 'open' to be rendered at least 3 times; the page renders it 2",
     "kind": "POSITION",
@@ -299,9 +1211,11 @@
     "rendered_after": 2,
     "rendered_before": 1,
     "step": 281,
+    "support": 1,
     "verdict": "REFUTED"
    },
    {
+    "basis": "INVARIANT",
     "control": "button:Reopen",
     "detail": "the rule needs 'open' to be rendered at least 3 times; the page renders it 2",
     "kind": "POSITION",
@@ -310,9 +1224,11 @@
     "rendered_after": 2,
     "rendered_before": 1,
     "step": 281,
+    "support": 1,
     "verdict": "REFUTED"
    },
    {
+    "basis": "INVARIANT",
     "control": "button:Reopen",
     "detail": "the rule needs 'open' to be rendered at least 3 times; the page renders it 2",
     "kind": "POSITION",
@@ -321,9 +1237,11 @@
     "rendered_after": 2,
     "rendered_before": 1,
     "step": 292,
+    "support": 1,
     "verdict": "REFUTED"
    },
    {
+    "basis": "INVARIANT",
     "control": "button:Reopen",
     "detail": "the rule needs 'open' to be rendered at least 3 times; the page renders it 2",
     "kind": "POSITION",
@@ -332,9 +1250,11 @@
     "rendered_after": 2,
     "rendered_before": 1,
     "step": 292,
+    "support": 1,
     "verdict": "REFUTED"
    },
    {
+    "basis": "INVARIANT",
     "control": "button:Reopen",
     "detail": "the rule needs 'open' to be rendered at least 3 times; the page renders it 2",
     "kind": "POSITION",
@@ -343,9 +1263,11 @@
     "rendered_after": 2,
     "rendered_before": 1,
     "step": 295,
+    "support": 1,
     "verdict": "REFUTED"
    },
    {
+    "basis": "INVARIANT",
     "control": "button:Reopen",
     "detail": "the rule needs 'open' to be rendered at least 3 times; the page renders it 2",
     "kind": "POSITION",
@@ -354,9 +1276,11 @@
     "rendered_after": 2,
     "rendered_before": 1,
     "step": 295,
+    "support": 1,
     "verdict": "REFUTED"
    },
    {
+    "basis": "INVARIANT",
     "control": "button:Reopen",
     "detail": "the rule needs 'open' to be rendered at least 3 times; the page renders it 2",
     "kind": "POSITION",
@@ -365,9 +1289,11 @@
     "rendered_after": 2,
     "rendered_before": 1,
     "step": 298,
+    "support": 1,
     "verdict": "REFUTED"
    },
    {
+    "basis": "INVARIANT",
     "control": "button:Reopen",
     "detail": "the rule needs 'open' to be rendered at least 3 times; the page renders it 2",
     "kind": "POSITION",
@@ -376,9 +1302,11 @@
     "rendered_after": 2,
     "rendered_before": 1,
     "step": 298,
+    "support": 1,
     "verdict": "REFUTED"
    },
    {
+    "basis": "INVARIANT",
     "control": "button:Reopen",
     "detail": "the rule needs 'open' to be rendered at least 3 times; the page renders it 2",
     "kind": "POSITION",
@@ -387,9 +1315,11 @@
     "rendered_after": 2,
     "rendered_before": 1,
     "step": 308,
+    "support": 1,
     "verdict": "REFUTED"
    },
    {
+    "basis": "INVARIANT",
     "control": "button:Reopen",
     "detail": "the rule needs 'open' to be rendered at least 3 times; the page renders it 2",
     "kind": "POSITION",
@@ -398,9 +1328,11 @@
     "rendered_after": 2,
     "rendered_before": 1,
     "step": 308,
+    "support": 1,
     "verdict": "REFUTED"
    },
    {
+    "basis": "INVARIANT",
     "control": "button:Close",
     "detail": "the rule needs 'closed' to be rendered at least 2 times; the page renders it 1",
     "kind": "POSITION",
@@ -409,9 +1341,11 @@
     "rendered_after": 1,
     "rendered_before": 0,
     "step": 318,
+    "support": 2,
     "verdict": "REFUTED"
    },
    {
+    "basis": "INVARIANT",
     "control": "button:Close",
     "detail": "the rule needs 'closed' to be rendered at least 2 times; the page renders it 1",
     "kind": "POSITION",
@@ -420,9 +1354,11 @@
     "rendered_after": 1,
     "rendered_before": 0,
     "step": 318,
+    "support": 1,
     "verdict": "REFUTED"
    },
    {
+    "basis": "INVARIANT",
     "control": "button:Close",
     "detail": "the rule needs 'closed' to be rendered at least 2 times; the page renders it 1",
     "kind": "POSITION",
@@ -431,9 +1367,11 @@
     "rendered_after": 1,
     "rendered_before": 0,
     "step": 318,
+    "support": 1,
     "verdict": "REFUTED"
    },
    {
+    "basis": "INVARIANT",
     "control": "button:Close",
     "detail": "the rule needs 'closed' to be rendered at least 2 times; the page renders it 1",
     "kind": "POSITION",
@@ -442,9 +1380,11 @@
     "rendered_after": 1,
     "rendered_before": 0,
     "step": 318,
+    "support": 1,
     "verdict": "REFUTED"
    },
    {
+    "basis": "INVARIANT",
     "control": "button:Close",
     "detail": "the rule needs 'closed' to be rendered at least 2 times; the page renders it 1",
     "kind": "POSITION",
@@ -453,9 +1393,667 @@
     "rendered_after": 1,
     "rendered_before": 0,
     "step": 318,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op0",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 2,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op3",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op6",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op11",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed",
+    "operator": "op13",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed",
+    "operator": "op16",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op18",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 1,
     "verdict": "REFUTED"
    }
   ],
   "split": 0.6
+ },
+ {
+  "content": {
+   "NOT_APPLICABLE": 10,
+   "REFUTED": 2,
+   "SUPPORTED": 4
+  },
+  "content_by_basis": {
+   "INVARIANT/support>=2": {
+    "NOT_APPLICABLE": 5,
+    "REFUTED": 1,
+    "SUPPORTED": 2
+   },
+   "PRECONDITION/support>=2": {
+    "NOT_APPLICABLE": 5,
+    "REFUTED": 1,
+    "SUPPORTED": 2
+   }
+  },
+  "content_silence": {
+   "coverage": 0.375,
+   "instrument_reached_this_application": true,
+   "predictions": 16,
+   "reasons": {
+    "the rule requires 'closed' where it was clicked; that row does not render it, so the rule does not apply here": 10
+   },
+   "tested": 6,
+   "untested": 10
+  },
+  "evaluated_steps": 138,
+  "fitted_on_steps": 321,
+  "local_separability": {
+   "CONTENT": {
+    "contexts_on_both_sides": 0,
+    "diagnosis": "RULE_GAP_A_PRECONDITION_ON_THE_ACTED_ON_OBJECT_SEPARATES_THEM",
+    "refuted_contexts": 1,
+    "separable_by_a_precondition_on_the_acted_on_object": true,
+    "supported_contexts": 2
+   },
+   "POSITION": {
+    "contexts_on_both_sides": 0,
+    "diagnosis": "NO_REFUTATIONS",
+    "refuted_contexts": 0,
+    "separable_by_a_precondition_on_the_acted_on_object": false,
+    "supported_contexts": 0
+   }
+  },
+  "name": "joint discrimination x2",
+  "operators": 13,
+  "position": {},
+  "position_by_basis": {},
+  "position_silence": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0,
+   "untested": 0
+  },
+  "reading": "joint discrimination x2",
+  "refutations": [
+   {
+    "basis": "PRECONDITION",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed",
+    "operator": "op0",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 10,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed",
+    "operator": "op2",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 4,
+    "verdict": "REFUTED"
+   }
+  ],
+  "split": 0.7
+ },
+ {
+  "content": {
+   "NOT_APPLICABLE": 35,
+   "REFUTED": 9,
+   "SUPPORTED": 14
+  },
+  "content_by_basis": {
+   "INVARIANT/support=1": {
+    "NOT_APPLICABLE": 20,
+    "REFUTED": 5,
+    "SUPPORTED": 8
+   },
+   "INVARIANT/support>=2": {
+    "NOT_APPLICABLE": 15,
+    "REFUTED": 4,
+    "SUPPORTED": 6
+   }
+  },
+  "content_silence": {
+   "coverage": 0.397,
+   "instrument_reached_this_application": true,
+   "predictions": 58,
+   "reasons": {
+    "the rule requires 'closed' where it was clicked; that row does not render it, so the rule does not apply here": 35
+   },
+   "tested": 23,
+   "untested": 35
+  },
+  "evaluated_steps": 138,
+  "fitted_on_steps": 321,
+  "local_separability": {
+   "CONTENT": {
+    "contexts_on_both_sides": 0,
+    "diagnosis": "RULE_GAP_A_PRECONDITION_ON_THE_ACTED_ON_OBJECT_SEPARATES_THEM",
+    "refuted_contexts": 1,
+    "separable_by_a_precondition_on_the_acted_on_object": true,
+    "supported_contexts": 2
+   },
+   "POSITION": {
+    "contexts_on_both_sides": 0,
+    "diagnosis": "NO_REFUTATIONS",
+    "refuted_contexts": 0,
+    "separable_by_a_precondition_on_the_acted_on_object": false,
+    "supported_contexts": 2
+   }
+  },
+  "name": "promote cell[_]=cell#0",
+  "operators": 26,
+  "position": {
+   "NOT_APPLICABLE": 41,
+   "SUPPORTED": 14
+  },
+  "position_by_basis": {
+   "INVARIANT/support=1": {
+    "NOT_APPLICABLE": 22,
+    "SUPPORTED": 8
+   },
+   "INVARIANT/support>=2": {
+    "NOT_APPLICABLE": 19,
+    "SUPPORTED": 6
+   }
+  },
+  "position_silence": {
+   "coverage": 0.255,
+   "instrument_reached_this_application": true,
+   "predictions": 55,
+   "reasons": {
+    "the predicted change did not occur": 41
+   },
+   "tested": 14,
+   "untested": 41
+  },
+  "reading": "promote cell[_]=cell#0",
+  "refutations": [
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op0",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 3,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op3",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 2,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op5",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 2,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op6",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 2,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op9",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op14",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed",
+    "operator": "op16",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed",
+    "operator": "op19",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed",
+    "operator": "op25",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 1,
+    "verdict": "REFUTED"
+   }
+  ],
+  "split": 0.7
+ },
+ {
+  "content": {
+   "NOT_APPLICABLE": 6,
+   "REFUTED": 2,
+   "SUPPORTED": 2
+  },
+  "content_by_basis": {
+   "INVARIANT/support>=2": {
+    "NOT_APPLICABLE": 3,
+    "REFUTED": 1,
+    "SUPPORTED": 1
+   },
+   "PRECONDITION/support>=2": {
+    "NOT_APPLICABLE": 3,
+    "REFUTED": 1,
+    "SUPPORTED": 1
+   }
+  },
+  "content_silence": {
+   "coverage": 0.4,
+   "instrument_reached_this_application": true,
+   "predictions": 10,
+   "reasons": {
+    "the rule requires 'closed' where it was clicked; that row does not render it, so the rule does not apply here": 6
+   },
+   "tested": 4,
+   "untested": 6
+  },
+  "evaluated_steps": 92,
+  "fitted_on_steps": 367,
+  "local_separability": {
+   "CONTENT": {
+    "contexts_on_both_sides": 0,
+    "diagnosis": "RULE_GAP_A_PRECONDITION_ON_THE_ACTED_ON_OBJECT_SEPARATES_THEM",
+    "refuted_contexts": 1,
+    "separable_by_a_precondition_on_the_acted_on_object": true,
+    "supported_contexts": 1
+   },
+   "POSITION": {
+    "contexts_on_both_sides": 0,
+    "diagnosis": "NO_REFUTATIONS",
+    "refuted_contexts": 0,
+    "separable_by_a_precondition_on_the_acted_on_object": false,
+    "supported_contexts": 0
+   }
+  },
+  "name": "joint discrimination x2",
+  "operators": 13,
+  "position": {},
+  "position_by_basis": {},
+  "position_silence": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0,
+   "untested": 0
+  },
+  "reading": "joint discrimination x2",
+  "refutations": [
+   {
+    "basis": "PRECONDITION",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed",
+    "operator": "op1",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 10,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed",
+    "operator": "op2",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 4,
+    "verdict": "REFUTED"
+   }
+  ],
+  "split": 0.8
+ },
+ {
+  "content": {
+   "NOT_APPLICABLE": 24,
+   "REFUTED": 9,
+   "SUPPORTED": 8
+  },
+  "content_by_basis": {
+   "INVARIANT/support=1": {
+    "NOT_APPLICABLE": 15,
+    "REFUTED": 5,
+    "SUPPORTED": 5
+   },
+   "INVARIANT/support>=2": {
+    "NOT_APPLICABLE": 9,
+    "REFUTED": 4,
+    "SUPPORTED": 3
+   }
+  },
+  "content_silence": {
+   "coverage": 0.415,
+   "instrument_reached_this_application": true,
+   "predictions": 41,
+   "reasons": {
+    "the rule requires 'closed' where it was clicked; that row does not render it, so the rule does not apply here": 24
+   },
+   "tested": 17,
+   "untested": 24
+  },
+  "evaluated_steps": 92,
+  "fitted_on_steps": 367,
+  "local_separability": {
+   "CONTENT": {
+    "contexts_on_both_sides": 0,
+    "diagnosis": "RULE_GAP_A_PRECONDITION_ON_THE_ACTED_ON_OBJECT_SEPARATES_THEM",
+    "refuted_contexts": 1,
+    "separable_by_a_precondition_on_the_acted_on_object": true,
+    "supported_contexts": 1
+   },
+   "POSITION": {
+    "contexts_on_both_sides": 0,
+    "diagnosis": "NO_REFUTATIONS",
+    "refuted_contexts": 0,
+    "separable_by_a_precondition_on_the_acted_on_object": false,
+    "supported_contexts": 1
+   }
+  },
+  "name": "promote cell[_]=cell#0",
+  "operators": 27,
+  "position": {
+   "NOT_APPLICABLE": 30,
+   "SUPPORTED": 8
+  },
+  "position_by_basis": {
+   "INVARIANT/support=1": {
+    "NOT_APPLICABLE": 17,
+    "SUPPORTED": 5
+   },
+   "INVARIANT/support>=2": {
+    "NOT_APPLICABLE": 13,
+    "SUPPORTED": 3
+   }
+  },
+  "position_silence": {
+   "coverage": 0.211,
+   "instrument_reached_this_application": true,
+   "predictions": 38,
+   "reasons": {
+    "the predicted change did not occur": 30
+   },
+   "tested": 8,
+   "untested": 30
+  },
+  "reading": "promote cell[_]=cell#0",
+  "refutations": [
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op0",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 3,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op3",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 2,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op5",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 2,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op6",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 2,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op9",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed#2",
+    "operator": "op14",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed",
+    "operator": "op16",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed",
+    "operator": "op19",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "basis": "INVARIANT",
+    "control": "button:Close",
+    "detail": "the rule applied ('open' was rendered) and predicted 'closed', which the page did not gain",
+    "kind": "CONTENT",
+    "literal": "closed",
+    "operator": "op25",
+    "rendered_after": 0,
+    "rendered_before": 0,
+    "step": 367,
+    "support": 1,
+    "verdict": "REFUTED"
+   }
+  ],
+  "split": 0.8
  }
 ]

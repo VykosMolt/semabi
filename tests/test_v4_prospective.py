@@ -23,7 +23,8 @@ import pytest
 
 from semabi.compiler.v4 import prospective
 from semabi.compiler.v4.prospective import (CONTENT, NOT_APPLICABLE, POSITION, REFUTED,
-                                            SUPPORTED, enclosing_scope, required_value,
+                                            SUPPORTED, INVARIANT, NO_BASIS,
+                                            PRECONDITION, enclosing_scope, required_value,
                                             split_literal)
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -49,9 +50,12 @@ def _eff(obj="?o0", slot="attr:s", new="x"):
 
 
 def test_only_an_equality_on_the_effects_own_slot_projects():
+    """Executes the projection filter.  A pass establishes that only a positive equality on
+    the effect's own parameter and slot is read as "this slot already held V"; it does not
+    establish that such a literal exists in any real operator."""
     effect = _eff()
-    same = SimpleNamespace(pre=[("attr", "?o0", "attr:s", "old")])
-    assert required_value(same, effect) == "old"
+    same = SimpleNamespace(pre=[("attr", "?o0", "attr:s", "old")], common=())
+    assert required_value(same, effect) == ("old", PRECONDITION)
     for irrelevant in (
         [("attr", "?o1", "attr:s", "old")],        # a different parameter
         [("attr", "?o0", "attr:other", "old")],    # a different slot
@@ -59,7 +63,49 @@ def test_only_an_equality_on_the_effects_own_slot_projects():
         [("empty", "?o0")],                        # not about a value at all
         [],
     ):
-        assert required_value(SimpleNamespace(pre=irrelevant), effect) is None
+        op = SimpleNamespace(pre=irrelevant, common=())
+        assert required_value(op, effect) == (None, NO_BASIS)
+
+
+def test_the_fitted_invariant_licenses_a_prediction_where_no_chosen_precondition_does():
+    """The repair this module needed.
+
+    Executes: an operator whose ``pre`` says nothing about the effect's slot, but whose
+    ``common`` -- the literals true in every transition it was fitted on -- does.
+
+    Detects: the regression of reading applicability off ``learn_pre``'s *discriminative*
+    output.  ``learn_pre`` manufactures ``attr_ne`` candidates to cover negatives, so a
+    positive equality reaches ``pre`` only when it happens to discriminate; measured over
+    this corpus that was about one effect in four hundred, which left CONTENT dead on two
+    applications of three and tested harbour's two survivors on disjoint instruments.
+
+    A pass establishes that the generative invariant is consulted and labelled.  It does
+    not establish that the invariant generalises -- see the support test below."""
+    effect = _eff()
+    op = SimpleNamespace(pre=[("attr_ne", "?o0", "attr:s", "z")],
+                         common=[("attr", "?o0", "attr:s", "old")])
+    assert required_value(op, effect) == ("old", INVARIANT)
+
+
+def test_a_chosen_precondition_outranks_the_invariant():
+    """A literal learn_pre selected is a stronger commitment than one merely true of the
+    fitted transitions, so it is reported as the basis when both are present.  Measured on
+    the corpus the two never disagree, so this fixes a label, not a value."""
+    effect = _eff()
+    op = SimpleNamespace(pre=[("attr", "?o0", "attr:s", "chosen")],
+                         common=[("attr", "?o0", "attr:s", "chosen")])
+    assert required_value(op, effect) == ("chosen", PRECONDITION)
+
+
+def test_an_ordinal_bearing_invariant_projects_to_its_base():
+    """A reading whose names collide states its invariant positionally -- ``id == 'open#2'``
+    -- and no page renders that string.  Projecting the base asks only that the value is
+    rendered, which is what the accessibility tree can answer; the ordinal is POSITION's
+    business.  Without this, every ordinal-bearing reading is silently NOT_APPLICABLE on
+    CONTENT, which is exactly how B escaped the content test."""
+    effect = _eff(slot="id")
+    op = SimpleNamespace(pre=[], common=[("attr", "?o0", "id", "open#2")])
+    assert required_value(op, effect) == ("open", INVARIANT)
 
 
 # --------------------------------------------------------------------- scoping
@@ -138,17 +184,45 @@ def test_predicting_a_value_the_application_never_renders_is_refuted_not_ignored
     assert broken.counts(CONTENT)[REFUTED] >= 1
 
 
-def test_scoping_the_precondition_removes_predictions_the_rule_never_made(harbour):
-    """A rule is not tested where it does not apply.
+def test_scoping_the_precondition_removes_predictions_the_rule_never_made(harbour,
+                                                                          monkeypatch):
+    """A rule is not tested where it does not apply, and the scope is load-bearing.
 
-    Unscoped, the projection fired whenever any row anywhere rendered the required value,
-    and reported refutations for three Reopen clicks on rows that were already open and one
-    Close on a row already closed.
+    Executes A's content predictions at split 0.6 twice: scoped to the clicked control's
+    enclosing row, and with the scope replaced by the whole page -- the behaviour that once
+    reported refutations for three Reopen clicks on rows already open and one Close on a
+    row already closed.
+
+    Detects the loss of scoping.  Measured: refuted *contexts* 1 -> 5 and contexts on both
+    sides 0 -> 4, and the diagnosis flips from RULE_GAP to NOT_REPAIRABLE_LOCALLY.  That
+    flip happens for *both* harbour survivors, so an unscoped projection does not merely
+    add noise -- it destroys the adjudication.
+
+    The unit is contexts, not predictions.  A fits two rules for ``click:Close`` (two button
+    locators) and both fail at step 367, where the click changed nothing at all: two refuted
+    predictions, one underlying failure, one context.  Asserting on the raw prediction count
+    would make this test sensitive to how many rules a reading happens to fit.
+
+    A pass establishes that the scope suppresses inapplicable firings.  It does not
+    establish that the enclosing row is the right scope for applications that are not
+    tables -- it is undefined for 88% of vet_clinic's clicks, which those runs report as
+    NOT_APPLICABLE.
     """
     result = _run(harbour["joint discrimination x2"])
-    content = result.counts(CONTENT)
-    assert content[NOT_APPLICABLE] > 0
-    assert content[REFUTED] <= 1, [p.to_json() for p in result.refutations]
+    assert result.counts(CONTENT)[NOT_APPLICABLE] > 0
+    scoped = prospective.local_separability(result, HARBOUR_RUN)[CONTENT]
+    assert scoped["refuted_contexts"] == 1, scoped
+    assert scoped["contexts_on_both_sides"] == 0, scoped
+    assert scoped["diagnosis"].startswith("RULE_GAP"), scoped
+
+    monkeypatch.setattr(prospective, "enclosing_scope",
+                        lambda obs, idx, role="row": Counter(n.name for n in obs.nodes))
+    unscoped = _run(harbour["joint discrimination x2"])
+    monkeypatch.undo()          # separability must measure with the real scope
+    loose = prospective.local_separability(unscoped, HARBOUR_RUN)[CONTENT]
+    assert loose["refuted_contexts"] > scoped["refuted_contexts"], loose
+    assert loose["contexts_on_both_sides"] > 0, loose
+    assert loose["diagnosis"].startswith("NOT_REPAIRABLE_LOCALLY"), loose
 
 
 # ------------------------------------- rule gap versus a claim the ontology cannot keep
@@ -187,3 +261,95 @@ def test_the_diagnosis_says_nothing_when_there_are_no_refutations(harbour):
     from semabi.compiler.v4.prospective import local_separability
     result = _run(harbour["joint discrimination x2"])
     assert local_separability(result, HARBOUR_RUN)[POSITION]["diagnosis"] == "NO_REFUTATIONS"
+
+
+def test_the_result_reports_why_it_was_silent(harbour):
+    """Executes the silence summary on a reading the instrument does reach.
+
+    Detects a result artifact in which an absence of refutations cannot be told apart from
+    an absence of tests.  A pass establishes that coverage and the reasons for
+    NOT_APPLICABLE are recorded alongside the verdicts; it does not establish that the
+    instrument's scope is appropriate for any given application -- on blend_book every
+    CONTENT prediction is untested for a single reason, and the summary is what makes that
+    legible rather than hiding it behind a clean refutation count.
+    """
+    result = _run(harbour["joint discrimination x2"])
+    silence = result.silence(CONTENT)
+    assert silence["instrument_reached_this_application"] is True
+    assert silence["tested"] > 0 and silence["untested"] > 0
+    assert 0.0 < silence["coverage"] < 1.0
+    assert silence["predictions"] == silence["tested"] + silence["untested"]
+    assert all(isinstance(reason, str) and reason for reason in silence["reasons"])
+
+
+# ------------------------------------------------- is the effect model a function of the action?
+
+@pytest.fixture(scope="module")
+def determinacy(harbour):
+    from semabi.compiler.v4.prospective import action_effect_determinacy
+    return {name: action_effect_determinacy(HARBOUR_RUN, harbour[name], split=0.6)
+            for name in ("joint discrimination x2", "promote cell[_]=cell#0")}
+
+
+def _group(result, control):
+    return next(g for g in result["groups"] if g["control"] == control)
+
+
+def test_a_stable_naming_gives_one_effect_per_observable_action(determinacy):
+    """Executes the determinacy check on harbour's ``click:Close`` and ``click:Reopen``.
+
+    Detects a reading whose rules disagree with each other about what one observable action
+    does.  A pass establishes that this reading's rules for a given a11y action all predict
+    the same literal -- internal coherence, measured without reference to any other reading
+    and without consulting the later page at all.
+
+    It does not establish that the literal is correct; that is what CONTENT and POSITION
+    are for, and this reading is refuted there too.
+    """
+    result = determinacy["joint discrimination x2"]
+    assert result["totals"].get("BASE_AMBIGUOUS", 0) == 0
+    assert result["totals"].get("ORDINAL_AMBIGUOUS", 0) == 0
+    for control in ("button:Close", "button:Reopen"):
+        group = _group(result, control)
+        assert group["verdict"] == "DETERMINATE"
+        assert len(group["literals"]) == 1
+
+
+def test_a_colliding_naming_fragments_into_rules_that_contradict_each_other(determinacy):
+    """The internal counterpart of the positional refutation.
+
+    Executes the same check on the reading that names a cell by its own text.  Because the
+    abstractor must disambiguate each occurrence positionally, the reading fits a separate
+    rule per button occurrence, most from a single transition, and those rules then predict
+    different identities for the identical observable click.
+
+    Detects a model that is not a function of the action it is keyed on.  A pass establishes
+    that this reading is self-inconsistent about ``click:Close`` on the evidence it was
+    fitted from; it does not by itself refute the reading -- the page checks do that.
+    """
+    result = determinacy["promote cell[_]=cell#0"]
+    assert result["totals"].get("ORDINAL_AMBIGUOUS", 0) >= 1
+    close = _group(result, "button:Close")
+    assert close["verdict"] == "ORDINAL_AMBIGUOUS"
+    assert len(close["literals"]) > 1
+    assert {split_literal(v)[0] for v in close["literals"]} == {"closed"}
+    # the fragmentation is what produces the disagreement
+    assert close["rules"] > _group(determinacy["joint discrimination x2"],
+                                  "button:Close")["rules"]
+    assert close["single_support_rules"] >= 1
+
+
+def test_determinacy_never_compares_one_readings_literals_with_anothers(determinacy):
+    """Guards the non-circularity of this check: it is a within-reading measure.
+
+    The two readings share no vocabulary -- one predicts ``'closed'`` on an attribute slot,
+    the other ``'closed#2'`` on the identity slot -- so a cross-reading comparison would be
+    meaningless.  What makes the results comparable is that each is a yes/no about that
+    reading alone, keyed on the observable action.
+    """
+    slots = {name: {g["slot"] for g in result["groups"]}
+             for name, result in determinacy.items()}
+    assert slots["joint discrimination x2"] != slots["promote cell[_]=cell#0"]
+    for result in determinacy.values():
+        assert {g["control"] for g in result["groups"]} <= {
+            "button:Close", "button:Reopen", "button:Schedule call"}

@@ -1,0 +1,210 @@
+[
+ {
+  "reading": "joint discrimination x2",
+  "split": 0.4,
+  "totals": {
+   "DETERMINATE": 2,
+   "DETERMINATE_heldout_clicks": 42
+  },
+  "groups": [
+   {
+    "control": "button:Close",
+    "slot": "attr:cell#0@5",
+    "verdict": "DETERMINATE",
+    "rules": 2,
+    "literals": [
+     "closed"
+    ],
+    "max_support": 4,
+    "single_support_rules": 1,
+    "heldout_clicks": 17
+   },
+   {
+    "control": "button:Reopen",
+    "slot": "attr:cell#0@5",
+    "verdict": "DETERMINATE",
+    "rules": 1,
+    "literals": [
+     "open"
+    ],
+    "max_support": 4,
+    "single_support_rules": 0,
+    "heldout_clicks": 25
+   }
+  ]
+ },
+ {
+  "reading": "promote cell[_]=cell#0",
+  "split": 0.4,
+  "totals": {
+   "DETERMINATE": 2,
+   "DETERMINATE_heldout_clicks": 42
+  },
+  "groups": [
+   {
+    "control": "button:Close",
+    "slot": "id",
+    "verdict": "DETERMINATE",
+    "rules": 4,
+    "literals": [
+     "closed#2"
+    ],
+    "max_support": 2,
+    "single_support_rules": 3,
+    "heldout_clicks": 17
+   },
+   {
+    "control": "button:Reopen",
+    "slot": "id",
+    "verdict": "DETERMINATE",
+    "rules": 3,
+    "literals": [
+     "open#2"
+    ],
+    "max_support": 2,
+    "single_support_rules": 2,
+    "heldout_clicks": 25
+   }
+  ]
+ },
+ {
+  "reading": "joint discrimination x2",
+  "split": 0.6,
+  "totals": {
+   "DETERMINATE": 2,
+   "DETERMINATE_heldout_clicks": 23
+  },
+  "groups": [
+   {
+    "control": "button:Close",
+    "slot": "attr:cell#0@5",
+    "verdict": "DETERMINATE",
+    "rules": 2,
+    "literals": [
+     "closed"
+    ],
+    "max_support": 5,
+    "single_support_rules": 0,
+    "heldout_clicks": 8
+   },
+   {
+    "control": "button:Reopen",
+    "slot": "attr:cell#0@5",
+    "verdict": "DETERMINATE",
+    "rules": 2,
+    "literals": [
+     "open"
+    ],
+    "max_support": 6,
+    "single_support_rules": 1,
+    "heldout_clicks": 15
+   }
+  ]
+ },
+ {
+  "reading": "promote cell[_]=cell#0",
+  "split": 0.6,
+  "totals": {
+   "ORDINAL_AMBIGUOUS": 2,
+   "ORDINAL_AMBIGUOUS_heldout_clicks": 23
+  },
+  "groups": [
+   {
+    "control": "button:Close",
+    "slot": "id",
+    "verdict": "ORDINAL_AMBIGUOUS",
+    "rules": 7,
+    "literals": [
+     "closed",
+     "closed#2"
+    ],
+    "max_support": 2,
+    "single_support_rules": 6,
+    "heldout_clicks": 8
+   },
+   {
+    "control": "button:Reopen",
+    "slot": "id",
+    "verdict": "ORDINAL_AMBIGUOUS",
+    "rules": 6,
+    "literals": [
+     "open#2",
+     "open#3"
+    ],
+    "max_support": 2,
+    "single_support_rules": 5,
+    "heldout_clicks": 15
+   }
+  ]
+ },
+ {
+  "reading": "joint discrimination x2",
+  "split": 0.8,
+  "totals": {
+   "DETERMINATE": 2,
+   "DETERMINATE_heldout_clicks": 5
+  },
+  "groups": [
+   {
+    "control": "button:Close",
+    "slot": "attr:cell#0@5",
+    "verdict": "DETERMINATE",
+    "rules": 2,
+    "literals": [
+     "closed"
+    ],
+    "max_support": 10,
+    "single_support_rules": 0,
+    "heldout_clicks": 1
+   },
+   {
+    "control": "button:Reopen",
+    "slot": "attr:cell#0@5",
+    "verdict": "DETERMINATE",
+    "rules": 2,
+    "literals": [
+     "open"
+    ],
+    "max_support": 11,
+    "single_support_rules": 0,
+    "heldout_clicks": 4
+   }
+  ]
+ },
+ {
+  "reading": "promote cell[_]=cell#0",
+  "split": 0.8,
+  "totals": {
+   "ORDINAL_AMBIGUOUS": 2,
+   "ORDINAL_AMBIGUOUS_heldout_clicks": 5
+  },
+  "groups": [
+   {
+    "control": "button:Close",
+    "slot": "id",
+    "verdict": "ORDINAL_AMBIGUOUS",
+    "rules": 9,
+    "literals": [
+     "closed",
+     "closed#2"
+    ],
+    "max_support": 3,
+    "single_support_rules": 5,
+    "heldout_clicks": 1
+   },
+   {
+    "control": "button:Reopen",
+    "slot": "id",
+    "verdict": "ORDINAL_AMBIGUOUS",
+    "rules": 8,
+    "literals": [
+     "open#2",
+     "open#3"
+    ],
+    "max_support": 3,
+    "single_support_rules": 5,
+    "heldout_clicks": 4
+   }
+  ]
+ }
+]
