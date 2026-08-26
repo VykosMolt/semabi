@@ -8,9 +8,11 @@ appeared anywhere, which is far too weak -- a value gained in an untouched row c
 prediction about a row that never changed.  Scoping the check needs correspondence.
 
 The correspondence has to live *below* the competing readings.  Harbour's live disagreement
-is whether the entity is a row or a cell; a correspondence rule that relocates rows assumes
-one answer, and one that relocates cells assumes the other.  So this module knows nothing
-about readings, objects, keys or families.  It works on :class:`Observation` alone: roles,
+is over what the page's entities are: one reading names each table row by its identifying
+column, the other keeps rows keyed by a column that does not identify them and additionally
+makes every bare cell an entity named by its own rendered text.  A correspondence rule that
+relocates rows assumes the first answer and one that relocates cells assumes the second, so
+this module knows nothing about readings, objects, keys or families.  It works on :class:`Observation` alone: roles,
 rendered text, values, and tree structure.
 
 **Outcome masking.**  The feature a prediction is about may not be used to find the thing
@@ -41,8 +43,8 @@ which is where the wildcard enters).  A pre-child's admissible continuations are
 post-children it is matched to in *some* optimal alignment; if it can also be left unmatched
 by an optimal alignment, that counts as ambiguity too.  Levels are aligned on the strongest
 descriptor that places the target at all -- full masked subtree, then a depth-two local
-summary, then bare role structure -- and the backoff is per level and recorded, never used
-to break a tie.
+summary, then role and whether it has descendants -- and the backoff is per level and
+recorded, never used to break a tie.
 """
 from __future__ import annotations
 

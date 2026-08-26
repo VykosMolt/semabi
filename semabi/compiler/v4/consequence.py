@@ -17,10 +17,12 @@ Three things keep this non-circular.
 
 * The rules are fitted on a strict chronological prefix; nothing about the evaluated step
   reached them.
-* The correspondence is candidate-independent and outcome-masked.  Harbour's disagreement is
-  whether the entity is a row or a cell, and the correspondence layer commits to neither: it
-  relocates whichever raw node the reading's own effect points at, using roles, structure and
-  the *other* rendered text around it.
+* The correspondence is candidate-independent and outcome-masked.  Harbour's readings
+  disagree about what the page's entities are -- rows named by their identifying column, or
+  rows named by a column that does not identify them plus every bare cell as an entity named
+  by its own text -- and the correspondence layer commits to neither: it relocates whichever
+  raw node the reading's own effect points at, using roles, structure and the *other*
+  rendered text around it.
 * The ``VALUE`` verdict compares against ``Node.name``/``Node.value`` in the later raw
   observation, which no reading computes.
 
