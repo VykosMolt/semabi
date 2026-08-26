@@ -33,6 +33,8 @@ win every comparison: it has no churn because it has nothing.
 """
 from __future__ import annotations
 
+import hashlib
+import json
 from collections import Counter
 from dataclasses import dataclass, field
 from typing import Any
@@ -43,6 +45,29 @@ from semabi.compiler.v2.abstractor import V2Abstractor
 from semabi.compiler.v2.score import _changed_inside_units, _same_view
 
 SENSING_KINDS = ("reload",)
+
+# the abstractor's identity repair: the same object seen under a new key
+KEY_CHANGE = "__key__"
+
+
+def observable_delta_signature(delta) -> tuple:
+    """The part of a state delta stated in rendered slots and values.
+
+    ``added`` and ``removed`` reduce to counts because an object's identity is private to
+    the reading that posited it, and relation slots reduce to a count because ``rel:N``
+    names a type id, which two readings can number differently while positing the same
+    change.  What survives is what the page showed: the slot that changed and the values
+    it changed between.
+    """
+    attrs: Counter = Counter()
+    keyings = 0
+    for _oid, slot, old, new in delta.attr_changes:
+        if slot == KEY_CHANGE:
+            keyings += 1
+            continue
+        attrs[(slot, repr(old), repr(new))] += 1
+    return (len(delta.added), len(delta.removed), keyings,
+            tuple(sorted(attrs.items())), len(delta.rel_changes))
 
 
 @dataclass
@@ -62,12 +87,32 @@ class Behaviour:
     # what this reading said about each step, so that two readings can be compared where
     # they actually disagree rather than by their totals
     verdicts: dict[int, str] = field(default_factory=dict)
+    # and *what* it said changed there.  The verdict records whether a reading accounted
+    # for a step; it does not record the content of the account, so two readings that
+    # disagree about which rendered values belong to tracked objects can receive the same
+    # verdict at every step of a long history.  On blend_book that hides a difference at
+    # four steps.  The signature below keeps the observable part of the delta -- slot
+    # names and rendered values, which come from the page -- and drops object identities
+    # and type ids, which are private to a reading and would make every pair differ.
+    delta_signatures: dict[int, tuple] = field(default_factory=dict)
 
     @property
     def errors(self) -> int:
         """Registered changes with nothing behind them: contradictions, re-keyings,
         visibility artifacts and deltas at steps where no unit content changed."""
         return self.contradictions + self.churn + self.spurious + self.visibility
+
+    def delta_signature_digest(self) -> str:
+        """Identity of everything this reading said changed, over the whole history.
+
+        Two readings with equal digests were indistinguishable at delta granularity here.
+        That is a statement about *this* history and this vocabulary, not about the
+        readings: an interaction the history never performed can still tell them apart.
+        """
+        payload = json.dumps([[step, self.delta_signatures[step]]
+                              for step in sorted(self.delta_signatures)],
+                             sort_keys=True, separators=(",", ":"), default=str)
+        return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
     @property
     def order(self) -> tuple:
@@ -196,6 +241,7 @@ def evaluate(A: V2Abstractor, log: EvidenceLog, max_steps: int | None = None) ->
             elif changed_domain and phantom:
                 verdict = "VISIBILITY"
             out.verdicts[step.step] = verdict
+            out.delta_signatures[step.step] = observable_delta_signature(delta)
             prev = state
 
     out.complexity = sum(5 + len([k for k in ti.slots if k != "id"]) + len(ti.refs)

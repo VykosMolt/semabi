@@ -651,3 +651,124 @@ the previous checkpoint: 2/3/2 survivors, every outcome `AMBIGUOUS_SURVIVOR_SET`
 HOLDOUT classification `INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE`, `selected` null, every
 SOURCE incumbent carrying an explicit TRANSFER loss, transported RTC zero. No scientific
 mechanism was touched and no next experiment was started.
+
+## m — 2026-08-26 — what the survivor sets actually were, and what the comparison could not see
+
+V4 was adjudicated complete and the integrity campaign closed. This entry is the first
+post-V4 work: not a new experiment, but an inspection of the survivor sets V4 produced,
+and three mechanism repairs that inspection forced.
+
+### The survivor sets were not what they looked like
+
+`2/3/2` looked like three applications on which the evidence left several rival readings.
+Reading the pairwise verdicts says otherwise. On **all three** applications the same
+candidate, `promote cell[_]=cell#0`, survived with **zero wins and zero losses**: every
+pair it appeared in returned `INCONCLUSIVE_ASYMMETRIC_APPLICABILITY`. It was never
+compared to anything.
+
+The cause is structural rather than accidental. Promotion does not vary a parameter inside
+a fixed hypothesis space; it changes the space. Measured directly on the TRANSFER traces:
+promoting `cell[_]` destroys both row families on harbour, one on blend_book, and on
+vet_clinic strips the slots every row key names (`row[_](cell[_])` goes from seven slots to
+one). Its applicability is therefore always below 1, the gate fires, and the gate fires on
+*exactly* the decision class transfer exists to test.
+
+That the exemption mattered is not inference. The local search on each TRANSFER trace, free
+to promote anything, promotes nothing on all three. The transported promoted reading shows
+churn 209 on blend_book — the re-keying signature the V4 objective was written to catch —
+with explained collapsing 265 → 64, and is contradicted at 309 steps on vet_clinic where a
+rival is not contradicted at all.
+
+### Correction 1 — refutation crosses asymmetric applicability; credit does not
+
+A claim that could not be instantiated leaves the reading SILENT there, and silence is
+never classified WRONG. So the count of steps where a reading is wrong and its rival is not
+can only *fall* as it instantiates less: a less instantiated reading cannot manufacture
+refutations of its rival. A reading contradicted where its rival never is has been refuted
+despite the handicap. Explanation counts have no such monotonicity — a differently
+structured reading has different opportunities to explain — so only the strictly dominant
+refutation case is admitted, and error totals, separation dominance and confirmed-claim
+counts all stay behind the gate.
+
+### Correction 2 — silence is not evidence in either direction
+
+The guard stopped only when *neither* reading made predictions. A probe reading that is
+SILENT at all 891 steps of vet_clinic defeated four of the six real candidates: never
+contradicted, because it never claims anything. It now decides nothing.
+
+This falsified an existing test. `test_explaining_more_steps_does_not_win_a_transfer_
+comparison` used a rival silent at every step, so it was passing through the defect rather
+than through the rule. The property it names is the core V4 thesis and survives: with a
+rival that says something of its own, the left reading still explains three more steps and
+still loses.
+
+Result: `2/3/2 → 1/3/1`. `selected` is non-null for the first time, on vet_clinic and
+blend_book. Both HOLDOUT classifications stay `INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE`.
+
+### Correction 3 — the candidate space could not express the reading the evidence wanted
+
+With the promoted candidate testable, harbour's remaining ambiguity was one pair, and the
+disagreement atlas named it: `SEPARATION_CONFLICT`, two readings differing at **one step of
+a 459-step history**, each key separating better on a different family. That is not the
+history failing to discriminate. Alternatives were generated one family at a time, so the
+candidate set was the Hamming-1 neighbourhood of the incumbent, and the reading that fixes
+both families was never proposed.
+
+The joint candidate applies every family whose SOURCE discrimination strictly exceeds the
+chosen key's, at once. It is not a free win, which is why it is proposed rather than
+assumed: on harbour it defeats both row readings and closes the conflict; on vet_clinic it
+is contradicted at 380 steps and loses to everything; on blend_book it is eliminated.
+
+Provenance, stated because it matters: the gap was noticed by looking at harbour's TRANSFER
+conflict, so the *idea* saw evidence the generator cannot. The rule is general, computed
+from SOURCE alone, and fires on all three applications — x3, x2, x3. A harbour-shaped patch
+would fire only on harbour.
+
+### What the comparison could not see
+
+Grouping candidates by their per-step verdict map turns up classes of readings that are
+identical at every step of an 800-step history. On blend_book, `button[_]=button#0`,
+`cell[_]=cell#0` and `source_choice` share a verdict map over all 833 steps — and the
+frontier's unique survivor is one of them, chosen over the other two on separation evidence
+alone. Behaviour did not choose it.
+
+Asking the finer question needed a delta-level signature, and the first version of that
+probe was wrong: it kept relation slot names, which are type ids, and reported three
+distinct classes where every difference was numbering. With identities and type ids
+excluded, the honest answer is two classes:
+
+    {cell[_]=cell#0, source_choice}   0 differing steps out of 833
+    {button[_]=button#0}              4 differing steps
+
+and the four differences are observable. At step 677 `cell[_]=cell#0` registers
+`attr:cell#0@4  'Festival White' -> 'Picnic'` — a rendered label change — which
+`button[_]=button#0` does not attribute to any object it tracks. Both readings receive the
+same verdict there.
+
+So the missing capability is not a new prediction API. **The comparison was discarding
+predictions the abstractor already makes.** A verdict records *whether* a reading accounted
+for a step, never *what* it said changed, and that is coarse enough to hide a real
+disagreement across an entire history.
+
+The signature is now recorded during replay and carried into every report as a digest, and
+readings are grouped by it. It classifies and never eliminates: a delta difference says two
+readings disagree, not which of them is wrong — that judgement is what the verdict carries.
+Each report states its `identification`:
+
+    BEHAVIOURALLY_DISTINGUISHED_ON_THIS_HISTORY
+    SELECTED_WITHIN_AN_INDISTINGUISHABLE_CLASS_ON_THIS_HISTORY
+    AMBIGUOUS_SURVIVORS_BEHAVIOURALLY_DISTINCT_ON_THIS_HISTORY
+    AMBIGUOUS_SURVIVORS_INDISTINGUISHABLE_ON_THIS_HISTORY
+
+always qualified by the history, because indistinguishability here is a statement about the
+interactions this trace performed and the vocabulary it recorded, not about the readings.
+
+### Why active distinguishability was not built
+
+It was the expected next mechanism. Inspection did not support it. Every surviving pair was
+either a candidate the gate exempted from a test the retained evidence could already apply,
+or a reading the candidate space could not express. There is no point acquiring
+discriminating evidence while the system is discarding discriminating evidence it already
+holds. What inspection did leave is one genuine target — harbour's two survivors sit in
+different delta classes and are separated by no retained evidence — and the delta signature
+is the vocabulary an experiment selector would have to predict in.

@@ -35,6 +35,7 @@ def _evidence(rows: dict) -> list[transfer.TransferEvidence]:
             transport=dict(row["transport"]),
             verdicts={int(step): verdict for step, verdict in row["verdicts"].items()},
             separation=list(row["separation"]),
+            delta_signature_sha256=row.get("delta_signature_sha256", ""),
         ))
     return out
 

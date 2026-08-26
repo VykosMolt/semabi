@@ -103,6 +103,11 @@ class TransferEvidence:
     transport: dict[str, Any] = field(default_factory=dict)
     verdicts: dict[int, str] = field(default_factory=dict)
     separation: list[dict] = field(default_factory=list)
+    # identity of everything this reading said changed, at delta granularity.  Empty for
+    # hand-built fixtures; production evidence always carries it.  It decides nothing:
+    # a delta difference says two readings disagree, not which of them is wrong, so it
+    # classifies indistinguishability and never eliminates.
+    delta_signature_sha256: str = ""
 
     @property
     def errors(self) -> int:
@@ -144,7 +149,8 @@ class TransferEvidence:
                 "separation": self.separation,
                 "separation_confirmed": self.separation_confirmed,
                 "separation_refuted": self.separation_refuted,
-                "separation_tested": self.separation_tested}
+                "separation_tested": self.separation_tested,
+                "delta_signature_sha256": self.delta_signature_sha256}
 
 
 def from_behaviour(name: str, behaviour, transport, key_slots: dict[str, str | None],
@@ -167,7 +173,9 @@ def from_behaviour(name: str, behaviour, transport, key_slots: dict[str, str | N
         applicability=transport.applicability,
         applicability_fraction=transport.applicability_fraction,
         transport=serialized_transport,
-        verdicts=dict(behaviour.verdicts))
+        verdicts=dict(behaviour.verdicts),
+        delta_signature_sha256=(behaviour.delta_signature_digest()
+                                if hasattr(behaviour, "delta_signature_digest") else ""))
     # from_behaviour is the production evidence boundary.  Validate it before returning so
     # malformed transport/separation combinations cannot enter a frontier artifact.
     _validate_separation_records(evidence)
@@ -606,6 +614,22 @@ def separation_differential(left: TransferEvidence,
             "direction": direction,
         })
     return out
+
+
+def indistinguishable_classes(evidence) -> list[list[str]]:
+    """Group readings that said exactly the same thing changed, at every step.
+
+    Deliberately not called equivalence.  It is indistinguishability by the observable
+    content of this history's deltas: an interaction the history never performed can still
+    separate two readings in the same class, and readings in one class still induce
+    different models.  Readings without a delta signature -- hand-built fixtures -- are
+    each left in a class of their own rather than merged into one.
+    """
+    groups: dict[str, list[str]] = {}
+    for row in sorted(evidence, key=lambda e: e.name):
+        digest = row.delta_signature_sha256 or f"UNSIGNED:{row.name}"
+        groups.setdefault(digest, []).append(row.name)
+    return sorted(groups.values(), key=lambda names: (-len(names), names[0]))
 
 
 DECISIONS = ("LEFT", "RIGHT", "UNDECIDED", "INCONCLUSIVE_NO_PREDICTIONS",

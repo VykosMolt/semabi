@@ -341,6 +341,37 @@ def replay(
     report["holdout_frontier"] = holdout_frontier.to_json() if holdout_frontier else None
     report["holdout_outcome"] = holdout_outcome
 
+    # What each reading said *changed*, not merely whether it accounted for the step.
+    # Elimination stays on the verdicts: a delta difference says two readings disagree,
+    # not which of them is wrong.  This classifies what the history could not tell apart.
+    all_evidence = list(transfer_evidence.values())
+    classes = transfer.indistinguishable_classes(all_evidence)
+    survivor_set = set(transfer_frontier.survivors)
+    survivor_classes = [[n for n in group if n in survivor_set] for group in classes]
+    survivor_classes = [group for group in survivor_classes if group]
+    winner_class = next((group for group in classes
+                         if selected_candidate and selected_candidate.name in group), None)
+    if unique and winner_class is not None:
+        identification = ("BEHAVIOURALLY_DISTINGUISHED_ON_THIS_HISTORY" if len(winner_class) == 1
+                          else "SELECTED_WITHIN_AN_INDISTINGUISHABLE_CLASS_ON_THIS_HISTORY")
+    elif not survivor_candidates:
+        identification = "NO_UNDEFEATED_READING"
+    elif len(survivor_classes) == 1:
+        identification = "AMBIGUOUS_SURVIVORS_INDISTINGUISHABLE_ON_THIS_HISTORY"
+    else:
+        identification = "AMBIGUOUS_SURVIVORS_BEHAVIOURALLY_DISTINCT_ON_THIS_HISTORY"
+    report["indistinguishable_classes"] = {
+        "basis": "IDENTICAL_OBSERVABLE_STATE_DELTA_AT_EVERY_STEP_OF_THIS_HISTORY",
+        "not_a_claim_of": (
+            "MODEL_EQUIVALENCE_OR_EQUIVALENCE_UNDER_INTERACTIONS_THIS_HISTORY_NEVER_PERFORMED"
+        ),
+        "classes": classes,
+        "survivor_classes": survivor_classes,
+        "distinct_classes": len(classes),
+        "distinct_survivor_classes": len(survivor_classes),
+    }
+    report["identification"] = identification
+
     # Last, so the recorded execution set covers every module this replay imported,
     # including the ones compilation imports lazily.  The authoritative launcher
     # independently refuses a report whose digest differs from its final attestation.

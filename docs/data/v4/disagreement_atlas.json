@@ -26,6 +26,30 @@
      "row[_](cell[_],cell[_](c=cell#0@4"
     ]
    ],
+   "delta_classes": [
+    [
+     "group[_](heading[_],list=heading#1",
+     "source_choice"
+    ],
+    [
+     "cell[_]=cell#0"
+    ],
+    [
+     "joint discrimination x3"
+    ],
+    [
+     "promote cell[_]=cell#0"
+    ],
+    [
+     "promote listitem[_]=listitem#0!"
+    ],
+    [
+     "row[_](cell[_])=None"
+    ],
+    [
+     "row[_](cell[_],cell[_](c=cell#0@4"
+    ]
+   ],
    "distinct_classes": 7,
    "distinct_survivor_classes": 1,
    "not_a_claim_of": "MODEL_EQUIVALENCE_OR_EQUIVALENCE_UNDER_UNTAKEN_ACTIONS",
@@ -33,9 +57,22 @@
     [
      "row[_](cell[_])=None"
     ]
+   ],
+   "verdict_classes_that_split_at_delta_granularity": [
+    {
+     "delta_classes": [
+      0
+     ],
+     "splits": false,
+     "verdict_class": [
+      "group[_](heading[_],list=heading#1",
+      "source_choice"
+     ]
+    }
    ]
   },
   "coexistence_reasons": {},
+  "identification": "BEHAVIOURALLY_DISTINGUISHED_ON_THIS_HISTORY",
   "incumbent": "source_choice",
   "outcome": "UNIQUE_SURVIVOR",
   "pairs": [],
@@ -67,6 +104,25 @@
      "promote cell[_]=cell#0"
     ]
    ],
+   "delta_classes": [
+    [
+     "joint discrimination x2",
+     "row[_](cell[_](button[_]=cell#0"
+    ],
+    [
+     "row[_](cell[_],cell[_](b=cell#0",
+     "source_choice"
+    ],
+    [
+     "button[_]=None"
+    ],
+    [
+     "group[_](heading[_],tabl=None"
+    ],
+    [
+     "promote cell[_]=cell#0"
+    ]
+   ],
    "distinct_classes": 5,
    "distinct_survivor_classes": 2,
    "not_a_claim_of": "MODEL_EQUIVALENCE_OR_EQUIVALENCE_UNDER_UNTAKEN_ACTIONS",
@@ -77,11 +133,34 @@
     [
      "promote cell[_]=cell#0"
     ]
+   ],
+   "verdict_classes_that_split_at_delta_granularity": [
+    {
+     "delta_classes": [
+      0
+     ],
+     "splits": false,
+     "verdict_class": [
+      "joint discrimination x2",
+      "row[_](cell[_](button[_]=cell#0"
+     ]
+    },
+    {
+     "delta_classes": [
+      1
+     ],
+     "splits": false,
+     "verdict_class": [
+      "row[_](cell[_],cell[_](b=cell#0",
+      "source_choice"
+     ]
+    }
    ]
   },
   "coexistence_reasons": {
    "UNTESTED_ACROSS_INVENTORIES": 1
   },
+  "identification": "AMBIGUOUS_SURVIVORS_BEHAVIOURALLY_DISTINCT_ON_THIS_HISTORY",
   "incumbent": "source_choice",
   "outcome": "AMBIGUOUS_SURVIVOR_SET",
   "pairs": [
@@ -307,6 +386,25 @@
      "promote cell[_]=cell#0"
     ]
    ],
+   "delta_classes": [
+    [
+     "cell[_]=cell#0",
+     "source_choice"
+    ],
+    [
+     "joint discrimination x3",
+     "row[_](cell[_],cell[_](b=cell#0"
+    ],
+    [
+     "button[_]=button#0"
+    ],
+    [
+     "group[_](status[_],group=None"
+    ],
+    [
+     "promote cell[_]=cell#0"
+    ]
+   ],
    "distinct_classes": 4,
    "distinct_survivor_classes": 1,
    "not_a_claim_of": "MODEL_EQUIVALENCE_OR_EQUIVALENCE_UNDER_UNTAKEN_ACTIONS",
@@ -314,9 +412,34 @@
     [
      "cell[_]=cell#0"
     ]
+   ],
+   "verdict_classes_that_split_at_delta_granularity": [
+    {
+     "delta_classes": [
+      0,
+      2
+     ],
+     "splits": true,
+     "verdict_class": [
+      "button[_]=button#0",
+      "cell[_]=cell#0",
+      "source_choice"
+     ]
+    },
+    {
+     "delta_classes": [
+      1
+     ],
+     "splits": false,
+     "verdict_class": [
+      "joint discrimination x3",
+      "row[_](cell[_],cell[_](b=cell#0"
+     ]
+    }
    ]
   },
   "coexistence_reasons": {},
+  "identification": "SELECTED_WITHIN_AN_INDISTINGUISHABLE_CLASS_ON_THIS_HISTORY",
   "incumbent": "source_choice",
   "outcome": "UNIQUE_SURVIVOR",
   "pairs": [],

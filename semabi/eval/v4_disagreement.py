@@ -182,6 +182,17 @@ def atlas(report_path: Path, *, survivors_only: bool = True) -> dict[str, Any]:
         for b in names[i + 1:]:
             pairs.append(classify_pair(evidence[a], evidence[b], readings[a], readings[b]))
     classes = behavioural_classes(evidence)
+    # the report carries the finer, delta-level classes; the verdict classes above are what
+    # the comparison rule can actually see.  Where a verdict class splits into several
+    # delta classes, the rule was blind to a difference the abstraction had already made.
+    delta = report.get("indistinguishable_classes")
+    refinement = None
+    if delta:
+        by_delta = {name: i for i, group in enumerate(delta["classes"]) for name in group}
+        refinement = [{"verdict_class": group,
+                       "delta_classes": sorted({by_delta[n] for n in group if n in by_delta}),
+                       "splits": len({by_delta[n] for n in group if n in by_delta}) > 1}
+                      for group in classes if len(group) > 1]
     survivor_classes = [[n for n in group if n in set(report["survivor_names"])]
                         for group in classes]
     survivor_classes = [group for group in survivor_classes if group]
@@ -191,6 +202,7 @@ def atlas(report_path: Path, *, survivors_only: bool = True) -> dict[str, Any]:
         "survivors": report["survivor_names"],
         "incumbent": report["source"]["source_choice"]["name"],
         "source_choice_rejected": report["source_choice_rejected"],
+        "identification": report.get("identification"),
         "behavioural_classes": {
             "basis": "IDENTICAL_PER_STEP_VERDICT_MAP_ON_THIS_HISTORY_ONLY",
             "not_a_claim_of": "MODEL_EQUIVALENCE_OR_EQUIVALENCE_UNDER_UNTAKEN_ACTIONS",
@@ -198,6 +210,8 @@ def atlas(report_path: Path, *, survivors_only: bool = True) -> dict[str, Any]:
             "distinct_classes": len(classes),
             "survivor_classes": survivor_classes,
             "distinct_survivor_classes": len(survivor_classes),
+            "delta_classes": (delta or {}).get("classes"),
+            "verdict_classes_that_split_at_delta_granularity": refinement,
         },
         "pairs": pairs,
         "coexistence_reasons": dict(Counter(p["coexistence_reason"] for p in pairs)),
@@ -224,6 +238,12 @@ def main() -> None:
         for group in classes["classes"]:
             mark = "*" if len(group) > 1 else " "
             print(f"     {mark} {group}")
+        for row in classes.get("verdict_classes_that_split_at_delta_granularity") or []:
+            if row["splits"]:
+                print(f"     ! verdict class {row['verdict_class']} splits into "
+                      f"{len(row['delta_classes'])} delta classes")
+        if one.get("identification"):
+            print(f"   identification: {one['identification']}")
         for pair in one["pairs"]:
             print(f"   {pair['left'][:30]!r:32s} vs {pair['right'][:30]!r:32s} "
                   f"{pair['verdict'][:12]:12s} {pair['coexistence_reason']}")
