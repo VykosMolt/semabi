@@ -772,3 +772,26 @@ discriminating evidence while the system is discarding discriminating evidence i
 holds. What inspection did leave is one genuine target — harbour's two survivors sit in
 different delta classes and are separated by no retained evidence — and the delta signature
 is the vocabulary an experiment selector would have to predict in.
+
+### The separating witness, from evidence already held
+
+An undecided pair is not an absence of difference. `semabi/eval/v4_separating_witness.py`
+asks where a surviving pair's observable deltas already diverge, and what was done there.
+On harbour:
+
+    joint discrimination x2  vs  promote cell[_]=cell#0
+      deltas differ at 40 of 453 steps
+      separating actions   : click:button  x40   (every one)
+      verdict pairs there  : EXPLAINED/EXPLAINED x39, SILENT/EXPLAINED x1
+
+So the history *does* separate them, at 40 steps, and the comparison vocabulary is blind at
+39 of the 40 because both readings are recorded as having accounted for the step. The class
+of interaction that discriminates is named: clicking a button in the table.
+
+This is the first half of active distinguishability and it needed no new interaction, only
+the delta layer. The second half is the part it cannot do: knowing *where* two readings
+differ is not knowing which is right there. Both are EXPLAINED, so the objective's
+consistency checks — contradiction, churn, visibility, spurious — fire for neither. Closing
+that needs either a criterion that adjudicates competing deltas at a step both readings
+explain, or an interaction whose outcome one of them cannot accommodate. That is the next
+piece of mechanism, and it is now a well-posed question rather than a direction.
