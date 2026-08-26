@@ -11,9 +11,15 @@ reading, or to the consequence check; it exists so that a claim like "the matche
 the berth's condition cell" can be checked against what the application says the berth is,
 rather than against the matcher's own reasoning.
 
-Two restricted tallies keep the headline number from being a statement about easy inputs: the
-same counts over transitions that add or remove nodes, and over the nodes whose index actually
-moved -- the only cases a matcher that answered "the same position" could not get right.
+Three restricted tallies keep the headline number from being a statement about easy inputs:
+the same counts over transitions that add or remove nodes, over the nodes whose index actually
+moved -- the only cases a matcher that answered "the same position" could not get right -- and
+over the cases where the entity came back rendered *somewhere else on the page* -- under a
+different heading, or in a different role -- which are not correspondence questions at all.
+That last split matters: without it the cellar application appeared to break the matcher 150
+times, when what it does is switch view and render a hall that was a heading as a cell in
+another table's Hall column.  The domain entity persists; the node does not; the matcher
+tracks nodes.
 
 The check is deliberately run in the matcher's hardest mode -- the anchoring text masked, as a
 prediction about that text would mask it -- and reports the number that matters:
@@ -90,6 +96,25 @@ def anchors(state: dict, obs: Observation, keys: dict[str, str]) -> dict[str, in
     return out
 
 
+def section(obs: Observation, index: int) -> str:
+    """The nearest heading above this node, which is what tells one view of a page from another.
+
+    Walking up from the node, the first heading among the earlier siblings of each ancestor.
+    A vessel's cell in the Vessels table and a lot's cell in the Lots table have the same role
+    and the same ancestor role path; what separates them is that one sits under "Cellar: halls
+    and vessels" and the other under "Lots in the cellar".
+    """
+    node = index
+    while node >= 0:
+        parent = obs.node(node).parent
+        siblings = obs.children(parent)
+        for sibling in reversed(siblings[:siblings.index(node)]):
+            if obs.node(sibling).role == "heading" and obs.node(sibling).name:
+                return obs.node(sibling).name
+        node = parent
+    return ""
+
+
 def audit(run_dir: Path, limit: int | None = None) -> dict[str, Any]:
     log = EvidenceLog(run_dir)
     records = [json.loads(line) for line in
@@ -103,6 +128,7 @@ def audit(run_dir: Path, limit: int | None = None) -> dict[str, Any]:
     vanished: Counter = Counter()
     hard: Counter = Counter()      # the same tally restricted to structural transitions
     shifted: Counter = Counter()   # ... and to cases where the node's index itself moved
+    rerendered: Counter = Counter()  # ... and where the entity came back in a different role
     wrong: list[dict[str, Any]] = []
     steps = log.steps[:limit] if limit else log.steps
     for k, step in enumerate(steps):
@@ -146,7 +172,17 @@ def audit(run_dir: Path, limit: int | None = None) -> dict[str, Any]:
                        else "ambiguous_missing_truth")
             if structural:
                 hard[outcome] += 1
-            if truth != pre_node:
+            elsewhere = (pre.node(pre_node).role != post.node(truth).role
+                         or section(pre, pre_node) != section(post, truth))
+            if elsewhere:
+                # Not a correspondence question.  This application switched view and rendered
+                # the entity somewhere else -- a hall that was a heading comes back as a cell
+                # in a table's Hall column, a vessel's cell moves from the Vessels table to
+                # the Lots table -- so the domain entity persists while the node does not.
+                # The matcher tracks nodes and correctly declines these; scoring them as
+                # matcher errors would conflate the two.
+                rerendered[outcome] += 1
+            elif truth != pre_node:
                 # The decisive subset.  Most nodes keep their index across a re-render, so a
                 # matcher that simply answered "the same index" would score well on the totals
                 # above; it cannot score at all here.
@@ -162,6 +198,10 @@ def audit(run_dir: Path, limit: int | None = None) -> dict[str, Any]:
             else:
                 tally["ambiguous_containing_truth" if truth in match.admissible
                       else "ambiguous_missing_truth"] += 1
+            if elsewhere:
+                # The anchor is a re-render, so the row pairing derived from it is not a
+                # correspondence question either.
+                continue
             _cells(corresponder, pre, post, pre_node, truth, cells, wrong, step.step, eid,
                    hard if structural else None, shifted)
     total = sum(v for k, v in tally.items() if k not in
@@ -171,8 +211,13 @@ def audit(run_dir: Path, limit: int | None = None) -> dict[str, Any]:
             "attribute_cells": dict(sorted(cells.items())),
             "transitions_that_add_or_remove_nodes": dict(sorted(hard.items())),
             "nodes_whose_index_moved": dict(sorted(shifted.items())),
+            "entity_re_rendered_elsewhere_on_the_page": dict(sorted(rerendered.items())),
             "no_oracle_truth_available": dict(sorted(vanished.items())),
-            "unique_but_wrong": tally["unique_but_wrong"] + cells["unique_but_wrong"],
+            "unique_but_wrong": {
+                "where a node continuation exists":
+                    tally["unique_but_wrong"] + cells["unique_but_wrong"]
+                    - rerendered["unique_but_wrong"],
+                "where the entity was re-rendered elsewhere": rerendered["unique_but_wrong"]},
             "witnesses": wrong[:20]}
 
 
@@ -234,8 +279,12 @@ def main() -> None:
         print(f"   row cells    {row['attribute_cells']}")
         print(f"   structural   {row['transitions_that_add_or_remove_nodes']}")
         print(f"   index moved  {row['nodes_whose_index_moved']}")
+        print(f"   re-rendered  {row['entity_re_rendered_elsewhere_on_the_page']}")
         print(f"   no oracle truth  {row['no_oracle_truth_available']}")
         print(f"   UNIQUE BUT WRONG: {row['unique_but_wrong']}")
+        print(f"   ambiguous missing the truth: "
+              f"{row['nodes_whose_index_moved'].get('ambiguous_missing_truth', 0)} of the "
+              f"index-moved cases where a node continuation exists")
         for w in row["witnesses"][:5]:
             print(f"      step {w['step']} {w['entity']} col {w.get('column')} "
                   f"matcher {w['matcher']} oracle {w['oracle']} layers {w['layers']}")

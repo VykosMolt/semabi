@@ -179,12 +179,25 @@ def elimination(rows: list[dict], conditional: list[dict], readings: list[str]) 
         if any(r["value"].get("REFUTED", 0) + r.get("existence", {}).get("REFUTED", 0)
                for r in rows if r["name"] == reading and r["mutation"] == "none"
                and r["correspondence_rule"] == "masked")}
-    removed = sorted(r for r in readings
-                     if verdicts.get(r) == CONTRADICTED and r in refuted_everywhere)
-    return {"criterion": ("refuted on every history that reached it, and no prefix-chosen "
-                          "literal over the objects its rules bind removes those refutations "
-                          "without discarding its successes"),
+    contradicted = {r for r in readings
+                    if verdicts.get(r) == CONTRADICTED and r in refuted_everywhere}
+    # A contradiction every candidate shares is evidence about the machinery they all use,
+    # not about the choice between them.  Blend is the case: every reading there predicts a
+    # counter's next value as the constant it took last time, so all of them are refuted the
+    # same way by the same arithmetic, and removing them would empty the version space over a
+    # failure none of them is responsible for.  Elimination is therefore relative to the
+    # retained set -- a reading goes only when some other reading survives the same test.
+    survivor = [r for r in readings if r not in contradicted
+                and verdicts.get(r) not in (None, "NOT_ANALYSED")]
+    removed = sorted(contradicted) if survivor else []
+    return {"criterion": ("refuted on every history that reached it; no prefix-chosen literal "
+                          "over the objects its rules bind removes those refutations without "
+                          "discarding its successes; and some other candidate survives the "
+                          "same test, so the contradiction is about this reading rather than "
+                          "about the apparatus they share"),
             "explanations": dict(sorted(verdicts.items())),
+            "contradicted": sorted(contradicted),
+            "shared_by_every_candidate": bool(contradicted) and not survivor,
             "removed": removed,
             "retained": sorted(set(readings) - set(removed))}
 
