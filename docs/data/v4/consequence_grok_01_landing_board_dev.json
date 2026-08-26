@@ -1,0 +1,3462 @@
+[
+ {
+  "applicability": "asserted",
+  "correspondence_rule": "masked",
+  "evaluated_steps": 187,
+  "existence": {
+   "REFUTED": 4,
+   "SUPPORTED": 95
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 99,
+   "reasons": {},
+   "tested": 99
+  },
+  "fitted_on_steps": 186,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "none",
+  "name": "source_choice",
+  "operators": 11,
+  "prediction_signature_digest": "217f4741f1906dac",
+  "predictions_signed": 99,
+  "reading": "source_choice",
+  "refutations": [
+   {
+    "action_local": true,
+    "admissible": [
+     82
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 82,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op4",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 244,
+    "subject": "1",
+    "support": 3,
+    "verdict": "REFUTED"
+   },
+   {
+    "action_local": true,
+    "admissible": [
+     82
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 82,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op7",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 244,
+    "subject": "1",
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "action_local": true,
+    "admissible": [
+     86
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 86,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op4",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 365,
+    "subject": "1#2",
+    "support": 3,
+    "verdict": "REFUTED"
+   },
+   {
+    "action_local": true,
+    "admissible": [
+     86
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 86,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op7",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 365,
+    "subject": "1#2",
+    "support": 1,
+    "verdict": "REFUTED"
+   }
+  ],
+  "single_act_operators": 11,
+  "skipped": {
+   "no rule fitted for this control": 12
+  },
+  "split": 0.5,
+  "value": {
+   "NOT_APPLICABLE": 469
+  },
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 469,
+   "reasons": {
+    "attr:duty#0 holds 'Off' but the node it was read from renders 'Off duty', so this slot is not that node's text and a page check cannot stand in for it": 30,
+    "no object is named 'Ladder' here, so the rule does not apply": 120,
+    "no object is named 'Licensed#2' here, so the rule does not apply": 51,
+    "the reading does not render attr:duty#0 anywhere in this object": 63,
+    "the rule constrains ?o1, which this step does not bind": 58,
+    "the rule requires ?o0.attr:duty#0 = 'Off', which is not so here": 44
+   },
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "asserted",
+  "correspondence_rule": "masked",
+  "evaluated_steps": 187,
+  "existence": {
+   "REFUTED": 4,
+   "SUPPORTED": 95
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 99,
+   "reasons": {},
+   "tested": 99
+  },
+  "fitted_on_steps": 186,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "never_rendered_token",
+  "name": "source_choice",
+  "operators": 11,
+  "prediction_signature_digest": "217f4741f1906dac",
+  "predictions_signed": 99,
+  "reading": "source_choice",
+  "refutations": [
+   {
+    "action_local": true,
+    "admissible": [
+     82
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 82,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op4",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 244,
+    "subject": "1",
+    "support": 3,
+    "verdict": "REFUTED"
+   },
+   {
+    "action_local": true,
+    "admissible": [
+     82
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 82,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op7",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 244,
+    "subject": "1",
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "action_local": true,
+    "admissible": [
+     86
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 86,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op4",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 365,
+    "subject": "1#2",
+    "support": 3,
+    "verdict": "REFUTED"
+   },
+   {
+    "action_local": true,
+    "admissible": [
+     86
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 86,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op7",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 365,
+    "subject": "1#2",
+    "support": 1,
+    "verdict": "REFUTED"
+   }
+  ],
+  "single_act_operators": 11,
+  "skipped": {
+   "no rule fitted for this control": 12
+  },
+  "split": 0.5,
+  "value": {
+   "NOT_APPLICABLE": 469
+  },
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 469,
+   "reasons": {
+    "attr:duty#0 holds 'Off' but the node it was read from renders 'Off duty', so this slot is not that node's text and a page check cannot stand in for it": 30,
+    "no object is named 'Ladder' here, so the rule does not apply": 120,
+    "no object is named 'Licensed#2' here, so the rule does not apply": 51,
+    "the reading does not render attr:duty#0 anywhere in this object": 63,
+    "the rule constrains ?o1, which this step does not bind": 58,
+    "the rule requires ?o0.attr:duty#0 = 'Off', which is not so here": 44
+   },
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "asserted",
+  "correspondence_rule": "same_index",
+  "evaluated_steps": 187,
+  "existence": {
+   "REFUTED": 4,
+   "SUPPORTED": 95
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 99,
+   "reasons": {},
+   "tested": 99
+  },
+  "fitted_on_steps": 186,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "none",
+  "name": "source_choice",
+  "operators": 11,
+  "prediction_signature_digest": "217f4741f1906dac",
+  "predictions_signed": 99,
+  "reading": "source_choice",
+  "refutations": [
+   {
+    "action_local": true,
+    "admissible": [
+     82
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 82,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op4",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 244,
+    "subject": "1",
+    "support": 3,
+    "verdict": "REFUTED"
+   },
+   {
+    "action_local": true,
+    "admissible": [
+     82
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 82,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op7",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 244,
+    "subject": "1",
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "action_local": true,
+    "admissible": [
+     86
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 86,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op4",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 365,
+    "subject": "1#2",
+    "support": 3,
+    "verdict": "REFUTED"
+   },
+   {
+    "action_local": true,
+    "admissible": [
+     86
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 86,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op7",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 365,
+    "subject": "1#2",
+    "support": 1,
+    "verdict": "REFUTED"
+   }
+  ],
+  "single_act_operators": 11,
+  "skipped": {
+   "no rule fitted for this control": 12
+  },
+  "split": 0.5,
+  "value": {
+   "NOT_APPLICABLE": 469
+  },
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 469,
+   "reasons": {
+    "attr:duty#0 holds 'Off' but the node it was read from renders 'Off duty', so this slot is not that node's text and a page check cannot stand in for it": 30,
+    "no object is named 'Ladder' here, so the rule does not apply": 120,
+    "no object is named 'Licensed#2' here, so the rule does not apply": 51,
+    "the reading does not render attr:duty#0 anywhere in this object": 63,
+    "the rule constrains ?o1, which this step does not bind": 58,
+    "the rule requires ?o0.attr:duty#0 = 'Off', which is not so here": 44
+   },
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "asserted",
+  "correspondence_rule": "same_index",
+  "evaluated_steps": 187,
+  "existence": {
+   "REFUTED": 4,
+   "SUPPORTED": 95
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 99,
+   "reasons": {},
+   "tested": 99
+  },
+  "fitted_on_steps": 186,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "never_rendered_token",
+  "name": "source_choice",
+  "operators": 11,
+  "prediction_signature_digest": "217f4741f1906dac",
+  "predictions_signed": 99,
+  "reading": "source_choice",
+  "refutations": [
+   {
+    "action_local": true,
+    "admissible": [
+     82
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 82,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op4",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 244,
+    "subject": "1",
+    "support": 3,
+    "verdict": "REFUTED"
+   },
+   {
+    "action_local": true,
+    "admissible": [
+     82
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 82,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op7",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 244,
+    "subject": "1",
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "action_local": true,
+    "admissible": [
+     86
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 86,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op4",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 365,
+    "subject": "1#2",
+    "support": 3,
+    "verdict": "REFUTED"
+   },
+   {
+    "action_local": true,
+    "admissible": [
+     86
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 86,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op7",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 365,
+    "subject": "1#2",
+    "support": 1,
+    "verdict": "REFUTED"
+   }
+  ],
+  "single_act_operators": 11,
+  "skipped": {
+   "no rule fitted for this control": 12
+  },
+  "split": 0.5,
+  "value": {
+   "NOT_APPLICABLE": 469
+  },
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 469,
+   "reasons": {
+    "attr:duty#0 holds 'Off' but the node it was read from renders 'Off duty', so this slot is not that node's text and a page check cannot stand in for it": 30,
+    "no object is named 'Ladder' here, so the rule does not apply": 120,
+    "no object is named 'Licensed#2' here, so the rule does not apply": 51,
+    "the reading does not render attr:duty#0 anywhere in this object": 63,
+    "the rule constrains ?o1, which this step does not bind": 58,
+    "the rule requires ?o0.attr:duty#0 = 'Off', which is not so here": 44
+   },
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "attested",
+  "correspondence_rule": "masked",
+  "evaluated_steps": 187,
+  "existence": {
+   "SUPPORTED": 1
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 1,
+   "reasons": {},
+   "tested": 1
+  },
+  "fitted_on_steps": 186,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "none",
+  "name": "source_choice",
+  "operators": 11,
+  "prediction_signature_digest": "a474198eddb07e70",
+  "predictions_signed": 1,
+  "reading": "source_choice",
+  "refutations": [],
+  "single_act_operators": 11,
+  "skipped": {
+   "no rule fitted for this control": 12
+  },
+  "split": 0.5,
+  "value": {
+   "NOT_APPLICABLE": 469
+  },
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 469,
+   "reasons": {
+    "no object is named 'Ladder' here, so the rule does not apply": 120,
+    "no object is named 'Licensed#2' here, so the rule does not apply": 51,
+    "the rule constrains ?o1, which this step does not bind": 58,
+    "the rule requires ?o0.attr:Stand at down handler#0 != 'Fuel Face', which is not so here": 18,
+    "the rule requires ?o0.attr:duty#0 = 'Off', which is not so here": 44,
+    "the rule requires ?o0.attr:duty#0 = 'On', which is not so here": 75
+   },
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "attested",
+  "correspondence_rule": "masked",
+  "evaluated_steps": 187,
+  "existence": {
+   "SUPPORTED": 1
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 1,
+   "reasons": {},
+   "tested": 1
+  },
+  "fitted_on_steps": 186,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "never_rendered_token",
+  "name": "source_choice",
+  "operators": 11,
+  "prediction_signature_digest": "a474198eddb07e70",
+  "predictions_signed": 1,
+  "reading": "source_choice",
+  "refutations": [],
+  "single_act_operators": 11,
+  "skipped": {
+   "no rule fitted for this control": 12
+  },
+  "split": 0.5,
+  "value": {
+   "NOT_APPLICABLE": 469
+  },
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 469,
+   "reasons": {
+    "no object is named 'Ladder' here, so the rule does not apply": 120,
+    "no object is named 'Licensed#2' here, so the rule does not apply": 51,
+    "the rule constrains ?o1, which this step does not bind": 58,
+    "the rule requires ?o0.attr:Stand at down handler#0 != 'Fuel Face', which is not so here": 18,
+    "the rule requires ?o0.attr:duty#0 = 'Off', which is not so here": 44,
+    "the rule requires ?o0.attr:duty#0 = 'On', which is not so here": 75
+   },
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "attested",
+  "correspondence_rule": "same_index",
+  "evaluated_steps": 187,
+  "existence": {
+   "SUPPORTED": 1
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 1,
+   "reasons": {},
+   "tested": 1
+  },
+  "fitted_on_steps": 186,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "none",
+  "name": "source_choice",
+  "operators": 11,
+  "prediction_signature_digest": "a474198eddb07e70",
+  "predictions_signed": 1,
+  "reading": "source_choice",
+  "refutations": [],
+  "single_act_operators": 11,
+  "skipped": {
+   "no rule fitted for this control": 12
+  },
+  "split": 0.5,
+  "value": {
+   "NOT_APPLICABLE": 469
+  },
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 469,
+   "reasons": {
+    "no object is named 'Ladder' here, so the rule does not apply": 120,
+    "no object is named 'Licensed#2' here, so the rule does not apply": 51,
+    "the rule constrains ?o1, which this step does not bind": 58,
+    "the rule requires ?o0.attr:Stand at down handler#0 != 'Fuel Face', which is not so here": 18,
+    "the rule requires ?o0.attr:duty#0 = 'Off', which is not so here": 44,
+    "the rule requires ?o0.attr:duty#0 = 'On', which is not so here": 75
+   },
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "attested",
+  "correspondence_rule": "same_index",
+  "evaluated_steps": 187,
+  "existence": {
+   "SUPPORTED": 1
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 1,
+   "reasons": {},
+   "tested": 1
+  },
+  "fitted_on_steps": 186,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "never_rendered_token",
+  "name": "source_choice",
+  "operators": 11,
+  "prediction_signature_digest": "a474198eddb07e70",
+  "predictions_signed": 1,
+  "reading": "source_choice",
+  "refutations": [],
+  "single_act_operators": 11,
+  "skipped": {
+   "no rule fitted for this control": 12
+  },
+  "split": 0.5,
+  "value": {
+   "NOT_APPLICABLE": 469
+  },
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 469,
+   "reasons": {
+    "no object is named 'Ladder' here, so the rule does not apply": 120,
+    "no object is named 'Licensed#2' here, so the rule does not apply": 51,
+    "the rule constrains ?o1, which this step does not bind": 58,
+    "the rule requires ?o0.attr:Stand at down handler#0 != 'Fuel Face', which is not so here": 18,
+    "the rule requires ?o0.attr:duty#0 = 'Off', which is not so here": 44,
+    "the rule requires ?o0.attr:duty#0 = 'On', which is not so here": 75
+   },
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "asserted",
+  "correspondence_rule": "masked",
+  "evaluated_steps": 187,
+  "existence": {
+   "REFUTED": 1,
+   "SUPPORTED": 32
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 33,
+   "reasons": {},
+   "tested": 33
+  },
+  "fitted_on_steps": 186,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "none",
+  "name": "promote cell[_]=cell#0",
+  "operators": 5,
+  "prediction_signature_digest": "1a3fc0a85d7af2f9",
+  "predictions_signed": 33,
+  "reading": "promote cell[_]=cell#0",
+  "refutations": [
+   {
+    "action_local": false,
+    "admissible": [
+     105
+    ],
+    "control": "button#text/button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders 'Ladder', so the object did not go",
+    "expected": "gone",
+    "feature_node": 105,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "Ladder"
+    ],
+    "operator": "op3",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 209,
+    "subject": "Ladder",
+    "support": 1,
+    "verdict": "REFUTED"
+   }
+  ],
+  "single_act_operators": 5,
+  "skipped": {
+   "no rule fitted for this control": 12
+  },
+  "split": 0.5,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "asserted",
+  "correspondence_rule": "masked",
+  "evaluated_steps": 187,
+  "existence": {
+   "REFUTED": 1,
+   "SUPPORTED": 32
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 33,
+   "reasons": {},
+   "tested": 33
+  },
+  "fitted_on_steps": 186,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "never_rendered_token",
+  "name": "promote cell[_]=cell#0",
+  "operators": 5,
+  "prediction_signature_digest": "1a3fc0a85d7af2f9",
+  "predictions_signed": 33,
+  "reading": "promote cell[_]=cell#0",
+  "refutations": [
+   {
+    "action_local": false,
+    "admissible": [
+     105
+    ],
+    "control": "button#text/button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders 'Ladder', so the object did not go",
+    "expected": "gone",
+    "feature_node": 105,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "Ladder"
+    ],
+    "operator": "op3",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 209,
+    "subject": "Ladder",
+    "support": 1,
+    "verdict": "REFUTED"
+   }
+  ],
+  "single_act_operators": 5,
+  "skipped": {
+   "no rule fitted for this control": 12
+  },
+  "split": 0.5,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "asserted",
+  "correspondence_rule": "same_index",
+  "evaluated_steps": 187,
+  "existence": {
+   "REFUTED": 1,
+   "SUPPORTED": 32
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 33,
+   "reasons": {},
+   "tested": 33
+  },
+  "fitted_on_steps": 186,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "none",
+  "name": "promote cell[_]=cell#0",
+  "operators": 5,
+  "prediction_signature_digest": "1a3fc0a85d7af2f9",
+  "predictions_signed": 33,
+  "reading": "promote cell[_]=cell#0",
+  "refutations": [
+   {
+    "action_local": false,
+    "admissible": [
+     105
+    ],
+    "control": "button#text/button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders 'Ladder', so the object did not go",
+    "expected": "gone",
+    "feature_node": 105,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "Ladder"
+    ],
+    "operator": "op3",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 209,
+    "subject": "Ladder",
+    "support": 1,
+    "verdict": "REFUTED"
+   }
+  ],
+  "single_act_operators": 5,
+  "skipped": {
+   "no rule fitted for this control": 12
+  },
+  "split": 0.5,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "asserted",
+  "correspondence_rule": "same_index",
+  "evaluated_steps": 187,
+  "existence": {
+   "REFUTED": 1,
+   "SUPPORTED": 32
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 33,
+   "reasons": {},
+   "tested": 33
+  },
+  "fitted_on_steps": 186,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "never_rendered_token",
+  "name": "promote cell[_]=cell#0",
+  "operators": 5,
+  "prediction_signature_digest": "1a3fc0a85d7af2f9",
+  "predictions_signed": 33,
+  "reading": "promote cell[_]=cell#0",
+  "refutations": [
+   {
+    "action_local": false,
+    "admissible": [
+     105
+    ],
+    "control": "button#text/button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders 'Ladder', so the object did not go",
+    "expected": "gone",
+    "feature_node": 105,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "Ladder"
+    ],
+    "operator": "op3",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 209,
+    "subject": "Ladder",
+    "support": 1,
+    "verdict": "REFUTED"
+   }
+  ],
+  "single_act_operators": 5,
+  "skipped": {
+   "no rule fitted for this control": 12
+  },
+  "split": 0.5,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "attested",
+  "correspondence_rule": "masked",
+  "evaluated_steps": 187,
+  "existence": {
+   "SUPPORTED": 28
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 28,
+   "reasons": {},
+   "tested": 28
+  },
+  "fitted_on_steps": 186,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "none",
+  "name": "promote cell[_]=cell#0",
+  "operators": 5,
+  "prediction_signature_digest": "2a70b2e839c27607",
+  "predictions_signed": 28,
+  "reading": "promote cell[_]=cell#0",
+  "refutations": [],
+  "single_act_operators": 5,
+  "skipped": {
+   "no rule fitted for this control": 12
+  },
+  "split": 0.5,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "attested",
+  "correspondence_rule": "masked",
+  "evaluated_steps": 187,
+  "existence": {
+   "SUPPORTED": 28
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 28,
+   "reasons": {},
+   "tested": 28
+  },
+  "fitted_on_steps": 186,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "never_rendered_token",
+  "name": "promote cell[_]=cell#0",
+  "operators": 5,
+  "prediction_signature_digest": "2a70b2e839c27607",
+  "predictions_signed": 28,
+  "reading": "promote cell[_]=cell#0",
+  "refutations": [],
+  "single_act_operators": 5,
+  "skipped": {
+   "no rule fitted for this control": 12
+  },
+  "split": 0.5,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "attested",
+  "correspondence_rule": "same_index",
+  "evaluated_steps": 187,
+  "existence": {
+   "SUPPORTED": 28
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 28,
+   "reasons": {},
+   "tested": 28
+  },
+  "fitted_on_steps": 186,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "none",
+  "name": "promote cell[_]=cell#0",
+  "operators": 5,
+  "prediction_signature_digest": "2a70b2e839c27607",
+  "predictions_signed": 28,
+  "reading": "promote cell[_]=cell#0",
+  "refutations": [],
+  "single_act_operators": 5,
+  "skipped": {
+   "no rule fitted for this control": 12
+  },
+  "split": 0.5,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "attested",
+  "correspondence_rule": "same_index",
+  "evaluated_steps": 187,
+  "existence": {
+   "SUPPORTED": 28
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 28,
+   "reasons": {},
+   "tested": 28
+  },
+  "fitted_on_steps": 186,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "never_rendered_token",
+  "name": "promote cell[_]=cell#0",
+  "operators": 5,
+  "prediction_signature_digest": "2a70b2e839c27607",
+  "predictions_signed": 28,
+  "reading": "promote cell[_]=cell#0",
+  "refutations": [],
+  "single_act_operators": 5,
+  "skipped": {
+   "no rule fitted for this control": 12
+  },
+  "split": 0.5,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "asserted",
+  "correspondence_rule": "masked",
+  "evaluated_steps": 187,
+  "existence": {},
+  "existence_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "fitted_on_steps": 186,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "none",
+  "name": "joint discrimination x3",
+  "operators": 8,
+  "prediction_signature_digest": "4f53cda18c2baa0c",
+  "predictions_signed": 0,
+  "reading": "joint discrimination x3",
+  "refutations": [],
+  "single_act_operators": 8,
+  "skipped": {
+   "no rule fitted for this control": 12
+  },
+  "split": 0.5,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "asserted",
+  "correspondence_rule": "masked",
+  "evaluated_steps": 187,
+  "existence": {},
+  "existence_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "fitted_on_steps": 186,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "never_rendered_token",
+  "name": "joint discrimination x3",
+  "operators": 8,
+  "prediction_signature_digest": "4f53cda18c2baa0c",
+  "predictions_signed": 0,
+  "reading": "joint discrimination x3",
+  "refutations": [],
+  "single_act_operators": 8,
+  "skipped": {
+   "no rule fitted for this control": 12
+  },
+  "split": 0.5,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "asserted",
+  "correspondence_rule": "same_index",
+  "evaluated_steps": 187,
+  "existence": {},
+  "existence_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "fitted_on_steps": 186,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "none",
+  "name": "joint discrimination x3",
+  "operators": 8,
+  "prediction_signature_digest": "4f53cda18c2baa0c",
+  "predictions_signed": 0,
+  "reading": "joint discrimination x3",
+  "refutations": [],
+  "single_act_operators": 8,
+  "skipped": {
+   "no rule fitted for this control": 12
+  },
+  "split": 0.5,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "asserted",
+  "correspondence_rule": "same_index",
+  "evaluated_steps": 187,
+  "existence": {},
+  "existence_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "fitted_on_steps": 186,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "never_rendered_token",
+  "name": "joint discrimination x3",
+  "operators": 8,
+  "prediction_signature_digest": "4f53cda18c2baa0c",
+  "predictions_signed": 0,
+  "reading": "joint discrimination x3",
+  "refutations": [],
+  "single_act_operators": 8,
+  "skipped": {
+   "no rule fitted for this control": 12
+  },
+  "split": 0.5,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "attested",
+  "correspondence_rule": "masked",
+  "evaluated_steps": 187,
+  "existence": {},
+  "existence_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "fitted_on_steps": 186,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "none",
+  "name": "joint discrimination x3",
+  "operators": 8,
+  "prediction_signature_digest": "4f53cda18c2baa0c",
+  "predictions_signed": 0,
+  "reading": "joint discrimination x3",
+  "refutations": [],
+  "single_act_operators": 8,
+  "skipped": {
+   "no rule fitted for this control": 12
+  },
+  "split": 0.5,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "attested",
+  "correspondence_rule": "masked",
+  "evaluated_steps": 187,
+  "existence": {},
+  "existence_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "fitted_on_steps": 186,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "never_rendered_token",
+  "name": "joint discrimination x3",
+  "operators": 8,
+  "prediction_signature_digest": "4f53cda18c2baa0c",
+  "predictions_signed": 0,
+  "reading": "joint discrimination x3",
+  "refutations": [],
+  "single_act_operators": 8,
+  "skipped": {
+   "no rule fitted for this control": 12
+  },
+  "split": 0.5,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "attested",
+  "correspondence_rule": "same_index",
+  "evaluated_steps": 187,
+  "existence": {},
+  "existence_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "fitted_on_steps": 186,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "none",
+  "name": "joint discrimination x3",
+  "operators": 8,
+  "prediction_signature_digest": "4f53cda18c2baa0c",
+  "predictions_signed": 0,
+  "reading": "joint discrimination x3",
+  "refutations": [],
+  "single_act_operators": 8,
+  "skipped": {
+   "no rule fitted for this control": 12
+  },
+  "split": 0.5,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "attested",
+  "correspondence_rule": "same_index",
+  "evaluated_steps": 187,
+  "existence": {},
+  "existence_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "fitted_on_steps": 186,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "never_rendered_token",
+  "name": "joint discrimination x3",
+  "operators": 8,
+  "prediction_signature_digest": "4f53cda18c2baa0c",
+  "predictions_signed": 0,
+  "reading": "joint discrimination x3",
+  "refutations": [],
+  "single_act_operators": 8,
+  "skipped": {
+   "no rule fitted for this control": 12
+  },
+  "split": 0.5,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "asserted",
+  "correspondence_rule": "masked",
+  "evaluated_steps": 150,
+  "existence": {
+   "REFUTED": 4,
+   "SUPPORTED": 59
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 63,
+   "reasons": {},
+   "tested": 63
+  },
+  "fitted_on_steps": 223,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "none",
+  "name": "source_choice",
+  "operators": 11,
+  "prediction_signature_digest": "2bdfe65a230f6503",
+  "predictions_signed": 63,
+  "reading": "source_choice",
+  "refutations": [
+   {
+    "action_local": true,
+    "admissible": [
+     82
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 82,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op4",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 244,
+    "subject": "1",
+    "support": 3,
+    "verdict": "REFUTED"
+   },
+   {
+    "action_local": true,
+    "admissible": [
+     82
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 82,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op7",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 244,
+    "subject": "1",
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "action_local": true,
+    "admissible": [
+     86
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 86,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op4",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 365,
+    "subject": "1#2",
+    "support": 3,
+    "verdict": "REFUTED"
+   },
+   {
+    "action_local": true,
+    "admissible": [
+     86
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 86,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op7",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 365,
+    "subject": "1#2",
+    "support": 1,
+    "verdict": "REFUTED"
+   }
+  ],
+  "single_act_operators": 11,
+  "skipped": {
+   "no rule fitted for this control": 8
+  },
+  "split": 0.6,
+  "value": {
+   "NOT_APPLICABLE": 356
+  },
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 356,
+   "reasons": {
+    "attr:duty#0 holds 'Off' but the node it was read from renders 'Off duty', so this slot is not that node's text and a page check cannot stand in for it": 22,
+    "no object is named 'Ladder' here, so the rule does not apply": 120,
+    "no object is named 'Licensed#2' here, so the rule does not apply": 32,
+    "the reading does not render attr:duty#0 anywhere in this object": 45,
+    "the rule constrains ?o1, which this step does not bind": 39,
+    "the rule requires ?o0.attr:duty#0 = 'Off', which is not so here": 30
+   },
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "asserted",
+  "correspondence_rule": "masked",
+  "evaluated_steps": 150,
+  "existence": {
+   "REFUTED": 4,
+   "SUPPORTED": 59
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 63,
+   "reasons": {},
+   "tested": 63
+  },
+  "fitted_on_steps": 223,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "never_rendered_token",
+  "name": "source_choice",
+  "operators": 11,
+  "prediction_signature_digest": "2bdfe65a230f6503",
+  "predictions_signed": 63,
+  "reading": "source_choice",
+  "refutations": [
+   {
+    "action_local": true,
+    "admissible": [
+     82
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 82,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op4",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 244,
+    "subject": "1",
+    "support": 3,
+    "verdict": "REFUTED"
+   },
+   {
+    "action_local": true,
+    "admissible": [
+     82
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 82,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op7",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 244,
+    "subject": "1",
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "action_local": true,
+    "admissible": [
+     86
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 86,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op4",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 365,
+    "subject": "1#2",
+    "support": 3,
+    "verdict": "REFUTED"
+   },
+   {
+    "action_local": true,
+    "admissible": [
+     86
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 86,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op7",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 365,
+    "subject": "1#2",
+    "support": 1,
+    "verdict": "REFUTED"
+   }
+  ],
+  "single_act_operators": 11,
+  "skipped": {
+   "no rule fitted for this control": 8
+  },
+  "split": 0.6,
+  "value": {
+   "NOT_APPLICABLE": 356
+  },
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 356,
+   "reasons": {
+    "attr:duty#0 holds 'Off' but the node it was read from renders 'Off duty', so this slot is not that node's text and a page check cannot stand in for it": 22,
+    "no object is named 'Ladder' here, so the rule does not apply": 120,
+    "no object is named 'Licensed#2' here, so the rule does not apply": 32,
+    "the reading does not render attr:duty#0 anywhere in this object": 45,
+    "the rule constrains ?o1, which this step does not bind": 39,
+    "the rule requires ?o0.attr:duty#0 = 'Off', which is not so here": 30
+   },
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "asserted",
+  "correspondence_rule": "same_index",
+  "evaluated_steps": 150,
+  "existence": {
+   "REFUTED": 4,
+   "SUPPORTED": 59
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 63,
+   "reasons": {},
+   "tested": 63
+  },
+  "fitted_on_steps": 223,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "none",
+  "name": "source_choice",
+  "operators": 11,
+  "prediction_signature_digest": "2bdfe65a230f6503",
+  "predictions_signed": 63,
+  "reading": "source_choice",
+  "refutations": [
+   {
+    "action_local": true,
+    "admissible": [
+     82
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 82,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op4",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 244,
+    "subject": "1",
+    "support": 3,
+    "verdict": "REFUTED"
+   },
+   {
+    "action_local": true,
+    "admissible": [
+     82
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 82,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op7",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 244,
+    "subject": "1",
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "action_local": true,
+    "admissible": [
+     86
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 86,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op4",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 365,
+    "subject": "1#2",
+    "support": 3,
+    "verdict": "REFUTED"
+   },
+   {
+    "action_local": true,
+    "admissible": [
+     86
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 86,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op7",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 365,
+    "subject": "1#2",
+    "support": 1,
+    "verdict": "REFUTED"
+   }
+  ],
+  "single_act_operators": 11,
+  "skipped": {
+   "no rule fitted for this control": 8
+  },
+  "split": 0.6,
+  "value": {
+   "NOT_APPLICABLE": 356
+  },
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 356,
+   "reasons": {
+    "attr:duty#0 holds 'Off' but the node it was read from renders 'Off duty', so this slot is not that node's text and a page check cannot stand in for it": 22,
+    "no object is named 'Ladder' here, so the rule does not apply": 120,
+    "no object is named 'Licensed#2' here, so the rule does not apply": 32,
+    "the reading does not render attr:duty#0 anywhere in this object": 45,
+    "the rule constrains ?o1, which this step does not bind": 39,
+    "the rule requires ?o0.attr:duty#0 = 'Off', which is not so here": 30
+   },
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "asserted",
+  "correspondence_rule": "same_index",
+  "evaluated_steps": 150,
+  "existence": {
+   "REFUTED": 4,
+   "SUPPORTED": 59
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 63,
+   "reasons": {},
+   "tested": 63
+  },
+  "fitted_on_steps": 223,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "never_rendered_token",
+  "name": "source_choice",
+  "operators": 11,
+  "prediction_signature_digest": "2bdfe65a230f6503",
+  "predictions_signed": 63,
+  "reading": "source_choice",
+  "refutations": [
+   {
+    "action_local": true,
+    "admissible": [
+     82
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 82,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op4",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 244,
+    "subject": "1",
+    "support": 3,
+    "verdict": "REFUTED"
+   },
+   {
+    "action_local": true,
+    "admissible": [
+     82
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 82,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op7",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 244,
+    "subject": "1",
+    "support": 1,
+    "verdict": "REFUTED"
+   },
+   {
+    "action_local": true,
+    "admissible": [
+     86
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 86,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op4",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 365,
+    "subject": "1#2",
+    "support": 3,
+    "verdict": "REFUTED"
+   },
+   {
+    "action_local": true,
+    "admissible": [
+     86
+    ],
+    "control": "button#button",
+    "correspondence": "UNIQUE",
+    "detail": "the continuation still renders '1', so the object did not go",
+    "expected": "gone",
+    "feature_node": 86,
+    "kind": "EXISTENCE",
+    "layers": [
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP",
+     "DEEP"
+    ],
+    "observed": [
+     "1"
+    ],
+    "operator": "op7",
+    "predicted": "gone",
+    "slot": "id",
+    "step": 365,
+    "subject": "1#2",
+    "support": 1,
+    "verdict": "REFUTED"
+   }
+  ],
+  "single_act_operators": 11,
+  "skipped": {
+   "no rule fitted for this control": 8
+  },
+  "split": 0.6,
+  "value": {
+   "NOT_APPLICABLE": 356
+  },
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 356,
+   "reasons": {
+    "attr:duty#0 holds 'Off' but the node it was read from renders 'Off duty', so this slot is not that node's text and a page check cannot stand in for it": 22,
+    "no object is named 'Ladder' here, so the rule does not apply": 120,
+    "no object is named 'Licensed#2' here, so the rule does not apply": 32,
+    "the reading does not render attr:duty#0 anywhere in this object": 45,
+    "the rule constrains ?o1, which this step does not bind": 39,
+    "the rule requires ?o0.attr:duty#0 = 'Off', which is not so here": 30
+   },
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "attested",
+  "correspondence_rule": "masked",
+  "evaluated_steps": 150,
+  "existence": {
+   "SUPPORTED": 2
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 2,
+   "reasons": {},
+   "tested": 2
+  },
+  "fitted_on_steps": 223,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "none",
+  "name": "source_choice",
+  "operators": 11,
+  "prediction_signature_digest": "b1440076f2f0af8c",
+  "predictions_signed": 2,
+  "reading": "source_choice",
+  "refutations": [],
+  "single_act_operators": 11,
+  "skipped": {
+   "no rule fitted for this control": 8
+  },
+  "split": 0.6,
+  "value": {
+   "NOT_APPLICABLE": 356
+  },
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 356,
+   "reasons": {
+    "no object is named 'Ladder' here, so the rule does not apply": 120,
+    "no object is named 'Licensed#2' here, so the rule does not apply": 32,
+    "the reading does not read the clicked control as part of any object": 15,
+    "the rule constrains ?o1, which this step does not bind": 39,
+    "the rule requires ?o0.attr:duty#0 = 'Off', which is not so here": 30,
+    "the rule requires ?o0.attr:duty#0 = 'On', which is not so here": 54
+   },
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "attested",
+  "correspondence_rule": "masked",
+  "evaluated_steps": 150,
+  "existence": {
+   "SUPPORTED": 2
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 2,
+   "reasons": {},
+   "tested": 2
+  },
+  "fitted_on_steps": 223,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "never_rendered_token",
+  "name": "source_choice",
+  "operators": 11,
+  "prediction_signature_digest": "b1440076f2f0af8c",
+  "predictions_signed": 2,
+  "reading": "source_choice",
+  "refutations": [],
+  "single_act_operators": 11,
+  "skipped": {
+   "no rule fitted for this control": 8
+  },
+  "split": 0.6,
+  "value": {
+   "NOT_APPLICABLE": 356
+  },
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 356,
+   "reasons": {
+    "no object is named 'Ladder' here, so the rule does not apply": 120,
+    "no object is named 'Licensed#2' here, so the rule does not apply": 32,
+    "the reading does not read the clicked control as part of any object": 15,
+    "the rule constrains ?o1, which this step does not bind": 39,
+    "the rule requires ?o0.attr:duty#0 = 'Off', which is not so here": 30,
+    "the rule requires ?o0.attr:duty#0 = 'On', which is not so here": 54
+   },
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "attested",
+  "correspondence_rule": "same_index",
+  "evaluated_steps": 150,
+  "existence": {
+   "SUPPORTED": 2
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 2,
+   "reasons": {},
+   "tested": 2
+  },
+  "fitted_on_steps": 223,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "none",
+  "name": "source_choice",
+  "operators": 11,
+  "prediction_signature_digest": "b1440076f2f0af8c",
+  "predictions_signed": 2,
+  "reading": "source_choice",
+  "refutations": [],
+  "single_act_operators": 11,
+  "skipped": {
+   "no rule fitted for this control": 8
+  },
+  "split": 0.6,
+  "value": {
+   "NOT_APPLICABLE": 356
+  },
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 356,
+   "reasons": {
+    "no object is named 'Ladder' here, so the rule does not apply": 120,
+    "no object is named 'Licensed#2' here, so the rule does not apply": 32,
+    "the reading does not read the clicked control as part of any object": 15,
+    "the rule constrains ?o1, which this step does not bind": 39,
+    "the rule requires ?o0.attr:duty#0 = 'Off', which is not so here": 30,
+    "the rule requires ?o0.attr:duty#0 = 'On', which is not so here": 54
+   },
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "attested",
+  "correspondence_rule": "same_index",
+  "evaluated_steps": 150,
+  "existence": {
+   "SUPPORTED": 2
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 2,
+   "reasons": {},
+   "tested": 2
+  },
+  "fitted_on_steps": 223,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "never_rendered_token",
+  "name": "source_choice",
+  "operators": 11,
+  "prediction_signature_digest": "b1440076f2f0af8c",
+  "predictions_signed": 2,
+  "reading": "source_choice",
+  "refutations": [],
+  "single_act_operators": 11,
+  "skipped": {
+   "no rule fitted for this control": 8
+  },
+  "split": 0.6,
+  "value": {
+   "NOT_APPLICABLE": 356
+  },
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 356,
+   "reasons": {
+    "no object is named 'Ladder' here, so the rule does not apply": 120,
+    "no object is named 'Licensed#2' here, so the rule does not apply": 32,
+    "the reading does not read the clicked control as part of any object": 15,
+    "the rule constrains ?o1, which this step does not bind": 39,
+    "the rule requires ?o0.attr:duty#0 = 'Off', which is not so here": 30,
+    "the rule requires ?o0.attr:duty#0 = 'On', which is not so here": 54
+   },
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "asserted",
+  "correspondence_rule": "masked",
+  "evaluated_steps": 150,
+  "existence": {
+   "SUPPORTED": 12
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 12,
+   "reasons": {},
+   "tested": 12
+  },
+  "fitted_on_steps": 223,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "none",
+  "name": "promote cell[_]=cell#0",
+  "operators": 5,
+  "prediction_signature_digest": "1e294d9df91d9657",
+  "predictions_signed": 12,
+  "reading": "promote cell[_]=cell#0",
+  "refutations": [],
+  "single_act_operators": 5,
+  "skipped": {
+   "no rule fitted for this control": 8
+  },
+  "split": 0.6,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "asserted",
+  "correspondence_rule": "masked",
+  "evaluated_steps": 150,
+  "existence": {
+   "SUPPORTED": 12
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 12,
+   "reasons": {},
+   "tested": 12
+  },
+  "fitted_on_steps": 223,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "never_rendered_token",
+  "name": "promote cell[_]=cell#0",
+  "operators": 5,
+  "prediction_signature_digest": "1e294d9df91d9657",
+  "predictions_signed": 12,
+  "reading": "promote cell[_]=cell#0",
+  "refutations": [],
+  "single_act_operators": 5,
+  "skipped": {
+   "no rule fitted for this control": 8
+  },
+  "split": 0.6,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "asserted",
+  "correspondence_rule": "same_index",
+  "evaluated_steps": 150,
+  "existence": {
+   "SUPPORTED": 12
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 12,
+   "reasons": {},
+   "tested": 12
+  },
+  "fitted_on_steps": 223,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "none",
+  "name": "promote cell[_]=cell#0",
+  "operators": 5,
+  "prediction_signature_digest": "1e294d9df91d9657",
+  "predictions_signed": 12,
+  "reading": "promote cell[_]=cell#0",
+  "refutations": [],
+  "single_act_operators": 5,
+  "skipped": {
+   "no rule fitted for this control": 8
+  },
+  "split": 0.6,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "asserted",
+  "correspondence_rule": "same_index",
+  "evaluated_steps": 150,
+  "existence": {
+   "SUPPORTED": 12
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 12,
+   "reasons": {},
+   "tested": 12
+  },
+  "fitted_on_steps": 223,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "never_rendered_token",
+  "name": "promote cell[_]=cell#0",
+  "operators": 5,
+  "prediction_signature_digest": "1e294d9df91d9657",
+  "predictions_signed": 12,
+  "reading": "promote cell[_]=cell#0",
+  "refutations": [],
+  "single_act_operators": 5,
+  "skipped": {
+   "no rule fitted for this control": 8
+  },
+  "split": 0.6,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "attested",
+  "correspondence_rule": "masked",
+  "evaluated_steps": 150,
+  "existence": {
+   "SUPPORTED": 12
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 12,
+   "reasons": {},
+   "tested": 12
+  },
+  "fitted_on_steps": 223,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "none",
+  "name": "promote cell[_]=cell#0",
+  "operators": 5,
+  "prediction_signature_digest": "1e294d9df91d9657",
+  "predictions_signed": 12,
+  "reading": "promote cell[_]=cell#0",
+  "refutations": [],
+  "single_act_operators": 5,
+  "skipped": {
+   "no rule fitted for this control": 8
+  },
+  "split": 0.6,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "attested",
+  "correspondence_rule": "masked",
+  "evaluated_steps": 150,
+  "existence": {
+   "SUPPORTED": 12
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 12,
+   "reasons": {},
+   "tested": 12
+  },
+  "fitted_on_steps": 223,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "never_rendered_token",
+  "name": "promote cell[_]=cell#0",
+  "operators": 5,
+  "prediction_signature_digest": "1e294d9df91d9657",
+  "predictions_signed": 12,
+  "reading": "promote cell[_]=cell#0",
+  "refutations": [],
+  "single_act_operators": 5,
+  "skipped": {
+   "no rule fitted for this control": 8
+  },
+  "split": 0.6,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "attested",
+  "correspondence_rule": "same_index",
+  "evaluated_steps": 150,
+  "existence": {
+   "SUPPORTED": 12
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 12,
+   "reasons": {},
+   "tested": 12
+  },
+  "fitted_on_steps": 223,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "none",
+  "name": "promote cell[_]=cell#0",
+  "operators": 5,
+  "prediction_signature_digest": "1e294d9df91d9657",
+  "predictions_signed": 12,
+  "reading": "promote cell[_]=cell#0",
+  "refutations": [],
+  "single_act_operators": 5,
+  "skipped": {
+   "no rule fitted for this control": 8
+  },
+  "split": 0.6,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "attested",
+  "correspondence_rule": "same_index",
+  "evaluated_steps": 150,
+  "existence": {
+   "SUPPORTED": 12
+  },
+  "existence_coverage": {
+   "coverage": 1.0,
+   "instrument_reached_this_application": true,
+   "predictions": 12,
+   "reasons": {},
+   "tested": 12
+  },
+  "fitted_on_steps": 223,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "never_rendered_token",
+  "name": "promote cell[_]=cell#0",
+  "operators": 5,
+  "prediction_signature_digest": "1e294d9df91d9657",
+  "predictions_signed": 12,
+  "reading": "promote cell[_]=cell#0",
+  "refutations": [],
+  "single_act_operators": 5,
+  "skipped": {
+   "no rule fitted for this control": 8
+  },
+  "split": 0.6,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "asserted",
+  "correspondence_rule": "masked",
+  "evaluated_steps": 150,
+  "existence": {},
+  "existence_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "fitted_on_steps": 223,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "none",
+  "name": "joint discrimination x3",
+  "operators": 9,
+  "prediction_signature_digest": "4f53cda18c2baa0c",
+  "predictions_signed": 0,
+  "reading": "joint discrimination x3",
+  "refutations": [],
+  "single_act_operators": 9,
+  "skipped": {
+   "no rule fitted for this control": 8
+  },
+  "split": 0.6,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "asserted",
+  "correspondence_rule": "masked",
+  "evaluated_steps": 150,
+  "existence": {},
+  "existence_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "fitted_on_steps": 223,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "never_rendered_token",
+  "name": "joint discrimination x3",
+  "operators": 9,
+  "prediction_signature_digest": "4f53cda18c2baa0c",
+  "predictions_signed": 0,
+  "reading": "joint discrimination x3",
+  "refutations": [],
+  "single_act_operators": 9,
+  "skipped": {
+   "no rule fitted for this control": 8
+  },
+  "split": 0.6,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "asserted",
+  "correspondence_rule": "same_index",
+  "evaluated_steps": 150,
+  "existence": {},
+  "existence_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "fitted_on_steps": 223,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "none",
+  "name": "joint discrimination x3",
+  "operators": 9,
+  "prediction_signature_digest": "4f53cda18c2baa0c",
+  "predictions_signed": 0,
+  "reading": "joint discrimination x3",
+  "refutations": [],
+  "single_act_operators": 9,
+  "skipped": {
+   "no rule fitted for this control": 8
+  },
+  "split": 0.6,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "asserted",
+  "correspondence_rule": "same_index",
+  "evaluated_steps": 150,
+  "existence": {},
+  "existence_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "fitted_on_steps": 223,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "never_rendered_token",
+  "name": "joint discrimination x3",
+  "operators": 9,
+  "prediction_signature_digest": "4f53cda18c2baa0c",
+  "predictions_signed": 0,
+  "reading": "joint discrimination x3",
+  "refutations": [],
+  "single_act_operators": 9,
+  "skipped": {
+   "no rule fitted for this control": 8
+  },
+  "split": 0.6,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "attested",
+  "correspondence_rule": "masked",
+  "evaluated_steps": 150,
+  "existence": {},
+  "existence_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "fitted_on_steps": 223,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "none",
+  "name": "joint discrimination x3",
+  "operators": 9,
+  "prediction_signature_digest": "4f53cda18c2baa0c",
+  "predictions_signed": 0,
+  "reading": "joint discrimination x3",
+  "refutations": [],
+  "single_act_operators": 9,
+  "skipped": {
+   "no rule fitted for this control": 8
+  },
+  "split": 0.6,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "attested",
+  "correspondence_rule": "masked",
+  "evaluated_steps": 150,
+  "existence": {},
+  "existence_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "fitted_on_steps": 223,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "never_rendered_token",
+  "name": "joint discrimination x3",
+  "operators": 9,
+  "prediction_signature_digest": "4f53cda18c2baa0c",
+  "predictions_signed": 0,
+  "reading": "joint discrimination x3",
+  "refutations": [],
+  "single_act_operators": 9,
+  "skipped": {
+   "no rule fitted for this control": 8
+  },
+  "split": 0.6,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "attested",
+  "correspondence_rule": "same_index",
+  "evaluated_steps": 150,
+  "existence": {},
+  "existence_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "fitted_on_steps": 223,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "none",
+  "name": "joint discrimination x3",
+  "operators": 9,
+  "prediction_signature_digest": "4f53cda18c2baa0c",
+  "predictions_signed": 0,
+  "reading": "joint discrimination x3",
+  "refutations": [],
+  "single_act_operators": 9,
+  "skipped": {
+   "no rule fitted for this control": 8
+  },
+  "split": 0.6,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ },
+ {
+  "applicability": "attested",
+  "correspondence_rule": "same_index",
+  "evaluated_steps": 150,
+  "existence": {},
+  "existence_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "fitted_on_steps": 223,
+  "identity": {},
+  "identity_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "mutation": "never_rendered_token",
+  "name": "joint discrimination x3",
+  "operators": 9,
+  "prediction_signature_digest": "4f53cda18c2baa0c",
+  "predictions_signed": 0,
+  "reading": "joint discrimination x3",
+  "refutations": [],
+  "single_act_operators": 9,
+  "skipped": {
+   "no rule fitted for this control": 8
+  },
+  "split": 0.6,
+  "value": {},
+  "value_correspondence": {},
+  "value_coverage": {
+   "coverage": 0.0,
+   "instrument_reached_this_application": false,
+   "predictions": 0,
+   "reasons": {},
+   "tested": 0
+  },
+  "value_landing": {}
+ }
+]

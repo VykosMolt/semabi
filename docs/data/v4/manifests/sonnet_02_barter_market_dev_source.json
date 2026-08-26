@@ -1,0 +1,840 @@
+{
+ "candidates": [
+  {
+   "fingerprint": "de689eb949657e68",
+   "full_reading_sha256": "9dba717026cfe9fc25a4533ea6c80c3e7873e29ddc55e50c74ef4451da1a0d9c",
+   "name": "source_choice",
+   "reading": {
+    "families": {
+     "button[_]": {
+      "discrimination": 1.0,
+      "family": "button[_]",
+      "key_slot": "button#0",
+      "status": "SUPPORTED"
+     },
+     "group[_](heading[_],list[_](listitem[_](text[_],textbox[_],button[_],text[_]),listitem[_](text[_])),heading[_],textbox[_],combobox[_],button[_],text[_])": {
+      "discrimination": null,
+      "family": "group[_](heading[_],list[_](listitem[_](text[_],textbox[_],button[_],text[_]),listitem[_](text[_])),heading[_],textbox[_],combobox[_],button[_],text[_])",
+      "key_slot": "heading#0@10",
+      "status": "UNSUPPORTED"
+     },
+     "listitem[_](text[_],textbox[_],button[_],text[_])": {
+      "discrimination": 0.0,
+      "family": "listitem[_](text[_],textbox[_],button[_],text[_])",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "listitem[_](text[_],textbox[_],button[_],text[_])@ctx0)": {
+      "discrimination": null,
+      "family": "listitem[_](text[_],textbox[_],button[_],text[_])@ctx0)",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "row[_](cell[_])": {
+      "discrimination": 0.9933110367892977,
+      "family": "row[_](cell[_])",
+      "key_slot": "cell#0|cell#0@3",
+      "status": "SUPPORTED"
+     },
+     "row[_](cell[_],cell[_](button[_],combobox[_],textbox[_],button[_],text[_]))": {
+      "discrimination": 1.0,
+      "family": "row[_](cell[_],cell[_](button[_],combobox[_],textbox[_],button[_],text[_]))",
+      "key_slot": "cell#0",
+      "status": "SUPPORTED"
+     },
+     "row[_](cell[_],cell[_](button[_],text[_]))": {
+      "discrimination": 0.8571428571428571,
+      "family": "row[_](cell[_],cell[_](button[_],text[_]))",
+      "key_slot": "cell#0@3|cell#0@4",
+      "status": "SUPPORTED"
+     }
+    },
+    "name": "source_choice",
+    "promoted_families": [],
+    "provenance": {
+     "role": "SOURCE",
+     "source_run": "runs/v4/sonnet_02_barter_market_dev"
+    },
+    "refuted": {},
+    "version": 1
+   }
+  },
+  {
+   "fingerprint": "8277e0e4ce022933",
+   "full_reading_sha256": "3b45f5af8accf016ecce54ac56099da92f949f8ed23910d808fe2352058e1a7c",
+   "name": "promote cell[_]=cell#0",
+   "reading": {
+    "families": {
+     "button[_]": {
+      "discrimination": 1.0,
+      "family": "button[_]",
+      "key_slot": "button#0",
+      "status": "SUPPORTED"
+     },
+     "cell[_]": {
+      "discrimination": 0.9325,
+      "family": "cell[_]",
+      "key_slot": "cell#0",
+      "status": "SUPPORTED"
+     },
+     "group[_](heading[_],list[_](listitem[_](text[_],textbox[_],button[_],text[_]),listitem[_](text[_])),heading[_],textbox[_],combobox[_],button[_],text[_])": {
+      "discrimination": null,
+      "family": "group[_](heading[_],list[_](listitem[_](text[_],textbox[_],button[_],text[_]),listitem[_](text[_])),heading[_],textbox[_],combobox[_],button[_],text[_])",
+      "key_slot": "heading#0@10",
+      "status": "UNSUPPORTED"
+     },
+     "listitem[_](text[_],textbox[_],button[_],text[_])": {
+      "discrimination": 0.0,
+      "family": "listitem[_](text[_],textbox[_],button[_],text[_])",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "listitem[_](text[_],textbox[_],button[_],text[_])@ctx0)": {
+      "discrimination": null,
+      "family": "listitem[_](text[_],textbox[_],button[_],text[_])@ctx0)",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "row[_](cell[_])": {
+      "discrimination": 0.9933110367892977,
+      "family": "row[_](cell[_])",
+      "key_slot": "cell#0|cell#0@3",
+      "status": "SUPPORTED"
+     },
+     "row[_](cell[_],cell[_](button[_],combobox[_],textbox[_],button[_],text[_]))": {
+      "discrimination": 1.0,
+      "family": "row[_](cell[_],cell[_](button[_],combobox[_],textbox[_],button[_],text[_]))",
+      "key_slot": "cell#0",
+      "status": "SUPPORTED"
+     },
+     "row[_](cell[_],cell[_](button[_],text[_]))": {
+      "discrimination": 0.8571428571428571,
+      "family": "row[_](cell[_],cell[_](button[_],text[_]))",
+      "key_slot": "cell#0@3|cell#0@4",
+      "status": "SUPPORTED"
+     }
+    },
+    "name": "promote cell[_]=cell#0",
+    "promoted_families": [
+     "cell[_]"
+    ],
+    "provenance": {
+     "role": "SOURCE",
+     "source_run": "runs/v4/sonnet_02_barter_market_dev"
+    },
+    "refuted": {},
+    "version": 1
+   }
+  },
+  {
+   "fingerprint": "883f21c19fe58302",
+   "full_reading_sha256": "ac3a761d210aa152ede00937a30c10248b2e1d1e270d4c1a72484b73da3dca3a",
+   "name": "promote heading[_]=heading#0",
+   "reading": {
+    "families": {
+     "button[_]": {
+      "discrimination": 1.0,
+      "family": "button[_]",
+      "key_slot": "button#0",
+      "status": "SUPPORTED"
+     },
+     "group[_](heading[_],list[_](listitem[_](text[_],textbox[_],button[_],text[_]),listitem[_](text[_])),heading[_],textbox[_],combobox[_],button[_],text[_])": {
+      "discrimination": null,
+      "family": "group[_](heading[_],list[_](listitem[_](text[_],textbox[_],button[_],text[_]),listitem[_](text[_])),heading[_],textbox[_],combobox[_],button[_],text[_])",
+      "key_slot": "heading#0@10",
+      "status": "UNSUPPORTED"
+     },
+     "heading[_]": {
+      "discrimination": 1.0,
+      "family": "heading[_]",
+      "key_slot": "heading#0",
+      "status": "SUPPORTED"
+     },
+     "listitem[_](text[_],textbox[_],button[_],text[_])": {
+      "discrimination": 0.0,
+      "family": "listitem[_](text[_],textbox[_],button[_],text[_])",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "listitem[_](text[_],textbox[_],button[_],text[_])@ctx0)": {
+      "discrimination": null,
+      "family": "listitem[_](text[_],textbox[_],button[_],text[_])@ctx0)",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "row[_](cell[_])": {
+      "discrimination": 0.9933110367892977,
+      "family": "row[_](cell[_])",
+      "key_slot": "cell#0|cell#0@3",
+      "status": "SUPPORTED"
+     },
+     "row[_](cell[_],cell[_](button[_],combobox[_],textbox[_],button[_],text[_]))": {
+      "discrimination": 1.0,
+      "family": "row[_](cell[_],cell[_](button[_],combobox[_],textbox[_],button[_],text[_]))",
+      "key_slot": "cell#0",
+      "status": "SUPPORTED"
+     },
+     "row[_](cell[_],cell[_](button[_],text[_]))": {
+      "discrimination": 0.8571428571428571,
+      "family": "row[_](cell[_],cell[_](button[_],text[_]))",
+      "key_slot": "cell#0@3|cell#0@4",
+      "status": "SUPPORTED"
+     }
+    },
+    "name": "promote heading[_]=heading#0",
+    "promoted_families": [
+     "heading[_]"
+    ],
+    "provenance": {
+     "role": "SOURCE",
+     "source_run": "runs/v4/sonnet_02_barter_market_dev"
+    },
+    "refuted": {},
+    "version": 1
+   }
+  },
+  {
+   "fingerprint": "ee6ee051c8410b3b",
+   "full_reading_sha256": "cfc6b4a118e7cf8e9ebbe42207fb03c70e492f5fe410146529a4126630714413",
+   "name": "joint discrimination x3",
+   "reading": {
+    "families": {
+     "button[_]": {
+      "discrimination": 1.0,
+      "family": "button[_]",
+      "key_slot": "button#0",
+      "status": "SUPPORTED"
+     },
+     "group[_](heading[_],list[_](listitem[_](text[_],textbox[_],button[_],text[_]),listitem[_](text[_])),heading[_],textbox[_],combobox[_],button[_],text[_])": {
+      "discrimination": null,
+      "family": "group[_](heading[_],list[_](listitem[_](text[_],textbox[_],button[_],text[_]),listitem[_](text[_])),heading[_],textbox[_],combobox[_],button[_],text[_])",
+      "key_slot": "heading#0@10",
+      "status": "UNSUPPORTED"
+     },
+     "listitem[_](text[_],textbox[_],button[_],text[_])": {
+      "discrimination": 1.0,
+      "family": "listitem[_](text[_],textbox[_],button[_],text[_])",
+      "key_slot": "text#0",
+      "status": "SUPPORTED"
+     },
+     "listitem[_](text[_],textbox[_],button[_],text[_])@ctx0)": {
+      "discrimination": null,
+      "family": "listitem[_](text[_],textbox[_],button[_],text[_])@ctx0)",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "row[_](cell[_])": {
+      "discrimination": 1.0,
+      "family": "row[_](cell[_])",
+      "key_slot": "cell#0@3|cell#0@4",
+      "status": "SUPPORTED"
+     },
+     "row[_](cell[_],cell[_](button[_],combobox[_],textbox[_],button[_],text[_]))": {
+      "discrimination": 1.0,
+      "family": "row[_](cell[_],cell[_](button[_],combobox[_],textbox[_],button[_],text[_]))",
+      "key_slot": "cell#0",
+      "status": "SUPPORTED"
+     },
+     "row[_](cell[_],cell[_](button[_],text[_]))": {
+      "discrimination": 1.0,
+      "family": "row[_](cell[_],cell[_](button[_],text[_]))",
+      "key_slot": "cell#0|cell#0@3",
+      "status": "SUPPORTED"
+     }
+    },
+    "name": "joint discrimination x3",
+    "promoted_families": [],
+    "provenance": {
+     "role": "SOURCE",
+     "source_run": "runs/v4/sonnet_02_barter_market_dev"
+    },
+    "refuted": {},
+    "version": 1
+   }
+  },
+  {
+   "fingerprint": "c0e4273411e06017",
+   "full_reading_sha256": "12eb73e7230511fb3327e56a44d6acc3301f4f9b311e873e3584079a726c0a64",
+   "name": "button[_]=None",
+   "reading": {
+    "families": {
+     "button[_]": {
+      "discrimination": 0.0,
+      "family": "button[_]",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "group[_](heading[_],list[_](listitem[_](text[_],textbox[_],button[_],text[_]),listitem[_](text[_])),heading[_],textbox[_],combobox[_],button[_],text[_])": {
+      "discrimination": null,
+      "family": "group[_](heading[_],list[_](listitem[_](text[_],textbox[_],button[_],text[_]),listitem[_](text[_])),heading[_],textbox[_],combobox[_],button[_],text[_])",
+      "key_slot": "heading#0@10",
+      "status": "UNSUPPORTED"
+     },
+     "listitem[_](text[_],textbox[_],button[_],text[_])": {
+      "discrimination": 0.0,
+      "family": "listitem[_](text[_],textbox[_],button[_],text[_])",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "listitem[_](text[_],textbox[_],button[_],text[_])@ctx0)": {
+      "discrimination": null,
+      "family": "listitem[_](text[_],textbox[_],button[_],text[_])@ctx0)",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "row[_](cell[_])": {
+      "discrimination": 0.9933110367892977,
+      "family": "row[_](cell[_])",
+      "key_slot": "cell#0|cell#0@3",
+      "status": "SUPPORTED"
+     },
+     "row[_](cell[_],cell[_](button[_],combobox[_],textbox[_],button[_],text[_]))": {
+      "discrimination": 1.0,
+      "family": "row[_](cell[_],cell[_](button[_],combobox[_],textbox[_],button[_],text[_]))",
+      "key_slot": "cell#0",
+      "status": "SUPPORTED"
+     },
+     "row[_](cell[_],cell[_](button[_],text[_]))": {
+      "discrimination": 0.8571428571428571,
+      "family": "row[_](cell[_],cell[_](button[_],text[_]))",
+      "key_slot": "cell#0@3|cell#0@4",
+      "status": "SUPPORTED"
+     }
+    },
+    "name": "button[_]=None",
+    "promoted_families": [],
+    "provenance": {
+     "role": "SOURCE",
+     "source_run": "runs/v4/sonnet_02_barter_market_dev"
+    },
+    "refuted": {},
+    "version": 1
+   }
+  },
+  {
+   "fingerprint": "97f0b683e56750bd",
+   "full_reading_sha256": "209af3fca7133704cad2a629a6360241aa342b2e6d5286250ffa7ea01d3b23e6",
+   "name": "group[_](heading[_],list=None",
+   "reading": {
+    "families": {
+     "button[_]": {
+      "discrimination": 1.0,
+      "family": "button[_]",
+      "key_slot": "button#0",
+      "status": "SUPPORTED"
+     },
+     "group[_](heading[_],list[_](listitem[_](text[_],textbox[_],button[_],text[_]),listitem[_](text[_])),heading[_],textbox[_],combobox[_],button[_],text[_])": {
+      "discrimination": null,
+      "family": "group[_](heading[_],list[_](listitem[_](text[_],textbox[_],button[_],text[_]),listitem[_](text[_])),heading[_],textbox[_],combobox[_],button[_],text[_])",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "listitem[_](text[_],textbox[_],button[_],text[_])": {
+      "discrimination": 0.0,
+      "family": "listitem[_](text[_],textbox[_],button[_],text[_])",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "listitem[_](text[_],textbox[_],button[_],text[_])@ctx0)": {
+      "discrimination": null,
+      "family": "listitem[_](text[_],textbox[_],button[_],text[_])@ctx0)",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "row[_](cell[_])": {
+      "discrimination": 0.9933110367892977,
+      "family": "row[_](cell[_])",
+      "key_slot": "cell#0|cell#0@3",
+      "status": "SUPPORTED"
+     },
+     "row[_](cell[_],cell[_](button[_],combobox[_],textbox[_],button[_],text[_]))": {
+      "discrimination": 1.0,
+      "family": "row[_](cell[_],cell[_](button[_],combobox[_],textbox[_],button[_],text[_]))",
+      "key_slot": "cell#0",
+      "status": "SUPPORTED"
+     },
+     "row[_](cell[_],cell[_](button[_],text[_]))": {
+      "discrimination": 0.8571428571428571,
+      "family": "row[_](cell[_],cell[_](button[_],text[_]))",
+      "key_slot": "cell#0@3|cell#0@4",
+      "status": "SUPPORTED"
+     }
+    },
+    "name": "group[_](heading[_],list=None",
+    "promoted_families": [],
+    "provenance": {
+     "role": "SOURCE",
+     "source_run": "runs/v4/sonnet_02_barter_market_dev"
+    },
+    "refuted": {},
+    "version": 1
+   }
+  },
+  {
+   "fingerprint": "adad27e8c87f73ea",
+   "full_reading_sha256": "9e36815b4b2dd8b7edca03b29d65637a0f4da47bb69e61fc75735f4193792f22",
+   "name": "listitem[_](text[_],text=text#0",
+   "reading": {
+    "families": {
+     "button[_]": {
+      "discrimination": 1.0,
+      "family": "button[_]",
+      "key_slot": "button#0",
+      "status": "SUPPORTED"
+     },
+     "group[_](heading[_],list[_](listitem[_](text[_],textbox[_],button[_],text[_]),listitem[_](text[_])),heading[_],textbox[_],combobox[_],button[_],text[_])": {
+      "discrimination": null,
+      "family": "group[_](heading[_],list[_](listitem[_](text[_],textbox[_],button[_],text[_]),listitem[_](text[_])),heading[_],textbox[_],combobox[_],button[_],text[_])",
+      "key_slot": "heading#0@10",
+      "status": "UNSUPPORTED"
+     },
+     "listitem[_](text[_],textbox[_],button[_],text[_])": {
+      "discrimination": 1.0,
+      "family": "listitem[_](text[_],textbox[_],button[_],text[_])",
+      "key_slot": "text#0",
+      "status": "SUPPORTED"
+     },
+     "listitem[_](text[_],textbox[_],button[_],text[_])@ctx0)": {
+      "discrimination": null,
+      "family": "listitem[_](text[_],textbox[_],button[_],text[_])@ctx0)",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "row[_](cell[_])": {
+      "discrimination": 0.9933110367892977,
+      "family": "row[_](cell[_])",
+      "key_slot": "cell#0|cell#0@3",
+      "status": "SUPPORTED"
+     },
+     "row[_](cell[_],cell[_](button[_],combobox[_],textbox[_],button[_],text[_]))": {
+      "discrimination": 1.0,
+      "family": "row[_](cell[_],cell[_](button[_],combobox[_],textbox[_],button[_],text[_]))",
+      "key_slot": "cell#0",
+      "status": "SUPPORTED"
+     },
+     "row[_](cell[_],cell[_](button[_],text[_]))": {
+      "discrimination": 0.8571428571428571,
+      "family": "row[_](cell[_],cell[_](button[_],text[_]))",
+      "key_slot": "cell#0@3|cell#0@4",
+      "status": "SUPPORTED"
+     }
+    },
+    "name": "listitem[_](text[_],text=text#0",
+    "promoted_families": [],
+    "provenance": {
+     "role": "SOURCE",
+     "source_run": "runs/v4/sonnet_02_barter_market_dev"
+    },
+    "refuted": {},
+    "version": 1
+   }
+  },
+  {
+   "fingerprint": "525f8b9a95ab4087",
+   "full_reading_sha256": "0a02887e95215fa57281491739abf4e1e5004a72a377ae557559491baa5b4d96",
+   "name": "row[_](cell[_])=cell#0@3|cell#0@4",
+   "reading": {
+    "families": {
+     "button[_]": {
+      "discrimination": 1.0,
+      "family": "button[_]",
+      "key_slot": "button#0",
+      "status": "SUPPORTED"
+     },
+     "group[_](heading[_],list[_](listitem[_](text[_],textbox[_],button[_],text[_]),listitem[_](text[_])),heading[_],textbox[_],combobox[_],button[_],text[_])": {
+      "discrimination": null,
+      "family": "group[_](heading[_],list[_](listitem[_](text[_],textbox[_],button[_],text[_]),listitem[_](text[_])),heading[_],textbox[_],combobox[_],button[_],text[_])",
+      "key_slot": "heading#0@10",
+      "status": "UNSUPPORTED"
+     },
+     "listitem[_](text[_],textbox[_],button[_],text[_])": {
+      "discrimination": 0.0,
+      "family": "listitem[_](text[_],textbox[_],button[_],text[_])",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "listitem[_](text[_],textbox[_],button[_],text[_])@ctx0)": {
+      "discrimination": null,
+      "family": "listitem[_](text[_],textbox[_],button[_],text[_])@ctx0)",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     },
+     "row[_](cell[_])": {
+      "discrimination": 1.0,
+      "family": "row[_](cell[_])",
+      "key_slot": "cell#0@3|cell#0@4",
+      "status": "SUPPORTED"
+     },
+     "row[_](cell[_],cell[_](button[_],combobox[_],textbox[_],button[_],text[_]))": {
+      "discrimination": 1.0,
+      "family": "row[_](cell[_],cell[_](button[_],combobox[_],textbox[_],button[_],text[_]))",
+      "key_slot": "cell#0",
+      "status": "SUPPORTED"
+     },
+     "row[_](cell[_],cell[_](button[_],text[_]))": {
+      "discrimination": 0.8571428571428571,
+      "family": "row[_](cell[_],cell[_](button[_],text[_]))",
+      "key_slot": "cell#0@3|cell#0@4",
+      "status": "SUPPORTED"
+     }
+    },
+    "name": "row[_](cell[_])=cell#0@3|cell#0@4",
+    "promoted_families": [],
+    "provenance": {
+     "role": "SOURCE",
+     "source_run": "runs/v4/sonnet_02_barter_market_dev"
+    },
+    "refuted": {},
+    "version": 1
+   }
+  }
+ ],
+ "generation": {
+  "implementation_files": {
+   "scripts/v4_freeze_source_candidates.py": "6a4864a58278f9a2746d74f91923fa99c7604709732b154f128036d725e58efc",
+   "semabi/__init__.py": "0a6e61cf4d9d8dc368fef7bc2053e6db686e3fb70272d7f9e9f1e5b3f79f95e8",
+   "semabi/compiler/__init__.py": "5249623658aef7d2b87bd34d06fab3f181b1ef5bbb9dd70b827592bb01b02893",
+   "semabi/compiler/abstract.py": "07fd8b41fcfdfe3d563e6b5f28d6fbb0229fb706f944dbfe7626a363ade633f8",
+   "semabi/compiler/belief.py": "10996cf9f5f2264ecbe8e28235718e81fc606ed249d8c2708f50541a73a8aa5c",
+   "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+   "semabi/compiler/compile.py": "fa0e4b4237658dc2e5d41cf715fe8ca884b0b2ec9b714cde4f1917318c9f920f",
+   "semabi/compiler/compile_v4.py": "dd6b17f26e98dc79291ececcbb35f1048a41f15f31e1793bf34ae443e592c778",
+   "semabi/compiler/evidence.py": "b4a5d0c9208f9b6c4588317078f8270a7bd0766bcb1a2e52722f72be74a90e51",
+   "semabi/compiler/explorer.py": "16827d3735c9eab4d51a60c585790226be3e692bb63b01794df29a9ba8c8c807",
+   "semabi/compiler/grounder.py": "d272260d2bacd64dcd7fc88f2094c2f84b989736c89924460cc0053b8e97ac06",
+   "semabi/compiler/induce.py": "46075088d34187ea121c77c3522055260e710a71199fd97de338f36f0c212b3e",
+   "semabi/compiler/mentions.py": "800fa94e2e4f76bfc503c7557ec775f6d83a612f6634123a62f78a16de2b781c",
+   "semabi/compiler/model.py": "31b2d1207d678c05b743e70249db7947d7bb25759f668f2d013aef218aca6f36",
+   "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+   "semabi/compiler/parse.py": "c609e78b0f020f09bc22686168f22392cb54cea163a2ff84ab917528cb0ca922",
+   "semabi/compiler/v2/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "semabi/compiler/v2/abstractor.py": "8ef5620e76fbfd6047879814453d9cb1761d0d5f3641f354fa81dd9978110499",
+   "semabi/compiler/v2/controls.py": "593eaaacfae90a3b688b403ea78e7651461a319dcb8f0fa3c148fcf21cc96f06",
+   "semabi/compiler/v2/graph.py": "feb2ee73faca3bd5eaa91b3685bf84c047bf90027dddc56d02713b26a5501b6a",
+   "semabi/compiler/v2/hypotheses.py": "fcb47e96015115c02efc56c9994fbcc1d2dcb2728d8b9ab51a89bfda5cffb92a",
+   "semabi/compiler/v2/score.py": "292ea78f2237e7b86dbbc943d624024ca9213218ead327b88080b71aebaaa95c",
+   "semabi/compiler/v2/units.py": "c1a94e811f8259742e65e24d4beea8b869868bec6a2901f5420a96d60d5d7d58",
+   "semabi/compiler/v4/__init__.py": "c41acb8afd5f3306718e6b5bb242db1dae876bf512bcec1d6c49108e8fbcc38c",
+   "semabi/compiler/v4/abstractor.py": "4e772cf28d002461de3449e4a939ced2b39a672e629b916612c83bb6ad0625f1",
+   "semabi/compiler/v4/custody.py": "75ec3a978d92f8d1e924e07ba76cb41294737c5c596210cd82fbecc3b2b55178",
+   "semabi/compiler/v4/frozen_evidence.py": "ff80dc759a450cc64c90c913df63fb7d9eb70bb652ebc733dd40637a74b73738",
+   "semabi/compiler/v4/identity.py": "4e718dd8b3d2ade2126c31c5e88a3d5d7b91662a08e1a95077f342c030039c05",
+   "semabi/compiler/v4/manifests.py": "f38b79557ae4553d9f03c64fb9b160c027a3763f2577869372d660dbfd417afb",
+   "semabi/compiler/v4/objective.py": "b1040e3e65734524fbaac915b9e8da9eece4dfb442e5c67665d56d8350ea31e0",
+   "semabi/compiler/v4/pinned.py": "711305a95c1da238c4b9e4f213fb5f2421bf1757244b10bcbab5b14a83f8ad4d",
+   "semabi/compiler/v4/promote.py": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65",
+   "semabi/compiler/v4/search.py": "c1ad0bc10a94d146120192d77ac01da95158ed7ea738af9e84e889397305c839",
+   "semabi/compiler/v4/source_candidates.py": "c7a5626fbf2b7b92ad1c0c4b9ed6aadc791771f314a291d21f38c5121d90f41f",
+   "semabi/relmodel.py": "22ffbfe51a95a2b77307b9a2e0f3ba297dd58b2efd045ce7ab0263602abd74cf"
+  },
+  "max_candidates": 8
+ },
+ "incumbent": "source_choice",
+ "role": "SOURCE",
+ "runtime": {
+  "implementation": "CPython",
+  "version": "3.12.13"
+ },
+ "schema": "semabi.v4.source-candidates.v4",
+ "source_path": "../../../../runs/v4/sonnet_02_barter_market_dev",
+ "source_snapshot": {
+  "consumed_evidence_sha256": "489af38659e0daa4ea967bd248e3166fc5cdb5799687b3c2fff105ec64f430bf",
+  "content_tree_sha256": "67b3e59d540bc1cbd8fcffd785a9affc5feceae4d88c4158b44bc6bb6b647659",
+  "files": [
+   {
+    "mode": 420,
+    "path": "observations.jsonl",
+    "sha256": "c42a44e4c097250a7fa2be8daf1814e493e1ab0a8312548390b51f87b77e790c",
+    "size": 858759
+   },
+   {
+    "mode": 420,
+    "path": "steps.jsonl",
+    "sha256": "776b263416d833126e4393040330e53eaae6f3bd4572f009b37012f0110be40d",
+    "size": 170167
+   }
+  ],
+  "role": "SOURCE",
+  "role_bound_sha256": "1b15ba20c046a5e4ac102566fc92805c87e72cdd24ac8e5090a3804bdd143ab7",
+  "schema": "semabi.v4.compiler-snapshot.v2"
+ },
+ "source_summary": {
+  "alternatives_generated": [
+   {
+    "candidate": "promote cell[_]=cell#0",
+    "discrimination": 0.9325,
+    "family": "cell[_]",
+    "promotion": "cell#0",
+    "status": "SUPPORTED"
+   },
+   {
+    "candidate": "promote heading[_]=heading#0",
+    "discrimination": 1.0,
+    "family": "heading[_]",
+    "promotion": "heading#0",
+    "status": "SUPPORTED"
+   },
+   {
+    "alternative": "text#0",
+    "candidate": "joint discrimination x3",
+    "discrimination": 1.0,
+    "family": "listitem[_](text[_],textbox[_],button[_],text[_])",
+    "status": "SUPPORTED"
+   },
+   {
+    "alternative": "cell#0@3|cell#0@4",
+    "candidate": "joint discrimination x3",
+    "discrimination": 1.0,
+    "family": "row[_](cell[_])",
+    "status": "SUPPORTED"
+   },
+   {
+    "alternative": "cell#0|cell#0@3",
+    "candidate": "joint discrimination x3",
+    "discrimination": 1.0,
+    "family": "row[_](cell[_],cell[_](button[_],text[_]))",
+    "status": "SUPPORTED"
+   },
+   {
+    "alternative": null,
+    "candidate": "button[_]=None",
+    "discrimination": 0.0,
+    "family": "button[_]",
+    "status": "NO_IDENTITY"
+   },
+   {
+    "alternative": null,
+    "candidate": "group[_](heading[_],list=None",
+    "discrimination": null,
+    "family": "group[_](heading[_],list[_](listitem[_](text[_],textbox[_],button[_],text[_]),listitem[_](text[_])),heading[_],textbox[_],combobox[_],button[_],text[_])",
+    "status": "NO_IDENTITY"
+   },
+   {
+    "alternative": "text#0",
+    "candidate": "listitem[_](text[_],text=text#0",
+    "discrimination": 1.0,
+    "family": "listitem[_](text[_],textbox[_],button[_],text[_])",
+    "status": "SUPPORTED"
+   },
+   {
+    "alternative": "cell#0@3|cell#0@4",
+    "candidate": "row[_](cell[_])=cell#0@3|cell#0@4",
+    "discrimination": 1.0,
+    "family": "row[_](cell[_])",
+    "status": "SUPPORTED"
+   }
+  ],
+  "non_authoritative_source_diagnostics": {
+   "authority": "NON_AUTHORITATIVE_UNVERIFIED_SOURCE_SEARCH_DIAGNOSTICS",
+   "families": {
+    "button[_]": 1,
+    "group[_](heading[_],list[_](listitem[_](text[_],textbox[_],button[_],text[_]),listitem[_](text[_])),heading[_],textbox[_],combobox[_],button[_],text[_])": 1,
+    "listitem[_](text[_],textbox[_],button[_],text[_])": 1,
+    "listitem[_](text[_],textbox[_],button[_],text[_])@ctx0)": 1,
+    "row[_](cell[_])": 2,
+    "row[_](cell[_],cell[_](button[_],combobox[_],textbox[_],button[_],text[_]))": 1,
+    "row[_](cell[_],cell[_](button[_],text[_]))": 1
+   },
+   "local_final": {
+    "churn": 0,
+    "churn_steps": [],
+    "complexity": 25,
+    "contradiction_steps": [
+     412,
+     420,
+     59,
+     78,
+     112,
+     127,
+     137,
+     139,
+     158,
+     175,
+     220,
+     225,
+     238,
+     245,
+     281,
+     344,
+     406
+    ],
+    "contradictions": 17,
+    "delta_atoms": 136,
+    "explained": 101,
+    "spurious": 0,
+    "steps": 423,
+    "unexplained": 22,
+    "visibility": 13,
+    "visibility_steps": [
+     12,
+     25,
+     96,
+     98,
+     128,
+     186,
+     187,
+     202,
+     213,
+     215,
+     267,
+     325,
+     404
+    ]
+   },
+   "open_questions": [
+    {
+     "left": {
+      "evidence": {
+       "constant_share": 0.21,
+       "copresent_pairs": 216,
+       "coverage": 1.0,
+       "cross_view_values": 0,
+       "discrimination": 1.0,
+       "distinct_values": 8,
+       "numeric_share": 0.0,
+       "reload_stability": 1.0,
+       "separated_pairs": 216
+      },
+      "key_slot": "button#0",
+      "status": "SUPPORTED",
+      "template": "button[_]",
+      "why": "separates 216/216 co-present pairs, 8 values, coverage 1.00"
+     },
+     "reason": "undecided: chosen explains 86 with 59 errors, the alternative explains 40 with 37",
+     "right": {
+      "evidence": {
+       "constant_share": 0.0,
+       "copresent_pairs": 216,
+       "coverage": 0.0,
+       "cross_view_values": 0,
+       "discrimination": 0.0,
+       "distinct_values": 0,
+       "numeric_share": 0.0,
+       "reload_stability": null,
+       "separated_pairs": 0
+      },
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "template": "button[_]",
+      "why": "no identity-bearing observation claimed"
+     },
+     "template": "button[_]"
+    },
+    {
+     "left": {
+      "evidence": {
+       "constant_share": 0.0,
+       "copresent_pairs": 69,
+       "coverage": 0.0,
+       "cross_view_values": 0,
+       "discrimination": 0.0,
+       "distinct_values": 0,
+       "numeric_share": 0.0,
+       "reload_stability": null,
+       "separated_pairs": 0
+      },
+      "key_slot": null,
+      "status": "NO_IDENTITY",
+      "template": "listitem[_](text[_],textbox[_],button[_],text[_])",
+      "why": "no identity-bearing observation claimed"
+     },
+     "reason": "undecided: chosen explains 101 with 30 errors, the alternative explains 108 with 34",
+     "right": {
+      "evidence": {
+       "constant_share": 1.0,
+       "copresent_pairs": 69,
+       "coverage": 1.0,
+       "cross_view_values": 0,
+       "discrimination": 0.0,
+       "distinct_values": 1,
+       "numeric_share": 1.0,
+       "reload_stability": 1.0,
+       "separated_pairs": 0
+      },
+      "key_slot": "textbox#0",
+      "status": "CONTRADICTED",
+      "template": "listitem[_](text[_],textbox[_],button[_],text[_])",
+      "why": "one value only: it names no instance in particular"
+     },
+     "template": "listitem[_](text[_],textbox[_],button[_],text[_])"
+    },
+    {
+     "left": {
+      "evidence": {
+       "constant_share": 0.1,
+       "copresent_pairs": 299,
+       "coverage": 1.0,
+       "cross_view_values": 0,
+       "discrimination": 0.9933110367892977,
+       "distinct_values": 26,
+       "numeric_share": 0.0,
+       "reload_stability": null,
+       "separated_pairs": 297
+      },
+      "key_slot": "cell#0|cell#0@3",
+      "status": "SUPPORTED",
+      "template": "row[_](cell[_])",
+      "why": "separates 297/299 co-present pairs, 26 values, coverage 1.00"
+     },
+     "reason": "undecided: chosen explains 101 with 30 errors, the alternative explains 98 with 27",
+     "right": {
+      "evidence": {
+       "constant_share": 0.1,
+       "copresent_pairs": 299,
+       "coverage": 1.0,
+       "cross_view_values": 0,
+       "discrimination": 1.0,
+       "distinct_values": 23,
+       "numeric_share": 0.0,
+       "reload_stability": null,
+       "separated_pairs": 299
+      },
+      "key_slot": "cell#0@3|cell#0@4",
+      "status": "SUPPORTED",
+      "template": "row[_](cell[_])",
+      "why": "separates 299/299 co-present pairs, 23 values, coverage 1.00"
+     },
+     "template": "row[_](cell[_])"
+    },
+    {
+     "left": {
+      "evidence": {
+       "constant_share": 0.1,
+       "copresent_pairs": 299,
+       "coverage": 1.0,
+       "cross_view_values": 0,
+       "discrimination": 0.9933110367892977,
+       "distinct_values": 26,
+       "numeric_share": 0.0,
+       "reload_stability": null,
+       "separated_pairs": 297
+      },
+      "key_slot": "cell#0|cell#0@3",
+      "status": "SUPPORTED",
+      "template": "row[_](cell[_])",
+      "why": "separates 297/299 co-present pairs, 26 values, coverage 1.00"
+     },
+     "reason": "undecided: chosen explains 101 with 30 errors, the alternative explains 98 with 21",
+     "right": {
+      "evidence": {
+       "constant_share": 0.22,
+       "copresent_pairs": 299,
+       "coverage": 1.0,
+       "cross_view_values": 0,
+       "discrimination": 0.9130434782608695,
+       "distinct_values": 19,
+       "numeric_share": 0.0,
+       "reload_stability": null,
+       "separated_pairs": 273
+      },
+      "key_slot": "cell#0",
+      "status": "SUPPORTED",
+      "template": "row[_](cell[_])",
+      "why": "separates 273/299 co-present pairs, 19 values, coverage 1.00"
+     },
+     "template": "row[_](cell[_])"
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,85 @@
+{
+ "blend_masked_vs_unmasked": {
+  "identical verdicts": true,
+  "masked": {
+   "NOT_APPLICABLE": 17848,
+   "REFUTED": 3376,
+   "SUPPORTED": 1022
+  },
+  "unmasked": {
+   "NOT_APPLICABLE": 17848,
+   "REFUTED": 3376,
+   "SUPPORTED": 1022
+  }
+ },
+ "blend_refutations_by_kind_of_value": {
+  "a bare number": 3376
+ },
+ "blend_refutations_by_slot": {
+  "attr:cell#0@3": 2462,
+  "attr:cell#0@4": 914
+ },
+ "can_a_rule_name_the_clicked_object": {
+  "joint discrimination x2": {
+   "held-out clicks": {
+    "the clicked control belongs to an object": 78,
+    "the clicked control belongs to no object": 48
+   },
+   "object vocabulary sizes": {
+    "attrs=0 refs=0": 1,
+    "attrs=1 refs=2": 3,
+    "attrs=3 refs=0": 3,
+    "attrs=3 refs=1": 4,
+    "attrs=4 refs=1": 2
+   }
+  },
+  "promote cell[_]=cell#0": {
+   "held-out clicks": {
+    "the clicked control belongs to an object": 33,
+    "the clicked control belongs to no object": 93
+   },
+   "object vocabulary sizes": {
+    "attrs=0 refs=0": 3,
+    "attrs=1 refs=1": 38
+   }
+  }
+ },
+ "existence_check_discrimination_over_every_object": {
+  "says gone": 59,
+  "says still there": 92
+ },
+ "head_to_head_harbour_seed11": {
+  "joint discrimination x2": {
+   "on shared steps": {
+    "REFUTED": 10,
+    "SUPPORTED": 36
+   },
+   "steps": 25
+  },
+  "promote cell[_]=cell#0": {
+   "on shared steps": {
+    "REFUTED": 56,
+    "SUPPORTED": 24
+   },
+   "steps": 35
+  },
+  "shared steps": 25
+ },
+ "head_to_head_harbour_transfer": {
+  "joint discrimination x2": {
+   "on shared steps": {
+    "REFUTED": 2,
+    "SUPPORTED": 34
+   },
+   "steps": 18
+  },
+  "promote cell[_]=cell#0": {
+   "on shared steps": {
+    "REFUTED": 32,
+    "SUPPORTED": 34
+   },
+   "steps": 24
+  },
+  "shared steps": 18
+ }
+}
