@@ -6,20 +6,35 @@ import json
 from pathlib import Path
 
 from semabi.compiler.v4 import manifests
+
+
+def _candidates(path: Path):
+    """The candidate readings, from a chain manifest or from a bare source manifest.
+
+    Chains exist for the three applications the frontier was run on.  Applying this instrument
+    to an application that never reached that stage needs only its source candidates, and
+    refusing to look at one for want of a chain would confine every result to the three
+    histories the instrument was developed on.
+    """
+    payload = json.loads(Path(path).read_text())
+    if "source_manifest" in payload:
+        return manifests.load_chain_manifest(Path(path)).source_manifest.candidates
+    return manifests.load_source_manifest(Path(path)).candidates
 from semabi.compiler.v4.conditional import refine
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--chain", required=True, type=Path)
+    parser.add_argument("--chain", required=True, type=Path,
+                        help="a chain manifest, or a source manifest for an application that "
+                             "has no frozen chain")
     parser.add_argument("--run", required=True, type=Path)
     parser.add_argument("--split", action="append", type=float, default=None)
     parser.add_argument("--reading", action="append", default=None)
     parser.add_argument("--applicability", default="asserted", choices=["asserted", "attested"])
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
-    chain = manifests.load_chain_manifest(args.chain)
-    candidates = {c.name: c.reading for c in chain.source_manifest.candidates}
+    candidates = {c.name: c.reading for c in _candidates(args.chain)}
     rows = [refine(args.run, candidates[name], split=split, applicability=args.applicability)
             for split in (args.split or [0.4, 0.5, 0.6, 0.7])
             for name in (args.reading or sorted(candidates))]

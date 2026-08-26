@@ -10,6 +10,20 @@ import json
 from pathlib import Path
 
 from semabi.compiler.v4 import manifests
+
+
+def _candidates(path: Path):
+    """The candidate readings, from a chain manifest or from a bare source manifest.
+
+    Chains exist for the three applications the frontier was run on.  Applying this instrument
+    to an application that never reached that stage needs only its source candidates, and
+    refusing to look at one for want of a chain would confine every result to the three
+    histories the instrument was developed on.
+    """
+    payload = json.loads(Path(path).read_text())
+    if "source_manifest" in payload:
+        return manifests.load_chain_manifest(Path(path)).source_manifest.candidates
+    return manifests.load_source_manifest(Path(path)).candidates
 from semabi.compiler.v4.consequence import (ASSERTED, ATTESTED, IDENTITY, MASKED,
                                             NEAR_OPTIMAL, SAME_INDEX, UNMASKED, VALUE,
                                             fit, score)
@@ -25,8 +39,7 @@ MUTATIONS = {
 
 def run(chain_path: Path, run_dir: Path, splits, readings=None, mutations=("none",),
         modes=(ASSERTED,), rules=(MASKED,)):
-    chain = manifests.load_chain_manifest(Path(chain_path))
-    candidates = {c.name: c.reading for c in chain.source_manifest.candidates}
+    candidates = {c.name: c.reading for c in _candidates(chain_path)}
     rows = []
     for split in splits:
         for name in (readings or sorted(candidates)):
@@ -47,7 +60,9 @@ def _fmt(counts: dict) -> str:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--chain", required=True, type=Path)
+    parser.add_argument("--chain", required=True, type=Path,
+                        help="a chain manifest, or a source manifest for an application that "
+                             "has no frozen chain")
     parser.add_argument("--run", required=True, type=Path)
     parser.add_argument("--split", action="append", type=float, default=None)
     parser.add_argument("--reading", action="append", default=None)
