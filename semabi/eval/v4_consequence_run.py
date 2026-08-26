@@ -10,7 +10,8 @@ import json
 from pathlib import Path
 
 from semabi.compiler.v4 import manifests
-from semabi.compiler.v4.consequence import ASSERTED, ATTESTED, IDENTITY, VALUE, fit, score
+from semabi.compiler.v4.consequence import (ASSERTED, ATTESTED, IDENTITY, MASKED, SAME_INDEX,
+                                            UNMASKED, VALUE, fit, score)
 
 MUTATIONS = {
     "none": None,
@@ -22,7 +23,7 @@ MUTATIONS = {
 
 
 def run(chain_path: Path, run_dir: Path, splits, readings=None, mutations=("none",),
-        modes=(ASSERTED,)):
+        modes=(ASSERTED,), rules=(MASKED,)):
     chain = manifests.load_chain_manifest(Path(chain_path))
     candidates = {c.name: c.reading for c in chain.source_manifest.candidates}
     rows = []
@@ -30,9 +31,11 @@ def run(chain_path: Path, run_dir: Path, splits, readings=None, mutations=("none
         for name in (readings or sorted(candidates)):
             model = fit(Path(run_dir), candidates[name], split=split)
             for mode in modes:
-                for mutation in mutations:
-                    result = score(model, mutate=MUTATIONS[mutation], applicability=mode)
-                    rows.append({"name": name, "mutation": mutation, **result.to_json()})
+                for rule in rules:
+                    for mutation in mutations:
+                        result = score(model, mutate=MUTATIONS[mutation], applicability=mode,
+                                       correspondence=rule)
+                        rows.append({"name": name, "mutation": mutation, **result.to_json()})
     return rows
 
 
@@ -50,18 +53,22 @@ def main() -> None:
     parser.add_argument("--mutation", action="append", default=None, choices=sorted(MUTATIONS))
     parser.add_argument("--applicability", action="append", default=None,
                         choices=[ASSERTED, ATTESTED])
+    parser.add_argument("--correspondence", action="append", default=None,
+                        choices=[MASKED, UNMASKED, SAME_INDEX])
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     rows = run(args.chain, args.run, args.split or [0.4, 0.5, 0.6, 0.7, 0.8], args.reading,
-               args.mutation or ["none"], args.applicability or [ASSERTED])
+               args.mutation or ["none"], args.applicability or [ASSERTED],
+               args.correspondence or [MASKED])
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(rows, indent=1, sort_keys=True) + "\n")
-    print(f"{'split':>5} {'reading':30} {'mode':9} {'mutation':20} "
+    print(f"{'split':>5} {'reading':30} {'mode':9} {'match':11} {'mutation':20} "
           f"| {'VALUE  S/R/P/U/NA':^28} | {'IDENTITY':^28}")
     for row in rows:
         print(f"{row['split']:5.1f} {row['name'][:30]:30} {row['applicability']:9} "
-              f"{row['mutation']:20} | {_fmt(row['value'])} | {_fmt(row['identity'])}")
+              f"{row['correspondence_rule']:11} {row['mutation']:20} "
+              f"| {_fmt(row['value'])} | {_fmt(row['identity'])}")
     print()
     for row in rows:
         if row["value_landing"]:
@@ -70,7 +77,8 @@ def main() -> None:
     print()
     seen: dict[tuple, dict[str, tuple[str, int]]] = {}
     for row in rows:
-        key = (row["split"], row["applicability"], row["mutation"])
+        key = (row["split"], row["applicability"], row["correspondence_rule"],
+               row["mutation"])
         seen.setdefault(key, {})[row["name"]] = (row["prediction_signature_digest"],
                                                  row["predictions_signed"])
     for key, digests in sorted(seen.items()):
@@ -87,7 +95,7 @@ def main() -> None:
         line = " | ".join("{" + ", ".join(g) + "}" for g in groups.values()) or "(none tested)"
         if untested:
             line += "   untested: " + ", ".join(untested)
-        print(f"  split {key[0]} {key[1]} {key[2]}: predictive classes: {line}")
+        print(f"  split {key[0]} {key[1]} {key[2]} {key[3]}: predictive classes: {line}")
     print()
     for row in rows:
         for p in row["refutations"][:2]:

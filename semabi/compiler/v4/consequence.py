@@ -55,6 +55,10 @@ from semabi.compiler.v4.prospective import action_control, control_of, split_lit
 VALUE = "VALUE"
 IDENTITY = "IDENTITY"
 
+MASKED = "masked"          # the instrument: candidate-independent, predicted field hidden
+UNMASKED = "unmasked"      # control: the same matcher allowed to use the tested property
+SAME_INDEX = "same_index"  # control: the node kept its position in the tree
+
 SUPPORTED = "SUPPORTED"
 REFUTED = "REFUTED"
 POSSIBLE = "POSSIBLE"
@@ -100,6 +104,7 @@ class ScopedResult:
     reading: str
     split: float
     applicability: str
+    correspondence_rule: str
     fitted_on_steps: int
     evaluated_steps: int
     operators: int
@@ -169,6 +174,7 @@ class ScopedResult:
     def to_json(self) -> dict[str, Any]:
         return {"reading": self.reading, "split": self.split,
                 "applicability": self.applicability,
+                "correspondence_rule": self.correspondence_rule,
                 "fitted_on_steps": self.fitted_on_steps,
                 "evaluated_steps": self.evaluated_steps, "operators": self.operators,
                 "single_act_operators": self.single_act_operators,
@@ -424,14 +430,17 @@ def fit(run_dir: Path, reading, *, split: float = 0.6, min_support: int = 2) -> 
 
 def evaluate(run_dir: Path, reading, *, split: float = 0.6, min_support: int = 2,
              mutate: Callable[[str], str] | None = None,
-             evaluate_on: str = "suffix", applicability: str = ASSERTED) -> ScopedResult:
+             evaluate_on: str = "suffix", applicability: str = ASSERTED,
+             correspondence: str = MASKED) -> ScopedResult:
     """Fit on the first ``split`` of the history; predict the rest; check where it landed."""
     return score(fit(run_dir, reading, split=split, min_support=min_support),
-                 mutate=mutate, evaluate_on=evaluate_on, applicability=applicability)
+                 mutate=mutate, evaluate_on=evaluate_on, applicability=applicability,
+                 correspondence=correspondence)
 
 
 def score(model: Fit, *, mutate: Callable[[str], str] | None = None,
-          evaluate_on: str = "suffix", applicability: str = ASSERTED) -> ScopedResult:
+          evaluate_on: str = "suffix", applicability: str = ASSERTED,
+          correspondence: str = MASKED) -> ScopedResult:
     """Check a fitted reading's rules against the raw page, where each one lands.
 
     ``evaluate_on`` exists for the conditional-refinement search, which needs the same
@@ -444,10 +453,10 @@ def score(model: Fit, *, mutate: Callable[[str], str] | None = None,
 
     result = ScopedResult(
         reading=getattr(reading, "name", "?"), split=split, applicability=applicability,
-        fitted_on_steps=cut,
+        correspondence_rule=correspondence, fitted_on_steps=cut,
         evaluated_steps=len(full.steps) - cut, operators=len(operators),
         single_act_operators=sum(len(v) for v in by_control.values()))
-    corresponder = corr.Corresponder()
+    relocate = matcher(correspondence, corr.Corresponder())
     bridges: dict[int, dict[tuple[int, str], int]] = {}
     states: dict[int, Any] = {}
 
@@ -516,7 +525,7 @@ def score(model: Fit, *, mutate: Callable[[str], str] | None = None,
                     continue
                 base.feature_node = node
                 base.action_local = action_local(pre, step.action.target, node)
-                match = corresponder(pre, post, node, corr.mask_outcome(pre, node))
+                match = relocate(pre, post, node)
                 base.correspondence = match.status
                 base.admissible = match.admissible
                 base.layers = match.layers
@@ -529,6 +538,28 @@ def score(model: Fit, *, mutate: Callable[[str], str] | None = None,
                     result.predictions.append(
                         _identity_prediction(base, after, match, predicted))
     return result
+
+
+def matcher(kind: str, corresponder):
+    """The correspondence rule to check predictions against, including the broken ones.
+
+    A conclusion that survives every one of these is not evidence about the instrument, and a
+    conclusion that only appears under one of them is evidence about the instrument rather
+    than about the readings.  ``unmasked`` lets the correspondence use the very property the
+    prediction is about; ``same_index`` is the null hypothesis that these applications
+    re-render in place, which most transitions in this corpus satisfy.
+    """
+    if kind == UNMASKED:
+        return lambda pre, post, node: corresponder(pre, post, node, {})
+    if kind == SAME_INDEX:
+        def by_index(pre, post, node):
+            if node < len(post.nodes) and post.node(node).role == pre.node(node).role:
+                return corr.Correspondence(node, (node,), corr.UNIQUE, ("SAME_INDEX",),
+                                           "the node kept its position in the tree")
+            return corr.Correspondence(node, (), corr.NONE, ("SAME_INDEX",),
+                                       "no node of that role at that position")
+        return by_index
+    return lambda pre, post, node: corresponder(pre, post, node, corr.mask_outcome(pre, node))
 
 
 def _rendered_as(value) -> str | None:
