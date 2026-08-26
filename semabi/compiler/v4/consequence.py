@@ -54,8 +54,10 @@ from semabi.compiler.v4.prospective import action_control, control_of, split_lit
 
 VALUE = "VALUE"
 IDENTITY = "IDENTITY"
+EXISTENCE = "EXISTENCE"
 
 MASKED = "masked"          # the instrument: candidate-independent, predicted field hidden
+NEAR_OPTIMAL = "masked_near_optimal"   # the same, admitting alignments one match off the best
 UNMASKED = "unmasked"      # control: the same matcher allowed to use the tested property
 SAME_INDEX = "same_index"  # control: the node kept its position in the tree
 
@@ -134,7 +136,9 @@ class ScopedResult:
     def refutations(self) -> list[ScopedPrediction]:
         return [p for p in self.predictions if p.verdict == REFUTED]
 
-    def signature(self, kind: str = VALUE) -> list[tuple]:
+    PAGE_CHECKS = (VALUE, EXISTENCE)
+
+    def signature(self, kind: str | tuple[str, ...] = PAGE_CHECKS) -> list[tuple]:
         """What this reading predicted, where, and how it came out -- in raw page terms.
 
         ``(step, raw node, expected text, verdict)``.  Every component is either an index into
@@ -148,13 +152,17 @@ class ScopedResult:
 
         Only predictions the instrument actually decided are signed.  A rule that did not fire
         made no claim, and counting non-claims would make the signature a function of how many
-        rules were fitted rather than of what was predicted.
+        rules were fitted rather than of what was predicted.  Both page checks are covered and
+        the reading-relative one is not: on the veterinary clinic every rule any reading fits
+        is about an object appearing or going away, so a signature over value claims alone
+        would call four readings indistinguishable by saying nothing about any of them.
         """
-        return sorted((p.step, p.feature_node, p.expected, p.verdict)
+        kinds = (kind,) if isinstance(kind, str) else tuple(kind)
+        return sorted((p.kind, p.step, p.feature_node, p.expected, p.verdict)
                       for p in self.predictions
-                      if p.kind == kind and p.verdict != NOT_APPLICABLE)
+                      if p.kind in kinds and p.verdict != NOT_APPLICABLE)
 
-    def signature_digest(self, kind: str = VALUE) -> str:
+    def signature_digest(self, kind: str | tuple[str, ...] = PAGE_CHECKS) -> str:
         import hashlib
         import json as _json
         payload = _json.dumps(self.signature(kind), sort_keys=True, default=str)
@@ -179,11 +187,13 @@ class ScopedResult:
                 "evaluated_steps": self.evaluated_steps, "operators": self.operators,
                 "single_act_operators": self.single_act_operators,
                 "value": self.counts(VALUE), "identity": self.counts(IDENTITY),
+                "existence": self.counts(EXISTENCE),
+                "existence_coverage": self.coverage(EXISTENCE),
                 "value_correspondence": self.correspondence_counts(VALUE),
                 "value_coverage": self.coverage(VALUE), "value_landing": self.landing(VALUE),
                 "identity_coverage": self.coverage(IDENTITY),
-                "prediction_signature_digest": self.signature_digest(VALUE),
-                "predictions_signed": len(self.signature(VALUE)),
+                "prediction_signature_digest": self.signature_digest(),
+                "predictions_signed": len(self.signature()),
                 "skipped": dict(sorted(self.skipped.items())),
                 "refutations": [p.to_json() for p in self.refutations[:40]]}
 
@@ -388,12 +398,21 @@ def binding_context(binding) -> tuple[tuple[str, Any], ...]:
     reading's own vocabulary, so a reading that cannot see the distinguishing state cannot
     be rescued by one.  Recorded on every prediction so the search in
     :mod:`semabi.compiler.v4.conditional` never needs to re-run the fit.
+
+    References belong here as much as attributes.  Harbour's berth rows do not carry the
+    holding call as an attribute -- the abstractor resolves that cell to a *reference* to the
+    call -- so a search offered only attributes concluded that nothing in the reading's
+    vocabulary separated its successes from its failures, when the one thing that does was
+    sitting in ``refs``.  A reference's target is recorded by the key it points at, or
+    ``None``, which is exactly the distinction a precondition would need to make.
     """
     out: list[tuple[str, Any]] = []
     for param, obj in sorted(binding.items()):
         out.append((f"{param}.id", obj.key))
         for slot, value in sorted(obj.attrs.items()):
             out.append((f"{param}.{slot}", value))
+        for slot, target in sorted(obj.refs.items()):
+            out.append((f"{param}.{slot}", None if target is None else str(target[1])))
     return tuple(out)
 
 
@@ -457,6 +476,10 @@ def score(model: Fit, *, mutate: Callable[[str], str] | None = None,
         evaluated_steps=len(full.steps) - cut, operators=len(operators),
         single_act_operators=sum(len(v) for v in by_control.values()))
     relocate = matcher(correspondence, corr.Corresponder())
+    # Survival is asked with the content layers only.  Letting the descent fall through to
+    # role and position would answer "still there" for a panel replaced by a different panel
+    # of the same shape, which is the one answer a removal check must never give for free.
+    gone = corr.Corresponder(ladder=(corr.DEEP, corr.LOCAL))
     bridges: dict[int, dict[tuple[int, str], int]] = {}
     states: dict[int, Any] = {}
 
@@ -484,6 +507,12 @@ def score(model: Fit, *, mutate: Callable[[str], str] | None = None,
             ok, reason = ((False, why) if why else
                           preconditions_hold(A, state, op, binding, applicability))
             for eff in op.effs:
+                if eff.kind == "remove" and ok:
+                    survives = _existence_prediction(
+                        A, bridge, pre, post, step, control, op, binding, eff, gone)
+                    if survives is not None:
+                        result.predictions.append(survives)
+                    continue
                 if eff.kind != "set" or not isinstance(eff.new, str) or eff.slot is None:
                     continue
                 predicted = mutate(eff.new) if mutate else eff.new
@@ -549,6 +578,9 @@ def matcher(kind: str, corresponder):
     prediction is about; ``same_index`` is the null hypothesis that these applications
     re-render in place, which most transitions in this corpus satisfy.
     """
+    if kind == NEAR_OPTIMAL:
+        wider = corr.Corresponder(corresponder.descriptors, tolerance=1)
+        return lambda pre, post, node: wider(pre, post, node, corr.mask_outcome(pre, node))
     if kind == UNMASKED:
         return lambda pre, post, node: corresponder(pre, post, node, {})
     if kind == SAME_INDEX:
@@ -569,6 +601,54 @@ def _rendered_as(value) -> str | None:
     if isinstance(value, bool):
         return str(value)
     return str(split_literal(value)[0]) if isinstance(value, str) else str(value)
+
+
+def _existence_prediction(A, bridge, pre, post, step, control, op, binding, eff, gone):
+    """A rule that says an object goes away, checked where that object was rendered.
+
+    Some readings' whole action-effect model is about existence: on the veterinary clinic
+    every fitted rule is a view switch that makes objects appear and disappear, and not one of
+    them predicts what anything will say.  A value check reports nothing there, which is
+    correct and uninformative -- so the same correspondence answers the other question, by
+    relocating the node that rendered the object's own name and asking whether the thing that
+    continued it still says that name.
+
+    Nothing is masked: the prediction is about the object being gone, not about a field
+    taking a value, so its rendered identity is evidence rather than the answer.
+    """
+    subject = binding.get(eff.obj)
+    if subject is None or subject.node is None or subject.node < 0:
+        return None
+    node = bridge.get((subject.node, "id"), subject.node)
+    if node >= len(pre.nodes):
+        return None
+    pred = ScopedPrediction(
+        step=step.step, control=control, operator=op.name, kind=EXISTENCE,
+        support=len(op.positives), slot="id", predicted="gone", expected="gone",
+        subject=str(subject.key), feature_node=node,
+        action_local=action_local(pre, step.action.target, node),
+        context=binding_context(binding))
+    match = gone(pre, post, node)
+    pred.correspondence, pred.admissible, pred.layers = (match.status, match.admissible,
+                                                         match.layers)
+    if match.status == corr.NONE:
+        pred.verdict = SUPPORTED
+        pred.detail = "nothing in the later observation continues the structure that rendered it"
+        return pred
+    rendered = str(leaf_value(pre.node(node)))
+    seen = [str(leaf_value(post.node(j))) for j in match.admissible]
+    pred.observed = tuple(seen)
+    still = sum(1 for x in seen if x == rendered)
+    if still == len(seen):
+        pred.verdict = REFUTED
+        pred.detail = f"the continuation still renders {rendered!r}, so the object did not go"
+    elif still == 0:
+        pred.verdict = SUPPORTED
+        pred.detail = f"no admissible continuation still renders {rendered!r}"
+    else:
+        pred.verdict = POSSIBLE
+        pred.detail = "some admissible continuations still render it and some do not"
+    return pred
 
 
 def _is_key_slot(A, subject, slot: str) -> bool:

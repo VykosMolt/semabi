@@ -34,6 +34,8 @@ ROOT = Path(__file__).resolve().parents[2]
 PROBE = ("single clicks on the controls the application renders, one step ahead, checked at "
          "the raw node the effect names, with the predicted field masked from correspondence")
 
+from semabi.compiler.v4.conditional import CLEAN, CONTRADICTED, explain
+
 REFUTED_EVERYWHERE = "REFUTED_ON_EVERY_TRACE_THAT_REACHED_IT"
 REFUTED_SOMEWHERE = "REFUTED_ON_SOME_TRACES_AND_NOT_OTHERS"
 UNREFUTED = "UNREFUTED_WHERE_THE_INSTRUMENT_REACHED_IT"
@@ -67,9 +69,15 @@ def prospective(rows: list[dict], readings: list[str]) -> dict[str, Any]:
                     and r["mutation"] == "none" and r["correspondence_rule"] == "masked"]
             if not live:
                 continue
-            decided = sum(r["value_coverage"]["tested"] for r in live)
-            refuted = sum(r["value"].get("REFUTED", 0) for r in live)
-            supported = sum(r["value"].get("SUPPORTED", 0) for r in live)
+            # Both page checks count.  A reading whose whole action-effect model is about
+            # objects appearing and going away makes no value claim, and reading only the
+            # value column would report it as untested when it was tested and passed.
+            decided = sum(r["value_coverage"]["tested"]
+                          + r.get("existence_coverage", {}).get("tested", 0) for r in live)
+            refuted = sum(r["value"].get("REFUTED", 0)
+                          + r.get("existence", {}).get("REFUTED", 0) for r in live)
+            supported = sum(r["value"].get("SUPPORTED", 0)
+                            + r.get("existence", {}).get("SUPPORTED", 0) for r in live)
             traces[trace] = {
                 "splits": sorted({r["split"] for r in live}),
                 "modes": sorted({r["applicability"] for r in live}),
@@ -93,8 +101,10 @@ def prospective(rows: list[dict], readings: list[str]) -> dict[str, Any]:
                     continue
                 key = f"{r['correspondence_rule']}/{r['mutation']}"
                 bucket = controls[reading].setdefault(key, {"decided": 0, "refuted": 0})
-                bucket["decided"] += r["value_coverage"]["tested"]
-                bucket["refuted"] += r["value"].get("REFUTED", 0)
+                bucket["decided"] += (r["value_coverage"]["tested"]
+                                      + r.get("existence_coverage", {}).get("tested", 0))
+                bucket["refuted"] += (r["value"].get("REFUTED", 0)
+                                      + r.get("existence", {}).get("REFUTED", 0))
     return {"basis": PROBE, "readings": per,
             "controls": {k: dict(sorted(v.items())) for k, v in sorted(controls.items())},
             "predictive_classes": _classes(rows)}
@@ -143,27 +153,64 @@ def _classes(rows: list[dict]) -> list[dict[str, Any]]:
     return out
 
 
-def build(app: str, consequence: list[Path]) -> dict[str, Any]:
+def elimination(rows: list[dict], conditional: list[dict], readings: list[str]) -> dict[str, Any]:
+    """Which readings a held-out contradiction is entitled to remove, and which it is not.
+
+    A refutation on its own does not eliminate: a rule the learner under-specified fails on
+    held-out steps too, and repairing it is ordinary learning rather than evidence against the
+    representation.  What eliminates is a contradiction the reading cannot repair *in its own
+    vocabulary* with a condition chosen on the prefix -- because that is the case where the
+    thing the effect depends on is something the reading cannot say.
+
+    Nothing here is a score and nothing is tuned.  A reading is removed when it was refuted on
+    every history that reached it and no prefix-chosen literal over the objects its rules bind
+    removes those refutations without also discarding the successes.
+    """
+    verdicts: dict[str, str] = {}
+    for reading in readings:
+        mine = [r for r in conditional if r["reading"] == reading]
+        verdicts[reading] = explain(mine) if mine else "NOT_ANALYSED"
+    refuted_everywhere = {
+        reading for reading in readings
+        if any(r["value"].get("REFUTED", 0) + r.get("existence", {}).get("REFUTED", 0)
+               for r in rows if r["name"] == reading and r["mutation"] == "none"
+               and r["correspondence_rule"] == "masked")}
+    removed = sorted(r for r in readings
+                     if verdicts.get(r) == CONTRADICTED and r in refuted_everywhere)
+    return {"criterion": ("refuted on every history that reached it, and no prefix-chosen "
+                          "literal over the objects its rules bind removes those refutations "
+                          "without discarding its successes"),
+            "explanations": dict(sorted(verdicts.items())),
+            "removed": removed,
+            "retained": sorted(set(readings) - set(removed))}
+
+
+def build(app: str, consequence: list[Path], conditional: list[Path]) -> dict[str, Any]:
     report = json.loads((ROOT / f"docs/data/v4/frontier_{app}.json").read_text())
     rows: list[dict] = []
     for path in consequence:
-        trace = path.stem.replace(f"consequence_", "")
+        trace = path.stem.replace("consequence_", "")
         for row in json.loads(path.read_text()):
             rows.append({**row, "trace": trace})
+    cond: list[dict] = []
+    for path in conditional:
+        cond.extend(json.loads(path.read_text()))
     readings = sorted({row["name"] for row in rows}) or [r["name"] for r in report["survivors"]]
     return {"application": app,
             "structural": structural(report),
             "retrospective": retrospective(report),
-            "prospective": prospective(rows, readings)}
+            "prospective": prospective(rows, readings),
+            "prospective_elimination": elimination(rows, cond, readings)}
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--app", required=True)
     parser.add_argument("--consequence", type=Path, action="append", default=[])
+    parser.add_argument("--conditional", type=Path, action="append", default=[])
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
-    payload = build(args.app, args.consequence)
+    payload = build(args.app, args.consequence, args.conditional)
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(payload, indent=1, sort_keys=True) + "\n")
@@ -179,6 +226,11 @@ def main() -> None:
                   f"refuted {t['refuted']:5d}  {t['landing']}")
     for name, row in sorted(payload["prospective"]["controls"].items()):
         print(f"  controls       {name[:34]:36} {row}")
+    elim = payload["prospective_elimination"]
+    for name, why in sorted(elim["explanations"].items()):
+        print(f"  refutations    {name[:34]:36} {why}")
+    print(f"  ELIMINATED     {elim['removed']}")
+    print(f"  RETAINED       {elim['retained']}")
 
 
 if __name__ == "__main__":

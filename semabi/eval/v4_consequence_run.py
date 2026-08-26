@@ -10,8 +10,9 @@ import json
 from pathlib import Path
 
 from semabi.compiler.v4 import manifests
-from semabi.compiler.v4.consequence import (ASSERTED, ATTESTED, IDENTITY, MASKED, SAME_INDEX,
-                                            UNMASKED, VALUE, fit, score)
+from semabi.compiler.v4.consequence import (ASSERTED, ATTESTED, IDENTITY, MASKED,
+                                            NEAR_OPTIMAL, SAME_INDEX, UNMASKED, VALUE,
+                                            fit, score)
 
 MUTATIONS = {
     "none": None,
@@ -54,7 +55,7 @@ def main() -> None:
     parser.add_argument("--applicability", action="append", default=None,
                         choices=[ASSERTED, ATTESTED])
     parser.add_argument("--correspondence", action="append", default=None,
-                        choices=[MASKED, UNMASKED, SAME_INDEX])
+                        choices=[MASKED, NEAR_OPTIMAL, UNMASKED, SAME_INDEX])
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     rows = run(args.chain, args.run, args.split or [0.4, 0.5, 0.6, 0.7, 0.8], args.reading,
@@ -64,11 +65,11 @@ def main() -> None:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(rows, indent=1, sort_keys=True) + "\n")
     print(f"{'split':>5} {'reading':30} {'mode':9} {'match':11} {'mutation':20} "
-          f"| {'VALUE  S/R/P/U/NA':^28} | {'IDENTITY':^28}")
+          f"| {'VALUE  S/R/P/U/NA':^24} | {'EXISTENCE':^24} | {'IDENTITY':^24}")
     for row in rows:
         print(f"{row['split']:5.1f} {row['name'][:30]:30} {row['applicability']:9} "
               f"{row['correspondence_rule']:11} {row['mutation']:20} "
-              f"| {_fmt(row['value'])} | {_fmt(row['identity'])}")
+              f"| {_fmt(row['value'])} | {_fmt(row['existence'])} | {_fmt(row['identity'])}")
     print()
     for row in rows:
         if row["value_landing"]:

@@ -227,4 +227,50 @@ def test_only_decided_predictions_are_signed():
                              slot="s", predicted="y", expected="y",
                              verdict=csq.NOT_APPLICABLE),
     ]
-    assert result.signature() == [(1, 3, "x", csq.SUPPORTED)]
+    assert result.signature() == [(csq.VALUE, 1, 3, "x", csq.SUPPORTED)]
+
+
+# ------------------------------------------------------------------ existence
+
+def _existence(pre, post, node, key):
+    from semabi.compiler.v4.correspondence import DEEP, LOCAL, Corresponder
+    subject = obj(key=key, node=node)
+    op = operator()
+    eff = SimpleNamespace(kind="remove", obj="?o0")
+    step = SimpleNamespace(step=0, action=SimpleNamespace(target=0))
+    gone = Corresponder(ladder=(DEEP, LOCAL))
+    return csq._existence_prediction(abstractor(), {}, pre, post, step, "c", op,
+                                     {"?o0": subject}, eff, gone)
+
+
+def test_an_object_whose_structure_is_gone_is_reported_gone():
+    pre = tree(("group", "", [("row", "", [("cell", "Bramble", [])]),
+                              ("row", "", [("cell", "Willow", [])])]))
+    post = tree(("group", "", [("row", "", [("cell", "Willow", [])])]))
+    assert _existence(pre, post, 2, "Bramble").verdict == csq.SUPPORTED
+
+
+def test_an_object_still_rendered_refutes_a_removal():
+    """Establishes the control the existence check needs: it can say no.  A check that
+    reported every removal supported would be measuring the page's willingness to re-render,
+    not the rule's claim."""
+    pre = tree(("group", "", [("row", "", [("cell", "Bramble", [])]),
+                              ("row", "", [("cell", "Willow", [])])]))
+    post = tree(("group", "", [("row", "", [("cell", "Bramble", [])]),
+                               ("row", "", [("cell", "Willow", [])])]))
+    assert _existence(pre, post, 2, "Bramble").verdict == csq.REFUTED
+
+
+def test_survival_is_not_decided_by_shape_alone():
+    """Establishes why the removal check refuses the weakest correspondence layer.
+
+    The panel is replaced by a different panel with the same shape.  Falling through to role
+    and position would find a continuation and report the object still present; restricted to
+    the content layers, nothing continues it and the removal stands.
+    """
+    from semabi.compiler.v4 import correspondence as c
+    pre = tree(("group", "", [("row", "", [("cell", "Bramble", [])])]))
+    post = tree(("group", "", [("row", "", [("cell", "Something else", [])])]))
+    assert c.correspond(pre, post, 2, {}).status == c.UNIQUE          # the full ladder
+    assert c.correspond(pre, post, 2, {}, ladder=(c.DEEP, c.LOCAL)).status == c.NONE
+    assert _existence(pre, post, 2, "Bramble").verdict == csq.SUPPORTED

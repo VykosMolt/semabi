@@ -193,6 +193,57 @@ def test_a_node_an_equally_good_alignment_could_drop_is_not_called_unique():
     assert "unmatched" in match.detail
 
 
+def test_a_node_that_moves_between_containers_is_reported_ambiguous_not_wrong():
+    """The boundary of this matcher, stated as a test rather than left to be discovered.
+
+    The descent walks the pre-node's ancestor chain, so a card dragged from one column to
+    another is not something it can follow.  What it does instead matters more than that it
+    cannot: where the two columns are not told apart by their remaining content, the descent
+    reaches both and returns both continuations, so the true one is in the admissible set and
+    nothing is asserted about which.  A consequence checked against that set is undecided
+    rather than wrong.
+    """
+    pre = tree(("group", "", [
+        ("list", "todo", [("listitem", "card A", []), ("listitem", "card B", [])]),
+        ("list", "done", [])]))
+    post = tree(("group", "", [
+        ("list", "todo", [("listitem", "card B", [])]),
+        ("list", "done", [("listitem", "card A", [])])]))
+    moved = find(pre, "listitem", "card A")
+    match = corr.correspond(pre, post, moved, {})
+    assert match.status == corr.AMBIGUOUS
+    assert find(post, "listitem", "card A") in match.admissible
+
+
+def test_a_move_out_of_a_pinned_container_names_the_wrong_candidate_but_flags_it():
+    """The other half of the same boundary, and the honest form of it.
+
+    When the containers are told apart, the descent commits to the one the node was in, and
+    the node is not there any more.  The weakest layer -- role and whether it has children,
+    with rendered text dropped -- then places it on the sibling that remains.  The status is
+    ``AMBIGUOUS`` and the detail says the structure may not have survived, so nothing is
+    asserted; but the admissible set does not contain the true continuation, which is the one
+    kind of miss this matcher can produce.  An application whose objects move between
+    containers needs a matcher that can leave the ancestor chain, and this is not that
+    matcher.  On the tabular applications in this corpus the weakest layer never places the
+    final node; on the veterinary clinic, whose panels are replaced wholesale, it places 83 of
+    295, which is where this failure mode would first bite.
+    """
+    pre = tree(("group", "", [
+        ("list", "todo", [("heading", "To do", []), ("listitem", "card A", []),
+                          ("listitem", "card B", [])]),
+        ("list", "done", [("heading", "Done", [])])]))
+    post = tree(("group", "", [
+        ("list", "todo", [("heading", "To do", []), ("listitem", "card B", [])]),
+        ("list", "done", [("heading", "Done", []), ("listitem", "card A", [])])]))
+    moved = find(pre, "listitem", "card A")
+    match = corr.correspond(pre, post, moved, {})
+    assert match.status == corr.AMBIGUOUS
+    assert "not settled" in match.detail
+    assert find(post, "listitem", "card A") not in match.admissible
+    assert match.layers[-1] == corr.SHAPE
+
+
 # ------------------------------------------------------------------ alignment primitive
 
 def test_admissible_matches_returns_every_optimal_pairing():

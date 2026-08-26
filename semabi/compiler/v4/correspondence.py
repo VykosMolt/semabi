@@ -183,14 +183,19 @@ def compatible(a: Any, b: Any) -> bool:
 
 # ---------------------------------------------------------------- alignment
 
-def admissible_matches(n: int, m: int, match: Callable[[int, int], bool]
-                       ) -> tuple[dict[int, set[int]], list[bool]]:
-    """Order-preserving alignment, reporting every match an optimal alignment can make.
+def admissible_matches(n: int, m: int, match: Callable[[int, int], bool],
+                       tolerance: int = 0) -> tuple[dict[int, set[int]], list[bool]]:
+    """Order-preserving alignment, reporting every match a good alignment can make.
 
     Returns, for each left index, the set of right indices it is paired with in at least one
-    maximum-length alignment, and whether some maximum-length alignment leaves it unpaired.
-    Taking the union over optimal alignments rather than one of them is what keeps genuine
-    ambiguity visible instead of resolving it by an arbitrary preference.
+    alignment within ``tolerance`` of the maximum length, and whether such an alignment can
+    leave it unpaired.  Taking the union over co-optimal alignments rather than one of them is
+    what keeps genuine ambiguity visible instead of resolving it by an arbitrary preference;
+    the sequence-alignment literature makes the same point about reducing a comparison to one
+    solution, and goes further by admitting near-optimal alignments too, since the highest
+    score is not always the right answer.  ``tolerance`` is that widening.  It can only add
+    admissible continuations, so it can only turn a refutation into a ``POSSIBLE`` -- which
+    makes it a one-directional robustness check on any refutation this instrument reports.
     """
     suffix = [[0] * (m + 1) for _ in range(n + 1)]
     for i in range(n - 1, -1, -1):
@@ -208,14 +213,14 @@ def admissible_matches(n: int, m: int, match: Callable[[int, int], bool]
             if match(i - 1, j - 1) and 1 + prev[j - 1] > best:
                 best = 1 + prev[j - 1]
             row[j] = best
-    total = suffix[0][0]
+    floor = suffix[0][0] - tolerance
     pairs: dict[int, set[int]] = {i: set() for i in range(n)}
     skippable = [False] * n
     for i in range(n):
         for j in range(m):
-            if match(i, j) and prefix[i][j] + 1 + suffix[i + 1][j + 1] == total:
+            if match(i, j) and prefix[i][j] + 1 + suffix[i + 1][j + 1] >= floor:
                 pairs[i].add(j)
-        skippable[i] = any(prefix[i][j] + suffix[i + 1][j] == total for j in range(m + 1))
+        skippable[i] = any(prefix[i][j] + suffix[i + 1][j] >= floor for j in range(m + 1))
     return pairs, skippable
 
 
@@ -223,19 +228,21 @@ def admissible_matches(n: int, m: int, match: Callable[[int, int], bool]
 
 def _place(desc: _Descriptors, pre_obs: Observation, post_obs: Observation,
            pre_children: list[int], post_children: list[int], k: int,
-           masked: Mapping[int, frozenset[str]], tainted: frozenset[int]
+           masked: Mapping[int, frozenset[str]], tainted: frozenset[int],
+           tolerance: int = 0, ladder: tuple[str, ...] = (DEEP, LOCAL, SHAPE)
            ) -> tuple[str | None, list[int], bool]:
     """Where among ``post_children`` may ``pre_children[k]`` have continued?"""
-    layers = (
+    layers = [
         (DEEP, lambda o, i, m: desc.deep(o, i, m, tainted if m else frozenset())),
         (LOCAL, desc.local),
         (SHAPE, lambda o, i, m: desc.shape(o, i)),
-    )
+    ]
+    layers = [(name, fn) for name, fn in layers if name in ladder]
     for name, fn in layers:
         left = [fn(pre_obs, c, masked) for c in pre_children]
         right = [fn(post_obs, c, {}) for c in post_children]
         pairs, skippable = admissible_matches(
-            len(left), len(right), lambda i, j: compatible(left[i], right[j]))
+            len(left), len(right), lambda i, j: compatible(left[i], right[j]), tolerance)
         if pairs[k]:
             return name, [post_children[j] for j in sorted(pairs[k])], skippable[k]
     return None, [], True
@@ -243,8 +250,16 @@ def _place(desc: _Descriptors, pre_obs: Observation, post_obs: Observation,
 
 def correspond(pre_obs: Observation, post_obs: Observation, pre_index: int,
                masked: Mapping[int, frozenset[str]] | None = None,
-               *, descriptors: _Descriptors | None = None) -> Correspondence:
-    """Admissible continuations of ``pre_index`` in ``post_obs``, given the masked fields."""
+               *, descriptors: _Descriptors | None = None,
+               tolerance: int = 0, ladder: tuple[str, ...] = (DEEP, LOCAL, SHAPE)
+               ) -> Correspondence:
+    """Admissible continuations of ``pre_index`` in ``post_obs``, given the masked fields.
+
+    ``ladder`` restricts the backoff.  A caller asking whether a structure *survived* must not
+    let the descent fall through to the layer that matches on role and position alone: a panel
+    replaced by a different panel of the same shape would then look like the same panel, and
+    the answer to "is it gone" would always be no.
+    """
     masked = dict(masked or {})
     desc = descriptors or _Descriptors()
     tainted = tainted_nodes(pre_obs, masked)
@@ -262,7 +277,7 @@ def correspond(pre_obs: Observation, post_obs: Observation, pre_index: int,
         for post_parent in current:
             layer, cands, skippable = _place(
                 desc, pre_obs, post_obs, pre_children, post_obs.children(post_parent), k,
-                masked, tainted)
+                masked, tainted, tolerance, ladder)
             if layer is None:
                 continue
             used.add(layer)
@@ -295,7 +310,10 @@ def correspond(pre_obs: Observation, post_obs: Observation, pre_index: int,
 class Corresponder:
     """A reusable :func:`correspond` with the descriptor cache kept across calls."""
     descriptors: _Descriptors = field(default_factory=_Descriptors)
+    tolerance: int = 0
+    ladder: tuple[str, ...] = (DEEP, LOCAL, SHAPE)
 
     def __call__(self, pre_obs: Observation, post_obs: Observation, pre_index: int,
                  masked: Mapping[int, frozenset[str]] | None = None) -> Correspondence:
-        return correspond(pre_obs, post_obs, pre_index, masked, descriptors=self.descriptors)
+        return correspond(pre_obs, post_obs, pre_index, masked, descriptors=self.descriptors,
+                          tolerance=self.tolerance, ladder=self.ladder)

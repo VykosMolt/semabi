@@ -132,3 +132,47 @@ def refine(run_dir: Path, reading, *, split: float = 0.6, min_support: int = 2,
             "suffix_after_refinement": dict(sorted(after.items())),
             "all_separating_literals_agree_on_the_suffix": unanimous,
             "operators": rows}
+
+
+CONTRADICTED = "PROSPECTIVELY_CONTRADICTED_AND_NOT_REPAIRABLE_IN_ITS_OWN_VOCABULARY"
+RULE_GAP = "REFUTED_BY_RULES_A_PREFIX_CHOSEN_CONDITION_REPAIRS_COMPLETELY"
+MIXED = "REPAIRED_ON_SOME_HISTORIES_AND_NOT_OTHERS"
+CLEAN = "NO_REFUTATION_TO_EXPLAIN"
+
+
+def repaired_completely(row: dict) -> bool:
+    """Did the frozen condition remove every held-out refutation at no cost in support?
+
+    Both halves matter and neither is a threshold.  A condition that removes refutations by
+    making the rule fire less often has not explained anything -- it has retreated -- so the
+    supports it keeps must be all of them.  A condition that keeps the supports but leaves a
+    refutation has not accounted for the failure either.  Only a rule gap satisfies both, and
+    a reading whose ontology does not carry the state the effect depends on cannot: there is
+    no literal in its vocabulary to choose.
+    """
+    before, after = row["suffix_before_refinement"], row["suffix_after_refinement"]
+    if not before.get(REFUTED):
+        return True
+    return (after.get(REFUTED, 0) == 0
+            and after.get(SUPPORTED, 0) == before.get(SUPPORTED, 0)
+            and not after.get("AMBIGUOUS_REFINEMENT"))
+
+
+def explain(rows: list[dict]) -> str:
+    """What a reading's held-out refutations mean, across the histories it was run on.
+
+    This is the line between "the learner under-specified a rule" and "the reading cannot say
+    what the effect depends on", and it is the only thing that makes a prospective
+    contradiction fit to eliminate with.  A refutation a prefix-chosen condition repairs is
+    evidence about the rule; one that no literal in the reading's own vocabulary repairs is
+    evidence about the reading.
+    """
+    refuted = [r for r in rows if r["suffix_before_refinement"].get(REFUTED)]
+    if not refuted:
+        return CLEAN
+    repaired = [repaired_completely(r) for r in refuted]
+    if all(repaired):
+        return RULE_GAP
+    if not any(repaired):
+        return CONTRADICTED
+    return MIXED
