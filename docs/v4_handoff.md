@@ -133,14 +133,26 @@ refutation/applicability/behavioral precedence, returns `UNDECIDED` immediately 
 families favor opposite readings, and uses cost only for identical per-step verdicts. Full
 verdict maps and every exact comparison are retained in the reports.
 
-All three SOURCE incumbents suffer an explicit TRANSFER loss and are rejected. **None of the
-three applications has a unique TRANSFER survivor.**
+All three SOURCE incumbents suffer an explicit TRANSFER loss and are rejected.
 
-| application | undefeated TRANSFER set | unresolved comparison | HOLDOUT evidence |
-|---|---|---|---|
-| `vet_clinic` | `promote cell[_]=cell#0`; `row[_](cell[_])=None` | asymmetric applicability, 0.83 versus 1.00 | both `INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE`; pairwise HOLDOUT remains applicability-inconclusive |
-| `harbour` | `promote cell[_]=cell#0`; both row-family `cell#0` variants | promoted reading is at 0.60 applicability versus 1.00; the two row variants improve opposite families | all three `INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE`; no HOLDOUT pair produces a loss among them |
-| `blend_book` | `cell[_]=cell#0`; `promote cell[_]=cell#0` | asymmetric applicability, 0.80 versus 0.60 | both `INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE`; their pairwise comparison remains applicability-inconclusive |
+**This table was superseded on 2026-08-26.** It described a `2/3/2` survivor set in which the
+same candidate, `promote cell[_]=cell#0`, survived on all three applications with zero wins
+and zero losses -- never compared to anything, because promotion changes the object inventory
+and the applicability gate refused every comparison whenever applicability differed. See
+`docs/v4_devlog.md` section `m` for what that was hiding and the three corrections it forced.
+The current result is generated into `docs/data/v4/frontier_summary.json`; read that rather
+than any table here.
+
+| application | outcome | identification |
+|---|---|---|
+| `vet_clinic` | `UNIQUE_SURVIVOR` -- `row[_](cell[_])=None` | `BEHAVIOURALLY_DISTINGUISHED_ON_THIS_HISTORY` |
+| `harbour` | `AMBIGUOUS_SURVIVOR_SET` -- `joint discrimination x2`, `promote cell[_]=cell#0` | `AMBIGUOUS_SURVIVORS_BEHAVIOURALLY_DISTINCT_ON_THIS_HISTORY` |
+| `blend_book` | `UNIQUE_SURVIVOR` -- `cell[_]=cell#0` | `SELECTED_WITHIN_AN_INDISTINGUISHABLE_CLASS_ON_THIS_HISTORY` |
+
+Every HOLDOUT classification is still `INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE`. A unique
+TRANSFER survivor is **not** a confirmed identity, and on `blend_book` the survivor is
+indistinguishable from the incumbent it displaced at every one of 833 steps even at delta
+granularity: the separation claim decided it, not behaviour.
 
 HOLDOUT is post-TRANSFER development classification, not validation and not a second selection
 history. Its mechanical frontier is retained, but it cannot promote one member of an
@@ -365,20 +377,25 @@ mechanism were deleted.
 * "Fresh clone" is never used here as shorthand for independent execution. Independence is
   claimed only where an attestation shows every executed project module bound to that clone.
 
-### The scientific result is unchanged and remains negative
+### The scientific result during the integrity campaign, and what changed after it
 
-No integrity repair has ever altered it, and none was permitted to. Across every candidate
-the retained payload is identical: `vet_clinic` 2 survivors, `harbour` 3, `blend_book` 2;
-every TRANSFER and HOLDOUT outcome `AMBIGUOUS_SURVIVOR_SET`; every HOLDOUT classification
-`INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE`; `selected` null everywhere; every SOURCE incumbent
-carrying at least one explicit TRANSFER loss; transported RTC zero.
+No integrity repair ever altered the payload, and none was permitted to. Throughout the
+campaign it was identical across every candidate: `vet_clinic` 2 survivors, `harbour` 3,
+`blend_book` 2; every TRANSFER and HOLDOUT outcome `AMBIGUOUS_SURVIVOR_SET`; every HOLDOUT
+classification `INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE`; `selected` null everywhere;
+transported RTC zero. That is a true statement about the campaign and it is why the
+rejections were never about the numbers.
 
-SOURCE-local representation preference does not transport reliably across these retained
-histories. Independent TRANSFER evidence eliminates some hypotheses but leaves non-singleton
-survivor sets on all three applications, and current HOLDOUT evidence is insufficient to
-identify one unique transported representation. Unique transported representation,
-prospective transport validation, representation transportability and fresh generalization
-are all `NOT_ESTABLISHED`.
+**It stopped being the current result on 2026-08-26**, after V4 was adjudicated and the
+survivor sets were inspected rather than the code. Three mechanism corrections -- refutation
+crossing asymmetric applicability, silence deciding nothing, and a candidate space able to
+express joint changes -- moved it to `1/2/1`, with `selected` non-null on two applications.
+`docs/v4_devlog.md` section `m` has the evidence for each. What did **not** change: every
+SOURCE incumbent still carries an explicit TRANSFER loss, every HOLDOUT classification is
+still `INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE`, transported RTC is still zero, these are
+still spent development histories with retroactive chronology, and prospective transport
+validation, representation transportability and fresh generalization are all still
+`NOT_ESTABLISHED`.
 
 That negative result is not what the campaign was testing. The campaign was testing whether
 the chain is trustworthy enough to *report* it. Note what the rejections do not say: every
