@@ -1,0 +1,490 @@
+[
+ {
+  "coexistence_reasons": {},
+  "incumbent": "source_choice",
+  "outcome": "UNIQUE_SURVIVOR",
+  "pairs": [],
+  "report": "docs/data/v4/frontier_vet_clinic.json",
+  "source_choice_rejected": true,
+  "survivors": [
+   "row[_](cell[_])=None"
+  ]
+ },
+ {
+  "coexistence_reasons": {
+   "SEPARATION_CONFLICT": 1,
+   "UNTESTED_ACROSS_INVENTORIES": 2
+  },
+  "incumbent": "source_choice",
+  "outcome": "AMBIGUOUS_SURVIVOR_SET",
+  "pairs": [
+   {
+    "applicability": {
+     "left": "3/5",
+     "right": "1"
+    },
+    "axes": {
+     "left_explains": 1,
+     "left_refuted": 0,
+     "right_explains": 0,
+     "right_refuted": 0
+    },
+    "coexistence_reason": "UNTESTED_ACROSS_INVENTORIES",
+    "disagreeing_steps": {
+     "count": 34,
+     "sample": [
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 10
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 31
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 39
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 42
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 51
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 55
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 63
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 80
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 83
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 86
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 99
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 144
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 158
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 163
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 174
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 222
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 231
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 335
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 339
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 355
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 361
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 368
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 382
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 389
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 397
+      }
+     ],
+     "verdict_pairs": {
+      "EXPLAINED/SILENT": 1,
+      "SILENT/NOTHING": 33
+     }
+    },
+    "families": {
+     "differing_key_slots": {
+      "row[_](cell[_](button[_]),cell[_])": [
+       "cell#0@7",
+       "cell#0"
+      ]
+     },
+     "left_only_families": [
+      "cell[_]"
+     ],
+     "left_promoted": [
+      "cell[_]"
+     ],
+     "promotion_differs": true,
+     "right_only_families": [],
+     "right_promoted": [],
+     "shared_families": [
+      "button[_]",
+      "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))",
+      "row[_](cell[_](button[_]),cell[_])",
+      "row[_](cell[_],cell[_](button[_]))"
+     ]
+    },
+    "left": "promote cell[_]=cell#0",
+    "right": "row[_](cell[_](button[_]=cell#0",
+    "separation": {
+     "comparable_families": 1,
+     "equal": 1,
+     "left_better": 0,
+     "right_better": 0
+    },
+    "totals": {
+     "left": {
+      "errors": 0,
+      "explained": 40
+     },
+     "right": {
+      "errors": 0,
+      "explained": 39
+     }
+    },
+    "verdict": "INCONCLUSIVE_ASYMMETRIC_APPLICABILITY",
+    "verdict_reason": "the left reading could be instantiated on 0.60 of its claims here against 1.00 for the right one, so this history did not put them to the same test"
+   },
+   {
+    "applicability": {
+     "left": "3/5",
+     "right": "1"
+    },
+    "axes": {
+     "left_explains": 2,
+     "left_refuted": 0,
+     "right_explains": 0,
+     "right_refuted": 0
+    },
+    "coexistence_reason": "UNTESTED_ACROSS_INVENTORIES",
+    "disagreeing_steps": {
+     "count": 35,
+     "sample": [
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 10
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 31
+      },
+      {
+       "left": "EXPLAINED",
+       "right": "SILENT",
+       "step": 33
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 39
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 42
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 51
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 55
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 63
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 80
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 83
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 86
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 99
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 144
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 158
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 163
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 174
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 222
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 231
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 335
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 339
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 355
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 361
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 368
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 382
+      },
+      {
+       "left": "SILENT",
+       "right": "NOTHING",
+       "step": 389
+      }
+     ],
+     "verdict_pairs": {
+      "EXPLAINED/SILENT": 2,
+      "SILENT/NOTHING": 33
+     }
+    },
+    "families": {
+     "differing_key_slots": {
+      "row[_](cell[_],cell[_](button[_]))": [
+       "cell#0@4",
+       "cell#0"
+      ]
+     },
+     "left_only_families": [
+      "cell[_]"
+     ],
+     "left_promoted": [
+      "cell[_]"
+     ],
+     "promotion_differs": true,
+     "right_only_families": [],
+     "right_promoted": [],
+     "shared_families": [
+      "button[_]",
+      "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))",
+      "row[_](cell[_](button[_]),cell[_])",
+      "row[_](cell[_],cell[_](button[_]))"
+     ]
+    },
+    "left": "promote cell[_]=cell#0",
+    "right": "row[_](cell[_],cell[_](b=cell#0",
+    "separation": {
+     "comparable_families": 1,
+     "equal": 1,
+     "left_better": 0,
+     "right_better": 0
+    },
+    "totals": {
+     "left": {
+      "errors": 0,
+      "explained": 40
+     },
+     "right": {
+      "errors": 0,
+      "explained": 38
+     }
+    },
+    "verdict": "INCONCLUSIVE_ASYMMETRIC_APPLICABILITY",
+    "verdict_reason": "the left reading could be instantiated on 0.60 of its claims here against 1.00 for the right one, so this history did not put them to the same test"
+   },
+   {
+    "applicability": {
+     "left": "1",
+     "right": "1"
+    },
+    "axes": {
+     "left_explains": 1,
+     "left_refuted": 0,
+     "right_explains": 0,
+     "right_refuted": 0
+    },
+    "coexistence_reason": "SEPARATION_CONFLICT",
+    "disagreeing_steps": {
+     "count": 1,
+     "sample": [
+      {
+       "left": "EXPLAINED",
+       "right": "SILENT",
+       "step": 33
+      }
+     ],
+     "verdict_pairs": {
+      "EXPLAINED/SILENT": 1
+     }
+    },
+    "families": {
+     "differing_key_slots": {
+      "row[_](cell[_](button[_]),cell[_])": [
+       "cell#0",
+       "cell#0@7"
+      ],
+      "row[_](cell[_],cell[_](button[_]))": [
+       "cell#0@4",
+       "cell#0"
+      ]
+     },
+     "left_only_families": [],
+     "left_promoted": [],
+     "promotion_differs": false,
+     "right_only_families": [],
+     "right_promoted": [],
+     "shared_families": [
+      "button[_]",
+      "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))",
+      "row[_](cell[_](button[_]),cell[_])",
+      "row[_](cell[_],cell[_](button[_]))"
+     ]
+    },
+    "left": "row[_](cell[_](button[_]=cell#0",
+    "right": "row[_](cell[_],cell[_](b=cell#0",
+    "separation": {
+     "comparable_families": 3,
+     "equal": 1,
+     "left_better": 1,
+     "right_better": 1
+    },
+    "totals": {
+     "left": {
+      "errors": 0,
+      "explained": 39
+     },
+     "right": {
+      "errors": 0,
+      "explained": 38
+     }
+    },
+    "verdict": "UNDECIDED",
+    "verdict_reason": "same-family separation favors each reading on a different shared family; the conflict is unresolved"
+   }
+  ],
+  "report": "docs/data/v4/frontier_harbour.json",
+  "source_choice_rejected": true,
+  "survivors": [
+   "promote cell[_]=cell#0",
+   "row[_](cell[_](button[_]=cell#0",
+   "row[_](cell[_],cell[_](b=cell#0"
+  ]
+ },
+ {
+  "coexistence_reasons": {},
+  "incumbent": "source_choice",
+  "outcome": "UNIQUE_SURVIVOR",
+  "pairs": [],
+  "report": "docs/data/v4/frontier_blend_book.json",
+  "source_choice_rejected": true,
+  "survivors": [
+   "cell[_]=cell#0"
+  ]
+ }
+]

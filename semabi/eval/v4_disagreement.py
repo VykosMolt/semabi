@@ -1,0 +1,204 @@
+"""Why does a survivor set have more than one member?
+
+A frontier that ends with several undefeated readings says only that the comparison
+history did not order them.  It does not say *why*, and the reasons are not the same kind
+of thing.  Two readings can coexist because the history never put them to the same test,
+because each is better on a different family, because one explains more and errs more, or
+because they said exactly the same thing everywhere.  Only the last is behavioural
+equivalence, and only some of the others could be settled by acting on the application.
+
+This is a development diagnostic over retained reports.  It decides nothing and is not part
+of the compiler's transfer closure; it exists so that the next mechanism is chosen from what
+the survivor sets actually contain.
+"""
+from __future__ import annotations
+
+import json
+from collections import Counter
+from dataclasses import dataclass, field
+from fractions import Fraction
+from pathlib import Path
+from typing import Any
+
+from semabi.compiler.v4 import transfer
+
+# why a pair of readings is still undefeated after the comparison history
+UNTESTED_ACROSS_INVENTORIES = "UNTESTED_ACROSS_INVENTORIES"
+EXPLANATION_ERROR_TRADEOFF = "EXPLANATION_ERROR_TRADEOFF"
+SEPARATION_CONFLICT = "SEPARATION_CONFLICT"
+NON_RIVAL_FAMILIES = "NON_RIVAL_FAMILIES"
+BEHAVIOURALLY_IDENTICAL = "BEHAVIOURALLY_IDENTICAL_ON_THIS_HISTORY"
+NO_DIFFERENCE_FOUND = "NO_DIFFERENCE_FOUND_ON_THIS_HISTORY"
+DECIDED = "DECIDED"
+
+
+def evidence_from_report(row: dict) -> transfer.TransferEvidence:
+    """Rebuild the exact evidence object a retained report serialized."""
+    return transfer.TransferEvidence(
+        name=row["name"], key_slot_summary=dict(row["key_slots"]),
+        hard_contradictions=row["hard_contradictions"], churn=row["churn"],
+        visibility=row["visibility"], spurious=row["spurious"],
+        explained=row["explained"], silent=row["silent"], complexity=row["complexity"],
+        applicability=row["applicability"],
+        applicability_fraction=dict(row["applicability_fraction"]),
+        transport=dict(row["transport"]),
+        verdicts={int(s): v for s, v in row["verdicts"].items()},
+        separation=list(row["separation"]))
+
+
+def _fraction(evidence: transfer.TransferEvidence) -> Fraction:
+    f = evidence.applicability_fraction
+    return Fraction(f["numerator"], f["denominator"])
+
+
+def axes(diff: transfer.Differential) -> dict[str, int]:
+    """Per-step refutation and explanation advantage, in both directions.
+
+    ``refuted`` counts steps where a reading is wrong and its rival is not.  ``explains``
+    counts steps where it accounted for what happened and its rival did not.  Both are
+    computed on the same shared step index, so neither depends on the object inventory.
+    """
+    c = diff.counts
+    return {
+        "left_refuted": c["LEFT_WRONG_RIGHT_SILENT"] + c["RIGHT_CORRECT_LEFT_WRONG"],
+        "right_refuted": c["RIGHT_WRONG_LEFT_SILENT"] + c["LEFT_CORRECT_RIGHT_WRONG"],
+        "left_explains": c["LEFT_PREDICTS_RIGHT_SILENT"] + c["LEFT_CORRECT_RIGHT_WRONG"],
+        "right_explains": c["RIGHT_PREDICTS_LEFT_SILENT"] + c["RIGHT_CORRECT_LEFT_WRONG"],
+    }
+
+
+def family_difference(left_reading: dict, right_reading: dict) -> dict[str, Any]:
+    """Which decisions actually differ, and whether the readings are rivals at all.
+
+    Two readings that change *different* families are composable rather than competing:
+    the candidate space simply cannot express taking both.  That is not ambiguity about
+    the world, it is a gap in what was proposed.
+    """
+    lf = {k: v["key_slot"] for k, v in left_reading["families"].items()}
+    rf = {k: v["key_slot"] for k, v in right_reading["families"].items()}
+    shared = sorted(set(lf) & set(rf))
+    differing = sorted(f for f in shared if lf[f] != rf[f])
+    return {
+        "shared_families": shared,
+        "left_only_families": sorted(set(lf) - set(rf)),
+        "right_only_families": sorted(set(rf) - set(lf)),
+        "differing_key_slots": {f: [lf[f], rf[f]] for f in differing},
+        "left_promoted": sorted(left_reading.get("promoted_families", [])),
+        "right_promoted": sorted(right_reading.get("promoted_families", [])),
+        "promotion_differs": (sorted(left_reading.get("promoted_families", []))
+                              != sorted(right_reading.get("promoted_families", []))),
+    }
+
+
+def disagreeing_steps(left: transfer.TransferEvidence, right: transfer.TransferEvidence,
+                      limit: int = 25) -> dict[str, Any]:
+    """The steps where the two readings said different things, and what they said."""
+    rows = []
+    pairs: Counter = Counter()
+    for step in sorted(set(left.verdicts) | set(right.verdicts)):
+        a = left.verdicts.get(step, "NOTHING")
+        b = right.verdicts.get(step, "NOTHING")
+        if a == b:
+            continue
+        pairs[(a, b)] += 1
+        rows.append({"step": step, "left": a, "right": b})
+    return {"count": len(rows), "verdict_pairs": {f"{a}/{b}": n for (a, b), n in pairs.most_common()},
+            "sample": rows[:limit]}
+
+
+def classify_pair(left: transfer.TransferEvidence, right: transfer.TransferEvidence,
+                  left_reading: dict, right_reading: dict) -> dict[str, Any]:
+    """Say why this pair is still undefeated, in the vocabulary above."""
+    decision = transfer.decide(left, right)
+    diff = transfer.differential(left, right)
+    sep = transfer.separation_differential(left, right)
+    a = axes(diff)
+    families = family_difference(left_reading, right_reading)
+    steps = disagreeing_steps(left, right)
+
+    if decision.outcome in ("LEFT", "RIGHT"):
+        reason = DECIDED
+    elif sep.left_better > 0 and sep.right_better > 0:
+        reason = SEPARATION_CONFLICT
+    elif _fraction(left) != _fraction(right):
+        reason = UNTESTED_ACROSS_INVENTORIES
+    elif not families["differing_key_slots"] and not families["promotion_differs"]:
+        reason = NON_RIVAL_FAMILIES
+    elif steps["count"] == 0:
+        reason = BEHAVIOURALLY_IDENTICAL
+    elif ((a["left_refuted"] > a["right_refuted"] and a["left_explains"] > a["right_explains"])
+          or (a["right_refuted"] > a["left_refuted"] and a["right_explains"] > a["left_explains"])):
+        reason = EXPLANATION_ERROR_TRADEOFF
+    else:
+        reason = NO_DIFFERENCE_FOUND
+
+    return {
+        "left": left.name, "right": right.name,
+        "verdict": decision.outcome, "verdict_reason": decision.reason,
+        "coexistence_reason": reason,
+        "applicability": {"left": str(_fraction(left)), "right": str(_fraction(right))},
+        "axes": a,
+        "separation": {"left_better": sep.left_better, "right_better": sep.right_better,
+                       "equal": sep.equal,
+                       "comparable_families": len(sep.cases) - sep.population_mismatches},
+        "families": families,
+        "disagreeing_steps": steps,
+        "totals": {"left": {"explained": left.explained, "errors": left.errors},
+                   "right": {"explained": right.explained, "errors": right.errors}},
+    }
+
+
+def atlas(report_path: Path, *, survivors_only: bool = True) -> dict[str, Any]:
+    """Build the disagreement atlas for one retained frontier report."""
+    report = json.loads(Path(report_path).read_text())
+    evidence = {n: evidence_from_report(row)
+                for n, row in report["transfer"]["evidence"].items()}
+    readings = {c["name"]: c["reading"] for c in report["source"]["candidates"]}
+    names = report["survivor_names"] if survivors_only else sorted(evidence)
+    pairs = []
+    for i, a in enumerate(names):
+        for b in names[i + 1:]:
+            pairs.append(classify_pair(evidence[a], evidence[b], readings[a], readings[b]))
+    return {
+        "report": str(report_path),
+        "outcome": report["outcome"],
+        "survivors": report["survivor_names"],
+        "incumbent": report["source"]["source_choice"]["name"],
+        "source_choice_rejected": report["source_choice_rejected"],
+        "pairs": pairs,
+        "coexistence_reasons": dict(Counter(p["coexistence_reason"] for p in pairs)),
+    }
+
+
+def main() -> None:
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("reports", nargs="+", type=Path)
+    parser.add_argument("--all-pairs", action="store_true")
+    parser.add_argument("--output", type=Path)
+    args = parser.parse_args()
+    out = [atlas(p, survivors_only=not args.all_pairs) for p in args.reports]
+    text = json.dumps(out, indent=1, sort_keys=True, ensure_ascii=False) + "\n"
+    if args.output:
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_text(text)
+    for one in out:
+        print(f"{Path(one['report']).stem}: {one['outcome']} survivors={one['survivors']}")
+        for pair in one["pairs"]:
+            print(f"   {pair['left'][:30]!r:32s} vs {pair['right'][:30]!r:32s} "
+                  f"{pair['verdict'][:12]:12s} {pair['coexistence_reason']}")
+            print(f"      appl {pair['applicability']['left']}/{pair['applicability']['right']}"
+                  f"  refuted {pair['axes']['left_refuted']}/{pair['axes']['right_refuted']}"
+                  f"  explains {pair['axes']['left_explains']}/{pair['axes']['right_explains']}"
+                  f"  sep {pair['separation']['left_better']}/{pair['separation']['right_better']}"
+                  f"  differing steps {pair['disagreeing_steps']['count']}")
+            if pair["families"]["differing_key_slots"]:
+                for family, (l, r) in pair["families"]["differing_key_slots"].items():
+                    print(f"        {family[:64]:64s} {l!r} vs {r!r}")
+            if pair["families"]["promotion_differs"]:
+                print(f"        promoted: {pair['families']['left_promoted']} "
+                      f"vs {pair['families']['right_promoted']}")
+
+
+if __name__ == "__main__":
+    main()

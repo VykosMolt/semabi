@@ -641,12 +641,15 @@ def decide(left: TransferEvidence, right: TransferEvidence) -> Decision:
        comparison is made.
     2. If both readings are not applicable, return
        ``INCONCLUSIVE_NOT_APPLICABLE``.
-    3. If neither reading makes predictions, return
-       ``INCONCLUSIVE_NO_PREDICTIONS``.
+    3. If *either* reading makes no predictions, return
+       ``INCONCLUSIVE_NO_PREDICTIONS``: silence is not evidence in either
+       direction.
     4. If the counts of zero-separation (``REFUTED``) claims differ, prefer
        the reading with fewer refutations.
-    5. If applicability differs, return
-       ``INCONCLUSIVE_ASYMMETRIC_APPLICABILITY``.
+    5. If applicability differs, only strict refutation dominance may decide --
+       one reading contradicted where the other is not contradicted at all.
+       Otherwise return ``INCONCLUSIVE_ASYMMETRIC_APPLICABILITY``, because
+       credit is not comparable across readings that instantiate differently.
     6. Use the behavioural differential: a reading contradicted where its
        rival is not contradicted loses; otherwise fewer contradicted steps
        wins when the counts differ.
@@ -673,9 +676,17 @@ def decide(left: TransferEvidence, right: TransferEvidence) -> Decision:
         return Decision("INCONCLUSIVE_NOT_APPLICABLE",
                         "neither reading could be instantiated on this history", left, right, diff,
                         separation_diff)
-    if not left.makes_predictions and not right.makes_predictions:
+    if not left.makes_predictions or not right.makes_predictions:
+        # Silence is not evidence in either direction.  A reading that says nothing this
+        # history could confirm or refute cannot be supported by it -- and, symmetrically,
+        # cannot support anything against a reading that does speak.  Without the second
+        # half a reading that asserts no identity anywhere is never contradicted, so it
+        # defeats every rival that risks a claim, and wins by declining to say anything.
+        silent = ("neither reading" if not left.makes_predictions and not right.makes_predictions
+                  else f"the {'left' if not left.makes_predictions else 'right'} reading")
         return Decision("INCONCLUSIVE_NO_PREDICTIONS",
-                        "neither reading says anything this history could confirm or refute",
+                        f"{silent} says anything this history could confirm or refute, so this "
+                        f"history cannot weigh them against each other",
                         left, right, diff, separation_diff)
     # an identity claim this history shows separates nothing it names is refuted by it, in
     # the same way and for the same reason as a contradiction: the reading asserted that a
@@ -689,6 +700,30 @@ def decide(left: TransferEvidence, right: TransferEvidence) -> Decision:
                                 f"one: a named value that separates none of the instances it "
                                 f"names is not naming them", left, right, diff, separation_diff)
     if left_applicability != right_applicability:
+        # Asymmetric applicability makes *credit* incomparable: a reading whose claims
+        # instantiate differently has different opportunities to explain, and a reading
+        # that claims less can buy a lower error total by saying less.  It does not make
+        # *refutation* incomparable.  A claim that could not be instantiated leaves the
+        # reading SILENT there, and silence is never classified WRONG, so a less
+        # instantiated reading cannot manufacture refutations of its rival: the count of
+        # steps where it is wrong and the rival is not can only fall as it instantiates
+        # less.  A reading contradicted where its rival never is has therefore been
+        # refuted despite the handicap, and refusing to say so exempts exactly the
+        # readings that restructure the object inventory -- promotion above all -- from
+        # the test transfer exists to apply.
+        left_bad, right_bad = diff.left_refuted_here, diff.right_refuted_here
+        if left_bad and not right_bad:
+            return Decision("RIGHT", f"the history contradicts the left reading at {left_bad} "
+                            f"steps where the right one is not contradicted at all; the "
+                            f"readings instantiate to different extents, which makes credit "
+                            f"incomparable but cannot manufacture a refutation",
+                            left, right, diff, separation_diff)
+        if right_bad and not left_bad:
+            return Decision("LEFT", f"the history contradicts the right reading at {right_bad} "
+                            f"steps where the left one is not contradicted at all; the "
+                            f"readings instantiate to different extents, which makes credit "
+                            f"incomparable but cannot manufacture a refutation",
+                            left, right, diff, separation_diff)
         weaker, stronger = (("left", "right") if left_applicability < right_applicability
                             else ("right", "left"))
         return Decision("INCONCLUSIVE_ASYMMETRIC_APPLICABILITY",

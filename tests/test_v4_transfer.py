@@ -58,12 +58,28 @@ def test_contradiction_on_fresh_evidence_is_what_eliminates():
 
 
 def test_explaining_more_steps_does_not_win_a_transfer_comparison():
-    # the left reading explains three extra steps and is contradicted nowhere the right is
-    # not; the right reading is contradicted nowhere at all
+    # the left reading explains three extra steps and is contradicted at one where the
+    # right one is not; the right reading is contradicted nowhere at all
+    #
+    # The rival used to be silent at *every* step.  That made this pass for the wrong
+    # reason: a reading which says nothing is contradicted nowhere by construction, so it
+    # won every comparison it was in, and the property below was being carried by that
+    # defect rather than by the rule.  The rival now says something of its own, and the
+    # property still holds -- explaining three more steps still does not win.
     left = _ev("left", {1: "EXPLAINED", 2: "EXPLAINED", 3: "EXPLAINED", 4: "CHURN"})
-    right = _ev("right", {1: "SILENT", 2: "SILENT", 3: "SILENT", 4: "SILENT"})
+    right = _ev("right", {1: "SILENT", 2: "SILENT", 3: "SILENT", 4: "SILENT", 5: "EXPLAINED"})
     decision = decide(left, right)
     assert decision.outcome == "RIGHT", decision.reason
+    assert left.explained > right.explained
+
+
+def test_a_rival_that_says_nothing_at_all_decides_nothing():
+    """The companion of the test above: silence is not evidence in either direction."""
+    left = _ev("left", {1: "EXPLAINED", 2: "EXPLAINED", 3: "EXPLAINED", 4: "CHURN"})
+    mute = _ev("mute", {1: "SILENT", 2: "SILENT", 3: "SILENT", 4: "SILENT"})
+    assert not mute.makes_predictions
+    assert decide(left, mute).outcome == "INCONCLUSIVE_NO_PREDICTIONS"
+    assert decide(mute, left).outcome == "INCONCLUSIVE_NO_PREDICTIONS"
 
 
 def test_a_reading_that_says_nothing_cannot_be_supported_by_anything():
