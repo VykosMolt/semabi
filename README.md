@@ -29,6 +29,11 @@ semabi/compiler/        BLACK-BOX SIDE (never imports hidden/env/eval; enforced 
   model.py              export to the relational language + groundings
   v2/                    observation/evidence proposals, factorized abstraction hypotheses,
                         counterexamples, diagnostic interventions, and persistent belief
+  v4/correspondence.py  candidate-independent, outcome-masked, set-valued continuation of a raw
+                        node across one transition (no reading, no score, no tie-break)
+  v4/consequence.py     a reading's predicted delta checked at the structure the action affected
+  v4/conditional.py     is a held-out refutation a missing precondition, or an ontology that
+                        cannot express one?  chosen on the prefix, tested on the suffix
 semabi/eval/            scoring against hidden ground truth (paired-state alignment + behavioural simulation),
                         held-out goals, direct model-vs-model comparison (crossui.py), generic scorer
 semabi/baselines/       screen-transition graph, LLM passive (claude -p), known action vocabulary

@@ -106,6 +106,10 @@ def prospective(rows: list[dict], readings: list[str]) -> dict[str, Any]:
                 bucket["refuted"] += (r["value"].get("REFUTED", 0)
                                       + r.get("existence", {}).get("REFUTED", 0))
     return {"basis": PROBE, "readings": per,
+            "control_caveat": ("the mutation controls rewrite a predicted literal, which does "
+                               "nothing to a claim that an object goes away; the existence "
+                               "check's discrimination is measured separately, by running it "
+                               "over every object in every held-out pre-state"),
             "controls": {k: dict(sorted(v.items())) for k, v in sorted(controls.items())},
             "predictive_classes": _classes(rows)}
 

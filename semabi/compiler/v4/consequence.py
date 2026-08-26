@@ -35,6 +35,14 @@ key function to an unmodified later page is not the reading confirming itself --
 the arbiter and the reading cannot influence it -- but it is reported separately from
 ``VALUE`` so that a conclusion can be read without it.
 
+There are two page checks, because readings differ in what they are willing to claim.
+``VALUE`` asks whether the node an effect names took the predicted text; ``EXISTENCE`` asks
+whether the structure that rendered an object still renders it, which is the only claim some
+readings make at all.  And each is scored under two readings of a rule's antecedent: what the
+rule asserts, and what its positives attested.  Whether a refutation counts against the
+representation or against the precondition learner is not decidable from the verdict, so both
+are reported rather than one being chosen.
+
 Set-valued correspondence propagates into the verdict.  ``SUPPORTED`` means every admissible
 continuation shows the predicted consequence, ``REFUTED`` that none does, ``POSSIBLE`` that
 some do and some do not, and ``UNKNOWN`` that the correspondence itself did not settle

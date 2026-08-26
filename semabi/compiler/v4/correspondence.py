@@ -22,6 +22,12 @@ descriptor and from every ancestor descriptor that contains it.  On the later ob
 nothing is masked, because which node is the continuation is not yet known; the mask is a
 wildcard that matches whatever is there.
 
+Geometry is deliberately not used.  ``Node.bbox`` is recorded and would be strong evidence
+where content fails, but on the transitions that matter it is only mostly stable: of 816 true
+correspondents across the blend history's node-adding transitions, 26 have a different box.
+Using it as hard evidence would invent that many failures to relocate, and using it softly
+needs a tolerance -- which is the arbitrary rule this module exists to do without.
+
 **Ambiguity is preserved.**  Correspondence is set-valued.  Where the admissible evidence
 does not single out one continuation, every admissible one is returned and the status is
 ``AMBIGUOUS``; where nothing is admissible the status is ``NONE``.  There is no score, no
@@ -190,12 +196,17 @@ def admissible_matches(n: int, m: int, match: Callable[[int, int], bool],
     Returns, for each left index, the set of right indices it is paired with in at least one
     alignment within ``tolerance`` of the maximum length, and whether such an alignment can
     leave it unpaired.  Taking the union over co-optimal alignments rather than one of them is
-    what keeps genuine ambiguity visible instead of resolving it by an arbitrary preference;
-    the sequence-alignment literature makes the same point about reducing a comparison to one
-    solution, and goes further by admitting near-optimal alignments too, since the highest
-    score is not always the right answer.  ``tolerance`` is that widening.  It can only add
-    admissible continuations, so it can only turn a refutation into a ``POSSIBLE`` -- which
-    makes it a one-directional robustness check on any refutation this instrument reports.
+    what keeps genuine ambiguity visible instead of resolving it by an arbitrary preference.
+
+    This is the sequence-alignment notion of a *safe* pairing (Grigorjew et al., 2023, after
+    Naor and Brutlag, 1994): a partial solution is safe when it appears in every optimal path
+    of the alignment graph, and their generalisation admits paths within a suboptimality
+    budget as well, on the observation that the single best-scoring alignment is not reliably
+    the right one.  A left index with exactly one admissible partner here is safe in that
+    sense; more than one, and the evidence does not determine the pairing.  ``tolerance`` is
+    the suboptimality budget.  Widening it can only add admissible continuations, so it can
+    only turn a refutation into a ``POSSIBLE`` -- which makes it a one-directional robustness
+    check on any refutation this instrument reports.
     """
     suffix = [[0] * (m + 1) for _ in range(n + 1)]
     for i in range(n - 1, -1, -1):
