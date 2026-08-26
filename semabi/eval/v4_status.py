@@ -210,8 +210,17 @@ def elimination(rows: list[dict], conditional: list[dict], readings: list[str]) 
             "retained": sorted(set(readings) - set(removed))}
 
 
+NO_FRONTIER = {"basis": "no frontier was run on this application",
+               "outcome": "NOT_RUN", "survivors": [], "selected": None,
+               "classifications": {}, "identification": None,
+               "classes_among_survivors": []}
+
+
 def build(app: str, consequence: list[Path], conditional: list[Path]) -> dict[str, Any]:
-    report = json.loads((ROOT / f"docs/data/v4/frontier_{app}.json").read_text())
+    frontier = ROOT / f"docs/data/v4/frontier_{app}.json"
+    # An application the frontier never ran on still has a prospective status, and it is the
+    # one status that does not depend on the comparison having been made.
+    report = json.loads(frontier.read_text()) if frontier.exists() else None
     rows: list[dict] = []
     for path in consequence:
         trace = path.stem.replace("consequence_", "")
@@ -220,10 +229,11 @@ def build(app: str, consequence: list[Path], conditional: list[Path]) -> dict[st
     cond: list[dict] = []
     for path in conditional:
         cond.extend(json.loads(path.read_text()))
-    readings = sorted({row["name"] for row in rows}) or [r["name"] for r in report["survivors"]]
+    readings = sorted({row["name"] for row in rows}) or (
+        [r["name"] for r in report["survivors"]] if report else [])
     return {"application": app,
-            "structural": structural(report),
-            "retrospective": retrospective(report),
+            "structural": structural(report) if report else NO_FRONTIER,
+            "retrospective": retrospective(report) if report else NO_FRONTIER,
             "prospective": prospective(rows, readings),
             "prospective_elimination": elimination(rows, cond, readings)}
 

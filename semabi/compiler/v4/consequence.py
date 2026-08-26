@@ -203,7 +203,9 @@ class ScopedResult:
                 "prediction_signature_digest": self.signature_digest(),
                 "predictions_signed": len(self.signature()),
                 "skipped": dict(sorted(self.skipped.items())),
-                "refutations": [p.to_json() for p in self.refutations[:40]]}
+                # Enough refutations to inspect a pattern, not enough to make the artifact
+                # mostly witnesses; the full set is a rerun away.
+                "refutations": [p.to_json() for p in self.refutations[:8]]}
 
 
 # ---------------------------------------------------------------- the reading bridge

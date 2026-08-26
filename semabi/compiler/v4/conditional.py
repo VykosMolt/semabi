@@ -51,7 +51,14 @@ def _holds(context: tuple[tuple[str, Any], ...], key: str, value: Any, negated: 
 
 def separating_literals(supported: list[ScopedPrediction], refuted: list[ScopedPrediction]
                         ) -> list[tuple[str, Any, bool]]:
-    """Literals over the bound objects that hold in every success and no failure."""
+    """Literals over the bound objects that hold in every success and no failure.
+
+    A rule with no successes to keep has no repair available, only a retreat: every literal
+    true of none of its (empty) successes and none of its failures separates it vacuously, and
+    reporting that as a repair would credit a rule for being switched off.
+    """
+    if not supported:
+        return []
     keys = {k for p in supported + refuted for k, _ in p.context}
     out: list[tuple[str, Any, bool]] = []
     for key in sorted(keys):
