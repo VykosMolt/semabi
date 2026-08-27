@@ -1251,6 +1251,32 @@ class Inducer:
         tid = op.params.get(param)
         return tid in self.A.types and self.A.types[tid].key_slot == slot
 
+    def memorises_the_fitting_instance(self, op: OperatorHyp, lit: tuple) -> str:
+        """Why this literal cannot become reusable action semantics, or ``""`` if it can.
+
+        These three refusals were written inline in ``learn_pre``'s greedy cover and were
+        therefore invisible to everything else -- including ``applicable_literals``, which
+        added ``op.common`` back to the binder without them and so re-admitted precisely what
+        was thrown out.  On harbour every one of the 145 verdict changes that mode produced was
+        caused by a key-slot identity constant.
+
+        The rule is narrow on purpose: a training-instance identity cannot become action
+        semantics *merely because it was present in the fitting transition*.  A genuinely
+        distinguished object could still earn that role through independent evidence, which is
+        a question about evidence rather than about syntax.
+        """
+        if lit[0] not in ("attr", "attr_ne"):
+            return ""
+        _, param, slot, value = lit
+        if lit[0] == "attr" and self._is_key_slot(op, param, slot):
+            return "identity constants never generalise"
+        if (lit[0] == "attr" and not isinstance(value, bool)
+                and len({tr.binding.get(param) for tr in op.positives}) < 2):
+            return "a constant attribute of a single object is indistinguishable from its identity"
+        if self._is_free_text(op, param, slot) and not self._is_key_slot(op, param, slot):
+            return "constants of a mutable free-text attribute cannot be semantic preconditions"
+        return ""
+
     def learn_pre(self, op: OperatorHyp) -> None:
         common: set[tuple] | None = None
         for tr in op.positives:
@@ -1284,14 +1310,9 @@ class Inducer:
         remaining = list(range(len(neg_lits)))
         while remaining:
             covs = {}
-            distinct_objs = {p: len({tr.binding.get(p) for tr in op.positives}) for p in op.params}
             for l in sorted(common, key=str):
-                if l[0] == "attr" and self._is_key_slot(op, l[1], l[2]):
-                    continue  # identity constants never generalise
-                if l[0] == "attr" and not isinstance(l[3], bool) and distinct_objs.get(l[1], 0) < 2:
-                    continue  # a constant attribute of a single object is indistinguishable from its identity
-                if l[0] in ("attr", "attr_ne") and self._is_free_text(op, l[1], l[2]) and not self._is_key_slot(op, l[1], l[2]):
-                    continue  # constants of a mutable free-text attribute cannot be semantic preconditions
+                if self.memorises_the_fitting_instance(op, l):
+                    continue
                 if l[0] == "attr_ne":
                     cov = sum(1 for i in remaining if ("attr", l[1], l[2], l[3]) in neg_lits[i])
                 else:

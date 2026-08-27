@@ -422,8 +422,19 @@ def bindings_for(A, po, state, op, clicked: int, applicability: str) -> tuple[An
 _UNCHECKABLE = ("nonempty_str", "str_ne_attr")
 
 ASSERTED = "asserted"      # the rule's own learned precondition, and nothing more
-ATTESTED = "attested"      # also every attribute value that held in all of its positives
-GENERATIVE = "generative"  # only what held in all of its positives; not the learned cover
+ATTESTED = "attested"      # RETIRED -- see applicable_literals; kept to replay old artifacts
+GENERATIVE = "generative"  # RETIRED for the same reason, more so: op.common without op.pre
+
+AUTHORITATIVE = (ASSERTED,)
+"""The modes that measure a property of the reading rather than of its fitting transitions.
+
+``attested`` and ``generative`` are not among them.  Both feed ``op.common`` to the binder, and
+``op.common`` contains the literals ``learn_pre`` refuses -- so both re-admit, through a second
+code path, exactly the memorised training identities the learner threw out.  Measured on two
+applications: adding only the ``op.common`` literals that pass those refusals changes not one
+verdict on any firing of either, while every verdict change the full mode produces is caused by
+a key-slot identity constant.  They remain callable so retained artifacts can be reproduced.
+"""
 
 
 def applicable_literals(op, mode: str) -> list[tuple]:
@@ -442,6 +453,21 @@ def applicable_literals(op, mode: str) -> list[tuple]:
     checkable for every binding, and dropping an unverifiable restriction makes a rule fire
     more often, which is the direction that invents refutations -- so they are left out of
     ``asserted`` and reported rather than assumed.
+
+    **``attested`` and ``generative`` are retired as authoritative modes.** Both add
+    ``op.common``, whose literals ``learn_pre`` deliberately declines to put in ``op.pre``:
+    equalities on a key slot ("identity constants never generalise"), constants of an object
+    seen once, constants of mutable free text.  ``memorises_the_fitting_instance`` now names
+    those refusals in one place, because having them inline in the greedy cover is why this
+    function could re-admit what they rejected without anyone noticing.
+
+    The ablation that settled it ran three literal sets over identical firings -- ``op.pre``,
+    ``op.pre`` plus only the additions no refusal covers, and ``op.pre`` plus everything.  The
+    middle set is indistinguishable from the first on every firing of harbour (264) and cellar
+    (92); and of the 145 harbour and 86 cellar verdict changes the full set produces, every
+    single one is caused by a key-slot identity constant, on operators fitted mostly to one
+    transition.  So what the mode does is enforce "this rule applies to the object that had
+    this name during training", which is the memorised-key binding the binder replaced.
 
     ``generative`` is the third reading, and it is the one the literature argues for.  SYNTH
     (arXiv:2508.21449, and see docs/related_work.md) builds an action's precondition as a
