@@ -559,17 +559,24 @@ enumeration bound.
 
 ## Two instruments that were not measuring
 
-* **The removal check has no discrimination on some applications.** Base rate that an object
-  stops being rendered, over every object in every held-out pre-state with no rule involved:
-  harbour **0.992**, landing board **0.837**, vet **0.21-0.39**. Landing board's 48/48 and
-  154/172 are therefore near-chance. Vet is where it means something, and there it separates
-  readings the raw counts did not: `joint discrimination x3` scores 0.63 against a 0.36 base,
-  `cell[_]=cell#0` scores 0.19 against 0.21 -- at or below chance. The base rate now travels
-  with the verdicts. It is unconditional, so read it in one direction only: failing to beat it
-  settles a reading, beating it does not, because a rule that only fires on objects in a view
-  about to be replaced would beat it without modelling anything. The conditional version --
-  what fraction of the objects present at *this* click went away -- is the sharper control and
-  is not built.
+* **The removal check is mostly not asking about objects.** Run the identical check over every
+  object in every held-out pre-state with no rule involved, and report both the base rate and
+  how each click divides:
+
+        application     almost all went   almost none went   some went, some stayed
+        harbour              125                  1                    0   of 126
+        landing board        154                 31                    0   of 185
+        vet clinic            17                 24                   10   of  51
+        barter market         12                 45                   58   of 115
+
+  Base rates 0.992, 0.837, 0.358 and 0.34 respectively. **On harbour and the landing board not
+  one held-out click leaves some objects and takes others**, so the landing board's 48/48 and
+  154/172 are predictions about *which clicks wipe the page*, not about objects. Barter is the
+  only application where a removal claim is substantially a claim about an object; its readings
+  score 0.79-0.84 against 0.28-0.34, which is worth something and does not separate them. Vet's
+  two readings do separate (0.63 vs a 0.36 base against 0.19 vs 0.21) but on ten discriminating
+  clicks out of fifty-one. Both numbers now travel with the verdicts. The base rate is
+  unconditional, so failing to beat it settles a reading and beating it does not.
 * **`op.common` is a description, not an invariant.** SYNTH's `Q'` is the atoms true in every
   state where the action applied, computed over traces of 10,000 steps. Here `|common|` is
   6-7 literals whether the rule has one positive or four, and **most rules have exactly one**
