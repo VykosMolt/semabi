@@ -244,6 +244,17 @@ single implicit one. `promote cell[_]=cell#0` has no such predicate available,
 because its ontology contains no relation between a button and the cell that holds
 it, which is the same conclusion the residual search reaches empirically.
 
+**Mutex features (SIFT+, same paper) are the machinery for inventing the relation
+that is missing.** A mutex feature `f = ⟨k, A, D⟩` is admitted only when the value
+of its last argument is determined by the preceding ones, so what SIFT+ invents from
+traces is exactly *determined* relations -- the kind that can pin a latent argument.
+The relation `promote cell[_]=cell#0` needs is one of those: *the row containing this
+button*. Here that relation is not invented from traces at all, it comes from the
+reading's parse of the DOM, and the loose reading simply does not make rows objects.
+So predicate invention is not what would fix it -- the containment is visible in the
+page -- but the criterion SIFT+ admits features by is the right criterion for deciding
+which parses are worth proposing.
+
 **Not found: any symbolic action-model learning work on web/GUI state.** The GUI
 agent literature (2025-2026) is LLM- and RL-based -- DOM pruning, state-machine
 memories, grounding -- and does not build lifted action models; the action-model
