@@ -257,22 +257,30 @@ class Operator:
     params: list[tuple[str, str]]  # (?name, type) ; type "str" for free strings
     pre: list[Literal] = field(default_factory=list)
     effects: list[Effect] = field(default_factory=list)
-    supplied: tuple[str, ...] = ()
-    """Parameters the grounding actually carries.
+    supplied: tuple[str, ...] | None = None
+    """Parameters the grounding actually carries, or ``None`` if the question was never asked.
 
     An operator can refer to objects the concrete interaction never names -- the berth a
     scheduling click affects, the row a tab switch removes.  A caller can choose the supplied
     ones; the rest it must *derive*, by solving the preconditions against the state it is in,
-    which is what :func:`derive_bindings` does.  Empty means every parameter is supplied, which
-    is what every operator written before this distinction existed meant.
+    which is what :func:`derive_bindings` does.
+
+    ``None`` means the operator predates the distinction and every parameter is supplied.  The
+    empty tuple means the opposite -- the action grounds *nothing*, and every parameter has to
+    come out of the state.  Those two readings must not share a representation: an operator
+    whose action names none of its objects is precisely the case this field exists to expose,
+    and it is the commonest one for a reading that does not connect controls to the objects
+    they belong to.
     """
 
     def derived(self) -> list[str]:
-        return [name for name, _ in self.params
-                if self.supplied and name not in self.supplied]
+        if self.supplied is None:
+            return []
+        return [name for name, _ in self.params if name not in self.supplied]
 
     def __str__(self) -> str:
-        ps = ", ".join(f"{n}: {t}{'' if not self.supplied or n in self.supplied else ' (derived)'}"
+        derived = set(self.derived())
+        ps = ", ".join(f"{n}: {t}{' (derived)' if n in derived else ''}"
                        for n, t in self.params)
         lines = [f"{self.name}({ps})"]
         if self.pre:
@@ -506,7 +514,7 @@ def domain_to_json(dom: Domain) -> dict:
             {
                 "name": o.name,
                 "params": [list(p) for p in o.params],
-                "supplied": list(o.supplied),
+                **({} if o.supplied is None else {"supplied": list(o.supplied)}),
                 "pre": [_lit_to_json(l) for l in o.pre],
                 "effects": [_eff_to_json(e) for e in o.effects],
             }
@@ -525,6 +533,6 @@ def domain_from_json(j: dict) -> Domain:
             [tuple(p) for p in o["params"]],
             [_lit_from_json(l) for l in o["pre"]],
             [_eff_from_json(e) for e in o["effects"]],
-            tuple(o.get("supplied", ())),
+            None if "supplied" not in o else tuple(o["supplied"]),
         )
     return Domain(j["name"], types, rels, ops)

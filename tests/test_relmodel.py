@@ -28,3 +28,33 @@ def test_domain_json_roundtrip():
         d = make_domain(v)
         d2 = rm.domain_from_json(rm.domain_to_json(d))
         assert str(d) == str(d2)
+
+
+def test_an_operator_the_action_grounds_nothing_of_is_not_a_legacy_operator():
+    """``supplied=()`` and ``supplied=None`` mean opposite things and must stay apart.
+
+    ``None`` is every operator written before the distinction existed: the action names all of
+    its objects.  ``()`` is the case the field exists to expose -- the action names none of
+    them, so a planner has to solve the preconditions for every parameter.  Collapsing the two
+    would make the exported model claim there is nothing to derive in exactly the situation
+    where everything has to be, and ``derive_bindings`` would keep enumerating the state while
+    ``derived()`` reported a fully grounded operator.
+    """
+    params = [("?a", "Task"), ("?b", "Project")]
+    legacy = rm.Operator("legacy", params, [], [])
+    latent = rm.Operator("latent", params, [], [], supplied=())
+    partial = rm.Operator("partial", params, [], [], supplied=("?a",))
+    assert legacy.derived() == []
+    assert latent.derived() == ["?a", "?b"]
+    assert partial.derived() == ["?b"]
+    assert "(derived)" not in str(legacy)
+    assert str(latent).count("(derived)") == 2
+
+    d = rm.Domain("d", {}, {}, {o.name: o for o in (legacy, latent, partial)})
+    payload = rm.domain_to_json(d)
+    assert "supplied" not in payload["operators"][0]        # absent, not an empty list
+    back = rm.domain_from_json(payload)
+    assert back.operators["legacy"].supplied is None
+    assert back.operators["latent"].supplied == ()
+    assert back.operators["partial"].supplied == ("?a",)
+    assert str(d) == str(back)
