@@ -225,10 +225,23 @@ def test_on_the_real_trace_one_reading_determines_its_object_and_the_other_does_
     # it is a property of the reading rather than of the trace: an operator records which of
     # its parameters the interaction itself grounds.
     for fitted, action_grounds_everything in ((grounded_fit, True), (loose_fit, False)):
-        operators = build_model(fitted.abstractor, fitted.operators,
-                                min_support=2).domain.operators.values()
+        exported = build_model(fitted.abstractor, fitted.operators, min_support=1).domain
+        operators = [op for op in exported.operators.values()
+                     if len(op.params) and any(o.name == op.name and o.support >= 2
+                                               for o in fitted.operators)]
         assert operators
         assert all(bool(op.derived()) is not action_grounds_everything for op in operators)
+
+        # and the exported claim is the same claim the checker acts on.  ``supplied`` is
+        # computed statically from the grounding acts while ``action_binding`` is computed per
+        # transition from where the click landed; if they disagreed, the ABI would be
+        # describing a different operator from the one being measured.
+        for op in fitted.operators:
+            core = op.core()[0]
+            at_runtime = ({core.owner} if core.owner and core.loc is not None
+                          and core.loc.owner_tid is not None else set())
+            strings = {p for p, t in op.params.items() if t == "str"}
+            assert set(exported.operators[op.name].supplied) - strings == at_runtime, op.name
 
 
 # ------------------------------------------------------------------ existential aggregation
