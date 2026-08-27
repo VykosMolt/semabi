@@ -1020,7 +1020,20 @@ class Inducer:
             for k, v in o.attrs.items():
                 lits.add(("attr", p, k, v))
             lits.add(("attr", p, self.A.types[o.tid].key_slot, o.key))
+            # Whether a reference slot points at anything is a fact about *this* object, and
+            # until now it could only be said about a pair: the loop below relates one bound
+            # param to another, so a rule that binds a single object could not express
+            # "nothing is attached here" at all.  That is the whole condition harbour's Close
+            # rule needs -- a berth can be closed only while no call holds it -- and its
+            # absence from the language, not from the evidence, is why the learner left five
+            # prefix counterexamples unexplained and an external filter had to supply the
+            # condition afterwards.  The slot name is whatever the reading exposes; nothing
+            # here knows about berths or calls.
+            for k, v in o.refs.items():
+                lits.add(("ref_null", p, k) if v is None else ("ref_set", p, k))
             has_parent_rel = bool(self.A.types[o.tid].parent_tids)
+            if has_parent_rel:
+                lits.add(("parent_null", p) if o.parent is None else ("parent_set", p))
             for q, o2 in objs.items():
                 if q == p or o2 is None:
                     continue

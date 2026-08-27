@@ -411,6 +411,15 @@ def preconditions_hold(A, state, op, binding, mode: str = ASSERTED) -> tuple[boo
             _, p, q = literal
             if (objs[p].parent == objs[q].id) != (head == "parent"):
                 return False, "the rule's containment precondition does not hold here"
+        elif head in ("ref_null", "ref_set"):
+            _, p, slot = literal
+            if (objs[p].refs.get(slot) is None) != (head == "ref_null"):
+                return False, (f"the rule requires {slot} to point at "
+                               f"{'nothing' if head == 'ref_null' else 'something'}, "
+                               f"which is not so here")
+        elif head in ("parent_null", "parent_set"):
+            if (objs[literal[1]].parent is None) != (head == "parent_null"):
+                return False, "the rule's containment precondition does not hold here"
         elif head == "empty":
             o = objs[literal[1]]
             occupied = any(x.parent == o.id for x in state.objs.values()) or any(
@@ -464,6 +473,7 @@ class Fit:
     log: Any
     cut: int
     split: float
+    inducer: Any = None
 
 
 def fit(run_dir: Path, reading, *, split: float = 0.6, min_support: int = 2) -> Fit:
@@ -477,7 +487,8 @@ def fit(run_dir: Path, reading, *, split: float = 0.6, min_support: int = 2) -> 
     prefix.steps = full.steps[:cut]
     compiled = compile_v4(run_dir, min_support=min_support, write_diagnostics=False,
                           pinned=reading, evidence_log=prefix)
-    return Fit(reading, compiled.inducer.A, compiled.inducer.operators, full, cut, split)
+    return Fit(reading, compiled.inducer.A, compiled.inducer.operators, full, cut, split,
+               compiled.inducer)
 
 
 def evaluate(run_dir: Path, reading, *, split: float = 0.6, min_support: int = 2,

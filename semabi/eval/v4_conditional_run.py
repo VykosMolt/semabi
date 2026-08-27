@@ -8,19 +8,7 @@ from pathlib import Path
 from semabi.compiler.v4 import manifests
 
 
-def _candidates(path: Path):
-    """The candidate readings, from a chain manifest or from a bare source manifest.
-
-    Chains exist for the three applications the frontier was run on.  Applying this instrument
-    to an application that never reached that stage needs only its source candidates, and
-    refusing to look at one for want of a chain would confine every result to the three
-    histories the instrument was developed on.
-    """
-    payload = json.loads(Path(path).read_text())
-    if "source_manifest" in payload:
-        return manifests.load_chain_manifest(Path(path)).source_manifest.candidates
-    return manifests.load_source_manifest(Path(path)).candidates
-from semabi.compiler.v4.conditional import refine
+from semabi.eval.v4_consequence_run import _candidates
 
 
 def main() -> None:

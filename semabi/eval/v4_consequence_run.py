@@ -10,6 +10,15 @@ import json
 from pathlib import Path
 
 from semabi.compiler.v4 import manifests
+from semabi.compiler.v4.pinned import PinnedReading
+
+
+class _Candidate:
+    """A named reading recovered from a manifest as data."""
+
+    def __init__(self, name: str, reading):
+        self.name = name
+        self.reading = reading
 
 
 def _candidates(path: Path):
@@ -19,11 +28,30 @@ def _candidates(path: Path):
     to an application that never reached that stage needs only its source candidates, and
     refusing to look at one for want of a chain would confine every result to the three
     histories the instrument was developed on.
+
+    A manifest also pins the hash of the compiler that generated it, and the authenticated
+    loaders refuse a manifest whose compiler has since changed.  That is the right default and
+    it is exactly what happens here, because this line of work changes the inducer on purpose.
+    What the experiment carries forward is the *reading* -- which families are objects and what
+    names them -- and a reading is data.  So when authentication fails on the compiler hash the
+    readings are recovered from the same file as data, and what is given up is stated rather
+    than worked around: these results are not a claim that the frozen compiler produced them.
+    Any other mismatch is still an error.
     """
-    payload = json.loads(Path(path).read_text())
-    if "source_manifest" in payload:
-        return manifests.load_chain_manifest(Path(path)).source_manifest.candidates
-    return manifests.load_source_manifest(Path(path)).candidates
+    path = Path(path)
+    payload = json.loads(path.read_text())
+    try:
+        if "source_manifest" in payload:
+            return manifests.load_chain_manifest(path).source_manifest.candidates
+        return manifests.load_source_manifest(path).candidates
+    except manifests.ManifestError as exc:
+        if "implementation hash mismatch" not in str(exc):
+            raise
+        if "source_manifest" in payload:
+            path = (path.parent / payload["source_manifest"]["path"]).resolve()
+            payload = json.loads(path.read_text())
+        return [_Candidate(c["name"], PinnedReading.from_json(c["reading"]))
+                for c in payload["candidates"]]
 from semabi.compiler.v4.consequence import (ASSERTED, ATTESTED, IDENTITY, MASKED,
                                             NEAR_OPTIMAL, SAME_INDEX, UNMASKED, VALUE,
                                             fit, score)
