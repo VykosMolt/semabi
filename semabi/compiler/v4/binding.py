@@ -83,6 +83,21 @@ class Bindings:
     def unique(self) -> Binding | None:
         return self.admissible[0] if self.status == UNIQUE else None
 
+    def pinned(self) -> frozenset[str]:
+        """The parameters every admissible assignment agrees on.
+
+        ``UNIQUE`` pins all of them and ``NONE`` pins none, but the interesting case is in
+        between: an ambiguous set can still determine some of its parameters while leaving
+        others open, and which ones is the whole question when deciding whether an effect is
+        about a definite object.  All the assignments come from one state, so the objects are
+        the same instances and identity is the right comparison.
+        """
+        if not self.admissible:
+            return frozenset()
+        first = self.admissible[0].values
+        return frozenset(p for p in first
+                         if all(b.values.get(p) is first[p] for b in self.admissible))
+
     def to_json(self) -> dict[str, Any]:
         return {"status": self.status, "detail": self.detail, "truncated": self.truncated,
                 "admissible": [b.to_json() for b in self.admissible[:8]],

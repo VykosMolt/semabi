@@ -136,6 +136,7 @@ class ScopedResult:
     model: dict[str, Any] = field(default_factory=dict)
     predictions: list[ScopedPrediction] = field(default_factory=list)
     skipped: Counter = field(default_factory=Counter)
+    schema_evidence: dict[str, Any] = field(default_factory=dict)
 
     def counts(self, kind: str) -> dict[str, int]:
         return dict(sorted(Counter(p.verdict for p in self.predictions
@@ -225,6 +226,40 @@ class ScopedResult:
             out[p.verdict][key] += 1
         return {k: dict(sorted(v.items())) for k, v in sorted(out.items())}
 
+    def schema(self) -> dict[str, Any]:
+        """Are the operators well-formed action schemas, in the STRIPS+ sense?
+
+        STRIPS+ (Gosgens/Geffner and the SIFT line; see docs/related_work.md) splits an action
+        schema's variables three ways: *explicit* ones the action carries, *implicit* ones the
+        preconditions determine uniquely from those, and *existential* ones that need only be
+        satisfiable.  The first two may appear in effects; the third may not, and the reason is
+        exactly the one this run measured -- an effect on an object the state does not pin down
+        does not say which object changes, so it is not a claim about the world.
+
+        This reports the same question of what was actually learned.  A derived parameter counts
+        as determined when every occasion the rule fired left it pinned; an operator is
+        ill-formed when an undetermined parameter appears in one of its effects.  It is a
+        property of the reading and its trace, not a verdict on any prediction.
+        """
+        operators, ill = {}, []
+        for name, row in sorted(self.schema_evidence.items()):
+            params = {}
+            for param in sorted(row["derived"]):
+                seen, pinned = row["seen"][param], row["pinned"][param]
+                params[param] = ("determined" if seen and pinned == seen
+                                 else f"open on {seen - pinned} of {seen} occasions")
+            bad = sorted(p for p in row["derived"] & row["effect_params"]
+                         if row["seen"][p] and row["pinned"][p] != row["seen"][p])
+            kind = ("an effect on an object the state does not pin down" if bad
+                    else "every parameter explicit in the action" if not params
+                    else "the preconditions determine the rest")
+            operators[name] = {"derived": params, "undetermined_effect_params": bad,
+                               "kind": kind}
+            if bad:
+                ill.append(name)
+        return {"operators": operators, "ill_formed": sorted(ill),
+                "kinds": dict(sorted(Counter(o["kind"] for o in operators.values()).items()))}
+
     def to_json(self) -> dict[str, Any]:
         return {"reading": self.reading, "split": self.split,
                 "applicability": self.applicability,
@@ -238,7 +273,7 @@ class ScopedResult:
                 "value_correspondence": self.correspondence_counts(VALUE),
                 "value_coverage": self.coverage(VALUE), "value_landing": self.landing(VALUE),
                 "identity_coverage": self.coverage(IDENTITY),
-                "binding": self.binding_summary(),
+                "binding": self.binding_summary(), "schema": self.schema(),
                 "prediction_signature_digest": self.signature_digest(),
                 "predictions_signed": len(self.signature()),
                 "skipped": dict(sorted(self.skipped.items())),
@@ -579,6 +614,7 @@ def score(model: Fit, *, mutate: Callable[[str], str] | None = None,
             bridge = bridges[id(pre)] = slot_nodes(A, pre)
         for op in rules:
             bound, why = bindings_for(A, po, state, op, step.action.target, applicability)
+            _record_schema(result, op, bound)
             for eff in op.effs:
                 claim = _claim(op, eff, mutate)
                 if claim is None:
@@ -610,6 +646,28 @@ def score(model: Fit, *, mutate: Callable[[str], str] | None = None,
                 if aggregated.identity is not None:
                     result.predictions.append(aggregated.identity)
     return result
+
+
+def _record_schema(result: ScopedResult, op, bound) -> None:
+    """Note, for this firing, which derived parameters the pre-state pinned.
+
+    A firing that produced no binding at all says nothing either way about whether the
+    parameter can be determined, so it is not counted rather than counted as open.
+    """
+    if bound is None or not bound.admissible:
+        return
+    row = result.schema_evidence.get(op.name)
+    if row is None:
+        row = result.schema_evidence[op.name] = {
+            "derived": set(), "effect_params": {e.obj for e in op.effs},
+            "seen": Counter(), "pinned": Counter()}
+    pinned = bound.pinned()
+    for param, origin in bound.admissible[0].provenance.items():
+        if origin != binding.DERIVED:
+            continue
+        row["derived"].add(param)
+        row["seen"][param] += 1
+        row["pinned"][param] += param in pinned
 
 
 def _claim(op, eff, mutate):

@@ -248,3 +248,55 @@ def test_an_enumeration_that_stopped_early_can_never_refute():
     POSSIBLE -- and this is the guard for the direction that would matter more."""
     from semabi.compiler.v4 import consequence as csq
     assert _fold([csq.REFUTED, csq.REFUTED], truncated=True).verdict == csq.POSSIBLE
+
+
+# ------------------------------------------------------- schemas that name a definite object
+
+def test_an_ambiguous_set_can_still_pin_some_of_its_parameters():
+    values = lambda a, b: binding.Binding({"?a": a, "?b": b}, {"?a": binding.DERIVED,
+                                                              "?b": binding.DERIVED})
+    fixed, one, two = object(), object(), object()
+    bound = binding.Bindings(binding.AMBIGUOUS, (values(fixed, one), values(fixed, two)))
+    assert bound.pinned() == frozenset({"?a"})
+    assert binding.Bindings(binding.NONE, ()).pinned() == frozenset()
+
+
+def test_an_effect_on_an_object_the_state_never_pins_is_not_a_well_formed_schema():
+    """The STRIPS+ condition, measured rather than assumed.
+
+    A variable that appears in an effect has to be determined by the explicit arguments and the
+    preconditions, or the effect does not say which object changes.  Harbour's two readings sit
+    on opposite sides of that line and the checker does not need to be told which is which: the
+    grounded reading has no derived parameters to determine, while the loose reading's single
+    parameter is left open on every occasion its rules fire, so nine of its sixteen operators
+    are effects on nothing in particular.
+
+    Adding the attested equalities determines the parameter and every operator becomes
+    well-formed -- and is then refuted, which is the point of separating the two questions.  A
+    schema that names a definite object can be wrong about it; one that does not cannot even be
+    wrong.
+    """
+    from semabi.compiler.v4.consequence import ATTESTED, VALUE, fit, score
+    from semabi.eval.v4_consequence_run import _candidates
+
+    readings = {c.name: c.reading for c in _candidates(HARBOUR_CHAIN)}
+    grounded = score(fit(HARBOUR_RUN, readings["joint discrimination x2"], split=0.5)).schema()
+    assert grounded["operators"] and not grounded["ill_formed"]
+    assert all(not row["derived"] for row in grounded["operators"].values())
+
+    loose_fit = fit(HARBOUR_RUN, readings["promote cell[_]=cell#0"], split=0.5)
+    loose_result = score(loose_fit)
+    loose = loose_result.schema()
+    assert loose["ill_formed"]
+    for name in loose["ill_formed"]:
+        assert loose["operators"][name]["undetermined_effect_params"] == ["?o0"]
+
+    # The classification is made before any outcome is consulted, and it is what decides
+    # whether the reading manages to say anything at all: every decided prediction it makes
+    # here comes from an operator whose effect object the state never pinned down.
+    decided = [p for p in loose_result.predictions
+               if p.kind == VALUE and p.verdict != "NOT_APPLICABLE"]
+    assert decided
+    assert all(loose["operators"][p.operator]["undetermined_effect_params"] for p in decided)
+
+    assert not score(loose_fit, applicability=ATTESTED).schema()["ill_formed"]
