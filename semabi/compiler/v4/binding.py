@@ -51,6 +51,16 @@ NONE = "NONE"                # the rendered state contradicts every assignment
 UNOBSERVED = "UNOBSERVED"    # a parameter's type is not rendered here at all
 UNSETTLED = "UNSETTLED"      # the search hit its bound without settling what the state admits
 
+# What the admissible set says about the objects the rule claims to *change*, which is a
+# different question from how many assignments there are.  A rule may admit hundreds of
+# assignments because its precondition-only witnesses vary while every one of them picks the
+# same object to act on; that rule is usable.  A rule admitting two assignments that disagree
+# about which object changes is not, however small the number.
+DETERMINED = "DETERMINED"                  # complete search, every assignment agrees
+UNDERDETERMINED = "UNDERDETERMINED"        # two assignments disagree -- sound under truncation
+UNDETERMINED_INCOMPLETE = "INCOMPLETE"     # the search stopped; agreement so far proves nothing
+INAPPLICABLE = "INAPPLICABLE"              # complete search, nothing satisfies the rule
+
 MAX_ADMISSIBLE = 256         # a resource bound, not a judgement; reported when it bites
 MAX_SEARCH_NODES = 50_000    # the other resource bound, on the search rather than its answer
 
@@ -105,6 +115,39 @@ class Bindings:
         first = self.admissible[0].values
         return frozenset(p for p in first
                          if all(b.values.get(p) is first[p] for b in self.admissible))
+
+    def denotations(self, params: Sequence[str]) -> tuple[tuple, ...]:
+        """The distinct values the admissible assignments give to ``params``, as a set.
+
+        Objects are compared by their abstract identity rather than by rendered name, because
+        the point of asking is to find out whether the rule names one object or several, and a
+        name is the thing under suspicion.
+        """
+        seen = {}
+        for b in self.admissible:
+            key = tuple(getattr(b.values.get(p), "id", None) for p in params)
+            seen.setdefault(key, key)
+        return tuple(seen)
+
+    def effect_target(self, params: Sequence[str]) -> tuple[str, int]:
+        """Does this state determine which objects the rule acts on, and how many candidates?
+
+        Truncation is asymmetric here, and the asymmetry is the whole reason to separate this
+        from the assignment count.  Seeing two disagreeing denotations settles
+        underdetermination however the search ended -- a witness is a witness.  Seeing one
+        settles nothing unless the search was complete, because the assignment that would have
+        disagreed may be the one never reached.
+        """
+        if not params:
+            return DETERMINED, 0
+        found = self.denotations(params)
+        if len(found) > 1:
+            return UNDERDETERMINED, len(found)
+        if self.truncated:
+            return UNDETERMINED_INCOMPLETE, len(found)
+        if not found:
+            return INAPPLICABLE, 0
+        return DETERMINED, 1
 
     def to_json(self) -> dict[str, Any]:
         return {"status": self.status, "detail": self.detail, "truncated": self.truncated,

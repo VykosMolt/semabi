@@ -434,3 +434,65 @@ def test_a_search_that_cannot_finish_says_so_instead_of_running(monkeypatch):
     # with room to finish, the same query is a plain refusal rather than a shrug
     settled = binding.solve(wide, wide.pre, st, {}, nodes=10_000)
     assert settled.status == binding.NONE and not settled.truncated
+
+
+# --------------------------------------------------- what the rule claims to change, and where
+
+def test_many_witnesses_one_target_is_not_ambiguity():
+    """Assignment count is a computational fact.  Which object changes is the semantic one.
+
+    A rule whose precondition-only variables range over many objects while every satisfying
+    assignment picks the same object to act on is perfectly usable, and counting assignments
+    would call it hopeless.  This is the case the old ``bindings`` number could not express.
+    """
+    target = obj("the one that changes")
+    others = [obj(f"witness{i}") for i in range(6)]
+    op = rule({"?z": BERTH, "?y": BERTH}, [("attr", "?z", "slot", "act on me")])
+    st = state(target, *others)
+    target.attrs["slot"] = "act on me"
+    bound = binding.solve(op, op.pre, st, {})
+    assert bound.status == binding.AMBIGUOUS
+    assert len(bound.admissible) == 7                     # one per witness
+    assert bound.effect_target(["?z"]) == (binding.DETERMINED, 1)
+    assert bound.effect_target(["?z", "?y"])[0] == binding.UNDERDETERMINED
+
+
+def test_two_assignments_disagreeing_about_the_target_is_ambiguity():
+    """And the converse: a tiny assignment count that still does not say what changes."""
+    a, b = obj("A"), obj("B")
+    for o in (a, b):
+        o.attrs["slot"] = "either of us"
+    op = rule({"?z": BERTH}, [("attr", "?z", "slot", "either of us")])
+    bound = binding.solve(op, op.pre, state(a, b), {})
+    assert len(bound.admissible) == 2
+    assert bound.effect_target(["?z"]) == (binding.UNDERDETERMINED, 2)
+
+
+def test_agreement_among_the_assignments_reached_is_not_determinacy():
+    """Truncation is asymmetric, and the asymmetry is the reason to ask this separately.
+
+    Two disagreeing denotations settle underdetermination however the search ended -- a witness
+    is a witness.  Agreement settles nothing unless the search was complete, because the
+    assignment that would have disagreed may be the one never reached.  Reading determinacy off
+    a truncated enumeration is how a resource bound becomes a semantic claim.
+    """
+    target = obj("same target")
+    op = rule({"?z": BERTH, "?y": BERTH}, [])
+    st = state(target, *[obj(f"w{i}") for i in range(9)])
+    everything = binding.solve(op, [], st, {"?z": target})
+    assert not everything.truncated
+    assert everything.effect_target(["?z"]) == (binding.DETERMINED, 1)
+
+    cut_short = binding.solve(op, [], st, {"?z": target}, limit=4)
+    assert cut_short.truncated and len(cut_short.admissible) == 4
+    assert all(d == everything.denotations(["?z"])[0] for d in cut_short.denotations(["?z"]))
+    assert cut_short.effect_target(["?z"]) == (binding.UNDETERMINED_INCOMPLETE, 1)
+
+    # but disagreement seen before the bound is still disagreement.  ``?w`` has a
+    # single candidate so it is solved first, which leaves the truncated prefix varying
+    # ``?z`` -- the case where the bound cuts across the target rather than around it.
+    inner = rule({"?w": CALL, "?z": BERTH}, [])
+    st2 = state(obj("only one", tid=CALL), *[obj(f"t{i}") for i in range(9)])
+    disagreeing = binding.solve(inner, [], st2, {}, limit=4)
+    assert disagreeing.truncated
+    assert disagreeing.effect_target(["?z"])[0] == binding.UNDERDETERMINED
