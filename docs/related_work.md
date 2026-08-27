@@ -135,3 +135,58 @@ continuity) without labels. **Reusable:** bbox-derived edges (aligned, near,
 same-pattern) as *evidence* for unit hypotheses; **not reusable** as a decision
 procedure — the ladder's B -> C gap shows the unit is only half the problem,
 belief over what is not rendered is the other half.
+
+## Added for the latent-binding work (2026-08-27)
+
+### SAM / E-SAM learning (Stern & Juba 2017; Juba, Le & Stern, *Safe Learning of Lifted Action Models*, arXiv:2107.04169)
+Read in full. SAM learns a **safe** action model -- one whose every applicable
+grounding is applicable in the real model and produces the same post-state -- by
+initialising each lifted action's preconditions to *all* parameter-bound literals
+and deleting any that fail to hold in an observed pre-state, while adding as
+effects the literals that changed. Safety is one-directional on purpose: the
+learned model is never stronger than the truth, so plans it produces cannot fail,
+at the cost of being incomplete.
+
+The part that bears directly on this work is `bindings(bA, bL)`: when a grounded
+literal could correspond to more than one parameter-bound literal, which happens
+whenever the **injective action binding** assumption fails (two action parameters
+bound to the same object), the correspondence is genuinely ambiguous. E-SAM's
+treatment splits exactly the way ours does, and the split is not arbitrary:
+
+* *"must be an effect"* under ambiguity becomes a **disjunction** over the
+  admissible bindings -- at least one of them carries the effect (their Rule 3,
+  `Ceff ← ⋁ IsEff(⟨L, b⟩)`);
+* *"cannot be a precondition/effect"* becomes a **unit negative** clause that
+  holds for every binding (their Rules 1 and 2).
+
+That is the same asymmetry `binding.solve` and `consequence._aggregate` arrived at
+independently: one satisfied assignment is enough to block a refutation, while a
+literal contradicted under an assignment prunes that assignment outright. It is
+useful to know the existential reading has a safety theorem behind it rather than
+only an intuition (their Theorems 4, 6 and 7).
+
+**Where our problem is strictly harder.** E-SAM's ambiguity is over *which
+parameter slot* an object fills; every object involved is already named by the
+observed grounded action `bA`, and they assume full observability. Here the object
+may not be named by the action at all, so the search ranges over the state rather
+than over an argument tuple -- which is why it is a small CSP and not a
+unification -- and a state assembled from one rendered page is missing objects
+entirely, which is what `UNOBSERVED` is for and what neither SAM nor E-SAM has to
+model.
+
+**Not borrowed, and why.** E-SAM compiles ambiguity away into *proxy actions*:
+one action per subset of the non-unit clauses, whose preconditions force the
+ambiguity to be resolved (the parameters unify, or the alternatives already hold).
+This is exponential in the number of ambiguous clauses, which the authors
+acknowledge and propose conformant planning to avoid. With medians of ~35 and a
+maximum of 41 admissible assignments on harbour's loose reading, that compilation
+is not available to us at any size, so `derive_bindings` returns the set and says
+so. Their construction is still the right model for what a *safe exported
+operator* would have to look like, and it is the obvious next thing to try for the
+`AMBIGUOUS` case rather than leaving the caller with a list.
+
+Worth recording: they evaluated on twelve IPC domains **chosen because injective
+binding holds**, so E-SAM and SAM behave identically throughout their experiments.
+The disjunctive machinery is proved but, in that paper, never exercised. The
+regime this project is in -- dozens of admissible bindings per action -- is the
+one their experiments exclude.
