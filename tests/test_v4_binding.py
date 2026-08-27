@@ -572,3 +572,57 @@ def test_a_candidate_filtered_before_evaluation_is_not_a_language_that_was_searc
     # the same evidence, with the candidate allowed through, is a real search that succeeds
     assert referring.ground(op, evidence, set(), _never_refuses).outcomes() == {
         "?z": referring.QUERY_FOUND}
+
+
+# ------------------------------------------------------------------- chronological scope
+
+def _tiny_log(tmp_path, rows):
+    """A run directory with ``rows`` steps, each a distinct observation pair."""
+    import json
+    from semabi.compiler.evidence import EvidenceLog
+    d = tmp_path / "run"
+    d.mkdir(parents=True, exist_ok=True)
+    obs = []
+    for i in range(rows + 1):
+        obs.append({"sig": f"s{i}", "obs": {"nodes": [
+            {"i": 0, "parent": None, "role": "text", "name": f"v{i}", "bbox": [0, 0, 1, 1]}]}})
+    (d / "observations.jsonl").write_text(
+        "\n".join(json.dumps(o) for o in obs) + "\n")
+    steps = [{"step": i, "episode": 0, "action": {"kind": "click", "target": 0},
+              "ok": True, "error": None, "before": f"s{i}", "after": f"s{i+1}",
+              "typed_tokens": []} for i in range(rows)]
+    (d / "steps.jsonl").write_text("\n".join(json.dumps(s) for s in steps) + "\n")
+    return EvidenceLog(d)
+
+
+def test_a_prefix_view_cannot_reach_a_later_observation(tmp_path):
+    """Truncating the step list is not a chronological split.
+
+    Everything that fits a schema reads ``observations``, not ``steps``: the observation graph,
+    the family hypotheses, the parser the abstractor takes its types and slots from.  A log
+    loaded from disk holds the whole trace there, so a "prefix" model was being built under a
+    type system that had already seen the held-out suffix -- on harbour, the difference between
+    14 types and 11.
+    """
+    log = _tiny_log(tmp_path, 6)
+    assert len(log.steps) == 6 and len(log.observations) == 7
+
+    leaky = _tiny_log(tmp_path, 6)
+    leaky.steps = leaky.steps[:3]
+    assert len(leaky.observations) == 7            # the defect, kept visible
+
+    view = log.through(3)
+    assert len(view.steps) == 3
+    assert set(view.observations) == {"s0", "s1", "s2", "s3"}
+    assert "s5" not in view.observations
+    assert view.observations is not log.observations       # its own dict, not a shared one
+    assert view.obs_path is None                           # and not appendable
+
+
+def test_what_happens_after_the_cut_cannot_change_the_prefix_view(tmp_path):
+    """The regression that matters: the fitted prefix must not move when the future does."""
+    short = _tiny_log(tmp_path / "a", 4).through(3)
+    long = _tiny_log(tmp_path / "b", 9).through(3)
+    assert set(short.observations) == set(long.observations)
+    assert [s.before for s in short.steps] == [s.before for s in long.steps]
+    assert [s.after for s in short.steps] == [s.after for s in long.steps]

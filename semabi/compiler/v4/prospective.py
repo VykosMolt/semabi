@@ -323,8 +323,7 @@ def action_effect_determinacy(run_dir: Path, reading, *, split: float = 0.6,
     run_dir = Path(run_dir)
     full = EvidenceLog(run_dir)
     cut = int(len(full.steps) * split)
-    prefix = EvidenceLog(run_dir)
-    prefix.steps = full.steps[:cut]
+    prefix = full.through(cut)
     compiled = compile_v4(run_dir, min_support=min_support, write_diagnostics=False,
                           pinned=reading, evidence_log=prefix)
     by_control = _rules_by_control(compiled.inducer.operators)
@@ -376,8 +375,7 @@ def evaluate(run_dir: Path, reading, *, split: float = 0.6, min_support: int = 2
     run_dir = Path(run_dir)
     full = EvidenceLog(run_dir)
     cut = int(len(full.steps) * split)
-    prefix = EvidenceLog(run_dir)
-    prefix.steps = full.steps[:cut]
+    prefix = full.through(cut)
     compiled = compile_v4(run_dir, min_support=min_support, write_diagnostics=False,
                           pinned=reading, evidence_log=prefix)
     operators = compiled.inducer.operators

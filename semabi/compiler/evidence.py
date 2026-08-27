@@ -76,6 +76,31 @@ class EvidenceLog:
     def obs(self, sig: str) -> Observation:
         return self.observations[sig]
 
+    def through(self, cut: int) -> "EvidenceLog":
+        """The first ``cut`` steps, and *only* the observations they reach.
+
+        Truncating ``steps`` alone is not a chronological split.  Everything that fits a
+        schema -- the observation graph, the family hypotheses, the parser the abstractor
+        derives its types and slots from -- reads ``observations``, which on a log loaded from
+        disk holds the whole trace.  So a "prefix" model was being built under a type system
+        that had seen the held-out suffix, and on harbour that is the difference between 14
+        types and 11.
+
+        The returned log owns restricted dicts rather than sharing this one's, so code fitting
+        on a prefix cannot reach a later observation even by accident.  It is not attached to
+        the run directory: a slice is an analysis view, and appending to it would write the
+        prefix's own observations back over the trace it came from.
+        """
+        view = EvidenceLog.__new__(EvidenceLog)
+        view.dir = self.dir
+        view.obs_path = view.steps_path = None       # a view is not appendable
+        view.steps = list(self.steps[:cut])
+        reachable = {sig for step in view.steps for sig in (step.before, step.after)}
+        view.observations = {sig: obs for sig, obs in self.observations.items()
+                             if sig in reachable}
+        view.typed_tokens = list(view.steps[-1].typed_tokens) if view.steps else []
+        return view
+
     def save_meta(self, **kw):
         p = self.dir / "meta.json"
         d = json.loads(p.read_text()) if p.exists() else {}
