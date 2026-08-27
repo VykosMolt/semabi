@@ -565,7 +565,11 @@ enumeration bound.
   154/172 are therefore near-chance. Vet is where it means something, and there it separates
   readings the raw counts did not: `joint discrimination x3` scores 0.63 against a 0.36 base,
   `cell[_]=cell#0` scores 0.19 against 0.21 -- at or below chance. The base rate now travels
-  with the verdicts.
+  with the verdicts. It is unconditional, so read it in one direction only: failing to beat it
+  settles a reading, beating it does not, because a rule that only fires on objects in a view
+  about to be replaced would beat it without modelling anything. The conditional version --
+  what fraction of the objects present at *this* click went away -- is the sharper control and
+  is not built.
 * **`op.common` is a description, not an invariant.** SYNTH's `Q'` is the atoms true in every
   state where the action applied, computed over traces of 10,000 steps. Here `|common|` is
   6-7 literals whether the rule has one positive or four, and **most rules have exactly one**
