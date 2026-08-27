@@ -25,7 +25,7 @@ from __future__ import annotations
 
 import argparse
 import json
-from collections import defaultdict
+from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
 
@@ -84,6 +84,11 @@ def prospective(rows: list[dict], readings: list[str]) -> dict[str, Any]:
                 "decided": decided, "supported": supported, "refuted": refuted,
                 "reached": decided > 0,
                 "landing": _merge_landing(live),
+                # How well the reading's own rules pin down the object the action affected.
+                # A reading that cannot relate the clicked control to the object it changes
+                # leaves every object of the type open, and its verdicts then say POSSIBLE
+                # everywhere -- which reads as inconclusive unless this is shown beside it.
+                "binding": _merge_binding(live),
             }
         reached = [t for t in traces.values() if t["reached"]]
         if not reached:
@@ -119,6 +124,19 @@ def _by_trace(rows: list[dict]) -> dict[str, list[dict]]:
     for row in rows:
         out[row["trace"]].append(row)
     return out
+
+
+def _merge_binding(rows: list[dict]) -> dict[str, Any]:
+    status: Counter = Counter()
+    largest = 0
+    for row in rows:
+        for key, count in row.get("binding", {}).get("status", {}).items():
+            status[key] += count
+        largest = max(largest, row.get("binding", {}).get("largest", 0))
+    total = sum(status.values())
+    unique = status.get("UNIQUE", 0)
+    return {"status": dict(sorted(status.items())), "largest_assignment_set": largest,
+            "determined": f"{unique}/{total}" if total else "0/0"}
 
 
 def _merge_landing(rows: list[dict]) -> dict[str, dict[str, int]]:
@@ -278,7 +296,8 @@ def main() -> None:
         print(f"  prospective    {name[:34]:36} {row['status']}")
         for trace, t in sorted(row["traces"].items()):
             print(f"       {trace:22} decided {t['decided']:5d} supported {t['supported']:5d} "
-                  f"refuted {t['refuted']:5d}  {t['landing']}")
+                  f"refuted {t['refuted']:5d}  bindings {t['binding']['status']} "
+                  f"determined {t['binding']['determined']} max {t['binding']['largest_assignment_set']}")
     for name, row in sorted(payload["prospective"]["controls"].items()):
         print(f"  controls       {name[:34]:36} {row}")
     elim = payload["prospective_elimination"]

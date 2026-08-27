@@ -102,6 +102,7 @@ class ScopedPrediction:
     bindings: int = 0                           # assignments the pre-state left open
     binding_status: str = ""                    # UNIQUE | AMBIGUOUS | NONE | UNOBSERVED
     binding_evidence: str = ""                  # supported | possible, over those assignments
+    binding_truncated: bool = False              # the enumeration hit its resource bound
     identity: Any = None                        # the reading's own naming check, when it applies
     verdict: str = NOT_APPLICABLE
     detail: str = ""
@@ -204,6 +205,9 @@ class ScopedResult:
         return {"status": dict(sorted(status.items())),
                 "median_assignments": sorted(sizes)[len(sizes) // 2] if sizes else 0,
                 "largest": max(sizes) if sizes else 0,
+                # A count that stopped at the bound is not a measurement of how open the rule
+                # was, so it is reported rather than read as one.
+                "hit_the_enumeration_bound": sum(1 for p in rows if p.binding_truncated),
                 "evidence": dict(sorted(Counter(
                     p.binding_evidence for p in rows if p.binding_evidence).items()))}
 
@@ -588,6 +592,7 @@ def score(model: Fit, *, mutate: Callable[[str], str] | None = None,
                     continue
                 base.bindings = len(bound.admissible)
                 base.binding_status = bound.status
+                base.binding_truncated = bound.truncated
                 if bound.status == binding.UNOBSERVED:
                     base.verdict, base.detail = UNKNOWN, bound.detail
                     result.predictions.append(base)
@@ -637,8 +642,12 @@ def _under_one_binding(base, A, bridge, pre, post, step, op, eff, assignment, re
     pred.subject = str(subject.key)
     pred.context = binding_context(assignment.values)
     if base.kind is EXISTENCE or eff.kind == "remove":
-        return _existence_prediction(A, bridge, pre, post, step, base.control, op,
-                                     assignment.values, eff, gone) or pred
+        survives = _existence_prediction(A, bridge, pre, post, step, base.control, op,
+                                         assignment.values, eff, gone)
+        if survives is None:
+            return pred
+        survives.binding_evidence = assignment.evidence
+        return survives
     node = bridge.get((subject.node, eff.slot))
     if node is None:
         pred.verdict = NOT_APPLICABLE

@@ -48,7 +48,7 @@ AMBIGUOUS = "AMBIGUOUS"
 NONE = "NONE"                # the rendered state contradicts every assignment
 UNOBSERVED = "UNOBSERVED"    # a parameter's type is not rendered here at all
 
-MAX_ADMISSIBLE = 64          # a resource bound, not a judgement; reported when it bites
+MAX_ADMISSIBLE = 256         # a resource bound, not a judgement; reported when it bites
 
 
 @dataclass(frozen=True)
