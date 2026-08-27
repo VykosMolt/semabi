@@ -489,6 +489,25 @@ repaired anywhere: every operator, every split, both traces,
 is right on the clicked row and wrong off it, and *is this the row the click landed in* is not
 expressible in an ontology with no relation between a button and its row.
 
+## What the corpus exercises
+
+Derived parameters per scored operator, over the six regenerated applications, masked
+correspondence, unmutated:
+
+    0 derived : 481      1 derived : 332      2 derived : 33      3 derived : 24
+
+So the joint search is not a hypothetical. Barter (18 + 15), vet (12 + 9) and landing board (3)
+all fit rules whose latent parameters have to be solved together, and the backtracking with
+forward-checking runs on them in production, not only in tests. Harbour never exceeds one
+derived parameter, so the harbour result above does not depend on the joint search at all.
+
+Binding statuses corpus-wide come out `UNIQUE` 3710, `AMBIGUOUS` 3924, `NONE` 5326,
+`UNOBSERVED` 1952. `UNOBSERVED` firing 1952 times is what makes the distinction from `NONE`
+load-bearing rather than decorative: a state assembled from one rendered page has no objects
+from the other pages, and reading their absence as a failed precondition would turn a page that
+did not show something into evidence about the rule. No row in any application hit the
+enumeration bound.
+
 ## Where the literature put this
 
 `docs/related_work.md` has the full entries; both papers were read end to end.
