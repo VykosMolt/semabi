@@ -190,3 +190,62 @@ binding holds**, so E-SAM and SAM behave identically throughout their experiment
 The disjunctive machinery is proved but, in that paper, never exercised. The
 regime this project is in -- dozens of admissible bindings per action -- is the
 one their experiments exclude.
+
+### SYNTH and STRIPS+ (Jansen, Gösgens & Geffner, *Learning Lifted Action Models From Traces of Incomplete Actions and States*, arXiv:2508.21449) and SYNTH+ (arXiv:2605.18627)
+Read in full. STRIPS+ splits an action schema's variables into **x**, the explicit
+arguments the action carries; **z**, implicit ones the preconditions *determine*
+from x; and **y**, existential ones that need only be satisfiable. Definition 3 is
+the binding status this project computes, verbatim: the z variables are determined
+if *"there are no two satisfying groundings σ and σ′ of ϕ(x, y, z) such that
+σ(x) = σ′(x) and σ(z) ≠ σ′(z)"*. And the rule that made this operational here:
+**y variables may not appear in effects**, because an effect on an object the state
+does not pin down does not say which object changes. `ScopedResult.schema()` asks
+that of what was actually learned; `docs/v4_devlog.md` section `p` has the harbour
+result.
+
+**The three-way split is the right shape for `Operator.supplied`.** x is `supplied`,
+z is a derived parameter the pre-state determines, y is one it does not. What this
+project has that SYNTH assumes away is the fourth case: a parameter that appears in
+an *effect* and is not determined. SYNTH excludes it by requiring the domain to be
+*stratified*; here it is measured, and it is what separates harbour's two readings.
+
+**SYNTH searches for the query; this does not.** SYNTH's EXPAND greedily conjoins
+lifted atoms until TEST reports the new variable uniquely grounded in every state
+where the action applied, rejecting extensions that make it unsatisfiable somewhere
+(`Not-Valid`) or that duplicate an existing variable (`Subsumed`). This project's
+binder uses whatever preconditions `learn_pre` already produced and reports whether
+they happen to determine the parameter. The `attested` mode is a crude
+hand-specified version of the same idea -- and by SYNTH's own criterion it is an
+*invalid* extension, because it makes the rule unsatisfiable on 69 of 145 firings.
+A determinacy-directed search over the reading's own vocabulary is the principled
+version and is the obvious next mechanism.
+
+**`op.pre` has no counterpart there.** SYNTH's precondition is the binding query
+conjoined with `Q'`, the atoms true in every state where the action applied.
+`op.common` is `Q'`; `op.pre` is a greedy discriminative cover. Hence the
+`generative` mode. The catch is measured in section `p`: `Q'` is only an invariant
+when there is evidence behind it, and most operators here have exactly one positive.
+
+**Local observability is this project's observation model, named.** SYNTH+
+(arXiv:2605.18627, May 2026) relaxes full observability to *local* observability:
+the local objects of a state are those appearing as arguments of the actions
+applicable in it, and a locally observable predicate reveals exactly its true atoms
+over those objects. A rendered page shows the objects that have controls on it,
+which is that definition. Their TEST\* handles a non-local atom asymmetrically --
+assumed **false** when testing whether a precondition is valid, **true** when
+testing whether a query determines a unique object -- both in the direction of not
+claiming more than the observation supports. This code arrives at the same place
+from the other side: an undecidable literal does not prune an assignment (so
+ambiguity is not narrowed by ignorance) and marks it `POSSIBLE` (so a rule is not
+refuted on evidence that was never seen). Their Theorem 12 gives completeness under
+local observability provided the *key predicates* are fully observed -- a key
+predicate being one appearing in a precondition atom with no explicit argument and a
+single implicit one. `promote cell[_]=cell#0` has no such predicate available,
+because its ontology contains no relation between a button and the cell that holds
+it, which is the same conclusion the residual search reaches empirically.
+
+**Not found: any symbolic action-model learning work on web/GUI state.** The GUI
+agent literature (2025-2026) is LLM- and RL-based -- DOM pruning, state-machine
+memories, grounding -- and does not build lifted action models; the action-model
+learning literature assumes the predicates and the action arguments are given. The
+gap this project sits in is real.
