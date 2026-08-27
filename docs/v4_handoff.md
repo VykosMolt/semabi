@@ -545,8 +545,16 @@ expressible in an ontology with no relation between a button and its row.
   uniquely grounded in every state where the action fired, rejecting extensions that make the
   rule unsatisfiable somewhere. `attested` is a crude hand-specified version of that and is an
   *invalid* extension by SYNTH's own criterion -- it determines the parameter by making the rule
-  inapplicable on 69 of 145 firings. This is the obvious next mechanism, it needs no outcome,
-  and it would fail on the loose reading for a stateable structural reason.
+  inapplicable on 69 of 145 firings. This is the obvious next mechanism and it needs no outcome.
+
+  It would not save the loose reading, and the reason does not need an experiment. Those nine
+  operators have a *derived* `?o0` and no other parameter, so `action_binding` returned nothing
+  for them -- their action is attributed to no object at all. A binding query determines a
+  latent variable by relating it to something the action supplies; where the action supplies
+  nothing, the only atoms available mention constants, and a constant selects the object that
+  looks like the training one. That is exactly what `attested` does, and it is why the object
+  it commits to is the wrong one 41 times out of 75. **The reading cannot express a binding
+  query, not merely fail to have learned one.**
 * **Only 2 of 16 and 5 of 9 fitted rules reach the exported model at all** (`build_model` drops
   support-1 operators; the checker scores everything). Whatever the checker establishes about a
   rule with one positive is not currently in the ABI.
