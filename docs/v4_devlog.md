@@ -1050,3 +1050,108 @@ action-family conflation -- one operator learned from five *Lots* clicks and ano
 *Cellar* clicks share the action `click(button#button@T0[?o0])` because those words are data
 tokens that also appear in headings -- which is diagnosed and deliberately not fixed here.
 And the memorised-key loss above dwarfs everything this section is about.
+
+## p — 2026-08-27 — what the literature calls this, and two instruments that were not measuring
+
+Section `o` reported that harbour's two readings differ in how many objects their own
+preconditions fail to exclude. Reading the action-model-learning literature in full turned
+that observation into a named condition, and then turned the instrument on two results that
+had been reported as successes.
+
+### The condition has a name, and it is checkable
+
+STRIPS+ (SYNTH, arXiv:2508.21449) splits an action schema's variables three ways: **x**, the
+explicit arguments the action carries; **z**, implicit ones the preconditions *determine* from
+x; and **y**, existential ones that need only be satisfiable. The determinacy condition is
+stated exactly as the binder computes it -- *"there are no two satisfying groundings σ and σ′
+of ϕ(x, y, z) such that σ(x) = σ′(x) and σ(z) ≠ σ′(z)"* -- which is `UNIQUE`. And the rule that
+matters here: **y variables may not appear in effects.** An effect on an object the state does
+not pin down does not say which object changes.
+
+`ScopedResult.schema()` now asks that of what was actually learned rather than assuming it.
+On harbour at split 0.5:
+
+| reading | mode | explicit | determined | effect on an unpinned object |
+|---|---|---|---|---|
+| `joint discrimination x2` | asserted | 9 | 0 | 0 |
+| `promote cell[_]=cell#0` | asserted | 7 | 0 | **9** |
+| `promote cell[_]=cell#0` | attested | 7 | 9 | 0 |
+
+All 145 of the loose reading's decided predictions come from those nine ill-formed operators;
+the seven whose parameter the click supplies decide nothing at all. The classification is made
+from the pre-state alone, before any outcome, and it predicts which operators can say anything.
+Adding the attested equalities determines the parameter, every operator becomes well-formed --
+and the reading is then refuted 41 times out of 75. **A schema that names a definite object can
+be wrong about it; one that does not cannot even be wrong.**
+
+E-SAM (*Safe Learning of Lifted Action Models*, arXiv:2107.04169) splits ambiguity the same way
+this code does and proves it safe: *must be an effect* under ambiguity becomes a disjunction
+over admissible bindings, *cannot be a precondition* a universal negation. Their ambiguity is
+over which parameter slot an object fills, ours over which object; their compilation of
+ambiguity into proxy actions is exponential in exactly the quantity harbour makes large.
+`docs/related_work.md` has the comparison.
+
+### `op.pre` has no counterpart in the construction that is proved correct
+
+SYNTH builds a precondition as the binding query that determines z, conjoined with `Q'` -- the
+atoms that held in every state where the action was applied -- and proves the result applicable
+exactly when the hidden action is. `op.common` is `Q'`, computed the same way. `op.pre` is
+neither: it is a greedy discriminative cover chosen to exclude negatives. So `generative` scores
+`op.common` alone. It is identical to `attested` for `promote cell[_]=cell#0` -- the cover adds
+nothing there, mean `|pre|` is 0.3 -- and differs for `joint discrimination x2`, where dropping
+the cover exposes one refutation the cover had been suppressing.
+
+But the mode that should be the correct one destroys applicability for *both* readings: the
+grounded reading falls from 34 supported to 9, the loose one from 145 decided to 75. The
+measurement says why. `common` does not shrink with evidence:
+
+    mean |common| by number of positives, harbour transfer @0.5
+    1 positive : 7 literals    2 positives : 5-6    4 positives : 6
+
+and **most operators have exactly one positive** -- 14 of 16 for the loose reading. `Q'` computed
+from a single transition is not an invariant, it is a description of that transition, and using
+it as a precondition restricts the rule to objects that look exactly like the training one.
+SYNTH computes `Q'` over traces of up to 10,000 steps. That is the difference, and it is not a
+detail.
+
+### The removal check was answering a question the page had already decided
+
+Landing board's readings score 48/48 and 154/172 supported on *this object goes away*, which is
+the kind of number that should be attacked. `semabi/eval/v4_existence_baseline.py` runs the
+identical check over **every** object in **every** held-out pre-state with no rule involved:
+
+    application         base rate an object stops being rendered
+    harbour             0.992 - 0.993
+    landing board       0.833 - 0.837
+    vet clinic          0.206 - 0.391
+
+So on landing board a removal claim is right 84% of the time for nothing, and the promoted
+reading's 89.5% is barely above its own base rate. On harbour the check is useless in the other
+direction -- it says *gone* for essentially everything, because survival is asked with the
+content layers only and harbour re-renders -- which does no damage only because harbour's rules
+make no removal claims.
+
+Vet is where it means something, and there it separates readings that the raw counts did not:
+
+    joint discrimination x3   supported 0.63  base 0.36   +27 points
+    cell[_]=cell#0            supported 0.19  base 0.21   at or below chance
+
+That is the anti-vacuity test this project has been missing, and it is a base rate rather than
+an arbitrary minimum prediction count. It travels with the verdicts in the status report now,
+so the 48/48 cannot be read alone again.
+
+### The leakage trap, empirically
+
+The trap asserted that `binding.solve` has no post-state parameter, which stops the obvious
+version and nothing subtler. The mutation control gives a direct test: rewrite every predicted
+value to a token the application never renders, so every refutable claim is refuted, and check
+that the binding and schema summaries do not move. They do not -- **114 of 114 paired rows,
+byte-identical** -- while the verdicts change completely.
+
+### Corrections to section `o`
+
+Two loss figures quoted there were read off artifacts that predated the integration, and are
+not properties of the current system. What is true is stated with the regenerated corpus in
+the handoff; the general lesson is that a stale artifact in a directory of fresh ones is
+indistinguishable from a result unless the timestamps are checked, and this log came within a
+paragraph of recording one as a finding twice.
