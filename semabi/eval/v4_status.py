@@ -120,9 +120,13 @@ def prospective(rows: list[dict], readings: list[str],
                                       + r.get("existence", {}).get("REFUTED", 0))
     return {"basis": PROBE, "readings": per,
             "control_caveat": ("the mutation controls rewrite a predicted literal, which does "
-                               "nothing to a claim that an object goes away; the existence "
-                               "check's discrimination is measured separately, by running it "
-                               "over every object in every held-out pre-state"),
+                               "nothing to a claim that an object goes away; that check's "
+                               "discrimination is the base rate reported beside each reading, "
+                               "measured by semabi/eval/v4_existence_baseline.py over every "
+                               "object in every held-out pre-state with no rule involved -- "
+                               "0.99 on harbour and 0.84 on the landing board, where a removal "
+                               "claim is therefore worth almost nothing, against 0.21-0.39 on "
+                               "the vet clinic, where it is worth something"),
             "controls": {k: dict(sorted(v.items())) for k, v in sorted(controls.items())},
             "predictive_classes": _classes(rows)}
 
