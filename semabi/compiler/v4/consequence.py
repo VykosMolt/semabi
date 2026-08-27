@@ -633,6 +633,14 @@ def score(model: Fit, *, mutate: Callable[[str], str] | None = None,
         bridge = bridges.get(id(pre))
         if bridge is None:
             bridge = bridges[id(pre)] = slot_nodes(A, pre)
+        # One transition, so a relocation depends only on which node is being relocated: every
+        # admissible assignment of every rule at this step asks about the same pair of
+        # observations.  Where a rule leaves dozens of assignments open that is the same
+        # correspondence recomputed dozens of times, and it is the whole cost of scoring -- on
+        # cellar's loosest reading the binder itself takes 0.2s of a 290s scoring pass.  The
+        # cache lives for one step so that no observation identity outlives it.
+        step_relocate = _for_one_step(relocate)
+        step_gone = _for_one_step(gone)
         for op in rules:
             bound, why = bindings_for(A, po, state, op, step.action.target, applicability)
             _record_schema(result, op, bound)
@@ -660,13 +668,32 @@ def score(model: Fit, *, mutate: Callable[[str], str] | None = None,
                     result.predictions.append(base)
                     continue
                 parts = [_under_one_binding(base, A, bridge, pre, post, step, op, eff,
-                                            assignment, relocate, gone, states, predicted)
+                                            assignment, step_relocate, step_gone, states,
+                                            predicted)
                          for assignment in bound.admissible]
                 aggregated = _aggregate(base, parts, bound)
                 result.predictions.append(aggregated)
                 if aggregated.identity is not None:
                     result.predictions.append(aggregated.identity)
     return result
+
+
+def _for_one_step(match):
+    """``match`` memoised on the node, for the one transition it is about.
+
+    Correspondence is a pure function of the two observations and the node, and within a step
+    the observations do not change.  Keying on the node alone means no observation identity is
+    held past the step that produced it, which keying on ``id()`` would have risked.
+    """
+    seen: dict[int, Any] = {}
+
+    def once(pre, post, node):
+        found = seen.get(node)
+        if found is None:
+            found = seen[node] = match(pre, post, node)
+        return found
+
+    return once
 
 
 def _record_schema(result: ScopedResult, op, bound) -> None:
