@@ -35,11 +35,13 @@ def baseline(run_dir: Path, reading, *, split: float = 0.5) -> dict:
     A, full, cut = model.abstractor, model.log, model.cut
     gone = corr.Corresponder(ladder=(corr.DEEP, corr.LOCAL))
     verdicts: Counter = Counter()
+    per_step: list[float] = []
     steps = 0
     for step in full.steps[cut:]:
         if step.action.kind != "click" or step.action.target is None:
             continue
         steps += 1
+        here: Counter = Counter()
         pre, post = full.obs(step.before), full.obs(step.after)
         state = A.abstract(pre)
         bridge = slot_nodes(A, pre)
@@ -51,16 +53,29 @@ def baseline(run_dir: Path, reading, *, split: float = 0.5) -> dict:
                 continue
             match = gone(pre, post, node)
             if match.status == corr.NONE:
-                verdicts["SUPPORTED"] += 1
+                here["SUPPORTED"] += 1
                 continue
             rendered = str(leaf_value(pre.node(node)))
             seen = [str(leaf_value(post.node(j))) for j in match.admissible]
             still = sum(1 for x in seen if x == rendered)
-            verdicts["REFUTED" if still == len(seen)
-                     else "SUPPORTED" if still == 0 else "POSSIBLE"] += 1
+            here["REFUTED" if still == len(seen)
+                 else "SUPPORTED" if still == 0 else "POSSIBLE"] += 1
+        verdicts += here
+        if sum(here.values()):
+            per_step.append(here["SUPPORTED"] / sum(here.values()))
     total = sum(verdicts.values())
+    # Is removal a property of the object or of the click?  If every step either takes almost
+    # everything away or almost nothing, then the check is answering "did the view change",
+    # and a rule that predicts *which clicks* wipe the page scores well without knowing which
+    # object it is about.  The shape of this distribution says which question is being asked.
+    buckets = Counter()
+    for fraction in per_step:
+        buckets["none went (<10%)" if fraction < .1 else
+                "all went (>90%)" if fraction > .9 else
+                "some went"] += 1
     return {"split": split, "steps": steps, "objects_checked": total,
             "verdicts": dict(sorted(verdicts.items())),
+            "steps_by_fraction_gone": dict(sorted(buckets.items())),
             "base_rate_gone": round(verdicts["SUPPORTED"] / total, 3) if total else None}
 
 
@@ -82,6 +97,7 @@ def main() -> None:
             print(f"{name[:30]:32} split {row['split']} {row['objects_checked']:5} objects "
                   f"in {row['steps']:4} steps  base rate gone {row['base_rate_gone']}  "
                   f"{json.dumps(row['verdicts'])}")
+            print(f"{'':32} per step {json.dumps(row['steps_by_fraction_gone'])}")
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(rows, indent=1, sort_keys=True) + "\n")
