@@ -17,7 +17,7 @@ def main() -> None:
     parser.add_argument("--run", required=True, type=Path)
     parser.add_argument("--split", action="append", type=float, default=None)
     parser.add_argument("--reading", action="append", default=None)
-    parser.add_argument("--applicability", default="asserted", choices=["asserted", "attested"])
+    parser.add_argument("--applicability", default="asserted", choices=["asserted", "attested", "generative"])
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     candidates = {c.name: c.reading for c in _candidates(args.chain)}

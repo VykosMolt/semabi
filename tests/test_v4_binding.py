@@ -300,3 +300,30 @@ def test_an_effect_on_an_object_the_state_never_pins_is_not_a_well_formed_schema
     assert all(loose["operators"][p.operator]["undetermined_effect_params"] for p in decided)
 
     assert not score(loose_fit, applicability=ATTESTED).schema()["ill_formed"]
+
+
+def test_the_generative_mode_is_the_invariants_alone_and_not_the_learned_cover():
+    """``op.pre`` has no counterpart in the construction the literature proves correct.
+
+    SYNTH builds a precondition as a binding query conjoined with the atoms that held in every
+    state where the action was applied.  ``op.common`` is that second part; ``op.pre`` is a
+    greedy discriminative cover chosen to exclude negatives, which is a different object
+    entirely.  ``generative`` is therefore not a weaker ``attested`` -- it is what is left when
+    the cover is removed, and on harbour it is not the same thing: the cover was suppressing a
+    refutation the invariants alone expose.
+    """
+    from semabi.compiler.v4 import consequence as csq
+
+    class Op:
+        pre = [("attr", "?o0", "state", "open")]
+        common = (("attr", "?o0", "state", "open"), ("attr", "?o0", "berth", "3"),
+                  ("ref", "?o0", "visit", "?o1"))
+
+    assert csq.applicable_literals(Op, csq.ASSERTED) == Op.pre
+    attested = csq.applicable_literals(Op, csq.ATTESTED)
+    assert Op.pre[0] in attested and ("attr", "?o0", "berth", "3") in attested
+    generative = csq.applicable_literals(Op, csq.GENERATIVE)
+    assert generative == [("attr", "?o0", "berth", "3"), ("attr", "?o0", "state", "open")]
+    # the structural literal is checkable for a binding but not an attribute equality, and is
+    # left out of every mode for the same reason it always was
+    assert all(lit[0] in ("attr", "attr_ne") for lit in generative)

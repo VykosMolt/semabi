@@ -52,7 +52,8 @@ def _candidates(path: Path):
             payload = json.loads(path.read_text())
         return [_Candidate(c["name"], PinnedReading.from_json(c["reading"]))
                 for c in payload["candidates"]]
-from semabi.compiler.v4.consequence import (ASSERTED, ATTESTED, IDENTITY, MASKED,
+from semabi.compiler.v4.consequence import (ASSERTED, ATTESTED, GENERATIVE,
+                                            IDENTITY, MASKED,
                                             NEAR_OPTIMAL, SAME_INDEX, UNMASKED, VALUE,
                                             fit, score)
 
@@ -96,7 +97,7 @@ def main() -> None:
     parser.add_argument("--reading", action="append", default=None)
     parser.add_argument("--mutation", action="append", default=None, choices=sorted(MUTATIONS))
     parser.add_argument("--applicability", action="append", default=None,
-                        choices=[ASSERTED, ATTESTED])
+                        choices=[ASSERTED, ATTESTED, GENERATIVE])
     parser.add_argument("--correspondence", action="append", default=None,
                         choices=[MASKED, NEAR_OPTIMAL, UNMASKED, SAME_INDEX])
     parser.add_argument("--output", type=Path)

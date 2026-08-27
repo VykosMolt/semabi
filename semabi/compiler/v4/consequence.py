@@ -414,8 +414,9 @@ def bindings_for(A, po, state, op, clicked: int, applicability: str) -> tuple[An
 
 _UNCHECKABLE = ("nonempty_str", "str_ne_attr")
 
-ASSERTED = "asserted"    # the rule's own learned precondition, and nothing more
-ATTESTED = "attested"    # also every attribute value that held in all of its positives
+ASSERTED = "asserted"      # the rule's own learned precondition, and nothing more
+ATTESTED = "attested"      # also every attribute value that held in all of its positives
+GENERATIVE = "generative"  # only what held in all of its positives; not the learned cover
 
 
 def applicable_literals(op, mode: str) -> list[tuple]:
@@ -434,7 +435,20 @@ def applicable_literals(op, mode: str) -> list[tuple]:
     checkable for every binding, and dropping an unverifiable restriction makes a rule fire
     more often, which is the direction that invents refutations -- so they are left out of
     ``asserted`` and reported rather than assumed.
+
+    ``generative`` is the third reading, and it is the one the literature argues for.  SYNTH
+    (arXiv:2508.21449, and see docs/related_work.md) builds an action's precondition as a
+    *binding query* that determines the implicit arguments, conjoined with the atoms that held
+    in every state where the action was applied -- and proves the result applicable exactly
+    when the hidden action is.  ``common`` is that second part, computed the same way.
+    ``op.pre`` is neither: it is a greedy discriminative cover, kept because it excludes the
+    negatives, and it has no counterpart in that construction.  So ``generative`` drops it and
+    keeps only what was observed to hold, which is the mode in which "the rule did not apply
+    here" means what it says.
     """
+    if mode == GENERATIVE:
+        return [literal for literal in sorted(getattr(op, "common", ()) or (), key=str)
+                if len(literal) == 4 and literal[0] in ("attr", "attr_ne")]
     out = list(op.pre)
     if mode == ATTESTED:
         chosen = {(lit[1], lit[2]) for lit in out if lit[0] in ("attr", "attr_ne")}
