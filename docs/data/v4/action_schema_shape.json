@@ -1,0 +1,130 @@
+{
+ "cellar / joint discrimination x2": {
+  "split_rules": [],
+  "totals": {
+   "controls": 2,
+   "controls with several rule shapes": 2,
+   "distinct rule shapes": 7
+  }
+ },
+ "harbour / joint discrimination x2": {
+  "split_rules": [
+   {
+    "control": "button:Close",
+    "copies": 2,
+    "effects": [
+     "attr:cell#0@5(?o0) := 'closed'"
+    ],
+    "owner_types": [
+     "1",
+     "6"
+    ]
+   },
+   {
+    "control": "button:Reopen",
+    "copies": 2,
+    "effects": [
+     "attr:cell#0@5(?o0) := 'open'"
+    ],
+    "owner_types": [
+     "1",
+     "6"
+    ]
+   },
+   {
+    "control": "button:Schedule call",
+    "copies": 2,
+    "effects": [
+     "?new0 := new T0(id=*, attr:cell#0@5=None, attr:cell#0@7=expected, attr:m#0=*)"
+    ],
+    "owner_types": [
+     "3",
+     "9"
+    ]
+   }
+  ],
+  "totals": {
+   "controls": 3,
+   "controls with several rule shapes": 1,
+   "distinct rule shapes": 6,
+   "split rules": 3,
+   "support lost to splitting": 4
+  }
+ },
+ "harbour / promote cell[_]=cell#0": {
+  "split_rules": [
+   {
+    "control": "button:Close",
+    "copies": 2,
+    "effects": [
+     "id(?o0) := 'closed'"
+    ],
+    "owner_types": [
+     "None"
+    ]
+   },
+   {
+    "control": "button:Close",
+    "copies": 3,
+    "effects": [
+     "id(?o0) := 'closed'"
+    ],
+    "owner_types": [
+     "None"
+    ]
+   },
+   {
+    "control": "button:Reopen",
+    "copies": 2,
+    "effects": [
+     "id(?o0) := 'open'"
+    ],
+    "owner_types": [
+     "None"
+    ]
+   },
+   {
+    "control": "button:Reopen",
+    "copies": 2,
+    "effects": [
+     "id(?o0) := 'open'"
+    ],
+    "owner_types": [
+     "None"
+    ]
+   },
+   {
+    "control": "button:Schedule call",
+    "copies": 6,
+    "effects": [
+     "?new0 := new T0(id=*)"
+    ],
+    "owner_types": [
+     "None"
+    ]
+   }
+  ],
+  "totals": {
+   "controls": 3,
+   "controls with several rule shapes": 3,
+   "distinct rule shapes": 6,
+   "split rules": 5,
+   "support lost to splitting": 10
+  }
+ },
+ "landing_board / promote cell[_]=cell#0": {
+  "split_rules": [],
+  "totals": {
+   "controls": 2,
+   "distinct rule shapes": 2
+  }
+ },
+ "landing_board / source_choice": {
+  "split_rules": [],
+  "totals": {
+   "controls": 2,
+   "controls with several rule shapes": 1,
+   "distinct rule shapes": 10
+  }
+ }
+}

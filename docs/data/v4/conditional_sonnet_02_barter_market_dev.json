@@ -4,7 +4,7 @@
   "applicability": "asserted",
   "operators": [
    {
-    "operator": "op0",
+    "operator": "op1",
     "prefix": {
      "SUPPORTED": 32
     },
@@ -15,6 +15,91 @@
    },
    {
     "operator": "op10",
+    "prefix": {
+     "SUPPORTED": 1
+    },
+    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
+    "suffix_unrefined": {}
+   },
+   {
+    "operator": "op15",
+    "prefix": {
+     "REFUTED": 1
+    },
+    "separating_literals": [],
+    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
+    "suffix_unrefined": {}
+   },
+   {
+    "operator": "op7",
+    "prefix": {
+     "REFUTED": 1,
+     "SUPPORTED": 1
+    },
+    "separating_literals": [],
+    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
+    "suffix_unrefined": {
+     "REFUTED": 5
+    }
+   },
+   {
+    "operator": "op8",
+    "prefix": {
+     "REFUTED": 1
+    },
+    "separating_literals": [],
+    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
+    "suffix_unrefined": {}
+   },
+   {
+    "operator": "op9",
+    "prefix": {
+     "SUPPORTED": 3
+    },
+    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
+    "suffix_unrefined": {
+     "SUPPORTED": 3
+    }
+   }
+  ],
+  "reading": "source_choice",
+  "split": 0.5,
+  "suffix_after_refinement": {
+   "REFUTED": 5,
+   "SUPPORTED": 34
+  },
+  "suffix_before_refinement": {
+   "REFUTED": 5,
+   "SUPPORTED": 34
+  }
+ },
+ {
+  "all_separating_literals_agree_on_the_suffix": true,
+  "applicability": "asserted",
+  "operators": [
+   {
+    "operator": "op1",
+    "prefix": {
+     "SUPPORTED": 32
+    },
+    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
+    "suffix_unrefined": {
+     "SUPPORTED": 31
+    }
+   },
+   {
+    "operator": "op10",
+    "prefix": {
+     "REFUTED": 3
+    },
+    "separating_literals": [],
+    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
+    "suffix_unrefined": {
+     "REFUTED": 1
+    }
+   },
+   {
+    "operator": "op11",
     "prefix": {
      "REFUTED": 1,
      "SUPPORTED": 1
@@ -36,91 +121,6 @@
    },
    {
     "operator": "op13",
-    "prefix": {
-     "SUPPORTED": 3
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 3
-    }
-   },
-   {
-    "operator": "op15",
-    "prefix": {
-     "SUPPORTED": 1
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op22",
-    "prefix": {
-     "REFUTED": 1
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   }
-  ],
-  "reading": "source_choice",
-  "split": 0.5,
-  "suffix_after_refinement": {
-   "REFUTED": 5,
-   "SUPPORTED": 34
-  },
-  "suffix_before_refinement": {
-   "REFUTED": 5,
-   "SUPPORTED": 34
-  }
- },
- {
-  "all_separating_literals_agree_on_the_suffix": true,
-  "applicability": "asserted",
-  "operators": [
-   {
-    "operator": "op0",
-    "prefix": {
-     "SUPPORTED": 32
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 31
-    }
-   },
-   {
-    "operator": "op11",
-    "prefix": {
-     "REFUTED": 3
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 1
-    }
-   },
-   {
-    "operator": "op12",
-    "prefix": {
-     "REFUTED": 1,
-     "SUPPORTED": 1
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 5
-    }
-   },
-   {
-    "operator": "op14",
-    "prefix": {
-     "REFUTED": 1
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op16",
     "prefix": {
      "REFUTED": 3
     },
@@ -155,7 +155,7 @@
   "applicability": "asserted",
   "operators": [
    {
-    "operator": "op0",
+    "operator": "op1",
     "prefix": {
      "SUPPORTED": 27
     },
@@ -163,14 +163,6 @@
     "suffix_unrefined": {
      "SUPPORTED": 26
     }
-   },
-   {
-    "operator": "op10",
-    "prefix": {
-     "SUPPORTED": 6
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
    },
    {
     "operator": "op12",
@@ -221,35 +213,15 @@
    {
     "operator": "op17",
     "prefix": {
-     "SUPPORTED": 10
+     "SUPPORTED": 3
     },
     "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
     "suffix_unrefined": {
-     "SUPPORTED": 10
+     "SUPPORTED": 5
     }
    },
    {
     "operator": "op18",
-    "prefix": {
-     "SUPPORTED": 3
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 5
-    }
-   },
-   {
-    "operator": "op19",
-    "prefix": {
-     "SUPPORTED": 3
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 5
-    }
-   },
-   {
-    "operator": "op20",
     "prefix": {
      "SUPPORTED": 2
     },
@@ -257,7 +229,7 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op21",
+    "operator": "op19",
     "prefix": {
      "SUPPORTED": 10
     },
@@ -265,7 +237,7 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op22",
+    "operator": "op20",
     "prefix": {
      "SUPPORTED": 5
     },
@@ -273,7 +245,7 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op24",
+    "operator": "op21",
     "prefix": {
      "SUPPORTED": 6
     },
@@ -281,7 +253,7 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op25",
+    "operator": "op22",
     "prefix": {
      "REFUTED": 1,
      "SUPPORTED": 1
@@ -293,7 +265,7 @@
     }
    },
    {
-    "operator": "op27",
+    "operator": "op23",
     "prefix": {
      "REFUTED": 2
     },
@@ -304,7 +276,7 @@
     }
    },
    {
-    "operator": "op28",
+    "operator": "op24",
     "prefix": {
      "REFUTED": 2
     },
@@ -313,17 +285,7 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op29",
-    "prefix": {
-     "SUPPORTED": 4
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 2
-    }
-   },
-   {
-    "operator": "op31",
+    "operator": "op26",
     "prefix": {
      "SUPPORTED": 3
     },
@@ -331,7 +293,7 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op33",
+    "operator": "op28",
     "prefix": {
      "SUPPORTED": 2
     },
@@ -342,17 +304,15 @@
     }
    },
    {
-    "operator": "op35",
+    "operator": "op3",
     "prefix": {
-     "SUPPORTED": 1
+     "SUPPORTED": 2
     },
     "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 4
-    }
+    "suffix_unrefined": {}
    },
    {
-    "operator": "op36",
+    "operator": "op30",
     "prefix": {
      "REFUTED": 3,
      "SUPPORTED": 1
@@ -362,15 +322,7 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op4",
-    "prefix": {
-     "SUPPORTED": 2
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op40",
+    "operator": "op33",
     "prefix": {
      "SUPPORTED": 3
     },
@@ -378,7 +330,7 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op6",
+    "operator": "op4",
     "prefix": {
      "SUPPORTED": 10
     },
@@ -386,23 +338,41 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op9",
+    "operator": "op6",
     "prefix": {
      "SUPPORTED": 5
     },
     "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
     "suffix_unrefined": {}
+   },
+   {
+    "operator": "op7",
+    "prefix": {
+     "SUPPORTED": 6
+    },
+    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
+    "suffix_unrefined": {}
+   },
+   {
+    "operator": "op9",
+    "prefix": {
+     "SUPPORTED": 3
+    },
+    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
+    "suffix_unrefined": {
+     "SUPPORTED": 5
+    }
    }
   ],
   "reading": "joint discrimination x3",
   "split": 0.5,
   "suffix_after_refinement": {
    "REFUTED": 11,
-   "SUPPORTED": 53
+   "SUPPORTED": 37
   },
   "suffix_before_refinement": {
    "REFUTED": 11,
-   "SUPPORTED": 53
+   "SUPPORTED": 37
   }
  },
  {
@@ -410,7 +380,7 @@
   "applicability": "asserted",
   "operators": [
    {
-    "operator": "op0",
+    "operator": "op1",
     "prefix": {
      "SUPPORTED": 40
     },
@@ -420,24 +390,19 @@
     }
    },
    {
-    "operator": "op11",
+    "operator": "op10",
     "prefix": {
-     "REFUTED": 1,
-     "SUPPORTED": 1
+     "SUPPORTED": 6
     },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 5
-    }
+    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
+    "suffix_unrefined": {}
    },
    {
-    "operator": "op13",
+    "operator": "op11",
     "prefix": {
-     "REFUTED": 1
+     "SUPPORTED": 1
     },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
+    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
     "suffix_unrefined": {}
    },
    {
@@ -449,23 +414,28 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op16",
+    "operator": "op17",
     "prefix": {
+     "REFUTED": 1
+    },
+    "separating_literals": [],
+    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
+    "suffix_unrefined": {}
+   },
+   {
+    "operator": "op8",
+    "prefix": {
+     "REFUTED": 1,
      "SUPPORTED": 1
     },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
+    "separating_literals": [],
+    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
+    "suffix_unrefined": {
+     "REFUTED": 5
+    }
    },
    {
-    "operator": "op21",
-    "prefix": {
-     "SUPPORTED": 6
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op25",
+    "operator": "op9",
     "prefix": {
      "REFUTED": 1
     },
@@ -490,7 +460,7 @@
   "applicability": "asserted",
   "operators": [
    {
-    "operator": "op0",
+    "operator": "op1",
     "prefix": {
      "SUPPORTED": 40
     },
@@ -500,7 +470,7 @@
     }
    },
    {
-    "operator": "op11",
+    "operator": "op10",
     "prefix": {},
     "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
     "suffix_unrefined": {
@@ -508,7 +478,7 @@
     }
    },
    {
-    "operator": "op13",
+    "operator": "op11",
     "prefix": {
      "REFUTED": 3
     },
@@ -519,7 +489,7 @@
     }
    },
    {
-    "operator": "op14",
+    "operator": "op12",
     "prefix": {
      "REFUTED": 1,
      "SUPPORTED": 1
@@ -531,7 +501,7 @@
     }
    },
    {
-    "operator": "op16",
+    "operator": "op13",
     "prefix": {
      "REFUTED": 1
     },
@@ -540,7 +510,7 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op18",
+    "operator": "op14",
     "prefix": {
      "REFUTED": 3
     },
@@ -567,7 +537,7 @@
   "applicability": "asserted",
   "operators": [
    {
-    "operator": "op0",
+    "operator": "op1",
     "prefix": {
      "SUPPORTED": 38
     },
@@ -577,15 +547,7 @@
     }
    },
    {
-    "operator": "op10",
-    "prefix": {
-     "SUPPORTED": 6
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op13",
+    "operator": "op12",
     "prefix": {
      "SUPPORTED": 9
     },
@@ -593,7 +555,7 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op14",
+    "operator": "op13",
     "prefix": {
      "SUPPORTED": 8
     },
@@ -601,7 +563,7 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op15",
+    "operator": "op14",
     "prefix": {
      "REFUTED": 2,
      "SUPPORTED": 8
@@ -613,7 +575,7 @@
     }
    },
    {
-    "operator": "op16",
+    "operator": "op15",
     "prefix": {
      "SUPPORTED": 5
     },
@@ -621,7 +583,7 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op17",
+    "operator": "op16",
     "prefix": {
      "REFUTED": 3,
      "SUPPORTED": 1
@@ -633,37 +595,17 @@
     }
    },
    {
+    "operator": "op17",
+    "prefix": {
+     "SUPPORTED": 3
+    },
+    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
+    "suffix_unrefined": {
+     "SUPPORTED": 5
+    }
+   },
+   {
     "operator": "op18",
-    "prefix": {
-     "SUPPORTED": 10
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 10
-    }
-   },
-   {
-    "operator": "op19",
-    "prefix": {
-     "SUPPORTED": 3
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 5
-    }
-   },
-   {
-    "operator": "op20",
-    "prefix": {
-     "SUPPORTED": 3
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 5
-    }
-   },
-   {
-    "operator": "op21",
     "prefix": {
      "SUPPORTED": 2
     },
@@ -671,7 +613,7 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op22",
+    "operator": "op19",
     "prefix": {
      "SUPPORTED": 10
     },
@@ -679,7 +621,7 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op23",
+    "operator": "op20",
     "prefix": {
      "SUPPORTED": 5
     },
@@ -687,7 +629,7 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op24",
+    "operator": "op21",
     "prefix": {
      "SUPPORTED": 6
     },
@@ -695,7 +637,7 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op25",
+    "operator": "op22",
     "prefix": {
      "REFUTED": 1,
      "SUPPORTED": 1
@@ -707,7 +649,7 @@
     }
    },
    {
-    "operator": "op27",
+    "operator": "op23",
     "prefix": {
      "REFUTED": 4
     },
@@ -718,7 +660,7 @@
     }
    },
    {
-    "operator": "op28",
+    "operator": "op24",
     "prefix": {
      "REFUTED": 2
     },
@@ -727,15 +669,7 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op29",
-    "prefix": {
-     "SUPPORTED": 6
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op31",
+    "operator": "op26",
     "prefix": {
      "SUPPORTED": 3
     },
@@ -743,7 +677,7 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op33",
+    "operator": "op28",
     "prefix": {
      "REFUTED": 1,
      "SUPPORTED": 2
@@ -770,17 +704,7 @@
     }
    },
    {
-    "operator": "op35",
-    "prefix": {
-     "SUPPORTED": 1
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 4
-    }
-   },
-   {
-    "operator": "op36",
+    "operator": "op30",
     "prefix": {
      "REFUTED": 3,
      "SUPPORTED": 1
@@ -790,7 +714,7 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op38",
+    "operator": "op31",
     "prefix": {
      "SUPPORTED": 6
     },
@@ -798,7 +722,7 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op39",
+    "operator": "op32",
     "prefix": {
      "REFUTED": 6,
      "SUPPORTED": 6
@@ -811,7 +735,7 @@
     }
    },
    {
-    "operator": "op41",
+    "operator": "op34",
     "prefix": {
      "REFUTED": 4,
      "SUPPORTED": 1
@@ -847,15 +771,7 @@
     }
    },
    {
-    "operator": "op42",
-    "prefix": {},
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 2
-    }
-   },
-   {
-    "operator": "op46",
+    "operator": "op37",
     "prefix": {
      "SUPPORTED": 3
     },
@@ -863,7 +779,7 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op5",
+    "operator": "op4",
     "prefix": {
      "SUPPORTED": 2
     },
@@ -871,7 +787,7 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op6",
+    "operator": "op5",
     "prefix": {
      "SUPPORTED": 10
     },
@@ -879,12 +795,22 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op9",
+    "operator": "op7",
     "prefix": {
-     "SUPPORTED": 5
+     "SUPPORTED": 6
     },
     "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
     "suffix_unrefined": {}
+   },
+   {
+    "operator": "op9",
+    "prefix": {
+     "SUPPORTED": 3
+    },
+    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
+    "suffix_unrefined": {
+     "SUPPORTED": 5
+    }
    }
   ],
   "reading": "joint discrimination x3",
@@ -892,11 +818,11 @@
   "suffix_after_refinement": {
    "AMBIGUOUS_REFINEMENT": 1,
    "REFUTED": 12,
-   "SUPPORTED": 56
+   "SUPPORTED": 40
   },
   "suffix_before_refinement": {
    "REFUTED": 15,
-   "SUPPORTED": 56
+   "SUPPORTED": 40
   }
  }
 ]

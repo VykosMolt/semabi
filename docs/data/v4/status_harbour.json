@@ -1,59 +1,28 @@
 {
  "application": "harbour",
+ "identification": null,
  "prospective": {
   "basis": "single clicks on the controls the application renders, one step ahead, checked at the raw node the effect names, with the predicted field masked from correspondence",
   "control_caveat": "the mutation controls rewrite a predicted literal, which does nothing to a claim that an object goes away; the existence check's discrimination is measured separately, by running it over every object in every held-out pre-state",
   "controls": {
    "joint discrimination x2": {
-    "masked/impossible_ordinal": {
-     "decided": 518,
-     "refuted": 513
-    },
     "masked/never_rendered_token": {
-     "decided": 518,
-     "refuted": 513
+     "decided": 483,
+     "refuted": 478
     },
     "masked/none": {
-     "decided": 518,
-     "refuted": 69
-    },
-    "same_index/impossible_ordinal": {
-     "decided": 518,
-     "refuted": 513
-    },
-    "same_index/never_rendered_token": {
-     "decided": 518,
-     "refuted": 513
-    },
-    "same_index/none": {
-     "decided": 518,
-     "refuted": 69
+     "decided": 483,
+     "refuted": 26
     }
    },
    "promote cell[_]=cell#0": {
-    "masked/impossible_ordinal": {
-     "decided": 1548,
-     "refuted": 1018
-    },
     "masked/never_rendered_token": {
-     "decided": 1548,
-     "refuted": 1548
+     "decided": 788,
+     "refuted": 788
     },
     "masked/none": {
-     "decided": 1548,
-     "refuted": 1018
-    },
-    "same_index/impossible_ordinal": {
-     "decided": 1548,
-     "refuted": 1018
-    },
-    "same_index/never_rendered_token": {
-     "decided": 1548,
-     "refuted": 1548
-    },
-    "same_index/none": {
-     "decided": 1548,
-     "refuted": 1018
+     "decided": 788,
+     "refuted": 504
     }
    }
   },
@@ -69,22 +38,6 @@
      ]
     ],
     "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
-    "split": 0.4,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
     "mutation": "never_rendered_token",
     "split": 0.4,
     "trace": "harbour_dev",
@@ -102,70 +55,6 @@
     ],
     "correspondence_rule": "masked",
     "mutation": "none",
-    "split": 0.4,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.4,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.4,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.4,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
     "split": 0.4,
     "trace": "harbour_dev",
     "untested": []
@@ -203,70 +92,6 @@
     "untested": []
    },
    {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.4,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.4,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.4,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
-    "split": 0.5,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
     "applicability": "asserted",
     "classes": [
      [
@@ -294,70 +119,6 @@
     ],
     "correspondence_rule": "masked",
     "mutation": "none",
-    "split": 0.5,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.5,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.5,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.5,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
     "split": 0.5,
     "trace": "harbour_dev",
     "untested": []
@@ -395,70 +156,6 @@
     "untested": []
    },
    {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.5,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.5,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.5,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
-    "split": 0.6,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
     "applicability": "asserted",
     "classes": [
      [
@@ -486,70 +183,6 @@
     ],
     "correspondence_rule": "masked",
     "mutation": "none",
-    "split": 0.6,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.6,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.6,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.6,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
     "split": 0.6,
     "trace": "harbour_dev",
     "untested": []
@@ -587,70 +220,6 @@
     "untested": []
    },
    {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.6,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.6,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.6,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
-    "split": 0.7,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
     "applicability": "asserted",
     "classes": [
      [
@@ -678,70 +247,6 @@
     ],
     "correspondence_rule": "masked",
     "mutation": "none",
-    "split": 0.7,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.7,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.7,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.7,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
     "split": 0.7,
     "trace": "harbour_dev",
     "untested": []
@@ -775,70 +280,6 @@
     "correspondence_rule": "masked",
     "mutation": "none",
     "split": 0.7,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.7,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.7,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.7,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
-    "split": 0.8,
     "trace": "harbour_dev",
     "untested": []
    },
@@ -870,70 +311,6 @@
     ],
     "correspondence_rule": "masked",
     "mutation": "none",
-    "split": 0.8,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.8,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.8,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.8,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
     "split": 0.8,
     "trace": "harbour_dev",
     "untested": []
@@ -971,70 +348,6 @@
     "untested": []
    },
    {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.8,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.8,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.8,
-    "trace": "harbour_dev",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
-    "split": 0.4,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
     "applicability": "asserted",
     "classes": [
      [
@@ -1062,70 +375,6 @@
     ],
     "correspondence_rule": "masked",
     "mutation": "none",
-    "split": 0.4,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.4,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.4,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.4,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
     "split": 0.4,
     "trace": "harbour_seed11",
     "untested": []
@@ -1163,70 +412,6 @@
     "untested": []
    },
    {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.4,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.4,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.4,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
-    "split": 0.5,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
     "applicability": "asserted",
     "classes": [
      [
@@ -1254,70 +439,6 @@
     ],
     "correspondence_rule": "masked",
     "mutation": "none",
-    "split": 0.5,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.5,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.5,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.5,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
     "split": 0.5,
     "trace": "harbour_seed11",
     "untested": []
@@ -1355,70 +476,6 @@
     "untested": []
    },
    {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.5,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.5,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.5,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
-    "split": 0.6,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
     "applicability": "asserted",
     "classes": [
      [
@@ -1446,70 +503,6 @@
     ],
     "correspondence_rule": "masked",
     "mutation": "none",
-    "split": 0.6,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.6,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.6,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.6,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
     "split": 0.6,
     "trace": "harbour_seed11",
     "untested": []
@@ -1547,70 +540,6 @@
     "untested": []
    },
    {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.6,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.6,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.6,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
-    "split": 0.7,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
     "applicability": "asserted",
     "classes": [
      [
@@ -1638,70 +567,6 @@
     ],
     "correspondence_rule": "masked",
     "mutation": "none",
-    "split": 0.7,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.7,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.7,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.7,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
     "split": 0.7,
     "trace": "harbour_seed11",
     "untested": []
@@ -1739,70 +604,6 @@
     "untested": []
    },
    {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.7,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.7,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.7,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
-    "split": 0.8,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
     "applicability": "asserted",
     "classes": [
      [
@@ -1830,70 +631,6 @@
     ],
     "correspondence_rule": "masked",
     "mutation": "none",
-    "split": 0.8,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.8,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.8,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.8,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
     "split": 0.8,
     "trace": "harbour_seed11",
     "untested": []
@@ -1928,70 +665,6 @@
     "mutation": "none",
     "split": 0.8,
     "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.8,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.8,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.8,
-    "trace": "harbour_seed11",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
-    "split": 0.4,
-    "trace": "harbour_transfer",
     "untested": []
    },
    {
@@ -2022,70 +695,6 @@
     ],
     "correspondence_rule": "masked",
     "mutation": "none",
-    "split": 0.4,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.4,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.4,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.4,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
     "split": 0.4,
     "trace": "harbour_transfer",
     "untested": []
@@ -2123,70 +732,6 @@
     "untested": []
    },
    {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.4,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.4,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.4,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
-    "split": 0.5,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
     "applicability": "asserted",
     "classes": [
      [
@@ -2214,70 +759,6 @@
     ],
     "correspondence_rule": "masked",
     "mutation": "none",
-    "split": 0.5,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.5,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.5,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.5,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
     "split": 0.5,
     "trace": "harbour_transfer",
     "untested": []
@@ -2315,70 +796,6 @@
     "untested": []
    },
    {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.5,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.5,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.5,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
-    "split": 0.6,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
     "applicability": "asserted",
     "classes": [
      [
@@ -2406,70 +823,6 @@
     ],
     "correspondence_rule": "masked",
     "mutation": "none",
-    "split": 0.6,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.6,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.6,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.6,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
     "split": 0.6,
     "trace": "harbour_transfer",
     "untested": []
@@ -2507,70 +860,6 @@
     "untested": []
    },
    {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.6,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.6,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.6,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
-    "split": 0.7,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
     "applicability": "asserted",
     "classes": [
      [
@@ -2598,70 +887,6 @@
     ],
     "correspondence_rule": "masked",
     "mutation": "none",
-    "split": 0.7,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.7,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.7,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.7,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
     "split": 0.7,
     "trace": "harbour_transfer",
     "untested": []
@@ -2695,70 +920,6 @@
     "correspondence_rule": "masked",
     "mutation": "none",
     "split": 0.7,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.7,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.7,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.7,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
-    "split": 0.8,
     "trace": "harbour_transfer",
     "untested": []
    },
@@ -2795,70 +956,6 @@
     "untested": []
    },
    {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.8,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.8,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.8,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "masked",
-    "mutation": "impossible_ordinal",
-    "split": 0.8,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
     "applicability": "attested",
     "classes": [
      [
@@ -2885,54 +982,6 @@
      ]
     ],
     "correspondence_rule": "masked",
-    "mutation": "none",
-    "split": 0.8,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "impossible_ordinal",
-    "split": 0.8,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.8,
-    "trace": "harbour_transfer",
-    "untested": []
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "joint discrimination x2"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
     "mutation": "none",
     "split": 0.8,
     "trace": "harbour_transfer",
@@ -2941,16 +990,16 @@
   ],
   "readings": {
    "joint discrimination x2": {
-    "status": "REFUTED_ON_EVERY_TRACE_THAT_REACHED_IT",
+    "status": "REFUTED_ON_SOME_TRACES_AND_NOT_OTHERS",
     "traces": {
      "harbour_dev": {
-      "decided": 148,
+      "decided": 156,
       "landing": {
        "REFUTED": {
         "in the clicked row": 6
        },
        "SUPPORTED": {
-        "in the clicked row": 137
+        "in the clicked row": 145
        }
       },
       "modes": [
@@ -2966,13 +1015,13 @@
        0.7,
        0.8
       ],
-      "supported": 142
+      "supported": 150
      },
      "harbour_seed11": {
-      "decided": 216,
+      "decided": 197,
       "landing": {
        "REFUTED": {
-        "in the clicked row": 39
+        "in the clicked row": 20
        },
        "SUPPORTED": {
         "in the clicked row": 177
@@ -2983,7 +1032,7 @@
        "attested"
       ],
       "reached": true,
-      "refuted": 39,
+      "refuted": 20,
       "splits": [
        0.4,
        0.5,
@@ -2994,11 +1043,8 @@
       "supported": 177
      },
      "harbour_transfer": {
-      "decided": 154,
+      "decided": 130,
       "landing": {
-       "REFUTED": {
-        "in the clicked row": 24
-       },
        "SUPPORTED": {
         "in the clicked row": 130
        }
@@ -3008,7 +1054,7 @@
        "attested"
       ],
       "reached": true,
-      "refuted": 24,
+      "refuted": 0,
       "splits": [
        0.4,
        0.5,
@@ -3024,14 +1070,14 @@
     "status": "REFUTED_ON_EVERY_TRACE_THAT_REACHED_IT",
     "traces": {
      "harbour_dev": {
-      "decided": 356,
+      "decided": 148,
       "landing": {
        "REFUTED": {
-        "in another row": 224,
-        "in the clicked row": 8
+        "in another row": 92,
+        "in the clicked row": 4
        },
        "SUPPORTED": {
-        "in the clicked row": 124
+        "in the clicked row": 52
        }
       },
       "modes": [
@@ -3039,7 +1085,7 @@
        "attested"
       ],
       "reached": true,
-      "refuted": 232,
+      "refuted": 96,
       "splits": [
        0.4,
        0.5,
@@ -3047,17 +1093,17 @@
        0.7,
        0.8
       ],
-      "supported": 124
+      "supported": 52
      },
      "harbour_seed11": {
-      "decided": 686,
+      "decided": 228,
       "landing": {
        "REFUTED": {
-        "in another row": 438,
-        "in the clicked row": 60
+        "in another row": 142,
+        "in the clicked row": 30
        },
        "SUPPORTED": {
-        "in the clicked row": 188
+        "in the clicked row": 56
        }
       },
       "modes": [
@@ -3065,7 +1111,7 @@
        "attested"
       ],
       "reached": true,
-      "refuted": 498,
+      "refuted": 172,
       "splits": [
        0.4,
        0.5,
@@ -3073,17 +1119,17 @@
        0.7,
        0.8
       ],
-      "supported": 188
+      "supported": 56
      },
      "harbour_transfer": {
-      "decided": 506,
+      "decided": 412,
       "landing": {
        "REFUTED": {
-        "in another row": 264,
+        "in another row": 212,
         "in the clicked row": 24
        },
        "SUPPORTED": {
-        "in the clicked row": 218
+        "in the clicked row": 176
        }
       },
       "modes": [
@@ -3091,7 +1137,7 @@
        "attested"
       ],
       "reached": true,
-      "refuted": 288,
+      "refuted": 236,
       "splits": [
        0.4,
        0.5,
@@ -3099,7 +1145,7 @@
        0.7,
        0.8
       ],
-      "supported": 218
+      "supported": 176
      }
     }
    }

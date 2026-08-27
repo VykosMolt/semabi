@@ -1,5 +1,6 @@
 {
  "application": "vet_clinic",
+ "identification": "SELECTED_BUT_MAKES_NO_TESTABLE_CLAIM",
  "prospective": {
   "basis": "single clicks on the controls the application renders, one step ahead, checked at the raw node the effect names, with the predicted field masked from correspondence",
   "control_caveat": "the mutation controls rewrite a predicted literal, which does nothing to a claim that an object goes away; the existence check's discrimination is measured separately, by running it over every object in every held-out pre-state",
@@ -12,14 +13,6 @@
     "masked/none": {
      "decided": 24,
      "refuted": 0
-    },
-    "same_index/never_rendered_token": {
-     "decided": 24,
-     "refuted": 0
-    },
-    "same_index/none": {
-     "decided": 24,
-     "refuted": 0
     }
    },
    "joint discrimination x3": {
@@ -28,14 +21,6 @@
      "refuted": 0
     },
     "masked/none": {
-     "decided": 208,
-     "refuted": 0
-    },
-    "same_index/never_rendered_token": {
-     "decided": 208,
-     "refuted": 0
-    },
-    "same_index/none": {
      "decided": 208,
      "refuted": 0
     }
@@ -48,14 +33,6 @@
     "masked/none": {
      "decided": 0,
      "refuted": 0
-    },
-    "same_index/never_rendered_token": {
-     "decided": 0,
-     "refuted": 0
-    },
-    "same_index/none": {
-     "decided": 0,
-     "refuted": 0
     }
    },
    "source_choice": {
@@ -64,14 +41,6 @@
      "refuted": 0
     },
     "masked/none": {
-     "decided": 0,
-     "refuted": 0
-    },
-    "same_index/never_rendered_token": {
-     "decided": 0,
-     "refuted": 0
-    },
-    "same_index/none": {
      "decided": 0,
      "refuted": 0
     }
@@ -117,44 +86,6 @@
     ]
    },
    {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "cell[_]=cell#0"
-     ],
-     [
-      "joint discrimination x3"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.5,
-    "trace": "vet_clinic_dev",
-    "untested": [
-     "row[_](cell[_])=None",
-     "source_choice"
-    ]
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "cell[_]=cell#0"
-     ],
-     [
-      "joint discrimination x3"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.5,
-    "trace": "vet_clinic_dev",
-    "untested": [
-     "row[_](cell[_])=None",
-     "source_choice"
-    ]
-   },
-   {
     "applicability": "attested",
     "classes": [
      [
@@ -193,44 +124,6 @@
     ]
    },
    {
-    "applicability": "attested",
-    "classes": [
-     [
-      "cell[_]=cell#0"
-     ],
-     [
-      "joint discrimination x3"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.5,
-    "trace": "vet_clinic_dev",
-    "untested": [
-     "row[_](cell[_])=None",
-     "source_choice"
-    ]
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "cell[_]=cell#0"
-     ],
-     [
-      "joint discrimination x3"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.5,
-    "trace": "vet_clinic_dev",
-    "untested": [
-     "row[_](cell[_])=None",
-     "source_choice"
-    ]
-   },
-   {
     "applicability": "asserted",
     "classes": [
      [
@@ -269,44 +162,6 @@
     ]
    },
    {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "cell[_]=cell#0"
-     ],
-     [
-      "joint discrimination x3"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.6,
-    "trace": "vet_clinic_dev",
-    "untested": [
-     "row[_](cell[_])=None",
-     "source_choice"
-    ]
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "cell[_]=cell#0"
-     ],
-     [
-      "joint discrimination x3"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.6,
-    "trace": "vet_clinic_dev",
-    "untested": [
-     "row[_](cell[_])=None",
-     "source_choice"
-    ]
-   },
-   {
     "applicability": "attested",
     "classes": [
      [
@@ -336,44 +191,6 @@
      ]
     ],
     "correspondence_rule": "masked",
-    "mutation": "none",
-    "split": 0.6,
-    "trace": "vet_clinic_dev",
-    "untested": [
-     "row[_](cell[_])=None",
-     "source_choice"
-    ]
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "cell[_]=cell#0"
-     ],
-     [
-      "joint discrimination x3"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.6,
-    "trace": "vet_clinic_dev",
-    "untested": [
-     "row[_](cell[_])=None",
-     "source_choice"
-    ]
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "cell[_]=cell#0"
-     ],
-     [
-      "joint discrimination x3"
-     ]
-    ],
-    "correspondence_rule": "same_index",
     "mutation": "none",
     "split": 0.6,
     "trace": "vet_clinic_dev",
@@ -421,44 +238,6 @@
     ]
    },
    {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "cell[_]=cell#0"
-     ],
-     [
-      "joint discrimination x3"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.7,
-    "trace": "vet_clinic_dev",
-    "untested": [
-     "row[_](cell[_])=None",
-     "source_choice"
-    ]
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "cell[_]=cell#0"
-     ],
-     [
-      "joint discrimination x3"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.7,
-    "trace": "vet_clinic_dev",
-    "untested": [
-     "row[_](cell[_])=None",
-     "source_choice"
-    ]
-   },
-   {
     "applicability": "attested",
     "classes": [
      [
@@ -488,44 +267,6 @@
      ]
     ],
     "correspondence_rule": "masked",
-    "mutation": "none",
-    "split": 0.7,
-    "trace": "vet_clinic_dev",
-    "untested": [
-     "row[_](cell[_])=None",
-     "source_choice"
-    ]
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "cell[_]=cell#0"
-     ],
-     [
-      "joint discrimination x3"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.7,
-    "trace": "vet_clinic_dev",
-    "untested": [
-     "row[_](cell[_])=None",
-     "source_choice"
-    ]
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "cell[_]=cell#0"
-     ],
-     [
-      "joint discrimination x3"
-     ]
-    ],
-    "correspondence_rule": "same_index",
     "mutation": "none",
     "split": 0.7,
     "trace": "vet_clinic_dev",

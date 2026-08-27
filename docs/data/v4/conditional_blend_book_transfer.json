@@ -1,853 +1,65 @@
 [
  {
-  "all_separating_literals_agree_on_the_suffix": false,
+  "all_separating_literals_agree_on_the_suffix": true,
   "applicability": "asserted",
   "operators": [
    {
-    "operator": "op0",
-    "prefix": {
-     "REFUTED": 11,
-     "SUPPORTED": 65
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 19,
-     "SUPPORTED": 31
-    }
-   },
-   {
-    "operator": "op10",
-    "prefix": {
-     "REFUTED": 1
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op100",
-    "prefix": {
-     "REFUTED": 1,
-     "SUPPORTED": 2
-    },
-    "separating_literals": [
-     {
-      "literal": "?o0.attr:cell#0 != 'Mill Race'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.attr:cell#0@3 != '4'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.attr:cell#0@3 = '7'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.id != 'Chenin#2'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.id = 'Syrah'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:( ) , open single varietal#0 != 'Festival White'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:.#0 != 'Closed Creek Bed'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.rel:2 != '2020'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.rel:2 = '2022'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     }
-    ],
-    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op101",
-    "prefix": {
-     "REFUTED": 12,
-     "SUPPORTED": 6
-    },
-    "separating_literals": [
-     {
-      "literal": "?o0.rel:1 = None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.rel:4 != 'Gallons'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.rel:4 = None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.rel:5 = 'Gallons'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.rel:5 != None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     }
-    ],
-    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
-    "suffix_unrefined": {
-     "REFUTED": 2,
-     "SUPPORTED": 1
-    }
-   },
-   {
-    "operator": "op102",
-    "prefix": {
-     "SUPPORTED": 42
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op103",
-    "prefix": {
-     "REFUTED": 49,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 21,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op104",
-    "prefix": {
-     "SUPPORTED": 30
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op105",
-    "prefix": {
-     "REFUTED": 49,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 21,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op106",
-    "prefix": {
-     "SUPPORTED": 45
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op107",
-    "prefix": {
-     "REFUTED": 49,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 21,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op108",
-    "prefix": {
-     "REFUTED": 49,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 21,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op109",
-    "prefix": {
-     "REFUTED": 49,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 21,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op11",
-    "prefix": {
-     "REFUTED": 148,
-     "SUPPORTED": 3
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 105,
-     "SUPPORTED": 7
-    }
-   },
-   {
-    "operator": "op110",
-    "prefix": {
-     "SUPPORTED": 45
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op111",
-    "prefix": {
-     "REFUTED": 49,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 21,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op112",
-    "prefix": {
-     "REFUTED": 49,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 21,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op113",
-    "prefix": {
-     "REFUTED": 153,
-     "SUPPORTED": 2
-    },
-    "separating_literals": [
-     {
-      "literal": "?o1.attr:cell#0@4 = '1'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 70
-      },
-      "suffix_when_it_holds": {}
-     }
-    ],
-    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
-    "suffix_unrefined": {
-     "REFUTED": 70
-    }
-   },
-   {
-    "operator": "op114",
-    "prefix": {
-     "REFUTED": 148,
-     "SUPPORTED": 11
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 76,
-     "SUPPORTED": 2
-    }
-   },
-   {
-    "operator": "op115",
-    "prefix": {
-     "REFUTED": 123,
-     "SUPPORTED": 36
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 50,
-     "SUPPORTED": 28
-    }
-   },
-   {
-    "operator": "op117",
-    "prefix": {
-     "REFUTED": 1,
-     "SUPPORTED": 2
-    },
-    "separating_literals": [
-     {
-      "literal": "?o0.attr:( ) , open single varietal#0 != 'Festival White'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.attr:.#0 != 'Closed Creek Bed'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.rel:2 != '2020'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.rel:2 = '2022'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:cell#0 != 'Mill Race'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:cell#0@3 != '4'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:cell#0@3 = '7'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.id != 'Chenin#2'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.id = 'Syrah'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     }
-    ],
-    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op12",
-    "prefix": {
-     "REFUTED": 37,
-     "SUPPORTED": 2
-    },
-    "separating_literals": [
-     {
-      "literal": "?o1.attr:cell#0@3 = '4'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 9,
-       "SUPPORTED": 5
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o2.attr:cell#0@4 = '1'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 9,
-       "SUPPORTED": 5
-      },
-      "suffix_when_it_holds": {}
-     }
-    ],
-    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
-    "suffix_unrefined": {
-     "REFUTED": 9,
-     "SUPPORTED": 5
-    }
-   },
-   {
-    "operator": "op120",
-    "prefix": {
-     "REFUTED": 69,
-     "SUPPORTED": 44
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 40,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op123",
-    "prefix": {
-     "REFUTED": 69,
-     "SUPPORTED": 44
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 40,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op129",
-    "prefix": {
-     "REFUTED": 12,
-     "SUPPORTED": 92
-    },
-    "separating_literals": [
-     {
-      "literal": "?o0.attr:cell#0@3 = 'Creek Bed'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 42,
-       "SUPPORTED": 24
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.attr:cell#0@3 != 'West Ridge'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 16
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 26,
-       "SUPPORTED": 24
-      }
-     },
-     {
-      "literal": "?o0.attr:cell#0@4 != 'Festival White'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 16
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 26,
-       "SUPPORTED": 24
-      }
-     },
-     {
-      "literal": "?o0.attr:cell#0@4 = 'Picnic'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 42,
-       "SUPPORTED": 24
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:cell#0 = 'Creek Bed'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 16
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 26,
-       "SUPPORTED": 24
-      }
-     },
-     {
-      "literal": "?o1.attr:cell#0 != 'West Ridge'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 16
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 26,
-       "SUPPORTED": 24
-      }
-     },
-     {
-      "literal": "?o2.attr:blend#0 != 'May'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 16
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 26,
-       "SUPPORTED": 24
-      }
-     },
-     {
-      "literal": "?o2.attr:blend#0 = None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 16
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 26,
-       "SUPPORTED": 24
-      }
-     },
-     {
-      "literal": "?o2.attr:cell#0@4 != None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 16
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 26,
-       "SUPPORTED": 24
-      }
-     },
-     {
-      "literal": "?o2.attr:varietal#0 != None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 16
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 26,
-       "SUPPORTED": 24
-      }
-     },
-     {
-      "literal": "?o2.attr:varietal#0 = 'Single'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 16
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 26,
-       "SUPPORTED": 24
-      }
-     },
-     {
-      "literal": "?o3.attr:cell#0@3 = 'Creek Bed'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 42,
-       "SUPPORTED": 24
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o3.attr:cell#0@3 != 'West Ridge'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 16
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 26,
-       "SUPPORTED": 24
-      }
-     },
-     {
-      "literal": "?o3.attr:cell#0@4 != 'Festival White'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 16
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 26,
-       "SUPPORTED": 24
-      }
-     },
-     {
-      "literal": "?o3.attr:cell#0@4 = 'Picnic'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 42,
-       "SUPPORTED": 24
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o4.attr:cell#0@3 = 'Creek Bed'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 42,
-       "SUPPORTED": 24
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o4.attr:cell#0@3 != 'West Ridge'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 16
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 26,
-       "SUPPORTED": 24
-      }
-     },
-     {
-      "literal": "?o4.attr:cell#0@4 != 'Festival White'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 16
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 26,
-       "SUPPORTED": 24
-      }
-     },
-     {
-      "literal": "?o4.attr:cell#0@4 = 'Picnic'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 42,
-       "SUPPORTED": 24
-      },
-      "suffix_when_it_holds": {}
-     }
-    ],
-    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
     "operator": "op13",
     "prefix": {
-     "REFUTED": 138,
-     "SUPPORTED": 13
+     "REFUTED": 21,
+     "SUPPORTED": 30
     },
     "separating_literals": [],
     "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
     "suffix_unrefined": {
-     "REFUTED": 103,
-     "SUPPORTED": 9
-    }
-   },
-   {
-    "operator": "op130",
-    "prefix": {
-     "REFUTED": 1,
-     "SUPPORTED": 2
-    },
-    "separating_literals": [
-     {
-      "literal": "?o0.attr:( ) , open single varietal#0 != 'Festival White'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.attr:.#0 != 'Closed Creek Bed'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.rel:2 != '2020'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.rel:2 = '2022'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:cell#0 != 'Mill Race'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:cell#0@3 != '4'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:cell#0@3 = '7'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.id != 'Chenin#2'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.id = 'Syrah'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     }
-    ],
-    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op132",
-    "prefix": {},
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "REFUTED": 2
-    }
-   },
-   {
-    "operator": "op133",
-    "prefix": {},
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 1
-    }
-   },
-   {
-    "operator": "op134",
-    "prefix": {
-     "REFUTED": 38,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 6,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op135",
-    "prefix": {
-     "REFUTED": 38,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 6,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op136",
-    "prefix": {
-     "REFUTED": 2
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op137",
-    "prefix": {
-     "SUPPORTED": 1
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op139",
-    "prefix": {},
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 1
-    }
-   },
-   {
-    "operator": "op14",
-    "prefix": {
-     "REFUTED": 113,
-     "SUPPORTED": 38
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 94,
-     "SUPPORTED": 18
+     "REFUTED": 21,
+     "SUPPORTED": 16
     }
    },
    {
     "operator": "op15",
     "prefix": {
-     "REFUTED": 121,
-     "SUPPORTED": 30
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 106,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op16",
-    "prefix": {
-     "SUPPORTED": 3
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
      "REFUTED": 1,
-     "SUPPORTED": 2
-    }
-   },
-   {
-    "operator": "op17",
-    "prefix": {
-     "REFUTED": 14,
-     "SUPPORTED": 14
+     "SUPPORTED": 1
     },
     "separating_literals": [
      {
-      "literal": "?o0.attr:( ) , bottled single varietal#0 != 'Festival White'",
+      "literal": "?o0.attr:( ) , open single varietal#0 = 'Cloister'",
       "suffix_when_it_does_not": {},
       "suffix_when_it_holds": {}
      },
      {
-      "literal": "?o0.attr:( ) , bottled single varietal#0 = None",
+      "literal": "?o0.attr:( ) , open single varietal#0 != 'Picnic'",
       "suffix_when_it_does_not": {},
       "suffix_when_it_holds": {}
      },
      {
-      "literal": "?o0.attr:( ) , open single varietal#0 = 'Festival White'",
+      "literal": "?o0.attr:.#0 != 'Closed West Ridge'",
       "suffix_when_it_does_not": {},
       "suffix_when_it_holds": {}
      },
      {
-      "literal": "?o0.attr:( ) , open single varietal#0 != None",
+      "literal": "?o0.attr:.#0 = 'Opened Low Barn'",
       "suffix_when_it_does_not": {},
       "suffix_when_it_holds": {}
      },
      {
-      "literal": "?o2.attr:cask#0 = 'In'",
+      "literal": "?o1.attr:cell#0 != 'North Wall'",
       "suffix_when_it_does_not": {},
       "suffix_when_it_holds": {}
      },
      {
-      "literal": "?o2.attr:cask#0 != None",
+      "literal": "?o1.attr:cell#0 = 'Orchard'",
       "suffix_when_it_does_not": {},
       "suffix_when_it_holds": {}
      },
      {
-      "literal": "?o2.attr:cell#0@5 != 'Bottled'",
+      "literal": "?o1.attr:cell#0@4 = 'Closed'",
       "suffix_when_it_does_not": {},
       "suffix_when_it_holds": {}
      },
      {
-      "literal": "?o2.attr:cell#0@5 = None",
+      "literal": "?o1.attr:cell#0@4 != 'Open'",
       "suffix_when_it_does_not": {},
       "suffix_when_it_holds": {}
      }
@@ -856,4093 +68,227 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op18",
+    "operator": "op16",
     "prefix": {
      "REFUTED": 2,
-     "SUPPORTED": 25
+     "SUPPORTED": 1
     },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 4,
-     "SUPPORTED": 8
-    }
-   },
-   {
-    "operator": "op19",
-    "prefix": {
-     "REFUTED": 109,
-     "SUPPORTED": 44
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 101,
-     "SUPPORTED": 5
-    }
-   },
-   {
-    "operator": "op2",
-    "prefix": {
-     "REFUTED": 10,
-     "SUPPORTED": 61
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 33,
-     "SUPPORTED": 40
-    }
-   },
-   {
-    "operator": "op20",
-    "prefix": {
-     "REFUTED": 109,
-     "SUPPORTED": 44
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 101,
-     "SUPPORTED": 5
-    }
+    "separating_literals": [
+     {
+      "literal": "?o0.attr:( ) , open single varietal#0 = 'Cloister'",
+      "suffix_when_it_does_not": {},
+      "suffix_when_it_holds": {}
+     },
+     {
+      "literal": "?o0.attr:.#0 = 'Opened Low Barn'",
+      "suffix_when_it_does_not": {},
+      "suffix_when_it_holds": {}
+     },
+     {
+      "literal": "?o1.attr:cell#0 = 'Orchard'",
+      "suffix_when_it_does_not": {},
+      "suffix_when_it_holds": {}
+     }
+    ],
+    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
+    "suffix_unrefined": {}
    },
    {
     "operator": "op21",
-    "prefix": {
-     "REFUTED": 2,
-     "SUPPORTED": 34
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
+    "prefix": {},
+    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
     "suffix_unrefined": {
-     "REFUTED": 5,
-     "SUPPORTED": 10
+     "REFUTED": 1,
+     "SUPPORTED": 1
     }
    },
    {
     "operator": "op22",
     "prefix": {
-     "REFUTED": 2,
-     "SUPPORTED": 25
+     "REFUTED": 26,
+     "SUPPORTED": 2
     },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 4,
-     "SUPPORTED": 8
-    }
+    "separating_literals": [
+     {
+      "literal": "?o0.attr:.#0 = 'Opened North Wall'",
+      "suffix_when_it_does_not": {},
+      "suffix_when_it_holds": {}
+     }
+    ],
+    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
+    "suffix_unrefined": {}
    },
    {
     "operator": "op23",
     "prefix": {
-     "REFUTED": 69,
-     "SUPPORTED": 44
+     "REFUTED": 28,
+     "SUPPORTED": 66
     },
     "separating_literals": [],
     "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
     "suffix_unrefined": {
-     "REFUTED": 40,
-     "SUPPORTED": 6
+     "REFUTED": 26,
+     "SUPPORTED": 72
     }
    },
    {
     "operator": "op24",
     "prefix": {
      "REFUTED": 2,
-     "SUPPORTED": 34
+     "SUPPORTED": 1
     },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 5,
-     "SUPPORTED": 10
-    }
+    "separating_literals": [
+     {
+      "literal": "?o0.attr:cell#0 = 'Orchard'",
+      "suffix_when_it_does_not": {},
+      "suffix_when_it_holds": {}
+     },
+     {
+      "literal": "?o1.attr:( ) , open single varietal#0 = 'Cloister'",
+      "suffix_when_it_does_not": {},
+      "suffix_when_it_holds": {}
+     },
+     {
+      "literal": "?o1.attr:.#0 = 'Opened Low Barn'",
+      "suffix_when_it_does_not": {},
+      "suffix_when_it_holds": {}
+     }
+    ],
+    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
+    "suffix_unrefined": {}
    },
    {
     "operator": "op25",
     "prefix": {
-     "REFUTED": 69,
-     "SUPPORTED": 44
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 40,
+     "REFUTED": 12,
      "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op26",
-    "prefix": {
-     "REFUTED": 2,
-     "SUPPORTED": 25
     },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
+    "separating_literals": [
+     {
+      "literal": "?o0.rel:1 = None",
+      "suffix_when_it_does_not": {
+       "REFUTED": 1
+      },
+      "suffix_when_it_holds": {
+       "REFUTED": 2
+      }
+     },
+     {
+      "literal": "?o0.rel:4 != 'Gallons'",
+      "suffix_when_it_does_not": {
+       "REFUTED": 1
+      },
+      "suffix_when_it_holds": {
+       "REFUTED": 2
+      }
+     },
+     {
+      "literal": "?o0.rel:4 = None",
+      "suffix_when_it_does_not": {
+       "REFUTED": 1
+      },
+      "suffix_when_it_holds": {
+       "REFUTED": 2
+      }
+     },
+     {
+      "literal": "?o0.rel:5 = 'Gallons'",
+      "suffix_when_it_does_not": {
+       "REFUTED": 1
+      },
+      "suffix_when_it_holds": {
+       "REFUTED": 2
+      }
+     },
+     {
+      "literal": "?o0.rel:5 != None",
+      "suffix_when_it_does_not": {
+       "REFUTED": 1
+      },
+      "suffix_when_it_holds": {
+       "REFUTED": 2
+      }
+     }
+    ],
+    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
     "suffix_unrefined": {
-     "REFUTED": 4,
-     "SUPPORTED": 8
-    }
-   },
-   {
-    "operator": "op27",
-    "prefix": {
-     "REFUTED": 69,
-     "SUPPORTED": 44
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 40,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op28",
-    "prefix": {
-     "REFUTED": 69,
-     "SUPPORTED": 44
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 40,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op29",
-    "prefix": {
-     "REFUTED": 46,
-     "SUPPORTED": 47
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 23,
-     "SUPPORTED": 13
-    }
-   },
-   {
-    "operator": "op3",
-    "prefix": {
-     "REFUTED": 37,
-     "SUPPORTED": 22
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 24,
-     "SUPPORTED": 15
+     "REFUTED": 3
     }
    },
    {
     "operator": "op30",
     "prefix": {
-     "REFUTED": 96,
-     "SUPPORTED": 18
+     "REFUTED": 49,
+     "SUPPORTED": 55
     },
     "separating_literals": [],
     "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
     "suffix_unrefined": {
-     "REFUTED": 34,
+     "REFUTED": 48,
      "SUPPORTED": 18
     }
    },
    {
     "operator": "op31",
-    "prefix": {
-     "REFUTED": 46,
-     "SUPPORTED": 47
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
+    "prefix": {},
+    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
     "suffix_unrefined": {
-     "REFUTED": 23,
-     "SUPPORTED": 13
-    }
-   },
-   {
-    "operator": "op32",
-    "prefix": {
-     "REFUTED": 96,
-     "SUPPORTED": 18
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 34,
-     "SUPPORTED": 18
+     "REFUTED": 1,
+     "SUPPORTED": 1
     }
    },
    {
     "operator": "op33",
-    "prefix": {
-     "REFUTED": 69,
-     "SUPPORTED": 44
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 40,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op34",
-    "prefix": {
-     "SUPPORTED": 6
-    },
+    "prefix": {},
     "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
     "suffix_unrefined": {
-     "REFUTED": 1,
-     "SUPPORTED": 2
-    }
-   },
-   {
-    "operator": "op35",
-    "prefix": {
-     "REFUTED": 4,
-     "SUPPORTED": 5
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 3,
-     "SUPPORTED": 3
-    }
-   },
-   {
-    "operator": "op36",
-    "prefix": {
-     "REFUTED": 174,
-     "SUPPORTED": 4
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 95,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op37",
-    "prefix": {
-     "REFUTED": 163,
-     "SUPPORTED": 15
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 82,
-     "SUPPORTED": 19
-    }
-   },
-   {
-    "operator": "op38",
-    "prefix": {
-     "REFUTED": 23,
-     "SUPPORTED": 3
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 3
-    }
-   },
-   {
-    "operator": "op39",
-    "prefix": {
-     "REFUTED": 87,
-     "SUPPORTED": 111
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 78,
-     "SUPPORTED": 24
+     "REFUTED": 1
     }
    },
    {
     "operator": "op4",
     "prefix": {
-     "SUPPORTED": 45
+     "SUPPORTED": 60
     },
     "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op40",
-    "prefix": {
-     "REFUTED": 87,
-     "SUPPORTED": 111
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
     "suffix_unrefined": {
-     "REFUTED": 78,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op41",
-    "prefix": {
-     "REFUTED": 87,
-     "SUPPORTED": 111
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 78,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op42",
-    "prefix": {
-     "REFUTED": 87,
-     "SUPPORTED": 111
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 78,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op44",
-    "prefix": {
-     "REFUTED": 89,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 79,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op45",
-    "prefix": {
-     "REFUTED": 89,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 79,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op46",
-    "prefix": {
-     "REFUTED": 6,
-     "SUPPORTED": 36
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 23,
-     "SUPPORTED": 37
-    }
-   },
-   {
-    "operator": "op47",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op48",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op49",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op5",
-    "prefix": {
-     "REFUTED": 37,
-     "SUPPORTED": 22
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 21,
-     "SUPPORTED": 18
-    }
-   },
-   {
-    "operator": "op50",
-    "prefix": {
-     "REFUTED": 6,
-     "SUPPORTED": 36
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 23,
-     "SUPPORTED": 37
-    }
-   },
-   {
-    "operator": "op51",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op52",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op53",
-    "prefix": {
-     "REFUTED": 14,
-     "SUPPORTED": 67
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 20,
+     "REFUTED": 1,
      "SUPPORTED": 31
     }
    },
    {
-    "operator": "op54",
+    "operator": "op7",
     "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op55",
-    "prefix": {
-     "REFUTED": 11,
-     "SUPPORTED": 50
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 16,
-     "SUPPORTED": 25
-    }
-   },
-   {
-    "operator": "op56",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op57",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op58",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op59",
-    "prefix": {
-     "REFUTED": 11,
-     "SUPPORTED": 50
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 16,
-     "SUPPORTED": 25
-    }
-   },
-   {
-    "operator": "op6",
-    "prefix": {
-     "REFUTED": 5,
-     "SUPPORTED": 29
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 17,
-     "SUPPORTED": 27
-    }
-   },
-   {
-    "operator": "op60",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op61",
-    "prefix": {
-     "REFUTED": 14,
-     "SUPPORTED": 67
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 20,
-     "SUPPORTED": 31
-    }
-   },
-   {
-    "operator": "op62",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op63",
-    "prefix": {
-     "REFUTED": 14,
-     "SUPPORTED": 67
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 20,
-     "SUPPORTED": 31
-    }
-   },
-   {
-    "operator": "op64",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op65",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op66",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op67",
-    "prefix": {
-     "REFUTED": 14,
-     "SUPPORTED": 67
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 20,
-     "SUPPORTED": 31
-    }
-   },
-   {
-    "operator": "op68",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op69",
-    "prefix": {
-     "REFUTED": 11,
-     "SUPPORTED": 50
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 16,
-     "SUPPORTED": 25
-    }
-   },
-   {
-    "operator": "op70",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op71",
-    "prefix": {
-     "REFUTED": 14,
-     "SUPPORTED": 67
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 20,
-     "SUPPORTED": 31
-    }
-   },
-   {
-    "operator": "op72",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op73",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op74",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op75",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op76",
-    "prefix": {
-     "REFUTED": 84,
-     "SUPPORTED": 2
-    },
-    "separating_literals": [
-     {
-      "literal": "?o0.attr:cell#0@3 = '3'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 84,
-       "SUPPORTED": 3
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 8,
-       "SUPPORTED": 6
-      }
-     },
-     {
-      "literal": "?o1.attr:cell#0@4 = '0'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 82,
-       "SUPPORTED": 7
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 10,
-       "SUPPORTED": 2
-      }
-     }
-    ],
-    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
-    "suffix_unrefined": {
-     "REFUTED": 92,
-     "SUPPORTED": 9
-    }
-   },
-   {
-    "operator": "op77",
-    "prefix": {
-     "REFUTED": 40,
-     "SUPPORTED": 54
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 56
-    }
-   },
-   {
-    "operator": "op78",
-    "prefix": {
-     "REFUTED": 82,
-     "SUPPORTED": 2
-    },
-    "separating_literals": [
-     {
-      "literal": "?o1.attr:cell#0@4 = '1'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 76,
-       "SUPPORTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 6,
-       "SUPPORTED": 6
-      }
-     }
-    ],
-    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
-    "suffix_unrefined": {
-     "REFUTED": 82,
-     "SUPPORTED": 7
-    }
-   },
-   {
-    "operator": "op79",
-    "prefix": {
-     "REFUTED": 2,
-     "SUPPORTED": 2
-    },
-    "separating_literals": [
-     {
-      "literal": "?o0.attr:( ) , bottled single varietal#0 != 'Festival White'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o0.attr:( ) , bottled single varietal#0 = None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o0.attr:( ) , open single varietal#0 = 'Cloister'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 3
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.attr:( ) , open single varietal#0 != None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o0.attr:.#0 = 'Closed Orchard'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 3
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.rel:1 = None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o0.rel:1 != 'Pinot'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o0.rel:2 != '2020'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o0.rel:2 = '2022'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o0.rel:4 != 'Gallons'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o0.rel:4 = None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o0.rel:5 = 'Gallons'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o0.rel:5 != None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o1.attr:cell#0 != 'Creek Bed'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o1.attr:cell#0 = 'North Wall'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 3
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:cell#0@3 = '3'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 3
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:cell#0@3 != '4'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o1.attr:cell#0@4 != 'Closed'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {
-       "REFUTED": 3
-      }
-     },
-     {
-      "literal": "?o1.attr:cell#0@4 = 'Open'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {
-       "REFUTED": 3
-      }
-     },
-     {
-      "literal": "?o2.attr:blend#0 != 'May'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o2.attr:blend#0 = None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o2.attr:cell#0 = 'Cloister'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 3
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o2.attr:cell#0 != 'Picnic'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o2.attr:cell#0@4 = '2'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 3
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o2.attr:cell#0@4 != None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o2.attr:varietal#0 != None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o2.attr:varietal#0 = 'Single'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     }
-    ],
-    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
-    "suffix_unrefined": {
-     "REFUTED": 3
-    }
-   },
-   {
-    "operator": "op80",
-    "prefix": {
-     "REFUTED": 62,
-     "SUPPORTED": 32
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 74,
-     "SUPPORTED": 29
-    }
-   },
-   {
-    "operator": "op81",
-    "prefix": {
-     "REFUTED": 2,
-     "SUPPORTED": 6
-    },
-    "separating_literals": [
-     {
-      "literal": "?o0.attr:( ) , bottled single varietal#0 != 'Festival White'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.attr:( ) , bottled single varietal#0 = None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.attr:( ) , open single varietal#0 = 'Cloister'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 2,
-       "SUPPORTED": 1
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.attr:( ) , open single varietal#0 != None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.rel:1 = None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.rel:1 != 'Pinot'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.rel:2 != '2020'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.rel:2 = '2022'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.rel:4 != 'Gallons'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.rel:4 = None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.rel:5 = 'Gallons'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.rel:5 != None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o1.attr:cell#0 != 'Creek Bed'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o1.attr:cell#0 = 'North Wall'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 2,
-       "SUPPORTED": 1
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:cell#0@3 = '1'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 2,
-       "SUPPORTED": 1
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:cell#0@3 != '4'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o1.attr:cell#0@4 != 'Closed'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {
-       "REFUTED": 2,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o1.attr:cell#0@4 = 'Open'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {
-       "REFUTED": 2,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o2.attr:blend#0 != 'May'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o2.attr:blend#0 = None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o2.attr:cell#0 = 'Cloister'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 2,
-       "SUPPORTED": 1
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o2.attr:cell#0 != 'Picnic'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o2.attr:cell#0@4 = '4'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o2.attr:cell#0@4 != None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o2.attr:varietal#0 != None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o2.attr:varietal#0 = 'Single'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     }
-    ],
-    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
-    "suffix_unrefined": {
-     "REFUTED": 2,
-     "SUPPORTED": 1
-    }
-   },
-   {
-    "operator": "op82",
-    "prefix": {
-     "SUPPORTED": 54
+     "SUPPORTED": 30
     },
     "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op84",
-    "prefix": {
-     "REFUTED": 12,
-     "SUPPORTED": 2
-    },
-    "separating_literals": [
-     {
-      "literal": "?o0.attr:.#0 = 'Disgorged Cloister'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 2,
-       "SUPPORTED": 1
-      },
-      "suffix_when_it_holds": {}
-     }
-    ],
-    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
     "suffix_unrefined": {
-     "REFUTED": 2,
-     "SUPPORTED": 1
+     "SUPPORTED": 5
     }
    },
    {
-    "operator": "op85",
+    "operator": "op9",
     "prefix": {
-     "REFUTED": 60,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 69,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op86",
-    "prefix": {
-     "SUPPORTED": 42
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op87",
-    "prefix": {
-     "REFUTED": 60,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 69,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op88",
-    "prefix": {
-     "SUPPORTED": 21
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op89",
-    "prefix": {
-     "SUPPORTED": 21
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op90",
-    "prefix": {
-     "REFUTED": 49,
-     "SUPPORTED": 40
+     "REFUTED": 21,
+     "SUPPORTED": 30
     },
     "separating_literals": [],
     "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
     "suffix_unrefined": {
      "REFUTED": 21,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op91",
-    "prefix": {
-     "REFUTED": 49,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 21,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op92",
-    "prefix": {
-     "SUPPORTED": 42
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op93",
-    "prefix": {
-     "REFUTED": 49,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 21,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op94",
-    "prefix": {
-     "SUPPORTED": 42
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op95",
-    "prefix": {
-     "REFUTED": 49,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 21,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op96",
-    "prefix": {
-     "SUPPORTED": 42
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op97",
-    "prefix": {
-     "REFUTED": 49,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 21,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op98",
-    "prefix": {
-     "REFUTED": 8,
-     "SUPPORTED": 7
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op99",
-    "prefix": {
-     "REFUTED": 14,
-     "SUPPORTED": 4
-    },
-    "separating_literals": [
-     {
-      "literal": "?o0.attr:cell#0@3 = '2'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 22,
-       "SUPPORTED": 6
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:cell#0@4 = '3'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 22,
-       "SUPPORTED": 6
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o2.attr:cell#1 = '4'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 22,
-       "SUPPORTED": 6
-      },
-      "suffix_when_it_holds": {}
-     }
-    ],
-    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
-    "suffix_unrefined": {
-     "REFUTED": 22,
-     "SUPPORTED": 6
+     "SUPPORTED": 16
     }
    }
   ],
   "reading": "cell[_]=cell#0",
   "split": 0.6,
   "suffix_after_refinement": {
-   "AMBIGUOUS_REFINEMENT": 78,
-   "REFUTED": 3484,
-   "SUPPORTED": 1545
+   "REFUTED": 122,
+   "SUPPORTED": 160
   },
   "suffix_before_refinement": {
-   "REFUTED": 3801,
-   "SUPPORTED": 1592
-  }
- },
- {
-  "all_separating_literals_agree_on_the_suffix": false,
-  "applicability": "asserted",
-  "operators": [
-   {
-    "operator": "op0",
-    "prefix": {
-     "REFUTED": 11,
-     "SUPPORTED": 65
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 19,
-     "SUPPORTED": 31
-    }
-   },
-   {
-    "operator": "op10",
-    "prefix": {
-     "REFUTED": 1
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op100",
-    "prefix": {
-     "REFUTED": 1,
-     "SUPPORTED": 2
-    },
-    "separating_literals": [
-     {
-      "literal": "?o0.attr:cell#0 != 'Mill Race'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.attr:cell#0@3 != '4'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.attr:cell#0@3 = '7'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.id != 'Chenin#2'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.id = 'Syrah'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:( ) , open single varietal#0 != 'Festival White'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:.#0 != 'Closed Creek Bed'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.rel:1 != '2020'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.rel:1 = '2022'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     }
-    ],
-    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op101",
-    "prefix": {
-     "REFUTED": 12,
-     "SUPPORTED": 6
-    },
-    "separating_literals": [
-     {
-      "literal": "?o0.rel:0 = None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.rel:3 != 'Gallons'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.rel:3 = None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.rel:4 = 'Gallons'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.rel:4 != None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     }
-    ],
-    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
-    "suffix_unrefined": {
-     "REFUTED": 2,
-     "SUPPORTED": 1
-    }
-   },
-   {
-    "operator": "op102",
-    "prefix": {
-     "SUPPORTED": 42
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op103",
-    "prefix": {
-     "REFUTED": 49,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 21,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op104",
-    "prefix": {
-     "SUPPORTED": 30
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op105",
-    "prefix": {
-     "REFUTED": 49,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 21,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op106",
-    "prefix": {
-     "SUPPORTED": 45
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op107",
-    "prefix": {
-     "REFUTED": 49,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 21,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op108",
-    "prefix": {
-     "REFUTED": 49,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 21,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op109",
-    "prefix": {
-     "REFUTED": 49,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 21,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op11",
-    "prefix": {
-     "REFUTED": 148,
-     "SUPPORTED": 3
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 105,
-     "SUPPORTED": 7
-    }
-   },
-   {
-    "operator": "op110",
-    "prefix": {
-     "SUPPORTED": 45
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op111",
-    "prefix": {
-     "REFUTED": 49,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 21,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op112",
-    "prefix": {
-     "REFUTED": 49,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 21,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op113",
-    "prefix": {
-     "REFUTED": 153,
-     "SUPPORTED": 2
-    },
-    "separating_literals": [
-     {
-      "literal": "?o1.attr:cell#0@4 = '1'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 70
-      },
-      "suffix_when_it_holds": {}
-     }
-    ],
-    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
-    "suffix_unrefined": {
-     "REFUTED": 70
-    }
-   },
-   {
-    "operator": "op114",
-    "prefix": {
-     "REFUTED": 148,
-     "SUPPORTED": 11
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 76,
-     "SUPPORTED": 2
-    }
-   },
-   {
-    "operator": "op115",
-    "prefix": {
-     "REFUTED": 123,
-     "SUPPORTED": 36
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 50,
-     "SUPPORTED": 28
-    }
-   },
-   {
-    "operator": "op117",
-    "prefix": {
-     "REFUTED": 1,
-     "SUPPORTED": 2
-    },
-    "separating_literals": [
-     {
-      "literal": "?o0.attr:( ) , open single varietal#0 != 'Festival White'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.attr:.#0 != 'Closed Creek Bed'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.rel:1 != '2020'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.rel:1 = '2022'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:cell#0 != 'Mill Race'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:cell#0@3 != '4'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:cell#0@3 = '7'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.id != 'Chenin#2'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.id = 'Syrah'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     }
-    ],
-    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op12",
-    "prefix": {
-     "REFUTED": 37,
-     "SUPPORTED": 2
-    },
-    "separating_literals": [
-     {
-      "literal": "?o1.attr:cell#0@3 = '4'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 9,
-       "SUPPORTED": 5
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o2.attr:cell#0@4 = '1'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 9,
-       "SUPPORTED": 5
-      },
-      "suffix_when_it_holds": {}
-     }
-    ],
-    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
-    "suffix_unrefined": {
-     "REFUTED": 9,
-     "SUPPORTED": 5
-    }
-   },
-   {
-    "operator": "op120",
-    "prefix": {
-     "REFUTED": 69,
-     "SUPPORTED": 44
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 40,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op123",
-    "prefix": {
-     "REFUTED": 69,
-     "SUPPORTED": 44
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 40,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op129",
-    "prefix": {
-     "REFUTED": 12,
-     "SUPPORTED": 92
-    },
-    "separating_literals": [
-     {
-      "literal": "?o0.attr:cell#0@3 = 'Creek Bed'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 42,
-       "SUPPORTED": 24
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.attr:cell#0@3 != 'West Ridge'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 16
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 26,
-       "SUPPORTED": 24
-      }
-     },
-     {
-      "literal": "?o0.attr:cell#0@4 != 'Festival White'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 16
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 26,
-       "SUPPORTED": 24
-      }
-     },
-     {
-      "literal": "?o0.attr:cell#0@4 = 'Picnic'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 42,
-       "SUPPORTED": 24
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:cell#0 = 'Creek Bed'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 16
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 26,
-       "SUPPORTED": 24
-      }
-     },
-     {
-      "literal": "?o1.attr:cell#0 != 'West Ridge'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 16
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 26,
-       "SUPPORTED": 24
-      }
-     },
-     {
-      "literal": "?o2.attr:blend#0 != 'May'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 16
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 26,
-       "SUPPORTED": 24
-      }
-     },
-     {
-      "literal": "?o2.attr:blend#0 = None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 16
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 26,
-       "SUPPORTED": 24
-      }
-     },
-     {
-      "literal": "?o2.attr:cell#0@4 != None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 16
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 26,
-       "SUPPORTED": 24
-      }
-     },
-     {
-      "literal": "?o2.attr:varietal#0 != None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 16
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 26,
-       "SUPPORTED": 24
-      }
-     },
-     {
-      "literal": "?o2.attr:varietal#0 = 'Single'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 16
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 26,
-       "SUPPORTED": 24
-      }
-     },
-     {
-      "literal": "?o3.attr:cell#0@3 = 'Creek Bed'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 42,
-       "SUPPORTED": 24
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o3.attr:cell#0@3 != 'West Ridge'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 16
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 26,
-       "SUPPORTED": 24
-      }
-     },
-     {
-      "literal": "?o3.attr:cell#0@4 != 'Festival White'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 16
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 26,
-       "SUPPORTED": 24
-      }
-     },
-     {
-      "literal": "?o3.attr:cell#0@4 = 'Picnic'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 42,
-       "SUPPORTED": 24
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o4.attr:cell#0@3 = 'Creek Bed'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 42,
-       "SUPPORTED": 24
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o4.attr:cell#0@3 != 'West Ridge'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 16
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 26,
-       "SUPPORTED": 24
-      }
-     },
-     {
-      "literal": "?o4.attr:cell#0@4 != 'Festival White'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 16
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 26,
-       "SUPPORTED": 24
-      }
-     },
-     {
-      "literal": "?o4.attr:cell#0@4 = 'Picnic'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 42,
-       "SUPPORTED": 24
-      },
-      "suffix_when_it_holds": {}
-     }
-    ],
-    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op13",
-    "prefix": {
-     "REFUTED": 138,
-     "SUPPORTED": 13
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 103,
-     "SUPPORTED": 9
-    }
-   },
-   {
-    "operator": "op130",
-    "prefix": {
-     "REFUTED": 1,
-     "SUPPORTED": 2
-    },
-    "separating_literals": [
-     {
-      "literal": "?o0.attr:( ) , open single varietal#0 != 'Festival White'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.attr:.#0 != 'Closed Creek Bed'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.rel:1 != '2020'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.rel:1 = '2022'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:cell#0 != 'Mill Race'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:cell#0@3 != '4'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:cell#0@3 = '7'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.id != 'Chenin#2'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.id = 'Syrah'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     }
-    ],
-    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op132",
-    "prefix": {},
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "REFUTED": 2
-    }
-   },
-   {
-    "operator": "op133",
-    "prefix": {},
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 1
-    }
-   },
-   {
-    "operator": "op134",
-    "prefix": {
-     "REFUTED": 38,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 6,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op135",
-    "prefix": {
-     "REFUTED": 38,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 6,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op136",
-    "prefix": {
-     "REFUTED": 2
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op137",
-    "prefix": {
-     "SUPPORTED": 1
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op139",
-    "prefix": {},
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 1
-    }
-   },
-   {
-    "operator": "op14",
-    "prefix": {
-     "REFUTED": 113,
-     "SUPPORTED": 38
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 94,
-     "SUPPORTED": 18
-    }
-   },
-   {
-    "operator": "op15",
-    "prefix": {
-     "REFUTED": 121,
-     "SUPPORTED": 30
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 106,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op16",
-    "prefix": {
-     "SUPPORTED": 3
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "REFUTED": 1,
-     "SUPPORTED": 2
-    }
-   },
-   {
-    "operator": "op17",
-    "prefix": {
-     "REFUTED": 14,
-     "SUPPORTED": 14
-    },
-    "separating_literals": [
-     {
-      "literal": "?o0.attr:( ) , bottled single varietal#0 != 'Festival White'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.attr:( ) , bottled single varietal#0 = None",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.attr:( ) , open single varietal#0 = 'Festival White'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.attr:( ) , open single varietal#0 != None",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o2.attr:cask#0 = 'In'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o2.attr:cask#0 != None",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o2.attr:cell#0@5 != 'Bottled'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o2.attr:cell#0@5 = None",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {}
-     }
-    ],
-    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op18",
-    "prefix": {
-     "REFUTED": 2,
-     "SUPPORTED": 25
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 4,
-     "SUPPORTED": 8
-    }
-   },
-   {
-    "operator": "op19",
-    "prefix": {
-     "REFUTED": 109,
-     "SUPPORTED": 44
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 101,
-     "SUPPORTED": 5
-    }
-   },
-   {
-    "operator": "op2",
-    "prefix": {
-     "REFUTED": 10,
-     "SUPPORTED": 61
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 33,
-     "SUPPORTED": 40
-    }
-   },
-   {
-    "operator": "op20",
-    "prefix": {
-     "REFUTED": 109,
-     "SUPPORTED": 44
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 101,
-     "SUPPORTED": 5
-    }
-   },
-   {
-    "operator": "op21",
-    "prefix": {
-     "REFUTED": 2,
-     "SUPPORTED": 34
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 5,
-     "SUPPORTED": 10
-    }
-   },
-   {
-    "operator": "op22",
-    "prefix": {
-     "REFUTED": 2,
-     "SUPPORTED": 25
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 4,
-     "SUPPORTED": 8
-    }
-   },
-   {
-    "operator": "op23",
-    "prefix": {
-     "REFUTED": 69,
-     "SUPPORTED": 44
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 40,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op24",
-    "prefix": {
-     "REFUTED": 2,
-     "SUPPORTED": 34
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 5,
-     "SUPPORTED": 10
-    }
-   },
-   {
-    "operator": "op25",
-    "prefix": {
-     "REFUTED": 69,
-     "SUPPORTED": 44
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 40,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op26",
-    "prefix": {
-     "REFUTED": 2,
-     "SUPPORTED": 25
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 4,
-     "SUPPORTED": 8
-    }
-   },
-   {
-    "operator": "op27",
-    "prefix": {
-     "REFUTED": 69,
-     "SUPPORTED": 44
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 40,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op28",
-    "prefix": {
-     "REFUTED": 69,
-     "SUPPORTED": 44
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 40,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op29",
-    "prefix": {
-     "REFUTED": 46,
-     "SUPPORTED": 47
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 23,
-     "SUPPORTED": 13
-    }
-   },
-   {
-    "operator": "op3",
-    "prefix": {
-     "REFUTED": 37,
-     "SUPPORTED": 22
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 24,
-     "SUPPORTED": 15
-    }
-   },
-   {
-    "operator": "op30",
-    "prefix": {
-     "REFUTED": 96,
-     "SUPPORTED": 18
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 34,
-     "SUPPORTED": 18
-    }
-   },
-   {
-    "operator": "op31",
-    "prefix": {
-     "REFUTED": 46,
-     "SUPPORTED": 47
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 23,
-     "SUPPORTED": 13
-    }
-   },
-   {
-    "operator": "op32",
-    "prefix": {
-     "REFUTED": 96,
-     "SUPPORTED": 18
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 34,
-     "SUPPORTED": 18
-    }
-   },
-   {
-    "operator": "op33",
-    "prefix": {
-     "REFUTED": 69,
-     "SUPPORTED": 44
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 40,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op34",
-    "prefix": {
-     "SUPPORTED": 6
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "REFUTED": 1,
-     "SUPPORTED": 2
-    }
-   },
-   {
-    "operator": "op35",
-    "prefix": {
-     "REFUTED": 4,
-     "SUPPORTED": 5
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 3,
-     "SUPPORTED": 3
-    }
-   },
-   {
-    "operator": "op36",
-    "prefix": {
-     "REFUTED": 174,
-     "SUPPORTED": 4
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 95,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op37",
-    "prefix": {
-     "REFUTED": 163,
-     "SUPPORTED": 15
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 82,
-     "SUPPORTED": 19
-    }
-   },
-   {
-    "operator": "op38",
-    "prefix": {
-     "REFUTED": 23,
-     "SUPPORTED": 3
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 3
-    }
-   },
-   {
-    "operator": "op39",
-    "prefix": {
-     "REFUTED": 87,
-     "SUPPORTED": 111
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 78,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op4",
-    "prefix": {
-     "SUPPORTED": 45
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op40",
-    "prefix": {
-     "REFUTED": 87,
-     "SUPPORTED": 111
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 78,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op41",
-    "prefix": {
-     "REFUTED": 87,
-     "SUPPORTED": 111
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 78,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op42",
-    "prefix": {
-     "REFUTED": 87,
-     "SUPPORTED": 111
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 78,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op44",
-    "prefix": {
-     "REFUTED": 89,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 79,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op45",
-    "prefix": {
-     "REFUTED": 89,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 79,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op46",
-    "prefix": {
-     "REFUTED": 6,
-     "SUPPORTED": 36
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 23,
-     "SUPPORTED": 37
-    }
-   },
-   {
-    "operator": "op47",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op48",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op49",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op5",
-    "prefix": {
-     "REFUTED": 37,
-     "SUPPORTED": 22
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 21,
-     "SUPPORTED": 18
-    }
-   },
-   {
-    "operator": "op50",
-    "prefix": {
-     "REFUTED": 6,
-     "SUPPORTED": 36
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 23,
-     "SUPPORTED": 37
-    }
-   },
-   {
-    "operator": "op51",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op52",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op53",
-    "prefix": {
-     "REFUTED": 14,
-     "SUPPORTED": 67
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 20,
-     "SUPPORTED": 31
-    }
-   },
-   {
-    "operator": "op54",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op55",
-    "prefix": {
-     "REFUTED": 11,
-     "SUPPORTED": 50
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 16,
-     "SUPPORTED": 25
-    }
-   },
-   {
-    "operator": "op56",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op57",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op58",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op59",
-    "prefix": {
-     "REFUTED": 11,
-     "SUPPORTED": 50
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 16,
-     "SUPPORTED": 25
-    }
-   },
-   {
-    "operator": "op6",
-    "prefix": {
-     "REFUTED": 5,
-     "SUPPORTED": 29
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 17,
-     "SUPPORTED": 27
-    }
-   },
-   {
-    "operator": "op60",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op61",
-    "prefix": {
-     "REFUTED": 14,
-     "SUPPORTED": 67
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 20,
-     "SUPPORTED": 31
-    }
-   },
-   {
-    "operator": "op62",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op63",
-    "prefix": {
-     "REFUTED": 14,
-     "SUPPORTED": 67
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 20,
-     "SUPPORTED": 31
-    }
-   },
-   {
-    "operator": "op64",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op65",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op66",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op67",
-    "prefix": {
-     "REFUTED": 14,
-     "SUPPORTED": 67
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 20,
-     "SUPPORTED": 31
-    }
-   },
-   {
-    "operator": "op68",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op69",
-    "prefix": {
-     "REFUTED": 11,
-     "SUPPORTED": 50
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 16,
-     "SUPPORTED": 25
-    }
-   },
-   {
-    "operator": "op70",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op71",
-    "prefix": {
-     "REFUTED": 14,
-     "SUPPORTED": 67
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 20,
-     "SUPPORTED": 31
-    }
-   },
-   {
-    "operator": "op72",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op73",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op74",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op75",
-    "prefix": {
-     "REFUTED": 73,
-     "SUPPORTED": 113
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op76",
-    "prefix": {
-     "REFUTED": 84,
-     "SUPPORTED": 2
-    },
-    "separating_literals": [
-     {
-      "literal": "?o0.attr:cell#0@3 = '3'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 84,
-       "SUPPORTED": 3
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 8,
-       "SUPPORTED": 6
-      }
-     },
-     {
-      "literal": "?o1.attr:cell#0@4 = '0'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 82,
-       "SUPPORTED": 7
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 10,
-       "SUPPORTED": 2
-      }
-     }
-    ],
-    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
-    "suffix_unrefined": {
-     "REFUTED": 92,
-     "SUPPORTED": 9
-    }
-   },
-   {
-    "operator": "op77",
-    "prefix": {
-     "REFUTED": 40,
-     "SUPPORTED": 54
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 42,
-     "SUPPORTED": 56
-    }
-   },
-   {
-    "operator": "op78",
-    "prefix": {
-     "REFUTED": 82,
-     "SUPPORTED": 2
-    },
-    "separating_literals": [
-     {
-      "literal": "?o1.attr:cell#0@4 = '1'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 76,
-       "SUPPORTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 6,
-       "SUPPORTED": 6
-      }
-     }
-    ],
-    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
-    "suffix_unrefined": {
-     "REFUTED": 82,
-     "SUPPORTED": 7
-    }
-   },
-   {
-    "operator": "op79",
-    "prefix": {
-     "REFUTED": 2,
-     "SUPPORTED": 2
-    },
-    "separating_literals": [
-     {
-      "literal": "?o0.attr:( ) , bottled single varietal#0 != 'Festival White'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o0.attr:( ) , bottled single varietal#0 = None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o0.attr:( ) , open single varietal#0 = 'Cloister'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 3
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.attr:( ) , open single varietal#0 != None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o0.attr:.#0 = 'Closed Orchard'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 3
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.rel:0 = None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o0.rel:0 != 'Pinot'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o0.rel:1 != '2020'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o0.rel:1 = '2022'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o0.rel:3 != 'Gallons'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o0.rel:3 = None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o0.rel:4 = 'Gallons'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o0.rel:4 != None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o1.attr:cell#0 != 'Creek Bed'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o1.attr:cell#0 = 'North Wall'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 3
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:cell#0@3 = '3'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 3
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:cell#0@3 != '4'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o1.attr:cell#0@4 != 'Closed'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {
-       "REFUTED": 3
-      }
-     },
-     {
-      "literal": "?o1.attr:cell#0@4 = 'Open'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {
-       "REFUTED": 3
-      }
-     },
-     {
-      "literal": "?o2.attr:blend#0 != 'May'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o2.attr:blend#0 = None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o2.attr:cell#0 = 'Cloister'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 3
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o2.attr:cell#0 != 'Picnic'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o2.attr:cell#0@4 = '2'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 3
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o2.attr:cell#0@4 != None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o2.attr:varietal#0 != None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     },
-     {
-      "literal": "?o2.attr:varietal#0 = 'Single'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 2
-      }
-     }
-    ],
-    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
-    "suffix_unrefined": {
-     "REFUTED": 3
-    }
-   },
-   {
-    "operator": "op80",
-    "prefix": {
-     "REFUTED": 62,
-     "SUPPORTED": 32
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 74,
-     "SUPPORTED": 29
-    }
-   },
-   {
-    "operator": "op81",
-    "prefix": {
-     "REFUTED": 2,
-     "SUPPORTED": 6
-    },
-    "separating_literals": [
-     {
-      "literal": "?o0.attr:( ) , bottled single varietal#0 != 'Festival White'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.attr:( ) , bottled single varietal#0 = None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.attr:( ) , open single varietal#0 = 'Cloister'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 2,
-       "SUPPORTED": 1
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o0.attr:( ) , open single varietal#0 != None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.rel:0 = None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.rel:0 != 'Pinot'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.rel:1 != '2020'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.rel:1 = '2022'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.rel:3 != 'Gallons'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.rel:3 = None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.rel:4 = 'Gallons'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o0.rel:4 != None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o1.attr:cell#0 != 'Creek Bed'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o1.attr:cell#0 = 'North Wall'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 2,
-       "SUPPORTED": 1
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:cell#0@3 = '1'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 2,
-       "SUPPORTED": 1
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:cell#0@3 != '4'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o1.attr:cell#0@4 != 'Closed'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {
-       "REFUTED": 2,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o1.attr:cell#0@4 = 'Open'",
-      "suffix_when_it_does_not": {},
-      "suffix_when_it_holds": {
-       "REFUTED": 2,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o2.attr:blend#0 != 'May'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o2.attr:blend#0 = None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o2.attr:cell#0 = 'Cloister'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 2,
-       "SUPPORTED": 1
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o2.attr:cell#0 != 'Picnic'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o2.attr:cell#0@4 = '4'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o2.attr:cell#0@4 != None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o2.attr:varietal#0 != None",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     },
-     {
-      "literal": "?o2.attr:varietal#0 = 'Single'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 1
-      },
-      "suffix_when_it_holds": {
-       "REFUTED": 1,
-       "SUPPORTED": 1
-      }
-     }
-    ],
-    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
-    "suffix_unrefined": {
-     "REFUTED": 2,
-     "SUPPORTED": 1
-    }
-   },
-   {
-    "operator": "op82",
-    "prefix": {
-     "SUPPORTED": 54
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op84",
-    "prefix": {
-     "REFUTED": 12,
-     "SUPPORTED": 2
-    },
-    "separating_literals": [
-     {
-      "literal": "?o0.attr:.#0 = 'Disgorged Cloister'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 2,
-       "SUPPORTED": 1
-      },
-      "suffix_when_it_holds": {}
-     }
-    ],
-    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
-    "suffix_unrefined": {
-     "REFUTED": 2,
-     "SUPPORTED": 1
-    }
-   },
-   {
-    "operator": "op85",
-    "prefix": {
-     "REFUTED": 60,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 69,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op86",
-    "prefix": {
-     "SUPPORTED": 42
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op87",
-    "prefix": {
-     "REFUTED": 60,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 69,
-     "SUPPORTED": 24
-    }
-   },
-   {
-    "operator": "op88",
-    "prefix": {
-     "SUPPORTED": 21
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op89",
-    "prefix": {
-     "SUPPORTED": 21
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op90",
-    "prefix": {
-     "REFUTED": 49,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 21,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op91",
-    "prefix": {
-     "REFUTED": 49,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 21,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op92",
-    "prefix": {
-     "SUPPORTED": 42
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op93",
-    "prefix": {
-     "REFUTED": 49,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 21,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op94",
-    "prefix": {
-     "SUPPORTED": 42
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op95",
-    "prefix": {
-     "REFUTED": 49,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 21,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op96",
-    "prefix": {
-     "SUPPORTED": 42
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op97",
-    "prefix": {
-     "REFUTED": 49,
-     "SUPPORTED": 40
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 21,
-     "SUPPORTED": 6
-    }
-   },
-   {
-    "operator": "op98",
-    "prefix": {
-     "REFUTED": 8,
-     "SUPPORTED": 7
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op99",
-    "prefix": {
-     "REFUTED": 14,
-     "SUPPORTED": 4
-    },
-    "separating_literals": [
-     {
-      "literal": "?o0.attr:cell#0@3 = '2'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 22,
-       "SUPPORTED": 6
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o1.attr:cell#0@4 = '3'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 22,
-       "SUPPORTED": 6
-      },
-      "suffix_when_it_holds": {}
-     },
-     {
-      "literal": "?o2.attr:cell#1 = '4'",
-      "suffix_when_it_does_not": {
-       "REFUTED": 22,
-       "SUPPORTED": 6
-      },
-      "suffix_when_it_holds": {}
-     }
-    ],
-    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
-    "suffix_unrefined": {
-     "REFUTED": 22,
-     "SUPPORTED": 6
-    }
-   }
-  ],
-  "reading": "source_choice",
-  "split": 0.6,
-  "suffix_after_refinement": {
-   "AMBIGUOUS_REFINEMENT": 78,
-   "REFUTED": 3484,
-   "SUPPORTED": 1545
-  },
-  "suffix_before_refinement": {
-   "REFUTED": 3801,
-   "SUPPORTED": 1592
+   "REFUTED": 123,
+   "SUPPORTED": 160
   }
  },
  {
@@ -4950,286 +296,97 @@
   "applicability": "asserted",
   "operators": [
    {
-    "operator": "op0",
+    "operator": "op13",
     "prefix": {
-     "SUPPORTED": 40
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op1",
-    "prefix": {
-     "SUPPORTED": 35
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op10",
-    "prefix": {
-     "REFUTED": 8,
-     "SUPPORTED": 36
+     "REFUTED": 21,
+     "SUPPORTED": 30
     },
     "separating_literals": [],
     "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
     "suffix_unrefined": {
-     "REFUTED": 6,
+     "REFUTED": 21,
      "SUPPORTED": 16
     }
    },
    {
-    "operator": "op100",
+    "operator": "op15",
     "prefix": {
-     "SUPPORTED": 54
+     "REFUTED": 1,
+     "SUPPORTED": 1
     },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 38
-    }
+    "separating_literals": [
+     {
+      "literal": "?o0.attr:( ) , open single varietal#0 = 'Cloister'",
+      "suffix_when_it_does_not": {},
+      "suffix_when_it_holds": {}
+     },
+     {
+      "literal": "?o0.attr:( ) , open single varietal#0 != 'Picnic'",
+      "suffix_when_it_does_not": {},
+      "suffix_when_it_holds": {}
+     },
+     {
+      "literal": "?o0.attr:.#0 != 'Closed West Ridge'",
+      "suffix_when_it_does_not": {},
+      "suffix_when_it_holds": {}
+     },
+     {
+      "literal": "?o0.attr:.#0 = 'Opened Low Barn'",
+      "suffix_when_it_does_not": {},
+      "suffix_when_it_holds": {}
+     },
+     {
+      "literal": "?o1.attr:cell#0 != 'North Wall'",
+      "suffix_when_it_does_not": {},
+      "suffix_when_it_holds": {}
+     },
+     {
+      "literal": "?o1.attr:cell#0 = 'Orchard'",
+      "suffix_when_it_does_not": {},
+      "suffix_when_it_holds": {}
+     },
+     {
+      "literal": "?o1.attr:cell#0@4 = 'Closed'",
+      "suffix_when_it_does_not": {},
+      "suffix_when_it_holds": {}
+     },
+     {
+      "literal": "?o1.attr:cell#0@4 != 'Open'",
+      "suffix_when_it_does_not": {},
+      "suffix_when_it_holds": {}
+     }
+    ],
+    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
+    "suffix_unrefined": {}
    },
    {
-    "operator": "op101",
-    "prefix": {
-     "SUPPORTED": 54
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 38
-    }
-   },
-   {
-    "operator": "op102",
-    "prefix": {
-     "SUPPORTED": 54
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 38
-    }
-   },
-   {
-    "operator": "op103",
-    "prefix": {
-     "SUPPORTED": 54
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 38
-    }
-   },
-   {
-    "operator": "op104",
-    "prefix": {
-     "SUPPORTED": 54
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 38
-    }
-   },
-   {
-    "operator": "op105",
-    "prefix": {
-     "SUPPORTED": 54
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 38
-    }
-   },
-   {
-    "operator": "op106",
-    "prefix": {
-     "SUPPORTED": 54
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 38
-    }
-   },
-   {
-    "operator": "op107",
-    "prefix": {
-     "SUPPORTED": 54
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 38
-    }
-   },
-   {
-    "operator": "op108",
-    "prefix": {
-     "SUPPORTED": 54
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 38
-    }
-   },
-   {
-    "operator": "op109",
-    "prefix": {
-     "SUPPORTED": 54
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 38
-    }
-   },
-   {
-    "operator": "op11",
+    "operator": "op16",
     "prefix": {
      "REFUTED": 2,
-     "SUPPORTED": 2
+     "SUPPORTED": 1
     },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 12,
-     "SUPPORTED": 42
-    }
-   },
-   {
-    "operator": "op110",
-    "prefix": {
-     "SUPPORTED": 54
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 38
-    }
-   },
-   {
-    "operator": "op111",
-    "prefix": {
-     "SUPPORTED": 54
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 38
-    }
-   },
-   {
-    "operator": "op112",
-    "prefix": {
-     "SUPPORTED": 54
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 38
-    }
-   },
-   {
-    "operator": "op113",
-    "prefix": {
-     "SUPPORTED": 54
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 38
-    }
-   },
-   {
-    "operator": "op114",
-    "prefix": {
-     "SUPPORTED": 54
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 38
-    }
-   },
-   {
-    "operator": "op115",
-    "prefix": {
-     "SUPPORTED": 54
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 38
-    }
-   },
-   {
-    "operator": "op116",
-    "prefix": {
-     "SUPPORTED": 54
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 38
-    }
-   },
-   {
-    "operator": "op117",
-    "prefix": {
-     "SUPPORTED": 54
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 38
-    }
-   },
-   {
-    "operator": "op118",
-    "prefix": {
-     "SUPPORTED": 54
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 38
-    }
-   },
-   {
-    "operator": "op119",
-    "prefix": {
-     "SUPPORTED": 54
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 38
-    }
-   },
-   {
-    "operator": "op12",
-    "prefix": {
-     "SUPPORTED": 24
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
+    "separating_literals": [
+     {
+      "literal": "?o0.attr:( ) , open single varietal#0 = 'Cloister'",
+      "suffix_when_it_does_not": {},
+      "suffix_when_it_holds": {}
+     },
+     {
+      "literal": "?o0.attr:.#0 = 'Opened Low Barn'",
+      "suffix_when_it_does_not": {},
+      "suffix_when_it_holds": {}
+     },
+     {
+      "literal": "?o1.attr:cell#0 = 'Orchard'",
+      "suffix_when_it_does_not": {},
+      "suffix_when_it_holds": {}
+     }
+    ],
+    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
     "suffix_unrefined": {}
    },
    {
-    "operator": "op120",
-    "prefix": {
-     "SUPPORTED": 54
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 38
-    }
-   },
-   {
-    "operator": "op121",
-    "prefix": {
-     "SUPPORTED": 4
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 2
-    }
-   },
-   {
-    "operator": "op122",
-    "prefix": {
-     "REFUTED": 1
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op126",
+    "operator": "op21",
     "prefix": {},
     "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
     "suffix_unrefined": {
@@ -5238,245 +395,208 @@
     }
    },
    {
-    "operator": "op128",
+    "operator": "op22",
     "prefix": {
-     "REFUTED": 10,
-     "SUPPORTED": 68
+     "REFUTED": 26,
+     "SUPPORTED": 2
     },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
+    "separating_literals": [
+     {
+      "literal": "?o0.attr:.#0 = 'Opened North Wall'",
+      "suffix_when_it_does_not": {},
+      "suffix_when_it_holds": {}
+     }
+    ],
+    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
     "suffix_unrefined": {}
    },
    {
-    "operator": "op129",
+    "operator": "op23",
     "prefix": {
-     "REFUTED": 10,
-     "SUPPORTED": 68
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op130",
-    "prefix": {
-     "REFUTED": 10,
+     "REFUTED": 28,
      "SUPPORTED": 66
     },
     "separating_literals": [],
     "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
+    "suffix_unrefined": {
+     "REFUTED": 26,
+     "SUPPORTED": 72
+    }
    },
    {
-    "operator": "op131",
+    "operator": "op24",
     "prefix": {
-     "REFUTED": 10,
-     "SUPPORTED": 66
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op132",
-    "prefix": {
-     "REFUTED": 10,
-     "SUPPORTED": 66
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op133",
-    "prefix": {
-     "REFUTED": 1
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op134",
-    "prefix": {
-     "REFUTED": 10,
-     "SUPPORTED": 66
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op135",
-    "prefix": {
-     "REFUTED": 10,
-     "SUPPORTED": 66
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op136",
-    "prefix": {
-     "REFUTED": 10,
-     "SUPPORTED": 66
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op137",
-    "prefix": {
-     "REFUTED": 10,
-     "SUPPORTED": 66
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op138",
-    "prefix": {
-     "SUPPORTED": 10
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op139",
-    "prefix": {
-     "REFUTED": 1
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op14",
-    "prefix": {
-     "REFUTED": 5,
-     "SUPPORTED": 17
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op140",
-    "prefix": {
-     "REFUTED": 10,
-     "SUPPORTED": 66
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op141",
-    "prefix": {
-     "REFUTED": 10,
-     "SUPPORTED": 66
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op142",
-    "prefix": {
-     "REFUTED": 10,
-     "SUPPORTED": 66
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op143",
-    "prefix": {
-     "REFUTED": 10,
-     "SUPPORTED": 66
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op144",
-    "prefix": {
-     "REFUTED": 10,
-     "SUPPORTED": 66
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op145",
-    "prefix": {
-     "REFUTED": 10,
-     "SUPPORTED": 66
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op146",
-    "prefix": {
-     "REFUTED": 10,
-     "SUPPORTED": 66
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op147",
-    "prefix": {
-     "REFUTED": 1,
+     "REFUTED": 2,
      "SUPPORTED": 1
     },
+    "separating_literals": [
+     {
+      "literal": "?o0.attr:cell#0 = 'Orchard'",
+      "suffix_when_it_does_not": {},
+      "suffix_when_it_holds": {}
+     },
+     {
+      "literal": "?o1.attr:( ) , open single varietal#0 = 'Cloister'",
+      "suffix_when_it_does_not": {},
+      "suffix_when_it_holds": {}
+     },
+     {
+      "literal": "?o1.attr:.#0 = 'Opened Low Barn'",
+      "suffix_when_it_does_not": {},
+      "suffix_when_it_holds": {}
+     }
+    ],
+    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
+    "suffix_unrefined": {}
+   },
+   {
+    "operator": "op25",
+    "prefix": {
+     "REFUTED": 12,
+     "SUPPORTED": 6
+    },
+    "separating_literals": [
+     {
+      "literal": "?o0.rel:0 = None",
+      "suffix_when_it_does_not": {
+       "REFUTED": 1
+      },
+      "suffix_when_it_holds": {
+       "REFUTED": 2
+      }
+     },
+     {
+      "literal": "?o0.rel:3 != 'Gallons'",
+      "suffix_when_it_does_not": {
+       "REFUTED": 1
+      },
+      "suffix_when_it_holds": {
+       "REFUTED": 2
+      }
+     },
+     {
+      "literal": "?o0.rel:3 = None",
+      "suffix_when_it_does_not": {
+       "REFUTED": 1
+      },
+      "suffix_when_it_holds": {
+       "REFUTED": 2
+      }
+     },
+     {
+      "literal": "?o0.rel:4 = 'Gallons'",
+      "suffix_when_it_does_not": {
+       "REFUTED": 1
+      },
+      "suffix_when_it_holds": {
+       "REFUTED": 2
+      }
+     },
+     {
+      "literal": "?o0.rel:4 != None",
+      "suffix_when_it_does_not": {
+       "REFUTED": 1
+      },
+      "suffix_when_it_holds": {
+       "REFUTED": 2
+      }
+     }
+    ],
+    "status": "A_PREFIX_LITERAL_SEPARATES_SUCCESS_FROM_FAILURE",
+    "suffix_unrefined": {
+     "REFUTED": 3
+    }
+   },
+   {
+    "operator": "op30",
+    "prefix": {
+     "REFUTED": 49,
+     "SUPPORTED": 55
+    },
     "separating_literals": [],
     "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
+    "suffix_unrefined": {
+     "REFUTED": 48,
+     "SUPPORTED": 18
+    }
    },
    {
-    "operator": "op16",
+    "operator": "op31",
+    "prefix": {},
+    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
+    "suffix_unrefined": {
+     "REFUTED": 1,
+     "SUPPORTED": 1
+    }
+   },
+   {
+    "operator": "op33",
+    "prefix": {},
+    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
+    "suffix_unrefined": {
+     "REFUTED": 1
+    }
+   },
+   {
+    "operator": "op4",
     "prefix": {
-     "SUPPORTED": 4
+     "SUPPORTED": 60
     },
     "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
+    "suffix_unrefined": {
+     "REFUTED": 1,
+     "SUPPORTED": 31
+    }
    },
    {
-    "operator": "op17",
+    "operator": "op7",
     "prefix": {
      "SUPPORTED": 30
     },
     "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op18",
-    "prefix": {
+    "suffix_unrefined": {
      "SUPPORTED": 5
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
+    }
    },
    {
-    "operator": "op19",
+    "operator": "op9",
     "prefix": {
-     "SUPPORTED": 10
+     "REFUTED": 21,
+     "SUPPORTED": 30
+    },
+    "separating_literals": [],
+    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
+    "suffix_unrefined": {
+     "REFUTED": 21,
+     "SUPPORTED": 16
+    }
+   }
+  ],
+  "reading": "source_choice",
+  "split": 0.6,
+  "suffix_after_refinement": {
+   "REFUTED": 122,
+   "SUPPORTED": 160
+  },
+  "suffix_before_refinement": {
+   "REFUTED": 123,
+   "SUPPORTED": 160
+  }
+ },
+ {
+  "all_separating_literals_agree_on_the_suffix": true,
+  "applicability": "asserted",
+  "operators": [
+   {
+    "operator": "op10",
+    "prefix": {
+     "SUPPORTED": 25
     },
     "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
     "suffix_unrefined": {}
    },
    {
-    "operator": "op2",
+    "operator": "op11",
     "prefix": {
      "REFUTED": 20,
      "SUPPORTED": 7
@@ -5489,28 +609,59 @@
     }
    },
    {
-    "operator": "op20",
+    "operator": "op12",
     "prefix": {
-     "SUPPORTED": 5
+     "SUPPORTED": 20
     },
     "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
     "suffix_unrefined": {}
    },
    {
-    "operator": "op21",
+    "operator": "op14",
     "prefix": {
-     "REFUTED": 5,
-     "SUPPORTED": 17
+     "SUPPORTED": 15
+    },
+    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
+    "suffix_unrefined": {}
+   },
+   {
+    "operator": "op15",
+    "prefix": {
+     "SUPPORTED": 15
+    },
+    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
+    "suffix_unrefined": {}
+   },
+   {
+    "operator": "op16",
+    "prefix": {
+     "SUPPORTED": 15
+    },
+    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
+    "suffix_unrefined": {}
+   },
+   {
+    "operator": "op18",
+    "prefix": {
+     "REFUTED": 8,
+     "SUPPORTED": 42
     },
     "separating_literals": [],
     "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
     "suffix_unrefined": {}
    },
    {
-    "operator": "op22",
+    "operator": "op19",
     "prefix": {
-     "REFUTED": 5,
-     "SUPPORTED": 17
+     "SUPPORTED": 10
+    },
+    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
+    "suffix_unrefined": {}
+   },
+   {
+    "operator": "op20",
+    "prefix": {
+     "REFUTED": 1
     },
     "separating_literals": [],
     "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
@@ -5519,74 +670,40 @@
    {
     "operator": "op23",
     "prefix": {
-     "SUPPORTED": 5
+     "REFUTED": 5,
+     "SUPPORTED": 17
     },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
+    "separating_literals": [],
+    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
     "suffix_unrefined": {}
    },
    {
     "operator": "op24",
     "prefix": {
-     "REFUTED": 8,
-     "SUPPORTED": 36
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 6,
      "SUPPORTED": 16
-    }
+    },
+    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
+    "suffix_unrefined": {}
    },
    {
     "operator": "op25",
     "prefix": {
-     "SUPPORTED": 2
+     "REFUTED": 1
     },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op26",
-    "prefix": {
-     "SUPPORTED": 10
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op27",
-    "prefix": {
-     "SUPPORTED": 40
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
+    "separating_literals": [],
+    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
     "suffix_unrefined": {}
    },
    {
     "operator": "op28",
     "prefix": {
-     "SUPPORTED": 15
+     "SUPPORTED": 22
     },
     "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
     "suffix_unrefined": {}
    },
    {
-    "operator": "op29",
-    "prefix": {
-     "SUPPORTED": 15
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op30",
-    "prefix": {
-     "SUPPORTED": 40
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op31",
+    "operator": "op3",
     "prefix": {
      "SUPPORTED": 40
     },
@@ -5596,23 +713,17 @@
    {
     "operator": "op32",
     "prefix": {
-     "SUPPORTED": 40
+     "REFUTED": 10,
+     "SUPPORTED": 66
     },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op33",
-    "prefix": {
-     "SUPPORTED": 15
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
+    "separating_literals": [],
+    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
     "suffix_unrefined": {}
    },
    {
     "operator": "op34",
     "prefix": {
-     "SUPPORTED": 40
+     "SUPPORTED": 4
     },
     "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
     "suffix_unrefined": {}
@@ -5620,7 +731,7 @@
    {
     "operator": "op35",
     "prefix": {
-     "SUPPORTED": 4
+     "SUPPORTED": 30
     },
     "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
     "suffix_unrefined": {}
@@ -5634,27 +745,25 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op38",
+    "operator": "op37",
     "prefix": {
-     "REFUTED": 4,
-     "SUPPORTED": 22
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op39",
-    "prefix": {
-     "SUPPORTED": 16
+     "SUPPORTED": 10
     },
     "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
     "suffix_unrefined": {}
    },
    {
-    "operator": "op4",
+    "operator": "op38",
     "prefix": {
-     "SUPPORTED": 20
+     "SUPPORTED": 5
+    },
+    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
+    "suffix_unrefined": {}
+   },
+   {
+    "operator": "op39",
+    "prefix": {
+     "SUPPORTED": 5
     },
     "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
     "suffix_unrefined": {}
@@ -5662,15 +771,7 @@
    {
     "operator": "op40",
     "prefix": {
-     "SUPPORTED": 10
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op41",
-    "prefix": {
-     "SUPPORTED": 16
+     "SUPPORTED": 5
     },
     "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
     "suffix_unrefined": {}
@@ -5678,7 +779,7 @@
    {
     "operator": "op42",
     "prefix": {
-     "SUPPORTED": 5
+     "SUPPORTED": 10
     },
     "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
     "suffix_unrefined": {}
@@ -5686,53 +787,13 @@
    {
     "operator": "op43",
     "prefix": {
-     "SUPPORTED": 5
+     "SUPPORTED": 10
     },
     "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
     "suffix_unrefined": {}
    },
    {
     "operator": "op44",
-    "prefix": {
-     "SUPPORTED": 5
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op45",
-    "prefix": {
-     "SUPPORTED": 10
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op46",
-    "prefix": {
-     "SUPPORTED": 15
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op47",
-    "prefix": {
-     "SUPPORTED": 10
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op48",
-    "prefix": {
-     "SUPPORTED": 10
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op49",
     "prefix": {
      "REFUTED": 4,
      "SUPPORTED": 24
@@ -5742,15 +803,7 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op5",
-    "prefix": {
-     "SUPPORTED": 25
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op50",
+    "operator": "op45",
     "prefix": {
      "REFUTED": 2,
      "SUPPORTED": 1
@@ -5770,7 +823,7 @@
     }
    },
    {
-    "operator": "op51",
+    "operator": "op46",
     "prefix": {
      "SUPPORTED": 16
     },
@@ -5778,33 +831,9 @@
     "suffix_unrefined": {}
    },
    {
-    "operator": "op52",
+    "operator": "op5",
     "prefix": {
-     "SUPPORTED": 15
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op53",
-    "prefix": {
-     "SUPPORTED": 5
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op54",
-    "prefix": {
-     "SUPPORTED": 15
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op55",
-    "prefix": {
-     "SUPPORTED": 15
+     "SUPPORTED": 30
     },
     "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
     "suffix_unrefined": {}
@@ -5813,61 +842,50 @@
     "operator": "op56",
     "prefix": {
      "REFUTED": 8,
-     "SUPPORTED": 36
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "REFUTED": 6,
-     "SUPPORTED": 16
-    }
-   },
-   {
-    "operator": "op57",
-    "prefix": {
-     "REFUTED": 9,
-     "SUPPORTED": 45
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {
-     "SUPPORTED": 8
-    }
-   },
-   {
-    "operator": "op58",
-    "prefix": {
-     "SUPPORTED": 2
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "SUPPORTED": 2
-    }
-   },
-   {
-    "operator": "op60",
-    "prefix": {
-     "REFUTED": 1
+     "SUPPORTED": 42
     },
     "separating_literals": [],
     "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
     "suffix_unrefined": {}
    },
    {
-    "operator": "op61",
+    "operator": "op57",
     "prefix": {
-     "REFUTED": 18,
-     "SUPPORTED": 108
+     "SUPPORTED": 10
+    },
+    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
+    "suffix_unrefined": {}
+   },
+   {
+    "operator": "op58",
+    "prefix": {
+     "REFUTED": 8,
+     "SUPPORTED": 42
     },
     "separating_literals": [],
     "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
+    "suffix_unrefined": {}
+   },
+   {
+    "operator": "op6",
+    "prefix": {
+     "SUPPORTED": 40
+    },
+    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
+    "suffix_unrefined": {}
+   },
+   {
+    "operator": "op60",
+    "prefix": {
+     "SUPPORTED": 5
+    },
+    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
     "suffix_unrefined": {}
    },
    {
     "operator": "op67",
     "prefix": {
-     "REFUTED": 18,
-     "SUPPORTED": 108
+     "REFUTED": 1
     },
     "separating_literals": [],
     "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
@@ -5876,215 +894,29 @@
    {
     "operator": "op68",
     "prefix": {
-     "REFUTED": 18,
-     "SUPPORTED": 108
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op7",
-    "prefix": {
-     "SUPPORTED": 15
+     "SUPPORTED": 10
     },
     "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op70",
-    "prefix": {
-     "SUPPORTED": 22
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op74",
-    "prefix": {
-     "SUPPORTED": 22
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op75",
-    "prefix": {
-     "REFUTED": 8,
-     "SUPPORTED": 42
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op76",
-    "prefix": {
-     "REFUTED": 8,
-     "SUPPORTED": 42
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op79",
-    "prefix": {
-     "REFUTED": 8,
-     "SUPPORTED": 42
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
     "suffix_unrefined": {}
    },
    {
     "operator": "op8",
     "prefix": {
-     "SUPPORTED": 10
+     "SUPPORTED": 35
     },
     "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
     "suffix_unrefined": {}
-   },
-   {
-    "operator": "op80",
-    "prefix": {
-     "REFUTED": 8,
-     "SUPPORTED": 42
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op82",
-    "prefix": {
-     "SUPPORTED": 10
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op83",
-    "prefix": {
-     "REFUTED": 8,
-     "SUPPORTED": 42
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op85",
-    "prefix": {
-     "SUPPORTED": 5
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op89",
-    "prefix": {
-     "SUPPORTED": 2
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "REFUTED": 2,
-     "SUPPORTED": 12
-    }
-   },
-   {
-    "operator": "op9",
-    "prefix": {
-     "REFUTED": 1
-    },
-    "separating_literals": [],
-    "status": "NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX",
-    "suffix_unrefined": {}
-   },
-   {
-    "operator": "op90",
-    "prefix": {
-     "SUPPORTED": 56
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "REFUTED": 2,
-     "SUPPORTED": 50
-    }
-   },
-   {
-    "operator": "op91",
-    "prefix": {
-     "SUPPORTED": 56
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "REFUTED": 2,
-     "SUPPORTED": 50
-    }
-   },
-   {
-    "operator": "op92",
-    "prefix": {
-     "SUPPORTED": 56
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "REFUTED": 2,
-     "SUPPORTED": 50
-    }
-   },
-   {
-    "operator": "op93",
-    "prefix": {
-     "SUPPORTED": 56
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "REFUTED": 2,
-     "SUPPORTED": 50
-    }
-   },
-   {
-    "operator": "op94",
-    "prefix": {},
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "REFUTED": 2
-    }
-   },
-   {
-    "operator": "op97",
-    "prefix": {
-     "SUPPORTED": 56
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "REFUTED": 2,
-     "SUPPORTED": 50
-    }
-   },
-   {
-    "operator": "op98",
-    "prefix": {
-     "SUPPORTED": 56
-    },
-    "status": "NO_PREFIX_REFUTATION_SO_THERE_IS_NO_CONDITION_TO_LEARN",
-    "suffix_unrefined": {
-     "REFUTED": 2,
-     "SUPPORTED": 50
-    }
    }
   ],
   "reading": "promote cell[_]=cell#0",
   "split": 0.6,
   "suffix_after_refinement": {
-   "REFUTED": 53,
-   "SUPPORTED": 1216
+   "REFUTED": 6,
+   "SUPPORTED": 3
   },
   "suffix_before_refinement": {
-   "REFUTED": 56,
-   "SUPPORTED": 1216
+   "REFUTED": 9,
+   "SUPPORTED": 3
   }
  }
 ]

@@ -1,43 +1,28 @@
 {
  "application": "opus_02_cellar_dev",
+ "identification": null,
  "prospective": {
   "basis": "single clicks on the controls the application renders, one step ahead, checked at the raw node the effect names, with the predicted field masked from correspondence",
   "control_caveat": "the mutation controls rewrite a predicted literal, which does nothing to a claim that an object goes away; the existence check's discrimination is measured separately, by running it over every object in every held-out pre-state",
   "controls": {
    "joint discrimination x2": {
     "masked/never_rendered_token": {
-     "decided": 72,
-     "refuted": 32
+     "decided": 31,
+     "refuted": 11
     },
     "masked/none": {
-     "decided": 72,
-     "refuted": 32
-    },
-    "same_index/never_rendered_token": {
-     "decided": 72,
-     "refuted": 32
-    },
-    "same_index/none": {
-     "decided": 72,
-     "refuted": 32
+     "decided": 31,
+     "refuted": 11
     }
    },
    "promote cell[_]=cell#0": {
     "masked/never_rendered_token": {
-     "decided": 320,
-     "refuted": 176
+     "decided": 624,
+     "refuted": 332
     },
     "masked/none": {
-     "decided": 320,
-     "refuted": 176
-    },
-    "same_index/never_rendered_token": {
-     "decided": 320,
-     "refuted": 176
-    },
-    "same_index/none": {
-     "decided": 320,
-     "refuted": 176
+     "decided": 624,
+     "refuted": 332
     }
    },
    "source_choice": {
@@ -46,14 +31,6 @@
      "refuted": 0
     },
     "masked/none": {
-     "decided": 0,
-     "refuted": 0
-    },
-    "same_index/never_rendered_token": {
-     "decided": 0,
-     "refuted": 0
-    },
-    "same_index/none": {
      "decided": 0,
      "refuted": 0
     }
@@ -72,6 +49,78 @@
     ],
     "correspondence_rule": "masked",
     "mutation": "never_rendered_token",
+    "split": 0.4,
+    "trace": "opus_02_cellar_dev",
+    "untested": [
+     "source_choice"
+    ]
+   },
+   {
+    "applicability": "asserted",
+    "classes": [
+     [
+      "promote cell[_]=cell#0"
+     ],
+     [
+      "joint discrimination x2"
+     ]
+    ],
+    "correspondence_rule": "masked",
+    "mutation": "none",
+    "split": 0.4,
+    "trace": "opus_02_cellar_dev",
+    "untested": [
+     "source_choice"
+    ]
+   },
+   {
+    "applicability": "attested",
+    "classes": [
+     [
+      "promote cell[_]=cell#0"
+     ],
+     [
+      "joint discrimination x2"
+     ]
+    ],
+    "correspondence_rule": "masked",
+    "mutation": "never_rendered_token",
+    "split": 0.4,
+    "trace": "opus_02_cellar_dev",
+    "untested": [
+     "source_choice"
+    ]
+   },
+   {
+    "applicability": "attested",
+    "classes": [
+     [
+      "promote cell[_]=cell#0"
+     ],
+     [
+      "joint discrimination x2"
+     ]
+    ],
+    "correspondence_rule": "masked",
+    "mutation": "none",
+    "split": 0.4,
+    "trace": "opus_02_cellar_dev",
+    "untested": [
+     "source_choice"
+    ]
+   },
+   {
+    "applicability": "asserted",
+    "classes": [
+     [
+      "promote cell[_]=cell#0"
+     ],
+     [
+      "joint discrimination x2"
+     ]
+    ],
+    "correspondence_rule": "masked",
+    "mutation": "never_rendered_token",
     "split": 0.5,
     "trace": "opus_02_cellar_dev",
     "untested": [
@@ -97,49 +146,10 @@
     ]
    },
    {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "promote cell[_]=cell#0"
-     ],
-     [
-      "joint discrimination x2"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.5,
-    "trace": "opus_02_cellar_dev",
-    "untested": [
-     "source_choice"
-    ]
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "promote cell[_]=cell#0"
-     ],
-     [
-      "joint discrimination x2"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.5,
-    "trace": "opus_02_cellar_dev",
-    "untested": [
-     "source_choice"
-    ]
-   },
-   {
     "applicability": "attested",
     "classes": [
      [
       "promote cell[_]=cell#0"
-     ],
-     [
-      "joint discrimination x2"
      ]
     ],
     "correspondence_rule": "masked",
@@ -147,6 +157,7 @@
     "split": 0.5,
     "trace": "opus_02_cellar_dev",
     "untested": [
+     "joint discrimination x2",
      "source_choice"
     ]
    },
@@ -155,9 +166,6 @@
     "classes": [
      [
       "promote cell[_]=cell#0"
-     ],
-     [
-      "joint discrimination x2"
      ]
     ],
     "correspondence_rule": "masked",
@@ -165,42 +173,7 @@
     "split": 0.5,
     "trace": "opus_02_cellar_dev",
     "untested": [
-     "source_choice"
-    ]
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "promote cell[_]=cell#0"
-     ],
-     [
-      "joint discrimination x2"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.5,
-    "trace": "opus_02_cellar_dev",
-    "untested": [
-     "source_choice"
-    ]
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "promote cell[_]=cell#0"
-     ],
-     [
-      "joint discrimination x2"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.5,
-    "trace": "opus_02_cellar_dev",
-    "untested": [
+     "joint discrimination x2",
      "source_choice"
     ]
    },
@@ -241,49 +214,10 @@
     ]
    },
    {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "promote cell[_]=cell#0"
-     ],
-     [
-      "joint discrimination x2"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.6,
-    "trace": "opus_02_cellar_dev",
-    "untested": [
-     "source_choice"
-    ]
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "promote cell[_]=cell#0"
-     ],
-     [
-      "joint discrimination x2"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.6,
-    "trace": "opus_02_cellar_dev",
-    "untested": [
-     "source_choice"
-    ]
-   },
-   {
     "applicability": "attested",
     "classes": [
      [
       "promote cell[_]=cell#0"
-     ],
-     [
-      "joint discrimination x2"
      ]
     ],
     "correspondence_rule": "masked",
@@ -291,6 +225,7 @@
     "split": 0.6,
     "trace": "opus_02_cellar_dev",
     "untested": [
+     "joint discrimination x2",
      "source_choice"
     ]
    },
@@ -299,9 +234,6 @@
     "classes": [
      [
       "promote cell[_]=cell#0"
-     ],
-     [
-      "joint discrimination x2"
      ]
     ],
     "correspondence_rule": "masked",
@@ -309,42 +241,7 @@
     "split": 0.6,
     "trace": "opus_02_cellar_dev",
     "untested": [
-     "source_choice"
-    ]
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "promote cell[_]=cell#0"
-     ],
-     [
-      "joint discrimination x2"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.6,
-    "trace": "opus_02_cellar_dev",
-    "untested": [
-     "source_choice"
-    ]
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "promote cell[_]=cell#0"
-     ],
-     [
-      "joint discrimination x2"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.6,
-    "trace": "opus_02_cellar_dev",
-    "untested": [
+     "joint discrimination x2",
      "source_choice"
     ]
    }
@@ -354,19 +251,20 @@
     "status": "REFUTED_ON_EVERY_TRACE_THAT_REACHED_IT",
     "traces": {
      "opus_02_cellar_dev": {
-      "decided": 72,
+      "decided": 31,
       "landing": {},
       "modes": [
        "asserted",
        "attested"
       ],
       "reached": true,
-      "refuted": 32,
+      "refuted": 11,
       "splits": [
+       0.4,
        0.5,
        0.6
       ],
-      "supported": 40
+      "supported": 20
      }
     }
    },
@@ -374,19 +272,20 @@
     "status": "REFUTED_ON_EVERY_TRACE_THAT_REACHED_IT",
     "traces": {
      "opus_02_cellar_dev": {
-      "decided": 320,
+      "decided": 624,
       "landing": {},
       "modes": [
        "asserted",
        "attested"
       ],
       "reached": true,
-      "refuted": 176,
+      "refuted": 332,
       "splits": [
+       0.4,
        0.5,
        0.6
       ],
-      "supported": 144
+      "supported": 292
      }
     }
    },
@@ -403,6 +302,7 @@
       "reached": false,
       "refuted": 0,
       "splits": [
+       0.4,
        0.5,
        0.6
       ],
@@ -414,22 +314,22 @@
  },
  "prospective_elimination": {
   "contradicted": [
+   "joint discrimination x2",
    "promote cell[_]=cell#0"
   ],
   "criterion": "refuted on every history that reached it; no prefix-chosen literal over the objects its rules bind removes those refutations without discarding its successes; and some other candidate survives the same test, so the contradiction is about this reading rather than about the apparatus they share",
   "explanations": {
-   "joint discrimination x2": "REFUTED_BY_RULES_A_PREFIX_CHOSEN_CONDITION_REPAIRS_COMPLETELY",
+   "joint discrimination x2": "PROSPECTIVELY_CONTRADICTED_AND_NOT_REPAIRABLE_IN_ITS_OWN_VOCABULARY",
    "promote cell[_]=cell#0": "PROSPECTIVELY_CONTRADICTED_AND_NOT_REPAIRABLE_IN_ITS_OWN_VOCABULARY",
    "source_choice": "NO_REFUTATION_TO_EXPLAIN"
   },
-  "removed": [
-   "promote cell[_]=cell#0"
-  ],
+  "removed": [],
   "retained": [
    "joint discrimination x2",
+   "promote cell[_]=cell#0",
    "source_choice"
   ],
-  "shared_by_every_candidate": false
+  "shared_by_every_candidate": true
  },
  "retrospective": {
   "basis": "no frontier was run on this application",

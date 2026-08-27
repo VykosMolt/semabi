@@ -1,5 +1,6 @@
 {
  "application": "grok_01_landing_board_dev",
+ "identification": null,
  "prospective": {
   "basis": "single clicks on the controls the application renders, one step ahead, checked at the raw node the effect names, with the predicted field masked from correspondence",
   "control_caveat": "the mutation controls rewrite a predicted literal, which does nothing to a claim that an object goes away; the existence check's discrimination is measured separately, by running it over every object in every held-out pre-state",
@@ -12,50 +13,26 @@
     "masked/none": {
      "decided": 0,
      "refuted": 0
-    },
-    "same_index/never_rendered_token": {
-     "decided": 0,
-     "refuted": 0
-    },
-    "same_index/none": {
-     "decided": 0,
-     "refuted": 0
     }
    },
    "promote cell[_]=cell#0": {
     "masked/never_rendered_token": {
-     "decided": 85,
-     "refuted": 1
+     "decided": 10,
+     "refuted": 2
     },
     "masked/none": {
-     "decided": 85,
-     "refuted": 1
-    },
-    "same_index/never_rendered_token": {
-     "decided": 85,
-     "refuted": 1
-    },
-    "same_index/none": {
-     "decided": 85,
-     "refuted": 1
+     "decided": 10,
+     "refuted": 2
     }
    },
    "source_choice": {
     "masked/never_rendered_token": {
-     "decided": 165,
-     "refuted": 8
+     "decided": 284,
+     "refuted": 12
     },
     "masked/none": {
-     "decided": 165,
-     "refuted": 8
-    },
-    "same_index/never_rendered_token": {
-     "decided": 165,
-     "refuted": 8
-    },
-    "same_index/none": {
-     "decided": 165,
-     "refuted": 8
+     "decided": 284,
+     "refuted": 12
     }
    }
   },
@@ -72,6 +49,74 @@
     ],
     "correspondence_rule": "masked",
     "mutation": "never_rendered_token",
+    "split": 0.4,
+    "trace": "grok_01_landing_board_dev",
+    "untested": [
+     "joint discrimination x3"
+    ]
+   },
+   {
+    "applicability": "asserted",
+    "classes": [
+     [
+      "source_choice"
+     ],
+     [
+      "promote cell[_]=cell#0"
+     ]
+    ],
+    "correspondence_rule": "masked",
+    "mutation": "none",
+    "split": 0.4,
+    "trace": "grok_01_landing_board_dev",
+    "untested": [
+     "joint discrimination x3"
+    ]
+   },
+   {
+    "applicability": "attested",
+    "classes": [
+     [
+      "source_choice"
+     ]
+    ],
+    "correspondence_rule": "masked",
+    "mutation": "never_rendered_token",
+    "split": 0.4,
+    "trace": "grok_01_landing_board_dev",
+    "untested": [
+     "joint discrimination x3",
+     "promote cell[_]=cell#0"
+    ]
+   },
+   {
+    "applicability": "attested",
+    "classes": [
+     [
+      "source_choice"
+     ]
+    ],
+    "correspondence_rule": "masked",
+    "mutation": "none",
+    "split": 0.4,
+    "trace": "grok_01_landing_board_dev",
+    "untested": [
+     "joint discrimination x3",
+     "promote cell[_]=cell#0"
+    ]
+   },
+   {
+    "applicability": "asserted",
+    "classes": [
+     [
+      "source_choice"
+     ],
+     [
+      "promote cell[_]=cell#0"
+     ]
+    ],
+    "correspondence_rule": "masked",
+    "mutation": "never_rendered_token",
     "split": 0.5,
     "trace": "grok_01_landing_board_dev",
     "untested": [
@@ -97,49 +142,10 @@
     ]
    },
    {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "source_choice"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.5,
-    "trace": "grok_01_landing_board_dev",
-    "untested": [
-     "joint discrimination x3"
-    ]
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "source_choice"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.5,
-    "trace": "grok_01_landing_board_dev",
-    "untested": [
-     "joint discrimination x3"
-    ]
-   },
-   {
     "applicability": "attested",
     "classes": [
      [
       "source_choice"
-     ],
-     [
-      "promote cell[_]=cell#0"
      ]
     ],
     "correspondence_rule": "masked",
@@ -147,7 +153,8 @@
     "split": 0.5,
     "trace": "grok_01_landing_board_dev",
     "untested": [
-     "joint discrimination x3"
+     "joint discrimination x3",
+     "promote cell[_]=cell#0"
     ]
    },
    {
@@ -155,9 +162,6 @@
     "classes": [
      [
       "source_choice"
-     ],
-     [
-      "promote cell[_]=cell#0"
      ]
     ],
     "correspondence_rule": "masked",
@@ -165,43 +169,8 @@
     "split": 0.5,
     "trace": "grok_01_landing_board_dev",
     "untested": [
-     "joint discrimination x3"
-    ]
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "source_choice"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.5,
-    "trace": "grok_01_landing_board_dev",
-    "untested": [
-     "joint discrimination x3"
-    ]
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "source_choice"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.5,
-    "trace": "grok_01_landing_board_dev",
-    "untested": [
-     "joint discrimination x3"
+     "joint discrimination x3",
+     "promote cell[_]=cell#0"
     ]
    },
    {
@@ -209,9 +178,6 @@
     "classes": [
      [
       "source_choice"
-     ],
-     [
-      "promote cell[_]=cell#0"
      ]
     ],
     "correspondence_rule": "masked",
@@ -219,7 +185,8 @@
     "split": 0.6,
     "trace": "grok_01_landing_board_dev",
     "untested": [
-     "joint discrimination x3"
+     "joint discrimination x3",
+     "promote cell[_]=cell#0"
     ]
    },
    {
@@ -227,9 +194,6 @@
     "classes": [
      [
       "source_choice"
-     ],
-     [
-      "promote cell[_]=cell#0"
      ]
     ],
     "correspondence_rule": "masked",
@@ -237,43 +201,8 @@
     "split": 0.6,
     "trace": "grok_01_landing_board_dev",
     "untested": [
-     "joint discrimination x3"
-    ]
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "source_choice"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.6,
-    "trace": "grok_01_landing_board_dev",
-    "untested": [
-     "joint discrimination x3"
-    ]
-   },
-   {
-    "applicability": "asserted",
-    "classes": [
-     [
-      "source_choice"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.6,
-    "trace": "grok_01_landing_board_dev",
-    "untested": [
-     "joint discrimination x3"
+     "joint discrimination x3",
+     "promote cell[_]=cell#0"
     ]
    },
    {
@@ -281,9 +210,6 @@
     "classes": [
      [
       "source_choice"
-     ],
-     [
-      "promote cell[_]=cell#0"
      ]
     ],
     "correspondence_rule": "masked",
@@ -291,7 +217,8 @@
     "split": 0.6,
     "trace": "grok_01_landing_board_dev",
     "untested": [
-     "joint discrimination x3"
+     "joint discrimination x3",
+     "promote cell[_]=cell#0"
     ]
    },
    {
@@ -299,9 +226,6 @@
     "classes": [
      [
       "source_choice"
-     ],
-     [
-      "promote cell[_]=cell#0"
      ]
     ],
     "correspondence_rule": "masked",
@@ -309,43 +233,8 @@
     "split": 0.6,
     "trace": "grok_01_landing_board_dev",
     "untested": [
-     "joint discrimination x3"
-    ]
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "source_choice"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "never_rendered_token",
-    "split": 0.6,
-    "trace": "grok_01_landing_board_dev",
-    "untested": [
-     "joint discrimination x3"
-    ]
-   },
-   {
-    "applicability": "attested",
-    "classes": [
-     [
-      "source_choice"
-     ],
-     [
-      "promote cell[_]=cell#0"
-     ]
-    ],
-    "correspondence_rule": "same_index",
-    "mutation": "none",
-    "split": 0.6,
-    "trace": "grok_01_landing_board_dev",
-    "untested": [
-     "joint discrimination x3"
+     "joint discrimination x3",
+     "promote cell[_]=cell#0"
     ]
    }
   ],
@@ -363,6 +252,7 @@
       "reached": false,
       "refuted": 0,
       "splits": [
+       0.4,
        0.5,
        0.6
       ],
@@ -374,19 +264,20 @@
     "status": "REFUTED_ON_EVERY_TRACE_THAT_REACHED_IT",
     "traces": {
      "grok_01_landing_board_dev": {
-      "decided": 85,
+      "decided": 10,
       "landing": {},
       "modes": [
        "asserted",
        "attested"
       ],
       "reached": true,
-      "refuted": 1,
+      "refuted": 2,
       "splits": [
+       0.4,
        0.5,
        0.6
       ],
-      "supported": 84
+      "supported": 8
      }
     }
    },
@@ -394,31 +285,35 @@
     "status": "REFUTED_ON_EVERY_TRACE_THAT_REACHED_IT",
     "traces": {
      "grok_01_landing_board_dev": {
-      "decided": 165,
+      "decided": 284,
       "landing": {},
       "modes": [
        "asserted",
        "attested"
       ],
       "reached": true,
-      "refuted": 8,
+      "refuted": 12,
       "splits": [
+       0.4,
        0.5,
        0.6
       ],
-      "supported": 157
+      "supported": 272
      }
     }
    }
   }
  },
  "prospective_elimination": {
-  "contradicted": [],
+  "contradicted": [
+   "promote cell[_]=cell#0",
+   "source_choice"
+  ],
   "criterion": "refuted on every history that reached it; no prefix-chosen literal over the objects its rules bind removes those refutations without discarding its successes; and some other candidate survives the same test, so the contradiction is about this reading rather than about the apparatus they share",
   "explanations": {
-   "joint discrimination x3": "NOT_ANALYSED",
-   "promote cell[_]=cell#0": "NOT_ANALYSED",
-   "source_choice": "NOT_ANALYSED"
+   "joint discrimination x3": "NO_REFUTATION_TO_EXPLAIN",
+   "promote cell[_]=cell#0": "PROSPECTIVELY_CONTRADICTED_AND_NOT_REPAIRABLE_IN_ITS_OWN_VOCABULARY",
+   "source_choice": "PROSPECTIVELY_CONTRADICTED_AND_NOT_REPAIRABLE_IN_ITS_OWN_VOCABULARY"
   },
   "removed": [],
   "retained": [
@@ -426,7 +321,7 @@
    "promote cell[_]=cell#0",
    "source_choice"
   ],
-  "shared_by_every_candidate": false
+  "shared_by_every_candidate": true
  },
  "retrospective": {
   "basis": "no frontier was run on this application",

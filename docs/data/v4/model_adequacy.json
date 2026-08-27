@@ -1,0 +1,189 @@
+{
+ "barter_market / joint discrimination x3": {
+  "effect_values": {
+   "copied from instance data": 5,
+   "copied from instance data / rules": 35,
+   "determined by the action": 51,
+   "determined by the action / rules": 333,
+   "supplied by the action": 3,
+   "supplied by the action / rules": 6
+  },
+  "operators": 39,
+  "precondition_vocabulary": {
+   "attr": 3,
+   "attr_ne": 17,
+   "empty": 12,
+   "ref_ne": 4,
+   "ref_null": 2,
+   "ref_set": 4
+  },
+  "support_1_rules": 28,
+  "unexplained_negatives": 87
+ },
+ "barter_market / promote cell[_]=cell#0": {
+  "effect_values": {
+   "copied from instance data": 1,
+   "copied from instance data / rules": 11,
+   "determined by the action": 11,
+   "determined by the action / rules": 43,
+   "supplied by the action": 1,
+   "supplied by the action / rules": 1
+  },
+  "operators": 19,
+  "precondition_vocabulary": {
+   "empty": 6
+  },
+  "support_1_rules": 9,
+  "unexplained_negatives": 60
+ },
+ "blend_book / cell[_]=cell#0": {
+  "effect_values": {
+   "determined by the action": 29,
+   "determined by the action / rules": 153,
+   "supplied by the action": 2,
+   "supplied by the action / rules": 2
+  },
+  "operators": 34,
+  "precondition_vocabulary": {
+   "attr": 7,
+   "attr_ne": 33,
+   "empty": 4,
+   "nonempty_str": 1,
+   "ref": 1,
+   "ref_ne": 7
+  },
+  "support_1_rules": 12,
+  "unexplained_negatives": 102
+ },
+ "blend_book / promote cell[_]=cell#0": {
+  "effect_values": {
+   "determined by the action": 59,
+   "determined by the action / rules": 615
+  },
+  "operators": 70,
+  "precondition_vocabulary": {
+   "attr": 12,
+   "attr_ne": 58,
+   "empty": 21,
+   "nonempty_str": 1,
+   "ref_ne": 7,
+   "ref_null": 1,
+   "ref_set": 5
+  },
+  "support_1_rules": 37,
+  "unexplained_negatives": 77
+ },
+ "cellar / joint discrimination x2": {
+  "effect_values": {
+   "determined by the action": 35,
+   "determined by the action / rules": 187
+  },
+  "operators": 9,
+  "precondition_vocabulary": {
+   "attr": 2,
+   "nonempty_str": 6,
+   "ref_set": 1
+  },
+  "support_1_rules": 5,
+  "unexplained_negatives": 400
+ },
+ "cellar / promote cell[_]=cell#0": {
+  "effect_values": {
+   "copied from instance data": 1,
+   "copied from instance data / rules": 6,
+   "determined by the action": 25,
+   "determined by the action / rules": 975
+  },
+  "operators": 18,
+  "precondition_vocabulary": {
+   "attr": 3,
+   "attr_ne": 13,
+   "empty": 10,
+   "nonempty_str": 2
+  },
+  "support_1_rules": 11,
+  "unexplained_negatives": 403
+ },
+ "harbour / joint discrimination x2": {
+  "effect_values": {
+   "copied from instance data": 1,
+   "copied from instance data / rules": 5,
+   "determined by the action": 10,
+   "determined by the action / rules": 40
+  },
+  "operators": 10,
+  "precondition_vocabulary": {
+   "attr": 2,
+   "attr_ne": 5,
+   "ref_null": 4
+  },
+  "support_1_rules": 5,
+  "unexplained_negatives": 5
+ },
+ "harbour / promote cell[_]=cell#0": {
+  "effect_values": {
+   "copied from instance data": 1,
+   "copied from instance data / rules": 23,
+   "determined by the action": 4,
+   "determined by the action / rules": 64
+  },
+  "operators": 18,
+  "precondition_vocabulary": {
+   "attr": 2,
+   "empty": 3
+  },
+  "support_1_rules": 15,
+  "unexplained_negatives": 6
+ },
+ "landing_board / promote cell[_]=cell#0": {
+  "effect_values": {
+   "determined by the action": 5,
+   "determined by the action / rules": 5,
+   "supplied by the action": 1,
+   "supplied by the action / rules": 1
+  },
+  "operators": 2,
+  "precondition_vocabulary": {
+   "attr": 1,
+   "ref_ne": 1
+  },
+  "support_1_rules": 1,
+  "unexplained_negatives": 0
+ },
+ "landing_board / source_choice": {
+  "effect_values": {
+   "determined by the action": 9,
+   "determined by the action / rules": 23,
+   "supplied by the action": 1,
+   "supplied by the action / rules": 1
+  },
+  "operators": 10,
+  "precondition_vocabulary": {
+   "attr": 2,
+   "attr_ne": 13,
+   "empty": 2
+  },
+  "support_1_rules": 3,
+  "unexplained_negatives": 30
+ },
+ "vet_clinic / joint discrimination x3": {
+  "effect_values": {
+   "determined by the action": 7,
+   "determined by the action / rules": 27
+  },
+  "operators": 11,
+  "precondition_vocabulary": {
+   "attr_ne": 5,
+   "empty": 10
+  },
+  "support_1_rules": 5,
+  "unexplained_negatives": 6
+ },
+ "vet_clinic / row[_](cell[_])=None": {
+  "effect_values": {},
+  "operators": 0,
+  "precondition_vocabulary": {},
+  "support_1_rules": 0,
+  "unexplained_negatives": 0
+ }
+}
