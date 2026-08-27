@@ -387,3 +387,21 @@ def test_a_truncated_enumeration_pins_nothing():
     assert binding.Bindings(binding.AMBIGUOUS, (values, values)).pinned() == frozenset({"?a"})
     assert binding.Bindings(binding.AMBIGUOUS, (values, values),
                             truncated=True).pinned() == frozenset()
+
+
+def test_every_parameter_says_why_it_has_a_value_or_has_none():
+    """Four provenances, not two and an absence.
+
+    A reader of a binding should not have to infer from a parameter's absence which of the
+    reasons it is absent for: a string the action carried but this code was not given, or an
+    object the rule creates and no pre-state can hold.  Both are absent from ``values``; only
+    the label says which.
+    """
+    op = rule({"?o0": BERTH, "?s": "str", "?new0": BERTH})
+    s = state(obj("a"))
+    bound = binding.solve(op, [], s, {"?o0": list(s.objs.values())[0]})
+    assert bound.status == binding.UNIQUE
+    assert bound.admissible[0].provenance == {
+        "?o0": binding.ACTION, "?s": binding.UNRESOLVED, "?new0": binding.UNBOUND}
+    assert set(bound.admissible[0].values) == {"?o0"}
+    assert bound.admissible[0].evidence == binding.POSSIBLE      # the string is undecided

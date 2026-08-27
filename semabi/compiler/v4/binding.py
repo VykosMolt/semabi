@@ -39,6 +39,8 @@ from typing import Any, Iterable, Mapping, Sequence
 
 ACTION = "supplied by the action"
 DERIVED = "derived from the pre-state"
+UNRESOLVED = "carried by the action but not recovered here"
+UNBOUND = "created by this rule, so no pre-state object"
 
 SUPPORTED = "supported"      # every literal about this assignment came out true
 POSSIBLE = "possible"        # nothing contradicts it, something could not be decided
@@ -196,6 +198,11 @@ def solve(op, literals: Iterable[tuple], state, action_binding: Mapping[str, Any
     base = dict(action_binding)
     provenance = {p: ACTION for p in action_binding}
     provenance.update({p: DERIVED for p in unbound})
+    # Every parameter is accounted for, including the ones with no pre-state object behind
+    # them.  A reader of a binding should not have to infer from a parameter's absence which
+    # of the two reasons it is absent for.
+    provenance.update({p: UNRESOLVED for p in strings})
+    provenance.update({p: UNBOUND for p in op.params if p.startswith("?new")})
     out: list[Binding] = []
     truncated = False
     contradicted = 0
