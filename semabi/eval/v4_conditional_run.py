@@ -5,9 +5,7 @@ import argparse
 import json
 from pathlib import Path
 
-from semabi.compiler.v4 import manifests
-
-
+from semabi.compiler.v4.conditional import refine
 from semabi.eval.v4_consequence_run import _candidates
 
 

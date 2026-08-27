@@ -169,6 +169,12 @@ def elimination(rows: list[dict], conditional: list[dict], readings: list[str]) 
     Nothing here is a score and nothing is tuned.  A reading is removed when it was refuted on
     every history that reached it and no prefix-chosen literal over the objects its rules bind
     removes those refutations without also discarding the successes.
+
+    Two of those repairs now happen inside fitting rather than here, and every candidate gets
+    both: a precondition learned from the rule's own counterexamples, and the dropping of
+    effect values the action does not determine -- which is what stops a reading being blamed
+    for a memorised constant.  What this stage adds is the residual question, so a reading is
+    only removed after the learner has already done what it can for it.
     """
     verdicts: dict[str, str] = {}
     for reading in readings:

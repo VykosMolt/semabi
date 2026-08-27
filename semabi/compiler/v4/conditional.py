@@ -1,4 +1,16 @@
-"""Is a refuted rule a missing condition, or an ontology that cannot express one?
+"""Is what survived the learner's own repair a missing condition, or an ontology's limit?
+
+This module was the repair.  It is now the residual check on one, because the learner
+installs preconditions itself: ``learn_pre`` picks literals true in every positive and false
+in the counterexamples it was given, and since the literal language covers a bound object's
+reference slots it finds the conditions that used to be supplied from outside.  What is left
+here is the question that remains after that -- of the contradictions the fitted model still
+makes on held-out steps, is there a further condition, expressible in the reading's own
+pre-action vocabulary and chosen without seeing the suffix, that the greedy cover missed?
+
+A reading with none has been refuted with its repairs already applied.
+
+Is a refuted rule a missing condition, or an ontology that cannot express one?
 
 A prospective refutation says a rule made a false prediction.  It does not say why.  Two very
 different things produce one: the learner under-specified a rule whose antecedent needed one
