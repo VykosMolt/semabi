@@ -571,7 +571,9 @@ enumeration bound.
   6-7 literals whether the rule has one positive or four, and **most rules have exactly one**
   (14 of 16 for the loose reading). Using it as a precondition restricts a rule to objects that
   look exactly like the training one, which is why `attested` and `generative` cut applicability
-  roughly in half for *both* readings.
+  roughly in half for *both* readings. The scale gap is the whole story: SYNTH+ learns from
+  traces of 1,000 to 61,000 steps (up to 31 hours of learning time on driverlog); harbour's
+  entire trace is about 460 steps and a rule is fitted on a prefix of roughly half of it.
 
 ## Still open
 
