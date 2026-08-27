@@ -1131,14 +1131,31 @@ direction -- it says *gone* for essentially everything, because survival is aske
 content layers only and harbour re-renders -- which does no damage only because harbour's rules
 make no removal claims.
 
-Vet is where it means something, and there it separates readings that the raw counts did not:
+The base rate alone still cannot say what is being predicted, so the tool also reports how each
+held-out click divides. That turns out to be the whole story:
 
-    joint discrimination x3   supported 0.63  base 0.36   +27 points
-    cell[_]=cell#0            supported 0.19  base 0.21   at or below chance
+    application    clicks where     where almost     where some went and
+                   almost all went  none went        some stayed
+    harbour             125               1                  0   of 126
+    landing board       154              31                  0   of 185
+    vet clinic           17              24                 10   of  51
+    barter market        12              45                 58   of 115
 
-That is the anti-vacuity test this project has been missing, and it is a base rate rather than
-an arbitrary minimum prediction count. It travels with the verdicts in the status report now,
-so the 48/48 cannot be read alone again.
+**On harbour and the landing board, not one held-out click discriminates between objects.**
+Every click either clears the view or leaves it alone, so a rule scoring 48/48 there is
+predicting *which clicks wipe the page*, and could not identify an object if it tried. Vet has
+ten such clicks out of fifty-one; barter has fifty-eight out of a hundred and fifteen, and is
+the only application in the corpus where a removal claim is substantially a claim about an
+object. Its readings score 0.79-0.84 against base rates of 0.28-0.34, which is worth something,
+and does not separate its readings.
+
+Vet's two readings do separate -- `joint discrimination x3` at 0.63 against a 0.36 base,
+`cell[_]=cell#0` at 0.19 against 0.21 -- but with ten discriminating clicks that separation is
+mostly about which clicks change the view, not which objects go.
+
+That is the anti-vacuity test this project has been missing, and it is a base rate and a
+distribution rather than an arbitrary minimum prediction count. It travels with the verdicts in
+the status report now, so the 48/48 cannot be read alone again.
 
 ### The leakage trap, empirically
 
