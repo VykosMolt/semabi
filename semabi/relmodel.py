@@ -382,6 +382,21 @@ def derive_bindings(op: Operator, state: State, supplied: dict[str, Any],
     return out
 
 
+def unique_binding(op: Operator, state: State, supplied: dict[str, Any],
+                   limit: int = 64) -> dict[str, Any] | None:
+    """The one completion this state admits, or ``None`` when it admits any other number.
+
+    The safe way to use :func:`derive_bindings`, made executable rather than advisory.  Several
+    completions mean the state does not say which objects the operator would act on, and none
+    means it does not apply; in both cases there is nothing for a planner to do that is not a
+    guess.  Refusing is the whole point -- a caller that took the first completion would be
+    choosing an object the model never identified, and on a real reading that has been measured
+    to be the wrong object more often than not.
+    """
+    found = derive_bindings(op, state, supplied, limit=limit)
+    return found[0] if len(found) == 1 else None
+
+
 def check_pre_partial(op: Operator, state: State, binding: dict[str, Any]) -> bool:
     """Do the literals this partial binding can decide all hold?  Undecidable ones pass."""
     for lit in op.pre:

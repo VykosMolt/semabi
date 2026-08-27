@@ -58,3 +58,27 @@ def test_an_operator_the_action_grounds_nothing_of_is_not_a_legacy_operator():
     assert back.operators["latent"].supplied == ()
     assert back.operators["partial"].supplied == ("?a",)
     assert str(d) == str(back)
+
+
+def test_a_planner_is_given_the_one_binding_or_nothing():
+    """``derive_bindings`` returns every completion; acting needs there to be exactly one."""
+    d = make_domain("standard")
+    s = initial_state("standard", 0)
+    projects = [o.id for o in s.of_type("Project")]
+    assert len(projects) > 1
+
+    op = rm.Operator("touch", [("?p", "Project")], [], [], supplied=())
+    assert len(rm.derive_bindings(op, s, {})) == len(projects)
+    assert rm.unique_binding(op, s, {}) is None          # several: refuse
+    assert rm.unique_binding(op, s, {"?p": projects[0]}) == {"?p": projects[0]}
+
+    pinned = rm.Operator("pinned", [("?p", "Project")],
+                         [rm.AttrEq("?p", "name", s.objects[projects[0]].attrs["name"])],
+                         [], supplied=())
+    assert rm.unique_binding(pinned, s, {}) == {"?p": projects[0]}
+
+    impossible = rm.Operator("impossible", [("?p", "Project")],
+                             [rm.AttrEq("?p", "name", "\x00 no project is called this")],
+                             [], supplied=())
+    assert rm.derive_bindings(impossible, s, {}) == []
+    assert rm.unique_binding(impossible, s, {}) is None   # none: refuse too
