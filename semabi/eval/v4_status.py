@@ -89,6 +89,10 @@ def prospective(rows: list[dict], readings: list[str]) -> dict[str, Any]:
                 # leaves every object of the type open, and its verdicts then say POSSIBLE
                 # everywhere -- which reads as inconclusive unless this is shown beside it.
                 "binding": _merge_binding(live),
+                # Whether the rules are well-formed action schemas at all: an effect on an
+                # object the pre-state never pins down does not say which object changes, so
+                # it can be neither supported nor refuted in any useful sense.
+                "schema": _merge_schema(live),
             }
         reached = [t for t in traces.values() if t["reached"]]
         if not reached:
@@ -137,6 +141,22 @@ def _merge_binding(rows: list[dict]) -> dict[str, Any]:
     unique = status.get("UNIQUE", 0)
     return {"status": dict(sorted(status.items())), "largest_assignment_set": largest,
             "determined": f"{unique}/{total}" if total else "0/0"}
+
+
+def _merge_schema(rows: list[dict]) -> dict[str, Any]:
+    """How the operators divide, pooled over the rows this reading was scored on.
+
+    An operator name means different things at different splits -- each fit numbers its own
+    rules -- so what is pooled is the count per kind, not the identity of the operators.
+    """
+    kinds: Counter = Counter()
+    ill = 0
+    for row in rows:
+        for kind, count in row.get("schema", {}).get("kinds", {}).items():
+            kinds[kind] += count
+        ill += len(row.get("schema", {}).get("ill_formed", ()))
+    return {"operator_kinds": dict(sorted(kinds.items())),
+            "effects_on_an_object_the_state_does_not_pin_down": ill}
 
 
 def _merge_landing(rows: list[dict]) -> dict[str, dict[str, int]]:
