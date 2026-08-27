@@ -67,7 +67,69 @@ def model(run_dir: Path, reading, split: float, min_support: int = 2) -> dict[st
             "unexplained_negatives": sum(r["negatives_unexplained"] for r in rules),
             "precondition_vocabulary": dict(Counter(
                 l.split()[0] for r in rules for l in r["preconditions"]).most_common()),
+            "effect_values": effect_value_character(fitted.operators),
             "rules": sorted(rules, key=lambda r: -r["support"])}
+
+
+SUPPLIED = "supplied by the action"
+DETERMINED = "determined by the action"
+COPIED = "copied from instance data"
+
+
+def effect_value_character(operators) -> dict[str, Any]:
+    """Where does each effect's value come from?
+
+    Three answers, and only the third is a defect.  A value that is a rule parameter is
+    supplied by the action.  A value that is a constant, and the *same* constant everywhere
+    that action family writes that slot, is determined by the action -- harbour's Close always
+    writes 'closed'.  A value that is a constant differing between rules for the same action
+    and slot is none of those: it was copied out of the one transition the rule was lifted
+    from, so the rule says "clicking Schedule call creates a call for the vessel Nordkapp" and
+    can only be right by coincidence.
+
+    The test is structural and needs no threshold: it asks whether the action determines the
+    value, by looking at whether the value moves when nothing about the action does.
+    """
+    by_slot: dict[tuple[str, str], dict[str, Any]] = {}
+    for op in operators:
+        core = op.core()
+        control = (core[0].loc.slot.split("@")[0] if core and core[0].loc else "?")
+        for eff in op.effs:
+            for slot, value in _effect_values(eff):
+                bucket = by_slot.setdefault((control, slot),
+                                            {"parameters": 0, "constants": set(), "support": 0,
+                                             "rules": 0})
+                bucket["rules"] += 1
+                bucket["support"] = max(bucket["support"], len(op.positives))
+                if isinstance(value, str) and value.startswith("?"):
+                    bucket["parameters"] += 1
+                else:
+                    bucket["constants"].add(str(value))
+    out, tally = [], Counter()
+    for (control, slot), bucket in sorted(by_slot.items()):
+        if bucket["parameters"] and not bucket["constants"]:
+            character = SUPPLIED
+        elif len(bucket["constants"]) <= 1 and not bucket["parameters"]:
+            character = DETERMINED
+        else:
+            character = COPIED
+        tally[character] += 1
+        tally[character + " / rules"] += bucket["rules"]
+        out.append({"control": control, "slot": slot, "character": character,
+                    "distinct_constants": len(bucket["constants"]),
+                    "max_support": bucket["support"], "rules": bucket["rules"],
+                    "constants": sorted(bucket["constants"])[:4]})
+    return {"totals": dict(sorted(tally.items())), "positions": out}
+
+
+def _effect_values(eff):
+    if eff.kind in ("set", "rel", "forall_set", "forall_rel"):
+        yield (f"{eff.kind}:{eff.slot}", eff.new)
+    elif eff.kind == "add":
+        for slot, value in eff.attrs:
+            yield (f"add:{slot}", value)
+        for slot, value in eff.refs:
+            yield (f"add:{slot}", value)
 
 
 def _excluded_by(lit: tuple, lits: set) -> bool:
@@ -97,6 +159,7 @@ def main() -> None:
     for row in rows:
         print(f"== {row['reading'][:34]:36} split {row['split']}  operators={row['operators']} "
               f"unexplained={row['unexplained_negatives']}  vocab={row['precondition_vocabulary']}")
+        print(f"      effect values {row['effect_values']['totals']}")
         for rule in row["rules"][:args.rules]:
             print(f"   {rule['name']:5} {rule['acts'][0][:44]:46} support={rule['support']} "
                   f"objects={rule['distinct_bound_objects']}")

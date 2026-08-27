@@ -231,10 +231,22 @@ def build(app: str, consequence: list[Path], conditional: list[Path]) -> dict[st
         cond.extend(json.loads(path.read_text()))
     readings = sorted({row["name"] for row in rows}) or (
         [r["name"] for r in report["survivors"]] if report else [])
+    prospect = prospective(rows, readings)
+    selected = (structural(report) if report else NO_FRONTIER).get("selected")
+    identification = None
+    if selected is not None:
+        status = prospect["readings"].get(selected, {}).get("status")
+        # Viable and identified are different facts.  A reading that survived because it never
+        # said anything the evidence could contradict has not been identified by it, and the
+        # difference needs no threshold: the instrument either decided something for it or it
+        # decided nothing.
+        identification = ("SELECTED_AND_MAKES_TESTABLE_CLAIMS" if status and status != NOT_REACHED
+                          else "SELECTED_BUT_MAKES_NO_TESTABLE_CLAIM")
     return {"application": app,
+            "identification": identification,
             "structural": structural(report) if report else NO_FRONTIER,
             "retrospective": retrospective(report) if report else NO_FRONTIER,
-            "prospective": prospective(rows, readings),
+            "prospective": prospect,
             "prospective_elimination": elimination(rows, cond, readings)}
 
 
@@ -252,6 +264,8 @@ def main() -> None:
     print(f"== {payload['application']}")
     print(f"  structural     {payload['structural']['outcome']}: "
           f"{payload['structural']['survivors']}")
+    if payload["identification"]:
+        print(f"  identification {payload['identification']}")
     print(f"  retrospective  {payload['retrospective']['outcome']}  "
           f"{payload['retrospective']['identification']}")
     for name, row in sorted(payload["prospective"]["readings"].items()):
