@@ -8,7 +8,7 @@ operator hypotheses, and learns preconditions from failed attempts.
 from __future__ import annotations
 
 from collections import defaultdict
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from typing import Any
 
 from semabi.compiler.abstract import AbsObj, Abstractor, AbstractState, Diff, diff, resolve_masked
@@ -60,6 +60,38 @@ class ActT:
         o = f"[{self.owner}]" if self.owner else ""
         a = f", {self.arg}" if self.arg is not None else ""
         return f"{self.kind}({self.loc}{o}{a})"
+
+
+class _Varies:
+    """An effect value the action does not determine.
+
+    ``lift`` keeps whatever constant it saw when it cannot bind a value to a parameter.  Where
+    the same action family writes the same slot with a different constant in different
+    transitions, that constant was a property of the instance the rule was lifted from and not
+    of the action, and the honest content of the effect is that the slot changes.
+    """
+    __slots__ = ()
+
+    def __repr__(self) -> str:
+        return "*"
+
+    def __lt__(self, other) -> bool:      # effects are sorted by str(); keep it total
+        return True
+
+
+VARIES = _Varies()
+
+
+def _base(value: Any) -> Any:
+    """``'open#3'`` is the third rendered copy of ``'open'``; the base is what it says.
+
+    The convention is the abstractor's own (see the duplicate-name disambiguation in
+    ``v2/hypotheses.py``): siblings that render the same text are told apart by an ordinal.
+    """
+    if not isinstance(value, str):
+        return value
+    head, sep, tail = value.rpartition("#")
+    return head if sep and head and tail.isdigit() else value
 
 
 @dataclass(frozen=True)
@@ -858,6 +890,7 @@ class Inducer:
             self.operators.append(op)
         self._resolve_view_bound_constants()
         self._merge_supersequences()
+        self._generalise_copied_effects()
         # negatives: other operators with the same core, and no-op segments with the same core
         for tr in self.noops:
             self.lift(tr)
@@ -952,6 +985,92 @@ class Inducer:
         for i, op in enumerate(keep):
             op.name = f"op{i}"
         self.operators = self._merge_vacuous(keep)
+
+    def _control_key(self, op: OperatorHyp) -> str:
+        core = op.core()
+        return core[0].loc.slot.split("@")[0] if core and core[0].loc else "?"
+
+    @staticmethod
+    def _effect_positions(eff: EffT):
+        """(position, value) pairs of an effect, where a position is comparable across rules."""
+        if eff.kind in ("set", "rel", "forall_set", "forall_rel"):
+            yield (f"{eff.kind}:{eff.slot}", eff.new)
+        elif eff.kind == "add":
+            for slot, value in eff.attrs:
+                yield (f"add:attr:{slot}", value)
+            for slot, value in eff.refs:
+                yield (f"add:ref:{slot}", value)
+
+    def _generalise_copied_effects(self) -> None:
+        """Rules that differ only in a value the action does not determine are one rule.
+
+        Harbour's ``Schedule call`` is five operators of support one, each asserting that the
+        click creates a call for one particular vessel, because the vessel's name was in the
+        transition each was lifted from and nothing bound it to the action.  They are the same
+        rule seen five times.  Keeping them apart states five claims that can only be right by
+        coincidence and leaves each with too little evidence to learn a precondition from.
+
+        A position is generalised only when every rule of that action family writes it with a
+        constant and the constants differ: a value the action supplies is a parameter and is
+        left alone, and a value that never moves is determined by the action and is left alone
+        too.  So the test is whether the value moves while the action does not, which needs no
+        threshold and no vocabulary of its own.
+        """
+        by_position: dict[tuple[str, str], dict[str, Any]] = {}
+        for op in self.operators:
+            control = self._control_key(op)
+            for eff in op.effs:
+                for position, value in self._effect_positions(eff):
+                    seen = by_position.setdefault((control, position),
+                                                  {"constants": set(), "parameters": 0})
+                    if isinstance(value, str) and value.startswith("?"):
+                        seen["parameters"] += 1
+                    else:
+                        seen["constants"].add(value)
+        varying: dict[tuple[str, str], Any] = {}
+        for key, seen in by_position.items():
+            if seen["parameters"] or len(seen["constants"]) < 2:
+                continue
+            # Only the part that actually moves is dropped.  The abstractor tells duplicate
+            # names apart by appending an ordinal, so a family of constants that share a base
+            # -- 'closed' and 'closed#2' -- agrees about what the slot says and disagrees only
+            # about which copy it is.  Replacing the whole value with "something" there would
+            # convert a claim the evidence can refute into one it cannot, which is a worse
+            # answer than the memorised constant it replaced.
+            bases = {_base(v) for v in seen["constants"]}
+            varying[key] = bases.pop() if len(bases) == 1 else VARIES
+        if not varying:
+            return
+        for op in self.operators:
+            control = self._control_key(op)
+            effs = tuple(sorted((self._generalise(eff, control, varying) for eff in op.effs),
+                                key=str))
+            if effs != op.effs:
+                op.effs = effs
+                for tr in op.positives:
+                    tr.effs = effs
+        merged: dict[tuple, OperatorHyp] = {}
+        for op in sorted(self.operators, key=lambda o: -o.support):
+            key = (op.acts, op.effs)
+            if key in merged:
+                merged[key].positives.extend(op.positives)
+            else:
+                merged[key] = op
+        self.operators = sorted(merged.values(), key=lambda o: -o.support)
+        for i, op in enumerate(self.operators):
+            op.name = f"op{i}"
+
+    def _generalise(self, eff: EffT, control: str, varying: dict) -> EffT:
+        if eff.kind in ("set", "rel", "forall_set", "forall_rel"):
+            key = (control, f"{eff.kind}:{eff.slot}")
+            return replace(eff, new=varying[key]) if key in varying else eff
+        if eff.kind == "add":
+            attrs = tuple((slot, varying.get((control, f"add:attr:{slot}"), value))
+                          for slot, value in eff.attrs)
+            refs = tuple((slot, varying.get((control, f"add:ref:{slot}"), value))
+                         for slot, value in eff.refs)
+            return replace(eff, attrs=attrs, refs=refs)
+        return eff
 
     def _merge_vacuous(self, ops: list[OperatorHyp]) -> list[OperatorHyp]:
         """An operator whose effects are a subset of another's, the difference being

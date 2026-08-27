@@ -58,6 +58,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Callable
 
+from semabi.compiler.induce import VARIES
 from semabi.compiler.parse import leaf_value
 from semabi.compiler.v4 import correspondence as corr
 from semabi.compiler.v4.prospective import action_control, control_of, split_literal
@@ -65,6 +66,8 @@ from semabi.compiler.v4.prospective import action_control, control_of, split_lit
 VALUE = "VALUE"
 IDENTITY = "IDENTITY"
 EXISTENCE = "EXISTENCE"
+
+CHANGES = "\x00CHANGES"    # the claim of an effect whose value the action does not determine
 
 MASKED = "masked"          # the instrument: candidate-independent, predicted field hidden
 NEAR_OPTIMAL = "masked_near_optimal"   # the same, admitting alignments one match off the best
@@ -94,6 +97,7 @@ class ScopedPrediction:
     correspondence: str = ""       # UNIQUE | AMBIGUOUS | NONE | ""
     admissible: tuple[int, ...] = ()
     observed: tuple[str, ...] = ()
+    held_before: str = ""
     verdict: str = NOT_APPLICABLE
     detail: str = ""
     layers: tuple[str, ...] = ()
@@ -557,9 +561,18 @@ def score(model: Fit, *, mutate: Callable[[str], str] | None = None,
                     if survives is not None:
                         result.predictions.append(survives)
                     continue
-                if eff.kind != "set" or not isinstance(eff.new, str) or eff.slot is None:
+                if eff.kind != "set" or eff.slot is None:
                     continue
-                predicted = mutate(eff.new) if mutate else eff.new
+                if eff.new is VARIES:
+                    # The learner has said this slot changes without saying to what, because
+                    # the action does not determine the value.  That is still a claim the page
+                    # can refute -- the slot may not change at all -- and dropping it would
+                    # turn a generalisation into silence.
+                    predicted = CHANGES
+                elif isinstance(eff.new, str):
+                    predicted = mutate(eff.new) if mutate else eff.new
+                else:
+                    continue
                 base = ScopedPrediction(
                     step=step.step, control=control, operator=op.name, kind=VALUE,
                     support=len(op.positives), slot=eff.slot, predicted=predicted)
@@ -584,6 +597,7 @@ def score(model: Fit, *, mutate: Callable[[str], str] | None = None,
                 held = (subject.key if _is_key_slot(A, subject, eff.slot)
                         else subject.attrs.get(eff.slot))
                 rendered = leaf_value(pre.node(node))
+                base.held_before = str(rendered)
                 if _rendered_as(held) != _rendered_as(rendered):
                     # The slot's value is not this node's text.  ``attr:col`` is the clear
                     # case: it is the column label *about* a cell, and the cell renders its
@@ -705,21 +719,28 @@ def _is_key_slot(A, subject, slot: str) -> bool:
 
 def _value_verdict(pred: ScopedPrediction, post, match, subject, A, eff, predicted: str) -> None:
     """Did the continuation of the node this effect is about take the predicted text?"""
-    expected = split_literal(predicted)[0] if _is_key_slot(A, subject, eff.slot) else predicted
+    if predicted is CHANGES:
+        expected = CHANGES
+    else:
+        expected = (split_literal(predicted)[0] if _is_key_slot(A, subject, eff.slot)
+                    else predicted)
     pred.expected = expected
     if match.status == corr.NONE:
         pred.verdict, pred.detail = UNKNOWN, match.detail
         return
     seen = [leaf_value(post.node(j)) for j in match.admissible]
     pred.observed = tuple(str(x) for x in seen)
-    hits = sum(1 for x in seen if x == expected)
+    hits = (sum(1 for x in seen if str(x) != pred.held_before) if expected is CHANGES
+            else sum(1 for x in seen if x == expected))
     if hits == len(seen):
         pred.verdict = SUPPORTED
-        pred.detail = (f"every admissible continuation renders {expected!r}"
-                       if len(seen) > 1 else f"the continuation renders {expected!r}")
+        shown = "a different value" if expected is CHANGES else repr(expected)
+        pred.detail = (f"every admissible continuation renders {shown}"
+                       if len(seen) > 1 else f"the continuation renders {shown}")
     elif hits == 0:
         pred.verdict = REFUTED
-        pred.detail = (f"no admissible continuation renders {expected!r}; "
+        shown = "a different value" if expected is CHANGES else repr(expected)
+        pred.detail = (f"no admissible continuation renders {shown}; "
                        f"they render {sorted(set(map(str, seen)))}")
     else:
         pred.verdict = POSSIBLE

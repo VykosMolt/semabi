@@ -184,3 +184,85 @@ def test_harbour_learns_the_condition_for_close_and_not_for_reopen():
     assert all(any(l[0] == "ref_null" for l in op.pre) for op in close)
     assert not any(l[0] == "ref_null" for op in reopen for l in op.pre)
     assert all(op.unexplained_negatives == 0 for op in close)
+
+
+# ------------------------------------------------------------------ memorised effect values
+
+def effect(slot, value, obj="?o0"):
+    from semabi.compiler.induce import EffT
+    return EffT("set", BERTH, obj, slot, None, value)
+
+
+def rule(name, effs, support=1):
+    op = OperatorHyp(name, (CLICK,), tuple(effs), {"?o0": BERTH},
+                     positives=[transition(state(berth()), {"?o0": (BERTH, "S1")}, s)
+                                for s in range(support)])
+    return op
+
+
+def test_a_value_the_action_does_not_determine_is_generalised_and_the_rules_merge():
+    """The memorised-constant defect, and the smallest honest repair for it.
+
+    Two rules for one action write the same slot with different constants and neither
+    constant came from the action.  They are the same rule seen twice: keeping them apart
+    asserts two claims that can only be right by coincidence, and leaves each with one
+    transition of support -- too little to learn a precondition from.
+    """
+    from semabi.compiler.induce import VARIES
+
+    ind = inducer()
+    ind.operators = [rule("op0", [effect("attr:vessel", "Nordkapp")]),
+                     rule("op1", [effect("attr:vessel", "Selkie")])]
+    ind._generalise_copied_effects()
+    assert len(ind.operators) == 1
+    assert ind.operators[0].effs[0].new is VARIES
+    assert ind.operators[0].support == 2
+
+
+def test_a_value_the_action_does_determine_is_left_alone():
+    """The control for the above.  Establishes that a constant which never moves while the
+    action does not move is not touched -- harbour's Close always writes 'closed', and a
+    generalisation that reached it would destroy the only claim the rule has."""
+    ind = inducer()
+    ind.operators = [rule("op0", [effect("attr:state", "closed")], support=2),
+                     rule("op1", [effect("attr:state", "closed")])]
+    ind._generalise_copied_effects()
+    assert all(op.effs[0].new == "closed" for op in ind.operators)
+
+
+def test_only_the_part_of_a_value_that_moves_is_dropped():
+    """Establishes that a family of constants agreeing on what the slot says and disagreeing
+    only about which copy it is keeps what it agrees on.
+
+    Dropping the whole value there would convert a claim the page can refute into one it
+    cannot, which is a worse answer than the memorised constant it replaced -- and it would
+    silently excuse the reading whose names collide from the test it exists to face.
+    """
+    ind = inducer()
+    ind.operators = [rule("op0", [effect("id", "closed")]),
+                     rule("op1", [effect("id", "closed#2")])]
+    ind._generalise_copied_effects()
+    assert len(ind.operators) == 1
+    assert ind.operators[0].effs[0].new == "closed"
+
+
+def test_a_variable_effect_still_claims_that_the_value_changes():
+    """Establishes that generalising does not buy silence.  A slot the action changes without
+    determining the new value is still refuted by a slot that does not change."""
+    from semabi.compiler.induce import VARIES
+    from semabi.compiler.v4 import consequence as csq
+    from semabi.compiler.v4 import correspondence as corr
+    from semabi.compiler.observation import Node, Observation
+
+    post = Observation([Node(0, -1, "row", ""), Node(1, 0, "cell", "same")])
+    match = corr.Correspondence(1, (1,), corr.UNIQUE)
+    pred = csq.ScopedPrediction(step=0, control="c", operator="op0", kind=csq.VALUE, support=1,
+                                slot="attr:x", predicted=csq.CHANGES, held_before="same")
+    subject = SimpleNamespace(tid=0, node=0, key="k", attrs={}, refs={})
+    csq._value_verdict(pred, post, match, subject, SimpleNamespace(types={}),
+                       SimpleNamespace(slot="attr:x", new=VARIES), csq.CHANGES)
+    assert pred.verdict == csq.REFUTED
+    pred.held_before = "before"
+    csq._value_verdict(pred, post, match, subject, SimpleNamespace(types={}),
+                       SimpleNamespace(slot="attr:x", new=VARIES), csq.CHANGES)
+    assert pred.verdict == csq.SUPPORTED
