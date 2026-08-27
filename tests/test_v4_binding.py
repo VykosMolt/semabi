@@ -405,3 +405,32 @@ def test_every_parameter_says_why_it_has_a_value_or_has_none():
         "?o0": binding.ACTION, "?s": binding.UNRESOLVED, "?new0": binding.UNBOUND}
     assert set(bound.admissible[0].values) == {"?o0"}
     assert bound.admissible[0].evidence == binding.POSSIBLE      # the string is undecided
+
+
+def test_a_search_that_cannot_finish_says_so_instead_of_running(monkeypatch):
+    """The bound on the answer is not a bound on the search, and the difference bit.
+
+    A rule naming many objects the action does not supply spans a product space the size of
+    which is set by the state, not by ``MAX_ADMISSIBLE``.  Where its preconditions are weak the
+    search fills its quota at once and unwinds; where they exclude nearly everything, nothing
+    fills, and the enumeration walks the whole space.  On the wine cellar that is 10^26 and one
+    scoring pass had not finished after three and a half hours.
+
+    Giving up is only safe because it is reported: ``UNSETTLED`` is not ``NONE``, so a rule the
+    search could not settle is never read as one the state contradicted.
+    """
+    monkeypatch.setattr(binding, "MAX_SEARCH_NODES", 20)
+    # the failing literal is about the *last* parameter, so nothing can be excluded until a
+    # whole assignment is on the table -- which is what makes the space have to be walked
+    wide = rule({f"?o{i}": BERTH for i in range(4)},
+                [("attr", "?o3", "slot", "\x00 no object holds this")])
+    st = state(*[obj(f"k{i}") for i in range(5)])   # 5**4 assignments, none of them admissible
+    bound = binding.solve(wide, wide.pre, st, {}, nodes=20)
+    assert bound.status == binding.UNSETTLED
+    assert bound.truncated and not bound.admissible
+    assert "without settling" in bound.detail
+    assert bound.pinned() == frozenset()      # and it determines nothing
+
+    # with room to finish, the same query is a plain refusal rather than a shrug
+    settled = binding.solve(wide, wide.pre, st, {}, nodes=10_000)
+    assert settled.status == binding.NONE and not settled.truncated

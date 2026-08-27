@@ -49,8 +49,10 @@ UNIQUE = "UNIQUE"
 AMBIGUOUS = "AMBIGUOUS"
 NONE = "NONE"                # the rendered state contradicts every assignment
 UNOBSERVED = "UNOBSERVED"    # a parameter's type is not rendered here at all
+UNSETTLED = "UNSETTLED"      # the search hit its bound without settling what the state admits
 
 MAX_ADMISSIBLE = 256         # a resource bound, not a judgement; reported when it bites
+MAX_SEARCH_NODES = 50_000    # the other resource bound, on the search rather than its answer
 
 
 @dataclass(frozen=True)
@@ -180,8 +182,25 @@ def _domains(op, state, unbound: Sequence[str]) -> dict[str, list]:
 
 
 def solve(op, literals: Iterable[tuple], state, action_binding: Mapping[str, Any],
-          types: Mapping[Any, Any] | None = None, limit: int = MAX_ADMISSIBLE) -> Bindings:
-    """Every assignment of the rule's parameters the pre-action state leaves open."""
+          types: Mapping[Any, Any] | None = None, limit: int = MAX_ADMISSIBLE,
+          nodes: int = MAX_SEARCH_NODES) -> Bindings:
+    """Every assignment of the rule's parameters the pre-action state leaves open.
+
+    Two bounds, and they stop different things.  ``limit`` caps the *answer*: once that many
+    assignments are admissible the rule is as good as unconstrained and counting further says
+    nothing.  ``nodes`` caps the *search*, and it exists because the first bound does not.
+
+    A rule can name many objects the action does not supply -- one operator on the wine cellar
+    names twenty, over a product space of 10^26 -- and when its preconditions are weak the
+    search fills its quota immediately and unwinds.  When they are strong enough that few
+    complete assignments exist, nothing fills, and the enumeration walks that space to the end.
+    Under ``asserted`` that rule scores in nine seconds; under ``attested``, which adds the
+    invariants as further preconditions, it had not finished after three and a half hours.
+
+    Exhausting either bound means the same thing to a reader -- the search did not establish
+    what the state admits -- so both set ``truncated``, which already forbids refuting and pins
+    no parameter.  Giving up in bounded time and saying so beats an answer nobody waited for.
+    """
     literals = list(literals)
     if types is not None and not hasattr(state, "types"):
         state.types = types                        # for key-slot comparison in ``holds``
@@ -206,6 +225,7 @@ def solve(op, literals: Iterable[tuple], state, action_binding: Mapping[str, Any
     out: list[Binding] = []
     truncated = False
     contradicted = 0
+    visited = 0
 
     def decided(values: Mapping[str, Any]) -> tuple[bool, list[str]]:
         undecided: list[str] = []
@@ -220,10 +240,11 @@ def solve(op, literals: Iterable[tuple], state, action_binding: Mapping[str, Any
         return True, undecided
 
     def extend(i: int, values: dict[str, Any]) -> None:
-        nonlocal truncated, contradicted
-        if len(out) >= limit:
+        nonlocal truncated, contradicted, visited
+        if len(out) >= limit or visited >= nodes:
             truncated = True
             return
+        visited += 1
         if i == len(order):
             ok, undecided = decided(values)
             if not ok:
@@ -244,6 +265,11 @@ def solve(op, literals: Iterable[tuple], state, action_binding: Mapping[str, Any
 
     extend(0, dict(base))
     if not out:
+        if truncated:
+            return Bindings(UNSETTLED, (), f"the search stopped after {visited} steps without "
+                                           f"settling what {len(order)} unsupplied parameters "
+                                           f"admit, so this state says nothing either way",
+                            truncated=True)
         return Bindings(NONE, (), f"the rendered state contradicts every assignment "
                                   f"({contradicted} tried)")
     if len(out) == 1:

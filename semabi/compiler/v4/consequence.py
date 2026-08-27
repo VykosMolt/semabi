@@ -659,7 +659,9 @@ def score(model: Fit, *, mutate: Callable[[str], str] | None = None,
                 base.bindings = len(bound.admissible)
                 base.binding_status = bound.status
                 base.binding_truncated = bound.truncated
-                if bound.status == binding.UNOBSERVED:
+                if bound.status in (binding.UNOBSERVED, binding.UNSETTLED):
+                    # Two different ways of not knowing -- nothing of that type was rendered,
+                    # or the search could not finish -- and neither is evidence about the rule.
                     base.verdict, base.detail = UNKNOWN, bound.detail
                     result.predictions.append(base)
                     continue
