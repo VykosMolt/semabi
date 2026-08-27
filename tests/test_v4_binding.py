@@ -184,3 +184,49 @@ def test_on_the_real_trace_one_reading_determines_its_object_and_the_other_does_
     open_ended = [p for p in loose.predictions if p.kind == VALUE and p.bindings]
     assert open_ended and all(p.binding_status == binding.AMBIGUOUS for p in open_ended)
     assert min(p.bindings for p in open_ended) > 10
+
+
+# ------------------------------------------------------------------ existential aggregation
+
+def _part(verdict, evidence=binding.SUPPORTED):
+    from semabi.compiler.v4 import consequence as csq
+    return csq.ScopedPrediction(step=0, control="c", operator="op0", kind=csq.VALUE, support=1,
+                                slot="s", predicted="v", verdict=verdict, detail=verdict,
+                                binding_evidence=evidence)
+
+
+def _fold(verdicts, truncated=False):
+    from semabi.compiler.v4 import consequence as csq
+    base = csq.ScopedPrediction(step=0, control="c", operator="op0", kind=csq.VALUE, support=1,
+                                slot="s", predicted="v")
+    bound = binding.Bindings(binding.AMBIGUOUS, tuple(), "", truncated=truncated)
+    return csq._aggregate(base, [_part(v) for v in verdicts], bound)
+
+
+def test_one_assignment_that_works_stops_a_refutation():
+    """The existential reading, and the thing this whole layer exists to protect.
+
+    The rule fired once.  Several admissible assignments are competing hypotheses about which
+    instantiation that was, so a refutation requires all of them to fail -- the hidden one
+    might have been the one that worked.  Aggregating any other way would let a reading be
+    refuted for objects the action never touched.
+    """
+    from semabi.compiler.v4 import consequence as csq
+    assert _fold([csq.REFUTED, csq.REFUTED, csq.SUPPORTED]).verdict == csq.POSSIBLE
+    assert _fold([csq.REFUTED, csq.REFUTED]).verdict == csq.REFUTED
+    assert _fold([csq.SUPPORTED, csq.SUPPORTED]).verdict == csq.SUPPORTED
+
+
+def test_an_assignment_that_could_not_be_tested_counts_against_refuting():
+    """Establishes that silence about one candidate is not evidence against the rule: if one
+    admissible instantiation could not be checked, "every one is contradicted" was not shown."""
+    from semabi.compiler.v4 import consequence as csq
+    assert _fold([csq.REFUTED, csq.NOT_APPLICABLE]).verdict != csq.REFUTED
+
+
+def test_an_enumeration_that_stopped_early_can_never_refute():
+    """Establishes that a resource bound cannot become a scientific verdict.  Cellar showed
+    the opposite error first -- a truncated enumeration turning complete refutations into
+    POSSIBLE -- and this is the guard for the direction that would matter more."""
+    from semabi.compiler.v4 import consequence as csq
+    assert _fold([csq.REFUTED, csq.REFUTED], truncated=True).verdict == csq.POSSIBLE
