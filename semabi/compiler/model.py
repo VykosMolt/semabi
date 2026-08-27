@@ -224,7 +224,15 @@ def build_model(A: Abstractor, ops: list[OperatorHyp], min_support: int = 1, vie
                 vals += [v for _, v in e.attrs]
             return any(isinstance(v, str) and v.startswith("?new") and v not in created for v in vals)
         effects = [e for e in effects if not mentions_unbound(e)]
-        operators[op.name] = rm.Operator(op.name, params, pre, effects)
+        # Which parameters the grounding actually carries.  The rest are constrained by the
+        # preconditions and nothing else, so a caller has to derive them from the state it is
+        # in rather than choose them -- and without saying so the exported operator would look
+        # as though every object it touches is an argument the agent gets to pick.
+        supplied = tuple(p for p in (
+            [a.owner for a in op.acts if a.owner] + [a.arg for a in op.acts if a.arg])
+            if any(p == name for name, _ in params))
+        operators[op.name] = rm.Operator(op.name, params, pre, effects,
+                                         supplied=tuple(dict.fromkeys(supplied)))
         groundings[op.name] = Grounding(list(op.acts))
     dom = rm.Domain("learned", types, relations, operators)
     vo = {}

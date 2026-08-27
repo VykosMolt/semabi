@@ -257,9 +257,23 @@ class Operator:
     params: list[tuple[str, str]]  # (?name, type) ; type "str" for free strings
     pre: list[Literal] = field(default_factory=list)
     effects: list[Effect] = field(default_factory=list)
+    supplied: tuple[str, ...] = ()
+    """Parameters the grounding actually carries.
+
+    An operator can refer to objects the concrete interaction never names -- the berth a
+    scheduling click affects, the row a tab switch removes.  A caller can choose the supplied
+    ones; the rest it must *derive*, by solving the preconditions against the state it is in,
+    which is what :func:`derive_bindings` does.  Empty means every parameter is supplied, which
+    is what every operator written before this distinction existed meant.
+    """
+
+    def derived(self) -> list[str]:
+        return [name for name, _ in self.params
+                if self.supplied and name not in self.supplied]
 
     def __str__(self) -> str:
-        ps = ", ".join(f"{n}: {t}" for n, t in self.params)
+        ps = ", ".join(f"{n}: {t}{'' if not self.supplied or n in self.supplied else ' (derived)'}"
+                       for n, t in self.params)
         lines = [f"{self.name}({ps})"]
         if self.pre:
             lines.append("  pre: " + " & ".join(str(p) for p in self.pre))
@@ -322,6 +336,54 @@ def check_literal(lit: Literal, state: State, binding: dict[str, Any]) -> bool:
     if isinstance(lit, Distinct):
         return _resolve(lit.a, binding) != _resolve(lit.b, binding)
     raise TypeError(lit)
+
+
+def derive_bindings(op: Operator, state: State, supplied: dict[str, Any],
+                    limit: int = 64) -> list[dict[str, Any]]:
+    """Complete a partial binding by solving the operator's preconditions against a state.
+
+    The executable half of the same idea the compiler's binder uses when it evaluates a learned
+    rule against a recorded transition: the parameters the interaction supplies fix part of the
+    query and the preconditions determine the rest.  Every completion is returned, because
+    several of them mean the state does not say which one the operator would act on -- and an
+    agent that picked one anyway would be guessing, not planning.
+    """
+    unbound = [(name, kind) for name, kind in op.params
+               if name not in supplied and kind not in ("str", "int", "bool")]
+    if not unbound:
+        return [dict(supplied)] if check_pre_partial(op, state, supplied) else []
+    out: list[dict[str, Any]] = []
+
+    def extend(i: int, values: dict[str, Any]) -> None:
+        if len(out) >= limit:
+            return
+        if i == len(unbound):
+            if check_pre_partial(op, state, values):
+                out.append(dict(values))
+            return
+        name, kind = unbound[i]
+        for oid, obj in state.objects.items():
+            if obj.type != kind:
+                continue
+            values[name] = oid
+            if check_pre_partial(op, state, values):
+                extend(i + 1, values)
+            del values[name]
+
+    extend(0, dict(supplied))
+    return out
+
+
+def check_pre_partial(op: Operator, state: State, binding: dict[str, Any]) -> bool:
+    """Do the literals this partial binding can decide all hold?  Undecidable ones pass."""
+    for lit in op.pre:
+        names = [v for v in (getattr(lit, f, None) for f in ("obj", "a", "b", "value"))
+                 if isinstance(v, str) and v.startswith("?")]
+        if any(name not in binding for name in names):
+            continue
+        if not check_literal(lit, state, binding):
+            return False
+    return True
 
 
 def check_pre(op: Operator, domain: Domain, state: State, binding: dict[str, Any]) -> str | None:
@@ -444,6 +506,7 @@ def domain_to_json(dom: Domain) -> dict:
             {
                 "name": o.name,
                 "params": [list(p) for p in o.params],
+                "supplied": list(o.supplied),
                 "pre": [_lit_to_json(l) for l in o.pre],
                 "effects": [_eff_to_json(e) for e in o.effects],
             }
@@ -462,5 +525,6 @@ def domain_from_json(j: dict) -> Domain:
             [tuple(p) for p in o["params"]],
             [_lit_from_json(l) for l in o["pre"]],
             [_eff_from_json(e) for e in o["effects"]],
+            tuple(o.get("supplied", ())),
         )
     return Domain(j["name"], types, rels, ops)

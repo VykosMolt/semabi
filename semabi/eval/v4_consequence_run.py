@@ -115,6 +115,11 @@ def main() -> None:
               f"| {_fmt(row['value'])} | {_fmt(row['existence'])} | {_fmt(row['identity'])}")
     print()
     for row in rows:
+        b = row["binding"]
+        print(f"  {row['name'][:28]:30} {row['applicability']:9} {row['mutation'][:14]:16} "
+              f"bindings {b['status']} median={b['median_assignments']} max={b['largest']}")
+    print()
+    for row in rows:
         if row["value_landing"]:
             print(f"  {row['name'][:28]:30} {row['applicability']:9} {row['mutation']:16} "
                   f"landed: {row['value_landing']}")

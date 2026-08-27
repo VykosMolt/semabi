@@ -190,6 +190,23 @@ class ScopedResult:
         payload = _json.dumps(self.signature(kind), sort_keys=True, default=str)
         return hashlib.sha256(payload.encode()).hexdigest()[:16]
 
+    def binding_summary(self) -> dict[str, Any]:
+        """How well each reading's own rules pin down the object the action affected.
+
+        Not a score: the count of assignments its preconditions fail to exclude.  A reading
+        whose action arguments and learned relations determine the affected object binds
+        uniquely; one that cannot relate the control to the object it changes leaves every
+        object of the type open, and that shows up here rather than in a verdict.
+        """
+        rows = [p for p in self.predictions if p.kind in (VALUE, EXISTENCE)]
+        status = Counter(p.binding_status for p in rows if p.binding_status)
+        sizes = [p.bindings for p in rows if p.bindings]
+        return {"status": dict(sorted(status.items())),
+                "median_assignments": sorted(sizes)[len(sizes) // 2] if sizes else 0,
+                "largest": max(sizes) if sizes else 0,
+                "evidence": dict(sorted(Counter(
+                    p.binding_evidence for p in rows if p.binding_evidence).items()))}
+
     def landing(self, kind: str = VALUE) -> dict[str, dict[str, int]]:
         """Where each decided prediction landed relative to the click, by verdict."""
         out: dict[str, dict[str, int]] = {}
@@ -214,6 +231,7 @@ class ScopedResult:
                 "value_correspondence": self.correspondence_counts(VALUE),
                 "value_coverage": self.coverage(VALUE), "value_landing": self.landing(VALUE),
                 "identity_coverage": self.coverage(IDENTITY),
+                "binding": self.binding_summary(),
                 "prediction_signature_digest": self.signature_digest(),
                 "predictions_signed": len(self.signature()),
                 "skipped": dict(sorted(self.skipped.items())),
