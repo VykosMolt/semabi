@@ -152,20 +152,26 @@ def _run(reading, mutate=None, split=0.6):
     return prospective.evaluate(HARBOUR_RUN, reading, split=split, mutate=mutate)
 
 
-def test_the_reading_that_names_entities_by_a_colliding_value_is_refuted(harbour):
-    """The night's result.  Fitted on the first 60% of harbour; checked on the rest.
+def test_the_positional_claim_was_the_learner_memorising_an_ordinal(harbour):
+    """A finding of an earlier run, and its correction.
 
-    ``promote cell[_]=cell#0`` identifies a cell by its own text.  That text collides, so
-    the abstractor disambiguates by position, so the learned effects commit to *which copy*
-    the entity becomes -- ``id := 'open#3'``.  The page renders two.
+    This test used to assert that ``promote cell[_]=cell#0`` commits to *which copy* an
+    entity becomes -- ``id := 'open#3'`` where the page renders two -- and is refuted for it.
+    That was true of the learner as it stood.  It is no longer, and the reason matters more
+    than the result did: the ordinal was never something the reading's ontology required, it
+    was the value the learner happened to see in the one transition each rule was lifted from.
+    The learner now drops effect values the action does not determine, keeping the base and
+    discarding the ordinal, so the reading makes no positional claim at all.
+
+    What a pass establishes is that the positional evidence is *gone*, not that the reading is
+    exonerated: the case against it now rests on the scoped value check in
+    :mod:`semabi.compiler.v4.consequence`, where it still fires on rows nobody clicked.  A
+    refutation that disappears when a learner stops memorising was a fact about the learner.
     """
     result = _run(harbour["promote cell[_]=cell#0"])
-    position = result.counts(POSITION)
-    assert position[REFUTED] >= 1, position
-    assert position[SUPPORTED] >= 1, position
-    witnesses = [p for p in result.refutations if p.kind == POSITION]
-    assert all(p.rendered_after < p.ordinal for p in witnesses)
-    assert any("#" in p.literal for p in witnesses)
+    assert result.counts(POSITION) == Counter()
+    literals = {p.literal for p in result.predictions}
+    assert not any("#" in literal for literal in literals), sorted(literals)[:6]
 
 
 def test_the_reading_that_names_entities_by_a_stable_value_makes_no_positional_claim(harbour):
@@ -247,20 +253,16 @@ def test_a_refutation_is_diagnosed_as_a_rule_gap_when_the_acted_on_state_separat
     assert diagnosis[CONTENT]["contexts_on_both_sides"] == 0
 
 
-def test_a_positional_claim_is_diagnosed_as_not_locally_repairable(harbour):
-    """B's refutations are not a missing precondition.
+def test_there_is_no_positional_diagnosis_left_to_make(harbour):
+    """The companion of the correction above.
 
-    The same clicked-row state appears among both the supported and the refuted
-    predictions, so no precondition on the object the action names separates them.  What
-    separates them is how many *other* entities happen to render the same text, which B's
-    identity choice makes part of the prediction and which is not a property of the thing
-    acted on.
+    The diagnosis that B's positional failures were not locally repairable had a positional
+    failure to diagnose.  With the ordinal no longer memorised there is none, and the
+    diagnosis correctly says so rather than inventing one.
     """
     from semabi.compiler.v4.prospective import local_separability
     result = _run(harbour["promote cell[_]=cell#0"])
-    diagnosis = local_separability(result, HARBOUR_RUN)
-    assert diagnosis[POSITION]["diagnosis"].startswith("NOT_REPAIRABLE_LOCALLY")
-    assert diagnosis[POSITION]["contexts_on_both_sides"] > 0
+    assert local_separability(result, HARBOUR_RUN)[POSITION]["diagnosis"] == "NO_REFUTATIONS"
 
 
 def test_the_diagnosis_says_nothing_when_there_are_no_refutations(harbour):
@@ -321,8 +323,8 @@ def test_a_stable_naming_gives_one_effect_per_observable_action(determinacy):
         assert len(group["literals"]) == 1
 
 
-def test_a_colliding_naming_fragments_into_rules_that_contradict_each_other(determinacy):
-    """The internal counterpart of the positional refutation.
+def test_a_colliding_naming_still_fragments_but_no_longer_contradicts_itself(determinacy):
+    """The internal counterpart of the positional refutation, and what survived of it.
 
     Executes the same check on the reading that names a cell by its own text.  Because the
     abstractor must disambiguate each occurrence positionally, the reading fits a separate
@@ -334,12 +336,15 @@ def test_a_colliding_naming_fragments_into_rules_that_contradict_each_other(dete
     fitted from; it does not by itself refute the reading -- the page checks do that.
     """
     result = determinacy["promote cell[_]=cell#0"]
-    assert result["totals"].get("ORDINAL_AMBIGUOUS", 0) >= 1
     close = _group(result, "button:Close")
-    assert close["verdict"] == "ORDINAL_AMBIGUOUS"
-    assert len(close["literals"]) > 1
+    # The rules the reading fits for one observable click no longer disagree about which copy
+    # the entity becomes, because none of them names a copy any more.  They still fragment --
+    # more rules than the rival fits for the same click, and single-transition ones among them
+    # -- and that fragmentation is the thing this check was measuring.  The disagreement it
+    # used to find was the learner's memorised ordinal, and dropping that removed it.
+    assert result["totals"].get("ORDINAL_AMBIGUOUS", 0) == 0
+    assert close["verdict"] == "DETERMINATE"
     assert {split_literal(v)[0] for v in close["literals"]} == {"closed"}
-    # the fragmentation is what produces the disagreement
     assert close["rules"] > _group(determinacy["joint discrimination x2"],
                                   "button:Close")["rules"]
     assert close["single_support_rules"] >= 1
