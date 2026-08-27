@@ -417,3 +417,147 @@ started until this chain is closed. When it is, the next hypothesis is not a bet
 score; it is whether any reachable experiment makes the surviving hypotheses predict
 different observations, and if none does, treating them as a behavioral equivalence class
 rather than forcing a unique ontology.
+
+---
+
+# Handoff: pre-state binding of latent rule parameters (2026-08-27)
+
+## What this run was
+
+A learned rule can name objects the interaction never names. The checker used to drop those
+rules and report the drop as coverage. It now solves the rule's own preconditions against the
+**pre**-action state for the parameters the action left open, keeps every assignment that
+satisfies them, and aggregates the verdict existentially over that set. Binding happens before
+the outcome is consulted at all, and that is enforced twice: `binding.solve` has no post-state
+parameter and a test asserts its signature never grows one, and the mutation control gives the
+empirical form -- rewriting every predicted value to a token the application never renders
+leaves the binding and schema summaries byte-identical on 114 of 114 paired rows while the
+verdicts change completely.
+
+## What is new in the code
+
+| where | what |
+|---|---|
+| `semabi/compiler/v4/binding.py` | the query: `holds`, `solve`, `Binding`, `Bindings`, `Bindings.pinned()`; `UNIQUE`/`AMBIGUOUS`/`NONE`/`UNOBSERVED`; `SUPPORTED`/`POSSIBLE` evidence; `MAX_ADMISSIBLE = 256` reported when it bites |
+| `semabi/compiler/v4/consequence.py` | `action_binding` + `bindings_for` replace `bind`; `_under_one_binding` / `_aggregate` / `_aggregate_identity` do the existential fold; `ScopedResult.schema()`; `GENERATIVE` applicability |
+| `semabi/relmodel.py` | `Operator.supplied` (`None` = legacy, `()` = the action grounds nothing), `Operator.derived()`, `derive_bindings`, `check_pre_partial`, JSON round-trip |
+| `semabi/compiler/model.py` | `build_model` computes `supplied` from the grounding acts |
+| `semabi/compiler/v4/conditional.py` | the residual search runs only on determined assignments and reports what it set aside |
+| `semabi/eval/v4_existence_baseline.py` | how often a removal claim is right with no rule involved |
+| `semabi/eval/v4_status.py` | binding counts, operator kinds, removal base rate and removal landing per reading |
+| `tests/test_v4_binding.py` | 17 tests: the seven the brief required, existential aggregation, the truncation bound, the leakage trap in both forms, and the real-trace finding pinned at all three places it is visible |
+
+## The result
+
+Harbour's two surviving readings, under identical machinery, no reading-specific code anywhere
+in the binder. Three statements of one fact:
+
+1. **Admissible assignments.** Across three traces, five splits, both applicability modes:
+   `joint discrimination x2` never exceeds **2**; `promote cell[_]=cell#0` reaches **41**, with
+   medians around 35 under `asserted`. Not a score -- the count of objects a reading's own
+   preconditions fail to exclude for a click it has just seen.
+2. **Where the claims land.** 478 decided predictions from the grounded reading, **0%** about
+   any row but the clicked one. 1902 from the loose reading, **78%** about some other row, and
+   300 of its 333 refutations live in that 78%. Under `attested` at split 0.5 on transfer the
+   split is total: 34 supported all in the clicked row, 41 refuted all outside it. **A unique
+   binding is not a correct binding.**
+3. **Exported operator semantics.** Of 16 fitted rules the loose reading exports **2**, and both
+   are ill-formed in the STRIPS+ sense -- a parameter in the effects that the pre-state never
+   determines. The grounded reading exports 5 of 9, none derived, none ill-formed. The
+   distinction is readable off the exported action model before a single prediction is checked.
+
+**Ambiguity is what keeps this honest.** Under `asserted` the loose reading returns 140
+`POSSIBLE` and 5 `REFUTED`. Picking the best-fitting assignment would have made it flawless;
+picking arbitrarily would have made it catastrophic. Neither number would mean anything. What
+it earns is *not contradicted, and not about the object that was clicked* -- and the second half
+is only sayable because the first half did not resolve.
+
+**And binding does not rescue an ontology.** Refutations that survive go to the residual search,
+which learns a pre-state literal on the prefix and measures it on the held-out suffix. On
+`harbour_seed11` the grounded reading *is* refuted (6 of 32 at split 0.4, 5 of 41 at 0.5) and a
+prefix literal removes every refutation while keeping every support. The loose reading is not
+repaired anywhere: every operator, every split, both traces,
+`NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX`. The landing table says why -- it
+is right on the clicked row and wrong off it, and *is this the row the click landed in* is not
+expressible in an ontology with no relation between a button and its row.
+
+## Where the literature put this
+
+`docs/related_work.md` has the full entries; both papers were read end to end.
+
+* **STRIPS+ / SYNTH (arXiv:2508.21449)** splits schema variables into explicit **x**, determined
+  **z**, and existential **y**, defines determinacy exactly as `UNIQUE` is computed here, and
+  **forbids y from appearing in effects**. That rule is what `schema()` now measures.
+* **SYNTH+ (arXiv:2605.18627)** names this project's observation model: *local observability* --
+  the objects a state reveals are those its applicable actions take as arguments, which is what
+  a rendered page shows. Its asymmetric handling of non-local atoms agrees with what the binder
+  does.
+* **E-SAM (arXiv:2107.04169)** proves the existential reading of an ambiguous binding safe:
+  disjunction for *must be an effect*, universal negation for *cannot be a precondition*. Its
+  proxy-action compilation is exponential in exactly the quantity harbour makes large.
+* **Not found:** any symbolic action-model learning work on web/GUI state. The GUI-agent
+  literature does not build lifted action models; the action-model literature assumes the
+  predicates and the action arguments are given.
+
+## Defects this run found and fixed
+
+* The binder consulted `op.common` regardless of applicability mode, so **every `asserted`
+  number ever reported for a key-binding reading was really an attested number**.
+* The identity sub-check was read off a chosen supported binding, giving 99R/46S against
+  VALUE's 140 POSSIBLE / 5 REFUTED for the same predictions.
+* `supplied=()` was indistinguishable from "nobody asked", so `derived()` reported nothing to
+  derive in precisely the case the field exists to expose, while `derive_bindings` correctly
+  treated every parameter as unbound.
+* `pinned()` read determinacy off a truncated enumeration, in the direction that makes an
+  ill-formed schema look well-formed.
+* `MAX_ADMISSIBLE = 64` made cellar report a median of exactly 64 and 40 `POSSIBLE`; at 256
+  those became 45 `REFUTED` from a complete enumeration.
+* The prediction signature crashed on unbound predictions (`None` feature node) -- order
+  dependent, so it had silently passed elsewhere.
+
+## Two instruments that were not measuring
+
+* **The removal check has no discrimination on some applications.** Base rate that an object
+  stops being rendered, over every object in every held-out pre-state with no rule involved:
+  harbour **0.992**, landing board **0.837**, vet **0.21-0.39**. Landing board's 48/48 and
+  154/172 are therefore near-chance. Vet is where it means something, and there it separates
+  readings the raw counts did not: `joint discrimination x3` scores 0.63 against a 0.36 base,
+  `cell[_]=cell#0` scores 0.19 against 0.21 -- at or below chance. The base rate now travels
+  with the verdicts.
+* **`op.common` is a description, not an invariant.** SYNTH's `Q'` is the atoms true in every
+  state where the action applied, computed over traces of 10,000 steps. Here `|common|` is
+  6-7 literals whether the rule has one positive or four, and **most rules have exactly one**
+  (14 of 16 for the loose reading). Using it as a precondition restricts a rule to objects that
+  look exactly like the training one, which is why `attested` and `generative` cut applicability
+  roughly in half for *both* readings.
+
+## Still open
+
+* **A determinacy-directed search.** SYNTH's EXPAND conjoins atoms until the latent variable is
+  uniquely grounded in every state where the action fired, rejecting extensions that make the
+  rule unsatisfiable somewhere. `attested` is a crude hand-specified version of that and is an
+  *invalid* extension by SYNTH's own criterion -- it determines the parameter by making the rule
+  inapplicable on 69 of 145 firings. This is the obvious next mechanism, it needs no outcome,
+  and it would fail on the loose reading for a stateable structural reason.
+* **Only 2 of 16 and 5 of 9 fitted rules reach the exported model at all** (`build_model` drops
+  support-1 operators; the checker scores everything). Whatever the checker establishes about a
+  rule with one positive is not currently in the ABI.
+* **Cellar's action-family conflation.** One operator learned from five *Lots* clicks and another
+  from two *Cellar* clicks share the action `click(button#button@T0[?o0])`, because those words
+  are data tokens that also appear in headings. Diagnosed, deliberately not fixed here.
+* `preconditions_hold` has no production caller left; it is kept as an independent way to ask
+  the question of an assignment nobody derived.
+* Harbour family fragmentation, effect-constant generalisation, and the frontier's own selection
+  are untouched -- the binder changes what the consequence checker can say, not what
+  `transfer.py` compares.
+
+## Reading the artifacts
+
+`docs/data/v4/consequence_*.json` rows now carry `binding` (status counts, median and largest
+admissible set, whether the bound bit), `schema` (operator kinds and the ill-formed list),
+`value_landing` and `existence_landing`. `docs/data/v4/existence_baseline_*.json` carries the
+removal base rate. `docs/data/v4/conditional_*.json` has both applicability modes and reports
+how many suffix predictions were set aside because the assignment was not determined.
+**Check the timestamps.** Two loss figures in `docs/v4_devlog.md` section `o` were read off
+artifacts that predated the integration, and a stale artifact in a directory of fresh ones is
+indistinguishable from a result.
