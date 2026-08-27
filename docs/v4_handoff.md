@@ -472,6 +472,14 @@ picking arbitrarily would have made it catastrophic. Neither number would mean a
 it earns is *not contradicted, and not about the object that was clicked* -- and the second half
 is only sayable because the first half did not resolve.
 
+The two layers agree. `Operator.supplied` is computed statically from the grounding acts and
+`action_binding` per transition from where the click landed; nothing had checked they describe
+the same operator. They do -- **0 disagreements over all seven harbour readings and 70
+operators**, once string parameters are set aside, which is the right comparison because those
+are carried as typed text rather than as objects. `rm.unique_binding` makes the safe use of an
+ambiguous binding executable rather than advisory: it refuses both when several completions are
+open and when none is.
+
 **And binding does not rescue an ontology.** Refutations that survive go to the residual search,
 which learns a pre-state literal on the prefix and measures it on the held-out suffix. On
 `harbour_seed11` the grounded reading *is* refuted (6 of 32 at split 0.4, 5 of 41 at 0.5) and a
