@@ -135,6 +135,33 @@ def test_a_string_the_action_never_supplied_leaves_the_assignment_merely_possibl
 
 # ------------------------------------------------------------------ the leakage trap
 
+def test_rewriting_every_prediction_leaves_the_binding_untouched():
+    """The leakage trap, empirically rather than by signature.
+
+    ``never_rendered_token`` rewrites every predicted value to a string the application never
+    renders, so every claim that can be refuted is.  If anything about the search consulted the
+    outcome -- picking the assignment that makes the prediction come true, ranking by how well
+    it fits, quietly preferring an object that changed -- the binding summary would move.  It
+    does not, on either reading, in either applicability mode.  (The same comparison over the
+    retained artifacts holds for all 114 paired rows.)
+    """
+    from semabi.compiler.v4.consequence import ASSERTED, ATTESTED, fit, score
+    from semabi.eval.v4_consequence_run import MUTATIONS
+    from semabi.eval.v4_consequence_run import _candidates
+
+    readings = {c.name: c.reading for c in _candidates(HARBOUR_CHAIN)}
+    for name in ("joint discrimination x2", "promote cell[_]=cell#0"):
+        model = fit(HARBOUR_RUN, readings[name], split=0.5)
+        for mode in (ASSERTED, ATTESTED):
+            plain = score(model, applicability=mode)
+            wrecked = score(model, applicability=mode,
+                            mutate=MUTATIONS["never_rendered_token"])
+            assert plain.binding_summary() == wrecked.binding_summary(), (name, mode)
+            assert plain.schema() == wrecked.schema(), (name, mode)
+            # and the control really did do something
+            assert plain.counts("VALUE") != wrecked.counts("VALUE"), (name, mode)
+
+
 def test_the_outcome_cannot_choose_the_binding():
     """The most important test here.
 
