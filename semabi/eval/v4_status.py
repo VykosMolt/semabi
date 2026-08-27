@@ -58,8 +58,10 @@ def retrospective(report: dict) -> dict[str, Any]:
             "classes_among_survivors": classes.get("survivor_classes", [])}
 
 
-def prospective(rows: list[dict], readings: list[str]) -> dict[str, Any]:
+def prospective(rows: list[dict], readings: list[str],
+                baseline: dict[str, Any] | None = None) -> dict[str, Any]:
     """Verdicts per reading per trace, under the instrument and under its controls."""
+    baseline = baseline or {}
     per: dict[str, dict[str, Any]] = {}
     controls: dict[str, dict[str, dict[str, int]]] = defaultdict(dict)
     for reading in readings:
@@ -84,6 +86,7 @@ def prospective(rows: list[dict], readings: list[str]) -> dict[str, Any]:
                 "decided": decided, "supported": supported, "refuted": refuted,
                 "reached": decided > 0,
                 "landing": _merge_landing(live),
+                "existence_landing": _merge_landing(live, "existence_landing"),
                 # How well the reading's own rules pin down the object the action affected.
                 # A reading that cannot relate the clicked control to the object it changes
                 # leaves every object of the type open, and its verdicts then say POSSIBLE
@@ -93,6 +96,7 @@ def prospective(rows: list[dict], readings: list[str]) -> dict[str, Any]:
                 # object the pre-state never pins down does not say which object changes, so
                 # it can be neither supported nor refuted in any useful sense.
                 "schema": _merge_schema(live),
+                "removals_would_be_right_anyway": baseline.get(reading),
             }
         reached = [t for t in traces.values() if t["reached"]]
         if not reached:
@@ -159,10 +163,10 @@ def _merge_schema(rows: list[dict]) -> dict[str, Any]:
             "effects_on_an_object_the_state_does_not_pin_down": ill}
 
 
-def _merge_landing(rows: list[dict]) -> dict[str, dict[str, int]]:
+def _merge_landing(rows: list[dict], field: str = "value_landing") -> dict[str, dict[str, int]]:
     out: dict[str, dict[str, int]] = {}
     for row in rows:
-        for verdict, where in row["value_landing"].items():
+        for verdict, where in (row.get(field) or {}).items():
             for place, count in where.items():
                 out.setdefault(verdict, {}).setdefault(place, 0)
                 out[verdict][place] += count
@@ -260,7 +264,8 @@ NO_FRONTIER = {"basis": "no frontier was run on this application",
                "classes_among_survivors": []}
 
 
-def build(app: str, consequence: list[Path], conditional: list[Path]) -> dict[str, Any]:
+def build(app: str, consequence: list[Path], conditional: list[Path],
+          existence_baseline: list[Path] = ()) -> dict[str, Any]:
     frontier = ROOT / f"docs/data/v4/frontier_{app}.json"
     # An application the frontier never ran on still has a prospective status, and it is the
     # one status that does not depend on the comparison having been made.
@@ -273,9 +278,16 @@ def build(app: str, consequence: list[Path], conditional: list[Path]) -> dict[st
     cond: list[dict] = []
     for path in conditional:
         cond.extend(json.loads(path.read_text()))
+    # How often an object stops being rendered whether or not any rule said it would.  A
+    # removal claim is only worth the amount by which it beats this, and on an application
+    # whose action model is entirely removals that difference can be almost nothing.
+    base: dict[str, Any] = {}
+    for path in existence_baseline:
+        for row in json.loads(path.read_text()):
+            base.setdefault(row["reading"], {})[row["split"]] = row["base_rate_gone"]
     readings = sorted({row["name"] for row in rows}) or (
         [r["name"] for r in report["survivors"]] if report else [])
-    prospect = prospective(rows, readings)
+    prospect = prospective(rows, readings, base)
     selected = (structural(report) if report else NO_FRONTIER).get("selected")
     identification = None
     if selected is not None:
@@ -299,9 +311,12 @@ def main() -> None:
     parser.add_argument("--app", required=True)
     parser.add_argument("--consequence", type=Path, action="append", default=[])
     parser.add_argument("--conditional", type=Path, action="append", default=[])
+    parser.add_argument("--existence-baseline", type=Path, action="append",
+                        default=[], dest="existence_baseline")
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
-    payload = build(args.app, args.consequence, args.conditional)
+    payload = build(args.app, args.consequence, args.conditional,
+                    args.existence_baseline)
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(payload, indent=1, sort_keys=True) + "\n")
@@ -318,6 +333,9 @@ def main() -> None:
             print(f"       {trace:22} decided {t['decided']:5d} supported {t['supported']:5d} "
                   f"refuted {t['refuted']:5d}  bindings {t['binding']['status']} "
                   f"determined {t['binding']['determined']} max {t['binding']['largest_assignment_set']}")
+            if t.get("removals_would_be_right_anyway"):
+                print(f"       {'':22} a removal claim is right anyway "
+                      f"{t['removals_would_be_right_anyway']} of the time")
     for name, row in sorted(payload["prospective"]["controls"].items()):
         print(f"  controls       {name[:34]:36} {row}")
     elim = payload["prospective_elimination"]

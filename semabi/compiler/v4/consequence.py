@@ -272,6 +272,7 @@ class ScopedResult:
                 "existence_coverage": self.coverage(EXISTENCE),
                 "value_correspondence": self.correspondence_counts(VALUE),
                 "value_coverage": self.coverage(VALUE), "value_landing": self.landing(VALUE),
+                "existence_landing": self.landing(EXISTENCE),
                 "identity_coverage": self.coverage(IDENTITY),
                 "binding": self.binding_summary(), "schema": self.schema(),
                 "prediction_signature_digest": self.signature_digest(),
