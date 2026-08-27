@@ -132,6 +132,20 @@ def _lit(l: tuple, A: Abstractor, rels: dict, ptypes: dict[str, Any]) -> rm.Lite
     return None
 
 
+def _without_undetermined_values(e: EffT) -> EffT | None:
+    from dataclasses import replace
+
+    from semabi.compiler.induce import VARIES
+
+    if e.kind in ("set", "rel", "forall_set", "forall_rel"):
+        return None if e.new is VARIES else e
+    if e.kind == "add":
+        attrs = tuple((k, v) for k, v in e.attrs if v is not VARIES)
+        refs = tuple((k, v) for k, v in e.refs if v is not VARIES)
+        return replace(e, attrs=attrs, refs=refs)
+    return e
+
+
 def build_model(A: Abstractor, ops: list[OperatorHyp], min_support: int = 1, view_ops=()) -> LearnedModel:
     types: dict[str, rm.TypeDef] = {}
     key_slots: dict[str, str] = {}
@@ -164,6 +178,13 @@ def build_model(A: Abstractor, ops: list[OperatorHyp], min_support: int = 1, vie
         # context actions become view preconditions (kept in grounding only)
         effects: list[rm.Effect] = []
         for e in op.effs:
+            # A value the action does not determine cannot be planned with.  The model knows
+            # the slot changes; it does not know what to, so an effect asserting it would tell
+            # the planner to write a sentinel into the world.  Dropping the position keeps the
+            # rest of the operator usable and leaves the planner ignorant rather than wrong.
+            e = _without_undetermined_values(e)
+            if e is None:
+                continue
             if e.kind == "add":
                 effects.append(rm.Create(type_name(e.tid), tuple(e.attrs), e.obj))
                 if e.parent:

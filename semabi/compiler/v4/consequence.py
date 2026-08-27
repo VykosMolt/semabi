@@ -125,6 +125,7 @@ class ScopedResult:
     evaluated_steps: int
     operators: int
     single_act_operators: int
+    model: dict[str, Any] = field(default_factory=dict)
     predictions: list[ScopedPrediction] = field(default_factory=list)
     skipped: Counter = field(default_factory=Counter)
 
@@ -199,7 +200,7 @@ class ScopedResult:
                 "correspondence_rule": self.correspondence_rule,
                 "fitted_on_steps": self.fitted_on_steps,
                 "evaluated_steps": self.evaluated_steps, "operators": self.operators,
-                "single_act_operators": self.single_act_operators,
+                "single_act_operators": self.single_act_operators, "model": self.model,
                 "value": self.counts(VALUE), "identity": self.counts(IDENTITY),
                 "existence": self.counts(EXISTENCE),
                 "existence_coverage": self.coverage(EXISTENCE),
@@ -522,7 +523,8 @@ def score(model: Fit, *, mutate: Callable[[str], str] | None = None,
         reading=getattr(reading, "name", "?"), split=split, applicability=applicability,
         correspondence_rule=correspondence, fitted_on_steps=cut,
         evaluated_steps=len(full.steps) - cut, operators=len(operators),
-        single_act_operators=sum(len(v) for v in by_control.values()))
+        single_act_operators=sum(len(v) for v in by_control.values()),
+        model=_model_summary(operators))
     relocate = matcher(correspondence, corr.Corresponder())
     # Survival is asked with the content layers only.  Letting the descent fall through to
     # role and position would answer "still there" for a panel replaced by a different panel
@@ -659,6 +661,31 @@ def _rendered_as(value) -> str | None:
     if isinstance(value, bool):
         return str(value)
     return str(split_literal(value)[0]) if isinstance(value, str) else str(value)
+
+
+def _model_summary(operators) -> dict[str, Any]:
+    """What the fit itself looks like, carried alongside the verdicts.
+
+    A refutation count says nothing about whether the model was given the repairs the learner
+    can make.  These are the facts that say so: how many counterexamples the learner could not
+    explain after installing preconditions, which forms of literal it used, and how many effect
+    values it had to leave undetermined because the action does not fix them.
+    """
+    vocabulary: Counter = Counter()
+    undetermined = 0
+    for op in operators:
+        for literal in op.pre:
+            vocabulary[literal[0]] += 1
+        for eff in op.effs:
+            values = ([eff.new] if eff.kind in ("set", "rel", "forall_set", "forall_rel")
+                      else [v for _, v in eff.attrs] + [v for _, v in eff.refs])
+            undetermined += sum(1 for v in values if v is VARIES)
+    return {"operators": len(operators),
+            "unexplained_counterexamples": sum(op.unexplained_negatives for op in operators),
+            "learned_precondition_vocabulary": dict(sorted(vocabulary.items())),
+            "effect_values_the_action_does_not_determine": undetermined,
+            "rules_supported_by_one_transition": sum(1 for op in operators
+                                                     if len(op.positives) == 1)}
 
 
 def _existence_prediction(A, bridge, pre, post, step, control, op, binding, eff, gone):
