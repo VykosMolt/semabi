@@ -588,7 +588,8 @@ enumeration bound.
   nothing, the only atoms available mention constants, and a constant selects the object that
   looks like the training one. That is exactly what `attested` does, and it is why the object
   it commits to is the wrong one 41 times out of 75. **The reading cannot express a binding
-  query, not merely fail to have learned one.**
+  query, not merely fail to have learned one.** Measured across all seven harbour readings: nine
+ill-formed operators, all on that one reading, **all nine with no object the action names**.
 * **Only 2 of 16 and 5 of 9 fitted rules reach the exported model at all** (`build_model` drops
   support-1 operators; the checker scores everything). Whatever the checker establishes about a
   rule with one positive is not currently in the ABI.

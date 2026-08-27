@@ -341,6 +341,17 @@ def test_an_effect_on_an_object_the_state_never_pins_is_not_a_well_formed_schema
 
     assert not score(loose_fit, applicability=ATTESTED).schema()["ill_formed"]
 
+    # And no binding query could have determined those parameters, because there is nothing
+    # to determine them *from*: every ill-formed operator here has an action attributed to no
+    # object at all, so the only atoms available to a determinacy search mention constants,
+    # and a constant selects whichever object looks like the training one.  That is what
+    # attested does, and it is why the object it commits to is so often the wrong one.
+    by_name = {op.name: op for op in loose_fit.operators}
+    for name in loose["ill_formed"]:
+        core = by_name[name].core()[0]
+        assert not (core.owner and core.loc is not None
+                    and core.loc.owner_tid is not None), name
+
 
 def test_the_generative_mode_is_the_invariants_alone_and_not_the_learned_cover():
     """``op.pre`` has no counterpart in the construction the literature proves correct.
