@@ -173,17 +173,35 @@ def test_on_the_real_trace_one_reading_determines_its_object_and_the_other_does_
     because nothing in its rules relates the control to the cell.  That is not a score; it is
     the number of objects its own preconditions fail to exclude.
     """
+    from semabi.compiler.model import build_model
     from semabi.compiler.v4.consequence import VALUE, fit, score
     from semabi.eval.v4_consequence_run import _candidates
 
     readings = {c.name: c.reading for c in _candidates(HARBOUR_CHAIN)}
-    grounded = score(fit(HARBOUR_RUN, readings["joint discrimination x2"], split=0.5))
-    loose = score(fit(HARBOUR_RUN, readings["promote cell[_]=cell#0"], split=0.5))
+    grounded_fit = fit(HARBOUR_RUN, readings["joint discrimination x2"], split=0.5)
+    loose_fit = fit(HARBOUR_RUN, readings["promote cell[_]=cell#0"], split=0.5)
+    grounded, loose = score(grounded_fit), score(loose_fit)
     decided = [p for p in grounded.predictions if p.kind == VALUE and p.bindings]
     assert decided and all(p.binding_status == binding.UNIQUE for p in decided)
     open_ended = [p for p in loose.predictions if p.kind == VALUE and p.bindings]
     assert open_ended and all(p.binding_status == binding.AMBIGUOUS for p in open_ended)
     assert min(p.bindings for p in open_ended) > 10
+
+    # Where the two readings' claims land is the same fact seen from the outside.  Nothing in
+    # the checker prefers one of them: it asks both whether the node they predicted about is
+    # the one the click landed on, and only the grounded reading can answer yes.
+    assert set(grounded.landing(VALUE)) and all(
+        set(where) == {"in the clicked row"} for where in grounded.landing(VALUE).values())
+    assert all("in another row" in where for where in loose.landing(VALUE).values())
+
+    # And the exported action model says it before any prediction is checked at all, because
+    # it is a property of the reading rather than of the trace: an operator records which of
+    # its parameters the interaction itself grounds.
+    for fitted, action_grounds_everything in ((grounded_fit, True), (loose_fit, False)):
+        operators = build_model(fitted.abstractor, fitted.operators,
+                                min_support=2).domain.operators.values()
+        assert operators
+        assert all(bool(op.derived()) is not action_grounds_everything for op in operators)
 
 
 # ------------------------------------------------------------------ existential aggregation
