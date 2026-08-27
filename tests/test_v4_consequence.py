@@ -76,7 +76,10 @@ def test_a_precondition_that_cannot_be_checked_stops_the_rule_firing():
     A, st = abstractor(), state(obj(**{"attr:x": "closed"}))
     op = operator(pre=[("str_ne_attr", "?s0", "?o0", "attr:x")])
     ok, why = csq.preconditions_hold(A, st, op, {"?o0": list(st.objs.values())[0]})
-    assert not ok and "typed value" in why
+    # The reason is the accurate one -- the parameter is not bound -- rather than a blanket
+    # "typed value", because this check now shares its semantics with the binder, which knows
+    # which parameter is missing.
+    assert not ok and "?s0" in why
 
 
 def test_a_precondition_about_an_unbound_object_stops_the_rule_firing():

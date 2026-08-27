@@ -410,57 +410,48 @@ def applicable_literals(op, mode: str) -> list[tuple]:
     return out
 
 
-def preconditions_hold(A, state, op, binding, mode: str = ASSERTED) -> tuple[bool, str]:
-    """Does the rule's antecedent hold, exactly, in the reading's earlier state?
+def preconditions_hold(A, state, op, values, mode: str = ASSERTED) -> tuple[bool, str]:
+    """Does the rule's antecedent hold, exactly, for this one complete assignment?
 
-    Every literal must be checkable and true.  Skipping one that cannot be checked would let
-    the rule fire where it never claimed to, and over-firing is the direction that invents
+    The same semantics the binder uses when it solves for assignments, applied to one that is
+    already complete.  Keeping a second implementation here is how the two would drift, and a
+    binder that admitted an assignment the checker then rejected would be the worst of both.
+
+    A literal this state cannot decide leaves the rule un-fired.  Over-firing invents
     refutations; under-firing only costs coverage, which is reported.
     """
+    state.types = getattr(state, "types", None) or A.types
     for literal in applicable_literals(op, mode):
-        head = literal[0]
-        if head in _UNCHECKABLE:
-            return False, f"the rule's {head} precondition is about a typed value, not tested here"
-        params = [x for x in literal[1:] if isinstance(x, str) and x.startswith("?")]
-        objs = {}
-        for p in params:
-            o = binding.get(p)
-            if o is None:
-                return False, f"the rule constrains {p}, which this step does not bind"
-            objs[p] = o
-        if head in ("attr", "attr_ne"):
-            _, p, slot, value = literal
-            o = objs[p]
-            ti = A.types.get(o.tid)
-            actual = o.key if ti is not None and slot == ti.key_slot else o.attrs.get(slot)
-            if (actual == value) != (head == "attr"):
-                return False, f"the rule requires {p}.{slot} {'=' if head == 'attr' else '!='} {value!r}, which is not so here"
-        elif head in ("ref", "ref_ne"):
-            _, p, slot, q = literal
-            if (objs[p].refs.get(slot) == objs[q].id) != (head == "ref"):
-                return False, f"the rule's {slot} reference does not hold here"
-        elif head in ("parent", "parent_ne"):
-            _, p, q = literal
-            if (objs[p].parent == objs[q].id) != (head == "parent"):
-                return False, "the rule's containment precondition does not hold here"
-        elif head in ("ref_null", "ref_set"):
-            _, p, slot = literal
-            if (objs[p].refs.get(slot) is None) != (head == "ref_null"):
-                return False, (f"the rule requires {slot} to point at "
-                               f"{'nothing' if head == 'ref_null' else 'something'}, "
-                               f"which is not so here")
-        elif head in ("parent_null", "parent_set"):
-            if (objs[literal[1]].parent is None) != (head == "parent_null"):
-                return False, "the rule's containment precondition does not hold here"
-        elif head == "empty":
-            o = objs[literal[1]]
-            occupied = any(x.parent == o.id for x in state.objs.values()) or any(
-                v == o.id for x in state.objs.values() for v in x.refs.values())
-            if occupied:
-                return False, "the rule requires an object nothing points at"
-        else:
-            return False, f"the rule's {head} precondition is not tested here"
+        missing = [x for x in literal[1:]
+                   if isinstance(x, str) and x.startswith("?") and x not in values]
+        if missing:
+            return False, f"the rule constrains {missing[0]}, which this step does not bind"
+        verdict = binding.holds(literal, values, state)
+        if verdict is None:
+            return False, (f"the rule's {literal[0]} precondition is about a typed value, "
+                           f"not tested here")
+        if verdict is False:
+            return False, _why_not(literal)
     return True, ""
+
+
+def _why_not(literal: tuple) -> str:
+    head = literal[0]
+    if head in ("attr", "attr_ne"):
+        _, p, slot, value = literal
+        sign = "=" if head == "attr" else "!="
+        return f"the rule requires {p}.{slot} {sign} {value!r}, which is not so here"
+    if head in ("ref_null", "ref_set"):
+        _, p, slot = literal
+        want = "nothing" if head == "ref_null" else "something"
+        return f"the rule requires {slot} to point at {want}, which is not so here"
+    if head in ("ref", "ref_ne"):
+        return f"the rule's {literal[2]} reference does not hold here"
+    if head in ("parent", "parent_ne", "parent_null", "parent_set"):
+        return "the rule's containment precondition does not hold here"
+    if head == "empty":
+        return "the rule requires an object nothing points at"
+    return f"the rule's {head} precondition does not hold here"
 
 
 # ---------------------------------------------------------------- evaluation
