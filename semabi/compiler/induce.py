@@ -987,8 +987,17 @@ class Inducer:
         self.operators = self._merge_vacuous(keep)
 
     def _control_key(self, op: OperatorHyp) -> str:
+        """What counts as the same action family for the purpose of comparing effect values.
+
+        The control the core click names, when there is one.  An operator with no core -- a
+        select or type with nothing clicked after it -- is keyed by its whole action sequence
+        instead, because pooling every coreless rule under one name would compare the effect
+        values of actions that have nothing to do with each other.
+        """
         core = op.core()
-        return core[0].loc.slot.split("@")[0] if core and core[0].loc else "?"
+        if core and core[0].loc is not None:
+            return core[0].loc.slot.split("@")[0]
+        return "acts:" + "; ".join(str(a) for a in op.acts)
 
     @staticmethod
     def _effect_positions(eff: EffT):
