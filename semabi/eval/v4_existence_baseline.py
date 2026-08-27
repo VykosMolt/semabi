@@ -10,6 +10,13 @@ pre-state did not pin down is being marked correct for guessing the weather.
 So this runs exactly the same check over *every* object in every held-out pre-state, with no
 rule involved at all, and reports the base rate.  A reading's supported removals mean
 something only to the extent they exceed it.
+
+The base rate is unconditional, which is the weaker of the two comparisons worth making.  A
+rule that only ever fires on objects sitting in a view that is about to be replaced would beat
+it without modelling anything, because the objects it selects are not a random sample.  The
+sharper control is a baseline conditioned on the same click -- what fraction of the objects
+present at *this* step went away -- and it is not built here.  Treat a reading that fails to
+beat the unconditional rate as settled and one that beats it as not yet refuted.
 """
 from __future__ import annotations
 
