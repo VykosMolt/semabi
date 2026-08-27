@@ -917,3 +917,136 @@ What the generalisation actually needs is an outcome check scoped to the same re
 precondition -- "did *this object* come to render the value" rather than "did the page gain
 an occurrence" -- which requires relocating a scope across a transition. That is the real
 next mechanism, and it is a harder problem than swapping the ancestor role.
+
+## o — 2026-08-27 — binding the parameters the action does not supply
+
+A learned rule can name objects the interaction never names. `click Close` says which button
+was pressed; a rule saying *the visit in that berth closes* has a parameter nothing in the
+click grounds. Until now the checker did the only thing it could with such a rule, which was
+to drop it, and the drop was reported as coverage rather than examined.
+
+The mechanism is a query, not a heuristic. The rule's own preconditions are evaluated against
+the **pre**-action state and solved for the parameters the action left open; every assignment
+that satisfies them is admissible. Nothing about the outcome is available while that happens
+-- `binding.solve` does not take a post-state, and a test asserts that its signature never
+grows one -- because the failure mode here is not subtle: look at the outcome, find the object
+that makes the prediction come true, call that the binding, and every rule is confirmed.
+
+Three things follow from treating it as a query rather than a guess.
+
+*Applicability and binding are one question.* An assignment exists exactly when the
+preconditions can be satisfied, so `NONE` and *not applicable* stop being separate answers.
+On harbour's grounded reading 27 of 59 predictions at split 0.4 come back `NONE`, and the same
+27 are the `NOT_APPLICABLE` verdicts.
+
+*Ambiguity is an answer.* `UNIQUE` / `AMBIGUOUS` / `NONE` / `UNOBSERVED` are reported, not
+collapsed into a score or resolved by taking the first. `UNOBSERVED` is separate from `NONE`
+on purpose: a state built from one rendered page has no objects from the other pages, and
+absence of an object is not evidence that the rule fails. It fires 1952 times across the
+corpus, so the distinction is load-bearing rather than decorative.
+
+*The aggregate is existential.* A binding set is a set of hypotheses about which concrete rule
+instance ran, not a set of objects that must all change. One admissible assignment that the
+transition supports is enough to stop a refutation; refuting needs every one of them refuted,
+and an assignment that could not be decided counts against refuting too. So does an
+enumeration that stopped early -- a truncated search can report `POSSIBLE` but never `REFUTED`.
+That last rule was written after the enumeration bound was found masquerading as evidence: at
+`MAX_ADMISSIBLE = 64` cellar reported a median of exactly 64 assignments and 40 `POSSIBLE`
+verdicts; raising the bound turned those 40 into 45 `REFUTED` from a complete enumeration.
+
+### What the measurement was actually for
+
+The objective assumed unbound parameters were the binding problem. They are not the dominant
+one. Corpus-wide, of predictions made but not decided, roughly 47k are lost to a single
+pattern -- `no object is named 'Gallons' here, so the rule does not apply` -- where the rule
+memorised a key value from training and no object carries it at prediction time. The largest
+single case is 26,786 on one blend_book reading. Unbound parameters were the next category
+and are now zero on every regenerated application; `blend_book_transfer.json` still shows
+33,232 because it predates the integration, and reading a stale artifact as a live result is a
+mistake this log nearly recorded as a finding.
+
+### Harbour: one fact, visible in three places
+
+The two surviving harbour readings are `joint discrimination x2` (a row is an object, named by
+its identifying column) and `promote cell[_]=cell#0` (every rendered cell is an object, named
+by its own text). Same machinery, same traces, same actions, no reading-specific code
+anywhere in the binder.
+
+**As a count of admissible assignments.** Across three traces, five splits and both
+applicability modes: the grounded reading's largest admissible set is **2**; the loose
+reading's is **41**, with medians around 35 under `asserted`. That is not a score. It is the
+number of objects a reading's own preconditions fail to exclude for a click it has just seen.
+
+**As where the claims land.** 478 decided predictions from the grounded reading, **0%** about
+any row other than the one clicked. 1902 from the loose reading, **78%** about some other row
+-- and 300 of its 333 refutations are in that 78%. Under `attested` on the transfer trace at
+split 0.5 the split is total: 34 supported, every one in the clicked row; 41 refuted, every one
+outside it. A unique binding is not a correct binding.
+
+**As exported operator semantics.** `Operator.supplied` records which parameters the grounding
+carries. Six of harbour's seven candidate readings export operators that are 100%
+action-supplied. `promote cell[_]=cell#0` exports 0% -- one derived parameter per operator.
+That is readable off the exported model before a single prediction is checked, which is the
+point: it is a property of the reading, not of the trace.
+
+### Ambiguity is what keeps the answer honest
+
+Under `asserted` the loose reading returns 140 `POSSIBLE` and 5 `REFUTED` where a mechanism
+that picked one binding would have returned something else entirely. Had it picked the
+best-fitting assignment it would have looked flawless; had it picked arbitrarily it would have
+looked catastrophic. Neither number would have meant anything. What the reading actually
+earns is *not contradicted, and not about the object that was clicked* -- and the second half
+of that is only sayable because the first half did not resolve.
+
+### The residual search, and what it cannot repair
+
+Refutations that survive binding go to the conditional-refinement search, which learns a
+pre-state literal on the prefix and asks what it does to the held-out suffix. Two results.
+
+On `harbour_seed11` the grounded reading is refuted -- 6 of 32 at split 0.4, 5 of 41 at 0.5 --
+so the transfer trace's clean record is not a property of the reading. A prefix literal
+removes **every** refutation and keeps **every** support: `{REFUTED: 6, SUPPORTED: 26}` becomes
+`{SUPPORTED: 26}` on held-out steps. The rule was over-general and its own vocabulary contains
+the condition that fixes it.
+
+The loose reading is not repaired anywhere. Every operator, every split, both traces:
+`NO_LITERAL_IN_THE_READINGS_VOCABULARY_SEPARATES_THE_PREFIX`. And the landing table says why.
+It is right when the prediction lands on the clicked row and wrong when it does not, so the
+literal that would separate its successes from its failures is *is this the row the click
+landed in* -- which its ontology cannot state, because it has no relation between a button and
+the row containing it. **Latent binding does not substitute for an ontology that connects the
+action to its object.** That is the run's result.
+
+One consequence had to be accepted rather than worked around: where several assignments were
+open, the recorded context belongs to one representative of them, and choosing a repair
+condition from a representative would be choosing it from an object that may not be the one
+the rule acted on -- the leak the binder exists to close. So the search now runs only on
+determined assignments and reports how many it set aside, which under `asserted` is all 143 of
+the loose reading's predictions. The instrument reports its own silence instead of filling it.
+
+### Three defects the integration exposed
+
+*The binder consulted `op.common` regardless of applicability mode.* Applicability checked
+`op.pre` only while binding demanded the attested key literal, so every `asserted` number ever
+reported for a key-binding reading was really an attested number. The grounded reading was
+unaffected -- it binds from the action -- and the loose reading's old figures reappear exactly
+under `attested`, which is what identified the defect as a mode leak rather than a change.
+
+*The identity sub-check was reported for a chosen winner.* It read off whichever binding had
+been selected as representative, which is a supported one, giving 99 refuted / 46 supported
+against VALUE's 140 possible / 5 refuted for the same predictions. Aggregating identity the
+same existential way it aggregates value makes the two agree.
+
+*`supplied=()` was indistinguishable from "nobody asked".* The exported `derived()` returned
+nothing when the action grounded nothing, while `derive_bindings` correctly treated every
+parameter as unbound -- diagnostics contradicting the solver, silently, in precisely the case
+the field exists to expose. `None` now means the legacy reading and `()` means the real one.
+
+### Still open
+
+`preconditions_hold` has no production caller left and is kept only as an independent way to
+ask the question of an assignment nobody derived. Cellar's refutations are dominated by
+action-family conflation -- one operator learned from five *Lots* clicks and another from two
+*Cellar* clicks share the action `click(button#button@T0[?o0])` because those words are data
+tokens that also appear in headings -- which is diagnosed and deliberately not fixed here.
+And the memorised-key loss above dwarfs everything this section is about.
