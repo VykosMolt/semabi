@@ -387,7 +387,13 @@ def action_binding(A, po, state, op, clicked: int) -> tuple[dict[str, Any], str]
     about; a reading whose objects do not contain it supplies nothing here, and everything its
     rule mentions has to be solved for.  That difference is a fact about the readings.
 
-    Typed and selected values are supplied too: the action carried the string.
+    Only the owner of the clicked node.  A typed or selected string *was* carried by the
+    action, and binding it here would let literals about it be decided instead of left open --
+    but the value lives on the concrete step rather than on the rule, and this is not given the
+    step.  The cost is measured and small: 53 bindings corpus-wide come back ``POSSIBLE`` for
+    want of a string, all on one application, against 7581 fully decided.  Until that is worth
+    the plumbing, the string is treated as never supplied, which keeps such a rule from being
+    refuted on a literal nothing here could evaluate.
     """
     binding: dict[str, Any] = {}
     core = op.core()[0]
