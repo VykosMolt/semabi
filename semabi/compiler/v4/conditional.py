@@ -98,11 +98,19 @@ def refine(run_dir: Path, reading, *, split: float = 0.6, min_support: int = 2,
     by_op_suffix: dict[str, list[ScopedPrediction]] = defaultdict(list)
     # Both page checks, so that a reading whose rules only say what goes away is analysed
     # rather than silently reported as having nothing to explain.
+    # Only predictions whose assignment the pre-state determined.  Where several assignments
+    # were open the recorded context belongs to one representative of them, and choosing a
+    # condition from a representative would be choosing it from an object that may not be the
+    # one the rule acted on -- which is the leak the binder exists to close.
+    def grounded(p) -> bool:
+        return (p.kind in PAGE_CHECKS and p.verdict in (SUPPORTED, REFUTED)
+                and p.binding_status in ("", "UNIQUE"))
+
     for p in prefix.predictions:
-        if p.kind in PAGE_CHECKS and p.verdict in (SUPPORTED, REFUTED):
+        if grounded(p):
             by_op_prefix[p.operator].append(p)
     for p in suffix.predictions:
-        if p.kind in PAGE_CHECKS and p.verdict in (SUPPORTED, REFUTED):
+        if grounded(p):
             by_op_suffix[p.operator].append(p)
 
     rows: list[dict[str, Any]] = []
@@ -149,8 +157,11 @@ def refine(run_dir: Path, reading, *, split: float = 0.6, min_support: int = 2,
         len({tuple(sorted(lit["suffix_when_it_holds"].items()))
              for lit in row["separating_literals"]}) <= 1
         for row in rows if row.get("separating_literals"))
+    ambiguous = sum(1 for p in suffix.predictions
+                    if p.kind in PAGE_CHECKS and p.binding_status == "AMBIGUOUS")
     return {"reading": getattr(reading, "name", "?"), "split": split,
             "applicability": applicability,
+            "suffix_predictions_left_out_because_the_assignment_was_not_determined": ambiguous,
             "suffix_before_refinement": dict(sorted(before.items())),
             "suffix_after_refinement": dict(sorted(after.items())),
             "all_separating_literals_agree_on_the_suffix": unanimous,
