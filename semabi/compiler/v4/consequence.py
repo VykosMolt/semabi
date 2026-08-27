@@ -181,7 +181,10 @@ class ScopedResult:
         would call four readings indistinguishable by saying nothing about any of them.
         """
         kinds = (kind,) if isinstance(kind, str) else tuple(kind)
-        return sorted((p.kind, p.step, p.feature_node, p.expected, p.verdict)
+        # A prediction the pre-state could not bind has no node to name; -1 keeps the
+        # signature total without pretending it landed somewhere.
+        return sorted((p.kind, p.step, -1 if p.feature_node is None else p.feature_node,
+                       str(p.expected), p.verdict)
                       for p in self.predictions
                       if p.kind in kinds and p.verdict != NOT_APPLICABLE)
 
