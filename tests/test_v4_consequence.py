@@ -97,24 +97,35 @@ def test_the_key_slot_is_checked_against_the_objects_key():
 
 # ------------------------------------------------------------------ binding
 
-def test_a_rule_that_names_an_object_by_value_binds_to_whatever_carries_it():
-    """Establishes the property that separates the harbour readings.  A rule whose only
-    handle on its object is a learned value binds to whichever object on the page has that
-    value, wherever it is -- which is why its predictions can land outside the clicked row."""
+def test_only_the_action_supplies_a_parameter_directly():
+    """What the action itself carries, as distinct from what the rule's preconditions imply.
+
+    This used to be the whole binder: a parameter was bound either to the owner of the clicked
+    node or to an object whose *key* matched a constant the rule had memorised.  The second is
+    the memorised-constant defect on the binding side, and across the corpus it cost more
+    predictions than parameters having no binding at all -- "no object is named 'Gallons'
+    here" was the single commonest reason a rule could not fire.  Solving the preconditions
+    (see ``test_v4_binding.py``) replaced it; what remains here is the action's own
+    contribution.
+    """
     A = abstractor()
-    here, elsewhere = obj(key="closed", node=5), obj(key="open", node=9)
-    op = operator(common=[("attr", "?o0", "id", "closed")])
+    op = operator()
     op.core = lambda: (SimpleNamespace(owner=None, loc=None, kind="click"),)
-    binding, why = csq.bind(A, None, state(here, elsewhere), op, clicked=99)
-    assert why == "" and binding["?o0"] is here
+    supplied, why = csq.action_binding(A, None, state(obj()), op, clicked=0)
+    assert supplied == {} and why == ""
 
 
-def test_a_rule_whose_value_names_nothing_here_does_not_apply():
+def test_a_reading_that_does_not_own_the_clicked_control_supplies_nothing():
+    """Establishes the asymmetry that is a fact about the readings: one can say which object
+    the action was on, the other cannot, and everything it mentions must then be solved for."""
     A = abstractor()
-    op = operator(common=[("attr", "?o0", "id", "closed#7")])
-    op.core = lambda: (SimpleNamespace(owner=None, loc=None, kind="click"),)
-    binding, why = csq.bind(A, None, state(obj(key="closed")), op, clicked=0)
-    assert binding == {} and "closed#7" in why
+    op = operator()
+    owner_act = SimpleNamespace(owner="?o0", kind="click",
+                                loc=SimpleNamespace(owner_tid=1, slot="button:Close"))
+    op.core = lambda: (owner_act,)
+    po = SimpleNamespace(node_instance={}, instances=[])
+    supplied, why = csq.action_binding(A, po, state(obj()), op, clicked=7)
+    assert supplied == {} and "not read the clicked control" in why
 
 
 # ------------------------------------------------------------------ the slot/node guard

@@ -1,0 +1,186 @@
+"""Solving a rule's preconditions for the objects the action did not supply.
+
+A lifted rule names objects the concrete action does not carry.  The question these tests
+cover is which pre-state objects could have been the ones -- answered by reading the rule's own
+preconditions as a query over the pre-action state, before any outcome is seen.
+
+What a pass establishes, and what it does not:
+
+* an admissible assignment is one the pre-action evidence does not rule out.  It is never a
+  claim that this assignment is what happened; several of them are competing hypotheses about
+  one instantiation, which is why a single supported assignment blocks a refutation.
+* nothing here establishes that a rule's preconditions are the *right* constraints.  They are
+  the constraints the learner installed, and the binder interprets the model it was given.
+"""
+from __future__ import annotations
+
+from pathlib import Path
+from types import SimpleNamespace
+
+import pytest
+
+from semabi.compiler.abstract import AbsObj, AbstractState
+from semabi.compiler.v4 import binding
+
+BERTH, CALL = 1, 2
+
+
+def obj(key, tid=BERTH, node=0, holds=None, **attrs):
+    return AbsObj(tid, key, dict(attrs), refs={"rel:holds": (CALL, holds) if holds else None},
+                  node=node)
+
+
+def state(*objs):
+    st = AbstractState.__new__(AbstractState)
+    st.objs = {o.id: o for o in objs}
+    st.view = {}
+    st.types = {BERTH: SimpleNamespace(key_slot="id"), CALL: SimpleNamespace(key_slot="id")}
+    return st
+
+
+def rule(params, pre=()):
+    return SimpleNamespace(params=dict(params), pre=list(pre),
+                           core=lambda: (SimpleNamespace(owner=None, loc=None, kind="click"),))
+
+
+# ------------------------------------------------------------------ one answer
+
+def test_a_relational_precondition_can_determine_an_object_the_action_never_supplied():
+    """Establishes the mechanism: the action carries a call, and the rule's own precondition
+    -- the berth whose holds-reference points at that call -- picks exactly one berth out of
+    three.  No similarity, no name lookup, no ordering: a query with one solution."""
+    call = obj("C-101", tid=CALL, node=9)
+    world = state(obj("N1", node=1), obj("N2", node=2, holds="C-101"), obj("S1", node=3), call)
+    op = rule({"?o0": CALL, "?o1": BERTH}, [("ref", "?o1", "rel:holds", "?o0")])
+    found = binding.solve(op, op.pre, world, {"?o0": call})
+    assert found.status == binding.UNIQUE
+    assert found.unique.get("?o1").key == "N2"
+    assert found.unique.provenance["?o1"] == binding.DERIVED
+    assert found.unique.provenance["?o0"] == binding.ACTION
+
+
+def test_a_rule_that_constrains_nothing_admits_every_object_of_the_type():
+    """Establishes that weak preconditions produce ambiguity rather than a guess.
+
+    This is the shape a reading gets when its rules cannot relate the acted-on control to the
+    object they affect.  Three berths satisfy a rule that says nothing about which, and the
+    binder returns three -- it does not pick the first, the lowest id, or the best match.
+    """
+    world = state(obj("N1", node=1), obj("N2", node=2), obj("S1", node=3))
+    found = binding.solve(rule({"?o0": BERTH}), (), world, {})
+    assert found.status == binding.AMBIGUOUS
+    assert sorted(b.get("?o0").key for b in found.admissible) == ["N1", "N2", "S1"]
+
+
+def test_a_contradicted_precondition_leaves_no_assignment():
+    """Establishes non-applicability, which is not a refutation of anything: the rule simply
+    does not describe this state."""
+    world = state(obj("N1", node=1, state="open"), obj("N2", node=2, state="open"))
+    op = rule({"?o0": BERTH}, [("attr", "?o0", "state", "closed")])
+    found = binding.solve(op, op.pre, world, {})
+    assert found.status == binding.NONE
+    assert found.admissible == ()
+
+
+def test_a_type_that_is_not_rendered_here_is_ignorance_not_non_applicability():
+    """Establishes the partial-observability discipline at the binding layer.
+
+    These states are built from one observation, so an object on another view is not present
+    with unknown values -- it is absent.  A parameter whose type has no rendered instance is
+    therefore something this page could not show, and reporting it as "the rule does not apply"
+    would turn a page that showed nothing into evidence about the rule.
+    """
+    world = state(obj("N1", node=1))
+    found = binding.solve(rule({"?o0": CALL}), (), world, {})
+    assert found.status == binding.UNOBSERVED
+    assert "rendered here" in found.detail
+
+
+# ------------------------------------------------------------------ joint solving
+
+def test_two_latent_variables_related_by_a_reference_are_solved_together():
+    """Establishes that the search is a join and not two independent choices.
+
+    Either berth could be ``?o1`` and either call ``?o2`` on their own; only one pair satisfies
+    the reference between them, and solving the variables separately would admit four.
+    """
+    world = state(obj("N1", node=1, holds="C-101"), obj("N2", node=2, holds="C-102"),
+                  obj("C-101", tid=CALL, node=8), obj("C-102", tid=CALL, node=9))
+    op = rule({"?o1": BERTH, "?o2": CALL},
+              [("ref", "?o1", "rel:holds", "?o2"), ("attr", "?o2", "id", "C-102")])
+    found = binding.solve(op, op.pre, world, {})
+    assert found.status == binding.UNIQUE
+    assert (found.unique.get("?o1").key, found.unique.get("?o2").key) == ("N2", "C-102")
+
+
+def test_a_reference_to_nothing_constrains_the_search():
+    world = state(obj("N1", node=1), obj("N2", node=2, holds="C-101"))
+    op = rule({"?o0": BERTH}, [("ref_null", "?o0", "rel:holds")])
+    found = binding.solve(op, op.pre, world, {})
+    assert found.status == binding.UNIQUE and found.unique.get("?o0").key == "N1"
+    op = rule({"?o0": BERTH}, [("ref_set", "?o0", "rel:holds")])
+    assert binding.solve(op, op.pre, world, {}).unique.get("?o0").key == "N2"
+
+
+def test_a_string_the_action_never_supplied_leaves_the_assignment_merely_possible():
+    """Establishes that missing evidence weakens an assignment rather than deleting it, and
+    that the weakening is recorded rather than folded into the verdict."""
+    world = state(obj("N1", node=1))
+    op = rule({"?o0": BERTH, "?s0": "str"}, [("nonempty_str", "?s0")])
+    found = binding.solve(op, op.pre, world, {})
+    assert found.status == binding.UNIQUE
+    assert found.unique.evidence == binding.POSSIBLE
+    assert any("?s0" in reason for reason in found.unique.undecided)
+
+
+# ------------------------------------------------------------------ the leakage trap
+
+def test_the_outcome_cannot_choose_the_binding():
+    """The most important test here.
+
+    Two berths satisfy the rule equally in the pre-state; after the transition only one of them
+    took the predicted value.  The binder is given the pre-state and nothing else, so it must
+    return both -- and the consequence layer must therefore be unable to refute, because the
+    hidden instantiation might have been the one that worked.  A binder that could see the
+    outcome would return one, and every reading would then be able to pick whichever object
+    made its own effect come true.
+    """
+    world = state(obj("N1", node=1, state="open"), obj("N2", node=2, state="open"))
+    op = rule({"?o0": BERTH}, [("attr", "?o0", "state", "open")])
+    found = binding.solve(op, op.pre, world, {})
+    assert found.status == binding.AMBIGUOUS
+    assert len(found.admissible) == 2
+    # the solver's signature has no access to a later state at all
+    import inspect
+    assert "post" not in inspect.signature(binding.solve).parameters
+    assert not any("after" in name for name in inspect.signature(binding.solve).parameters)
+
+
+# ------------------------------------------------------------------ the real trace
+
+ROOT = Path(__file__).resolve().parents[1]
+HARBOUR_CHAIN = ROOT / "docs/data/v4/manifests/harbour_chain.json"
+HARBOUR_RUN = ROOT / "runs/v4/harbour_transfer"
+
+
+@pytest.mark.skipif(not (HARBOUR_RUN / "steps.jsonl").exists(), reason="retained trace absent")
+def test_on_the_real_trace_one_reading_determines_its_object_and_the_other_does_not():
+    """The finding, through the whole path: fit, bind, relocate, check.
+
+    The reading that names a berth row by its identifying column binds every rule uniquely from
+    the clicked control plus its learned preconditions.  The reading that makes each rendered
+    cell an entity named by its own text leaves dozens of assignments open for the same click,
+    because nothing in its rules relates the control to the cell.  That is not a score; it is
+    the number of objects its own preconditions fail to exclude.
+    """
+    from semabi.compiler.v4.consequence import VALUE, fit, score
+    from semabi.eval.v4_consequence_run import _candidates
+
+    readings = {c.name: c.reading for c in _candidates(HARBOUR_CHAIN)}
+    grounded = score(fit(HARBOUR_RUN, readings["joint discrimination x2"], split=0.5))
+    loose = score(fit(HARBOUR_RUN, readings["promote cell[_]=cell#0"], split=0.5))
+    decided = [p for p in grounded.predictions if p.kind == VALUE and p.bindings]
+    assert decided and all(p.binding_status == binding.UNIQUE for p in decided)
+    open_ended = [p for p in loose.predictions if p.kind == VALUE and p.bindings]
+    assert open_ended and all(p.binding_status == binding.AMBIGUOUS for p in open_ended)
+    assert min(p.bindings for p in open_ended) > 10

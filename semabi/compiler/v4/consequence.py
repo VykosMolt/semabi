@@ -60,6 +60,7 @@ from typing import Any, Callable
 
 from semabi.compiler.induce import VARIES
 from semabi.compiler.parse import leaf_value
+from semabi.compiler.v4 import binding
 from semabi.compiler.v4 import correspondence as corr
 from semabi.compiler.v4.prospective import action_control, control_of, split_literal
 
@@ -98,6 +99,10 @@ class ScopedPrediction:
     admissible: tuple[int, ...] = ()
     observed: tuple[str, ...] = ()
     held_before: str = ""
+    bindings: int = 0                           # assignments the pre-state left open
+    binding_status: str = ""                    # UNIQUE | AMBIGUOUS | NONE | UNOBSERVED
+    binding_evidence: str = ""                  # supported | possible, over those assignments
+    identity: Any = None                        # the reading's own naming check, when it applies
     verdict: str = NOT_APPLICABLE
     detail: str = ""
     layers: tuple[str, ...] = ()
@@ -112,7 +117,9 @@ class ScopedPrediction:
                 "feature_node": self.feature_node, "correspondence": self.correspondence,
                 "admissible": list(self.admissible), "observed": list(self.observed),
                 "verdict": self.verdict, "detail": self.detail, "layers": list(self.layers),
-                "action_local": self.action_local}
+                "action_local": self.action_local, "bindings": self.bindings,
+                "binding_status": self.binding_status,
+                "binding_evidence": self.binding_evidence}
 
 
 @dataclass
@@ -312,15 +319,14 @@ def _owner_object(A, po, state, node: int):
     return None
 
 
-def bind(A, po, state, op, clicked: int) -> tuple[dict[str, Any], str]:
-    """Bind the rule's object params in the earlier state, or say why it cannot be done.
+def action_binding(A, po, state, op, clicked: int) -> tuple[dict[str, Any], str]:
+    """The parameters the concrete action supplies, and nothing else.
 
-    Two sources, and their difference is a fact about the readings rather than about this
-    code.  A reading whose objects contain the clicked control can say *which* object the
-    action is about, and the binding is the owner of the clicked node.  A reading whose
-    objects do not contain it can only name the object by a value its rules learned, and the
-    binding then comes from that key literal -- which is why such a reading fires on whatever
-    object happens to carry the value, wherever it is on the page.
+    A reading whose objects contain the clicked control can say which object the action is
+    about; a reading whose objects do not contain it supplies nothing here, and everything its
+    rule mentions has to be solved for.  That difference is a fact about the readings.
+
+    Typed and selected values are supplied too: the action carried the string.
     """
     binding: dict[str, Any] = {}
     core = op.core()[0]
@@ -329,25 +335,21 @@ def bind(A, po, state, op, clicked: int) -> tuple[dict[str, Any], str]:
         if owner is None:
             return {}, "the reading does not read the clicked control as part of any object"
         binding[core.owner] = owner
-    by_key: dict[tuple[int, str], Any] = {}
-    for literal in list(op.pre) + sorted(getattr(op, "common", ()) or (), key=str):
-        if len(literal) == 4 and literal[0] == "attr":
-            _, param, slot, value = literal
-            tid = op.params.get(param)
-            ti = A.types.get(tid)
-            if ti is not None and slot == ti.key_slot and isinstance(value, str):
-                by_key.setdefault((param, value), tid)
-    for (param, value), tid in by_key.items():
-        if param in binding:
-            continue
-        hits = [o for o in state.objs.values() if o.tid == tid and o.key == value]
-        if len(hits) == 1:
-            binding[param] = hits[0]
-        elif not hits:
-            return {}, f"no object is named {value!r} here, so the rule does not apply"
-        else:
-            return {}, f"{len(hits)} objects are named {value!r}; the rule does not say which"
     return binding, ""
+
+
+def bindings_for(A, po, state, op, clicked: int, applicability: str) -> tuple[Any, str]:
+    """Every assignment of the rule's parameters this pre-action state leaves open.
+
+    The literals are the ones the applicability mode already uses, so binding and applicability
+    are one question asked once: an assignment is admissible exactly when it satisfies what
+    decides whether the rule applies.
+    """
+    supplied, why = action_binding(A, po, state, op, clicked)
+    if why:
+        return None, why
+    return binding.solve(op, applicable_literals(op, applicability), state, supplied,
+                         types=A.types), ""
 
 
 _UNCHECKABLE = ("nonempty_str", "str_ne_attr")
@@ -553,80 +555,168 @@ def score(model: Fit, *, mutate: Callable[[str], str] | None = None,
         if bridge is None:
             bridge = bridges[id(pre)] = slot_nodes(A, pre)
         for op in rules:
-            binding, why = bind(A, po, state, op, step.action.target)
-            ok, reason = ((False, why) if why else
-                          preconditions_hold(A, state, op, binding, applicability))
+            bound, why = bindings_for(A, po, state, op, step.action.target, applicability)
             for eff in op.effs:
-                if eff.kind == "remove" and ok:
-                    survives = _existence_prediction(
-                        A, bridge, pre, post, step, control, op, binding, eff, gone)
-                    if survives is not None:
-                        result.predictions.append(survives)
+                claim = _claim(op, eff, mutate)
+                if claim is None:
                     continue
-                if eff.kind != "set" or eff.slot is None:
-                    continue
-                if eff.new is VARIES:
-                    # The learner has said this slot changes without saying to what, because
-                    # the action does not determine the value.  That is still a claim the page
-                    # can refute -- the slot may not change at all -- and dropping it would
-                    # turn a generalisation into silence.
-                    predicted = CHANGES
-                elif isinstance(eff.new, str):
-                    predicted = mutate(eff.new) if mutate else eff.new
-                else:
-                    continue
+                kind, slot, predicted = claim
                 base = ScopedPrediction(
-                    step=step.step, control=control, operator=op.name, kind=VALUE,
-                    support=len(op.positives), slot=eff.slot, predicted=predicted)
-                if not ok:
-                    base.verdict, base.detail = NOT_APPLICABLE, reason
+                    step=step.step, control=control, operator=op.name, kind=kind,
+                    support=len(op.positives), slot=slot, predicted=predicted)
+                if why:
+                    base.verdict, base.detail = NOT_APPLICABLE, why
                     result.predictions.append(base)
                     continue
-                subject = binding.get(eff.obj)
-                if subject is None:
-                    base.verdict = NOT_APPLICABLE
-                    base.detail = "the effect is about an object this step does not bind"
+                base.bindings = len(bound.admissible)
+                base.binding_status = bound.status
+                if bound.status == binding.UNOBSERVED:
+                    base.verdict, base.detail = UNKNOWN, bound.detail
                     result.predictions.append(base)
                     continue
-                base.subject = str(subject.key)
-                base.context = binding_context(binding)
-                node = bridge.get((subject.node, eff.slot))
-                if node is None:
-                    base.verdict = NOT_APPLICABLE
-                    base.detail = f"the reading does not render {eff.slot} anywhere in this object"
+                if bound.status == binding.NONE:
+                    base.verdict, base.detail = NOT_APPLICABLE, bound.detail
                     result.predictions.append(base)
                     continue
-                held = (subject.key if _is_key_slot(A, subject, eff.slot)
-                        else subject.attrs.get(eff.slot))
-                rendered = leaf_value(pre.node(node))
-                base.held_before = str(rendered)
-                if _rendered_as(held) != _rendered_as(rendered):
-                    # The slot's value is not this node's text.  ``attr:col`` is the clear
-                    # case: it is the column label *about* a cell, and the cell renders its
-                    # own contents instead.  Checking a predicted value against the node's
-                    # text would then compare two different things, and did -- it reported a
-                    # cell refuted for rendering '0' when the prediction was 'Gallons'.
-                    base.verdict = NOT_APPLICABLE
-                    base.detail = (f"{eff.slot} holds {held!r} but the node it was read from "
-                                   f"renders {rendered!r}, so this slot is not that node's "
-                                   f"text and a page check cannot stand in for it")
-                    result.predictions.append(base)
-                    continue
-                base.feature_node = node
-                base.action_local = action_local(pre, step.action.target, node)
-                match = relocate(pre, post, node)
-                base.correspondence = match.status
-                base.admissible = match.admissible
-                base.layers = match.layers
-                _value_verdict(base, post, match, subject, A, eff, predicted)
-                result.predictions.append(base)
-                if _is_key_slot(A, subject, eff.slot):
-                    after = states.get(id(post))
-                    if after is None:
-                        after = states[id(post)] = A.abstract(post)
-                    result.predictions.append(
-                        _identity_prediction(base, after, match, predicted))
+                parts = [_under_one_binding(base, A, bridge, pre, post, step, op, eff,
+                                            assignment, relocate, gone, states, predicted)
+                         for assignment in bound.admissible]
+                aggregated = _aggregate(base, parts, bound)
+                result.predictions.append(aggregated)
+                if aggregated.identity is not None:
+                    result.predictions.append(aggregated.identity)
     return result
+
+
+def _claim(op, eff, mutate):
+    """What this effect asserts about the page, or ``None`` if it asserts nothing testable."""
+    if eff.kind == "remove":
+        return EXISTENCE, "id", "gone"
+    if eff.kind != "set" or eff.slot is None:
+        return None
+    if eff.new is VARIES:
+        # The learner has said this slot changes without saying to what, because the action
+        # does not determine the value.  That is still a claim the page can refute -- the slot
+        # may not change at all -- and dropping it would turn a generalisation into silence.
+        return VALUE, eff.slot, CHANGES
+    if isinstance(eff.new, str):
+        return VALUE, eff.slot, (mutate(eff.new) if mutate else eff.new)
+    return None
+
+
+def _under_one_binding(base, A, bridge, pre, post, step, op, eff, assignment, relocate, gone,
+                       states, predicted) -> ScopedPrediction:
+    """The verdict this effect gets if *this* assignment is the one that happened."""
+    pred = ScopedPrediction(
+        step=base.step, control=base.control, operator=base.operator, kind=base.kind,
+        support=base.support, slot=base.slot, predicted=base.predicted,
+        binding_evidence=assignment.evidence)
+    subject = assignment.get(eff.obj)
+    if subject is None or getattr(subject, "node", None) is None:
+        pred.verdict = NOT_APPLICABLE
+        pred.detail = "the effect is about an object this assignment does not bind"
+        return pred
+    pred.subject = str(subject.key)
+    pred.context = binding_context(assignment.values)
+    if base.kind is EXISTENCE or eff.kind == "remove":
+        return _existence_prediction(A, bridge, pre, post, step, base.control, op,
+                                     assignment.values, eff, gone) or pred
+    node = bridge.get((subject.node, eff.slot))
+    if node is None:
+        pred.verdict = NOT_APPLICABLE
+        pred.detail = f"the reading does not render {eff.slot} anywhere in this object"
+        return pred
+    held = (subject.key if _is_key_slot(A, subject, eff.slot) else subject.attrs.get(eff.slot))
+    rendered = leaf_value(pre.node(node))
+    pred.held_before = str(rendered)
+    if _rendered_as(held) != _rendered_as(rendered):
+        # ``attr:col`` is the clear case: it is the column label *about* a cell, and the cell
+        # renders its own contents instead.  Checking a predicted value against the node's text
+        # would compare two different things, and did.
+        pred.verdict = NOT_APPLICABLE
+        pred.detail = (f"{eff.slot} holds {held!r} but the node it was read from renders "
+                       f"{rendered!r}, so this slot is not that node's text and a page check "
+                       f"cannot stand in for it")
+        return pred
+    pred.feature_node = node
+    pred.action_local = action_local(pre, step.action.target, node)
+    match = relocate(pre, post, node)
+    pred.correspondence, pred.admissible, pred.layers = (match.status, match.admissible,
+                                                         match.layers)
+    _value_verdict(pred, post, match, subject, A, eff, predicted)
+    if _is_key_slot(A, subject, eff.slot):
+        after = states.get(id(post))
+        if after is None:
+            after = states[id(post)] = A.abstract(post)
+        pred.identity = _identity_prediction(pred, after, match, predicted)
+    return pred
+
+
+def _aggregate(base: ScopedPrediction, parts: list[ScopedPrediction], bound
+               ) -> ScopedPrediction:
+    """One verdict for the rule at this step, over every assignment still open.
+
+    The rule fired once.  Several admissible assignments are competing hypotheses about which
+    instantiation that was, not a claim that each of them received the effect, so a single
+    assignment whose consequence holds is enough to stop a refutation -- the hidden one might
+    have been that one.  Refuting therefore requires *every* admissible assignment to be
+    contradicted, and an assignment that could not be tested at all counts against refuting
+    rather than for it.  Where the enumeration was cut short, "every" was never established.
+    """
+    decided = [p for p in parts if p.verdict in (SUPPORTED, REFUTED, POSSIBLE)]
+    verdicts = {p.verdict for p in parts}
+    # The witness reported is representative of the aggregate rather than of its best case: a
+    # supported assignment stands for a supported verdict, and for anything else the first
+    # assignment that was decided at all, so an ambiguous result does not quote the one
+    # instantiation that happened to work.
+    winner = (next((p for p in parts if p.verdict == SUPPORTED), None)
+              if verdicts == {SUPPORTED} else None)
+    winner = winner or (decided[0] if decided else (parts[0] if parts else base))
+    for field_name in ("subject", "context", "held_before", "feature_node", "action_local",
+                       "correspondence", "admissible", "layers", "observed", "expected"):
+        setattr(base, field_name, getattr(winner, field_name, getattr(base, field_name)))
+    base.identity = _aggregate_identity(base, parts, bound)
+    base.binding_evidence = ("/".join(sorted({p.binding_evidence for p in parts}))
+                            if parts else "")
+    if not decided:
+        base.verdict = parts[0].verdict if parts else NOT_APPLICABLE
+        base.detail = (parts[0].detail if parts else "no assignment binds this effect")
+        return base
+    if verdicts == {SUPPORTED}:
+        base.verdict, base.detail = SUPPORTED, winner.detail
+    elif verdicts == {REFUTED} and not bound.truncated:
+        base.verdict = REFUTED
+        base.detail = (winner.detail if len(parts) == 1 else
+                       f"every one of the {len(parts)} assignments the pre-state leaves open "
+                       f"is contradicted: {winner.detail}")
+    elif SUPPORTED in verdicts and len(parts) > 1:
+        base.verdict = POSSIBLE
+        base.detail = (f"{sum(1 for p in parts if p.verdict == SUPPORTED)} of {len(parts)} "
+                       f"assignments the pre-state leaves open support this and the evidence "
+                       f"does not say which one happened")
+    else:
+        base.verdict = POSSIBLE if len(parts) > 1 else decided[0].verdict
+        base.detail = (decided[0].detail if len(parts) == 1 else
+                       f"the {len(parts)} assignments the pre-state leaves open disagree, "
+                       f"so this step does not settle the rule")
+    return base
+
+
+def _aggregate_identity(base: ScopedPrediction, parts: list[ScopedPrediction], bound):
+    """The naming check, over the same assignments and by the same rule.
+
+    Reporting it for one chosen assignment would let a reading be judged on whichever of its
+    candidate objects it named correctly, which is the leak this whole layer exists to close.
+    """
+    named = [p.identity for p in parts if p.identity is not None]
+    if not named:
+        return None
+    carrier = ScopedPrediction(
+        step=base.step, control=base.control, operator=base.operator, kind=IDENTITY,
+        support=base.support, slot=base.slot, predicted=base.predicted,
+        expected=base.predicted, bindings=base.bindings,
+        binding_status=base.binding_status)
+    return _aggregate(carrier, named, bound)
 
 
 def matcher(kind: str, corresponder):
