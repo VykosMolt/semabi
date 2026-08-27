@@ -419,6 +419,13 @@ def preconditions_hold(A, state, op, values, mode: str = ASSERTED) -> tuple[bool
 
     A literal this state cannot decide leaves the rule un-fired.  Over-firing invents
     refutations; under-firing only costs coverage, which is reported.
+
+    Nothing on the prediction path calls this any more: since the binder solves the
+    preconditions to find an assignment in the first place, every assignment it hands back has
+    already satisfied them, and re-checking would only ask the same question twice.  What it
+    still buys is an independent way to ask that question of an assignment nobody derived --
+    which is what the tests do, and what an outside caller holding a candidate binding would
+    want.  It delegates rather than reimplementing, so it cannot answer differently.
     """
     state.types = getattr(state, "types", None) or A.types
     for literal in applicable_literals(op, mode):
