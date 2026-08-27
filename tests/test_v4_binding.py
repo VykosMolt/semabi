@@ -496,3 +496,79 @@ def test_agreement_among_the_assignments_reached_is_not_determinacy():
     disagreeing = binding.solve(inner, [], st2, {}, limit=4)
     assert disagreeing.truncated
     assert disagreeing.effect_target(["?z"])[0] == binding.UNDERDETERMINED
+
+
+# ------------------------------------------------------ naming the object a rule acts on
+
+def _grounding_fixture(**over):
+    from types import SimpleNamespace
+    eff = SimpleNamespace(obj=over.pop("effect_on", "?z"))
+    return SimpleNamespace(name="op", params=over.pop("params", {"?x": BERTH, "?z": CALL}),
+                           effs=[eff], positives=(), **over)
+
+
+def _never_refuses(op, lit):
+    return False
+
+
+def test_a_relation_from_the_action_object_names_what_the_rule_changes():
+    """The constructive case: z is reached by following a relation from what the action names."""
+    from semabi.compiler.v4 import referring
+    target = obj("the visit", tid=CALL)
+    anchor = obj("berth 3", holds="the visit")
+    decoy = obj("berth 4")
+    st = state(anchor, decoy, target, obj("another visit", tid=CALL))
+    op = _grounding_fixture()
+    got = referring.ground(op, [(st, {"?x": anchor, "?z": target})], {"?x"}, _never_refuses)
+    assert got.outcomes() == {"?z": referring.QUERY_FOUND}
+    assert str(got.queries["?z"]) == "?z = ?x.rel:holds given ?x"
+    assert got.roles() == {"?x": referring.ACTION_BOUND, "?z": referring.DERIVED_PRESTATE}
+
+    # break the relation and the same search must stop claiming it
+    anchor.refs["rel:holds"] = None
+    blind = referring.ground(op, [(st, {"?x": anchor, "?z": target})], {"?x"}, _never_refuses)
+    assert blind.outcomes() == {"?z": referring.NO_QUERY}
+
+
+def test_two_indistinguishable_objects_leave_the_rule_unable_to_say_which():
+    """And the negative: nothing legitimate separates the target from its twin."""
+    from semabi.compiler.v4 import referring
+    a, b = obj("first", tid=CALL), obj("second", tid=CALL)
+    for o in (a, b):
+        o.attrs["state"] = "waiting"
+    st = state(obj("anchor"), a, b)
+    op = _grounding_fixture()
+    got = referring.ground(op, [(st, {"?x": list(st.objs.values())[0], "?z": a})],
+                           {"?x"}, _never_refuses)
+    assert got.outcomes() == {"?z": referring.NO_QUERY}
+
+
+def test_a_created_object_is_never_searched_for_in_the_state_before_it_exists():
+    """The category error that cost a run: a creation is an output, not an implicit reference.
+
+    Searching the pre-state for it always fails, and charging that failure to the reading
+    understates exactly the reading whose effects are honest creations.
+    """
+    from semabi.compiler.v4 import referring
+    op = _grounding_fixture(params={"?x": BERTH, "?new0": CALL}, effect_on="?new0")
+    st = state(obj("anchor"))
+    got = referring.ground(op, [(st, {"?x": list(st.objs.values())[0]})], {"?x"}, _never_refuses)
+    assert got.roles()["?new0"] == referring.CREATED
+    assert got.outcomes() == {}                       # nothing to determine
+    assert got.status == referring.DETERMINED
+
+
+def test_a_candidate_filtered_before_evaluation_is_not_a_language_that_was_searched():
+    """``NO_QUERY`` is a claim about a language.  One whose candidates were all refused as
+    fitting-instance memorisation was never searched, and the honest verdict says so."""
+    from semabi.compiler.v4 import referring
+    target = obj("the visit", tid=CALL)
+    target.attrs["state"] = "waiting"
+    st = state(obj("anchor"), target, obj("other", tid=CALL))
+    op = _grounding_fixture()
+    evidence = [(st, {"?x": list(st.objs.values())[0], "?z": target})]
+    assert referring.ground(op, evidence, set(), lambda o, l: True).outcomes() == {
+        "?z": referring.LOW_SUPPORT}
+    # the same evidence, with the candidate allowed through, is a real search that succeeds
+    assert referring.ground(op, evidence, set(), _never_refuses).outcomes() == {
+        "?z": referring.QUERY_FOUND}
