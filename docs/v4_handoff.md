@@ -501,6 +501,21 @@ all fit rules whose latent parameters have to be solved together, and the backtr
 forward-checking runs on them in production, not only in tests. Harbour never exceeds one
 derived parameter, so the harbour result above does not depend on the joint search at all.
 
+Every page check, `asserted`, masked, unmutated, across the six applications:
+
+    NOT_APPLICABLE 3234 | POSSIBLE 2268 | SUPPORTED 2195 | UNKNOWN 976 | REFUTED 536
+
+    harbour_transfer     decided 1046/1149 (91%)   but 827 of those are POSSIBLE
+    harbour_seed11       decided 1065/1197 (89%)   871 POSSIBLE
+    harbour_dev          decided  611/ 762 (80%)   438 POSSIBLE
+    vet_clinic_dev       decided  358/ 718 (50%)   114 UNKNOWN
+    barter_market_dev    decided  956/2545 (38%)   832 UNKNOWN
+    landing_board_dev    decided  963/2838 (34%)  1875 NOT_APPLICABLE
+
+Read the second column with the third. Harbour's high coverage is mostly the loose reading
+declining to be refuted; barter's third-of-everything `UNKNOWN` is the price of local
+observability, objects that are simply on another view.
+
 Binding statuses corpus-wide come out `UNIQUE` 3710, `AMBIGUOUS` 3924, `NONE` 5326,
 `UNOBSERVED` 1952. `UNOBSERVED` firing 1952 times is what makes the distinction from `NONE`
 load-bearing rather than decorative: a state assembled from one rendered page has no objects
