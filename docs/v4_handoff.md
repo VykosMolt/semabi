@@ -466,6 +466,15 @@ in the binder. Three statements of one fact:
    determines. The grounded reading exports 5 of 9, none derived, none ill-formed. The
    distinction is readable off the exported action model before a single prediction is checked.
 
+A fourth statement of the same fact, free from the data already collected: **every identity
+prediction on harbour comes from the loose reading** -- 73 supported, 422 refuted, 1407
+undecided across the three traces -- and the grounded reading makes none at all. That is not a
+quirk of the checker. The loose reading names an object by its own rendered text, so every
+effect it learns is on the key slot and therefore also a claim that the object *becomes a
+different object*; the grounded reading's effects are on ordinary attributes of a stable one.
+Naming a row by a cell whose contents the actions change is the same mistake seen from the
+identity side rather than the binding side.
+
 **Ambiguity is what keeps this honest.** Under `asserted` the loose reading returns 140
 `POSSIBLE` and 5 `REFUTED`. Picking the best-fitting assignment would have made it flawless;
 picking arbitrarily would have made it catastrophic. Neither number would mean anything. What
