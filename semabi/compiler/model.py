@@ -106,6 +106,17 @@ def _lit(l: tuple, A: Abstractor, rels: dict, ptypes: dict[str, Any]) -> rm.Lite
         tid = ptypes[l[1]]
         r = rels.get((tid, l[2]))
         return rm.RelHolds(r, l[1], l[3], negate=(k == "ref_ne")) if r else None
+    if k in ("ref_null", "ref_set"):
+        # "this object's reference slot points at nothing" is the existing relation predicate
+        # with an unbound target, so no new predicate is needed: RelHolds resolves a literal
+        # None straight through and get_rel returns None for an unset slot.  Without this the
+        # condition would govern applicability everywhere except the planner, which would
+        # cheerfully plan the action the model has just learned it cannot take.
+        r = rels.get((ptypes[l[1]], l[2]))
+        return rm.RelHolds(r, l[1], None, negate=(k == "ref_set")) if r else None
+    if k in ("parent_null", "parent_set"):
+        r = rels.get((ptypes[l[1]], "parent"))
+        return rm.RelHolds(r, l[1], None, negate=(k == "parent_set")) if r else None
     if k == "empty":
         tid = ptypes[l[1]]
         # any relation pointing at this type
