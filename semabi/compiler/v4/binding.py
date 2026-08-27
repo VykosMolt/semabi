@@ -92,7 +92,11 @@ class Bindings:
         about a definite object.  All the assignments come from one state, so the objects are
         the same instances and identity is the right comparison.
         """
-        if not self.admissible:
+        if not self.admissible or self.truncated:
+            # A truncated enumeration is a partial view of the admissible set, and the
+            # assignments it never reached may disagree.  Reading agreement off what was
+            # enumerated would claim determinacy the search did not establish, in the
+            # direction that makes an ill-formed schema look well-formed.
             return frozenset()
         first = self.admissible[0].values
         return frozenset(p for p in first

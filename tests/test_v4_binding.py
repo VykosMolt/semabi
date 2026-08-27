@@ -354,3 +354,12 @@ def test_the_generative_mode_is_the_invariants_alone_and_not_the_learned_cover()
     # the structural literal is checkable for a binding but not an attribute equality, and is
     # left out of every mode for the same reason it always was
     assert all(lit[0] in ("attr", "attr_ne") for lit in generative)
+
+
+def test_a_truncated_enumeration_pins_nothing():
+    """The bound is a resource limit, so what it did not reach cannot count as agreement."""
+    same = object()
+    values = binding.Binding({"?a": same}, {"?a": binding.DERIVED})
+    assert binding.Bindings(binding.AMBIGUOUS, (values, values)).pinned() == frozenset({"?a"})
+    assert binding.Bindings(binding.AMBIGUOUS, (values, values),
+                            truncated=True).pinned() == frozenset()
