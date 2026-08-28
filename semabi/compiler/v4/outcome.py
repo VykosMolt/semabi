@@ -219,6 +219,7 @@ class Evidence:
             self.by_event.setdefault(event, []).append(len(self.events))
             self.events.append(event)
         self.of_bit = {b: lit for lit, b in self.index.items()}
+        self.occasion_obs: dict = {}     # occasion -> the page it was read from (diagnostic)
         # Which literals a rule for each event is allowed to be *about*.  `_best_rule` has had
         # this restriction as an option since `docs/v4_outcomes.md` measured it on the list.
         #
@@ -953,11 +954,13 @@ def learn(inducer, *, permute: int | None = None, subject_restricted: bool = Fal
             out[control] = model
             continue
         occasions = []
+        pages = []            # the page each occasion was read from, for `v4_inadequacy`
         deltas: dict[str, dict[tuple, int]] = {}
         for tr, s, obs, event in rows:
             if event is None:
                 continue      # the live region did not move: re-emission or silence, unknown
             occasions.append((tr.before, _owner(A, obs, s), event, tr.emission.args))
+            pages.append(obs)
             shape = delta_shape(tr)
             deltas.setdefault(event, {})[shape] = deltas.setdefault(event, {}).get(shape, 0) + 1
         if permute is not None and occasions:
@@ -971,6 +974,11 @@ def learn(inducer, *, permute: int | None = None, subject_restricted: bool = Fal
                               subject_restricted=subject_restricted, defaults=defaults,
                               about=about, simplest=simplest)
         model.deltas = deltas
+        # Which page each fitting occasion came from.  A forced-wrong prediction is only
+        # diagnosable if the raw evidence behind the rule can be put beside the raw page that
+        # refuted it; nothing in the model reads this.
+        if model.evidence is not None and len(pages) == len(model.evidence.events):
+            model.evidence.occasion_obs = dict(enumerate(pages))
         out[control] = model
     return out
 

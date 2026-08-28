@@ -160,9 +160,21 @@ class ObsGraph:
         self.obs[sig] = obs
         depth = {}
         paths = {}
-        for n in obs.nodes:
-            depth[n.i] = 0 if n.parent < 0 else depth[n.parent] + 1
-            paths[n.i] = n.role if n.parent < 0 else paths[n.parent] + "/" + n.role
+        # Walked from the root rather than taken in list order: `sections.normalise` appends
+        # its containers, so a parent can sit after its children in the list while the tree
+        # itself stays perfectly well formed.
+        stack = [n.i for n in obs.nodes if n.parent < 0]
+        for r in stack:
+            depth[r], paths[r] = 0, obs.node(r).role
+        while stack:
+            x = stack.pop()
+            for c in obs.children(x):
+                depth[c] = depth[x] + 1
+                paths[c] = paths[x] + "/" + obs.node(c).role
+                stack.append(c)
+        for n in obs.nodes:                      # nodes unreachable from any root, if any
+            depth.setdefault(n.i, 0)
+            paths.setdefault(n.i, n.role)
         # table header cells: the first row of a table (labels even when they vary between
         # tables) -- unless the cell's text varies over time at that position (a matrix header)
         for n in obs.nodes:
@@ -174,9 +186,21 @@ class ObsGraph:
                         if self.learning:
                             self.header_strings[(paths[n.i], k)].add(node_text(obs.node(c)))
         shapes = {}
-        for n in reversed(obs.nodes):
-            ch = obs.children(n.i)
-            shapes[n.i] = n.role + ("(" + ",".join(shapes[c] for c in ch) + ")" if ch else "")
+        order = []                               # post-order, for the same reason as `depth`
+        stack = [(n.i, False) for n in obs.nodes if n.parent < 0]
+        while stack:
+            x, done = stack.pop()
+            if done:
+                order.append(x)
+                continue
+            stack.append((x, True))
+            for c in obs.children(x):
+                stack.append((c, False))
+        for x in order:
+            ch = obs.children(x)
+            shapes[x] = obs.node(x).role + ("(" + ",".join(shapes[c] for c in ch) + ")" if ch else "")
+        for n in obs.nodes:
+            shapes.setdefault(n.i, n.role)
         skel = hash(frozenset(paths.values()))  # which view this is (set of role paths)
         for n in obs.nodes:
             d = NodeDesc(sig, n.i, n.role, paths[n.i], shapes[n.i], tokens(node_text(n)), depth[n.i], list(obs.children(n.i)), n.parent)
@@ -204,6 +228,21 @@ class ObsGraph:
                     self._whole.add(o.strip())
         if self.learning:
             self._data = None
+
+    def forget(self, sig: str) -> None:
+        """Drop one observation's per-observation structure so it can be re-read.
+
+        Used only to replace a page with its section-normalised form, which happens once, on
+        first sight, before anything has been read off it.  Corpus statistics are deliberately
+        left alone: the normalised page carries exactly the same text.
+        """
+        self.obs.pop(sig, None)
+        for key in [k for k in self.nodes if k[0] == sig]:
+            self.nodes.pop(key, None)
+        for key in [k for k in self.position_of if k[0] == sig]:
+            self.position_of.pop(key, None)
+        for key in [k for k in self.header if k[0] == sig]:
+            self.header.discard(key)
 
     def is_data(self, t: str) -> bool:
         return t in self.data_set() or t[0].isdigit()
@@ -245,8 +284,17 @@ class ObsGraph:
         """A sentence position: its strings use a vocabulary of >= 4 distinct constant words
         (feedback lines), or this string alone carries >= 3 constant words."""
         n = self.obs[sig].node(i)
-        if len(self.labels(sig, i)) >= 3:
+        lab = self.labels(sig, i)
+        if len(lab) >= 3:
             return True
+        if not lab:
+            # Nothing in this string is a constant word, so whatever else shares its
+            # structural position, *this* string is a value and not a sentence about values.
+            # The pooled test below is a corpus heuristic for feedback lines and it misfires
+            # when a position collects unrelated texts: cellar's hall headings sit at the same
+            # position as `Finish fermentation` and `Receive fruit`, whose four constant words
+            # made `Press Hall` prose and cost the hall its key.  A sentence needs words.
+            return False
         tt = self.templates.get(self.position_of[(sig, i)])
         if tt is None:
             return False

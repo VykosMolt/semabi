@@ -16,14 +16,56 @@ from semabi.compiler.induce import Inducer
 from semabi.compiler.model import build_model, relation_names, type_name
 from semabi.compiler.v2.graph import ObsGraph
 from semabi.compiler.v2.hypotheses import Hypotheses
+from semabi.compiler.v2 import sections
 from semabi.compiler.v4.abstractor import V4Abstractor
 from semabi.compiler.v4 import pinned as v4_pinned, promote, search as v4_search
 
 READINGS_FILE = "identity_readings_v4.json"
 
 
+def _normalise_sections(log: EvidenceLog, stats_from: EvidenceLog | None = None) -> None:
+    """Re-read this log's pages with heading-delimited sections made explicit, in place.
+
+    Two passes are needed and one suffices.  Deciding that a span of siblings is an object
+    requires knowing which of its tokens are *data*, which is a corpus statistic and is not
+    complete until every page is in a graph; and the containers `normalise` appends carry no
+    text, so the statistics are unchanged afterwards and the fixed point is immediate.
+
+    The rewrite happens on the log rather than on the graph because a signature must name
+    exactly one `Observation` everywhere.  Holding a normalised page in the graph while callers
+    still passed the raw one around meant two objects with different node counts and the same
+    signature, and an index taken from one and applied to the other is out of range.  The
+    containers are appended, so every node keeps the index it had and a recorded action target
+    still names the element it named.
+    """
+    # Which tokens count as *data* is a corpus statistic, and under a regime it is the
+    # regime's corpus: `stats_from` is the prefix the model is allowed, so a page's section
+    # structure is decided by evidence that existed before the action it is read for.
+    source = stats_from if stats_from is not None else log
+    probe = ObsGraph()
+    for sig, obs in source.observations.items():
+        probe.add(sig, obs)
+    for sig, obs in log.observations.items():
+        if sig not in probe.obs:
+            probe.add(sig, obs)      # readable, but contributing no statistics
+    fixed = {sig: sections.normalise(probe, sig, obs) for sig, obs in log.observations.items()}
+    if all(fixed[sig] is obs for sig, obs in log.observations.items()):
+        return
+    # A page's signature is a hash of its structure, so adding containers changes it.  Every
+    # recorded signature has to move with it or code that recomputes one will not find the
+    # page it names.  Node *indices* are untouched, so actions still name their elements.
+    remap = {old: new.structural_signature() for old, new in fixed.items()}
+    log.observations.clear()
+    for old, obs in fixed.items():
+        log.observations[remap[old]] = obs
+    for step in log.steps:
+        step.before = remap.get(step.before, step.before)
+        step.after = remap.get(step.after, step.after)
+
+
 def build_hypotheses(run_dir: Path, log: EvidenceLog,
                      promoted: set[str] | None = None) -> tuple[Hypotheses, ObsGraph]:
+    _normalise_sections(log)
     G = ObsGraph()
     for sig, obs in log.observations.items():
         G.add(sig, obs)

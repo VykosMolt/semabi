@@ -69,8 +69,17 @@ class SurveyExplorer(Explorer):
     @staticmethod
     def skeleton(o: Observation) -> frozenset:
         paths = {}
+        # walked, not taken in list order: `sections.normalise` appends its containers
+        stack = [n.i for n in o.nodes if n.parent < 0]
+        for r in stack:
+            paths[r] = o.node(r).role
+        while stack:
+            x = stack.pop()
+            for c in o.children(x):
+                paths[c] = paths[x] + "/" + o.node(c).role
+                stack.append(c)
         for n in o.nodes:
-            paths[n.i] = n.role if n.parent < 0 else paths[n.parent] + "/" + n.role
+            paths.setdefault(n.i, n.role)
         return frozenset(paths.values())
 
     def track(self, obs: Observation) -> None:

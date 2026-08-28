@@ -698,9 +698,16 @@ def fit(run_dir: Path, reading, *, split: float = 0.6, at: int | None = None,
     full = EvidenceLog(run_dir)
     cut = int(len(full.steps) * split) if at is None else at
     split = cut / len(full.steps) if full.steps else split
-    prefix = {FROZEN_PREFIX: full.through,
-              TRANSDUCTIVE: full.transductively_through,
-              CAUSAL_PREQUENTIAL: full.before_action}[regime](cut)
+    slice_at = {FROZEN_PREFIX: full.through,
+                TRANSDUCTIVE: full.transductively_through,
+                CAUSAL_PREQUENTIAL: full.before_action}[regime]
+    # Sections are decided from the regime's own corpus and then applied to every page, so a
+    # held-out page is read under the frozen ontology rather than one that saw it.  Slicing
+    # happens afterwards because the rewrite re-keys signatures, and the views must carry the
+    # rewritten ones.
+    from semabi.compiler.compile_v4 import _normalise_sections
+    _normalise_sections(full, stats_from=slice_at(cut))
+    prefix = slice_at(cut)
     compiled = compile_v4(run_dir, min_support=min_support, write_diagnostics=False,
                           pinned=reading, evidence_log=prefix, read_outputs=read_outputs)
     # Fitting is over.  Everything after this reads observations the model must not learn from,

@@ -96,8 +96,17 @@ def _same_view(a, b) -> bool:
     def paths(obs):
         out = Counter()
         p = {}
+        # walked, not taken in list order: `sections.normalise` appends its containers
+        stack = [n.i for n in obs.nodes if n.parent < 0]
+        for r in stack:
+            p[r] = obs.node(r).role
+        while stack:
+            x = stack.pop()
+            for c in obs.children(x):
+                p[c] = p[x] + "/" + obs.node(c).role
+                stack.append(c)
         for n in obs.nodes:
-            p[n.i] = n.role if n.parent < 0 else p[n.parent] + "/" + n.role
+            p.setdefault(n.i, n.role)
             out[p[n.i]] += 1
         return out
     pa, pb = paths(a), paths(b)

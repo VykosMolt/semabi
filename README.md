@@ -104,7 +104,16 @@ the observation-model layer whatever they say. Three regimes are now named in th
 every fit and scored result carries the one that produced it. `docs/v4_handoff.md` remains the
 custody and protocol record.
 
-`docs/v4_admissibility.md` is the latest.  A decision list is a point hypothesis, and the
+`docs/v4_sections.md` is the latest.  A version space cannot know what its language cannot
+say, and cellar's halls -- rendered as a heading over prose rather than as table rows -- were
+not objects at all, so no rule could mention one.  Objecthood is now the question the compiler
+already asked of subtrees ("does this shape recur with a filling that varies?") asked of spans
+of siblings as well, which makes the halls entities with identity and attributes and gives the
+effect layer two more operators.  It leaves the outcome layer bit-identical, and why it does is
+the more useful half of the result.  `semabi/eval/v4_inadequacy.py` splits forced-and-wrong
+predictions into language gaps and search gaps: on blend, 3 and 29.
+
+`docs/v4_admissibility.md` precedes it.  A decision list is a point hypothesis, and the
 width of its claims was free: a default fitted on two occasions predicted over every state no
 guard caught.  The version space over justified rules is computed exactly instead, so the model
 answers when the evidence forces one outcome, returns the set when several remain, and refuses
