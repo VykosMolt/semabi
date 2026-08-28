@@ -110,6 +110,31 @@ The not-applicable answers are right rather than evasive.  At the steps where th
 declines, the application answers *"Berth N2 is already closed"*: the click succeeded, the page
 changed, and the berth did not close.
 
+## The same three boundaries on blend
+
+Harbour's table is 13 actions on a control that fires rarely.  Blend's `Record draw` fires 123
+times after a half-trace cut, which is two hours of compiling at one rebuild per action, so the
+prequential column is strided -- and the other two are restricted to the same actions, because
+three columns over three different subsets are three numbers rather than a comparison.
+
+Sixteen matched held-out actions, cut at step 419:
+
+| regime | supported | refuted | not applicable | unknown | supported share |
+|---|---|---|---|---|---|
+| `TRANSDUCTIVE` | 44 | 56 | 236 | 80 | 44% |
+| `FROZEN_PREFIX` | 16 | 20 | 86 | 102 | 44% |
+| `CAUSAL_PREQUENTIAL` | **44** | **40** | 233 | 77 | **52%** |
+
+The three make different numbers of claims because they are different models -- 31, 45 and a
+rebuilt one per action -- so the counts are not comparable and the rate is.  On that rate the
+online regime beats both frozen and transductive, and it reaches the transductive model's
+absolute count of correct predictions while being wrong sixteen times fewer.
+
+That is the same shape as harbour, where the prequential column matched the future-informed
+diagnostic exactly and the frozen model was the only one refuted.  On both applications the
+regime that keeps learning is the best of the three, and on blend it is better than the one that
+was allowed to see the future.
+
 ## The harbour adjudication, which never depended on the leak
 
 | | `joint discrimination x2` | `promote cell[_]=cell#0` |
