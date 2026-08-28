@@ -731,6 +731,20 @@ navigation from looking causal.  What is missing is a third category: an *observ
 that is not a state change, which an operator may predict and a held-out step may refute.  That
 is an architectural addition rather than a patch, and it is specified here rather than started.
 
+The first half has no design question left in it.  A status node is a single, positionally
+stable node wherever it exists:
+
+| | observations | status nodes each | where |
+|---|---|---|---|
+| harbour | 359 | exactly 1 | node 2, depth 1, every time |
+| blend | 484 | 1 on 477, none on 7 | node 5, depth 2 |
+| cellar | 259 | exactly 1 | node 6, depth 1 |
+| vet clinic | 221 | none | -- |
+
+So the placement rule is "the `status` node, where there is one, is a view slot", and the whole
+of the difficulty is the second half: what an operator is allowed to claim about an observable
+outcome that is not a state change.
+
 Blend's rules fire on 196 held-out actions where
 the application refused, and are contradicted 899 times there against 121 on the actions it
 performed.  The conditions that would stop them are conditions on the source and destination --
