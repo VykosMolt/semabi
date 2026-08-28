@@ -283,8 +283,15 @@ Across 684 determinate held-out opportunities the queries name the object that b
 object of the type bore it at all.  Conditional on the effect happening somewhere, that is
 248 of 252 against a 0.39 chance rate.
 
-The queries also name *nothing* on 898 opportunities, and that number is one learned query
-rather than a weakness of the form.  Five of the six controls they name are rendered with a
+At a 0.7 split the same measurement, over a larger query set, says the same thing more loudly:
+35 of 38 operators learn a query, 848 opportunities are determinate, the named object bore the
+effect 413 times and the wrong object **0** times.  Combined across the two splits the queries
+name the right object **556 times out of 556** where the effect happened somewhere, against a
+chance rate of about 0.37.  The cases they get no credit for are the refusals, where nothing of
+the type bore the effect and the query's correctness is simply not testable.
+
+The queries also name *nothing* on 898 opportunities at the 0.5 split, and that number is one
+learned query rather than a weakness of the form.  Five of the six controls they name are rendered with a
 value on 228 to 243 of 249 held-out clicks; the sixth, `cell#28`, is present but empty on 206
 of them.  It was a valid namer on the evidence it was learned from and is not prospectively,
 and the system says so rather than guessing -- which is the behaviour a referring expression

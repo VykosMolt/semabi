@@ -2,199 +2,198 @@
  "run": "blend_book_transfer",
  "reading": "joint discrimination x3",
  "regime": "FROZEN_PREFIX",
- "split": 0.5,
- "cut": 419,
- "operators": 45,
- "operators_with_a_query": 40,
+ "split": 0.7,
+ "cut": 587,
+ "operators": 38,
+ "operators_with_a_query": 35,
  "queries": [
   "?o0.in:1",
   "?o0.rel:1",
   "?o0.rel:3",
   "?o1.in:1",
-  "?o2.rel:1",
-  "?o2.rel:3",
-  "the object named by cell#16",
-  "the object named by cell#17",
-  "the object named by cell#22",
-  "the object named by cell#28",
   "the object named by combobox#0",
   "the object named by combobox#1",
   "the only object of its type",
-  "the only object with attr:blend#0 = None"
+  "the only object with attr:cell#1 = '4'"
  ],
  "determinacy": {
-  "names exactly one object": 684,
-  "names nothing where the rule applies": 898
+  "anchor never determined": 21,
+  "names exactly one object": 848,
+  "names nothing where the rule applies": 114
  },
  "effect_correctness": {
-  "the object it named bore the effect": 248,
-  "the object it named did not bear the effect": 436
+  "the object it named bore the effect": 413,
+  "the object it named did not bear the effect": 435
  },
  "where_the_effect_went": {
-  "another object of its type bore the effect instead": 4,
-  "no object of its type bore the effect": 432
+  "no object of its type bore the effect": 435
  },
  "candidates_of_the_type_present": {
-  "2": 576,
-  "3": 936,
-  "4": 70
+  "0": 5,
+  "1": 7,
+  "2": 220,
+  "3": 524,
+  "4": 205,
+  "5": 1
  },
- "chance_of_naming_right": 0.39,
+ "chance_of_naming_right": 0.357,
  "counterexamples": [
   {
-   "step": 419,
-   "operator": "op9",
+   "step": 587,
+   "operator": "op11",
+   "variable": "?o3",
+   "query": "the only object with attr:cell#1 = '4'",
+   "named": "Ticket#2",
+   "borne_by": []
+  },
+  {
+   "step": 590,
+   "operator": "op11",
+   "variable": "?o3",
+   "query": "the only object with attr:cell#1 = '4'",
+   "named": "Ticket",
+   "borne_by": []
+  },
+  {
+   "step": 593,
+   "operator": "op11",
+   "variable": "?o3",
+   "query": "the only object with attr:cell#1 = '4'",
+   "named": "Ticket",
+   "borne_by": []
+  },
+  {
+   "step": 602,
+   "operator": "op0",
    "variable": "?o0",
-   "query": "the object named by cell#28",
+   "query": "the object named by combobox#0",
    "named": []
   },
   {
-   "step": 421,
+   "step": 602,
+   "operator": "op11",
+   "variable": "?o3",
+   "query": "the only object with attr:cell#1 = '4'",
+   "named": "Ticket#3",
+   "borne_by": []
+  },
+  {
+   "step": 606,
+   "operator": "op0",
+   "variable": "?o0",
+   "query": "the object named by combobox#0",
+   "named": "Block",
+   "borne_by": []
+  },
+  {
+   "step": 606,
+   "operator": "op0",
+   "variable": "?o1",
+   "query": "the object named by combobox#1",
+   "named": "Festival White",
+   "borne_by": []
+  },
+  {
+   "step": 606,
    "operator": "op1",
    "variable": "?o0",
-   "query": "the object named by cell#28",
-   "named": []
-  },
-  {
-   "step": 422,
-   "operator": "op3",
-   "variable": "?o0",
-   "query": "the object named by cell#17",
-   "named": "Cloister",
+   "query": "the object named by combobox#0",
+   "named": "Block",
    "borne_by": []
   },
   {
-   "step": 422,
-   "operator": "op3",
+   "step": 606,
+   "operator": "op1",
    "variable": "?o1",
-   "query": "the object named by cell#16",
-   "named": "North Wall",
+   "query": "the object named by combobox#1",
+   "named": "Festival White",
    "borne_by": []
   },
   {
-   "step": 423,
-   "operator": "op3",
+   "step": 606,
+   "operator": "op6",
    "variable": "?o0",
-   "query": "the object named by cell#17",
-   "named": "Cloister",
+   "query": "the object named by combobox#0",
+   "named": "Block",
    "borne_by": []
   },
   {
-   "step": 423,
-   "operator": "op3",
+   "step": 606,
+   "operator": "op6",
    "variable": "?o1",
-   "query": "the object named by cell#16",
-   "named": "North Wall",
+   "query": "the object named by combobox#1",
+   "named": "Festival White",
    "borne_by": []
   },
   {
-   "step": 424,
-   "operator": "op3",
+   "step": 606,
+   "operator": "op9",
    "variable": "?o0",
-   "query": "the object named by cell#17",
-   "named": []
-  },
-  {
-   "step": 427,
-   "operator": "op0",
-   "variable": "?o0",
-   "query": "the object named by cell#17",
-   "named": []
-  },
-  {
-   "step": 428,
-   "operator": "op3",
-   "variable": "?o0",
-   "query": "the object named by cell#17",
-   "named": "Cloister",
+   "query": "the object named by combobox#0",
+   "named": "Block",
    "borne_by": []
   },
   {
-   "step": 428,
-   "operator": "op3",
+   "step": 606,
+   "operator": "op9",
    "variable": "?o1",
-   "query": "the object named by cell#16",
-   "named": "North Wall",
+   "query": "the object named by combobox#1",
+   "named": "Festival White",
    "borne_by": []
   },
   {
-   "step": 429,
-   "operator": "op3",
+   "step": 606,
+   "operator": "op11",
    "variable": "?o0",
-   "query": "the object named by cell#17",
-   "named": "Cloister",
+   "query": "the object named by combobox#0",
+   "named": "Block",
    "borne_by": []
   },
   {
-   "step": 429,
-   "operator": "op3",
+   "step": 606,
+   "operator": "op11",
    "variable": "?o1",
-   "query": "the object named by cell#16",
-   "named": "North Wall",
+   "query": "the object named by combobox#1",
+   "named": "Festival White",
    "borne_by": []
   },
   {
-   "step": 430,
-   "operator": "op0",
-   "variable": "?o0",
-   "query": "the object named by cell#17",
-   "named": "Cloister",
+   "step": 606,
+   "operator": "op11",
+   "variable": "?o3",
+   "query": "the only object with attr:cell#1 = '4'",
+   "named": "Ticket#3",
    "borne_by": []
   },
   {
-   "step": 430,
-   "operator": "op0",
-   "variable": "?o1",
-   "query": "the object named by cell#16",
-   "named": "North Wall",
-   "borne_by": []
-  },
-  {
-   "step": 430,
-   "operator": "op10",
-   "variable": "?o0",
-   "query": "the object named by cell#22",
-   "named": "Cloister",
-   "borne_by": []
-  },
-  {
-   "step": 430,
-   "operator": "op10",
-   "variable": "?o1",
-   "query": "the object named by cell#16",
-   "named": "North Wall",
-   "borne_by": []
-  },
-  {
-   "step": 430,
+   "step": 606,
    "operator": "op13",
    "variable": "?o0",
    "query": "the object named by combobox#0",
-   "named": "North Wall",
+   "named": "Block",
    "borne_by": []
   },
   {
-   "step": 430,
+   "step": 606,
    "operator": "op13",
    "variable": "?o1",
    "query": "the object named by combobox#1",
-   "named": "Cloister",
+   "named": "Festival White",
    "borne_by": []
   },
   {
-   "step": 430,
-   "operator": "op14",
+   "step": 608,
+   "operator": "op0",
    "variable": "?o0",
-   "query": "the object named by cell#16",
-   "named": "North Wall",
-   "borne_by": []
+   "query": "the object named by combobox#0",
+   "named": []
   },
   {
-   "step": 430,
-   "operator": "op14",
-   "variable": "?o1",
-   "query": "the object named by combobox#1",
-   "named": "Cloister",
+   "step": 608,
+   "operator": "op11",
+   "variable": "?o3",
+   "query": "the only object with attr:cell#1 = '4'",
+   "named": "Ticket#3",
    "borne_by": []
   }
  ]
