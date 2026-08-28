@@ -126,6 +126,10 @@ object's *identity* takes a status value.
 
 ## Blend: the query works, the effect model does not
 
+*The figures in this section are where the run found blend, before the selection query form and
+the corrected supplied set.  Both are later in this document and both move these numbers; the
+section is kept because the shape of the finding is what led to them.*
+
 The withdrawal of blend's referring query was too broad.  Under a properly scoped prefix fit at
 the same split, `the only object with attr:blend#0 = None` is there, drawn from five legitimate
 candidate properties with none refused.  What was wrong was the earlier measurement.
