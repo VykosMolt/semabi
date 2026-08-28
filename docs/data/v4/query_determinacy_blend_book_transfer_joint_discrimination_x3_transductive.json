@@ -1,0 +1,170 @@
+{
+ "run": "blend_book_transfer",
+ "reading": "joint discrimination x3",
+ "regime": "TRANSDUCTIVE",
+ "split": 0.5,
+ "cut": 419,
+ "operators": 31,
+ "operators_with_a_query": 20,
+ "queries": [
+  "?o0.in:1",
+  "?o0.rel:1",
+  "?o0.rel:3",
+  "?o1.in:1",
+  "?o3.rel:1",
+  "the only object with attr:blend#0 = None",
+  "the only object with attr:cell#0@3 = '1'",
+  "the only object with attr:cell#1 = '4'"
+ ],
+ "determinacy": {
+  "anchor never determined": 980,
+  "names exactly one object": 956,
+  "names nothing where the rule applies": 233
+ },
+ "effect_correctness": {
+  "the object it named bore the effect": 390,
+  "the object it named did not bear the effect": 566
+ },
+ "counterexamples": [
+  {
+   "step": 421,
+   "operator": "op6",
+   "variable": "?o0",
+   "query": "the only object with attr:cell#0@3 = '1'",
+   "named": []
+  },
+  {
+   "step": 430,
+   "operator": "op0",
+   "variable": "?o1",
+   "query": "the only object with attr:blend#0 = None",
+   "named": "Cloister"
+  },
+  {
+   "step": 430,
+   "operator": "op1",
+   "variable": "?o1",
+   "query": "the only object with attr:blend#0 = None",
+   "named": "Cloister"
+  },
+  {
+   "step": 430,
+   "operator": "op6",
+   "variable": "?o1",
+   "query": "the only object with attr:blend#0 = None",
+   "named": "Cloister"
+  },
+  {
+   "step": 430,
+   "operator": "op9",
+   "variable": "?o1",
+   "query": "the only object with attr:blend#0 = None",
+   "named": "Cloister"
+  },
+  {
+   "step": 430,
+   "operator": "op11",
+   "variable": "?o1",
+   "query": "the only object with attr:blend#0 = None",
+   "named": "Cloister"
+  },
+  {
+   "step": 430,
+   "operator": "op11",
+   "variable": "?o3",
+   "query": "the only object with attr:cell#1 = '4'",
+   "named": "Ticket#5"
+  },
+  {
+   "step": 430,
+   "operator": "op11",
+   "variable": "?o0",
+   "query": "?o3.rel:1",
+   "named": "North Wall"
+  },
+  {
+   "step": 430,
+   "operator": "op14",
+   "variable": "?o1",
+   "query": "the only object with attr:blend#0 = None",
+   "named": "Cloister"
+  },
+  {
+   "step": 456,
+   "operator": "op6",
+   "variable": "?o0",
+   "query": "the only object with attr:cell#0@3 = '1'",
+   "named": []
+  },
+  {
+   "step": 460,
+   "operator": "op6",
+   "variable": "?o0",
+   "query": "the only object with attr:cell#0@3 = '1'",
+   "named": []
+  },
+  {
+   "step": 462,
+   "operator": "op6",
+   "variable": "?o0",
+   "query": "the only object with attr:cell#0@3 = '1'",
+   "named": []
+  },
+  {
+   "step": 465,
+   "operator": "op6",
+   "variable": "?o0",
+   "query": "the only object with attr:cell#0@3 = '1'",
+   "named": []
+  },
+  {
+   "step": 470,
+   "operator": "op0",
+   "variable": "?o1",
+   "query": "the only object with attr:blend#0 = None",
+   "named": "Festival White"
+  },
+  {
+   "step": 470,
+   "operator": "op1",
+   "variable": "?o1",
+   "query": "the only object with attr:blend#0 = None",
+   "named": "Festival White"
+  },
+  {
+   "step": 470,
+   "operator": "op6",
+   "variable": "?o1",
+   "query": "the only object with attr:blend#0 = None",
+   "named": "Festival White"
+  },
+  {
+   "step": 470,
+   "operator": "op9",
+   "variable": "?o1",
+   "query": "the only object with attr:blend#0 = None",
+   "named": "Festival White"
+  },
+  {
+   "step": 470,
+   "operator": "op11",
+   "variable": "?o1",
+   "query": "the only object with attr:blend#0 = None",
+   "named": "Festival White"
+  },
+  {
+   "step": 470,
+   "operator": "op11",
+   "variable": "?o3",
+   "query": "the only object with attr:cell#1 = '4'",
+   "named": "Ticket#4"
+  },
+  {
+   "step": 470,
+   "operator": "op11",
+   "variable": "?o0",
+   "query": "?o3.rel:1",
+   "named": "West Ridge"
+  }
+ ]
+}

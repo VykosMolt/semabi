@@ -44,6 +44,14 @@ EFFECT_CORRECT = "the object it named bore the effect"
 EFFECT_WRONG = "the object it named did not bear the effect"
 EFFECT_UNKNOWN = "the post-state does not say"
 
+# When the named object did not bear the effect, two very different things may have happened,
+# and a report that does not separate them cannot tell a bad referring expression from a bad
+# rule.  Either some other object of the right type did change in the predicted way -- then the
+# query picked the wrong one -- or nothing did, and the rule was making a claim the application
+# does not honour, which is not the query's fault at all.
+QUERY_PICKED_WRONG = "another object of its type bore the effect instead"
+RULE_UNBORNE = "no object of its type bore the effect"
+
 
 def action_bound(op) -> set[str]:
     out = set()
@@ -156,6 +164,7 @@ def evaluate(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.
 
     determinacy: Counter = Counter()
     correctness: Counter = Counter()
+    blame: Counter = Counter()
     witnesses: list[dict] = []
     for step in full.steps[cut:]:
         if step.action.kind != "click" or step.action.target is None:
@@ -194,9 +203,14 @@ def evaluate(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.
                         verdict = _effect_on(op, var, hits[0], before, after)
                         correctness[verdict] += 1
                         if verdict == EFFECT_WRONG:
+                            others = [o for o in before.objs.values()
+                                      if o.tid == op.params.get(var) and o is not hits[0]
+                                      and _effect_on(op, var, o, before, after) == EFFECT_CORRECT]
+                            blame[QUERY_PICKED_WRONG if others else RULE_UNBORNE] += 1
                             witnesses.append({"step": step.step, "operator": op.name,
                                               "variable": var, "query": q.detail,
-                                              "named": hits[0].key})
+                                              "named": hits[0].key,
+                                              "borne_by": [o.key for o in others][:3]})
                     else:
                         determinacy[NAMES_NONE if not hits else NAMES_SEVERAL] += 1
                         if not witnesses or witnesses[-1].get("step") != step.step:
@@ -212,6 +226,7 @@ def evaluate(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.
             "queries": sorted({q.detail for qs in learned.values() for q in qs.values()}),
             "determinacy": dict(sorted(determinacy.items())),
             "effect_correctness": dict(sorted(correctness.items())),
+            "where_the_effect_went": dict(sorted(blame.items())),
             "counterexamples": witnesses[:20]}
 
 
@@ -239,9 +254,13 @@ def main(argv=None) -> int:
     print(f"  determinacy on held-out opportunities: {json.dumps(report['determinacy'])}")
     print(f"  effect correctness where determinate: "
           f"{json.dumps(report['effect_correctness'])}")
+    if report["where_the_effect_went"]:
+        print(f"  when the named object did not bear it: "
+              f"{json.dumps(report['where_the_effect_went'])}")
     for w in report["counterexamples"][:6]:
         print(f"    counterexample step {w['step']} {w['operator']} {w['variable']}: "
-              f"{w['query']} -> {w['named']}")
+              f"{w['query']} -> {w['named']}"
+              + (f"   (borne by {w['borne_by']})" if w.get("borne_by") else ""))
     print(f"\nwrote {path.relative_to(ROOT)}")
     return 0
 
