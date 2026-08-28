@@ -7,19 +7,21 @@ thing to check when reading anything here.
 
 ## Written after the repair, and self-describing
 
-Four families, all carrying a `regime` field naming one of `TRANSDUCTIVE`, `FROZEN_PREFIX` or
+Five families, all carrying a `regime` field naming one of `TRANSDUCTIVE`, `FROZEN_PREFIX` or
 `CAUSAL_PREQUENTIAL`, together with the split they were fitted at:
 
-    regimes_*            the three boundaries on the same predictions
-    claim_substance_*    what a reading claims, its variety, and its exposure to a control
-    groundability_*      rules that could be executed, and the queries learned
-    query_determinacy_*  found on the prefix / prospectively determinate / effect-correct
+    regimes_*              the three boundaries on the same predictions
+    claim_substance_*      what a reading claims, its variety, and its exposure to a control
+    groundability_*        rules that could be executed, and the queries learned
+    query_determinacy_*    found on the prefix / prospectively determinate / effect-correct
+    representation_curve_* the schema and the action alphabet at each chronological cut
 
 `docs/v4_chronology.md` names the runner behind each and how to regenerate it.
 
 ## Everything else here predates the repair
 
-Of the JSON files in this directory, 61 carry no regime field.  They were produced by a
+Of the JSON files in this directory, everything outside those five families carries no regime
+field.  They were produced by a
 compiler whose observation model could read held-out observations while claiming to be a prefix
 fit, so their held-out and prospective numbers are **transductive at the observation-model
 layer** whatever they say.  They are kept because discarding evidence is worse than labelling
