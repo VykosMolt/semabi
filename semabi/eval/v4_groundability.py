@@ -117,7 +117,8 @@ def main(argv=None) -> int:
     path = a.out or OUT / f"groundability_{a.run.name}.json"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(rows, indent=1) + "\n")
-    print(f"\nwrote {path.relative_to(ROOT)}")
+    shown = path.relative_to(ROOT) if path.is_relative_to(ROOT) else path
+    print(f"\nwrote {shown}")
     return 0
 
 

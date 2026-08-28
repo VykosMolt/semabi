@@ -127,7 +127,8 @@ def main(argv=None) -> int:
               f"{json.dumps(row['verdicts'])}")
         if row["refuted_steps"]:
             print(f"  {'':20} refuted at steps {row['refuted_steps']}")
-    print(f"\nwrote {path.relative_to(ROOT)}")
+    shown = path.relative_to(ROOT) if path.is_relative_to(ROOT) else path
+    print(f"\nwrote {shown}")
     return 0
 
 

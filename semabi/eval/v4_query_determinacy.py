@@ -277,7 +277,8 @@ def main(argv=None) -> int:
         print(f"    counterexample step {w['step']} {w['operator']} {w['variable']}: "
               f"{w['query']} -> {w['named']}"
               + (f"   (borne by {w['borne_by']})" if w.get("borne_by") else ""))
-    print(f"\nwrote {path.relative_to(ROOT)}")
+    shown = path.relative_to(ROOT) if path.is_relative_to(ROOT) else path
+    print(f"\nwrote {shown}")
     return 0
 
 

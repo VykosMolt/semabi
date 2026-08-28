@@ -114,6 +114,16 @@ learns nothing new about the world across the whole trace, the action supplies n
 effect objects, and the nine pre-existing objects it claims to change have no legitimate
 referring expression on the evidence.
 
+The adjudication rests on the 0.5 split, and it should be read as resting on it.  There are 33
+held-out Close actions there.  At 0.7 there are eight, and on that many the picture is noisier
+in the promoted reading's favour: it makes 28 decided claims at 50% supported over two distinct
+claims, `id = closed` and `id = open`, and gets every applicable rule right on seven of the
+eight actions, while `joint discrimination x2` makes four decided claims, all supported, and has
+no rule applying on six of the eight.  Eight actions do not adjudicate anything.  What the
+larger split says is what is reported above; what the smaller one says is that the promoted
+reading is not permanently silent, only silent early -- and that its claim is still that an
+object's *identity* takes a status value.
+
 ## Blend: the query works, the effect model does not
 
 The withdrawal of blend's referring query was too broad.  Under a properly scoped prefix fit at
