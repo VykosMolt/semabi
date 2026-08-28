@@ -1,0 +1,170 @@
+[
+ {
+  "run": "opus_02_cellar_dev",
+  "reading": "joint discrimination x2",
+  "regime": "FROZEN_PREFIX",
+  "split": 0.5,
+  "cut": 195,
+  "operators": 3,
+  "rules_by_status": {
+   "the legitimate query language was searched and none determines it": 2,
+   "every effect target is supplied, created, or determined by a query": 1
+  },
+  "determined_rules": [
+   {
+    "operator": "op1",
+    "support": 2,
+    "acts": [
+     "click(button#button)"
+    ],
+    "implicit": {
+     "?o1": "the only object of its type"
+    }
+   }
+  ],
+  "variable_roles": {
+   "it already exists and the action does not name it": 9,
+   "the effect brings it into being": 5,
+   "the action supplies it": 3
+  },
+  "query_outcomes": {
+   "the legitimate query language was searched and none determines it": 8,
+   "a prefix-only query determines it": 1
+  },
+  "distinct_queries": [
+   "the only object of its type"
+  ]
+ },
+ {
+  "run": "opus_02_cellar_dev",
+  "reading": "promote cell[_]=cell#0",
+  "regime": "FROZEN_PREFIX",
+  "split": 0.5,
+  "cut": 195,
+  "operators": 12,
+  "rules_by_status": {
+   "every candidate property was refused as fitting-instance memorisation, so the evidence cannot tell a reusable predicate from a description of one object": 8,
+   "the legitimate query language was searched and none determines it": 4
+  },
+  "determined_rules": [],
+  "variable_roles": {
+   "it already exists and the action does not name it": 167,
+   "the effect brings it into being": 149,
+   "the action supplies it": 4
+  },
+  "query_outcomes": {
+   "the legitimate query language was searched and none determines it": 91,
+   "every candidate property was refused as fitting-instance memorisation, so the evidence cannot tell a reusable predicate from a description of one object": 76
+  },
+  "distinct_queries": []
+ },
+ {
+  "run": "opus_02_cellar_dev",
+  "reading": "joint discrimination x2",
+  "regime": "TRANSDUCTIVE",
+  "split": 0.5,
+  "cut": 195,
+  "operators": 7,
+  "rules_by_status": {
+   "every effect target is supplied, created, or determined by a query": 5,
+   "the legitimate query language was searched and none determines it": 2
+  },
+  "determined_rules": [
+   {
+    "operator": "op1",
+    "support": 2,
+    "acts": [
+     "click(button#button)"
+    ],
+    "implicit": {
+     "?o1": "the only object of its type"
+    }
+   },
+   {
+    "operator": "op3",
+    "support": 1,
+    "acts": [],
+    "implicit": {}
+   },
+   {
+    "operator": "op4",
+    "support": 1,
+    "acts": [],
+    "implicit": {}
+   },
+   {
+    "operator": "op5",
+    "support": 1,
+    "acts": [],
+    "implicit": {}
+   },
+   {
+    "operator": "op6",
+    "support": 1,
+    "acts": [],
+    "implicit": {}
+   }
+  ],
+  "variable_roles": {
+   "the action supplies it": 10,
+   "the effect brings it into being": 9,
+   "it already exists and the action does not name it": 9
+  },
+  "query_outcomes": {
+   "the legitimate query language was searched and none determines it": 8,
+   "a prefix-only query determines it": 1
+  },
+  "distinct_queries": [
+   "the only object of its type"
+  ]
+ },
+ {
+  "run": "opus_02_cellar_dev",
+  "reading": "promote cell[_]=cell#0",
+  "regime": "TRANSDUCTIVE",
+  "split": 0.5,
+  "cut": 195,
+  "operators": 16,
+  "rules_by_status": {
+   "every candidate property was refused as fitting-instance memorisation, so the evidence cannot tell a reusable predicate from a description of one object": 8,
+   "the legitimate query language was searched and none determines it": 4,
+   "every effect target is supplied, created, or determined by a query": 4
+  },
+  "determined_rules": [
+   {
+    "operator": "op9",
+    "support": 1,
+    "acts": [],
+    "implicit": {}
+   },
+   {
+    "operator": "op13",
+    "support": 1,
+    "acts": [],
+    "implicit": {}
+   },
+   {
+    "operator": "op14",
+    "support": 1,
+    "acts": [],
+    "implicit": {}
+   },
+   {
+    "operator": "op15",
+    "support": 1,
+    "acts": [],
+    "implicit": {}
+   }
+  ],
+  "variable_roles": {
+   "it already exists and the action does not name it": 167,
+   "the effect brings it into being": 153,
+   "the action supplies it": 14
+  },
+  "query_outcomes": {
+   "every candidate property was refused as fitting-instance memorisation, so the evidence cannot tell a reusable predicate from a description of one object": 88,
+   "the legitimate query language was searched and none determines it": 79
+  },
+  "distinct_queries": []
+ }
+]
