@@ -874,6 +874,23 @@ So the single finding under it all is that a fixed half-trace split is below thr
 applications, and that what looked like ceilings were thresholds.  That is a learning curve the
 causal prequential regime already handles, and that no amount of freezing will.
 
+## The instruments have one test, and it is the one that matters
+
+Five runners produce the numbers above and none of them had a test.  That is a real exposure:
+a broken instrument does not fail, it silently changes a conclusion, and the claim ledger's
+per-action classifier *did* have a defect during this run -- abstained predictions counted as
+"no rule applied", which reads as a fact about the page rather than about the model -- caught by
+eye rather than by anything that would catch it again.
+
+`tests/test_v4_claim_ledger.py` covers that classifier, because it is the one whose output
+carries conclusions rather than describing them: it is what stopped a reading with a single
+vacuous claim looking like the best model on an application.  It pins the five outcomes as
+distinct, pins abstention apart from non-application, pins one-right-among-three-wrong as a
+disagreement rather than a success, and pins claims being keyed by what they assert rather than
+by which rule asserted it.
+
+The other four remain untested.  That is stated rather than fixed.
+
 ## Running any of this again
 
 Every number above comes from one of five runners, and each writes its report to
