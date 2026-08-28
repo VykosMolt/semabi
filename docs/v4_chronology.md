@@ -674,12 +674,29 @@ It is not the referring query language.  Given a form for what the interface is 
 names the right object on every held-out opportunity where the effect happened at all, against
 a 0.392 chance rate, and using it to bind raises prediction on those steps from 46% to 60%.
 
-It is **applicability over implicit objects**.  Blend's rules fire on 196 held-out actions where
+It is **applicability over implicit objects**, and the shape of what worked says something about
+where to look next.
+
+Two changes this run improved prediction, and both use information available at prediction time
+about *this state*: the selection query asks what the interface is currently pointed at, and
+abstention asks whether the rule can identify its subject here.  Four attempts to rank rules or
+literals by statistics of the fitting evidence all failed.  So the next mechanism is unlikely to
+be a fifth way of scoring candidates.
+
+The one it points to instead is this, and it is a hypothesis rather than a measurement: **the
+model has no rule for refusal.**  Blend's counterexamples are discarded as things a draw rule
+must exclude, when 58% of the clicks are refusals with four systematic causes, each announced in
+a status message the trace records.  A learner that fitted "clicking Record draw while the
+destination is bottled changes nothing and says so" would decline correctly because it had a
+*positive* rule for that case, drawn from 41 examples, rather than a draw rule strained to
+exclude them.  Nothing in this run tested that, and everything in it points at it.
+
+Blend's rules fire on 196 held-out actions where
 the application refused, and are contradicted 899 times there against 121 on the actions it
 performed.  The conditions that would stop them are conditions on the source and destination --
-objects the action does not supply and the referring query now names.  Two of the four are
-already learnable and learned; one needs a literal comparing an attribute of one object to an
-attribute of another, which the language does not have.
+objects the action does not supply and the referring query now names.  All four are expressible
+as unary literals on those objects, and the ceiling analysis showed the cross-object comparison
+the language lacks would be worth nothing here.  The learner does not select them.
 
 And applicability is a learning curve as well.  Every failure traced under strict chronology in
 this run turned out to be one: harbour's lost precondition, learnable by step 252; blend's
