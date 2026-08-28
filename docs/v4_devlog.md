@@ -4,6 +4,14 @@ Development evidence on gauntlet-v3. gauntlet-v3 became a development suite the 
 official frozen-V2 result was sealed (`54adf05`); nothing below is fresh generalization and
 none of it may be reported as such.
 
+**A second caveat applies to every held-out and prospective number below, and it is not the one
+about collection chronology.** The observation model in those runs could read held-out
+observations while claiming to be a prefix fit, so they are *transductive at the
+observation-model layer* whatever they say -- including the section `m` result that harbour's
+two survivors are "separated by a prospective test", which is the claim `docs/v4_chronology.md`
+re-establishes under a corrected boundary and finds partly true and partly not. Read that
+document before treating any figure here as prospective.
+
 ## a — custody
 
 `scripts/v4_custody.py` verifies the freeze against the blobs the tag points at rather than
