@@ -1,0 +1,623 @@
+{
+ "run": "harbour_transfer",
+ "reading": "joint discrimination x2",
+ "regime": "CAUSAL_PREQUENTIAL",
+ "split": 0.5,
+ "cut": 229,
+ "stride": 4,
+ "control": null,
+ "actions_scored": 31,
+ "what_the_evidence_establishes": {
+  "rule": {
+   "the evidence forces one outcome": 13,
+   "no outcome is established": 11,
+   "one outcome, because the control has never done anything else": 7
+  },
+  "list": {
+   "the evidence forces one outcome": 10,
+   "no outcome is established": 9,
+   "one outcome, because the control has never done anything else": 7,
+   "several outcomes remain admissible": 5
+  }
+ },
+ "verdicts": {
+  "rule": {
+   "one outcome was admissible and it happened": 13,
+   "no outcome is established for this state": 11,
+   "the only outcome ever seen on this control, and it happened": 7
+  },
+  "list": {
+   "one outcome was admissible and it happened": 10,
+   "no outcome is established for this state": 9,
+   "the only outcome ever seen on this control, and it happened": 7,
+   "several outcomes remained admissible; the one that happened was among them": 5
+  }
+ },
+ "rows": [
+  {
+   "step": 230,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> already has call <> on the board ."
+    ],
+    "observed": "<> already has call <> on the board ."
+   },
+   "control": "button:Schedule call",
+   "list": {
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> already has call <> on the board .",
+     "Call <> opened for <> ."
+    ],
+    "observed": "<> already has call <> on the board ."
+   }
+  },
+  {
+   "step": 236,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> <> is now <> ."
+    ],
+    "observed": "<> <> is now <> ."
+   },
+   "control": "button:Close",
+   "list": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> <> is now <> ."
+    ],
+    "observed": "<> <> is now <> ."
+   }
+  },
+  {
+   "step": 240,
+   "rule": {
+    "bucket": "one outcome, because the control has never done anything else",
+    "verdict": "the only outcome ever seen on this control, and it happened",
+    "admissible": [
+     "\u0000SILENT"
+    ],
+    "observed": "<> <> is now <> ."
+   },
+   "control": "button#cell/button@6bf899",
+   "list": {
+    "bucket": "one outcome, because the control has never done anything else",
+    "verdict": "the only outcome ever seen on this control, and it happened",
+    "admissible": [
+     "\u0000SILENT"
+    ],
+    "observed": "<> <> is now <> ."
+   }
+  },
+  {
+   "step": 249,
+   "rule": {
+    "bucket": "no outcome is established",
+    "verdict": "no outcome is established for this state",
+    "admissible": [],
+    "observed": "<> is signed off ."
+   },
+   "control": "button:Sign off",
+   "list": {
+    "bucket": "no outcome is established",
+    "verdict": "no outcome is established for this state",
+    "admissible": [],
+    "observed": "<> is signed off ."
+   }
+  },
+  {
+   "step": 257,
+   "rule": {
+    "bucket": "no outcome is established",
+    "verdict": "no outcome is established for this state",
+    "admissible": [],
+    "observed": "<> is already signed off ."
+   },
+   "control": "button:Sign off",
+   "list": {
+    "bucket": "no outcome is established",
+    "verdict": "no outcome is established for this state",
+    "admissible": [],
+    "observed": "<> is already signed off ."
+   }
+  },
+  {
+   "step": 263,
+   "rule": {
+    "bucket": "no outcome is established",
+    "verdict": "no outcome is established for this state",
+    "admissible": [],
+    "observed": "<> is already signed on ."
+   },
+   "control": "button:Sign on",
+   "list": {
+    "bucket": "no outcome is established",
+    "verdict": "no outcome is established for this state",
+    "admissible": [],
+    "observed": "<> is already signed on ."
+   }
+  },
+  {
+   "step": 267,
+   "rule": {
+    "bucket": "no outcome is established",
+    "verdict": "no outcome is established for this state",
+    "admissible": [],
+    "observed": "<> is already signed on ."
+   },
+   "control": "button:Sign on",
+   "list": {
+    "bucket": "no outcome is established",
+    "verdict": "no outcome is established for this state",
+    "admissible": [],
+    "observed": "<> is already signed on ."
+   }
+  },
+  {
+   "step": 272,
+   "rule": {
+    "bucket": "no outcome is established",
+    "verdict": "no outcome is established for this state",
+    "admissible": [],
+    "observed": "<> is signed off ."
+   },
+   "control": "button:Sign off",
+   "list": {
+    "bucket": "no outcome is established",
+    "verdict": "no outcome is established for this state",
+    "admissible": [],
+    "observed": "<> is signed off ."
+   }
+  },
+  {
+   "step": 276,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> <> is already <> ."
+    ],
+    "observed": "<> <> is already <> ."
+   },
+   "control": "button:Reopen",
+   "list": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> <> is already <> ."
+    ],
+    "observed": "<> <> is already <> ."
+   }
+  },
+  {
+   "step": 281,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> <> is now <> ."
+    ],
+    "observed": "<> <> is now <> ."
+   },
+   "control": "button:Reopen",
+   "list": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> <> is now <> ."
+    ],
+    "observed": "<> <> is now <> ."
+   }
+  },
+  {
+   "step": 287,
+   "rule": {
+    "bucket": "no outcome is established",
+    "verdict": "no outcome is established for this state",
+    "admissible": [],
+    "observed": "<> is already signed off ."
+   },
+   "control": "button:Sign off",
+   "list": {
+    "bucket": "no outcome is established",
+    "verdict": "no outcome is established for this state",
+    "admissible": [],
+    "observed": "<> is already signed off ."
+   }
+  },
+  {
+   "step": 294,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> <> is now <> ."
+    ],
+    "observed": "<> <> is now <> ."
+   },
+   "control": "button:Close",
+   "list": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> <> is now <> ."
+    ],
+    "observed": "<> <> is now <> ."
+   }
+  },
+  {
+   "step": 298,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> <> is now <> ."
+    ],
+    "observed": "<> <> is now <> ."
+   },
+   "control": "button:Reopen",
+   "list": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> <> is now <> ."
+    ],
+    "observed": "<> <> is now <> ."
+   }
+  },
+  {
+   "step": 302,
+   "rule": {
+    "bucket": "one outcome, because the control has never done anything else",
+    "verdict": "the only outcome ever seen on this control, and it happened",
+    "admissible": [
+     "\u0000SILENT"
+    ],
+    "observed": "<> is already signed off ."
+   },
+   "control": "button#cell/button@6bf899",
+   "list": {
+    "bucket": "one outcome, because the control has never done anything else",
+    "verdict": "the only outcome ever seen on this control, and it happened",
+    "admissible": [
+     "\u0000SILENT"
+    ],
+    "observed": "<> is already signed off ."
+   }
+  },
+  {
+   "step": 309,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Call <> opened for <> ."
+    ],
+    "observed": "Call <> opened for <> ."
+   },
+   "control": "button:Schedule call",
+   "list": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Call <> opened for <> ."
+    ],
+    "observed": "Call <> opened for <> ."
+   }
+  },
+  {
+   "step": 317,
+   "rule": {
+    "bucket": "no outcome is established",
+    "verdict": "no outcome is established for this state",
+    "admissible": [],
+    "observed": "<> already has call <> on the board ."
+   },
+   "control": "button:Schedule call",
+   "list": {
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> already has call <> on the board .",
+     "Call <> opened for <> ."
+    ],
+    "observed": "<> already has call <> on the board ."
+   }
+  },
+  {
+   "step": 323,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> <> is now <> ."
+    ],
+    "observed": "<> <> is now <> ."
+   },
+   "control": "button:Reopen",
+   "list": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> <> is now <> ."
+    ],
+    "observed": "<> <> is now <> ."
+   }
+  },
+  {
+   "step": 331,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> already has call <> on the board ."
+    ],
+    "observed": "<> already has call <> on the board ."
+   },
+   "control": "button:Schedule call",
+   "list": {
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> already has call <> on the board .",
+     "Call <> opened for <> ."
+    ],
+    "observed": "<> already has call <> on the board ."
+   }
+  },
+  {
+   "step": 340,
+   "rule": {
+    "bucket": "one outcome, because the control has never done anything else",
+    "verdict": "the only outcome ever seen on this control, and it happened",
+    "admissible": [
+     "Nothing chosen in the berth list ."
+    ],
+    "observed": "Nothing chosen in the berth list ."
+   },
+   "control": "button:Allocate berth",
+   "list": {
+    "bucket": "one outcome, because the control has never done anything else",
+    "verdict": "the only outcome ever seen on this control, and it happened",
+    "admissible": [
+     "Nothing chosen in the berth list ."
+    ],
+    "observed": "Nothing chosen in the berth list ."
+   }
+  },
+  {
+   "step": 349,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> already has call <> on the board ."
+    ],
+    "observed": "<> already has call <> on the board ."
+   },
+   "control": "button:Schedule call",
+   "list": {
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> already has call <> on the board .",
+     "Call <> opened for <> ."
+    ],
+    "observed": "<> already has call <> on the board ."
+   }
+  },
+  {
+   "step": 365,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> already has call <> on the board ."
+    ],
+    "observed": "<> already has call <> on the board ."
+   },
+   "control": "button:Schedule call",
+   "list": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> already has call <> on the board ."
+    ],
+    "observed": "<> already has call <> on the board ."
+   }
+  },
+  {
+   "step": 370,
+   "rule": {
+    "bucket": "no outcome is established",
+    "verdict": "no outcome is established for this state",
+    "admissible": [],
+    "observed": "<> is already signed on ."
+   },
+   "control": "button:Sign on",
+   "list": {
+    "bucket": "no outcome is established",
+    "verdict": "no outcome is established for this state",
+    "admissible": [],
+    "observed": "<> is already signed on ."
+   }
+  },
+  {
+   "step": 376,
+   "rule": {
+    "bucket": "no outcome is established",
+    "verdict": "no outcome is established for this state",
+    "admissible": [],
+    "observed": "<> is already signed on ."
+   },
+   "control": "button:Sign on",
+   "list": {
+    "bucket": "no outcome is established",
+    "verdict": "no outcome is established for this state",
+    "admissible": [],
+    "observed": "<> is already signed on ."
+   }
+  },
+  {
+   "step": 386,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> already has call <> on the board ."
+    ],
+    "observed": "<> already has call <> on the board ."
+   },
+   "control": "button:Schedule call",
+   "list": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> already has call <> on the board ."
+    ],
+    "observed": "<> already has call <> on the board ."
+   }
+  },
+  {
+   "step": 394,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> already has call <> on the board ."
+    ],
+    "observed": "<> already has call <> on the board ."
+   },
+   "control": "button:Schedule call",
+   "list": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> already has call <> on the board ."
+    ],
+    "observed": "<> already has call <> on the board ."
+   }
+  },
+  {
+   "step": 400,
+   "rule": {
+    "bucket": "one outcome, because the control has never done anything else",
+    "verdict": "the only outcome ever seen on this control, and it happened",
+    "admissible": [
+     "\u0000SILENT"
+    ],
+    "observed": "Ready ."
+   },
+   "control": "button#button",
+   "list": {
+    "bucket": "one outcome, because the control has never done anything else",
+    "verdict": "the only outcome ever seen on this control, and it happened",
+    "admissible": [
+     "\u0000SILENT"
+    ],
+    "observed": "Ready ."
+   }
+  },
+  {
+   "step": 408,
+   "rule": {
+    "bucket": "no outcome is established",
+    "verdict": "no outcome is established for this state",
+    "admissible": [],
+    "observed": "Call <> opened for <> ."
+   },
+   "control": "button:Schedule call",
+   "list": {
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> already has call <> on the board .",
+     "Call <> opened for <> ."
+    ],
+    "observed": "Call <> opened for <> ."
+   }
+  },
+  {
+   "step": 417,
+   "rule": {
+    "bucket": "no outcome is established",
+    "verdict": "no outcome is established for this state",
+    "admissible": [],
+    "observed": "<> is signed off ."
+   },
+   "control": "button:Sign off",
+   "list": {
+    "bucket": "no outcome is established",
+    "verdict": "no outcome is established for this state",
+    "admissible": [],
+    "observed": "<> is signed off ."
+   }
+  },
+  {
+   "step": 422,
+   "rule": {
+    "bucket": "one outcome, because the control has never done anything else",
+    "verdict": "the only outcome ever seen on this control, and it happened",
+    "admissible": [
+     "Call <> has <> berth allocated ."
+    ],
+    "observed": "Call <> has <> berth allocated ."
+   },
+   "control": "button:Bring _",
+   "list": {
+    "bucket": "one outcome, because the control has never done anything else",
+    "verdict": "the only outcome ever seen on this control, and it happened",
+    "admissible": [
+     "Call <> has <> berth allocated ."
+    ],
+    "observed": "Call <> has <> berth allocated ."
+   }
+  },
+  {
+   "step": 436,
+   "rule": {
+    "bucket": "one outcome, because the control has never done anything else",
+    "verdict": "the only outcome ever seen on this control, and it happened",
+    "admissible": [
+     "\u0000SILENT"
+    ],
+    "observed": "Ready ."
+   },
+   "control": "button#button",
+   "list": {
+    "bucket": "one outcome, because the control has never done anything else",
+    "verdict": "the only outcome ever seen on this control, and it happened",
+    "admissible": [
+     "\u0000SILENT"
+    ],
+    "observed": "Ready ."
+   }
+  },
+  {
+   "step": 447,
+   "rule": {
+    "bucket": "one outcome, because the control has never done anything else",
+    "verdict": "the only outcome ever seen on this control, and it happened",
+    "admissible": [
+     "\u0000SILENT"
+    ],
+    "observed": "Ready ."
+   },
+   "control": "button#button",
+   "list": {
+    "bucket": "one outcome, because the control has never done anything else",
+    "verdict": "the only outcome ever seen on this control, and it happened",
+    "admissible": [
+     "\u0000SILENT"
+    ],
+    "observed": "Ready ."
+   }
+  }
+ ]
+}

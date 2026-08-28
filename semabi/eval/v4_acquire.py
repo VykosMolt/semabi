@@ -56,6 +56,23 @@ def _target(obs, name: str) -> int | None:
     return None
 
 
+def _targets(A, obs, name: str, control_key: str) -> list[int]:
+    """Every button on the page that is this control: by exact name, or by identity.
+
+    A control such as blend's `Close _` renders one button per vat, each named with the vat
+    (`Close North Wall`), so no single rendered name addresses it; the frozen control
+    identity does (`docs/v4_identity.md`), and the driver then chooses among the buttons by
+    what the model says at each -- which is the choice the acquisition is about.
+    """
+    exact = _target(obs, name)
+    if exact is not None:
+        return [exact]
+    from semabi.compiler.v4.consequence import control_of
+    families = A.control_family(obs)
+    return [n.i for n in obs.nodes
+            if n.role == "button" and control_of(families.get(n.i, "")) == control_key]
+
+
 def _name_the_unnamed(browser, obs, got, status, turn) -> bool:
     """Set the select a currently-unnamed role reads, if the page renders one.
 
@@ -118,7 +135,8 @@ def acquire(model, control_key: str, button: str, base: str, *, seed: int,
             if len(acquired) >= want:
                 break
             state, po = _model_state(model, obs)
-            node = _target(obs, button)
+            candidates = _targets(A, obs, button, control_key)
+            node = candidates[0] if candidates else None
             if node is None:
                 # The control is not on this page.  Cellar renders its operations across three
                 # views, so an exploratory click can navigate away from the one being studied;
@@ -132,26 +150,55 @@ def acquire(model, control_key: str, button: str, base: str, *, seed: int,
                 obs = browser.observe()
                 continue
             from semabi.compiler.v4.consequence import _owner_object
-            owner = _owner_object(A, po, state, node)
-            bound, status = got.bind(state, owner)
-            options = got.admissible(
-                oc._literals(model.inducer, state, bound, status, got.defaults),
-                corroborated=True)
+            # Among the buttons that are this control, prefer one where the model is unsure
+            # (or, under the coverage policy, where nothing is established): the acquisition
+            # is worth making at that one.
+            chosen = None
+            for cand in candidates:
+                o_ = _owner_object(A, po, state, cand)
+                b_, s_ = got.bind(state, o_)
+                opts_ = got.admissible(
+                    oc._literals(model.inducer, state, b_, s_, got.defaults), corroborated=True)
+                if policy == "corroborate":
+                    here_ = frozenset(oc._literals(model.inducer, state, b_, s_, got.defaults))
+                    ev_ = got.evidence
+                    want_here = any(set(ev_._condition(ev_.masks[i])) <= here_
+                                    for e_, idxs_ in ev_.by_event.items()
+                                    if len(idxs_) < oc.MIN_COVER for i in idxs_)
+                else:
+                    want_here = (len(opts_) > 1 if policy != "unestablished" else not opts_)
+                if chosen is None or (want_here and not chosen[-1]):
+                    chosen = (cand, o_, b_, s_, opts_, want_here)
+                if want_here:
+                    break
+            node, owner, bound, status, options, _ = chosen
             visited[len(options)] += 1
             # Two kinds of not knowing, and they justify acting for different reasons.
             # `uncertain` acts where several outcomes remain admissible: a real disagreement
             # between hypotheses, which the application's answer settles.  `unestablished`
             # acts where *nothing* is admissible: not a disagreement but a coverage gap, which
             # is the weaker justification and the one cellar's controls actually present.
-            discriminating = (len(options) > 1 if policy != "unestablished"
-                              else not options)
+            if policy == "corroborate":
+                # An event the control returned exactly once cannot found a rule -- the
+                # `ONCE` case of `v4_inadequacy` -- and the model can see that from the
+                # inside.  A state that satisfies everything the single occasion did is where
+                # a second occasion of the event would make a pure pair; act there.
+                here = frozenset(oc._literals(model.inducer, state, bound, status,
+                                              got.defaults))
+                ev = got.evidence
+                lone = [i for e, idxs in ev.by_event.items() if len(idxs) < oc.MIN_COVER
+                        for i in idxs]
+                discriminating = any(set(ev._condition(ev.masks[i])) <= here for i in lone)
+            else:
+                discriminating = (len(options) > 1 if policy != "unestablished"
+                                  else not options)
             # Asking the same question twice acquires nothing.  Under the coverage policy
             # nothing is ever established, so without this the driver clicks at every turn and
             # never explores -- which is what it did on cellar, pressing `Move vessel` with
             # nothing selected twenty times and learning only that nothing was selected.
             fresh = frozenset(
                 oc._literals(model.inducer, state, bound, status, got.defaults)) not in asked
-            if (discriminating and fresh if policy in ("uncertain", "unestablished")
+            if (discriminating and fresh if policy in ("uncertain", "unestablished", "corroborate")
                     else True) or (
                     turn % 3 == 2 and len(acquired) < want):
                 before = emit_mod.live_text(obs)
@@ -264,7 +311,8 @@ def main(argv=None) -> int:
                     help="must differ from the retained trace's seed")
     ap.add_argument("--budget", type=int, default=40)
     ap.add_argument("--want", type=int, default=12)
-    ap.add_argument("--policy", default="uncertain", choices=("uncertain", "any", "unestablished"),
+    ap.add_argument("--policy", default="uncertain",
+                    choices=("uncertain", "any", "unestablished", "corroborate"),
                     help="'any' is the matched control: act without consulting uncertainty")
     a = ap.parse_args(argv)
     from semabi.eval.v4_consequence_run import _candidates

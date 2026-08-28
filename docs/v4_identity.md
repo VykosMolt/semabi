@@ -224,6 +224,23 @@ segmenter's key truncation below, which the old identity never reached because t
 an object.  The other four are one more frame error than before.  The second history, which
 has no such vat, improves.
 
+### Under the boundary a deployed agent faces
+
+`v4_admissible_prequential` rebuilds the whole model before each scored action from exactly
+what had been observed when it was chosen, and asks the version space there.  Blend, every
+eighth held-out click (32 of 249):
+
+| class | forced, right | forced, wrong | several open, truth among | several, missing | nothing | sole |
+|---|---|---|---|---|---|---|
+| rule | 18 | 0 | 9 | 0 | 2 | 3 (1 right) |
+| list | 16 | 0 | 11 | 0 | 2 | 3 (1 right) |
+
+Nothing forced was wrong under either class, and where the evidence left the outcome open the
+truth was always among the options.  Harbour, every fourth held-out click (31 of 126): under
+the rule class 13 forced and right, 11 refused, 7 vacuously sole and right; under the list
+class 10 forced and right, 5 open with the truth among them, 9 refused.  At the boundary an
+agent actually faces, on these two applications, a forced answer was never wrong.
+
 ## An entity whose name the prefix never used
 
 Twenty-seven blend clicks still had no model after the identity repair, all on a vat called
@@ -403,6 +420,18 @@ layer responsible rather than counted:
 * **Blend, 20 vacuous answers on `Open` and `Disgorge`** -- controls the prefix only ever saw
   succeed.  The label space, and the case acquisition is for: the control has to be exercised
   where it will refuse.
+* **Blend, `Close`, driven live.**  With the control addressable by identity rather than by
+  a rendered name (`v4_acquire._targets`), the acquisition driver was run against the running
+  application at two seeds the trace never used.  Under the `uncertain` policy it examined 36
+  states and found the model sure at every one -- no disagreement to act on -- and under a new
+  `corroborate` policy, which acts where a state satisfies everything the single occasion of a
+  once-seen event did, it found no such state either: the lone occasion's literal set is too
+  specific to be met.  Both runs acquired twelve observations through the driver's periodic
+  exercise of the control, nine of them *already closed*, and refitting on them takes `Close`
+  from 9 right / 4 wrong / 3 refused to 14 right / 0 wrong / 2 open.  So the `ONCE` category
+  was one witness away, as its name says, and it was *exercise*, not the model's uncertainty,
+  that supplied the witness.  The corroborate policy is kept, off, as the negative: knowing
+  which event lacks a witness does not tell the driver which state would produce one.
 * **Off-page referents**: a probe over every held-out role that names nothing found *no* case,
   on any of the three applications, where the referent had been seen on an earlier page.  A
   remembered-object state would have nothing to do here, and was not built.
