@@ -108,6 +108,16 @@ take blend's accuracy on the steps where the application performs the action fro
 and cut its contradictions by 74%; harbour is untouched by both, because none of its rules
 learns a query.
 
+The largest remaining defect is not in any of the layers this run was about.  The application
+states in words, on every step, what the last action did or refused to do, and the parser was
+the only layer that did not read it -- `parse.DATA_ROLES` held `alert` and omitted `status`
+while the graph and hypotheses layers held both.  That is now fixed, which moves nothing on
+harbour and blend and gains cellar's promoted reading its first determinate queries.  It does
+not close the gap: a transition whose only difference is the status line is still not a domain
+change, so all 69 of blend's held-out refusals remain counterexamples rather than outcomes.
+Closing it needs a category the model does not have -- an observable outcome that is not a state
+change -- and `tests/test_v4_frozen_transform.py` is written to fail when that lands.
+
 Six candidate mechanisms were measured and rejected, and the rejections are in the chronology
 document rather than discarded.  No statistic computed from the fitting evidence predicted
 prospective correctness -- four were tried, including one named there as the next mechanism and
