@@ -86,6 +86,8 @@ class ObsGraph:
         self._in_nonwidget: set[str] = set()  # tokens seen in a non-widget text or an input value
         self._whole: set[str] = set()  # complete texts / option labels / input values (lowercase data values)
         self._data: set[str] | None = None
+        self._seen: set[str] = set()   # every token the corpus read anywhere, headers and options included
+        self._value_paths: set[str] | None = None
         self.templates_v: dict[tuple, TextTemplate] = {}  # (position, indexed position, view skeleton) -> strings
         self.header: set[tuple[str, int]] = set()  # (sig, node) cells of a table's first row
         self.header_strings: dict[tuple[str, int], set[str]] = defaultdict(set)  # (table path, col) -> strings
@@ -216,6 +218,9 @@ class ObsGraph:
             # listing share theirs (their own index would make every stable listing look constant)
             ppos = self.position_idx(obs, n.parent) if n.parent >= 0 else ()
             tv = self.templates_v.setdefault((pos, ppos, skel), TextTemplate(pos))
+            self._seen.update(tokens(node_text(n)))
+            for o in n.options or ():
+                self._seen.update(tokens(o))
             if node_text(n) and (sig, n.i) not in self.header:
                 tt.strings[node_text(n)] += 1
                 tt.n += 1
@@ -228,6 +233,7 @@ class ObsGraph:
                     self._whole.add(o.strip())
         if self.learning:
             self._data = None
+            self._value_paths = None
 
     def forget(self, sig: str) -> None:
         """Drop one observation's per-observation structure so it can be re-read.
@@ -247,6 +253,40 @@ class ObsGraph:
     def is_data(self, t: str) -> bool:
         return t in self.data_set() or t[0].isdigit()
 
+    def value_paths(self) -> set[str]:
+        """Role paths at which the corpus has seen a value.
+
+        Computed from the text templates, which stop growing when the graph is frozen, so
+        for a frozen graph this is a fact about the fitting corpus and nothing else.
+        """
+        if self._value_paths is None:
+            d = self.data_set()
+            self._value_paths = {
+                pos.split("|")[0] for pos, tt in self.templates.items()
+                if any(t in d or t[0].isdigit()
+                       for s in tt.strings for t in tokens(s) if t[0].isalnum())}
+        return self._value_paths
+
+    def is_data_at(self, sig: str, i: int, t: str) -> bool:
+        """Is this token, at this node, a value?
+
+        The corpus vocabulary decides for every token the corpus has seen.  A token it has
+        *never* seen is a different case, and the frozen model has one piece of evidence
+        about it: where it is.  At a position the corpus read values from -- the name cell
+        of a row, a button whose label carries the row's name -- an unseen word is a value,
+        because that is what the position holds; elsewhere the model has no evidence and
+        the token is left as it would have been.  Nothing changes during fitting, when every
+        token has been seen; what changes is that a frozen model can recognise a row whose
+        name contains a word the prefix never used -- blend's `Block 12`, which was not an
+        object on any of the 267 held-out pages that rendered it.
+        """
+        if t in self.data_set() or t[0].isdigit():
+            return True
+        if t in self._seen or self.learning:
+            return False
+        pos = self.position_of.get((sig, i))
+        return pos is not None and pos.split("|")[0] in self.value_paths()
+
     def is_header(self, sig: str, i: int) -> bool:
         """A first-row cell is a label row unless its text is data elsewhere (a matrix whose
         column headers name entities shown in other places)."""
@@ -265,7 +305,7 @@ class ObsGraph:
         out: list[str] = []
         run: list[str] = []
         for t in tokens(node_text(n)):
-            if self.is_data(t):
+            if self.is_data_at(sig, i, t):
                 if run and run[-1][0].isdigit() != t[0].isdigit():
                     out.append(" ".join(run))  # a number next to a name is a different value
                     run = []
@@ -306,8 +346,7 @@ class ObsGraph:
         n = self.obs[sig].node(i)
         if self.is_header(sig, i):
             return set(tokens(node_text(n)))
-        d = self.data_set()
-        return {t for t in tokens(node_text(n)) if t not in d and not t[0].isdigit()}
+        return {t for t in tokens(node_text(n)) if not self.is_data_at(sig, i, t)}
 
     # ------------------------------------------------------------------ subtree template
     def subtree_template(self, sig: str, i: int) -> str:

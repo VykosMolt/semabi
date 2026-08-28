@@ -198,3 +198,91 @@ def test_one_family_covers_several_entity_bindings():
     families = _induce({"a": two_cards}, {"a": [(0, "card"), (3, "card")]}, {"card": 2})
 
     assert families.of("a", 2) == families.of("a", 5)
+
+
+# ---------------------------------------------------------------- identity across renderings
+#
+# Blend rendered five hidden operators as row buttons whose labels carry the row's entity --
+# `Close North Wall`, `Open North Wall`, `Bottle Cloister`, `Disgorge Cloister`, `Return ticket
+# 4 (...)` -- and every one of them was a label-less family distinguished by nothing but a
+# template digest that the layers above dropped.  On a held-out page they were not even that:
+# a page the induction never read fell through to per-instance ordinals, so all five were
+# `button#0`.  The tests below pin the three repairs at the cases that produced that.
+
+
+def test_data_in_a_label_is_masked_rather_than_blanking_the_label():
+    close = _Obs([_node(0, "button", -1, name="Close North Wall")])
+    bottle = _Obs([_node(0, "button", -1, name="Bottle Cloister")])
+    ret = _Obs([_node(0, "button", -1, name="Return ticket 4 (1 gal from North Wall out of Picnic)")])
+    families = _induce(
+        {"a": close, "b": bottle, "c": ret},
+        {"a": [(0, "button[Close _]")], "b": [(0, "button[Bottle _]")], "c": [(0, "button[Return ticket _ ...]")]},
+        {"button[Close _]": 1, "button[Bottle _]": 1, "button[Return ticket _ ...]": 1},
+        data=("North", "Wall", "Cloister", "4", "1", "Picnic"),
+    )
+
+    assert len({families.of("a", 0), families.of("b", 0), families.of("c", 0)}) == 3
+    assert families.of("a", 0) == "button:Close _"
+    assert families.of("c", 0) == "button:Return ticket _ gal from _ out of _"
+
+
+def test_a_label_that_is_nothing_but_data_is_label_less():
+    """`Open North Wall`, where `Open` is also a cell value: no constant token, no label."""
+    obs = _Obs([_node(0, "button", -1, name="Open North Wall")])
+    families = _induce({"a": obs}, {"a": [(0, "button[_]")]}, {"button[_]": 1},
+                       data=("Open", "North", "Wall"))
+
+    assert families.of("a", 0) == "button#button"
+
+
+def test_a_page_the_induction_never_read_is_classified_by_descriptor():
+    """The families are a model, not a memo: a held-out page gets the family its control's
+    descriptor names, and a unit template the induction never saw falls back on role, label
+    and path."""
+    seen = _Obs(_card(0, combobox_options=["pink"]))
+    families = _induce({"a": seen}, {"a": [(0, "card")]}, {"card": 2})
+    H = _H({"a": [(0, "card")], "b": [(9, "card")], "c": [(9, "card-with-a-lead")]},
+           {"card": 2})
+    unseen = _Obs([_node(9, "group", -1), _node(10, "text", 9), _node(11, "combobox", 10, options=["black"])])
+
+    assert families.of("b", 11) is None
+    assert families.assign(H, unseen, "b", set()) == {11: families.of("a", 2)}
+    assert families.assign(H, unseen, "c", set()) == {11: families.of("a", 2)}
+
+
+def test_classification_of_a_new_template_respects_an_entity_split():
+    """Two families share a descriptor but for the entity group; a new template the frozen
+    hypotheses place in one of those groups goes there, and one they place nowhere gets the
+    bare rendered name -- which names nothing fitted for a label-less control."""
+    a = _Obs([_node(0, "button", -1, name="Hang on Cave")])
+    b = _Obs([_node(0, "button", -1, name="R1")])
+    families = _induce({"a": a, "b": b},
+                       {"a": [(0, "button[Hang on _]")], "b": [(0, "button[_]")]},
+                       {"button[Hang on _]": 0, "button[_]": 1}, data=("Cave", "R1", "R2"))
+    third = _Obs([_node(0, "button", -1, name="R2")])
+    H = _H({"c": [(0, "button[_](text[])")], "d": [(0, "button[](_)")]},
+           {"button[Hang on _]": 0, "button[_]": 1, "button[_](text[])": 1})
+
+    assert families.assign(H, third, "c", {"Cave", "R1", "R2"}) == {0: families.of("b", 0)}
+    # nothing in the frozen hypotheses places `button[](_)`, and `button#button` is label-less
+    # with only one candidate, so the one candidate is the answer
+    assert families.assign(H, third, "d", {"Cave", "R1", "R2"}) == {0: families.of("b", 0)}
+
+
+def test_identity_keeps_a_label_less_digest_and_drops_a_labelled_one():
+    assert controls.identity("button:Close@54dcf8") == "button:Close"
+    assert controls.identity("button#button@bb8f76") == "button#button@bb8f76"
+    assert controls.identity("button:Walls@57") == "button:Walls"
+    assert controls.identity("button#0") == "button#0"
+    assert controls.identity("button:Record draw") == "button:Record draw"
+
+
+def test_units_that_are_not_entities_do_not_split_a_labelled_control():
+    """A page-level unit has no entity group.  Blend's `Record draw` sat in seven page-template
+    variants and was seven families; a unit the entity layer does not read is no evidence
+    that two same-shaped controls are two things."""
+    a = _Obs([_node(0, "group", -1), _node(1, "group", 0), _node(2, "button", 1, name="Record draw")])
+    b = _Obs([_node(0, "group", -1), _node(1, "group", 0), _node(2, "button", 1, name="Record draw")])
+    families = _induce({"a": a, "b": b}, {"a": [(0, "page-v1")], "b": [(0, "page-v2")]}, {})
+
+    assert families.of("a", 2) == families.of("b", 2) == "button:Record draw"

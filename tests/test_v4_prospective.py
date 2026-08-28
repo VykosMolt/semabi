@@ -345,9 +345,13 @@ def test_a_colliding_naming_still_fragments_but_no_longer_contradicts_itself(det
     assert result["totals"].get("ORDINAL_AMBIGUOUS", 0) == 0
     assert close["verdict"] == "DETERMINATE"
     assert {split_literal(v)[0] for v in close["literals"]} == {"closed"}
-    assert close["rules"] > _group(determinacy["joint discrimination x2"],
-                                  "button:Close")["rules"]
-    assert close["single_support_rules"] >= 1
+    # It used to fragment as well -- more rules than the rival fits for the same click -- and
+    # that too turned out to be the identity's doing rather than the reading's: under this
+    # reading the button sat outside every unit and its slot key carried a node index, so each
+    # occurrence was its own control.  With controls named by their masked label
+    # (`docs/v4_identity.md`) the click is one control under both readings, and the
+    # single-transition rules went with the fragmentation.
+    assert close["single_support_rules"] == 0
 
 
 def test_determinacy_never_compares_one_readings_literals_with_anothers(determinacy):

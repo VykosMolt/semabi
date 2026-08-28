@@ -1,0 +1,74 @@
+{
+ "run": "harbour_transfer",
+ "reading": "joint discrimination x2",
+ "regime": "FROZEN_PREFIX",
+ "hypothesis": "rule",
+ "cut": 229,
+ "forced_wrong": 2,
+ "kinds": {
+  "inseparable: every shared conjunction reaches another event": 2
+ },
+ "by_control": {
+  "button:Schedule call": {
+   "inseparable: every shared conjunction reaches another event": 2
+  }
+ },
+ "cases": [
+  {
+   "control": "button:Schedule call",
+   "step": 230,
+   "forced": [
+    "Call <> opened for <> ."
+   ],
+   "actual": "<> already has call <> on the board .",
+   "why": "Call <> opened for <> . <- ('ref_null', 'owner', 'rel:10') & ('unnamed', \"selection['cell#36']:0\") & ('unnamed', 'singleton[]:9')  [3 occasions]",
+   "kind": "inseparable: every shared conjunction reaches another event",
+   "seen": 12,
+   "witnesses": [
+    1,
+    3
+   ],
+   "blockers": 2,
+   "blocked_by": {
+    "Call <> opened for <> .": 2
+   },
+   "raw_difference": [
+    "node 19 cell: 'Kittiwake'/'None'  vs  'Nordkapp'/'None'",
+    "node 20 cell: '78 m'/'None'  vs  '132 m'/'None'",
+    "node 21 cell: 'N2'/'None'  vs  'S1'/'None'",
+    "node 24 group: ''/'None'  vs  ''/'None'",
+    "node 25 heading: 'Call sheet'/'None'  vs  ''/'None'",
+    "node 26 text: 'No call is open. Press a call refe'/'None'  vs  'C-102'/'None'",
+    "node count 141 vs 157"
+   ]
+  },
+  {
+   "control": "button:Schedule call",
+   "step": 243,
+   "forced": [
+    "Call <> opened for <> ."
+   ],
+   "actual": "<> already has call <> on the board .",
+   "why": "Call <> opened for <> . <- ('ref_null', 'owner', 'rel:10') & ('unnamed', \"selection['cell#36']:0\") & ('unnamed', 'singleton[]:9')  [3 occasions]",
+   "kind": "inseparable: every shared conjunction reaches another event",
+   "seen": 12,
+   "witnesses": [
+    1,
+    3
+   ],
+   "blockers": 2,
+   "blocked_by": {
+    "Call <> opened for <> .": 2
+   },
+   "raw_difference": [
+    "node 19 cell: 'Kittiwake'/'None'  vs  'Nordkapp'/'None'",
+    "node 20 cell: '78 m'/'None'  vs  '132 m'/'None'",
+    "node 21 cell: 'N2'/'None'  vs  'S1'/'None'",
+    "node 24 group: ''/'None'  vs  ''/'None'",
+    "node 25 heading: 'Call sheet'/'None'  vs  ''/'None'",
+    "node 26 text: 'No call is open. Press a call refe'/'None'  vs  'C-102'/'None'",
+    "node count 141 vs 157"
+   ]
+  }
+ ]
+}

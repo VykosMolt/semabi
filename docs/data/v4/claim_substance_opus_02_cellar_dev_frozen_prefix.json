@@ -1,0 +1,73 @@
+[
+ {
+  "run": "opus_02_cellar_dev",
+  "reading": "joint discrimination x3",
+  "regime": "FROZEN_PREFIX",
+  "split": 0.5,
+  "cut": 195,
+  "operators": 17,
+  "held_out_actions": 9,
+  "rules_offered_per_action": 5.0,
+  "applicable_claims_per_action": 5.33,
+  "distinct_decided_claims": 7,
+  "composition": {
+   "an interface response": {
+    "claims": 35,
+    "decided": 19,
+    "supported": 10,
+    "refuted": 9,
+    "supported_share": 0.526,
+    "distinct_claims": 5,
+    "examples": [
+     "<> already stands in <> . = <> already stands in <> .",
+     "<> moved from <> to <> . = <> moved from <> to <> .",
+     "Nothing chosen in the hall list . = Nothing chosen in the hall list .",
+     "Nothing chosen in the lot list . = Nothing chosen in the lot list .",
+     "Nothing chosen in the vessel list . = Nothing chosen in the vessel list ."
+    ]
+   },
+   "an object brought into being": {
+    "claims": 63,
+    "decided": 8,
+    "supported": 0,
+    "refuted": 8,
+    "supported_share": 0.0,
+    "distinct_claims": 1,
+    "examples": [
+     "id = new"
+    ]
+   },
+   "removal": {
+    "claims": 153,
+    "decided": 44,
+    "supported": 40,
+    "refuted": 4,
+    "supported_share": 0.909,
+    "distinct_claims": 1,
+    "examples": [
+     "id = gone"
+    ]
+   }
+  },
+  "per_action": {
+   "every applicable rule was right": 4,
+   "the rules could not say which object they were about": 3,
+   "only undecidable claims survived": 1,
+   "every applicable rule was contradicted": 1
+  },
+  "removal_exposure": {
+   "base_rate_gone": 0.705,
+   "steps_by_fraction_gone": {
+    "all went (>90%)": 24,
+    "none went (<10%)": 10,
+    "some went": 6
+   },
+   "reading_supported_share": 0.909,
+   "removal_claims": 44,
+   "steps_spoken_at": 5,
+   "per_click_control": 0.579,
+   "objects_in_those_steps": 38,
+   "margin_over_per_click_control": 0.33
+  }
+ }
+]

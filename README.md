@@ -104,7 +104,20 @@ the observation-model layer whatever they say. Three regimes are now named in th
 every fit and scored result carries the one that produced it. `docs/v4_handoff.md` remains the
 custody and protocol record.
 
-`docs/v4_sections.md` is the latest.  A version space cannot know what its language cannot
+`docs/v4_identity.md` is the latest.  It opened on whether "forced" means what it claims and
+found that the version space's search is exact for its class, that the class it quantified over
+was not the ordered-guard class the learner declares (both are now named, and the ABI answers
+for the declared one), and that the confident errors the previous run had triaged as search and
+language gaps were, but for five, clicks on five different buttons that the *control identity*
+had pooled as one -- the frozen control families were never applied to a page the induction had
+not read, on any application.  Repaired, blend's operator ledger goes from 25 right / 48 wrong /
+174 unbound to 103 / 41 / 41, and the forced-wrong residue is four events the prefix never saw,
+one guard the application checks after another, and on harbour two states the literal language
+genuinely cannot separate.  An entity whose name contains a word the prefix never used is now an
+object on the pages that render it.  Every held-out number in the three documents below predates
+this and is superseded where they disagree.
+
+`docs/v4_sections.md` precedes it.  A version space cannot know what its language cannot
 say, and cellar's halls -- rendered as a heading over prose rather than as table rows -- were
 not objects at all, so no rule could mention one.  Objecthood is now the question the compiler
 already asked of subtrees ("does this shape recur with a filling that varies?") asked of spans

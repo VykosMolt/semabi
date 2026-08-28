@@ -5,29 +5,29 @@
   "regime": "FROZEN_PREFIX",
   "split": 0.5,
   "cut": 448,
-  "operators": 26,
+  "operators": 25,
   "held_out_actions": 257,
-  "rules_offered_per_action": 2.52,
-  "applicable_claims_per_action": 1.97,
+  "rules_offered_per_action": 2.5,
+  "applicable_claims_per_action": 2.08,
   "distinct_decided_claims": 2,
   "composition": {
    "an object brought into being": {
-    "claims": 1342,
-    "decided": 56,
-    "supported": 26,
-    "refuted": 30,
-    "supported_share": 0.464,
+    "claims": 1329,
+    "decided": 72,
+    "supported": 45,
+    "refuted": 27,
+    "supported_share": 0.625,
     "distinct_claims": 1,
     "examples": [
      "id = new"
     ]
    },
    "removal": {
-    "claims": 1359,
-    "decided": 502,
-    "supported": 447,
-    "refuted": 55,
-    "supported_share": 0.89,
+    "claims": 1349,
+    "decided": 529,
+    "supported": 461,
+    "refuted": 68,
+    "supported_share": 0.871,
     "distinct_claims": 1,
     "examples": [
      "id = gone"
@@ -36,24 +36,24 @@
   },
   "per_action": {
    "every applicable rule was right": 186,
-   "every applicable rule was contradicted": 30,
-   "no rule applied": 20,
-   "the rules could not say which object they were about": 18,
-   "applicable rules disagreed": 3
+   "the rules could not say which object they were about": 36,
+   "every applicable rule was contradicted": 14,
+   "applicable rules disagreed": 12,
+   "no rule applied": 9
   },
   "removal_exposure": {
-   "base_rate_gone": 0.724,
+   "base_rate_gone": 0.71,
    "steps_by_fraction_gone": {
-    "all went (>90%)": 182,
-    "none went (<10%)": 66,
-    "some went": 9
+    "all went (>90%)": 180,
+    "none went (<10%)": 55,
+    "some went": 22
    },
-   "reading_supported_share": 0.89,
-   "removal_claims": 502,
-   "steps_spoken_at": 219,
-   "per_click_control": 0.851,
-   "objects_in_those_steps": 707,
-   "margin_over_per_click_control": 0.039
+   "reading_supported_share": 0.871,
+   "removal_claims": 529,
+   "steps_spoken_at": 212,
+   "per_click_control": 0.864,
+   "objects_in_those_steps": 891,
+   "margin_over_per_click_control": 0.007
   }
  }
 ]

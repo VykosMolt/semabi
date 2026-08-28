@@ -5,45 +5,45 @@
   "regime": "FROZEN_PREFIX",
   "split": 0.5,
   "cut": 419,
-  "operators": 64,
-  "held_out_actions": 248,
-  "rules_offered_per_action": 4.17,
-  "applicable_claims_per_action": 0.65,
-  "distinct_decided_claims": 10,
+  "operators": 53,
+  "held_out_actions": 235,
+  "rules_offered_per_action": 6.91,
+  "applicable_claims_per_action": 1.77,
+  "distinct_decided_claims": 11,
   "composition": {
    "a named constant": {
-    "claims": 68,
-    "decided": 6,
-    "supported": 3,
-    "refuted": 3,
-    "supported_share": 0.5,
+    "claims": 610,
+    "decided": 47,
+    "supported": 47,
+    "refuted": 0,
+    "supported_share": 1.0,
     "distinct_claims": 1,
     "examples": [
-     "attr:cell#0@3 = 1"
+     "attr:cell#0@4 = Open"
     ]
    },
    "an interface response": {
-    "claims": 2839,
-    "decided": 307,
-    "supported": 61,
-    "refuted": 246,
-    "supported_share": 0.199,
-    "distinct_claims": 7,
+    "claims": 3647,
+    "decided": 575,
+    "supported": 173,
+    "refuted": 402,
+    "supported_share": 0.301,
+    "distinct_claims": 8,
     "examples": [
      "<> holds <> ; cannot draw <> . = <> holds <> ; cannot draw <> .",
      "<> is <> . = <> is <> .",
      "<> is <> ; disgorge it before returning a draw . = <> is <> ; disgorge it before returning a draw .",
      "<> is already <> . = <> is already <> .",
      "Drew <> from <> into <> . = Drew <> from <> into <> .",
-     "Returned <> to <> from <> . = Returned <> to <> from <> ."
+     "Opened <> . = Opened <> ."
     ]
    },
    "changes, unspecified": {
-    "claims": 2002,
-    "decided": 148,
-    "supported": 51,
-    "refuted": 97,
-    "supported_share": 0.345,
+    "claims": 3037,
+    "decided": 355,
+    "supported": 233,
+    "refuted": 122,
+    "supported_share": 0.656,
     "distinct_claims": 2,
     "examples": [
      "attr:cell#0@3 = changes",
@@ -52,10 +52,12 @@
    }
   },
   "per_action": {
-   "the rules could not say which object they were about": 174,
+   "every applicable rule was right": 114,
    "every applicable rule was contradicted": 48,
-   "every applicable rule was right": 25,
-   "applicable rules disagreed": 1
+   "the rules could not say which object they were about": 41,
+   "no rule applied": 25,
+   "applicable rules disagreed": 4,
+   "only undecidable claims survived": 3
   }
  }
 ]

@@ -283,3 +283,76 @@ def test_occasions_acquired_later_are_refused_the_same_literals_as_the_fitted_on
     assert ("attr", "r", "id", "B1") not in grown.index
     for vouch in grown.admissible(lits(g="shut", id="B1"), corroborated=True).values():
         assert all(lit[2] != "id" for lit in vouch.condition)
+
+
+# ------------------------------------------------------------ the decision-list class
+#
+# The learner fits an ordered list, and an application with ordered guards *is* one: `already
+# bottled` is what you get when the destination is bottled whatever else is wrong, so a rule
+# for `the source is closed` is pure only among the occasions the bottled guard did not take.
+# `Evidence.admissible` was written with the argument that a single globally pure rule is what
+# any consistent list could put on top, and so decides what any list could answer.  That is
+# wrong in one direction, and these pin the class the question is now asked of.
+
+
+def _guard_chain():
+    """Destination state `s` (bottled or one of several open states), source `c` closed or
+    not.  The application checks bottled first.  Every closed refusal in the evidence was
+    at a *different* open destination state, so no two closed witnesses share the query's
+    `s` literal, and the conjunction any pair hands over is `c=yes` alone -- which also
+    holds on the two occasions the bottled guard took first."""
+    return oc.Evidence(rows(
+        ({"s": "bottled", "c": "no"}, "bottled"), ({"s": "bottled", "c": "no"}, "bottled"),
+        ({"s": "bottled", "c": "yes"}, "bottled"), ({"s": "bottled", "c": "yes"}, "bottled"),
+        ({"s": "cask", "c": "yes"}, "closed"), ({"s": "empty", "c": "yes"}, "closed"),
+        ({"s": "full", "c": "yes"}, "closed"),
+        ({"s": "cask", "c": "no"}, "drew"), ({"s": "cask", "c": "no"}, "drew"),
+        ({"s": "empty", "c": "no"}, "drew")))
+
+
+def test_a_guard_that_is_pure_only_after_an_earlier_one_is_a_rule_in_the_list_class():
+    """`closed` cannot be a globally pure rule: two closed vats were refused as *bottled*.
+    A list that checks bottled first answers `closed` here and is consistent with everything,
+    so the list class admits it, and says which guard had to come first."""
+    e = _guard_chain()
+    state = lits(s="cask", c="yes")
+
+    assert "closed" not in e.admissible(state, corroborated=True)
+    got = e.admissible(state, corroborated=True, hypothesis=oc.LIST)
+    assert list(got) == ["closed"]
+    assert got["closed"].preceded_by == ("bottled",)
+    assert got["closed"].ordered
+
+
+def test_the_rule_class_is_the_unordered_part_of_the_list_class():
+    e = _guard_chain()
+    for state in (lits(s="bottled", c="no"), lits(s="bottled", c="yes"), lits(s="cask", c="no")):
+        rule = e.admissible(state, corroborated=True)
+        listed = e.admissible(state, corroborated=True, hypothesis=oc.LIST)
+        assert set(rule) <= set(listed)
+        assert {ev for ev, v in listed.items() if not v.ordered} == set(rule)
+
+
+def test_an_earlier_guard_that_fires_at_the_state_cannot_be_checked_past():
+    """Where the destination *is* bottled, no consistent list reaches a `closed` rule: the
+    bottled guard fires here and cannot be placed below it, so `closed` would have to be
+    pure over the bottled-and-closed occasions, and it is not."""
+    e = _guard_chain()
+    got = e.admissible(lits(s="bottled", c="yes"), corroborated=True, hypothesis=oc.LIST)
+    assert list(got) == ["bottled"]
+    assert not got["bottled"].ordered
+
+
+def test_the_list_class_still_needs_witnesses_and_corroboration():
+    e = oc.Evidence(rows(({"g": "a"}, "x"), ({"g": "a"}, "x"), ({"g": "a"}, "x"),
+                         ({"g": "b", "h": "1"}, "y"), ({"g": "b", "h": "2"}, "z")))
+    assert e.admissible(lits(g="b", h="1"), corroborated=True, hypothesis=oc.LIST) == {}
+
+
+def test_the_abi_answer_is_relative_to_the_list_class_and_names_the_unordered_part():
+    e = _guard_chain()
+    got = oc.ControlOutcome("c", evidence=e)
+    # `answer` needs the inducer's literal language; the version space is asked directly here
+    open_state = lits(s="cask", c="yes")
+    assert sorted(got.admissible(open_state, corroborated=True, hypothesis=oc.LIST)) == ["closed"]
+    assert got.admissible(open_state, corroborated=True) == {}

@@ -19,6 +19,7 @@ from semabi.compiler.evidence import EvidenceLog
 from semabi.compiler.explorer import affordance_key
 from semabi.compiler.observation import Observation
 from semabi.compiler.parse import LEAF_ROLES, WIDGETS, Instance, ParsedObs, leaf_label, leaf_value
+from semabi.compiler.v2 import controls as controls_mod
 from semabi.compiler.v2.graph import ObsGraph, node_text, tokens
 from semabi.compiler.v2.hypotheses import EntityType, Hypotheses, UnitInstance
 
@@ -33,6 +34,7 @@ class V2Abstractor(Abstractor):
         self.conservative_belief = conservative_belief
         self.data = G.data_set()
         self._controls = None
+        self._assigned: dict[str, dict[int, str]] = {}   # sig -> node -> family, for pages induction never read
         self.tid_map: dict[int, int] = {}  # hypothesis tid -> abstract tid (link types merged)
         self.link_pairs: dict[frozenset, int] = {}
         self.record_by_anchor: dict[int, dict] = {}
@@ -258,8 +260,29 @@ class V2Abstractor(Abstractor):
         and navigation actions are unaffected."""
         sig = self.ensure(obs)
         po = self.parsed(obs)
-        families = self.controls.by_node.get(sig, {})
-        return {node: families.get(node, key) for node, key in po.node_key.items()}
+        families = self.controls.by_node.get(sig)
+        if families is None:
+            # A page the families were not induced from: classify its controls by the same
+            # descriptor they were induced by, rather than falling through to ordinals.
+            families = self._assigned.get(sig)
+            if families is None:
+                families = self._assigned[sig] = self.controls.assign(self.H, obs, sig, self.data)
+        out: dict[int, str] = {}
+        for node, key in po.node_key.items():
+            fid = families.get(node)
+            if fid is None:
+                n = obs.node(node)
+                if n.role in WIDGETS:
+                    # Outside every recurring unit the slot key is the ordinal among the
+                    # page's widgets whenever the label carries data -- blend's `Return
+                    # ticket 4 (...)` was `button#3` -- which pools by position.  The label
+                    # with its data masked is the same name the families use.
+                    label = controls_mod.masked_label(
+                        n, self.data, is_data=lambda t, i=node: self.G.is_data_at(sig, i, t))
+                    if label:
+                        fid = controls_mod.rendered_name(n.role, label, "")
+            out[node] = fid if fid is not None else key
+        return out
 
     def entity_key(self, et: EntityType, ui: UnitInstance, keys_by_tid: dict[int, dict[str, str]]) -> str | None:
         t = ui.template

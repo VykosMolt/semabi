@@ -53,6 +53,10 @@ UNNAMED = "\x00UNNAMED"              # a role the list depends on names nothing 
 
 OWNER = "owner"                      # the object the clicked control sits in
 
+# The two hypothesis classes a version space can be asked about.  See `Evidence.admissible`.
+RULE = "rule"      # one conjunction, pure over every fitting occasion: a list's head
+LIST = "list"      # an ordered list of conjunctions, each pure on what the ones above left
+
 # A condition fitted to a single occasion is indistinguishable from naming that occasion.
 # The same principle is already in `memorises_the_fitting_instance` and in `learn_pre`'s
 # refusal to explain isolated failures, and it is the only count in this module.
@@ -161,11 +165,21 @@ class Vouch:
     # `Record draw` to three occasions produces exactly this: one event, the whole state space
     # vouched for it, and 71 of 123 held-out actions wrong.
     sole: bool = False
+    # The events whose guards had to be checked *before* this rule for it to be pure.  Empty
+    # for a rule that is pure over all the evidence -- one that could head a decision list --
+    # and otherwise the earlier branches of the ordered list this rule is justified in.
+    preceded_by: tuple[str, ...] = ()
+
+    @property
+    def ordered(self) -> bool:
+        return bool(self.preceded_by)
 
     def __str__(self) -> str:
         from semabi.compiler.induce import _lit_str
         cond = " & ".join(_lit_str(l) for l in self.condition) or "anything this control does"
-        return f"{describe(self.event)} <- {cond}  [{self.covers} occasions]"
+        after = ("  after " + " | ".join(describe(e) for e in self.preceded_by)
+                 if self.preceded_by else "")
+        return f"{describe(self.event)} <- {cond}  [{self.covers} occasions]{after}"
 
 
 class Evidence:
@@ -180,8 +194,17 @@ class Evidence:
     satisfies, (b) reaches at least ``MIN_COVER`` fitting occasions of one event, and (c)
     reaches no occasion of any other -- the same two refusals the greedy learner already makes,
     read as a definition of justification rather than as a stopping rule.  An adversary who
-    wants a decision list to answer ``e`` here puts such a rule at the top; if no such rule
-    exists, no consistent list can answer ``e`` here by a rule at all.
+    wants a decision list to answer ``e`` here can put such a rule at the top.
+
+    The converse -- that if no such rule exists, no consistent list answers ``e`` here -- was
+    asserted in the first version of this docstring and is false: a list answers by rules
+    that are pure only *after* the guards above them, and the application these lists model
+    checks its guards in an order.  That is a second hypothesis class, ``LIST``, and
+    :meth:`admissible` answers for whichever is named.  What "forced" means depends on it:
+    under ``RULE`` it is *the only event a globally pure rule vouches for here*, under ``LIST``
+    it is *the only event any consistent ordering of fired guards could return here*.  The
+    second is the class the learner declares, and it is what :meth:`ControlOutcome.answer`
+    reports.
 
     The search is exact and quadratic, not a heuristic, and the argument is short.  A
     conjunction this state satisfies is a subset of its literals; its cover is the intersection
@@ -197,6 +220,7 @@ class Evidence:
 
     def __init__(self, rows, refuse=None, subjects=None):
         self.subjects = subjects
+        self._blocks: list[tuple[int, int, str]] | None = None
         # Kept so that occasions added later are filtered by the same rule.  They were not,
         # and it mattered: an acquired occasion carried `id = B1` into the vocabulary, the
         # identity constant every fitted occasion had had removed, and that literal then
@@ -293,7 +317,7 @@ class Evidence:
         return cond
 
     def admissible(self, literals, *, corroborated: bool = False,
-                   simplest: bool = False) -> dict[str, Vouch]:
+                   simplest: bool = False, hypothesis: str = RULE) -> dict[str, Vouch]:
         """Event -> the widest justified rule this state satisfies, or nothing.
 
         Empty means *not established*.  With ``corroborated`` the rule must additionally reach
@@ -302,7 +326,27 @@ class Evidence:
         about a constant seen once.  Pairs decide the uncorroborated question exactly; with
         corroboration they are a sound seed and the search is completed by generalisation, so
         that answer is conservative -- it can miss an admissible event, never invent one.
+        (Measured against a triple enumeration on blend, harbour and cellar it misses none.)
+
+        ``hypothesis`` names the class the question is asked of, and the two classes give
+        different answers.  ``RULE`` is a single conjunction pure over *all* the evidence --
+        a rule that could head a decision list.  ``LIST`` is what the learner actually fits and
+        what an application with ordered guards actually is: a rule need only be pure among
+        the occasions the guards above it did not take, so *the source is closed* can be a
+        justified rule even though it also holds on occasions where *already bottled* fired
+        first.  The docstring this class was written with argued that the two coincide -- an
+        adversary who wants a list to answer ``e`` puts a pure rule for it on top -- and that
+        argument is wrong in one direction: a list can answer ``e`` by a rule that is pure
+        only *after* earlier guards, and no globally pure rule for ``e`` need exist.  On blend
+        63 of 93 states the rule class calls forced are open under the list class, and 6 of
+        its confident errors are states where a consistent list answered correctly.  See
+        :meth:`_in_some_list`.
         """
+        if hypothesis == LIST:
+            return self._admissible_in_lists(literals, corroborated=corroborated,
+                                             simplest=simplest)
+        if hypothesis != RULE:
+            raise ValueError(f"unknown hypothesis class {hypothesis!r}")
         here = self._mask(literals)
         out: dict[str, Vouch] = {}
         for event, idxs in self.by_event.items():
@@ -341,6 +385,138 @@ class Evidence:
                     break
             if best is not None and (not corroborated or best.covers > 2):
                 out[event] = replace(best, sole=len(self.by_event) < 2)
+        return out
+
+    # ------------------------------------------------------------ the decision-list class
+
+    def _pair_blocks(self) -> list[tuple[int, int, str]]:
+        """Every rule a pair of same-event occasions can found: (condition, cover, event).
+
+        A rule that is pure on some residual and covers a set ``S`` of occasions covers, for
+        every pair in ``S``, that pair's own most specific conjunction -- so the pair blocks
+        remove everything any legal earlier rule could remove, and each of them is itself a
+        legal rule.  Enumerating them is therefore exact for what a list can take away before
+        a later rule is judged.  Covers are bitsets over occasions.
+        """
+        if self._blocks is None:
+            n = len(self.events)
+            blocks = []
+            for event, idxs in self.by_event.items():
+                for a in range(len(idxs)):
+                    for b in range(a + 1, len(idxs)):
+                        cond = self.masks[idxs[a]] & self.masks[idxs[b]]
+                        cover = sum(1 << j for j in range(n) if cond & self.masks[j] == cond)
+                        blocks.append((cond, cover, event))
+            self._blocks = blocks
+        return self._blocks
+
+    def _cover(self, cond: int) -> int:
+        return sum(1 << j for j in range(len(self.events)) if cond & self.masks[j] == cond)
+
+    def _event_bits(self, event: str) -> int:
+        return sum(1 << i for i in self.by_event[event])
+
+    def _closure(self, here: int, protect: int) -> tuple[int, frozenset]:
+        """The occasions no consistent list could have taken before answering at ``here``.
+
+        Removes, to a fixpoint, every pair block that is pure on the residual, does not fire
+        at the query state (it would answer there itself), reaches ``MIN_COVER`` occasions,
+        and touches nothing in ``protect``.  Removal is monotone -- taking occasions away only
+        makes further blocks pure -- so the fixpoint is the maximal residual any ordering can
+        reach, and purity on it is the easiest purity a later rule can be asked for.  Returns
+        the residual and the events of the guards that had to fire first.
+        """
+        residual = (1 << len(self.events)) - 1
+        preceded: set[str] = set()
+        changed = True
+        while changed:
+            changed = False
+            for cond, cover, event in self._pair_blocks():
+                if cond & here == cond:
+                    continue
+                taken = cover & residual
+                if not taken or taken & protect or taken & ~self._event_bits(event):
+                    continue
+                if _bits(taken) < MIN_COVER:
+                    continue
+                residual &= ~taken
+                preceded.add(event)
+                changed = True
+        return residual, frozenset(preceded)
+
+    def _pure_on(self, cond: int, event: str, residual: int) -> bool:
+        return self._cover(cond) & residual & ~self._event_bits(event) == 0
+
+    def _admissible_in_lists(self, literals, *, corroborated: bool = False,
+                             simplest: bool = False) -> dict[str, Vouch]:
+        """Events some decision list consistent with every occasion could answer here.
+
+        A rule pure over all the evidence is one such list's head, so the rule class is a
+        subset and is taken first.  For every other event the question is whether a witness
+        set induces a guard that fires at this state and is pure on the residual that the
+        guards above it could leave -- the closure above, protecting the witnesses themselves,
+        which an earlier rule may not take.  Purity on the unprotected closure is necessary
+        and cheap, and prunes the candidates before the protected closure is computed.
+
+        What is *not* admitted is a default.  A list ends in one, and on the residual every
+        other guard leaves, the empty condition is pure; admitting it would answer every
+        state no guard reaches with whatever was left over, which is what `docs/v4_admissibility.md`
+        measured a decision list doing and being wrong 69 times in 79.  So an ordered rule
+        is the guard its witnesses share, satisfied here in full, and nothing wider.
+        """
+        out = dict(self.admissible(literals, corroborated=corroborated, simplest=simplest))
+        here = self._mask(literals)
+        need = 3 if corroborated else MIN_COVER
+        unprotected: tuple[int, frozenset] | None = None
+        for event, idxs in self.by_event.items():
+            if event in out:
+                continue
+            keep = self._keep(event)
+            n = len(idxs)
+            if n < need:
+                continue
+            if unprotected is None:
+                unprotected = self._closure(here, 0)
+            # Purity on the unprotected residual is necessary -- the protected one is larger --
+            # and cheap.  Whether this event's *own* occasions survive it is irrelevant: the
+            # protected closure keeps the witnesses, and blocks of the same event never block.
+            r0, _ = unprotected
+            combos = ([(a, b) for a in range(n) for b in range(a + 1, n)] if need == 2 else
+                      [(a, b, c) for a in range(n) for b in range(a + 1, n)
+                       for c in range(b + 1, n)])
+            for combo in combos:
+                witnesses = tuple(idxs[k] for k in combo)
+                guard = keep
+                protect = 0
+                for w in witnesses:
+                    guard &= self.masks[w]
+                    protect |= 1 << w
+                # The guard the witnesses induce must *fire* here: the state satisfies all of
+                # what they share, not a part of it.  The rule class may widen a pair's
+                # conjunction to whatever this state satisfies, because global purity then
+                # vouches for the wider claim; on a residual, purity vouches for nothing
+                # beyond the guard itself.  Without this, the empty conjunction is pure once
+                # every other event's guards are taken away, and a state unlike anything
+                # seen is answered by the list's default -- the two-occasion universal law
+                # this instrument exists to refuse.
+                if guard & here != guard:
+                    continue
+                if not self._pure_on(guard, event, r0):
+                    continue
+                residual, _ = self._closure(here, protect)
+                if not self._pure_on(guard, event, residual):
+                    continue
+                cover = self._cover(guard)
+                covers = _bits(cover & self._event_bits(event))
+                # The guards that had to fire first: those of the occasions this guard
+                # reaches and does not own.  The closure removes more than that, and what
+                # it removed for no reason is not part of the justification.
+                taken = cover & ~self._event_bits(event)
+                preceded = {self.events[j] for j in range(len(self.events)) if taken >> j & 1}
+                out[event] = Vouch(event, witnesses, self._condition(guard), covers,
+                                   sole=len(self.by_event) < 2,
+                                   preceded_by=tuple(sorted(preceded)))
+                break
         return out
 
 
@@ -429,16 +605,18 @@ class ControlOutcome:
                 return rule.event
         return self.default
 
-    def admissible(self, literals: set, *, corroborated: bool = False) -> dict[str, "Vouch"]:
+    def admissible(self, literals: set, *, corroborated: bool = False,
+                   hypothesis: str = RULE) -> dict[str, "Vouch"]:
         """Every event some *justified* rule could assign to this state, with its witness.
 
         This is the model's answer when the question is what the evidence establishes rather
-        than what one search found.  See :class:`Evidence`.
+        than what one search found.  See :class:`Evidence`, and ``hypothesis`` for which class
+        of rule is meant.
         """
         if self.evidence is None:
             return {}
         return self.evidence.admissible(literals, corroborated=corroborated,
-                                        simplest=self.simplest)
+                                        simplest=self.simplest, hypothesis=hypothesis)
 
     def delta(self, event: str) -> tuple[frozenset, str]:
         """The durable change this event implies, and how well the evidence pins it.
@@ -463,8 +641,12 @@ class ControlOutcome:
         """
         bound, status = self.bind(state, owner)
         from semabi.compiler.v4 import outcome as _self          # literals need the inducer
-        options = self.admissible(_self._pending_literals(self, state, bound, status),
-                                  corroborated=True)
+        literals = _self._pending_literals(self, state, bound, status)
+        # The status is relative to the class the learner declares -- ordered lists -- and
+        # the events a globally pure rule vouches for are reported inside it as the guards
+        # that need no ordering to be justified.  A set of one under the rule class is not
+        # "forced": it is the one event a list could *head* with here.
+        options = self.admissible(literals, corroborated=True, hypothesis=LIST)
         if not options:
             return Answer(NOTHING_ESTABLISHED)
         events = tuple(sorted(options))
@@ -472,7 +654,8 @@ class ControlOutcome:
                       sole=len(events) == 1 and options[events[0]].sole,
                       delta={e: self.delta(e) for e in events},
                       arguments={e: self.arguments(e, bound) for e in events},
-                      why={e: str(v) for e, v in options.items()})
+                      why={e: str(v) for e, v in options.items()},
+                      unordered=tuple(e for e in events if not options[e].ordered))
 
     def arguments(self, event: str, bound: dict) -> dict[int, str]:
         """The values the predicted event's argument positions take in this state."""
@@ -881,7 +1064,7 @@ def learn(inducer, *, permute: int | None = None, subject_restricted: bool = Fal
     actions is fitting the shape of the evidence rather than the application, and the only way
     to know is to run it.
     """
-    from semabi.compiler.v4.consequence import clicked_control
+    from semabi.compiler.v4.consequence import clicked_control, control_of
 
     bind_language(inducer)
     A, log = inducer.A, inducer.log
@@ -890,7 +1073,7 @@ def learn(inducer, *, permute: int | None = None, subject_restricted: bool = Fal
     for op in inducer.operators:
         core = op.core()
         if len(core) == 1 and core[0].kind == "click" and core[0].loc is not None:
-            ops_by_control.setdefault(core[0].loc.slot.split("@")[0], []).append(op)
+            ops_by_control.setdefault(control_of(core[0].loc.slot), []).append(op)
     steps = {s.step: s for s in log.steps}
     for tr in list(inducer.transitions) + list(inducer.noops):
         if len(tr.steps) != 1:
@@ -1004,6 +1187,10 @@ class Answer:
     delta: dict = None
     arguments: dict = None
     why: dict = None
+    # Of the outcomes, those a rule pure over all the evidence vouches for -- justified
+    # without any guard having to be checked first.  Where several outcomes are open this
+    # is the version space's own preference, and it is reported as one.
+    unordered: tuple = ()
 
     def __str__(self) -> str:
         if self.status == NOTHING_ESTABLISHED:
@@ -1019,7 +1206,10 @@ class Answer:
                             "" if how == "settled" else f" [delta {how}]"))
         head = ("forces" if self.status == FORCED_ONE else
                 "the only outcome ever seen is" if self.sole else "leaves open")
-        return head + " " + " | ".join(parts)
+        tail = ""
+        if self.status == SEVERAL_OPEN and self.unordered and len(self.unordered) < len(self.outcomes):
+            tail = " (unordered: " + ", ".join(describe(e) for e in self.unordered) + ")"
+        return head + " " + " | ".join(parts) + tail
 
 
 FORCED_ONE = "forced"
@@ -1132,7 +1322,8 @@ def score_step(model, step, *, with_arguments: bool = True) -> dict:
             "arguments": args}
 
 
-def score_step_admissible(model, step, *, corroborated: bool = False) -> dict:
+def score_step_admissible(model, step, *, corroborated: bool = False,
+                          hypothesis: str = RULE) -> dict:
     """The same held-out click, asked of the evidence rather than of the chosen list.
 
     Four answers instead of two.  The list either fires or falls to its default; the evidence
@@ -1159,16 +1350,21 @@ def score_step_admissible(model, step, *, corroborated: bool = False) -> dict:
     owner = _owner_object(A, A.parsed(pre), state, step.action.target)
     bound, status = got.bind(state, owner)
     options = got.admissible(_literals(model.inducer, state, bound, status, got.defaults),
-                             corroborated=corroborated)
+                             corroborated=corroborated, hypothesis=hypothesis)
     out["admissible"] = sorted(options)
+    out["hypothesis"] = hypothesis
+    out["unordered"] = sorted(e for e, v in options.items() if not v.ordered)
     out["observed"] = None if observed is None else observed.frame
     out["returned"] = after_text
     if not options:
         return {**out, "verdict": NOT_ESTABLISHED,
                 "detail": f"{got.fitted} occasions of this control vouch for no rule here"}
-    if observed is None:
+    if observed is None or after_text == before_text:
         # The live region did not move.  A silent step is consistent with any admissible event
-        # whose rendering is what is already standing there, which the frame alone cannot say.
+        # whose rendering is what is already standing there, which the frame alone cannot say,
+        # and it is exactly what a `returns nothing` model predicts.  `score_step` has always
+        # read it so; this compared the *standing* message's frame against the prediction and
+        # called harbour's silent call buttons wrong on 24 of 24 unmoved regions.
         if len(options) > 1:
             return {**out, "verdict": SEVERAL_AMONG,
                     "detail": "the live region did not move", "level": SILENT}

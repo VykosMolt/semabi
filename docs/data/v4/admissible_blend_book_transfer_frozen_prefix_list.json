@@ -6,39 +6,40 @@
  "cut": 419,
  "control": null,
  "corroborated": true,
- "hypothesis": "rule",
+ "hypothesis": "list",
  "against_the_other_class": {
-  "rule: several outcomes remain admissible | list: several outcomes remain admissible": 80,
-  "rule: the evidence forces one outcome | list: the evidence forces one outcome": 61,
-  "rule: one outcome, because the control has never done anything else | list: one outcome, because the control has never done anything else": 32,
-  "rule: no outcome is established | list: no outcome is established": 30,
-  "rule: the evidence forces one outcome | list: several outcomes remain admissible": 21,
-  "rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)": 20,
-  "rule: no outcome is established | list: the evidence forces one outcome": 3,
-  "rule: no outcome is established | list: the evidence forces one outcome (wrong)": 1,
-  "rule: the evidence forces one outcome (wrong) | list: several outcomes remain admissible": 1
+  "list: several outcomes remain admissible | rule: several outcomes remain admissible": 80,
+  "list: the evidence forces one outcome | rule: the evidence forces one outcome": 61,
+  "list: one outcome, because the control has never done anything else | rule: one outcome, because the control has never done anything else": 32,
+  "list: no outcome is established | rule: no outcome is established": 30,
+  "list: several outcomes remain admissible | rule: the evidence forces one outcome": 21,
+  "list: the evidence forces one outcome (wrong) | rule: the evidence forces one outcome (wrong)": 20,
+  "list: the evidence forces one outcome | rule: no outcome is established": 3,
+  "list: the evidence forces one outcome (wrong) | rule: no outcome is established": 1,
+  "list: several outcomes remain admissible | rule: the evidence forces one outcome (wrong)": 1
  },
  "actions": 249,
  "what_the_evidence_establishes": {
-  "the evidence forces one outcome": 103,
-  "several outcomes remain admissible": 80,
-  "no outcome is established": 34,
-  "one outcome, because the control has never done anything else": 32
+  "several outcomes remain admissible": 102,
+  "the evidence forces one outcome": 85,
+  "one outcome, because the control has never done anything else": 32,
+  "no outcome is established": 30
  },
  "admissible_set_size": {
-  "0": 34,
-  "1": 135,
-  "2": 61,
-  "3": 19
+  "0": 30,
+  "1": 117,
+  "2": 71,
+  "3": 29,
+  "4": 2
  },
  "what_happened_was": {
-  "inside the admissible set": 187,
+  "inside the admissible set": 191,
   "outside it": 28,
-  "nothing was admissible": 34
+  "nothing was admissible": 30
  },
  "the_list_where_the_evidence": {
   "no outcome is established": {
-   "no determinate answer": 18,
+   "no determinate answer": 14,
    "the event the interface returned": 9,
    "a different event": 7
   },
@@ -47,44 +48,42 @@
    "the event the interface returned": 9
   },
   "several outcomes remain admissible": {
-   "the event the interface returned": 72,
+   "the event the interface returned": 94,
    "a different event": 7,
    "no determinate answer": 1
   },
   "the evidence forces one outcome": {
-   "the event the interface returned": 71,
-   "no determinate answer": 19,
+   "the event the interface returned": 49,
+   "no determinate answer": 23,
    "a different event": 13
   }
  },
  "policy_forced_then_list": {
-  "one outcome was admissible and it happened": 82,
-  "deferred to the list: the event the interface returned": 72,
-  "refused: nothing established": 34,
+  "deferred to the list: the event the interface returned": 94,
+  "one outcome was admissible and it happened": 64,
+  "refused: nothing established": 30,
   "the only outcome ever seen on this control, and something else happened": 22,
   "one outcome was admissible and a different one happened": 21,
   "the only outcome ever seen on this control, and it happened": 10,
   "deferred to the list: a different event": 7,
   "deferred to the list: no determinate answer": 1
  },
- "distinct_events_forced": 6,
+ "distinct_events_forced": 5,
  "events_forced": {
-  "Drew <> from <> into <> .": 56,
-  "Returned <> to <> from <> .": 43,
+  "Returned <> to <> from <> .": 47,
+  "Drew <> from <> into <> .": 37,
   "Opened <> .": 23,
   "Disgorged <> .": 9,
-  "<> is <> .": 3,
   "<> is <> ; disgorge it before returning a draw .": 1
  },
  "per_control": {
   "button:Record draw": {
-   "several outcomes remain admissible": 64,
-   "the evidence forces one outcome": 59
+   "several outcomes remain admissible": 86,
+   "the evidence forces one outcome": 37
   },
   "button:Return ticket _ gal from _ out of _": {
-   "the evidence forces one outcome": 44,
-   "several outcomes remain admissible": 16,
-   "no outcome is established": 4
+   "the evidence forces one outcome": 48,
+   "several outcomes remain admissible": 16
   },
   "button#cell/button": {
    "one outcome, because the control has never done anything else": 23
@@ -115,16 +114,15 @@
    "the only outcome ever seen on this control, and it happened": 1
   },
   "button:Record draw": {
-   "several outcomes remained admissible; the one that happened was among them": 62,
-   "one outcome was admissible and it happened": 47,
-   "one outcome was admissible and a different one happened": 12,
+   "several outcomes remained admissible; the one that happened was among them": 84,
+   "one outcome was admissible and it happened": 26,
+   "one outcome was admissible and a different one happened": 11,
    "several outcomes remained admissible and none of them happened": 2
   },
   "button:Return ticket _ gal from _ out of _": {
-   "one outcome was admissible and it happened": 35,
+   "one outcome was admissible and it happened": 38,
    "several outcomes remained admissible; the one that happened was among them": 16,
-   "one outcome was admissible and a different one happened": 9,
-   "no outcome is established for this state": 4
+   "one outcome was admissible and a different one happened": 10
   }
  },
  "controls": {
@@ -172,7 +170,7 @@
    "admissible": [
     "Drew <> from <> into <> ."
    ],
-   "hypothesis": "rule",
+   "hypothesis": "list",
    "unordered": [
     "Drew <> from <> into <> ."
    ],
@@ -188,7 +186,7 @@
    "admissible": [
     "Drew <> from <> into <> ."
    ],
-   "hypothesis": "rule",
+   "hypothesis": "list",
    "unordered": [
     "Drew <> from <> into <> ."
    ],
@@ -204,7 +202,7 @@
    "admissible": [
     "Drew <> from <> into <> ."
    ],
-   "hypothesis": "rule",
+   "hypothesis": "list",
    "unordered": [
     "Drew <> from <> into <> ."
    ],
@@ -220,7 +218,7 @@
    "admissible": [
     "Drew <> from <> into <> ."
    ],
-   "hypothesis": "rule",
+   "hypothesis": "list",
    "unordered": [
     "Drew <> from <> into <> ."
    ],
@@ -242,7 +240,7 @@
    "admissible": [
     "Returned <> to <> from <> ."
    ],
-   "hypothesis": "rule",
+   "hypothesis": "list",
    "unordered": [
     "Returned <> to <> from <> ."
    ],
@@ -260,7 +258,7 @@
      "Festival White"
     ]
    },
-   "why": "Returned <> to <> from <> . <- attr:cask#0(selection['cell#17']:3) == 'In'  [50 occasions]"
+   "why": "Returned <> to <> from <> . <- attr:cell#0@5(selection['cell#17']:3) == None  [50 occasions]"
   },
   {
    "step": 575,
@@ -268,7 +266,7 @@
    "admissible": [
     "Drew <> from <> into <> ."
    ],
-   "hypothesis": "rule",
+   "hypothesis": "list",
    "unordered": [
     "Drew <> from <> into <> ."
    ],
@@ -290,7 +288,7 @@
    "admissible": [
     "Drew <> from <> into <> ."
    ],
-   "hypothesis": "rule",
+   "hypothesis": "list",
    "unordered": [
     "Drew <> from <> into <> ."
    ],
@@ -312,7 +310,7 @@
    "admissible": [
     "Returned <> to <> from <> ."
    ],
-   "hypothesis": "rule",
+   "hypothesis": "list",
    "unordered": [
     "Returned <> to <> from <> ."
    ],
@@ -326,7 +324,7 @@
      "Block 12"
     ]
    },
-   "why": "Returned <> to <> from <> . <- attr:cask#0(selection['cell#17']:3) == 'In'  [50 occasions]"
+   "why": "Returned <> to <> from <> . <- attr:cell#0@5(selection['cell#17']:3) == None  [50 occasions]"
   }
  ]
 }

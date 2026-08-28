@@ -251,6 +251,7 @@ def test_on_the_real_trace_one_reading_determines_its_object_and_the_other_does_
 
     def changes(op):
         vals = []
+        created = set()
         for e in op.effects:
             if isinstance(e, rm.Emit):
                 continue
@@ -258,7 +259,12 @@ def test_on_the_real_trace_one_reading_determines_its_object_and_the_other_does_
                      if hasattr(e, k)]
             if isinstance(e, rm.Create):
                 vals += [v for _, v in e.attrs]
-        return {v for v in vals if isinstance(v, str) and v.startswith("?")}
+                created.add(e.bind)
+        # An object the interaction brings into being is not one it had to ground.  Under
+        # the loose reading `Schedule call` has a creation-only operator, which reached
+        # support 2 only once the control identity stopped fragmenting the control by node
+        # index (`docs/v4_identity.md`); it changes nothing pre-existing.
+        return {v for v in vals if isinstance(v, str) and v.startswith("?")} - created
 
     for fitted, action_grounds_everything in ((grounded_fit, True), (loose_fit, False)):
         exported = build_model(fitted.abstractor, fitted.operators, min_support=1).domain
@@ -380,7 +386,15 @@ def test_an_effect_on_an_object_the_state_never_pins_is_not_a_well_formed_schema
     assert decided
     assert all(loose["operators"][p.operator]["undetermined_effect_params"] for p in decided)
 
-    assert not score(loose_fit, applicability=ATTESTED).schema()["ill_formed"]
+    # The retired `attested` mode used to make every one of them well-formed -- and then
+    # refuted.  It could, because each of these operators had support 1: the button sat
+    # outside every unit under this reading and its slot key carried a node index, so every
+    # occurrence was its own operator and `attested` pinned the parameter with the constant
+    # that one occasion happened to show (`id = 'open'`).  With the control named by its
+    # masked label the occasions pool (`docs/v4_identity.md`), the only attested literal left
+    # for the open parameter is its column, and nothing pins it.  That is the mode doing what
+    # it was retired for, and the ill-formed set is what it was.
+    assert score(loose_fit, applicability=ATTESTED).schema()["ill_formed"] == loose["ill_formed"]
 
     # And no binding query could have determined those parameters, because there is nothing
     # to determine them *from*: every ill-formed operator here has an action attributed to no

@@ -4,24 +4,45 @@
 interface then returns a different one, the model has not been unlucky -- it has been
 falsified while unanimous, and candidate-elimination's guarantees are conditional on the
 target concept being in the hypothesis class.  So a forced-wrong case is evidence about the
-class, and the useful thing is to say *which* of the possible defects it is evidence for:
+class, and the useful thing is to say *which* of the possible defects it is evidence for.
 
-``INDISTINGUISHABLE``
-    Some fitting occasion of the forced event has **the same literal set** as the held-out
-    state, yet the two behaved differently.  No rule over this language can separate them, so
-    no amount of evidence or ranking will help.  The raw difference between the two pages is
-    printed, because that is the distinction the abstraction erased.
+The first version of this asked whether the held-out state had a **twin** -- a witness of the
+forced event with the same literal mask -- and called every other case "separable: the search
+did not find the rule".  That was the wrong question twice over.  The search is exact for its
+class (a triple enumeration finds nothing the pair seeding misses, on three applications), so
+there is no rule it failed to find; and 29 of the 32 cases it called separable were clicks on
+five different buttons that the control identity had pooled as one (`docs/v4_identity.md`),
+for which the actual event had never once been seen on the control the model was answering
+for.  A mask that differs from every witness says nothing about whether a rule for the
+*actual* event could exist.
 
-``SEPARABLE``
-    The held-out state differs from every witness in at least one literal.  The language *can*
-    tell them apart and the search did not: a learning problem rather than a language problem.
+So the question is now asked of the actual event, in order of what would have had to be
+different for the model to have been right:
 
-``NONDETERMINISTIC``
-    The two pages are identical in the raw accessibility tree as well, so the difference is not
-    in the observation at all.
+``UNSEEN``
+    No fitting occasion of this control returned the actual event.  No hypothesis over the
+    events the evidence contains can be right here; this is the label space, not the language.
 
-The first is the signal this run was built to find.  It is reported per control so that a
-language gap in one part of an application does not hide behind accuracy elsewhere.
+``ONCE``
+    Seen, but fewer times than ``MIN_COVER``.  No rule may be founded on it.
+
+``UNCORROBORATED``
+    A pure conjunction reaches two occasions of it and this state, and no third.  The language
+    separates it; the corroboration refusal declines to claim on two.
+
+``ORDERED``
+    A guard the evidence induces for it fires here and is pure once the guards of other events
+    are checked first, and no globally pure rule exists.  The single-rule class is too small:
+    the application checks its guards in an order.
+
+``INSEPARABLE``
+    Three or more occasions, and every conjunction this state shares with any of them also
+    reaches an occasion of another event that no earlier guard takes.  Those occasions are the
+    ones the language cannot tell this state apart from; the raw difference between this page
+    and one of theirs is the distinction the abstraction erased.  This is the language gap.
+
+Each is reported per control, so a language gap in one part of an application does not hide
+behind accuracy elsewhere.
 """
 from __future__ import annotations
 
@@ -33,9 +54,11 @@ from pathlib import Path
 from semabi.compiler.v4 import consequence as csq
 from semabi.compiler.v4 import outcome as oc
 
-INDISTINGUISHABLE = "indistinguishable from a witness: the language cannot separate them"
-SEPARABLE = "separable in this language: the search did not find the rule"
-NONDET = "identical raw pages: the difference is not in the observation"
+UNSEEN = "unseen: the control never returned this event while fitting"
+ONCE = "once: seen, but not enough to found a rule"
+UNCORROBORATED = "uncorroborated: a pure pair, and no third occasion"
+ORDERED = "ordered: justified only after another event's guard"
+INSEPARABLE = "inseparable: every shared conjunction reaches another event"
 
 
 def _raw_diff(a, b, limit: int = 6) -> list[str]:
@@ -53,8 +76,45 @@ def _raw_diff(a, b, limit: int = 6) -> list[str]:
     return out
 
 
+def _least_blocked(ev, here: int, event: str) -> tuple[tuple, list[int]]:
+    """The witness pair whose shared conjunction with the state reaches the fewest occasions
+    of other events, and those occasions."""
+    idxs = ev.by_event[event]
+    best: tuple | None = None
+    for a in range(len(idxs)):
+        for b in range(a + 1, len(idxs)):
+            cond = here & ev.masks[idxs[a]] & ev.masks[idxs[b]]
+            blockers = [j for j in range(len(ev.events))
+                        if ev.events[j] != event and cond & ev.masks[j] == cond]
+            if best is None or len(blockers) < len(best[1]):
+                best = ((idxs[a], idxs[b]), blockers)
+    return best if best is not None else ((), [])
+
+
+def classify(got, here: int, actual: str) -> tuple[str, dict]:
+    """Which defect a forced-wrong prediction is evidence for, with what it rests on."""
+    ev = got.evidence
+    seen = len(ev.by_event.get(actual, ()))
+    if seen == 0:
+        return UNSEEN, {"seen": 0}
+    if seen < oc.MIN_COVER:
+        return ONCE, {"seen": seen}
+    literals = {ev.of_bit[b] for b in range(here.bit_length()) if here >> b & 1}
+    if actual in ev.admissible(literals, corroborated=False):
+        return UNCORROBORATED, {"seen": seen}
+    listed = ev.admissible(literals, corroborated=True, hypothesis=oc.LIST)
+    if actual in listed:
+        v = listed[actual]
+        return ORDERED, {"seen": seen, "after": list(v.preceded_by), "guard": str(v)}
+    witnesses, blockers = _least_blocked(ev, here, actual)
+    return INSEPARABLE, {"seen": seen, "witnesses": list(witnesses),
+                         "blockers": len(blockers),
+                         "blocked_by": dict(Counter(ev.events[j] for j in blockers)),
+                         "blocker": blockers[0] if blockers else None}
+
+
 def diagnose(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.5,
-             regime: str = csq.FROZEN_PREFIX) -> dict:
+             regime: str = csq.FROZEN_PREFIX, hypothesis: str = oc.RULE) -> dict:
     from semabi.eval.v4_consequence_run import _candidates
     from semabi.compiler.v4.consequence import clicked_control, _owner_object
 
@@ -71,38 +131,31 @@ def diagnose(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.
         got = model.outcomes.get(control)
         if got is None or got.evidence is None:
             continue
-        scored = oc.score_step_admissible(model, step, corroborated=True)
-        if scored["verdict"] != oc.FORCED_WRONG:
-            continue
+        scored = oc.score_step_admissible(model, step, corroborated=True, hypothesis=hypothesis)
+        if scored["verdict"] != oc.FORCED_WRONG or scored.get("level") != oc.FRAME_ONLY:
+            continue      # a right frame with a wrong argument is a grounding question, not this one
         state = A.abstract(pre)
         owner = _owner_object(A, A.parsed(pre), state, step.action.target)
         bound, status = got.bind(state, owner)
-        here = set(oc._literals(model.inducer, state, bound, status, got.defaults))
-        forced = sorted(got.admissible(here, corroborated=True))
-        ev = got.evidence
-        # A twin is an occasion the *language* cannot tell apart from this state, so the
-        # comparison is on the interned mask and not on the raw literal set: a literal the
-        # evidence never saw is not a distinction any rule over this evidence could use.
-        mine = ev._mask(here)
-        twins = [i for i, e in enumerate(ev.events) if e in forced and ev.masks[i] == mine]
-        kind = INDISTINGUISHABLE if twins else SEPARABLE
-        detail: list[str] = []
-        if twins:
-            src = getattr(ev, "occasion_obs", {}).get(twins[0])
-            if src is not None:
-                detail = _raw_diff(src, pre)
-                if not detail:
-                    kind = NONDET
+        here = got.evidence._mask(oc._literals(model.inducer, state, bound, status, got.defaults))
+        actual = scored["observed"]
+        kind, detail = classify(got, here, actual)
         kinds[kind] += 1
-        cases.append({"control": control, "step": step.step, "forced": forced,
-                      "detail": scored.get("detail"), "kind": kind,
-                      "witness_twins": len(twins), "raw_difference": detail})
+        raw: list[str] = []
+        if kind == INSEPARABLE and detail.get("blocker") is not None:
+            src = getattr(got.evidence, "occasion_obs", {}).get(detail["blocker"])
+            if src is not None:
+                raw = _raw_diff(src, pre)
+        cases.append({"control": control, "step": step.step, "forced": scored["admissible"],
+                      "actual": actual, "why": scored.get("why"), "kind": kind,
+                      **{k: v for k, v in detail.items() if k != "blocker"},
+                      "raw_difference": raw})
     return {"run": Path(run_dir).name, "reading": reading_name, "regime": regime,
-            "cut": model.cut, "forced_wrong": len(cases),
+            "hypothesis": hypothesis, "cut": model.cut, "forced_wrong": len(cases),
             "kinds": dict(kinds.most_common()),
             "by_control": {c: dict(Counter(x["kind"] for x in cases if x["control"] == c))
                            for c in sorted({x["control"] for x in cases})},
-            "cases": cases[:40]}
+            "cases": cases[:60]}
 
 
 def main(argv=None) -> int:
@@ -111,19 +164,23 @@ def main(argv=None) -> int:
     ap.add_argument("--chain", required=True)
     ap.add_argument("--reading", required=True)
     ap.add_argument("--split", type=float, default=0.5)
+    ap.add_argument("--hypothesis", default=oc.RULE, choices=(oc.RULE, oc.LIST))
     ap.add_argument("--out")
     a = ap.parse_args(argv)
-    r = diagnose(Path(a.run), Path(a.chain), a.reading, split=a.split)
-    print(f"\n{r['run']}  {r['reading']!r}  cut={r['cut']}")
-    print(f"  forced and wrong: {r['forced_wrong']}")
+    r = diagnose(Path(a.run), Path(a.chain), a.reading, split=a.split, hypothesis=a.hypothesis)
+    print(f"\n{r['run']}  {r['reading']!r}  cut={r['cut']}  forced under the {r['hypothesis']} class")
+    print(f"  forced and wrong on the frame: {r['forced_wrong']}")
     for k, n in r["kinds"].items():
         print(f"    {n:4}  {k}")
     for c, d in r["by_control"].items():
         print(f"    {c}: {d}")
-    for case in r["cases"][:4]:
-        if case["raw_difference"]:
+    for case in r["cases"]:
+        if case["kind"] in (ORDERED, INSEPARABLE):
             print(f"\n  {case['control']} step {case['step']}: forced {case['forced']}, "
-                  f"detail {case['detail']!r}")
+                  f"actual {case['actual']!r}: {case['kind']}")
+            for k in ("after", "guard", "blocked_by"):
+                if k in case:
+                    print(f"      {k}: {case[k]}")
             for line in case["raw_difference"]:
                 print(f"      {line}")
     if a.out:

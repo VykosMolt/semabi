@@ -1131,7 +1131,8 @@ class Inducer:
         """
         core = op.core()
         if core and core[0].loc is not None:
-            return core[0].loc.slot.split("@")[0]
+            from semabi.compiler.v2.controls import identity
+            return identity(core[0].loc.slot)
         return "acts:" + "; ".join(str(a) for a in op.acts)
 
     @staticmethod

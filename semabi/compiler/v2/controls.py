@@ -13,8 +13,8 @@ entities: as an observation of a latent family.  A family is described by eviden
 does not depend on the run:
 
 * the interaction role (`combobox`, `button`, ...);
-* the control's stable label, when it has one that is not entity data;
-* the role path from the root of the innermost recurring unit that contains it.
+* the control's label with its data masked (`Close _`), when any constant token remains;
+* the role path from the root of the innermost recurring unit that properly contains it.
 
 Occurrences agreeing on all three are the same family across unit-template variants, but
 only when the entity layer already judges those templates to be renderings of one kind of
@@ -31,6 +31,10 @@ DOM node indices or per-instance ordinals, so the alphabet is stable across runs
 
 Controls outside every recurring unit (navigation, filters, global forms) keep the
 identity they already had: view/sensing separation is unchanged by this module.
+
+The families are a *model*, applied to pages the induction never read: `ControlFamilies.assign`
+classifies a new page's controls by the same descriptor (`docs/v4_identity.md`).  Until it
+existed, every held-out click on every application fell through to a per-instance ordinal.
 """
 from __future__ import annotations
 
@@ -73,11 +77,90 @@ class ControlFamily:
                 "occurrences": self.occurrences}
 
 
-def _stable_label(node, data_tokens: set[str]) -> str:
-    label = leaf_label(node)
-    if not label or set(tokens(label)) & data_tokens:
-        return ""      # entity data, not a control name
-    return label
+def masked_label(node, data_tokens, *, is_data=None) -> str:
+    """The control's label with its data masked, or "" when nothing but data remains.
+
+    ``Close North Wall``, ``Bottle Cloister`` and ``Return ticket 4 (1 gal from North Wall
+    out of Picnic)`` each carry an entity's name, and the first version of this blanked any
+    label that did -- so all three, and ``Open North Wall`` and ``Disgorge Cloister`` with
+    them, were label-less controls distinguished by nothing but the digest of their unit
+    template, which the layers above then dropped.  Five hidden operators became one control.
+
+    The name of an action is what is left of its label when the data is taken out of it, and
+    that is a masking the abstraction already performs on every template: ``Close _``,
+    ``Bottle _``, ``Return ticket _ gal from _ out of _``.  Only a label with no constant token
+    at all is label-less.  ``is_data`` is the graph's judgement at this node where the caller
+    has one -- so a word the corpus never saw, in a label where it saw names, is masked too
+    (`Close Block 12` is `Close _`) -- and the frozen corpus vocabulary otherwise.
+    """
+    if is_data is None:
+        is_data = data_tokens.__contains__
+    parts: list[str] = []
+    for t in tokens(leaf_label(node)):
+        if not t[0].isalnum():
+            continue      # punctuation is neither label nor data
+        m = "_" if is_data(t) else t
+        if m == "_" and parts and parts[-1] == "_":
+            continue      # a run of data tokens is one slot
+        parts.append(m)
+    if all(p == "_" for p in parts):
+        return ""
+    return " ".join(parts)
+
+
+def _judge(G, sig: str, node, data_tokens):
+    """How to tell data from label at this node: the graph's positional judgement if it has one."""
+    at = getattr(G, "is_data_at", None)
+    if at is None:
+        return None
+    return lambda t: at(sig, node.i, t)
+
+
+def rendered_name(role: str, label: str, path: str) -> str:
+    return f"{role}:{label}" if label else f"{role}#{path}"
+
+
+def identity(slot: str) -> str:
+    """What names a control, from a family id, a static slot key or a locator slot.
+
+    Three kinds of string reach the behavioural layers as a control's identity, and they
+    have to be compared on one footing:
+
+    * ``button:Close@54dcf8`` -- a labelled family, disambiguated from another family with
+      the same label and path that the entity layer keeps apart.  The label is the
+      interface's own name for the action, and the layers above have always pooled these;
+      the digest is dropped.
+    * ``button#button@bb8f76`` -- a label-less family.  Nothing but its template family
+      names it, so the digest *is* the identity and stays.  Dropping it pooled blend's
+      ``Open`` buttons with every other label-less button at the same path.
+    * ``button:Walls@57`` -- a static slot key whose ``@`` carries a node index, dropped.
+    """
+    head, sep, tail = slot.partition("@")
+    if not sep:
+        return slot
+    if ":" in head or tail.isdigit():
+        return head
+    return slot
+
+
+def _unit_root(units: dict, obs, node) -> int:
+    """The innermost recurring unit that *properly* contains this control, or the control
+    itself when it is a unit and nothing encloses it, or -1.
+
+    A button whose whole name is data -- a ship's name, `Open North Wall` where `Open` is
+    also a cell value -- recurs with a varying filling and so is a unit in its own right.
+    Read as its own innermost unit its descriptor says nothing but `button[_]` at path
+    `button`, and every such button on the page, whichever entity's row it sits in, is one
+    family: on harbour 477 occurrences of buttons naming ships, berths and pilots.  Where in a
+    recurring structure a control sits is what the descriptor is for, so the unit that
+    encloses it is the one to read.
+    """
+    root = node.parent
+    while root >= 0 and root not in units:
+        root = obs.node(root).parent
+    if root >= 0:
+        return root
+    return node.i if node.i in units else -1
 
 
 def _components(members: list[str], vocabulary: dict[str, frozenset[str]],
@@ -99,10 +182,15 @@ def _components(members: list[str], vocabulary: dict[str, frozenset[str]],
 
     for i, a in enumerate(members):
         for b in members[i + 1:]:
-            same_entity = (entity_group.get(a) is not None and entity_group.get(a) == entity_group.get(b))
+            ga, gb = entity_group.get(a), entity_group.get(b)
+            # Two entity types are positive evidence that two same-shaped controls are two
+            # things.  A unit the entity layer does not read as an entity at all -- a page,
+            # a form -- is no evidence either way, and splitting on it fragmented blend's
+            # `Record draw` seven ways by page-template variant.
+            compatible_entity = ga is None or gb is None or ga == gb
             va, vb = vocabulary[a], vocabulary[b]
             compatible_values = not va or not vb or bool(va & vb)
-            if same_entity and compatible_values:
+            if compatible_entity and compatible_values:
                 parent[find(a)] = find(b)
     groups: dict[str, list[str]] = defaultdict(list)
     for t in members:
@@ -115,9 +203,56 @@ class ControlFamilies:
     """The families of one run plus the occurrence -> family map."""
     families: dict[str, ControlFamily] = field(default_factory=dict)
     by_node: dict[str, dict[int, str]] = field(default_factory=dict)   # sig -> node -> family id
+    by_descriptor: dict[ControlDescriptor, str] = field(default_factory=dict)
+    by_key: dict[tuple[str, str, str], list[str]] = field(default_factory=dict)
 
     def of(self, sig: str, node: int) -> str | None:
         return self.by_node.get(sig, {}).get(node)
+
+    def assign(self, H, obs, sig: str, data_tokens: set[str]) -> dict[int, str]:
+        """Node -> family, for a page these families were not induced from.
+
+        ``by_node`` is a memo of the pages the induction read.  A frozen model applied to a
+        page it never saw has to *classify* the page's controls by the same run-independent
+        descriptor the families were built from, or the families are not a model at all --
+        and until this existed they were not: every held-out click on every application fell
+        through to its per-instance ordinal, so ``Close``, ``Bottle`` and ``Return ticket``
+        were all ``button#0`` while the prefix had fitted them under their families.
+
+        Exact descriptor first.  A unit template the induction never saw falls back on the
+        role, label and path: one family with those is the answer; several are told apart by
+        the entity group the frozen hypotheses assign the new template, where they assign one;
+        otherwise the rendered name alone, which is what the layers above compare labelled
+        families by anyway, and which for a label-less control names nothing fitted.
+        """
+        units = {ui.root: ui for ui in H.parse_units(sig)}
+        out: dict[int, str] = {}
+        for node in obs.nodes:
+            if node.role not in WIDGETS:
+                continue
+            root = _unit_root(units, obs, node)
+            if root < 0:
+                continue      # outside every recurring unit: the caller names it
+            d = ControlDescriptor(node.role,
+                                  masked_label(node, data_tokens,
+                                               is_data=_judge(getattr(H, "G", None), sig, node, data_tokens)),
+                                  units[root].template, H._relpath(obs, root, node.i))
+            fid = self.by_descriptor.get(d)
+            if fid is None:
+                fid = self._nearest(d, H.tid_of_template.get(d.template), H.tid_of_template)
+            out[node.i] = fid
+        return out
+
+    def _nearest(self, d: ControlDescriptor, group, tid_of_template: dict) -> str:
+        candidates = self.by_key.get((d.role, d.label, d.path), [])
+        if len(candidates) == 1:
+            return candidates[0]
+        if candidates and group is not None:
+            same = [f for f in candidates
+                    if any(tid_of_template.get(t) == group for t in self.families[f].templates)]
+            if len(same) == 1:
+                return same[0]
+        return rendered_name(d.role, d.label, d.path)
 
     def report(self) -> dict[str, Any]:
         return {"families": {fid: f.descriptor() for fid, f in sorted(self.families.items())}}
@@ -133,14 +268,12 @@ def induce(G, H, data_tokens: set[str]) -> ControlFamilies:
         for node in obs.nodes:
             if node.role not in WIDGETS:
                 continue
-            root = node.i
-            while root >= 0 and root not in units:
-                root = obs.node(root).parent
+            root = _unit_root(units, obs, node)
             if root < 0:
                 continue      # outside every recurring unit: keeps its existing identity
             descriptor = ControlDescriptor(
-                node.role, _stable_label(node, data_tokens), units[root].template,
-                H._relpath(obs, root, node.i),
+                node.role, masked_label(node, data_tokens, is_data=_judge(G, sig, node, data_tokens)),
+                units[root].template, H._relpath(obs, root, node.i),
             )
             row = occurrences[descriptor]
             row["n"] += 1
@@ -166,7 +299,7 @@ def induce(G, H, data_tokens: set[str]) -> ControlFamilies:
         by_template = {d.template: d for d in descriptors}
         for group in _components(sorted(by_template), vocabulary, entity_group):
             members = [by_template[t] for t in group]
-            name = f"{role}:{label}" if label else f"{role}#{path}"
+            name = rendered_name(role, label, path)
             family = ControlFamily(
                 name, role, label, path,
                 frozenset(group),
@@ -189,4 +322,11 @@ def induce(G, H, data_tokens: set[str]) -> ControlFamilies:
     for sig, nodes in by_node.items():
         for node, family in list(nodes.items()):
             nodes[node] = family.id
-    return ControlFamilies(families, dict(by_node))
+    by_descriptor: dict[ControlDescriptor, str] = {}
+    by_key: dict[tuple[str, str, str], list[str]] = defaultdict(list)
+    for fid, family in families.items():
+        by_key[(family.role, family.label, family.path)].append(fid)
+        for t in family.templates:
+            by_descriptor[ControlDescriptor(family.role, family.label, t, family.path)] = fid
+    return ControlFamilies(families, dict(by_node), by_descriptor,
+                           {k: sorted(v) for k, v in by_key.items()})

@@ -158,8 +158,15 @@ def split_literal(value: Any) -> tuple[str, int]:
 
 
 def control_of(locator_slot: str) -> str:
-    """The control's rendered identity, without the occurrence provenance after ``@``."""
-    return locator_slot.split("@")[0]
+    """The control's identity, as `semabi.compiler.v2.controls.identity` defines it.
+
+    This used to drop everything after ``@``, which is right for a static slot's node index
+    and for a labelled family's entity-group digest, and wrong for a label-less family, whose
+    digest is the only thing that names it: it pooled blend's ``Open`` buttons with every
+    other label-less button at the same path.
+    """
+    from semabi.compiler.v2.controls import identity
+    return identity(locator_slot)
 
 
 def action_control(step) -> str:

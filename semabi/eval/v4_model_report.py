@@ -15,6 +15,7 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
+from semabi.compiler.v4 import consequence as csq
 from semabi.compiler.v4.consequence import fit
 from semabi.eval.v4_consequence_run import _candidates
 
@@ -93,7 +94,7 @@ def effect_value_character(operators) -> dict[str, Any]:
     by_slot: dict[tuple[str, str], dict[str, Any]] = {}
     for op in operators:
         core = op.core()
-        control = (core[0].loc.slot.split("@")[0] if core and core[0].loc else "?")
+        control = (csq.control_of(core[0].loc.slot) if core and core[0].loc else "?")
         for eff in op.effs:
             for slot, value in _effect_values(eff):
                 bucket = by_slot.setdefault((control, slot),
