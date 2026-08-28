@@ -31,6 +31,7 @@ import json
 from collections import Counter
 from pathlib import Path
 
+from semabi.compiler.evidence import EvidenceLog
 from semabi.compiler.v4 import consequence as csq, prequential as pq
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -69,10 +70,19 @@ def compare(run_dir: Path, chain: Path, reading_name: str, control: str, *,
     out: dict = {"run": run_dir.name, "reading": reading_name, "control": control,
                  "split": split, "regimes": {}}
 
+    # The prequential column rebuilds per action, which is about a minute apiece, so a control
+    # firing 123 times after the cut needs a stride.  Whatever it scores, the other two are
+    # restricted to the same actions: three columns over three different subsets are three
+    # numbers, not a comparison, and the whole point of this instrument is that they are asked
+    # the same questions.
+    cut = int(len(EvidenceLog(run_dir).steps) * split)
+    steps = [t for t in pq.scored_steps(run_dir, control) if t >= cut][::stride]
+    matched = set(steps)
+
     for regime in (csq.TRANSDUCTIVE, csq.FROZEN_PREFIX):
         model = csq.fit(run_dir, reading, split=split, min_support=min_support, regime=regime)
         result = csq.score(model, evaluate_on="suffix")
-        rows = _control_rows(result, control)
+        rows = [p for p in _control_rows(result, control) if p.step in matched]
         out["regimes"][regime] = {
             **_shape(model), "cut": model.cut,
             "predictions": len(rows), "steps": sorted({p.step for p in rows}),
@@ -83,14 +93,11 @@ def compare(run_dir: Path, chain: Path, reading_name: str, control: str, *,
     # The prequential column rebuilds per action, so it is restricted to the steps the other
     # two were asked about: a regime that answered a different set of questions cannot be
     # compared with them.
-    #
-    # `stride` exists because that rebuild is the whole cost of this instrument -- about a
-    # minute an action -- and a control firing 123 times after the cut is two hours of
-    # compiling for one report.  Scoring every nth is sound: the model at step t is built from
-    # everything before t either way, so a stride skips the question and never the evidence.
-    # The steps actually used are recorded, so the three columns are compared on the same ones.
-    steps = [t for t in pq.scored_steps(run_dir, control) if t >= out["cut"]][::stride]
+    # Scoring every nth action is sound rather than a shortcut: the model at step t is built
+    # from everything before t either way, so a stride skips the question and never the
+    # evidence.
     out["prequential_stride"] = stride
+    out["matched_steps"] = steps
     snaps = pq.run(run_dir, reading, steps, min_support=min_support)
     verdicts: Counter = Counter()
     for s in snaps:
