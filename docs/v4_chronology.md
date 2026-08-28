@@ -174,6 +174,148 @@ transductively constructed representation, and they survive strict chronology es
 unchanged.  What does not survive is the action's grip on its own objects: action-bound
 variables fall from 14 to 4.
 
+## What a verdict count was hiding
+
+Two of my own readings of the evidence died on the way to the section above, and both died the
+same way -- an aggregate that looked like a result until it was asked what it was computed over.
+
+A **negatives-per-positive ratio** does not predict prospective failure.  Blend's worst rules
+were fitted from two positives against 103 negatives, which looked like the signature; across
+all of blend's operators the refuted share is 0.95 for rules under 10:1 and 0.93 for those
+over.
+
+**"Some rule was right"** rewards emitting more rules.  Classified that way, `promote
+cell[_]=cell#0` was the best model on blend -- 85% of held-out actions with a correct rule and
+none where everything was contradicted, against 21% and 55% for `joint discrimination x3`.
+Classified by what the rules that actually *applied* did, and then by what they claimed, it
+collapses:
+
+|  | distinct claims | decided | supported |
+|---|---|---|---|
+| harbour `joint discrimination x2` | 2 | 36 | 94% |
+| harbour `promote cell[_]=cell#0` | 1 | 10 | 0% |
+| blend `joint discrimination x3` | 4 | 1146 | 10% |
+| blend `promote cell[_]=cell#0` | **1** | 1353 | 100% |
+
+Blend's promoted reading makes one claim, `id: gone`, on a page that stops rendering more than
+90% of its objects on 217 of 249 held-out steps.  Measured against the click it fired on rather
+than against the trace, it scores 1.000 where everything else at those same steps scores 0.996.
+On harbour the same reading makes one claim -- that its object's *identity* becomes the string
+`closed` -- refuted every time it is decidable.  It is not a competing hypothesis.
+
+Rule-level executability tells the other half.  A rule is usable only if *every* object its
+effects act on can be identified beforehand, and one unnamed object is enough to make the whole
+rule unusable:
+
+    harbour  joint discrimination x2    9/9   (100%)   identical in both regimes
+    harbour  promote cell[_]=cell#0     7/16   (44%)   identical in both regimes
+    blend    joint discrimination x3   41/45   (91%)   frozen prefix
+    blend    joint discrimination x3   19/31   (61%)   transductive
+    cellar   joint discrimination x2    1/3    (33%)   frozen prefix
+    cellar   promote cell[_]=cell#0     0/12    (0%)
+
+Blend's strictly chronological model is *more* executable than its transductive one, and the
+roles say why: under a fragmented schema each control family covers one place, so a rule's
+objects arrive with the action -- 86 action-supplied against 21 implicit, where the consolidated
+schema has 39 against 55.  Consolidation is what makes a rule general, and generality is exactly
+what creates the burden of saying which object it is about.
+
+## Naming what the interface is pointed at
+
+Blend draws from the vat named in one dropdown into the blend named in another, and the click
+carries neither.  The selections were made earlier and persist across reloads, so at the moment
+of acting they are ordinary pre-state evidence -- sitting in `state.view` rather than on any
+object, which is why relation, singleton and property all missed them.
+
+Without a form for this the learner falls back on what actually separates its examples, the
+identity of the vats it was fitted from, and that is correctly refused as memorisation.  `op1`'s
+five best candidate conditions are `id(?o0) == 'Festival White'` and four more of the same kind,
+every one refused, leaving 35 counterexamples unexplained.  The rule is inexpressible.
+
+Adding the form, on blend under strict chronology:
+
+| | before | after |
+|---|---|---|
+| determinate held-out opportunities | 250 | **324** |
+| the named object bore the effect | 101 | **143** |
+| the query named the wrong object | 4 | **0** |
+
+Conditional on the effect happening somewhere, the queries now name the right object every
+time, with 2 to 4 candidates of the type present -- a random choice would be right 0.392.
+Cellar's one prefix query is falsified by the same instrument rather than confirmed: `the only
+object of its type` names four objects on its single held-out opportunity.
+
+## Telling the search what a prediction will actually have
+
+`action_binding` supplies the owner of the clicked control and nothing else, and says why: a
+typed or selected string was carried by the concrete step, and the rule is not given the step.
+But `learn_ref` was being told that any variable an act argument names is supplied, so it never
+looked for a way to name it -- and then the predictor, which cannot bind it either, enumerated.
+
+On blend that is 55 of 86 object parameters.  On harbour it is none, which is why harbour's
+numbers do not move when it is corrected.  Aligning the two:
+
+| | before | after |
+|---|---|---|
+| action-supplied variables | 86 | 31 |
+| implicit variables | 21 | 71 |
+| operators that learn a query | 11 of 45 | **40 of 45** |
+| distinct queries | 5 | **14** |
+| rules that could be executed | 41 of 45 | 41 of 45 |
+
+Executability holds at 91% while the honest count of implicit variables more than triples,
+because the queries were found for them.  The highest-support rule on the application now names
+both of its objects: `?o0 = the object named by cell#17`, `?o1 = the object named by cell#16`.
+
+## Using the queries to predict, and one change that did not work
+
+The queries were being measured and never used.  `bindings_for` enumerated the assignments the
+preconditions failed to exclude, which is precisely what a referring expression is learned
+instead of.  Asking the rule's own query first, and letting it pin a variable when it names
+exactly one object, moves blend's accuracy on the steps where the application actually drew
+from 46% to **60%**, and roughly halves the binder's ambiguity on the destination.  With the
+supplied set corrected as well it reaches **70%**, and the ambiguity on the destination falls
+from 86 undecidable claims to 21.  Harbour is untouched throughout, because none of its rules
+learns a query and none of its parameters was miscounted.
+
+Across 684 determinate held-out opportunities the queries name the object that bore the effect
+248 times and the wrong object **4** times; the other 432 failures are opportunities where no
+object of the type bore it at all.  Conditional on the effect happening somewhere, that is
+248 of 252 against a 0.39 chance rate.
+
+The same reasoning applied one level earlier does **not** work, and the measurement says so.
+`_rebind_negative` falls back, for an implicit parameter it cannot bind, to the *negative's*
+binding for the same parameter name -- a coincidence between two independent lifts rather than a
+determination, and on blend the two disagree 159 times and agree 6.  Replacing that fallback
+with the rule's own query made things worse: accuracy on the drew steps fell from 60% to 40% and
+25 tests broke.  Reverted.  A better-founded binding of the counterexamples is not automatically
+a better precondition learner, and the reason is worth finding out later.
+
+## What blend's remaining failure actually is
+
+Only **42%** of held-out `Record draw` clicks draw.  The rest are refusals with four distinct
+causes, all conditions on the implicit source and destination:
+
+    41  the destination blend is already bottled
+    16  the source vat is closed
+     6  the source holds 0 gallons
+     3  the varietal does not match
+
+Grouping the held-out predictions by what the application actually did separates the two
+failures cleanly:
+
+| what happened | actions | decided | supported |
+|---|---|---|---|
+| the action drew | 52 | 301 | **60%** |
+| refused: already bottled | 62 | 400 | 0% |
+| other | 82 | 323 | 0% |
+| refused: source empty | 7 | 68 | 0% |
+
+`learn_pre` already finds two of the four conditions -- `op0` learns `attr:cell#0@3(?o1) != '0'`
+and `attr:cell#0@4(?o1) == 'Open'`, the source being non-empty and open.  The varietal match is
+inexpressible: the literal language compares an attribute to a constant, or a string parameter
+to an attribute, but has no form for *this object's attribute equals that object's*.
+
 ## Where the bottleneck is now
 
 It is not chronology.  The evidence view, the graph, and the lazily induced control families
@@ -181,10 +323,17 @@ are all scoped, and two attacks confirm it: the pre-action view holds the page t
 looking at and not the outcome, and truncating the trace on disk immediately after the action
 under test gives the identical learned fingerprint.
 
-It is not the referring query language, which does the job asked of it on the one application
-that needs it.
+It is not the referring query language.  Given a form for what the interface is pointed at, it
+names the right object on every held-out opportunity where the effect happened at all, against
+a 0.392 chance rate, and using it to bind raises prediction on those steps from 46% to 60%.
 
-It is an effect model that will claim an undetermined change on two examples' worth of
-evidence, and a representation whose concepts arrive later than a fixed split assumes.  The
-first of those is a discipline problem with a measured signature.  The second is a learning
-curve that the causal prequential regime already handles, and that no amount of freezing will.
+It is **applicability over implicit objects**.  Blend's rules fire on 196 held-out actions where
+the application refused, and are contradicted 899 times there against 121 on the actions it
+performed.  The conditions that would stop them are conditions on the source and destination --
+objects the action does not supply and the referring query now names.  Two of the four are
+already learnable and learned; one needs a literal comparing an attribute of one object to an
+attribute of another, which the language does not have.
+
+The second bottleneck is unchanged: a representation whose concepts arrive later than a fixed
+split assumes.  That is a learning curve the causal prequential regime already handles, and
+that no amount of freezing will.

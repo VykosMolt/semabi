@@ -414,18 +414,58 @@ def action_binding(A, po, state, op, clicked: int) -> tuple[dict[str, Any], str]
     return binding, ""
 
 
-def bindings_for(A, po, state, op, clicked: int, applicability: str) -> tuple[Any, str]:
+def bindings_for(A, po, state, op, clicked: int, applicability: str,
+                 queries: dict | None = None) -> tuple[Any, str]:
     """Every assignment of the rule's parameters this pre-action state leaves open.
 
     The literals are the ones the applicability mode already uses, so binding and applicability
     are one question asked once: an assignment is admissible exactly when it satisfies what
     decides whether the rule applies.
+
+    A learned referring query, where the rule has one, is asked first.  That is the whole point
+    of having learned it: the rule says which object it is about, and enumerating the objects
+    the preconditions merely fail to exclude is what it was learned instead of.  A query that
+    names exactly one object pins it; one that names none or several pins nothing and the
+    enumeration proceeds as before, because a referring expression that does not refer here is
+    not evidence about which object the rule meant.
+
+    The query never decides *whether* the rule applies -- only which object it is about.
+    Applicability remains the preconditions, asked of the assignment.
     """
     supplied, why = action_binding(A, po, state, op, clicked)
     if why:
         return None, why
-    return binding.solve(op, applicable_literals(op, applicability), state, supplied,
-                         types=A.types), ""
+    named = _named_by_query(op, state, supplied, queries)
+    return binding.solve(op, applicable_literals(op, applicability), state,
+                         {**supplied, **named}, types=A.types), ""
+
+
+def _named_by_query(op, state, supplied: dict, queries: dict | None) -> dict:
+    """Objects the rule's own referring queries determine in this state.
+
+    Asked in dependency order, so a variable a query has already determined can anchor the
+    next, and never the other way round.
+    """
+    if not queries:
+        return {}
+    # `action_binding` hands the solver objects, not identifiers, so a query-determined
+    # variable has to arrive in the same currency.
+    known = {p: (state.objs.get(v) if isinstance(v, tuple) else v)
+             for p, v in supplied.items()}
+    out: dict[str, Any] = {}
+    pending = dict(queries)
+    progress = True
+    while progress and pending:
+        progress = False
+        for var, q in list(pending.items()):
+            if q.given and any(g not in known for g in q.given):
+                continue
+            del pending[var]
+            progress = True
+            hits = q.denotation(op, state, known)
+            if len(hits) == 1:
+                known[var] = out[var] = hits[0]
+    return out
 
 
 _UNCHECKABLE = ("nonempty_str", "str_ne_attr")
@@ -597,6 +637,7 @@ class Fit:
     inducer: Any = None
     regime: str = FROZEN_PREFIX
     evidence: Any = None   # the scoped view the model was actually built from
+    queries: dict = field(default_factory=dict)   # operator -> variable -> referring query
 
 
 def fit(run_dir: Path, reading, *, split: float = 0.6, at: int | None = None,
@@ -634,11 +675,38 @@ def fit(run_dir: Path, reading, *, split: float = 0.6, at: int | None = None,
     # whichever regime built it: a transductive schema is a diagnostic, not a licence to keep
     # learning while it scores.
     compiled.inducer.A.freeze()
+    # The referring queries are part of the model, not a diagnostic run over it: a rule that
+    # names an object the action does not supply has to say which object before it can predict
+    # anything.  They are learned here, from the same fitting evidence as the rules, so that
+    # nothing downstream can accidentally learn one from the evidence it is being tested on.
+    queries = _learn_queries(compiled.inducer, compiled.inducer.operators)
     # `log` is the whole trace because scoring has to reach the steps being predicted.
     # `evidence` is what the model was allowed to learn from, kept so that the frontier is
     # something a caller can check rather than something it has to trust.
     return Fit(reading, compiled.inducer.A, compiled.inducer.operators, full, cut, split,
-               compiled.inducer, regime, prefix)
+               compiled.inducer, regime, prefix, queries)
+
+
+def _learn_queries(inducer, operators) -> dict:
+    """Per operator, a referring query for each object its effects act on that it must find."""
+    from semabi.compiler.v4 import referring
+
+    out: dict[str, dict] = {}
+    for op in operators:
+        # What a prediction will actually have in hand.  `action_binding` supplies the owner of
+        # the clicked control and nothing else: a typed or selected string was carried by the
+        # concrete step, and the rule is not given the step.  Treating such a variable as
+        # supplied told this search there was nothing to look for.
+        bound = {a.owner for a in op.core() if a.owner}
+        evidence = [(tr.before,
+                     {q: tr.before.objs.get(v) for q, v in tr.binding.items()
+                      if isinstance(v, tuple)})
+                    for tr in op.positives]
+        got = referring.ground(op, evidence, bound,
+                               inducer.memorises_the_fitting_instance)
+        if got.queries:
+            out[op.name] = dict(got.queries)
+    return out
 
 
 def evaluate(run_dir: Path, reading, *, split: float = 0.6, min_support: int = 2,
@@ -708,7 +776,8 @@ def score(model: Fit, *, mutate: Callable[[str], str] | None = None,
         step_relocate = _for_one_step(relocate)
         step_gone = _for_one_step(gone)
         for op in rules:
-            bound, why = bindings_for(A, po, state, op, step.action.target, applicability)
+            bound, why = bindings_for(A, po, state, op, step.action.target, applicability,
+                                      model.queries.get(op.name))
             _record_schema(result, op, bound)
             for eff in op.effs:
                 claim = _claim(op, eff, mutate)

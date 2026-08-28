@@ -1,67 +1,6 @@
 [
  {
   "run": "blend_book_transfer",
-  "reading": "promote cell[_]=cell#0",
-  "regime": "FROZEN_PREFIX",
-  "split": 0.5,
-  "cut": 419,
-  "operators": 51,
-  "held_out_actions": 187,
-  "rules_offered_per_action": 6.7,
-  "applicable_claims_per_action": 8.51,
-  "distinct_decided_claims": 1,
-  "composition": {
-   "a named constant": {
-    "claims": 33,
-    "decided": 0,
-    "supported": 0,
-    "refuted": 0,
-    "supported_share": null,
-    "distinct_claims": 0,
-    "examples": []
-   },
-   "changes, unspecified": {
-    "claims": 923,
-    "decided": 0,
-    "supported": 0,
-    "refuted": 0,
-    "supported_share": null,
-    "distinct_claims": 0,
-    "examples": []
-   },
-   "removal": {
-    "claims": 2306,
-    "decided": 1353,
-    "supported": 1353,
-    "refuted": 0,
-    "supported_share": 1.0,
-    "distinct_claims": 1,
-    "examples": [
-     "id = gone"
-    ]
-   }
-  },
-  "per_action": {
-   "every applicable rule was right": 159,
-   "only undecidable claims survived": 28
-  },
-  "removal_exposure": {
-   "base_rate_gone": 0.888,
-   "steps_by_fraction_gone": {
-    "all went (>90%)": 217,
-    "none went (<10%)": 23,
-    "some went": 9
-   },
-   "reading_supported_share": 1.0,
-   "removal_claims": 1353,
-   "steps_spoken_at": 159,
-   "per_click_control": 0.996,
-   "objects_in_those_steps": 4544,
-   "margin_over_per_click_control": 0.004
-  }
- },
- {
-  "run": "blend_book_transfer",
   "reading": "joint discrimination x3",
   "regime": "FROZEN_PREFIX",
   "split": 0.5,
@@ -69,7 +8,7 @@
   "operators": 45,
   "held_out_actions": 248,
   "rules_offered_per_action": 4.17,
-  "applicable_claims_per_action": 6.09,
+  "applicable_claims_per_action": 5.8,
   "distinct_decided_claims": 4,
   "composition": {
    "a named constant": {
@@ -86,10 +25,10 @@
    },
    "changes, unspecified": {
     "claims": 2002,
-    "decided": 1106,
-    "supported": 115,
-    "refuted": 991,
-    "supported_share": 0.104,
+    "decided": 1110,
+    "supported": 182,
+    "refuted": 928,
+    "supported_share": 0.164,
     "distinct_claims": 2,
     "examples": [
      "attr:cell#0@3 = changes",
@@ -98,8 +37,8 @@
    }
   },
   "per_action": {
-   "every applicable rule was contradicted": 191,
-   "applicable rules disagreed": 53,
+   "every applicable rule was contradicted": 190,
+   "applicable rules disagreed": 54,
    "only undecidable claims survived": 4
   }
  }

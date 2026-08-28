@@ -54,13 +54,16 @@ RULE_UNBORNE = "no object of its type bore the effect"
 
 
 def action_bound(op) -> set[str]:
-    out = set()
-    for a in op.acts:
-        if a.owner:
-            out.add(a.owner)
-        if isinstance(a.arg, str) and a.arg.startswith("?"):
-            out.add(a.arg)
-    return out
+    """The parameters a *prediction* will have in hand, which is fewer than the rule mentions.
+
+    `action_binding` supplies the owner of the clicked control and nothing else.  A typed or
+    selected string was carried by the concrete step, and the rule is not given the step, so a
+    variable that only an act argument names is one the predictor still has to find -- exactly
+    the case a referring query exists for.  Counting it as supplied told `learn_ref` there was
+    nothing to look for: on blend that is 55 of 86 object parameters, and on harbour none,
+    which is why harbour's numbers do not move when this is corrected.
+    """
+    return {a.owner for a in op.core() if a.owner}
 
 
 def _params(lit) -> set[str]:

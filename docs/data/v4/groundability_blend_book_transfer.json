@@ -7,8 +7,8 @@
   "cut": 419,
   "operators": 45,
   "rules_by_status": {
-   "every effect target is supplied, created, or determined by a query": 40,
-   "the legitimate query language was searched and none determines it": 5
+   "every effect target is supplied, created, or determined by a query": 41,
+   "the legitimate query language was searched and none determines it": 4
   },
   "determined_rules": [
    {
@@ -17,7 +17,10 @@
     "acts": [
      "click(button:Record draw)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the object named by cell#17",
+     "?o1": "the object named by cell#16"
+    }
    },
    {
     "operator": "op1",
@@ -25,7 +28,10 @@
     "acts": [
      "click(button:Record draw)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the object named by cell#28",
+     "?o1": "the object named by cell#22"
+    }
    },
    {
     "operator": "op2",
@@ -33,7 +39,10 @@
     "acts": [
      "click(button#2)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the object named by cell#17",
+     "?o1": "the object named by cell#16"
+    }
    },
    {
     "operator": "op3",
@@ -41,7 +50,10 @@
     "acts": [
      "click(button#0)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the object named by cell#17",
+     "?o1": "the object named by cell#16"
+    }
    },
    {
     "operator": "op4",
@@ -49,7 +61,10 @@
     "acts": [
      "click(button#1)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the object named by cell#17",
+     "?o1": "the object named by cell#16"
+    }
    },
    {
     "operator": "op5",
@@ -57,7 +72,10 @@
     "acts": [
      "click(button#3)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the object named by cell#17",
+     "?o1": "the object named by cell#16"
+    }
    },
    {
     "operator": "op7",
@@ -73,7 +91,10 @@
     "acts": [
      "click(button#5)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the object named by cell#28",
+     "?o1": "the object named by cell#22"
+    }
    },
    {
     "operator": "op9",
@@ -81,7 +102,10 @@
     "acts": [
      "click(button#1)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the object named by cell#28",
+     "?o1": "the object named by cell#22"
+    }
    },
    {
     "operator": "op10",
@@ -89,7 +113,10 @@
     "acts": [
      "click(button:Record draw)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the object named by cell#22",
+     "?o1": "the object named by cell#16"
+    }
    },
    {
     "operator": "op11",
@@ -98,6 +125,7 @@
      "click(button#button@bb8f76)"
     ],
     "implicit": {
+     "?o0": "the only object of its type",
      "?o2": "?o1.in:1"
     }
    },
@@ -107,7 +135,21 @@
     "acts": [
      "click(button#4)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the object named by cell#17",
+     "?o1": "the object named by cell#16"
+    }
+   },
+   {
+    "operator": "op13",
+    "support": 2,
+    "acts": [
+     "click(button:Record draw)"
+    ],
+    "implicit": {
+     "?o0": "the object named by combobox#0",
+     "?o1": "the object named by combobox#1"
+    }
    },
    {
     "operator": "op14",
@@ -116,7 +158,8 @@
      "click(button:Record draw)"
     ],
     "implicit": {
-     "?o1": "the only object with attr:blend#0 = None"
+     "?o0": "the object named by cell#16",
+     "?o1": "the object named by combobox#1"
     }
    },
    {
@@ -126,6 +169,7 @@
      "click(button#button@bb8f76)"
     ],
     "implicit": {
+     "?o0": "the only object of its type",
      "?o2": "?o1.in:1"
     }
    },
@@ -135,7 +179,9 @@
     "acts": [
      "click(button#button@4a5cb3)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the only object of its type"
+    }
    },
    {
     "operator": "op17",
@@ -144,6 +190,7 @@
      "click(button#button@bb8f76)"
     ],
     "implicit": {
+     "?o0": "the only object of its type",
      "?o2": "?o1.in:1"
     }
    },
@@ -153,7 +200,9 @@
     "acts": [
      "click(button#button@4a5cb3)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the only object of its type"
+    }
    },
    {
     "operator": "op19",
@@ -162,6 +211,7 @@
      "click(button#button@bb8f76)"
     ],
     "implicit": {
+     "?o0": "the only object of its type",
      "?o2": "?o1.in:1"
     }
    },
@@ -211,7 +261,9 @@
     "acts": [
      "click(button#button@bb8f76)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "?o1.in:1"
+    }
    },
    {
     "operator": "op28",
@@ -219,7 +271,9 @@
     "acts": [
      "click(button#button@4a5cb3)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the only object of its type"
+    }
    },
    {
     "operator": "op29",
@@ -227,7 +281,9 @@
     "acts": [
      "click(button#button@e5c39d)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the only object of its type"
+    }
    },
    {
     "operator": "op30",
@@ -235,7 +291,9 @@
     "acts": [
      "click(button#button@4a5cb3)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the only object of its type"
+    }
    },
    {
     "operator": "op31",
@@ -243,7 +301,9 @@
     "acts": [
      "click(button#button@e5c39d)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the only object of its type"
+    }
    },
    {
     "operator": "op32",
@@ -251,7 +311,9 @@
     "acts": [
      "click(button#button@4a5cb3)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the only object of its type"
+    }
    },
    {
     "operator": "op33",
@@ -260,6 +322,7 @@
      "click(button#button@bb8f76)"
     ],
     "implicit": {
+     "?o0": "the only object of its type",
      "?o2": "?o1.in:1"
     }
    },
@@ -269,7 +332,9 @@
     "acts": [
      "click(button#button@bb8f76)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "?o1.in:1"
+    }
    },
    {
     "operator": "op35",
@@ -277,7 +342,9 @@
     "acts": [
      "click(button#button@4a5cb3)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the only object of its type"
+    }
    },
    {
     "operator": "op36",
@@ -285,7 +352,9 @@
     "acts": [
      "click(button#button@e5c39d)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the only object of its type"
+    }
    },
    {
     "operator": "op37",
@@ -293,7 +362,10 @@
     "acts": [
      "click(button#3)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the object named by cell#28",
+     "?o1": "the object named by cell#22"
+    }
    },
    {
     "operator": "op38",
@@ -301,7 +373,9 @@
     "acts": [
      "click(button#button@4a5cb3)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o1": "the only object of its type"
+    }
    },
    {
     "operator": "op39",
@@ -309,7 +383,10 @@
     "acts": [
      "click(button#2)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the object named by cell#28",
+     "?o1": "the object named by cell#22"
+    }
    },
    {
     "operator": "op40",
@@ -318,7 +395,10 @@
      "click(button:Record draw@443e72)",
      "click(button#2)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "?o2.rel:3",
+     "?o1": "?o2.rel:1"
+    }
    },
    {
     "operator": "op41",
@@ -326,7 +406,9 @@
     "acts": [
      "click(button#button@4a5cb3)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o2": "the only object of its type"
+    }
    },
    {
     "operator": "op42",
@@ -335,7 +417,10 @@
      "click(button:Record draw@3d6aa4)",
      "click(button#4)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "?o2.rel:3",
+     "?o1": "?o2.rel:1"
+    }
    },
    {
     "operator": "op43",
@@ -344,7 +429,10 @@
      "click(button:Record draw@3d6aa4)",
      "click(button#2)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "?o2.rel:3",
+     "?o1": "?o2.rel:1"
+    }
    },
    {
     "operator": "op44",
@@ -352,22 +440,34 @@
     "acts": [
      "click(button#button@4a5cb3)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o2": "the only object of its type"
+    }
    }
   ],
   "variable_roles": {
-   "the action supplies it": 86,
-   "it already exists and the action does not name it": 21
+   "it already exists and the action does not name it": 71,
+   "the action supplies it": 31,
+   "it appears only in preconditions": 5
   },
   "query_outcomes": {
-   "a prefix-only query determines it": 13,
-   "the legitimate query language was searched and none determines it": 8
+   "a prefix-only query determines it": 64,
+   "the legitimate query language was searched and none determines it": 7
   },
   "distinct_queries": [
    "?o0.in:1",
    "?o0.rel:1",
    "?o0.rel:3",
    "?o1.in:1",
+   "?o2.rel:1",
+   "?o2.rel:3",
+   "the object named by cell#16",
+   "the object named by cell#17",
+   "the object named by cell#22",
+   "the object named by cell#28",
+   "the object named by combobox#0",
+   "the object named by combobox#1",
+   "the only object of its type",
    "the only object with attr:blend#0 = None"
   ]
  },
@@ -379,8 +479,8 @@
   "cut": 419,
   "operators": 51,
   "rules_by_status": {
-   "the legitimate query language was searched and none determines it": 35,
-   "every candidate property was refused as fitting-instance memorisation, so the evidence cannot tell a reusable predicate from a description of one object": 14,
+   "the legitimate query language was searched and none determines it": 37,
+   "every candidate property was refused as fitting-instance memorisation, so the evidence cannot tell a reusable predicate from a description of one object": 12,
    "every effect target is supplied, created, or determined by a query": 2
   },
   "determined_rules": [
@@ -398,19 +498,28 @@
     "acts": [
      "click(button#button@55e0b5)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the only object of its type"
+    }
    }
   ],
   "variable_roles": {
-   "it already exists and the action does not name it": 132,
+   "it already exists and the action does not name it": 153,
    "the effect brings it into being": 76,
-   "the action supplies it": 35
+   "the action supplies it": 14
   },
   "query_outcomes": {
-   "the legitimate query language was searched and none determines it": 99,
-   "every candidate property was refused as fitting-instance memorisation, so the evidence cannot tell a reusable predicate from a description of one object": 33
+   "the legitimate query language was searched and none determines it": 101,
+   "every candidate property was refused as fitting-instance memorisation, so the evidence cannot tell a reusable predicate from a description of one object": 27,
+   "a prefix-only query determines it": 25
   },
-  "distinct_queries": []
+  "distinct_queries": [
+   "the object named by cell#21",
+   "the object named by cell#22",
+   "the object named by cell#24",
+   "the object named by combobox#2",
+   "the only object of its type"
+  ]
  },
  {
   "run": "blend_book_transfer",
@@ -420,10 +529,21 @@
   "cut": 419,
   "operators": 31,
   "rules_by_status": {
-   "every effect target is supplied, created, or determined by a query": 19,
-   "the legitimate query language was searched and none determines it": 12
+   "every effect target is supplied, created, or determined by a query": 21,
+   "the legitimate query language was searched and none determines it": 10
   },
   "determined_rules": [
+   {
+    "operator": "op1",
+    "support": 18,
+    "acts": [
+     "click(button:Record draw)"
+    ],
+    "implicit": {
+     "?o0": "the object named by combobox#0",
+     "?o1": "the object named by combobox#1"
+    }
+   },
    {
     "operator": "op3",
     "support": 12,
@@ -471,7 +591,19 @@
      "click(button#button@bb8f76)"
     ],
     "implicit": {
+     "?o0": "the only object of its type",
      "?o2": "?o1.in:1"
+    }
+   },
+   {
+    "operator": "op14",
+    "support": 2,
+    "acts": [
+     "click(button:Record draw)"
+    ],
+    "implicit": {
+     "?o0": "the object named by combobox#0",
+     "?o1": "the object named by combobox#1"
     }
    },
    {
@@ -489,6 +621,7 @@
      "click(button#button@bb8f76)"
     ],
     "implicit": {
+     "?o0": "the only object of its type",
      "?o2": "?o1.in:1"
     }
    },
@@ -498,7 +631,9 @@
     "acts": [
      "click(button#button@4a5cb3)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the only object of its type"
+    }
    },
    {
     "operator": "op18",
@@ -506,7 +641,9 @@
     "acts": [
      "click(button#button@4a5cb3)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the only object of its type"
+    }
    },
    {
     "operator": "op19",
@@ -515,6 +652,7 @@
      "click(button#button@bb8f76)"
     ],
     "implicit": {
+     "?o0": "the only object of its type",
      "?o2": "?o1.in:1"
     }
    },
@@ -524,7 +662,9 @@
     "acts": [
      "click(button#button@4a5cb3)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the only object of its type"
+    }
    },
    {
     "operator": "op21",
@@ -532,7 +672,9 @@
     "acts": [
      "click(button#button@4a5cb3)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the only object of its type"
+    }
    },
    {
     "operator": "op22",
@@ -541,6 +683,7 @@
      "click(button#button@bb8f76)"
     ],
     "implicit": {
+     "?o0": "the only object of its type",
      "?o2": "?o1.in:1"
     }
    },
@@ -550,7 +693,9 @@
     "acts": [
      "click(button#button@4a5cb3)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the only object of its type"
+    }
    },
    {
     "operator": "op26",
@@ -558,7 +703,9 @@
     "acts": [
      "click(button#button@e5c39d)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the only object of its type"
+    }
    },
    {
     "operator": "op27",
@@ -566,7 +713,9 @@
     "acts": [
      "click(button#button@e5c39d)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the only object of its type"
+    }
    },
    {
     "operator": "op28",
@@ -574,7 +723,9 @@
     "acts": [
      "click(button#button@4a5cb3)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the only object of its type"
+    }
    },
    {
     "operator": "op29",
@@ -583,6 +734,7 @@
      "click(button#button@bb8f76)"
     ],
     "implicit": {
+     "?o0": "the only object of its type",
      "?o2": "?o1.in:1"
     }
    },
@@ -592,26 +744,28 @@
     "acts": [
      "click(button#button@4a5cb3)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the only object of its type"
+    }
    }
   ],
   "variable_roles": {
-   "it already exists and the action does not name it": 55,
-   "the action supplies it": 39,
+   "it already exists and the action does not name it": 69,
+   "the action supplies it": 25,
    "the effect brings it into being": 7
   },
   "query_outcomes": {
-   "a prefix-only query determines it": 31,
-   "the legitimate query language was searched and none determines it": 24
+   "a prefix-only query determines it": 48,
+   "the legitimate query language was searched and none determines it": 21
   },
   "distinct_queries": [
    "?o0.in:1",
    "?o0.rel:1",
    "?o0.rel:3",
    "?o1.in:1",
-   "?o3.rel:1",
-   "the only object with attr:blend#0 = None",
-   "the only object with attr:cell#0@3 = '1'",
+   "the object named by combobox#0",
+   "the object named by combobox#1",
+   "the only object of its type",
    "the only object with attr:cell#1 = '4'"
   ]
  },
@@ -623,8 +777,8 @@
   "cut": 419,
   "operators": 64,
   "rules_by_status": {
-   "the legitimate query language was searched and none determines it": 44,
-   "every candidate property was refused as fitting-instance memorisation, so the evidence cannot tell a reusable predicate from a description of one object": 18,
+   "the legitimate query language was searched and none determines it": 48,
+   "every candidate property was refused as fitting-instance memorisation, so the evidence cannot tell a reusable predicate from a description of one object": 14,
    "every effect target is supplied, created, or determined by a query": 2
   },
   "determined_rules": [
@@ -642,18 +796,28 @@
     "acts": [
      "click(button#button@55e0b5)"
     ],
-    "implicit": {}
+    "implicit": {
+     "?o0": "the only object of its type"
+    }
    }
   ],
   "variable_roles": {
-   "it already exists and the action does not name it": 267,
+   "it already exists and the action does not name it": 296,
    "the effect brings it into being": 138,
-   "the action supplies it": 43
+   "the action supplies it": 14
   },
   "query_outcomes": {
-   "the legitimate query language was searched and none determines it": 160,
-   "every candidate property was refused as fitting-instance memorisation, so the evidence cannot tell a reusable predicate from a description of one object": 107
+   "the legitimate query language was searched and none determines it": 168,
+   "every candidate property was refused as fitting-instance memorisation, so the evidence cannot tell a reusable predicate from a description of one object": 93,
+   "a prefix-only query determines it": 35
   },
-  "distinct_queries": []
+  "distinct_queries": [
+   "the object named by cell#19",
+   "the object named by cell#20",
+   "the object named by cell#21",
+   "the object named by cell#22",
+   "the object named by combobox#2",
+   "the only object of its type"
+  ]
  }
 ]
