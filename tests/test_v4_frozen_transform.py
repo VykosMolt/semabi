@@ -212,3 +212,65 @@ def test_fitting_a_reading_leaves_a_model_that_no_longer_learns():
         A.abstract(model.log.obs(step.after))
     assert (set(A.G.data_set()), len(A.G.templates), len(A.G.templates_v),
             set(A.G._whole)) == before
+
+
+# ------------------------------------------------------------------ the causal frontier
+
+def _run(tmp_path, rows, name="run"):
+    """A run directory with ``rows`` continuous steps, each a distinct observation."""
+    import json
+    from semabi.compiler.evidence import EvidenceLog
+    d = tmp_path / name
+    d.mkdir(parents=True, exist_ok=True)
+    obs = [{"sig": f"s{i}", "obs": {"nodes": [
+        {"i": 0, "parent": None, "role": "text", "name": f"v{i}", "bbox": [0, 0, 1, 1]}]}}
+        for i in range(rows + 1)]
+    (d / "observations.jsonl").write_text("\n".join(json.dumps(o) for o in obs) + "\n")
+    steps = [{"step": i, "episode": 0, "action": {"kind": "click", "target": 0},
+              "ok": True, "error": None, "before": f"s{i}", "after": f"s{i+1}",
+              "typed_tokens": []} for i in range(rows)]
+    (d / "steps.jsonl").write_text("\n".join(json.dumps(s) for s in steps) + "\n")
+    return EvidenceLog(d)
+
+
+def test_the_pre_action_view_holds_the_page_the_agent_was_looking_at_and_not_the_outcome(tmp_path):
+    """The information frontier of an agent that is still learning.
+
+    An agent choosing action ``t`` has seen every completed transition and the page in front of
+    it.  It has not seen what the action did.  A held-out cut is a different and stricter
+    boundary; conflating them would either deny the agent the page it is acting on or hand it
+    the answer.
+    """
+    log = _run(tmp_path, 8)
+    view = log.before_action(4)
+
+    assert [s.step for s in view.steps] == [0, 1, 2, 3]         # completed transitions only
+    assert "s4" in view.observations                            # the page it is acting on
+    assert "s5" not in view.observations                        # what the action did
+    assert "s8" not in view.observations
+    assert view.obs_path is None
+
+
+def test_what_an_action_does_cannot_reach_the_model_that_predicted_it(tmp_path):
+    """Two histories agreeing up to and including the pre-state of action ``t``.
+
+    Whatever follows -- a different outcome, a different future -- the evidence available when
+    the action was chosen is the same, so a model built from it is the same.  This is the
+    strongest chronology regression available at the level of the evidence view.
+    """
+    import json
+    a = _run(tmp_path, 9, "a")
+    b = _run(tmp_path, 9, "b")
+    d = tmp_path / "b"
+    rows = [json.loads(l) for l in (d / "steps.jsonl").read_text().splitlines()]
+    for r in rows[4:]:
+        r["after"] = r["after"] + "x"                       # a wholly different future
+        if r["step"] > 4:
+            r["before"] = r["before"] + "x"
+    (d / "steps.jsonl").write_text("\n".join(json.dumps(r) for r in rows) + "\n")
+    from semabi.compiler.evidence import EvidenceLog
+    b = EvidenceLog(d)
+
+    va, vb = a.before_action(4), b.before_action(4)
+    assert set(va.observations) == set(vb.observations)
+    assert [(s.before, s.after) for s in va.steps] == [(s.before, s.after) for s in vb.steps]

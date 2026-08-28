@@ -101,6 +101,32 @@ class EvidenceLog:
         view.typed_tokens = list(view.steps[-1].typed_tokens) if view.steps else []
         return view
 
+    def before_action(self, t: int) -> "EvidenceLog":
+        """Everything an agent had actually observed at the moment it chose action ``t``.
+
+        This is a different boundary from ``through``.  A held-out evaluation freezes the model
+        at a cut and never updates it again; an agent working through an unfamiliar application
+        keeps learning, and the restriction on it is temporal rather than positional.  At the
+        moment of acting it has seen every completed transition *and* the page in front of it.
+        What it has not seen is the outcome.
+
+        ``steps[t].before`` is unioned in explicitly rather than relied upon to arrive as the
+        previous step's ``after``.  On every retained trace here the two coincide, but that is a
+        property of how these traces were collected and not something the structure promises,
+        and a frontier that depends on an unchecked coincidence is not a frontier.
+
+        Where the action changed nothing, ``before`` and ``after`` are the same observation and
+        so the outcome page is in the view.  That is not leakage -- the agent was looking at it
+        before it acted -- but it does mean presence in this view is never itself evidence about
+        how the action turned out.
+        """
+        view = self.through(t)
+        if 0 <= t < len(self.steps):
+            sig = self.steps[t].before
+            view.observations[sig] = self.observations[sig]
+            view.typed_tokens = list(self.steps[t].typed_tokens)
+        return view
+
     def transductively_through(self, cut: int) -> "EvidenceLog":
         """The first ``cut`` steps, but every observation the trace retained.
 

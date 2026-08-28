@@ -159,6 +159,20 @@ def test_a_learned_reference_condition_becomes_a_planning_precondition():
 
 # ------------------------------------------------------------------ the real trace
 
+def _close_and_reopen(regime, split=0.5):
+    from semabi.compiler.v4.consequence import fit
+    from semabi.eval.v4_consequence_run import _candidates
+
+    readings = {c.name: c.reading for c in _candidates(HARBOUR_CHAIN)}
+    model = fit(HARBOUR_RUN, readings["joint discrimination x2"], split=split, regime=regime)
+    by_control = {}
+    for op in model.operators:
+        core = op.core()
+        if len(core) == 1 and core[0].loc is not None:
+            by_control.setdefault(core[0].loc.slot.split("@")[0], []).append(op)
+    return model, by_control["button:Close"], by_control["button:Reopen"]
+
+
 @pytest.mark.skipif(not (HARBOUR_RUN / "steps.jsonl").exists(), reason="retained trace absent")
 def test_harbour_learns_the_condition_for_close_and_not_for_reopen():
     """The finding, from the real evidence, at the level of the learned rules.
@@ -167,23 +181,63 @@ def test_harbour_learns_the_condition_for_close_and_not_for_reopen():
     closing a berth requires no call to hold it, reopening one does not, and the learner is
     told neither.  A condition adopted by every rule of the family would be the signature of a
     device for suppressing errors rather than a fact about the application.
-    """
-    from semabi.compiler.v4.consequence import fit
-    from semabi.eval.v4_consequence_run import _candidates
 
-    readings = {c.name: c.reading for c in _candidates(HARBOUR_CHAIN)}
-    model = fit(HARBOUR_RUN, readings["joint discrimination x2"], split=0.5)
-    by_control = {}
-    for op in model.operators:
-        core = op.core()
-        if len(core) == 1 and core[0].loc is not None:
-            by_control.setdefault(core[0].loc.slot.split("@")[0], []).append(op)
-    close = by_control["button:Close"]
-    reopen = by_control["button:Reopen"]
+    This is asserted under the transductive regime because that is the regime that produced
+    it.  What it establishes is that the *language and the discipline* can find the condition
+    from evidence alone; it is not a claim that a prefix model finds it, which is the subject
+    of the next test.
+    """
+    from semabi.compiler.v4.consequence import TRANSDUCTIVE
+
+    _, close, reopen = _close_and_reopen(TRANSDUCTIVE)
     assert close and reopen
     assert all(any(l[0] == "ref_null" for l in op.pre) for op in close)
     assert not any(l[0] == "ref_null" for op in reopen for l in op.pre)
     assert all(op.unexplained_negatives == 0 for op in close)
+
+
+@pytest.mark.skipif(not (HARBOUR_RUN / "steps.jsonl").exists(), reason="retained trace absent")
+def test_the_condition_for_close_is_not_available_to_a_half_trace_prefix_model():
+    """And the reason is not the language, the discipline, or the evidence.
+
+    The same condition, sought the same way, is not found when the schema is built from the
+    first half of the trace alone.  Every step of the argument survives except one: the literal
+    is still in the candidate set, still true in every positive, still unrefused.  What has
+    changed is that the berth's reference resolves to nothing anywhere, so it is null in the
+    counterexamples too and separates none of them.
+
+    Under the whole-trace schema the berth's reference denotes the *call*.  Under the half-trace
+    schema it denotes the cell in the Call column, whose composite key the berth's rendered
+    value never matches.  So the concept harbour lost is a reference target, and the loss is
+    not the learner declining to generalise -- it is the learner being unable to see, in the
+    states where closing failed, that anything was holding the berth.
+
+    This is the regression for the chronology repair.  If the observation model could reach the
+    suffix again, the condition would reappear here and this test would fail.
+    """
+    from semabi.compiler.v4.consequence import FROZEN_PREFIX
+
+    model, close, reopen = _close_and_reopen(FROZEN_PREFIX)
+    assert close and reopen
+    assert not any(l[0] == "ref_null" for op in close for l in op.pre)
+    assert any(op.unexplained_negatives > 0 for op in close)
+
+    A, I = model.abstractor, model.inducer
+    for op in close:
+        available = [l for l in op.common if l[0] == "ref_null"]
+        assert available, "the literal left the language, which is a different defect"
+        for lit in available:
+            assert not I.memorises_the_fitting_instance(op, lit)
+        # null everywhere: in the positives, and in every counterexample as well
+        tid = op.params["?o0"]
+        for slot in getattr(A.types[tid], "refs", {}) or {}:
+            for tr in list(op.positives) + list(op.negatives):
+                b = tr.binding if tr in op.positives else I._rebind_negative(op, tr)
+                if b is None:
+                    continue
+                o = tr.before.objs.get(b.get("?o0"))
+                if o is not None and slot in o.refs:
+                    assert o.refs[slot] is None
 
 
 # ------------------------------------------------------------------ memorised effect values
