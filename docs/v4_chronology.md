@@ -132,12 +132,23 @@ rule applies for reasons other than the query, under strict chronology:
 Conditional on the effect happening somewhere, the referring expression named the right object
 101 times out of 105.
 
-The 145 are one shape: every one is a `set` whose value the action does not determine, on one
-slot, `attr:cell#0@4`, and 142 come from rules fitted on two positives.  That slot changes on
-5.1% of held-out object-steps and its observed transitions are `'4'->'3'`, `'3'->'4'`,
-`'Closed'->'Open'` -- a column position carrying a counter in one table and a status in
-another.  A rule that says such a slot changes, learned from two transitions in which it
-happened to, has not established that the action is why.
+The 145 are one shape, and two rules.  Every one is a `set` whose value the action does not
+determine, on one slot, `attr:cell#0@4`; 142 of them come from `op13` and `op14`, each fitted
+from **two** positives against **103** negatives, each applicable 71 times on held-out
+evidence, each wrong every time.
+
+The slot key is shared by two types with disjoint value domains -- `'Open'`/`'Closed'` on one,
+`'0'`-`'5'` on the other -- but slots are per type and the rules are correctly typed, so the
+name collision is cosmetic rather than a conflation.  What the rules actually claim is that
+clicking moves a counter on a vat, and prospectively the counter does not move.
+
+A background check does not explain it either.  Of 107 undetermined-value effects, 53 have
+their slot moving in one of the operator's own negatives, which would be a good reason to
+distrust them -- but `op13` is not one of them: on fitting evidence its slot moves in 2 of 2
+positives and 2 of 55 negatives, which looks strongly discriminating.  Two positives against
+103 negatives is the signature that survives: a precondition fitted to separate that many
+counterexamples from that few examples restricts the rule far less than the fit implies, and a
+rule that fires 71 times having been learned from 2 is not being held by its precondition.
 
 Blend's other failure is upstream and different in kind from harbour's.  Its *action alphabet*
 fragments under a short prefix: 244 observations give 24 control families and 13 positional
