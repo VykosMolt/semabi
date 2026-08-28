@@ -409,6 +409,46 @@ to 55% at 0.7, and its accuracy on the steps where the action performs goes from
 On the prequential measure the share does not move.  Both are true; neither is the headline on
 its own.
 
+## The applicability ceiling, and five routes to it that do not work
+
+Given the two objects the selection queries name, the conjunction of the facts true before
+every draw would exclude **31 of 42** refusals at a 0.5 split and **28 of 33** at 0.7.  The
+facts are the right ones and the language already has them:
+
+    ('source', 'attr:cell#0@4', 'Open')      the source vat is open
+    ('dest',   'attr:cell#0@5', 'None')      the destination is not bottled
+    ('dest',   'attr:cask#0',   'In')        the destination cask is in
+
+So the information is present and expressible.  Five ways of getting the learner to use it were
+tried and measured, and the baseline beats all of them:
+
+| what was asserted | right | wrong | precision |
+|---|---|---|---|
+| **the minimal precondition, as now** | **230** | **852** | **21%** |
+| the rule's query rebinding its counterexamples | -- | -- | worse; 25 tests broke |
+| literals over the query-named objects on both sides | 112 | 631 | 15% |
+| both sets unioned | 112 | 631 | 15% |
+| `op.common` minus the memorisation refusals | 108 | 523 | 17% |
+
+Every strengthening cuts more true firings than false ones.  The reason is visible in the
+ceiling calculation itself: it was computed over the draws where *both* selections resolved,
+40 of 52 at a 0.5 split.  Asserting those conditions suppresses the rule on the twelve where
+they do not, and the naming controls resolve on 40 of 52 draws and 42 of 71 refusals.  The
+ceiling is real and it is bounded by how often the interface says what it is pointed at.
+
+This also confirms the earlier retirement of `attested` from the one direction it had not been
+tested in.  The filtered version -- `op.common` with the memorising literals removed -- changed
+no verdict on harbour or cellar when that decision was made, and blend is the application where
+it should have mattered.  It does change verdicts here, and for the worse.
+
+Three fit-time statistics were tested as predictors of prospective failure and none of them
+works.  Negatives per positive: 0.95 refuted under 10:1 against 0.93 over.  The learner's own
+count of unexplained counterexamples: 23% / 26% / 5% supported across the three buckets on
+blend at 0.5, 50% / 57% / 54% at 0.7, and on vet clinic the *worst*-conditioned rules score
+100%.  Rule support: harbour's 94% comes from rules of support 2 to 4.  What predicts a
+refutation is not a property of the rule at all -- it is whether the application performed the
+action.
+
 ## Where the bottleneck is now
 
 It is not chronology.  The evidence view, the graph, and the lazily induced control families
