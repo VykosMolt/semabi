@@ -502,6 +502,39 @@ them: blend learns 28 selection queries, 18 relation, 17 singleton and 1 propert
 learns 10 selection and 3 singleton.  Naming what the interface is pointed at is the form these
 applications need most, and it did not exist before this run.
 
+## The readings never disagree, so active exploration has nothing to target
+
+Active exploration is justified only where readings remain viable, make grounded predictions,
+cannot be told apart by the retained evidence, and *disagree about a reachable interaction*.
+Vet clinic meets the first three: neither of its readings is identified and both clear the
+per-click control by four to eight points.  So the question is the fourth, and it can be asked
+directly by pairing the two readings' stances step by step.
+
+Harbour, 33 held-out steps where either reading spoke:
+
+|  | promoted reading undecided | promoted asserts and fails |
+|---|---|---|
+| `joint discrimination x2` asserts and holds | 17 | 0 |
+| declines | 15 | 0 |
+| asserts and fails | 0 | 1 |
+
+Vet clinic, 257 steps: 71 where both assert and both hold, 115 where `joint discrimination x3`
+asserts and holds while the promoted reading declines or is silent, 40 where it asserts and
+fails while the promoted reading is silent, 20 where neither commits.
+
+**On neither application is there a single step where one reading is right and the other
+wrong.**  The one step where they both speak on harbour is a step where they both fail, which is
+the shared-apparatus case rather than a discrimination.
+
+So these are not competing hypotheses about the world that disagree at particular interactions.
+They are hypotheses of different expressive strength: one says decidable things and the other
+says undecidable things.  An exploration mechanism that looks for an action where they predict
+differently would find nothing to execute, and the way to adjudicate them is the way this run
+did it -- claim substance, the per-click control, and decidability.
+
+That is a firm answer to a question the run was supposed to reach: no, active distinguishing
+exploration is not the next mechanism.
+
 ## Where the bottleneck is now
 
 It is not chronology.  The evidence view, the graph, and the lazily induced control families
