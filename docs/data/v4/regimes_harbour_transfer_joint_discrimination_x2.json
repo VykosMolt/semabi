@@ -1,0 +1,275 @@
+{
+ "run": "harbour_transfer",
+ "reading": "joint discrimination x2",
+ "control": "Close",
+ "split": 0.5,
+ "regimes": {
+  "TRANSDUCTIVE": {
+   "types": 14,
+   "slots": 51,
+   "relations": 13,
+   "control_families": 22,
+   "operators": 9,
+   "control_slots": 8,
+   "named_controls": 8,
+   "positional_controls": 0,
+   "observations_fitted_from": 359,
+   "fingerprint": "caf3126b157385f3",
+   "cut": 229,
+   "predictions": 26,
+   "steps": [
+    236,
+    250,
+    262,
+    266,
+    273,
+    280,
+    286,
+    294,
+    296,
+    297,
+    305,
+    318,
+    367
+   ],
+   "verdicts": {
+    "NOT_APPLICABLE": 10,
+    "SUPPORTED": 16
+   },
+   "refuted_steps": []
+  },
+  "FROZEN_PREFIX": {
+   "types": 11,
+   "slots": 36,
+   "relations": 10,
+   "control_families": 19,
+   "operators": 9,
+   "control_slots": 8,
+   "named_controls": 8,
+   "positional_controls": 0,
+   "observations_fitted_from": 172,
+   "fingerprint": "568f9f6a0c9082bf",
+   "cut": 229,
+   "predictions": 26,
+   "steps": [
+    236,
+    250,
+    262,
+    266,
+    273,
+    280,
+    286,
+    294,
+    296,
+    297,
+    305,
+    318,
+    367
+   ],
+   "verdicts": {
+    "NOT_APPLICABLE": 8,
+    "REFUTED": 2,
+    "SUPPORTED": 16
+   },
+   "refuted_steps": [
+    367
+   ]
+  },
+  "CAUSAL_PREQUENTIAL": {
+   "cut": 229,
+   "predictions": 26,
+   "steps": [
+    236,
+    250,
+    262,
+    266,
+    273,
+    280,
+    286,
+    294,
+    296,
+    297,
+    305,
+    318,
+    367
+   ],
+   "verdicts": {
+    "NOT_APPLICABLE": 10,
+    "SUPPORTED": 16
+   },
+   "refuted_steps": [],
+   "snapshots": [
+    {
+     "step": 236,
+     "observations": 176,
+     "types": 11,
+     "slots": 36,
+     "relations": 10,
+     "control_families": 19,
+     "operators": 9,
+     "fingerprint": "568f9f6a0c9082bf",
+     "verdicts": {
+      "SUPPORTED": 2
+     }
+    },
+    {
+     "step": 250,
+     "observations": 188,
+     "types": 13,
+     "slots": 46,
+     "relations": 10,
+     "control_families": 21,
+     "operators": 9,
+     "fingerprint": "09cb347d4dfdeaa8",
+     "verdicts": {
+      "SUPPORTED": 2
+     }
+    },
+    {
+     "step": 262,
+     "observations": 196,
+     "types": 13,
+     "slots": 46,
+     "relations": 11,
+     "control_families": 21,
+     "operators": 10,
+     "fingerprint": "6d8a1265d199c1ec",
+     "verdicts": {
+      "NOT_APPLICABLE": 2
+     }
+    },
+    {
+     "step": 266,
+     "observations": 200,
+     "types": 13,
+     "slots": 46,
+     "relations": 11,
+     "control_families": 21,
+     "operators": 10,
+     "fingerprint": "6d8a1265d199c1ec",
+     "verdicts": {
+      "NOT_APPLICABLE": 2
+     }
+    },
+    {
+     "step": 273,
+     "observations": 206,
+     "types": 13,
+     "slots": 46,
+     "relations": 11,
+     "control_families": 21,
+     "operators": 10,
+     "fingerprint": "6d8a1265d199c1ec",
+     "verdicts": {
+      "NOT_APPLICABLE": 2
+     }
+    },
+    {
+     "step": 280,
+     "observations": 212,
+     "types": 13,
+     "slots": 46,
+     "relations": 11,
+     "control_families": 21,
+     "operators": 10,
+     "fingerprint": "6d8a1265d199c1ec",
+     "verdicts": {
+      "SUPPORTED": 2
+     }
+    },
+    {
+     "step": 286,
+     "observations": 217,
+     "types": 13,
+     "slots": 46,
+     "relations": 11,
+     "control_families": 21,
+     "operators": 10,
+     "fingerprint": "6d8a1265d199c1ec",
+     "verdicts": {
+      "SUPPORTED": 2
+     }
+    },
+    {
+     "step": 294,
+     "observations": 224,
+     "types": 13,
+     "slots": 46,
+     "relations": 11,
+     "control_families": 21,
+     "operators": 10,
+     "fingerprint": "6d8a1265d199c1ec",
+     "verdicts": {
+      "SUPPORTED": 2
+     }
+    },
+    {
+     "step": 296,
+     "observations": 226,
+     "types": 13,
+     "slots": 46,
+     "relations": 11,
+     "control_families": 21,
+     "operators": 10,
+     "fingerprint": "6d8a1265d199c1ec",
+     "verdicts": {
+      "SUPPORTED": 2
+     }
+    },
+    {
+     "step": 297,
+     "observations": 227,
+     "types": 13,
+     "slots": 46,
+     "relations": 11,
+     "control_families": 21,
+     "operators": 10,
+     "fingerprint": "6d8a1265d199c1ec",
+     "verdicts": {
+      "NOT_APPLICABLE": 2
+     }
+    },
+    {
+     "step": 305,
+     "observations": 235,
+     "types": 13,
+     "slots": 46,
+     "relations": 11,
+     "control_families": 21,
+     "operators": 10,
+     "fingerprint": "6d8a1265d199c1ec",
+     "verdicts": {
+      "SUPPORTED": 2
+     }
+    },
+    {
+     "step": 318,
+     "observations": 246,
+     "types": 13,
+     "slots": 46,
+     "relations": 12,
+     "control_families": 21,
+     "operators": 10,
+     "fingerprint": "49639f5a99a4a3e9",
+     "verdicts": {
+      "SUPPORTED": 2
+     }
+    },
+    {
+     "step": 367,
+     "observations": 281,
+     "types": 13,
+     "slots": 46,
+     "relations": 12,
+     "control_families": 21,
+     "operators": 10,
+     "fingerprint": "017d5eec6ea0154c",
+     "verdicts": {
+      "NOT_APPLICABLE": 2
+     }
+    }
+   ]
+  }
+ },
+ "cut": 229
+}

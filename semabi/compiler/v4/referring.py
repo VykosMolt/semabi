@@ -51,11 +51,44 @@ DETERMINED = "every effect target is supplied, created, or determined by a query
 
 @dataclass(frozen=True)
 class Query:
-    """One way of naming an implicit variable, and what it needed to know first."""
+    """One way of naming an implicit variable, and what it needed to know first.
+
+    ``detail`` is for reading; ``form`` is for running.  A query learned on the fitting
+    evidence is only interesting if it can be asked of a state it was not learned from, and a
+    rendered sentence cannot be asked of anything.
+    """
     kind: str
     variable: str
     detail: str
     given: tuple[str, ...] = ()
+    form: tuple = ()          # singleton: ()  property: (slot, value)  relation: (dir, slot)
+
+    def denotation(self, op, state, known: dict) -> list:
+        """Every object in ``state`` this query names, given the objects already determined.
+
+        A list, not an object: the answer may be empty, which says the query names nothing
+        here, or plural, which says it does not determine anything here.  Collapsing either
+        into a choice is how a referring expression stops being a claim.
+        """
+        tid = op.params.get(self.variable)
+        here = _candidates(state, tid)
+        if self.kind == SINGLETON:
+            return here
+        if self.kind == PROPERTY:
+            slot, value = self.form
+            return [o for o in here if o.attrs.get(slot) == value]
+        direction, slot = self.form
+        anchor = known.get(self.given[0]) if self.given else None
+        if anchor is None:
+            return []
+        if direction == "forward":
+            tgt = anchor.refs.get(slot)
+            return [] if tgt is None else [o for o in here if _target(o) == _target(tgt)]
+        if direction == "backward":
+            return [o for o in here if o.refs.get(slot) is not None
+                    and _target(o.refs[slot]) == _target(anchor)]
+        return [o for o in here
+                if o.parent is not None and _target(o.parent) == _target(anchor)]
 
     def __str__(self) -> str:
         given = f" given {', '.join(self.given)}" if self.given else ""
@@ -291,7 +324,7 @@ def ground(op, evidence, action_bound, refuses) -> Grounding:
                                   (len(_candidates(st, op.params.get(var))) for st, _ in evidence),
                                   default=0)}
             if _singleton(op, var, evidence):
-                out.queries[var] = Query(SINGLETON, var, "the only object of its type")
+                out.queries[var] = Query(SINGLETON, var, "the only object of its type", form=())
             else:
                 found = None
                 for direction, anchor, slot in _relation_queries(op, var, known, evidence):
@@ -299,13 +332,14 @@ def ground(op, evidence, action_bound, refuses) -> Grounding:
                         arrow = {"forward": f"{anchor}.{slot}",
                                  "backward": f"the object whose {slot} is {anchor}",
                                  "parent": f"the object contained by {anchor}"}[direction]
-                        found = Query(RELATION, var, arrow, (anchor,))
+                        found = Query(RELATION, var, arrow, (anchor,), (direction, slot))
                         break
                 if found is None:
                     props = _property_queries(op, var, evidence, refuses)
                     if props:
                         slot, value = props[0]
-                        found = Query(PROPERTY, var, f"the only object with {slot} = {value!r}")
+                        found = Query(PROPERTY, var, f"the only object with {slot} = {value!r}",
+                                      form=(slot, value))
                 if found is None:
                     continue
                 out.queries[var] = found
