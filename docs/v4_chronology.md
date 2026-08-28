@@ -436,6 +436,18 @@ ceiling calculation itself: it was computed over the draws where *both* selectio
 they do not, and the naming controls resolve on 40 of 52 draws and 42 of 71 refusals.  The
 ceiling is real and it is bounded by how often the interface says what it is pointed at.
 
+That bound is itself a threshold rather than a limit.  Over the (draw click, naming control)
+pairs:
+
+| | names one object | names none | names several | control absent |
+|---|---|---|---|---|
+| split 0.5 | 82% | 15% | **0** | 3% |
+| split 0.7 | **91%** | 0 | **0** | 9% |
+
+The prefix rule never leaves the choice open on this application, and the 15% at 0.5 where the
+control names nothing is a schema that does not yet read those vats as objects.  By 0.7 that
+failure is gone and the only residual is the control genuinely not being on the page.
+
 This also confirms the earlier retirement of `attested` from the one direction it had not been
 tested in.  The filtered version -- `op.common` with the memorising literals removed -- changed
 no verdict on harbour or cellar when that decision was made, and blend is the application where
