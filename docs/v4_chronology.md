@@ -4,6 +4,15 @@ The observation model was being built from observations the experiment had not y
 This is the record of finding the rest of that leak, closing it, and re-establishing every
 result that depended on it.
 
+It did not stay a chronology run.  Closing the leak made the applications legible enough to ask
+what was actually stopping them, and the answer moved three times: from the information boundary
+to the referring query language, from there to applicability, and from there to a node the
+parser had never read.  Two mechanisms came out of it and six candidates were measured and
+rejected, including one named in this document as the next thing to build and falsified two
+sections later.  The rejections are kept because they rule out a family rather than an idea:
+**no statistic computed from the fitting evidence predicted prospective correctness in this
+run.**  Both things that worked use what is in front of the model at the moment it acts.
+
 ## The leak had two halves and only one was known
 
 The first half was the evidence log.  A "prefix" model truncated `steps` but left
