@@ -327,8 +327,8 @@ chance rate of about 0.37.  The cases they get no credit for are the refusals, w
 the type bore the effect and the query's correctness is simply not testable.
 
 The queries also name *nothing* on 898 opportunities at the 0.5 split, and that number is one
-learned query rather than a weakness of the form.  Five of the six controls they name are rendered with a
-value on 228 to 243 of 249 held-out clicks; the sixth, `cell#28`, is present but empty on 206
+learned query rather than a weakness of the form.  Five of the six controls they name are
+rendered with a value on 228 to 243 of 249 held-out clicks; the sixth, `cell#28`, is empty on 206
 of them.  It was a valid namer on the evidence it was learned from and is not prospectively,
 and the system says so rather than guessing -- which is the behaviour a referring expression
 should have when it does not refer.
@@ -745,6 +745,22 @@ So the placement rule is "the `status` node, where there is one, is a view slot"
 of the difficulty is the second half: what an operator is allowed to claim about an observable
 outcome that is not a state change.
 
+What that would be worth is worth stating too, since a line that always reads `Ready.` is not
+evidence about anything:
+
+| | status changes on | distinct messages | uninformative (`Ready.`) |
+|---|---|---|---|
+| blend | 55% of steps | 83 | **0%** |
+| harbour | 58% | 64 | 34% |
+| cellar | 15% | 18 | 54% |
+
+Blend is where it would pay most and every message is informative.  Harbour's most common after
+`Ready.` are `Tom Dorley is already signed on.` and `Berth S1 is already open.` -- the same
+refusal shape.  Cellar changes its status on only 15% of steps, but the messages it does produce
+are `Nothing chosen in the vessel list.` (58) and `Nothing chosen in the lot list.` (35), which
+is its 167 ungroundable derived-prestate variables described from the other side: the
+application is saying that nothing has been selected, and the model has no way to hear it.
+
 Blend's rules fire on 196 held-out actions where
 the application refused, and are contradicted 899 times there against 121 on the actions it
 performed.  The conditions that would stop them are conditions on the source and destination --
@@ -761,3 +777,46 @@ the relevant steps at 0.7 and mediocre at 0.5.
 So the single finding under it all is that a fixed half-trace split is below threshold for both
 applications, and that what looked like ceilings were thresholds.  That is a learning curve the
 causal prequential regime already handles, and that no amount of freezing will.
+
+## Running any of this again
+
+Every number above comes from one of five runners, and each writes its report to
+`docs/data/v4/`.  All take `--regime`, defaulting to `FROZEN_PREFIX`; none of them will produce
+a number without saying which information boundary produced it.
+
+```
+python -m semabi.eval.v4_regimes --run runs/v4/harbour_transfer \
+    --chain docs/data/v4/manifests/harbour_chain.json \
+    --reading "joint discrimination x2" --control Close --split 0.5
+```
+the three regimes on the same predictions.  The prequential column rebuilds the model before
+each scored action, so this one is minutes rather than seconds.
+
+```
+python -m semabi.eval.v4_claim_substance --run ... --reading ... [--no-base-rate]
+```
+what a reading actually claims: distinct claims, composition, per-action outcomes, and for
+removals the unconditional base rate together with the per-click control.  Read this before any
+verdict count.
+
+```
+python -m semabi.eval.v4_groundability --run ... --reading ... --regime ... --regime ...
+```
+rules that could be executed, variable roles, and the queries learned, per regime.
+
+```
+python -m semabi.eval.v4_query_determinacy --run ... --reading ... --regime ...
+```
+the three claim levels for referring queries -- found on the prefix, prospectively determinate,
+prospectively effect-correct -- with the count of candidates present, so a correct answer among
+one candidate cannot read as skill.
+
+```
+python -m semabi.eval.v4_existence_baseline --chain ... --run ... --reading ...
+```
+the removal base rate, unconditionally and per click.
+
+`semabi.compiler.v4.prequential.run` is the loop itself, taking the steps to score and an
+optional probe; `scored_steps` picks them by control.  `csq.fit(run_dir, reading, at=t,
+regime=CAUSAL_PREQUENTIAL)` is one snapshot.
+

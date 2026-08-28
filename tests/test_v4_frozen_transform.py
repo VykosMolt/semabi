@@ -400,3 +400,67 @@ def test_a_rule_that_cannot_say_which_object_says_so_rather_than_guessing():
     assert bound.status != binding.UNNAMED
     assert bound.status == binding.UNIQUE
     assert bound.unique.get("?v").key == "N1"
+
+
+# ------------------------------------------------------------------ what the model cannot see
+
+@pytest.mark.skipif(not (HARBOUR_RUN / "steps.jsonl").exists(), reason="retained trace absent")
+def test_the_application_says_what_it_did_and_the_representation_discards_it():
+    """A known gap, pinned so that repairing it is visible.
+
+    Every one of harbour's retained observations carries a `status` node -- the application
+    saying in words what the last action did or refused to do -- and not one of them reaches the
+    semantic state.  The node sits outside every recurring unit, so the parser never places it
+    in an instance, and the text is then in neither the view nor any object.
+
+    This is the largest remaining defect the chronology run found, and it is measured rather
+    than argued: on blend, 63 draws are lifted as transitions and all 69 refusals are set aside
+    as no-ops, 46 of them recording no difference at all, because the only thing that changed
+    was a sentence the model cannot see.
+
+    The assertions are written to *fail* when the gap is repaired.  That is deliberate: a
+    silent improvement here would leave every recorded number in `docs/v4_chronology.md`
+    describing a model that no longer exists.  Whoever places the status node should come here,
+    watch this fail, and rewrite it to say what the representation does instead.
+    """
+    from semabi.compiler.v4 import consequence as csq
+    from semabi.eval.v4_consequence_run import _candidates
+
+    readings = {c.name: c.reading for c in _candidates(HARBOUR_CHAIN)}
+    model = csq.fit(HARBOUR_RUN, readings["joint discrimination x2"], split=0.5)
+    A, log = model.abstractor, model.evidence
+
+    checked = placed = in_state = 0
+    for sig in list(log.observations)[:40]:
+        obs = log.obs(sig)
+        status = [n for n in obs.nodes if n.role == "status" and (n.name or "").strip()]
+        if not status:
+            continue
+        checked += 1
+        node = status[0]
+        roots = [inst.root for inst in A.parsed(obs).instances]
+        if any(node.i in obs.subtree(r) for r in roots):
+            placed += 1
+        state = A.abstract(obs)
+        if node.name in (state.view or {}).values() or any(
+                node.name in o.attrs.values() for o in state.objs.values()):
+            in_state += 1
+
+    assert checked, "harbour's observations carry a status line; this found none"
+    assert placed == 0, (
+        f"{placed} status nodes are now inside a unit -- the gap may be repaired, "
+        "which is good news and means this test needs rewriting"
+    )
+    assert in_state == 0, (
+        f"{in_state} status lines now reach the semantic state -- the gap may be repaired, "
+        "which is good news and means this test needs rewriting"
+    )
+
+    # And the gate that would still stop it being learned, even once it is represented.
+    from semabi.compiler.abstract import Diff
+    only_view = Diff([], [], [], [], {"status": ("Ready.", "Berth N2 is already closed.")})
+    assert only_view.domain_changed is False, (
+        "a status-only change now counts as a domain change; that is the wrong repair -- "
+        "nothing about the world changed, and this distinction is what stops view navigation "
+        "looking causal"
+    )

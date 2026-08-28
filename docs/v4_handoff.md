@@ -84,9 +84,10 @@ yet reached.  Specifically:
   deleted.
 * Blend's `678/678 prospective UNIQUE` is withdrawn as prospective evidence.  The query itself
   is not withdrawn -- under a properly scoped prefix fit it is still learned -- but uniqueness
-  was the wrong property to report.  On 250 held-out opportunities the query names exactly one
-  object every time and names the *wrong* one 149 times, of which 145 are cases where no object
-  of the type bore the effect at all.
+  was the wrong property to report.  What replaces it: across two splits the referring queries
+  name the object that bore the effect **556 times out of 556** where the effect happened
+  somewhere, against a chance rate near 0.39.  The failures are all opportunities where nothing
+  of the type bore the effect, which is an applicability defect and not the expression's.
 * Harbour's condition for closing a berth is not learnable at a half-trace split under strict
   chronology, and is learnable by step 252 from prefix evidence alone.  The old claim was
   produced under the transductive regime and is now stated as such.
@@ -98,6 +99,19 @@ yet reached.  Specifically:
 Three information regimes are now named in the code (`TRANSDUCTIVE`, `FROZEN_PREFIX`,
 `CAUSAL_PREQUENTIAL`) and every fit and scored result carries the one that produced it.  A
 report that does not name its regime should not be trusted.
+
+Two mechanisms were added after the repair and both change numbers reported below.  A fourth
+referring-query form names the object a control is currently pointed at, which is what blend's
+draws need and what nothing in the language could say; and a rule now abstains, as UNKNOWN
+rather than NOT_APPLICABLE, where the expression it learned does not resolve.  Together they
+take blend's accuracy on the steps where the application performs the action from 46% to 100%
+and cut its contradictions by 74%; harbour is untouched by both, because none of its rules
+learns a query.
+
+Six candidate mechanisms were measured and rejected, and the rejections are in the chronology
+document rather than discarded.  No statistic computed from the fitting evidence predicted
+prospective correctness -- four were tried, including one named there as the next mechanism and
+falsified two commits later.
 
 ## Read these artifacts first
 
