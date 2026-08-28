@@ -50,6 +50,7 @@ AMBIGUOUS = "AMBIGUOUS"
 NONE = "NONE"                # the rendered state contradicts every assignment
 UNOBSERVED = "UNOBSERVED"    # a parameter's type is not rendered here at all
 UNSETTLED = "UNSETTLED"      # the search hit its bound without settling what the state admits
+UNNAMED = "UNNAMED"          # the rule's own referring expression names no single object here
 
 # What the admissible set says about the objects the rule claims to *change*, which is a
 # different question from how many assignments there are.  A rule may admit hundreds of

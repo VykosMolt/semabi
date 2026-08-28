@@ -37,6 +37,7 @@ ALL_RIGHT = "every applicable rule was right"
 DISAGREED = "applicable rules disagreed"
 ALL_WRONG = "every applicable rule was contradicted"
 UNDECIDABLE = "only undecidable claims survived"
+COULD_NOT_TELL = "the rules could not say which object they were about"
 NO_RULE = "no rule applied"
 
 
@@ -82,6 +83,10 @@ def substance(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0
             actions[ALL_WRONG] += 1
         elif poss:
             actions[UNDECIDABLE] += 1
+        elif c[csq.UNKNOWN]:
+            # A rule that abstained because its referring expression named no single object is
+            # not a rule that did not apply.  One is about the model, the other about the page.
+            actions[COULD_NOT_TELL] += 1
         else:
             actions[NO_RULE] += 1
 

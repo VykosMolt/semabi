@@ -3,20 +3,31 @@
   "run": "blend_book_transfer",
   "reading": "joint discrimination x3",
   "regime": "FROZEN_PREFIX",
-  "split": 0.7,
-  "cut": 587,
-  "operators": 38,
-  "held_out_actions": 74,
-  "rules_offered_per_action": 9.0,
-  "applicable_claims_per_action": 6.7,
-  "distinct_decided_claims": 2,
+  "split": 0.5,
+  "cut": 419,
+  "operators": 45,
+  "held_out_actions": 248,
+  "rules_offered_per_action": 4.17,
+  "applicable_claims_per_action": 1.41,
+  "distinct_decided_claims": 3,
   "composition": {
+   "a named constant": {
+    "claims": 68,
+    "decided": 6,
+    "supported": 3,
+    "refuted": 3,
+    "supported_share": 0.5,
+    "distinct_claims": 1,
+    "examples": [
+     "attr:cell#0@3 = 1"
+    ]
+   },
    "changes, unspecified": {
-    "claims": 2146,
-    "decided": 492,
-    "supported": 268,
-    "refuted": 224,
-    "supported_share": 0.545,
+    "claims": 2002,
+    "decided": 338,
+    "supported": 123,
+    "refuted": 215,
+    "supported_share": 0.364,
     "distinct_claims": 2,
     "examples": [
      "attr:cell#0@3 = changes",
@@ -25,8 +36,10 @@
    }
   },
   "per_action": {
-   "every applicable rule was contradicted": 40,
-   "every applicable rule was right": 34
+   "the rules could not say which object they were about": 127,
+   "every applicable rule was contradicted": 70,
+   "every applicable rule was right": 50,
+   "applicable rules disagreed": 1
   }
  }
 ]

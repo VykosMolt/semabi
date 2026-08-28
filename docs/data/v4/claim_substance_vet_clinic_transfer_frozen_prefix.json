@@ -8,15 +8,15 @@
   "operators": 26,
   "held_out_actions": 257,
   "rules_offered_per_action": 2.52,
-  "applicable_claims_per_action": 3.53,
+  "applicable_claims_per_action": 1.7,
   "distinct_decided_claims": 1,
   "composition": {
    "removal": {
     "claims": 1359,
-    "decided": 902,
-    "supported": 767,
-    "refuted": 135,
-    "supported_share": 0.85,
+    "decided": 432,
+    "supported": 377,
+    "refuted": 55,
+    "supported_share": 0.873,
     "distinct_claims": 1,
     "examples": [
      "id = gone"
@@ -25,8 +25,9 @@
   },
   "per_action": {
    "every applicable rule was right": 186,
-   "every applicable rule was contradicted": 44,
-   "no rule applied": 24,
+   "every applicable rule was contradicted": 30,
+   "no rule applied": 20,
+   "the rules could not say which object they were about": 18,
    "applicable rules disagreed": 3
   },
   "removal_exposure": {
@@ -36,12 +37,12 @@
     "none went (<10%)": 66,
     "some went": 9
    },
-   "reading_supported_share": 0.85,
-   "removal_claims": 902,
-   "steps_spoken_at": 233,
-   "per_click_control": 0.804,
-   "objects_in_those_steps": 749,
-   "margin_over_per_click_control": 0.046
+   "reading_supported_share": 0.873,
+   "removal_claims": 432,
+   "steps_spoken_at": 219,
+   "per_click_control": 0.851,
+   "objects_in_those_steps": 707,
+   "margin_over_per_click_control": 0.022
   }
  },
  {
@@ -53,7 +54,7 @@
   "operators": 54,
   "held_out_actions": 172,
   "rules_offered_per_action": 12.05,
-  "applicable_claims_per_action": 30.9,
+  "applicable_claims_per_action": 28.72,
   "distinct_decided_claims": 2,
   "composition": {
    "a named constant": {
@@ -69,8 +70,8 @@
    },
    "removal": {
     "claims": 15400,
-    "decided": 5163,
-    "supported": 5153,
+    "decided": 4787,
+    "supported": 4777,
     "refuted": 10,
     "supported_share": 0.998,
     "distinct_claims": 1,
@@ -81,7 +82,7 @@
   },
   "per_action": {
    "every applicable rule was right": 71,
-   "no rule applied": 70,
+   "the rules could not say which object they were about": 70,
    "only undecidable claims survived": 26,
    "every applicable rule was contradicted": 5
   },
@@ -93,7 +94,7 @@
     "some went": 27
    },
    "reading_supported_share": 0.998,
-   "removal_claims": 5163,
+   "removal_claims": 4787,
    "steps_spoken_at": 75,
    "per_click_control": 0.918,
    "objects_in_those_steps": 403,

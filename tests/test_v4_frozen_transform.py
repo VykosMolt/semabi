@@ -349,3 +349,54 @@ def test_deleting_the_future_does_not_move_the_model_that_predicted_the_present(
     cut = csq.fit(truncated, reading, at=t, regime=csq.CAUSAL_PREQUENTIAL)
     assert fingerprint(cut.abstractor) == fingerprint(whole.abstractor)
     assert len(cut.operators) == len(whole.operators)
+
+
+# ------------------------------------------------------------------ abstaining is not denying
+
+@pytest.mark.skipif(not (HARBOUR_RUN / "steps.jsonl").exists(), reason="retained trace absent")
+def test_a_rule_that_cannot_say_which_object_says_so_rather_than_guessing():
+    """The difference between "I cannot tell" and "it does not apply here".
+
+    A rule that learned a referring expression and whose expression names no single object in
+    this state has not identified its subject.  Falling through to enumeration answers a
+    different question -- which objects the preconditions fail to exclude -- and that is where
+    the wrong firing happens: on blend, abstaining instead cuts contradictions by 74%, takes
+    precision from 21% to 37%, and stops the model being wrong at all on the steps where the
+    application performs the action.
+
+    What this pins is the *verdict*, not the improvement.  `NOT_APPLICABLE` is a claim about the
+    page; `UNKNOWN` is a claim about the model, and only the second one is true here.  An
+    earlier version of this returned the first, and 1090 predictions on one application would
+    have been reported as the application refusing the rule.
+    """
+    from types import SimpleNamespace
+
+    from semabi.compiler.abstract import AbsObj, AbstractState
+    from semabi.compiler.v4 import binding, consequence as csq, referring
+
+    tid = 1
+    st = AbstractState.__new__(AbstractState)
+    st.objs = {(tid, "N1"): AbsObj(tid, "N1", {}, refs={}, node=1)}
+    st.view = {"combobox#0": "Nowhere (gone)"}
+    st.types = {tid: SimpleNamespace(key_slot="id")}
+
+    op = SimpleNamespace(name="op0", params={"?v": tid}, pre=[], effs=(),
+                         acts=(SimpleNamespace(kind="click", loc=None, owner=None, arg=None),),
+                         core=lambda: (SimpleNamespace(kind="click", loc=None, owner=None),))
+    q = referring.Query(referring.SELECTION, "?v", "the object named by combobox#0",
+                        form=("combobox#0",))
+
+    bound, why = csq.bindings_for(None, None, st, op, 0, csq.ASSERTED, {"?v": q})
+    assert why == ""
+    assert bound.status == binding.UNNAMED
+    assert bound.status not in (binding.NONE, binding.UNIQUE)
+    assert "names no single object" in bound.detail
+    assert bound.admissible == ()
+
+    # and when it does resolve, the rule is bound and the enumeration proceeds
+    st.view = {"combobox#0": "N1 (open)"}
+    A = SimpleNamespace(types=st.types)
+    bound, why = csq.bindings_for(A, None, st, op, 0, csq.ASSERTED, {"?v": q})
+    assert bound.status != binding.UNNAMED
+    assert bound.status == binding.UNIQUE
+    assert bound.unique.get("?v").key == "N1"

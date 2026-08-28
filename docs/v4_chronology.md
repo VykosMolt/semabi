@@ -502,6 +502,44 @@ them: blend learns 28 selection queries, 18 relation, 17 singleton and 1 propert
 learns 10 selection and 3 singleton.  Naming what the interface is pointed at is the form these
 applications need most, and it did not exist before this run.
 
+## The sixth route: let a rule decline when it cannot say which object
+
+All five routes above strengthen what a rule asserts, and all five over-restrict.  The sixth
+goes the other way and had not been tried: leave the preconditions alone, and have a rule
+abstain where the referring expression *it learned* does not resolve here, instead of falling
+through to enumerating whatever the weak preconditions fail to exclude.
+
+That is "unknown is not absence" applied to binding.  A query naming none or several is the rule
+saying it cannot tell which object it is about; firing anyway answers a different question.
+
+| | right | wrong | precision | on the steps where the action performs |
+|---|---|---|---|---|
+| blend @0.5, as before | 230 | 852 | 21% | 70% |
+| blend @0.5, abstaining | 126 | 218 | **37%** | **100%** |
+| blend @0.7, as before | 232 | 176 | 55% | 100% |
+| blend @0.7, abstaining | 232 | 176 | **57%** | **100%** |
+| vet clinic @0.5, as before | 767 | 135 | 85% | -- |
+| vet clinic @0.5, abstaining | 377 | 55 | **87%** | -- |
+| harbour @0.5 | 34 | 2 | 94% | unchanged either way |
+
+Contradictions fall by 74% on blend and 59% on vet clinic; the cost is that roughly half the
+decided predictions become UNKNOWN.  Harbour does not move at all, because none of its rules
+learns a query -- the same isolation that made the earlier changes safe.
+
+The verdict matters as much as the number.  A first version of this returned `NOT_APPLICABLE`,
+which is a claim about the page; 1090 predictions on blend would have been reported as the
+application refusing the rule when what happened is that the model could not identify its
+subject.  The binder now has a distinct `UNNAMED` status that scores as UNKNOWN, and the claim
+ledger reports "the rules could not say which object they were about" separately from "no rule
+applied" -- 51% of blend's held-out actions at a 0.5 split.
+
+Two things this does not do.  It does not improve the queries: determinacy and effect
+correctness are computed from the queries directly and are unchanged.  And on vet clinic it
+*narrows* the margin over the per-click control, from +0.046 to +0.022, because the steps where
+the reading can name its objects turn out to be steps where more of the page goes away anyway.
+That is a worse result honestly obtained, and it strengthens rather than weakens the conclusion
+that neither vet clinic reading is identified.
+
 ## The readings never disagree, so active exploration has nothing to target
 
 Active exploration is justified only where readings remain viable, make grounded predictions,
