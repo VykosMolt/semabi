@@ -685,13 +685,25 @@ abstention asks whether the rule can identify its subject here.  Four attempts t
 literals by statistics of the fitting evidence all failed.  So the next mechanism is unlikely to
 be a fifth way of scoring candidates.
 
-The one it points to instead is this, and it is a hypothesis rather than a measurement: **the
-model has no rule for refusal.**  Blend's counterexamples are discarded as things a draw rule
-must exclude, when 58% of the clicks are refusals with four systematic causes, each announced in
-a status message the trace records.  A learner that fitted "clicking Record draw while the
-destination is bottled changes nothing and says so" would decline correctly because it had a
-*positive* rule for that case, drawn from 41 examples, rather than a draw rule strained to
-exclude them.  Nothing in this run tested that, and everything in it points at it.
+The one it points to instead was a hypothesis -- that the model has no rule for refusal -- and
+it was then measured, which sharpened it into something better founded.
+
+Every effect blend's model learned is a `set` on an object attribute or a `rel`: 41 on
+`attr:cell#0@4`, 23 on `attr:cell#0@3`, 17 on `attr:.#0`, and so on down.  Not one is about the
+status line.  And the status line is not a slot on any object -- it is view-level, sitting in
+`state.view` beside the dropdowns.
+
+So a refusal changes only the view.  The effect language does not reach the view, so a refusal
+has nothing the model can express as an outcome: it becomes a no-op set aside as a
+counterexample, or a transition whose only difference the learner cannot lift.  Of blend's 419
+prefix steps, 146 became positives of some rule and 90 were set aside as no-ops.
+
+That is not "the learner picks the wrong conditions".  It is that **the outcome it should be
+learning is invisible to the effect language.**  The application says "Festival White is already
+bottled" -- it announces exactly the fact the rule needs -- and the model has no way to represent
+that anything happened.  Letting effects reach the view, or modelling the status line as an
+observable outcome, is the next mechanism, and unlike the four scoring schemes it is not a way of
+re-ranking what the fitting evidence already offers.
 
 Blend's rules fire on 196 held-out actions where
 the application refused, and are contradicted 899 times there against 121 on the actions it
