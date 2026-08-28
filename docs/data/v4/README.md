@@ -20,8 +20,8 @@ Five families, all carrying a `regime` field naming one of `TRANSDUCTIVE`, `FROZ
 
 ## Everything else here predates the repair
 
-Of the JSON files in this directory, everything outside those five families carries no regime
-field.  They were produced by a
+Everything else here -- the remaining JSON, and the three `.txt` reports beside them -- carries
+no regime field.  They were produced by a
 compiler whose observation model could read held-out observations while claiming to be a prefix
 fit, so their held-out and prospective numbers are **transductive at the observation-model
 layer** whatever they say.  They are kept because discarding evidence is worse than labelling
