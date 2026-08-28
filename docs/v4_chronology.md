@@ -283,6 +283,13 @@ Across 684 determinate held-out opportunities the queries name the object that b
 object of the type bore it at all.  Conditional on the effect happening somewhere, that is
 248 of 252 against a 0.39 chance rate.
 
+The queries also name *nothing* on 898 opportunities, and that number is one learned query
+rather than a weakness of the form.  Five of the six controls they name are rendered with a
+value on 228 to 243 of 249 held-out clicks; the sixth, `cell#28`, is present but empty on 206
+of them.  It was a valid namer on the evidence it was learned from and is not prospectively,
+and the system says so rather than guessing -- which is the behaviour a referring expression
+should have when it does not refer.
+
 The same reasoning applied one level earlier does **not** work, and the measurement says so.
 `_rebind_negative` falls back, for an implicit parameter it cannot bind, to the *negative's*
 binding for the same parameter name -- a coincidence between two independent lifts rather than a
