@@ -484,12 +484,26 @@ discrimination -- exercise a control until its list stops changing -- and it has
 rule, a measurable quantity (occasions per control per event), and a control application
 (blend, where the evidence is already sufficient and more should change nothing).
 
-Two smaller gaps are worth naming.  Every outcome number here is `FROZEN_PREFIX` or a second
-history; the `CAUSAL_PREQUENTIAL` pass exists (`--regime CAUSAL_PREQUENTIAL --stride N`) and
-the chronology's finding was that the online regime recovers what a frozen half-trace loses, so
-it is the obvious thing to run.  And harbour's `Sign on`/`Sign off` are two events that nothing
+One smaller gap is worth naming.  Harbour's `Sign on`/`Sign off` are two events that nothing
 in the state separates under the roles that control has -- a grounding gap of exactly the kind
 the selection query closed for blend, and checkable by asking whether the roster exposes one.
+
+## The boundary a deployed agent faces
+
+Everything above is `FROZEN_PREFIX` -- one model, fitted once at a cut, asked about everything
+after it -- or a second history.  The regime that matters for an agent is the third one, where
+the whole model is rebuilt before each scored action from exactly what had been observed when
+that action was chosen.  That is about a minute apiece, so it is strided: every eighth of
+blend's 123 held-out `Record draw` clicks, which is 17 of them.
+
+    13 right, 3 wrong, 1 abstained -- 0.812 where it answered, 5 distinct events, and all 13
+    correct answers correct with their arguments.
+
+The majority-frame control on the same 17 actions gets 6 of 17 (0.353): the commonest event on
+the prefix is `Drew <> from <> into <> .` and the suffix is not mostly draws.  So the online
+regime answers, and answers about the objects, under the only boundary that is not a
+retrospective construction.  Seventeen actions is a sample and the number should be read as
+one; what it establishes is that nothing in the mechanism depends on the model being frozen.
 
 ## Claims corrected during this run
 

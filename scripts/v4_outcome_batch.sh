@@ -66,7 +66,8 @@ done
 
 # The boundary a deployed agent faces: the whole model rebuilt before each scored action, from
 # exactly what had been observed when that action was chosen.  A minute apiece, hence a stride;
-# a stride skips the question and never the evidence.
+# a stride skips the question and never the evidence.  The report carries no majority-frame
+# control; the one quoted in docs/v4_outcomes.md was computed separately over the same actions.
 $V -m semabi.eval.v4_outcome --run runs/v4/blend_book_transfer --chain $M/blend_book_chain.json \
    --reading "joint discrimination x3" --split 0.5 --control "Record draw" \
    --regime CAUSAL_PREQUENTIAL --stride 8
