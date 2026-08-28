@@ -411,6 +411,21 @@ consolidation and 53% after**.  What changes is selectivity: not-applicable verd
 8.6 per action to 21.9.  The model becomes much more careful about when it speaks and no better
 at what it says.
 
+Abstention changes both halves of that and not the shape of it.  Rerunning the same pass with
+rules declining where their referring expression does not resolve:
+
+| | before consolidation | after |
+|---|---|---|
+| supported share, as it was | 53% over 49 decided | 53% over 64 |
+| supported share, abstaining | **76%** over 34 decided | **61%** over 56 |
+| supported claims in absolute terms | 26 | 34 |
+
+So abstention helps at both stages and helps most before the consolidation, when the queries are
+least reliable.  And the online model still does not get *more accurate* across the
+consolidation -- it goes from 76% to 61% while nearly doubling what it decides, and from 26
+supported claims to 34.  Consolidation buys coverage, not per-claim accuracy, which is the same
+thing the batch measure says when its not-applicable count rises.
+
 That is a real limit on the learning-curve story and worth stating against the batch numbers,
 which look more encouraging because they measure something else.  A batch split scores a fixed
 held-out suffix with one model; the prequential scores one action at a time with a model that
