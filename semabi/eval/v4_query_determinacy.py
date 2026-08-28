@@ -165,6 +165,7 @@ def evaluate(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.
     determinacy: Counter = Counter()
     correctness: Counter = Counter()
     blame: Counter = Counter()
+    candidates: Counter = Counter()
     witnesses: list[dict] = []
     for step in full.steps[cut:]:
         if step.action.kind != "click" or step.action.target is None:
@@ -197,6 +198,11 @@ def evaluate(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.
                     del pending[var]
                     progress = True
                     hits = q.denotation(op, before, known)
+                    # Naming one object out of one is not a referring expression doing work.
+                    # The count of candidates is what says whether a correct answer was a
+                    # choice, so it is recorded wherever the query determines something.
+                    candidates[len([o for o in before.objs.values()
+                                    if o.tid == op.params.get(var)])] += 1
                     if len(hits) == 1:
                         determinacy[DETERMINATE] += 1
                         known[var] = hits[0]
@@ -227,6 +233,10 @@ def evaluate(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.
             "determinacy": dict(sorted(determinacy.items())),
             "effect_correctness": dict(sorted(correctness.items())),
             "where_the_effect_went": dict(sorted(blame.items())),
+            "candidates_of_the_type_present": dict(sorted(candidates.items())),
+            "chance_of_naming_right": (
+                round(sum(n / k for k, n in candidates.items() if k)
+                      / max(1, sum(candidates.values())), 3) if candidates else None),
             "counterexamples": witnesses[:20]}
 
 
@@ -257,6 +267,9 @@ def main(argv=None) -> int:
     if report["where_the_effect_went"]:
         print(f"  when the named object did not bear it: "
               f"{json.dumps(report['where_the_effect_went'])}")
+    print(f"  candidates of the type present: "
+          f"{json.dumps(report['candidates_of_the_type_present'])}  "
+          f"-- naming one at random would be right {report['chance_of_naming_right']}")
     for w in report["counterexamples"][:6]:
         print(f"    counterexample step {w['step']} {w['operator']} {w['variable']}: "
               f"{w['query']} -> {w['named']}"

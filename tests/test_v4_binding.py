@@ -626,3 +626,84 @@ def test_what_happens_after_the_cut_cannot_change_the_prefix_view(tmp_path):
     assert set(short.observations) == set(long.observations)
     assert [s.before for s in short.steps] == [s.before for s in long.steps]
     assert [s.after for s in short.steps] == [s.after for s in long.steps]
+
+
+# ------------------------------------------------------------------ naming what the interface points at
+
+def _vat(key, node, **attrs):
+    return AbsObj(BERTH, key, dict(attrs), refs={}, node=node)
+
+
+def _world(view, *objs):
+    st = AbstractState.__new__(AbstractState)
+    st.objs = {o.id: o for o in objs}
+    st.view = dict(view)
+    st.types = {BERTH: SimpleNamespace(key_slot="id")}
+    return st
+
+
+def test_an_object_can_be_named_by_the_control_the_interface_currently_points_at():
+    """The form blend needed and did not have.
+
+    A draw moves gallons from the vat named in one dropdown into the blend named in another,
+    and the click carries neither: the selections were made earlier and persist, so at the
+    moment of acting they are ordinary pre-state evidence -- sitting in the view rather than on
+    any object, which is why relation, singleton and property all miss them.
+
+    Without this the learner has nothing to say about the variable and falls back on what
+    actually separates its examples, the identity of the vats it was fitted from, which is
+    correctly refused as memorisation.  The rule then cannot be expressed at all.
+    """
+    from semabi.compiler.v4 import referring
+
+    def evidence(chosen, *keys):
+        vats = [_vat(k, i) for i, k in enumerate(keys, start=1)]
+        st = _world({"combobox#0": f"{chosen} (Chenin, 2 gal, open)"}, *vats)
+        return st, {"?v": next(v for v in vats if v.key == chosen)}
+
+    op = SimpleNamespace(name="op0", params={"?v": BERTH}, pre=[], effs=[
+        SimpleNamespace(obj="?v", kind="set", slot="attr:gal", new="1", tid=BERTH)],
+        acts=(), positives=[])
+    got = referring.ground(
+        op, [evidence("North Wall", "North Wall", "Low Barn", "Orchard"),
+             evidence("Orchard", "North Wall", "Low Barn", "Orchard")],
+        set(), _never_refuses)
+
+    assert got.outcomes() == {"?v": referring.QUERY_FOUND}
+    q = got.queries["?v"]
+    assert q.kind == referring.SELECTION
+    assert q.detail == "the object named by combobox#0"
+
+    # and it runs on a state it was not learned from, naming whatever is selected there
+    later = _world({"combobox#0": "Low Barn (Pinot, 4 gal, open)"},
+                   _vat("North Wall", 1), _vat("Low Barn", 2), _vat("Orchard", 3))
+    assert [o.key for o in q.denotation(op, later, {})] == ["Low Barn"]
+
+
+def test_a_control_that_names_no_object_of_the_type_determines_nothing():
+    """Naming nothing is not naming the absence of anything.
+
+    The dropdown may point at something the frozen schema does not read as an object of this
+    type -- on blend that happens on 49 of 373 held-out opportunities.  The honest answer is an
+    empty denotation, which the caller reports as the query failing to determine, never as the
+    object being absent from the application.
+    """
+    from semabi.compiler.v4 import referring
+
+    q = referring.Query(referring.SELECTION, "?v", "the object named by combobox#0",
+                        form=("combobox#0",))
+    op = SimpleNamespace(name="op0", params={"?v": BERTH})
+    assert q.denotation(op, _world({"combobox#0": "Nowhere (gone)"}, _vat("North Wall", 1)),
+                        {}) == []
+    assert q.denotation(op, _world({}, _vat("North Wall", 1)), {}) == []
+
+
+def test_a_control_naming_two_candidates_is_not_proposed_as_a_query():
+    """A referring expression that leaves the choice open has not made one."""
+    from semabi.compiler.v4 import referring
+
+    # "North" prefixes both keys, so the control does not single either of them out
+    vats = [_vat("North", 1), _vat("Nor", 2)]
+    st = _world({"combobox#0": "North Wall (Chenin, 2 gal, open)"}, *vats)
+    op = SimpleNamespace(name="op0", params={"?v": BERTH})
+    assert referring._selection_queries(op, "?v", [(st, {"?v": vats[0]})]) == []

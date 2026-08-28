@@ -1,0 +1,35 @@
+{
+ "run": "opus_02_cellar_dev",
+ "reading": "joint discrimination x2",
+ "regime": "FROZEN_PREFIX",
+ "split": 0.5,
+ "cut": 195,
+ "operators": 3,
+ "operators_with_a_query": 1,
+ "queries": [
+  "the only object of its type"
+ ],
+ "determinacy": {
+  "names several objects": 1
+ },
+ "effect_correctness": {},
+ "where_the_effect_went": {},
+ "candidates_of_the_type_present": {
+  "4": 1
+ },
+ "chance_of_naming_right": 0.25,
+ "counterexamples": [
+  {
+   "step": 199,
+   "operator": "op1",
+   "variable": "?o1",
+   "query": "the only object of its type",
+   "named": [
+    "T1",
+    "T2",
+    "B2",
+    "B1"
+   ]
+  }
+ ]
+}

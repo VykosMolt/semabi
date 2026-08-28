@@ -11,25 +11,48 @@
   "?o0.rel:1",
   "?o0.rel:3",
   "?o1.in:1",
+  "the object named by combobox#0",
+  "the object named by combobox#1",
   "the only object with attr:blend#0 = None"
  ],
  "determinacy": {
-  "names exactly one object": 250
+  "names exactly one object": 324,
+  "names nothing where the rule applies": 49
  },
  "effect_correctness": {
-  "the object it named bore the effect": 101,
-  "the object it named did not bear the effect": 149
+  "the object it named bore the effect": 143,
+  "the object it named did not bear the effect": 181
  },
  "where_the_effect_went": {
-  "another object of its type bore the effect instead": 4,
-  "no object of its type bore the effect": 145
+  "no object of its type bore the effect": 181
  },
+ "candidates_of_the_type_present": {
+  "2": 137,
+  "3": 226,
+  "4": 10
+ },
+ "chance_of_naming_right": 0.392,
  "counterexamples": [
   {
+   "step": 427,
+   "operator": "op13",
+   "variable": "?o0",
+   "query": "the object named by combobox#0",
+   "named": []
+  },
+  {
+   "step": 430,
+   "operator": "op13",
+   "variable": "?o0",
+   "query": "the object named by combobox#0",
+   "named": "North Wall",
+   "borne_by": []
+  },
+  {
    "step": 430,
    "operator": "op13",
    "variable": "?o1",
-   "query": "the only object with attr:blend#0 = None",
+   "query": "the object named by combobox#1",
    "named": "Cloister",
    "borne_by": []
   },
@@ -37,7 +60,7 @@
    "step": 430,
    "operator": "op14",
    "variable": "?o1",
-   "query": "the only object with attr:blend#0 = None",
+   "query": "the object named by combobox#1",
    "named": "Cloister",
    "borne_by": []
   },
@@ -50,26 +73,18 @@
    "borne_by": []
   },
   {
-   "step": 470,
+   "step": 473,
    "operator": "op13",
-   "variable": "?o1",
-   "query": "the only object with attr:blend#0 = None",
-   "named": "Festival White",
-   "borne_by": []
-  },
-  {
-   "step": 470,
-   "operator": "op14",
-   "variable": "?o1",
-   "query": "the only object with attr:blend#0 = None",
-   "named": "Festival White",
+   "variable": "?o0",
+   "query": "the object named by combobox#0",
+   "named": "West Ridge",
    "borne_by": []
   },
   {
    "step": 473,
    "operator": "op13",
    "variable": "?o1",
-   "query": "the only object with attr:blend#0 = None",
+   "query": "the object named by combobox#1",
    "named": "Festival White",
    "borne_by": []
   },
@@ -77,15 +92,23 @@
    "step": 473,
    "operator": "op14",
    "variable": "?o1",
-   "query": "the only object with attr:blend#0 = None",
+   "query": "the object named by combobox#1",
    "named": "Festival White",
    "borne_by": []
   },
   {
    "step": 477,
    "operator": "op13",
+   "variable": "?o0",
+   "query": "the object named by combobox#0",
+   "named": "West Ridge",
+   "borne_by": []
+  },
+  {
+   "step": 477,
+   "operator": "op13",
    "variable": "?o1",
-   "query": "the only object with attr:blend#0 = None",
+   "query": "the object named by combobox#1",
    "named": "Festival White",
    "borne_by": []
   },
@@ -93,15 +116,23 @@
    "step": 477,
    "operator": "op14",
    "variable": "?o1",
-   "query": "the only object with attr:blend#0 = None",
+   "query": "the object named by combobox#1",
    "named": "Festival White",
    "borne_by": []
   },
   {
    "step": 480,
    "operator": "op13",
+   "variable": "?o0",
+   "query": "the object named by combobox#0",
+   "named": "West Ridge",
+   "borne_by": []
+  },
+  {
+   "step": 480,
+   "operator": "op13",
    "variable": "?o1",
-   "query": "the only object with attr:blend#0 = None",
+   "query": "the object named by combobox#1",
    "named": "Festival White",
    "borne_by": []
   },
@@ -109,15 +140,23 @@
    "step": 480,
    "operator": "op14",
    "variable": "?o1",
-   "query": "the only object with attr:blend#0 = None",
+   "query": "the object named by combobox#1",
    "named": "Festival White",
    "borne_by": []
   },
   {
    "step": 483,
    "operator": "op13",
+   "variable": "?o0",
+   "query": "the object named by combobox#0",
+   "named": "West Ridge",
+   "borne_by": []
+  },
+  {
+   "step": 483,
+   "operator": "op13",
    "variable": "?o1",
-   "query": "the only object with attr:blend#0 = None",
+   "query": "the object named by combobox#1",
    "named": "Festival White",
    "borne_by": []
   },
@@ -125,15 +164,23 @@
    "step": 483,
    "operator": "op14",
    "variable": "?o1",
-   "query": "the only object with attr:blend#0 = None",
+   "query": "the object named by combobox#1",
    "named": "Festival White",
    "borne_by": []
   },
   {
    "step": 486,
    "operator": "op13",
+   "variable": "?o0",
+   "query": "the object named by combobox#0",
+   "named": "West Ridge",
+   "borne_by": []
+  },
+  {
+   "step": 486,
+   "operator": "op13",
    "variable": "?o1",
-   "query": "the only object with attr:blend#0 = None",
+   "query": "the object named by combobox#1",
    "named": "Festival White",
    "borne_by": []
   },
@@ -141,47 +188,7 @@
    "step": 486,
    "operator": "op14",
    "variable": "?o1",
-   "query": "the only object with attr:blend#0 = None",
-   "named": "Festival White",
-   "borne_by": []
-  },
-  {
-   "step": 489,
-   "operator": "op13",
-   "variable": "?o1",
-   "query": "the only object with attr:blend#0 = None",
-   "named": "Festival White",
-   "borne_by": []
-  },
-  {
-   "step": 489,
-   "operator": "op14",
-   "variable": "?o1",
-   "query": "the only object with attr:blend#0 = None",
-   "named": "Festival White",
-   "borne_by": []
-  },
-  {
-   "step": 493,
-   "operator": "op6",
-   "variable": "?o2",
-   "query": "the only object with attr:blend#0 = None",
-   "named": "Festival White",
-   "borne_by": []
-  },
-  {
-   "step": 493,
-   "operator": "op13",
-   "variable": "?o1",
-   "query": "the only object with attr:blend#0 = None",
-   "named": "Festival White",
-   "borne_by": []
-  },
-  {
-   "step": 493,
-   "operator": "op14",
-   "variable": "?o1",
-   "query": "the only object with attr:blend#0 = None",
+   "query": "the object named by combobox#1",
    "named": "Festival White",
    "borne_by": []
   }

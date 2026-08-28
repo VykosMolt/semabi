@@ -39,6 +39,7 @@ PRECONDITION_WITNESS = "it appears only in preconditions"
 RELATION = "relation"
 SINGLETON = "singleton"
 PROPERTY = "property"
+SELECTION = "selection"
 
 QUERY_FOUND = "a prefix-only query determines it"
 NO_QUERY = "the legitimate query language was searched and none determines it"
@@ -77,6 +78,12 @@ class Query:
         if self.kind == PROPERTY:
             slot, value = self.form
             return [o for o in here if o.attrs.get(slot) == value]
+        if self.kind == SELECTION:
+            slot = self.form[0]
+            value = (getattr(state, "view", None) or {}).get(slot)
+            if not isinstance(value, str):
+                return []
+            return [o for o in here if o.key and value.startswith(o.key)]
         direction, slot = self.form
         anchor = known.get(self.given[0]) if self.given else None
         if anchor is None:
@@ -241,6 +248,44 @@ def _singleton(op, var, evidence) -> bool:
     return True
 
 
+def _selection_queries(op, var, evidence) -> list[str]:
+    """View controls whose current value names the intended object, in every positive.
+
+    Some objects an action acts on are neither supplied by it nor findable from another
+    object: they are whatever the interface is currently pointed at.  Blend draws from the vat
+    named in one dropdown into the blend named in another, and the click carries neither -- the
+    selections were made earlier and persist, so at the moment of acting they are ordinary
+    pre-state evidence sitting in the view rather than on any object.
+
+    Without this form the learner has nothing to say about such a variable and falls back on
+    what actually separates its examples, which is the identity of the vats it was fitted from
+    -- and that is correctly refused as memorisation, leaving the rule inexpressible.  Naming
+    the control is not memorisation: the slot is reusable and the value is read at prediction
+    time, exactly as a relation query re-follows its slot.
+
+    The convention is that a control renders an object as its key followed by details --
+    ``North Wall (Chenin, 2 gal, open)``.  A control that leaves more than one object of the
+    type matching does not determine it, and is not proposed.
+    """
+    tid = op.params.get(var)
+    proposed: set[str] | None = None
+    for state, binding in evidence:
+        want = binding.get(var)
+        if want is None:
+            return []
+        here = set()
+        for slot, value in (getattr(state, "view", None) or {}).items():
+            if not isinstance(value, str) or not value:
+                continue
+            hits = [o for o in _candidates(state, tid) if o.key and value.startswith(o.key)]
+            if len(hits) == 1 and _target(hits[0]) == _target(want):
+                here.add(slot)
+        proposed = here if proposed is None else (proposed & here)
+        if not proposed:
+            return []
+    return sorted(proposed or ())
+
+
 def property_basis(op, var, evidence, refuses) -> dict[str, int]:
     """How much of the property form was actually available, before asking whether it worked.
 
@@ -319,6 +364,7 @@ def ground(op, evidence, action_bound, refuses) -> Grounding:
             if var in out.queries:
                 continue
             out.basis[var] = {**property_basis(op, var, evidence, refuses),
+                              "naming_controls": len(_selection_queries(op, var, evidence)),
                               "relational_start": bool(known),
                               "instances_of_its_type": max(
                                   (len(_candidates(st, op.params.get(var))) for st, _ in evidence),
@@ -333,6 +379,11 @@ def ground(op, evidence, action_bound, refuses) -> Grounding:
                                  "backward": f"the object whose {slot} is {anchor}",
                                  "parent": f"the object contained by {anchor}"}[direction]
                         found = Query(RELATION, var, arrow, (anchor,), (direction, slot))
+                        break
+                if found is None:
+                    for slot in _selection_queries(op, var, evidence):
+                        found = Query(SELECTION, var,
+                                      f"the object named by {slot}", form=(slot,))
                         break
                 if found is None:
                     props = _property_queries(op, var, evidence, refuses)
