@@ -82,6 +82,11 @@ def type_support(A, log, sigs) -> dict[int, frozenset]:
     A type id is a name the fitter happened to assign.  Across rebuilds it means nothing, and
     treating it as an identity would report a renumbering as a semantic change and a genuine
     merge as continuity.
+
+    Two model versions must be compared over the *same* observations.  A later model has seen
+    more pages, and letting it count them would report every snapshot as growth -- which is a
+    fact about the sample, not about the model.  So the caller passes the earlier snapshot's
+    observations when comparing, and the later one's when carrying forward.
     """
     sup: dict[int, set] = {}
     for sig in sigs:
@@ -120,7 +125,8 @@ def events(prev, cur, prev_sup, cur_sup) -> list[str]:
                 elif len(s) < len(prev_sup[best]):
                     out.append(f"type split: {best} -> {t} (lost {len(prev_sup[best] - s)} nodes)")
                 else:
-                    out.append(f"type grew: {best} -> {t} (+{len(s - prev_sup[best])} nodes)")
+                    out.append(f"type covers more of the same pages: {best} -> {t} "
+                               f"(+{len(s - prev_sup[best])} nodes)")
         else:
             out.append(f"new type: {t} over {len(s)} nodes")
     for p in prev_sup:
@@ -169,7 +175,7 @@ def run(run_dir: Path, reading, steps: list[int], *, min_support: int = 2,
     run_dir = Path(run_dir)
     full = EvidenceLog(run_dir)
     out: list[Snapshot] = []
-    prev, prev_sup = None, {}
+    prev, prev_sup, prev_sigs = None, {}, []
     for t in steps:
         model = csq.fit(run_dir, reading, at=t, min_support=min_support,
                         regime=csq.CAUSAL_PREQUENTIAL)
@@ -179,11 +185,14 @@ def run(run_dir: Path, reading, steps: list[int], *, min_support: int = 2,
         # read the outcome.
         result = csq.score(model, evaluate_on="next", applicability=applicability,
                            correspondence=correspondence)
-        seen = [s.before for s in full.steps[:t]] + [full.steps[t].before]
-        sup = type_support(A, model.log, seen)
+        seen = list(dict.fromkeys([s.before for s in full.steps[:t]]
+                                  + [full.steps[t].before]))
+        # Compared on the previous model's pages, carried forward on this one's.
+        comparable = type_support(A, model.evidence, prev_sigs) if prev_sigs else {}
+        sup = type_support(A, model.evidence, seen)
         snap = Snapshot(
             step=t, completed_transitions=t,
-            observations_available=len(model.log.observations),
+            observations_available=len(model.evidence.observations),
             types=len(A.types),
             slots=sum(len(ti.slots) for ti in A.types.values()),
             relations=sum(len(getattr(ti, "refs", ()) or ()) for ti in A.types.values()),
@@ -198,9 +207,9 @@ def run(run_dir: Path, reading, steps: list[int], *, min_support: int = 2,
                          for p in result.predictions],
             skipped=dict(result.skipped),
             probe=dict(probe(model)) if probe is not None else {})
-        changed = events(prev, snap, prev_sup, sup)
+        changed = events(prev, snap, prev_sup, comparable)
         out.append(snap)
         if on_snapshot is not None:
             on_snapshot(snap, changed)
-        prev, prev_sup = snap, sup
+        prev, prev_sup, prev_sigs = snap, sup, seen
     return out

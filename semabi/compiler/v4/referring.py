@@ -257,6 +257,12 @@ def ground(op, evidence, action_bound, refuses) -> Grounding:
     Stratified rather than joint: a variable a query has already determined becomes something
     the next query may refer from.  Iterating to a fixed point recovers chains without assuming
     one exists, and stops when a round adds nothing.
+
+    ``evidence`` is a sequence of ``(pre-state, binding)`` pairs where the binding maps a
+    parameter to the *object* it was bound to, not to the ``(tid, key)`` pair a transition
+    records.  A query is asked about an object's attributes and relations, so the caller
+    resolves the identifiers first; parameters bound to strings rather than objects are left
+    out, and nothing is claimed about them.
     """
     effect_vars = tuple(sorted({e.obj for e in op.effs if isinstance(e.obj, str)}))
     # A ``?new`` variable is not an object to be identified in the pre-state -- it is one the
