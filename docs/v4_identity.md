@@ -238,15 +238,22 @@ fires at the state and is pure once *already bottled* has been checked first, wh
 the application checks them in.  No globally pure rule for it exists.  The single-rule class was
 too small by exactly one guard, and the list class names the guard that had to precede it.
 
-Harbour's two are the language gap, and they say what is missing.  `Schedule call` refuses with
-*Selkie already has call C-102 on the board*: a fact about whether *any* call names this ship,
-which is an existential over another entity type that no literal in the language -- attributes
-of the roles' objects, whether a role names anything, whether a list was touched -- can state.
-Every conjunction the state shares with the refusal's witnesses also reaches two occasions where
-a call was opened.  The raw difference between the pages is the whole call sheet.  This is the
-first forced-wrong case in the project that is cleanly a language gap rather than an identity,
-label-space, justification or ordering gap, and the layer it blames is the relational literal
-language.
+Harbour's two are inseparable, and they were traced one layer further.  `Schedule call` refuses
+with *Selkie already has call C-102 on the board*, and every conjunction the state shares with
+the refusal's witnesses also reaches two occasions where a call was opened.  The first reading
+of that was an expressiveness gap -- the language has `empty` (nothing references this object)
+and cannot say its complement -- so the complement was built, as `held(role, type)`, and
+measured: harbour is unchanged, both states still inseparable, blend and cellar bit-identical.
+It is not in the tree.  The reason it could not help is on the page: the ship's own row renders
+`Current call: C-102`, and the ship object's reference slot for it is `None` on both pages,
+because the reading types that slot as pointing at the matrix-cell type -- whose keys are
+`T0:Selkie|col:Call` -- and `C-102`, a call's key, never resolves against it.  The fact the
+guard needs is rendered inside the object the rule is about and dropped by the state layer
+before any literal could mention it.  `v4_inadequacy` now reports this case as such: for an
+inseparable state it lists the values rendered in the bound objects' own rows that are absent
+from their attributes and references (`erased_by_the_state`), and for Selkie it names the
+flag, the cargo and the current call.  The layer this blames is reference resolution in the
+reading, not the literal language, and the repair is to the ontology's typing of one slot.
 
 ## Chronology
 
@@ -320,9 +327,9 @@ on a page the induction had read; a word was a value only if the corpus had seen
 name with a number in it is not the name.  Each of these is a place where a held-out page looked
 like a different application than the prefix, and each cost more than the outcome layer's own
 defects did.  Cross-rendering identity of entities -- the hall as section, option and suffix --
-is the same problem one level up, and it is still open; but the harbour case above says what
-the next expressiveness gap is when identity is right: a literal that quantifies over another
-entity type.
+is the same problem one level up, and it is still open; but the harbour case above is the same thing at the level of a reference slot: a fact the page
+renders in the object's own row, typed to an entity it can never resolve against, and so
+absent from the state the language is asked about.
 
 ## Running it
 

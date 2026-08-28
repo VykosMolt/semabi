@@ -39,7 +39,10 @@ different for the model to have been right:
     Three or more occasions, and every conjunction this state shares with any of them also
     reaches an occasion of another event that no earlier guard takes.  Those occasions are the
     ones the language cannot tell this state apart from; the raw difference between this page
-    and one of theirs is the distinction the abstraction erased.  This is the language gap.
+    and one of theirs is the distinction the abstraction erased.  Whether the *language* or the
+    *state* erased it is then decided by where the difference is: a value rendered inside the
+    row of an object the rule is about, and absent from that object's attributes and
+    references, never reached the language at all (``erased_by_the_state``).
 
 Each is reported per control, so a language gap in one part of an application does not hide
 behind accuracy elsewhere.
@@ -74,6 +77,41 @@ def _raw_diff(a, b, limit: int = 6) -> list[str]:
     if len(a.nodes) != len(b.nodes):
         out.append(f"node count {len(a.nodes)} vs {len(b.nodes)}")
     return out
+
+
+def _erased(A, pre, blocker, bound: dict) -> list[str]:
+    """What the two pages disagree about *inside the bound objects' own renderings* that the
+    abstract state does not carry.
+
+    An inseparable case says the literal language cannot separate the state from a blocker.
+    Whether that is the language's fault or the state's is decided by where the difference
+    is: a value rendered in the row of an object the rule is about, and absent from that
+    object's attributes and references, was dropped by the abstraction before any literal
+    could mention it.  Harbour's ship row renders `Current call: C-102` and the ship object's
+    reference to it is None, because the reading types that slot as pointing at another
+    entity.  That is the state layer, not the language, and it is what this reports.
+    """
+    po, po2 = A.parsed(pre), A.parsed(blocker)
+    out: list[str] = []
+    for role, obj in bound.items():
+        idx = po.node_instance.get(obj.node)
+        if idx is None:
+            continue
+        carried = {str(v) for v in obj.attrs.values()} | {str(v[1]) for v in obj.refs.values()
+                                                            if v is not None} | {str(obj.key)}
+        for i in pre.subtree(obj.node):
+            n = pre.node(i)
+            if n.role not in ("cell", "text", "heading") or not n.name:
+                continue
+            other = blocker.node(i) if i < len(blocker.nodes) else None
+            if other is not None and other.key() == n.key():
+                continue
+            if any(str(n.name) == c or str(n.name).startswith(c + " ") for c in carried):
+                continue
+            out.append(f"{role}: node {i} {n.role} {str(n.name)[:40]!r} rendered in the "
+                       f"object's own {pre.node(obj.node).role}, not in its state"
+                       + (f" (blocker shows {str(other.name)[:30]!r})" if other is not None else ""))
+    return out[:6]
 
 
 def _least_blocked(ev, here: int, event: str) -> tuple[tuple, list[int]]:
@@ -142,14 +180,16 @@ def diagnose(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.
         kind, detail = classify(got, here, actual)
         kinds[kind] += 1
         raw: list[str] = []
+        erased: list[str] = []
         if kind == INSEPARABLE and detail.get("blocker") is not None:
             src = getattr(got.evidence, "occasion_obs", {}).get(detail["blocker"])
             if src is not None:
                 raw = _raw_diff(src, pre)
+                erased = _erased(A, pre, src, bound)
         cases.append({"control": control, "step": step.step, "forced": scored["admissible"],
                       "actual": actual, "why": scored.get("why"), "kind": kind,
                       **{k: v for k, v in detail.items() if k != "blocker"},
-                      "raw_difference": raw})
+                      "raw_difference": raw, "erased_by_the_state": erased})
     return {"run": Path(run_dir).name, "reading": reading_name, "regime": regime,
             "hypothesis": hypothesis, "cut": model.cut, "forced_wrong": len(cases),
             "kinds": dict(kinds.most_common()),
@@ -183,6 +223,8 @@ def main(argv=None) -> int:
                     print(f"      {k}: {case[k]}")
             for line in case["raw_difference"]:
                 print(f"      {line}")
+            for line in case.get("erased_by_the_state", []):
+                print(f"      erased: {line}")
     if a.out:
         Path(a.out).write_text(json.dumps(r, indent=1, default=str))
         print(f"\nwrote {a.out}")
