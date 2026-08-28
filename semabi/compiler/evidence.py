@@ -101,6 +101,22 @@ class EvidenceLog:
         view.typed_tokens = list(view.steps[-1].typed_tokens) if view.steps else []
         return view
 
+    def transductively_through(self, cut: int) -> "EvidenceLog":
+        """The first ``cut`` steps, but every observation the trace retained.
+
+        This is the old, wrong split, kept deliberately and under a name that says so.  It
+        answers a question worth asking -- *if representation induction were already solved by
+        access to the retained observation distribution, how good is the downstream action-model
+        machinery?* -- and it is the only way to measure how much of a result came from the
+        suffix participating in schema construction.
+
+        It is not a prospective regime and must never be reported as one.  A caller asks for it
+        by name; nothing reaches it by forgetting to scope a log.
+        """
+        view = self.through(cut)
+        view.observations = dict(self.observations)
+        return view
+
     def save_meta(self, **kw):
         p = self.dir / "meta.json"
         d = json.loads(p.read_text()) if p.exists() else {}

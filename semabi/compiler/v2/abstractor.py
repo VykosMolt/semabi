@@ -216,6 +216,25 @@ class V2Abstractor(Abstractor):
             self.G.add(sig, obs)
         return sig
 
+    def freeze(self) -> "V2Abstractor":
+        """Stop learning.  From here the model reads observations and is not changed by them.
+
+        Fitting is over by the time this is called; what remains is interpretation, and the
+        distinction matters because ``ensure`` puts every observation it is asked to read into
+        the observation graph.  Without this, transforming a held-out page contributed its text
+        to the data-token vocabulary the model uses to decide what counts as a value -- on
+        harbour it added three tokens, one of them a word the prefix had never seen used as
+        data.  Then the answer to "how does this model read the suffix" depended on how much of
+        the suffix it had already read.
+
+        The lazily induced control families are resolved here rather than left to a first
+        access that might happen after held-out observations were in the graph.  Deferred work
+        against mutable state is the same leak wearing a different hat.
+        """
+        self.controls            # resolve before the graph can gain anything else
+        self.G.learning = False
+        return self
+
     def parsed(self, obs: Observation) -> ParsedObs:
         sig = self.ensure(obs)
         if sig not in self._cache:

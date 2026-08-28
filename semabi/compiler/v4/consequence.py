@@ -123,6 +123,13 @@ class ScopedPrediction:
                 "binding_evidence": self.binding_evidence}
 
 
+# Which information boundary produced a result.  These are not styles of the same
+# experiment; they answer different questions and a report that mixes them says nothing.
+TRANSDUCTIVE = "TRANSDUCTIVE"      # schema from the whole retained trace: diagnostic only
+FROZEN_PREFIX = "FROZEN_PREFIX"    # schema, action model and queries from the prefix alone
+REGIMES = (FROZEN_PREFIX, TRANSDUCTIVE)
+
+
 @dataclass
 class ScopedResult:
     reading: str
@@ -133,6 +140,7 @@ class ScopedResult:
     evaluated_steps: int
     operators: int
     single_act_operators: int
+    regime: str = FROZEN_PREFIX
     model: dict[str, Any] = field(default_factory=dict)
     predictions: list[ScopedPrediction] = field(default_factory=list)
     skipped: Counter = field(default_factory=Counter)
@@ -586,20 +594,36 @@ class Fit:
     cut: int
     split: float
     inducer: Any = None
+    regime: str = FROZEN_PREFIX
 
 
-def fit(run_dir: Path, reading, *, split: float = 0.6, min_support: int = 2) -> Fit:
+def fit(run_dir: Path, reading, *, split: float = 0.6, min_support: int = 2,
+        regime: str = FROZEN_PREFIX) -> Fit:
+    """Compile one reading on the first ``split`` of a run, under a stated information regime.
+
+    ``FROZEN_PREFIX`` fits the observation model from prefix observations only.  ``TRANSDUCTIVE``
+    lets the whole retained trace build the schema while still learning transitions from the
+    prefix; it is a diagnostic that measures how much of a result the suffix representation was
+    responsible for, and it is never prospective evidence.
+    """
     from semabi.compiler.compile_v4 import compile_v4
     from semabi.compiler.evidence import EvidenceLog
 
+    if regime not in REGIMES:
+        raise ValueError(f"unknown information regime {regime!r}")
     run_dir = Path(run_dir)
     full = EvidenceLog(run_dir)
     cut = int(len(full.steps) * split)
-    prefix = full.through(cut)
+    prefix = (full.through(cut) if regime == FROZEN_PREFIX
+              else full.transductively_through(cut))
     compiled = compile_v4(run_dir, min_support=min_support, write_diagnostics=False,
                           pinned=reading, evidence_log=prefix)
+    # Fitting is over.  Everything after this reads observations the model must not learn from,
+    # whichever regime built it: a transductive schema is a diagnostic, not a licence to keep
+    # learning while it scores.
+    compiled.inducer.A.freeze()
     return Fit(reading, compiled.inducer.A, compiled.inducer.operators, full, cut, split,
-               compiled.inducer)
+               compiled.inducer, regime)
 
 
 def evaluate(run_dir: Path, reading, *, split: float = 0.6, min_support: int = 2,
@@ -630,7 +654,7 @@ def score(model: Fit, *, mutate: Callable[[str], str] | None = None,
         correspondence_rule=correspondence, fitted_on_steps=cut,
         evaluated_steps=len(full.steps) - cut, operators=len(operators),
         single_act_operators=sum(len(v) for v in by_control.values()),
-        model=_model_summary(operators))
+        regime=model.regime, model=_model_summary(operators))
     relocate = matcher(correspondence, corr.Corresponder())
     # Survival is asked with the content layers only.  Letting the descent fall through to
     # role and position would answer "still there" for a panel replaced by a different panel

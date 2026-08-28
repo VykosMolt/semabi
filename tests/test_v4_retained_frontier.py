@@ -118,13 +118,18 @@ def test_retained_reports_bind_the_manifest_bytes_they_replay():
 def test_retained_manifests_refuse_to_load_once_the_compiler_they_name_has_changed():
     """The manifests name the compiler that produced them, and it has since changed.
 
-    They used to load, and this test used to assert that they did.  The inducer is now under
-    active development -- it learns preconditions over a wider literal language and no longer
-    memorises effect values the action does not determine -- so the hash no longer matches and
-    the authenticated loaders refuse.  Refusing is the whole point of pinning it, so what is
-    asserted here is that the refusal happens, that it names the file that changed, and that
-    the manifests are otherwise intact: the file set they declare is still the right one, and
-    the three roles still consumed three different histories.
+    They used to load, and this test used to assert that they did.  The compiler is now under
+    active development -- the inducer learns preconditions over a wider literal language, and
+    the evidence log can now scope itself to a chronological prefix -- so the hashes no longer
+    match and the authenticated loaders refuse.  Refusing is the whole point of pinning it, so
+    what is asserted here is that the refusal happens, that the file it names has *genuinely*
+    diverged from the hash the manifest recorded for it, and that the manifests are otherwise
+    intact: the file set they declare is still the right one, and the three roles still
+    consumed three different histories.
+
+    Naming a specific file here would make the test a diary of whichever edit came last.  What
+    matters is that the loader points at a real divergence rather than an arbitrary one, so the
+    named file is checked against the manifest's own recorded hash for it.
 
     Results produced against the current compiler are therefore not claims that the frozen one
     produced them, and the loader is what enforces that rather than a convention.
@@ -138,7 +143,7 @@ def test_retained_manifests_refuse_to_load_once_the_compiler_they_name_has_chang
         )
         with pytest.raises(manifests.ManifestError) as exc:
             manifests.load_source_manifest(path, repo_root=ROOT)
-        refused.append(str(exc.value))
+        refused.append((str(exc.value), payload["generation"]["implementation_files"]))
     for path in sorted(manifest_dir.glob("*_chain.json")):
         payload = json.loads(path.read_text())
         assert set(payload["implementation_files"]) == set(manifests.REPLAY_IMPLEMENTATION_FILES)
@@ -148,7 +153,12 @@ def test_retained_manifests_refuse_to_load_once_the_compiler_they_name_has_chang
         }) == 3
         with pytest.raises(manifests.ManifestError) as exc:
             manifests.load_chain_manifest(path, repo_root=ROOT)
-        refused.append(str(exc.value))
+        refused.append((str(exc.value), payload["construction_implementation_files"]))
     assert refused
-    assert all("implementation hash mismatch" in reason for reason in refused)
-    assert all("semabi/compiler/induce.py" in reason for reason in refused)
+    for reason, recorded in refused:
+        assert "implementation hash mismatch" in reason
+        named = [f for f in recorded if f in reason]
+        assert len(named) == 1, reason
+        assert _sha256(ROOT / named[0]) != recorded[named[0]], (
+            f"{named[0]} was named as divergent but still matches its recorded hash"
+        )

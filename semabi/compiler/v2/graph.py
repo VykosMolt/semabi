@@ -89,6 +89,7 @@ class ObsGraph:
         self.templates_v: dict[tuple, TextTemplate] = {}  # (position, indexed position, view skeleton) -> strings
         self.header: set[tuple[str, int]] = set()  # (sig, node) cells of a table's first row
         self.header_strings: dict[tuple[str, int], set[str]] = defaultdict(set)  # (table path, col) -> strings
+        self.learning: bool = True  # False once fitted: read new observations, learn nothing from them
 
     def data_set(self) -> set[str]:
         """Data tokens: numbers, and tokens that vary within a position, except tokens that
@@ -138,6 +139,22 @@ class ObsGraph:
 
     # ------------------------------------------------------------------ build
     def add(self, sig: str, obs: Observation) -> None:
+        """Take an observation into the graph.
+
+        Two different things happen here, and once a model is frozen only one of them may.
+        Per-observation structure -- the node descriptors, the role paths, which cells sit in a
+        table's first row -- is what makes *this* observation readable at all, and reading a
+        held-out page requires it.  The corpus statistics are different: the text-variation
+        templates and the data-token vocabulary are the learned judgement about which text on a
+        page is a value rather than a label, and they are as much part of the model as the type
+        system is.  Letting a held-out observation contribute to them is the chronology leak in
+        miniature -- the suffix teaching the model the vocabulary it is about to be judged with.
+
+        So a frozen graph reads the observation and declines to learn from it.  A position the
+        prefix never saw simply has no template, and ``is_prose`` answers False for it: the
+        frozen model has no evidence about that position, which is a smaller claim than the
+        alternative and never a claim about the application.
+        """
         if sig in self.obs:
             return
         self.obs[sig] = obs
@@ -154,7 +171,8 @@ class ObsGraph:
                 if rows:
                     for k, c in enumerate(obs.children(rows[0])):
                         self.header.add((sig, c))
-                        self.header_strings[(paths[n.i], k)].add(node_text(obs.node(c)))
+                        if self.learning:
+                            self.header_strings[(paths[n.i], k)].add(node_text(obs.node(c)))
         shapes = {}
         for n in reversed(obs.nodes):
             ch = obs.children(n.i)
@@ -166,6 +184,8 @@ class ObsGraph:
             # structural position of a text: role path + parent's shape (what surrounds it)
             pos = paths[n.i] + "|" + token_pattern(node_text(n))
             self.position_of[(sig, n.i)] = pos
+            if not self.learning:
+                continue
             tt = self.templates.setdefault(pos, TextTemplate(pos))
             # variation is judged per (position, indexed position of the *parent*, view): two
             # headings under different containers are different positions; the rows of one
@@ -182,7 +202,8 @@ class ObsGraph:
                 self._whole.add(node_text(n).strip())
                 for o in n.options or ():
                     self._whole.add(o.strip())
-        self._data = None
+        if self.learning:
+            self._data = None
 
     def is_data(self, t: str) -> bool:
         return t in self.data_set() or t[0].isdigit()
