@@ -70,6 +70,35 @@ authoritative; verify them rather than trusting this summary.
   not claim the authority, or if the report's digest differs from the final attestation --
   which is what a module imported after the report was written would produce.
 
+## The chronology run supersedes several claims below
+
+`docs/v4_chronology.md` is the current account of what holds and under which information
+boundary.  Read it before anything in this file that reports a held-out or prospective number,
+because the observation model in those runs was built from observations the experiment had not
+yet reached.  Specifically:
+
+* Every earlier "held-out" or "prospective" action-model result was chronologically split at
+  the step and effect-learning layer and **transductive at the observation-model layer**.  The
+  schema, type system, slot vocabulary and control families could use suffix observations.
+  Those results are not worthless; they are diagnostics, and they are relabelled rather than
+  deleted.
+* Blend's `678/678 prospective UNIQUE` is withdrawn as prospective evidence.  The query itself
+  is not withdrawn -- under a properly scoped prefix fit it is still learned -- but uniqueness
+  was the wrong property to report.  On 250 held-out opportunities the query names exactly one
+  object every time and names the *wrong* one 149 times, of which 145 are cases where no object
+  of the type bore the effect at all.
+* Harbour's condition for closing a berth is not learnable at a half-trace split under strict
+  chronology, and is learnable by step 252 from prefix evidence alone.  The old claim was
+  produced under the transductive regime and is now stated as such.
+* Harbour's A/B grounding contrast -- nine action-bound variables and no derived-pre-state
+  burden for `joint discrimination x2`, none and nine for `promote cell[_]=cell#0` -- is
+  *unchanged* between regimes and never depended on the leak.
+* Cellar's derived-pre-state pathology is unchanged between regimes: 167 either way.
+
+Three information regimes are now named in the code (`TRANSDUCTIVE`, `FROZEN_PREFIX`,
+`CAUSAL_PREQUENTIAL`) and every fit and scored result carries the one that produced it.  A
+report that does not name its regime should not be trusted.
+
 ## Read these artifacts first
 
 For each application, the source manifest freezes the explicit incumbent, all six complete
