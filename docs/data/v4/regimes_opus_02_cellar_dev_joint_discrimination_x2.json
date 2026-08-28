@@ -1,0 +1,108 @@
+{
+ "run": "opus_02_cellar_dev",
+ "reading": "joint discrimination x2",
+ "control": "Move vessel",
+ "split": 0.5,
+ "regimes": {
+  "TRANSDUCTIVE": {
+   "types": 7,
+   "slots": 99,
+   "relations": 1,
+   "control_families": 16,
+   "operators": 7,
+   "control_slots": 1,
+   "named_controls": 0,
+   "positional_controls": 1,
+   "observations_fitted_from": 259,
+   "fingerprint": "2f99464fecbbe071",
+   "cut": 195,
+   "predictions": 0,
+   "steps": [],
+   "verdicts": {},
+   "refuted_steps": []
+  },
+  "FROZEN_PREFIX": {
+   "types": 4,
+   "slots": 33,
+   "relations": 1,
+   "control_families": 4,
+   "operators": 3,
+   "control_slots": 1,
+   "named_controls": 0,
+   "positional_controls": 1,
+   "observations_fitted_from": 127,
+   "fingerprint": "57d418e0eb9a79ef",
+   "cut": 195,
+   "predictions": 0,
+   "steps": [],
+   "verdicts": {},
+   "refuted_steps": []
+  },
+  "CAUSAL_PREQUENTIAL": {
+   "cut": 195,
+   "predictions": 0,
+   "steps": [
+    235,
+    331,
+    343,
+    379
+   ],
+   "verdicts": {},
+   "refuted_steps": [],
+   "snapshots": [
+    {
+     "step": 235,
+     "observations": 149,
+     "types": 8,
+     "slots": 81,
+     "relations": 1,
+     "control_families": 16,
+     "operators": 9,
+     "fingerprint": "80b54b01a02d8c44",
+     "verdicts": {}
+    },
+    {
+     "step": 331,
+     "observations": 214,
+     "types": 9,
+     "slots": 93,
+     "relations": 1,
+     "control_families": 22,
+     "operators": 11,
+     "fingerprint": "c84d941cefe00d9a",
+     "verdicts": {}
+    },
+    {
+     "step": 343,
+     "observations": 221,
+     "types": 10,
+     "slots": 105,
+     "relations": 1,
+     "control_families": 25,
+     "operators": 13,
+     "fingerprint": "63e80f94946731e8",
+     "verdicts": {}
+    },
+    {
+     "step": 379,
+     "observations": 252,
+     "types": 9,
+     "slots": 143,
+     "relations": 1,
+     "control_families": 22,
+     "operators": 13,
+     "fingerprint": "8cc9c9771d93ab94",
+     "verdicts": {}
+    }
+   ]
+  }
+ },
+ "cut": 195,
+ "prequential_stride": 1,
+ "matched_steps": [
+  235,
+  331,
+  343,
+  379
+ ]
+}

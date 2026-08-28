@@ -1,0 +1,321 @@
+{
+ "run": "vet_clinic_transfer",
+ "reading": "joint discrimination x3",
+ "control": "Schedule",
+ "split": 0.5,
+ "regimes": {
+  "TRANSDUCTIVE": {
+   "types": 6,
+   "slots": 21,
+   "relations": 2,
+   "control_families": 14,
+   "operators": 30,
+   "control_slots": 10,
+   "named_controls": 10,
+   "positional_controls": 0,
+   "observations_fitted_from": 221,
+   "fingerprint": "d5d805f9184524eb",
+   "cut": 448,
+   "predictions": 26,
+   "steps": [
+    456,
+    483,
+    529,
+    606,
+    697,
+    720,
+    729,
+    735,
+    737,
+    814,
+    859,
+    893,
+    895
+   ],
+   "verdicts": {
+    "POSSIBLE": 6,
+    "REFUTED": 14,
+    "SUPPORTED": 6
+   },
+   "refuted_steps": [
+    456,
+    529,
+    720,
+    737,
+    814,
+    859,
+    895
+   ]
+  },
+  "FROZEN_PREFIX": {
+   "types": 10,
+   "slots": 32,
+   "relations": 3,
+   "control_families": 24,
+   "operators": 26,
+   "control_slots": 11,
+   "named_controls": 11,
+   "positional_controls": 0,
+   "observations_fitted_from": 110,
+   "fingerprint": "39b622fa4a4da5f2",
+   "cut": 448,
+   "predictions": 26,
+   "steps": [
+    456,
+    483,
+    529,
+    606,
+    697,
+    720,
+    729,
+    735,
+    737,
+    814,
+    859,
+    893,
+    895
+   ],
+   "verdicts": {
+    "POSSIBLE": 4,
+    "REFUTED": 14,
+    "SUPPORTED": 8
+   },
+   "refuted_steps": [
+    456,
+    529,
+    720,
+    737,
+    814,
+    859,
+    895
+   ]
+  },
+  "CAUSAL_PREQUENTIAL": {
+   "cut": 448,
+   "predictions": 26,
+   "steps": [
+    456,
+    483,
+    529,
+    606,
+    697,
+    720,
+    729,
+    735,
+    737,
+    814,
+    859,
+    893,
+    895
+   ],
+   "verdicts": {
+    "POSSIBLE": 6,
+    "REFUTED": 14,
+    "SUPPORTED": 6
+   },
+   "refuted_steps": [
+    456,
+    529,
+    720,
+    737,
+    814,
+    859,
+    895
+   ],
+   "snapshots": [
+    {
+     "step": 456,
+     "observations": 111,
+     "types": 10,
+     "slots": 32,
+     "relations": 3,
+     "control_families": 24,
+     "operators": 26,
+     "fingerprint": "39b622fa4a4da5f2",
+     "verdicts": {
+      "REFUTED": 2
+     }
+    },
+    {
+     "step": 483,
+     "observations": 117,
+     "types": 10,
+     "slots": 32,
+     "relations": 3,
+     "control_families": 24,
+     "operators": 26,
+     "fingerprint": "39b622fa4a4da5f2",
+     "verdicts": {
+      "POSSIBLE": 1,
+      "SUPPORTED": 1
+     }
+    },
+    {
+     "step": 529,
+     "observations": 128,
+     "types": 10,
+     "slots": 32,
+     "relations": 3,
+     "control_families": 24,
+     "operators": 26,
+     "fingerprint": "e23dcb4585e9c4e7",
+     "verdicts": {
+      "REFUTED": 2
+     }
+    },
+    {
+     "step": 606,
+     "observations": 142,
+     "types": 9,
+     "slots": 30,
+     "relations": 2,
+     "control_families": 24,
+     "operators": 27,
+     "fingerprint": "b4704ec6884ad8d6",
+     "verdicts": {
+      "POSSIBLE": 1,
+      "SUPPORTED": 1
+     }
+    },
+    {
+     "step": 697,
+     "observations": 169,
+     "types": 7,
+     "slots": 25,
+     "relations": 2,
+     "control_families": 18,
+     "operators": 34,
+     "fingerprint": "121604298aef15cb",
+     "verdicts": {
+      "POSSIBLE": 1,
+      "SUPPORTED": 1
+     }
+    },
+    {
+     "step": 720,
+     "observations": 178,
+     "types": 7,
+     "slots": 25,
+     "relations": 2,
+     "control_families": 18,
+     "operators": 36,
+     "fingerprint": "76baac403fc2cfdb",
+     "verdicts": {
+      "REFUTED": 2
+     }
+    },
+    {
+     "step": 729,
+     "observations": 181,
+     "types": 7,
+     "slots": 25,
+     "relations": 2,
+     "control_families": 18,
+     "operators": 36,
+     "fingerprint": "76baac403fc2cfdb",
+     "verdicts": {
+      "POSSIBLE": 1,
+      "SUPPORTED": 1
+     }
+    },
+    {
+     "step": 735,
+     "observations": 186,
+     "types": 6,
+     "slots": 21,
+     "relations": 2,
+     "control_families": 14,
+     "operators": 34,
+     "fingerprint": "89e0b35195dec6d8",
+     "verdicts": {
+      "POSSIBLE": 1,
+      "SUPPORTED": 1
+     }
+    },
+    {
+     "step": 737,
+     "observations": 188,
+     "types": 6,
+     "slots": 21,
+     "relations": 2,
+     "control_families": 14,
+     "operators": 34,
+     "fingerprint": "6f41d458f253cf3e",
+     "verdicts": {
+      "REFUTED": 2
+     }
+    },
+    {
+     "step": 814,
+     "observations": 194,
+     "types": 6,
+     "slots": 21,
+     "relations": 2,
+     "control_families": 14,
+     "operators": 34,
+     "fingerprint": "2ff09c52a67aed37",
+     "verdicts": {
+      "REFUTED": 2
+     }
+    },
+    {
+     "step": 859,
+     "observations": 204,
+     "types": 6,
+     "slots": 21,
+     "relations": 2,
+     "control_families": 14,
+     "operators": 36,
+     "fingerprint": "2ff09c52a67aed37",
+     "verdicts": {
+      "REFUTED": 2
+     }
+    },
+    {
+     "step": 893,
+     "observations": 219,
+     "types": 6,
+     "slots": 21,
+     "relations": 2,
+     "control_families": 14,
+     "operators": 37,
+     "fingerprint": "0db9a5632b40c500",
+     "verdicts": {
+      "POSSIBLE": 1,
+      "SUPPORTED": 1
+     }
+    },
+    {
+     "step": 895,
+     "observations": 221,
+     "types": 6,
+     "slots": 21,
+     "relations": 2,
+     "control_families": 14,
+     "operators": 38,
+     "fingerprint": "d5d805f9184524eb",
+     "verdicts": {
+      "REFUTED": 2
+     }
+    }
+   ]
+  }
+ },
+ "cut": 448,
+ "prequential_stride": 1,
+ "matched_steps": [
+  456,
+  483,
+  529,
+  606,
+  697,
+  720,
+  729,
+  735,
+  737,
+  814,
+  859,
+  893,
+  895
+ ]
+}

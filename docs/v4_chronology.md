@@ -857,6 +857,18 @@ third and four fifths of what it says is a refusal, and none of it reaches the m
 the application whose 167 derived-pre-state variables have no query, is also the one refusing
 81% of the time.
 
+Harbour refusing on 55% of its clicks and scoring 94% is not a contradiction; it is the whole
+point.  Harbour's refusals are `Berth S1 is already open.`, and *that* condition is a state
+fact its rules can express and do learn -- `attr:cell#0@5(?o0) != 'closed'` -- so the model
+declines correctly on them and the refusals never become contradictions.  Blend's are
+`Festival White is already bottled.`, a fact about an object the action does not name, on a
+schema that does not reliably carry it at a half-trace cut.
+
+So the difference between the application this works on and the one it does not is whether the
+refusal condition happens to be sayable about an object the rule already has.  Where it is, the
+learner finds it from the counterexamples alone.  Where it is not, the application says it in
+words on every step, and nothing reads them.
+
 What that would be worth is worth stating too, since a line that always reads `Ready.` is not
 evidence about anything:
 
