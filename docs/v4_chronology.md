@@ -841,6 +841,22 @@ So the placement rule was "the `status` node, where there is one, is a view slot
 the remaining difficulty is the second half: what an operator is allowed to claim about an
 observable outcome that is not a state change.
 
+And this is not a blend fix.  Counting the clicks that announce anything, and calling a message
+a refusal when it says *already*, *cannot*, *is closed*, *holds 0* or *nothing chosen*:
+
+| | clicks with a new status message | refusals |
+|---|---|---|
+| cellar | 42 | **34 (81%)** |
+| harbour | 196 | **107 (55%)** |
+| blend | 455 | 136 (30%) |
+| vet clinic | -- | no status line at all |
+
+The classification is a regex over the message text and will be a few either way, but the
+magnitudes are not in doubt: on every application in this corpus that says anything, between a
+third and four fifths of what it says is a refusal, and none of it reaches the model.  Cellar,
+the application whose 167 derived-pre-state variables have no query, is also the one refusing
+81% of the time.
+
 What that would be worth is worth stating too, since a line that always reads `Ready.` is not
 evidence about anything:
 
