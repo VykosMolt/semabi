@@ -697,17 +697,26 @@ Every effect blend's model learned is a `set` on an object attribute or a `rel`:
 status line.  And the status line is not a slot on any object -- it is view-level, sitting in
 `state.view` beside the dropdowns.
 
-So a refusal changes only the view.  The effect language does not reach the view, so a refusal
-has nothing the model can express as an outcome: it becomes a no-op set aside as a
-counterexample, or a transition whose only difference the learner cannot lift.  Of blend's 419
-prefix steps, 146 became positives of some rule and 90 were set aside as no-ops.
+That first reading was that the effect language does not reach the view.  Following it further
+makes it sharper and worse: **the status line is not in the semantic state at all.**
 
-That is not "the learner picks the wrong conditions".  It is that **the outcome it should be
-learning is invisible to the effect language.**  The application says "Festival White is already
-bottled" -- it announces exactly the fact the rule needs -- and the model has no way to represent
-that anything happened.  Letting effects reach the view, or modelling the status line as an
-observable outcome, is the next mechanism, and unlike the four scoring schemes it is not a way of
-re-ranking what the fitting evidence already offers.
+At a blend refusal the raw page carries one `status` node, `Festival White is already bottled.`
+The abstract state before and after has that text nowhere -- not in `view`, not on any object --
+because the node sits outside every recurring unit, so the parser never places it in an
+instance.  Harbour is the same and at scale: 229 of its prefix observations carry a status line,
+**0** of them inside any instance root, **0** with the text present in the abstract state.  Vet
+clinic has no status lines, so it is unaffected.
+
+The consequence is exact.  Of blend's prefix `Record draw` clicks, 63 draws are lifted as
+transitions and **all 69 refusals are set aside as no-ops** -- and 46 of those 69 record no diff
+whatsoever, because the only thing that changed was the sentence the model cannot see.
+
+So this is not "the learner picks the wrong conditions", and it is not even "the effect language
+cannot express the outcome".  The application states in words, on every single step, exactly the
+fact the rule needs, and the representation discards it before any learner sees it.  Reading the
+status line into the semantic state is the next mechanism, and unlike the four scoring schemes
+it is not a way of re-ranking what the fitting evidence already offers -- it is evidence the
+fitting never had.
 
 Blend's rules fire on 196 held-out actions where
 the application refused, and are contradicted 899 times there against 121 on the actions it
