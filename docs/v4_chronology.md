@@ -862,6 +862,13 @@ python -m semabi.eval.v4_existence_baseline --chain ... --run ... --reading ...
 ```
 the removal base rate, unconditionally and per click.
 
+```
+python -m semabi.eval.v4_representation_curve --run ... --reading ... --splits 0.3,0.5,0.7
+```
+the schema, the control families and the named-versus-positional split of the action alphabet
+at each chronological cut.  This is the one that shows a threshold as a threshold; none of it is
+visible from a single split.
+
 `semabi.compiler.v4.prequential.run` is the loop itself, taking the steps to score and an
 optional probe; `scored_steps` picks them by control.  `csq.fit(run_dir, reading, at=t,
 regime=CAUSAL_PREQUENTIAL)` is one snapshot.
