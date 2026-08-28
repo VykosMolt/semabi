@@ -461,6 +461,37 @@ blend at 0.5, 50% / 57% / 54% at 0.7, and on vet clinic the *worst*-conditioned 
 refutation is not a property of the rule at all -- it is whether the application performed the
 action.
 
+## Conditioning on absence, which turns out to be rare
+
+`abstract` fills a slot with `None` when the instance does not render it: every attribute the
+*type* has is put on every instance, absent ones as `None`.  So `attr:k(x) == None` says the
+page did not show `k` here, and a rule whose antecedent is mostly absence is conditioning on
+what was not rendered rather than on the application.  How much of that there was had not been
+counted.
+
+Almost none, as it turns out:
+
+| | preconditions on a rendered value | on an absent slot | absent slots in one pre-state |
+|---|---|---|---|
+| harbour | 7 | 0 | 6% |
+| blend | 30 | 1 | 17% |
+| vet clinic | 7 | 0 | 0% |
+| cellar | 1 | 1 | **52%** |
+
+Cellar's schema is half absence and it still draws only one precondition from it.  The
+exceptions are blend's `attr:blend#0 = None` property query -- the one this run un-withdrew --
+and one precondition each on blend and cellar.
+
+One caveat on the applicability ceiling above: one of its three separating facts,
+`('dest', 'attr:cell#0@5', 'None')`, is an absence.  The ceiling came from enumerating every
+fact the state offers rather than from anything the learner asserted, so a third of it rests on
+a slot not being rendered.
+
+The query forms in use, at a 0.5 split, are also worth recording now that there are four of
+them: blend learns 28 selection queries, 18 relation, 17 singleton and 1 property; vet clinic
+learns 10 selection and 3 singleton.  Naming what the interface is pointed at is the form these
+applications need most, and it did not exist before this run.
+
 ## Where the bottleneck is now
 
 It is not chronology.  The evidence view, the graph, and the lazily induced control families
