@@ -323,6 +323,32 @@ and `attr:cell#0@4(?o1) == 'Open'`, the source being non-empty and open.  The va
 inexpressible: the literal language compares an attribute to a constant, or a string parameter
 to an attribute, but has no form for *this object's attribute equals that object's*.
 
+## Blend's applicability is a learning curve too
+
+The half-trace split is below threshold for blend in the same way it was for harbour.  Walking
+the cut, on the held-out steps where the application actually performs the draw:
+
+| split | steps fitted from | decided claims | supported | refusals correctly declined |
+|---|---|---|---|---|
+| 0.5 | 419 | 300 | **70%** | 258 of 622 |
+| 0.6 | 503 | 263 | 68% | 234 of 462 |
+| 0.7 | 587 | 268 | **100%** | 508 of 580 |
+
+At 0.7 -- the cut where the control families consolidate, 18 families and 4 positional control
+slots against 24 and 13 -- the model is right on every decided claim it makes at the steps where
+the action does what the rule is about, and declines 88% of the refusals rather than 41%.
+
+A hundred per cent demands a control, and the same one used for removals applies: measured
+against the clicks the rules fired on rather than against the trace.  Of the object-slot pairs
+present at those same steps, **22%** changed.  So "this slot changes" is true of about one
+object in five there, and the model is running at 4.6 times that rate at 0.7 and 3.1 times at
+0.5.  Overall across all held-out actions it is 55%, because it still fires on the refusals it
+does not decline.
+
+Which rules do that damage is measurable: at 0.5, three rules of support 2 and 3 account for
+222 of the contradictions on "already bottled" refusals, against 6 from the support-39 rule
+whose preconditions are three literals rather than one.
+
 ## Where the bottleneck is now
 
 It is not chronology.  The evidence view, the graph, and the lazily induced control families
@@ -341,6 +367,12 @@ objects the action does not supply and the referring query now names.  Two of th
 already learnable and learned; one needs a literal comparing an attribute of one object to an
 attribute of another, which the language does not have.
 
-The second bottleneck is unchanged: a representation whose concepts arrive later than a fixed
-split assumes.  That is a learning curve the causal prequential regime already handles, and
-that no amount of freezing will.
+And applicability is a learning curve as well.  Every failure traced under strict chronology in
+this run turned out to be one: harbour's lost precondition, learnable by step 252; blend's
+fragmented action alphabet, consolidating between 503 and 587; blend's referring queries, which
+needed a form for what the interface points at; and blend's applicability, which is perfect on
+the relevant steps at 0.7 and mediocre at 0.5.
+
+So the single finding under it all is that a fixed half-trace split is below threshold for both
+applications, and that what looked like ceilings were thresholds.  That is a learning curve the
+causal prequential regime already handles, and that no amount of freezing will.
