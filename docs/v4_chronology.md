@@ -833,7 +833,10 @@ python -m semabi.eval.v4_regimes --run runs/v4/harbour_transfer \
     --reading "joint discrimination x2" --control Close --split 0.5
 ```
 the three regimes on the same predictions.  The prequential column rebuilds the model before
-each scored action, so this one is minutes rather than seconds.
+each scored action, so this one is minutes rather than seconds -- and on a control that fires
+often it needs `--stride`.  Blend's `Record draw` fires 123 times after a half-trace cut, which
+is two hours of compiling at stride 1.  A stride skips the *question* and never the evidence:
+the model at step t is built from everything before t either way.
 
 ```
 python -m semabi.eval.v4_claim_substance --run ... --reading ... [--no-base-rate]
