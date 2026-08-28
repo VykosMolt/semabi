@@ -718,6 +718,19 @@ status line into the semantic state is the next mechanism, and unlike the four s
 it is not a way of re-ranking what the fitting evidence already offers -- it is evidence the
 fitting never had.
 
+It needs two changes, not one, and the second is the interesting one.  The parser has to place
+the status node, which today it drops because the node sits outside every recurring unit.  And
+a status-only change has to become something the action model can predict, which the current
+gate forbids: `domain_changed` is `added or removed or attr_changes or rel_changes`, view
+changes deliberately excluded, so a transition whose only difference is a sentence goes to
+`noops` however well it is represented.
+
+Making a status-only change count as a domain change would be the wrong repair.  Nothing about
+the world changed, and that distinction is doing real work elsewhere -- it is what keeps view
+navigation from looking causal.  What is missing is a third category: an *observable outcome*
+that is not a state change, which an operator may predict and a held-out step may refute.  That
+is an architectural addition rather than a patch, and it is specified here rather than started.
+
 Blend's rules fire on 196 held-out actions where
 the application refused, and are contradicted 899 times there against 121 on the actions it
 performed.  The conditions that would stop them are conditions on the source and destination --
