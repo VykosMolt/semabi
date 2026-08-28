@@ -44,7 +44,15 @@ from semabi.compiler.observation import Observation
 
 # Live regions: the ARIA roles whose content is written by the application in response to an
 # interaction rather than describing the state of the page.
-LIVE_ROLES = ("status", "alert")
+#
+# `alert` is not here, and the reason is a decision rather than a claim.  It is the same kind
+# of region -- the V0/V1 environment renders its error text with `role="alert"` -- but the
+# parser reads it as an ordinary leaf and has since V0, so the whole frozen V0/V1 line was
+# derived with alert content in the state.  A role must be one thing or the other: state or
+# output, never both, or a message is counted twice and a status-only change becomes a domain
+# change.  Moving `alert` across is a one-line change here and in `parse.DATA_ROLES`, and its
+# cost is re-deriving results that are not about live regions at all.
+LIVE_ROLES = ("status",)
 
 # A rendered value is short.  The guard exists to keep an application's prose -- a page
 # heading, an instructional paragraph -- from becoming a vocabulary of values that would mask

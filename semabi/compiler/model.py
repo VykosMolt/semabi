@@ -232,8 +232,15 @@ def build_model(A: Abstractor, ops: list[OperatorHyp], min_support: int = 1, vie
         # preconditions and nothing else, so a caller has to derive them from the state it is
         # in rather than choose them -- and without saying so the exported operator would look
         # as though every object it touches is an argument the agent gets to pick.
+        # Only what the *concrete interaction* carries: the owner of the clicked control, and
+        # a value the caller types or selects.  A `context` act is not that.  It is a view
+        # condition the lifter synthesises when an effect value happened to be displayed
+        # somewhere -- including, now, an object the emitted message names -- and treating its
+        # argument as supplied would export an operator claiming a parameter is the caller's
+        # to pick when `action_binding` will not supply it and a query has to find it.
         supplied = tuple(p for p in (
-            [a.owner for a in op.acts if a.owner] + [a.arg for a in op.acts if a.arg])
+            [a.owner for a in op.acts if a.owner and a.kind != "context"]
+            + [a.arg for a in op.acts if a.arg and a.kind != "context"])
             if any(p == name for name, _ in params))
         operators[op.name] = rm.Operator(op.name, params, pre, effects,
                                          supplied=tuple(dict.fromkeys(supplied)))

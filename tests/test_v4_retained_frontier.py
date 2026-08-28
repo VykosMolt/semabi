@@ -131,6 +131,12 @@ def test_retained_manifests_refuse_to_load_once_the_compiler_they_name_has_chang
     matters is that the loader points at a real divergence rather than an arbitrary one, so the
     named file is checked against the manifest's own recorded hash for it.
 
+    The compiler has since gained files as well as changed them -- the outcome layer is two
+    modules that did not exist when these manifests were written -- so the declared *set* can
+    differ from the current closure.  That is the same fact and the loader refuses for it too,
+    with a different message; both refusals are accepted here and each is checked for being
+    about something real.
+
     Results produced against the current compiler are therefore not claims that the frozen one
     produced them, and the loader is what enforces that rather than a convention.
     """
@@ -138,24 +144,33 @@ def test_retained_manifests_refuse_to_load_once_the_compiler_they_name_has_chang
     refused = []
     for path in sorted(manifest_dir.glob("*_source_candidates.json")):
         payload = json.loads(path.read_text())
-        assert set(payload["generation"]["implementation_files"]) == set(
-            manifests.GENERATOR_IMPLEMENTATION_FILES
-        )
         with pytest.raises(manifests.ManifestError) as exc:
             manifests.load_source_manifest(path, repo_root=ROOT)
-        refused.append((str(exc.value), payload["generation"]["implementation_files"]))
+        refused.append((str(exc.value), payload["generation"]["implementation_files"],
+                        set(manifests.GENERATOR_IMPLEMENTATION_FILES)))
     for path in sorted(manifest_dir.glob("*_chain.json")):
         payload = json.loads(path.read_text())
-        assert set(payload["implementation_files"]) == set(manifests.REPLAY_IMPLEMENTATION_FILES)
         assert len({
             payload["roles"][role]["snapshot"]["consumed_evidence_sha256"]
             for role in ("SOURCE", "TRANSFER", "HOLDOUT")
         }) == 3
         with pytest.raises(manifests.ManifestError) as exc:
             manifests.load_chain_manifest(path, repo_root=ROOT)
-        refused.append((str(exc.value), payload["construction_implementation_files"]))
+        refused.append((str(exc.value), payload["construction_implementation_files"],
+                        set(manifests.CHAIN_BUILDER_IMPLEMENTATION_FILES)))
     assert refused
-    for reason, recorded in refused:
+    for reason, recorded, current in refused:
+        if set(recorded) != current:
+            # The compiler gained files rather than only changing them: the outcome layer is
+            # two modules the manifests were written before.  That is a divergence too, and
+            # the loader has to name it as one rather than pass.
+            assert "is not frozen" in reason, reason
+            assert current - set(recorded), (
+                "the declared file set differs but nothing was added; if files were *removed* "
+                "the manifests are describing a compiler that no longer exists in a way this "
+                "assertion does not cover"
+            )
+            continue
         assert "implementation hash mismatch" in reason
         named = [f for f in recorded if f in reason]
         assert len(named) == 1, reason

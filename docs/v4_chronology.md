@@ -932,6 +932,25 @@ by which rule asserted it.
 
 The other four remain untested.  That is stated rather than fixed.
 
+## What happened to the second half
+
+The last section above says the next mechanism is a third category -- an observable outcome
+that is not a state change -- and specifies it rather than building it.  It was built, and
+`docs/v4_outcomes.md` is that account.  Two things here are superseded by it and should be read
+with that document beside them.
+
+The first half of the status repair is withdrawn as a *placement*.  Putting `status` in the
+parser's leaf roles makes the sentence a slot -- of the view where it stands alone, of a unit
+where it sits inside one -- and a status-only change then becomes an ordinary attribute change,
+which is the repair this document argued against two paragraphs earlier.  The sentence belongs
+on the transition, and that is where it now is.
+
+With it goes the cellar result reported above: the promoted reading gaining `the object named
+by status#0` as a namer, its queries going from 5 to 6 and 7 to 8, and its five determinate
+held-out opportunities.  The status line is not in the semantic state, so that namer does not
+exist.  This document flagged the result as one to be suspicious of, and that is what being
+suspicious of it came to.
+
 ## Running any of this again
 
 Every number above comes from one of five runners, and each writes its report to

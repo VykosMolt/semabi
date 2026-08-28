@@ -8,7 +8,7 @@ independently produces a set of rules that all claim the same click.  On blend's
 draw`` at a 0.7 cut, six branches were applicable at every one of 67 held-out actions and the
 right one was among them every time; the model had recall and no decision.
 
-Two things follow from taking the alternatives seriously.
+Three things follow from taking the alternatives seriously.
 
 The first is that the hypothesis is a **decision list**, not a set.  An application checks its
 guards in an order and reports the first that fails, so ``already bottled`` is what you get
@@ -22,10 +22,21 @@ The second is that not answering is an answer.  Where no pure rule covers the re
 ends and the model says it does not know, rather than defaulting to the commonest event --
 which is the control this instrument is measured against.
 
-The roles the conditions are about are the referring expressions the operators already
-learned: "the object named by this select", "the object this button sits in", "the object
-whose reference points at that one".  Nothing here introduces a new way of naming an object,
-and a state where a role names no single object makes the model abstain rather than guess.
+The third is that the application says which object each event is about, and that is evidence
+about the *referring expressions*, not only about the events.  The roles here are the
+expressions the operators already learned -- "the object named by this select", "the object
+this button sits in", "the object whose reference points at that one" -- and two of them that
+fill the same argument position of the same event are two names for one role, merged and then
+ordered by which of them the messages corroborate.  An expression never once corroborated and
+sometimes contradicted is dropped.  Nothing here introduces a new way of *naming* an object;
+what is new is that a name can now be checked against the application's own use of it.
+
+Using a completed transition's message to choose a referring expression is causally legal --
+the action has happened.  Using it to choose the target of the prediction that preceded it is
+not, and does not occur: prediction asks only pre-state queries.  Whether a role names anything
+at all is itself a condition the list may be about, which is how cellar's commonest refusal --
+*Nothing chosen in the vessel list.* -- is expressible; and a state where a role the list
+depends on names nothing makes the model abstain rather than guess.
 """
 from __future__ import annotations
 

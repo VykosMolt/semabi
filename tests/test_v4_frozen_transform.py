@@ -405,31 +405,33 @@ def test_a_rule_that_cannot_say_which_object_says_so_rather_than_guessing():
 # ------------------------------------------------------------------ what the model cannot see
 
 @pytest.mark.skipif(not (HARBOUR_RUN / "steps.jsonl").exists(), reason="retained trace absent")
-def test_the_application_says_what_it_did_and_the_model_still_cannot_learn_from_it():
-    """Half a gap, pinned at the half that remains.
+def test_the_application_says_what_it_did_and_the_model_reads_it_as_an_outcome():
+    """The other half, closed, and pinned at the shape of the closing.
 
-    The status node is now read.  `status` joined the parser's leaf roles beside `alert`, which
-    is the same kind of live region and was already in the graph's and the hypotheses' leaf
-    sets; only `parse.DATA_ROLES` omitted it.  Harbour's status line now reaches the view on
-    every observation it appears in.
+    This test used to assert the opposite.  The status line had just been made visible to the
+    parser and nothing downstream could use it: a transition whose only difference was a
+    sentence was not a domain change, so a refusal was set aside as a counterexample rather
+    than lifted as an outcome, and it said in as many words that closing the gap would need a
+    category the model did not have and that a rewrite would be due when it arrived.
 
-    Nothing downstream moved.  Types, slots, operators and control families are identical with
-    and without it on harbour and blend, and the regenerated claim ledgers are byte-identical --
-    because reading a fact is not the same as being able to learn from it.
+    It arrived, and the category is not a slot.  Reading the sentence as an ordinary leaf was
+    the *wrong* half of the first repair: as a leaf it becomes a slot -- of the view where the
+    node stands alone, of a unit where it sits inside one -- and a status-only change then
+    becomes an ordinary attribute change, which is precisely the repair the old test forbade.
+    So `status` is out of the parser's leaf roles again and the sentence is carried on the
+    transition instead, by `semabi.compiler.v4.emission`.
 
-    What remains is the gate.  A transition whose only difference is the status line is still
-    not a domain change, so a refusal is still set aside as a counterexample rather than lifted
-    as an outcome, and all 69 of blend's held-out refusals are still counterexamples.  Closing
-    that needs a category this model does not have: an observable outcome that is not a state
-    change.  Making a status-only diff count as a domain change is *not* the repair -- nothing
-    about the world changed, and that distinction is what stops view navigation looking causal.
-
-    These assertions are written to fail when the second half closes, for the same reason the
-    first version was: a silent improvement would leave the numbers in
-    `docs/v4_chronology.md` describing a model that no longer exists.
+    Three things are pinned here: the parser does not place it, the transition does carry it,
+    and a status-only diff is still not a domain change.
     """
+    from semabi.compiler.abstract import Diff
+    from semabi.compiler.parse import DATA_ROLES
     from semabi.compiler.v4 import consequence as csq
+    from semabi.compiler.v4 import emission as em
     from semabi.eval.v4_consequence_run import _candidates
+
+    # A role is state or output, never both: read twice, a message would be a domain change.
+    assert not (set(em.LIVE_ROLES) & DATA_ROLES)
 
     readings = {c.name: c.reading for c in _candidates(HARBOUR_CHAIN)}
     model = csq.fit(HARBOUR_RUN, readings["joint discrimination x2"], split=0.5)
@@ -451,21 +453,16 @@ def test_the_application_says_what_it_did_and_the_model_still_cannot_learn_from_
             in_view += 1
 
     assert checked, "harbour's observations carry a status line; this found none"
-    assert in_view == checked, (
-        f"only {in_view} of {checked} status lines reach the view -- the parser has stopped "
-        "reading them, which undoes the first half of the repair"
-    )
-    assert placed == 0, (
-        f"{placed} status nodes are now inside a unit; they are meant to be statics, and a "
-        "status line that belongs to one row of a table is a different claim"
+    assert placed == 0 and in_view == 0, (
+        f"{placed} status nodes are inside a unit and {in_view} reach the view; the live "
+        "region is a transition output and must not also be state"
     )
 
-    # The gate that still stops any of it being learned.
-    from semabi.compiler.abstract import Diff
+    # It is carried on the transitions instead, as a lifted event.
+    emitted = [tr for tr in model.inducer.transitions if tr.emission is not None]
+    assert emitted, "no transition carries an output"
+    assert any(e.kind == "emit" for op in model.operators for e in op.effs)
+
+    # And the gate is untouched: nothing about the world changed.
     only_view = Diff([], [], [], [], {"status": ("Ready.", "Berth N2 is already closed.")})
-    assert only_view.domain_changed is False, (
-        "a status-only change now counts as a domain change; that is the wrong repair -- "
-        "nothing about the world changed, and this distinction is what stops view navigation "
-        "looking causal.  If the second half has been closed properly, it was closed with a "
-        "third category and this test needs rewriting around it"
-    )
+    assert only_view.domain_changed is False

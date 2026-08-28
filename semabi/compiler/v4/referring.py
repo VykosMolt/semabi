@@ -35,6 +35,13 @@ ACTION_BOUND = "the action supplies it"
 CREATED = "the effect brings it into being"
 DERIVED_PRESTATE = "it already exists and the action does not name it"
 PRECONDITION_WITNESS = "it appears only in preconditions"
+# An object the interaction's *output* names and its state effects do not touch: harbour's
+# "Berth S1 cannot be closed while call C-101 holds it" is about the call, which nothing in
+# that branch changes.  It needs a query for the same reason a derived effect target does --
+# the message cannot be predicted without naming it -- and it is a different obligation:
+# an operator whose *output* argument the state does not pin down has said less than it might,
+# while one whose *effect target* is not pinned down has not said which object changes.
+OUTPUT_ARGUMENT = "the interaction's output names it and no effect changes it"
 
 RELATION = "relation"
 SINGLETON = "singleton"
@@ -109,6 +116,7 @@ class Grounding:
     params: tuple[str, ...] = ()
     action_bound: tuple[str, ...] = ()
     effect_variables: tuple[str, ...] = ()
+    output_variables: tuple[str, ...] = ()
     created: tuple[str, ...] = ()
     witnesses: tuple[str, ...] = ()
     queries: dict[str, Query] = field(default_factory=dict)
@@ -126,6 +134,8 @@ class Grounding:
                 out[param] = ACTION_BOUND
             elif param in self.effect_variables:
                 out[param] = DERIVED_PRESTATE
+            elif param in self.output_variables:
+                out[param] = OUTPUT_ARGUMENT
             else:
                 out[param] = PRECONDITION_WITNESS
         return out
@@ -137,7 +147,7 @@ class Grounding:
         evidence to search over.  Without positives the honest answer is that nothing was
         established, which is a different thing from having looked and found nothing.
         """
-        wanted = [v for v in self.effect_variables
+        wanted = [v for v in tuple(self.effect_variables) + tuple(self.output_variables)
                   if v not in self.action_bound and v not in self.created]
         if not self.positives:
             return {v: UNESTABLISHED for v in wanted}
@@ -172,6 +182,7 @@ class Grounding:
                 "roles": self.roles(), "outcomes": self.outcomes(), "basis": self.basis,
                 "action_bound": list(self.action_bound),
                 "effect_variables": list(self.effect_variables),
+                "output_variables": list(self.output_variables),
                 "created": list(self.created), "witnesses": list(self.witnesses),
                 "queries": {v: str(q) for v, q in sorted(self.queries.items())},
                 "not_determined": list(self.unreachable), "status": self.status}
@@ -342,21 +353,32 @@ def ground(op, evidence, action_bound, refuses) -> Grounding:
     resolves the identifiers first; parameters bound to strings rather than objects are left
     out, and nothing is claimed about them.
     """
-    effect_vars = tuple(sorted({e.obj for e in op.effs if isinstance(e.obj, str)}))
+    effect_vars = tuple(sorted({e.obj for e in op.effs if isinstance(e.obj, str) and e.obj
+                                and getattr(e, "kind", "") != "emit"}))
+    # Objects only the output names.  They are sought the same way -- a message about an object
+    # cannot be predicted without naming it -- and reported apart, because "the state does not
+    # pin down what this interaction *changes*" and "...what it *mentions*" are different
+    # failures and only the first makes an operator ill-formed.
+    output_vars = tuple(sorted({v for e in op.effs if getattr(e, "kind", "") == "emit"
+                                for v in ([e.obj] + [x for _, x in e.attrs])
+                                if isinstance(v, str) and v.startswith("?")
+                                and v not in effect_vars}))
     # A ``?new`` variable is not an object to be identified in the pre-state -- it is one the
     # effect brings into being, so its denotation is supplied by the effect rather than by any
     # query, and looking for a pre-state referring expression for it is a category error.  An
     # earlier version of this searched for them anyway and reported the failures as the
     # reading's, which would have understated exactly the reading that grounds best.
-    created = tuple(v for v in effect_vars if v.startswith("?new"))
+    created = tuple(v for v in effect_vars + output_vars if v.startswith("?new"))
     all_params = tuple(op.params)
-    witnesses = tuple(p for p in all_params if p not in effect_vars and p not in action_bound)
-    out = Grounding(op.name, all_params, tuple(sorted(action_bound)), effect_vars, created,
-                    witnesses, positives=len(evidence))
+    witnesses = tuple(p for p in all_params if p not in effect_vars
+                      and p not in output_vars and p not in action_bound)
+    out = Grounding(op.name, all_params, tuple(sorted(action_bound)), effect_vars,
+                    output_vars, created, witnesses, positives=len(evidence))
     if not evidence:
         return out
     known = set(action_bound)
-    wanted = [v for v in effect_vars if v not in action_bound and v not in created]
+    wanted = [v for v in effect_vars + output_vars
+              if v not in action_bound and v not in created]
     progress = True
     while progress:
         progress = False

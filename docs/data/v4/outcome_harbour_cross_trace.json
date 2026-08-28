@@ -4,11 +4,12 @@
  "regime": "FROZEN_PREFIX",
  "split": 1.0,
  "control": null,
+ "subject_restricted": false,
  "permuted_events": null,
  "scored_on": "harbour_holdout",
  "cut": 459,
- "operators": 84,
- "operators_with_an_output": 84,
+ "operators": 64,
+ "operators_with_an_output": 64,
  "output": {
   "claims": 0,
   "verdicts": {},
@@ -40,7 +41,7 @@
  },
  "outcome_model": {
   "controls": 11,
-  "rules": 15,
+  "rules": 17,
   "held_out_clicks": 270,
   "ledger": {
    "a different event": 96,
@@ -63,15 +64,78 @@
    "<> <> is now <> .": 17,
    "<> already has call <> on the board .": 11,
    "<> <> cannot be <> while call <> holds it .": 7,
-   "Call <> opened for <> .": 6,
    "Call <> is not <> , so nothing has sailed .": 6,
-   "Nothing chosen in the berth list .": 6
+   "Nothing chosen in the berth list .": 6,
+   "Call <> opened for <> .": 6
   },
   "majority_frame_control_where_it_answered": {
-   "right": 30,
-   "wrong": 149,
+   "right": 31,
+   "wrong": 148,
    "control_unseen_on_prefix": 0,
-   "accuracy": 0.168
+   "accuracy": 0.173
+  },
+  "by_control": {
+   "button#0": {
+    "fitted": 2,
+    "rules": 1,
+    "events_fitted": 1,
+    "a different event": 79,
+    "the event the interface returned": 5
+   },
+   "button:Reopen": {
+    "fitted": 38,
+    "rules": 3,
+    "events_fitted": 2,
+    "the event the interface returned": 35,
+    "a different event": 2
+   },
+   "button:Schedule call": {
+    "fitted": 36,
+    "rules": 7,
+    "events_fitted": 2,
+    "no determinate answer": 19,
+    "the event the interface returned": 9,
+    "a different event": 8
+   },
+   "button:Sign off": {
+    "fitted": 30,
+    "rules": 0,
+    "events_fitted": 3,
+    "no determinate answer": 33
+   },
+   "button:Sign on": {
+    "fitted": 34,
+    "rules": 0,
+    "events_fitted": 2,
+    "no determinate answer": 32
+   },
+   "button:Close": {
+    "fitted": 33,
+    "rules": 3,
+    "events_fitted": 3,
+    "the event the interface returned": 26,
+    "a different event": 3
+   },
+   "button:Book pilot": {
+    "fitted": 5,
+    "rules": 0,
+    "events_fitted": 2,
+    "no determinate answer": 7
+   },
+   "button:Record departure": {
+    "fitted": 7,
+    "rules": 1,
+    "events_fitted": 1,
+    "the event the interface returned": 4,
+    "a different event": 2
+   },
+   "button:Allocate berth": {
+    "fitted": 5,
+    "rules": 1,
+    "events_fitted": 1,
+    "the event the interface returned": 4,
+    "a different event": 2
+   }
   },
   "wrong": [
    {
@@ -162,7 +226,7 @@
    "button:Close": "button:Close: 33 fitted occasions, 3 distinct events\n    ('ref_set', 'owner', 'rel:12')  ->  <> <> cannot be <> while call <> holds it .   [10]\n    attr:cell#0@5(owner) == 'open'  ->  <> <> is now <> .   [14]\n    otherwise  ->  <> <> is already <> .   [9]\n    otherwise -> <> <> is already <> .\n    '<> <> cannot be <> while call <> holds it .' arguments: 1=owner\n    '<> <> is already <> .' arguments: 1=owner\n    '<> <> is now <> .' arguments: 1=owner",
    "button:Record departure": "button:Record departure: 7 fitted occasions, 1 distinct events\n    role singleton[]:10 = singleton[]\n    otherwise  ->  Call <> is not <> , so nothing has sailed .   [7]\n    otherwise -> Call <> is not <> , so nothing has sailed .",
    "button:Reopen": "button:Reopen: 38 fitted occasions, 2 distinct events\n    attr:cell#0@5(owner) == 'open'  ->  <> <> is already <> .   [20]\n    ('ref_null', 'owner', 'rel:12')  ->  <> <> is now <> .   [14]\n    otherwise  ->  <> <> is already <> .   [4]\n    otherwise -> <> <> is already <> .\n    '<> <> is already <> .' arguments: 1=owner\n    '<> <> is now <> .' arguments: 1=owner",
-   "button:Schedule call": "button:Schedule call: 36 fitted occasions, 2 distinct events\n    role singleton[]:12 = singleton[]\n    role singleton[]:10 = singleton[]\n    ('ref_set', 'owner', 'rel:12')  ->  <> already has call <> on the board .   [9]\n    ('ref_set', 'owner', 'rel:10')  ->  <> already has call <> on the board .   [6]\n    attr:cell#0@6(owner) == '4' & rel:13(owner) != singleton[]:10  ->  <> already has call <> on the board .   [4]\n    ('ref_null', 'owner', 'rel:12')  ->  Call <> opened for <> .   [3]\n    ('ref_null', 'owner', 'rel:10')  ->  Call <> opened for <> .   [2]\n    otherwise -> undetermined\n    '<> already has call <> on the board .' arguments: 0=owner\n    'Call <> opened for <> .' arguments: 1=owner",
+   "button:Schedule call": "button:Schedule call: 36 fitted occasions, 2 distinct events\n    role singleton[]:12 = singleton[]\n    ('ref_set', 'owner', 'rel:12')  ->  <> already has call <> on the board .   [9]\n    ('ref_set', 'owner', 'rel:10')  ->  <> already has call <> on the board .   [6]\n    ('ref_null', 'owner', 'rel:12')  ->  Call <> opened for <> .   [3]\n    attr:cell#0@6(owner) == '2' & rel:13(owner) != singleton[]:12  ->  <> already has call <> on the board .   [3]\n    ('named', 'singleton[]:12')  ->  Call <> opened for <> .   [3]\n    attr:cell#0@6(owner) == '3'  ->  Call <> opened for <> .   [2]\n    attr:cell#0@6(owner) == '4' & attr:m#0(owner) == '112'  ->  <> already has call <> on the board .   [2]\n    otherwise -> undetermined\n    '<> already has call <> on the board .' arguments: 0=owner, 1=singleton[]:12\n    'Call <> opened for <> .' arguments: 1=owner",
    "button:Sign off": "button:Sign off: 30 fitted occasions, 3 distinct events\n    otherwise -> undetermined",
    "button:Sign on": "button:Sign on: 34 fitted occasions, 2 distinct events\n    otherwise -> undetermined"
   }

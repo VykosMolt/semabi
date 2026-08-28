@@ -44,7 +44,18 @@ NO_RULE = "no rule applied"
 def _claim_kind(p) -> str:
     if p.kind == csq.EXISTENCE:
         return "removal"
+    if p.kind == csq.OUTPUT:
+        return "an interface response"
+    if p.kind == csq.CREATION:
+        return "an object brought into being"
     return "changes, unspecified" if p.predicted == csq.CHANGES else "a named constant"
+
+
+# The per-action ledger covers what the action model claims about the *state*, which is what
+# the rows in docs/v4_chronology.md were computed over.  Outputs and creations are new kinds of
+# claim and are reported in the composition; folding them into the same ledger would silently
+# change what a row means.
+STATE_CLAIMS = (csq.VALUE, csq.EXISTENCE)
 
 
 def substance(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.5,
@@ -64,8 +75,9 @@ def substance(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0
     for p in result.predictions:
         kind = _claim_kind(p)
         by_kind[kind][p.verdict] += 1
-        at_action[(p.step, p.control)][p.verdict] += 1
-        offered[(p.step, p.control)].add(p.operator)
+        if p.kind in STATE_CLAIMS:
+            at_action[(p.step, p.control)][p.verdict] += 1
+            offered[(p.step, p.control)].add(p.operator)
         if p.verdict in (csq.SUPPORTED, csq.REFUTED):
             shown = "changes" if p.predicted == csq.CHANGES else str(p.predicted)
             distinct[kind].add((p.slot, shown))

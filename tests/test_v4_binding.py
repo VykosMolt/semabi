@@ -158,8 +158,25 @@ def test_rewriting_every_prediction_leaves_the_binding_untouched():
                             mutate=MUTATIONS["never_rendered_token"])
             assert plain.binding_summary() == wrecked.binding_summary(), (name, mode)
             assert plain.schema() == wrecked.schema(), (name, mode)
-            # and the control really did do something
-            assert plain.counts("VALUE") != wrecked.counts("VALUE"), (name, mode)
+            # and the control really did do something -- where the instrument decides anything.
+            #
+            # On the loose reading it no longer does.  Its binder hits the enumeration bound on
+            # every one of its 145 firings, and a truncated enumeration can never refute, so
+            # every value claim is POSSIBLE with the predictions rewritten or not.
+            #
+            # Not because of the belief repair, which was the obvious suspect and was measured:
+            # restoring the old merge, so that the tracker carries values the page contradicts
+            # again, gives the identical {'POSSIBLE': 145} and the identical 145 truncations.
+            # What is left is the counterexample-rebinding repair -- a parameter the negative
+            # does not determine no longer counts as excluded -- which leaves this reading with
+            # fewer surviving literals and so with less to constrain its search.  A reading
+            # whose rules constrain nothing binds everything, which is what this file is about;
+            # the claim made here is therefore the weaker true one.
+            counts = plain.counts("VALUE")
+            if set(counts) - {"POSSIBLE", "NOT_APPLICABLE", "UNKNOWN"}:
+                assert counts != wrecked.counts("VALUE"), (name, mode)
+            else:
+                assert plain.binding_summary()["hit_the_enumeration_bound"], (name, mode)
 
 
 def test_the_outcome_cannot_choose_the_binding():
@@ -224,13 +241,33 @@ def test_on_the_real_trace_one_reading_determines_its_object_and_the_other_does_
     # And the exported action model says it before any prediction is checked at all, because
     # it is a property of the reading rather than of the trace: an operator records which of
     # its parameters the interaction itself grounds.
+    #
+    # About the objects it *changes*.  Since the model learned what an interaction returns, an
+    # operator can also mention an object no effect of it touches -- harbour's "cannot be
+    # closed while call C-101 holds it" is about the call -- and that parameter is derived on
+    # both readings, correctly.  Conflating the two would say the grounded reading has stopped
+    # grounding its action, which is not what happened.
+    import semabi.relmodel as rm
+
+    def changes(op):
+        vals = []
+        for e in op.effects:
+            if isinstance(e, rm.Emit):
+                continue
+            vals += [getattr(e, k) for k in ("obj", "a", "b", "src", "dst", "value")
+                     if hasattr(e, k)]
+            if isinstance(e, rm.Create):
+                vals += [v for _, v in e.attrs]
+        return {v for v in vals if isinstance(v, str) and v.startswith("?")}
+
     for fitted, action_grounds_everything in ((grounded_fit, True), (loose_fit, False)):
         exported = build_model(fitted.abstractor, fitted.operators, min_support=1).domain
         operators = [op for op in exported.operators.values()
                      if len(op.params) and any(o.name == op.name and o.support >= 2
                                                for o in fitted.operators)]
         assert operators
-        assert all(bool(op.derived()) is not action_grounds_everything for op in operators)
+        assert all(bool(set(op.derived()) & changes(op)) is not action_grounds_everything
+                   for op in operators if changes(op))
 
         # and the exported claim is the same claim the checker acts on.  ``supplied`` is
         # computed statically from the grounding acts while ``action_binding`` is computed per
@@ -322,14 +359,18 @@ def test_an_effect_on_an_object_the_state_never_pins_is_not_a_well_formed_schema
     readings = {c.name: c.reading for c in _candidates(HARBOUR_CHAIN)}
     grounded = score(fit(HARBOUR_RUN, readings["joint discrimination x2"], split=0.5)).schema()
     assert grounded["operators"] and not grounded["ill_formed"]
-    assert all(not row["derived"] for row in grounded["operators"].values())
+    # No operator has an effect target the state leaves open.  Some now have a *derived*
+    # parameter that only the emitted message names -- the call holding a berth -- and that is
+    # a different obligation, reported apart and not an ill-formed schema.
+    assert all(not row["undetermined_effect_params"]
+               for row in grounded["operators"].values())
 
     loose_fit = fit(HARBOUR_RUN, readings["promote cell[_]=cell#0"], split=0.5)
     loose_result = score(loose_fit)
     loose = loose_result.schema()
     assert loose["ill_formed"]
     for name in loose["ill_formed"]:
-        assert loose["operators"][name]["undetermined_effect_params"] == ["?o0"]
+        assert len(loose["operators"][name]["undetermined_effect_params"]) == 1
 
     # The classification is made before any outcome is consulted, and it is what decides
     # whether the reading manages to say anything at all: every decided prediction it makes

@@ -4,6 +4,7 @@
  "regime": "FROZEN_PREFIX",
  "split": 0.5,
  "control": null,
+ "subject_restricted": false,
  "permuted_events": null,
  "scored_on": "vet_clinic_transfer",
  "cut": 448,
@@ -69,13 +70,69 @@
    "control_unseen_on_prefix": 0,
    "accuracy": null
   },
+  "by_control": {
+   "button:Clients": {
+    "fitted": 0,
+    "rules": 0,
+    "events_fitted": 1,
+    "this application has no live region, so there is nothing to predict": 72
+   },
+   "button:Vets": {
+    "fitted": 0,
+    "rules": 0,
+    "events_fitted": 1,
+    "this application has no live region, so there is nothing to predict": 71
+   },
+   "button:Appointments": {
+    "fitted": 0,
+    "rules": 0,
+    "events_fitted": 1,
+    "this application has no live region, so there is nothing to predict": 70
+   },
+   "button:Schedule": {
+    "fitted": 0,
+    "rules": 0,
+    "events_fitted": 1,
+    "this application has no live region, so there is nothing to predict": 13
+   },
+   "button:Check in": {
+    "fitted": 0,
+    "rules": 0,
+    "events_fitted": 1,
+    "this application has no live region, so there is nothing to predict": 7
+   },
+   "button:Assign vet": {
+    "fitted": 0,
+    "rules": 0,
+    "events_fitted": 1,
+    "this application has no live region, so there is nothing to predict": 7
+   },
+   "button:Cancel": {
+    "fitted": 0,
+    "rules": 0,
+    "events_fitted": 1,
+    "this application has no live region, so there is nothing to predict": 6
+   },
+   "button:Start exam": {
+    "fitted": 0,
+    "rules": 0,
+    "events_fitted": 1,
+    "this application has no live region, so there is nothing to predict": 6
+   },
+   "button:Complete": {
+    "fitted": 0,
+    "rules": 0,
+    "events_fitted": 1,
+    "this application has no live region, so there is nothing to predict": 5
+   }
+  },
   "wrong": [],
   "lists": {
    "button:Appointments": "button:Appointments: 0 fitted occasions, 1 distinct events\n    role singleton[]:2 = singleton[]\n    otherwise -> returns nothing",
    "button:Assign vet": "button:Assign vet: 0 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing",
    "button:Cancel": "button:Cancel: 0 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing",
    "button:Check in": "button:Check in: 0 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing",
-   "button:Clients": "button:Clients: 0 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    role singleton[]:2 = singleton[]\n    otherwise -> returns nothing",
+   "button:Clients": "button:Clients: 0 fitted occasions, 1 distinct events\n    role singleton[]:2 = singleton[]\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing",
    "button:Complete": "button:Complete: 0 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing",
    "button:Register patient": "button:Register patient: 0 fitted occasions, 1 distinct events\n    otherwise -> returns nothing",
    "button:Schedule": "button:Schedule: 0 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing",

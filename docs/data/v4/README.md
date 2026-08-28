@@ -18,6 +18,23 @@ Five families, all carrying a `regime` field naming one of `TRANSDUCTIVE`, `FROZ
 
 `docs/v4_chronology.md` names the runner behind each and how to regenerate it.
 
+Three more families were added by the outcome run and carry the same field:
+
+    outcome_*              what the interface returns: the model, its controls, and the state
+                           predictions beside it, with the same reading fitted with the live
+                           region unread.  `*_permuted` is the same learner on shuffled events;
+                           `*_cross_trace` is scored on a second retained history rather than a
+                           suffix; `*_subject_restricted` allows a guard only about an object
+                           the event names; `*_prequential` rebuilds the model before each
+                           scored action
+    state_fidelity_*       every attribute value the learner saw, against the page it was read
+                           from.  `_tracked` audits the belief-tracked states; without it, each
+                           parse
+    creation_*             creation claims and the exposure that makes one easy
+
+`docs/v4_outcomes.md` names their runners, and `scripts/v4_outcome_batch.sh` regenerates all of
+them in one pass.
+
 ## Everything else here predates the repair
 
 Everything else here -- the remaining JSON, and the three `.txt` reports beside them -- carries

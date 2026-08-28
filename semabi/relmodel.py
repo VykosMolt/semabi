@@ -187,6 +187,9 @@ class Create:
         return f"{self.bind} := new {self.type}({a})"
 
 
+RETURNED = "?returned"     # where `apply_effects` puts what the interaction answered
+
+
 @dataclass(frozen=True)
 class Emit:
     """An observable output the interaction returns, with the objects it names.
@@ -479,6 +482,12 @@ def apply_effects(op: Operator, state: State, binding: dict[str, Any]) -> tuple[
             for x in s.incoming(e.rel, _resolve(e.obj, b)):
                 if x in s.objects:
                     s.objects[x].attrs[e.attr] = val
+        elif isinstance(e, Emit):
+            # An output changes no state.  It is returned instead, under a reserved binding
+            # key, so that a caller planning against this model can see that an operation
+            # answers rather than acts -- which is the whole reason the effect exists.
+            b.setdefault(RETURNED, []).append(
+                (e.frame, tuple(_resolve(v, b) for v in e.args)))
         else:
             raise TypeError(e)
     return s, b
@@ -524,7 +533,8 @@ def _eff_to_json(e: Effect) -> dict:
 
 
 _LIT = {c.__name__: c for c in (AttrEq, RelHolds, NoIncoming, Distinct)}
-_EFF = {c.__name__: c for c in (Create, Delete, SetAttr, SetRel, DeleteIncoming, MoveIncoming, SetAttrIncoming)}
+_EFF = {c.__name__: c for c in (Create, Delete, SetAttr, SetRel, DeleteIncoming, MoveIncoming,
+                                SetAttrIncoming, Emit)}
 
 
 def _lit_from_json(d: dict) -> Literal:
@@ -537,6 +547,8 @@ def _eff_from_json(d: dict) -> Effect:
     k = d.pop("kind")
     if k == "Create":
         d["attrs"] = tuple((a, v) for a, v in d.get("attrs", []))
+    if k == "Emit":
+        d["args"] = tuple(d.get("args", ()))
     return _EFF[k](**d)
 
 

@@ -104,6 +104,50 @@ def majority_control(model, events, held_out_steps, *, on: set | None = None) ->
             "accuracy": round(right / decided, 3) if decided else None}
 
 
+def prequential(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.5,
+                min_support: int = 2, control: str | None = None, stride: int = 8) -> dict:
+    """The outcome model under the boundary a deployed agent actually faces.
+
+    Every other number here is `FROZEN_PREFIX`: one model, fitted once, asked about everything
+    after the cut.  This rebuilds the whole model before each scored action from exactly what
+    had been observed when that action was chosen -- every completed transition and the page in
+    front of the agent, and nothing about how the action turns out -- which is a minute apiece,
+    hence the stride.  A stride skips the *question* and never the evidence: the model at step
+    t is built from everything before t either way.
+    """
+    from semabi.eval.v4_consequence_run import _candidates
+
+    readings = {c.name: c.reading for c in _candidates(chain)}
+    reading = readings[reading_name]
+    log = EvidenceLog(Path(run_dir))
+    cut = int(len(log.steps) * split)
+    steps = [s for s in log.steps[cut:]
+             if s.action.kind == "click" and s.action.target is not None][::stride]
+    ledger: Counter = Counter()
+    levels: Counter = Counter()
+    asserted: Counter = Counter()
+    rows = []
+    for step in steps:
+        model = csq.fit(Path(run_dir), reading, at=step.step, min_support=min_support,
+                        regime=csq.CAUSAL_PREQUENTIAL)
+        row = oc.score_step(model, step)
+        if control is not None and control.lower() not in (row["control"] or "").lower():
+            continue
+        ledger[row["verdict"]] += 1
+        if row["verdict"] in (oc.RIGHT, oc.WRONG):
+            asserted[row.get("predicted")] += 1
+            levels[f"{row['verdict']} / {row.get('level', 'no arguments to check')}"] += 1
+        rows.append({k: v for k, v in row.items() if k != "detail"})
+    decided = ledger[oc.RIGHT] + ledger[oc.WRONG]
+    return {"run": Path(run_dir).name, "reading": reading_name,
+            "regime": csq.CAUSAL_PREQUENTIAL, "split": split, "cut": cut,
+            "control": control, "stride": stride, "actions_scored": len(rows),
+            "ledger": dict(ledger.most_common()), "by_level": dict(levels.most_common()),
+            "accuracy_where_it_answered": round(ledger[oc.RIGHT] / decided, 3) if decided
+            else None,
+            "distinct_events_asserted": len(asserted), "rows": rows}
+
+
 def outcome(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.5,
             regime: str = csq.FROZEN_PREFIX, min_support: int = 2,
             control: str | None = None, ablation: bool = True,
@@ -360,8 +404,25 @@ def main(argv=None) -> int:
                     help="a guard may only be about an object the event names")
     ap.add_argument("--score-on", default=None,
                     help="a second retained trace to score on, none of which was fitted")
+    ap.add_argument("--stride", type=int, default=8,
+                    help="only with --regime CAUSAL_PREQUENTIAL: score every Nth action")
     ap.add_argument("--out", default=None)
     a = ap.parse_args(argv)
+    if a.regime == csq.CAUSAL_PREQUENTIAL:
+        r = prequential(Path(a.run), Path(a.chain), a.reading, split=a.split,
+                        min_support=a.min_support, control=a.control, stride=a.stride)
+        print(f"\n{r['run']}  {r['reading']!r}  {r['regime']}  cut={r['cut']}  "
+              f"stride={r['stride']}  control={r['control']!r}")
+        for k, v in r["ledger"].items():
+            print(f"    {v:>5}  {k}")
+        for k, v in r["by_level"].items():
+            print(f"    {v:>5}  {k}")
+        print(f"    accuracy where it answered: {r['accuracy_where_it_answered']}  "
+              f"({r['distinct_events_asserted']} distinct events asserted)")
+        path = OUT / (a.out or f"outcome_{Path(a.run).name}_prequential.json")
+        path.write_text(json.dumps(r, indent=1))
+        print(f"\nwrote {path.relative_to(ROOT)}")
+        return 0
     r = outcome(Path(a.run), Path(a.chain), a.reading, split=a.split, regime=a.regime,
                 min_support=a.min_support, control=a.control, ablation=not a.no_ablation,
                 permute=a.permute, score_on=Path(a.score_on) if a.score_on else None,

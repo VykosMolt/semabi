@@ -266,11 +266,17 @@ class ScopedResult:
                                  else f"open on {seen - pinned} of {seen} occasions")
             bad = sorted(p for p in row["derived"] & row["effect_params"]
                          if row["seen"][p] and row["pinned"][p] != row["seen"][p])
+            # An output argument the state does not pin down is a message the model cannot
+            # instantiate, not an effect on nothing in particular.  Reported apart for that
+            # reason: only the second is an ill-formed schema.
+            loose_output = sorted(p for p in row["derived"] & row.get("output_params", set())
+                                  if p not in row["effect_params"]
+                                  and row["seen"][p] and row["pinned"][p] != row["seen"][p])
             kind = ("an effect on an object the state does not pin down" if bad
                     else "every parameter explicit in the action" if not params
                     else "the preconditions determine the rest")
             operators[name] = {"derived": params, "undetermined_effect_params": bad,
-                               "kind": kind}
+                               "undetermined_output_params": loose_output, "kind": kind}
             if bad:
                 ill.append(name)
         return {"operators": operators, "ill_formed": sorted(ill),
@@ -888,7 +894,11 @@ def _record_schema(result: ScopedResult, op, bound) -> None:
     row = result.schema_evidence.get(op.name)
     if row is None:
         row = result.schema_evidence[op.name] = {
-            "derived": set(), "effect_params": {e.obj for e in op.effs},
+            "derived": set(),
+            "effect_params": {e.obj for e in op.effs if e.kind != "emit"},
+            "output_params": {v for e in op.effs if e.kind == "emit"
+                              for v in [e.obj] + [x for _, x in e.attrs]
+                              if isinstance(v, str) and v.startswith("?")},
             "seen": Counter(), "pinned": Counter()}
     pinned = bound.pinned()
     for param, origin in bound.admissible[0].provenance.items():
