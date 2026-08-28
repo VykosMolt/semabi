@@ -43,7 +43,8 @@ def compile_v4(run_dir: Path, min_support: int = 1, conservative_belief: bool = 
                max_steps: int | None = None, write_diagnostics: bool = True,
                identity: dict[str, str | None] | None = None,
                pinned: "v4_pinned.PinnedReading | None" = None,
-               evidence_log: EvidenceLog | None = None) -> Compiled:
+               evidence_log: EvidenceLog | None = None,
+               read_outputs: bool = True) -> Compiled:
     """Compile with V4 identity selection.
 
     `pinned` carries a whole frozen reading from another interaction history and applies it
@@ -124,7 +125,7 @@ def compile_v4(run_dir: Path, min_support: int = 1, conservative_belief: bool = 
     H._build_entity_types()
     A = V4Abstractor(G, H, conservative_belief=conservative_belief)
     A.fit_view_controls(log)
-    I = Inducer(A, log)
+    I = Inducer(A, log, read_outputs=read_outputs)
     I.run()
     M = build_model(A, I.operators, min_support=min_support, view_ops=I.view_ops)
     rels = relation_names(A)

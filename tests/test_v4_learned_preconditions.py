@@ -186,12 +186,27 @@ def test_harbour_learns_the_condition_for_close_and_not_for_reopen():
     it.  What it establishes is that the *language and the discipline* can find the condition
     from evidence alone; it is not a claim that a prefix model finds it, which is the subject
     of the next test.
+
+    Once observable outputs existed the ``Close`` family stopped being one rule.  It is now
+    three branches -- the state change, *"cannot be closed while call C-101 holds it"*, and
+    *"is already closed"* -- and the condition belongs to the first of them.  Asserting it of
+    every rule in the family, which is what this test used to do, would now be asserting that
+    the refusal branch also requires no call to hold the berth, which is the opposite of what
+    that branch is.  So the claim is made where it belongs, and the complementary one is made
+    too: the branch that announces the refusal requires the reference to be *set*.
     """
     from semabi.compiler.v4.consequence import TRANSDUCTIVE
 
     _, close, reopen = _close_and_reopen(TRANSDUCTIVE)
     assert close and reopen
-    assert all(any(l[0] == "ref_null" for l in op.pre) for op in close)
+    changing = [op for op in close
+                if any(e.kind == "set" and e.new == "closed" for e in op.effs)]
+    assert changing, "no Close rule asserts the state change"
+    assert all(any(l[0] == "ref_null" for l in op.pre) for op in changing)
+    refusing = [op for op in close if any(l[0] == "ref_set" for l in op.pre)]
+    assert refusing and not any(e.kind == "set" for op in refusing for e in op.effs)
+    assert all("cannot be" in (e.slot or "") for op in refusing for e in op.effs
+               if e.kind == "emit")
     assert not any(l[0] == "ref_null" for op in reopen for l in op.pre)
     assert all(op.unexplained_negatives == 0 for op in close)
 

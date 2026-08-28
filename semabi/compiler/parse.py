@@ -13,14 +13,19 @@ from typing import Any
 from semabi.compiler.observation import Node, Observation
 
 WIDGETS = {"button", "link", "checkbox", "radio", "combobox", "textbox"}
-# `status` sits here for the same reason `alert` does: both are live regions the application
-# writes its account of the last action into, and a node the parser does not read is a node
-# nothing downstream can see.  Its absence meant every one of harbour's 359 status lines and
-# every one of blend's refusal messages -- "Festival White is already bottled." -- was dropped
-# before any learner saw it, which is why all 69 of blend's held-out refusals are counterexamples
-# rather than outcomes.  Reading it changes no schema: types, slots, operators and control
-# families are identical on harbour and blend with and without it.
-DATA_ROLES = {"text", "heading", "cell", "listitem", "alert", "status"}
+# Live regions are not here.  `status` was added to this set once, to stop the application's
+# account of the last action being dropped before any learner saw it, and that was right about
+# the evidence and wrong about where to put it: as an ordinary leaf the sentence becomes a slot
+# -- of the page's view state where the node sits alone, of a *unit* where it sits inside one,
+# which makes a status-only change a domain change and produces operators whose effect is
+# `attr:status#0(?o) := 'Closed Creek Bed'`.  A live region is what the transition *returned*;
+# it belongs on the transition, and `semabi.compiler.v4.emission` is where it now goes.
+#
+# `alert` stays, and that is a compatibility decision rather than a claim.  It is the same kind
+# of live region and by this argument does not belong in the state either, but it is inside
+# frozen V0/V1 history on a corpus with no `status` anywhere, and moving those results is not
+# what this change is about.  `emission.LIVE_ROLES` reads both.
+DATA_ROLES = {"text", "heading", "cell", "listitem", "alert"}
 LEAF_ROLES = WIDGETS | DATA_ROLES
 
 SIM_THRESHOLD = 0.5

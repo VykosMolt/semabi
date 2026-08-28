@@ -45,7 +45,13 @@ def _candidates(path: Path):
             return manifests.load_chain_manifest(path).source_manifest.candidates
         return manifests.load_source_manifest(path).candidates
     except manifests.ManifestError as exc:
-        if "implementation hash mismatch" not in str(exc):
+        # Three ways the same fact surfaces: a compiler file changed, a compiler file was
+        # added, or the import closure moved because of one of those.  All three say the
+        # manifest was written by a compiler that is not this one, which is what happens on
+        # purpose in a line of work whose subject is the inducer.
+        if not any(m in str(exc) for m in ("implementation hash mismatch",
+                                           "implementation file set is not frozen",
+                                           "implementation closure is not frozen")):
             raise
         if "source_manifest" in payload:
             path = (path.parent / payload["source_manifest"]["path"]).resolve()

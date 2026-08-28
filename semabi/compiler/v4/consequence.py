@@ -62,11 +62,14 @@ from semabi.compiler.induce import VARIES
 from semabi.compiler.parse import leaf_value
 from semabi.compiler.v4 import binding
 from semabi.compiler.v4 import correspondence as corr
+from semabi.compiler.v4 import emission as emit_mod
+from semabi.compiler.v4 import outcome
 from semabi.compiler.v4.prospective import action_control, control_of, split_literal
 
 VALUE = "VALUE"
 IDENTITY = "IDENTITY"
 EXISTENCE = "EXISTENCE"
+OUTPUT = "OUTPUT"        # what the interaction returned, checked against the live region
 
 CHANGES = "\x00CHANGES"    # the claim of an effect whose value the action does not determine
 
@@ -169,7 +172,10 @@ class ScopedResult:
     def refutations(self) -> list[ScopedPrediction]:
         return [p for p in self.predictions if p.verdict == REFUTED]
 
-    PAGE_CHECKS = (VALUE, EXISTENCE)
+    # Every claim checked against the raw page.  ``OUTPUT`` belongs here for the same reason
+    # the other two do: it is decided by what the application rendered, not by anything the
+    # reading computes about the later page.
+    PAGE_CHECKS = (VALUE, EXISTENCE, OUTPUT)
 
     def signature(self, kind: str | tuple[str, ...] = PAGE_CHECKS) -> list[tuple]:
         """What this reading predicted, where, and how it came out -- in raw page terms.
@@ -278,6 +284,7 @@ class ScopedResult:
                 "single_act_operators": self.single_act_operators, "model": self.model,
                 "value": self.counts(VALUE), "identity": self.counts(IDENTITY),
                 "existence": self.counts(EXISTENCE),
+                "output": self.counts(OUTPUT), "output_coverage": self.coverage(OUTPUT),
                 "existence_coverage": self.coverage(EXISTENCE),
                 "value_correspondence": self.correspondence_counts(VALUE),
                 "value_coverage": self.coverage(VALUE), "value_landing": self.landing(VALUE),
@@ -651,10 +658,12 @@ class Fit:
     regime: str = FROZEN_PREFIX
     evidence: Any = None   # the scoped view the model was actually built from
     queries: dict = field(default_factory=dict)   # operator -> variable -> referring query
+    read_outputs: bool = True                    # were live regions read as transition outputs?
+    outcomes: dict = field(default_factory=dict)  # control -> ordered outcome model
 
 
 def fit(run_dir: Path, reading, *, split: float = 0.6, at: int | None = None,
-        min_support: int = 2, regime: str = FROZEN_PREFIX) -> Fit:
+        min_support: int = 2, regime: str = FROZEN_PREFIX, read_outputs: bool = True) -> Fit:
     """Compile one reading on the evidence one regime says was available, and freeze it.
 
     The regime *is* the information boundary; there is one place that turns it into a view of
@@ -683,21 +692,27 @@ def fit(run_dir: Path, reading, *, split: float = 0.6, at: int | None = None,
               TRANSDUCTIVE: full.transductively_through,
               CAUSAL_PREQUENTIAL: full.before_action}[regime](cut)
     compiled = compile_v4(run_dir, min_support=min_support, write_diagnostics=False,
-                          pinned=reading, evidence_log=prefix)
+                          pinned=reading, evidence_log=prefix, read_outputs=read_outputs)
     # Fitting is over.  Everything after this reads observations the model must not learn from,
     # whichever regime built it: a transductive schema is a diagnostic, not a licence to keep
     # learning while it scores.
     compiled.inducer.A.freeze()
     # The referring queries are part of the model, not a diagnostic run over it: a rule that
     # names an object the action does not supply has to say which object before it can predict
-    # anything.  They are learned here, from the same fitting evidence as the rules, so that
-    # nothing downstream can accidentally learn one from the evidence it is being tested on.
-    queries = _learn_queries(compiled.inducer, compiled.inducer.operators)
+    # anything.  The inducer now learns them before its preconditions -- a counterexample has
+    # to be read with the same query the rule will be executed with -- so this is normally the
+    # model's own set; the fallback covers a caller that compiled without one.
+    queries = compiled.inducer.queries or _learn_queries(compiled.inducer,
+                                                        compiled.inducer.operators)
     # `log` is the whole trace because scoring has to reach the steps being predicted.
     # `evidence` is what the model was allowed to learn from, kept so that the frontier is
     # something a caller can check rather than something it has to trust.
+    # The outcome layer sits over the operators rather than inside them: what an interaction
+    # returns is one of a set of alternatives, and alternatives are learned as an ordered list
+    # (see `semabi.compiler.v4.outcome`), not as independently guarded rules.
+    outcomes = (outcome.learn(compiled.inducer) if read_outputs else {})
     return Fit(reading, compiled.inducer.A, compiled.inducer.operators, full, cut, split,
-               compiled.inducer, regime, prefix, queries)
+               compiled.inducer, regime, prefix, queries, read_outputs, outcomes)
 
 
 def _learn_queries(inducer, operators) -> dict:
@@ -871,6 +886,12 @@ def _record_schema(result: ScopedResult, op, bound) -> None:
 
 def _claim(op, eff, mutate):
     """What this effect asserts about the page, or ``None`` if it asserts nothing testable."""
+    if eff.kind == "emit":
+        # The claim is about the live region after the action: which event it reads, and about
+        # which objects.  Unlike the state checks it needs no correspondence -- the live region
+        # is one positionally stable node and the claim is about its content, not about
+        # following a node through a transition.
+        return OUTPUT, eff.slot, (mutate(eff.slot) if mutate else eff.slot)
     if eff.kind == "remove":
         return EXISTENCE, "id", "gone"
     if eff.kind != "set" or eff.slot is None:
@@ -892,6 +913,8 @@ def _under_one_binding(base, A, bridge, pre, post, step, op, eff, assignment, re
         step=base.step, control=base.control, operator=base.operator, kind=base.kind,
         support=base.support, slot=base.slot, predicted=base.predicted,
         binding_evidence=assignment.evidence)
+    if base.kind is OUTPUT:
+        return _output_prediction(pred, A, post, eff, assignment, predicted)
     subject = assignment.get(eff.obj)
     if subject is None or getattr(subject, "node", None) is None:
         pred.verdict = NOT_APPLICABLE
@@ -1111,6 +1134,58 @@ def _existence_prediction(A, bridge, pre, post, step, control, op, binding, eff,
     else:
         pred.verdict = POSSIBLE
         pred.detail = "some admissible continuations still render it and some do not"
+    return pred
+
+
+def _output_prediction(pred: ScopedPrediction, A, post, eff, assignment, predicted: str
+                       ) -> ScopedPrediction:
+    """Did the live region read the event this rule said it would, about these objects?
+
+    The claim is checked against the raw post-state page, lifted by the same frozen vocabulary
+    the model was fitted under, and the reading contributes only the *antecedent*: which
+    objects it thinks the interaction was about.  So this asks two things at once and reports
+    them as one verdict, which is deliberate -- an event predicted about the wrong object is
+    not a correct prediction, and a reading whose names for objects are not the names the
+    application prints has been contradicted by the application.
+
+    There is no correspondence layer here.  A live region is a single positionally stable node
+    and the claim is about what it says, not about following a node across a transition.
+    """
+    observed = emit_mod.live_text(post)
+    if observed is None:
+        pred.verdict = NOT_APPLICABLE
+        pred.detail = "this application renders no live region, so it returns nothing to check"
+        return pred
+    args = []
+    for _, value in eff.attrs:
+        if isinstance(value, str) and value.startswith("?"):
+            obj = assignment.get(value)
+            if obj is None:
+                pred.verdict = UNKNOWN
+                pred.detail = f"the rule does not say which object {value} is here"
+                return pred
+            args.append(str(obj.key))
+        else:
+            args.append(str(value))
+    subject = assignment.get(eff.obj) if eff.obj else None
+    pred.subject = str(subject.key) if subject is not None else ""
+    pred.context = binding_context(assignment.values)
+    event = emit_mod.lift_event(observed, post, vocabulary=getattr(A, "emissions", None))
+    pred.expected = emit_mod.render(predicted, args)
+    pred.observed = (event.frame,) + tuple(event.args)
+    pred.held_before = observed
+    if event.frame != predicted:
+        pred.verdict = REFUTED
+        pred.detail = (f"predicted the interface to return {pred.expected!r}; it returned "
+                       f"{observed!r}, which is a different event")
+        return pred
+    if tuple(args) != event.args:
+        pred.verdict = REFUTED
+        pred.detail = (f"predicted {pred.expected!r}; the interface returned the same event "
+                       f"about {list(event.args)} rather than {args}")
+        return pred
+    pred.verdict = SUPPORTED
+    pred.detail = f"the interface returned {observed!r}"
     return pred
 
 

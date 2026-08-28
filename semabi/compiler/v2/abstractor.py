@@ -214,6 +214,7 @@ class V2Abstractor(Abstractor):
         sig = obs.structural_signature()
         if sig not in self.G.obs:
             self.G.add(sig, obs)
+        self.emissions.learn(obs)     # a no-op once frozen, like the graph's statistics
         return sig
 
     def freeze(self) -> "V2Abstractor":
@@ -233,6 +234,7 @@ class V2Abstractor(Abstractor):
         """
         self.controls            # resolve before the graph can gain anything else
         self.G.learning = False
+        self.emissions.freeze()
         return self
 
     def parsed(self, obs: Observation) -> ParsedObs:
@@ -698,6 +700,28 @@ class V2Abstractor(Abstractor):
                 + "\nheuristic view candidates: " + ", ".join(sorted(self.heuristic_view_controls)))
 
 
+def _rendered_under(po, node: int) -> set[str]:
+    """Every string the subtree under ``node`` renders, and the tokens of each."""
+    obs = getattr(po, "obs", None)
+    if obs is None:
+        return set()
+    out: set[str] = set()
+    for i in obs.subtree(node):
+        n = obs.node(i)
+        for text in (n.name, n.value):
+            if text:
+                out.add(text)
+                out.update(text.split())
+        for option in (n.options or ()):
+            out.add(option)
+            out.update(option.split())
+    return out
+
+
+def _is_rendered(value: str, shown: set[str]) -> bool:
+    return value in shown or (bool(value) and all(t in shown for t in value.split()))
+
+
 class V2Tracker(Tracker):
     """TRUE/FALSE/UNKNOWN belief across partially rendered views.
 
@@ -768,11 +792,26 @@ class V2Tracker(Tracker):
         for oid, o in raw.objs.items():
             if oid in new.objs:
                 c = new.objs[oid]
+                # A carried value the object's own rendering contradicts is not belief, it is
+                # a stale reading.  The slot a cell lands in depends on its text -- blend's
+                # State column is `cask#0 = 'In'` while it reads "In cask" and `cell#0@5 =
+                # 'Bottled'` while it reads "Bottled" -- so a value change vacates one slot and
+                # fills another, and merging left the vacated one saying the opposite of the
+                # page.  On blend that was 5.5% of every attribute the learner saw.
+                #
+                # Only where the object is rendered *here*.  Carrying values across views is
+                # what this tracker is for, and an object off-screen is not contradicted by
+                # anything.
+                shown = (_rendered_under(raw.parsed, o.node)
+                         if o.node is not None and o.node >= 0 else None)
                 for k, v in o.attrs.items():
                     if v is not None:
                         c.attrs[k] = v
                         self._confirm(oid, "attribute", k, v, sig)
                     elif k not in c.attrs:
+                        c.attrs[k] = None
+                    elif (shown is not None and isinstance(c.attrs[k], str)
+                            and not _is_rendered(c.attrs[k], shown)):
                         c.attrs[k] = None
                 c.refs.update(o.refs)
                 for k, v in o.refs.items():

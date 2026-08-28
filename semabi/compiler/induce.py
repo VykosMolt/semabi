@@ -15,6 +15,8 @@ from semabi.compiler.abstract import AbsObj, Abstractor, AbstractState, Diff, di
 from semabi.compiler.belief import Tracker, make_tracker, scoped_ids
 from semabi.compiler.browser import Primitive
 from semabi.compiler.evidence import EvidenceLog, Step
+from semabi.compiler.v4 import emission as emit_mod
+from semabi.compiler.v4 import referring
 
 # --------------------------------------------------------------------------
 # Templates
@@ -108,6 +110,9 @@ class EffT:
     anchor_rel: str | None = None  # forall_*: relation slot ('parent' or ref slot) linking x to the anchor
 
     def __str__(self) -> str:
+        if self.kind == "emit":
+            a = ", ".join(str(v) for _, v in self.attrs)
+            return f"emit {self.slot!r}({a})" if a else f"emit {self.slot!r}"
         if self.kind == "add":
             a = ", ".join(f"{k}={v}" for k, v in self.attrs)
             r = "".join(f" {k}->{v}" for k, v in self.refs)
@@ -136,6 +141,7 @@ class Transition:
     param_types: dict[str, int | str] = field(default_factory=dict)
     ambiguous: list[tuple[int, str]] = field(default_factory=list)  # scoped objects that vanished, fate unresolved
     ext: tuple | None = None  # macro-extension arguments, for re-extension after delayed attribution
+    emission: Any = None  # semabi.compiler.v4.emission.Event: what the interaction returned
 
     def core(self) -> tuple[ActT, ...]:
         return tuple(a for a in self.acts if a.kind not in ("type", "select", "context"))
@@ -336,9 +342,13 @@ def describe_target(abstractor: Abstractor, state: AbstractState, obs, node: int
 
 
 class Inducer:
-    def __init__(self, abstractor: Abstractor, log: EvidenceLog):
+    def __init__(self, abstractor: Abstractor, log: EvidenceLog, read_outputs: bool = True):
         self.A = abstractor
         self.log = log
+        # Whether the live region is read as a transition output at all.  False reproduces the
+        # model as it was before observable outputs existed, which is how the mechanism's
+        # effect on every other number is measured rather than asserted.
+        self.read_outputs = read_outputs
         self.transitions: list[Transition] = []
         self.noops: list[Transition] = []  # clean->clean segments without domain change
         self.operators: list[OperatorHyp] = []
@@ -349,6 +359,7 @@ class Inducer:
         self.view_transitions: list[tuple[Transition, str, int, Any]] = []
         self.view_ops: list[ViewOp] = []
         self._view_steps: set[int] = set()
+        self.queries: dict[str, dict] = {}  # operator -> variable -> referring query
         self.reattributed = 0  # domain changes revealed by view switches / reloads
         self.delayed_resolutions: list[dict[str, Any]] = []
         self.unattributed_sensing_changes: list[dict[str, Any]] = []
@@ -513,6 +524,13 @@ class Inducer:
                     pending_domain = None
 
                 tr = Transition(ep, [s.step], [s.step], prev, st, d)
+                # What the interaction returned, as distinct from what it changed.  Read from
+                # the live region and only where its text moved: an unchanged status line is
+                # either a re-emission of the same sentence or silence, and the page does not
+                # say which.
+                tr.emission = (emit_mod.observed(self.log.obs(s.before), self.log.obs(s.after),
+                                                 getattr(self.A, "emissions", None))
+                               if self.read_outputs else None)
                 if d.domain_changed:
                     self._changing_steps.add(s.step)
                     tr.ext = (steps, last_change_i + 1, i - 1, self._episode_anchor(steps, i))
@@ -538,6 +556,21 @@ class Inducer:
                         continue
                     if pending_domain is not None and not self._is_view_control_click(s):
                         pending_domain = None
+                    if tr.emission is not None and s.action.kind == "click":
+                        # The interaction returned something and changed nothing.  That is a
+                        # transition with an output and an empty delta, not a no-op, and it is
+                        # where every refusal in this corpus lives.
+                        #
+                        # ``last_change_i`` is deliberately not advanced.  It marks the point
+                        # after which enabling actions are still in force, and an interaction
+                        # that changed no state did not consume the selections that preceded
+                        # it: the vat and blend chosen before a refused draw are still chosen
+                        # for the draw after it.
+                        tr.ext = (steps, last_change_i + 1, i - 1, self._episode_anchor(steps, i))
+                        self._extend_macro(tr, *tr.ext)
+                        self.transitions.append(tr)
+                        prev = st
+                        continue
                     self._extend_macro(tr, steps, i, i - 1, enabling_lo=self._episode_anchor(steps, i))
                     self.noops.append(tr)
                     # view transition: a context slot changed to an object key
@@ -770,6 +803,19 @@ class Inducer:
             effs.append(EffT("set", oid[0], obj_p(oid), k, None, lift_val(b)))
         for oid, k, a, b in tr.d.rel_changes:
             effs.append(EffT("rel", oid[0], obj_p(oid), k, None, lift_val(b) if b else None))
+        if tr.emission is not None:
+            args: list[Any] = []
+            for a in tr.emission.args:
+                oid = key_lookup(a, tr.before) or key_lookup(a, tr.after)
+                args.append(obj_p(oid) if oid else a)
+            # The subject is the first argument that names an object, so that an output about
+            # an entity is typed by that entity and binds like any other effect.  An output
+            # naming no object -- "Nothing chosen in the vessel list." -- has none, and says
+            # so rather than being attached to whatever happened to be nearby.
+            subject = next((a for a in args if isinstance(a, str) and a.startswith("?")), "")
+            tid = binding[subject][0] if subject else -1
+            effs.append(EffT("emit", tid, subject, tr.emission.frame,
+                             attrs=tuple((str(i), v) for i, v in enumerate(args))))
         effs = self._quantify(effs, acts, binding, ptypes, tr)
         # params used in effects but never supplied by an action: bind from view state
         supplied = set(a.owner for a in acts) | set(a.arg for a in acts)
@@ -891,6 +937,7 @@ class Inducer:
         self._resolve_view_bound_constants()
         self._merge_supersequences()
         self._generalise_copied_effects()
+        self._absorb_unobserved_outputs()
         # negatives: other operators with the same core, and no-op segments with the same core
         for tr in self.noops:
             self.lift(tr)
@@ -905,6 +952,13 @@ class Inducer:
                 for tr in self.noops:
                     if tr.core() == core and tr.acts:
                         op.negatives.append(tr)
+        # Grounding before preconditions, and for a reason that is not tidiness.  A rule whose
+        # subject the action does not supply is executed by asking a referring query for it,
+        # and a counterexample has to be read the same way: which object would this rule have
+        # been about *here*?  Learning the queries afterwards left every literal about a
+        # derived parameter undecidable on every counterexample, so no such literal could ever
+        # be chosen -- the learner could not condition on the object it was talking about.
+        self.queries = self.learn_queries()
         for op in self.operators:
             self.learn_pre(op)
         self._cluster_view_ops()
@@ -985,6 +1039,40 @@ class Inducer:
         for i, op in enumerate(keep):
             op.name = f"op{i}"
         self.operators = self._merge_vacuous(keep)
+
+    def _absorb_unobserved_outputs(self) -> None:
+        """A transition whose output the page did not report is not a different operator.
+
+        An unchanged live region is missing data, not silence (see
+        :mod:`semabi.compiler.v4.emission`), so an occasion where the same state change
+        happened and the status line already read what it was about to read must not cluster
+        apart from the occasions where it moved -- that would make the absence of an
+        observation into an observation.  Blend's fifteen repeated draws did exactly that.
+
+        Absorbed only where one operator matches.  Where two branches share a state delta and
+        differ only in what they return, an unreported output does not say which of them this
+        was, and the transition stays where it is rather than being assigned to one of them.
+        """
+        by_state: dict[tuple, list[OperatorHyp]] = defaultdict(list)
+        for op in self.operators:
+            if any(e.kind == "emit" for e in op.effs):
+                key = (op.acts, tuple(str(e) for e in op.effs if e.kind != "emit"))
+                by_state[key].append(op)
+        absorbed: set[int] = set()
+        for op in self.operators:
+            if any(e.kind == "emit" for e in op.effs) or not op.effs:
+                continue
+            if any(tr.emission is not None for tr in op.positives):
+                continue
+            hosts = by_state.get((op.acts, tuple(str(e) for e in op.effs)), [])
+            if len(hosts) != 1:
+                continue
+            hosts[0].positives.extend(op.positives)
+            absorbed.add(id(op))
+        if absorbed:
+            self.operators = [op for op in self.operators if id(op) not in absorbed]
+            for i, op in enumerate(self.operators):
+                op.name = f"op{i}"
 
     def _control_key(self, op: OperatorHyp) -> str:
         """What counts as the same action family for the purpose of comparing effect values.
@@ -1213,12 +1301,23 @@ class Inducer:
                 hits = [o for o in st.objs.values() if o.key == v and o.tid == op.params.get(a.arg)]
                 if len(hits) == 1:
                     out[a.arg] = hits[0].id
+        # Whatever the actions do not supply, the rule's own referring queries are asked for,
+        # exactly as they will be at prediction time.
+        known = {p: st.objs.get(v) for p, v in out.items() if isinstance(v, tuple)}
+        for p, v in self._query_binding(op, st, {k: o for k, o in known.items() if o}).items():
+            out.setdefault(p, v)
         for p, t in op.params.items():
             if p not in out and not p.startswith("?new"):
                 if t == "str":
                     out[p] = ""
-                else:
-                    out[p] = tr.binding.get(p)
+                # An object parameter the negative's own actions do not supply is *not*
+                # determined here.  It used to be filled from `tr.binding[p]` -- the object
+                # some other rule happened to give the same canonical name to, which is not
+                # the same object and often not even the same type.  Every literal about that
+                # parameter was then evaluated against an unrelated object, and a literal that
+                # is false about an unrelated object counts as excluding a counterexample it
+                # never touched.  Leaving it out makes the parameter undetermined, and
+                # `learn_pre` treats undetermined as no evidence rather than as coverage.
         return out
 
     def _widget_value(self, po, st: AbstractState, a: ActT, bound: dict[str, Any]):
@@ -1277,6 +1376,57 @@ class Inducer:
             return "constants of a mutable free-text attribute cannot be semantic preconditions"
         return ""
 
+    def learn_queries(self) -> dict[str, dict]:
+        """Per operator, a referring query for each object its effects act on and it must find.
+
+        What a prediction will actually have in hand: ``action_binding`` supplies the owner of
+        the clicked control and nothing else, so a typed or selected string carried by the
+        concrete step is *not* something the rule is given.
+        """
+        out: dict[str, dict] = {}
+        for op in self.operators:
+            bound = {a.owner for a in op.core() if a.owner}
+            evidence = [(tr.before,
+                         {q: tr.before.objs.get(v) for q, v in tr.binding.items()
+                          if isinstance(v, tuple)})
+                        for tr in op.positives]
+            got = referring.ground(op, evidence, bound, self.memorises_the_fitting_instance)
+            if got.queries:
+                out[op.name] = dict(got.queries)
+        return out
+
+    def _query_binding(self, op: OperatorHyp, state: AbstractState,
+                       known: dict[str, Any]) -> dict[str, Any]:
+        """Objects the operator's own referring queries name in ``state``, given ``known``.
+
+        Only a query that names exactly one object binds anything.  Empty or plural is the
+        rule declining to say, which is the same answer it gives at prediction time.
+        """
+        queries = self.queries.get(op.name) or {}
+        out: dict[str, Any] = {}
+        resolved = dict(known)
+        for _ in range(len(queries) + 1):
+            progress = False
+            for var, q in queries.items():
+                if var in out or var in known:
+                    continue
+                if any(g not in resolved for g in q.given):
+                    continue
+                hits = q.denotation(op, state, resolved)
+                if len(hits) != 1:
+                    continue
+                out[var] = hits[0].id
+                resolved[var] = hits[0]
+                progress = True
+            if not progress:
+                break
+        return out
+
+    @staticmethod
+    def _lit_params(l: tuple) -> set[str]:
+        """The operator parameters a candidate literal talks about."""
+        return {x for x in l[1:] if isinstance(x, str) and x.startswith("?")}
+
     def learn_pre(self, op: OperatorHyp) -> None:
         common: set[tuple] | None = None
         for tr in op.positives:
@@ -1285,12 +1435,15 @@ class Inducer:
         common = common or set()
         op.common = set(common)
         neg_lits = []
+        neg_unknown: list[set[str]] = []   # parameters this counterexample does not determine
         for tr in op.negatives:
             b = self._rebind_negative(op, tr)
             if b is None:
                 continue
             fake = Transition(tr.episode, tr.steps, tr.macro, tr.before, tr.after, tr.d, binding=b)
             neg_lits.append(self._literals(op, fake))
+            neg_unknown.append({p for p in op.params
+                                if not p.startswith("?new") and p not in b})
         # candidate "attr != const" literals: constants seen on negatives' params but on no positive
         pos_vals: set[tuple] = set()
         for tr in op.positives:
@@ -1313,10 +1466,14 @@ class Inducer:
             for l in sorted(common, key=str):
                 if self.memorises_the_fitting_instance(op, l):
                     continue
+                params = self._lit_params(l)
                 if l[0] == "attr_ne":
                     cov = sum(1 for i in remaining if ("attr", l[1], l[2], l[3]) in neg_lits[i])
                 else:
-                    cov = sum(1 for i in remaining if l not in neg_lits[i])
+                    # A counterexample that does not determine what this literal is about is
+                    # not excluded by it.  Silence is not refutation.
+                    cov = sum(1 for i in remaining
+                              if not (params & neg_unknown[i]) and l not in neg_lits[i])
                 if cov > 0:
                     covs[l] = cov
             if not covs:
@@ -1334,10 +1491,12 @@ class Inducer:
             chosen.append(best)
             if len(tied) > 1:
                 alternatives[best] = tied[1:]
+            best_params = self._lit_params(best)
             if best[0] == "attr_ne":
                 remaining = [i for i in remaining if ("attr", best[1], best[2], best[3]) not in neg_lits[i]]
             else:
-                remaining = [i for i in remaining if best in neg_lits[i]]
+                remaining = [i for i in remaining
+                             if (best_params & neg_unknown[i]) or best in neg_lits[i]]
         op.pre = chosen
         op.alternatives = alternatives
         op.unexplained_negatives = len(remaining)
