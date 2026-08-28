@@ -8,8 +8,8 @@
  "permuted_events": null,
  "scored_on": "harbour_holdout",
  "cut": 459,
- "operators": 64,
- "operators_with_an_output": 64,
+ "operators": 50,
+ "operators_with_an_output": 50,
  "output": {
   "claims": 0,
   "verdicts": {},
@@ -40,26 +40,27 @@
   "per_action": {}
  },
  "outcome_model": {
-  "controls": 11,
-  "rules": 17,
+  "controls": 12,
+  "rules": 16,
   "held_out_clicks": 270,
   "ledger": {
-   "a different event": 96,
+   "the event the interface returned": 162,
    "no determinate answer": 91,
-   "the event the interface returned": 83
+   "a different event": 17
   },
-  "accuracy_where_it_answered": 0.464,
-  "distinct_events_asserted": 8,
-  "answers_naming_an_event": 179,
-  "accuracy_where_it_named_an_event": 0.464,
+  "accuracy_where_it_answered": 0.905,
+  "distinct_events_asserted": 9,
+  "answers_naming_an_event": 100,
+  "accuracy_where_it_named_an_event": 0.83,
   "by_level": {
-   "a different event / the event alone": 90,
-   "the event the interface returned / with its arguments": 68,
-   "the event the interface returned / the event alone": 15,
+   "the event the interface returned / the control returns nothing": 79,
+   "the event the interface returned / with its arguments": 70,
+   "the event the interface returned / the event alone": 13,
+   "a different event / the event alone": 11,
    "a different event / with its arguments": 6
   },
   "events_asserted": {
-   "Call <> has <> berth allocated .": 84,
+   "\u0000SILENT": 79,
    "<> <> is already <> .": 42,
    "<> <> is now <> .": 17,
    "<> already has call <> on the board .": 11,
@@ -75,12 +76,11 @@
    "accuracy": 0.173
   },
   "by_control": {
-   "button#0": {
-    "fitted": 2,
-    "rules": 1,
+   "button#cell/button@6bf899": {
+    "fitted": 55,
+    "rules": 0,
     "events_fitted": 1,
-    "a different event": 79,
-    "the event the interface returned": 5
+    "the event the interface returned": 42
    },
    "button:Reopen": {
     "fitted": 38,
@@ -116,6 +116,18 @@
     "the event the interface returned": 26,
     "a different event": 3
    },
+   "button#button": {
+    "fitted": 9,
+    "rules": 0,
+    "events_fitted": 1,
+    "the event the interface returned": 28
+   },
+   "button#cell/button@75b51d": {
+    "fitted": 9,
+    "rules": 0,
+    "events_fitted": 1,
+    "the event the interface returned": 9
+   },
    "button:Book pilot": {
     "fitted": 5,
     "rules": 0,
@@ -135,6 +147,12 @@
     "events_fitted": 1,
     "the event the interface returned": 4,
     "a different event": 2
+   },
+   "button:Bring _": {
+    "fitted": 8,
+    "rules": 1,
+    "events_fitted": 1,
+    "the event the interface returned": 5
    }
   },
   "wrong": [
@@ -154,75 +172,106 @@
     }
    },
    {
-    "step": 10,
-    "control": "button#0",
-    "predicted": "Call <> has <> berth allocated .",
-    "observed": "Ready .",
-    "returned": "Ready.",
+    "step": 75,
+    "control": "button:Record departure",
+    "predicted": "Call <> is not <> , so nothing has sailed .",
+    "observed": "<> has sailed on call <> ; berth <> is clear .",
+    "returned": "Hafnarfjord has sailed on call C-101; berth S1 is clear.",
     "verdict": "a different event",
     "level": "the event alone"
    },
    {
-    "step": 14,
-    "control": "button#0",
-    "predicted": "Call <> has <> berth allocated .",
-    "observed": "Ready .",
-    "returned": "Ready.",
+    "step": 84,
+    "control": "button:Schedule call",
+    "predicted": "<> already has call <> on the board .",
+    "observed": "<> already has call <> on the board .",
+    "returned": "Petrel Star already has call C-102 on the board.",
     "verdict": "a different event",
-    "level": "the event alone"
+    "level": "with its arguments",
+    "arguments": {
+     "0": [
+      "Malta",
+      "Petrel Star"
+     ]
+    }
    },
    {
-    "step": 20,
-    "control": "button#0",
-    "predicted": "Call <> has <> berth allocated .",
-    "observed": "Ready .",
-    "returned": "Ready.",
+    "step": 120,
+    "control": "button:Schedule call",
+    "predicted": "<> already has call <> on the board .",
+    "observed": "<> already has call <> on the board .",
+    "returned": "Petrel Star already has call C-101 on the board.",
     "verdict": "a different event",
-    "level": "the event alone"
+    "level": "with its arguments",
+    "arguments": {
+     "0": [
+      "Malta",
+      "Petrel Star"
+     ]
+    }
    },
    {
-    "step": 34,
-    "control": "button#0",
-    "predicted": "Call <> has <> berth allocated .",
-    "observed": "Ready .",
-    "returned": "Ready.",
+    "step": 130,
+    "control": "button:Schedule call",
+    "predicted": "<> already has call <> on the board .",
+    "observed": "<> already has call <> on the board .",
+    "returned": "Petrel Star already has call C-101 on the board.",
     "verdict": "a different event",
-    "level": "the event alone"
+    "level": "with its arguments",
+    "arguments": {
+     "0": [
+      "Malta",
+      "Petrel Star"
+     ]
+    }
    },
    {
-    "step": 36,
-    "control": "button#0",
-    "predicted": "Call <> has <> berth allocated .",
-    "observed": "Ready .",
-    "returned": "Ready.",
+    "step": 138,
+    "control": "button:Schedule call",
+    "predicted": "<> already has call <> on the board .",
+    "observed": "<> already has call <> on the board .",
+    "returned": "Petrel Star already has call C-101 on the board.",
     "verdict": "a different event",
-    "level": "the event alone"
+    "level": "with its arguments",
+    "arguments": {
+     "0": [
+      "Malta",
+      "Petrel Star"
+     ]
+    }
    },
    {
-    "step": 38,
-    "control": "button#0",
-    "predicted": "Call <> has <> berth allocated .",
-    "observed": "Ready .",
-    "returned": "Ready.",
+    "step": 168,
+    "control": "button:Schedule call",
+    "predicted": "<> already has call <> on the board .",
+    "observed": "<> already has call <> on the board .",
+    "returned": "Petrel Star already has call C-101 on the board.",
     "verdict": "a different event",
-    "level": "the event alone"
+    "level": "with its arguments",
+    "arguments": {
+     "0": [
+      "Malta",
+      "Petrel Star"
+     ]
+    }
    },
    {
-    "step": 52,
-    "control": "button#0",
-    "predicted": "Call <> has <> berth allocated .",
-    "observed": "<> <> is already <> .",
-    "returned": "Berth N1 is already open.",
+    "step": 223,
+    "control": "button:Record departure",
+    "predicted": "Call <> is not <> , so nothing has sailed .",
+    "observed": "<> has sailed on call <> ; berth <> is clear .",
+    "returned": "Bregagh has sailed on call C-101; berth N2 is clear.",
     "verdict": "a different event",
     "level": "the event alone"
    }
   ],
   "lists": {
-   "button#0": "button#0: 2 fitted occasions, 1 distinct events\n    otherwise  ->  Call <> has <> berth allocated .   [2]\n    otherwise -> Call <> has <> berth allocated .",
-   "button#button": "button#button: 0 fitted occasions, 1 distinct events\n    otherwise -> returns nothing",
-   "button#text/button": "button#text/button: 6 fitted occasions, 1 distinct events\n    otherwise  ->  Call <> has <> berth allocated .   [6]\n    otherwise -> Call <> has <> berth allocated .\n    'Call <> has <> berth allocated .' arguments: 0=owner",
+   "button#button": "button#button: 9 fitted occasions, 1 distinct events\n    otherwise -> returns nothing",
+   "button#cell/button@6bf899": "button#cell/button@6bf899: 55 fitted occasions, 1 distinct events\n    otherwise -> returns nothing",
+   "button#cell/button@75b51d": "button#cell/button@75b51d: 9 fitted occasions, 1 distinct events\n    otherwise -> returns nothing",
    "button:Allocate berth": "button:Allocate berth: 5 fitted occasions, 1 distinct events\n    otherwise  ->  Nothing chosen in the berth list .   [5]\n    otherwise -> Nothing chosen in the berth list .",
    "button:Book pilot": "button:Book pilot: 5 fitted occasions, 2 distinct events\n    otherwise -> undetermined",
+   "button:Bring _": "button:Bring _: 8 fitted occasions, 1 distinct events\n    otherwise  ->  Call <> has <> berth allocated .   [8]\n    otherwise -> Call <> has <> berth allocated .\n    'Call <> has <> berth allocated .' arguments: 0=owner",
    "button:Close": "button:Close: 33 fitted occasions, 3 distinct events\n    ('ref_set', 'owner', 'rel:12')  ->  <> <> cannot be <> while call <> holds it .   [10]\n    attr:cell#0@5(owner) == 'open'  ->  <> <> is now <> .   [14]\n    otherwise  ->  <> <> is already <> .   [9]\n    otherwise -> <> <> is already <> .\n    '<> <> cannot be <> while call <> holds it .' arguments: 1=owner\n    '<> <> is already <> .' arguments: 1=owner\n    '<> <> is now <> .' arguments: 1=owner",
    "button:Record departure": "button:Record departure: 7 fitted occasions, 1 distinct events\n    role singleton[]:10 = singleton[]\n    otherwise  ->  Call <> is not <> , so nothing has sailed .   [7]\n    otherwise -> Call <> is not <> , so nothing has sailed .",
    "button:Reopen": "button:Reopen: 38 fitted occasions, 2 distinct events\n    attr:cell#0@5(owner) == 'open'  ->  <> <> is already <> .   [20]\n    ('ref_null', 'owner', 'rel:12')  ->  <> <> is now <> .   [14]\n    otherwise  ->  <> <> is already <> .   [4]\n    otherwise -> <> <> is already <> .\n    '<> <> is already <> .' arguments: 1=owner\n    '<> <> is now <> .' arguments: 1=owner",

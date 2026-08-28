@@ -8,32 +8,32 @@
  "permuted_events": null,
  "scored_on": "blend_book_transfer",
  "cut": 419,
- "operators": 64,
- "operators_with_an_output": 64,
+ "operators": 53,
+ "operators_with_an_output": 53,
  "output": {
   "claims": 2583,
   "verdicts": {
-   "NOT_APPLICABLE": 1292,
-   "POSSIBLE": 5,
-   "REFUTED": 199,
-   "SUPPORTED": 46,
-   "UNKNOWN": 1041
+   "NOT_APPLICABLE": 1515,
+   "POSSIBLE": 10,
+   "REFUTED": 328,
+   "SUPPORTED": 105,
+   "UNKNOWN": 625
   },
   "held_out_actions_with_an_output_claim": 123,
-  "distinct_decided_claims": 14,
+  "distinct_decided_claims": 21,
   "distinct_decided_frames": 5,
   "per_action": {
-   "every applicable rule was contradicted": 82,
-   "applicable rules disagreed": 41
+   "applicable rules disagreed": 96,
+   "every applicable rule was contradicted": 27
   },
   "frame_only": {
-   "among": 41,
-   "wrong": 82
+   "among": 113,
+   "wrong": 10
   },
   "model_level": {
-   "determinate and wrong": 74,
-   "undetermined, the right event among them": 41,
-   "undetermined, and not among them": 8
+   "undetermined, the right event among them": 113,
+   "undetermined, and not among them": 9,
+   "determinate and wrong": 1
   },
   "distinct_events_where_determinate": 0,
   "majority_frame_control_where_determinate": {
@@ -43,11 +43,11 @@
    "accuracy": null
   },
   "distinct_events_predicted_per_action": {
-   "1": 74,
-   "2": 15,
-   "3": 13,
-   "4": 18,
-   "5": 3
+   "1": 1,
+   "2": 38,
+   "3": 39,
+   "4": 36,
+   "5": 9
   },
   "majority_frame_control": {
    "right": 52,
@@ -65,56 +65,57 @@
  },
  "state": {
   "verdicts": {
-   "NOT_APPLICABLE": 820,
+   "NOT_APPLICABLE": 1120,
    "POSSIBLE": 3,
-   "REFUTED": 30,
-   "SUPPORTED": 35,
-   "UNKNOWN": 834
+   "REFUTED": 81,
+   "SUPPORTED": 128,
+   "UNKNOWN": 390
   },
   "per_action": {
-   "the rules could not say which object they were about": 95,
-   "every applicable rule was right": 16,
-   "every applicable rule was contradicted": 12
+   "every applicable rule was right": 51,
+   "the rules could not say which object they were about": 41,
+   "every applicable rule was contradicted": 30,
+   "applicable rules disagreed": 1
   }
  },
  "outcome_model": {
-  "controls": 9,
-  "rules": 20,
+  "controls": 6,
+  "rules": 17,
   "held_out_clicks": 123,
   "ledger": {
-   "the event the interface returned": 96,
-   "a different event": 26,
-   "no determinate answer": 1
+   "the event the interface returned": 90,
+   "a different event": 29,
+   "no determinate answer": 4
   },
-  "accuracy_where_it_answered": 0.787,
-  "distinct_events_asserted": 5,
-  "answers_naming_an_event": 122,
-  "accuracy_where_it_named_an_event": 0.787,
+  "accuracy_where_it_answered": 0.756,
+  "distinct_events_asserted": 4,
+  "answers_naming_an_event": 119,
+  "accuracy_where_it_named_an_event": 0.756,
   "by_level": {
-   "the event the interface returned / with its arguments": 96,
-   "a different event / the event alone": 26
+   "the event the interface returned / with its arguments": 90,
+   "a different event / the event alone": 16,
+   "a different event / with its arguments": 13
   },
   "events_asserted": {
-   "Drew <> from <> into <> .": 61,
+   "Drew <> from <> into <> .": 67,
    "<> is already <> .": 41,
-   "The book already holds 12 records ; return a draw first .": 10,
-   "<> holds <> ; cannot draw <> .": 7,
-   "<> is <> .": 3
+   "<> holds <> ; cannot draw <> .": 6,
+   "<> is <> .": 5
   },
   "majority_frame_control_where_it_answered": {
    "right": 51,
-   "wrong": 71,
+   "wrong": 68,
    "control_unseen_on_prefix": 0,
-   "accuracy": 0.418
+   "accuracy": 0.429
   },
   "by_control": {
    "button:Record draw": {
     "fitted": 112,
     "rules": 11,
     "events_fitted": 5,
-    "the event the interface returned": 96,
-    "a different event": 26,
-    "no determinate answer": 1
+    "the event the interface returned": 90,
+    "a different event": 29,
+    "no determinate answer": 4
    }
   },
   "wrong": [
@@ -182,25 +183,28 @@
     "level": "the event alone"
    },
    {
-    "step": 584,
+    "step": 572,
     "control": "button:Record draw",
-    "predicted": "The book already holds 12 records ; return a draw first .",
+    "predicted": "Drew <> from <> into <> .",
     "observed": "Drew <> from <> into <> .",
     "returned": "Drew 1 gal from Block 12 into Festival White.",
     "verdict": "a different event",
-    "level": "the event alone"
+    "level": "with its arguments",
+    "arguments": {
+     "1": [
+      "Block",
+      "Block 12"
+     ]
+    }
    }
   ],
   "lists": {
-   "button#0": "button#0: 10 fitted occasions, 2 distinct events\n    role selection['cell#17']:3 = selection['cell#17']\n    role selection['cell#16']:1 = selection['cell#16']\n    attr:cell#0@5(selection['cell#17']:3) == None  ->  Returned <> to <> from <> .   [9]\n    otherwise -> <> is <> ; disgorge it before returning a draw .\n    '<> is <> ; disgorge it before returning a draw .' arguments: 0=selection['cell#17']:3\n    'Returned <> to <> from <> .' arguments: 1=selection['cell#16']:1, 2=selection['cell#17']:3",
-   "button#1": "button#1: 12 fitted occasions, 2 distinct events\n    role selection['cell#16']:1 = selection['cell#16'][8/0] or selection['cell#22'][3/0]\n    role selection['cell#17']:3 = selection['cell#17'][9/0] or selection['cell#28'][3/0]\n    attr:cell#0@5(selection['cell#17']:3) == None  ->  Returned <> to <> from <> .   [11]\n    otherwise -> <> is <> ; disgorge it before returning a draw .\n    '<> is <> ; disgorge it before returning a draw .' arguments: 0=selection['cell#17']:3\n    'Returned <> to <> from <> .' arguments: 1=selection['cell#16']:1, 2=selection['cell#17']:3",
-   "button#2": "button#2: 14 fitted occasions, 2 distinct events\n    role selection['cell#16']:1 = selection['cell#16'][11/0] or selection['cell#22'][2/0]\n    role selection['cell#17']:3 = selection['cell#17'][10/1] or selection['cell#28'][3/0]\n    attr:cell#0@5(selection['cell#17']:3) == None  ->  Returned <> to <> from <> .   [13]\n    otherwise -> <> is <> ; disgorge it before returning a draw .\n    '<> is <> ; disgorge it before returning a draw .' arguments: 0=selection['cell#17']:3\n    'Returned <> to <> from <> .' arguments: 1=selection['cell#16']:1, 2=selection['cell#17']:3",
-   "button#3": "button#3: 10 fitted occasions, 2 distinct events\n    role selection['cell#17']:3 = selection['cell#17'][9/0] or selection['cell#28'][1/0]\n    role selection['cell#16']:1 = selection['cell#16'][7/0] or selection['cell#22'][1/0]\n    attr:cell#0@5(selection['cell#17']:3) == None  ->  Returned <> to <> from <> .   [8]\n    otherwise  ->  <> is <> ; disgorge it before returning a draw .   [2]\n    otherwise -> <> is <> ; disgorge it before returning a draw .\n    '<> is <> ; disgorge it before returning a draw .' arguments: 0=selection['cell#17']:3\n    'Returned <> to <> from <> .' arguments: 1=selection['cell#16']:1, 2=selection['cell#17']:3",
-   "button#4": "button#4: 3 fitted occasions, 1 distinct events\n    role selection['cell#16']:1 = selection['cell#16']\n    role selection['cell#17']:3 = selection['cell#17']\n    otherwise  ->  Returned <> to <> from <> .   [3]\n    otherwise -> Returned <> to <> from <> .\n    'Returned <> to <> from <> .' arguments: 1=selection['cell#16']:1, 2=selection['cell#17']:3",
-   "button#5": "button#5: 4 fitted occasions, 1 distinct events\n    role selection['cell#22']:1 = selection['cell#22']\n    role selection['cell#28']:3 = selection['cell#28']\n    otherwise  ->  Returned <> to <> from <> .   [4]\n    otherwise -> Returned <> to <> from <> .\n    'Returned <> to <> from <> .' arguments: 1=selection['cell#22']:1, 2=selection['cell#28']:3",
-   "button#button": "button#button: 33 fitted occasions, 5 distinct events\n    role relation['forward', 'in:1']:1<owner = relation['forward', 'in:1'] from owner\n    role singleton[]:4 = singleton[]\n    role singleton[]:9 = singleton[]\n    role singleton[]:8 = singleton[]\n    role singleton[]:5 = singleton[]\n    role singleton[]:6 = singleton[]\n    ('named', 'owner')  ->  Opened <> .   [12]\n    otherwise -> undetermined\n    'Opened <> .' arguments: 0=relation['forward', 'in:1']:1<owner",
-   "button#group/table/rowgroup/row/cell/button": "button#group/table/rowgroup/row/cell/button: 6 fitted occasions, 2 distinct events\n    role relation['forward', 'rel:1']:1<owner = relation['forward', 'rel:1'] from owner\n    role relation['forward', 'rel:3']:3<owner = relation['forward', 'rel:3'] from owner\n    attr:cell#0@5(relation['forward', 'rel:3']:3<owner) == None  ->  Returned <> to <> from <> .   [2]\n    otherwise -> undetermined\n    '<> is <> ; disgorge it before returning a draw .' arguments: 0=relation['forward', 'rel:3']:3<owner\n    'Returned <> to <> from <> .' arguments: 1=relation['forward', 'rel:1']:1<owner, 2=relation['forward', 'rel:3']:3<owner",
-   "button:Record draw": "button:Record draw: 112 fitted occasions, 5 distinct events\n    role selection['combobox#0']:1 = selection['combobox#0'][66/0] or selection['cell#16'][50/0] or selection['cell#22'][14/0] or relation['forward', 'rel:1'] from owner[6/0]\n    role selection['combobox#1']:3 = selection['combobox#1'][68/0] or property['attr:blend#0', None][67/0] or selection['cell#22'][49/0] or selection['cell#28'][14/0]\n    role selection['cell#17']:3 = selection['cell#17']\n    attr:cell#0@5(selection['combobox#1']:3) == 'Bottled'  ->  <> is already <> .   [25]\n    attr:cell#0@3(selection['combobox#0']:1) == '0' & attr:cell#0@4(selection['combobox#0']:1) == 'Open'  ->  <> holds <> ; cannot draw <> .   [14]\n    attr:cell#0@4(selection['combobox#1']:3) == '0'  ->  Drew <> from <> into <> .   [4]\n    attr:cell#0@4(selection['combobox#1']:3) == '2'  ->  Drew <> from <> into <> .   [2]\n    attr:cell#0@4(selection['combobox#1']:3) == '1'  ->  Drew <> from <> into <> .   [2]\n    attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cell#0@4(selection['combobox#1']:3) == '3'  ->  Drew <> from <> into <> .   [28]\n    attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cell#0@4(selection['combobox#1']:3) == '4'  ->  Drew <> from <> into <> .   [18]\n    ('named', \"selection['cell#17']:3\")  ->  <> is <> .   [4]\n    ('named', \"selection['combobox#0']:1\") & ('unnamed', \"selection['combobox#1']:3\")  ->  <> is already <> .   [2]\n    attr:cell#0@4(selection['combobox#0']:1) == 'Closed'  ->  <> is <> .   [3]\n    ('unnamed', 'owner')  ->  The book already holds 12 records ; return a draw first .   [2]\n    otherwise -> undetermined\n    '<> holds <> ; cannot draw <> .' arguments: 0=selection['combobox#0']:1\n    '<> is <> .' arguments: 0=selection['combobox#0']:1\n    '<> is already <> .' arguments: 0=selection['combobox#1']:3\n    'Drew <> from <> into <> .' arguments: 1=selection['combobox#0']:1, 2=selection['combobox#1']:3"
+   "button#cell/button": "button#cell/button: 12 fitted occasions, 1 distinct events\n    role relation['forward', 'in:1']:1<owner = relation['forward', 'in:1'] from owner\n    role singleton[]:5 = singleton[]\n    role singleton[]:4 = singleton[]\n    role singleton[]:9 = singleton[]\n    otherwise  ->  Opened <> .   [12]\n    otherwise -> Opened <> .\n    'Opened <> .' arguments: 0=relation['forward', 'in:1']:1<owner",
+   "button:Bottle _": "button:Bottle _: 2 fitted occasions, 2 distinct events\n    otherwise -> undetermined",
+   "button:Close _": "button:Close _: 16 fitted occasions, 2 distinct events\n    role singleton[]:4 = singleton[]\n    role singleton[]:9 = singleton[]\n    role singleton[]:8 = singleton[]\n    ('named', 'singleton[]:9')  ->  <> <> .   [5]\n    ('unnamed', 'singleton[]:4')  ->  <> <> .   [2]\n    otherwise -> undetermined",
+   "button:Disgorge _": "button:Disgorge _: 3 fitted occasions, 1 distinct events\n    role singleton[]:4 = singleton[]\n    role singleton[]:6 = singleton[]\n    otherwise  ->  Disgorged <> .   [3]\n    otherwise -> Disgorged <> .",
+   "button:Record draw": "button:Record draw: 112 fitted occasions, 5 distinct events\n    role selection['combobox#0']:1 = selection['combobox#0'][66/0] or selection['cell#16'][50/0] or selection['cell#22'][14/0] or relation['forward', 'rel:1'] from owner[6/0]\n    role selection['combobox#1']:3 = selection['combobox#1'][68/0] or property['attr:blend#0', None][67/0] or selection['cell#22'][49/0] or selection['cell#28'][14/0]\n    role selection['cell#17']:3 = selection['cell#17']\n    attr:cell#0@5(selection['combobox#1']:3) == 'Bottled'  ->  <> is already <> .   [25]\n    attr:cell#0@3(selection['combobox#0']:1) == '0' & attr:cell#0@4(selection['combobox#0']:1) == 'Open'  ->  <> holds <> ; cannot draw <> .   [14]\n    attr:cell#0@4(selection['combobox#1']:3) == '0'  ->  Drew <> from <> into <> .   [4]\n    attr:cell#0@4(selection['combobox#1']:3) == '2'  ->  Drew <> from <> into <> .   [2]\n    attr:cell#0@4(selection['combobox#1']:3) == '1'  ->  Drew <> from <> into <> .   [2]\n    attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cell#0@4(selection['combobox#1']:3) == '3'  ->  Drew <> from <> into <> .   [28]\n    attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cell#0@4(selection['combobox#1']:3) == '4'  ->  Drew <> from <> into <> .   [18]\n    ('named', \"selection['cell#17']:3\")  ->  <> is <> .   [4]\n    ('named', \"selection['combobox#0']:1\") & ('unnamed', \"selection['combobox#1']:3\")  ->  <> is already <> .   [2]\n    attr:cell#0@4(selection['combobox#0']:1) == 'Closed'  ->  <> is <> .   [3]\n    ('unnamed', 'owner')  ->  The book already holds 12 records ; return a draw first .   [2]\n    otherwise -> undetermined\n    '<> holds <> ; cannot draw <> .' arguments: 0=selection['combobox#0']:1\n    '<> is <> .' arguments: 0=selection['combobox#0']:1\n    '<> is already <> .' arguments: 0=selection['combobox#1']:3\n    'Drew <> from <> into <> .' arguments: 1=selection['combobox#0']:1, 2=selection['combobox#1']:3",
+   "button:Return ticket _ gal from _ out of _": "button:Return ticket _ gal from _ out of _: 59 fitted occasions, 2 distinct events\n    role selection['cell#16']:1 = selection['cell#16'][37/0] or selection['cell#22'][11/0] or relation['forward', 'rel:1'] from owner[2/0]\n    role selection['cell#17']:3 = selection['cell#17'][40/1] or selection['cell#22'][40/1] or selection['cell#28'][12/0] or relation['forward', 'rel:3'] from owner[3/0]\n    attr:cell#0@5(selection['cell#17']:3) == None  ->  Returned <> to <> from <> .   [50]\n    ('named', \"selection['cell#17']:3\")  ->  <> is <> ; disgorge it before returning a draw .   [6]\n    otherwise -> undetermined\n    '<> is <> ; disgorge it before returning a draw .' arguments: 0=selection['cell#17']:3\n    'Returned <> to <> from <> .' arguments: 1=selection['cell#16']:1, 2=selection['cell#17']:3"
   }
  }
 }

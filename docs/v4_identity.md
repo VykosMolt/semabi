@@ -172,6 +172,7 @@ The outcome layer under the rule class, held out at a half-trace cut:
 | blend, after | 249 | 103 | 82 | 21 | 4 | 80 | 34 | 32 |
 | harbour, before | 93 | 22 | 20 | 2 | 2 | 0 | 62 | 9 |
 | harbour, after | 119 | 22 | 20 | 2 | 2 | 0 | 62 | 35 |
+| harbour, after the reference repair below | 119 | 22 | 22 | 0 | 0 | 0 | 62 | 35 |
 | cellar, before | 32 | 0 | 0 | 0 | 0 | 0 | 29 | 3 |
 | cellar, after | 40 | 0 | 0 | 0 | 0 | 0 | 29 | 11 |
 
@@ -185,6 +186,41 @@ against a `returns nothing` prediction, where `score_step` had always read an un
 what silence predicts.  Fixed: harbour's 35 `sole` verdicts are 34 right and 1 wrong, cellar's 11 all right.
 
 Where several outcomes remain open the chosen list is right 72 of 80 on blend, as before.
+
+### The decision list, and the histories nothing was fitted on
+
+`scripts/v4_outcome_batch.sh` regenerates every report `docs/v4_outcomes.md` quotes, and the
+chosen decision list -- the point hypothesis, scored by `v4_outcome` -- moves with the identity
+too.  The cross-trace rows are a second interaction history per application that no fit ever
+read, which makes them the cleanest test of a representation repair there is:
+
+| decision list, held out | right | wrong | abstained | no model | accuracy where it answered |
+|---|---|---|---|---|---|
+| blend, own suffix (`Record draw`, 123 clicks), before | 97 | 3 | 23 | -- | 0.97 |
+| blend, own suffix, after | 92 | 11 | 20 | -- | 0.89 |
+| blend, second history (261 clicks), before | 203 | 44 | 14 | -- | 0.82 |
+| blend, second history, after | 227 | 27 | 7 | -- | 0.89 |
+| harbour, own suffix (126 clicks), before | 33 | 17 | 43 | 33 | 0.66 |
+| harbour, own suffix, after | 59 | 17 | 43 | 7 | 0.78 |
+| harbour, second history (270 clicks), before | 83 | 96 | 91 | -- | 0.46 |
+| harbour, second history, after | 162 | 17 | 91 | -- | 0.91 |
+| cellar, own suffix (40 clicks), before | 10 | 2 | 20 | 8 | 0.83 |
+| cellar, own suffix, after | 18 | 2 | 20 | 0 | 0.90 |
+
+Harbour's second history is the one `docs/v4_outcomes.md` read as *79 of the 96 errors are one
+control, `button#0`, whose whole model is the default of a list fitted on two occasions* -- the
+claim-width defect that document ends on.  Those 79 clicks were the calls table's reference
+buttons, which never move the live region; the model that answered for them was fitted on two
+occasions of whichever other buttons had fallen to the same ordinal, and the width of its
+default was never the problem.  Under their own family they are silent and right, 79 of 79.
+The claim-width defect is real and `docs/v4_admissibility.md` measured it on evidence that was
+not this; what this number was measuring was identity.
+
+Blend's own suffix is the one place the list gets *worse*, 97/3 to 92/11, and seven of the
+eleven are the right frame with the wrong argument -- `Block` for `Block 12`, the value
+segmenter's key truncation below, which the old identity never reached because the vat was not
+an object.  The other four are one more frame error than before.  The second history, which
+has no such vat, improves.
 
 ## An entity whose name the prefix never used
 
@@ -230,7 +266,7 @@ Forced under the rule class and wrong on the frame:
 | once | 0 | 0 | 0 |
 | uncorroborated | 0 | 0 | 0 |
 | ordered | 1 | 0 | 0 |
-| inseparable | 0 | 2 | 0 |
+| inseparable | 0 | 2, then 0 | 0 |
 
 Blend's ordered case is `Record draw` at step 728: the evidence forced *Drew*, the application
 said *Low Barn holds 0 gal; cannot draw 1*, and the guard for that -- the vat's gallons are 0 --
@@ -254,6 +290,18 @@ inseparable state it lists the values rendered in the bound objects' own rows th
 from their attributes and references (`erased_by_the_state`), and for Selkie it names the
 flag, the cargo and the current call.  The layer this blames is reference resolution in the
 reading, not the literal language, and the repair is to the ontology's typing of one slot.
+
+That repair was made, and it is the first time in this project that the loop the brief asks
+for -- a counterexample, the layer it blames, a repair to that layer, a relearn -- has closed
+on a real trace.  A reference slot's target is the type whose keys its values overlap most.  A
+*link* type's keys are borrowed from the type it overlaps -- harbour's call cells are keyed by
+the call's own reference -- so a column matching the link's keys matches the origin's just as
+well, and where the link also keys an empty cell, better; that is how `Current call` came to
+reference the cells rather than the calls.  `Hypotheses` now sends a reference that lands on a
+link type to the type the link borrows its key from.  Refitted, Selkie's row carries
+`rel:9 = C-102` on both pages, `Schedule call`'s refusal is forced and right on both, harbour
+is 22 forced and 22 right where it was 20 and 2, and blend, cellar and vet are bit-identical --
+admissible tables and operator ledgers alike.
 
 ## Chronology
 

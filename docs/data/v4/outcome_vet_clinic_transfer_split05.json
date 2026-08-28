@@ -8,7 +8,7 @@
  "permuted_events": null,
  "scored_on": "vet_clinic_transfer",
  "cut": 448,
- "operators": 26,
+ "operators": 25,
  "operators_with_an_output": 0,
  "output": {
   "claims": 0,
@@ -37,18 +37,18 @@
  },
  "state": {
   "verdicts": {
-   "NOT_APPLICABLE": 219,
-   "POSSIBLE": 4,
-   "REFUTED": 55,
-   "SUPPORTED": 447,
-   "UNKNOWN": 634
+   "NOT_APPLICABLE": 173,
+   "POSSIBLE": 6,
+   "REFUTED": 68,
+   "SUPPORTED": 461,
+   "UNKNOWN": 641
   },
   "per_action": {
    "every applicable rule was right": 186,
-   "every applicable rule was contradicted": 30,
-   "no rule applied": 20,
-   "the rules could not say which object they were about": 18,
-   "applicable rules disagreed": 3
+   "the rules could not say which object they were about": 36,
+   "every applicable rule was contradicted": 14,
+   "applicable rules disagreed": 12,
+   "no rule applied": 9
   }
  },
  "outcome_model": {
@@ -72,55 +72,55 @@
   },
   "by_control": {
    "button:Clients": {
-    "fitted": 0,
+    "fitted": 77,
     "rules": 0,
     "events_fitted": 1,
     "this application has no live region, so there is nothing to predict": 72
    },
    "button:Vets": {
-    "fitted": 0,
+    "fitted": 76,
     "rules": 0,
     "events_fitted": 1,
     "this application has no live region, so there is nothing to predict": 71
    },
    "button:Appointments": {
-    "fitted": 0,
+    "fitted": 77,
     "rules": 0,
     "events_fitted": 1,
     "this application has no live region, so there is nothing to predict": 70
    },
    "button:Schedule": {
-    "fitted": 0,
+    "fitted": 6,
     "rules": 0,
     "events_fitted": 1,
     "this application has no live region, so there is nothing to predict": 13
    },
    "button:Check in": {
-    "fitted": 0,
+    "fitted": 6,
     "rules": 0,
     "events_fitted": 1,
     "this application has no live region, so there is nothing to predict": 7
    },
    "button:Assign vet": {
-    "fitted": 0,
+    "fitted": 4,
     "rules": 0,
     "events_fitted": 1,
     "this application has no live region, so there is nothing to predict": 7
    },
    "button:Cancel": {
-    "fitted": 0,
+    "fitted": 7,
     "rules": 0,
     "events_fitted": 1,
     "this application has no live region, so there is nothing to predict": 6
    },
    "button:Start exam": {
-    "fitted": 0,
+    "fitted": 2,
     "rules": 0,
     "events_fitted": 1,
     "this application has no live region, so there is nothing to predict": 6
    },
    "button:Complete": {
-    "fitted": 0,
+    "fitted": 3,
     "rules": 0,
     "events_fitted": 1,
     "this application has no live region, so there is nothing to predict": 5
@@ -128,33 +128,33 @@
   },
   "wrong": [],
   "lists": {
-   "button:Appointments": "button:Appointments: 0 fitted occasions, 1 distinct events\n    role singleton[]:2 = singleton[]\n    otherwise -> returns nothing",
-   "button:Assign vet": "button:Assign vet: 0 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing",
-   "button:Cancel": "button:Cancel: 0 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing",
-   "button:Check in": "button:Check in: 0 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing",
-   "button:Clients": "button:Clients: 0 fitted occasions, 1 distinct events\n    role singleton[]:2 = singleton[]\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing",
-   "button:Complete": "button:Complete: 0 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing",
-   "button:Register patient": "button:Register patient: 0 fitted occasions, 1 distinct events\n    otherwise -> returns nothing",
-   "button:Schedule": "button:Schedule: 0 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing",
-   "button:Start exam": "button:Start exam: 0 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing",
-   "button:Vets": "button:Vets: 0 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing"
+   "button:Appointments": "button:Appointments: 77 fitted occasions, 1 distinct events\n    role singleton[]:2 = singleton[]\n    otherwise -> returns nothing",
+   "button:Assign vet": "button:Assign vet: 4 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing",
+   "button:Cancel": "button:Cancel: 7 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing",
+   "button:Check in": "button:Check in: 6 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing",
+   "button:Clients": "button:Clients: 77 fitted occasions, 1 distinct events\n    role singleton[]:2 = singleton[]\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing",
+   "button:Complete": "button:Complete: 3 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing",
+   "button:Register patient": "button:Register patient: 3 fitted occasions, 1 distinct events\n    otherwise -> returns nothing",
+   "button:Schedule": "button:Schedule: 6 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing",
+   "button:Start exam": "button:Start exam: 2 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing",
+   "button:Vets": "button:Vets: 76 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing"
   }
  },
  "ablation_live_region_unread": {
-  "operators": 26,
+  "operators": 25,
   "state_verdicts": {
-   "NOT_APPLICABLE": 219,
-   "POSSIBLE": 4,
-   "REFUTED": 55,
-   "SUPPORTED": 447,
-   "UNKNOWN": 634
+   "NOT_APPLICABLE": 173,
+   "POSSIBLE": 6,
+   "REFUTED": 68,
+   "SUPPORTED": 461,
+   "UNKNOWN": 641
   },
   "state_per_action": {
    "every applicable rule was right": 186,
-   "every applicable rule was contradicted": 30,
-   "no rule applied": 20,
-   "the rules could not say which object they were about": 18,
-   "applicable rules disagreed": 3
+   "the rules could not say which object they were about": 36,
+   "every applicable rule was contradicted": 14,
+   "applicable rules disagreed": 12,
+   "no rule applied": 9
   }
  }
 }

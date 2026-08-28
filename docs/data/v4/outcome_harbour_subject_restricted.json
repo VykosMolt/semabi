@@ -8,25 +8,25 @@
  "permuted_events": null,
  "scored_on": "harbour_transfer",
  "cut": 229,
- "operators": 44,
- "operators_with_an_output": 44,
+ "operators": 35,
+ "operators_with_an_output": 35,
  "output": {
-  "claims": 580,
+  "claims": 418,
   "verdicts": {
-   "NOT_APPLICABLE": 209,
-   "REFUTED": 242,
-   "SUPPORTED": 87,
+   "NOT_APPLICABLE": 217,
+   "REFUTED": 68,
+   "SUPPORTED": 91,
    "UNKNOWN": 42
   },
-  "held_out_actions_with_an_output_claim": 92,
-  "distinct_decided_claims": 26,
+  "held_out_actions_with_an_output_claim": 96,
+  "distinct_decided_claims": 22,
   "distinct_decided_frames": 9,
   "per_action": {
-   "every applicable rule was contradicted": 24,
-   "applicable rules disagreed": 24,
+   "applicable rules disagreed": 42,
    "every applicable rule was right": 20,
+   "no rule applied": 16,
    "the rules could not say which object they were about": 12,
-   "no rule applied": 12
+   "every applicable rule was contradicted": 6
   },
   "frame_only": {
    "among": 47,
@@ -35,7 +35,7 @@
   },
   "model_level": {
    "undetermined, the right event among them": 47,
-   "no branch applied": 24,
+   "no branch applied": 28,
    "determinate and right": 20,
    "undetermined, and not among them": 1
   },
@@ -47,15 +47,15 @@
    "accuracy": null
   },
   "distinct_events_predicted_per_action": {
-   "0": 24,
+   "0": 28,
    "1": 20,
    "2": 48
   },
   "majority_frame_control": {
-   "right": 50,
+   "right": 54,
    "wrong": 42,
    "control_unseen_on_prefix": 0,
-   "accuracy": 0.543
+   "accuracy": 0.562
   },
   "observed_frame_distribution": {
    "<> <> is now <> .": 17,
@@ -81,46 +81,47 @@
   }
  },
  "outcome_model": {
-  "controls": 10,
+  "controls": 11,
   "rules": 10,
   "held_out_clicks": 126,
   "ledger": {
+   "the event the interface returned": 55,
    "no determinate answer": 55,
-   "no outcome model for this control": 33,
-   "the event the interface returned": 29,
-   "a different event": 9
+   "a different event": 9,
+   "no outcome model for this control": 7
   },
-  "accuracy_where_it_answered": 0.763,
-  "distinct_events_asserted": 7,
-  "answers_naming_an_event": 37,
-  "accuracy_where_it_named_an_event": 0.757,
+  "accuracy_where_it_answered": 0.859,
+  "distinct_events_asserted": 8,
+  "answers_naming_an_event": 41,
+  "accuracy_where_it_named_an_event": 0.78,
   "by_level": {
+   "the event the interface returned / the control returns nothing": 23,
    "the event the interface returned / with its arguments": 21,
-   "a different event / the event alone": 9,
-   "the event the interface returned / the event alone": 7,
-   "the event the interface returned / the control returns nothing": 1
+   "the event the interface returned / the event alone": 11,
+   "a different event / the event alone": 9
   },
   "events_asserted": {
+   "\u0000SILENT": 23,
    "<> <> is now <> .": 13,
    "<> <> is already <> .": 11,
    "Call <> opened for <> .": 5,
    "Call <> is not <> , so nothing has sailed .": 4,
+   "Call <> has <> berth allocated .": 4,
    "Nothing chosen in the pilot list .": 2,
-   "Nothing chosen in the berth list .": 2,
-   "\u0000SILENT": 1
+   "Nothing chosen in the berth list .": 2
   },
   "majority_frame_control_where_it_answered": {
-   "right": 22,
-   "wrong": 16,
+   "right": 34,
+   "wrong": 30,
    "control_unseen_on_prefix": 0,
-   "accuracy": 0.579
+   "accuracy": 0.531
   },
   "by_control": {
-   "button#0": {
-    "fitted": null,
-    "rules": null,
-    "events_fitted": null,
-    "no outcome model for this control": 33
+   "button#cell/button@6bf899": {
+    "fitted": 34,
+    "rules": 0,
+    "events_fitted": 1,
+    "the event the interface returned": 23
    },
    "button:Reopen": {
     "fitted": 18,
@@ -156,8 +157,20 @@
     "no determinate answer": 9,
     "the event the interface returned": 4
    },
+   "button#button": {
+    "fitted": null,
+    "rules": null,
+    "events_fitted": null,
+    "no outcome model for this control": 7
+   },
    "button:Record departure": {
     "fitted": 3,
+    "rules": 1,
+    "events_fitted": 1,
+    "the event the interface returned": 4
+   },
+   "button:Bring _": {
+    "fitted": 4,
     "rules": 1,
     "events_fitted": 1,
     "the event the interface returned": 4
@@ -174,12 +187,6 @@
     "rules": 1,
     "events_fitted": 1,
     "the event the interface returned": 2
-   },
-   "button#button": {
-    "fitted": 0,
-    "rules": 0,
-    "events_fitted": 1,
-    "the event the interface returned": 1
    }
   },
   "wrong": [
@@ -257,10 +264,11 @@
    }
   ],
   "lists": {
-   "button#button": "button#button: 0 fitted occasions, 1 distinct events\n    otherwise -> returns nothing",
-   "button#text/button": "button#text/button: 4 fitted occasions, 1 distinct events\n    otherwise  ->  Call <> has <> berth allocated .   [4]\n    otherwise -> Call <> has <> berth allocated .\n    'Call <> has <> berth allocated .' arguments: 0=owner",
+   "button#cell/button@6bf899": "button#cell/button@6bf899: 34 fitted occasions, 1 distinct events\n    otherwise -> returns nothing",
+   "button#cell/button@75b51d": "button#cell/button@75b51d: 9 fitted occasions, 1 distinct events\n    otherwise -> returns nothing",
    "button:Allocate berth": "button:Allocate berth: 3 fitted occasions, 1 distinct events\n    otherwise  ->  Nothing chosen in the berth list .   [3]\n    otherwise -> Nothing chosen in the berth list .",
    "button:Book pilot": "button:Book pilot: 3 fitted occasions, 1 distinct events\n    otherwise  ->  Nothing chosen in the pilot list .   [3]\n    otherwise -> Nothing chosen in the pilot list .",
+   "button:Bring _": "button:Bring _: 4 fitted occasions, 1 distinct events\n    otherwise  ->  Call <> has <> berth allocated .   [4]\n    otherwise -> Call <> has <> berth allocated .\n    'Call <> has <> berth allocated .' arguments: 0=owner",
    "button:Close": "button:Close: 20 fitted occasions, 3 distinct events\n    attr:cell#0@5(owner) == 'closed'  ->  <> <> is already <> .   [5]\n    otherwise -> undetermined\n    '<> <> cannot be <> while call <> holds it .' arguments: 1=owner\n    '<> <> is already <> .' arguments: 1=owner\n    '<> <> is now <> .' arguments: 1=owner",
    "button:Record departure": "button:Record departure: 3 fitted occasions, 1 distinct events\n    otherwise  ->  Call <> is not <> , so nothing has sailed .   [3]\n    otherwise -> Call <> is not <> , so nothing has sailed .\n    'Call <> is not <> , so nothing has sailed .' arguments: 0=owner",
    "button:Reopen": "button:Reopen: 18 fitted occasions, 2 distinct events\n    attr:cell#0@5(owner) == 'open'  ->  <> <> is already <> .   [13]\n    otherwise  ->  <> <> is now <> .   [5]\n    otherwise -> <> <> is now <> .\n    '<> <> is already <> .' arguments: 1=owner\n    '<> <> is now <> .' arguments: 1=owner",
