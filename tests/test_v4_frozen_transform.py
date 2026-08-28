@@ -405,23 +405,28 @@ def test_a_rule_that_cannot_say_which_object_says_so_rather_than_guessing():
 # ------------------------------------------------------------------ what the model cannot see
 
 @pytest.mark.skipif(not (HARBOUR_RUN / "steps.jsonl").exists(), reason="retained trace absent")
-def test_the_application_says_what_it_did_and_the_representation_discards_it():
-    """A known gap, pinned so that repairing it is visible.
+def test_the_application_says_what_it_did_and_the_model_still_cannot_learn_from_it():
+    """Half a gap, pinned at the half that remains.
 
-    Every one of harbour's retained observations carries a `status` node -- the application
-    saying in words what the last action did or refused to do -- and not one of them reaches the
-    semantic state.  The node sits outside every recurring unit, so the parser never places it
-    in an instance, and the text is then in neither the view nor any object.
+    The status node is now read.  `status` joined the parser's leaf roles beside `alert`, which
+    is the same kind of live region and was already in the graph's and the hypotheses' leaf
+    sets; only `parse.DATA_ROLES` omitted it.  Harbour's status line now reaches the view on
+    every observation it appears in.
 
-    This is the largest remaining defect the chronology run found, and it is measured rather
-    than argued: on blend, 63 draws are lifted as transitions and all 69 refusals are set aside
-    as no-ops, 46 of them recording no difference at all, because the only thing that changed
-    was a sentence the model cannot see.
+    Nothing downstream moved.  Types, slots, operators and control families are identical with
+    and without it on harbour and blend, and the regenerated claim ledgers are byte-identical --
+    because reading a fact is not the same as being able to learn from it.
 
-    The assertions are written to *fail* when the gap is repaired.  That is deliberate: a
-    silent improvement here would leave every recorded number in `docs/v4_chronology.md`
-    describing a model that no longer exists.  Whoever places the status node should come here,
-    watch this fail, and rewrite it to say what the representation does instead.
+    What remains is the gate.  A transition whose only difference is the status line is still
+    not a domain change, so a refusal is still set aside as a counterexample rather than lifted
+    as an outcome, and all 69 of blend's held-out refusals are still counterexamples.  Closing
+    that needs a category this model does not have: an observable outcome that is not a state
+    change.  Making a status-only diff count as a domain change is *not* the repair -- nothing
+    about the world changed, and that distinction is what stops view navigation looking causal.
+
+    These assertions are written to fail when the second half closes, for the same reason the
+    first version was: a silent improvement would leave the numbers in
+    `docs/v4_chronology.md` describing a model that no longer exists.
     """
     from semabi.compiler.v4 import consequence as csq
     from semabi.eval.v4_consequence_run import _candidates
@@ -430,7 +435,7 @@ def test_the_application_says_what_it_did_and_the_representation_discards_it():
     model = csq.fit(HARBOUR_RUN, readings["joint discrimination x2"], split=0.5)
     A, log = model.abstractor, model.evidence
 
-    checked = placed = in_state = 0
+    checked = placed = in_view = 0
     for sig in list(log.observations)[:40]:
         obs = log.obs(sig)
         status = [n for n in obs.nodes if n.role == "status" and (n.name or "").strip()]
@@ -442,25 +447,25 @@ def test_the_application_says_what_it_did_and_the_representation_discards_it():
         if any(node.i in obs.subtree(r) for r in roots):
             placed += 1
         state = A.abstract(obs)
-        if node.name in (state.view or {}).values() or any(
-                node.name in o.attrs.values() for o in state.objs.values()):
-            in_state += 1
+        if node.name in (state.view or {}).values():
+            in_view += 1
 
     assert checked, "harbour's observations carry a status line; this found none"
-    assert placed == 0, (
-        f"{placed} status nodes are now inside a unit -- the gap may be repaired, "
-        "which is good news and means this test needs rewriting"
+    assert in_view == checked, (
+        f"only {in_view} of {checked} status lines reach the view -- the parser has stopped "
+        "reading them, which undoes the first half of the repair"
     )
-    assert in_state == 0, (
-        f"{in_state} status lines now reach the semantic state -- the gap may be repaired, "
-        "which is good news and means this test needs rewriting"
+    assert placed == 0, (
+        f"{placed} status nodes are now inside a unit; they are meant to be statics, and a "
+        "status line that belongs to one row of a table is a different claim"
     )
 
-    # And the gate that would still stop it being learned, even once it is represented.
+    # The gate that still stops any of it being learned.
     from semabi.compiler.abstract import Diff
     only_view = Diff([], [], [], [], {"status": ("Ready.", "Berth N2 is already closed.")})
     assert only_view.domain_changed is False, (
         "a status-only change now counts as a domain change; that is the wrong repair -- "
         "nothing about the world changed, and this distinction is what stops view navigation "
-        "looking causal"
+        "looking causal.  If the second half has been closed properly, it was closed with a "
+        "third category and this test needs rewriting around it"
     )

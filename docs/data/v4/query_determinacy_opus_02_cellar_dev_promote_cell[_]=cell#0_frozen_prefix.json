@@ -5,10 +5,52 @@
  "split": 0.5,
  "cut": 195,
  "operators": 12,
- "operators_with_a_query": 0,
- "queries": [],
- "determinacy": {},
- "effect_correctness": {},
- "where_the_effect_went": {},
- "counterexamples": []
+ "operators_with_a_query": 4,
+ "queries": [
+  "the object named by combobox#0",
+  "the object named by combobox#2",
+  "the object named by status#0",
+  "the object named by text#3",
+  "the object named by text#4"
+ ],
+ "determinacy": {
+  "names exactly one object": 5,
+  "names nothing where the rule applies": 6
+ },
+ "effect_correctness": {
+  "the object it named bore the effect": 4,
+  "the object it named did not bear the effect": 1
+ },
+ "where_the_effect_went": {
+  "no object of its type bore the effect": 1
+ },
+ "candidates_of_the_type_present": {
+  "19": 8,
+  "20": 3
+ },
+ "chance_of_naming_right": 0.052,
+ "counterexamples": [
+  {
+   "step": 199,
+   "operator": "op9",
+   "variable": "?o0",
+   "query": "the object named by text#3",
+   "named": "Vessel",
+   "borne_by": []
+  },
+  {
+   "step": 202,
+   "operator": "op11",
+   "variable": "?o0",
+   "query": "the object named by text#4",
+   "named": []
+  },
+  {
+   "step": 375,
+   "operator": "op4",
+   "variable": "?o0",
+   "query": "the object named by text#3",
+   "named": []
+  }
+ ]
 }

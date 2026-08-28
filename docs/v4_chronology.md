@@ -729,10 +729,37 @@ Making a status-only change count as a domain change would be the wrong repair. 
 the world changed, and that distinction is doing real work elsewhere -- it is what keeps view
 navigation from looking causal.  What is missing is a third category: an *observable outcome*
 that is not a state change, which an operator may predict and a held-out step may refute.  That
-is an architectural addition rather than a patch, and it is specified here rather than started.
+is an architectural addition rather than a patch.  The *first* half is now done and was one
+element in a set; the second is specified below rather than started.
 
-The first half has no design question left in it.  A status node is a single, positionally
-stable node wherever it exists:
+`LEAF_ROLES` already contained `alert` -- the same kind of live region -- and the graph's `LEAF`
+and the hypotheses' `LEAF_DATA` already contained `status`.  Only `parse.DATA_ROLES` omitted it,
+which is why the node was never read at all.  Adding it puts harbour's status line in the view
+on every observation that has one.  Blend's reaches the view on 62 of 78 sampled, and the other
+16 are not lost: they sit inside a recurring unit, so they become a slot of that object rather
+than a view entry, which is what the parser should do with a status line that belongs to one row
+rather than to the page.
+
+On harbour and blend nothing else moved: types, slots, operators and control families are
+identical with and without it, and the regenerated claim ledgers are byte-identical.  I checked
+those two and wrote that nothing moved, which was over-broad -- cellar moves, and favourably.
+
+Its promoted reading gains a namer, `the object named by status#0`, because the application
+writes the key of the object it is talking about into the status line, and the selection form
+picks that up as soon as the line is readable.  Queries found go from 5 to 6 under the
+transductive regime and 7 to 8 under the frozen one, and for the first time that reading has
+determinate held-out opportunities at all: five of them, four effect-correct, one where no
+object of the type bore the effect, against a chance rate of **0.052** with nineteen or twenty
+candidates present.
+
+Five opportunities do not establish anything, and the direction is the interesting part rather
+than the number.  It is also worth being suspicious of: a status line in the *pre*-state
+describes the *previous* action, so naming this action's object from it is only sound where the
+same object is acted on repeatedly, and cellar is an application where that happens.  Reading a
+fact is not the same as being able to learn from it, and only the first of those has been done.
+
+It had no design question left in it either.  A status node is a single, positionally stable
+node wherever it exists:
 
 | | observations | status nodes each | where |
 |---|---|---|---|
@@ -741,9 +768,9 @@ stable node wherever it exists:
 | cellar | 259 | exactly 1 | node 6, depth 1 |
 | vet clinic | 221 | none | -- |
 
-So the placement rule is "the `status` node, where there is one, is a view slot", and the whole
-of the difficulty is the second half: what an operator is allowed to claim about an observable
-outcome that is not a state change.
+So the placement rule was "the `status` node, where there is one, is a view slot", and all of
+the remaining difficulty is the second half: what an operator is allowed to claim about an
+observable outcome that is not a state change.
 
 What that would be worth is worth stating too, since a line that always reads `Ready.` is not
 evidence about anything:

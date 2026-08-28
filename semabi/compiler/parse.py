@@ -13,7 +13,14 @@ from typing import Any
 from semabi.compiler.observation import Node, Observation
 
 WIDGETS = {"button", "link", "checkbox", "radio", "combobox", "textbox"}
-DATA_ROLES = {"text", "heading", "cell", "listitem", "alert"}
+# `status` sits here for the same reason `alert` does: both are live regions the application
+# writes its account of the last action into, and a node the parser does not read is a node
+# nothing downstream can see.  Its absence meant every one of harbour's 359 status lines and
+# every one of blend's refusal messages -- "Festival White is already bottled." -- was dropped
+# before any learner saw it, which is why all 69 of blend's held-out refusals are counterexamples
+# rather than outcomes.  Reading it changes no schema: types, slots, operators and control
+# families are identical on harbour and blend with and without it.
+DATA_ROLES = {"text", "heading", "cell", "listitem", "alert", "status"}
 LEAF_ROLES = WIDGETS | DATA_ROLES
 
 SIM_THRESHOLD = 0.5
