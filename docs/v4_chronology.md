@@ -752,6 +752,13 @@ determinate held-out opportunities at all: five of them, four effect-correct, on
 object of the type bore the effect, against a chance rate of **0.052** with nineteen or twenty
 candidates present.
 
+What it does deliver is the evidence itself, and that is measurable directly.  Of blend's 69
+prefix refusals, the number carrying a recorded difference goes from **23 to 55**, and the number
+recording no difference at all from 46 to 14.  The remaining 14 are honest: a refusal that
+repeats the previous refusal's message changes nothing on the page, so there is no difference to
+record, and making one appear would be inventing evidence.  Reading them would need the action
+together with the *unchanged* status, which is a different claim again.
+
 Five opportunities do not establish anything, and the direction is the interesting part rather
 than the number.  It is also worth being suspicious of: a status line in the *pre*-state
 describes the *previous* action, so naming this action's object from it is only sound where the
