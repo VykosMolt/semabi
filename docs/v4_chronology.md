@@ -378,6 +378,37 @@ Which rules do that damage is measurable: at 0.5, three rules of support 2 and 3
 222 of the contradictions on "already bottled" refusals, against 6 from the support-39 rule
 whose preconditions are three literals rather than one.
 
+## Watching blend consolidate online, and what it does not buy
+
+The prequential pass over blend's `Record draw` actions -- 24 evaluation points, the model
+rebuilt from scratch before each -- shows the consolidation happening as an event:
+
+| step | control families | positional control slots | queries found | verdicts |
+|---|---|---|---|---|
+| 520 | 24 | 13 | 17 | 12 n/a, 2 refuted |
+| 564 | 24 | 13 | 19 | 12 n/a, 2 refuted |
+| **599** | **18** | **4** | **39** | 25 n/a, 4 supported |
+| 717 | 18 | 4 | 46 | 22 n/a, 10 supported |
+| 827 | 18 | 4 | 50 | 24 n/a, 10 refuted |
+
+Between step 564 and 599 the causal learner halves its slot count, drops nine control families,
+turns thirteen positional control slots into four, and roughly doubles the referring queries it
+can state.  That is the same consolidation the batch curve puts between 503 and 587, arriving
+on its own from evidence that was always in the past.
+
+What it does not buy is accuracy.  The supported share among decided claims is **53% before the
+consolidation and 53% after**.  What changes is selectivity: not-applicable verdicts go from
+8.6 per action to 21.9.  The model becomes much more careful about when it speaks and no better
+at what it says.
+
+That is a real limit on the learning-curve story and worth stating against the batch numbers,
+which look more encouraging because they measure something else.  A batch split scores a fixed
+held-out suffix with one model; the prequential scores one action at a time with a model that
+keeps growing.  On the batch measure blend's overall supported share goes from about 20% at 0.5
+to 55% at 0.7, and its accuracy on the steps where the action performs goes from 70% to 100%.
+On the prequential measure the share does not move.  Both are true; neither is the headline on
+its own.
+
 ## Where the bottleneck is now
 
 It is not chronology.  The evidence view, the graph, and the lazily induced control families
