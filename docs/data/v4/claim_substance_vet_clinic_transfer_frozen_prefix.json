@@ -1,0 +1,103 @@
+[
+ {
+  "run": "vet_clinic_transfer",
+  "reading": "joint discrimination x3",
+  "regime": "FROZEN_PREFIX",
+  "split": 0.5,
+  "cut": 448,
+  "operators": 26,
+  "held_out_actions": 257,
+  "rules_offered_per_action": 2.52,
+  "applicable_claims_per_action": 3.53,
+  "distinct_decided_claims": 1,
+  "composition": {
+   "removal": {
+    "claims": 1359,
+    "decided": 902,
+    "supported": 767,
+    "refuted": 135,
+    "supported_share": 0.85,
+    "distinct_claims": 1,
+    "examples": [
+     "id = gone"
+    ]
+   }
+  },
+  "per_action": {
+   "every applicable rule was right": 186,
+   "every applicable rule was contradicted": 44,
+   "no rule applied": 24,
+   "applicable rules disagreed": 3
+  },
+  "removal_exposure": {
+   "base_rate_gone": 0.724,
+   "steps_by_fraction_gone": {
+    "all went (>90%)": 182,
+    "none went (<10%)": 66,
+    "some went": 9
+   },
+   "reading_supported_share": 0.85,
+   "removal_claims": 902,
+   "steps_spoken_at": 233,
+   "per_click_control": 0.804,
+   "objects_in_those_steps": 749,
+   "margin_over_per_click_control": 0.046
+  }
+ },
+ {
+  "run": "vet_clinic_transfer",
+  "reading": "promote cell[_]=cell#0",
+  "regime": "FROZEN_PREFIX",
+  "split": 0.5,
+  "cut": 448,
+  "operators": 54,
+  "held_out_actions": 172,
+  "rules_offered_per_action": 12.05,
+  "applicable_claims_per_action": 30.9,
+  "distinct_decided_claims": 2,
+  "composition": {
+   "a named constant": {
+    "claims": 96,
+    "decided": 6,
+    "supported": 0,
+    "refuted": 6,
+    "supported_share": 0.0,
+    "distinct_claims": 1,
+    "examples": [
+     "id = in_progress"
+    ]
+   },
+   "removal": {
+    "claims": 15400,
+    "decided": 5163,
+    "supported": 5153,
+    "refuted": 10,
+    "supported_share": 0.998,
+    "distinct_claims": 1,
+    "examples": [
+     "id = gone"
+    ]
+   }
+  },
+  "per_action": {
+   "every applicable rule was right": 71,
+   "no rule applied": 70,
+   "only undecidable claims survived": 26,
+   "every applicable rule was contradicted": 5
+  },
+  "removal_exposure": {
+   "base_rate_gone": 0.744,
+   "steps_by_fraction_gone": {
+    "all went (>90%)": 116,
+    "none went (<10%)": 11,
+    "some went": 27
+   },
+   "reading_supported_share": 0.998,
+   "removal_claims": 5163,
+   "steps_spoken_at": 75,
+   "per_click_control": 0.918,
+   "objects_in_those_steps": 403,
+   "margin_over_per_click_control": 0.08
+  }
+ }
+]

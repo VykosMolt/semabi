@@ -155,6 +155,28 @@ fragments under a short prefix: 244 observations give 24 control families and 13
 control slots (`button#0` … `button#5`), where 484 give 18 families and 4.  It consolidates
 between step 503 and step 587, so this too is a learning curve.
 
+## Vet clinic: neither reading is identified
+
+Both of vet clinic's readings are removal models, and the per-click control is what says so:
+
+| reading | distinct claims | decided | supported | per-click control | margin |
+|---|---|---|---|---|---|
+| `joint discrimination x3` | 1 | 902 | 85% | 0.804 | +0.046 |
+| `promote cell[_]=cell#0` | 2 | 5169 | 100% | 0.918 | +0.080 |
+
+`joint discrimination x3` makes exactly one kind of claim here -- `id: gone` -- where on
+harbour it makes two value claims and on blend two change claims.  The promoted reading offers
+30.9 applicable claims per action and 5163 of its decided ones are the same assertion.
+
+Neither is *contradicted*, and neither is *identified*: on an application that stops rendering
+more than 90% of its objects on 182 of 257 held-out steps, a removal model clears the control
+by four to eight points.  That is not enough to distinguish the readings from each other or
+from the page.
+
+The selection query form generalises here, which is the check that it is not a blend-specific
+device: vet clinic learns `the object named by combobox#0`, `listitem#0`, `listitem#1`,
+`listitem#2` and `text#0`.
+
 ## Cellar: the pathology is real and is not a chronology artefact
 
 `promote cell[_]=cell#0`, at the same split, under both regimes:

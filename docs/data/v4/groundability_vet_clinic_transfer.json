@@ -1,0 +1,501 @@
+[
+ {
+  "run": "vet_clinic_transfer",
+  "reading": "joint discrimination x3",
+  "regime": "FROZEN_PREFIX",
+  "split": 0.5,
+  "cut": 448,
+  "operators": 26,
+  "rules_by_status": {
+   "every effect target is supplied, created, or determined by a query": 13,
+   "the legitimate query language was searched and none determines it": 10,
+   "every candidate property was refused as fitting-instance memorisation, so the evidence cannot tell a reusable predicate from a description of one object": 3
+  },
+  "determined_rules": [
+   {
+    "operator": "op1",
+    "support": 72,
+    "acts": [
+     "click(button:Appointments)"
+    ],
+    "implicit": {
+     "?o0": "the only object of its type"
+    }
+   },
+   {
+    "operator": "op3",
+    "support": 4,
+    "acts": [
+     "click(button:Cancel@3532f1)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op5",
+    "support": 3,
+    "acts": [
+     "click(button:Assign vet@3532f1)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op6",
+    "support": 3,
+    "acts": [
+     "click(button:Schedule)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op7",
+    "support": 3,
+    "acts": [
+     "click(button:Check in@f21267)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op8",
+    "support": 2,
+    "acts": [
+     "click(button:Clients)"
+    ],
+    "implicit": {
+     "?o0": "the only object of its type"
+    }
+   },
+   {
+    "operator": "op10",
+    "support": 1,
+    "acts": [
+     "click(button:Appointments)"
+    ],
+    "implicit": {
+     "?o0": "the only object of its type"
+    }
+   },
+   {
+    "operator": "op11",
+    "support": 1,
+    "acts": [
+     "click(button:Start exam@e64ac3)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op12",
+    "support": 1,
+    "acts": [
+     "click(button:Cancel@3532f1)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op13",
+    "support": 1,
+    "acts": [
+     "click(button:Cancel@422e7e)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op14",
+    "support": 1,
+    "acts": [
+     "click(button:Check in@f21267)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op22",
+    "support": 1,
+    "acts": [
+     "click(button:Complete@e85660)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op23",
+    "support": 1,
+    "acts": [
+     "click(button:Schedule)"
+    ],
+    "implicit": {}
+   }
+  ],
+  "variable_roles": {
+   "the effect brings it into being": 35,
+   "it already exists and the action does not name it": 31,
+   "the action supplies it": 12,
+   "it appears only in preconditions": 4
+  },
+  "query_outcomes": {
+   "a prefix-only query determines it": 13,
+   "the legitimate query language was searched and none determines it": 13,
+   "every candidate property was refused as fitting-instance memorisation, so the evidence cannot tell a reusable predicate from a description of one object": 5
+  },
+  "distinct_queries": [
+   "the object named by text#0",
+   "the only object of its type"
+  ]
+ },
+ {
+  "run": "vet_clinic_transfer",
+  "reading": "promote cell[_]=cell#0",
+  "regime": "FROZEN_PREFIX",
+  "split": 0.5,
+  "cut": 448,
+  "operators": 54,
+  "rules_by_status": {
+   "every candidate property was refused as fitting-instance memorisation, so the evidence cannot tell a reusable predicate from a description of one object": 31,
+   "the legitimate query language was searched and none determines it": 14,
+   "every effect target is supplied, created, or determined by a query": 9
+  },
+  "determined_rules": [
+   {
+    "operator": "op25",
+    "support": 1,
+    "acts": [],
+    "implicit": {}
+   },
+   {
+    "operator": "op39",
+    "support": 1,
+    "acts": [
+     "click(button:Cancel@8cc606)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op41",
+    "support": 1,
+    "acts": [
+     "click(button:Schedule)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op42",
+    "support": 1,
+    "acts": [
+     "click(button:Schedule)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op45",
+    "support": 1,
+    "acts": [
+     "click(button:Schedule)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op47",
+    "support": 1,
+    "acts": [
+     "click(button:Schedule)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op48",
+    "support": 1,
+    "acts": [
+     "click(button:Schedule)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op50",
+    "support": 1,
+    "acts": [
+     "click(button:Schedule)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op51",
+    "support": 1,
+    "acts": [
+     "click(button:Schedule)"
+    ],
+    "implicit": {}
+   }
+  ],
+  "variable_roles": {
+   "it already exists and the action does not name it": 236,
+   "the effect brings it into being": 236,
+   "it appears only in preconditions": 10
+  },
+  "query_outcomes": {
+   "the legitimate query language was searched and none determines it": 122,
+   "every candidate property was refused as fitting-instance memorisation, so the evidence cannot tell a reusable predicate from a description of one object": 85,
+   "a prefix-only query determines it": 29
+  },
+  "distinct_queries": [
+   "the object named by combobox#0",
+   "the object named by listitem#0",
+   "the object named by listitem#1",
+   "the object named by listitem#2",
+   "the object named by text#0",
+   "the object named by text#1",
+   "the only object with attr:col = 'Notes'"
+  ]
+ },
+ {
+  "run": "vet_clinic_transfer",
+  "reading": "joint discrimination x3",
+  "regime": "TRANSDUCTIVE",
+  "split": 0.5,
+  "cut": 448,
+  "operators": 30,
+  "rules_by_status": {
+   "every effect target is supplied, created, or determined by a query": 15,
+   "the legitimate query language was searched and none determines it": 11,
+   "every candidate property was refused as fitting-instance memorisation, so the evidence cannot tell a reusable predicate from a description of one object": 4
+  },
+  "determined_rules": [
+   {
+    "operator": "op1",
+    "support": 72,
+    "acts": [
+     "click(button:Appointments)"
+    ],
+    "implicit": {
+     "?o0": "the only object of its type"
+    }
+   },
+   {
+    "operator": "op3",
+    "support": 4,
+    "acts": [
+     "click(button:Schedule)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op5",
+    "support": 3,
+    "acts": [
+     "click(button:Assign vet)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op6",
+    "support": 3,
+    "acts": [
+     "click(button:Check in)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op7",
+    "support": 3,
+    "acts": [
+     "click(button:Cancel)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op8",
+    "support": 2,
+    "acts": [
+     "click(button:Clients)"
+    ],
+    "implicit": {
+     "?o0": "the only object of its type"
+    }
+   },
+   {
+    "operator": "op9",
+    "support": 2,
+    "acts": [
+     "click(button:Cancel)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op11",
+    "support": 2,
+    "acts": [
+     "click(button:Cancel)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op12",
+    "support": 1,
+    "acts": [
+     "click(button:Appointments)"
+    ],
+    "implicit": {
+     "?o0": "the only object of its type"
+    }
+   },
+   {
+    "operator": "op13",
+    "support": 1,
+    "acts": [
+     "click(button:Start exam)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op14",
+    "support": 1,
+    "acts": [
+     "click(button:Check in)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op16",
+    "support": 1,
+    "acts": [
+     "click(button:Assign vet)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op23",
+    "support": 1,
+    "acts": [
+     "click(button:Complete@e85660)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op24",
+    "support": 1,
+    "acts": [
+     "click(button:Schedule)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op25",
+    "support": 1,
+    "acts": [
+     "click(button:Check in)",
+     "click(button:Cancel)"
+    ],
+    "implicit": {}
+   }
+  ],
+  "variable_roles": {
+   "the effect brings it into being": 40,
+   "it already exists and the action does not name it": 37,
+   "the action supplies it": 14,
+   "it appears only in preconditions": 7
+  },
+  "query_outcomes": {
+   "the legitimate query language was searched and none determines it": 15,
+   "a prefix-only query determines it": 14,
+   "every candidate property was refused as fitting-instance memorisation, so the evidence cannot tell a reusable predicate from a description of one object": 8
+  },
+  "distinct_queries": [
+   "the object named by text#0",
+   "the only object of its type"
+  ]
+ },
+ {
+  "run": "vet_clinic_transfer",
+  "reading": "promote cell[_]=cell#0",
+  "regime": "TRANSDUCTIVE",
+  "split": 0.5,
+  "cut": 448,
+  "operators": 54,
+  "rules_by_status": {
+   "every candidate property was refused as fitting-instance memorisation, so the evidence cannot tell a reusable predicate from a description of one object": 32,
+   "the legitimate query language was searched and none determines it": 14,
+   "every effect target is supplied, created, or determined by a query": 8
+  },
+  "determined_rules": [
+   {
+    "operator": "op39",
+    "support": 1,
+    "acts": [
+     "click(button:Cancel@8cc606)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op41",
+    "support": 1,
+    "acts": [
+     "click(button:Schedule)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op42",
+    "support": 1,
+    "acts": [
+     "click(button:Schedule)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op45",
+    "support": 1,
+    "acts": [
+     "click(button:Schedule)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op47",
+    "support": 1,
+    "acts": [
+     "click(button:Schedule)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op48",
+    "support": 1,
+    "acts": [
+     "click(button:Schedule)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op50",
+    "support": 1,
+    "acts": [
+     "click(button:Schedule)"
+    ],
+    "implicit": {}
+   },
+   {
+    "operator": "op51",
+    "support": 1,
+    "acts": [
+     "click(button:Schedule)"
+    ],
+    "implicit": {}
+   }
+  ],
+  "variable_roles": {
+   "it already exists and the action does not name it": 237,
+   "the effect brings it into being": 235,
+   "it appears only in preconditions": 9
+  },
+  "query_outcomes": {
+   "the legitimate query language was searched and none determines it": 122,
+   "every candidate property was refused as fitting-instance memorisation, so the evidence cannot tell a reusable predicate from a description of one object": 86,
+   "a prefix-only query determines it": 29
+  },
+  "distinct_queries": [
+   "the object named by combobox#0",
+   "the object named by listitem#0",
+   "the object named by listitem#1",
+   "the object named by listitem#2",
+   "the object named by text#0",
+   "the object named by text#1",
+   "the only object with attr:col = 'Notes'"
+  ]
+ }
+]
