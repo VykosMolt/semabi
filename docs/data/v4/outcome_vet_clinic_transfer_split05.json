@@ -1,0 +1,103 @@
+{
+ "run": "vet_clinic_transfer",
+ "reading": "joint discrimination x3",
+ "regime": "FROZEN_PREFIX",
+ "split": 0.5,
+ "control": null,
+ "permuted_events": null,
+ "scored_on": "vet_clinic_transfer",
+ "cut": 448,
+ "operators": 26,
+ "operators_with_an_output": 0,
+ "output": {
+  "claims": 0,
+  "verdicts": {},
+  "held_out_actions_with_an_output_claim": 0,
+  "distinct_decided_claims": 0,
+  "distinct_decided_frames": 0,
+  "per_action": {},
+  "frame_only": {},
+  "model_level": {},
+  "distinct_events_where_determinate": 0,
+  "majority_frame_control_where_determinate": {
+   "right": 0,
+   "wrong": 0,
+   "control_unseen_on_prefix": 0,
+   "accuracy": null
+  },
+  "distinct_events_predicted_per_action": {},
+  "majority_frame_control": {
+   "right": 0,
+   "wrong": 0,
+   "control_unseen_on_prefix": 0,
+   "accuracy": null
+  },
+  "observed_frame_distribution": {}
+ },
+ "state": {
+  "verdicts": {
+   "NOT_APPLICABLE": 219,
+   "POSSIBLE": 4,
+   "REFUTED": 55,
+   "SUPPORTED": 447,
+   "UNKNOWN": 634
+  },
+  "per_action": {
+   "every applicable rule was right": 186,
+   "every applicable rule was contradicted": 30,
+   "no rule applied": 20,
+   "the rules could not say which object they were about": 18,
+   "applicable rules disagreed": 3
+  }
+ },
+ "outcome_model": {
+  "controls": 10,
+  "rules": 0,
+  "held_out_clicks": 257,
+  "ledger": {
+   "this application has no live region, so there is nothing to predict": 257
+  },
+  "accuracy_where_it_answered": null,
+  "distinct_events_asserted": 0,
+  "answers_naming_an_event": 0,
+  "accuracy_where_it_named_an_event": null,
+  "by_level": {},
+  "events_asserted": {},
+  "majority_frame_control_where_it_answered": {
+   "right": 0,
+   "wrong": 0,
+   "control_unseen_on_prefix": 0,
+   "accuracy": null
+  },
+  "wrong": [],
+  "lists": {
+   "button:Appointments": "button:Appointments: 0 fitted occasions, 1 distinct events\n    role singleton[]:2 = singleton[]\n    otherwise -> returns nothing",
+   "button:Assign vet": "button:Assign vet: 0 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing",
+   "button:Cancel": "button:Cancel: 0 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing",
+   "button:Check in": "button:Check in: 0 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing",
+   "button:Clients": "button:Clients: 0 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    role singleton[]:2 = singleton[]\n    otherwise -> returns nothing",
+   "button:Complete": "button:Complete: 0 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing",
+   "button:Register patient": "button:Register patient: 0 fitted occasions, 1 distinct events\n    otherwise -> returns nothing",
+   "button:Schedule": "button:Schedule: 0 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing",
+   "button:Start exam": "button:Start exam: 0 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing",
+   "button:Vets": "button:Vets: 0 fitted occasions, 1 distinct events\n    role selection['text#0']:2 = selection['text#0']\n    otherwise -> returns nothing"
+  }
+ },
+ "ablation_live_region_unread": {
+  "operators": 26,
+  "state_verdicts": {
+   "NOT_APPLICABLE": 219,
+   "POSSIBLE": 4,
+   "REFUTED": 55,
+   "SUPPORTED": 447,
+   "UNKNOWN": 634
+  },
+  "state_per_action": {
+   "every applicable rule was right": 186,
+   "every applicable rule was contradicted": 30,
+   "no rule applied": 20,
+   "the rules could not say which object they were about": 18,
+   "applicable rules disagreed": 3
+  }
+ }
+}

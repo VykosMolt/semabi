@@ -34,6 +34,12 @@ semabi/compiler/        BLACK-BOX SIDE (never imports hidden/env/eval; enforced 
   v4/consequence.py     a reading's predicted delta checked at the structure the action affected
   v4/conditional.py     is a held-out refutation a missing precondition, or an ontology that
                         cannot express one?  chosen on the prefix, tested on the suffix
+  v4/emission.py        the live region as a transition *output*: a message split into a frame
+                        and the page values it names, by masking spans the page renders as
+                        whole values.  Not state, not a view change: a third category
+  v4/outcome.py         per control, an ordered list of guarded answers -- what the interface
+                        returns, learned by separate-and-conquer over the referring
+                        expressions the operators already have
 semabi/eval/            scoring against hidden ground truth (paired-state alignment + behavioural simulation),
                         held-out goals, direct model-vs-model comparison (crossui.py), generic scorer
 semabi/baselines/       screen-transition graph, LLM passive (claude -p), known action vocabulary
@@ -88,10 +94,16 @@ was recovered. Given a correct state layer the frozen V0 inducer recovers 7-11 o
 the failure is the state abstraction, not the induction.
 
 V4 follows that line, and its results carry an information boundary as well as a number.
-`docs/v4_chronology.md` is the current account of what holds and under which one: the
-observation model in earlier V4 runs could read held-out observations while claiming to be a
-prefix fit, so those results are transductive at the observation-model layer whatever they say.
-Three regimes are now named in the code and every fit and scored result carries the one that
-produced it. `docs/v4_handoff.md` remains the custody and protocol record; where the two
-disagree about a held-out number, the chronology document is later.
+`docs/v4_chronology.md` established which: the observation model in earlier V4 runs could read
+held-out observations while claiming to be a prefix fit, so those results are transductive at
+the observation-model layer whatever they say. Three regimes are now named in the code and
+every fit and scored result carries the one that produced it. `docs/v4_handoff.md` remains the
+custody and protocol record.
+
+`docs/v4_outcomes.md` is the latest, and continues the chronology rather than replacing it: an
+interaction can return an observable result without the state transition it was aimed at
+happening, and until that run the action model had nowhere to put it. Blend's outcome model
+predicts which of six events `Record draw` returns, with the objects it names, on a held-out
+suffix and on a second interaction history. Where any two of these documents disagree about a
+number, the later one is later; `scripts/v4_outcome_batch.sh` regenerates the outcome ones.
 

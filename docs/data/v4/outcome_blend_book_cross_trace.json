@@ -1,0 +1,163 @@
+{
+ "run": "blend_book_transfer",
+ "reading": "joint discrimination x3",
+ "regime": "FROZEN_PREFIX",
+ "split": 1.0,
+ "control": "Record draw",
+ "subject_restricted": false,
+ "permuted_events": null,
+ "scored_on": "blend_book_holdout",
+ "cut": 839,
+ "operators": 50,
+ "operators_with_an_output": 47,
+ "output": {
+  "claims": 0,
+  "verdicts": {},
+  "held_out_actions_with_an_output_claim": 0,
+  "distinct_decided_claims": 0,
+  "distinct_decided_frames": 0,
+  "per_action": {},
+  "frame_only": {},
+  "model_level": {},
+  "distinct_events_where_determinate": 0,
+  "majority_frame_control_where_determinate": {
+   "right": 0,
+   "wrong": 0,
+   "control_unseen_on_prefix": 0,
+   "accuracy": null
+  },
+  "distinct_events_predicted_per_action": {},
+  "majority_frame_control": {
+   "right": 0,
+   "wrong": 0,
+   "control_unseen_on_prefix": 0,
+   "accuracy": null
+  },
+  "observed_frame_distribution": {}
+ },
+ "state": {
+  "verdicts": {},
+  "per_action": {}
+ },
+ "outcome_model": {
+  "controls": 3,
+  "rules": 18,
+  "held_out_clicks": 261,
+  "ledger": {
+   "the event the interface returned": 203,
+   "a different event": 44,
+   "no determinate answer": 14
+  },
+  "accuracy_where_it_answered": 0.822,
+  "distinct_events_asserted": 6,
+  "answers_naming_an_event": 247,
+  "accuracy_where_it_named_an_event": 0.822,
+  "by_level": {
+   "the event the interface returned / with its arguments": 203,
+   "a different event / the event alone": 44
+  },
+  "events_asserted": {
+   "Drew <> from <> into <> .": 122,
+   "<> is already <> .": 78,
+   "<> is <> .": 24,
+   "<> holds <> ; cannot draw <> .": 18,
+   "<> is single-varietal ( <> ) ; <> is <> .": 4,
+   "The book already holds 12 records ; return a draw first .": 1
+  },
+  "majority_frame_control_where_it_answered": {
+   "right": 31,
+   "wrong": 216,
+   "control_unseen_on_prefix": 0,
+   "accuracy": 0.126
+  },
+  "by_control": {
+   "button:Record draw": {
+    "fitted": 209,
+    "rules": 12,
+    "events_fitted": 6,
+    "the event the interface returned": 203,
+    "a different event": 44,
+    "no determinate answer": 14
+   }
+  },
+  "wrong": [
+   {
+    "step": 20,
+    "control": "button:Record draw",
+    "predicted": "<> is single-varietal ( <> ) ; <> is <> .",
+    "observed": "Drew <> from <> into <> .",
+    "returned": "Drew 1 gal from Orchard into Festival White.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 25,
+    "control": "button:Record draw",
+    "predicted": "<> is single-varietal ( <> ) ; <> is <> .",
+    "observed": "Drew <> from <> into <> .",
+    "returned": "Drew 1 gal from Orchard into Festival White.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 28,
+    "control": "button:Record draw",
+    "predicted": "Drew <> from <> into <> .",
+    "observed": "The book already holds 12 records ; return a draw first .",
+    "returned": "The book already holds 12 records; return a draw first.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 84,
+    "control": "button:Record draw",
+    "predicted": "The book already holds 12 records ; return a draw first .",
+    "observed": "Drew <> from <> into <> .",
+    "returned": "Drew 1 gal from Orchard into Festival White.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 94,
+    "control": "button:Record draw",
+    "predicted": "Drew <> from <> into <> .",
+    "observed": "The book already holds 12 records ; return a draw first .",
+    "returned": "The book already holds 12 records; return a draw first.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 97,
+    "control": "button:Record draw",
+    "predicted": "Drew <> from <> into <> .",
+    "observed": "The book already holds 12 records ; return a draw first .",
+    "returned": "The book already holds 12 records; return a draw first.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 102,
+    "control": "button:Record draw",
+    "predicted": "<> is single-varietal ( <> ) ; <> is <> .",
+    "observed": "Drew <> from <> into <> .",
+    "returned": "Drew 1 gal from Orchard into Festival White.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 105,
+    "control": "button:Record draw",
+    "predicted": "<> is single-varietal ( <> ) ; <> is <> .",
+    "observed": "Drew <> from <> into <> .",
+    "returned": "Drew 1 gal from Orchard into Festival White.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   }
+  ],
+  "lists": {
+   "button#button": "button#button: 52 fitted occasions, 5 distinct events\n    role relation['forward', 'in:1']:1<owner = relation['forward', 'in:1'] from owner\n    role singleton[]:10 = singleton[]\n    role singleton[]:6 = singleton[]\n    role singleton[]:8 = singleton[]\n    role singleton[]:7 = singleton[]\n    ('ref_set', 'owner', 'in:1')  ->  Opened <> .   [22]\n    attr:( ) , closed gal#2(singleton[]:8) == '1'  ->  <> <> .   [6]\n    no_children(singleton[]:6)  ->  <> <> .   [4]\n    attr:.#0(singleton[]:7) == 'Bottled Festival White'  ->  <> <> .   [2]\n    otherwise -> undetermined\n    'Opened <> .' arguments: 0=relation['forward', 'in:1']:1<owner",
+   "button#cell/button": "button#cell/button: 113 fitted occasions, 2 distinct events\n    role relation['forward', 'rel:1']:1<owner = relation['forward', 'rel:1'] from owner\n    role relation['forward', 'rel:3']:3<owner = relation['forward', 'rel:3'] from owner\n    attr:cell#0@5(relation['forward', 'rel:3']:3<owner) == None  ->  Returned <> to <> from <> .   [97]\n    otherwise  ->  <> is <> ; disgorge it before returning a draw .   [16]\n    otherwise -> <> is <> ; disgorge it before returning a draw .\n    '<> is <> ; disgorge it before returning a draw .' arguments: 0=relation['forward', 'rel:3']:3<owner\n    'Returned <> to <> from <> .' arguments: 1=relation['forward', 'rel:1']:1<owner, 2=relation['forward', 'rel:3']:3<owner",
+   "button:Record draw": "button:Record draw: 209 fitted occasions, 6 distinct events\n    role selection['combobox#0']:1 = selection['combobox#0'][118/12] or property['attr:cell#0@3', '0'][20/0] or relation['forward', 'rel:1'] from owner[8/2]\n    role selection['combobox#1']:3 = selection['combobox#1'][136/0] or relation['forward', 'rel:3'] from owner[21/5]\n    attr:cell#0@5(selection['combobox#1']:3) == 'Bottled'  ->  <> is already <> .   [54]\n    no_children(selection['combobox#1']:3)  ->  Drew <> from <> into <> .   [9]\n    attr:( ) , gal open#2(owner) == '0'  ->  <> holds <> ; cannot draw <> .   [5]\n    attr:( ) , bottled single varietal#1(owner) == '2020'  ->  <> is already <> .   [4]\n    attr:cell#0@4(selection['combobox#0']:1) == 'Closed'  ->  <> is <> .   [25]\n    attr:cell#0@3(selection['combobox#0']:1) == '1'  ->  Drew <> from <> into <> .   [69]\n    attr:cell#0@3(selection['combobox#0']:1) == '0'  ->  <> holds <> ; cannot draw <> .   [14]\n    attr:cell#0@2(selection['combobox#1']:3) == '2022'  ->  Drew <> from <> into <> .   [12]\n    attr:cell#1(selection['combobox#0']:1) == '12'  ->  Drew <> from <> into <> .   [6]\n    attr:cell#0@4(selection['combobox#1']:3) == '4'  ->  <> is single-varietal ( <> ) ; <> is <> .   [2]\n    attr:cell#0@3(selection['combobox#0']:1) == '2'  ->  Drew <> from <> into <> .   [2]\n    attr:cell#0@4(selection['combobox#1']:3) == '5'  ->  The book already holds 12 records ; return a draw first .   [2]\n    otherwise -> undetermined\n    '<> holds <> ; cannot draw <> .' arguments: 0=selection['combobox#0']:1\n    '<> is <> .' arguments: 0=selection['combobox#0']:1\n    '<> is already <> .' arguments: 0=selection['combobox#1']:3\n    '<> is single-varietal ( <> ) ; <> is <> .' arguments: 0=selection['combobox#1']:3, 2=selection['combobox#0']:1\n    'Drew <> from <> into <> .' arguments: 1=selection['combobox#0']:1, 2=selection['combobox#1']:3"
+  }
+ }
+}

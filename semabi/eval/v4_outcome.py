@@ -26,6 +26,7 @@ from __future__ import annotations
 import argparse
 import json
 from collections import Counter, defaultdict
+from dataclasses import replace
 from pathlib import Path
 
 from semabi.compiler.evidence import EvidenceLog
@@ -105,7 +106,9 @@ def majority_control(model, events, held_out_steps, *, on: set | None = None) ->
 
 def outcome(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.5,
             regime: str = csq.FROZEN_PREFIX, min_support: int = 2,
-            control: str | None = None, ablation: bool = True) -> dict:
+            control: str | None = None, ablation: bool = True,
+            permute: int | None = None, score_on: Path | None = None,
+            subject_restricted: bool = False) -> dict:
     from semabi.eval.v4_consequence_run import _candidates
 
     readings = {c.name: c.reading for c in _candidates(chain)}
@@ -114,7 +117,11 @@ def outcome(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.5
               "split": split, "control": control}
 
     model = csq.fit(Path(run_dir), reading, split=split, min_support=min_support,
-                    regime=regime)
+                    regime=regime, permute_outcomes=permute,
+                    subject_restricted=subject_restricted)
+    report["subject_restricted"] = subject_restricted
+    report["permuted_events"] = permute
+    report["scored_on"] = Path(score_on).name if score_on else Path(run_dir).name
     result = csq.score(model, evaluate_on="suffix")
     report["cut"] = model.cut
     report["operators"] = len(model.operators)
@@ -194,19 +201,29 @@ def outcome(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.5
     }
 
     # The outcome model itself: one ordered list per control, asked the executable question.
-    held_out = [s for s in model.log.steps[model.cut:]
-                if s.action.kind == "click" and s.action.target is not None]
+    if score_on is not None:
+        # A second interaction history, none of which the model has seen.  A prefix/suffix
+        # split inside one trace shares its episodes; this does not.
+        other = EvidenceLog(Path(score_on))
+        model = replace(model, log=other)
+        held_out = [s for s in other.steps
+                    if s.action.kind == "click" and s.action.target is not None]
+    else:
+        held_out = [s for s in model.log.steps[model.cut:]
+                    if s.action.kind == "click" and s.action.target is not None]
     ledger = Counter()
     right_steps: set[int] = set()
     decided_steps: set[int] = set()
     asserted: Counter = Counter()
     levels: Counter = Counter()
+    by_control: dict[str, Counter] = defaultdict(Counter)
     wrong_witnesses = []
     for step in held_out:
         row = oc.score_step(model, step)
         if control is not None and control.lower() not in (row["control"] or "").lower():
             continue
         ledger[row["verdict"]] += 1
+        by_control[row["control"]][row["verdict"]] += 1
         if row["verdict"] in (oc.RIGHT, oc.WRONG):
             decided_steps.add(step.step)
             asserted[row.get("predicted")] += 1
@@ -237,6 +254,17 @@ def outcome(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.5
         "events_asserted": dict(asserted.most_common(8)),
         "majority_frame_control_where_it_answered": majority_control(
             model, events, sorted(decided_steps), on=decided_steps),
+        # Where the failures are.  An aggregate over ten controls with three occasions each
+        # says nothing about whether the mechanism works or the evidence was thin.
+        "by_control": {c: {"fitted": (model.outcomes[c].fitted
+                                      if c in model.outcomes else None),
+                           "rules": (len(model.outcomes[c].rules)
+                                     if c in model.outcomes else None),
+                           "events_fitted": (len(model.outcomes[c].events)
+                                             if c in model.outcomes else None),
+                           **dict(v.most_common())}
+                       for c, v in sorted(by_control.items(),
+                                          key=lambda kv: -sum(kv[1].values()))},
         "wrong": wrong_witnesses,
         "lists": {c: str(o) for c, o in sorted(model.outcomes.items())},
     }
@@ -299,6 +327,12 @@ def _print(r: dict) -> None:
               f"accuracy {m['accuracy_where_it_named_an_event']}")
         print(f"    majority-frame control on those same actions: "
               f"{m['majority_frame_control_where_it_answered']}")
+        for c, row in list(m["by_control"].items())[:8]:
+            right, wrong = row.get(oc.RIGHT, 0), row.get(oc.WRONG, 0)
+            print(f"    {c:34.34} fitted={str(row['fitted']):>4} "
+                  f"events={str(row['events_fitted']):>3} rules={str(row['rules']):>3}  "
+                  f"right={right:>3} wrong={wrong:>3} "
+                  f"abstained={row.get(oc.ABSTAINED, 0):>3}")
     print(f"  state verdicts {r['state']['verdicts']}")
     for k, v in r["state"]["per_action"].items():
         print(f"    {v:>5}  {k}")
@@ -320,10 +354,18 @@ def main(argv=None) -> int:
     ap.add_argument("--control", default=None)
     ap.add_argument("--min-support", type=int, default=2)
     ap.add_argument("--no-ablation", action="store_true")
+    ap.add_argument("--permute", type=int, default=None,
+                    help="shuffle the fitted events: the control for the whole layer")
+    ap.add_argument("--subject-restricted", action="store_true",
+                    help="a guard may only be about an object the event names")
+    ap.add_argument("--score-on", default=None,
+                    help="a second retained trace to score on, none of which was fitted")
     ap.add_argument("--out", default=None)
     a = ap.parse_args(argv)
     r = outcome(Path(a.run), Path(a.chain), a.reading, split=a.split, regime=a.regime,
-                min_support=a.min_support, control=a.control, ablation=not a.no_ablation)
+                min_support=a.min_support, control=a.control, ablation=not a.no_ablation,
+                permute=a.permute, score_on=Path(a.score_on) if a.score_on else None,
+                subject_restricted=a.subject_restricted)
     _print(r)
     name = a.out or (f"outcome_{Path(a.run).name}_"
                      f"{a.reading.replace(' ', '_')}_{a.regime.lower()}.json")

@@ -188,6 +188,25 @@ class Create:
 
 
 @dataclass(frozen=True)
+class Emit:
+    """An observable output the interaction returns, with the objects it names.
+
+    Not a state change.  An interface operation can answer -- "already bottled", "nothing
+    chosen in the vessel list" -- without the transition it was aimed at happening, and that
+    answer is part of the contract: a caller that plans against this model needs to know which
+    invocations return rather than act.  The event's ``frame`` is whatever recurred once the
+    page's own data was masked out of the message, so it is not an English label the compiler
+    was given; the arguments are parameters of the operator, so it is not a sentence either.
+    """
+    frame: str
+    args: tuple = ()
+
+    def __str__(self) -> str:
+        a = ", ".join(str(v) for v in self.args)
+        return f"return {self.frame!r}" + (f"({a})" if a else "")
+
+
+@dataclass(frozen=True)
 class Delete:
     obj: str
 
@@ -248,7 +267,8 @@ class SetAttrIncoming:
         return f"forall x: {self.rel}(x, {self.obj}) -> {self.attr}(x) := {self.value!r}"
 
 
-Effect = Create | Delete | SetAttr | SetRel | DeleteIncoming | MoveIncoming | SetAttrIncoming
+Effect = (Create | Delete | SetAttr | SetRel | DeleteIncoming | MoveIncoming
+          | SetAttrIncoming | Emit)
 
 
 @dataclass

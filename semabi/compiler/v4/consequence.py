@@ -70,6 +70,7 @@ VALUE = "VALUE"
 IDENTITY = "IDENTITY"
 EXISTENCE = "EXISTENCE"
 OUTPUT = "OUTPUT"        # what the interaction returned, checked against the live region
+CREATION = "CREATION"    # an object the interaction brings into being, checked on the page
 
 CHANGES = "\x00CHANGES"    # the claim of an effect whose value the action does not determine
 
@@ -175,7 +176,7 @@ class ScopedResult:
     # Every claim checked against the raw page.  ``OUTPUT`` belongs here for the same reason
     # the other two do: it is decided by what the application rendered, not by anything the
     # reading computes about the later page.
-    PAGE_CHECKS = (VALUE, EXISTENCE, OUTPUT)
+    PAGE_CHECKS = (VALUE, EXISTENCE, OUTPUT, CREATION)
 
     def signature(self, kind: str | tuple[str, ...] = PAGE_CHECKS) -> list[tuple]:
         """What this reading predicted, where, and how it came out -- in raw page terms.
@@ -285,6 +286,8 @@ class ScopedResult:
                 "value": self.counts(VALUE), "identity": self.counts(IDENTITY),
                 "existence": self.counts(EXISTENCE),
                 "output": self.counts(OUTPUT), "output_coverage": self.coverage(OUTPUT),
+                "creation": self.counts(CREATION),
+                "creation_coverage": self.coverage(CREATION),
                 "existence_coverage": self.coverage(EXISTENCE),
                 "value_correspondence": self.correspondence_counts(VALUE),
                 "value_coverage": self.coverage(VALUE), "value_landing": self.landing(VALUE),
@@ -663,7 +666,8 @@ class Fit:
 
 
 def fit(run_dir: Path, reading, *, split: float = 0.6, at: int | None = None,
-        min_support: int = 2, regime: str = FROZEN_PREFIX, read_outputs: bool = True) -> Fit:
+        min_support: int = 2, regime: str = FROZEN_PREFIX, read_outputs: bool = True,
+        permute_outcomes: int | None = None, subject_restricted: bool = False) -> Fit:
     """Compile one reading on the evidence one regime says was available, and freeze it.
 
     The regime *is* the information boundary; there is one place that turns it into a view of
@@ -710,7 +714,9 @@ def fit(run_dir: Path, reading, *, split: float = 0.6, at: int | None = None,
     # The outcome layer sits over the operators rather than inside them: what an interaction
     # returns is one of a set of alternatives, and alternatives are learned as an ordered list
     # (see `semabi.compiler.v4.outcome`), not as independently guarded rules.
-    outcomes = (outcome.learn(compiled.inducer) if read_outputs else {})
+    outcomes = (outcome.learn(compiled.inducer, permute=permute_outcomes,
+                              subject_restricted=subject_restricted)
+                if read_outputs else {})
     return Fit(reading, compiled.inducer.A, compiled.inducer.operators, full, cut, split,
                compiled.inducer, regime, prefix, queries, read_outputs, outcomes)
 
@@ -833,10 +839,19 @@ def score(model: Fit, *, mutate: Callable[[str], str] | None = None,
                     base.verdict, base.detail = NOT_APPLICABLE, bound.detail
                     result.predictions.append(base)
                     continue
+                assignments = bound.admissible
+                if kind is CREATION:
+                    # A creation claim is about the values the new object will carry, and two
+                    # assignments that resolve them the same way are one claim.  Evaluating
+                    # them separately made a rule with a hundred open assignments ask the same
+                    # question a hundred times, which is most of a scoring pass on a reading
+                    # that pins nothing.
+                    assignments = _distinct_by(assignments,
+                                               lambda a: _creation_values(eff, a))
                 parts = [_under_one_binding(base, A, bridge, pre, post, step, op, eff,
                                             assignment, step_relocate, step_gone, states,
                                             predicted)
-                         for assignment in bound.admissible]
+                         for assignment in assignments]
                 aggregated = _aggregate(base, parts, bound)
                 result.predictions.append(aggregated)
                 if aggregated.identity is not None:
@@ -892,6 +907,11 @@ def _claim(op, eff, mutate):
         # is one positionally stable node and the claim is about its content, not about
         # following a node through a transition.
         return OUTPUT, eff.slot, (mutate(eff.slot) if mutate else eff.slot)
+    if eff.kind == "add":
+        # The claim is that the page will render a structure it did not render before, carrying
+        # these values together.  What "these values" are depends on the binding, so the
+        # predicted text is filled in where the binding is known.
+        return CREATION, "id", "new"
     if eff.kind == "remove":
         return EXISTENCE, "id", "gone"
     if eff.kind != "set" or eff.slot is None:
@@ -915,6 +935,8 @@ def _under_one_binding(base, A, bridge, pre, post, step, op, eff, assignment, re
         binding_evidence=assignment.evidence)
     if base.kind is OUTPUT:
         return _output_prediction(pred, A, post, eff, assignment, predicted)
+    if base.kind is CREATION:
+        return _creation_prediction(pred, pre, post, eff, assignment)
     subject = assignment.get(eff.obj)
     if subject is None or getattr(subject, "node", None) is None:
         pred.verdict = NOT_APPLICABLE
@@ -1158,6 +1180,9 @@ def _output_prediction(pred: ScopedPrediction, A, post, eff, assignment, predict
         return pred
     args = []
     for _, value in eff.attrs:
+        if value is VARIES:
+            args.append(None)     # the action does not determine this argument: not checked
+            continue
         if isinstance(value, str) and value.startswith("?"):
             obj = assignment.get(value)
             if obj is None:
@@ -1171,7 +1196,7 @@ def _output_prediction(pred: ScopedPrediction, A, post, eff, assignment, predict
     pred.subject = str(subject.key) if subject is not None else ""
     pred.context = binding_context(assignment.values)
     event = emit_mod.lift_event(observed, post, vocabulary=getattr(A, "emissions", None))
-    pred.expected = emit_mod.render(predicted, args)
+    pred.expected = emit_mod.render(predicted, ["*" if a is None else a for a in args])
     pred.observed = (event.frame,) + tuple(event.args)
     pred.held_before = observed
     if event.frame != predicted:
@@ -1179,13 +1204,142 @@ def _output_prediction(pred: ScopedPrediction, A, post, eff, assignment, predict
         pred.detail = (f"predicted the interface to return {pred.expected!r}; it returned "
                        f"{observed!r}, which is a different event")
         return pred
-    if tuple(args) != event.args:
+    if any(a is not None and (i >= len(event.args) or event.args[i] != a)
+           for i, a in enumerate(args)):
         pred.verdict = REFUTED
         pred.detail = (f"predicted {pred.expected!r}; the interface returned the same event "
                        f"about {list(event.args)} rather than {args}")
         return pred
     pred.verdict = SUPPORTED
     pred.detail = f"the interface returned {observed!r}"
+    return pred
+
+
+def _nodes_rendering(obs, value: str) -> frozenset:
+    """Nodes whose subtree renders ``value``, memoised on the observation.
+
+    One pass per distinct value per observation.  Doing it per *claim* instead was the
+    difference between a test that runs and one that does not: a rule with a hundred admissible
+    assignments asks a hundred different value sets of the same two pages.
+    """
+    from semabi.compiler.v4.emission import tokens as _tokens
+
+    index = getattr(obs, "_rendering_index", None)
+    if index is None:
+        index = obs._rendering_index = {}
+    hit = index.get(value)
+    if hit is not None:
+        return hit
+    under = getattr(obs, "_subtree_texts", None)
+    if under is None:
+        under = {}
+        for n in reversed(obs.nodes):
+            got = set()
+            for text in (n.name, n.value):
+                if text:
+                    got.add(text)
+                    got.update(_tokens(text))
+            for child in obs.children(n.i):
+                got |= under.get(child, set())
+            under[n.i] = got
+        obs._subtree_texts = under
+    want = _tokens(value)
+    hit = frozenset(i for i, got in under.items()
+                    if value in got or (want and all(t in got for t in want)))
+    index[value] = hit
+    return hit
+
+
+def _creation_witnesses(obs, values: list[str]) -> int:
+    """Minimal subtrees rendering all of ``values``.
+
+    Minimal so that a witness is not counted again for every ancestor of it, and counted rather
+    than sought so that the check is a *change*: blend's draw form renders the vat, the blend
+    and the amount before the click as well as after, and asking only whether the page shows
+    them somewhere would be answered by the form the click was made from.
+    """
+    if not values:
+        return 0
+    holds = _nodes_rendering(obs, values[0])
+    for value in values[1:]:
+        holds &= _nodes_rendering(obs, value)
+        if not holds:
+            return 0
+    return sum(1 for i in holds if not any(c in holds for c in obs.children(i)))
+
+
+def _distinct_by(items, key):
+    seen, out = set(), []
+    for item in items:
+        k = key(item)
+        if k in seen:
+            continue
+        seen.add(k)
+        out.append(item)
+    return tuple(out)
+
+
+def _creation_values(eff, assignment) -> tuple:
+    """The values a creation claim is about, under one assignment."""
+    out = []
+    for _slot, value in tuple(eff.attrs) + tuple(eff.refs):
+        if value is VARIES or value is None:
+            out.append(None)
+        elif isinstance(value, str) and value.startswith("?"):
+            obj = assignment.get(value)
+            out.append(None if obj is None else str(obj.key))
+        elif isinstance(value, str) and value:
+            out.append(split_literal(value)[0])
+        else:
+            out.append(None)
+    return tuple(out)
+
+
+def _creation_prediction(pred: ScopedPrediction, pre, post, eff, assignment
+                         ) -> ScopedPrediction:
+    """Did the page gain a structure rendering, together, what the new object is said to carry?
+
+    Creation was the one effect kind nothing scored.  A ``remove`` claim is checked by
+    relocating the node that rendered the object; a created object has no node in the earlier
+    page to relocate, so the check is the other way round -- the values the rule says the new
+    object carries, sought as a *minimal* subtree of the later page and counted against the
+    earlier one.  The reading supplies which objects the rule is about and what it says they
+    are called; the page decides.
+
+    A value the action does not determine is not part of the claim.  A rule that determines
+    none of them is not making a checkable one.
+    """
+    values: list[str] = []
+    undetermined = 0
+    for _slot, value in tuple(eff.attrs) + tuple(eff.refs):
+        if value is VARIES or value is None:
+            undetermined += 1
+            continue
+        if isinstance(value, str) and value.startswith("?"):
+            obj = assignment.get(value)
+            if obj is None:
+                undetermined += 1
+                continue
+            values.append(str(obj.key))
+        elif isinstance(value, str) and value:
+            values.append(split_literal(value)[0])
+    pred.context = binding_context(assignment.values)
+    if not values:
+        pred.verdict = UNKNOWN
+        pred.detail = (f"the rule determines none of the {undetermined} values it says the new "
+                       f"object carries, so it does not say what would appear")
+        return pred
+    pred.expected = " + ".join(values)
+    before = _creation_witnesses(pre, values)
+    after = _creation_witnesses(post, values)
+    pred.held_before = f"{before} structures carried these values before"
+    pred.observed = (f"{after} after",)
+    if after > before:
+        pred.verdict = SUPPORTED
+        pred.detail = (f"the page gained a structure carrying {values}: {before} -> {after}")
+    else:
+        pred.verdict = REFUTED
+        pred.detail = (f"no structure carrying {values} appeared: {before} -> {after}")
     return pred
 
 

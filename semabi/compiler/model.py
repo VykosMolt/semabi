@@ -192,6 +192,8 @@ def build_model(A: Abstractor, ops: list[OperatorHyp], min_support: int = 1, vie
                 for k, v in e.refs:
                     if (e.tid, k) in rels:
                         effects.append(rm.SetRel(rels[(e.tid, k)], e.obj, v))
+            elif e.kind == "emit":
+                effects.append(rm.Emit(e.slot, tuple(v for _, v in e.attrs)))
             elif e.kind == "remove":
                 effects.append(rm.Delete(e.obj))
             elif e.kind == "set":
@@ -222,6 +224,8 @@ def build_model(A: Abstractor, ops: list[OperatorHyp], min_support: int = 1, vie
             vals = [getattr(e, k) for k in ("obj", "a", "b", "src", "dst", "value") if hasattr(e, k)]
             if isinstance(e, rm.Create):
                 vals += [v for _, v in e.attrs]
+            if isinstance(e, rm.Emit):
+                vals += list(e.args)
             return any(isinstance(v, str) and v.startswith("?new") and v not in created for v in vals)
         effects = [e for e in effects if not mentions_unbound(e)]
         # Which parameters the grounding actually carries.  The rest are constrained by the

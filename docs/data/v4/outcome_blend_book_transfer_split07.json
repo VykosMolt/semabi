@@ -1,0 +1,230 @@
+{
+ "run": "blend_book_transfer",
+ "reading": "joint discrimination x3",
+ "regime": "FROZEN_PREFIX",
+ "split": 0.7,
+ "control": "Record draw",
+ "permuted_events": null,
+ "scored_on": "blend_book_transfer",
+ "cut": 587,
+ "operators": 47,
+ "operators_with_an_output": 44,
+ "output": {
+  "claims": 1554,
+  "verdicts": {
+   "NOT_APPLICABLE": 1147,
+   "POSSIBLE": 5,
+   "REFUTED": 152,
+   "SUPPORTED": 132,
+   "UNKNOWN": 118
+  },
+  "held_out_actions_with_an_output_claim": 74,
+  "distinct_decided_claims": 18,
+  "distinct_decided_frames": 6,
+  "per_action": {
+   "applicable rules disagreed": 67,
+   "every applicable rule was contradicted": 7
+  },
+  "frame_only": {
+   "among": 73,
+   "wrong": 1
+  },
+  "model_level": {
+   "undetermined, the right event among them": 73,
+   "undetermined, and not among them": 1
+  },
+  "distinct_events_where_determinate": 0,
+  "majority_frame_control_where_determinate": {
+   "right": 0,
+   "wrong": 0,
+   "control_unseen_on_prefix": 0,
+   "accuracy": null
+  },
+  "distinct_events_predicted_per_action": {
+   "2": 48,
+   "3": 19,
+   "4": 1,
+   "5": 6
+  },
+  "majority_frame_control": {
+   "right": 34,
+   "wrong": 40,
+   "control_unseen_on_prefix": 0,
+   "accuracy": 0.459
+  },
+  "observed_frame_distribution": {
+   "Drew <> from <> into <> .": 34,
+   "<> is already <> .": 20,
+   "<> is <> .": 14,
+   "<> holds <> ; cannot draw <> .": 6
+  }
+ },
+ "state": {
+  "verdicts": {
+   "NOT_APPLICABLE": 1504,
+   "REFUTED": 46,
+   "SUPPORTED": 200,
+   "UNKNOWN": 396
+  },
+  "per_action": {
+   "every applicable rule was right": 34,
+   "no rule applied": 20,
+   "every applicable rule was contradicted": 14,
+   "the rules could not say which object they were about": 6
+  }
+ },
+ "outcome_model": {
+  "controls": 3,
+  "rules": 18,
+  "held_out_clicks": 74,
+  "ledger": {
+   "the event the interface returned": 58,
+   "a different event": 15,
+   "no determinate answer": 1
+  },
+  "accuracy_where_it_answered": 0.795,
+  "distinct_events_asserted": 5,
+  "answers_naming_an_event": 73,
+  "accuracy_where_it_named_an_event": 0.795,
+  "by_level": {
+   "the event the interface returned / with its arguments": 58,
+   "a different event / the event alone": 8,
+   "a different event / with its arguments": 7
+  },
+  "events_asserted": {
+   "Drew <> from <> into <> .": 32,
+   "<> is already <> .": 20,
+   "<> is <> .": 11,
+   "<> is single-varietal ( <> ) ; <> is <> .": 5,
+   "<> holds <> ; cannot draw <> .": 5
+  },
+  "majority_frame_control_where_it_answered": {
+   "right": 34,
+   "wrong": 39,
+   "control_unseen_on_prefix": 0,
+   "accuracy": 0.466
+  },
+  "by_control": {
+   "button:Record draw": {
+    "fitted": 150,
+    "rules": 13,
+    "events_fitted": 6,
+    "the event the interface returned": 58,
+    "a different event": 15,
+    "no determinate answer": 1
+   }
+  },
+  "wrong": [
+   {
+    "step": 587,
+    "control": "button:Record draw",
+    "predicted": "<> is single-varietal ( <> ) ; <> is <> .",
+    "observed": "Drew <> from <> into <> .",
+    "returned": "Drew 1 gal from Block 12 into Festival White.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 590,
+    "control": "button:Record draw",
+    "predicted": "<> is single-varietal ( <> ) ; <> is <> .",
+    "observed": "Drew <> from <> into <> .",
+    "returned": "Drew 1 gal from Block 12 into Festival White.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 593,
+    "control": "button:Record draw",
+    "predicted": "<> is single-varietal ( <> ) ; <> is <> .",
+    "observed": "Drew <> from <> into <> .",
+    "returned": "Drew 1 gal from Block 12 into Festival White.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 596,
+    "control": "button:Record draw",
+    "predicted": "<> is single-varietal ( <> ) ; <> is <> .",
+    "observed": "Drew <> from <> into <> .",
+    "returned": "Drew 1 gal from Block 12 into Festival White.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 599,
+    "control": "button:Record draw",
+    "predicted": "<> is single-varietal ( <> ) ; <> is <> .",
+    "observed": "Drew <> from <> into <> .",
+    "returned": "Drew 1 gal from Block 12 into Festival White.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 602,
+    "control": "button:Record draw",
+    "predicted": "<> is <> .",
+    "observed": "<> is <> .",
+    "returned": "Block 12 is closed.",
+    "verdict": "a different event",
+    "level": "with its arguments",
+    "arguments": {
+     "0": [
+      "Block",
+      "Block 12"
+     ]
+    }
+   },
+   {
+    "step": 606,
+    "control": "button:Record draw",
+    "predicted": "<> is <> .",
+    "observed": "<> is <> .",
+    "returned": "Block 12 is closed.",
+    "verdict": "a different event",
+    "level": "with its arguments",
+    "arguments": {
+     "0": [
+      "Block",
+      "Block 12"
+     ]
+    }
+   },
+   {
+    "step": 608,
+    "control": "button:Record draw",
+    "predicted": "<> is <> .",
+    "observed": "<> is <> .",
+    "returned": "Block 12 is closed.",
+    "verdict": "a different event",
+    "level": "with its arguments",
+    "arguments": {
+     "0": [
+      "Block",
+      "Block 12"
+     ]
+    }
+   }
+  ],
+  "lists": {
+   "button#button": "button#button: 37 fitted occasions, 5 distinct events\n    role relation['forward', 'in:1']:1<owner = relation['forward', 'in:1'] from owner\n    role singleton[]:5 = singleton[]\n    role singleton[]:7 = singleton[]\n    role singleton[]:10 = singleton[]\n    role singleton[]:6 = singleton[]\n    role singleton[]:8 = singleton[]\n    ('ref_set', 'owner', 'in:1')  ->  Opened <> .   [15]\n    attr:( ) , closed gal#2(singleton[]:8) == '1'  ->  <> <> .   [6]\n    attr:.#0(singleton[]:7) == 'Bottled Festival White'  ->  <> <> .   [2]\n    otherwise -> undetermined\n    'Opened <> .' arguments: 0=relation['forward', 'in:1']:1<owner",
+   "button#cell/button": "button#cell/button: 76 fitted occasions, 2 distinct events\n    role relation['forward', 'rel:1']:1<owner = relation['forward', 'rel:1'] from owner\n    role relation['forward', 'rel:3']:3<owner = relation['forward', 'rel:3'] from owner\n    attr:cell#0@5(relation['forward', 'rel:3']:3<owner) == None  ->  Returned <> to <> from <> .   [63]\n    otherwise  ->  <> is <> ; disgorge it before returning a draw .   [13]\n    otherwise -> <> is <> ; disgorge it before returning a draw .\n    '<> is <> ; disgorge it before returning a draw .' arguments: 0=relation['forward', 'rel:3']:3<owner\n    'Returned <> to <> from <> .' arguments: 1=relation['forward', 'rel:1']:1<owner, 2=relation['forward', 'rel:3']:3<owner",
+   "button:Record draw": "button:Record draw: 150 fitted occasions, 6 distinct events\n    role selection['combobox#0']:1 = selection['combobox#0'][85/4] or relation['forward', 'rel:1'] from owner[8/0]\n    role selection['combobox#1']:3 = selection['combobox#1'][96/0] or relation['forward', 'rel:3'] from owner[17/5]\n    role property['attr:cell#1', '4']:4 = property['attr:cell#1', '4']\n    attr:cell#0@5(selection['combobox#1']:3) == 'Bottled'  ->  <> is already <> .   [39]\n    attr:cell#0@4(selection['combobox#1']:3) == '0'  ->  Drew <> from <> into <> .   [7]\n    attr:( ) , gal open#2(owner) == '0'  ->  <> holds <> ; cannot draw <> .   [5]\n    attr:( ) , bottled single varietal#1(owner) == '2020'  ->  <> is already <> .   [4]\n    attr:cell#0@4(selection['combobox#0']:1) == 'Closed'  ->  <> is <> .   [13]\n    attr:cell#0@3(selection['combobox#0']:1) == '1'  ->  Drew <> from <> into <> .   [52]\n    attr:cell#0@3(selection['combobox#0']:1) == '0'  ->  <> holds <> ; cannot draw <> .   [10]\n    attr:cell#0@4(selection['combobox#1']:3) == '2'  ->  Drew <> from <> into <> .   [4]\n    attr:cell#0@4(selection['combobox#1']:3) == '1'  ->  Drew <> from <> into <> .   [3]\n    attr:cell#0@3(selection['combobox#0']:1) == '2'  ->  Drew <> from <> into <> .   [3]\n    attr:cell#0@2(selection['combobox#0']:1) == 'Syrah'  ->  <> is single-varietal ( <> ) ; <> is <> .   [3]\n    attr:.#0(owner) == 'Opened Orchard'  ->  Drew <> from <> into <> .   [2]\n    ('unnamed', 'owner')  ->  The book already holds 12 records ; return a draw first .   [2]\n    otherwise -> undetermined\n    '<> holds <> ; cannot draw <> .' arguments: 0=selection['combobox#0']:1\n    '<> is <> .' arguments: 0=selection['combobox#0']:1\n    '<> is already <> .' arguments: 0=selection['combobox#1']:3\n    '<> is single-varietal ( <> ) ; <> is <> .' arguments: 0=selection['combobox#1']:3, 2=selection['combobox#0']:1\n    'Drew <> from <> into <> .' arguments: 1=selection['combobox#0']:1, 2=selection['combobox#1']:3"
+  }
+ },
+ "ablation_live_region_unread": {
+  "operators": 29,
+  "state_verdicts": {
+   "NOT_APPLICABLE": 1504,
+   "REFUTED": 46,
+   "SUPPORTED": 200,
+   "UNKNOWN": 396
+  },
+  "state_per_action": {
+   "every applicable rule was right": 34,
+   "no rule applied": 20,
+   "every applicable rule was contradicted": 14,
+   "the rules could not say which object they were about": 6
+  }
+ }
+}

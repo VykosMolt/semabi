@@ -701,25 +701,35 @@ class V2Abstractor(Abstractor):
 
 
 def _rendered_under(po, node: int) -> set[str]:
-    """Every string the subtree under ``node`` renders, and the tokens of each."""
+    """Every string the subtree under ``node`` renders, and the tokens of each.
+
+    Tokenised the way messages are, so that a value rendered inside a longer text still counts:
+    cellar's ``L-01`` sits in ``L-01, Pinot Noir, wine, 1800 L`` and splitting on whitespace
+    would have called it absent -- and, in the repair below, dropped it.
+    """
+    from semabi.compiler.v4.emission import tokens as _tokens
+
     obs = getattr(po, "obs", None)
     if obs is None:
         return set()
     out: set[str] = set()
     for i in obs.subtree(node):
         n = obs.node(i)
-        for text in (n.name, n.value):
+        texts = [n.name, n.value, *(n.options or ())]
+        for text in texts:
             if text:
                 out.add(text)
-                out.update(text.split())
-        for option in (n.options or ()):
-            out.add(option)
-            out.update(option.split())
+                out.update(_tokens(text))
     return out
 
 
 def _is_rendered(value: str, shown: set[str]) -> bool:
-    return value in shown or (bool(value) and all(t in shown for t in value.split()))
+    from semabi.compiler.v4.emission import tokens as _tokens
+
+    if value in shown:
+        return True
+    got = _tokens(value)
+    return bool(got) and all(t in shown for t in got)
 
 
 class V2Tracker(Tracker):
@@ -810,9 +820,11 @@ class V2Tracker(Tracker):
                         self._confirm(oid, "attribute", k, v, sig)
                     elif k not in c.attrs:
                         c.attrs[k] = None
-                    elif (shown is not None and isinstance(c.attrs[k], str)
-                            and not _is_rendered(c.attrs[k], shown)):
-                        c.attrs[k] = None
+                if shown is not None:
+                    for k, v in list(c.attrs.items()):
+                        if (isinstance(v, str) and o.attrs.get(k) is None
+                                and not _is_rendered(v, shown)):
+                            c.attrs[k] = None
                 c.refs.update(o.refs)
                 for k, v in o.refs.items():
                     self._confirm(oid, "reference", k, v, sig)

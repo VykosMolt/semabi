@@ -26,6 +26,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 from semabi.compiler.evidence import EvidenceLog
+from semabi.compiler.v2.abstractor import _is_rendered
 from semabi.compiler.v4 import consequence as csq
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -33,15 +34,20 @@ OUT = ROOT / "docs/data/v4"
 
 
 def _rendered(obs, root: int) -> set[str]:
-    """Every string the subtree under ``root`` renders, plus the tokens of each."""
+    """Every string the subtree under ``root`` renders, plus its tokens.
+
+    Tokenised the way messages are: a value rendered inside a longer text is rendered.
+    """
+    from semabi.compiler.v4.emission import tokens as _tokens
+
     out: set[str] = set()
     for i in obs.subtree(root):
         n = obs.node(i)
-        for text in (n.name, n.value):
+        for text in (n.name, n.value, *(n.options or ())):
             if not text:
                 continue
             out.add(text)
-            out.update(text.split())
+            out.update(_tokens(text))
     return out
 
 
@@ -50,32 +56,34 @@ def fidelity(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.
              tracked: bool = False) -> dict:
     """``tracked`` audits the states the *learner* saw rather than the parse of each page.
 
-    They are not the same object and only the second has ever been checked.  Between them sits
+    They are not the same object and only the second had ever been checked.  Between them sits
     the belief tracker, which carries an object's attributes across observations so that a view
     showing half the page does not read as half the world disappearing.  What it must not do is
-    carry a slot the object still renders *differently*."""
+    carry a slot the object still renders *differently*.
 
+    A slot whose value is never found under its object in any observation is *derived* rather
+    than read -- the column a cell sits in, a provenance tag -- and its absence from the
+    rendering is not staleness.  Reported separately, because conflating the two said harbour
+    was 10% stale when every one of its 468 was ``attr:col = 'Call'``, the name of a column.
+    """
     from semabi.eval.v4_consequence_run import _candidates
 
     readings = {c.name: c.reading for c in _candidates(chain)}
     model = csq.fit(Path(run_dir), readings[reading_name], split=split, regime=regime)
     A = model.abstractor
     log = EvidenceLog(Path(run_dir))
-    seen = Counter()
-    bad: Counter = Counter()
-    per_slot: Counter = Counter()
-    witnesses: list[dict] = []
+    seen: Counter = Counter()
+    unrendered: Counter = Counter()
+    ever_rendered: set = set()
+    witness_pool: dict = {}
     if tracked:
-        pairs = []
-        for tr in list(model.inducer.transitions) + list(model.inducer.noops):
-            if not tr.steps:
-                continue
-            step = log.steps[tr.steps[0]]
-            pairs.append((step.before, log.obs(step.before), tr.before))
-        pairs = pairs[:limit]
+        pairs = [(log.steps[tr.steps[0]].before, log.obs(log.steps[tr.steps[0]].before),
+                  tr.before)
+                 for tr in list(model.inducer.transitions) + list(model.inducer.noops)
+                 if tr.steps]
     else:
-        pairs = [(sig, obs, None) for sig, obs in list(log.observations.items())[:limit]]
-    observations = pairs
+        pairs = [(sig, obs, None) for sig, obs in log.observations.items()]
+    pairs = pairs[:limit]
     for sig, obs, carried in pairs:
         state = carried if carried is not None else A.abstract(obs)
         for o in state.objs.values():
@@ -87,24 +95,28 @@ def fidelity(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.
                 if value is None or not isinstance(value, str):
                     continue
                 seen[o.tid] += 1
-                if value in rendered or all(t in rendered for t in value.split()):
+                if _is_rendered(value, rendered):
+                    ever_rendered.add((o.tid, slot))
                     continue
-                bad[o.tid] += 1
-                per_slot[slot] += 1
-                if len(witnesses) < 12:
-                    witnesses.append({
-                        "observation": sig, "object": f"T{o.tid}:{o.key}", "node": node,
-                        "slot": slot, "carries": value,
-                        "rendered_here": sorted(x for x in rendered if len(x) < 24)[:12]})
-    total, wrong = sum(seen.values()), sum(bad.values())
+                unrendered[(o.tid, slot)] += 1
+                witness_pool.setdefault((o.tid, slot), []).append(
+                    {"observation": sig, "object": f"T{o.tid}:{o.key}", "node": node,
+                     "slot": slot, "carries": value,
+                     "rendered_here": sorted(x for x in rendered if len(x) < 24)[:12]})
+    stale = {k: v for k, v in unrendered.items() if k in ever_rendered}
+    derived = {k: v for k, v in unrendered.items() if k not in ever_rendered}
+    total, wrong = sum(seen.values()), sum(stale.values())
+    witnesses = [w for k in stale for w in witness_pool[k][:2]][:12]
     return {"run": Path(run_dir).name, "reading": reading_name, "regime": regime,
-            "split": split, "observations_audited": len(observations),
+            "split": split, "observations_audited": len(pairs), "tracked": tracked,
             "attribute_values_checked": total,
             "not_rendered_under_their_object": wrong,
             "rate": round(wrong / total, 4) if total else None,
-            "by_type": {f"T{t}": {"checked": seen[t], "unrendered": bad[t]}
-                        for t in sorted(seen, key=lambda x: -bad[x])[:8]},
-            "by_slot": dict(per_slot.most_common(10)),
+            "by_slot": {f"T{t}.{sl}": n for (t, sl), n in
+                        sorted(stale.items(), key=lambda kv: -kv[1])[:10]},
+            "slots_never_read_from_the_rendering": {
+                f"T{t}.{sl}": n for (t, sl), n in
+                sorted(derived.items(), key=lambda kv: -kv[1])[:10]},
             "witnesses": witnesses}
 
 
@@ -127,6 +139,8 @@ def main(argv=None) -> int:
     print(f"  {r['not_rendered_under_their_object']} of them ({r['rate']}) are not rendered "
           f"anywhere under that object")
     print(f"  by slot: {json.dumps(r['by_slot'])}")
+    print(f"  slots never read from the rendering (not staleness): "
+          f"{json.dumps(r['slots_never_read_from_the_rendering'])}")
     for w in r["witnesses"][:4]:
         print(f"    {w['object']} {w['slot']} = {w['carries']!r}; the page renders "
               f"{w['rendered_here'][:8]}")

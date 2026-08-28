@@ -805,8 +805,13 @@ class Inducer:
             effs.append(EffT("rel", oid[0], obj_p(oid), k, None, lift_val(b) if b else None))
         if tr.emission is not None:
             args: list[Any] = []
+            already = {o[1]: o for o in obj_param}
             for a in tr.emission.args:
-                oid = key_lookup(a, tr.before) or key_lookup(a, tr.after)
+                # An object this transition already talks about, first.  `key_lookup` refuses a
+                # key two types share, and a refused argument becomes a *constant* -- which
+                # clusters the operator apart from its own family, so blend had one Drew rule
+                # naming its vat by parameter and another naming "Block 12" by name.
+                oid = already.get(a) or key_lookup(a, tr.before) or key_lookup(a, tr.after)
                 args.append(obj_p(oid) if oid else a)
             # The subject is the first argument that names an object, so that an output about
             # an entity is typed by that entity and binds like any other effect.  An output
@@ -1041,38 +1046,80 @@ class Inducer:
         self.operators = self._merge_vacuous(keep)
 
     def _absorb_unobserved_outputs(self) -> None:
-        """A transition whose output the page did not report is not a different operator.
+        """Two occasions of one operator are not two operators because their messages differ.
 
-        An unchanged live region is missing data, not silence (see
-        :mod:`semabi.compiler.v4.emission`), so an occasion where the same state change
-        happened and the status line already read what it was about to read must not cluster
-        apart from the occasions where it moved -- that would make the absence of an
-        observation into an observation.  Blend's fifteen repeated draws did exactly that.
+        Clustering on ``(acts, effs)`` puts the output in the cluster key, which is what makes
+        an interaction that returns something a different rule from one that returns something
+        else -- the whole point of the layer.  It also splits a rule for two reasons that are
+        not that:
 
-        Absorbed only where one operator matches.  Where two branches share a state delta and
-        differ only in what they return, an unreported output does not say which of them this
-        was, and the transition stays where it is rather than being assigned to one of them.
+        *An argument that did not resolve.*  Blend learned one ``Drew`` rule naming its vat by
+        parameter and another naming "Block 12" by name, because on those four occasions the
+        message named an object whose key under this reading is not what it printed.  Same
+        acts, same state delta, same event -- one rule, with the disagreeing argument
+        generalised to "the action does not determine this", exactly as a slot value is.
+
+        *An output the page did not report.*  An unchanged live region is missing data, not
+        silence (see :mod:`semabi.compiler.v4.emission`), so an occasion where the same state
+        change happened while the status line already read what it was about to read must not
+        cluster apart -- that would make the absence of an observation into an observation.
+        Absorbed only where one branch matches: where two branches share a state delta and
+        differ in what they return, an unreported output does not say which this was.
         """
+        from dataclasses import replace
+
+        def state_key(op):
+            return (op.acts, tuple(sorted(str(e) for e in op.effs if e.kind != "emit")))
+
+        def frames(op):
+            return tuple(sorted(e.slot or "" for e in op.effs if e.kind == "emit"))
+
+        groups: dict[tuple, list[OperatorHyp]] = defaultdict(list)
+        for op in self.operators:
+            groups[(state_key(op), frames(op))].append(op)
+        keep: list[OperatorHyp] = []
+        for _, ops in sorted(groups.items(), key=lambda kv: str(kv[0])):
+            ops.sort(key=lambda o: (-o.support, o.name))
+            host = ops[0]
+            if len(ops) > 1:
+                merged = []
+                for e in host.effs:
+                    if e.kind != "emit":
+                        merged.append(e)
+                        continue
+                    rivals = [x for op in ops[1:] for x in op.effs
+                              if x.kind == "emit" and x.slot == e.slot]
+                    attrs = tuple(
+                        (k, v if all(i < len(r.attrs) and r.attrs[i][1] == v for r in rivals)
+                         else VARIES)
+                        for i, (k, v) in enumerate(e.attrs))
+                    obj = e.obj if all(r.obj == e.obj for r in rivals) else ""
+                    merged.append(replace(e, attrs=attrs, obj=obj))
+                host.effs = tuple(merged)
+                for op in ops[1:]:
+                    host.positives.extend(op.positives)
+            keep.append(host)
+        self.operators = keep
+
         by_state: dict[tuple, list[OperatorHyp]] = defaultdict(list)
         for op in self.operators:
             if any(e.kind == "emit" for e in op.effs):
-                key = (op.acts, tuple(str(e) for e in op.effs if e.kind != "emit"))
-                by_state[key].append(op)
+                by_state[state_key(op)].append(op)
         absorbed: set[int] = set()
         for op in self.operators:
             if any(e.kind == "emit" for e in op.effs) or not op.effs:
                 continue
             if any(tr.emission is not None for tr in op.positives):
                 continue
-            hosts = by_state.get((op.acts, tuple(str(e) for e in op.effs)), [])
+            hosts = by_state.get(state_key(op), [])
             if len(hosts) != 1:
                 continue
             hosts[0].positives.extend(op.positives)
             absorbed.add(id(op))
         if absorbed:
             self.operators = [op for op in self.operators if id(op) not in absorbed]
-            for i, op in enumerate(self.operators):
-                op.name = f"op{i}"
+        for i, op in enumerate(self.operators):
+            op.name = f"op{i}"
 
     def _control_key(self, op: OperatorHyp) -> str:
         """What counts as the same action family for the purpose of comparing effect values.

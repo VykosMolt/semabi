@@ -4,6 +4,8 @@
  "regime": "FROZEN_PREFIX",
  "split": 0.5,
  "control": null,
+ "permuted_events": null,
+ "scored_on": "opus_02_cellar_dev",
  "cut": 195,
  "operators": 16,
  "operators_with_an_output": 13,
@@ -189,6 +191,16 @@
    "button:Receive fruit": "button:Receive fruit: 3 fitted occasions, 2 distinct events\n    otherwise -> undetermined",
    "button:Split": "button:Split: 1 fitted occasions, 1 distinct events\n    otherwise -> Nothing chosen in the lot list .",
    "button:Wash out": "button:Wash out: 8 fitted occasions, 3 distinct events\n    role selection['combobox#2']:2 = selection['combobox#2']\n    attr:cell#4(selection['combobox#2']:2) == None  ->  <> is already <> .   [5]\n    ('unnamed', \"selection['combobox#2']:2\")  ->  Nothing chosen in the vessel list .   [2]\n    otherwise -> <> cannot be washed out while lot <> is in it .\n    '<> cannot be washed out while lot <> is in it .' arguments: 0=selection['combobox#2']:2\n    '<> is already <> .' arguments: 0=selection['combobox#2']:2"
+  }
+ },
+ "ablation_live_region_unread": {
+  "operators": 3,
+  "state_verdicts": {
+   "NOT_APPLICABLE": 8,
+   "UNKNOWN": 1
+  },
+  "state_per_action": {
+   "the rules could not say which object they were about": 1
   }
  }
 }

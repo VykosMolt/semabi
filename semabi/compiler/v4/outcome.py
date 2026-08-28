@@ -268,7 +268,7 @@ def _literals(inducer, state, binding: dict, status: dict) -> set:
     return lits
 
 
-def _best_rule(rows, refuse) -> Rule | None:
+def _best_rule(rows, refuse, subjects=None) -> Rule | None:
     """The widest conjunction that covers occasions of one event and of no other.
 
     Separate-and-conquer in its ordinary form: start from the empty condition, which covers
@@ -284,6 +284,7 @@ def _best_rule(rows, refuse) -> Rule | None:
     """
     best: Rule | None = None
     for event in sorted({r[1] for r in rows}):
+        allowed = None if subjects is None else subjects.get(event, frozenset())
         covered = list(range(len(rows)))
         condition: list[tuple] = []
         for _ in range(8):
@@ -296,6 +297,8 @@ def _best_rule(rows, refuse) -> Rule | None:
                 target = rows[i][1] == event
                 for lit in rows[i][0]:
                     if lit in condition or refuse(lit):
+                        continue
+                    if allowed is not None and not _about(lit, allowed):
                         continue
                     row = counts.setdefault(lit, [0, 0])
                     row[0 if target else 1] += 1
@@ -390,7 +393,26 @@ def align(roles: dict[str, Role], occasions, bindings) -> dict[str, Role]:
     return out
 
 
-def learn_control(inducer, control: str, occasions, roles: dict[str, Role]) -> ControlOutcome:
+def _about(lit: tuple, allowed: frozenset) -> bool:
+    """Is this literal about an object the event names?
+
+    A guard the application does not mention is not necessarily wrong, but it is a correlate
+    until something says otherwise, and the message is what says otherwise: *Festival White is
+    already bottled* names the destination and nothing else, so a condition on the source is
+    the learner explaining a refusal with a fact the application did not cite.  Whether a role
+    names anything at all is exempt -- *Nothing chosen in the vessel list.* names no object
+    precisely because the role it is about is empty.
+    """
+    if lit[0] in ("named", "unnamed", "ambiguous"):
+        return True
+    return all(x in allowed for x in lit[1:]
+               if isinstance(x, str) and x.startswith(("?", "selection", "relation",
+                                                       "property", "singleton"))
+               or x == OWNER)
+
+
+def learn_control(inducer, control: str, occasions, roles: dict[str, Role], *,
+                  subject_restricted: bool = False) -> ControlOutcome:
     """``occasions`` is a list of (abstract pre-state, owner object or None, frame, args)."""
     probe = ControlOutcome(control, roles)
     bindings = [probe.bind(state, owner)[0] for state, owner, _frame, _args in occasions]
@@ -433,9 +455,15 @@ def learn_control(inducer, control: str, occasions, roles: dict[str, Role]) -> C
         ti = inducer.A.types.get(roles[lit[1]].tid)
         return ti is not None and lit[2] == ti.key_slot
 
+    subjects = None
+    if subject_restricted:
+        # The roles each event actually names, from the same alignment the arguments come from.
+        subjects = {frame: frozenset(p.values()) for frame, p in out.arg_roles.items()}
+        for frame in out.events:
+            subjects.setdefault(frame, frozenset())
     remaining = list(rows)
     while remaining:
-        rule = _best_rule(remaining, refuse)
+        rule = _best_rule(remaining, refuse, subjects)
         if rule is None:
             break
         out.rules.append(rule)
@@ -452,8 +480,15 @@ def learn_control(inducer, control: str, occasions, roles: dict[str, Role]) -> C
     return out
 
 
-def learn(inducer) -> dict[str, ControlOutcome]:
-    """One outcome model per control, from the clicks the fitting evidence contains."""
+def learn(inducer, *, permute: int | None = None,
+          subject_restricted: bool = False) -> dict[str, ControlOutcome]:
+    """One outcome model per control, from the clicks the fitting evidence contains.
+
+    ``permute`` shuffles the events among a control's occasions before learning: the control
+    for this whole layer.  A learner that can fit permuted labels and still score on held-out
+    actions is fitting the shape of the evidence rather than the application, and the only way
+    to know is to run it.
+    """
     from semabi.compiler.v4.consequence import clicked_control
 
     A, log = inducer.A, inducer.log
@@ -479,17 +514,29 @@ def learn(inducer) -> dict[str, ControlOutcome]:
     for control, rows in by_control.items():
         roles = roles_of(inducer, ops_by_control.get(control, []))
         if all(event is None for _, _, _, event in rows):
-            # Nothing this control did ever moved the live region: it returns nothing, and
-            # saying so is a prediction that a held-out step can refute.
-            model = ControlOutcome(control, roles, [], SILENT, 0, {SILENT: len(rows)})
-            out[control] = model
+            # Nothing this control did ever moved the live region.  With enough occasions that
+            # is a prediction a held-out step can refute -- it returns nothing.  With one or
+            # two it is the same as any other condition fitted to a single occasion, and cellar
+            # is where that shows: eleven of its eighteen "returns nothing" answers were wrong,
+            # every one of them from a control seen once or twice before the cut.
+            silent = SILENT if len(rows) >= MIN_COVER else UNDETERMINED
+            out[control] = ControlOutcome(control, roles, [], silent, 0,
+                                          {silent: len(rows)})
             continue
         occasions = []
         for tr, s, obs, event in rows:
             if event is None:
                 continue      # the live region did not move: re-emission or silence, unknown
             occasions.append((tr.before, _owner(A, obs, s), event, tr.emission.args))
-        out[control] = learn_control(inducer, control, occasions, roles)
+        if permute is not None and occasions:
+            import random
+
+            shuffled = [o[2:] for o in occasions]
+            random.Random(permute + len(occasions)).shuffle(shuffled)
+            occasions = [(st, ow, ev, ar) for (st, ow, _e, _a), (ev, ar)
+                         in zip(occasions, shuffled)]
+        out[control] = learn_control(inducer, control, occasions, roles,
+                                     subject_restricted=subject_restricted)
     return out
 
 
@@ -569,3 +616,26 @@ def score_step(model, step, *, with_arguments: bool = True) -> dict:
     return {**out, "verdict": RIGHT,
             "level": WITH_ARGUMENTS if args else FRAME_ONLY,
             "arguments": args}
+
+
+def digest(models: dict) -> str:
+    """A content hash of every outcome model, for comparing two fits.
+
+    Reading the live region makes the *post*-action page training evidence for the first time,
+    which is a new path for the future to reach the model, so there has to be a way to ask
+    whether it did.  Deleting the rest of the trace from disk and refitting must produce this
+    same string.
+    """
+    import hashlib
+    import json
+
+    payload = {control: {"rules": [[sorted(map(str, r.condition)), r.event, r.covered]
+                                   for r in got.rules],
+                         "default": got.default, "fitted": got.fitted,
+                         "events": got.events,
+                         "roles": sorted(got.roles),
+                         "arguments": {f: dict(sorted(p.items()))
+                                       for f, p in sorted(got.arg_roles.items())}}
+               for control, got in sorted(models.items())}
+    return hashlib.sha256(json.dumps(payload, sort_keys=True,
+                                     default=str).encode()).hexdigest()[:16]
