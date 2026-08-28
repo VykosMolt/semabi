@@ -572,6 +572,30 @@ of the *prefix* when choosing between candidate literals.  All of it is causally
 it costs no chronology, and it is the only signal available that separates a literal which
 generalises from one that happened to fit.
 
+## One deliberate compromise, challenged and upheld
+
+`learn_pre` refuses `id(?o) == 'Ticket#2'` as an identity constant that never generalises, and
+allows the negated form capped at one per parameter -- "at most one special-object exclusion per
+parameter; the rest stays unexplained".  That is memorising the fitting instance in negated
+form, and `op0` carrying `id(?o2) != 'Ticket#2'` above looked like the loophole doing damage.
+
+It is not.  Rules carrying such an exclusion do better than rules without:
+
+| | rules with it | supported | rules without | supported |
+|---|---|---|---|---|
+| harbour | 0 of 9 | -- | 9 | 94% |
+| blend | 1 of 45 | **67%** | 44 | 25% |
+| vet clinic | 6 of 26 | **94%** | 20 | 72% |
+
+The vet clinic examples say why: `id(?o0) != 'Reason'`, `!= 'Species'`, `!= 'Name'`.  The
+reading models a table's header cells as objects of the same type as its data cells, and the
+rules are correctly saying *not the header one*.  That is a semantic exclusion, not a memorised
+identity, and the cap of one per parameter is what keeps it from becoming a list of the training
+instances.
+
+The comparison is not controlled for support, so the effect sizes are what carry it rather than
+the ranking.  Recorded because the compromise was challenged and came out ahead.
+
 ## The readings never disagree, so active exploration has nothing to target
 
 Active exploration is justified only where readings remain viable, make grounded predictions,
