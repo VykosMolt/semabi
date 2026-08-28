@@ -86,3 +86,12 @@ against six applications written by three independent authors who never saw it) 
 produced no trace at all; on the other four, 19 hidden operators were exercised and none
 was recovered. Given a correct state layer the frozen V0 inducer recovers 7-11 of them, so
 the failure is the state abstraction, not the induction.
+
+V4 follows that line, and its results carry an information boundary as well as a number.
+`docs/v4_chronology.md` is the current account of what holds and under which one: the
+observation model in earlier V4 runs could read held-out observations while claiming to be a
+prefix fit, so those results are transductive at the observation-model layer whatever they say.
+Three regimes are now named in the code and every fit and scored result carries the one that
+produced it. `docs/v4_handoff.md` remains the custody and protocol record; where the two
+disagree about a held-out number, the chronology document is later.
+
