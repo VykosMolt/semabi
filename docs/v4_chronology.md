@@ -598,7 +598,9 @@ End to end it is a no-op.  The same greedy cover with the same stopping rule, ra
 coverage instead of full coverage, gives 126 right and 220 wrong against 126 and 218: precision
 36% against 37%, and identical on the steps where the application performs the action.  Eleven
 of the fifteen rules large enough to split pick the same literal either way, and where the pick
-changes it does not change the outcome.
+changes it does not change the outcome.  Harbour and vet clinic are unmoved to the digit -- 94%
+and 87%, the same counts -- so this is a no-op on all three applications rather than a wash on
+one.
 
 So that is the fourth fit-time quantity to fail as a predictor of prospective correctness, after
 negatives per positive, the learner's own unexplained-counterexample count, and rule support.
