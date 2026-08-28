@@ -225,6 +225,23 @@ transductively constructed representation, and they survive strict chronology es
 unchanged.  What does not survive is the action's grip on its own objects: action-bound
 variables fall from 14 to 4.
 
+Its schema collapse is a threshold like the others, which is worth saying because the claim that
+*every* failure traced here was one had only been demonstrated on harbour and blend.  Walking
+cellar's cut:
+
+| steps fitted from | types | slots | control families | operators |
+|---|---|---|---|---|
+| 117 | 3 | 26 | 4 | 3 |
+| 195 | 4 | 33 | 4 | 3 |
+| **273** | **8** | **81** | **19** | **10** |
+| 351 | 10 | 125 | 25 | 14 |
+
+By 273 steps it has doubled its types and its slots and gone from 3 operators to 10; by 351 it
+exceeds what the *transductive* fit produced at a half-trace cut, which was 7 types and 99
+slots.  Cellar's difficulty at 0.5 is that it has barely seen the application.  Unlike blend it
+is not fragmentation -- one positional control slot throughout -- and unlike harbour it is not a
+reference: cellar has essentially no relations at any cut, at most one.
+
 ## What a verdict count was hiding
 
 Two of my own readings of the evidence died on the way to the section above, and both died the
