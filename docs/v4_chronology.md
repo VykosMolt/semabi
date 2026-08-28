@@ -131,9 +131,22 @@ online regime beats both frozen and transductive, and it reaches the transductiv
 absolute count of correct predictions while being wrong sixteen times fewer.
 
 That is the same shape as harbour, where the prequential column matched the future-informed
-diagnostic exactly and the frozen model was the only one refuted.  On both applications the
-regime that keeps learning is the best of the three, and on blend it is better than the one that
-was allowed to see the future.
+diagnostic exactly and the frozen model was the only one refuted.
+
+It does not generalise to the other two, and the corpus is four applications, so that matters.
+
+Vet clinic, `Schedule`, 26 predictions on matched steps: transductive 6 supported against 14
+refuted, frozen **8** against 14, prequential 6 against 14.  Rates of 30%, 36% and 30% -- the
+three regimes are indistinguishable there and all three are poor, and if anything the frozen one
+is marginally ahead.  Cellar, `Move vessel`, makes **no predictions at all** under any of the
+three: seven operators transductively and three frozen, and not one of them fires on that
+control after the cut.
+
+So the finding is that the online regime is the best of the three *where the three differ at
+all*, which is harbour and blend.  On vet clinic they do not differ, and on cellar there is
+nothing to compare.  The corpus limitation the earlier work recorded -- that many cellar actions
+were refused or no-op interactions -- is still the binding one there, and a regime comparison
+cannot see past it.
 
 ## The harbour adjudication, which never depended on the leak
 
