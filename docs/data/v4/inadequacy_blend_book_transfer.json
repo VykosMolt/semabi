@@ -4,18 +4,35 @@
  "regime": "FROZEN_PREFIX",
  "hypothesis": "rule",
  "cut": 419,
- "forced_wrong": 4,
+ "forced_wrong": 8,
  "kinds": {
+  "once: seen, but not enough to found a rule": 4,
   "unseen: the control never returned this event while fitting": 3,
   "ordered: justified only after another event's guard": 1
  },
  "by_control": {
+  "button:Close _": {
+   "once: seen, but not enough to found a rule": 4
+  },
   "button:Record draw": {
    "unseen: the control never returned this event while fitting": 3,
    "ordered: justified only after another event's guard": 1
   }
  },
  "cases": [
+  {
+   "control": "button:Close _",
+   "step": 531,
+   "forced": [
+    "<> <> ."
+   ],
+   "actual": "<> is already <> .",
+   "why": "<> <> . <- attr:cell#0@2(owner) == 'Pinot'  [3 occasions]",
+   "kind": "once: seen, but not enough to found a rule",
+   "seen": 1,
+   "raw_difference": [],
+   "erased_by_the_state": []
+  },
   {
    "control": "button:Record draw",
    "step": 541,
@@ -26,7 +43,8 @@
    "why": "Drew <> from <> into <> . <- attr:cell#0@2(selection['combobox#1']:3) == '2020' & no_children(selection['combobox#1']:3)  [4 occasions]",
    "kind": "unseen: the control never returned this event while fitting",
    "seen": 0,
-   "raw_difference": []
+   "raw_difference": [],
+   "erased_by_the_state": []
   },
   {
    "control": "button:Record draw",
@@ -38,7 +56,8 @@
    "why": "Drew <> from <> into <> . <- attr:cell#0@2(selection['combobox#1']:3) == '2020' & no_children(selection['combobox#1']:3)  [4 occasions]",
    "kind": "unseen: the control never returned this event while fitting",
    "seen": 0,
-   "raw_difference": []
+   "raw_difference": [],
+   "erased_by_the_state": []
   },
   {
    "control": "button:Record draw",
@@ -50,7 +69,34 @@
    "why": "Drew <> from <> into <> . <- attr:cell#0@2(selection['combobox#1']:3) == '2020' & no_children(selection['combobox#1']:3)  [4 occasions]",
    "kind": "unseen: the control never returned this event while fitting",
    "seen": 0,
-   "raw_difference": []
+   "raw_difference": [],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Close _",
+   "step": 568,
+   "forced": [
+    "<> <> ."
+   ],
+   "actual": "<> is already <> .",
+   "why": "<> <> . <- attr:cell#0@2(owner) == 'Pinot'  [3 occasions]",
+   "kind": "once: seen, but not enough to found a rule",
+   "seen": 1,
+   "raw_difference": [],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Close _",
+   "step": 650,
+   "forced": [
+    "<> <> ."
+   ],
+   "actual": "<> is already <> .",
+   "why": "<> <> . <- attr:cell#0@2(owner) == 'Syrah'  [7 occasions]",
+   "kind": "once: seen, but not enough to found a rule",
+   "seen": 1,
+   "raw_difference": [],
+   "erased_by_the_state": []
   },
   {
    "control": "button:Record draw",
@@ -66,7 +112,21 @@
     "<> is already <> ."
    ],
    "guard": "<> holds <> ; cannot draw <> . <- attr:( ) , gal open#2(owner) == '0' & no_children(owner) & ('named', 'owner') & ('ref_set', 'owner', 'rel:0') & ('unnamed', \"selection['cell#17']:3\")  [6 occasions]  after <> is already <> .",
-   "raw_difference": []
+   "raw_difference": [],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Close _",
+   "step": 772,
+   "forced": [
+    "<> <> ."
+   ],
+   "actual": "<> is already <> .",
+   "why": "<> <> . <- attr:cell#0@3(owner) == '7'  [3 occasions]",
+   "kind": "once: seen, but not enough to found a rule",
+   "seen": 1,
+   "raw_difference": [],
+   "erased_by_the_state": []
   }
  ]
 }

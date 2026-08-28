@@ -336,22 +336,17 @@ def test_a_colliding_naming_still_fragments_but_no_longer_contradicts_itself(det
     fitted from; it does not by itself refute the reading -- the page checks do that.
     """
     result = determinacy["promote cell[_]=cell#0"]
-    close = _group(result, "button:Close")
-    # The rules the reading fits for one observable click no longer disagree about which copy
-    # the entity becomes, because none of them names a copy any more.  They still fragment --
-    # more rules than the rival fits for the same click, and single-transition ones among them
-    # -- and that fragmentation is the thing this check was measuring.  The disagreement it
-    # used to find was the learner's memorised ordinal, and dropping that removed it.
+    # What this check used to find on the loose reading has drained away in two steps.  The
+    # disagreement about which copy the entity becomes was the learner's memorised ordinal,
+    # and dropping that removed it.  The fragmentation -- more rules than the rival fits for
+    # the same click, single-transition ones among them -- was the control identity's
+    # (`docs/v4_identity.md`).  And since a reference names its object by key whether or not
+    # the prefix rendered it, a reading that keys every cell by its own text fills its
+    # references with phantoms and fits no value rule for the click at all: the determinacy
+    # check has nothing of it to check.  What must not appear is a self-contradiction.
     assert result["totals"].get("ORDINAL_AMBIGUOUS", 0) == 0
-    assert close["verdict"] == "DETERMINATE"
-    assert {split_literal(v)[0] for v in close["literals"]} == {"closed"}
-    # It used to fragment as well -- more rules than the rival fits for the same click -- and
-    # that too turned out to be the identity's doing rather than the reading's: under this
-    # reading the button sat outside every unit and its slot key carried a node index, so each
-    # occurrence was its own control.  With controls named by their masked label
-    # (`docs/v4_identity.md`) the click is one control under both readings, and the
-    # single-transition rules went with the fragmentation.
-    assert close["single_support_rules"] == 0
+    assert not any(g["control"] == "button:Close" and g["verdict"] != "DETERMINATE"
+                   for g in result["groups"])
 
 
 def test_determinacy_never_compares_one_readings_literals_with_anothers(determinacy):

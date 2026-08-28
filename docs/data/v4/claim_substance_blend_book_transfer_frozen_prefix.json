@@ -8,34 +8,35 @@
   "operators": 53,
   "held_out_actions": 235,
   "rules_offered_per_action": 6.91,
-  "applicable_claims_per_action": 1.77,
-  "distinct_decided_claims": 11,
+  "applicable_claims_per_action": 1.84,
+  "distinct_decided_claims": 14,
   "composition": {
    "a named constant": {
     "claims": 610,
-    "decided": 47,
-    "supported": 47,
+    "decided": 63,
+    "supported": 63,
     "refuted": 0,
     "supported_share": 1.0,
-    "distinct_claims": 1,
+    "distinct_claims": 2,
     "examples": [
+     "attr:cell#0@4 = Closed",
      "attr:cell#0@4 = Open"
     ]
    },
    "an interface response": {
     "claims": 3647,
-    "decided": 575,
-    "supported": 173,
-    "refuted": 402,
-    "supported_share": 0.301,
-    "distinct_claims": 8,
+    "decided": 620,
+    "supported": 237,
+    "refuted": 383,
+    "supported_share": 0.382,
+    "distinct_claims": 10,
     "examples": [
+     "<> <> . = <> <> .",
+     "<> has <> committed ; need at least <> to bottle . = <> has <> committed ; need at least <> to bottle .",
      "<> holds <> ; cannot draw <> . = <> holds <> ; cannot draw <> .",
      "<> is <> . = <> is <> .",
      "<> is <> ; disgorge it before returning a draw . = <> is <> ; disgorge it before returning a draw .",
-     "<> is already <> . = <> is already <> .",
-     "Drew <> from <> into <> . = Drew <> from <> into <> .",
-     "Opened <> . = Opened <> ."
+     "<> is already <> . = <> is already <> ."
     ]
    },
    "changes, unspecified": {
@@ -52,10 +53,9 @@
    }
   },
   "per_action": {
-   "every applicable rule was right": 114,
+   "every applicable rule was right": 130,
+   "the rules could not say which object they were about": 50,
    "every applicable rule was contradicted": 48,
-   "the rules could not say which object they were about": 41,
-   "no rule applied": 25,
    "applicable rules disagreed": 4,
    "only undecidable claims survived": 3
   }

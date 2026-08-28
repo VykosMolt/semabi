@@ -5,18 +5,18 @@
   "regime": "FROZEN_PREFIX",
   "split": 0.5,
   "cut": 229,
-  "operators": 36,
+  "operators": 35,
   "held_out_actions": 33,
   "rules_offered_per_action": 2.0,
-  "applicable_claims_per_action": 1.09,
+  "applicable_claims_per_action": 1.03,
   "distinct_decided_claims": 12,
   "composition": {
    "a named constant": {
     "claims": 66,
-    "decided": 36,
+    "decided": 34,
     "supported": 34,
-    "refuted": 2,
-    "supported_share": 0.944,
+    "refuted": 0,
+    "supported_share": 1.0,
     "distinct_claims": 2,
     "examples": [
      "attr:cell#0@5 = closed",
@@ -24,11 +24,11 @@
     ]
    },
    "an interface response": {
-    "claims": 435,
-    "decided": 159,
-    "supported": 91,
-    "refuted": 68,
-    "supported_share": 0.572,
+    "claims": 418,
+    "decided": 136,
+    "supported": 93,
+    "refuted": 43,
+    "supported_share": 0.684,
     "distinct_claims": 9,
     "examples": [
      "<> <> cannot be <> while call <> holds it . = <> <> cannot be <> while call <> holds it .",
@@ -40,11 +40,11 @@
     ]
    },
    "an object brought into being": {
-    "claims": 170,
-    "decided": 34,
-    "supported": 9,
-    "refuted": 25,
-    "supported_share": 0.265,
+    "claims": 136,
+    "decided": 28,
+    "supported": 7,
+    "refuted": 21,
+    "supported_share": 0.25,
     "distinct_claims": 1,
     "examples": [
      "id = new"
@@ -53,8 +53,7 @@
   },
   "per_action": {
    "every applicable rule was right": 17,
-   "no rule applied": 15,
-   "every applicable rule was contradicted": 1
+   "no rule applied": 16
   }
  }
 ]

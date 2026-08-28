@@ -8,53 +8,54 @@
  "corroborated": true,
  "hypothesis": "rule",
  "against_the_other_class": {
-  "rule: no outcome is established | list: no outcome is established": 59,
+  "rule: no outcome is established | list: no outcome is established": 38,
   "rule: one outcome, because the control has never done anything else | list: one outcome, because the control has never done anything else": 35,
-  "rule: the evidence forces one outcome | list: the evidence forces one outcome": 20,
+  "rule: the evidence forces one outcome | list: the evidence forces one outcome": 29,
+  "rule: no outcome is established | list: the evidence forces one outcome": 9,
+  "rule: no outcome is established | list: the evidence forces one outcome (wrong)": 4,
   "rule: the evidence forces one outcome | list: several outcomes remain admissible": 2,
-  "rule: no outcome is established | list: the evidence forces one outcome (wrong)": 2,
-  "rule: no outcome is established | list: the evidence forces one outcome": 1
+  "rule: no outcome is established | list: several outcomes remain admissible": 2
  },
  "actions": 119,
  "what_the_evidence_establishes": {
-  "no outcome is established": 62,
+  "no outcome is established": 53,
   "one outcome, because the control has never done anything else": 35,
-  "the evidence forces one outcome": 22
+  "the evidence forces one outcome": 31
  },
  "admissible_set_size": {
-  "0": 62,
-  "1": 57
+  "0": 53,
+  "1": 66
  },
  "what_happened_was": {
-  "inside the admissible set": 33,
+  "inside the admissible set": 42,
   "outside it": 24,
-  "nothing was admissible": 62
+  "nothing was admissible": 53
  },
  "the_list_where_the_evidence": {
   "no outcome is established": {
-   "no determinate answer": 43,
-   "a different event": 14,
-   "the event the interface returned": 5
+   "no determinate answer": 34,
+   "a different event": 12,
+   "the event the interface returned": 7
   },
   "one outcome, because the control has never done anything else": {
    "the event the interface returned": 34,
    "a different event": 1
   },
   "the evidence forces one outcome": {
-   "the event the interface returned": 22
+   "the event the interface returned": 31
   }
  },
  "policy_forced_then_list": {
-  "refused: nothing established": 62,
+  "refused: nothing established": 53,
   "the only outcome ever seen on this control, and it happened": 34,
-  "one outcome was admissible and it happened": 22,
+  "one outcome was admissible and it happened": 31,
   "the only outcome ever seen on this control, and something else happened": 1
  },
- "distinct_events_forced": 8,
+ "distinct_events_forced": 9,
  "events_forced": {
   "\u0000SILENT": 23,
+  "<> <> is now <> .": 17,
   "<> <> is already <> .": 11,
-  "<> <> is now <> .": 9,
   "Call <> is not <> , so nothing has sailed .": 4,
   "Call <> has <> berth allocated .": 4,
   "<> already has call <> on the board .": 2,
@@ -80,8 +81,7 @@
    "no outcome is established": 17
   },
   "button:Close": {
-   "no outcome is established": 9,
-   "the evidence forces one outcome": 4
+   "the evidence forces one outcome": 13
   },
   "button:Record departure": {
    "one outcome, because the control has never done anything else": 4
@@ -111,8 +111,7 @@
    "the only outcome ever seen on this control, and it happened": 4
   },
   "button:Close": {
-   "no outcome is established for this state": 9,
-   "one outcome was admissible and it happened": 4
+   "one outcome was admissible and it happened": 13
   },
   "button:Record departure": {
    "the only outcome ever seen on this control, and it happened": 4
@@ -166,8 +165,8 @@
   "button:Close": {
    "fitted": 20,
    "events": 3,
-   "rules": 1,
-   "default": "undetermined"
+   "rules": 3,
+   "default": "<> <> is already <> ."
   },
   "button:Record departure": {
    "fitted": 3,
@@ -185,7 +184,7 @@
    "fitted": 19,
    "events": 2,
    "rules": 4,
-   "default": "undetermined"
+   "default": "<> already has call <> on the board ."
   },
   "button:Sign off": {
    "fitted": 14,

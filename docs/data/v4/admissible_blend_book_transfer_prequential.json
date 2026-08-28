@@ -1,0 +1,700 @@
+{
+ "run": "blend_book_transfer",
+ "reading": "joint discrimination x3",
+ "regime": "CAUSAL_PREQUENTIAL",
+ "split": 0.5,
+ "cut": 419,
+ "stride": 8,
+ "control": null,
+ "actions_scored": 32,
+ "what_the_evidence_establishes": {
+  "rule": {
+   "the evidence forces one outcome": 18,
+   "several outcomes remain admissible": 9,
+   "one outcome, because the control has never done anything else": 3,
+   "no outcome is established": 2
+  },
+  "list": {
+   "the evidence forces one outcome": 16,
+   "several outcomes remain admissible": 11,
+   "one outcome, because the control has never done anything else": 3,
+   "no outcome is established": 2
+  }
+ },
+ "verdicts": {
+  "rule": {
+   "one outcome was admissible and it happened": 18,
+   "several outcomes remained admissible; the one that happened was among them": 9,
+   "no outcome is established for this state": 2,
+   "the only outcome ever seen on this control, and something else happened": 2,
+   "the only outcome ever seen on this control, and it happened": 1
+  },
+  "list": {
+   "one outcome was admissible and it happened": 16,
+   "several outcomes remained admissible; the one that happened was among them": 11,
+   "no outcome is established for this state": 2,
+   "the only outcome ever seen on this control, and something else happened": 2,
+   "the only outcome ever seen on this control, and it happened": 1
+  }
+ },
+ "rows": [
+  {
+   "step": 419,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Returned <> to <> from <> ."
+    ],
+    "observed": "Returned <> to <> from <> ."
+   },
+   "control": "button:Return ticket _ gal from _ out of _",
+   "list": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Returned <> to <> from <> ."
+    ],
+    "observed": "Returned <> to <> from <> ."
+   }
+  },
+  {
+   "step": 430,
+   "rule": {
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> holds <> ; cannot draw <> .",
+     "Drew <> from <> into <> ."
+    ],
+    "observed": "<> holds <> ; cannot draw <> ."
+   },
+   "control": "button:Record draw",
+   "list": {
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> holds <> ; cannot draw <> .",
+     "Drew <> from <> into <> ."
+    ],
+    "observed": "<> holds <> ; cannot draw <> ."
+   }
+  },
+  {
+   "step": 441,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Returned <> to <> from <> ."
+    ],
+    "observed": "Returned <> to <> from <> ."
+   },
+   "control": "button:Return ticket _ gal from _ out of _",
+   "list": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Returned <> to <> from <> ."
+    ],
+    "observed": "Returned <> to <> from <> ."
+   }
+  },
+  {
+   "step": 456,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Drew <> from <> into <> ."
+    ],
+    "observed": "Drew <> from <> into <> ."
+   },
+   "control": "button:Record draw",
+   "list": {
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> is already <> .",
+     "Drew <> from <> into <> ."
+    ],
+    "observed": "Drew <> from <> into <> ."
+   }
+  },
+  {
+   "step": 473,
+   "rule": {
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> holds <> ; cannot draw <> .",
+     "<> is already <> .",
+     "Drew <> from <> into <> ."
+    ],
+    "observed": "<> is already <> ."
+   },
+   "control": "button:Record draw",
+   "list": {
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> holds <> ; cannot draw <> .",
+     "<> is already <> .",
+     "Drew <> from <> into <> ."
+    ],
+    "observed": "<> is already <> ."
+   }
+  },
+  {
+   "step": 487,
+   "rule": {
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> is <> ; disgorge it before returning a draw .",
+     "Returned <> to <> from <> ."
+    ],
+    "observed": "<> is <> ; disgorge it before returning a draw ."
+   },
+   "control": "button:Return ticket _ gal from _ out of _",
+   "list": {
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> is <> ; disgorge it before returning a draw .",
+     "Returned <> to <> from <> ."
+    ],
+    "observed": "<> is <> ; disgorge it before returning a draw ."
+   }
+  },
+  {
+   "step": 502,
+   "rule": {
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> holds <> ; cannot draw <> .",
+     "<> is already <> .",
+     "Drew <> from <> into <> ."
+    ],
+    "observed": "<> is already <> ."
+   },
+   "control": "button:Record draw",
+   "list": {
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> holds <> ; cannot draw <> .",
+     "<> is already <> .",
+     "Drew <> from <> into <> ."
+    ],
+    "observed": "<> is already <> ."
+   }
+  },
+  {
+   "step": 516,
+   "rule": {
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> holds <> ; cannot draw <> .",
+     "<> is already <> .",
+     "Drew <> from <> into <> ."
+    ],
+    "observed": "<> is already <> ."
+   },
+   "control": "button:Record draw",
+   "list": {
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> holds <> ; cannot draw <> .",
+     "<> is already <> .",
+     "Drew <> from <> into <> ."
+    ],
+    "observed": "<> is already <> ."
+   }
+  },
+  {
+   "step": 526,
+   "rule": {
+    "bucket": "no outcome is established",
+    "verdict": "no outcome is established for this state",
+    "admissible": [],
+    "observed": "<> is already <> ."
+   },
+   "control": "button:Bottle _",
+   "list": {
+    "bucket": "no outcome is established",
+    "verdict": "no outcome is established for this state",
+    "admissible": [],
+    "observed": "<> is already <> ."
+   }
+  },
+  {
+   "step": 536,
+   "rule": {
+    "bucket": "no outcome is established",
+    "verdict": "no outcome is established for this state",
+    "admissible": [],
+    "observed": "<> has <> committed ; need at least <> to bottle ."
+   },
+   "control": "button:Bottle _",
+   "list": {
+    "bucket": "no outcome is established",
+    "verdict": "no outcome is established for this state",
+    "admissible": [],
+    "observed": "<> has <> committed ; need at least <> to bottle ."
+   }
+  },
+  {
+   "step": 552,
+   "rule": {
+    "bucket": "one outcome, because the control has never done anything else",
+    "verdict": "the only outcome ever seen on this control, and something else happened",
+    "admissible": [
+     "Disgorged <> ."
+    ],
+    "observed": "<> is not <> ."
+   },
+   "control": "button:Disgorge _",
+   "list": {
+    "bucket": "one outcome, because the control has never done anything else",
+    "verdict": "the only outcome ever seen on this control, and something else happened",
+    "admissible": [
+     "Disgorged <> ."
+    ],
+    "observed": "<> is not <> ."
+   }
+  },
+  {
+   "step": 565,
+   "rule": {
+    "bucket": "one outcome, because the control has never done anything else",
+    "verdict": "the only outcome ever seen on this control, and something else happened",
+    "admissible": [
+     "Disgorged <> ."
+    ],
+    "observed": "<> is not <> ."
+   },
+   "control": "button:Disgorge _",
+   "list": {
+    "bucket": "one outcome, because the control has never done anything else",
+    "verdict": "the only outcome ever seen on this control, and something else happened",
+    "admissible": [
+     "Disgorged <> ."
+    ],
+    "observed": "<> is not <> ."
+   }
+  },
+  {
+   "step": 578,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Drew <> from <> into <> ."
+    ],
+    "observed": "Drew <> from <> into <> ."
+   },
+   "control": "button:Record draw",
+   "list": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Drew <> from <> into <> ."
+    ],
+    "observed": "Drew <> from <> into <> ."
+   }
+  },
+  {
+   "step": 593,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Drew <> from <> into <> ."
+    ],
+    "observed": "Drew <> from <> into <> ."
+   },
+   "control": "button:Record draw",
+   "list": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Drew <> from <> into <> ."
+    ],
+    "observed": "Drew <> from <> into <> ."
+   }
+  },
+  {
+   "step": 604,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Returned <> to <> from <> ."
+    ],
+    "observed": "Returned <> to <> from <> ."
+   },
+   "control": "button:Return ticket _ gal from _ out of _",
+   "list": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Returned <> to <> from <> ."
+    ],
+    "observed": "Returned <> to <> from <> ."
+   }
+  },
+  {
+   "step": 616,
+   "rule": {
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> is <> .",
+     "Drew <> from <> into <> ."
+    ],
+    "observed": "<> is <> ."
+   },
+   "control": "button:Record draw",
+   "list": {
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> is <> .",
+     "Drew <> from <> into <> ."
+    ],
+    "observed": "<> is <> ."
+   }
+  },
+  {
+   "step": 629,
+   "rule": {
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> is <> ; disgorge it before returning a draw .",
+     "Returned <> to <> from <> ."
+    ],
+    "observed": "<> is <> ; disgorge it before returning a draw ."
+   },
+   "control": "button:Return ticket _ gal from _ out of _",
+   "list": {
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> is <> ; disgorge it before returning a draw .",
+     "Returned <> to <> from <> ."
+    ],
+    "observed": "<> is <> ; disgorge it before returning a draw ."
+   }
+  },
+  {
+   "step": 649,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> is already <> ."
+    ],
+    "observed": "<> is already <> ."
+   },
+   "control": "button:Record draw",
+   "list": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> is already <> ."
+    ],
+    "observed": "<> is already <> ."
+   }
+  },
+  {
+   "step": 665,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> is already <> ."
+    ],
+    "observed": "<> is already <> ."
+   },
+   "control": "button:Record draw",
+   "list": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> is already <> ."
+    ],
+    "observed": "<> is already <> ."
+   }
+  },
+  {
+   "step": 678,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Returned <> to <> from <> ."
+    ],
+    "observed": "Returned <> to <> from <> ."
+   },
+   "control": "button:Return ticket _ gal from _ out of _",
+   "list": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Returned <> to <> from <> ."
+    ],
+    "observed": "Returned <> to <> from <> ."
+   }
+  },
+  {
+   "step": 694,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> is already <> ."
+    ],
+    "observed": "<> is already <> ."
+   },
+   "control": "button:Record draw",
+   "list": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> is already <> ."
+    ],
+    "observed": "<> is already <> ."
+   }
+  },
+  {
+   "step": 708,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Returned <> to <> from <> ."
+    ],
+    "observed": "Returned <> to <> from <> ."
+   },
+   "control": "button:Return ticket _ gal from _ out of _",
+   "list": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Returned <> to <> from <> ."
+    ],
+    "observed": "Returned <> to <> from <> ."
+   }
+  },
+  {
+   "step": 721,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Returned <> to <> from <> ."
+    ],
+    "observed": "Returned <> to <> from <> ."
+   },
+   "control": "button:Return ticket _ gal from _ out of _",
+   "list": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Returned <> to <> from <> ."
+    ],
+    "observed": "Returned <> to <> from <> ."
+   }
+  },
+  {
+   "step": 733,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> holds <> ; cannot draw <> ."
+    ],
+    "observed": "<> holds <> ; cannot draw <> ."
+   },
+   "control": "button:Record draw",
+   "list": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> holds <> ; cannot draw <> ."
+    ],
+    "observed": "<> holds <> ; cannot draw <> ."
+   }
+  },
+  {
+   "step": 749,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Drew <> from <> into <> ."
+    ],
+    "observed": "Drew <> from <> into <> ."
+   },
+   "control": "button:Record draw",
+   "list": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Drew <> from <> into <> ."
+    ],
+    "observed": "Drew <> from <> into <> ."
+   }
+  },
+  {
+   "step": 762,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Drew <> from <> into <> ."
+    ],
+    "observed": "Drew <> from <> into <> ."
+   },
+   "control": "button:Record draw",
+   "list": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Drew <> from <> into <> ."
+    ],
+    "observed": "Drew <> from <> into <> ."
+   }
+  },
+  {
+   "step": 773,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Returned <> to <> from <> ."
+    ],
+    "observed": "Returned <> to <> from <> ."
+   },
+   "control": "button:Return ticket _ gal from _ out of _",
+   "list": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Returned <> to <> from <> ."
+    ],
+    "observed": "Returned <> to <> from <> ."
+   }
+  },
+  {
+   "step": 785,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Returned <> to <> from <> ."
+    ],
+    "observed": "Returned <> to <> from <> ."
+   },
+   "control": "button:Return ticket _ gal from _ out of _",
+   "list": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Returned <> to <> from <> ."
+    ],
+    "observed": "Returned <> to <> from <> ."
+   }
+  },
+  {
+   "step": 798,
+   "rule": {
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> is <> .",
+     "Drew <> from <> into <> ."
+    ],
+    "observed": "<> is <> ."
+   },
+   "control": "button:Record draw",
+   "list": {
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> is <> .",
+     "Drew <> from <> into <> ."
+    ],
+    "observed": "<> is <> ."
+   }
+  },
+  {
+   "step": 810,
+   "rule": {
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> is <> .",
+     "Drew <> from <> into <> ."
+    ],
+    "observed": "<> is <> ."
+   },
+   "control": "button:Record draw",
+   "list": {
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> is <> .",
+     "Drew <> from <> into <> ."
+    ],
+    "observed": "<> is <> ."
+   }
+  },
+  {
+   "step": 822,
+   "rule": {
+    "bucket": "one outcome, because the control has never done anything else",
+    "verdict": "the only outcome ever seen on this control, and it happened",
+    "admissible": [
+     "Opened <> ."
+    ],
+    "observed": "Opened <> ."
+   },
+   "control": "button#cell/button",
+   "list": {
+    "bucket": "one outcome, because the control has never done anything else",
+    "verdict": "the only outcome ever seen on this control, and it happened",
+    "admissible": [
+     "Opened <> ."
+    ],
+    "observed": "Opened <> ."
+   }
+  },
+  {
+   "step": 837,
+   "rule": {
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Drew <> from <> into <> ."
+    ],
+    "observed": "Drew <> from <> into <> ."
+   },
+   "control": "button:Record draw",
+   "list": {
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> is <> .",
+     "Drew <> from <> into <> ."
+    ],
+    "observed": "Drew <> from <> into <> ."
+   }
+  }
+ ]
+}

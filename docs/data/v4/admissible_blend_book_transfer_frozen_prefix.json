@@ -8,70 +8,70 @@
  "corroborated": true,
  "hypothesis": "rule",
  "against_the_other_class": {
+  "rule: the evidence forces one outcome | list: the evidence forces one outcome": 86,
   "rule: several outcomes remain admissible | list: several outcomes remain admissible": 80,
-  "rule: the evidence forces one outcome | list: the evidence forces one outcome": 61,
   "rule: one outcome, because the control has never done anything else | list: one outcome, because the control has never done anything else": 32,
-  "rule: no outcome is established | list: no outcome is established": 30,
   "rule: the evidence forces one outcome | list: several outcomes remain admissible": 21,
-  "rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)": 20,
+  "rule: no outcome is established | list: no outcome is established": 17,
+  "rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)": 8,
   "rule: no outcome is established | list: the evidence forces one outcome": 3,
   "rule: no outcome is established | list: the evidence forces one outcome (wrong)": 1,
   "rule: the evidence forces one outcome (wrong) | list: several outcomes remain admissible": 1
  },
  "actions": 249,
  "what_the_evidence_establishes": {
-  "the evidence forces one outcome": 103,
+  "the evidence forces one outcome": 116,
   "several outcomes remain admissible": 80,
-  "no outcome is established": 34,
-  "one outcome, because the control has never done anything else": 32
+  "one outcome, because the control has never done anything else": 32,
+  "no outcome is established": 21
  },
  "admissible_set_size": {
-  "0": 34,
-  "1": 135,
+  "0": 21,
+  "1": 148,
   "2": 61,
   "3": 19
  },
  "what_happened_was": {
-  "inside the admissible set": 187,
-  "outside it": 28,
-  "nothing was admissible": 34
+  "inside the admissible set": 196,
+  "outside it": 32,
+  "nothing was admissible": 21
  },
  "the_list_where_the_evidence": {
   "no outcome is established": {
    "no determinate answer": 18,
-   "the event the interface returned": 9,
-   "a different event": 7
+   "the event the interface returned": 3
   },
   "one outcome, because the control has never done anything else": {
-   "a different event": 23,
-   "the event the interface returned": 9
+   "a different event": 21,
+   "the event the interface returned": 11
   },
   "several outcomes remain admissible": {
-   "the event the interface returned": 72,
-   "a different event": 7,
+   "the event the interface returned": 76,
+   "a different event": 3,
    "no determinate answer": 1
   },
   "the evidence forces one outcome": {
-   "the event the interface returned": 71,
+   "the event the interface returned": 95,
    "no determinate answer": 19,
-   "a different event": 13
+   "a different event": 2
   }
  },
  "policy_forced_then_list": {
-  "one outcome was admissible and it happened": 82,
-  "deferred to the list: the event the interface returned": 72,
-  "refused: nothing established": 34,
-  "the only outcome ever seen on this control, and something else happened": 22,
-  "one outcome was admissible and a different one happened": 21,
-  "the only outcome ever seen on this control, and it happened": 10,
-  "deferred to the list: a different event": 7,
+  "one outcome was admissible and it happened": 107,
+  "deferred to the list: the event the interface returned": 76,
+  "refused: nothing established": 21,
+  "the only outcome ever seen on this control, and something else happened": 20,
+  "the only outcome ever seen on this control, and it happened": 12,
+  "one outcome was admissible and a different one happened": 9,
+  "deferred to the list: a different event": 3,
   "deferred to the list: no determinate answer": 1
  },
- "distinct_events_forced": 6,
+ "distinct_events_forced": 7,
  "events_forced": {
   "Drew <> from <> into <> .": 56,
   "Returned <> to <> from <> .": 43,
   "Opened <> .": 23,
+  "<> <> .": 13,
   "Disgorged <> .": 9,
   "<> is <> .": 3,
   "<> is <> ; disgorge it before returning a draw .": 1
@@ -90,7 +90,8 @@
    "one outcome, because the control has never done anything else": 23
   },
   "button:Close _": {
-   "no outcome is established": 16
+   "the evidence forces one outcome": 13,
+   "no outcome is established": 3
   },
   "button:Bottle _": {
    "no outcome is established": 14
@@ -101,14 +102,16 @@
  },
  "per_control_verdicts": {
   "button#cell/button": {
-   "the only outcome ever seen on this control, and something else happened": 14,
-   "the only outcome ever seen on this control, and it happened": 9
+   "the only outcome ever seen on this control, and something else happened": 12,
+   "the only outcome ever seen on this control, and it happened": 11
   },
   "button:Bottle _": {
    "no outcome is established for this state": 14
   },
   "button:Close _": {
-   "no outcome is established for this state": 16
+   "one outcome was admissible and it happened": 9,
+   "one outcome was admissible and a different one happened": 4,
+   "no outcome is established for this state": 3
   },
   "button:Disgorge _": {
    "the only outcome ever seen on this control, and something else happened": 8,
@@ -116,15 +119,15 @@
   },
   "button:Record draw": {
    "several outcomes remained admissible; the one that happened was among them": 62,
-   "one outcome was admissible and it happened": 47,
-   "one outcome was admissible and a different one happened": 12,
+   "one outcome was admissible and it happened": 55,
+   "one outcome was admissible and a different one happened": 4,
    "several outcomes remained admissible and none of them happened": 2
   },
   "button:Return ticket _ gal from _ out of _": {
-   "one outcome was admissible and it happened": 35,
+   "one outcome was admissible and it happened": 43,
    "several outcomes remained admissible; the one that happened was among them": 16,
-   "one outcome was admissible and a different one happened": 9,
-   "no outcome is established for this state": 4
+   "no outcome is established for this state": 4,
+   "one outcome was admissible and a different one happened": 1
   }
  },
  "controls": {
@@ -143,7 +146,7 @@
   "button:Close _": {
    "fitted": 16,
    "events": 2,
-   "rules": 3,
+   "rules": 1,
    "default": "<> is already <> ."
   },
   "button:Disgorge _": {
@@ -166,6 +169,22 @@
   }
  },
  "forced_but_wrong": [
+  {
+   "step": 531,
+   "control": "button:Close _",
+   "admissible": [
+    "<> <> ."
+   ],
+   "hypothesis": "rule",
+   "unordered": [
+    "<> <> ."
+   ],
+   "observed": "<> is already <> .",
+   "returned": "West Ridge is already closed.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "the event alone",
+   "why": "<> <> . <- attr:cell#0@2(owner) == 'Pinot'  [3 occasions]"
+  },
   {
    "step": 541,
    "control": "button:Record draw",
@@ -215,26 +234,20 @@
    "why": "Drew <> from <> into <> . <- attr:cell#0@2(selection['combobox#1']:3) == '2020' & no_children(selection['combobox#1']:3)  [4 occasions]"
   },
   {
-   "step": 572,
-   "control": "button:Record draw",
+   "step": 568,
+   "control": "button:Close _",
    "admissible": [
-    "Drew <> from <> into <> ."
+    "<> <> ."
    ],
    "hypothesis": "rule",
    "unordered": [
-    "Drew <> from <> into <> ."
+    "<> <> ."
    ],
-   "observed": "Drew <> from <> into <> .",
-   "returned": "Drew 1 gal from Block 12 into Festival White.",
+   "observed": "<> is already <> .",
+   "returned": "West Ridge is already closed.",
    "verdict": "one outcome was admissible and a different one happened",
-   "level": "with its arguments",
-   "arguments": {
-    "1": [
-     "Block",
-     "Block 12"
-    ]
-   },
-   "why": "Drew <> from <> into <> . <- attr:cell#0@4(selection['combobox#1']:3) == '0'  [4 occasions]"
+   "level": "the event alone",
+   "why": "<> <> . <- attr:cell#0@2(owner) == 'Pinot'  [3 occasions]"
   },
   {
    "step": 573,
@@ -251,10 +264,6 @@
    "verdict": "one outcome was admissible and a different one happened",
    "level": "with its arguments",
    "arguments": {
-    "1": [
-     "Block",
-     "Block 12"
-    ],
     "2": [
      "Picnic",
      "Festival White"
@@ -263,7 +272,23 @@
    "why": "Returned <> to <> from <> . <- attr:cask#0(selection['cell#17']:3) == 'In'  [50 occasions]"
   },
   {
-   "step": 575,
+   "step": 650,
+   "control": "button:Close _",
+   "admissible": [
+    "<> <> ."
+   ],
+   "hypothesis": "rule",
+   "unordered": [
+    "<> <> ."
+   ],
+   "observed": "<> is already <> .",
+   "returned": "Block 12 is already closed.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "the event alone",
+   "why": "<> <> . <- attr:cell#0@2(owner) == 'Syrah'  [7 occasions]"
+  },
+  {
+   "step": 728,
    "control": "button:Record draw",
    "admissible": [
     "Drew <> from <> into <> ."
@@ -272,61 +297,11 @@
    "unordered": [
     "Drew <> from <> into <> ."
    ],
-   "observed": "Drew <> from <> into <> .",
-   "returned": "Drew 1 gal from Block 12 into Festival White.",
+   "observed": "<> holds <> ; cannot draw <> .",
+   "returned": "Low Barn holds 0 gal; cannot draw 1.",
    "verdict": "one outcome was admissible and a different one happened",
-   "level": "with its arguments",
-   "arguments": {
-    "1": [
-     "Block",
-     "Block 12"
-    ]
-   },
-   "why": "Drew <> from <> into <> . <- attr:cell#0@4(selection['combobox#1']:3) == '0'  [4 occasions]"
-  },
-  {
-   "step": 578,
-   "control": "button:Record draw",
-   "admissible": [
-    "Drew <> from <> into <> ."
-   ],
-   "hypothesis": "rule",
-   "unordered": [
-    "Drew <> from <> into <> ."
-   ],
-   "observed": "Drew <> from <> into <> .",
-   "returned": "Drew 1 gal from Block 12 into Festival White.",
-   "verdict": "one outcome was admissible and a different one happened",
-   "level": "with its arguments",
-   "arguments": {
-    "1": [
-     "Block",
-     "Block 12"
-    ]
-   },
-   "why": "Drew <> from <> into <> . <- attr:cell#0@2(selection['combobox#1']:3) == '2020' & no_children(selection['combobox#1']:3)  [4 occasions]"
-  },
-  {
-   "step": 579,
-   "control": "button:Return ticket _ gal from _ out of _",
-   "admissible": [
-    "Returned <> to <> from <> ."
-   ],
-   "hypothesis": "rule",
-   "unordered": [
-    "Returned <> to <> from <> ."
-   ],
-   "observed": "Returned <> to <> from <> .",
-   "returned": "Returned 2 gal to Block 12 from Picnic.",
-   "verdict": "one outcome was admissible and a different one happened",
-   "level": "with its arguments",
-   "arguments": {
-    "1": [
-     "Block",
-     "Block 12"
-    ]
-   },
-   "why": "Returned <> to <> from <> . <- attr:cask#0(selection['cell#17']:3) == 'In'  [50 occasions]"
+   "level": "the event alone",
+   "why": "Drew <> from <> into <> . <- attr:( ) , gal open#1(owner) == 'Chenin' & attr:( ) , open single varietal#1(owner) == '2022'  [3 occasions]"
   }
  ]
 }

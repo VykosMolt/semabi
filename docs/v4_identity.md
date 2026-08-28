@@ -249,6 +249,47 @@ the outcome layer reports for a draw from it is `Block`.  That is the seventeen 
 forced-wrong above.  It is a fitting-time segmentation rule and changing it re-fits cellar, so
 it is recorded here rather than changed.
 
+### Three more memos, found by the same question
+
+Asking of each remaining error which judgement had been a memo of the fitting corpus found
+three more, and each is a frozen-model repair measured on every application:
+
+* **A key is the whole value the identifying position renders.**  `data_tokens` keeps a
+  number apart from a name beside it -- right for an attribute cell, wrong for a name -- so
+  the vat was keyed `Block`, two `Block N` vats collided, and every argument naming it was
+  wrong.  `V2Abstractor._rendered_value` reads a key, and a reference, as the maximal run of
+  data tokens the slot's span begins, so `Close Block 12` names `Block 12` and names the same
+  object the row does.  Prefix fits are bit-identical on all four applications.
+* **A reference names an object by its key whether or not the prefix rendered it.**
+  `resolve` consulted a registry of the key values the fitting pages had rendered *as
+  instances*, so a reference to any object first seen after the cut resolved to nothing --
+  and so did, on the fitting pages themselves, some 900 of harbour's references to calls that
+  appear only by name in a berth's or ship's row (`Held by call C-105`).  Where a type's keys
+  are simple, an unseen value now names the object by its key; the registry decides ambiguity,
+  not permission.  This changes harbour's and cellar's *fits*: harbour learns one operator
+  fewer and `Close`, whose guard is *no call holds this berth*, goes from 4 forced and 9
+  refused to 13 forced and 13 right; cellar's held-out table is unchanged.
+* **A click's owner is resolved as the inducer resolves it.**  `_owner_object` in the scorer
+  matched the clicked instance's root node against the objects' nodes and stopped; a button
+  that is a *mention* of an entity (`Close North Wall`, a unit of its own keyed by the vat's
+  name) names the row's object by key and not by node, so the click had no owner and
+  `Close` established nothing at all sixteen of its held-out states.  Resolving by ``(type,
+  key)`` and walking up to the enclosing instance, as `describe_target` always has, gives
+  `Close` 13 forced answers, 9 right and 4 wrong -- the four being *already closed*, which
+  the prefix saw exactly once.
+
+The registry repair also changes the *loose* reading `promote cell[_]=cell#0`, the contrast
+case `tests/test_v4_binding.py` and `docs/v4_devlog.md` use: a reading that makes every cell an
+entity keyed by its own text now fills its references with phantoms, and no value rule of it
+applies on the held-out suffix where before dozens of assignments were left open per claim.
+That is a different shape of the same failure -- the reading still determines no object -- and
+the tests pin the new shape.
+
+Blend after the three, held out: 116 forced (107 right, 9 wrong; 8 wrong on the frame -- 3
+unseen, 4 seen once, 1 ordered), 80 several, 21 nothing established, 32 sole; the operator
+ledger 130 right / 48 wrong / 50 unbound.  Harbour: 31 forced, 31 right, 53 nothing, 35 sole.
+Cellar: 29 nothing, 11 sole and right.
+
 ## Why a forced answer was wrong, asked of the actual event
 
 `v4_inadequacy` was rewritten.  The question is now asked of the event that happened, in the
@@ -345,6 +386,26 @@ identical digest -- passes.
   problem around a vat's Open/Closed state -- is withdrawn.  They were clicks on other buttons.
 * The claim in `Evidence`'s docstring that no consistent list can answer what no globally pure
   rule vouches for is withdrawn, and the docstring says so.
+
+## Where the remaining refusals are, and which layer they name
+
+After the repairs, what the version space still refuses or answers vacuously was traced to the
+layer responsible rather than counted:
+
+* **Harbour, 34 states on `Sign on` / `Sign off`** -- 17 and 14 fitting occasions, two events
+  each, and an *empty* literal vocabulary: the buttons sit in a crew row that is not an object
+  under the reading (the page's objects are calls, berths and ships), so the operators for the
+  click are nullary and nothing about the person -- signed on or not -- can reach a rule.  The
+  identity layer's gap, of the kind `docs/v4_sections.md` found for cellar's halls: a family
+  without identity.  Not repaired here.
+* **Blend, 14 states on `Bottle`** -- two fitting occasions carrying two events.  Evidence
+  starvation; no language establishes anything from one occasion of each.
+* **Blend, 20 vacuous answers on `Open` and `Disgorge`** -- controls the prefix only ever saw
+  succeed.  The label space, and the case acquisition is for: the control has to be exercised
+  where it will refuse.
+* **Off-page referents**: a probe over every held-out role that names nothing found *no* case,
+  on any of the three applications, where the referent had been seen on an earlier page.  A
+  remembered-object state would have nothing to do here, and was not built.
 
 ## What this does not establish
 

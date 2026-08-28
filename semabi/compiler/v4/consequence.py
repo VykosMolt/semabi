@@ -395,13 +395,29 @@ def clicked_control(A, obs, step) -> str:
 
 
 def _owner_object(A, po, state, node: int):
+    """The persistent object the clicked control sits in, as the inducer names it.
+
+    This matched the innermost instance's root against the objects' nodes and stopped.  A
+    button that is a *mention* of an entity -- blend's `Close North Wall` is a recurring unit
+    of its own, keyed by the vat's name and read as the vat's type -- is an instance whose
+    key names the row's object while its node does not, so the click had no owner and no
+    literal about the vat could reach a rule: `Close` established nothing at every one of its
+    sixteen held-out states.  `induce.describe_target` has always resolved the owner by
+    ``(type, key)`` as well and walked up to the enclosing instance when neither is an object;
+    the scorer now does the same, so a prediction is bound the way the rule was learned.
+    """
     idx = po.node_instance.get(node)
-    if idx is None:
-        return None
-    root = po.instances[idx].root
-    for o in state.objs.values():
-        if o.node == root:
-            return o
+    by_node = {o.node: o for o in state.objs.values()}
+    while idx is not None:
+        inst = po.instances[idx]
+        if inst.root in by_node:
+            return by_node[inst.root]
+        key = inst.slots.get("id")
+        if key is not None and key[1] not in (None, ""):
+            found = state.objs.get((inst.tid, key[1]))
+            if found is not None:
+                return found
+        idx = inst.parent
     return None
 
 

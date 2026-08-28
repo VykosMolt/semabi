@@ -212,47 +212,42 @@ def test_harbour_learns_the_condition_for_close_and_not_for_reopen():
 
 
 @pytest.mark.skipif(not (HARBOUR_RUN / "steps.jsonl").exists(), reason="retained trace absent")
-def test_the_condition_for_close_is_not_available_to_a_half_trace_prefix_model():
-    """And the reason is not the language, the discipline, or the evidence.
+def test_the_condition_for_close_is_available_to_a_half_trace_prefix_model():
+    """And it is now, for the reason the previous version of this test named.
 
-    The same condition, sought the same way, is not found when the schema is built from the
-    first half of the trace alone.  Every step of the argument survives except one: the literal
-    is still in the candidate set, still true in every positive, still unrefused.  What has
-    changed is that the berth's reference resolves to nothing anywhere, so it is null in the
-    counterexamples too and separates none of them.
+    This test used to assert the opposite: under a half-trace schema the berth's reference
+    resolved to nothing anywhere, so the literal separated no counterexample.  Its docstring
+    diagnosed why -- the reference was typed to the cell in the Call column, whose composite
+    key the berth's rendered value never matched, and a call the prefix never rendered as a
+    row was not in the registry a reference resolves through.  Both are repaired
+    (`docs/v4_identity.md`): a reference lands on the type a link borrows its key from, and an
+    unseen simple key names its object.  The condition reappears from the prefix alone.
 
-    Under the whole-trace schema the berth's reference denotes the *call*.  Under the half-trace
-    schema it denotes the cell in the Call column, whose composite key the berth's rendered
-    value never matches.  So the concept harbour lost is a reference target, and the loss is
-    not the learner declining to generalise -- it is the learner being unable to see, in the
-    states where closing failed, that anything was holding the berth.
-
-    This is the regression for the chronology repair.  If the observation model could reach the
-    suffix again, the condition would reappear here and this test would fail.
+    The chronology guard this test doubled as is `tests/test_v4_outcome_chronology.py`, which
+    deletes the future from disk and requires an identical model; the reference resolves from
+    the prefix's own registry and the page in front of the agent, and that test passes.
     """
     from semabi.compiler.v4.consequence import FROZEN_PREFIX
 
     model, close, reopen = _close_and_reopen(FROZEN_PREFIX)
     assert close and reopen
-    assert not any(l[0] == "ref_null" for op in close for l in op.pre)
-    assert any(op.unexplained_negatives > 0 for op in close)
+    assert any(l[0] == "ref_null" for op in close for l in op.pre)
+    assert all(op.unexplained_negatives == 0 for op in close)
 
+    # The counterexamples now show what holds the berth: at least one of them binds a berth
+    # whose Call reference is set, which is what the literal separates them on.
     A, I = model.abstractor, model.inducer
+    held = 0
     for op in close:
-        available = [l for l in op.common if l[0] == "ref_null"]
-        assert available, "the literal left the language, which is a different defect"
-        for lit in available:
-            assert not I.memorises_the_fitting_instance(op, lit)
-        # null everywhere: in the positives, and in every counterexample as well
         tid = op.params["?o0"]
-        for slot in getattr(A.types[tid], "refs", {}) or {}:
-            for tr in list(op.positives) + list(op.negatives):
-                b = tr.binding if tr in op.positives else I._rebind_negative(op, tr)
-                if b is None:
-                    continue
-                o = tr.before.objs.get(b.get("?o0"))
-                if o is not None and slot in o.refs:
-                    assert o.refs[slot] is None
+        for tr in op.negatives:
+            b = I._rebind_negative(op, tr)
+            if b is None:
+                continue
+            o = tr.before.objs.get(b.get("?o0"))
+            if o is not None and any(v is not None for v in o.refs.values()):
+                held += 1
+    assert held > 0
 
 
 # ------------------------------------------------------------------ memorised effect values

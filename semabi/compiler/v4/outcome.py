@@ -907,12 +907,14 @@ def align(roles: dict[str, Role], occasions, bindings) -> dict[str, Role]:
     disagree: set[tuple] = set()
     for (_, _, frame, args), bound in zip(occasions, bindings):
         for k, arg in enumerate(args):
-            here = {name for name, obj in bound.items() if str(obj.key) == arg}
+            # The owner is bound whenever the click sits in an object, whether or not it is
+            # one of this control's roles; the alignment is over roles.
+            here = {name for name, obj in bound.items() if name in roles and str(obj.key) == arg}
             if here:
                 slots.setdefault((frame, k), set()).update(here)
         for a in bound:
             for b in bound:
-                if a < b and str(bound[a].key) != str(bound[b].key):
+                if a < b and a in roles and b in roles and str(bound[a].key) != str(bound[b].key):
                     disagree.add((a, b))
     for members in slots.values():
         ordered = sorted(members)
@@ -934,6 +936,8 @@ def align(roles: dict[str, Role], occasions, bindings) -> dict[str, Role]:
     wrong: dict[str, int] = {name: 0 for name in roles}
     for (_, _, frame, args), bound in zip(occasions, bindings):
         for name, obj in bound.items():
+            if name not in parent:
+                continue
             positions = [k for k in range(len(args)) if (frame, k) in slots
                          and find(name) in {find(m) for m in slots[(frame, k)]}]
             if not positions:

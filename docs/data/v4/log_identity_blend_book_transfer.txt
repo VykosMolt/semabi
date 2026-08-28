@@ -1,50 +1,49 @@
 
 blend_book_transfer  'joint discrimination x3'  FROZEN_PREFIX  cut=419  control=None  corroborated=True  hypothesis=rule
   249 held-out actions
-      103  the evidence forces one outcome
+      116  the evidence forces one outcome
        80  several outcomes remain admissible
-       34  no outcome is established
        32  one outcome, because the control has never done anything else
+       21  no outcome is established
   against the other hypothesis class:
+       86  rule: the evidence forces one outcome | list: the evidence forces one outcome
        80  rule: several outcomes remain admissible | list: several outcomes remain admissible
-       61  rule: the evidence forces one outcome | list: the evidence forces one outcome
        32  rule: one outcome, because the control has never done anything else | list: one outcome, because the control has never done anything else
-       30  rule: no outcome is established | list: no outcome is established
        21  rule: the evidence forces one outcome | list: several outcomes remain admissible
-       20  rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)
+       17  rule: no outcome is established | list: no outcome is established
+        8  rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)
         3  rule: no outcome is established | list: the evidence forces one outcome
         1  rule: no outcome is established | list: the evidence forces one outcome (wrong)
         1  rule: the evidence forces one outcome (wrong) | list: several outcomes remain admissible
-  admissible-set size {"0": 34, "1": 135, "2": 61, "3": 19}; what happened was {'inside the admissible set': 187, 'outside it': 28, 'nothing was admissible': 34}
-  6 distinct events ever forced
+  admissible-set size {"0": 21, "1": 148, "2": 61, "3": 19}; what happened was {'inside the admissible set': 196, 'outside it': 32, 'nothing was admissible': 21}
+  7 distinct events ever forced
   where no outcome is established, the chosen list:
        18  no determinate answer
-        9  the event the interface returned
-        7  a different event
+        3  the event the interface returned
   where one outcome, because the control has never done anything else, the chosen list:
-       23  a different event
-        9  the event the interface returned
+       21  a different event
+       11  the event the interface returned
   where several outcomes remain admissible, the chosen list:
-       72  the event the interface returned
-        7  a different event
+       76  the event the interface returned
+        3  a different event
         1  no determinate answer
   where the evidence forces one outcome, the chosen list:
-       71  the event the interface returned
+       95  the event the interface returned
        19  no determinate answer
-       13  a different event
+        2  a different event
   forced where forced, list elsewhere:
-       82  one outcome was admissible and it happened
-       72  deferred to the list: the event the interface returned
-       34  refused: nothing established
-       22  the only outcome ever seen on this control, and something else happened
-       21  one outcome was admissible and a different one happened
-       10  the only outcome ever seen on this control, and it happened
-        7  deferred to the list: a different event
+      107  one outcome was admissible and it happened
+       76  deferred to the list: the event the interface returned
+       21  refused: nothing established
+       20  the only outcome ever seen on this control, and something else happened
+       12  the only outcome ever seen on this control, and it happened
+        9  one outcome was admissible and a different one happened
+        3  deferred to the list: a different event
         1  deferred to the list: no determinate answer
-    button:Record draw         fitted= 112 events= 5 rules=11 forced-wrong= 12  {'several outcomes remain admissible': 64, 'the evidence forces one outcome': 59}
-    button:Return ticket _ gal fitted=  59 events= 2 rules= 2 forced-wrong=  9  {'the evidence forces one outcome': 44, 'several outcomes remain admissible': 16, 'no outcome is established': 4}
+    button:Record draw         fitted= 112 events= 5 rules=11 forced-wrong=  4  {'several outcomes remain admissible': 64, 'the evidence forces one outcome': 59}
+    button:Return ticket _ gal fitted=  59 events= 2 rules= 2 forced-wrong=  1  {'the evidence forces one outcome': 44, 'several outcomes remain admissible': 16, 'no outcome is established': 4}
     button#cell/button         fitted=  12 events= 1 rules= 1 forced-wrong=  0  {'one outcome, because the control has never done anything else': 23}
-    button:Close _             fitted=  16 events= 2 rules= 3 forced-wrong=  0  {'no outcome is established': 16}
+    button:Close _             fitted=  16 events= 2 rules= 1 forced-wrong=  4  {'the evidence forces one outcome': 13, 'no outcome is established': 3}
     button:Bottle _            fitted=   2 events= 2 rules= 0 forced-wrong=  0  {'no outcome is established': 14}
     button:Disgorge _          fitted=   3 events= 1 rules= 1 forced-wrong=  0  {'one outcome, because the control has never done anything else': 9}
 
@@ -53,58 +52,59 @@ wrote docs/data/v4/admissible_blend_book_transfer_frozen_prefix.json
 blend_book_transfer  'joint discrimination x3'  FROZEN_PREFIX  cut=419  control=None  corroborated=True  hypothesis=list
   249 held-out actions
       102  several outcomes remain admissible
-       85  the evidence forces one outcome
+       98  the evidence forces one outcome
        32  one outcome, because the control has never done anything else
-       30  no outcome is established
+       17  no outcome is established
   against the other hypothesis class:
+       86  list: the evidence forces one outcome | rule: the evidence forces one outcome
        80  list: several outcomes remain admissible | rule: several outcomes remain admissible
-       61  list: the evidence forces one outcome | rule: the evidence forces one outcome
        32  list: one outcome, because the control has never done anything else | rule: one outcome, because the control has never done anything else
-       30  list: no outcome is established | rule: no outcome is established
        21  list: several outcomes remain admissible | rule: the evidence forces one outcome
-       20  list: the evidence forces one outcome (wrong) | rule: the evidence forces one outcome (wrong)
+       17  list: no outcome is established | rule: no outcome is established
+        8  list: the evidence forces one outcome (wrong) | rule: the evidence forces one outcome (wrong)
         3  list: the evidence forces one outcome | rule: no outcome is established
         1  list: the evidence forces one outcome (wrong) | rule: no outcome is established
         1  list: several outcomes remain admissible | rule: the evidence forces one outcome (wrong)
-  admissible-set size {"0": 30, "1": 117, "2": 71, "3": 29, "4": 2}; what happened was {'inside the admissible set': 191, 'outside it': 28, 'nothing was admissible': 30}
-  5 distinct events ever forced
+  admissible-set size {"0": 17, "1": 130, "2": 71, "3": 29, "4": 2}; what happened was {'inside the admissible set': 200, 'outside it': 32, 'nothing was admissible': 17}
+  6 distinct events ever forced
   where no outcome is established, the chosen list:
        14  no determinate answer
-        9  the event the interface returned
-        7  a different event
+        3  the event the interface returned
   where one outcome, because the control has never done anything else, the chosen list:
-       23  a different event
-        9  the event the interface returned
+       21  a different event
+       11  the event the interface returned
   where several outcomes remain admissible, the chosen list:
-       94  the event the interface returned
-        7  a different event
+       98  the event the interface returned
+        3  a different event
         1  no determinate answer
   where the evidence forces one outcome, the chosen list:
-       49  the event the interface returned
+       73  the event the interface returned
        23  no determinate answer
-       13  a different event
+        2  a different event
   forced where forced, list elsewhere:
-       94  deferred to the list: the event the interface returned
-       64  one outcome was admissible and it happened
-       30  refused: nothing established
-       22  the only outcome ever seen on this control, and something else happened
-       21  one outcome was admissible and a different one happened
-       10  the only outcome ever seen on this control, and it happened
-        7  deferred to the list: a different event
+       98  deferred to the list: the event the interface returned
+       89  one outcome was admissible and it happened
+       20  the only outcome ever seen on this control, and something else happened
+       17  refused: nothing established
+       12  the only outcome ever seen on this control, and it happened
+        9  one outcome was admissible and a different one happened
+        3  deferred to the list: a different event
         1  deferred to the list: no determinate answer
-    button:Record draw         fitted= 112 events= 5 rules=11 forced-wrong= 11  {'several outcomes remain admissible': 86, 'the evidence forces one outcome': 37}
-    button:Return ticket _ gal fitted=  59 events= 2 rules= 2 forced-wrong= 10  {'the evidence forces one outcome': 48, 'several outcomes remain admissible': 16}
+    button:Record draw         fitted= 112 events= 5 rules=11 forced-wrong=  3  {'several outcomes remain admissible': 86, 'the evidence forces one outcome': 37}
+    button:Return ticket _ gal fitted=  59 events= 2 rules= 2 forced-wrong=  2  {'the evidence forces one outcome': 48, 'several outcomes remain admissible': 16}
     button#cell/button         fitted=  12 events= 1 rules= 1 forced-wrong=  0  {'one outcome, because the control has never done anything else': 23}
-    button:Close _             fitted=  16 events= 2 rules= 3 forced-wrong=  0  {'no outcome is established': 16}
+    button:Close _             fitted=  16 events= 2 rules= 1 forced-wrong=  4  {'the evidence forces one outcome': 13, 'no outcome is established': 3}
     button:Bottle _            fitted=   2 events= 2 rules= 0 forced-wrong=  0  {'no outcome is established': 14}
     button:Disgorge _          fitted=   3 events= 1 rules= 1 forced-wrong=  0  {'one outcome, because the control has never done anything else': 9}
 
 wrote docs/data/v4/admissible_blend_book_transfer_frozen_prefix_list.json
 
 blend_book_transfer  'joint discrimination x3'  cut=419  forced under the rule class
-  forced and wrong on the frame: 4
+  forced and wrong on the frame: 8
+       4  once: seen, but not enough to found a rule
        3  unseen: the control never returned this event while fitting
        1  ordered: justified only after another event's guard
+    button:Close _: {'once: seen, but not enough to found a rule': 4}
     button:Record draw: {'unseen: the control never returned this event while fitting': 3, "ordered: justified only after another event's guard": 1}
 
   button:Record draw step 728: forced ['Drew <> from <> into <> .'], actual '<> holds <> ; cannot draw <> .': ordered: justified only after another event's guard
@@ -114,18 +114,17 @@ blend_book_transfer  'joint discrimination x3'  cut=419  forced under the rule c
 wrote docs/data/v4/inadequacy_blend_book_transfer.json
 
 blend_book_transfer  'joint discrimination x3'  FROZEN_PREFIX  cut=419  53 operators
-  235 held-out actions, 6.91 rules offered and 1.77 claims applicable per action
-  11 distinct claims across all its decided predictions
-    a named constant         610 claims,    47 decided, supported 100%   1 distinct
-                           ['attr:cell#0@4 = Open']
-    an interface response   3647 claims,   575 decided, supported  30%   8 distinct
-                           ['<> holds <> ; cannot draw <> . = <> holds <> ; cannot draw <> .', '<> is <> . = <> is <> .', '<> is <> ; disgorge it before returning a draw . = <> is <> ; disgorge it before returning a draw .', '<> is already <> . = <> is already <> .', 'Drew <> from <> into <> . = Drew <> from <> into <> .', 'Opened <> . = Opened <> .']
+  235 held-out actions, 6.91 rules offered and 1.84 claims applicable per action
+  14 distinct claims across all its decided predictions
+    a named constant         610 claims,    63 decided, supported 100%   2 distinct
+                           ['attr:cell#0@4 = Closed', 'attr:cell#0@4 = Open']
+    an interface response   3647 claims,   620 decided, supported  38%   10 distinct
+                           ['<> <> . = <> <> .', '<> has <> committed ; need at least <> to bottle . = <> has <> committed ; need at least <> to bottle .', '<> holds <> ; cannot draw <> . = <> holds <> ; cannot draw <> .', '<> is <> . = <> is <> .', '<> is <> ; disgorge it before returning a draw . = <> is <> ; disgorge it before returning a draw .', '<> is already <> . = <> is already <> .']
     changes, unspecified    3037 claims,   355 decided, supported  66%   2 distinct
                            ['attr:cell#0@3 = changes', 'attr:cell#0@4 = changes']
-      114 ( 49%)  every applicable rule was right
+      130 ( 55%)  every applicable rule was right
+       50 ( 21%)  the rules could not say which object they were about
        48 ( 20%)  every applicable rule was contradicted
-       41 ( 17%)  the rules could not say which object they were about
-       25 ( 11%)  no rule applied
         4 (  2%)  applicable rules disagreed
         3 (  1%)  only undecidable claims survived
 

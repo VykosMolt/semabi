@@ -59,6 +59,16 @@ rather than of the correctness of an update rule.
 
 ## Harbour: the concept was learnable, just not that early
 
+> **Superseded (2026-08-29, `docs/v4_identity.md`).**  The diagnosis below was right and the
+> limitation it describes is gone: the berth's Call reference was typed to the Call-column
+> cell because a link type's keys are borrowed from the calls, and a call the prefix never
+> rendered as a row was absent from the registry references resolve through.  With a reference
+> sent to the type its key is borrowed from, and an unseen simple key naming its object, the
+> half-trace model learns the condition for closing a berth from the prefix alone (13 forced,
+> 13 right).  The chronology finding stands -- the future never reaches the prefix model, and
+> `tests/test_v4_outcome_chronology.py` still says so -- and the table's "reference denotes"
+> column is what changed.
+
 Under a half-trace split, `joint discrimination x2` does not learn the condition for closing a
 berth.  Every step of the argument survives except one.  The literal is still in the candidate
 set, still true in every positive, still unrefused by the memorisation checks.  What changes is

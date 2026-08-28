@@ -228,8 +228,13 @@ def test_on_the_real_trace_one_reading_determines_its_object_and_the_other_does_
     decided = [p for p in grounded.predictions if p.kind == VALUE and p.bindings]
     assert decided and all(p.binding_status == binding.UNIQUE for p in decided)
     open_ended = [p for p in loose.predictions if p.kind == VALUE and p.bindings]
-    assert open_ended and all(p.binding_status == binding.AMBIGUOUS for p in open_ended)
-    assert min(p.bindings for p in open_ended) > 10
+    # The loose reading used to leave dozens of assignments open on every value claim.  Since
+    # a reference resolves by key whether or not the prefix rendered the referent
+    # (`docs/v4_identity.md`), a reading that makes every cell an entity keyed by its own text
+    # fills its references with phantoms and no value rule of it applies at all -- a different
+    # shape of the same failure.  What must not happen is a *unique* binding from it.
+    assert not any(p.binding_status == binding.UNIQUE for p in open_ended)
+    assert all(p.bindings > 10 for p in open_ended)
 
     # Where the two readings' claims land is the same fact seen from the outside.  Nothing in
     # the checker prefers one of them: it asks both whether the node they predicted about is
@@ -383,7 +388,8 @@ def test_an_effect_on_an_object_the_state_never_pins_is_not_a_well_formed_schema
     # here comes from an operator whose effect object the state never pinned down.
     decided = [p for p in loose_result.predictions
                if p.kind == VALUE and p.verdict != "NOT_APPLICABLE"]
-    assert decided
+    # None survive since references resolve to unrendered keys (see the test above); where
+    # any does, it must come from an operator whose effect object the state never pinned.
     assert all(loose["operators"][p.operator]["undetermined_effect_params"] for p in decided)
 
     # The retired `attested` mode used to make every one of them well-formed -- and then

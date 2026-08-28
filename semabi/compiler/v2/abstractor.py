@@ -82,13 +82,30 @@ class V2Abstractor(Abstractor):
                     self.registry[tid][v.split("|")[0]].add(v)
 
     def resolve(self, tid: int, v: str) -> str | None:
-        """A referenced entity named by its primary key: the unique full key, else None."""
+        """A referenced entity named by its primary key: the unique full key, else None.
+
+        The registry maps a key's first component to the full keys the *fitting* pages
+        rendered, which is what a composite key needs.  It was also the only route for a
+        simple key, so a reference to an object the prefix never rendered -- a vat, ticket or
+        patient that exists only after the cut -- resolved to nothing however plainly the page
+        named it.  Where a type's keys are simple (every registered full key is its own first
+        component) a value the registry has not seen names the object by its key, exactly as a
+        seen one does; the registry is consulted for ambiguity, not for permission.
+        """
         full = self.registry.get(tid, {}).get(v)
         if full and len(full) == 1:
             return next(iter(full))
         if v in (full or ()):
             return v
+        if full is None and v and self._simple_keys(tid):
+            return v
         return None
+
+    def _simple_keys(self, tid: int) -> bool:
+        seen = self.registry.get(tid)
+        if not seen:
+            return False
+        return all(len(fulls) == 1 and next(iter(fulls)) == part for part, fulls in seen.items())
 
     # ---------------------------------------------------------------- types
     def _build_types(self) -> None:
@@ -284,9 +301,40 @@ class V2Abstractor(Abstractor):
             out[node] = fid if fid is not None else key
         return out
 
+    def _rendered_value(self, ui: UnitInstance, sid: str) -> str | None:
+        """What a slot's node renders as one value, for identity and reference.
+
+        `data_tokens` segments a node's text into value spans and keeps a number apart from a
+        name beside it, which is right for an attribute cell and wrong for a name: a vat called
+        `Block 12` was keyed `Block`, two such vats collided, and a ticket's reference to it
+        never matched.  Where the node's text is nothing but data, the value it renders is the
+        whole of it.  Nodes with a constant token keep their first span, as before.
+        """
+        v = ui.slots.get(sid)
+        node = ui.slot_nodes.get(sid) if hasattr(ui, "slot_nodes") else None
+        if v is None or node is None:
+            return v
+        # The maximal run of data tokens the slot's own span begins: `Close Block 12` names
+        # `Block 12` under the label `Close`, and it has to name the same object the row does.
+        toks = [t for t in tokens(node_text(self.G.obs[ui.sig].node(node))) if t[0].isalnum()]
+        runs: list[list[str]] = []
+        for t in toks:
+            if self.G.is_data_at(ui.sig, node, t):
+                if runs and runs[-1] is not None:
+                    runs[-1].append(t)
+                else:
+                    runs.append([t])
+            else:
+                runs.append(None)
+        first = v.split(" ")[0]
+        for run in runs:
+            if run and run[0] == first and len(run) > len(v.split(" ")):
+                return " ".join(run)
+        return v
+
     def entity_key(self, et: EntityType, ui: UnitInstance, keys_by_tid: dict[int, dict[str, str]]) -> str | None:
         t = ui.template
-        k = ui.slots.get(et.key_slot[t])
+        k = self._rendered_value(ui, et.key_slot[t])
         if k is None:
             return None
         if t in et.link_parent:
@@ -374,7 +422,7 @@ class V2Abstractor(Abstractor):
                     continue
                 if t2 == ui.template and tgt in self.tid_map:
                     # a reference slot this template displays: absent or unresolvable value = no target
-                    v = self.resolve(self.tid_map[tgt], ui.slots[sid]) if sid in ui.slots else None
+                    v = self.resolve(self.tid_map[tgt], self._rendered_value(ui, sid)) if sid in ui.slots else None
                     inst.slots[f"rel:{self.tid_map[tgt]}"] = ("", v)
             for tgt_tid in self.family_refs.get(ui.template, ()):
                 inst.slots.setdefault(f"rel:{tgt_tid}", ("", None))
