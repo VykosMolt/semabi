@@ -540,6 +540,38 @@ the reading can name its objects turn out to be steps where more of the page goe
 That is a worse result honestly obtained, and it strengthens rather than weakens the conclusion
 that neither vet clinic reading is identified.
 
+## What is left, once the rules stop guessing
+
+At a 0.7 split with abstention, blend is right on every decided claim at the steps where the
+application performs the action, and still contradicted 176 times where it refuses.  Those are
+rules whose referring expression *did* resolve and that fired anyway -- the applicability gap,
+isolated at last from the cases where the model could not tell.
+
+They are not failing to name their objects.  Both of the high-support rules name the source and
+the destination correctly, by the controls.  What they condition on is the problem:
+
+    op1 (support 26)  attr:button#1(?o0) == None,  attr:cell#0@3(?o0) != '6'
+    op0 (support 27)  attr:cell#1@3(?o2) == None,  attr:cell#1(?o2) != '3',
+                      id(?o2) != 'Ticket#2'
+
+`op1` conditions on a button and a count on the source.  `op0` conditions on `?o2`, which is a
+*ticket* -- neither the source nor the destination -- and carries an identity constant that
+slipped past the refusals as an inequality.  Neither says anything about the source being open
+or the destination being bottled, and those are exactly the two facts the ceiling analysis
+picked out.
+
+So the candidates are present, the objects are named, and the greedy cover selects incidental
+correlates over them.  It selects by how many counterexamples a literal excludes on the fitting
+evidence, and an incidental fact can exclude more there than the semantically correct one.
+Asserting everything instead is worse, as the filtered-`op.common` row shows.  Neither minimal
+nor maximal is right; the right conditions are a particular subset, and nothing *within* the
+fitting evidence distinguishes them from the incidental ones.
+
+That names the next mechanism precisely, and it is not one this run should start: hold out part
+of the *prefix* when choosing between candidate literals.  All of it is causally available, so
+it costs no chronology, and it is the only signal available that separates a literal which
+generalises from one that happened to fit.
+
 ## The readings never disagree, so active exploration has nothing to target
 
 Active exploration is justified only where readings remain viable, make grounded predictions,
