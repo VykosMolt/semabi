@@ -31,3 +31,13 @@ done
 #    --chain $M/opus_02_cellar_dev_source.json --reading "joint discrimination x2" \
 #    --split 0.5 --control "button:Move vessel" --button "Move vessel" \
 #    --base http://127.0.0.1:8911 --seed 91 --policy unestablished
+
+# The four mechanisms this run measured and rejected are keyword arguments on
+# `outcome.learn` -- structural, touched, about, simplest -- all off by default, so everything
+# above is the default configuration.  `docs/v4_admissibility.md` has the tables.
+#
+# The one combination that changes a result is cellar's `Move vessel` refitted after
+# acquisition with `touched=True`: the evidence then holds the application's own guard
+# (something chosen in the vessel list, nothing in the hall list) instead of a memorised key,
+# and its four held-out actions are honest refusals.  That needs the app running and a
+# functools.partial around outcome.learn; it is not a default and is not scripted here.

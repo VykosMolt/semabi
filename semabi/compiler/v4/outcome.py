@@ -139,6 +139,10 @@ class Role:
         return []
 
 
+def _bits(mask: int) -> int:
+    return bin(mask).count("1")
+
+
 @dataclass(frozen=True)
 class Vouch:
     """Why an event is admissible here: the occasions that vouch for it, and on what.
@@ -191,7 +195,13 @@ class Evidence:
     against 150 occasions a fraction of a second rather than a minute.
     """
 
-    def __init__(self, rows, refuse=None):
+    def __init__(self, rows, refuse=None, subjects=None):
+        self.subjects = subjects
+        # Kept so that occasions added later are filtered by the same rule.  They were not,
+        # and it mattered: an acquired occasion carried `id = B1` into the vocabulary, the
+        # identity constant every fitted occasion had had removed, and that literal then
+        # founded a corroborated rule for cellar's hall refusal.
+        self.refuse = refuse
         self.events: list[str] = []
         self.index: dict[tuple, int] = {}
         self.masks: list[int] = []
@@ -209,11 +219,35 @@ class Evidence:
             self.by_event.setdefault(event, []).append(len(self.events))
             self.events.append(event)
         self.of_bit = {b: lit for lit, b in self.index.items()}
+        # Which literals a rule for each event is allowed to be *about*.  `_best_rule` has had
+        # this restriction as an option since `docs/v4_outcomes.md` measured it on the list.
+        #
+        # It was added here on the reasoning that denying a literal can only remove hypotheses
+        # and is therefore conservative in a version space.  **That reasoning is wrong and the
+        # measurement says so.**  Confidence here is a property of the admissible *set*, and a
+        # set of one is the most confident answer there is, so removing a candidate can turn
+        # *several remain open* into *this outcome is forced*.  On blend it does exactly that:
+        # 57 several-open states fall to 41, forced claims rise from 98 to 109, and they are
+        # right 61 times against 66 before -- more decisive and less accurate.  Off by default;
+        # the negative is why it is kept.
+        self.about: dict[str, int] | None = None
+        if subjects is not None:
+            self.about = {}
+            for event in self.by_event:
+                allowed = subjects.get(event, frozenset())
+                mask = 0
+                for lit, bit in self.index.items():
+                    if _about(lit, allowed):
+                        mask |= 1 << bit
+                self.about[event] = mask
 
     def rows_for_refit(self):
         """The occasions as they were given, so that more can be added to them."""
         return [(set(self._condition(m)), e, frozenset())
                 for m, e in zip(self.masks, self.events)]
+
+    def _keep(self, event: str) -> int:
+        return -1 if self.about is None else self.about.get(event, -1)
 
     @classmethod
     def extend(cls, evidence: "Evidence", extra) -> "Evidence":
@@ -222,7 +256,9 @@ class Evidence:
         Rebuilding rather than mutating keeps the literal vocabulary a function of the whole
         evidence, so an acquired occasion cannot silently change what an earlier one meant.
         """
-        return cls(list(evidence.rows_for_refit()) + list(extra))
+        return cls(list(evidence.rows_for_refit()) + list(extra),
+                   refuse=getattr(evidence, "refuse", None),
+                   subjects=getattr(evidence, "subjects", None))
 
     def _mask(self, literals) -> int:
         mask = 0
@@ -255,7 +291,8 @@ class Evidence:
                 cond = smaller
         return cond
 
-    def admissible(self, literals, *, corroborated: bool = False) -> dict[str, Vouch]:
+    def admissible(self, literals, *, corroborated: bool = False,
+                   simplest: bool = False) -> dict[str, Vouch]:
         """Event -> the widest justified rule this state satisfies, or nothing.
 
         Empty means *not established*.  With ``corroborated`` the rule must additionally reach
@@ -269,20 +306,37 @@ class Evidence:
         out: dict[str, Vouch] = {}
         for event, idxs in self.by_event.items():
             other = [j for j in range(len(self.events)) if self.events[j] != event]
-            best = None
+            keep = self._keep(event)
+            best, mark = None, None
             for a in range(len(idxs)):
-                ma = here & self.masks[idxs[a]]
+                ma = here & self.masks[idxs[a]] & keep
                 for b in range(a + 1, len(idxs)):
                     cond = ma & self.masks[idxs[b]]
                     if any(cond & self.masks[j] == cond for j in other):
                         continue      # the condition reaches an occasion of another event
                     cond = self._generalise(cond, other)
                     covers = sum(1 for i in idxs if cond & self.masks[i] == cond)
-                    if best is None or covers > best.covers:
-                        best = Vouch(event, (idxs[a], idxs[b]), self._condition(cond), covers)
+                    # Which pure condition to vouch by, where several are pure.  By default the
+                    # widest, which is what the greedy learner also prefers.  Under `simplest`,
+                    # the one with fewest literals -- guards are short, so Occam should pick the
+                    # application's own condition over a coincidence.  **It does not.**  The
+                    # shortest separating condition in this language is an object's key, so the
+                    # preference selects memorisation; asking cellar for it returned `id = B1`.
+                    # Measured on every application and it changes nothing else, so: off, kept
+                    # for what it revealed.  See `docs/v4_admissibility.md`.
+                    if corroborated and simplest and covers <= 2:
+                        # Only corroborated candidates may compete, or preferring a short
+                        # condition could discard an event whose *longer* condition was
+                        # admissible -- refusing more, which would look like an improvement
+                        # and would not be one.
+                        continue
+                    score = ((-_bits(cond), covers) if simplest else (covers,))
+                    if best is None or score > mark:
+                        best, mark = Vouch(event, (idxs[a], idxs[b]),
+                                           self._condition(cond), covers), score
                     if not corroborated:
                         break
-                if best is not None and (not corroborated or best.covers > 2):
+                if best is not None and not simplest and (not corroborated or best.covers > 2):
                     break
             if best is not None and (not corroborated or best.covers > 2):
                 out[event] = replace(best, sole=len(self.by_event) < 2)
@@ -313,6 +367,12 @@ class ControlOutcome:
     # which events *any* justified hypothesis could assign here, and that question is about
     # the evidence rather than about the list the search happened to find.
     evidence: "Evidence | None" = None
+    # What each list this control sits with held the first time the model saw it, which is
+    # what it holds untouched.  The literal language compares against these; see `_literals`.
+    defaults: dict = field(default_factory=dict)
+    # Which of several pure conditions to vouch by: the widest, or the one with fewest
+    # literals.  See `Evidence.admissible`.
+    simplest: bool = False
     # What each event *durably did*, as the kinds and slots that changed.  An interaction is
     # one behaviour: a draw moves gallons and says so, a refusal changes nothing and says why.
     # Holding the delta on the branch is what stops the model claiming a transfer message with
@@ -376,7 +436,8 @@ class ControlOutcome:
         """
         if self.evidence is None:
             return {}
-        return self.evidence.admissible(literals, corroborated=corroborated)
+        return self.evidence.admissible(literals, corroborated=corroborated,
+                                        simplest=self.simplest)
 
     def delta(self, event: str) -> tuple[frozenset, str]:
         """The durable change this event implies, and how well the evidence pins it.
@@ -454,6 +515,85 @@ def _canon(op, var, queries, bound: set, depth: int = 0) -> Role | None:
     return None
 
 
+def _lists_with(obs, button_node) -> list[int]:
+    """The lists in the innermost group that holds this button, and only lists.
+
+    Containment rather than proximity: a form is a group, and the controls a button reads are
+    the ones inside it with it.  Nothing that is not a list can be returned, which is what
+    keeps the live region from re-entering the pre-state language by this route.
+    """
+    for anc in obs.ancestors(button_node):
+        boxes = [i for i in obs.subtree(anc)
+                 if obs.node(i).role == "combobox" and obs.node(i).options]
+        if boxes:
+            return boxes
+    return []
+
+
+def _type_named_by(state, options) -> Any:
+    """The type whose objects these options name, or None if it is not one type."""
+    hits: Counter = Counter()
+    for option in options:
+        for obj in state.objs.values():
+            if obj.key and option.startswith(str(obj.key)):
+                hits[obj.tid] += 1
+    if not hits:
+        return None
+    top = hits.most_common()
+    if len(top) > 1 and top[0][1] == top[1][1]:
+        return None
+    return top[0][0]
+
+
+def structural_roles(A, obs, state, button_node) -> dict[str, Role]:
+    """Selection roles read off the shape of the page rather than off operator positives.
+
+    `roles_of` derives a control's roles from the referring queries its operators learned, and
+    an operator learns a query only where it had positives to search with.  A sparse control
+    therefore has fewer *arguments* than it has, and cellar's `Move vessel` has exactly one --
+    the vessel -- against a hidden `move_vessel(?vessel, ?hall)`.  It cannot condition on the
+    hall, cannot report it as a parameter, and cannot steer an acquisition toward filling it.
+
+    The page says otherwise for free.  The button and its selects sit in one group, and that
+    containment is evidence about which controls feed this one that needs no positives at all.
+    A select is offered as a role when its options name the objects of exactly one type.
+
+    **This is off by default because it was measured and it is harmful.**  On blend it turns 50
+    of the 79 held-out states where nothing was established into forced claims, of which 18 are
+    right and 32 are wrong, and it drops the accuracy of the forced answer from 66/98 to 84/148.
+    Every added role adds literals, and purity over a longer literal list is easier to reach and
+    means less: a conjunction can separate the fitting occasions through a new expression that
+    has no bearing on the outcome.  Expressiveness bought without evidence manufactures
+    justification, which is the same failure as a two-occasion default in a different disguise.
+    Kept, off, because the negative is the result -- it was the obvious repair for the obstacle
+    named at the end of `docs/v4_admissibility.md` and it does not work.
+    """
+    po = A.parsed(obs)
+    out: dict[str, Role] = {}
+    for box in _lists_with(obs, button_node):
+        slot = po.node_key.get(box)
+        tid = _type_named_by(state, obs.node(box).options or ())
+        if not slot or tid is None:
+            continue
+        role = Role(f"{referring.SELECTION}{[slot]}:{tid}", referring.SELECTION, (slot,), tid)
+        out[role.name] = role
+    return out
+
+
+def structural_selects(A, obs, button_node) -> tuple[str, ...]:
+    """The view slots of the selects that sit with this button, named or not.
+
+    `structural_roles` can only offer a select whose options name objects the state models.
+    Cellar's hall list names none: halls are rendered as headings over prose, the entity
+    induction makes objects out of table rows, and so the state has vessels and no halls at
+    all.  The hall is therefore unavailable as a *referent* -- but the fact that the list has
+    been touched is still an observable pre-state fact, and it is the one the application
+    actually checks before it reads the list.  This returns the slots for that purpose.
+    """
+    po = A.parsed(obs)
+    return tuple(k for k in (po.node_key.get(b) for b in _lists_with(obs, button_node)) if k)
+
+
 def roles_of(inducer, operators) -> dict[str, Role]:
     out: dict[str, Role] = {}
     for op in operators:
@@ -484,13 +624,14 @@ def bind_language(inducer) -> None:
 def _pending_literals(model, state, bound, status) -> set:
     if _INDUCER is None:
         raise RuntimeError("call outcome.bind_language(inducer) before asking a model")
-    return _literals(_INDUCER, state, bound, status)
+    return _literals(_INDUCER, state, bound, status, model.defaults)
 
 
-def _literals(inducer, state, binding: dict, status: dict) -> set:
+def _literals(inducer, state, binding: dict, status: dict, defaults: dict | None = None) -> set:
     """The inducer's own literal language, over role names instead of operator parameters.
 
-    Plus one family it does not have: whether each role names anything here at all.
+    Plus two families it does not have: whether each role names anything here at all, and
+    whether each list this control sits with has been chosen into.
     """
     from semabi.compiler.induce import Transition
 
@@ -499,6 +640,16 @@ def _literals(inducer, state, binding: dict, status: dict) -> set:
     lits = inducer._literals(None, fake)
     for role, how in status.items():
         lits.add((how, role))
+    view = getattr(state, "view", None) or {}
+    for slot, initial in (defaults or {}).items():
+        # Whether this list has been touched since the run began.  Not "is it empty": that
+        # would need a placeholder convention the interface never states.  The value it holds
+        # in the earliest observation is what it holds when nothing has chosen into it, and
+        # every guard that reads a list checks exactly that.  Pre-state only, and an input
+        # widget rather than the live region, so it is not the status line by another route.
+        here = view.get(slot)
+        if isinstance(here, str):
+            lits.add(("untouched" if here == initial else "chosen into", slot))
     return lits
 
 
@@ -646,17 +797,20 @@ def _about(lit: tuple, allowed: frozenset) -> bool:
 
 
 def learn_control(inducer, control: str, occasions, roles: dict[str, Role], *,
-                  subject_restricted: bool = False) -> ControlOutcome:
+                  subject_restricted: bool = False, defaults: dict | None = None,
+                  about: bool = False, simplest: bool = False) -> ControlOutcome:
     """``occasions`` is a list of (abstract pre-state, owner object or None, frame, args)."""
+    defaults = defaults or {}
     probe = ControlOutcome(control, roles)
     bindings = [probe.bind(state, owner)[0] for state, owner, _frame, _args in occasions]
-    out = ControlOutcome(control, align(roles, occasions, bindings))
+    out = ControlOutcome(control, align(roles, occasions, bindings), defaults=defaults,
+                         simplest=simplest)
     rows: list[tuple[set, str, frozenset]] = []
     seen: dict[str, int] = {}
     for state, owner, event, _args in occasions:
         seen[event] = seen.get(event, 0) + 1
         bound, status = out.bind(state, owner)
-        rows.append((_literals(inducer, state, bound, status), event,
+        rows.append((_literals(inducer, state, bound, status, defaults), event,
                      frozenset(bound) | {OWNER}))
     out.fitted = len(rows)
     out.events = dict(sorted(seen.items(), key=lambda kv: -kv[1]))
@@ -689,15 +843,14 @@ def learn_control(inducer, control: str, occasions, roles: dict[str, Role], *,
         ti = inducer.A.types.get(roles[lit[1]].tid)
         return ti is not None and lit[2] == ti.key_slot
 
-    subjects = None
-    if subject_restricted:
-        # The roles each event actually names, from the same alignment the arguments come from.
-        subjects = {frame: frozenset(p.values()) for frame, p in out.arg_roles.items()}
-        for frame in out.events:
-            subjects.setdefault(frame, frozenset())
+    # The roles each event actually names, from the same alignment the arguments come from.
+    named = {frame: frozenset(p.values()) for frame, p in out.arg_roles.items()}
+    for frame in out.events:
+        named.setdefault(frame, frozenset())
+    subjects = named if subject_restricted else None
     # The evidence itself, kept beside the list the search returns.  Building it here rather
     # than inside the loop means it holds every occasion, not the residual.
-    out.evidence = Evidence(rows, refuse)
+    out.evidence = Evidence(rows, refuse, named if about else None)
     remaining = list(rows)
     while remaining:
         rule = _best_rule(remaining, refuse, subjects)
@@ -717,8 +870,9 @@ def learn_control(inducer, control: str, occasions, roles: dict[str, Role], *,
     return out
 
 
-def learn(inducer, *, permute: int | None = None,
-          subject_restricted: bool = False) -> dict[str, ControlOutcome]:
+def learn(inducer, *, permute: int | None = None, subject_restricted: bool = False,
+          structural: bool = False, touched: bool = False,
+          about: bool = False, simplest: bool = False) -> dict[str, ControlOutcome]:
     """One outcome model per control, from the clicks the fitting evidence contains.
 
     ``permute`` shuffles the events among a control's occasions before learning: the control
@@ -749,8 +903,33 @@ def learn(inducer, *, permute: int | None = None,
         by_control.setdefault(control, []).append((tr, s, obs, event))
 
     out: dict[str, ControlOutcome] = {}
+    # What each list holds the first time this model sees it.  Not the first state of the
+    # run: cellar keeps its move form on a page the landing view does not show, so the slot
+    # does not exist yet there.  The earliest state in the frozen prefix that *has* the slot
+    # is where it stands untouched, and the prefix is the evidence this model is allowed.
+    first_view: dict = {}
+    for tr in sorted((t for t in list(inducer.transitions) + list(inducer.noops) if t.steps),
+                     key=lambda t: t.steps[0]):
+        for slot, value in (getattr(tr.before, "view", None) or {}).items():
+            first_view.setdefault(slot, value)
+
     for control, rows in by_control.items():
         roles = roles_of(inducer, ops_by_control.get(control, []))
+        defaults: dict = {}
+        if rows and (structural or touched):
+            _tr, _s, _obs, _e = rows[0]
+            if _s.action.target is not None:
+                if structural:
+                    # The queries win where both find the same expression -- they are
+                    # identical by construction -- and the page supplies the arguments no
+                    # operator had the positives to look for.
+                    roles = {**structural_roles(A, _obs, A.abstract(_obs), _s.action.target),
+                             **roles}
+                if touched:
+                    for slot in structural_selects(A, _obs, _s.action.target):
+                        initial = first_view.get(slot)
+                        if isinstance(initial, str):
+                            defaults[slot] = initial
         if all(event is None for _, _, _, event in rows):
             # Nothing this control did ever moved the live region.  With enough occasions that
             # is a prediction a held-out step can refute -- it returns nothing.  With one or
@@ -758,7 +937,8 @@ def learn(inducer, *, permute: int | None = None,
             # is where that shows: eleven of its eighteen "returns nothing" answers were wrong,
             # every one of them from a control seen once or twice before the cut.
             silent = SILENT if len(rows) >= MIN_COVER else UNDETERMINED
-            model = ControlOutcome(control, roles, [], silent, 0, {silent: len(rows)})
+            model = ControlOutcome(control, roles, [], silent, 0, {silent: len(rows)},
+                                   defaults=defaults, simplest=simplest)
             # Returning nothing is an outcome, so the evidence for it is the occasions
             # themselves.  Only where the live region never moved on *any* of them: for a
             # control that sometimes speaks, an unchanged region is missing data rather than
@@ -766,8 +946,8 @@ def learn(inducer, *, permute: int | None = None,
             silent_rows = []
             for tr, s_, obs_, _event in rows:
                 bound, status = model.bind(tr.before, _owner(A, obs_, s_))
-                silent_rows.append((_literals(inducer, tr.before, bound, status), SILENT,
-                                    frozenset(bound) | {OWNER}))
+                silent_rows.append((_literals(inducer, tr.before, bound, status, defaults),
+                                    SILENT, frozenset(bound) | {OWNER}))
             model.evidence = Evidence(silent_rows)
             model.fitted = len(silent_rows)
             out[control] = model
@@ -788,7 +968,8 @@ def learn(inducer, *, permute: int | None = None,
             occasions = [(st, ow, ev, ar) for (st, ow, _e, _a), (ev, ar)
                          in zip(occasions, shuffled)]
         model = learn_control(inducer, control, occasions, roles,
-                              subject_restricted=subject_restricted)
+                              subject_restricted=subject_restricted, defaults=defaults,
+                              about=about, simplest=simplest)
         model.deltas = deltas
         out[control] = model
     return out
@@ -916,7 +1097,7 @@ def score_step(model, step, *, with_arguments: bool = True) -> dict:
     state = A.abstract(pre)
     owner = _owner_object(A, A.parsed(pre), state, step.action.target)
     bound, status = got.bind(state, owner)
-    predicted = got.predict(_literals(model.inducer, state, bound, status))
+    predicted = got.predict(_literals(model.inducer, state, bound, status, got.defaults))
     out["predicted"] = predicted
     out["observed"] = None if observed is None else observed.frame
     out["returned"] = after_text
@@ -969,7 +1150,7 @@ def score_step_admissible(model, step, *, corroborated: bool = False) -> dict:
     state = A.abstract(pre)
     owner = _owner_object(A, A.parsed(pre), state, step.action.target)
     bound, status = got.bind(state, owner)
-    options = got.admissible(_literals(model.inducer, state, bound, status),
+    options = got.admissible(_literals(model.inducer, state, bound, status, got.defaults),
                              corroborated=corroborated)
     out["admissible"] = sorted(options)
     out["observed"] = None if observed is None else observed.frame
@@ -1025,6 +1206,10 @@ def digest(models: dict) -> str:
                          "default": got.default, "fitted": got.fitted,
                          "events": got.events,
                          "roles": sorted(got.roles),
+                         # What each list held the first time this model saw it.  Read from
+                         # the frozen prefix, so refitting after deleting the future must
+                         # reproduce it.
+                         "defaults": dict(sorted(got.defaults.items())),
                          "arguments": {f: dict(sorted(p.items()))
                                        for f, p in sorted(got.arg_roles.items())},
                          # The occasions themselves, and the delta each event carries.  The

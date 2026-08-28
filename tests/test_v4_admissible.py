@@ -161,3 +161,125 @@ def test_the_abi_call_answers_with_a_whole_interaction():
     novel = SimpleNamespace(objs={(1, "v"): Obj(1, "v", {"g": "sealed"})}, view={})
     assert got.answer(novel, None).status == oc.NOTHING_ESTABLISHED
     assert "not established" in str(got.answer(novel, None))
+
+
+# The language a sparse control has, as against the language its application uses.  Cellar's
+# `Move vessel` could express exactly one literal -- whether the vessel list names a vessel --
+# against a form with two lists, and the rule it could not express had twice the support of the
+# rule it could.  These pin the two things that were done about it.
+
+class _Node:
+    def __init__(self, role, options=None):
+        self.role, self.options, self.name = role, options, ""
+
+
+class _Obs:
+    """A group holding two lists and the button they feed, and an unrelated list outside it."""
+    def __init__(self):
+        self._n = {0: _Node("group"), 1: _Node("combobox", ["(none chosen)", "T1 - tank"]),
+                   2: _Node("combobox", ["(none chosen)", "Press Hall - 20 C"]),
+                   3: _Node("button"), 4: _Node("combobox", ["(none chosen)", "elsewhere"]),
+                   5: _Node("status")}
+
+    def node(self, i):
+        return self._n[i]
+
+    def ancestors(self, i):
+        return [0] if i in (1, 2, 3) else []
+
+    def subtree(self, i):
+        return [1, 2, 3] if i == 0 else [i]
+
+
+class _A:
+    def parsed(self, obs):
+        return type("P", (), {"node_key": {1: "combobox#0", 2: "combobox#1", 4: "combobox#2",
+                                           5: "status#0"}})()
+
+
+def test_the_selects_a_button_sits_with_are_found_and_nothing_else_is():
+    """Containment, not proximity in the tree order: the list outside the group is not this
+    control's, and no node that is not a list can be picked up at all -- which is what keeps
+    the live region from re-entering as an ordinary pre-state feature."""
+    assert oc.structural_selects(_A(), _Obs(), 3) == ("combobox#0", "combobox#1")
+
+
+def test_a_list_naming_no_modelled_object_yields_no_role():
+    """The hall case.  Cellar's state has vessels and page sections and no halls, so the hall
+    list denotes nothing and must not be offered as a referring expression -- while remaining
+    available as a fact about the interface."""
+    state = type("S", (), {"objs": {"a": type("O", (), {"key": "T1", "tid": 2})(),
+                                    "b": type("O", (), {"key": "T2", "tid": 2})()}})()
+    assert oc._type_named_by(state, ["(none chosen)", "T1 - tank", "T2 - tank"]) == 2
+    assert oc._type_named_by(state, ["(none chosen)", "Press Hall - 20 C"]) is None
+
+
+def test_touched_lists_enter_the_language_without_a_placeholder_convention():
+    """`(none chosen)` is never written down anywhere.  What the list holds the first time the
+    model sees it is what it holds untouched, and the literal is the comparison."""
+    class FakeInducer:
+        def _literals(self, _op, _tr):
+            return set()
+
+    state = type("S", (), {"view": {"combobox#0": "(none chosen)", "combobox#1": "Press Hall"}})()
+    got = oc._literals(FakeInducer(), state, {}, {},
+                       {"combobox#0": "(none chosen)", "combobox#1": "(none chosen)"})
+    assert ("untouched", "combobox#0") in got
+    assert ("chosen into", "combobox#1") in got
+
+
+def test_a_vouch_can_be_required_to_be_about_what_the_event_names():
+    """The restriction `docs/v4_outcomes.md` measured on the decision list, applied to the
+    version space instead.
+
+    Cellar is why it exists.  After acquisition the evidence justified `Nothing chosen in the
+    hall list .` -- and did it through a conjunction over the *vessel's* attributes, which the
+    message does not mention, so the rule fired at a held-out state where the hall list had
+    been chosen into and was wrong.  This pins that the restriction does what it says: a
+    literal about an object the event does not name cannot carry it.
+
+    It is off by default, because doing what it says makes the model worse.  Removing a
+    candidate can collapse *several remain open* into *forced*, which is the most confident
+    answer available; blend's forced claims rise from 98 to 109 and their accuracy falls.
+    """
+    SRC = "selection['c#0']:1"
+    def rows_(*specs):
+        return [({("attr", SRC, "kind", k)} | ({("untouched", "c#1")} if u else set()), ev,
+                 frozenset()) for k, u, ev in specs]
+    spec = [("barrel", True, "refused"), ("barrel", True, "refused"),
+            ("barrel", True, "refused"), ("tank", False, "moved"), ("tank", False, "moved"),
+            ("tank", False, "moved")]
+    here = {("attr", SRC, "kind", "barrel")}          # a barrel, and the list *was* chosen into
+
+    loose = oc.Evidence(rows_(*spec))
+    assert list(loose.admissible(here, corroborated=True)) == ["refused"]
+
+    # `refused` names nothing, so nothing about the vessel may carry it; `moved` names the
+    # vessel, so a condition about the vessel remains available to it.
+    strict = oc.Evidence(rows_(*spec), subjects={"refused": frozenset(), "moved": frozenset([SRC])})
+    assert strict.admissible(here, corroborated=True) == {}
+    assert list(strict.admissible({("attr", SRC, "kind", "tank")}, corroborated=True)) == ["moved"]
+
+
+def test_occasions_acquired_later_are_refused_the_same_literals_as_the_fitted_ones():
+    """`Evidence` drops the literals no rule may use -- identity constants above all -- and
+    `extend` rebuilt the evidence without carrying that rule to the new rows.
+
+    It is not hypothetical.  Cellar's acquisition brought in `id = B1`, the vessel's own key,
+    which every fitted occasion had had removed; the version space then founded a corroborated
+    rule for `Nothing chosen in the hall list .` on it, and fired that rule at a held-out state
+    where the hall list had been chosen into.  A memorised constant, arriving by the one route
+    that did not check.
+    """
+    def no_ids(lit):
+        return lit[2] == "id"
+
+    base = oc.Evidence(rows(({"g": "open"}, "drew"), ({"g": "open"}, "drew"),
+                            ({"g": "shut"}, "refused"), ({"g": "shut"}, "refused")),
+                       refuse=no_ids)
+    extra = [({("attr", "r", "id", "B1"), ("attr", "r", "g", "shut")}, "refused", frozenset())
+             for _ in range(3)]
+    grown = oc.Evidence.extend(base, extra)
+    assert ("attr", "r", "id", "B1") not in grown.index
+    for vouch in grown.admissible(lits(g="shut", id="B1"), corroborated=True).values():
+        assert all(lit[2] != "id" for lit in vouch.condition)

@@ -10,10 +10,15 @@ because this project has repeatedly found support thresholds to confuse evidence
 semantic justification.
 
 This is the record of replacing the point hypothesis with the question it was standing in for,
-of what that question answers on four applications, and of the three things it exposed: an
-independence bug between the outcome layer and the effect layer, a falsification of "sparse
-controls need lifting", and the first acquisition in this project that was actually executed
-against a running application rather than simulated.
+of what that question answers on four applications, and of what it exposed: an independence bug
+between the outcome layer and the effect layer, a falsification of "sparse controls need
+lifting", the first acquisition in this project actually executed against a running application
+rather than simulated, four repairs for the remaining sparse controls that were built, measured
+on every application, and falsified, and one defect they uncovered whose repair does work.
+
+The claim-width defect is not fixed here.  It is measured, given a criterion that owes nothing
+to a support constant, bounded on four applications, and the obvious repairs are eliminated --
+which leaves a sharper problem than the one this run started with, stated at the end.
 
 ## The question, and why it has an exact answer
 
@@ -209,9 +214,329 @@ before pooling:
 | `Blend` | 1 | 2 | 0/3 | 0/3 |
 | `Split` | 1 | 2 | 0/3 | 0/3 |
 
-More occasions do not help because cellar's held-out states are not near any of its fitting
-states under the literal language.  That is a coverage problem, and coverage is fixed by going
-somewhere new rather than by re-reading what is already held.
+More occasions do not help.  The first reading of that was coverage -- held-out states not
+near any fitting state under the literal language -- and it is wrong.  The next section is what
+is actually the matter.
+
+## What the language can say about a sparse control
+
+There is almost nothing for cellar's held-out states to be far *in*.  At a live pre-state of
+its move form, the entire literal set `Move vessel` can express is one literal:
+
+    {('unnamed', "selection['combobox#0']:2")}
+
+One bit.  Two conditions exist in that language -- the vessel list names a vessel, or it does
+not -- and the move form has two lists.
+
+Here are all nine recorded occasions of the control, from both sides of the cut, cross-tabulated
+against the two lists and what came back.  This is a diagnostic of what is expressible, not a
+prediction result, which is why it reads the whole trace:
+
+| vessel list | hall list | what the interface returned | n |
+|---|---|---|---|
+| names a vessel | untouched | `Nothing chosen in the hall list .` | 4 |
+| names a vessel | chosen into | `<> moved from <> to <> .` | 1 |
+| names a vessel | chosen into | `<> already stands in <> .` | 1 |
+| names a vessel | chosen into | `<> is a full <> and cannot be shifted .` | 1 |
+| names nothing | chosen into | `Nothing chosen in the vessel list .` | 1 |
+| names nothing | untouched | `Nothing chosen in the vessel list .` | 1 |
+
+The application checks the vessel first and the hall second, and there are two pure rules in the
+table.  `names nothing -> Nothing chosen in the vessel list .` holds on 2 occasions and is
+expressible: it is exactly the one literal the control has.  `names a vessel and the hall list
+is untouched -> Nothing chosen in the hall list .` holds on **4** occasions -- twice as many --
+and is not expressible at all, because nothing in the language mentions the second list.
+
+This is the run's sharpest evidence against reading a sparse control as a data problem.  The
+better-supported rule is the unlearnable one.  Support and learnability are not the same axis
+here, and further occasions of the hall refusal would not make it learnable: they all land in
+the single literal cell `names a vessel`, beside the moves, where the language cannot tell them
+apart.  It is also half of why acquisition appeared to make this control *worse*; the other half is a
+leak, and the sections below have both.
+
+### Why the hall is not in the language
+
+Not because the query search failed.  Because the state has no halls in it.  Cellar's abstract
+state at that page holds objects of two types: `{Cellar, Lots}`, which are its page sections,
+and `{T1, T2, B1, B2}`, its vessels.  The hall list offers `Ferment Shed - 22 C - room for 3`
+and no object's key is a prefix of that, so a selection query over it denotes nothing and is
+correctly not proposed.  The hidden operator is `move_vessel(?vessel, ?hall)` and its second
+argument has no referent anywhere in the ontology.
+
+Entity induction makes objects out of the rows of recurring tables.  Cellar renders vessels as
+table rows and halls as a heading over a line of prose -- *Ferment Shed* / *Temperature 22 C.
+Room for 3 vessels; 2 standing here.* -- so the halls survive only as a suffix inside each
+vessel's rendered string.  Every layer above inherits that blindness: no query, no role, no
+literal, no argument position, and no way for an acquisition driver to be pointed at a hall.
+
+### Grounding an argument from the shape of the page, and why it is worse
+
+The obvious repair, and the one the previous version of this document proposed as the next
+thing to build, is to stop asking the operator layer for arguments and read them off the
+interface: the lists a button sits with in a group are the lists it reads, whatever the query
+search managed to find.  `outcome.structural_roles` does that.  It is **implemented, measured,
+and off by default, because it makes the model worse.**
+
+Blend, held-out actions, with and without it:
+
+| | the evidence forces one | of those, right | of those, wrong | establishes nothing |
+|---|---|---|---|---|
+| as fitted | 98 | 66 | 32 | 79 |
+| + roles from page containment | 148 | 84 | 64 | 29 |
+
+Fifty refusals become confident claims.  Eighteen of them are right and **thirty-two are
+wrong**, and the accuracy of the forced answer falls from 67% to 57%.  Harbour does not move
+(22 forced, 20 right, either way) because its controls act on table rows rather than on forms.
+
+And cellar does not move either -- 0 forced, 3 vacuously unanimous, 29 establishing nothing,
+with the mechanism and without it.  That is the whole verdict in one line: the repair aimed at
+cellar does nothing for cellar and turns thirty-two of blend's honest refusals into
+confident errors.  It finds the hall
+list and offers it as a role, and a role over a list whose options denote no object binds to
+nothing, so nothing downstream changes.  The ontology is upstream of grounding.
+
+The reason is worth stating plainly, because it is the same failure this whole document is
+about wearing a different coat.  Every added role adds literals.  A longer literal list makes
+purity *easier* to reach: some conjunction over the new expressions separates the fitting
+occasions, the version space accepts it as justification, and it has no bearing on the outcome.
+The two-occasion default overreached because a rule fitted to almost nothing was applied
+everywhere; this overreaches because a rule fitted to a coincidence in a richer language is
+applied confidently.  **Expressiveness bought without evidence manufactures justification.**
+
+So the fix is not "give the model more ways to refer to things".  It is to add the *particular*
+fact the application's own message cites -- and the next section is the one case where that
+could be done without the ontology.
+
+### The one literal that can be added without the ontology
+
+A guard that reads a list checks whether anything was chosen into it.  That is a fact about the
+interface, not about the domain, so it does not need halls to be objects.  What it does need is
+a notion of "nothing chosen" that is not a hard-coded string: `(none chosen)` is a convention of
+these four applications and writing it down would be exactly the sort of borrowed knowledge this
+project refuses.
+
+`_literals` takes it from the trace instead.  What a list holds the first time the model sees it
+is what it holds untouched, so the literal is `untouched` / `chosen into` -- a comparison against
+the earliest state in the frozen prefix that has the slot, added only for the lists that sit in
+the button's own group.  No placeholder convention, no domain types, no threshold, and nothing
+but comboboxes can enter this way, which is what keeps the live region from returning as an
+ordinary pre-state feature by a side door.
+
+It does what it was meant to.  Given the nine occasions of the table above -- again a diagnostic
+of expressiveness, not a held-out result -- the two languages answer differently:
+
+| asked at | the language it has | with `untouched` / `chosen into` |
+|---|---|---|
+| vessel named, hall untouched | nothing established | forces `Nothing chosen in the hall list .`, 4 occasions |
+| vessel named, hall chosen into | nothing established | nothing established |
+| vessel unnamed | nothing established | nothing established |
+
+The first row is the guard the application actually applies, justified from occasions that were
+already in hand.  The second and third are the refusals that should survive: the three move
+outcomes have one occasion each, and the vessel refusal has exactly its two witnesses and so is
+refused by corroboration as memorisation.  Adding the literal did not make the model credulous.
+
+What it does not do is rescue the control.  On the applications that have a live region, held
+out:
+
+| | blend | harbour | cellar |
+|---|---|---|---|
+| forced, right / wrong -- as fitted | 66 / 32 | 20 / 2 | 0 / 0 |
+| forced, right / wrong -- with the literal | 65 / 33 | 20 / 2 | 0 / 0 |
+| establishes nothing -- as fitted | 79 | 62 | 29 |
+| establishes nothing -- with the literal | 75 | 62 | 29 |
+
+(The clinic has no live region and so no outcome to establish, as above.)
+
+Blend moves four states out of flat refusal into *several admissible* -- and the list's
+preference among them is correct in all four -- at the cost of one forced claim flipping from
+right to wrong.  Harbour and cellar do not move at all.  That is a wash, so it ships **off**,
+like the other mechanism this run added: what argues for it is that it makes an application's
+own guard sayable, and that is an argument about what the language should contain rather than
+a held-out result, so it does not get to be the default.  Every number elsewhere in this
+document is the default configuration.
+
+Driving the live application with it changes nothing either: the same seed, budget and driver
+acquire the same observations, and cellar's four held-out `Move vessel` actions end where they
+began -- three establishing nothing and one confident error.  Inspecting *why* is the last thing
+this run found, and it is not the reason one would guess.
+
+The refit does hold a justified rule for the hall refusal.  All five of its occasions -- one
+from the prefix, four acquired -- are vouched for it under corroboration.  But the rule fires at
+one of the four held-out states, and at that state the hall list **had** been chosen into.  So
+the condition the version space vouched by is not the guard.  With ten occasions and seventeen
+literals, the vessel's own attributes separate those five occasions perfectly well -- the
+acquired ones happen to involve one barrel, `id = B1` -- and such a conjunction is pure, minimal
+after generalisation, and corroborated.  It is a coincidence with a corroboration count.
+
+**Adding the right literal to the language does not make the learner choose it.**  Purity is
+satisfied by the guard and by the coincidence alike, `_generalise` returns *a* minimal pure
+condition rather than *the* one the application applies, and where the two disagree -- which is
+exactly the held-out state -- the coincidence wins.  This is the same shape of failure as the
+structural-roles result, arriving from the other direction: there, extra literals made spurious
+purity easy; here, one *correct* literal is added and loses the tie-break to spurious purity
+that was already available.  The version space is sound about *whether* something is justified
+and has no preference at all about *by what*.
+
+### Making it prefer the guard, and why that is worse too
+
+There is a preference available and the repository already had it.  `docs/v4_outcomes.md`
+measured a restriction on the decision list -- a guard may only be about an object the event
+names, since *Festival White is already bottled* names the destination and a condition on the
+source is the learner citing a fact the application did not.  It is exactly the discipline the
+cellar coincidence violates: `Nothing chosen in the hall list .` names no object at all, so
+nothing about the vessel should be able to carry it.
+
+Applied to the version space (`outcome.learn(about=True)`), on blend:
+
+| | forces one | right | wrong | several open | establishes nothing |
+|---|---|---|---|---|---|
+| unrestricted | 98 | 66 | 32 | 57 | 79 |
+| only about what the event names | 109 | 61 | **48** | 41 | 84 |
+
+It was added on the reasoning that denying a literal can only remove hypotheses, and is
+therefore conservative in a version space in a way it is not in a greedy list.  **That
+reasoning is wrong, and this is the most useful thing in the section.**  Confidence here is a
+property of the admissible *set*, and a set of one is the most confident answer the model can
+give.  Removing a candidate hypothesis does not make the model quieter; it can turn *several
+outcomes remain admissible* into *this outcome is forced*.  Sixteen of blend's several-open
+states collapse that way, the survivor is wrong more often than not, and the model ends more
+decisive and less accurate.
+
+Harbour and cellar are bit-identical under it -- harbour 22 forced and 20 right, cellar 0 forced
+and 29 establishing nothing, either way -- and that is the same fact from the other side:
+neither has a single several-open state, so there is nothing for the restriction to collapse.
+Where the model is already sure or already silent, a restriction on what its rules may cite
+changes nothing; where it holds open sets, the restriction spends them.  Note also what this
+means for cellar, the control the whole exercise was aimed at: the restriction that would have
+excluded its coincidence changes nothing about it at the cut, because the coincidence only
+appears in the *refit after acquisition*, which is not what the held-out table measures.
+
+Restricting a version space is not the same operation as restricting a search, and "fewer
+hypotheses" is not "less claimed".  Off by default, kept for the negative.
+
+### A preference among pure conditions, and the artefact that looked like one
+
+That is a well-posed request, and it has an obvious candidate: prefer the pure condition with
+the **fewest literals**.  Guards are short.  A conjunction over five of a vessel's attributes is
+not what an application checks, and `the hall list is untouched` is.  It is Occam, it needs no
+threshold and no domain knowledge, and `outcome.learn(simplest=True)` implements it.
+
+The first measurement was spectacular.  Blend's forced claims rose from 98 to 116 while the
+wrong ones *fell* from 32 to 30; honest refusals rose from 79 to 92; forced accuracy went from
+67% to 74%.  Better on every axis at once, which should have been the tell.
+
+It was an artefact, and its shape is the most portable thing in this section.  The pair search
+stops at the first corroborated candidate; ranking candidates means scanning them all, and the
+shortest pure condition for an event is often one that covers *only its own two witnesses* --
+at which point it fails the corroboration check at the end and the event is dropped, **even
+though a longer, corroborated condition for it existed**.  The preference was not choosing
+better explanations.  It was silently discarding candidates.  And discarding candidates makes a
+version space more decisive and more silent at the same time -- a set of two becomes a set of
+one, a set of one becomes empty -- which is exactly the pattern those numbers showed, and
+exactly what the subject restriction did one section earlier by a different route.
+
+With the guard corrected, so that only corroborated candidates compete, the preference changes
+**nothing at all**.  Blend is 98 forced, 66 right, 32 wrong, 57 several and 79 establishing
+nothing, with the preference and without it.  `_generalise` already returns a minimal pure
+condition for each witness pair, and among the candidates that survive corroboration the
+shortest and the widest pick out the same admissible sets.
+
+So the preference this document named as the missing piece is, in this form, not it.  It did,
+however, find something else by pointing at the condition it chose.
+
+### What the shortest condition turned out to be
+
+Asked for the fewest-literal pure condition behind cellar's confident error, the version space
+answers:
+
+    ('attr', "selection['combobox#0']:2", 'id', 'B1')     covering 3
+
+The vessel's **key**.  One literal, minimal, pure, corroborated -- and pure memorisation of
+which barrel was involved, which is the one thing this compiler refuses everywhere else.  It is
+also the reason Occam is the wrong prior in this language: an identity constant is the shortest
+separating condition there can be, so a simplicity preference does not select guards, it selects
+keys.
+
+Worse, that literal should not have been available at all.  `Evidence` drops the literals no
+rule may use, identity constants first, and `Evidence.extend` -- the path acquisition takes --
+rebuilt the evidence **without carrying the refusal to the new rows**.  Every fitted occasion of
+`Move vessel` had `id` removed; the acquired ones did not, so a memorised constant entered by
+the single route that did not check, and then founded the rule that fired wrongly.  Fixed, and
+pinned by `tests/test_v4_admissible.py`, which fails without it.
+
+That is a defect in the acquisition path rather than in the version space, and it sharpens the
+earlier claim about acquisition rather than replacing it: an observation the language cannot
+condition on gets explained by whatever else is lying around -- and acquisition was also
+*widening* the language it would be explained in.
+
+**Closing it is the one repair in this run that worked.**  Driven again at seed 91, same driver
+and same budget, in the default configuration, cellar's four held-out `Move vessel` actions come
+back **nothing established, all four** -- the confident error is gone and the regenerated
+`docs/data/v4/acquire_opus_02_cellar_dev_unestablished.json` is that run.
+
+Turn `touched` on as well and the evidence additionally holds the right rule.  It vouches for
+the hall refusal by
+
+    ('chosen into', 'combobox#0') and ('untouched', 'combobox#1')     covering 5
+
+which *is* the application's guard in the application's own terms: something was chosen in the
+vessel list and nothing in the hall list.  The held-out actions are unchanged -- none of the
+four is in its scope -- so this does not show up as a score.  The two repairs do different
+things and it is worth keeping them apart: closing the leak removed a wrong claim, and
+`touched` gave the model a right one it has not yet had occasion to use.
+
+What the exercise produced besides is a rule for looking for a preference:
+
+> **Any change that removes hypotheses from a version space will improve a decisiveness metric.**
+> Forcing is a property of set size, so a mechanism that quietly drops candidates buys confident
+> answers and honest-looking refusals in the same motion.  Before believing that a preference
+> helped, check that it did not simply delete something.
+
+Two mechanisms in this run were caught by that rule -- the subject restriction, which fails it
+openly, and the first cut of the simplicity preference, which failed it invisibly and would have
+been reported as a large improvement.  Nothing in the suite pins that rule: a synthetic
+regression test for it was written and then dropped, because it passed with the guard removed
+and so pinned nothing, and a test that cannot fail on the bug it names is worse than none.  The
+guard itself is three lines in `Evidence.admissible` and is commented with why.
+
+### The four repairs together
+
+Four ways of making the model know more were implemented and measured against every application
+that has a live region.  All four are in the tree, all four default to off, and the negative is
+what each is kept for.
+
+| | what it adds | blend, forced right/wrong | verdict |
+|---|---|---|---|
+| `structural=True` | the lists a button sits with, as roles | 66/32 -> 84/64 | more literals, easier spurious purity |
+| `touched=True` | whether each such list has been chosen into | 66/32 -> 65/33 | a wash; makes a real guard sayable |
+| `about=True` | a rule may only be about what the event names | 66/32 -> 61/48 | fewer hypotheses, *more* forcing |
+| `simplest=True` | vouch by the shortest pure condition, not the widest | 66/32 -> 66/32 | no effect once it may not discard |
+
+Harbour and cellar do not move under any of the four, at the cut.  What did move cellar was none
+of them: closing the identity-constant leak in `Evidence.extend` turned its post-acquisition
+confident error back into an honest refusal, and `touched` on top of that gives the evidence the
+application's own guard to hold.
+
+Read together they say one thing.  The width of a claim is not controlled by how much the model
+can express, in any direction.  Giving the language more (`structural`) manufactures
+justification.  Giving it exactly the missing piece (`touched`) does not make the learner prefer
+it.  Taking candidates away (`about`) makes the model more confident rather than less, because
+in a version space confidence is the *smallness of the admissible set*.  And ranking the
+candidates that remain (`simplest`) does nothing, because generalisation had already made the
+survivors equivalent -- while an earlier, broken version of the same ranking looked like a large
+improvement precisely because it was deleting candidates.
+
+That is the honest state of the claim-width problem: measured, bounded, four obvious repairs
+falsified, and not solved.  It is a better-posed problem than it was at the start of the run --
+the criterion is exact and threshold-free, the failure is localised to the choice among pure
+conditions, and there is now a rule for recognising a fake fix -- but it is not a solved one.
+
+The one thing that did make a model better was not a repair to the criterion at all.  It was
+finding, by asking the criterion which condition it had used, that a memorised constant had
+entered the evidence through the acquisition path.  That is worth generalising: **asking the
+model what it justified its answer by is a better diagnostic than any aggregate over whether it
+was right**, and it is available only because the answer carries its condition.
 
 ## Acquisition, executed rather than simulated
 
@@ -284,28 +609,57 @@ three views, so an exploratory click can navigate away from the control being st
 that stops when its button is absent ended a 200-step budget after two states.  With both
 repaired the honest cellar figure is above.
 
-With the role-directed driver -- the one that fixed blend -- cellar ends at 3 of 4 establishing
-nothing and **one confident error where before there was a refusal**.  Acquisition made this
-control slightly worse.
+With the role-directed driver -- the one that fixed blend -- cellar ended at 3 of 4 establishing
+nothing and **one confident error where before there was a refusal**.  Acquisition appeared to
+make this control slightly worse, and chasing why is what produced the rest of this document.
+The cause turned out to be a defect in the acquisition path rather than a property of
+acquisition, and with it closed the honest figure is **4 of 4 establishing nothing, before and
+after**: the observations neither help this control nor harm it.
 
-The reason is exact and it is the most useful thing this run found.  Six of twenty acquisitions
-carried an event and every one of them was *Nothing chosen in the ... list*, because the driver
-fills the roles the model has and `Move vessel`'s model has one:
+The reason is exact.  Six of twenty acquisitions carried an event and every one of them was
+*Nothing chosen in the ... list*, because the driver fills the roles the model has and
+`Move vessel`'s model has one:
 
     button:Move vessel   roles: selection['combobox#0'] over type 2 (Vessel)
                          events: five, one occasion each
 
-The hidden operator is `move_vessel(?vessel, ?hall)`.  The hall is not a role of this model at
-all -- the referring layer never found a query for it, because the operator layer had too few
-positives to look with.  So the model cannot condition on the hall, which is why *`<> already
-stands in <> .`* and *`<> moved from <> to <> .`* can never be established; and it cannot steer
-the interface toward filling the hall select, which is why acquisition keeps re-observing the
-one refusal it can provoke.
+The hidden operator is `move_vessel(?vessel, ?hall)` and the hall is not a role of this model
+at all.  A first reading of that -- that the referring layer never found a query for the hall
+because the operator layer had too few positives to look with -- is **wrong**, and the section
+above says why: there are no halls in the state to find a query *for*.  The consequence is what
+was observed.  The model cannot condition on the hall, so *`<> already stands in <> .`* and
+*`<> moved from <> to <> .`* can never be established; it cannot steer the interface toward
+filling the hall list, so acquisition keeps re-observing the one refusal it can provoke.
 
-So cellar's sparse controls are **not** a lifting problem, and not simply a data problem
-either: they are a *grounding* problem that then blocks the acquisition that would fix the data
-problem.  A model that has not learned that an argument exists cannot drive the application to
-exercise it.  That is a loop, and it is the obstacle this run ends on.
+And those re-observations were not inert.  The language has no literal about the hall, so once
+five hall refusals were in the evidence something else had to separate them -- and what did was
+`id = B1`, the vessel's own key, which had arrived *with the acquired occasions* because the
+refit did not apply the identity refusal to them.  That was the confident error, and it is a
+leak in this driver rather than a fact about acquiring.  *What the Occam probe found* below has
+it in full; the repair is one line and it is what turns the figures above into 4 of 4.
+
+The general form of the lesson survives the repair, because the leak is a special case of it:
+an observation the language cannot condition on does not sit quietly in the evidence -- it gets
+explained by whatever else is lying around, and acquisition is also the moment when *new*
+literals can arrive to lie around.
+
+What generalises past cellar is narrower than the harm first suggested, and worth stating
+carefully because the first version of this paragraph overstated it.
+
+**Acquiring where the hypothesis language is inadequate does not help.**  Uncertainty-directed
+acquisition assumes the learner's inability to answer is hypothesis uncertainty, which more
+evidence resolves.  Where it is instead inadequacy of the language, the same procedure runs
+happily, provokes the one message it can provoke twenty times, and leaves the control exactly
+where it was: 4 of 4 held-out actions establishing nothing, before and after.  The model cannot
+tell the two cases apart from the inside -- both present as *nothing is established* -- so a
+control that stays unestablished *under acquisition* is reporting about its language rather than
+about its data, which is a usable diagnostic and is how cellar's ontology problem was found.
+
+**And acquisition is when new literals arrive.**  Every other occasion in the evidence was
+filtered on the way in; these were not, and a memorised key came with them.  That is not a fact
+about acquiring in general -- it was a defect, now repaired -- but it is the kind of defect an
+acquisition path invites, because it is the only place where the vocabulary can grow after the
+refusals were applied.
 
 ## The frame language, attacked
 
@@ -331,6 +685,14 @@ branch deltas read only fitting transitions.  Both are now inside the digest tha
 the trace off disk, refit, require an identical model -- covers the new mechanism rather than
 fingerprinting only the rules that no longer make the predictions.  It passes.
 
+The `untouched` / `chosen into` literal opens no new route and is in the digest too.  Its
+reference value is read from the earliest state of the frozen prefix that has the slot, which is
+strictly earlier than any occasion it is compared against, and its subject is an input widget.
+That last point is worth stating because the trap it is nearest to is a real one: the pre-state
+status line is *not* an ordinary state feature, and `_lists_with` can return nothing but
+comboboxes, which `tests/test_v4_admissible.py` pins.  A list is what the user fills; the live
+region is what the application answers with.
+
 Acquisition adds a route that did not exist: evidence from outside the retained trace.  It is
 causally later than the actions that produced it, drawn from a different session and a seed the
 retained trace never used, and it is checked: cellar's retained trace resets to seeds 0 through
@@ -350,6 +712,18 @@ The acquisition runs are single sessions at one seed each, driven by a deliberat
 policy.  What they establish is that uncertainty-driven acquisition against these applications
 is *possible and effective*, not how much of the model it would repair given a budget.
 
+The four mechanisms this run added were measured on every application with a live region, at one
+cut each.  Two of the results are large enough that a single cut settles them -- structural roles
+turn fifty refusals into claims that are wrong thirty-two times, and the subject restriction
+moves sixteen several-open states into forcing and loses accuracy doing it.  The `untouched`
+literal's is a one-state difference on blend and nothing anywhere else, which is not enough to
+call it an improvement and is not called one here; `simplest` makes no difference at all.
+
+Nor is any of the four a claim about the mechanism *in general*: what is measured is each one
+inside this version space, on these applications, at this cut.  The subject restriction in
+particular is known from `docs/v4_outcomes.md` to behave differently in the decision list, which
+is the point of measuring it twice rather than reasoning about it once.
+
 ## What the ABI can now say, and the obstacle it ends on
 
 `ControlOutcome.answer(state, owner)` is the call, and it reads only the pre-state:
@@ -363,15 +737,53 @@ is *possible and effective*, not how much of the model it would repair given a b
 * and `sole` on a forced answer, marking the case where unanimity is vacuous because the
   control has never been seen to do anything else.
 
-The single obstacle that now dominates is **grounding, which bounds everything downstream**.
-An argument the referring layer never found is an argument the outcome model cannot condition
-on, cannot report as a parameter, and -- as cellar showed -- cannot drive the application to
-exercise.  Blend's `Record draw` works because its two arguments are named by selects the
-referring search found; cellar's `Move vessel` fails at every layer because one of its two
-arguments was never found at all, and the acquisition that would have supplied the evidence is
-steered by the same model that is missing it.  Breaking that loop -- grounding an argument from
-the *shape of the interface* rather than from operator positives that a sparse control does not
-have -- is the next thing worth building.
+Two obstacles dominate what is left, and the first of them is **the ontology, which bounds
+everything downstream**.
+An argument that is not an object in the abstract state is an argument the outcome model cannot
+condition on, cannot report as a parameter, and cannot drive the application to exercise.
+Blend's `Record draw` works because both of its arguments are entities the state holds and
+selects name.  Cellar's `Move vessel` fails at every layer because one of its two arguments --
+the hall -- is not in the state at all: entity induction makes objects out of the rows of
+repeating tables, and cellar renders its halls as headings over prose.
+
+The obvious repair was tried this run and is **falsified**.  Grounding the argument from the
+shape of the interface rather than from operator positives does find the right lists, and it
+makes the model measurably worse -- fifty of blend's refusals become confident claims, thirty-two
+of them wrong.  More ways to refer to things is not the same as more knowledge about them.
+
+What did work, in the narrow sense that it makes the application's own guard expressible without
+inventing an ontology, is naming the *interface* fact the message cites: whether a list has been
+chosen into.  On the nine recorded occasions of `Move vessel` that language justifies
+`vessel named and hall untouched -> Nothing chosen in the hall list .` on four of them, under
+corroboration, where the language it has justifies nothing at all.  It does not rescue the
+control, because only five of those nine occasions fall before the cut and they carry five
+distinct events; and on the applications where held-out measurement is possible it is a wash
+(blend 66/32 correct forced claims becomes 65/33, with four states moving from *nothing
+established* to *several admissible*; harbour unchanged).
+
+When the missing literal *is* supplied, the learner did not at first take it: after acquisition
+the evidence justified the hall refusal by the vessel's key, which had leaked in with the
+acquired occasions, and fired it at the one held-out state where that disagreed with the guard.
+Closing the leak fixed that control -- the rule it now holds is the guard, and its held-out
+actions are honest refusals -- so this obstacle is one repair smaller than it was.  Cellar's
+`Move vessel` still cannot say anything about a hall, and never will until the state has halls
+in it.
+
+So there are two obstacles, and the run ends able to state both.
+
+**The ontology bounds what can be said.**  An entity the interface renders as prose rather than
+as a row never becomes an object, and every layer above inherits that.  Whether entity induction
+can be extended to section-shaped entities without destabilising the identity layer four
+applications now depend on is a change to the abstraction, not to the outcome model, and it is
+the larger of the two.
+
+**Justification does not order.**  The version space is sound about *whether* a rule is
+justified and indifferent about *by what*, so among many equally pure conditions it takes one
+and the application's actual guard has no standing.  Every repair tried here either enlarges
+that set or shrinks it, and neither is the operation required.  The missing thing is a
+principled preference over pure conditions -- a reason, drawn from the application rather than
+from a count, for one separator to be the guard and another to be a coincidence.  That is the
+question the next run should open with, and this run closes without it.
 
 ## Running any of this again
 
@@ -401,5 +813,23 @@ drive the running application where the model does not know the outcome.  `--pol
 matched control; `--policy unestablished` acts on coverage gaps instead, which is what cellar
 presents.  **The seed must not be one the retained trace used.**
 
+The two mechanisms this run added are switches on `outcome.learn`, so either measurement above
+can be repeated with and without them:
+
+```python
+from semabi.compiler.v4 import outcome as oc
+oc.learn = functools.partial(oc.learn, structural=True)   # roles from page containment: harmful
+oc.learn = functools.partial(oc.learn, touched=True)      # the untouched/chosen-into literal
+oc.learn = functools.partial(oc.learn, about=True)        # rules only about what the event names
+oc.learn = functools.partial(oc.learn, simplest=True)     # vouch by the shortest pure condition
+```
+
+All four default to **off**, so every number elsewhere in this document is the default
+configuration; the tables above are each of them on every application that has a live region.
+`simplest=True` also drops the early exit from the pair search, so it costs two to three times
+the running time for no change in what is established.
+
 `semabi.compiler.v4.outcome.Evidence.admissible` is the mechanism itself;
-`ControlOutcome.delta` is what a branch says it durably does.
+`ControlOutcome.delta` is what a branch says it durably does; `structural_roles` and
+`structural_selects` are the two readings of the page's shape; and `Vouch.condition` is what to
+look at when a claim is wrong, which is how the acquisition leak was found.

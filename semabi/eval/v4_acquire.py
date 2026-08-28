@@ -134,8 +134,9 @@ def acquire(model, control_key: str, button: str, base: str, *, seed: int,
             from semabi.compiler.v4.consequence import _owner_object
             owner = _owner_object(A, po, state, node)
             bound, status = got.bind(state, owner)
-            options = got.admissible(oc._literals(model.inducer, state, bound, status),
-                                     corroborated=True)
+            options = got.admissible(
+                oc._literals(model.inducer, state, bound, status, got.defaults),
+                corroborated=True)
             visited[len(options)] += 1
             # Two kinds of not knowing, and they justify acting for different reasons.
             # `uncertain` acts where several outcomes remain admissible: a real disagreement
@@ -148,7 +149,8 @@ def acquire(model, control_key: str, button: str, base: str, *, seed: int,
             # nothing is ever established, so without this the driver clicks at every turn and
             # never explores -- which is what it did on cellar, pressing `Move vessel` with
             # nothing selected twenty times and learning only that nothing was selected.
-            fresh = frozenset(oc._literals(model.inducer, state, bound, status)) not in asked
+            fresh = frozenset(
+                oc._literals(model.inducer, state, bound, status, got.defaults)) not in asked
             if (discriminating and fresh if policy in ("uncertain", "unestablished")
                     else True) or (
                     turn % 3 == 2 and len(acquired) < want):
@@ -166,7 +168,8 @@ def acquire(model, control_key: str, button: str, base: str, *, seed: int,
                     "resolved": event is not None and event.frame in options,
                     "state": state, "owner": owner,
                     "before_text": before})
-                asked.add(frozenset(oc._literals(model.inducer, state, bound, status)))
+                asked.add(frozenset(
+                    oc._literals(model.inducer, state, bound, status, got.defaults)))
                 log(f"  {'*' if discriminating else ' '} acted where {len(options)} "
                     f"outcome(s) were admissible -> {acquired[-1]['frame']!r}")
                 turn += 1
@@ -236,11 +239,12 @@ def refit_with(model, control_key: str, acquired: list[dict],
         if row["frame"] is None or (only_discriminating and not row["discriminating"]):
             continue
         bound, status = got.bind(row["state"], row["owner"])
-        extra.append((oc._literals(model.inducer, row["state"], bound, status),
+        extra.append((oc._literals(model.inducer, row["state"], bound, status, got.defaults),
                       row["frame"], frozenset(bound) | {oc.OWNER}))
     fresh = oc.ControlOutcome(got.control, got.roles, list(got.rules), got.default,
                               got.fitted + len(extra), dict(got.events), got.arg_roles,
-                              deltas=dict(got.deltas))
+                              deltas=dict(got.deltas), defaults=dict(got.defaults),
+                              simplest=got.simplest)
     fresh.evidence = oc.Evidence.extend(got.evidence, extra)
     for row in extra:
         fresh.events[row[1]] = fresh.events.get(row[1], 0) + 1

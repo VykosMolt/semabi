@@ -110,7 +110,11 @@ guard caught.  The version space over justified rules is computed exactly instea
 answers when the evidence forces one outcome, returns the set when several remain, and refuses
 where nothing is established -- on blend the chosen list answered 79 such states and was wrong
 on 69 of them.  It also carries the first acquisition in this project executed against a
-running application rather than replayed.
+running application rather than replayed, and four repairs for the sparse controls that were
+implemented, measured on every application, and falsified: the version space is sound about
+whether a rule is justified and indifferent about by what, and neither enlarging, restricting
+nor ranking its language fixes that.  Asking it *which* condition it had used did find something
+-- an identity constant reaching the evidence through the acquisition path, since closed.
 
 `docs/v4_outcomes.md` precedes it, and continues the chronology rather than replacing it: an
 interaction can return an observable result without the state transition it was aimed at
