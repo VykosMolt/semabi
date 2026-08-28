@@ -81,6 +81,12 @@ Walking the cut says when that stops being true:
 | **252** | **13** | **46** | **the call, `C-102`** | **yes** | **0** |
 | 413 | 14 | 51 | the call | yes | 0 |
 
+The curve also shows what harbour is *not* short of.  Its action alphabet is fully named at
+every cut -- zero positional control slots from 137 steps to 413, where blend has thirteen at a
+half-trace split -- so nothing here is the control-family fragmentation that blend suffers.  What
+moves is the type system and, at 0.6, the relation count: 10 to 11, which is the reference
+finding its target.
+
 So the concept is not inaccessible to a prospective learner.  It was learned later than a
 half-trace split allowed.  That is a learning curve, not a ceiling, and it is the difference
 between "harbour needed the future" and "harbour needed more of the past".
