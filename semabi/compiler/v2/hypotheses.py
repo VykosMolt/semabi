@@ -839,6 +839,20 @@ class Hypotheses:
         for et in self.entity_types.values():
             for t in et.units:
                 keys_of[et.tid] |= self.units[t].key_values()
+        # A link type's key is borrowed from the type it overlaps, so a column whose values
+        # match the link's keys matches the origin's keys just as well -- and where the link
+        # also keys an empty cell, better, which is how harbour's `Current call` column came to
+        # reference the call *cells* rather than the calls, and a ship's reference to the call
+        # it holds resolved to nothing on every page.  A reference is to the origin.
+        origin: dict[int, int] = {}
+        for t, other in links.items():
+            hops = 0
+            while other in links and hops < 5:
+                other = links[other]
+                hops += 1
+            o = self.tid_of_template.get(other)
+            if o is not None and t in self.tid_of_template:
+                origin[self.tid_of_template[t]] = o
         for et in self.entity_types.values():
             for t in et.units:
                 if "col" in self.units[t].slots:
@@ -855,9 +869,12 @@ class Hypotheses:
                         if ov >= 0.5 and (best is None or ov > best[0]):
                             best = (ov, tid2)
                     if best:
-                        et.ref_slots[(t, sid)] = best[1]
+                        target = origin.get(best[1], best[1])
+                        if target == et.tid:
+                            continue
+                        et.ref_slots[(t, sid)] = target
                         et.attr_slots[t].discard(sid)
-                        et.evidence.append(f"slot {sid} of {t[:30]} references T{best[1]} ({best[0]:.2f})")
+                        et.evidence.append(f"slot {sid} of {t[:30]} references T{target} ({best[0]:.2f})")
         # 3. containment: instances nested in another entity type's instances
         for et in self.entity_types.values():
             for t in et.units:

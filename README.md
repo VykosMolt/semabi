@@ -112,8 +112,10 @@ language gaps were, but for five, clicks on five different buttons that the *con
 had pooled as one -- the frozen control families were never applied to a page the induction had
 not read, on any application.  Repaired, blend's operator ledger goes from 25 right / 48 wrong /
 174 unbound to 103 / 41 / 41, and the forced-wrong residue is four events the prefix never saw,
-one guard the application checks after another, and on harbour two states the literal language
-genuinely cannot separate.  An entity whose name contains a word the prefix never used is now an
+one guard the application checks after another, and on harbour two states that were traced to
+a reference slot the reading had typed to an entity it could never resolve against -- repaired,
+and the first counterexample in the project to close the loop from the layer it blamed back to
+a relearned model.  An entity whose name contains a word the prefix never used is now an
 object on the pages that render it.  Every held-out number in the three documents below predates
 this and is superseded where they disagree.
 

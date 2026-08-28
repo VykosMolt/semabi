@@ -202,8 +202,10 @@ read, which makes them the cleanest test of a representation repair there is:
 | blend, second history, after | 227 | 27 | 7 | -- | 0.89 |
 | harbour, own suffix (126 clicks), before | 33 | 17 | 43 | 33 | 0.66 |
 | harbour, own suffix, after | 59 | 17 | 43 | 7 | 0.78 |
+| harbour, own suffix, after the reference repair below | 61 | 15 | 43 | 7 | 0.80 |
 | harbour, second history (270 clicks), before | 83 | 96 | 91 | -- | 0.46 |
 | harbour, second history, after | 162 | 17 | 91 | -- | 0.91 |
+| harbour, second history, after the reference repair below | 168 | 30 | 72 | -- | 0.85 |
 | cellar, own suffix (40 clicks), before | 10 | 2 | 20 | 8 | 0.83 |
 | cellar, own suffix, after | 18 | 2 | 20 | 0 | 0.90 |
 
@@ -302,6 +304,15 @@ link type to the type the link borrows its key from.  Refitted, Selkie's row car
 `rel:9 = C-102` on both pages, `Schedule call`'s refusal is forced and right on both, harbour
 is 22 forced and 22 right where it was 20 and 2, and blend, cellar and vet are bit-identical --
 admissible tables and operator ledgers alike.
+
+The chosen decision list is a different instrument and it says something worth keeping apart.
+On harbour's second history it now answers 19 more `Schedule call` clicks, because the guard
+the ship's reference makes sayable -- no call held, so one opens -- is a rule it can fit; six of
+those answers are right and thirteen are wrong, on states where the application refused for a
+reason that guard does not mention.  The version space at those states is not measured by the
+existing instruments, which score the own suffix; what the list's numbers show is the
+claim-width defect `docs/v4_admissibility.md` describes, arriving through a literal that is
+correct: a point hypothesis widens a true guard to everything it does not exclude.
 
 ## Chronology
 

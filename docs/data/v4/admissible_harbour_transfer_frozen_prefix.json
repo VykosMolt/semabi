@@ -11,7 +11,7 @@
   "rule: no outcome is established | list: no outcome is established": 59,
   "rule: one outcome, because the control has never done anything else | list: one outcome, because the control has never done anything else": 35,
   "rule: the evidence forces one outcome | list: the evidence forces one outcome": 20,
-  "rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)": 2,
+  "rule: the evidence forces one outcome | list: several outcomes remain admissible": 2,
   "rule: no outcome is established | list: the evidence forces one outcome (wrong)": 2,
   "rule: no outcome is established | list: the evidence forces one outcome": 1
  },
@@ -26,8 +26,8 @@
   "1": 57
  },
  "what_happened_was": {
-  "outside it": 26,
-  "inside the admissible set": 31,
+  "inside the admissible set": 33,
+  "outside it": 24,
   "nothing was admissible": 62
  },
  "the_list_where_the_evidence": {
@@ -41,15 +41,13 @@
    "a different event": 1
   },
   "the evidence forces one outcome": {
-   "the event the interface returned": 20,
-   "a different event": 2
+   "the event the interface returned": 22
   }
  },
  "policy_forced_then_list": {
   "refused: nothing established": 62,
   "the only outcome ever seen on this control, and it happened": 34,
-  "one outcome was admissible and it happened": 20,
-  "one outcome was admissible and a different one happened": 2,
+  "one outcome was admissible and it happened": 22,
   "the only outcome ever seen on this control, and something else happened": 1
  },
  "distinct_events_forced": 8,
@@ -59,7 +57,7 @@
   "<> <> is now <> .": 9,
   "Call <> is not <> , so nothing has sailed .": 4,
   "Call <> has <> berth allocated .": 4,
-  "Call <> opened for <> .": 2,
+  "<> already has call <> on the board .": 2,
   "Nothing chosen in the pilot list .": 2,
   "Nothing chosen in the berth list .": 2
  },
@@ -125,7 +123,7 @@
   },
   "button:Schedule call": {
    "no outcome is established for this state": 15,
-   "one outcome was admissible and a different one happened": 2
+   "one outcome was admissible and it happened": 2
   },
   "button:Sign off": {
    "no outcome is established for this state": 17
@@ -186,7 +184,7 @@
   "button:Schedule call": {
    "fitted": 19,
    "events": 2,
-   "rules": 3,
+   "rules": 4,
    "default": "undetermined"
   },
   "button:Sign off": {
@@ -202,38 +200,5 @@
    "default": "undetermined"
   }
  },
- "forced_but_wrong": [
-  {
-   "step": 230,
-   "control": "button:Schedule call",
-   "admissible": [
-    "Call <> opened for <> ."
-   ],
-   "hypothesis": "rule",
-   "unordered": [
-    "Call <> opened for <> ."
-   ],
-   "observed": "<> already has call <> on the board .",
-   "returned": "Selkie already has call C-102 on the board.",
-   "verdict": "one outcome was admissible and a different one happened",
-   "level": "the event alone",
-   "why": "Call <> opened for <> . <- ('ref_null', 'owner', 'rel:10') & ('unnamed', \"selection['cell#36']:0\") & ('unnamed', 'singleton[]:9')  [3 occasions]"
-  },
-  {
-   "step": 243,
-   "control": "button:Schedule call",
-   "admissible": [
-    "Call <> opened for <> ."
-   ],
-   "hypothesis": "rule",
-   "unordered": [
-    "Call <> opened for <> ."
-   ],
-   "observed": "<> already has call <> on the board .",
-   "returned": "Selkie already has call C-102 on the board.",
-   "verdict": "one outcome was admissible and a different one happened",
-   "level": "the event alone",
-   "why": "Call <> opened for <> . <- ('ref_null', 'owner', 'rel:10') & ('unnamed', \"selection['cell#36']:0\") & ('unnamed', 'singleton[]:9')  [3 occasions]"
-  }
- ]
+ "forced_but_wrong": []
 }

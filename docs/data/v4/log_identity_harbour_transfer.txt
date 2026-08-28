@@ -8,10 +8,10 @@ harbour_transfer  'joint discrimination x2'  FROZEN_PREFIX  cut=229  control=Non
        59  rule: no outcome is established | list: no outcome is established
        35  rule: one outcome, because the control has never done anything else | list: one outcome, because the control has never done anything else
        20  rule: the evidence forces one outcome | list: the evidence forces one outcome
-        2  rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)
+        2  rule: the evidence forces one outcome | list: several outcomes remain admissible
         2  rule: no outcome is established | list: the evidence forces one outcome (wrong)
         1  rule: no outcome is established | list: the evidence forces one outcome
-  admissible-set size {"0": 62, "1": 57}; what happened was {'outside it': 26, 'inside the admissible set': 31, 'nothing was admissible': 62}
+  admissible-set size {"0": 62, "1": 57}; what happened was {'inside the admissible set': 33, 'outside it': 24, 'nothing was admissible': 62}
   8 distinct events ever forced
   where no outcome is established, the chosen list:
        43  no determinate answer
@@ -21,17 +21,15 @@ harbour_transfer  'joint discrimination x2'  FROZEN_PREFIX  cut=229  control=Non
        34  the event the interface returned
         1  a different event
   where the evidence forces one outcome, the chosen list:
-       20  the event the interface returned
-        2  a different event
+       22  the event the interface returned
   forced where forced, list elsewhere:
        62  refused: nothing established
        34  the only outcome ever seen on this control, and it happened
-       20  one outcome was admissible and it happened
-        2  one outcome was admissible and a different one happened
+       22  one outcome was admissible and it happened
         1  the only outcome ever seen on this control, and something else happened
     button#cell/button@6bf899  fitted=  34 events= 1 rules= 0 forced-wrong=  0  {'one outcome, because the control has never done anything else': 23}
     button:Reopen              fitted=  18 events= 2 rules= 2 forced-wrong=  0  {'the evidence forces one outcome': 16, 'no outcome is established': 4}
-    button:Schedule call       fitted=  19 events= 2 rules= 3 forced-wrong=  2  {'no outcome is established': 15, 'the evidence forces one outcome': 2}
+    button:Schedule call       fitted=  19 events= 2 rules= 4 forced-wrong=  0  {'no outcome is established': 15, 'the evidence forces one outcome': 2}
     button:Sign off            fitted=  14 events= 2 rules= 0 forced-wrong=  0  {'no outcome is established': 17}
     button:Sign on             fitted=  17 events= 2 rules= 0 forced-wrong=  0  {'no outcome is established': 17}
     button:Close               fitted=  20 events= 3 rules= 1 forced-wrong=  0  {'no outcome is established': 9, 'the evidence forces one outcome': 4}
@@ -44,15 +42,16 @@ harbour_transfer  'joint discrimination x2'  FROZEN_PREFIX  cut=229  control=Non
   119 held-out actions
        59  no outcome is established
        35  one outcome, because the control has never done anything else
-       25  the evidence forces one outcome
+       23  the evidence forces one outcome
+        2  several outcomes remain admissible
   against the other hypothesis class:
        59  list: no outcome is established | rule: no outcome is established
        35  list: one outcome, because the control has never done anything else | rule: one outcome, because the control has never done anything else
        20  list: the evidence forces one outcome | rule: the evidence forces one outcome
-        2  list: the evidence forces one outcome (wrong) | rule: the evidence forces one outcome (wrong)
+        2  list: several outcomes remain admissible | rule: the evidence forces one outcome
         2  list: the evidence forces one outcome (wrong) | rule: no outcome is established
         1  list: the evidence forces one outcome | rule: no outcome is established
-  admissible-set size {"0": 59, "1": 60}; what happened was {'outside it': 28, 'inside the admissible set': 32, 'nothing was admissible': 59}
+  admissible-set size {"0": 59, "1": 58, "2": 2}; what happened was {'inside the admissible set': 34, 'outside it': 26, 'nothing was admissible': 59}
   8 distinct events ever forced
   where no outcome is established, the chosen list:
        43  no determinate answer
@@ -61,18 +60,21 @@ harbour_transfer  'joint discrimination x2'  FROZEN_PREFIX  cut=229  control=Non
   where one outcome, because the control has never done anything else, the chosen list:
        34  the event the interface returned
         1  a different event
+  where several outcomes remain admissible, the chosen list:
+        2  the event the interface returned
   where the evidence forces one outcome, the chosen list:
        21  the event the interface returned
-        4  a different event
+        2  a different event
   forced where forced, list elsewhere:
        59  refused: nothing established
        34  the only outcome ever seen on this control, and it happened
        21  one outcome was admissible and it happened
-        4  one outcome was admissible and a different one happened
+        2  deferred to the list: the event the interface returned
+        2  one outcome was admissible and a different one happened
         1  the only outcome ever seen on this control, and something else happened
     button#cell/button@6bf899  fitted=  34 events= 1 rules= 0 forced-wrong=  0  {'one outcome, because the control has never done anything else': 23}
     button:Reopen              fitted=  18 events= 2 rules= 2 forced-wrong=  0  {'the evidence forces one outcome': 16, 'no outcome is established': 4}
-    button:Schedule call       fitted=  19 events= 2 rules= 3 forced-wrong=  4  {'no outcome is established': 12, 'the evidence forces one outcome': 5}
+    button:Schedule call       fitted=  19 events= 2 rules= 4 forced-wrong=  2  {'no outcome is established': 12, 'the evidence forces one outcome': 3, 'several outcomes remain admissible': 2}
     button:Sign off            fitted=  14 events= 2 rules= 0 forced-wrong=  0  {'no outcome is established': 17}
     button:Sign on             fitted=  17 events= 2 rules= 0 forced-wrong=  0  {'no outcome is established': 17}
     button:Close               fitted=  20 events= 3 rules= 1 forced-wrong=  0  {'no outcome is established': 9, 'the evidence forces one outcome': 4}
@@ -82,40 +84,18 @@ harbour_transfer  'joint discrimination x2'  FROZEN_PREFIX  cut=229  control=Non
 wrote docs/data/v4/admissible_harbour_transfer_frozen_prefix_list.json
 
 harbour_transfer  'joint discrimination x2'  cut=229  forced under the rule class
-  forced and wrong on the frame: 2
-       2  inseparable: every shared conjunction reaches another event
-    button:Schedule call: {'inseparable: every shared conjunction reaches another event': 2}
-
-  button:Schedule call step 230: forced ['Call <> opened for <> .'], actual '<> already has call <> on the board .': inseparable: every shared conjunction reaches another event
-      blocked_by: {'Call <> opened for <> .': 2}
-      node 19 cell: 'Kittiwake'/'None'  vs  'Nordkapp'/'None'
-      node 20 cell: '78 m'/'None'  vs  '132 m'/'None'
-      node 21 cell: 'N2'/'None'  vs  'S1'/'None'
-      node 24 group: ''/'None'  vs  ''/'None'
-      node 25 heading: 'Call sheet'/'None'  vs  ''/'None'
-      node 26 text: 'No call is open. Press a call refe'/'None'  vs  'C-102'/'None'
-      node count 141 vs 157
-
-  button:Schedule call step 243: forced ['Call <> opened for <> .'], actual '<> already has call <> on the board .': inseparable: every shared conjunction reaches another event
-      blocked_by: {'Call <> opened for <> .': 2}
-      node 19 cell: 'Kittiwake'/'None'  vs  'Nordkapp'/'None'
-      node 20 cell: '78 m'/'None'  vs  '132 m'/'None'
-      node 21 cell: 'N2'/'None'  vs  'S1'/'None'
-      node 24 group: ''/'None'  vs  ''/'None'
-      node 25 heading: 'Call sheet'/'None'  vs  ''/'None'
-      node 26 text: 'No call is open. Press a call refe'/'None'  vs  'C-102'/'None'
-      node count 141 vs 157
+  forced and wrong on the frame: 0
 
 wrote docs/data/v4/inadequacy_harbour_transfer.json
 
-harbour_transfer  'joint discrimination x2'  FROZEN_PREFIX  cut=229  35 operators
+harbour_transfer  'joint discrimination x2'  FROZEN_PREFIX  cut=229  36 operators
   33 held-out actions, 2.0 rules offered and 1.09 claims applicable per action
   12 distinct claims across all its decided predictions
     a named constant          66 claims,    36 decided, supported  94%   2 distinct
                            ['attr:cell#0@5 = closed', 'attr:cell#0@5 = open']
-    an interface response    418 claims,   159 decided, supported  57%   9 distinct
+    an interface response    435 claims,   159 decided, supported  57%   9 distinct
                            ['<> <> cannot be <> while call <> holds it . = <> <> cannot be <> while call <> holds it .', '<> <> is already <> . = <> <> is already <> .', '<> <> is now <> . = <> <> is now <> .', '<> already has call <> on the board . = <> already has call <> on the board .', '<> is already signed off . = <> is already signed off .', '<> is already signed on . = <> is already signed on .']
-    an object brought into being   136 claims,    40 decided, supported  18%   1 distinct
+    an object brought into being   170 claims,    34 decided, supported  26%   1 distinct
                            ['id = new']
        17 ( 52%)  every applicable rule was right
        15 ( 45%)  no rule applied
