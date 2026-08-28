@@ -1,0 +1,272 @@
+{
+ "run": "blend_book_transfer",
+ "reading": "joint discrimination x3",
+ "regime": "FROZEN_PREFIX",
+ "split": 0.5,
+ "cut": 419,
+ "control": null,
+ "corroborated": true,
+ "actions": 248,
+ "what_the_evidence_establishes": {
+  "the evidence forces one outcome": 98,
+  "no outcome is established": 79,
+  "several outcomes remain admissible": 57,
+  "one outcome, because the control has never done anything else": 14
+ },
+ "admissible_set_size": {
+  "0": 79,
+  "1": 112,
+  "2": 38,
+  "3": 19
+ },
+ "what_happened_was": {
+  "inside the admissible set": 137,
+  "outside it": 32,
+  "nothing was admissible": 79
+ },
+ "the_list_where_the_evidence": {
+  "no outcome is established": {
+   "a different event": 69,
+   "the event the interface returned": 10
+  },
+  "one outcome, because the control has never done anything else": {
+   "the event the interface returned": 14
+  },
+  "several outcomes remain admissible": {
+   "the event the interface returned": 57
+  },
+  "the evidence forces one outcome": {
+   "the event the interface returned": 58,
+   "no determinate answer": 23,
+   "a different event": 17
+  }
+ },
+ "policy_forced_then_list": {
+  "refused: nothing established": 79,
+  "one outcome was admissible and it happened": 66,
+  "deferred to the list: the event the interface returned": 57,
+  "one outcome was admissible and a different one happened": 32,
+  "the only outcome ever seen on this control, and it happened": 14
+ },
+ "distinct_events_forced": 3,
+ "events_forced": {
+  "Drew <> from <> into <> .": 62,
+  "Returned <> to <> from <> .": 46,
+  "<> is <> .": 4
+ },
+ "per_control": {
+  "button:Record draw": {
+   "the evidence forces one outcome": 66,
+   "several outcomes remain admissible": 57
+  },
+  "button#0": {
+   "no outcome is established": 46,
+   "the evidence forces one outcome": 16
+  },
+  "button#3": {
+   "no outcome is established": 14,
+   "the evidence forces one outcome": 6
+  },
+  "button#2": {
+   "no outcome is established": 14,
+   "the evidence forces one outcome": 5
+  },
+  "button#1": {
+   "the evidence forces one outcome": 5,
+   "no outcome is established": 5
+  },
+  "button#4": {
+   "one outcome, because the control has never done anything else": 7
+  },
+  "button#5": {
+   "one outcome, because the control has never done anything else": 7
+  }
+ },
+ "per_control_verdicts": {
+  "button#0": {
+   "no outcome is established for this state": 46,
+   "one outcome was admissible and a different one happened": 14,
+   "one outcome was admissible and it happened": 2
+  },
+  "button#1": {
+   "no outcome is established for this state": 5,
+   "one outcome was admissible and a different one happened": 3,
+   "one outcome was admissible and it happened": 2
+  },
+  "button#2": {
+   "no outcome is established for this state": 14,
+   "one outcome was admissible and a different one happened": 3,
+   "one outcome was admissible and it happened": 2
+  },
+  "button#3": {
+   "no outcome is established for this state": 14,
+   "one outcome was admissible and it happened": 4,
+   "one outcome was admissible and a different one happened": 2
+  },
+  "button#4": {
+   "the only outcome ever seen on this control, and it happened": 7
+  },
+  "button#5": {
+   "the only outcome ever seen on this control, and it happened": 7
+  },
+  "button:Record draw": {
+   "several outcomes remained admissible; the one that happened was among them": 57,
+   "one outcome was admissible and it happened": 56,
+   "one outcome was admissible and a different one happened": 10
+  }
+ },
+ "controls": {
+  "button#0": {
+   "fitted": 10,
+   "events": 2,
+   "rules": 1,
+   "default": "<> is <> ; disgorge it before returning a draw ."
+  },
+  "button#1": {
+   "fitted": 12,
+   "events": 2,
+   "rules": 1,
+   "default": "<> is <> ; disgorge it before returning a draw ."
+  },
+  "button#2": {
+   "fitted": 14,
+   "events": 2,
+   "rules": 1,
+   "default": "<> is <> ; disgorge it before returning a draw ."
+  },
+  "button#3": {
+   "fitted": 10,
+   "events": 2,
+   "rules": 2,
+   "default": "<> is <> ; disgorge it before returning a draw ."
+  },
+  "button#4": {
+   "fitted": 3,
+   "events": 1,
+   "rules": 1,
+   "default": "Returned <> to <> from <> ."
+  },
+  "button#5": {
+   "fitted": 4,
+   "events": 1,
+   "rules": 1,
+   "default": "Returned <> to <> from <> ."
+  },
+  "button#button": {
+   "fitted": 33,
+   "events": 5,
+   "rules": 2,
+   "default": "undetermined"
+  },
+  "button#group/table/rowgroup/row/cell/button": {
+   "fitted": 6,
+   "events": 2,
+   "rules": 2,
+   "default": "Returned <> to <> from <> ."
+  },
+  "button:Record draw": {
+   "fitted": 112,
+   "events": 5,
+   "rules": 11,
+   "default": "undetermined"
+  }
+ },
+ "forced_but_wrong": [
+  {
+   "step": 422,
+   "control": "button#0",
+   "admissible": [
+    "Returned <> to <> from <> ."
+   ],
+   "observed": "<> is not <> .",
+   "returned": "Cloister is not bottled.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "the event alone",
+   "why": "Returned <> to <> from <> . <- attr:cell#0@5(selection['cell#17']:3) == None  [9 occasions]"
+  },
+  {
+   "step": 423,
+   "control": "button#0",
+   "admissible": [
+    "Returned <> to <> from <> ."
+   ],
+   "observed": "Opened <> .",
+   "returned": "Opened Low Barn.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "the event alone",
+   "why": "Returned <> to <> from <> . <- attr:cell#0@5(selection['cell#17']:3) == None  [9 occasions]"
+  },
+  {
+   "step": 428,
+   "control": "button#0",
+   "admissible": [
+    "Returned <> to <> from <> ."
+   ],
+   "observed": "<> is already <> .",
+   "returned": "Orchard is already open.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "the event alone",
+   "why": "Returned <> to <> from <> . <- attr:cell#0@5(selection['cell#17']:3) == None  [9 occasions]"
+  },
+  {
+   "step": 429,
+   "control": "button#0",
+   "admissible": [
+    "Returned <> to <> from <> ."
+   ],
+   "observed": "<> is already <> .",
+   "returned": "Low Barn is already open.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "the event alone",
+   "why": "Returned <> to <> from <> . <- attr:cell#0@5(selection['cell#17']:3) == None  [9 occasions]"
+  },
+  {
+   "step": 434,
+   "control": "button#0",
+   "admissible": [
+    "Returned <> to <> from <> ."
+   ],
+   "observed": "<> is not <> .",
+   "returned": "Cloister is not bottled.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "the event alone",
+   "why": "Returned <> to <> from <> . <- attr:cell#0@5(selection['cell#17']:3) == None  [9 occasions]"
+  },
+  {
+   "step": 461,
+   "control": "button#0",
+   "admissible": [
+    "Returned <> to <> from <> ."
+   ],
+   "observed": "<> has <> committed ; need at least <> to bottle .",
+   "returned": "Picnic has 0 gal committed; need at least 2 to bottle.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "the event alone",
+   "why": "Returned <> to <> from <> . <- attr:cell#0@5(selection['cell#17']:3) == None  [9 occasions]"
+  },
+  {
+   "step": 466,
+   "control": "button#0",
+   "admissible": [
+    "Returned <> to <> from <> ."
+   ],
+   "observed": "<> is already <> .",
+   "returned": "Orchard is already open.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "the event alone",
+   "why": "Returned <> to <> from <> . <- attr:cell#0@5(selection['cell#17']:3) == None  [9 occasions]"
+  },
+  {
+   "step": 467,
+   "control": "button#0",
+   "admissible": [
+    "Returned <> to <> from <> ."
+   ],
+   "observed": "<> <> .",
+   "returned": "Bottled Festival White.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "the event alone",
+   "why": "Returned <> to <> from <> . <- attr:cell#0@5(selection['cell#17']:3) == None  [9 occasions]"
+  }
+ ]
+}

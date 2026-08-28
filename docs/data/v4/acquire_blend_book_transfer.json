@@ -1,0 +1,430 @@
+{
+ "run": "blend_book_transfer",
+ "control": "button:Record draw",
+ "seed": 7,
+ "live": true,
+ "base": "http://127.0.0.1:8901",
+ "cut": 419,
+ "states_examined": {
+  "1": 19,
+  "2": 23
+ },
+ "acquired": [
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Drew 1 gal from West Ridge into Fair Day.",
+   "frame": "Drew <> from <> into <> .",
+   "args": [
+    "1 gal",
+    "West Ridge",
+    "Fair Day"
+   ],
+   "resolved": true,
+   "before_text": "West Ridge is already open."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Chapel Row is closed.",
+   "frame": "<> is <> .",
+   "args": [
+    "Chapel Row",
+    "closed"
+   ],
+   "resolved": true,
+   "before_text": "Drew 1 gal from West Ridge into Fair Day."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache.",
+   "frame": "<> is single-varietal ( <> ) ; <> is <> .",
+   "args": [
+    "Fair Day",
+    "Chenin",
+    "Creek Bed",
+    "Grenache"
+   ],
+   "resolved": false,
+   "before_text": "Chapel Row is closed."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Drew 1 gal from West Ridge into Fair Day.",
+   "frame": "Drew <> from <> into <> .",
+   "args": [
+    "1 gal",
+    "West Ridge",
+    "Fair Day"
+   ],
+   "resolved": true,
+   "before_text": "Fair Day is not bottled."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Chapel Row is closed.",
+   "frame": "<> is <> .",
+   "args": [
+    "Chapel Row",
+    "closed"
+   ],
+   "resolved": true,
+   "before_text": "Drew 1 gal from West Ridge into Fair Day."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache.",
+   "frame": "<> is single-varietal ( <> ) ; <> is <> .",
+   "args": [
+    "Fair Day",
+    "Chenin",
+    "Creek Bed",
+    "Grenache"
+   ],
+   "resolved": false,
+   "before_text": "Chapel Row is closed."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Drew 1 gal from West Ridge into Fair Day.",
+   "frame": "Drew <> from <> into <> .",
+   "args": [
+    "1 gal",
+    "West Ridge",
+    "Fair Day"
+   ],
+   "resolved": true,
+   "before_text": "Returned 1 gal to West Ridge from Fair Day."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Chapel Row is closed.",
+   "frame": "<> is <> .",
+   "args": [
+    "Chapel Row",
+    "closed"
+   ],
+   "resolved": true,
+   "before_text": "Drew 1 gal from West Ridge into Fair Day."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache.",
+   "frame": "<> is single-varietal ( <> ) ; <> is <> .",
+   "args": [
+    "Fair Day",
+    "Chenin",
+    "Creek Bed",
+    "Grenache"
+   ],
+   "resolved": false,
+   "before_text": "Chapel Row is closed."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Drew 1 gal from West Ridge into Fair Day.",
+   "frame": "Drew <> from <> into <> .",
+   "args": [
+    "1 gal",
+    "West Ridge",
+    "Fair Day"
+   ],
+   "resolved": true,
+   "before_text": "Opened Chapel Row."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is already <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is already bottled.",
+   "frame": "<> is already <> .",
+   "args": [
+    "Fair Day",
+    "bottled"
+   ],
+   "resolved": true,
+   "before_text": "Bottled Fair Day."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is already <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is already bottled.",
+   "frame": null,
+   "args": [],
+   "resolved": false,
+   "before_text": "Fair Day is already bottled."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is already <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is already bottled.",
+   "frame": null,
+   "args": [],
+   "resolved": false,
+   "before_text": "Fair Day is already bottled."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is already <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is already bottled.",
+   "frame": null,
+   "args": [],
+   "resolved": false,
+   "before_text": "Fair Day is already bottled."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is already <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is already bottled.",
+   "frame": null,
+   "args": [],
+   "resolved": false,
+   "before_text": "Fair Day is already bottled."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is already <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is already bottled.",
+   "frame": null,
+   "args": [],
+   "resolved": false,
+   "before_text": "Fair Day is already bottled."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is already <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is already bottled.",
+   "frame": null,
+   "args": [],
+   "resolved": false,
+   "before_text": "Fair Day is already bottled."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is already <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is already bottled.",
+   "frame": null,
+   "args": [],
+   "resolved": false,
+   "before_text": "Fair Day is already bottled."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is already <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is already bottled.",
+   "frame": null,
+   "args": [],
+   "resolved": false,
+   "before_text": "Fair Day is already bottled."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is already <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is already bottled.",
+   "frame": null,
+   "args": [],
+   "resolved": false,
+   "before_text": "Fair Day is already bottled."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is already <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is already bottled.",
+   "frame": null,
+   "args": [],
+   "resolved": false,
+   "before_text": "Fair Day is already bottled."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is already <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is already bottled.",
+   "frame": null,
+   "args": [],
+   "resolved": false,
+   "before_text": "Fair Day is already bottled."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is already <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is already bottled.",
+   "frame": null,
+   "args": [],
+   "resolved": false,
+   "before_text": "Fair Day is already bottled."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is already <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is already bottled.",
+   "frame": null,
+   "args": [],
+   "resolved": false,
+   "before_text": "Fair Day is already bottled."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is already <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is already bottled.",
+   "frame": null,
+   "args": [],
+   "resolved": false,
+   "before_text": "Fair Day is already bottled."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is already <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is already bottled.",
+   "frame": null,
+   "args": [],
+   "resolved": false,
+   "before_text": "Fair Day is already bottled."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is already <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is already bottled.",
+   "frame": null,
+   "args": [],
+   "resolved": false,
+   "before_text": "Fair Day is already bottled."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is already <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is already bottled.",
+   "frame": null,
+   "args": [],
+   "resolved": false,
+   "before_text": "Fair Day is already bottled."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is already <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is already bottled.",
+   "frame": null,
+   "args": [],
+   "resolved": false,
+   "before_text": "Fair Day is already bottled."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is already <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is already bottled.",
+   "frame": null,
+   "args": [],
+   "resolved": false,
+   "before_text": "Fair Day is already bottled."
+  }
+ ],
+ "discriminating": 23,
+ "held_out_profiles": {
+  "before": {
+   "one outcome was admissible and it happened": 56,
+   "several outcomes remained admissible; the one that happened was among them": 57,
+   "one outcome was admissible and a different one happened": 10
+  },
+  "discriminating occasions only": {
+   "one outcome was admissible and it happened": 43,
+   "several outcomes remained admissible; the one that happened was among them": 63,
+   "several outcomes remained admissible and none of them happened": 4,
+   "no outcome is established for this state": 12,
+   "one outcome was admissible and a different one happened": 1
+  },
+  "every occasion seen": {
+   "one outcome was admissible and it happened": 48,
+   "several outcomes remained admissible; the one that happened was among them": 65,
+   "one outcome was admissible and a different one happened": 10
+  }
+ }
+}

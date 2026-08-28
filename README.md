@@ -39,7 +39,11 @@ semabi/compiler/        BLACK-BOX SIDE (never imports hidden/env/eval; enforced 
                         whole values.  Not state, not a view change: a third category
   v4/outcome.py         per control, an ordered list of guarded answers -- what the interface
                         returns, learned by separate-and-conquer over the referring
-                        expressions the operators already have
+                        expressions the operators already have.  `Evidence.admissible` asks
+                        the other question exactly: which outcomes could *any* justified rule
+                        assign to this state?  `ControlOutcome.answer` is the ABI call --
+                        forced, several open, or nothing established, with the delta the
+                        branch owns and the objects the event is about
 semabi/eval/            scoring against hidden ground truth (paired-state alignment + behavioural simulation),
                         held-out goals, direct model-vs-model comparison (crossui.py), generic scorer
 semabi/baselines/       screen-transition graph, LLM passive (claude -p), known action vocabulary
@@ -100,7 +104,15 @@ the observation-model layer whatever they say. Three regimes are now named in th
 every fit and scored result carries the one that produced it. `docs/v4_handoff.md` remains the
 custody and protocol record.
 
-`docs/v4_outcomes.md` is the latest, and continues the chronology rather than replacing it: an
+`docs/v4_admissibility.md` is the latest.  A decision list is a point hypothesis, and the
+width of its claims was free: a default fitted on two occasions predicted over every state no
+guard caught.  The version space over justified rules is computed exactly instead, so the model
+answers when the evidence forces one outcome, returns the set when several remain, and refuses
+where nothing is established -- on blend the chosen list answered 79 such states and was wrong
+on 69 of them.  It also carries the first acquisition in this project executed against a
+running application rather than replayed.
+
+`docs/v4_outcomes.md` precedes it, and continues the chronology rather than replacing it: an
 interaction can return an observable result without the state transition it was aimed at
 happening, and until that run the action model had nowhere to put it. Blend's outcome model
 predicts which of six events `Record draw` returns, with the objects it names, on a held-out

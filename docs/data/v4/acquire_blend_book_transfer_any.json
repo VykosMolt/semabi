@@ -1,0 +1,501 @@
+{
+ "run": "blend_book_transfer",
+ "control": "button:Record draw",
+ "seed": 7,
+ "policy": "any",
+ "usable": 30,
+ "live": true,
+ "base": "http://127.0.0.1:8901",
+ "cut": 419,
+ "states_examined": {
+  "1": 15,
+  "2": 15
+ },
+ "acquired": [
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Drew 1 gal from West Ridge into Fair Day.",
+   "frame": "Drew <> from <> into <> .",
+   "args": [
+    "1 gal",
+    "West Ridge",
+    "Fair Day"
+   ],
+   "resolved": true,
+   "before_text": null
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Chapel Row is closed.",
+   "frame": "<> is <> .",
+   "args": [
+    "Chapel Row",
+    "closed"
+   ],
+   "resolved": true,
+   "before_text": "Drew 1 gal from West Ridge into Fair Day."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache.",
+   "frame": "<> is single-varietal ( <> ) ; <> is <> .",
+   "args": [
+    "Fair Day",
+    "Chenin",
+    "Creek Bed",
+    "Grenache"
+   ],
+   "resolved": false,
+   "before_text": "Chapel Row is closed."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Chapel Row is closed.",
+   "frame": "<> is <> .",
+   "args": [
+    "Chapel Row",
+    "closed"
+   ],
+   "resolved": true,
+   "before_text": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache.",
+   "frame": "<> is single-varietal ( <> ) ; <> is <> .",
+   "args": [
+    "Fair Day",
+    "Chenin",
+    "Creek Bed",
+    "Grenache"
+   ],
+   "resolved": false,
+   "before_text": "Chapel Row is closed."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Chapel Row is closed.",
+   "frame": "<> is <> .",
+   "args": [
+    "Chapel Row",
+    "closed"
+   ],
+   "resolved": true,
+   "before_text": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache.",
+   "frame": "<> is single-varietal ( <> ) ; <> is <> .",
+   "args": [
+    "Fair Day",
+    "Chenin",
+    "Creek Bed",
+    "Grenache"
+   ],
+   "resolved": false,
+   "before_text": "Chapel Row is closed."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Chapel Row is closed.",
+   "frame": "<> is <> .",
+   "args": [
+    "Chapel Row",
+    "closed"
+   ],
+   "resolved": true,
+   "before_text": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache.",
+   "frame": "<> is single-varietal ( <> ) ; <> is <> .",
+   "args": [
+    "Fair Day",
+    "Chenin",
+    "Creek Bed",
+    "Grenache"
+   ],
+   "resolved": false,
+   "before_text": "Chapel Row is closed."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Chapel Row is closed.",
+   "frame": "<> is <> .",
+   "args": [
+    "Chapel Row",
+    "closed"
+   ],
+   "resolved": true,
+   "before_text": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache.",
+   "frame": "<> is single-varietal ( <> ) ; <> is <> .",
+   "args": [
+    "Fair Day",
+    "Chenin",
+    "Creek Bed",
+    "Grenache"
+   ],
+   "resolved": false,
+   "before_text": "Chapel Row is closed."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Chapel Row is closed.",
+   "frame": "<> is <> .",
+   "args": [
+    "Chapel Row",
+    "closed"
+   ],
+   "resolved": true,
+   "before_text": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache.",
+   "frame": "<> is single-varietal ( <> ) ; <> is <> .",
+   "args": [
+    "Fair Day",
+    "Chenin",
+    "Creek Bed",
+    "Grenache"
+   ],
+   "resolved": false,
+   "before_text": "Chapel Row is closed."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Chapel Row is closed.",
+   "frame": "<> is <> .",
+   "args": [
+    "Chapel Row",
+    "closed"
+   ],
+   "resolved": true,
+   "before_text": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache.",
+   "frame": "<> is single-varietal ( <> ) ; <> is <> .",
+   "args": [
+    "Fair Day",
+    "Chenin",
+    "Creek Bed",
+    "Grenache"
+   ],
+   "resolved": false,
+   "before_text": "Chapel Row is closed."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Chapel Row is closed.",
+   "frame": "<> is <> .",
+   "args": [
+    "Chapel Row",
+    "closed"
+   ],
+   "resolved": true,
+   "before_text": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache.",
+   "frame": "<> is single-varietal ( <> ) ; <> is <> .",
+   "args": [
+    "Fair Day",
+    "Chenin",
+    "Creek Bed",
+    "Grenache"
+   ],
+   "resolved": false,
+   "before_text": "Chapel Row is closed."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Chapel Row is closed.",
+   "frame": "<> is <> .",
+   "args": [
+    "Chapel Row",
+    "closed"
+   ],
+   "resolved": true,
+   "before_text": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache.",
+   "frame": "<> is single-varietal ( <> ) ; <> is <> .",
+   "args": [
+    "Fair Day",
+    "Chenin",
+    "Creek Bed",
+    "Grenache"
+   ],
+   "resolved": false,
+   "before_text": "Chapel Row is closed."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Chapel Row is closed.",
+   "frame": "<> is <> .",
+   "args": [
+    "Chapel Row",
+    "closed"
+   ],
+   "resolved": true,
+   "before_text": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache.",
+   "frame": "<> is single-varietal ( <> ) ; <> is <> .",
+   "args": [
+    "Fair Day",
+    "Chenin",
+    "Creek Bed",
+    "Grenache"
+   ],
+   "resolved": false,
+   "before_text": "Chapel Row is closed."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Chapel Row is closed.",
+   "frame": "<> is <> .",
+   "args": [
+    "Chapel Row",
+    "closed"
+   ],
+   "resolved": true,
+   "before_text": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache.",
+   "frame": "<> is single-varietal ( <> ) ; <> is <> .",
+   "args": [
+    "Fair Day",
+    "Chenin",
+    "Creek Bed",
+    "Grenache"
+   ],
+   "resolved": false,
+   "before_text": "Chapel Row is closed."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Chapel Row is closed.",
+   "frame": "<> is <> .",
+   "args": [
+    "Chapel Row",
+    "closed"
+   ],
+   "resolved": true,
+   "before_text": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache.",
+   "frame": "<> is single-varietal ( <> ) ; <> is <> .",
+   "args": [
+    "Fair Day",
+    "Chenin",
+    "Creek Bed",
+    "Grenache"
+   ],
+   "resolved": false,
+   "before_text": "Chapel Row is closed."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Chapel Row is closed.",
+   "frame": "<> is <> .",
+   "args": [
+    "Chapel Row",
+    "closed"
+   ],
+   "resolved": true,
+   "before_text": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache.",
+   "frame": "<> is single-varietal ( <> ) ; <> is <> .",
+   "args": [
+    "Fair Day",
+    "Chenin",
+    "Creek Bed",
+    "Grenache"
+   ],
+   "resolved": false,
+   "before_text": "Chapel Row is closed."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Chapel Row is closed.",
+   "frame": "<> is <> .",
+   "args": [
+    "Chapel Row",
+    "closed"
+   ],
+   "resolved": true,
+   "before_text": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache.",
+   "frame": "<> is single-varietal ( <> ) ; <> is <> .",
+   "args": [
+    "Fair Day",
+    "Chenin",
+    "Creek Bed",
+    "Grenache"
+   ],
+   "resolved": false,
+   "before_text": "Chapel Row is closed."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Chapel Row is closed.",
+   "frame": "<> is <> .",
+   "args": [
+    "Chapel Row",
+    "closed"
+   ],
+   "resolved": true,
+   "before_text": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache."
+  }
+ ],
+ "discriminating": 15,
+ "held_out_profiles": {
+  "before": {
+   "one outcome was admissible and it happened": 56,
+   "several outcomes remained admissible; the one that happened was among them": 57,
+   "one outcome was admissible and a different one happened": 10
+  },
+  "discriminating occasions only": {
+   "one outcome was admissible and it happened": 40,
+   "several outcomes remained admissible; the one that happened was among them": 66,
+   "several outcomes remained admissible and none of them happened": 4,
+   "one outcome was admissible and a different one happened": 2,
+   "no outcome is established for this state": 11
+  },
+  "every occasion seen": {
+   "one outcome was admissible and it happened": 43,
+   "several outcomes remained admissible; the one that happened was among them": 73,
+   "several outcomes remained admissible and none of them happened": 1,
+   "one outcome was admissible and a different one happened": 6
+  }
+ }
+}

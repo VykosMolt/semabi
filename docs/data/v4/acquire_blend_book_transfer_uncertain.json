@@ -1,0 +1,503 @@
+{
+ "run": "blend_book_transfer",
+ "control": "button:Record draw",
+ "seed": 7,
+ "policy": "uncertain",
+ "usable": 30,
+ "live": true,
+ "base": "http://127.0.0.1:8901",
+ "cut": 419,
+ "states_examined": {
+  "1": 43,
+  "2": 28,
+  "3": 1
+ },
+ "acquired": [
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Drew 1 gal from West Ridge into Fair Day.",
+   "frame": "Drew <> from <> into <> .",
+   "args": [
+    "1 gal",
+    "West Ridge",
+    "Fair Day"
+   ],
+   "resolved": true,
+   "before_text": "West Ridge is already open."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Chapel Row is closed.",
+   "frame": "<> is <> .",
+   "args": [
+    "Chapel Row",
+    "closed"
+   ],
+   "resolved": true,
+   "before_text": "Drew 1 gal from West Ridge into Fair Day."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache.",
+   "frame": "<> is single-varietal ( <> ) ; <> is <> .",
+   "args": [
+    "Fair Day",
+    "Chenin",
+    "Creek Bed",
+    "Grenache"
+   ],
+   "resolved": false,
+   "before_text": "Chapel Row is closed."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Drew 1 gal from West Ridge into Fair Day.",
+   "frame": "Drew <> from <> into <> .",
+   "args": [
+    "1 gal",
+    "West Ridge",
+    "Fair Day"
+   ],
+   "resolved": true,
+   "before_text": "Fair Day is not bottled."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Chapel Row is closed.",
+   "frame": "<> is <> .",
+   "args": [
+    "Chapel Row",
+    "closed"
+   ],
+   "resolved": true,
+   "before_text": "Drew 1 gal from West Ridge into Fair Day."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache.",
+   "frame": "<> is single-varietal ( <> ) ; <> is <> .",
+   "args": [
+    "Fair Day",
+    "Chenin",
+    "Creek Bed",
+    "Grenache"
+   ],
+   "resolved": false,
+   "before_text": "Chapel Row is closed."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Drew 1 gal from West Ridge into Fair Day.",
+   "frame": "Drew <> from <> into <> .",
+   "args": [
+    "1 gal",
+    "West Ridge",
+    "Fair Day"
+   ],
+   "resolved": true,
+   "before_text": "Returned 1 gal to West Ridge from Fair Day."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Drew 3 gal from West Ridge into Fair Day.",
+   "frame": "Drew <> from <> into <> .",
+   "args": [
+    "3 gal",
+    "West Ridge",
+    "Fair Day"
+   ],
+   "resolved": true,
+   "before_text": "West Ridge is already open."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Drew 1 gal from West Ridge into Fair Day.",
+   "frame": "Drew <> from <> into <> .",
+   "args": [
+    "1 gal",
+    "West Ridge",
+    "Fair Day"
+   ],
+   "resolved": true,
+   "before_text": "Chapel Row is already closed."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Chapel Row is closed.",
+   "frame": "<> is <> .",
+   "args": [
+    "Chapel Row",
+    "closed"
+   ],
+   "resolved": true,
+   "before_text": "Drew 1 gal from West Ridge into Fair Day."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache.",
+   "frame": "<> is single-varietal ( <> ) ; <> is <> .",
+   "args": [
+    "Fair Day",
+    "Chenin",
+    "Creek Bed",
+    "Grenache"
+   ],
+   "resolved": false,
+   "before_text": "Chapel Row is closed."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> holds <> ; cannot draw <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "West Ridge holds 0 gal; cannot draw 1.",
+   "frame": "<> holds <> ; cannot draw <> .",
+   "args": [
+    "West Ridge",
+    "0 gal",
+    "1"
+   ],
+   "resolved": true,
+   "before_text": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache.",
+   "frame": "<> is single-varietal ( <> ) ; <> is <> .",
+   "args": [
+    "Fair Day",
+    "Chenin",
+    "Creek Bed",
+    "Grenache"
+   ],
+   "resolved": false,
+   "before_text": "West Ridge holds 0 gal; cannot draw 1."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> holds <> ; cannot draw <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "West Ridge holds 0 gal; cannot draw 3.",
+   "frame": "<> holds <> ; cannot draw <> .",
+   "args": [
+    "West Ridge",
+    "0 gal",
+    "3"
+   ],
+   "resolved": true,
+   "before_text": "Cloister is not bottled."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Drew 1 gal from West Ridge into Fair Day.",
+   "frame": "Drew <> from <> into <> .",
+   "args": [
+    "1 gal",
+    "West Ridge",
+    "Fair Day"
+   ],
+   "resolved": true,
+   "before_text": "Returned 1 gal to West Ridge from Fair Day."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> holds <> ; cannot draw <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "West Ridge holds 0 gal; cannot draw 3.",
+   "frame": "<> holds <> ; cannot draw <> .",
+   "args": [
+    "West Ridge",
+    "0 gal",
+    "3"
+   ],
+   "resolved": true,
+   "before_text": "West Ridge is already open."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> holds <> ; cannot draw <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "West Ridge holds 0 gal; cannot draw 1.",
+   "frame": "<> holds <> ; cannot draw <> .",
+   "args": [
+    "West Ridge",
+    "0 gal",
+    "1"
+   ],
+   "resolved": true,
+   "before_text": "Opened Chapel Row."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> holds <> ; cannot draw <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "West Ridge holds 0 gal; cannot draw 3.",
+   "frame": "<> holds <> ; cannot draw <> .",
+   "args": [
+    "West Ridge",
+    "0 gal",
+    "3"
+   ],
+   "resolved": true,
+   "before_text": "Fair Day is not bottled."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> holds <> ; cannot draw <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "West Ridge holds 0 gal; cannot draw 1.",
+   "frame": "<> holds <> ; cannot draw <> .",
+   "args": [
+    "West Ridge",
+    "0 gal",
+    "1"
+   ],
+   "resolved": true,
+   "before_text": "Cloister is not bottled."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "West Ridge holds 1 gal; cannot draw 3.",
+   "frame": "<> holds <> ; cannot draw <> .",
+   "args": [
+    "West Ridge",
+    "1 gal",
+    "3"
+   ],
+   "resolved": false,
+   "before_text": "Returned 1 gal to West Ridge from Fair Day."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Drew 1 gal from West Ridge into Fair Day.",
+   "frame": "Drew <> from <> into <> .",
+   "args": [
+    "1 gal",
+    "West Ridge",
+    "Fair Day"
+   ],
+   "resolved": true,
+   "before_text": "Closed Chapel Row."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> holds <> ; cannot draw <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "West Ridge holds 0 gal; cannot draw 3.",
+   "frame": "<> holds <> ; cannot draw <> .",
+   "args": [
+    "West Ridge",
+    "0 gal",
+    "3"
+   ],
+   "resolved": true,
+   "before_text": "Creek Bed is already open."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> holds <> ; cannot draw <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "West Ridge holds 0 gal; cannot draw 1.",
+   "frame": "<> holds <> ; cannot draw <> .",
+   "args": [
+    "West Ridge",
+    "0 gal",
+    "1"
+   ],
+   "resolved": true,
+   "before_text": "Fair Day is not bottled."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> holds <> ; cannot draw <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "West Ridge holds 0 gal; cannot draw 3.",
+   "frame": "<> holds <> ; cannot draw <> .",
+   "args": [
+    "West Ridge",
+    "0 gal",
+    "3"
+   ],
+   "resolved": true,
+   "before_text": "Picnic is not bottled."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Drew 1 gal from West Ridge into Fair Day.",
+   "frame": "Drew <> from <> into <> .",
+   "args": [
+    "1 gal",
+    "West Ridge",
+    "Fair Day"
+   ],
+   "resolved": true,
+   "before_text": "Returned 3 gal to West Ridge from Fair Day."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> holds <> ; cannot draw <> .",
+    "<> is <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Chapel Row is closed.",
+   "frame": "<> is <> .",
+   "args": [
+    "Chapel Row",
+    "closed"
+   ],
+   "resolved": true,
+   "before_text": "Drew 1 gal from West Ridge into Fair Day."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache.",
+   "frame": "<> is single-varietal ( <> ) ; <> is <> .",
+   "args": [
+    "Fair Day",
+    "Chenin",
+    "Creek Bed",
+    "Grenache"
+   ],
+   "resolved": false,
+   "before_text": "Chapel Row is closed."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Drew 1 gal from West Ridge into Fair Day.",
+   "frame": "Drew <> from <> into <> .",
+   "args": [
+    "1 gal",
+    "West Ridge",
+    "Fair Day"
+   ],
+   "resolved": true,
+   "before_text": "Creek Bed is already open."
+  },
+  {
+   "discriminating": true,
+   "admissible_before": [
+    "<> is <> .",
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Chapel Row is closed.",
+   "frame": "<> is <> .",
+   "args": [
+    "Chapel Row",
+    "closed"
+   ],
+   "resolved": true,
+   "before_text": "Drew 1 gal from West Ridge into Fair Day."
+  },
+  {
+   "discriminating": false,
+   "admissible_before": [
+    "Drew <> from <> into <> ."
+   ],
+   "returned": "Fair Day is single-varietal (Chenin); Creek Bed is Grenache.",
+   "frame": "<> is single-varietal ( <> ) ; <> is <> .",
+   "args": [
+    "Fair Day",
+    "Chenin",
+    "Creek Bed",
+    "Grenache"
+   ],
+   "resolved": false,
+   "before_text": "Chapel Row is closed."
+  }
+ ],
+ "discriminating": 14,
+ "held_out_profiles": {
+  "before": {
+   "one outcome was admissible and it happened": 56,
+   "several outcomes remained admissible; the one that happened was among them": 57,
+   "one outcome was admissible and a different one happened": 10
+  },
+  "discriminating occasions only": {
+   "one outcome was admissible and it happened": 36,
+   "several outcomes remained admissible; the one that happened was among them": 69,
+   "several outcomes remained admissible and none of them happened": 5,
+   "no outcome is established for this state": 12,
+   "one outcome was admissible and a different one happened": 1
+  },
+  "every occasion seen": {
+   "one outcome was admissible and it happened": 55,
+   "several outcomes remained admissible; the one that happened was among them": 57,
+   "one outcome was admissible and a different one happened": 11
+  }
+ }
+}

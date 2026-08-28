@@ -41,7 +41,7 @@ depends on names nothing makes the model abstain rather than guess.
 from __future__ import annotations
 
 from collections import Counter
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from typing import Any
 
 from semabi.compiler.v4 import emission as emit_mod
@@ -140,6 +140,156 @@ class Role:
 
 
 @dataclass(frozen=True)
+class Vouch:
+    """Why an event is admissible here: the occasions that vouch for it, and on what.
+
+    ``condition`` is the largest conjunction this state shares with both witnesses, and
+    ``covers`` is every fitting occasion it reaches -- all of them of this event, which is what
+    makes the rule justified rather than merely available.
+    """
+    event: str
+    witnesses: tuple[int, ...]
+    condition: tuple
+    covers: int
+    # True when this control has never been seen to do anything else.  Then unanimity among
+    # admissible hypotheses is vacuous -- there is only one label in the space -- and the model
+    # is agreeing with itself rather than being forced by evidence.  Truncating blend's
+    # `Record draw` to three occasions produces exactly this: one event, the whole state space
+    # vouched for it, and 71 of 123 held-out actions wrong.
+    sole: bool = False
+
+    def __str__(self) -> str:
+        from semabi.compiler.induce import _lit_str
+        cond = " & ".join(_lit_str(l) for l in self.condition) or "anything this control does"
+        return f"{describe(self.event)} <- {cond}  [{self.covers} occasions]"
+
+
+class Evidence:
+    """The fitting occasions of one control, and what any justified rule could say from them.
+
+    The decision list is a *point* hypothesis.  Many ordered lists fit the same evidence, and
+    where they disagree about a held-out state the list the search returned is one vote rather
+    than a conclusion.  This asks the question the list cannot: given everything observed for
+    this control, which events could a justified rule assign to *this* state?
+
+    A rule is admissible when it is a conjunction over the literal language that (a) this state
+    satisfies, (b) reaches at least ``MIN_COVER`` fitting occasions of one event, and (c)
+    reaches no occasion of any other -- the same two refusals the greedy learner already makes,
+    read as a definition of justification rather than as a stopping rule.  An adversary who
+    wants a decision list to answer ``e`` here puts such a rule at the top; if no such rule
+    exists, no consistent list can answer ``e`` here by a rule at all.
+
+    The search is exact and quadratic, not a heuristic, and the argument is short.  A
+    conjunction this state satisfies is a subset of its literals; its cover is the intersection
+    of the occasions of its literals, so covers shrink as conjunctions grow.  For a witness set
+    ``S`` the most specific conjunction available is ``L(state) & ⋂_{i∈S} L(i)``, which has the
+    *smallest* cover and therefore the best chance of purity.  Adding a third witness can only
+    shrink the conjunction and so enlarge the cover: if every pair fails purity, every larger
+    set fails too.  So enumerating pairs of same-event occasions decides the question.
+
+    Literals are held as bitmasks over one interned vocabulary, which is what makes 3750 pairs
+    against 150 occasions a fraction of a second rather than a minute.
+    """
+
+    def __init__(self, rows, refuse=None):
+        self.events: list[str] = []
+        self.index: dict[tuple, int] = {}
+        self.masks: list[int] = []
+        self.by_event: dict[str, list[int]] = {}
+        for lits, event, _bound in rows:
+            mask = 0
+            for lit in lits:
+                if refuse is not None and refuse(lit):
+                    continue      # a literal no rule may use is not available to any hypothesis
+                bit = self.index.get(lit)
+                if bit is None:
+                    bit = self.index[lit] = len(self.index)
+                mask |= 1 << bit
+            self.masks.append(mask)
+            self.by_event.setdefault(event, []).append(len(self.events))
+            self.events.append(event)
+        self.of_bit = {b: lit for lit, b in self.index.items()}
+
+    def rows_for_refit(self):
+        """The occasions as they were given, so that more can be added to them."""
+        return [(set(self._condition(m)), e, frozenset())
+                for m, e in zip(self.masks, self.events)]
+
+    @classmethod
+    def extend(cls, evidence: "Evidence", extra) -> "Evidence":
+        """The same evidence with further occasions, refitted from scratch.
+
+        Rebuilding rather than mutating keeps the literal vocabulary a function of the whole
+        evidence, so an acquired occasion cannot silently change what an earlier one meant.
+        """
+        return cls(list(evidence.rows_for_refit()) + list(extra))
+
+    def _mask(self, literals) -> int:
+        mask = 0
+        for lit in literals:
+            bit = self.index.get(lit)
+            if bit is not None:
+                mask |= 1 << bit
+        return mask
+
+    def _condition(self, mask: int) -> tuple:
+        return tuple(sorted((self.of_bit[b] for b in range(mask.bit_length())
+                             if mask >> b & 1), key=str))
+
+    def _generalise(self, cond: int, other: list[int]) -> int:
+        """Drop every literal purity does not need, widening the claim to what is separated.
+
+        The conjunction a witness pair hands over is the *most specific* one available, and a
+        most specific conjunction usually reaches nothing but its own witnesses -- which is the
+        anti-memorisation refusal this compiler already makes about constants, in conjunction
+        form.  Dropping a literal can only enlarge the cover, so a minimal pure condition is
+        the widest claim the evidence still separates, and its cover is how much of that width
+        the evidence actually establishes.
+        """
+        for b in range(cond.bit_length()):
+            bit = 1 << b
+            if not cond & bit:
+                continue
+            smaller = cond & ~bit
+            if not any(smaller & self.masks[j] == smaller for j in other):
+                cond = smaller
+        return cond
+
+    def admissible(self, literals, *, corroborated: bool = False) -> dict[str, Vouch]:
+        """Event -> the widest justified rule this state satisfies, or nothing.
+
+        Empty means *not established*.  With ``corroborated`` the rule must additionally reach
+        an occasion beyond the two that built it: a condition covering only its own witnesses
+        is indistinguishable from naming them, which is the same refusal ``learn_pre`` makes
+        about a constant seen once.  Pairs decide the uncorroborated question exactly; with
+        corroboration they are a sound seed and the search is completed by generalisation, so
+        that answer is conservative -- it can miss an admissible event, never invent one.
+        """
+        here = self._mask(literals)
+        out: dict[str, Vouch] = {}
+        for event, idxs in self.by_event.items():
+            other = [j for j in range(len(self.events)) if self.events[j] != event]
+            best = None
+            for a in range(len(idxs)):
+                ma = here & self.masks[idxs[a]]
+                for b in range(a + 1, len(idxs)):
+                    cond = ma & self.masks[idxs[b]]
+                    if any(cond & self.masks[j] == cond for j in other):
+                        continue      # the condition reaches an occasion of another event
+                    cond = self._generalise(cond, other)
+                    covers = sum(1 for i in idxs if cond & self.masks[i] == cond)
+                    if best is None or covers > best.covers:
+                        best = Vouch(event, (idxs[a], idxs[b]), self._condition(cond), covers)
+                    if not corroborated:
+                        break
+                if best is not None and (not corroborated or best.covers > 2):
+                    break
+            if best is not None and (not corroborated or best.covers > 2):
+                out[event] = replace(best, sole=len(self.by_event) < 2)
+        return out
+
+
+@dataclass(frozen=True)
 class Rule:
     condition: tuple          # literals over role names, in the inducer's language
     event: str
@@ -159,6 +309,16 @@ class ControlOutcome:
     default: str = UNDETERMINED
     fitted: int = 0
     events: dict[str, int] = field(default_factory=dict)
+    # The fitting occasions, kept.  The decision list is one hypothesis; `admissible` asks
+    # which events *any* justified hypothesis could assign here, and that question is about
+    # the evidence rather than about the list the search happened to find.
+    evidence: "Evidence | None" = None
+    # What each event *durably did*, as the kinds and slots that changed.  An interaction is
+    # one behaviour: a draw moves gallons and says so, a refusal changes nothing and says why.
+    # Holding the delta on the branch is what stops the model claiming a transfer message with
+    # no transfer, which it did at 86 of blend's 267 held-out claims when the outcome layer
+    # and the operator layer answered separately.
+    deltas: dict[str, dict[tuple, int]] = field(default_factory=dict)
     # Which role fills each argument position of each event.  This is what makes the answer a
     # parameterized output rather than a sentence: `already_bottled(<the object the Blend
     # select names>)` instead of `already_bottled(Festival White)`.
@@ -207,6 +367,50 @@ class ControlOutcome:
             if all(l in literals for l in rule.condition):
                 return rule.event
         return self.default
+
+    def admissible(self, literals: set, *, corroborated: bool = False) -> dict[str, "Vouch"]:
+        """Every event some *justified* rule could assign to this state, with its witness.
+
+        This is the model's answer when the question is what the evidence establishes rather
+        than what one search found.  See :class:`Evidence`.
+        """
+        if self.evidence is None:
+            return {}
+        return self.evidence.admissible(literals, corroborated=corroborated)
+
+    def delta(self, event: str) -> tuple[frozenset, str]:
+        """The durable change this event implies, and how well the evidence pins it.
+
+        ``settled`` where every occasion of the event changed the same kinds and slots --
+        which is what blend, and every control of it, actually show.  Where they did not, the
+        shape is returned as the set it is: the branch is one behaviour whose delta this
+        evidence has not resolved, which is a different thing from a branch with no delta.
+        """
+        shapes = self.deltas.get(event) or {}
+        if not shapes:
+            return frozenset(), "unobserved"
+        if len(shapes) == 1:
+            return frozenset(next(iter(shapes))), "settled"
+        return frozenset(frozenset(k) for k in shapes), "several shapes"
+
+    def answer(self, state, owner) -> "Answer":
+        """The semantic ABI call: what does this control do, in this grounded pre-state?
+
+        Reads only the pre-state.  Nothing about how the action turns out enters here, which is
+        what makes the answer a prediction rather than a description.
+        """
+        bound, status = self.bind(state, owner)
+        from semabi.compiler.v4 import outcome as _self          # literals need the inducer
+        options = self.admissible(_self._pending_literals(self, state, bound, status),
+                                  corroborated=True)
+        if not options:
+            return Answer(NOTHING_ESTABLISHED)
+        events = tuple(sorted(options))
+        return Answer(FORCED_ONE if len(events) == 1 else SEVERAL_OPEN, events,
+                      sole=len(events) == 1 and options[events[0]].sole,
+                      delta={e: self.delta(e) for e in events},
+                      arguments={e: self.arguments(e, bound) for e in events},
+                      why={e: str(v) for e, v in options.items()})
 
     def arguments(self, event: str, bound: dict) -> dict[int, str]:
         """The values the predicted event's argument positions take in this state."""
@@ -263,6 +467,25 @@ def roles_of(inducer, operators) -> dict[str, Role]:
 
 
 # ------------------------------------------------------------------ learning
+
+_INDUCER = None
+
+
+def bind_language(inducer) -> None:
+    """Hand the literal language to the models, so an ABI call needs only a state.
+
+    The literals are the inducer's, and a `ControlOutcome` that has to be given the inducer at
+    every call is an instrument rather than an interface.
+    """
+    global _INDUCER
+    _INDUCER = inducer
+
+
+def _pending_literals(model, state, bound, status) -> set:
+    if _INDUCER is None:
+        raise RuntimeError("call outcome.bind_language(inducer) before asking a model")
+    return _literals(_INDUCER, state, bound, status)
+
 
 def _literals(inducer, state, binding: dict, status: dict) -> set:
     """The inducer's own literal language, over role names instead of operator parameters.
@@ -472,6 +695,9 @@ def learn_control(inducer, control: str, occasions, roles: dict[str, Role], *,
         subjects = {frame: frozenset(p.values()) for frame, p in out.arg_roles.items()}
         for frame in out.events:
             subjects.setdefault(frame, frozenset())
+    # The evidence itself, kept beside the list the search returns.  Building it here rather
+    # than inside the loop means it holds every occasion, not the residual.
+    out.evidence = Evidence(rows, refuse)
     remaining = list(rows)
     while remaining:
         rule = _best_rule(remaining, refuse, subjects)
@@ -502,6 +728,7 @@ def learn(inducer, *, permute: int | None = None,
     """
     from semabi.compiler.v4.consequence import clicked_control
 
+    bind_language(inducer)
     A, log = inducer.A, inducer.log
     by_control: dict[str, list] = {}
     ops_by_control: dict[str, list] = {}
@@ -531,14 +758,28 @@ def learn(inducer, *, permute: int | None = None,
             # is where that shows: eleven of its eighteen "returns nothing" answers were wrong,
             # every one of them from a control seen once or twice before the cut.
             silent = SILENT if len(rows) >= MIN_COVER else UNDETERMINED
-            out[control] = ControlOutcome(control, roles, [], silent, 0,
-                                          {silent: len(rows)})
+            model = ControlOutcome(control, roles, [], silent, 0, {silent: len(rows)})
+            # Returning nothing is an outcome, so the evidence for it is the occasions
+            # themselves.  Only where the live region never moved on *any* of them: for a
+            # control that sometimes speaks, an unchanged region is missing data rather than
+            # silence (see `emission.observed`) and must not be labelled as an event.
+            silent_rows = []
+            for tr, s_, obs_, _event in rows:
+                bound, status = model.bind(tr.before, _owner(A, obs_, s_))
+                silent_rows.append((_literals(inducer, tr.before, bound, status), SILENT,
+                                    frozenset(bound) | {OWNER}))
+            model.evidence = Evidence(silent_rows)
+            model.fitted = len(silent_rows)
+            out[control] = model
             continue
         occasions = []
+        deltas: dict[str, dict[tuple, int]] = {}
         for tr, s, obs, event in rows:
             if event is None:
                 continue      # the live region did not move: re-emission or silence, unknown
             occasions.append((tr.before, _owner(A, obs, s), event, tr.emission.args))
+            shape = delta_shape(tr)
+            deltas.setdefault(event, {})[shape] = deltas.setdefault(event, {}).get(shape, 0) + 1
         if permute is not None and occasions:
             import random
 
@@ -546,9 +787,72 @@ def learn(inducer, *, permute: int | None = None,
             random.Random(permute + len(occasions)).shuffle(shuffled)
             occasions = [(st, ow, ev, ar) for (st, ow, _e, _a), (ev, ar)
                          in zip(occasions, shuffled)]
-        out[control] = learn_control(inducer, control, occasions, roles,
-                                     subject_restricted=subject_restricted)
+        model = learn_control(inducer, control, occasions, roles,
+                              subject_restricted=subject_restricted)
+        model.deltas = deltas
+        out[control] = model
     return out
+
+
+@dataclass(frozen=True)
+class Answer:
+    """What the interface does, as the semantic ABI is now able to say it.
+
+    Three kinds of answer and they are not degrees of one confidence.  ``FORCED`` means every
+    justified rule over the completed evidence agrees; ``SEVERAL`` means the evidence leaves
+    more than one behaviour open and both are returned, because the structure of an ambiguity
+    is more useful than erasing it; ``NOTHING`` means no rule is justified here at all, which
+    is what a default was quietly answering over before.
+
+    ``sole`` marks the degenerate case where unanimity is vacuous because the control has never
+    been seen to do anything else.  ``delta`` is what the branch says it durably changes, and
+    ``arguments`` the objects the event is about, so an answer is a whole interaction rather
+    than a sentence.
+    """
+    status: str
+    outcomes: tuple = ()
+    sole: bool = False
+    delta: dict = None
+    arguments: dict = None
+    why: dict = None
+
+    def __str__(self) -> str:
+        if self.status == NOTHING_ESTABLISHED:
+            return "not established here"
+        parts = []
+        for e in self.outcomes:
+            shape, how = (self.delta or {}).get(e, (frozenset(), "unobserved"))
+            args = (self.arguments or {}).get(e) or {}
+            parts.append(f"{describe(e)}"
+                         + (f"({', '.join(str(v) for _, v in sorted(args.items()))})" if args
+                            else "")
+                         + (f" changing {sorted(shape)}" if how == "settled" and shape else
+                            "" if how == "settled" else f" [delta {how}]"))
+        head = ("forces" if self.status == FORCED_ONE else
+                "the only outcome ever seen is" if self.sole else "leaves open")
+        return head + " " + " | ".join(parts)
+
+
+FORCED_ONE = "forced"
+SEVERAL_OPEN = "several"
+NOTHING_ESTABLISHED = "nothing established"
+
+
+def delta_shape(tr) -> tuple:
+    """What a transition durably changed, as kinds and slots.
+
+    Not values.  Whether the model gets the *amount* right is what the VALUE check asks; what
+    is held on the branch is the shape of the transition, which is what makes "a transfer
+    happened" and "nothing happened" different claims.
+    """
+    d = tr.d
+    if d is None:
+        return ()
+    parts = [("add", o.tid) for o in d.added]
+    parts += [("remove", o.tid) for o in d.removed]
+    parts += [("set", k) for _oid, k, _a, _b in d.attr_changes]
+    parts += [("rel", k) for _oid, k, _a, _b in d.rel_changes]
+    return tuple(sorted(set(parts)))
 
 
 def _owner(A, obs, step):
@@ -569,6 +873,16 @@ NO_MODEL = "no outcome model for this control"
 # status line at all -- at 257 correct predictions out of 257, which is the vacuity this whole
 # layer of instruments exists to catch.
 NO_CHANNEL = "this application has no live region, so there is nothing to predict"
+# The version-space verdicts.  `NOT_ESTABLISHED` is the one the decision list cannot say: it
+# means no two occasions of any event vouch for this state under any pure condition, so every
+# answer here would be an extrapolation rather than a claim the evidence supports.
+FORCED_RIGHT = "one outcome was admissible and it happened"
+FORCED_WRONG = "one outcome was admissible and a different one happened"
+SOLE_RIGHT = "the only outcome ever seen on this control, and it happened"
+SOLE_WRONG = "the only outcome ever seen on this control, and something else happened"
+SEVERAL_AMONG = "several outcomes remained admissible; the one that happened was among them"
+SEVERAL_MISSING = "several outcomes remained admissible and none of them happened"
+NOT_ESTABLISHED = "no outcome is established for this state"
 
 WITH_ARGUMENTS = "with its arguments"
 FRAME_ONLY = "the event alone"
@@ -629,6 +943,72 @@ def score_step(model, step, *, with_arguments: bool = True) -> dict:
             "arguments": args}
 
 
+def score_step_admissible(model, step, *, corroborated: bool = False) -> dict:
+    """The same held-out click, asked of the evidence rather than of the chosen list.
+
+    Four answers instead of two.  The list either fires or falls to its default; the evidence
+    either forces one event, leaves several admissible, or establishes nothing here.  The third
+    is the one that matters: it is what a two-occasion default was silently converting into a
+    universal law.
+    """
+    from semabi.compiler.v4.consequence import clicked_control, _owner_object
+
+    A, log = model.abstractor, model.log
+    pre, post = log.obs(step.before), log.obs(step.after)
+    control = clicked_control(A, pre, step)
+    got = model.outcomes.get(control)
+    out = {"step": step.step, "control": control}
+    if got is None:
+        return {**out, "verdict": NO_MODEL}
+    if not emit_mod.live_nodes(post):
+        return {**out, "verdict": NO_CHANNEL}
+    vocabulary = getattr(A, "emissions", None)
+    after_text, before_text = emit_mod.live_text(post), emit_mod.live_text(pre)
+    observed = (emit_mod.lift_event(after_text, post, pre, vocabulary=vocabulary)
+                if after_text is not None else None)
+    state = A.abstract(pre)
+    owner = _owner_object(A, A.parsed(pre), state, step.action.target)
+    bound, status = got.bind(state, owner)
+    options = got.admissible(_literals(model.inducer, state, bound, status),
+                             corroborated=corroborated)
+    out["admissible"] = sorted(options)
+    out["observed"] = None if observed is None else observed.frame
+    out["returned"] = after_text
+    if not options:
+        return {**out, "verdict": NOT_ESTABLISHED,
+                "detail": f"{got.fitted} occasions of this control vouch for no rule here"}
+    if observed is None:
+        # The live region did not move.  A silent step is consistent with any admissible event
+        # whose rendering is what is already standing there, which the frame alone cannot say.
+        if len(options) > 1:
+            return {**out, "verdict": SEVERAL_AMONG,
+                    "detail": "the live region did not move", "level": SILENT}
+        only = next(iter(options))
+        return {**out, "verdict": SOLE_RIGHT if options[only].sole else FORCED_RIGHT,
+                "detail": "the live region did not move", "level": SILENT}
+    got_frame = observed.frame
+    if len(options) == 1:
+        only = next(iter(options))
+        sole = options[only].sole
+        if only != got_frame:
+            return {**out, "verdict": SOLE_WRONG if sole else FORCED_WRONG,
+                    "level": FRAME_ONLY, "why": str(options[only])}
+        args = got.arguments(only, bound)
+        wrong_args = {k: (v, observed.args[k] if k < len(observed.args) else None)
+                      for k, v in args.items()
+                      if k >= len(observed.args) or observed.args[k] != v}
+        if wrong_args:
+            return {**out, "verdict": SOLE_WRONG if sole else FORCED_WRONG,
+                    "level": WITH_ARGUMENTS,
+                    "arguments": wrong_args, "why": str(options[only])}
+        return {**out, "verdict": SOLE_RIGHT if sole else FORCED_RIGHT,
+                "level": WITH_ARGUMENTS if args else FRAME_ONLY,
+                "arguments": args, "why": str(options[only])}
+    return {**out,
+            "verdict": SEVERAL_AMONG if got_frame in options else SEVERAL_MISSING,
+            "why": [str(v) for v in options.values()][:4]}
+
+
 def digest(models: dict) -> str:
     """A content hash of every outcome model, for comparing two fits.
 
@@ -646,7 +1026,16 @@ def digest(models: dict) -> str:
                          "events": got.events,
                          "roles": sorted(got.roles),
                          "arguments": {f: dict(sorted(p.items()))
-                                       for f, p in sorted(got.arg_roles.items())}}
+                                       for f, p in sorted(got.arg_roles.items())},
+                         # The occasions themselves, and the delta each event carries.  The
+                         # version space answers from these rather than from the rules, so a
+                         # future-deletion attack that fingerprinted only the rules would no
+                         # longer be attacking the thing that makes the predictions.
+                         "deltas": {e: sorted(map(str, shapes))
+                                    for e, shapes in sorted(got.deltas.items())},
+                         "evidence": ([] if got.evidence is None else
+                                      sorted(f"{e}|{sorted(map(str, lits))}"
+                                             for lits, e, _ in got.evidence.rows_for_refit()))}
                for control, got in sorted(models.items())}
     return hashlib.sha256(json.dumps(payload, sort_keys=True,
                                      default=str).encode()).hexdigest()[:16]
