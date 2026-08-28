@@ -85,7 +85,7 @@ yet reached.  Specifically:
 * Blend's `678/678 prospective UNIQUE` is withdrawn as prospective evidence.  The query itself
   is not withdrawn -- under a properly scoped prefix fit it is still learned -- but uniqueness
   was the wrong property to report.  What replaces it: across two splits the referring queries
-  name the object that bore the effect **556 times out of 556** where the effect happened
+  name the object that bore the effect **661 times out of 665** where the effect happened
   somewhere, against a chance rate near 0.39.  The failures are all opportunities where nothing
   of the type bore the effect, which is an applicability defect and not the expression's.
 * Harbour's condition for closing a berth is not learnable at a half-trace split under strict

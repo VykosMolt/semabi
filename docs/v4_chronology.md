@@ -378,10 +378,15 @@ object of the type bore it at all.  Conditional on the effect happening somewher
 
 At a 0.7 split the same measurement, over a larger query set, says the same thing more loudly:
 35 of 38 operators learn a query, 848 opportunities are determinate, the named object bore the
-effect 413 times and the wrong object **0** times.  Combined across the two splits the queries
-name the right object **556 times out of 556** where the effect happened somewhere, against a
-chance rate of about 0.37.  The cases they get no credit for are the refusals, where nothing of
-the type bore the effect and the query's correctness is simply not testable.
+effect 413 times and the wrong object **0** times.  Combined with the 248 of 252 above, the
+queries name the right object **661 times out of 665** where the effect happened somewhere,
+against a chance rate of about 0.37.  The cases they get no credit for are the refusals, where
+nothing of the type bore the effect and the query's correctness is simply not testable.
+
+An earlier draft of this paragraph said 556 of 556, which was wrong twice over: it added the
+0.5 figure from *before* the supplied set was corrected to the 0.7 figure from after, and in
+doing so carried across a "no wrong answers" that the corrected measurement does not have.
+There are four.
 
 The queries also name *nothing* on 898 opportunities at the 0.5 split, and that number is one
 learned query rather than a weakness of the form.  Five of the six controls they name are
