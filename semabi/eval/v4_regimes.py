@@ -61,7 +61,7 @@ def _shape(model) -> dict:
 
 
 def compare(run_dir: Path, chain: Path, reading_name: str, control: str, *,
-            split: float = 0.5, min_support: int = 2) -> dict:
+            split: float = 0.5, min_support: int = 2, stride: int = 1) -> dict:
     from semabi.eval.v4_consequence_run import _candidates
 
     readings = {c.name: c.reading for c in _candidates(chain)}
@@ -83,7 +83,14 @@ def compare(run_dir: Path, chain: Path, reading_name: str, control: str, *,
     # The prequential column rebuilds per action, so it is restricted to the steps the other
     # two were asked about: a regime that answered a different set of questions cannot be
     # compared with them.
-    steps = [t for t in pq.scored_steps(run_dir, control) if t >= out["cut"]]
+    #
+    # `stride` exists because that rebuild is the whole cost of this instrument -- about a
+    # minute an action -- and a control firing 123 times after the cut is two hours of
+    # compiling for one report.  Scoring every nth is sound: the model at step t is built from
+    # everything before t either way, so a stride skips the question and never the evidence.
+    # The steps actually used are recorded, so the three columns are compared on the same ones.
+    steps = [t for t in pq.scored_steps(run_dir, control) if t >= out["cut"]][::stride]
+    out["prequential_stride"] = stride
     snaps = pq.run(run_dir, reading, steps, min_support=min_support)
     verdicts: Counter = Counter()
     for s in snaps:
@@ -108,11 +115,14 @@ def main(argv=None) -> int:
     ap.add_argument("--control", required=True)
     ap.add_argument("--split", type=float, default=0.5)
     ap.add_argument("--min-support", type=int, default=2)
+    ap.add_argument("--stride", type=int, default=1,
+                    help="score every nth held-out action in the prequential column; the "
+                         "model still sees every intervening transition")
     ap.add_argument("--out", type=Path, default=None)
     a = ap.parse_args(argv)
 
     report = compare(a.run, a.chain, a.reading, a.control, split=a.split,
-                     min_support=a.min_support)
+                     min_support=a.min_support, stride=a.stride)
     path = a.out or OUT / f"regimes_{a.run.name}_{a.reading.replace(' ', '_')}.json"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(report, indent=1) + "\n")
