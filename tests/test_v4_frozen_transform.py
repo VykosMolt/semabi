@@ -274,3 +274,78 @@ def test_what_an_action_does_cannot_reach_the_model_that_predicted_it(tmp_path):
     va, vb = a.before_action(4), b.before_action(4)
     assert set(va.observations) == set(vb.observations)
     assert [(s.before, s.after) for s in va.steps] == [(s.before, s.after) for s in vb.steps]
+
+
+# ------------------------------------------------------------------ attacking the prequential evaluator
+
+@pytest.mark.skipif(not (HARBOUR_RUN / "steps.jsonl").exists(), reason="retained trace absent")
+def test_a_prequential_model_is_not_built_from_the_outcome_it_is_about_to_predict():
+    """The frontier, on the real pipeline rather than on a fixture.
+
+    Everything the model was fitted from must be an observation the agent had already seen when
+    it chose the action: a completed transition, or the page in front of it.  The post-state is
+    the one thing that must not be there, and where an action changes nothing the two coincide
+    -- so the assertion is about the *step list* the model learned transitions from, not merely
+    about which signatures are present.
+    """
+    from semabi.compiler.v4 import consequence as csq
+    from semabi.eval.v4_consequence_run import _candidates
+
+    readings = {c.name: c.reading for c in _candidates(HARBOUR_CHAIN)}
+    t = 200
+    model = csq.fit(HARBOUR_RUN, readings["joint discrimination x2"], at=t,
+                    regime=csq.CAUSAL_PREQUENTIAL)
+    seen, whole = model.evidence, model.log
+    assert model.cut == t
+    assert seen is not whole, "the model must record the view it learned from"
+    assert [s.step for s in seen.steps] == list(range(t))
+    assert whole.steps[t].before in seen.observations
+
+    after = whole.steps[t].after
+    if after != whole.steps[t].before:          # a no-op action is looking at its own outcome
+        assert after not in seen.observations
+    reachable = {s.before for s in whole.steps[:t]} | {s.after for s in whole.steps[:t]} \
+        | {whole.steps[t].before}
+    assert set(seen.observations) <= reachable
+
+
+@pytest.mark.skipif(not (HARBOUR_RUN / "steps.jsonl").exists(), reason="retained trace absent")
+def test_deleting_the_future_does_not_move_the_model_that_predicted_the_present(tmp_path):
+    """Future deletion invariance, on the real trace.
+
+    The trace is truncated immediately after the action under test and the model rebuilt.  If
+    anything downstream of the prediction had reached the model, the fingerprint would move.
+    This is the strongest available chronology regression because it changes the data rather
+    than the code, so no accessor or flag can satisfy it by accident.
+    """
+    import json
+    import shutil
+
+    from semabi.compiler.v4 import consequence as csq
+    from semabi.compiler.v4.prequential import fingerprint
+    from semabi.compiler.evidence import EvidenceLog
+    from semabi.eval.v4_consequence_run import _candidates
+
+    readings = {c.name: c.reading for c in _candidates(HARBOUR_CHAIN)}
+    reading = readings["joint discrimination x2"]
+    t = 120
+
+    whole = csq.fit(HARBOUR_RUN, reading, at=t, regime=csq.CAUSAL_PREQUENTIAL)
+
+    truncated = tmp_path / "truncated"
+    truncated.mkdir()
+    src = EvidenceLog(HARBOUR_RUN)
+    keep = {s.before for s in src.steps[:t]} | {s.after for s in src.steps[:t]} \
+        | {src.steps[t].before}
+    (truncated / "observations.jsonl").write_text("".join(
+        line + "\n" for line in (HARBOUR_RUN / "observations.jsonl").read_text().splitlines()
+        if json.loads(line)["sig"] in keep))
+    (truncated / "steps.jsonl").write_text("".join(
+        line + "\n" for line in (HARBOUR_RUN / "steps.jsonl").read_text().splitlines()[:t]))
+    for extra in ("meta.json",):
+        if (HARBOUR_RUN / extra).exists():
+            shutil.copy(HARBOUR_RUN / extra, truncated / extra)
+
+    cut = csq.fit(truncated, reading, at=t, regime=csq.CAUSAL_PREQUENTIAL)
+    assert fingerprint(cut.abstractor) == fingerprint(whole.abstractor)
+    assert len(cut.operators) == len(whole.operators)

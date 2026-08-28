@@ -127,7 +127,8 @@ class ScopedPrediction:
 # experiment; they answer different questions and a report that mixes them says nothing.
 TRANSDUCTIVE = "TRANSDUCTIVE"      # schema from the whole retained trace: diagnostic only
 FROZEN_PREFIX = "FROZEN_PREFIX"    # schema, action model and queries from the prefix alone
-REGIMES = (FROZEN_PREFIX, TRANSDUCTIVE)
+CAUSAL_PREQUENTIAL = "CAUSAL_PREQUENTIAL"   # everything observed before this action, and no more
+REGIMES = (FROZEN_PREFIX, TRANSDUCTIVE, CAUSAL_PREQUENTIAL)
 
 
 @dataclass
@@ -595,16 +596,25 @@ class Fit:
     split: float
     inducer: Any = None
     regime: str = FROZEN_PREFIX
+    evidence: Any = None   # the scoped view the model was actually built from
 
 
-def fit(run_dir: Path, reading, *, split: float = 0.6, min_support: int = 2,
-        regime: str = FROZEN_PREFIX) -> Fit:
-    """Compile one reading on the first ``split`` of a run, under a stated information regime.
+def fit(run_dir: Path, reading, *, split: float = 0.6, at: int | None = None,
+        min_support: int = 2, regime: str = FROZEN_PREFIX) -> Fit:
+    """Compile one reading on the evidence one regime says was available, and freeze it.
 
-    ``FROZEN_PREFIX`` fits the observation model from prefix observations only.  ``TRANSDUCTIVE``
-    lets the whole retained trace build the schema while still learning transitions from the
-    prefix; it is a diagnostic that measures how much of a result the suffix representation was
-    responsible for, and it is never prospective evidence.
+    The regime *is* the information boundary; there is one place that turns it into a view of
+    the trace, so a result cannot be produced under a boundary nobody named.
+
+    ``FROZEN_PREFIX`` fits the observation model from prefix observations only, then never
+    updates: zero-shot generalisation beyond the cut.  ``TRANSDUCTIVE`` lets the whole retained
+    trace build the schema while still learning transitions from the prefix; it measures how
+    much of a result the suffix representation was responsible for and is never prospective
+    evidence.  ``CAUSAL_PREQUENTIAL`` is the boundary an agent actually faces -- every completed
+    transition and the page in front of it, and nothing about how the action turns out.
+
+    ``at`` names the cut in steps, which is what a prequential loop wants; ``split`` names it as
+    a fraction, which is what a held-out experiment wants.
     """
     from semabi.compiler.compile_v4 import compile_v4
     from semabi.compiler.evidence import EvidenceLog
@@ -613,17 +623,22 @@ def fit(run_dir: Path, reading, *, split: float = 0.6, min_support: int = 2,
         raise ValueError(f"unknown information regime {regime!r}")
     run_dir = Path(run_dir)
     full = EvidenceLog(run_dir)
-    cut = int(len(full.steps) * split)
-    prefix = (full.through(cut) if regime == FROZEN_PREFIX
-              else full.transductively_through(cut))
+    cut = int(len(full.steps) * split) if at is None else at
+    split = cut / len(full.steps) if full.steps else split
+    prefix = {FROZEN_PREFIX: full.through,
+              TRANSDUCTIVE: full.transductively_through,
+              CAUSAL_PREQUENTIAL: full.before_action}[regime](cut)
     compiled = compile_v4(run_dir, min_support=min_support, write_diagnostics=False,
                           pinned=reading, evidence_log=prefix)
     # Fitting is over.  Everything after this reads observations the model must not learn from,
     # whichever regime built it: a transductive schema is a diagnostic, not a licence to keep
     # learning while it scores.
     compiled.inducer.A.freeze()
+    # `log` is the whole trace because scoring has to reach the steps being predicted.
+    # `evidence` is what the model was allowed to learn from, kept so that the frontier is
+    # something a caller can check rather than something it has to trust.
     return Fit(reading, compiled.inducer.A, compiled.inducer.operators, full, cut, split,
-               compiled.inducer, regime)
+               compiled.inducer, regime, prefix)
 
 
 def evaluate(run_dir: Path, reading, *, split: float = 0.6, min_support: int = 2,
@@ -663,8 +678,10 @@ def score(model: Fit, *, mutate: Callable[[str], str] | None = None,
     bridges: dict[int, dict[tuple[int, str], int]] = {}
     states: dict[int, Any] = {}
 
+    # "next" is the prequential evaluation point: the one action standing immediately after
+    # everything the model was allowed to learn from.
     evaluated = {"suffix": full.steps[cut:], "prefix": full.steps[:cut],
-                 "all": full.steps}[evaluate_on]
+                 "next": full.steps[cut:cut + 1], "all": full.steps}[evaluate_on]
     result.evaluated_steps = len(evaluated)
     for step in evaluated:
         if step.action.kind != "click" or step.action.target is None:
