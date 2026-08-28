@@ -582,10 +582,29 @@ Asserting everything instead is worse, as the filtered-`op.common` row shows.  N
 nor maximal is right; the right conditions are a particular subset, and nothing *within* the
 fitting evidence distinguishes them from the incidental ones.
 
-That names the next mechanism precisely, and it is not one this run should start: hold out part
-of the *prefix* when choosing between candidate literals.  All of it is causally available, so
-it costs no chronology, and it is the only signal available that separates a literal which
-generalises from one that happened to fit.
+The obvious next mechanism is to hold out part of the *prefix* when choosing between candidate
+literals -- all of it is causally available, so it costs no chronology, and it looks like the
+only signal that separates a literal which generalises from one that happened to fit.
+
+It was named as the next mechanism here and then measured, and it does not work.
+
+The diagnostic is encouraging.  Splitting each rule's counterexamples chronologically and
+scoring literals by their *worst* coverage across the two halves, the mean coverage on the later
+half rises from 0.70 to 0.79, and on the rule with the most support on the application it picks
+`attr:cell#0@4(?o1) == 'Open'` -- the source vat being open, one of the three ceiling facts --
+over the vintage-year correlate the greedy cover picks now, 0.33 against 0.12.
+
+End to end it is a no-op.  The same greedy cover with the same stopping rule, ranked by held-out
+coverage instead of full coverage, gives 126 right and 220 wrong against 126 and 218: precision
+36% against 37%, and identical on the steps where the application performs the action.  Eleven
+of the fifteen rules large enough to split pick the same literal either way, and where the pick
+changes it does not change the outcome.
+
+So that is the fourth fit-time quantity to fail as a predictor of prospective correctness, after
+negatives per positive, the learner's own unexplained-counterexample count, and rule support.
+**No statistic computed from the fitting evidence has predicted prospective correctness in this
+run.**  Whatever the next mechanism is, it cannot be one more way of ranking candidates by how
+they behave on the evidence they were drawn from.
 
 ## One deliberate compromise, challenged and upheld
 
