@@ -3,6 +3,16 @@
 Written for whoever continues this work. The filesystem and retained machine artifacts are
 authoritative; verify them rather than trusting this summary.
 
+Two documents are later than this one and supersede it where they disagree about a number:
+`docs/v4_chronology.md` (the information boundaries, and what holds under which) and
+`docs/v4_outcomes.md` (what an interaction *returns*, which is a kind of claim the model in
+this document could not make).  The custody and protocol record below is still the record.
+
+One custody note belongs here rather than there.  `docs/v4_outcomes.md` reports a blend result
+scored on `blend_book_holdout`, the history this chain designates HOLDOUT.  The mechanism was
+developed without it and scored on it once, which is a clean prospective use and also spends it
+for that question.
+
 ## Custody first
 
 * **V2 is frozen.** Tag `v2.0-causal-abstraction` is

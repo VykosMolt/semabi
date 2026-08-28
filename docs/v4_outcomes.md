@@ -94,7 +94,7 @@ text: blend's State column is `cask#0 = 'In'` while it reads "In cask" and `cell
 the tracker's merge left the vacated one standing, so `Festival White` -- whose State cell read
 "In cask" -- carried `cell#0@5 = 'Bottled'` from several actions earlier.  Every precondition
 learner downstream saw a blend that was both in cask and bottled.  **5.5% of every attribute
-value the learner saw on blend** (532 of 9636); now zero.  A carried value is dropped only
+value the learner saw on blend** (532 of 9636); now zero, and zero on all four applications.  A carried value is dropped only
 where the object is rendered on this page and does not render that value: carrying across
 views is what the tracker is for, and an object off screen is contradicted by nothing.
 `semabi/eval/v4_state_fidelity.py` is the audit and it needs no ground truth.  It also had to
@@ -146,9 +146,10 @@ picked out of the thirteen it learns:
     ...
     otherwise                 ->  undetermined
 
-The destination is bottled, the source is closed, the source holds none: three of the five
-conjuncts of the hidden operator's precondition, each attached to the event the application
-uses to announce it, and none of them named to the learner.  The other rules in that list are
+The destination is bottled, the source is closed, the source holds none.  Read against the
+hidden domain -- which is evaluator-side and which the compiler never sees -- those are three
+of the five conjuncts of `draw`'s precondition, each attached to the event the application uses
+to announce it, and none of them named to the learner.  The other rules in that list are
 `Drew` under conditions that are correlates of this trace -- the source's remaining gallons
 being 3, or 1 -- and what to do about them is the open problem below.
 
@@ -196,7 +197,9 @@ rendered at every click.  So every number below is reported with:
 
 * **the majority-frame control** -- always answering with the commonest event this control
   produced on the prefix, fitted and applied the same way.  On an application whose interface
-  mostly says one thing this is strong, and on cellar it wins.
+  mostly says one thing it is strong: it takes 58% of cellar's decided actions and 60% of
+  harbour's, against blend's 36%.  Before the "returns nothing" answer was made to need two
+  occasions it beat the model on cellar outright.
 * **the same control restricted to the actions the model decided**, because a model that
   answers only where the answer is easy has to be compared where it answered.
 * **claim variety** -- how many distinct events the model actually asserted.
@@ -547,3 +550,14 @@ clicks the rule did not fire on.
 `semabi.compiler.v4.emission.observed(before, after, vocabulary)` is the channel itself;
 `semabi.compiler.v4.outcome.learn(inducer)` the decision lists;
 `semabi.compiler.v4.outcome.score_step(fit, step)` one prediction.
+
+Four test files carry the claims that are not numbers.  `tests/test_v4_emission.py` pins what
+a frame is and that an unchanged live region is not an observed output.
+`tests/test_v4_outcome.py` pins the decision list on synthetic evidence: that it expresses a
+guard chain a rule set cannot, that it says it does not know rather than answering with the
+commonest event, that a condition fitted to one occasion is not a rule, and that whether a role
+names anything is itself a condition.  `tests/test_v4_creation.py` pins the minimal-witness
+count, including that a form already showing the values is not a creation.  And
+`tests/test_v4_outcome_chronology.py` is the future-deletion attack for the new information
+path -- delete the rest of the trace from disk, refit, and the outcome models must be
+identical.

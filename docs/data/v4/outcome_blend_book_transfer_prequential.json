@@ -1,0 +1,225 @@
+{
+ "run": "blend_book_transfer",
+ "reading": "joint discrimination x3",
+ "regime": "CAUSAL_PREQUENTIAL",
+ "split": 0.5,
+ "cut": 419,
+ "control": "Record draw",
+ "stride": 8,
+ "actions_scored": 17,
+ "ledger": {
+  "the event the interface returned": 13,
+  "a different event": 3,
+  "no determinate answer": 1
+ },
+ "by_level": {
+  "the event the interface returned / with its arguments": 13,
+  "a different event / the event alone": 2,
+  "a different event / with its arguments": 1
+ },
+ "accuracy_where_it_answered": 0.812,
+ "distinct_events_asserted": 5,
+ "rows": [
+  {
+   "step": 430,
+   "control": "button:Record draw",
+   "predicted": "<> holds <> ; cannot draw <> .",
+   "observed": "<> holds <> ; cannot draw <> .",
+   "returned": "North Wall holds 0 gal; cannot draw 1.",
+   "verdict": "the event the interface returned",
+   "level": "with its arguments",
+   "arguments": {
+    "0": "North Wall"
+   }
+  },
+  {
+   "step": 456,
+   "control": "button:Record draw",
+   "predicted": "Drew <> from <> into <> .",
+   "observed": "Drew <> from <> into <> .",
+   "returned": "Drew 1 gal from West Ridge into Festival White.",
+   "verdict": "the event the interface returned",
+   "level": "with its arguments",
+   "arguments": {
+    "1": "West Ridge",
+    "2": "Festival White"
+   }
+  },
+  {
+   "step": 473,
+   "control": "button:Record draw",
+   "predicted": "<> is already <> .",
+   "observed": "<> is already <> .",
+   "returned": "Festival White is already bottled.",
+   "verdict": "the event the interface returned",
+   "level": "with its arguments",
+   "arguments": {
+    "0": "Festival White"
+   }
+  },
+  {
+   "step": 502,
+   "control": "button:Record draw",
+   "predicted": "<> is already <> .",
+   "observed": "<> is already <> .",
+   "returned": "Festival White is already bottled.",
+   "verdict": "the event the interface returned",
+   "level": "with its arguments",
+   "arguments": {
+    "0": "Festival White"
+   }
+  },
+  {
+   "step": 516,
+   "control": "button:Record draw",
+   "predicted": "<> is already <> .",
+   "observed": "<> is already <> .",
+   "returned": "Festival White is already bottled.",
+   "verdict": "the event the interface returned",
+   "level": "with its arguments",
+   "arguments": {
+    "0": "Festival White"
+   }
+  },
+  {
+   "step": 578,
+   "control": "button:Record draw",
+   "predicted": "<> is single-varietal ( <> ) ; <> is <> .",
+   "observed": "Drew <> from <> into <> .",
+   "returned": "Drew 1 gal from Block 12 into Festival White.",
+   "verdict": "a different event",
+   "level": "the event alone"
+  },
+  {
+   "step": 593,
+   "control": "button:Record draw",
+   "predicted": "\u0000UNDETERMINED",
+   "observed": "Drew <> from <> into <> .",
+   "returned": "Drew 1 gal from Block 12 into Festival White.",
+   "verdict": "no determinate answer"
+  },
+  {
+   "step": 616,
+   "control": "button:Record draw",
+   "predicted": "<> is <> .",
+   "observed": "<> is <> .",
+   "returned": "Block 12 is closed.",
+   "verdict": "a different event",
+   "level": "with its arguments",
+   "arguments": {
+    "0": [
+     "Block",
+     "Block 12"
+    ]
+   }
+  },
+  {
+   "step": 649,
+   "control": "button:Record draw",
+   "predicted": "<> is already <> .",
+   "observed": "<> is already <> .",
+   "returned": "Festival White is already bottled.",
+   "verdict": "the event the interface returned",
+   "level": "with its arguments",
+   "arguments": {
+    "0": "Festival White"
+   }
+  },
+  {
+   "step": 665,
+   "control": "button:Record draw",
+   "predicted": "<> is already <> .",
+   "observed": "<> is already <> .",
+   "returned": "Festival White is already bottled.",
+   "verdict": "the event the interface returned",
+   "level": "with its arguments",
+   "arguments": {
+    "0": "Festival White"
+   }
+  },
+  {
+   "step": 694,
+   "control": "button:Record draw",
+   "predicted": "<> is already <> .",
+   "observed": "<> is already <> .",
+   "returned": "Festival White is already bottled.",
+   "verdict": "the event the interface returned",
+   "level": "with its arguments",
+   "arguments": {
+    "0": "Festival White"
+   }
+  },
+  {
+   "step": 733,
+   "control": "button:Record draw",
+   "predicted": "<> holds <> ; cannot draw <> .",
+   "observed": "<> holds <> ; cannot draw <> .",
+   "returned": "Low Barn holds 0 gal; cannot draw 1.",
+   "verdict": "the event the interface returned",
+   "level": "with its arguments",
+   "arguments": {
+    "0": "Low Barn"
+   }
+  },
+  {
+   "step": 749,
+   "control": "button:Record draw",
+   "predicted": "Drew <> from <> into <> .",
+   "observed": "Drew <> from <> into <> .",
+   "returned": "Drew 1 gal from Low Barn into Fair Day.",
+   "verdict": "the event the interface returned",
+   "level": "with its arguments",
+   "arguments": {
+    "1": "Low Barn",
+    "2": "Fair Day"
+   }
+  },
+  {
+   "step": 762,
+   "control": "button:Record draw",
+   "predicted": "Drew <> from <> into <> .",
+   "observed": "Drew <> from <> into <> .",
+   "returned": "Drew 1 gal from Low Barn into Fair Day.",
+   "verdict": "the event the interface returned",
+   "level": "with its arguments",
+   "arguments": {
+    "1": "Low Barn",
+    "2": "Fair Day"
+   }
+  },
+  {
+   "step": 798,
+   "control": "button:Record draw",
+   "predicted": "<> is <> .",
+   "observed": "<> is <> .",
+   "returned": "Low Barn is closed.",
+   "verdict": "the event the interface returned",
+   "level": "with its arguments",
+   "arguments": {
+    "0": "Low Barn"
+   }
+  },
+  {
+   "step": 810,
+   "control": "button:Record draw",
+   "predicted": "Drew <> from <> into <> .",
+   "observed": "<> is <> .",
+   "returned": "Low Barn is closed.",
+   "verdict": "a different event",
+   "level": "the event alone"
+  },
+  {
+   "step": 837,
+   "control": "button:Record draw",
+   "predicted": "Drew <> from <> into <> .",
+   "observed": "Drew <> from <> into <> .",
+   "returned": "Drew 1 gal from Low Barn into Fair Day.",
+   "verdict": "the event the interface returned",
+   "level": "with its arguments",
+   "arguments": {
+    "1": "Low Barn",
+    "2": "Fair Day"
+   }
+  }
+ ]
+}
