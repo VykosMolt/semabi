@@ -84,6 +84,9 @@ class EntityType:
 
 
 class Hypotheses:
+    # A number may key a unit that no word identifies.  See `_choose_key`.
+    numeric_keys_as_last_resort: bool = True
+
     def __init__(self, G: ObsGraph):
         self.G = G
         self.memo: dict = {}
@@ -688,6 +691,28 @@ class Hypotheses:
             # ties (within 0.05): the slot shown first (identity usually precedes description)
             if best is None or score > best[0] + 0.1 or (abs(score - best[0]) <= 0.1 and self._slot_order(uh, sid) < self._slot_order(uh, best[1])):
                 best = (score, sid, fd)
+        if best is None and self.numeric_keys_as_last_resort:
+            # Nothing textual identifies this unit.  A number may: blend's draw rows carry
+            # `Ticket 4`, unique among the rows, the same number standing with the same
+            # draw on every page, and the interface acts on the row by that number.  A
+            # number is refused above because in most tables it is an amount, and an amount
+            # can be unique by coincidence; here it is admitted only where no word does the
+            # job, on the same evidence a word is admitted on -- uniqueness among siblings,
+            # and determining the rest of the row -- so that a recurring structure with
+            # numeric identity is not read as slots of whatever encloses it.
+            for sid, st in uh.slots.items():
+                if sid.endswith("~") or sid.endswith("!") or sid == "col" or "|" in sid or st.n < 0.8 * n_inst:
+                    continue
+                uniq = st.unique_in_parent / st.n
+                crowded = st.crowded / st.n
+                if crowded > 0.1 or uniq < 0.5 or len(st.values) < 2 or st.numeric < st.n:
+                    continue
+                fd = self._fd(uh, sid)
+                score = uniq * fd
+                if best is None or score > best[0] + 0.1:
+                    best = (score, sid, fd)
+            if best:
+                uh.evidence.append(f"numeric key {best[1]}: no word identifies this unit")
         if best:
             uh.key_slot = best[1]
             uh.key_score = best[0]
@@ -778,6 +803,10 @@ class Hypotheses:
                 j = len(ka & kb) / min(len(ka), len(kb))  # overlap coefficient: one view may list a subset
                 if j < 0.5 or len(ka & kb) < 2:
                     continue
+                if (self._numeric_keyed(a.template) or self._numeric_keyed(b.template)) and not (
+                        self._names_the_kind(a.template, a.key_slot, b.template)
+                        or self._names_the_kind(b.template, b.key_slot, a.template)):
+                    continue      # two numbers alike are not two names of one thing
                 # contradiction: a unit type whose key repeats within one observation (different
                 # parents) cannot be the same entity as one where it does not -> link type;
                 # likewise a unit that comes into existence while the other already showed the
@@ -868,8 +897,15 @@ class Hypotheses:
                         if tid2 == et.tid or not ks:
                             continue
                         ov = len(vals & ks) / len(vals)
-                        if ov >= 0.5 and (best is None or ov > best[0]):
-                            best = (ov, tid2)
+                        if ov < 0.5 or (best is not None and ov <= best[0]):
+                            continue
+                        numeric_target = all(self._numeric_keyed(t2)
+                                             for t2 in self.entity_types[tid2].units)
+                        if numeric_target and not any(
+                                self._names_the_kind(t, sid, t2)
+                                for t2 in self.entity_types[tid2].units):
+                            continue
+                        best = (ov, tid2)
                     if best:
                         target = origin.get(best[1], best[1])
                         if target == et.tid:
@@ -897,6 +933,32 @@ class Hypotheses:
                         else:
                             et.contain[t] = ptid
                         et.evidence.append(f"{t[:30]} nested in T{ptid} ({c}/{len(self.units[t].instances)})")
+
+    def _slot_labels(self, t: str, sid: str) -> set[str]:
+        """The label tokens of the node holding this slot, lower-cased: `Ticket 4` -> {ticket}."""
+        u = self.units.get(t)
+        if u is None:
+            return set()
+        for ui in u.instances:
+            node = ui.slot_nodes.get(sid)
+            if node is not None:
+                return {x.lower() for x in self.G.labels(ui.sig, node)}
+        return set()
+
+    def _numeric_keyed(self, t: str) -> bool:
+        u = self.units.get(t)
+        return bool(u and u.key_slot and "|" not in u.key_slot
+                    and u.slots[u.key_slot].numeric == u.slots[u.key_slot].n)
+
+    def _names_the_kind(self, t: str, sid: str, other: str) -> bool:
+        """Does the slot carry a label the other unit's key carries?  A number names an
+        object of a numerically keyed type only where the interface says which kind of
+        number it is -- `Return ticket 4` names the draw `Ticket 4`; a blend's committed
+        gallons, `4`, overlap the ticket numbers by coincidence and name nothing."""
+        ou = self.units.get(other)
+        if ou is None or not ou.key_slot:
+            return False
+        return bool(self._slot_labels(t, sid) & self._slot_labels(other, ou.key_slot))
 
     def _parent_key(self, ui: UnitInstance) -> str | None:
         """The key of the unit instance enclosing this one, on the page it stands on.

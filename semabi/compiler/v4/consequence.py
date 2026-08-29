@@ -766,7 +766,8 @@ def _learn_queries(inducer, operators) -> dict:
                       if isinstance(v, tuple)})
                     for tr in op.positives]
         got = referring.ground(op, evidence, bound,
-                               inducer.memorises_the_fitting_instance)
+                               inducer.memorises_the_fitting_instance,
+                               referring.collection_types(inducer.A))
         if got.queries:
             out[op.name] = dict(got.queries)
     return out

@@ -5,45 +5,44 @@
   "regime": "FROZEN_PREFIX",
   "split": 0.5,
   "cut": 195,
-  "operators": 23,
-  "held_out_actions": 12,
-  "rules_offered_per_action": 3.33,
-  "applicable_claims_per_action": 6.0,
-  "distinct_decided_claims": 8,
+  "operators": 16,
+  "held_out_actions": 9,
+  "rules_offered_per_action": 2.11,
+  "applicable_claims_per_action": 5.33,
+  "distinct_decided_claims": 7,
   "composition": {
    "an interface response": {
-    "claims": 38,
-    "decided": 22,
-    "supported": 12,
-    "refuted": 10,
-    "supported_share": 0.545,
-    "distinct_claims": 6,
+    "claims": 35,
+    "decided": 19,
+    "supported": 10,
+    "refuted": 9,
+    "supported_share": 0.526,
+    "distinct_claims": 5,
     "examples": [
      "<> already stands in <> . = <> already stands in <> .",
      "<> moved from <> to <> . = <> moved from <> to <> .",
-     "Nothing chosen in the block list . = Nothing chosen in the block list .",
      "Nothing chosen in the hall list . = Nothing chosen in the hall list .",
      "Nothing chosen in the lot list . = Nothing chosen in the lot list .",
      "Nothing chosen in the vessel list . = Nothing chosen in the vessel list ."
     ]
    },
    "an object brought into being": {
-    "claims": 101,
-    "decided": 61,
-    "supported": 0,
-    "refuted": 61,
-    "supported_share": 0.0,
+    "claims": 26,
+    "decided": 6,
+    "supported": 2,
+    "refuted": 4,
+    "supported_share": 0.333,
     "distinct_claims": 1,
     "examples": [
      "id = new"
     ]
    },
    "removal": {
-    "claims": 105,
-    "decided": 72,
-    "supported": 58,
-    "refuted": 14,
-    "supported_share": 0.806,
+    "claims": 64,
+    "decided": 48,
+    "supported": 40,
+    "refuted": 8,
+    "supported_share": 0.833,
     "distinct_claims": 1,
     "examples": [
      "id = gone"
@@ -51,8 +50,8 @@
    }
   },
   "per_action": {
-   "every applicable rule was right": 7,
-   "every applicable rule was contradicted": 5
+   "every applicable rule was contradicted": 5,
+   "every applicable rule was right": 4
   },
   "removal_exposure": {
    "base_rate_gone": 0.786,
@@ -60,12 +59,12 @@
     "all went (>90%)": 30,
     "none went (<10%)": 10
    },
-   "reading_supported_share": 0.806,
-   "removal_claims": 72,
-   "steps_spoken_at": 12,
-   "per_click_control": 0.623,
-   "objects_in_those_steps": 61,
-   "margin_over_per_click_control": 0.183
+   "reading_supported_share": 0.833,
+   "removal_claims": 48,
+   "steps_spoken_at": 9,
+   "per_click_control": 0.521,
+   "objects_in_those_steps": 48,
+   "margin_over_per_click_control": 0.312
   }
  }
 ]

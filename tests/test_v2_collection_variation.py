@@ -118,8 +118,10 @@ def test_two_buttons_side_by_side_are_two_controls_and_the_duty_cell_is_a_value(
     sig = page.structural_signature()
     assert G.labels(sig, _node(page, "button", "Sign on")) == {"Sign", "on"}
     assert G.labels(sig, _node(page, "button", "Sign off")) == {"Sign", "off"}
-    assert G.data_tokens(sig, _node(page, "cell", "on duty")) == ["on duty"]
-    assert G.data_tokens(sig, _node(page, "cell", "off duty")) == ["off duty"]
+    # the duty column's constant word is the column's label; what varies is the value
+    assert G.data_tokens(sig, _node(page, "cell", "on duty")) == ["on"]
+    assert G.labels(sig, _node(page, "cell", "on duty")) == {"duty"}
+    assert G.data_tokens(sig, _node(page, "cell", "off duty")) == ["off"]
     assert "on" in G.data_set() and "on" in G._listed_only
 
 

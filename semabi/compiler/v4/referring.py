@@ -340,7 +340,20 @@ def _property_queries(op, var, evidence, refuses) -> list[tuple[str, Any]]:
     return out
 
 
-def ground(op, evidence, action_bound, refuses) -> Grounding:
+def collection_types(A) -> frozenset:
+    """The types the corpus renders several of at once: rows of a table, items of a list."""
+    H, tid_map = getattr(A, "H", None), getattr(A, "tid_map", None)
+    if H is None or tid_map is None:
+        return frozenset()          # an abstractor without unit hypotheses has no collections
+    out = set()
+    for t, u in H.units.items():
+        et = H.tid_of_template.get(t)
+        if et is not None and u.max_per_obs >= 2 and et in tid_map:
+            out.add(tid_map[et])
+    return frozenset(out)
+
+
+def ground(op, evidence, action_bound, refuses, collections=frozenset()) -> Grounding:
     """Search for a query naming each effect object, one variable at a time.
 
     Stratified rather than joint: a variable a query has already determined becomes something
@@ -391,7 +404,12 @@ def ground(op, evidence, action_bound, refuses) -> Grounding:
                               "instances_of_its_type": max(
                                   (len(_candidates(st, op.params.get(var))) for st, _ in evidence),
                                   default=0)}
-            if _singleton(op, var, evidence):
+            # "The only object of its type" names an object of a type that has one -- a
+            # form, a status panel -- and not whichever draw happened to be alone in the
+            # book when this rule's few positives were seen.  For a collection type the
+            # form is a count in disguise: on blend it gave `Bottle` a role that was
+            # `ambiguous` whenever two draws existed, and nine confident errors.
+            if op.params.get(var) not in collections and _singleton(op, var, evidence):
                 out.queries[var] = Query(SINGLETON, var, "the only object of its type", form=())
             else:
                 found = None

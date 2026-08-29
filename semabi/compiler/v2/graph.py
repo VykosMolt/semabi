@@ -83,9 +83,9 @@ class TextTemplate:
         return out
 
     def sentence_length(self) -> bool:
-        """Four or more alphanumeric tokens: the length at which a text is a sentence
-        rather than a name, a value or a phrase."""
-        return sum(1 for c in self.position.split("|")[-1] if c in "aN") >= 4
+        """Four or more alphanumeric tokens in some string here: the length at which a text
+        is a sentence rather than a name, a value or a phrase."""
+        return any(sum(1 for t in tokens(st) if t[0].isalnum()) >= 4 for st in self.strings)
 
 
 # Containers the accessibility tree declares as collections.  Their children are members of
@@ -294,6 +294,7 @@ class ObsGraph:
             paths.setdefault(n.i, n.role)
         # table header cells: the first row of a table (labels even when they vary between
         # tables) -- unless the cell's text varies over time at that position (a matrix header)
+        table_headers: dict[int, tuple] = {}
         for n in obs.nodes:
             if n.role == "table":
                 rows = sorted(x for x in obs.subtree(n.i) if obs.node(x).role == "row")
@@ -301,6 +302,8 @@ class ObsGraph:
                     # a header row in a row group of its own (a `thead`) is the interface
                     # declaring it; a first row among the others may be one or may not
                     declared = len(rows) > 1 and obs.node(rows[0]).parent != obs.node(rows[1]).parent
+                    if declared:
+                        table_headers[n.i] = tuple(node_text(obs.node(c)) for c in obs.children(rows[0]))
                     for k, c in enumerate(obs.children(rows[0])):
                         self.header.add((sig, c))
                         if self.learning:
@@ -350,11 +353,32 @@ class ObsGraph:
             # headings under different containers are different positions; the rows of one
             # listing share theirs -- which the parent's plain index did not give a cell,
             # whose parent is its own row: see `position_pooled`.
+            key_pos = pos
+            skel_key = skel
             if n.parent < 0:
                 ppos: tuple = ()
             elif self.judge_by_collection:
                 ppos = self.position_pooled(obs, n.parent)
-                if n.role in WIDGET_ROLES:
+                if self._is_member(obs, n.parent):
+                    # A member's fields are its slots, by their place among its children --
+                    # the column -- whatever shape a value takes.  Keyed by token pattern
+                    # as well, blend's `Ticket 4` (a labelled number) was one position with
+                    # `Block 12` (a name with a number) from another column of the same
+                    # rows, `Ticket` varied, and every draw was keyed `Ticket`.
+                    sibs = [c for c in obs.children(n.parent) if obs.node(c).role == n.role]
+                    ppos = ppos + ((n.role, sibs.index(n.i)),)
+                    key_pos = paths[n.i]
+                    # and in every view that renders the same table.  The view skeleton
+                    # told two tables apart that stand at the same place in two views
+                    # (vet's vets and its patients) and split one table by whatever else
+                    # the view showed (blend's draws with and without a placeholder row).
+                    # A table declares what it is: its header row.
+                    t = n.parent
+                    while t >= 0 and obs.node(t).role != "table":
+                        t = obs.node(t).parent
+                    if t >= 0 and t in table_headers:
+                        skel_key = ("headers",) + table_headers[t]
+                elif n.role in WIDGET_ROLES:
                     # Two buttons side by side are two controls, not one control with two
                     # values: `Sign on` and `Sign off` are told apart by their place, and
                     # each is pooled only with itself in the other rows.
@@ -362,11 +386,11 @@ class ObsGraph:
                     ppos = ppos + ((n.role, sibs.index(n.i)),)
             else:
                 ppos = self.position_idx(obs, n.parent)
-            self.variation_key[(sig, n.i)] = (pos, ppos, skel)
+            self.variation_key[(sig, n.i)] = (key_pos, ppos, skel_key)
             if not self.learning:
                 continue
             tt = self.templates.setdefault(pos, TextTemplate(pos))
-            tv = self.templates_v.setdefault((pos, ppos, skel), TextTemplate(pos))
+            tv = self.templates_v.setdefault((key_pos, ppos, skel_key), TextTemplate(key_pos))
             self._seen.update(tokens(node_text(n)))
             for o in n.options or ():
                 self._seen.update(tokens(o))
@@ -447,6 +471,21 @@ class ObsGraph:
             n = self.obs[sig].node(i)
             if n.role in ("combobox", "textbox"):
                 return t[0].isalnum()      # what an input holds is its value, all of it
+            key = self.variation_key.get((sig, i))
+            if key is not None and key[1] and key[1][-1][1] != "*" and any(
+                    x == "*" for _, x in key[1]) and n.role not in WIDGET_ROLES:
+                # A field of a collection member -- a table column -- is judged in its
+                # column, where the evidence is: what every member's value carries is the
+                # column's label, what differs is the value.  `Dr` heads every name in the
+                # vets table and is a label there; in the appointments' vet column, beside
+                # `(unassigned)`, it is part of a value.  A vocabulary answering for the
+                # whole application would have to say one thing for both.  A column with
+                # a single distinct value is no evidence, and falls to the vocabulary.
+                tt = self.templates_v.get(key)
+                if tt is not None and len(tt.strings) >= 2 and (
+                        t in tt.varying_tokens() or any(t in tokens(st) for st in tt.strings)):
+                    return t in tt.varying_tokens()
+                # a token the column never held is judged as any unseen token is, below
             if t in d:
                 if t not in self._listed_only:
                     return True

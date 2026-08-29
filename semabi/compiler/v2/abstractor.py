@@ -332,6 +332,26 @@ class V2Abstractor(Abstractor):
                 return " ".join(run)
         return v
 
+    def _resolve_slot(self, ui: UnitInstance, sid: str, tid: int) -> str | None:
+        """The object a reference slot names: by the value the slot renders, or, where that
+        names nothing, by any value span of the same node.  A reference cell may decorate
+        the name it carries -- vet's `Dr. Grace Kim` beside `(unassigned)`, where `Dr` is
+        part of the value and the vet is keyed `Grace Kim` -- and the decoration is not
+        the reference."""
+        v = self.resolve(tid, self._rendered_value(ui, sid))
+        if v is not None:
+            return v
+        node = ui.slot_nodes.get(sid) if hasattr(ui, "slot_nodes") else None
+        if node is None:
+            return None
+        spans = self.G.data_tokens(ui.sig, node)
+        for span in sorted(spans, key=len, reverse=True):
+            if span != ui.slots.get(sid):
+                v = self.resolve(tid, span)
+                if v is not None:
+                    return v
+        return None
+
     def entity_key(self, et: EntityType, ui: UnitInstance, keys_by_tid: dict[int, dict[str, str]]) -> str | None:
         t = ui.template
         k = self._rendered_value(ui, et.key_slot[t])
@@ -422,7 +442,7 @@ class V2Abstractor(Abstractor):
                     continue
                 if t2 == ui.template and tgt in self.tid_map:
                     # a reference slot this template displays: absent or unresolvable value = no target
-                    v = self.resolve(self.tid_map[tgt], self._rendered_value(ui, sid)) if sid in ui.slots else None
+                    v = self._resolve_slot(ui, sid, self.tid_map[tgt]) if sid in ui.slots else None
                     inst.slots[f"rel:{self.tid_map[tgt]}"] = ("", v)
             for tgt_tid in self.family_refs.get(ui.template, ()):
                 inst.slots.setdefault(f"rel:{tgt_tid}", ("", None))

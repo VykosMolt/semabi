@@ -1,5 +1,7 @@
 # Which text is a value: the judgement that made every row its own type
 
+> Continued in `docs/v4_collections.md`, which keys a member's fields by column and judges them there, admits a numeric key where no word identifies a unit, and certifies the model invariant under member reversal.
+
 `docs/v4_identity.md` closed on a diagnosis: the frozen model's identity judgements were
 memos of the fitting corpus rather than functions of a page.  Six of them were repaired there.
 This run opened by asking what harbour's *reading* actually was after those repairs, and

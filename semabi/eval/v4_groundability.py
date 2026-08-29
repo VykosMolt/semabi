@@ -61,7 +61,8 @@ def census(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.5,
     for op in model.operators:
         ev = [(tr.before, {q: tr.before.objs.get(v) for q, v in tr.binding.items()
                            if isinstance(v, tuple)}) for tr in op.positives]
-        g = referring.ground(op, ev, action_bound(op), I.memorises_the_fitting_instance)
+        g = referring.ground(op, ev, action_bound(op), I.memorises_the_fitting_instance,
+                             referring.collection_types(I.A))
         roles.update(g.roles().values())
         outcomes.update(g.outcomes().values())
         queries.update(q.detail for q in g.queries.values())

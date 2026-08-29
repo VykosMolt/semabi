@@ -62,6 +62,18 @@ FRESH = "*"                          # the prediction for such a position: a new
 RULE = "rule"      # one conjunction, pure over every fitting occasion: a list's head
 LIST = "list"      # an ordered list of conjunctions, each pure on what the ones above left
 
+# Whether the literal language states how many objects of each type the state holds.  A
+# count is a fact about a collection rather than about any object in it, and blend's draw
+# book refuses a thirteenth draw on a count: *The book already holds 12 records*.  Measured
+# twice and off both times (`docs/v4_identity.md`, `docs/v4_collections.md`).  With the draw
+# rows objects, per-type counts widen every control's admissible sets where a count happens
+# to vary -- harbour's second history 155 forced to 147, blend's 240 to 227 -- and close
+# none of the eight cardinality states, because the application's cap is on the *total* of
+# its objects (vats, blends and draws together), reached in that seed at six draws; a
+# per-type count is a proxy for it in one seed and a different number in the next.  Two
+# fitting occasions of the refusal could found no rule in any case.  Kept for measurement.
+COUNT_LITERALS = False
+
 # A condition fitted to a single occasion is indistinguishable from naming that occasion.
 # The same principle is already in `memorises_the_fitting_instance` and in `learn_pre`'s
 # refusal to explain isolated failures, and it is the only count in this module.
@@ -862,6 +874,12 @@ def _literals(inducer, state, binding: dict, status: dict, defaults: dict | None
     lits = inducer._literals(None, fake)
     for role, how in status.items():
         lits.add((how, role))
+    if COUNT_LITERALS:
+        # How many objects of each type the state holds.  Every type the model knows, so
+        # that an empty collection is a count of nought and not a missing fact.
+        tally: Counter = Counter(o.tid for o in state.objs.values())
+        for tid in getattr(inducer.A, "types", {}):
+            lits.add(("count", tid, tally.get(tid, 0)))
     view = getattr(state, "view", None) or {}
     for slot, initial in (defaults or {}).items():
         # Whether this list has been touched since the run began.  Not "is it empty": that

@@ -66,14 +66,12 @@
  },
  "state": {
   "verdicts": {
-   "NOT_APPLICABLE": 31,
-   "REFUTED": 1,
-   "SUPPORTED": 35
+   "NOT_APPLICABLE": 50,
+   "SUPPORTED": 17
   },
   "per_action": {
-   "every applicable rule was right": 35,
-   "no rule applied": 31,
-   "every applicable rule was contradicted": 1
+   "no rule applied": 50,
+   "every applicable rule was right": 17
   }
  },
  "outcome_model": {
@@ -203,21 +201,19 @@
    "button:Record departure": "button:Record departure: 3 fitted occasions, 1 distinct events\n    otherwise  ->  Call <> is not <> , so nothing has sailed .   [3]\n    otherwise -> Call <> is not <> , so nothing has sailed .\n    'Call <> is not <> , so nothing has sailed .' arguments: 0=owner",
    "button:Reopen": "button:Reopen: 18 fitted occasions, 2 distinct events\n    attr:cell#0@5(owner) == 'open'  ->  <> <> is already <> .   [13]\n    otherwise  ->  <> <> is now <> .   [5]\n    otherwise -> <> <> is now <> .\n    '<> <> is already <> .' arguments: 1=owner\n    '<> <> is now <> .' arguments: 1=owner",
    "button:Schedule call": "button:Schedule call: 19 fitted occasions, 2 distinct events\n    ('ref_set', 'owner', 'rel:3')  ->  <> already has call <> on the board .   [12]\n    otherwise  ->  Call <> opened for <> .   [7]\n    otherwise -> Call <> opened for <> .\n    '<> already has call <> on the board .' arguments: 0=owner\n    'Call <> opened for <> .' arguments: 0=created:T4, 1=owner",
-   "button:Sign off": "button:Sign off: 14 fitted occasions, 2 distinct events\n    attr:cell#0@3(owner) == 'on duty'  ->  <> is signed off .   [8]\n    otherwise  ->  <> is already signed off .   [6]\n    otherwise -> <> is already signed off .\n    '<> is already signed off .' arguments: 0=owner\n    '<> is signed off .' arguments: 0=owner",
-   "button:Sign on": "button:Sign on: 17 fitted occasions, 2 distinct events\n    attr:cell#0@3(owner) == 'on duty'  ->  <> is already signed on .   [9]\n    otherwise  ->  <> is signed on .   [8]\n    otherwise -> <> is signed on .\n    '<> is already signed on .' arguments: 0=owner\n    '<> is signed on .' arguments: 0=owner"
+   "button:Sign off": "button:Sign off: 14 fitted occasions, 2 distinct events\n    attr:duty#0(owner) == 'on'  ->  <> is signed off .   [8]\n    otherwise  ->  <> is already signed off .   [6]\n    otherwise -> <> is already signed off .\n    '<> is already signed off .' arguments: 0=owner\n    '<> is signed off .' arguments: 0=owner",
+   "button:Sign on": "button:Sign on: 17 fitted occasions, 2 distinct events\n    attr:duty#0(owner) == 'on'  ->  <> is already signed on .   [9]\n    otherwise  ->  <> is signed on .   [8]\n    otherwise -> <> is signed on .\n    '<> is already signed on .' arguments: 0=owner\n    '<> is signed on .' arguments: 0=owner"
   }
  },
  "ablation_live_region_unread": {
   "operators": 5,
   "state_verdicts": {
-   "NOT_APPLICABLE": 31,
-   "REFUTED": 1,
-   "SUPPORTED": 35
+   "NOT_APPLICABLE": 50,
+   "SUPPORTED": 17
   },
   "state_per_action": {
-   "every applicable rule was right": 35,
-   "no rule applied": 31,
-   "every applicable rule was contradicted": 1
+   "no rule applied": 50,
+   "every applicable rule was right": 17
   }
  }
 }

@@ -1438,7 +1438,8 @@ class Inducer:
                          {q: tr.before.objs.get(v) for q, v in tr.binding.items()
                           if isinstance(v, tuple)})
                         for tr in op.positives]
-            got = referring.ground(op, evidence, bound, self.memorises_the_fitting_instance)
+            got = referring.ground(op, evidence, bound, self.memorises_the_fitting_instance,
+                                   referring.collection_types(self.A))
             if got.queries:
                 out[op.name] = dict(got.queries)
         return out

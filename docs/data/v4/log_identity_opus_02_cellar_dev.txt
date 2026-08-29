@@ -61,19 +61,3 @@ opus_02_cellar_dev  'joint discrimination x3'  cut=195  forced under the rule cl
   forced and wrong on the frame: 0
 
 wrote docs/data/v4/inadequacy_opus_02_cellar_dev.json
-
-opus_02_cellar_dev  'joint discrimination x3'  FROZEN_PREFIX  cut=195  23 operators
-  12 held-out actions, 3.33 rules offered and 6.0 claims applicable per action
-  8 distinct claims across all its decided predictions
-    an interface response     38 claims,    22 decided, supported  55%   6 distinct
-                           ['<> already stands in <> . = <> already stands in <> .', '<> moved from <> to <> . = <> moved from <> to <> .', 'Nothing chosen in the block list . = Nothing chosen in the block list .', 'Nothing chosen in the hall list . = Nothing chosen in the hall list .', 'Nothing chosen in the lot list . = Nothing chosen in the lot list .', 'Nothing chosen in the vessel list . = Nothing chosen in the vessel list .']
-    an object brought into being   101 claims,    61 decided, supported   0%   1 distinct
-                           ['id = new']
-    removal                  105 claims,    72 decided, supported  81%   1 distinct
-                           ['id = gone']
-    removal exposure: this reading 0.806, unconditional base rate 0.786, per-click control 0.623 (margin +0.183)
-                           steps by fraction gone {"all went (>90%)": 30, "none went (<10%)": 10}
-        7 ( 58%)  every applicable rule was right
-        5 ( 42%)  every applicable rule was contradicted
-
-wrote docs/data/v4/claim_substance_opus_02_cellar_dev_frozen_prefix.json

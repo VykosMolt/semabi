@@ -37,6 +37,14 @@ $V -m semabi.eval.v4_admissible_prequential --run runs/v4/blend_book_transfer --
    --reading "joint discrimination x3" --split 0.5 --stride 8 > $D/log_open_world_prequential_blend.txt 2>&1 &
 $V -m semabi.eval.v4_admissible_prequential --run runs/v4/harbour_transfer --chain $M/harbour_chain.json \
    --reading "joint discrimination x2" --split 0.5 --stride 4 > $D/log_open_world_prequential_harbour.txt 2>&1 &
+for app in "harbour_transfer:harbour_chain.json:joint discrimination x2:harbour_holdout:harbour" \
+           "blend_book_transfer:blend_book_chain.json:joint discrimination x3:blend_book_holdout:blend_book" \
+           "vet_clinic_transfer:vet_clinic_chain.json:joint discrimination x3:vet_clinic_holdout:vet_clinic" \
+           "opus_02_cellar_dev:opus_02_cellar_dev_source_sections.json:joint discrimination x3:cellar_seed11:cellar"; do
+  IFS=: read -r run chain reading other name <<< "$app"
+  $V -m semabi.eval.v4_metamorphic --run runs/v4/$run --chain $M/$chain --reading "$reading" \
+     --score-on runs/v4/$other --workdir $W/reversed_$name --out $D/reversal_$name.json > /dev/null 2>&1 &
+done
 for mode in fresh permute; do
   $V -m semabi.eval.v4_renaming --run runs/v4/harbour_transfer --chain $M/harbour_chain.json \
      --reading "joint discrimination x2" --score-on runs/v4/harbour_holdout --mode $mode \

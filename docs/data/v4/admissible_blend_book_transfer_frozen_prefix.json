@@ -9,76 +9,78 @@
  "corroborated": true,
  "hypothesis": "rule",
  "against_the_other_class": {
-  "rule: the evidence forces one outcome | list: the evidence forces one outcome": 146,
-  "rule: several outcomes remain admissible | list: several outcomes remain admissible": 51,
+  "rule: the evidence forces one outcome | list: the evidence forces one outcome": 151,
+  "rule: several outcomes remain admissible | list: several outcomes remain admissible": 45,
   "rule: one outcome, because the control has never done anything else | list: one outcome, because the control has never done anything else": 32,
-  "rule: no outcome is established | list: no outcome is established": 15,
-  "rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)": 5
+  "rule: no outcome is established | list: no outcome is established": 14,
+  "rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)": 5,
+  "rule: no outcome is established | list: the evidence forces one outcome": 2
  },
  "actions": 249,
  "what_the_evidence_establishes": {
-  "the evidence forces one outcome": 151,
-  "several outcomes remain admissible": 51,
+  "the evidence forces one outcome": 156,
+  "several outcomes remain admissible": 45,
   "one outcome, because the control has never done anything else": 32,
-  "no outcome is established": 15
+  "no outcome is established": 16
  },
  "admissible_set_size": {
-  "0": 15,
-  "1": 183,
-  "2": 48,
+  "0": 16,
+  "1": 188,
+  "2": 42,
   "3": 3
  },
  "what_happened_was": {
-  "inside the admissible set": 204,
+  "inside the admissible set": 203,
   "outside it": 30,
-  "nothing was admissible": 15
+  "nothing was admissible": 16
  },
  "the_list_where_the_evidence": {
   "no outcome is established": {
-   "no determinate answer": 12,
-   "the event the interface returned": 3
+   "no determinate answer": 11,
+   "the event the interface returned": 5
   },
   "one outcome, because the control has never done anything else": {
    "a different event": 21,
    "the event the interface returned": 11
   },
   "several outcomes remain admissible": {
-   "the event the interface returned": 43,
-   "a different event": 8
+   "the event the interface returned": 41,
+   "a different event": 4
   },
   "the evidence forces one outcome": {
-   "the event the interface returned": 148,
-   "a different event": 3
+   "the event the interface returned": 155,
+   "a different event": 1
   }
  },
  "policy_forced_then_list": {
-  "one outcome was admissible and it happened": 146,
-  "deferred to the list: the event the interface returned": 43,
+  "one outcome was admissible and it happened": 151,
+  "deferred to the list: the event the interface returned": 41,
   "the only outcome ever seen on this control, and something else happened": 20,
-  "refused: nothing established": 15,
+  "refused: nothing established": 16,
   "the only outcome ever seen on this control, and it happened": 12,
-  "deferred to the list: a different event": 8,
-  "one outcome was admissible and a different one happened": 5
+  "one outcome was admissible and a different one happened": 5,
+  "deferred to the list: a different event": 4
  },
  "distinct_events_forced": 8,
  "events_forced": {
-  "Drew <> from <> into <> .": 51,
-  "Returned <> to <> from <> .": 45,
+  "Drew <> from <> into <> .": 50,
+  "Returned <> to <> from <> .": 46,
   "<> is already <> .": 33,
   "Opened <> .": 23,
-  "<> <> .": 15,
+  "<> <> .": 16,
   "Disgorged <> .": 9,
-  "<> is <> .": 5,
+  "<> is <> .": 9,
   "<> is <> ; disgorge it before returning a draw .": 2
  },
  "per_control": {
   "button:Record draw": {
-   "the evidence forces one outcome": 89,
-   "several outcomes remain admissible": 34
+   "the evidence forces one outcome": 92,
+   "several outcomes remain admissible": 29,
+   "no outcome is established": 2
   },
   "button:Return ticket _ gal from _ out of _": {
-   "the evidence forces one outcome": 47,
-   "several outcomes remain admissible": 17
+   "the evidence forces one outcome": 48,
+   "several outcomes remain admissible": 16
   },
   "button#cell/button": {
    "one outcome, because the control has never done anything else": 23
@@ -88,8 +90,8 @@
    "no outcome is established": 3
   },
   "button:Bottle _": {
-   "no outcome is established": 12,
-   "the evidence forces one outcome": 2
+   "no outcome is established": 11,
+   "the evidence forces one outcome": 3
   },
   "button:Disgorge _": {
    "one outcome, because the control has never done anything else": 9
@@ -101,8 +103,8 @@
    "the only outcome ever seen on this control, and it happened": 11
   },
   "button:Bottle _": {
-   "no outcome is established for this state": 12,
-   "one outcome was admissible and it happened": 1,
+   "no outcome is established for this state": 11,
+   "one outcome was admissible and it happened": 2,
    "one outcome was admissible and a different one happened": 1
   },
   "button:Close _": {
@@ -115,13 +117,14 @@
    "the only outcome ever seen on this control, and it happened": 1
   },
   "button:Record draw": {
-   "one outcome was admissible and it happened": 89,
-   "several outcomes remained admissible; the one that happened was among them": 31,
-   "several outcomes remained admissible and none of them happened": 3
+   "one outcome was admissible and it happened": 92,
+   "several outcomes remained admissible; the one that happened was among them": 26,
+   "several outcomes remained admissible and none of them happened": 3,
+   "no outcome is established for this state": 2
   },
   "button:Return ticket _ gal from _ out of _": {
-   "one outcome was admissible and it happened": 47,
-   "several outcomes remained admissible; the one that happened was among them": 17
+   "one outcome was admissible and it happened": 48,
+   "several outcomes remained admissible; the one that happened was among them": 16
   }
  },
  "controls": {
@@ -152,7 +155,7 @@
   "button:Record draw": {
    "fitted": 112,
    "events": 5,
-   "rules": 9,
+   "rules": 7,
    "default": "The book already holds 12 records ; return a draw first ."
   },
   "button:Return ticket _ gal from _ out of _": {
@@ -177,7 +180,7 @@
    "returned": "Festival White is already bottled.",
    "verdict": "one outcome was admissible and a different one happened",
    "level": "the event alone",
-   "why": "<> <> . <- attr:cell#0@4(owner) == '4'  [3 occasions]"
+   "why": "<> <> . <- ('ambiguous', \"relation['backward', 'rel:3']:4<owner\")  [4 occasions]"
   },
   {
    "step": 531,

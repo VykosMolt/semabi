@@ -8,19 +8,17 @@
   "operators": 15,
   "held_out_actions": 67,
   "rules_offered_per_action": 1.0,
-  "applicable_claims_per_action": 0.54,
-  "distinct_decided_claims": 13,
+  "applicable_claims_per_action": 0.25,
+  "distinct_decided_claims": 11,
   "composition": {
    "a named constant": {
     "claims": 67,
-    "decided": 36,
-    "supported": 35,
-    "refuted": 1,
-    "supported_share": 0.972,
-    "distinct_claims": 4,
+    "decided": 17,
+    "supported": 17,
+    "refuted": 0,
+    "supported_share": 1.0,
+    "distinct_claims": 2,
     "examples": [
-     "attr:cell#0@3 = off duty",
-     "attr:cell#0@3 = on duty",
      "attr:cell#0@5 = closed",
      "attr:cell#0@5 = open"
     ]
@@ -54,9 +52,8 @@
    }
   },
   "per_action": {
-   "every applicable rule was right": 35,
-   "no rule applied": 31,
-   "every applicable rule was contradicted": 1
+   "no rule applied": 50,
+   "every applicable rule was right": 17
   }
  }
 ]

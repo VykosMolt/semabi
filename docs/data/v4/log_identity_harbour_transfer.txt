@@ -81,16 +81,15 @@ harbour_transfer  'joint discrimination x2'  cut=229  forced under the rule clas
 wrote docs/data/v4/inadequacy_harbour_transfer.json
 
 harbour_transfer  'joint discrimination x2'  FROZEN_PREFIX  cut=229  15 operators
-  67 held-out actions, 1.0 rules offered and 0.54 claims applicable per action
-  13 distinct claims across all its decided predictions
-    a named constant          67 claims,    36 decided, supported  97%   4 distinct
-                           ['attr:cell#0@3 = off duty', 'attr:cell#0@3 = on duty', 'attr:cell#0@5 = closed', 'attr:cell#0@5 = open']
+  67 held-out actions, 1.0 rules offered and 0.25 claims applicable per action
+  11 distinct claims across all its decided predictions
+    a named constant          67 claims,    17 decided, supported 100%   2 distinct
+                           ['attr:cell#0@5 = closed', 'attr:cell#0@5 = open']
     an interface response    185 claims,    73 decided, supported  99%   8 distinct
                            ['<> <> is already <> . = <> <> is already <> .', '<> <> is now <> . = <> <> is now <> .', '<> is already signed off . = <> is already signed off .', '<> is already signed on . = <> is already signed on .', '<> is signed off . = <> is signed off .', '<> is signed on . = <> is signed on .']
     an object brought into being    17 claims,     5 decided, supported 100%   1 distinct
                            ['id = new']
-       35 ( 52%)  every applicable rule was right
-       31 ( 46%)  no rule applied
-        1 (  1%)  every applicable rule was contradicted
+       50 ( 75%)  no rule applied
+       17 ( 25%)  every applicable rule was right
 
 wrote docs/data/v4/claim_substance_harbour_transfer_frozen_prefix.json
