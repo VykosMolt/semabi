@@ -148,6 +148,10 @@ errors on blend's second seed are eleven once-seen events, two unseen, and the e
 cardinality states; the varietal-mismatch state -- the one cross-object comparison -- is
 no longer forced.
 
+Under the causal-prequential boundary (the model rebuilt before each scored action) nothing
+moved: blend 22 forced right / 1 wrong / 5 open with the truth among them of 32; harbour 24
+forced right and 8 vacuous right of 32, nothing refused.
+
 The durable-effect ledger: blend 149 right / 18 contradicted / 82 no rule / 0 unbound (was
 144 / 53 / 44 / 4) -- the draws' removal on `Return ticket` is claimed and supported at
 every one of its 46 decided firings, and their creation on `Record draw` is claimed; harbour
