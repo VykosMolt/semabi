@@ -69,6 +69,12 @@ for app in "vet_clinic_transfer:vet_clinic_chain.json:joint discrimination x3:ve
   $V -m semabi.eval.v4_reading_selection --run runs/v4/$run --chain $M/$chain --ablate "$reading" \
      --out reading_ablation_$name.json > /dev/null 2>&1 &
 done
+# navigation sensing is acquired, not inferred: the tabs the explorer never probed, probed on a fresh instance
+# (the acquired records are retained under runs/; re-run only against a live application)
+#   $V -m semabi.eval.v4_probe_navigation --base http://127.0.0.1:8920 --seed 4245 \
+#      --buttons Clients,Appointments,Vets --out runs/v4/vet_clinic_transfer/probes.acquired.jsonl
+#   $V -m semabi.eval.v4_probe_navigation --base http://127.0.0.1:8911 --seed 4245 \
+#      --buttons Cellar,Lots,Intake --out runs/v4/opus_02_cellar_dev/probes.acquired.jsonl
 # what a control's label says against what it does
 $V -m semabi.eval.v4_roles --run runs/v4/blend_book_transfer --chain $M/blend_book_chain.json \
    --reading "joint discrimination x3" --out $D/roles_blend_book_transfer.json > /dev/null 2>&1 &

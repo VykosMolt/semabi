@@ -1,0 +1,82 @@
+{
+ "run": "vet_clinic_transfer",
+ "chain": "docs/data/v4/manifests/vet_clinic_chain.json",
+ "split": 0.5,
+ "ablated": null,
+ "rekeyed": {
+  "reading": "source_choice",
+  "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))"
+ },
+ "readings": [
+  {
+   "reading": "keyed by cell#0|cell#0@4 (chosen)",
+   "types": 2,
+   "prefix_objective": {
+    "explained": 19,
+    "errors": 20,
+    "visibility": 3,
+    "churn": 17,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 0
+   },
+   "suffix_ledger": {
+    "right": 12,
+    "contradicted": 1
+   }
+  },
+  {
+   "reading": "keyed by cell#0|cell#0@3",
+   "types": 2,
+   "prefix_objective": {
+    "explained": 36,
+    "errors": 3,
+    "visibility": 3,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 0
+   },
+   "suffix_ledger": {
+    "right": 12,
+    "contradicted": 1
+   },
+   "prefix_objective_prefers": true
+  },
+  {
+   "reading": "keyed by cell#0@3",
+   "types": 3,
+   "prefix_objective": {
+    "explained": 32,
+    "errors": 3,
+    "visibility": 3,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 4
+   },
+   "suffix_ledger": {
+    "right": 7
+   },
+   "prefix_objective_prefers": true
+  },
+  {
+   "reading": "keyed by cell#0|cell#0@2",
+   "types": 2,
+   "prefix_objective": {
+    "explained": 25,
+    "errors": 1,
+    "visibility": 1,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 13
+   },
+   "suffix_ledger": {
+    "contradicted": 3,
+    "disagreed": 2
+   },
+   "prefix_objective_prefers": true
+  }
+ ]
+}

@@ -1,5 +1,7 @@
 # Which distinctions have earned their place: behaviour choosing among readings
 
+> Continued in `docs/v4_frontier.md`, which corrects this report's conclusion about vet: the seventy unbound actions and the fifty-three contradictions were navigation, not the reading.
+
 The last three reports established what the frozen interpreter must ignore.  This one asks
 how it can know what to keep, on the two places where that question is live: vet's junk
 entity type, which behaviour after the cut refutes fifty-three times, and blend's three

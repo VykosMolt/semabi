@@ -14,9 +14,12 @@ Circularity is kept out by the cut: the objective reads nothing after it, and th
 reads nothing before it.  Nothing here changes a reading or fits one; readings are data, and
 this compares them.
 
-Two views: every candidate reading in a chain manifest, and the chosen reading with each of
+Three views: every candidate reading in a chain manifest; the chosen reading with each of
 its keyed families read as no entity in turn (`--ablate`), which asks of every type
-whether the evidence before the cut wanted it.
+whether the evidence before the cut wanted it; and one family of a reading keyed by each
+of several slots in turn (`--rekey` with `--slots`), which asks whether the key the search
+chose is the key the transitions preserve -- vet's appointments keyed by patient and status
+re-key at every status change, keyed by patient and reason they do not (`docs/v4_frontier.md`).
 """
 from __future__ import annotations
 
@@ -60,12 +63,27 @@ def measure(run_dir: Path, reading, label: str, *, split: float = 0.5) -> dict:
             "suffix_ledger": _ledger(csq.score(model)), "_behaviour": beh}
 
 
-def compare(run_dir: Path, chain: Path, *, split: float = 0.5, ablate: str | None = None) -> dict:
+def compare(run_dir: Path, chain: Path, *, split: float = 0.5, ablate: str | None = None,
+            rekey: tuple[str, str, list[str]] | None = None) -> dict:
     from semabi.eval.v4_consequence_run import _candidates
 
     candidates = {c.name: c.reading for c in _candidates(chain)}
     rows = []
-    if ablate is None:
+    if rekey is not None:
+        reading_name, family, slots = rekey
+        base = candidates[reading_name]
+        chosen_slot = base.families[family].key_slot
+        chosen = measure(run_dir, base, f"keyed by {chosen_slot} (chosen)", split=split)
+        rows.append(chosen)
+        for slot in slots:
+            if slot == chosen_slot:
+                continue
+            row = measure(run_dir, base.variant(family, slot, f"keyed by {slot}"),
+                          f"keyed by {slot}", split=split)
+            if "_behaviour" in row and "_behaviour" in chosen:
+                row["prefix_objective_prefers"] = row["_behaviour"].better_than(chosen["_behaviour"])
+            rows.append(row)
+    elif ablate is None:
         for name, reading in candidates.items():
             rows.append(measure(run_dir, reading, name, split=split))
     else:
@@ -83,6 +101,7 @@ def compare(run_dir: Path, chain: Path, *, split: float = 0.5, ablate: str | Non
     for row in rows:
         row.pop("_behaviour", None)
     return {"run": Path(run_dir).name, "chain": str(chain), "split": split, "ablated": ablate,
+            "rekeyed": None if rekey is None else {"reading": rekey[0], "family": rekey[1]},
             "readings": rows}
 
 
@@ -92,16 +111,26 @@ def main(argv=None) -> int:
     ap.add_argument("--chain", required=True)
     ap.add_argument("--split", type=float, default=0.5)
     ap.add_argument("--ablate", default=None, help="the reading whose keyed families are removed in turn")
+    ap.add_argument("--reading", default=None, help="with --rekey: the reading whose family is re-keyed")
+    ap.add_argument("--rekey", default=None, help="the family to key by each of --slots in turn")
+    ap.add_argument("--slots", default=None, help="comma-separated key slots, e.g. 'cell#0|cell#0@3,cell#0@3'")
     ap.add_argument("--out", default=None)
     a = ap.parse_args(argv)
-    r = compare(Path(a.run), Path(a.chain), split=a.split, ablate=a.ablate)
-    print(f"\n{r['run']}  split={a.split}" + (f"  ablating {a.ablate!r}" if a.ablate else ""))
+    rekey = None
+    if a.rekey:
+        if not (a.reading and a.slots):
+            ap.error("--rekey needs --reading and --slots")
+        rekey = (a.reading, a.rekey, a.slots.split(","))
+    r = compare(Path(a.run), Path(a.chain), split=a.split, ablate=a.ablate, rekey=rekey)
+    print(f"\n{r['run']}  split={a.split}" + (f"  ablating {a.ablate!r}" if a.ablate else "")
+          + (f"  re-keying {a.rekey!r} of {a.reading!r}" if a.rekey else ""))
     for row in r["readings"]:
         if "failed" in row:
             print(f"  {row['reading'][:48]:48} FAILED {row['failed']}")
             continue
         po, led = row["prefix_objective"], row["suffix_ledger"]
         flag = ("  <- the prefix objective accepts this removal" if row.get("prefix_objective_accepts_removal")
+                else "  <- the prefix objective prefers this key" if row.get("prefix_objective_prefers")
                 else "")
         print(f"  {row['reading'][:48]:48} types={row['types']:2}  prefix explained={po['explained']:3} "
               f"errors={po['errors']:3} (visibility {po['visibility']}, churn {po['churn']})  "

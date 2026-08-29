@@ -667,11 +667,23 @@ class V2Abstractor(Abstractor):
         probe_status: dict[str, set[str]] = defaultdict(set)
         probe_by_step: dict[int, dict] = {}
         probe_by_key: dict[tuple, list[dict]] = defaultdict(list)
-        pp = Path(log.dir) / "probes.jsonl"
-        if pp.exists():
-            for line in pp.read_text().splitlines():
+        # The explorer's own probes, and any acquired afterwards for controls it never
+        # probed -- vet's and cellar's navigation tabs, whose status the trace could not
+        # settle because no reload ever followed a click on one.  An acquired probe is an
+        # executed intervention on a fresh instance of the application (click, reload,
+        # look), a fact about the control and not about any state of the history; it is
+        # kept in its own file, labelled, so that the retained evidence stays as recorded.
+        lines: list[str] = []
+        for fname in ("probes.jsonl", "probes.acquired.jsonl"):
+            pp = Path(log.dir) / fname
+            if pp.exists():
+                lines += pp.read_text().splitlines()
+        if lines:
+            for line in lines:
                 j = json.loads(line)
-                if "step" in j:
+                if "key" not in j:
+                    continue
+                if j.get("step") is not None:
                     probe_by_step[int(j["step"])] = j
                 for sensing_step in j.get("sensing_steps", []):
                     probe_by_step[int(sensing_step)] = {
