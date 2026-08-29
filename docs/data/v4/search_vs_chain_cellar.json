@@ -1,0 +1,350 @@
+{
+ "run": "opus_02_cellar_dev",
+ "chain": "docs/data/v4/manifests/opus_02_cellar_dev_source_sections.json",
+ "chain_reading": "joint discrimination x3",
+ "split": 0.5,
+ "cut": 195,
+ "search": {
+  "final": {
+   "contradictions": 7,
+   "churn": 0,
+   "visibility": 7,
+   "conflicts": 0,
+   "unexplained": 0,
+   "spurious": 0,
+   "explained": 1,
+   "delta_atoms": 1,
+   "complexity": 36,
+   "steps": 195,
+   "churn_steps": [],
+   "contradiction_steps": [
+    2,
+    7,
+    9,
+    16,
+    73,
+    127,
+    156
+   ],
+   "visibility_steps": [
+    2,
+    7,
+    9,
+    16,
+    73,
+    127,
+    156
+   ]
+  },
+  "moves": [
+   {
+    "move": "evidence_prior",
+    "score": {
+     "contradictions": 9,
+     "churn": 0,
+     "visibility": 14,
+     "conflicts": 0,
+     "unexplained": 0,
+     "spurious": 0,
+     "explained": 0,
+     "delta_atoms": 0,
+     "complexity": 34,
+     "steps": 195,
+     "churn_steps": [],
+     "contradiction_steps": [
+      2,
+      3,
+      7,
+      8,
+      9,
+      16,
+      73,
+      127,
+      156
+     ],
+     "visibility_steps": [
+      2,
+      3,
+      7,
+      8,
+      9,
+      12,
+      16,
+      18,
+      73,
+      80,
+      127,
+      129,
+      156,
+      165
+     ]
+    }
+   },
+   {
+    "move": "identity",
+    "round": 0,
+    "family": "group[_](heading[_],text[_],table[_](rowgroup[_](row[_](cell[_]))))",
+    "templates": 1,
+    "key_slot": null,
+    "status": "NO_IDENTITY",
+    "decided_by": {},
+    "score": {
+     "contradictions": 9,
+     "churn": 0,
+     "visibility": 14,
+     "conflicts": 0,
+     "unexplained": 0,
+     "spurious": 0,
+     "explained": 0,
+     "delta_atoms": 0,
+     "complexity": 28,
+     "steps": 195,
+     "churn_steps": [],
+     "contradiction_steps": [
+      2,
+      3,
+      7,
+      8,
+      9,
+      16,
+      73,
+      127,
+      156
+     ],
+     "visibility_steps": [
+      2,
+      3,
+      7,
+      8,
+      9,
+      12,
+      16,
+      18,
+      73,
+      80,
+      127,
+      129,
+      156,
+      165
+     ]
+    }
+   },
+   {
+    "move": "identity",
+    "round": 0,
+    "family": "row[_](cell[_])",
+    "templates": 3,
+    "key_slot": "cell#0@3",
+    "status": "SUPPORTED",
+    "decided_by": {
+     "explained": 1
+    },
+    "score": {
+     "contradictions": 9,
+     "churn": 0,
+     "visibility": 14,
+     "conflicts": 0,
+     "unexplained": 0,
+     "spurious": 0,
+     "explained": 1,
+     "delta_atoms": 2,
+     "complexity": 36,
+     "steps": 195,
+     "churn_steps": [],
+     "contradiction_steps": [
+      2,
+      3,
+      7,
+      8,
+      9,
+      16,
+      73,
+      127,
+      156
+     ],
+     "visibility_steps": [
+      2,
+      3,
+      7,
+      8,
+      9,
+      12,
+      16,
+      18,
+      73,
+      80,
+      127,
+      129,
+      156,
+      165
+     ]
+    }
+   },
+   {
+    "move": "identity",
+    "round": 0,
+    "family": "row[_](cell[_])",
+    "templates": 3,
+    "key_slot": "cell#1",
+    "status": "SUPPORTED",
+    "decided_by": {
+     "contradictions": 2,
+     "visibility": 7
+    },
+    "score": {
+     "contradictions": 7,
+     "churn": 0,
+     "visibility": 7,
+     "conflicts": 0,
+     "unexplained": 0,
+     "spurious": 0,
+     "explained": 1,
+     "delta_atoms": 1,
+     "complexity": 36,
+     "steps": 195,
+     "churn_steps": [],
+     "contradiction_steps": [
+      2,
+      7,
+      9,
+      16,
+      73,
+      127,
+      156
+     ],
+     "visibility_steps": [
+      2,
+      7,
+      9,
+      16,
+      73,
+      127,
+      156
+     ]
+    }
+   }
+  ],
+  "withheld_unions": [],
+  "open_questions": [
+   {
+    "template": "row[_](cell[_])",
+    "left": {
+     "template": "row[_](cell[_])",
+     "key_slot": "cell#1",
+     "status": "SUPPORTED",
+     "why": "separates 287/400 co-present pairs, 3 values, coverage 0.54",
+     "evidence": {
+      "copresent_pairs": 400,
+      "separated_pairs": 287,
+      "discrimination": 0.7175,
+      "coverage": 0.544,
+      "distinct_values": 3,
+      "constant_share": 0.573,
+      "reload_stability": 0.85,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "right": {
+     "template": "row[_](cell[_])",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "why": "no identity-bearing observation claimed",
+     "evidence": {
+      "copresent_pairs": 400,
+      "separated_pairs": 0,
+      "discrimination": 0.0,
+      "coverage": 0.0,
+      "distinct_values": 0,
+      "constant_share": 0.0,
+      "reload_stability": null,
+      "cross_view_values": 0,
+      "numeric_share": 0.0
+     }
+    },
+    "reason": "undecided: chosen explains 1 with 14 errors, the alternative explains 0 with 0"
+   }
+  ],
+  "entity_types": {
+   "0": [
+    {
+     "template": "row[](cell[_],cell[_ L],cell[_])",
+     "key_slot": "cell#1"
+    }
+   ],
+   "1": [
+    {
+     "template": "row[](cell[_],cell[_ ha],cell[_ L],cell[_])",
+     "key_slot": "cell#1"
+    }
+   ],
+   "2": [
+    {
+     "template": "row[](cell[_])",
+     "key_slot": "cell#1"
+    }
+   ]
+  },
+  "reading": {
+   "version": 1,
+   "name": "search",
+   "families": {
+    "group[_](heading[_],text[_],table[_](rowgroup[_](row[_](cell[_]))))": {
+     "family": "group[_](heading[_],text[_],table[_](rowgroup[_](row[_](cell[_]))))",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "discrimination": 0.0
+    },
+    "row[_](cell[_])": {
+     "family": "row[_](cell[_])",
+     "key_slot": "cell#1",
+     "status": "SUPPORTED",
+     "discrimination": 0.7175
+    }
+   },
+   "promoted_families": [],
+   "refuted": {},
+   "provenance": {
+    "source_run": "runs/v4/opus_02_cellar_dev",
+    "role": "SOURCE"
+   }
+  },
+  "notes": [
+   "v4 initial (V2 identities): contradictions 9, churn 0, visibility 14, conflicts 0, unexplained 0, spurious 0, explained 0, atoms 0, complexity 35",
+   "v4 evidence prior: contradictions 9, churn 0, visibility 14, conflicts 0, unexplained 0, spurious 0, explained 0, atoms 0, complexity 34",
+   "v4 group[_](heading[_],text[_],table[_](rowgroup[_](row[_](cell[_])))): key -> None (contradictions 9, churn 0, visibility 14, conflicts 0, unexplained 0, spurious 0, explained 0, atoms 0, complexity 28)",
+   "v4 row[_](cell[_]): key -> cell#0@3 (contradictions 9, churn 0, visibility 14, conflicts 0, unexplained 0, spurious 0, explained 1, atoms 2, complexity 36)",
+   "v4 row[_](cell[_]): key -> cell#1 (contradictions 7, churn 0, visibility 7, conflicts 0, unexplained 0, spurious 0, explained 1, atoms 1, complexity 36)",
+   "v4 round 0: moved; judging every family again against the new base",
+   "v4 final: contradictions 7, churn 0, visibility 7, conflicts 0, unexplained 0, spurious 0, explained 1, atoms 1, complexity 36; 1 open questions"
+  ]
+ },
+ "suffix_ledger": {
+  "search": {
+   "unbound": 4
+  },
+  "chain": {}
+ },
+ "families": {
+  "button[_]": {
+   "search": null,
+   "chain": "button#0"
+  },
+  "cell[_]": {
+   "search": null,
+   "chain": null
+  },
+  "group[_](heading[_],text[_],table[_](rowgroup[_](row[_](cell[_]))))": {
+   "search": null,
+   "chain": "heading#0"
+  },
+  "group[_](heading[_],text[_],table[_](rowgroup[_](row[_](cell[_]))),heading[_],text[_],table[_](rowgroup[_](row[_](cell[_]))),group[_](heading[_],text[_](text[_],combobox[_],text[_],combobox[_],button[_])),group[_](heading[_],text[_](text[_],combobox[_],button[_])))": {
+   "search": null,
+   "chain": null
+  },
+  "row[_](cell[_])": {
+   "search": "cell#1",
+   "chain": "cell#0"
+  }
+ }
+}

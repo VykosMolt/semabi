@@ -233,36 +233,56 @@ def readings_for(unit, reload_pairs: list[tuple[str, str]],
         for combo in combinations(sorted(usable), MAX_COMPOSITE):
             candidates.append(combo)
 
-    out: list[Reading] = []
-    for slots in candidates:
-        ev = IdentityEvidence()
-        ev.copresent_pairs = len(pairs)
-        ev.separated_pairs = sum(1 for a, b in pairs
-                                 if _value(a, slots) is not None and _value(a, slots) != _value(b, slots))
-        present = [i for i in instances if _value(i, slots) is not None]
-        ev.coverage = len(present) / len(instances)
-        values = Counter(_value(i, slots) for i in present)
-        ev.distinct_values = len(values)
-        ev.constant_share = (values.most_common(1)[0][1] / len(present)) if present else 0.0
-        ev.numeric_share = sum(1 for v in values if v and v.replace(".", "", 1).replace("-", "", 1).isdigit()) / max(1, len(values))
-        ev.reload_kept, ev.reload_lost = _reload_evidence(unit, slots, reload_pairs, positions)
-        if view_of:
-            by_view: dict[str, set[str]] = defaultdict(set)
-            for i in present:
-                by_view[view_of.get(i.sig, i.sig)].add(_value(i, slots))
-            seen: Counter = Counter()
-            for vals in by_view.values():
-                seen.update(vals)
-            ev.cross_view_values = sum(1 for v, c in seen.items() if c > 1)
-
-        reading = Reading(unit.template, slots, ev)
-        reading.status, reading.why = _classify(ev)
-        out.append(reading)
-
+    out: list[Reading] = [reading_for(unit, slots, reload_pairs, view_of, pairs=pairs,
+                                      positions=positions) for slots in candidates]
     out.append(Reading(unit.template, (), IdentityEvidence(copresent_pairs=len(pairs)),
                        status="NO_IDENTITY", why="no identity-bearing observation claimed"))
     out.sort(key=_rank)
-    return out[:MAX_READINGS] + [r for r in out[MAX_READINGS:] if not r.is_identity][:1]
+    kept = out[:MAX_READINGS]
+    # a composite's single components stay proposable: a key can need coarsening as well as
+    # splitting, and the structural rank alone would drop every single once composites
+    # separate every pair (`docs/v4_frontier.md`)
+    components = {s for r in kept for s in r.slots if len(r.slots) > 1}
+    kept += [r for r in out[MAX_READINGS:] if len(r.slots) == 1 and r.slots[0] in components]
+    return kept + [r for r in out[MAX_READINGS:] if not r.is_identity][:1]
+
+
+def reading_for(unit, slots: tuple[str, ...], reload_pairs: list[tuple[str, str]],
+                view_of: dict[str, str] | None = None, *, pairs=None, positions=None,
+                status: str | None = None, why: str | None = None) -> Reading:
+    """One candidate reading of a family -- these slots as its name -- with its evidence.
+
+    `status` overrides the evidential classification: a key inherited from the V2 fit that
+    the structural ranking would not have proposed is carried as ``INHERITED`` rather than
+    reported as if the search had chosen it (`docs/v4_frontier.md`)."""
+    instances = unit.instances
+    pairs = _copresence_pairs(unit) if pairs is None else pairs
+    positions = {(i.sig, i.root): i for i in instances} if positions is None else positions
+    view_of = view_of or {}
+    ev = IdentityEvidence()
+    ev.copresent_pairs = len(pairs)
+    ev.separated_pairs = sum(1 for a, b in pairs
+                             if _value(a, slots) is not None and _value(a, slots) != _value(b, slots))
+    present = [i for i in instances if _value(i, slots) is not None]
+    ev.coverage = len(present) / len(instances) if instances else 0.0
+    values = Counter(_value(i, slots) for i in present)
+    ev.distinct_values = len(values)
+    ev.constant_share = (values.most_common(1)[0][1] / len(present)) if present else 0.0
+    ev.numeric_share = sum(1 for v in values if v and v.replace(".", "", 1).replace("-", "", 1).isdigit()) / max(1, len(values))
+    ev.reload_kept, ev.reload_lost = _reload_evidence(unit, slots, reload_pairs, positions)
+    if view_of:
+        by_view: dict[str, set[str]] = defaultdict(set)
+        for i in present:
+            by_view[view_of.get(i.sig, i.sig)].add(_value(i, slots))
+        seen: Counter = Counter()
+        for vals in by_view.values():
+            seen.update(vals)
+        ev.cross_view_values = sum(1 for v, c in seen.items() if c > 1)
+    reading = Reading(unit.template, slots, ev)
+    reading.status, reading.why = _classify(ev)
+    if status is not None:
+        reading.status, reading.why = status, why or reading.why
+    return reading
 
 
 def _classify(ev: IdentityEvidence) -> tuple[str, str]:
@@ -294,7 +314,7 @@ def _classify(ev: IdentityEvidence) -> tuple[str, str]:
 
 # a family that was never given the chance to show its identity discriminates anything
 # starts with no identity at all, and has to win one back from behaviour
-_STATUS_RANK = {"SUPPORTED": 0, "NO_IDENTITY": 1, "UNSUPPORTED": 2, "CONTRADICTED": 3}
+_STATUS_RANK = {"SUPPORTED": 0, "NO_IDENTITY": 1, "UNSUPPORTED": 2, "CONTRADICTED": 3, "INHERITED": 4}
 
 
 def _rank(reading: Reading) -> tuple:

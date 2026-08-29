@@ -1,0 +1,154 @@
+{
+ "run": "harbour_transfer",
+ "chain": "docs/data/v4/manifests/harbour_chain.json",
+ "chain_reading": "joint discrimination x2",
+ "split": 0.5,
+ "cut": 229,
+ "search": {
+  "final": {
+   "contradictions": 0,
+   "churn": 0,
+   "visibility": 0,
+   "conflicts": 0,
+   "unexplained": 0,
+   "spurious": 0,
+   "explained": 34,
+   "delta_atoms": 34,
+   "complexity": 37,
+   "steps": 229,
+   "churn_steps": [],
+   "contradiction_steps": [],
+   "visibility_steps": []
+  },
+  "moves": [
+   {
+    "move": "evidence_prior",
+    "score": {
+     "contradictions": 0,
+     "churn": 0,
+     "visibility": 0,
+     "conflicts": 0,
+     "unexplained": 0,
+     "spurious": 0,
+     "explained": 34,
+     "delta_atoms": 34,
+     "complexity": 37,
+     "steps": 229,
+     "churn_steps": [],
+     "contradiction_steps": [],
+     "visibility_steps": []
+    }
+   }
+  ],
+  "withheld_unions": [],
+  "open_questions": [],
+  "entity_types": {
+   "0": [
+    {
+     "template": "row[](cell[](button[_]),cell[_],cell[_ m],cell[_])",
+     "key_slot": "cell#0"
+    },
+    {
+     "template": "row[](cell[_],cell[_ m],cell[_],cell[](button[Schedule call]))",
+     "key_slot": "cell#0"
+    }
+   ],
+   "1": [
+    {
+     "template": "row[](cell[_],cell[_ m],cell[_],cell[](button[Close],button[Reopen]))",
+     "key_slot": "cell#0"
+    }
+   ],
+   "2": [
+    {
+     "template": "row[](cell[_],cell[_ m],cell[_ duty],cell[_],cell[](button[Sign on],button[Sign off]))",
+     "key_slot": "cell#0"
+    }
+   ],
+   "3": [
+    {
+     "template": "group[](heading[Call sheet _],table[](rowgroup[](row[](cell[Field],cell[Value])),rowgroup[](row[](cell[Vessel],cell[_]),row[](cell[Flag],cell[_]),row[](cell[Length overall],cell[_]),row[](cell[Hazardous cargo],cell[_]),row[](cell[Cargo],cell[_]),row[](cell[Status],cell[_]),row[](cell[Berth],cell[_]),row[](cell[Pilot],cell[_]))),text[](text[Berth],combobox[_],button[Allocate berth]),text[](text[Pilot],combobox[_],button[Book pilot]),text[](button[Bring _],button[Record departure]))",
+     "key_slot": null
+    }
+   ],
+   "4": [
+    {
+     "template": "button[_]",
+     "key_slot": "button#0"
+    }
+   ]
+  },
+  "reading": {
+   "version": 1,
+   "name": "search",
+   "families": {
+    "button[_]": {
+     "family": "button[_]",
+     "key_slot": "button#0",
+     "status": "SUPPORTED",
+     "discrimination": 1.0
+    },
+    "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))": {
+     "family": "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "discrimination": null
+    },
+    "row[_](cell[_](button[_]),cell[_])": {
+     "family": "row[_](cell[_](button[_]),cell[_])",
+     "key_slot": "cell#0",
+     "status": "SUPPORTED",
+     "discrimination": 1.0
+    },
+    "row[_](cell[_],cell[_](button[_]))": {
+     "family": "row[_](cell[_],cell[_](button[_]))",
+     "key_slot": "cell#0",
+     "status": "SUPPORTED",
+     "discrimination": 1.0
+    }
+   },
+   "promoted_families": [],
+   "refuted": {},
+   "provenance": {
+    "source_run": "runs/v4/harbour_transfer",
+    "role": "SOURCE"
+   }
+  },
+  "notes": [
+   "v4 initial (V2 identities): contradictions 0, churn 0, visibility 0, conflicts 0, unexplained 43, spurious 0, explained 34, atoms 34, complexity 43",
+   "v4 evidence prior: contradictions 0, churn 0, visibility 0, conflicts 0, unexplained 0, spurious 0, explained 34, atoms 34, complexity 37",
+   "v4 row[_](cell[_],cell[_](button[_])) cell#0@5: build failed (KeyError)",
+   "v4 row[_](cell[_],cell[_](button[_])) cell#0@6: build failed (KeyError)",
+   "v4 row[_](cell[_],cell[_](button[_])) cell#0@4: build failed (KeyError)",
+   "v4 final: contradictions 0, churn 0, visibility 0, conflicts 0, unexplained 0, spurious 0, explained 34, atoms 34, complexity 37; 0 open questions"
+  ]
+ },
+ "suffix_ledger": {
+  "search": {
+   "no rule": 50,
+   "right": 17
+  },
+  "chain": {
+   "no rule": 50,
+   "right": 17
+  }
+ },
+ "families": {
+  "button[_]": {
+   "search": "button#0",
+   "chain": "button#0"
+  },
+  "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))": {
+   "search": null,
+   "chain": "heading#0"
+  },
+  "row[_](cell[_](button[_]),cell[_])": {
+   "search": "cell#0",
+   "chain": "cell#0"
+  },
+  "row[_](cell[_],cell[_](button[_]))": {
+   "search": "cell#0",
+   "chain": "cell#0"
+  }
+ }
+}

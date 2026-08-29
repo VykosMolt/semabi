@@ -270,6 +270,14 @@ key the search chose and admits the right one -- and admits a wrong one beside i
 it cannot trade explanation for error.  A resumed search would need the sufficiency the
 objective lacks, and the ledger, causally placed, is its measure.
 
+That mechanism now exists in the search (the section above): keys and unions are
+hypotheses, judged and revised, with the counterexample each move answered on record.
+What it cannot do is decide what the prefix does not decide -- blend's chooser labels
+were a tie until a rule about ties was added, and the rule is a parsimony judgement, not
+evidence.  The open questions the search keeps are the experiments `probe.py` was written
+to run, and that is where the identity work goes next: not more selection, but the
+question put to the application.
+
 Behind that stands the more general lesson of this run.  Two interventions of two and
 three clicks each, on fresh instances, settled what five hundred retained steps and three
 sessions of instruments could not: whether a tab is sensing, whether a field is ordered.
@@ -279,6 +287,94 @@ space with several admissible rules and none forced, a reading the objective can
 probes on a fresh instance, with the hypotheses frozen first, is acquisition as an
 obligation rather than as a session's design, and it is the second thing this frontier
 needs.
+
+## Identity as a hypothesis: what the search was doing, and what it does now
+
+The re-keying table said the selector would take Patient + Reason if offered.  Running the
+identity search itself on vet's certified prefix showed why it never was, and it was not
+one cause but four, all in the search and its objective rather than in any framework
+around them.
+
+**The report was not the decision.**  V2's own key for the appointment rows is `cell#0`
+-- the patient alone -- and it is not among the six candidates the structural rank keeps
+(composites that separate every pair outrank a single that does not).  In that case the
+search left the hypotheses on V2's key and reported the *top-ranked candidate* as chosen;
+`pinned.from_search` then froze a key the search had never judged.  That is how
+`source_choice` came to carry Patient + Status.  The inherited key is now a reading of its
+own (`INHERITED`), judged against the alternatives as the base always was, and a key that
+arrives by `_build_entity_types` harmonising a composite across the templates of a union
+is reported as `HARMONISED`, not as the last thing the search accepted.
+
+**One pass, in sorted order.**  Each family was judged once against a base that still
+carried 250 errors from the junk families judged after it, and nothing revisited.  The
+pass now repeats until no family moves (`MAX_ROUNDS`); on vet the second round is where
+the base is clean.
+
+**Two things the objective could not see.**  Under Patient alone the two `Luna`
+appointments merge into one object, so a `Check in` on the second is *silent* -- the
+merged object keeps the earlier value -- and the reading is charged nothing; and a
+`Schedule` that adds a row changes the page's role-path profile past `_same_view`'s
+threshold, so the creation was written off as a visibility artifact.  A mention conflict
+-- one object, two mentions on one page disagreeing about a value -- is now an error term
+(`conflicts`): it is exactly the evidence that a name is too coarse.  And a click on a
+control a probe has certified as `DOMAIN` is never phantom: what appears after it is real.
+On the pinned family, Patient alone then scores 26 explained / **33 errors** and
+Patient + Reason 39 / **0**.
+
+**The union is a hypothesis too.**  Patient rows and appointment rows are one entity type
+because their keys overlap; nothing could withhold that.  A reading now carries
+`withheld_unions` (pinned, fingerprinted, applied as template pairs;
+`Hypotheses.withheld_unions`), and the search tries withholding each cross-family union
+its built hypotheses made, judged like a key.  Every accepted move records which terms of
+the objective decided it (`decided_by`) -- the counterexample it answered -- and a
+composite's single components stay proposable, so a key can be coarsened as well as
+split.
+
+What the search does on vet now (`MAX_ROUNDS` reached at two):
+
+| move | decided by |
+|---|---|
+| `cell[_]` → no identity | 80 contradictions, 80 visibility |
+| the form's field labels → no identity | 95 contradictions, 147 visibility |
+| patient rows → `cell#0|cell#0@3` | +1 explained |
+| appointment rows: `cell#0` → `cell#0|cell#0@3` | harmonised from the union, reported as such |
+| withhold patient ∪ appointment | **not accepted** |
+
+The last row is right by the quotient: with navigation certified the union produces no
+counterexample on the prefix -- `Luna|Cat` and `Luna|Annual checkup` never collide, a tab
+switch no longer reads as deletion -- so two kinds are kept merged until an interaction
+tells them apart.  The search's own reading scores 18 / 1 / 7 on the suffix, the same as
+the hand-picked chain reading.
+
+**The same search on the other applications** (`semabi.eval.v4_search_vs_chain`; the
+search's own reading and the chain's, scored on the same suffix):
+
+| application | what the search did | suffix, search | suffix, chain |
+|---|---|---|---|
+| vet | above; one family went `cell#0` → none (unearned) → `cell#0@4` (+2 explained) within a round | 18 / 1 / 7 no rule | 18 / 1 / 7 |
+| harbour | evidence prior accepted; no move, no open question, zero errors | 17 right / 50 no rule | 17 / 50 |
+| blend | label-less buttons, a bare cell family and the chooser labels → no entity | 149 / 18 / 82 | 149 / 18 / 82 |
+| cellar | vessel rows re-keyed `cell#0` → `cell#1` (2 contradictions, 7 visibility) | 4 unbound | nothing claimed |
+
+Blend needed one more rule, and it is the search's own.  Its first result under the new
+objective read the chooser labels beside the vat and blend selects as objects (`text#0`)
+and left them so as an *open question* -- an exact tie against no identity on explanation,
+error, atoms and complexity -- and that reading scored 147 / **40** / 62 on the suffix.
+All five variants of it tie on the prefix at 151 explained / 0 errors; the entire suffix
+difference is that one family, and the mechanism is a union that adds *mentions* and no
+object: the labels' values are vat names, the family is unioned into the vats by key
+overlap, and `Record draw`'s refusal rule then generalises its argument to `*` (support
+2 → 15), which is twenty-two contradictions the prefix cannot see.  The search's docstring
+says an identity "has to earn its place behaviourally against the alternative of claiming
+no identity at all"; on a tie the objective cannot break it has not, and that is now the
+rule (`decided_by: {"unearned": ...}`, the question kept open).  Its first form fired on
+any (explained, errors) tie and alternated with `better_than`'s own atoms-and-complexity
+tie-break on harbour for four rounds; it now yields to any tie `better_than` can break.
+
+So the identity search now produces, unaided, the readings the earlier sessions picked by
+hand and instrumented for three runs -- on the three applications whose suffixes test
+them.  Cellar's do not: its prefix explains one transition, and its suffix has nothing to
+say about either reading.
 
 ## Corrections to previous reports
 
@@ -309,7 +405,10 @@ python -m semabi.eval.v4_reading_selection --run runs/v4/vet_clinic_transfer \
     --chain docs/data/v4/manifests/vet_clinic_chain.json --reading source_choice \
     --rekey "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))" \
     --slots "cell#0|cell#0@4,cell#0|cell#0@3,cell#0@3,cell#0|cell#0@2" --out reading_keys_vet_clinic.json
-python -m pytest tests/test_v4_acquired_probes.py tests/test_v4_sensing_not_in_macro.py
+python -m semabi.eval.v4_search_vs_chain --run runs/v4/vet_clinic_transfer \
+    --chain docs/data/v4/manifests/vet_clinic_chain.json --reading source_choice --out search_vs_chain_vet_clinic.json
+python -m pytest tests/test_v4_acquired_probes.py tests/test_v4_sensing_not_in_macro.py \
+    tests/test_v4_search_revisits.py tests/test_v4_withheld_union.py
 bash scripts/v4_open_world_batch.sh      # every ledger, renaming and reversal, regenerated
 ```
 

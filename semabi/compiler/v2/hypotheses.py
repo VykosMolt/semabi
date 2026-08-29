@@ -100,6 +100,10 @@ class Hypotheses:
         self.transient: set[str] = set()
         self.transient_positions: set[tuple] = set()
         self.force_link: set[str] = set()  # refinement: templates whose link/merge decision is flipped
+        # pairs of templates whose union by key overlap is withheld: a reading in which two
+        # families that name the same values are two kinds of thing (an appointment row
+        # names its patient; it is not the patient).  Proposed and judged by the V4 search.
+        self.withheld_unions: set[frozenset[str]] = set()
         self._page_instances: dict[str, dict[int, UnitInstance]] = {}  # last parse of each page, by root
         self.alias_map: dict[tuple[str, str], str] = {}  # (template, key value) -> canonical key value (another template's)
         self.key_overrides: dict[tuple[str, str, str], str] = {}  # (observation, template, rendered key) -> associated key
@@ -807,6 +811,9 @@ class Hypotheses:
                         self._names_the_kind(a.template, a.key_slot, b.template)
                         or self._names_the_kind(b.template, b.key_slot, a.template)):
                     continue      # two numbers alike are not two names of one thing
+                if frozenset((a.template, b.template)) in self.withheld_unions:
+                    a.evidence.append(f"key overlaps {b.template[:40]} but the union is withheld: two kinds")
+                    continue
                 # contradiction: a unit type whose key repeats within one observation (different
                 # parents) cannot be the same entity as one where it does not -> link type;
                 # likewise a unit that comes into existence while the other already showed the

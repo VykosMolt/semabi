@@ -44,3 +44,13 @@ def test_complexity_only_breaks_an_exact_tie():
     complex_ = _b(explained=10, visibility=2, complexity=40)
     assert simple.better_than(complex_)
     assert not complex_.better_than(simple)
+
+
+def test_a_mention_conflict_is_an_error_the_reading_pays_for():
+    # two appointments for one patient, keyed by the patient: one object, two mentions on one
+    # page disagreeing about the status.  The merge hides the check-in on the second.
+    coarse = Behaviour(explained=25, conflicts=6, complexity=10)
+    fine = Behaviour(explained=25, conflicts=0, complexity=10)
+    assert coarse.errors == 6
+    assert fine.better_than(coarse)
+    assert not coarse.better_than(fine)

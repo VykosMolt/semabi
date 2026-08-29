@@ -82,3 +82,17 @@ def test_a_value_that_never_survives_a_reload_is_contradicted():
     by_slot = {r.key_slot: r for r in readings_for(unit, reload_pairs=[("a", "b")])}
     assert by_slot["v"].evidence.reload_stability == 0.0
     assert by_slot["v"].status == "CONTRADICTED"
+
+
+def test_a_composite_keeps_its_single_components_proposable():
+    # no single slot separates every co-present pair, so composites are proposed and rank
+    # first; the singles must survive the cut, because a key can need coarsening too
+    rows = [("Luna", "Maria", "Annual"), ("Luna", "Maria", "tp79"), ("Peanut", "Sana", "Annual"),
+            ("Peanut", "Sana", "Follow-up"), ("Comet", "Ada", "Annual")]
+    instances = [_instance("s1", i, a=a, b=b, c=c) for i, (a, b, c) in enumerate(rows)]
+    instances += [_instance("s2", i, a=a, b=b, c=c) for i, (a, b, c) in enumerate(rows)]
+    unit = _unit("row[_]", instances, ["a", "b", "c"])
+    got = readings_for(unit, reload_pairs=[])
+    keys = {r.key_slot for r in got}
+    assert "a|c" in keys and "b|c" in keys                 # composites that separate
+    assert {"a", "b", "c"} <= keys                          # and every component, single

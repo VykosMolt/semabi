@@ -1,0 +1,229 @@
+{
+ "run": "blend_book_transfer",
+ "chain": "docs/data/v4/manifests/blend_book_chain.json",
+ "chain_reading": "joint discrimination x3",
+ "split": 0.5,
+ "cut": 419,
+ "search": {
+  "final": {
+   "contradictions": 0,
+   "churn": 0,
+   "visibility": 0,
+   "conflicts": 0,
+   "unexplained": 0,
+   "spurious": 0,
+   "explained": 151,
+   "delta_atoms": 379,
+   "complexity": 25,
+   "steps": 419,
+   "churn_steps": [],
+   "contradiction_steps": [],
+   "visibility_steps": []
+  },
+  "moves": [
+   {
+    "move": "evidence_prior",
+    "score": {
+     "contradictions": 0,
+     "churn": 0,
+     "visibility": 0,
+     "conflicts": 0,
+     "unexplained": 0,
+     "spurious": 0,
+     "explained": 151,
+     "delta_atoms": 379,
+     "complexity": 36,
+     "steps": 419,
+     "churn_steps": [],
+     "contradiction_steps": [],
+     "visibility_steps": []
+    }
+   },
+   {
+    "move": "identity",
+    "round": 0,
+    "family": "button[_]",
+    "templates": 4,
+    "key_slot": null,
+    "status": "NO_IDENTITY",
+    "decided_by": {},
+    "score": {
+     "contradictions": 0,
+     "churn": 0,
+     "visibility": 0,
+     "conflicts": 0,
+     "unexplained": 0,
+     "spurious": 0,
+     "explained": 151,
+     "delta_atoms": 379,
+     "complexity": 30,
+     "steps": 419,
+     "churn_steps": [],
+     "contradiction_steps": [],
+     "visibility_steps": []
+    }
+   },
+   {
+    "move": "identity",
+    "round": 0,
+    "family": "cell[_]",
+    "templates": 1,
+    "key_slot": null,
+    "status": "NO_IDENTITY",
+    "decided_by": {
+     "unearned": "cell#0"
+    },
+    "score": {
+     "contradictions": 0,
+     "churn": 0,
+     "visibility": 0,
+     "conflicts": 0,
+     "unexplained": 0,
+     "spurious": 0,
+     "explained": 151,
+     "delta_atoms": 379,
+     "complexity": 30,
+     "steps": 419,
+     "churn_steps": [],
+     "contradiction_steps": [],
+     "visibility_steps": []
+    }
+   },
+   {
+    "move": "identity",
+    "round": 0,
+    "family": "text[_](combobox[_])",
+    "templates": 1,
+    "key_slot": null,
+    "status": "NO_IDENTITY",
+    "decided_by": {},
+    "score": {
+     "contradictions": 0,
+     "churn": 0,
+     "visibility": 0,
+     "conflicts": 0,
+     "unexplained": 0,
+     "spurious": 0,
+     "explained": 151,
+     "delta_atoms": 379,
+     "complexity": 25,
+     "steps": 419,
+     "churn_steps": [],
+     "contradiction_steps": [],
+     "visibility_steps": []
+    }
+   }
+  ],
+  "withheld_unions": [],
+  "open_questions": [],
+  "entity_types": {
+   "0": [
+    {
+     "template": "row[](cell[_],cell[](button[Close _],button[_]))",
+     "key_slot": "cell#0"
+    }
+   ],
+   "1": [
+    {
+     "template": "row[](cell[_],cell[](button[Bottle _],button[Disgorge _]))",
+     "key_slot": "cell#0"
+    }
+   ],
+   "2": [
+    {
+     "template": "row[](cell[Ticket _],cell[_ gal],cell[_],cell[](button[Return ticket _ gal from _ out of _]))",
+     "key_slot": "cell#0"
+    }
+   ]
+  },
+  "reading": {
+   "version": 1,
+   "name": "search",
+   "families": {
+    "button[_]": {
+     "family": "button[_]",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "discrimination": 0.0
+    },
+    "cell[_]": {
+     "family": "cell[_]",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "discrimination": 0.0
+    },
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": {
+     "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "discrimination": null
+    },
+    "row[_](cell[_],cell[_](button[_]))": {
+     "family": "row[_](cell[_],cell[_](button[_]))",
+     "key_slot": "cell#0",
+     "status": "SUPPORTED",
+     "discrimination": 1.0
+    },
+    "text[_](combobox[_])": {
+     "family": "text[_](combobox[_])",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "discrimination": 0.0
+    }
+   },
+   "promoted_families": [],
+   "refuted": {},
+   "provenance": {
+    "source_run": "runs/v4/blend_book_transfer",
+    "role": "SOURCE"
+   }
+  },
+  "notes": [
+   "v4 initial (V2 identities): contradictions 0, churn 0, visibility 0, conflicts 0, unexplained 26, spurious 0, explained 151, atoms 379, complexity 42",
+   "v4 evidence prior: contradictions 0, churn 0, visibility 0, conflicts 0, unexplained 0, spurious 0, explained 151, atoms 379, complexity 36",
+   "v4 button[_]: key -> None (contradictions 0, churn 0, visibility 0, conflicts 0, unexplained 0, spurious 0, explained 151, atoms 379, complexity 30)",
+   "v4 cell[_]: key 'cell#0' -> None, unearned on an exact tie",
+   "v4 text[_](combobox[_]): key -> None (contradictions 0, churn 0, visibility 0, conflicts 0, unexplained 0, spurious 0, explained 151, atoms 379, complexity 25)",
+   "v4 round 0: moved; judging every family again against the new base",
+   "v4 final: contradictions 0, churn 0, visibility 0, conflicts 0, unexplained 0, spurious 0, explained 151, atoms 379, complexity 25; 0 open questions"
+  ]
+ },
+ "suffix_ledger": {
+  "search": {
+   "right": 149,
+   "no rule": 82,
+   "contradicted": 18
+  },
+  "chain": {
+   "right": 149,
+   "no rule": 82,
+   "contradicted": 18
+  }
+ },
+ "families": {
+  "button[_]": {
+   "search": null,
+   "chain": "button#0"
+  },
+  "cell[_]": {
+   "search": null,
+   "chain": "cell#0"
+  },
+  "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": {
+   "search": null,
+   "chain": "group/group/text#0@9"
+  },
+  "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": {
+   "search": null,
+   "chain": null
+  },
+  "row[_](cell[_],cell[_](button[_]))": {
+   "search": "cell#0",
+   "chain": "cell#0"
+  },
+  "text[_](combobox[_])": {
+   "search": null,
+   "chain": null
+  }
+ }
+}

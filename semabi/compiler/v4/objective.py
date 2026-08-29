@@ -75,6 +75,10 @@ class Behaviour:
     contradictions: int = 0
     churn: int = 0
     visibility: int = 0
+    # one object, two mentions on one page that disagree about a value: the reading names
+    # two things with one name, and the merge is hiding a change (vet's two appointments
+    # for one patient, keyed by the patient: a check-in on the second is silent)
+    conflicts: int = 0
     unexplained: int = 0
     spurious: int = 0
     explained: int = 0
@@ -100,7 +104,7 @@ class Behaviour:
     def errors(self) -> int:
         """Registered changes with nothing behind them: contradictions, re-keyings,
         visibility artifacts and deltas at steps where no unit content changed."""
-        return self.contradictions + self.churn + self.spurious + self.visibility
+        return self.contradictions + self.churn + self.spurious + self.visibility + self.conflicts
 
     def delta_signature_digest(self) -> str:
         """Identity of everything this reading said changed, over the whole history.
@@ -149,7 +153,8 @@ class Behaviour:
 
     def to_json(self) -> dict[str, Any]:
         return {"contradictions": self.contradictions, "churn": self.churn,
-                "visibility": self.visibility, "unexplained": self.unexplained,
+                "visibility": self.visibility, "conflicts": self.conflicts,
+                "unexplained": self.unexplained,
                 "spurious": self.spurious, "explained": self.explained,
                 "delta_atoms": self.delta_atoms,
                 "complexity": self.complexity, "steps": self.steps,
@@ -159,7 +164,8 @@ class Behaviour:
 
     def __str__(self) -> str:
         return (f"contradictions {self.contradictions}, churn {self.churn}, "
-                f"visibility {self.visibility}, unexplained {self.unexplained}, "
+                f"visibility {self.visibility}, conflicts {self.conflicts}, "
+                f"unexplained {self.unexplained}, "
                 f"spurious {self.spurious}, explained {self.explained}, "
                 f"atoms {self.delta_atoms}, complexity {self.complexity}")
 
@@ -193,9 +199,13 @@ def evaluate(A: V2Abstractor, log: EvidenceLog, max_steps: int | None = None) ->
             name = (step.action.target_desc or {}).get("name") if step.action.target_desc else None
             sensing = step.action.kind in SENSING_KINDS or (
                 step.action.kind == "click" and name in A.verified_view_controls)
+            # a click a probe certified as persisting is a domain action whatever it did to
+            # the page's shape: what appears after it is not a view artifact
+            domain_certified = (step.action.kind == "click"
+                                and name in getattr(A, "verified_domain_controls", set()))
 
             churned = phantom = False
-            if changed_domain and (delta.added or delta.removed):
+            if changed_domain and (delta.added or delta.removed) and not domain_certified:
                 if not _same_view(log.obs(step.before), log.obs(step.after)):
                     # the page is showing something else now; objects that stopped being
                     # rendered were not destroyed, and ones that appeared are not new
@@ -246,4 +256,7 @@ def evaluate(A: V2Abstractor, log: EvidenceLog, max_steps: int | None = None) ->
 
     out.complexity = sum(5 + len([k for k in ti.slots if k != "id"]) + len(ti.refs)
                          for tid, ti in A.types.items() if tid < 100)
+    # distinct (object, slot, values, mentions) disagreements the abstractor recorded while
+    # reading the pages this evaluation visited
+    out.conflicts = len(getattr(A, "mention_conflicts", []) or [])
     return out

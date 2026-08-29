@@ -24,7 +24,10 @@ from semabi.compiler.v2.graph import ObsGraph
 from semabi.compiler.v2.hypotheses import Hypotheses, SlotStat
 from semabi.compiler.v4.abstractor import V4Abstractor
 from semabi.compiler.v4 import objective
-from semabi.compiler.v4.identity import Reading, family_key, family_readings
+from semabi.compiler.v4.identity import Reading, _Family, family_key, family_readings, reading_for
+
+MAX_ROUNDS = 4     # coordinate passes: a family judged against a base that later moves change
+                   # is judged again, until no family moves (`docs/v4_frontier.md`)
 
 
 @dataclass
@@ -51,9 +54,11 @@ class SearchResult:
     moves: list[dict] = field(default_factory=list)
     hypotheses: Any = None          # the hypotheses the search settled on (not serialised)
     promoted: list[str] = field(default_factory=list)
+    withheld_unions: list[tuple[str, str]] = field(default_factory=list)   # family pairs
 
     def to_json(self) -> dict[str, Any]:
         return {"promoted_leaves": list(self.promoted),
+                "withheld_unions": [list(p) for p in self.withheld_unions],
                 "families": {f: sorted(ts) for f, ts in sorted(self.families.items())},
                 "chosen": {t: r.to_json() for t, r in sorted(self.chosen.items())},
                 "readings": {t: [x.to_json() for x in rs] for t, rs in sorted(self.readings.items())},
@@ -132,6 +137,39 @@ def _materialise(unit, key_slot: str) -> None:
     unit.slots[key_slot] = stat
 
 
+def _decided_by(before, after) -> dict[str, int]:
+    """Which terms of the objective moved: the counterexamples a move answered."""
+    out = {}
+    for term in ("contradictions", "churn", "visibility", "conflicts", "spurious"):
+        d = getattr(before, term) - getattr(after, term)
+        if d:
+            out[term] = d
+    if after.explained != before.explained:
+        out["explained"] = after.explained - before.explained
+    return out
+
+
+def _cross_family_unions(H: Hypotheses, grouped: dict[str, list]) -> list[tuple[str, str]]:
+    """Family pairs the built hypotheses read as one entity type."""
+    tid_of = getattr(H, "tid_of_template", None) or {}
+    fam_of = {u.template: name for name, units in grouped.items() for u in units}
+    by_tid: dict[int, set[str]] = {}
+    for template, tid in tid_of.items():
+        if template in fam_of:
+            by_tid.setdefault(tid, set()).add(fam_of[template])
+    pairs = set()
+    for fams in by_tid.values():
+        fams = sorted(fams)
+        for i in range(len(fams)):
+            for j in range(i + 1, len(fams)):
+                pairs.add((fams[i], fams[j]))
+    return sorted(pairs)
+
+
+def _template_pairs(grouped: dict[str, list], fa: str, fb: str) -> set[frozenset[str]]:
+    return {frozenset((ua.template, ub.template)) for ua in grouped[fa] for ub in grouped[fb]}
+
+
 def _build(Hx: Hypotheses, G: ObsGraph, log: EvidenceLog) -> V4Abstractor:
     Hx._build_entity_types()
     A = V4Abstractor(G, Hx)
@@ -206,45 +244,129 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
     else:
         base = copy.deepcopy(H)
         for name in grouped:
+            # What the hypotheses actually carry is V2's key.  When the structural ranking
+            # did not propose it, `chosen` used to report the top-ranked candidate instead,
+            # and a reading pinned from that report named a key the search never validated
+            # (vet's appointments: hypotheses keyed by the patient, report keyed by reason
+            # and status).  The inherited key is now a reading of its own, with its
+            # evidence, and the alternatives are judged against it as they always were.
+            v2_key = H.units[grouped[name][0].template].key_slot
+            inherited = next((r for r in family_reading[name] if r.key_slot == v2_key), None)
+            if inherited is None:
+                inherited = reading_for(_Family(name, grouped[name]),
+                                        tuple(v2_key.split("|")) if v2_key else (),
+                                        reload_pairs, view_of, status="INHERITED",
+                                        why="V2's own key, outside the structural ranking")
+                if not v2_key:
+                    inherited.status, inherited.why = "NO_IDENTITY", "V2 claimed no identity"
+                family_reading[name].append(inherited)
+                for unit in grouped[name]:
+                    result.readings[unit.template] = family_reading[name]
             for unit in grouped[name]:
-                result.chosen[unit.template] = next(
-                    (r for r in family_reading[name] if r.key_slot == H.units[unit.template].key_slot),
-                    family_reading[name][0])
+                result.chosen[unit.template] = inherited
 
-    for name in sorted(grouped):
-        here = result.chosen[grouped[name][0].template]
-        equal: list[Reading] = []
-        for reading in [r for r in family_reading[name] if r.key_slot != here.key_slot]:
+    for round_no in range(MAX_ROUNDS):
+        moved = False
+        result.open_questions = []
+        for name in sorted(grouped):
+            here = result.chosen[grouped[name][0].template]
+            equal: list[Reading] = []
+            for reading in [r for r in family_reading[name] if r.key_slot != here.key_slot]:
+                candidate = copy.deepcopy(base)
+                assign(candidate, name, reading)
+                try:
+                    A = _build(candidate, G, log)
+                    trial_score = objective.evaluate(A, log, max_steps)
+                except Exception as exc:  # noqa: BLE001 - a reading that cannot be built loses
+                    log_fn(f"v4 {name} {reading.key_slot}: build failed ({type(exc).__name__})")
+                    continue
+                if trial_score.better_than(score):
+                    result.moves.append({"move": "identity", "round": round_no, "family": name,
+                                         "templates": len(grouped[name]),
+                                         "key_slot": reading.key_slot, "status": reading.status,
+                                         "decided_by": _decided_by(score, trial_score),
+                                         "score": trial_score.to_json()})
+                    log_fn(f"v4 {name}: key -> {reading.key_slot} ({trial_score})")
+                    base, score, here = candidate, trial_score, reading
+                    for unit in grouped[name]:
+                        result.chosen[unit.template] = reading
+                    equal = []
+                    moved = True
+                elif (not reading.is_identity and here.is_identity
+                      and trial_score.comparable_to(score)
+                      and (trial_score.explained, trial_score.errors) == (score.explained, score.errors)):
+                    # An identity has to earn its place against claiming none.  On a tie the
+                    # objective cannot break either way -- not by explanation, error, atoms or
+                    # complexity -- it has not: the objects it posits change nothing the trace
+                    # explains and cost nothing it charges, and on blend such a family, unioned
+                    # into the vats by key overlap, added mentions the outcome layer generalised
+                    # wrongly (`docs/v4_frontier.md`).  A tie `better_than` does break is left
+                    # to it, or the two rules would alternate.  The question stays open.
+                    result.moves.append({"move": "identity", "round": round_no, "family": name,
+                                         "templates": len(grouped[name]), "key_slot": None,
+                                         "status": reading.status, "decided_by": {"unearned": here.key_slot},
+                                         "score": trial_score.to_json()})
+                    log_fn(f"v4 {name}: key {here.key_slot!r} -> None, unearned on an exact tie")
+                    equal.append((here, score))
+                    base, score, here = candidate, trial_score, reading
+                    for unit in grouped[name]:
+                        result.chosen[unit.template] = reading
+                    moved = True
+                elif trial_score.comparable_to(score):
+                    # neither dominates: either the two readings score identically, or one
+                    # explains more while the other errs less.  Both are undecided, and an
+                    # undecided reading is a question for the application, not a tie to break.
+                    equal.append((reading, trial_score))
+            for reading, trial_score in equal[:2]:
+                if (trial_score.explained, trial_score.errors) == (score.explained, score.errors):
+                    why = "the trace so far scores both readings identically"
+                else:
+                    why = (f"undecided: chosen explains {score.explained} with {score.errors} errors, "
+                           f"the alternative explains {trial_score.explained} with {trial_score.errors}")
+                result.open_questions.append(OpenQuestion(name, here, reading, why))
+        # The other identity hypothesis: two families the key overlap unioned into one entity
+        # type may be two kinds of thing (an appointment row names its patient).  Each
+        # cross-family union the built hypotheses made is a candidate to withhold, judged
+        # like a key.
+        for fa, fb in _cross_family_unions(base, grouped):
+            if (fa, fb) in result.withheld_unions:
+                continue
             candidate = copy.deepcopy(base)
-            assign(candidate, name, reading)
+            candidate.withheld_unions = candidate.withheld_unions | _template_pairs(grouped, fa, fb)
             try:
-                A = _build(candidate, G, log)
-                trial_score = objective.evaluate(A, log, max_steps)
-            except Exception as exc:  # noqa: BLE001 - a reading that cannot be built loses
-                log_fn(f"v4 {name} {reading.key_slot}: build failed ({type(exc).__name__})")
+                trial_score = objective.evaluate(_build(candidate, G, log), log, max_steps)
+            except Exception as exc:  # noqa: BLE001
+                log_fn(f"v4 withhold {fa} / {fb}: build failed ({type(exc).__name__})")
                 continue
             if trial_score.better_than(score):
-                result.moves.append({"move": "identity", "family": name, "templates": len(grouped[name]),
-                                     "key_slot": reading.key_slot, "status": reading.status,
+                result.moves.append({"move": "withhold_union", "round": round_no,
+                                     "families": [fa, fb], "decided_by": _decided_by(score, trial_score),
                                      "score": trial_score.to_json()})
-                log_fn(f"v4 {name}: key -> {reading.key_slot} ({trial_score})")
-                base, score, here = candidate, trial_score, reading
-                for unit in grouped[name]:
-                    result.chosen[unit.template] = reading
-                equal = []
-            elif trial_score.comparable_to(score):
-                # neither dominates: either the two readings score identically, or one
-                # explains more while the other errs less.  Both are undecided, and an
-                # undecided reading is a question for the application, not a tie to break.
-                equal.append((reading, trial_score))
-        for reading, trial_score in equal[:2]:
-            if (trial_score.explained, trial_score.errors) == (score.explained, score.errors):
-                why = "the trace so far scores both readings identically"
-            else:
-                why = (f"undecided: chosen explains {score.explained} with {score.errors} errors, "
-                       f"the alternative explains {trial_score.explained} with {trial_score.errors}")
-            result.open_questions.append(OpenQuestion(name, here, reading, why))
+                log_fn(f"v4 withhold union {fa} / {fb} ({trial_score})")
+                base, score = candidate, trial_score
+                result.withheld_unions.append((fa, fb))
+                moved = True
+        if not moved:
+            break
+        log_fn(f"v4 round {round_no}: moved; judging every family again against the new base")
 
+    # `_build` runs `_build_entity_types` on the accepted candidate, which may have adopted a
+    # composite key from a sibling template of the entity type it was unioned into -- a key
+    # nobody judged.  Report what the hypotheses carry, marked as such, rather than the last
+    # reading the search accepted (`docs/v4_frontier.md`).
+    for name, units in grouped.items():
+        carried = next((base.units[u.template].key_slot for u in units if u.template in base.units), None)
+        reported = result.chosen[units[0].template]
+        if carried != reported.key_slot:
+            harmonised = reading_for(_Family(name, units), tuple(carried.split("|")) if carried else (),
+                                     reload_pairs, view_of, status="HARMONISED",
+                                     why=f"the entity type it was unioned into adopted {carried!r} "
+                                         f"across its templates; the search judged {reported.key_slot!r}")
+            family_reading[name].append(harmonised)
+            for unit in units:
+                result.chosen[unit.template] = harmonised
+                result.readings[unit.template] = family_reading[name]
+            log_fn(f"v4 {name}: key {reported.key_slot!r} -> {carried!r} by harmonisation, not judged")
     result.final = score
     result.hypotheses = base
     log_fn(f"v4 final: {score}; {len(result.open_questions)} open questions")

@@ -57,27 +57,46 @@ class PinnedReading:
     refuted: dict[str, list[str | None]] = field(default_factory=dict)
     provenance: dict[str, Any] = field(default_factory=dict)
     name: str = ""
+    # pairs of families whose union by key overlap the source withheld: the same values name
+    # two kinds of thing.  Part of the decision, so part of what is carried.
+    withheld_unions: list[tuple[str, str]] = field(default_factory=list)
 
     def to_json(self) -> dict[str, Any]:
-        return {"version": VERSION, "name": self.name,
-                "families": {k: v.to_json() for k, v in sorted(self.families.items())},
-                "promoted_families": sorted(self.promoted_families),
-                "refuted": {k: sorted(v, key=str) for k, v in sorted(self.refuted.items())},
-                "provenance": self.provenance}
+        out = {"version": VERSION, "name": self.name,
+               "families": {k: v.to_json() for k, v in sorted(self.families.items())},
+               "promoted_families": sorted(self.promoted_families),
+               "refuted": {k: sorted(v, key=str) for k, v in sorted(self.refuted.items())},
+               "provenance": self.provenance}
+        if self.withheld_unions:
+            out["withheld_unions"] = [list(pair) for pair in sorted(map(sorted, self.withheld_unions))]
+        return out
 
     @classmethod
     def from_json(cls, d: dict) -> "PinnedReading":
         return cls({k: FamilyReading.from_json(v) for k, v in d.get("families", {}).items()},
                    list(d.get("promoted_families", [])),
                    {k: list(v) for k, v in d.get("refuted", {}).items()},
-                   dict(d.get("provenance", {})), d.get("name", ""))
+                   dict(d.get("provenance", {})), d.get("name", ""),
+                   [tuple(pair) for pair in d.get("withheld_unions", [])])
 
     def fingerprint(self) -> str:
         """Identity of the decision itself, independent of where it was written down."""
         payload = {"version": VERSION,
                    "families": {k: [v.key_slot] for k, v in sorted(self.families.items())},
                    "promoted_families": sorted(self.promoted_families)}
+        if self.withheld_unions:
+            payload["withheld_unions"] = sorted(map(sorted, self.withheld_unions))
         return hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()[:16]
+
+    def withholding(self, family_a: str, family_b: str, name: str) -> "PinnedReading":
+        """The same reading with one union withheld: the other unit of comparison."""
+        pair = tuple(sorted((family_a, family_b)))
+        if pair in self.withheld_unions:
+            return self
+        return PinnedReading(dict(self.families), list(self.promoted_families),
+                             {k: list(v) for k, v in self.refuted.items()},
+                             {**self.provenance, "withholding": list(pair), "from": self.name},
+                             name, [*self.withheld_unions, pair])
 
     def variant(self, family: str,
                 alternative: str | None | FamilyReading,
@@ -139,7 +158,8 @@ def from_search(result, run_dir: Path, name: str = "source",
         else {k: sorted(v, key=str) for k, v in read_refutations(run_dir).items()}
     )
     return PinnedReading(families, promoted, frozen_refuted,
-                         {"source_run": str(run_dir), "role": "SOURCE"}, name)
+                         {"source_run": str(run_dir), "role": "SOURCE"}, name,
+                         [tuple(p) for p in getattr(result, "withheld_unions", [])])
 
 
 @dataclass
@@ -249,7 +269,18 @@ def apply(H, reading: PinnedReading, promoted_absent: list[str] | None = None) -
         if family not in grouped:
             transport.absent_in_transfer.append(family)
     transport.promoted_applied = sorted(set(reading.promoted_families) - set(transport.promoted_absent))
+    H.withheld_unions = withheld_template_pairs(grouped, reading.withheld_unions)
     return transport
+
+
+def withheld_template_pairs(grouped: Mapping[str, list], unions: Iterable[tuple[str, str]]) -> set[frozenset[str]]:
+    """A withheld union between two families, as the template pairs the hypotheses compare."""
+    out: set[frozenset[str]] = set()
+    for fa, fb in unions:
+        for ua in grouped.get(fa, []):
+            for ub in grouped.get(fb, []):
+                out.add(frozenset((ua.template, ub.template)))
+    return out
 
 
 def load(path: Path) -> PinnedReading:
