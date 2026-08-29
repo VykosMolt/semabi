@@ -1,0 +1,94 @@
+{
+ "run": "harbour_transfer",
+ "chain": "docs/data/v4/manifests/harbour_chain.json",
+ "split": 0.5,
+ "ablated": "joint discrimination x2",
+ "readings": [
+  {
+   "reading": "joint discrimination x2",
+   "types": 5,
+   "prefix_objective": {
+    "explained": 34,
+    "errors": 0,
+    "visibility": 0,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 43
+   },
+   "suffix_ledger": {
+    "no rule": 50,
+    "right": 17
+   }
+  },
+  {
+   "reading": "without button[_]",
+   "types": 4,
+   "prefix_objective": {
+    "explained": 34,
+    "errors": 0,
+    "visibility": 0,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 43
+   },
+   "suffix_ledger": {
+    "no rule": 50,
+    "right": 17
+   },
+   "prefix_objective_accepts_removal": true
+  },
+  {
+   "reading": "without group[_](heading[_],table[_](rowgroup[_](row[_](cell[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))",
+   "types": 4,
+   "prefix_objective": {
+    "explained": 34,
+    "errors": 0,
+    "visibility": 0,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 0
+   },
+   "suffix_ledger": {
+    "no rule": 50,
+    "right": 17
+   },
+   "prefix_objective_accepts_removal": true
+  },
+  {
+   "reading": "without row[_](cell[_](button[_]),cell[_])",
+   "types": 5,
+   "prefix_objective": {
+    "explained": 34,
+    "errors": 0,
+    "visibility": 0,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 43
+   },
+   "suffix_ledger": {
+    "no rule": 50,
+    "right": 17
+   },
+   "prefix_objective_accepts_removal": true
+  },
+  {
+   "reading": "without row[_](cell[_],cell[_](button[_]))",
+   "types": 3,
+   "prefix_objective": {
+    "explained": 7,
+    "errors": 0,
+    "visibility": 0,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 43
+   },
+   "suffix_ledger": {},
+   "prefix_objective_accepts_removal": false
+  }
+ ]
+}

@@ -58,6 +58,17 @@ for app in "harbour_transfer:harbour_chain.json:joint discrimination x2:harbour_
        --out $D/renaming_${name}_$mode.json > /dev/null 2>&1 &
   done
 done
+# can behaviour before the cut choose among readings, and does the suffix agree
+for app in "vet_clinic_transfer:vet_clinic_chain.json:joint discrimination x3:vet_clinic" \
+           "harbour_transfer:harbour_chain.json:joint discrimination x2:harbour" \
+           "blend_book_transfer:blend_book_chain.json:joint discrimination x3:blend_book" \
+           "opus_02_cellar_dev:opus_02_cellar_dev_source_sections.json:joint discrimination x3:cellar"; do
+  IFS=: read -r run chain reading name <<< "$app"
+  $V -m semabi.eval.v4_reading_selection --run runs/v4/$run --chain $M/$chain \
+     --out reading_selection_$name.json > /dev/null 2>&1 &
+  $V -m semabi.eval.v4_reading_selection --run runs/v4/$run --chain $M/$chain --ablate "$reading" \
+     --out reading_ablation_$name.json > /dev/null 2>&1 &
+done
 # what a control's label says against what it does
 $V -m semabi.eval.v4_roles --run runs/v4/blend_book_transfer --chain $M/blend_book_chain.json \
    --reading "joint discrimination x3" --out $D/roles_blend_book_transfer.json > /dev/null 2>&1 &

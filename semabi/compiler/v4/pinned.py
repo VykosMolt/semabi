@@ -236,6 +236,12 @@ def apply(H, reading: PinnedReading, promoted_absent: list[str] | None = None) -
             continue
         transport.applied[family] = key
         for unit in units:
+            # A family's templates need not all render the slot the reading names -- a
+            # variant without the column -- and a unit keyed on a slot it lacks broke the
+            # fit of four harbour candidates.  Such a unit carries no identity here.
+            if not all(p in unit.slots for p in parts):
+                unit.key_slot = None
+                continue
             unit.key_slot = key
             if "|" in key:
                 _materialise(unit, key)

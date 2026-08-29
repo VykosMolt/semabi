@@ -1,5 +1,7 @@
 # What the ABI must preserve: semantic distinctions by behavioural necessity
 
+> Continued in `docs/v4_selection.md`.
+
 Two runs established what the frozen interpreter must ignore: the row a member stands in,
 the spelling of a name, the shape of a value, the view that rendered a column.  This run
 asked the converse -- what it must *keep* -- and answered it on the witnesses the last

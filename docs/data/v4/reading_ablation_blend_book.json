@@ -1,0 +1,98 @@
+{
+ "run": "blend_book_transfer",
+ "chain": "docs/data/v4/manifests/blend_book_chain.json",
+ "split": 0.5,
+ "ablated": "joint discrimination x3",
+ "readings": [
+  {
+   "reading": "joint discrimination x3",
+   "types": 5,
+   "prefix_objective": {
+    "explained": 151,
+    "errors": 0,
+    "visibility": 0,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 0
+   },
+   "suffix_ledger": {
+    "right": 149,
+    "no rule": 82,
+    "contradicted": 18
+   }
+  },
+  {
+   "reading": "without button[_]",
+   "types": 4,
+   "prefix_objective": {
+    "explained": 151,
+    "errors": 0,
+    "visibility": 0,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 0
+   },
+   "suffix_ledger": {
+    "right": 149,
+    "no rule": 82,
+    "contradicted": 18
+   },
+   "prefix_objective_accepts_removal": true
+  },
+  {
+   "reading": "without cell[_]",
+   "types": 4,
+   "prefix_objective": {
+    "explained": 151,
+    "errors": 0,
+    "visibility": 0,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 0
+   },
+   "suffix_ledger": {
+    "right": 149,
+    "no rule": 82,
+    "contradicted": 18
+   },
+   "prefix_objective_accepts_removal": true
+  },
+  {
+   "reading": "without group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+   "types": 5,
+   "prefix_objective": {
+    "explained": 151,
+    "errors": 0,
+    "visibility": 0,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 0
+   },
+   "suffix_ledger": {
+    "right": 149,
+    "no rule": 82,
+    "contradicted": 18
+   },
+   "prefix_objective_accepts_removal": false
+  },
+  {
+   "reading": "without row[_](cell[_],cell[_](button[_]))",
+   "types": 4,
+   "prefix_objective": {
+    "explained": 0,
+    "errors": 0,
+    "visibility": 0,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 0
+   },
+   "suffix_ledger": {},
+   "prefix_objective_accepts_removal": false
+  }
+ ]
+}

@@ -1,0 +1,123 @@
+{
+ "run": "vet_clinic_transfer",
+ "chain": "docs/data/v4/manifests/vet_clinic_chain.json",
+ "split": 0.5,
+ "ablated": "joint discrimination x3",
+ "readings": [
+  {
+   "reading": "joint discrimination x3",
+   "types": 5,
+   "prefix_objective": {
+    "explained": 19,
+    "errors": 248,
+    "visibility": 231,
+    "churn": 17,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 0
+   },
+   "suffix_ledger": {
+    "right": 186,
+    "contradicted": 53,
+    "disagreed": 18
+   }
+  },
+  {
+   "reading": "without cell[_]",
+   "types": 5,
+   "prefix_objective": {
+    "explained": 19,
+    "errors": 168,
+    "visibility": 151,
+    "churn": 17,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 80
+   },
+   "suffix_ledger": {
+    "unbound": 104,
+    "right": 38,
+    "contradicted": 26,
+    "disagreed": 18
+   },
+   "prefix_objective_accepts_removal": true
+  },
+  {
+   "reading": "without group[_](heading[_],list[_](listitem[_]))",
+   "types": 3,
+   "prefix_objective": {
+    "explained": 19,
+    "errors": 248,
+    "visibility": 231,
+    "churn": 17,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 0
+   },
+   "suffix_ledger": {
+    "right": 186,
+    "contradicted": 53,
+    "disagreed": 18
+   },
+   "prefix_objective_accepts_removal": true
+  },
+  {
+   "reading": "without row[_](cell[_])",
+   "types": 4,
+   "prefix_objective": {
+    "explained": 22,
+    "errors": 231,
+    "visibility": 231,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 10
+   },
+   "suffix_ledger": {
+    "right": 180,
+    "unbound": 9,
+    "contradicted": 57,
+    "disagreed": 11
+   },
+   "prefix_objective_accepts_removal": true
+  },
+  {
+   "reading": "without row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
+   "types": 5,
+   "prefix_objective": {
+    "explained": 11,
+    "errors": 228,
+    "visibility": 228,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 3
+   },
+   "suffix_ledger": {
+    "right": 186,
+    "contradicted": 71
+   },
+   "prefix_objective_accepts_removal": false
+  },
+  {
+   "reading": "without text[_](combobox[_])",
+   "types": 5,
+   "prefix_objective": {
+    "explained": 19,
+    "errors": 166,
+    "visibility": 149,
+    "churn": 17,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 30
+   },
+   "suffix_ledger": {
+    "unbound": 70,
+    "right": 89,
+    "no rule": 7,
+    "contradicted": 1
+   },
+   "prefix_objective_accepts_removal": true
+  }
+ ]
+}

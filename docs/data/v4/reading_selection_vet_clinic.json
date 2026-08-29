@@ -1,0 +1,149 @@
+{
+ "run": "vet_clinic_transfer",
+ "chain": "docs/data/v4/manifests/vet_clinic_chain.json",
+ "split": 0.5,
+ "ablated": null,
+ "readings": [
+  {
+   "reading": "source_choice",
+   "types": 2,
+   "prefix_objective": {
+    "explained": 19,
+    "errors": 20,
+    "visibility": 3,
+    "churn": 17,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 176
+   },
+   "suffix_ledger": {
+    "right": 12,
+    "contradicted": 1
+   }
+  },
+  {
+   "reading": "promote cell[_]=cell#0",
+   "types": 2,
+   "prefix_objective": {
+    "explained": 27,
+    "errors": 158,
+    "visibility": 149,
+    "churn": 9,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 30
+   },
+   "suffix_ledger": {
+    "unbound": 70,
+    "right": 71,
+    "undecidable": 28,
+    "contradicted": 3
+   }
+  },
+  {
+   "reading": "promote listitem[_]=listitem#0!",
+   "types": 3,
+   "prefix_objective": {
+    "explained": 32,
+    "errors": 113,
+    "visibility": 113,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 117
+   },
+   "suffix_ledger": {
+    "unbound": 88,
+    "no rule": 4,
+    "contradicted": 37,
+    "right": 39
+   }
+  },
+  {
+   "reading": "joint discrimination x3",
+   "types": 5,
+   "prefix_objective": {
+    "explained": 19,
+    "errors": 248,
+    "visibility": 231,
+    "churn": 17,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 0
+   },
+   "suffix_ledger": {
+    "right": 186,
+    "contradicted": 53,
+    "disagreed": 18
+   }
+  },
+  {
+   "reading": "cell[_]=cell#0",
+   "types": 3,
+   "prefix_objective": {
+    "explained": 19,
+    "errors": 166,
+    "visibility": 149,
+    "churn": 17,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 30
+   },
+   "suffix_ledger": {
+    "unbound": 70,
+    "right": 89,
+    "no rule": 7,
+    "contradicted": 1
+   }
+  },
+  {
+   "reading": "group[_](heading[_],list=heading#1",
+   "types": 4,
+   "prefix_objective": {
+    "explained": 19,
+    "errors": 20,
+    "visibility": 3,
+    "churn": 17,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 176
+   },
+   "suffix_ledger": {
+    "right": 12,
+    "contradicted": 1
+   }
+  },
+  {
+   "reading": "row[_](cell[_])=None",
+   "types": 1,
+   "prefix_objective": {
+    "explained": 22,
+    "errors": 3,
+    "visibility": 3,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 88
+   },
+   "suffix_ledger": {}
+  },
+  {
+   "reading": "row[_](cell[_],cell[_](c=cell#0@4",
+   "types": 4,
+   "prefix_objective": {
+    "explained": 33,
+    "errors": 0,
+    "visibility": 0,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 0,
+    "unexplained": 182
+   },
+   "suffix_ledger": {
+    "unbound": 7,
+    "no rule": 7,
+    "right": 6
+   }
+  }
+ ]
+}
