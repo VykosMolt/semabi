@@ -169,6 +169,19 @@ before, and one `Record draw` refusal for a varietal mismatch is inseparable for
 the language genuinely lacks: it compares the vat's varietal with the blend's, an equality
 between two objects' attributes, which no literal states.
 
+Under the boundary a deployed agent faces (`v4_admissible_prequential`: the whole model
+rebuilt before each scored action from what had been observed when it was chosen):
+
+| | scored | forced, right | forced, wrong | several, truth among | nothing | sole (right) |
+|---|---|---|---|---|---|---|
+| blend, before (stride 8) | 32 | 18 | 0 | 9 | 2 | 3 (1) |
+| blend, after | 32 | 22 | 1 | 5 | 1 | 3 (1) |
+| harbour, before (stride 4) | 31 | 13 | 0 | 0 | 11 | 7 (7) |
+| harbour, after | 32 | 24 | 0 | 0 | **0** | 8 (8) |
+
+Harbour under the deployed boundary now refuses nothing and is wrong nowhere; blend's one
+forced error at that boundary is `Close`'s once-seen refusal.
+
 The chosen decision list, the point hypothesis inside the version space
 (`scripts/v4_outcome_batch.sh`'s instruments):
 
