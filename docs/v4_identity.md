@@ -241,6 +241,26 @@ the rule class 13 forced and right, 11 refused, 7 vacuously sole and right; unde
 class 10 forced and right, 5 open with the truth among them, 9 refused.  At the boundary an
 agent actually faces, on these two applications, a forced answer was never wrong.
 
+### On a history nothing was fitted on
+
+`v4_admissible --score-on` fits the whole transfer trace and asks the version space about the
+second history, which no fit ever read.  Blend (503 clicks): 218 forced, **205 right, 13
+wrong**; 192 open with the chosen list right on 159; 29 refused; 64 vacuous (27 right).
+Harbour (270 clicks): 91 forced, **77 right, 14 wrong**; 81 refused; 96 vacuous (92 right).
+`v4_inadequacy --score-on` then names what the confident errors are made of:
+
+* blend's 13: 5 `once` (`Close`'s *already closed*, seen once in the whole transfer trace) and
+  8 `inseparable`, every one of them `Record draw` returning *The book already holds 12
+  records; return a draw first* -- a guard on **how many** draws exist.  The literal language
+  has attributes, references, whether a role names anything and whether a list was touched; it
+  cannot count.  `erased_by_the_state` shows the tickets rendered inside the owner's group and
+  absent from its state, which is the right report and the wrong repair: what is missing is an
+  aggregate, not a slot.
+* harbour's 14: 2 on the frame (`Reopen`, inseparable) and 12 on an *argument* of `Schedule
+  call`'s *Call C-107 opened for Selkie* -- the identifier of the call the click creates, which
+  no pre-state can name.  A created object's key is not a prediction the outcome layer should
+  be asked for, and the scorer's argument check does not yet know the difference.
+
 ## An entity whose name the prefix never used
 
 Twenty-seven blend clicks still had no model after the identity repair, all on a vat called
@@ -450,6 +470,9 @@ layer responsible rather than counted:
   *already open* and *is not bottled*, events the prefix never saw on those controls.  Vacuous
   unanimity is reported as such; nothing here makes it less vacuous.
 * Vet's ledger moved under the unseen-token rule and the movement was not traced case by case.
+* The literal language cannot express a cardinality (*the book holds 12 records*), which is
+  the only inseparable case left on blend's second history; and the argument check scores a
+  created object's identifier as if the pre-state could name it.
 * Under harbour's loose reading (`promote cell[_]=cell#0`) the identity repair pools fourteen
   `Schedule call` operators that node-index provenance had kept apart into three, one of which
   only creates objects; `tests/test_v4_binding.py` had asserted that every loose-reading

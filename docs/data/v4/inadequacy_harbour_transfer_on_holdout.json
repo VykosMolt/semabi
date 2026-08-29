@@ -1,0 +1,76 @@
+{
+ "run": "harbour_transfer",
+ "reading": "joint discrimination x2",
+ "regime": "FROZEN_PREFIX",
+ "hypothesis": "rule",
+ "cut": 0,
+ "forced_wrong": 2,
+ "kinds": {
+  "inseparable: every shared conjunction reaches another event": 2
+ },
+ "by_control": {
+  "button:Reopen": {
+   "inseparable: every shared conjunction reaches another event": 2
+  }
+ },
+ "cases": [
+  {
+   "control": "button:Reopen",
+   "step": 341,
+   "forced": [
+    "<> <> is already <> ."
+   ],
+   "actual": "<> <> is now <> .",
+   "why": "<> <> is already <> . <- ('unnamed', 'owner')  [4 occasions]",
+   "kind": "inseparable: every shared conjunction reaches another event",
+   "seen": 14,
+   "witnesses": [
+    2,
+    4
+   ],
+   "blockers": 24,
+   "blocked_by": {
+    "<> <> is already <> .": 24
+   },
+   "raw_difference": [
+    "node 2 status: 'Ready.'/'None'  vs  'Call C-102 opened for Ardent Rose.'/'None'",
+    "node 21 cell: 'N2'/'None'  vs  'S1'/'None'",
+    "node 24 group: ''/'None'  vs  ''/'None'",
+    "node 25 heading: 'Call sheet'/'None'  vs  ''/'None'",
+    "node 26 text: 'No call is open. Press a call refe'/'None'  vs  'C-102'/'None'",
+    "node 27 group: ''/'None'  vs  'Ardent Rose'/'None'",
+    "node count 141 vs 149"
+   ],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Reopen",
+   "step": 356,
+   "forced": [
+    "<> <> is already <> ."
+   ],
+   "actual": "<> <> is now <> .",
+   "why": "<> <> is already <> . <- ('unnamed', 'owner')  [4 occasions]",
+   "kind": "inseparable: every shared conjunction reaches another event",
+   "seen": 14,
+   "witnesses": [
+    2,
+    4
+   ],
+   "blockers": 24,
+   "blocked_by": {
+    "<> <> is already <> .": 24
+   },
+   "raw_difference": [
+    "node 21 cell: 'N2'/'None'  vs  'S1'/'None'",
+    "node 24 group: ''/'None'  vs  ''/'None'",
+    "node 25 heading: 'Call sheet'/'None'  vs  ''/'None'",
+    "node 26 text: 'No call is open. Press a call refe'/'None'  vs  'C-102'/'None'",
+    "node 27 group: ''/'None'  vs  'Ardent Rose'/'None'",
+    "node 28 heading: 'Berths'/'None'  vs  '96 m'/'None'",
+    "node count 141 vs 157"
+   ],
+   "erased_by_the_state": []
+  }
+ ]
+}

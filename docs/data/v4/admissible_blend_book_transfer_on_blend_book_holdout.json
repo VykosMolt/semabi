@@ -1,0 +1,294 @@
+{
+ "run": "blend_book_transfer",
+ "reading": "joint discrimination x3",
+ "regime": "FROZEN_PREFIX",
+ "split": 1.0,
+ "cut": 0,
+ "control": null,
+ "scored_on": "blend_book_holdout",
+ "corroborated": true,
+ "hypothesis": "rule",
+ "against_the_other_class": {
+  "rule: several outcomes remain admissible | list: several outcomes remain admissible": 192,
+  "rule: the evidence forces one outcome | list: the evidence forces one outcome": 167,
+  "rule: one outcome, because the control has never done anything else | list: one outcome, because the control has never done anything else": 64,
+  "rule: the evidence forces one outcome | list: several outcomes remain admissible": 38,
+  "rule: no outcome is established | list: no outcome is established": 29,
+  "rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)": 13
+ },
+ "actions": 503,
+ "what_the_evidence_establishes": {
+  "the evidence forces one outcome": 218,
+  "several outcomes remain admissible": 192,
+  "one outcome, because the control has never done anything else": 64,
+  "no outcome is established": 29
+ },
+ "admissible_set_size": {
+  "0": 29,
+  "1": 282,
+  "2": 179,
+  "3": 13
+ },
+ "what_happened_was": {
+  "inside the admissible set": 419,
+  "nothing was admissible": 29,
+  "outside it": 55
+ },
+ "the_list_where_the_evidence": {
+  "no outcome is established": {
+   "no determinate answer": 24,
+   "the event the interface returned": 5
+  },
+  "one outcome, because the control has never done anything else": {
+   "a different event": 37,
+   "the event the interface returned": 27
+  },
+  "several outcomes remain admissible": {
+   "the event the interface returned": 159,
+   "a different event": 33
+  },
+  "the evidence forces one outcome": {
+   "the event the interface returned": 195,
+   "a different event": 23
+  }
+ },
+ "policy_forced_then_list": {
+  "one outcome was admissible and it happened": 205,
+  "deferred to the list: the event the interface returned": 159,
+  "the only outcome ever seen on this control, and something else happened": 37,
+  "deferred to the list: a different event": 33,
+  "refused: nothing established": 29,
+  "the only outcome ever seen on this control, and it happened": 27,
+  "one outcome was admissible and a different one happened": 13
+ },
+ "distinct_events_forced": 8,
+ "events_forced": {
+  "Drew <> from <> into <> .": 67,
+  "Returned <> to <> from <> .": 62,
+  "Opened <> .": 36,
+  "<> <> .": 28,
+  "Disgorged <> .": 28,
+  "<> is already <> .": 27,
+  "<> is <> .": 18,
+  "<> holds <> ; cannot draw <> .": 16
+ },
+ "per_control": {
+  "button:Record draw": {
+   "several outcomes remain admissible": 133,
+   "the evidence forces one outcome": 128
+  },
+  "button:Return ticket _ gal from _ out of _": {
+   "the evidence forces one outcome": 62,
+   "several outcomes remain admissible": 59
+  },
+  "button#cell/button": {
+   "one outcome, because the control has never done anything else": 36
+  },
+  "button:Close _": {
+   "the evidence forces one outcome": 28,
+   "no outcome is established": 5
+  },
+  "button:Disgorge _": {
+   "one outcome, because the control has never done anything else": 28
+  },
+  "button:Bottle _": {
+   "no outcome is established": 24
+  }
+ },
+ "per_control_verdicts": {
+  "button#cell/button": {
+   "the only outcome ever seen on this control, and it happened": 23,
+   "the only outcome ever seen on this control, and something else happened": 13
+  },
+  "button:Bottle _": {
+   "no outcome is established for this state": 24
+  },
+  "button:Close _": {
+   "one outcome was admissible and it happened": 23,
+   "no outcome is established for this state": 5,
+   "one outcome was admissible and a different one happened": 5
+  },
+  "button:Disgorge _": {
+   "the only outcome ever seen on this control, and something else happened": 24,
+   "the only outcome ever seen on this control, and it happened": 4
+  },
+  "button:Record draw": {
+   "several outcomes remained admissible; the one that happened was among them": 132,
+   "one outcome was admissible and it happened": 120,
+   "one outcome was admissible and a different one happened": 8,
+   "several outcomes remained admissible and none of them happened": 1
+  },
+  "button:Return ticket _ gal from _ out of _": {
+   "one outcome was admissible and it happened": 62,
+   "several outcomes remained admissible; the one that happened was among them": 59
+  }
+ },
+ "controls": {
+  "button#cell/button": {
+   "fitted": 22,
+   "events": 1,
+   "rules": 1,
+   "default": "Opened <> ."
+  },
+  "button:Bottle _": {
+   "fitted": 2,
+   "events": 2,
+   "rules": 0,
+   "default": "undetermined"
+  },
+  "button:Close _": {
+   "fitted": 25,
+   "events": 2,
+   "rules": 1,
+   "default": "<> is already <> ."
+  },
+  "button:Disgorge _": {
+   "fitted": 3,
+   "events": 1,
+   "rules": 1,
+   "default": "Disgorged <> ."
+  },
+  "button:Record draw": {
+   "fitted": 209,
+   "events": 6,
+   "rules": 17,
+   "default": "undetermined"
+  },
+  "button:Return ticket _ gal from _ out of _": {
+   "fitted": 113,
+   "events": 2,
+   "rules": 2,
+   "default": "<> is <> ; disgorge it before returning a draw ."
+  }
+ },
+ "forced_but_wrong": [
+  {
+   "step": 28,
+   "control": "button:Record draw",
+   "admissible": [
+    "Drew <> from <> into <> ."
+   ],
+   "hypothesis": "rule",
+   "unordered": [
+    "Drew <> from <> into <> ."
+   ],
+   "observed": "The book already holds 12 records ; return a draw first .",
+   "returned": "The book already holds 12 records; return a draw first.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "the event alone",
+   "why": "Drew <> from <> into <> . <- attr:cell#0@3(selection['combobox#0']:1) == '1' & attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cask#0(selection['combobox#1']:3) == 'In'  [68 occasions]"
+  },
+  {
+   "step": 87,
+   "control": "button:Record draw",
+   "admissible": [
+    "Drew <> from <> into <> ."
+   ],
+   "hypothesis": "rule",
+   "unordered": [
+    "Drew <> from <> into <> ."
+   ],
+   "observed": "The book already holds 12 records ; return a draw first .",
+   "returned": "The book already holds 12 records; return a draw first.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "the event alone",
+   "why": "Drew <> from <> into <> . <- rel:6(owner) != property['attr:blend#0', None]:3 & ('unnamed', \"property['attr:cell#0@3', '0']:1\")  [6 occasions]"
+  },
+  {
+   "step": 88,
+   "control": "button:Close _",
+   "admissible": [
+    "<> <> ."
+   ],
+   "hypothesis": "rule",
+   "unordered": [
+    "<> <> ."
+   ],
+   "observed": "<> is already <> .",
+   "returned": "Chapel Row is already closed.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "the event alone",
+   "why": "<> <> . <- attr:cell#0@3(owner) == '6'  [6 occasions]"
+  },
+  {
+   "step": 91,
+   "control": "button:Record draw",
+   "admissible": [
+    "Drew <> from <> into <> ."
+   ],
+   "hypothesis": "rule",
+   "unordered": [
+    "Drew <> from <> into <> ."
+   ],
+   "observed": "The book already holds 12 records ; return a draw first .",
+   "returned": "The book already holds 12 records; return a draw first.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "the event alone",
+   "why": "Drew <> from <> into <> . <- rel:6(owner) != property['attr:blend#0', None]:3 & ('unnamed', \"property['attr:cell#0@3', '0']:1\")  [6 occasions]"
+  },
+  {
+   "step": 106,
+   "control": "button:Close _",
+   "admissible": [
+    "<> <> ."
+   ],
+   "hypothesis": "rule",
+   "unordered": [
+    "<> <> ."
+   ],
+   "observed": "<> is already <> .",
+   "returned": "North Wall is already closed.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "the event alone",
+   "why": "<> <> . <- attr:cell#0@2(owner) == 'Syrah'  [9 occasions]"
+  },
+  {
+   "step": 111,
+   "control": "button:Record draw",
+   "admissible": [
+    "Drew <> from <> into <> ."
+   ],
+   "hypothesis": "rule",
+   "unordered": [
+    "Drew <> from <> into <> ."
+   ],
+   "observed": "The book already holds 12 records ; return a draw first .",
+   "returned": "The book already holds 12 records; return a draw first.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "the event alone",
+   "why": "Drew <> from <> into <> . <- attr:cell#0@3(selection['combobox#0']:1) == '1' & attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cask#0(selection['combobox#1']:3) == 'In'  [68 occasions]"
+  },
+  {
+   "step": 113,
+   "control": "button:Close _",
+   "admissible": [
+    "<> <> ."
+   ],
+   "hypothesis": "rule",
+   "unordered": [
+    "<> <> ."
+   ],
+   "observed": "<> is already <> .",
+   "returned": "North Wall is already closed.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "the event alone",
+   "why": "<> <> . <- attr:cell#0@2(owner) == 'Syrah'  [9 occasions]"
+  },
+  {
+   "step": 114,
+   "control": "button:Record draw",
+   "admissible": [
+    "Drew <> from <> into <> ."
+   ],
+   "hypothesis": "rule",
+   "unordered": [
+    "Drew <> from <> into <> ."
+   ],
+   "observed": "The book already holds 12 records ; return a draw first .",
+   "returned": "The book already holds 12 records; return a draw first.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "the event alone",
+   "why": "Drew <> from <> into <> . <- attr:cell#0@3(selection['combobox#0']:1) == '1' & attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cask#0(selection['combobox#1']:3) == 'In'  [68 occasions]"
+  }
+ ]
+}

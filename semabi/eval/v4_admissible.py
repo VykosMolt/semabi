@@ -60,12 +60,18 @@ def _bucket(row) -> str | None:
 def compare(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.5,
             regime: str = csq.FROZEN_PREFIX, min_support: int = 2,
             control: str | None = None, corroborated: bool = True,
-            hypothesis: str = oc.RULE) -> dict:
+            hypothesis: str = oc.RULE, score_on: Path | None = None) -> dict:
     from semabi.eval.v4_consequence_run import _candidates
 
     readings = {c.name: c.reading for c in _candidates(chain)}
     model = csq.fit(Path(run_dir), readings[reading_name], split=split,
                     min_support=min_support, regime=regime)
+    if score_on is not None:
+        # A second interaction history none of which the model has seen -- the cleanest test
+        # of whether a forced answer transports.  A split inside one trace shares its episodes.
+        from dataclasses import replace
+        from semabi.compiler.evidence import EvidenceLog
+        model = replace(model, log=EvidenceLog(Path(score_on)), cut=0)
     steps = [s for s in model.log.steps[model.cut:]
              if s.action.kind == "click" and s.action.target is not None]
 
@@ -127,6 +133,7 @@ def compare(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.5
                               "rules": len(got.rules), "default": oc.describe(got.default)}
     return {"run": Path(run_dir).name, "reading": reading_name, "regime": regime,
             "split": split, "cut": model.cut, "control": control,
+            "scored_on": Path(score_on).name if score_on else Path(run_dir).name,
             "corroborated": corroborated, "hypothesis": hypothesis,
             "against_the_other_class": {
                 f"{hypothesis}: {a}{' (wrong)' if aw else ''} | {other}: {b}{' (wrong)' if bw else ''}": n
@@ -188,6 +195,9 @@ def main(argv=None) -> int:
     ap.add_argument("--hypothesis", default=oc.RULE, choices=(oc.RULE, oc.LIST),
                     help="which class of rule 'justified' quantifies over: one globally pure "
                          "conjunction, or a guard in an ordered list")
+    ap.add_argument("--score-on", default=None,
+                    help="score the fitted model on this other run's history instead of the "
+                         "suffix of its own (use with --split 1.0)")
     ap.add_argument("--uncorroborated", action="store_true",
                     help="allow a rule whose condition reaches only the two occasions that "
                          "built it; exact for the class, and mostly memorisation")
@@ -195,9 +205,12 @@ def main(argv=None) -> int:
     a = ap.parse_args(argv)
     r = compare(Path(a.run), Path(a.chain), a.reading, split=a.split, regime=a.regime,
                 min_support=a.min_support, control=a.control,
-                corroborated=not a.uncorroborated, hypothesis=a.hypothesis)
+                corroborated=not a.uncorroborated, hypothesis=a.hypothesis,
+                score_on=Path(a.score_on) if a.score_on else None)
     _print(r)
-    path = OUT / (a.out or f"admissible_{Path(a.run).name}_{a.regime.lower()}.json")
+    path = OUT / (a.out or (f"admissible_{Path(a.run).name}_{a.regime.lower()}.json"
+                            if not a.score_on else
+                            f"admissible_{Path(a.run).name}_on_{Path(a.score_on).name}.json"))
     path.write_text(json.dumps(r, indent=1))
     print(f"\nwrote {path.relative_to(ROOT)}")
     return 0

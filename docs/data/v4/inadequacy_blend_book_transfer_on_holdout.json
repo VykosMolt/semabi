@@ -1,0 +1,350 @@
+{
+ "run": "blend_book_transfer",
+ "reading": "joint discrimination x3",
+ "regime": "FROZEN_PREFIX",
+ "hypothesis": "rule",
+ "cut": 0,
+ "forced_wrong": 13,
+ "kinds": {
+  "inseparable: every shared conjunction reaches another event": 8,
+  "once: seen, but not enough to found a rule": 5
+ },
+ "by_control": {
+  "button:Close _": {
+   "once: seen, but not enough to found a rule": 5
+  },
+  "button:Record draw": {
+   "inseparable: every shared conjunction reaches another event": 8
+  }
+ },
+ "cases": [
+  {
+   "control": "button:Record draw",
+   "step": 28,
+   "forced": [
+    "Drew <> from <> into <> ."
+   ],
+   "actual": "The book already holds 12 records ; return a draw first .",
+   "why": "Drew <> from <> into <> . <- attr:cell#0@3(selection['combobox#0']:1) == '1' & attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cell#0@5(selection['combobox#1']:3) == None  [68 occasions]",
+   "kind": "inseparable: every shared conjunction reaches another event",
+   "seen": 2,
+   "witnesses": [
+    17,
+    25
+   ],
+   "blockers": 2,
+   "blocked_by": {
+    "<> holds <> ; cannot draw <> .": 2
+   },
+   "raw_difference": [
+    "node 5 status: 'Drew 1 gal from North Wall into Fe'/'None'  vs  'Drew 1 gal from Orchard into Festi'/'None'",
+    "node 10 combobox: ''/'North Wall (Syrah, 0'  vs  ''/'Orchard (Grenache, 1'",
+    "node 12 combobox: ''/'Festival White 2020 '  vs  ''/'Festival White 2020 '",
+    "node 28 cell: 'North Wall'/'None'  vs  'Orchard'/'None'",
+    "node 29 cell: 'Syrah'/'None'  vs  'Grenache'/'None'",
+    "node 30 cell: '0'/'None'  vs  '1'/'None'"
+   ],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Record draw",
+   "step": 87,
+   "forced": [
+    "Drew <> from <> into <> ."
+   ],
+   "actual": "The book already holds 12 records ; return a draw first .",
+   "why": "Drew <> from <> into <> . <- rel:6(owner) != property['attr:blend#0', None]:3 & ('unnamed', \"property['attr:cell#0@3', '0']:1\")  [6 occasions]",
+   "kind": "inseparable: every shared conjunction reaches another event",
+   "seen": 2,
+   "witnesses": [
+    17,
+    25
+   ],
+   "blockers": 207,
+   "blocked_by": {
+    "Drew <> from <> into <> .": 101,
+    "<> is <> .": 26,
+    "<> is already <> .": 58,
+    "<> holds <> ; cannot draw <> .": 19,
+    "<> is single-varietal ( <> ) ; <> is <> .": 3
+   },
+   "raw_difference": [
+    "node 5 group: ''/'None'  vs  'Closed West Ridge.'/'None'",
+    "node 6 heading: 'Draw ticket'/'None'  vs  ''/'None'",
+    "node 7 group: ''/'None'  vs  'Draw ticket'/'None'",
+    "node 8 text: 'Vat'/'None'  vs  ''/'None'",
+    "node 9 combobox: ''/'Chapel Row (Chenin, '  vs  'Vat'/'None'",
+    "node 10 text: 'Blend'/'None'  vs  ''/'Orchard (Grenache, 1'",
+    "node count 102 vs 142"
+   ],
+   "erased_by_the_state": [
+    "owner: node 136 cell 'Ticket 9' rendered in the object's own group, not in its state",
+    "owner: node 138 cell 'Orchard' rendered in the object's own group, not in its state",
+    "owner: node 139 cell 'Festival White' rendered in the object's own group, not in its state",
+    "owner: node 129 cell 'Ticket 8' rendered in the object's own group, not in its state",
+    "owner: node 131 cell 'Orchard' rendered in the object's own group, not in its state",
+    "owner: node 132 cell 'Festival White' rendered in the object's own group, not in its state"
+   ]
+  },
+  {
+   "control": "button:Close _",
+   "step": 88,
+   "forced": [
+    "<> <> ."
+   ],
+   "actual": "<> is already <> .",
+   "why": "<> <> . <- attr:cell#0@3(owner) == '6'  [6 occasions]",
+   "kind": "once: seen, but not enough to found a rule",
+   "seen": 1,
+   "raw_difference": [],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Record draw",
+   "step": 91,
+   "forced": [
+    "Drew <> from <> into <> ."
+   ],
+   "actual": "The book already holds 12 records ; return a draw first .",
+   "why": "Drew <> from <> into <> . <- rel:6(owner) != property['attr:blend#0', None]:3 & ('unnamed', \"property['attr:cell#0@3', '0']:1\")  [6 occasions]",
+   "kind": "inseparable: every shared conjunction reaches another event",
+   "seen": 2,
+   "witnesses": [
+    17,
+    25
+   ],
+   "blockers": 207,
+   "blocked_by": {
+    "Drew <> from <> into <> .": 101,
+    "<> is <> .": 26,
+    "<> is already <> .": 58,
+    "<> holds <> ; cannot draw <> .": 19,
+    "<> is single-varietal ( <> ) ; <> is <> .": 3
+   },
+   "raw_difference": [
+    "node 5 group: ''/'None'  vs  'Opened Chapel Row.'/'None'",
+    "node 6 heading: 'Draw ticket'/'None'  vs  ''/'None'",
+    "node 7 group: ''/'None'  vs  'Draw ticket'/'None'",
+    "node 8 text: 'Vat'/'None'  vs  ''/'None'",
+    "node 9 combobox: ''/'Chapel Row (Chenin, '  vs  'Vat'/'None'",
+    "node 10 text: 'Blend'/'None'  vs  ''/'Orchard (Grenache, 1'",
+    "node count 102 vs 142"
+   ],
+   "erased_by_the_state": [
+    "owner: node 136 cell 'Ticket 9' rendered in the object's own group, not in its state",
+    "owner: node 138 cell 'Orchard' rendered in the object's own group, not in its state",
+    "owner: node 139 cell 'Festival White' rendered in the object's own group, not in its state",
+    "owner: node 129 cell 'Ticket 8' rendered in the object's own group, not in its state",
+    "owner: node 131 cell 'Orchard' rendered in the object's own group, not in its state",
+    "owner: node 132 cell 'Festival White' rendered in the object's own group, not in its state"
+   ]
+  },
+  {
+   "control": "button:Close _",
+   "step": 106,
+   "forced": [
+    "<> <> ."
+   ],
+   "actual": "<> is already <> .",
+   "why": "<> <> . <- attr:cell#0@2(owner) == 'Syrah'  [9 occasions]",
+   "kind": "once: seen, but not enough to found a rule",
+   "seen": 1,
+   "raw_difference": [],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Record draw",
+   "step": 111,
+   "forced": [
+    "Drew <> from <> into <> ."
+   ],
+   "actual": "The book already holds 12 records ; return a draw first .",
+   "why": "Drew <> from <> into <> . <- attr:cell#0@3(selection['combobox#0']:1) == '1' & attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cell#0@5(selection['combobox#1']:3) == None  [68 occasions]",
+   "kind": "inseparable: every shared conjunction reaches another event",
+   "seen": 2,
+   "witnesses": [
+    17,
+    25
+   ],
+   "blockers": 20,
+   "blocked_by": {
+    "Drew <> from <> into <> .": 15,
+    "<> holds <> ; cannot draw <> .": 2,
+    "<> is single-varietal ( <> ) ; <> is <> .": 3
+   },
+   "raw_difference": [
+    "node 5 group: ''/'None'  vs  'Drew 1 gal from Orchard into Festi'/'None'",
+    "node 6 heading: 'Draw ticket'/'None'  vs  ''/'None'",
+    "node 7 group: ''/'None'  vs  'Draw ticket'/'None'",
+    "node 8 text: 'Vat'/'None'  vs  ''/'None'",
+    "node 9 combobox: ''/'Chapel Row (Chenin, '  vs  'Vat'/'None'",
+    "node 10 text: 'Blend'/'None'  vs  ''/'Orchard (Grenache, 1'",
+    "node count 102 vs 142"
+   ],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Close _",
+   "step": 113,
+   "forced": [
+    "<> <> ."
+   ],
+   "actual": "<> is already <> .",
+   "why": "<> <> . <- attr:cell#0@2(owner) == 'Syrah'  [9 occasions]",
+   "kind": "once: seen, but not enough to found a rule",
+   "seen": 1,
+   "raw_difference": [],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Record draw",
+   "step": 114,
+   "forced": [
+    "Drew <> from <> into <> ."
+   ],
+   "actual": "The book already holds 12 records ; return a draw first .",
+   "why": "Drew <> from <> into <> . <- attr:cell#0@3(selection['combobox#0']:1) == '1' & attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cell#0@5(selection['combobox#1']:3) == None  [68 occasions]",
+   "kind": "inseparable: every shared conjunction reaches another event",
+   "seen": 2,
+   "witnesses": [
+    17,
+    25
+   ],
+   "blockers": 20,
+   "blocked_by": {
+    "Drew <> from <> into <> .": 15,
+    "<> holds <> ; cannot draw <> .": 2,
+    "<> is single-varietal ( <> ) ; <> is <> .": 3
+   },
+   "raw_difference": [
+    "node 5 group: ''/'None'  vs  'North Wall is already closed.'/'None'",
+    "node 6 heading: 'Draw ticket'/'None'  vs  ''/'None'",
+    "node 7 group: ''/'None'  vs  'Draw ticket'/'None'",
+    "node 8 text: 'Vat'/'None'  vs  ''/'None'",
+    "node 9 combobox: ''/'Chapel Row (Chenin, '  vs  'Vat'/'None'",
+    "node 10 text: 'Blend'/'None'  vs  ''/'Orchard (Grenache, 1'",
+    "node count 102 vs 142"
+   ],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Record draw",
+   "step": 116,
+   "forced": [
+    "Drew <> from <> into <> ."
+   ],
+   "actual": "The book already holds 12 records ; return a draw first .",
+   "why": "Drew <> from <> into <> . <- attr:cell#0@3(selection['combobox#0']:1) == '1' & attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cell#0@5(selection['combobox#1']:3) == None  [68 occasions]",
+   "kind": "inseparable: every shared conjunction reaches another event",
+   "seen": 2,
+   "witnesses": [
+    17,
+    25
+   ],
+   "blockers": 20,
+   "blocked_by": {
+    "Drew <> from <> into <> .": 15,
+    "<> holds <> ; cannot draw <> .": 2,
+    "<> is single-varietal ( <> ) ; <> is <> .": 3
+   },
+   "raw_difference": [
+    "node 5 group: ''/'None'  vs  'Festival White is not bottled.'/'None'",
+    "node 6 heading: 'Draw ticket'/'None'  vs  ''/'None'",
+    "node 7 group: ''/'None'  vs  'Draw ticket'/'None'",
+    "node 8 text: 'Vat'/'None'  vs  ''/'None'",
+    "node 9 combobox: ''/'Chapel Row (Chenin, '  vs  'Vat'/'None'",
+    "node 10 text: 'Blend'/'None'  vs  ''/'Orchard (Grenache, 1'",
+    "node count 102 vs 142"
+   ],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Record draw",
+   "step": 136,
+   "forced": [
+    "Drew <> from <> into <> ."
+   ],
+   "actual": "The book already holds 12 records ; return a draw first .",
+   "why": "Drew <> from <> into <> . <- attr:cell#0@3(selection['combobox#0']:1) == '1' & attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cell#0@5(selection['combobox#1']:3) == None  [68 occasions]",
+   "kind": "inseparable: every shared conjunction reaches another event",
+   "seen": 2,
+   "witnesses": [
+    17,
+    25
+   ],
+   "blockers": 20,
+   "blocked_by": {
+    "Drew <> from <> into <> .": 15,
+    "<> holds <> ; cannot draw <> .": 2,
+    "<> is single-varietal ( <> ) ; <> is <> .": 3
+   },
+   "raw_difference": [
+    "node 5 group: ''/'None'  vs  'Drew 1 gal from Orchard into Festi'/'None'",
+    "node 6 heading: 'Draw ticket'/'None'  vs  ''/'None'",
+    "node 7 group: ''/'None'  vs  'Draw ticket'/'None'",
+    "node 8 text: 'Vat'/'None'  vs  ''/'None'",
+    "node 9 combobox: ''/'Chapel Row (Chenin, '  vs  'Vat'/'None'",
+    "node 10 text: 'Blend'/'None'  vs  ''/'Orchard (Grenache, 1'",
+    "node count 102 vs 142"
+   ],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Close _",
+   "step": 190,
+   "forced": [
+    "<> <> ."
+   ],
+   "actual": "<> is already <> .",
+   "why": "<> <> . <- attr:cell#0@2(owner) == 'Pinot'  [5 occasions]",
+   "kind": "once: seen, but not enough to found a rule",
+   "seen": 1,
+   "raw_difference": [],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Record draw",
+   "step": 578,
+   "forced": [
+    "Drew <> from <> into <> ."
+   ],
+   "actual": "The book already holds 12 records ; return a draw first .",
+   "why": "Drew <> from <> into <> . <- attr:cell#0@5(property['attr:blend#0', None]:3) == None & attr:cell#0@3(selection['combobox#0']:1) == '1' & attr:cell#0@4(selection['combobox#0']:1) == 'Open'  [60 occasions]",
+   "kind": "inseparable: every shared conjunction reaches another event",
+   "seen": 2,
+   "witnesses": [
+    17,
+    25
+   ],
+   "blockers": 20,
+   "blocked_by": {
+    "Drew <> from <> into <> .": 15,
+    "<> holds <> ; cannot draw <> .": 2,
+    "<> is single-varietal ( <> ) ; <> is <> .": 3
+   },
+   "raw_difference": [
+    "node 5 group: ''/'None'  vs  'Reserve is not bottled.'/'None'",
+    "node 6 heading: 'Draw ticket'/'None'  vs  ''/'None'",
+    "node 7 group: ''/'None'  vs  'Draw ticket'/'None'",
+    "node 8 text: 'Vat'/'None'  vs  ''/'None'",
+    "node 9 combobox: ''/'Chapel Row (Chenin, '  vs  'Vat'/'None'",
+    "node 10 text: 'Blend'/'None'  vs  ''/'Chapel Row (Syrah, 1'",
+    "node count 102 vs 142"
+   ],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Close _",
+   "step": 754,
+   "forced": [
+    "<> <> ."
+   ],
+   "actual": "<> is already <> .",
+   "why": "<> <> . <- attr:cell#0@2(owner) == 'Syrah'  [9 occasions]",
+   "kind": "once: seen, but not enough to found a rule",
+   "seen": 1,
+   "raw_difference": [],
+   "erased_by_the_state": []
+  }
+ ]
+}

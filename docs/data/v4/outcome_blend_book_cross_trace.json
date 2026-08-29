@@ -8,8 +8,8 @@
  "permuted_events": null,
  "scored_on": "blend_book_holdout",
  "cut": 839,
- "operators": 50,
- "operators_with_an_output": 47,
+ "operators": 54,
+ "operators_with_an_output": 51,
  "output": {
   "claims": 0,
   "verdicts": {},
@@ -41,46 +41,53 @@
  },
  "outcome_model": {
   "controls": 6,
-  "rules": 17,
+  "rules": 22,
   "held_out_clicks": 261,
   "ledger": {
-   "the event the interface returned": 227,
-   "a different event": 27,
-   "no determinate answer": 7
+   "the event the interface returned": 206,
+   "a different event": 55
   },
-  "accuracy_where_it_answered": 0.894,
-  "distinct_events_asserted": 6,
-  "answers_naming_an_event": 254,
-  "accuracy_where_it_named_an_event": 0.894,
+  "accuracy_where_it_answered": 0.789,
+  "distinct_events_asserted": 5,
+  "answers_naming_an_event": 261,
+  "accuracy_where_it_named_an_event": 0.789,
   "by_level": {
-   "the event the interface returned / with its arguments": 227,
-   "a different event / the event alone": 27
+   "the event the interface returned / the event alone": 130,
+   "the event the interface returned / with its arguments": 76,
+   "a different event / the event alone": 55
   },
   "events_asserted": {
-   "Drew <> from <> into <> .": 111,
-   "<> is already <> .": 96,
-   "<> is <> .": 24,
-   "<> holds <> ; cannot draw <> .": 18,
-   "<> is single-varietal ( <> ) ; <> is <> .": 4,
-   "The book already holds 12 records ; return a draw first .": 1
+   "<> is already <> .": 93,
+   "Drew <> from <> into <> .": 78,
+   "<> is single-varietal ( <> ) ; <> is <> .": 38,
+   "<> is <> .": 34,
+   "<> holds <> ; cannot draw <> .": 18
   },
   "majority_frame_control_where_it_answered": {
-   "right": 31,
-   "wrong": 223,
+   "right": 34,
+   "wrong": 227,
    "control_unseen_on_prefix": 0,
-   "accuracy": 0.122
+   "accuracy": 0.13
   },
   "by_control": {
    "button:Record draw": {
     "fitted": 209,
-    "rules": 12,
+    "rules": 17,
     "events_fitted": 6,
-    "the event the interface returned": 227,
-    "a different event": 27,
-    "no determinate answer": 7
+    "the event the interface returned": 206,
+    "a different event": 55
    }
   },
   "wrong": [
+   {
+    "step": 17,
+    "control": "button:Record draw",
+    "predicted": "<> is single-varietal ( <> ) ; <> is <> .",
+    "observed": "Drew <> from <> into <> .",
+    "returned": "Drew 1 gal from Orchard into Festival White.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
    {
     "step": 20,
     "control": "button:Record draw",
@@ -109,11 +116,20 @@
     "level": "the event alone"
    },
    {
-    "step": 84,
+    "step": 87,
     "control": "button:Record draw",
-    "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "Drew <> from <> into <> .",
-    "returned": "Drew 1 gal from Orchard into Festival White.",
+    "predicted": "Drew <> from <> into <> .",
+    "observed": "The book already holds 12 records ; return a draw first .",
+    "returned": "The book already holds 12 records; return a draw first.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 91,
+    "control": "button:Record draw",
+    "predicted": "Drew <> from <> into <> .",
+    "observed": "The book already holds 12 records ; return a draw first .",
+    "returned": "The book already holds 12 records; return a draw first.",
     "verdict": "a different event",
     "level": "the event alone"
    },
@@ -134,32 +150,14 @@
     "returned": "The book already holds 12 records; return a draw first.",
     "verdict": "a different event",
     "level": "the event alone"
-   },
-   {
-    "step": 102,
-    "control": "button:Record draw",
-    "predicted": "<> is single-varietal ( <> ) ; <> is <> .",
-    "observed": "Drew <> from <> into <> .",
-    "returned": "Drew 1 gal from Orchard into Festival White.",
-    "verdict": "a different event",
-    "level": "the event alone"
-   },
-   {
-    "step": 105,
-    "control": "button:Record draw",
-    "predicted": "<> is single-varietal ( <> ) ; <> is <> .",
-    "observed": "Drew <> from <> into <> .",
-    "returned": "Drew 1 gal from Orchard into Festival White.",
-    "verdict": "a different event",
-    "level": "the event alone"
    }
   ],
   "lists": {
    "button#cell/button": "button#cell/button: 22 fitted occasions, 1 distinct events\n    role relation['forward', 'in:1']:1<owner = relation['forward', 'in:1'] from owner\n    role singleton[]:6 = singleton[]\n    otherwise  ->  Opened <> .   [22]\n    otherwise -> Opened <> .\n    'Opened <> .' arguments: 0=relation['forward', 'in:1']:1<owner",
-   "button:Bottle _": "button:Bottle _: 2 fitted occasions, 2 distinct events\n    role singleton[]:8 = singleton[]\n    otherwise -> undetermined",
-   "button:Close _": "button:Close _: 25 fitted occasions, 2 distinct events\n    role singleton[]:10 = singleton[]\n    ('ref_set', 'singleton[]:10', 'rel:5')  ->  <> <> .   [5]\n    otherwise -> undetermined",
-   "button:Disgorge _": "button:Disgorge _: 3 fitted occasions, 1 distinct events\n    role singleton[]:7 = singleton[]\n    otherwise  ->  Disgorged <> .   [3]\n    otherwise -> Disgorged <> .",
-   "button:Record draw": "button:Record draw: 209 fitted occasions, 6 distinct events\n    role selection['combobox#0']:1 = selection['combobox#0'][118/12] or property['attr:cell#0@3', '0'][20/0] or relation['forward', 'rel:1'] from owner[8/2]\n    role selection['combobox#1']:3 = selection['combobox#1'][136/0] or relation['forward', 'rel:3'] from owner[21/5]\n    attr:cell#0@5(selection['combobox#1']:3) == 'Bottled'  ->  <> is already <> .   [54]\n    no_children(selection['combobox#1']:3)  ->  Drew <> from <> into <> .   [9]\n    attr:( ) , gal open#2(owner) == '0'  ->  <> holds <> ; cannot draw <> .   [5]\n    attr:( ) , bottled single varietal#1(owner) == '2020'  ->  <> is already <> .   [4]\n    attr:cell#0@4(selection['combobox#0']:1) == 'Closed'  ->  <> is <> .   [25]\n    attr:cell#0@3(selection['combobox#0']:1) == '1'  ->  Drew <> from <> into <> .   [69]\n    attr:cell#0@3(selection['combobox#0']:1) == '0'  ->  <> holds <> ; cannot draw <> .   [14]\n    attr:cell#0@2(selection['combobox#1']:3) == '2022'  ->  Drew <> from <> into <> .   [12]\n    attr:cell#1(selection['combobox#0']:1) == '12'  ->  Drew <> from <> into <> .   [6]\n    attr:cell#0@4(selection['combobox#1']:3) == '4'  ->  <> is single-varietal ( <> ) ; <> is <> .   [2]\n    attr:cell#0@3(selection['combobox#0']:1) == '2'  ->  Drew <> from <> into <> .   [2]\n    attr:cell#0@4(selection['combobox#1']:3) == '5'  ->  The book already holds 12 records ; return a draw first .   [2]\n    otherwise -> undetermined\n    '<> holds <> ; cannot draw <> .' arguments: 0=selection['combobox#0']:1\n    '<> is <> .' arguments: 0=selection['combobox#0']:1\n    '<> is already <> .' arguments: 0=selection['combobox#1']:3\n    '<> is single-varietal ( <> ) ; <> is <> .' arguments: 0=selection['combobox#1']:3, 2=selection['combobox#0']:1\n    'Drew <> from <> into <> .' arguments: 1=selection['combobox#0']:1, 2=selection['combobox#1']:3",
+   "button:Bottle _": "button:Bottle _: 2 fitted occasions, 2 distinct events\n    role singleton[]:8 = singleton[]\n    otherwise -> undetermined\n    '<> <> .' arguments: 1=owner\n    '<> has <> committed ; need at least <> to bottle .' arguments: 0=owner",
+   "button:Close _": "button:Close _: 25 fitted occasions, 2 distinct events\n    role singleton[]:10 = singleton[]\n    role singleton[]:6 = singleton[]\n    attr:cell#0@4(owner) == 'Open'  ->  <> <> .   [24]\n    otherwise -> <> is already <> .\n    '<> <> .' arguments: 1=owner\n    '<> is already <> .' arguments: 0=owner",
+   "button:Disgorge _": "button:Disgorge _: 3 fitted occasions, 1 distinct events\n    role singleton[]:5 = singleton[]\n    role singleton[]:7 = singleton[]\n    otherwise  ->  Disgorged <> .   [3]\n    otherwise -> Disgorged <> .\n    'Disgorged <> .' arguments: 0=owner",
+   "button:Record draw": "button:Record draw: 209 fitted occasions, 6 distinct events\n    role selection['combobox#0']:1 = selection['combobox#0']\n    role selection['combobox#1']:3 = selection['combobox#1']\n    role property['attr:blend#0', None]:3 = property['attr:blend#0', None]\n    role property['attr:cell#0@3', '0']:1 = property['attr:cell#0@3', '0']\n    attr:cell#0@5(selection['combobox#1']:3) == 'Bottled'  ->  <> is already <> .   [39]\n    attr:cell#0@4(selection['combobox#0']:1) == 'Closed'  ->  <> is <> .   [21]\n    attr:cell#0@3(selection['combobox#0']:1) == '1'  ->  Drew <> from <> into <> .   [68]\n    attr:( ) , bottled single varietal#1(owner) == '2020'  ->  <> is already <> .   [14]\n    attr:cell#0@3(selection['combobox#0']:1) == '0'  ->  <> holds <> ; cannot draw <> .   [12]\n    no_children(selection['combobox#1']:3)  ->  Drew <> from <> into <> .   [11]\n    attr:cell#0@4(property['attr:blend#0', None]:3) == '2'  ->  Drew <> from <> into <> .   [7]\n    attr:( ) , gal open#2(owner) == '0'  ->  <> holds <> ; cannot draw <> .   [5]\n    attr:( ) , bottled single varietal#1(owner) == '2022'  ->  <> is already <> .   [5]\n    attr:cell#1(selection['combobox#0']:1) == '12'  ->  Drew <> from <> into <> .   [5]\n    rel:5(owner) != property['attr:blend#0', None]:3  ->  <> is <> .   [4]\n    attr:cell#0@2(selection['combobox#1']:3) == '2022'  ->  Drew <> from <> into <> .   [3]\n    rel:6(owner) != property['attr:cell#0@3', '0']:1  ->  <> holds <> ; cannot draw <> .   [2]\n    ('ref_set', 'owner', 'rel:6')  ->  Drew <> from <> into <> .   [4]\n    ('named', \"property['attr:blend#0', None]:3\")  ->  <> is single-varietal ( <> ) ; <> is <> .   [3]\n    attr:cell#0@4(selection['combobox#1']:3) == '3'  ->  Drew <> from <> into <> .   [2]\n    ('unnamed', 'owner')  ->  The book already holds 12 records ; return a draw first .   [2]\n    otherwise -> undetermined\n    '<> holds <> ; cannot draw <> .' arguments: 0=property['attr:cell#0@3', '0']:1\n    '<> is single-varietal ( <> ) ; <> is <> .' arguments: 2=selection['combobox#0']:1\n    'Drew <> from <> into <> .' arguments: 1=selection['combobox#0']:1",
    "button:Return ticket _ gal from _ out of _": "button:Return ticket _ gal from _ out of _: 113 fitted occasions, 2 distinct events\n    role relation['forward', 'rel:1']:1<owner = relation['forward', 'rel:1'] from owner\n    role relation['forward', 'rel:3']:3<owner = relation['forward', 'rel:3'] from owner\n    attr:cell#0@5(relation['forward', 'rel:3']:3<owner) == None  ->  Returned <> to <> from <> .   [97]\n    otherwise  ->  <> is <> ; disgorge it before returning a draw .   [16]\n    otherwise -> <> is <> ; disgorge it before returning a draw .\n    '<> is <> ; disgorge it before returning a draw .' arguments: 0=relation['forward', 'rel:3']:3<owner\n    'Returned <> to <> from <> .' arguments: 1=relation['forward', 'rel:1']:1<owner, 2=relation['forward', 'rel:3']:3<owner"
   }
  }

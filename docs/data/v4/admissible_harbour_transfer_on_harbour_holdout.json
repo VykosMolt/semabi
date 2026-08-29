@@ -1,0 +1,414 @@
+{
+ "run": "harbour_transfer",
+ "reading": "joint discrimination x2",
+ "regime": "FROZEN_PREFIX",
+ "split": 1.0,
+ "cut": 0,
+ "control": null,
+ "scored_on": "harbour_holdout",
+ "corroborated": true,
+ "hypothesis": "rule",
+ "against_the_other_class": {
+  "rule: one outcome, because the control has never done anything else | list: one outcome, because the control has never done anything else": 96,
+  "rule: no outcome is established | list: no outcome is established": 75,
+  "rule: the evidence forces one outcome | list: the evidence forces one outcome": 68,
+  "rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)": 10,
+  "rule: the evidence forces one outcome | list: several outcomes remain admissible": 9,
+  "rule: no outcome is established | list: the evidence forces one outcome (wrong)": 5,
+  "rule: the evidence forces one outcome (wrong) | list: several outcomes remain admissible": 4,
+  "rule: several outcomes remain admissible | list: several outcomes remain admissible": 2,
+  "rule: no outcome is established | list: the evidence forces one outcome": 1
+ },
+ "actions": 270,
+ "what_the_evidence_establishes": {
+  "one outcome, because the control has never done anything else": 96,
+  "the evidence forces one outcome": 91,
+  "no outcome is established": 81,
+  "several outcomes remain admissible": 2
+ },
+ "admissible_set_size": {
+  "0": 81,
+  "1": 187,
+  "2": 2
+ },
+ "what_happened_was": {
+  "inside the admissible set": 104,
+  "nothing was admissible": 81,
+  "outside it": 85
+ },
+ "the_list_where_the_evidence": {
+  "no outcome is established": {
+   "no determinate answer": 72,
+   "a different event": 8,
+   "the event the interface returned": 1
+  },
+  "one outcome, because the control has never done anything else": {
+   "the event the interface returned": 92,
+   "a different event": 4
+  },
+  "several outcomes remain admissible": {
+   "the event the interface returned": 2
+  },
+  "the evidence forces one outcome": {
+   "the event the interface returned": 77,
+   "a different event": 14
+  }
+ },
+ "policy_forced_then_list": {
+  "the only outcome ever seen on this control, and it happened": 92,
+  "refused: nothing established": 81,
+  "one outcome was admissible and it happened": 77,
+  "one outcome was admissible and a different one happened": 14,
+  "the only outcome ever seen on this control, and something else happened": 4,
+  "deferred to the list: the event the interface returned": 2
+ },
+ "distinct_events_forced": 9,
+ "events_forced": {
+  "\u0000SILENT": 79,
+  "<> <> is already <> .": 37,
+  "<> already has call <> on the board .": 20,
+  "<> <> is now <> .": 17,
+  "Call <> opened for <> .": 10,
+  "<> <> cannot be <> while call <> holds it .": 7,
+  "Call <> is not <> , so nothing has sailed .": 6,
+  "Nothing chosen in the berth list .": 6
+ },
+ "per_control": {
+  "button#cell/button@6bf899": {
+   "one outcome, because the control has never done anything else": 42
+  },
+  "button:Reopen": {
+   "the evidence forces one outcome": 37
+  },
+  "button:Schedule call": {
+   "the evidence forces one outcome": 30,
+   "no outcome is established": 6
+  },
+  "button:Sign off": {
+   "no outcome is established": 33
+  },
+  "button:Sign on": {
+   "no outcome is established": 32
+  },
+  "button:Close": {
+   "the evidence forces one outcome": 24,
+   "no outcome is established": 3,
+   "several outcomes remain admissible": 2
+  },
+  "button#button": {
+   "one outcome, because the control has never done anything else": 28
+  },
+  "button#cell/button@75b51d": {
+   "one outcome, because the control has never done anything else": 9
+  },
+  "button:Book pilot": {
+   "no outcome is established": 7
+  },
+  "button:Record departure": {
+   "one outcome, because the control has never done anything else": 6
+  },
+  "button:Allocate berth": {
+   "one outcome, because the control has never done anything else": 6
+  },
+  "button:Bring _": {
+   "one outcome, because the control has never done anything else": 5
+  }
+ },
+ "per_control_verdicts": {
+  "button#button": {
+   "the only outcome ever seen on this control, and it happened": 28
+  },
+  "button#cell/button@6bf899": {
+   "the only outcome ever seen on this control, and it happened": 42
+  },
+  "button#cell/button@75b51d": {
+   "the only outcome ever seen on this control, and it happened": 9
+  },
+  "button:Allocate berth": {
+   "the only outcome ever seen on this control, and it happened": 4,
+   "the only outcome ever seen on this control, and something else happened": 2
+  },
+  "button:Book pilot": {
+   "no outcome is established for this state": 7
+  },
+  "button:Bring _": {
+   "the only outcome ever seen on this control, and it happened": 5
+  },
+  "button:Close": {
+   "one outcome was admissible and it happened": 24,
+   "no outcome is established for this state": 3,
+   "several outcomes remained admissible; the one that happened was among them": 2
+  },
+  "button:Record departure": {
+   "the only outcome ever seen on this control, and it happened": 4,
+   "the only outcome ever seen on this control, and something else happened": 2
+  },
+  "button:Reopen": {
+   "one outcome was admissible and it happened": 35,
+   "one outcome was admissible and a different one happened": 2
+  },
+  "button:Schedule call": {
+   "one outcome was admissible and it happened": 18,
+   "one outcome was admissible and a different one happened": 12,
+   "no outcome is established for this state": 6
+  },
+  "button:Sign off": {
+   "no outcome is established for this state": 33
+  },
+  "button:Sign on": {
+   "no outcome is established for this state": 32
+  }
+ },
+ "controls": {
+  "button#button": {
+   "fitted": 9,
+   "events": 1,
+   "rules": 0,
+   "default": "returns nothing"
+  },
+  "button#cell/button@6bf899": {
+   "fitted": 55,
+   "events": 1,
+   "rules": 0,
+   "default": "returns nothing"
+  },
+  "button#cell/button@75b51d": {
+   "fitted": 9,
+   "events": 1,
+   "rules": 0,
+   "default": "returns nothing"
+  },
+  "button:Allocate berth": {
+   "fitted": 5,
+   "events": 1,
+   "rules": 1,
+   "default": "Nothing chosen in the berth list ."
+  },
+  "button:Book pilot": {
+   "fitted": 5,
+   "events": 2,
+   "rules": 0,
+   "default": "undetermined"
+  },
+  "button:Bring _": {
+   "fitted": 8,
+   "events": 1,
+   "rules": 1,
+   "default": "Call <> has <> berth allocated ."
+  },
+  "button:Close": {
+   "fitted": 33,
+   "events": 3,
+   "rules": 3,
+   "default": "<> <> is already <> ."
+  },
+  "button:Record departure": {
+   "fitted": 7,
+   "events": 1,
+   "rules": 1,
+   "default": "Call <> is not <> , so nothing has sailed ."
+  },
+  "button:Reopen": {
+   "fitted": 38,
+   "events": 2,
+   "rules": 3,
+   "default": "<> <> is already <> ."
+  },
+  "button:Schedule call": {
+   "fitted": 36,
+   "events": 2,
+   "rules": 3,
+   "default": "Call <> opened for <> ."
+  },
+  "button:Sign off": {
+   "fitted": 30,
+   "events": 3,
+   "rules": 0,
+   "default": "undetermined"
+  },
+  "button:Sign on": {
+   "fitted": 34,
+   "events": 2,
+   "rules": 0,
+   "default": "undetermined"
+  }
+ },
+ "forced_but_wrong": [
+  {
+   "step": 8,
+   "control": "button:Schedule call",
+   "admissible": [
+    "<> already has call <> on the board ."
+   ],
+   "hypothesis": "rule",
+   "unordered": [
+    "<> already has call <> on the board ."
+   ],
+   "observed": "<> already has call <> on the board .",
+   "returned": "Petrel Star already has call C-102 on the board.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "with its arguments",
+   "arguments": {
+    "0": [
+     "Malta",
+     "Petrel Star"
+    ]
+   },
+   "why": "<> already has call <> on the board . <- ('ref_set', 'owner', 'rel:12')  [9 occasions]"
+  },
+  {
+   "step": 84,
+   "control": "button:Schedule call",
+   "admissible": [
+    "<> already has call <> on the board ."
+   ],
+   "hypothesis": "rule",
+   "unordered": [
+    "<> already has call <> on the board ."
+   ],
+   "observed": "<> already has call <> on the board .",
+   "returned": "Petrel Star already has call C-102 on the board.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "with its arguments",
+   "arguments": {
+    "0": [
+     "Malta",
+     "Petrel Star"
+    ]
+   },
+   "why": "<> already has call <> on the board . <- ('ref_set', 'owner', 'rel:12')  [9 occasions]"
+  },
+  {
+   "step": 120,
+   "control": "button:Schedule call",
+   "admissible": [
+    "<> already has call <> on the board ."
+   ],
+   "hypothesis": "rule",
+   "unordered": [
+    "<> already has call <> on the board ."
+   ],
+   "observed": "<> already has call <> on the board .",
+   "returned": "Petrel Star already has call C-101 on the board.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "with its arguments",
+   "arguments": {
+    "0": [
+     "Malta",
+     "Petrel Star"
+    ]
+   },
+   "why": "<> already has call <> on the board . <- ('ref_set', 'owner', 'rel:12')  [9 occasions]"
+  },
+  {
+   "step": 130,
+   "control": "button:Schedule call",
+   "admissible": [
+    "<> already has call <> on the board ."
+   ],
+   "hypothesis": "rule",
+   "unordered": [
+    "<> already has call <> on the board ."
+   ],
+   "observed": "<> already has call <> on the board .",
+   "returned": "Petrel Star already has call C-101 on the board.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "with its arguments",
+   "arguments": {
+    "0": [
+     "Malta",
+     "Petrel Star"
+    ]
+   },
+   "why": "<> already has call <> on the board . <- ('ref_set', 'owner', 'rel:12')  [9 occasions]"
+  },
+  {
+   "step": 138,
+   "control": "button:Schedule call",
+   "admissible": [
+    "<> already has call <> on the board ."
+   ],
+   "hypothesis": "rule",
+   "unordered": [
+    "<> already has call <> on the board ."
+   ],
+   "observed": "<> already has call <> on the board .",
+   "returned": "Petrel Star already has call C-101 on the board.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "with its arguments",
+   "arguments": {
+    "0": [
+     "Malta",
+     "Petrel Star"
+    ]
+   },
+   "why": "<> already has call <> on the board . <- ('ref_set', 'owner', 'rel:12')  [9 occasions]"
+  },
+  {
+   "step": 168,
+   "control": "button:Schedule call",
+   "admissible": [
+    "<> already has call <> on the board ."
+   ],
+   "hypothesis": "rule",
+   "unordered": [
+    "<> already has call <> on the board ."
+   ],
+   "observed": "<> already has call <> on the board .",
+   "returned": "Petrel Star already has call C-101 on the board.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "with its arguments",
+   "arguments": {
+    "0": [
+     "Malta",
+     "Petrel Star"
+    ]
+   },
+   "why": "<> already has call <> on the board . <- ('ref_set', 'owner', 'rel:12')  [9 occasions]"
+  },
+  {
+   "step": 248,
+   "control": "button:Schedule call",
+   "admissible": [
+    "Call <> opened for <> ."
+   ],
+   "hypothesis": "rule",
+   "unordered": [
+    "Call <> opened for <> ."
+   ],
+   "observed": "Call <> opened for <> .",
+   "returned": "Call C-103 opened for Ardent Rose.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "with its arguments",
+   "arguments": {
+    "1": [
+     "Panama",
+     "Ardent Rose"
+    ]
+   },
+   "why": "Call <> opened for <> . <- ('ref_null', 'owner', 'rel:10')  [8 occasions]"
+  },
+  {
+   "step": 252,
+   "control": "button:Schedule call",
+   "admissible": [
+    "<> already has call <> on the board ."
+   ],
+   "hypothesis": "rule",
+   "unordered": [
+    "<> already has call <> on the board ."
+   ],
+   "observed": "<> already has call <> on the board .",
+   "returned": "Ardent Rose already has call C-103 on the board.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "with its arguments",
+   "arguments": {
+    "0": [
+     "Panama",
+     "Ardent Rose"
+    ]
+   },
+   "why": "<> already has call <> on the board . <- ('ref_set', 'owner', 'rel:10')  [15 occasions]"
+  }
+ ]
+}

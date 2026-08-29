@@ -152,12 +152,17 @@ def classify(got, here: int, actual: str) -> tuple[str, dict]:
 
 
 def diagnose(run_dir: Path, chain: Path, reading_name: str, *, split: float = 0.5,
-             regime: str = csq.FROZEN_PREFIX, hypothesis: str = oc.RULE) -> dict:
+             regime: str = csq.FROZEN_PREFIX, hypothesis: str = oc.RULE,
+             score_on: Path | None = None) -> dict:
     from semabi.eval.v4_consequence_run import _candidates
     from semabi.compiler.v4.consequence import clicked_control, _owner_object
 
     readings = {c.name: c.reading for c in _candidates(chain)}
     model = csq.fit(Path(run_dir), readings[reading_name], split=split, regime=regime)
+    if score_on is not None:
+        from dataclasses import replace
+        from semabi.compiler.evidence import EvidenceLog
+        model = replace(model, log=EvidenceLog(Path(score_on)), cut=0)
     A, log = model.abstractor, model.log
     cases: list[dict] = []
     kinds: Counter = Counter()
@@ -205,9 +210,11 @@ def main(argv=None) -> int:
     ap.add_argument("--reading", required=True)
     ap.add_argument("--split", type=float, default=0.5)
     ap.add_argument("--hypothesis", default=oc.RULE, choices=(oc.RULE, oc.LIST))
+    ap.add_argument("--score-on", default=None, help="diagnose on another run's history")
     ap.add_argument("--out")
     a = ap.parse_args(argv)
-    r = diagnose(Path(a.run), Path(a.chain), a.reading, split=a.split, hypothesis=a.hypothesis)
+    r = diagnose(Path(a.run), Path(a.chain), a.reading, split=a.split, hypothesis=a.hypothesis,
+                 score_on=Path(a.score_on) if a.score_on else None)
     print(f"\n{r['run']}  {r['reading']!r}  cut={r['cut']}  forced under the {r['hypothesis']} class")
     print(f"  forced and wrong on the frame: {r['forced_wrong']}")
     for k, n in r["kinds"].items():
