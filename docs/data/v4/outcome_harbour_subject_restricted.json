@@ -13,30 +13,30 @@
  "output": {
   "claims": 418,
   "verdicts": {
-   "NOT_APPLICABLE": 217,
-   "REFUTED": 68,
-   "SUPPORTED": 91,
-   "UNKNOWN": 42
+   "NOT_APPLICABLE": 244,
+   "REFUTED": 43,
+   "SUPPORTED": 93,
+   "UNKNOWN": 38
   },
   "held_out_actions_with_an_output_claim": 96,
-  "distinct_decided_claims": 22,
+  "distinct_decided_claims": 21,
   "distinct_decided_frames": 9,
   "per_action": {
-   "applicable rules disagreed": 42,
-   "every applicable rule was right": 20,
+   "applicable rules disagreed": 35,
+   "every applicable rule was right": 29,
    "no rule applied": 16,
    "the rules could not say which object they were about": 12,
-   "every applicable rule was contradicted": 6
+   "every applicable rule was contradicted": 4
   },
   "frame_only": {
-   "among": 47,
-   "right": 20,
+   "among": 37,
+   "right": 30,
    "wrong": 1
   },
   "model_level": {
-   "undetermined, the right event among them": 47,
+   "undetermined, the right event among them": 37,
+   "determinate and right": 30,
    "no branch applied": 28,
-   "determinate and right": 20,
    "undetermined, and not among them": 1
   },
   "distinct_events_where_determinate": 0,
@@ -48,8 +48,8 @@
   },
   "distinct_events_predicted_per_action": {
    "0": 28,
-   "1": 20,
-   "2": 48
+   "1": 30,
+   "2": 38
   },
   "majority_frame_control": {
    "right": 54,
@@ -70,51 +70,49 @@
  },
  "state": {
   "verdicts": {
-   "NOT_APPLICABLE": 30,
-   "REFUTED": 2,
+   "NOT_APPLICABLE": 32,
    "SUPPORTED": 34
   },
   "per_action": {
    "every applicable rule was right": 17,
-   "no rule applied": 15,
-   "every applicable rule was contradicted": 1
+   "no rule applied": 16
   }
  },
  "outcome_model": {
   "controls": 11,
-  "rules": 10,
+  "rules": 13,
   "held_out_clicks": 126,
   "ledger": {
-   "the event the interface returned": 55,
-   "no determinate answer": 55,
+   "the event the interface returned": 76,
+   "no determinate answer": 34,
    "a different event": 9,
    "no outcome model for this control": 7
   },
-  "accuracy_where_it_answered": 0.859,
-  "distinct_events_asserted": 8,
-  "answers_naming_an_event": 41,
-  "accuracy_where_it_named_an_event": 0.78,
+  "accuracy_where_it_answered": 0.894,
+  "distinct_events_asserted": 10,
+  "answers_naming_an_event": 62,
+  "accuracy_where_it_named_an_event": 0.855,
   "by_level": {
+   "the event the interface returned / with its arguments": 30,
+   "the event the interface returned / the event alone": 23,
    "the event the interface returned / the control returns nothing": 23,
-   "the event the interface returned / with its arguments": 21,
-   "the event the interface returned / the event alone": 11,
    "a different event / the event alone": 9
   },
   "events_asserted": {
    "\u0000SILENT": 23,
-   "<> <> is now <> .": 13,
+   "<> <> is now <> .": 21,
+   "<> already has call <> on the board .": 16,
    "<> <> is already <> .": 11,
-   "Call <> opened for <> .": 5,
    "Call <> is not <> , so nothing has sailed .": 4,
    "Call <> has <> berth allocated .": 4,
    "Nothing chosen in the pilot list .": 2,
    "Nothing chosen in the berth list .": 2
   },
   "majority_frame_control_where_it_answered": {
-   "right": 34,
-   "wrong": 30,
+   "right": 43,
+   "wrong": 42,
    "control_unseen_on_prefix": 0,
-   "accuracy": 0.531
+   "accuracy": 0.506
   },
   "by_control": {
    "button#cell/button@6bf899": {
@@ -132,11 +130,10 @@
    },
    "button:Schedule call": {
     "fitted": 19,
-    "rules": 3,
+    "rules": 4,
     "events_fitted": 2,
-    "no determinate answer": 12,
-    "a different event": 4,
-    "the event the interface returned": 1
+    "the event the interface returned": 13,
+    "a different event": 4
    },
    "button:Sign off": {
     "fitted": 14,
@@ -152,10 +149,9 @@
    },
    "button:Close": {
     "fitted": 20,
-    "rules": 1,
+    "rules": 3,
     "events_fitted": 3,
-    "no determinate answer": 9,
-    "the event the interface returned": 4
+    "the event the interface returned": 13
    },
    "button#button": {
     "fitted": null,
@@ -191,20 +187,20 @@
   },
   "wrong": [
    {
-    "step": 230,
+    "step": 261,
     "control": "button:Schedule call",
-    "predicted": "Call <> opened for <> .",
-    "observed": "<> already has call <> on the board .",
-    "returned": "Selkie already has call C-102 on the board.",
+    "predicted": "<> already has call <> on the board .",
+    "observed": "Call <> opened for <> .",
+    "returned": "Call C-102 opened for Bregagh.",
     "verdict": "a different event",
     "level": "the event alone"
    },
    {
-    "step": 243,
+    "step": 316,
     "control": "button:Schedule call",
-    "predicted": "Call <> opened for <> .",
-    "observed": "<> already has call <> on the board .",
-    "returned": "Selkie already has call C-102 on the board.",
+    "predicted": "<> already has call <> on the board .",
+    "observed": "Call <> opened for <> .",
+    "returned": "Call C-103 opened for Bregagh.",
     "verdict": "a different event",
     "level": "the event alone"
    },
@@ -214,15 +210,6 @@
     "predicted": "Nothing chosen in the pilot list .",
     "observed": "<> is already booked for call <> .",
     "returned": "Aoife Marr is already booked for call C-102.",
-    "verdict": "a different event",
-    "level": "the event alone"
-   },
-   {
-    "step": 331,
-    "control": "button:Schedule call",
-    "predicted": "Call <> opened for <> .",
-    "observed": "<> already has call <> on the board .",
-    "returned": "Hafnarfjord already has call C-101 on the board.",
     "verdict": "a different event",
     "level": "the event alone"
    },
@@ -254,11 +241,20 @@
     "level": "the event alone"
    },
    {
-    "step": 386,
+    "step": 396,
+    "control": "button:Reopen",
+    "predicted": "<> <> is now <> .",
+    "observed": "<> <> is already <> .",
+    "returned": "Berth W1 is already open.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 406,
     "control": "button:Schedule call",
-    "predicted": "Call <> opened for <> .",
-    "observed": "<> already has call <> on the board .",
-    "returned": "Hafnarfjord already has call C-101 on the board.",
+    "predicted": "<> already has call <> on the board .",
+    "observed": "Call <> opened for <> .",
+    "returned": "Call C-103 opened for Corrina B.",
     "verdict": "a different event",
     "level": "the event alone"
    }
@@ -269,10 +265,10 @@
    "button:Allocate berth": "button:Allocate berth: 3 fitted occasions, 1 distinct events\n    otherwise  ->  Nothing chosen in the berth list .   [3]\n    otherwise -> Nothing chosen in the berth list .",
    "button:Book pilot": "button:Book pilot: 3 fitted occasions, 1 distinct events\n    otherwise  ->  Nothing chosen in the pilot list .   [3]\n    otherwise -> Nothing chosen in the pilot list .",
    "button:Bring _": "button:Bring _: 4 fitted occasions, 1 distinct events\n    otherwise  ->  Call <> has <> berth allocated .   [4]\n    otherwise -> Call <> has <> berth allocated .\n    'Call <> has <> berth allocated .' arguments: 0=owner",
-   "button:Close": "button:Close: 20 fitted occasions, 3 distinct events\n    attr:cell#0@5(owner) == 'closed'  ->  <> <> is already <> .   [5]\n    otherwise -> undetermined\n    '<> <> cannot be <> while call <> holds it .' arguments: 1=owner\n    '<> <> is already <> .' arguments: 1=owner\n    '<> <> is now <> .' arguments: 1=owner",
+   "button:Close": "button:Close: 20 fitted occasions, 3 distinct events\n    ('ref_set', 'owner', 'rel:9')  ->  <> <> cannot be <> while call <> holds it .   [9]\n    attr:cell#0@5(owner) == 'open'  ->  <> <> is now <> .   [6]\n    otherwise  ->  <> <> is already <> .   [5]\n    otherwise -> <> <> is already <> .\n    '<> <> cannot be <> while call <> holds it .' arguments: 1=owner\n    '<> <> is already <> .' arguments: 1=owner\n    '<> <> is now <> .' arguments: 1=owner",
    "button:Record departure": "button:Record departure: 3 fitted occasions, 1 distinct events\n    otherwise  ->  Call <> is not <> , so nothing has sailed .   [3]\n    otherwise -> Call <> is not <> , so nothing has sailed .\n    'Call <> is not <> , so nothing has sailed .' arguments: 0=owner",
    "button:Reopen": "button:Reopen: 18 fitted occasions, 2 distinct events\n    attr:cell#0@5(owner) == 'open'  ->  <> <> is already <> .   [13]\n    otherwise  ->  <> <> is now <> .   [5]\n    otherwise -> <> <> is now <> .\n    '<> <> is already <> .' arguments: 1=owner\n    '<> <> is now <> .' arguments: 1=owner",
-   "button:Schedule call": "button:Schedule call: 19 fitted occasions, 2 distinct events\n    role singleton[]:9 = singleton[]\n    role selection['cell#36']:0 = selection['cell#36']\n    ('ref_null', 'owner', 'rel:7')  ->  Call <> opened for <> .   [2]\n    ('named', 'singleton[]:9')  ->  <> already has call <> on the board .   [7]\n    attr:m#0(owner) == '64'  ->  Call <> opened for <> .   [2]\n    otherwise -> undetermined\n    '<> already has call <> on the board .' arguments: 1=singleton[]:9\n    'Call <> opened for <> .' arguments: 1=owner",
+   "button:Schedule call": "button:Schedule call: 19 fitted occasions, 2 distinct events\n    role singleton[]:9 = singleton[]\n    role selection['cell#36']:0 = selection['cell#36']\n    ('ref_null', 'owner', 'rel:9')  ->  Call <> opened for <> .   [5]\n    ('named', \"selection['cell#36']:0\")  ->  <> already has call <> on the board .   [4]\n    ('ref_null', 'owner', 'rel:7')  ->  Call <> opened for <> .   [2]\n    otherwise  ->  <> already has call <> on the board .   [8]\n    otherwise -> <> already has call <> on the board .\n    '<> already has call <> on the board .' arguments: 1=singleton[]:9\n    'Call <> opened for <> .' arguments: 1=owner",
    "button:Sign off": "button:Sign off: 14 fitted occasions, 2 distinct events\n    otherwise -> undetermined",
    "button:Sign on": "button:Sign on: 17 fitted occasions, 2 distinct events\n    otherwise -> undetermined"
   }

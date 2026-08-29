@@ -8,16 +8,16 @@
  "stride": 8,
  "actions_scored": 17,
  "ledger": {
-  "the event the interface returned": 13,
-  "a different event": 3,
+  "the event the interface returned": 15,
+  "a different event": 1,
   "no determinate answer": 1
  },
  "by_level": {
-  "the event the interface returned / with its arguments": 13,
-  "a different event / the event alone": 2,
-  "a different event / with its arguments": 1
+  "the event the interface returned / with its arguments": 12,
+  "the event the interface returned / the event alone": 3,
+  "a different event / the event alone": 1
  },
- "accuracy_where_it_answered": 0.812,
+ "accuracy_where_it_answered": 0.938,
  "distinct_events_asserted": 5,
  "rows": [
   {
@@ -104,13 +104,10 @@
    "predicted": "<> is <> .",
    "observed": "<> is <> .",
    "returned": "Block 12 is closed.",
-   "verdict": "a different event",
+   "verdict": "the event the interface returned",
    "level": "with its arguments",
    "arguments": {
-    "0": [
-     "Block",
-     "Block 12"
-    ]
+    "0": "Block 12"
    }
   },
   {
@@ -144,10 +141,8 @@
    "observed": "<> is already <> .",
    "returned": "Festival White is already bottled.",
    "verdict": "the event the interface returned",
-   "level": "with its arguments",
-   "arguments": {
-    "0": "Festival White"
-   }
+   "level": "the event alone",
+   "arguments": {}
   },
   {
    "step": 733,
@@ -170,8 +165,7 @@
    "verdict": "the event the interface returned",
    "level": "with its arguments",
    "arguments": {
-    "1": "Low Barn",
-    "2": "Fair Day"
+    "1": "Low Barn"
    }
   },
   {
@@ -183,8 +177,7 @@
    "verdict": "the event the interface returned",
    "level": "with its arguments",
    "arguments": {
-    "1": "Low Barn",
-    "2": "Fair Day"
+    "1": "Low Barn"
    }
   },
   {
@@ -194,19 +187,18 @@
    "observed": "<> is <> .",
    "returned": "Low Barn is closed.",
    "verdict": "the event the interface returned",
-   "level": "with its arguments",
-   "arguments": {
-    "0": "Low Barn"
-   }
+   "level": "the event alone",
+   "arguments": {}
   },
   {
    "step": 810,
    "control": "button:Record draw",
-   "predicted": "Drew <> from <> into <> .",
+   "predicted": "<> is <> .",
    "observed": "<> is <> .",
    "returned": "Low Barn is closed.",
-   "verdict": "a different event",
-   "level": "the event alone"
+   "verdict": "the event the interface returned",
+   "level": "the event alone",
+   "arguments": {}
   },
   {
    "step": 837,
@@ -217,8 +209,7 @@
    "verdict": "the event the interface returned",
    "level": "with its arguments",
    "arguments": {
-    "1": "Low Barn",
-    "2": "Fair Day"
+    "1": "Low Barn"
    }
   }
  ]

@@ -208,6 +208,18 @@ read, which makes them the cleanest test of a representation repair there is:
 | harbour, second history, after the reference repair below | 168 | 30 | 72 | -- | 0.85 |
 | cellar, own suffix (40 clicks), before | 10 | 2 | 20 | 8 | 0.83 |
 | cellar, own suffix, after | 18 | 2 | 20 | 0 | 0.90 |
+| blend, own suffix, after the three memos below | 99 | 4 | 20 | -- | 0.96 |
+| blend, second history, after the three memos below | 206 | 55 | 0 | -- | 0.79 |
+| harbour, own suffix, after the three memos below | 72 | 13 | 34 | 7 | 0.85 |
+| harbour, second history, after the three memos below | 172 | 26 | 72 | -- | 0.87 |
+
+The last four rows are the batch regenerated once more after the three repairs of the next
+section.  Blend's own suffix recovers (the seven argument errors were the key), harbour's
+second history improves again, and blend's second history gets *worse* for the chosen list --
+206 right and 55 wrong with no abstention, where the version space asked about the same 503
+clicks forces 218 and is right on 205.  A point hypothesis given more literals to be pure on
+widens its claims; the version space, given the same literals, does not.  That is the whole
+argument for the version space being the ABI and the list being a preference inside it.
 
 Harbour's second history is the one `docs/v4_outcomes.md` read as *79 of the 96 errors are one
 control, `button#0`, whose whole model is the default of a list fitted on two occasions* -- the
