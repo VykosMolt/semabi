@@ -6,10 +6,10 @@ cd "$(dirname "$0")/.."
 V=${V:-.venv/bin/python}
 M=docs/data/v4/manifests
 
-for app in "blend_book_transfer:blend_book_chain.json:joint discrimination x3" \
-           "harbour_transfer:harbour_chain.json:joint discrimination x2" \
-           "opus_02_cellar_dev:opus_02_cellar_dev_source.json:joint discrimination x2" \
-           "vet_clinic_transfer:vet_clinic_chain.json:joint discrimination x3"; do
+for app in "blend_book_transfer:blend_book_chain.json:source_choice" \
+           "harbour_transfer:harbour_chain.json:source_choice" \
+           "opus_02_cellar_dev:opus_02_cellar_dev_source.json:source_choice" \
+           "vet_clinic_transfer:vet_clinic_chain.json:source_choice"; do
   IFS=: read -r run chain reading <<< "$app"
   $V -m semabi.eval.v4_admissible --run runs/v4/$run --chain $M/$chain \
      --reading "$reading" --split 0.5
@@ -24,11 +24,11 @@ done
 # cellar run at seed 5 did exactly that and its result was withdrawn.
 #
 # $V -m semabi.eval.v4_acquire --run runs/v4/blend_book_transfer --chain $M/blend_book_chain.json \
-#    --reading "joint discrimination x3" --split 0.5 --control "button:Record draw" \
+#    --reading "source_choice" --split 0.5 --control "button:Record draw" \
 #    --button "Record draw" --base http://127.0.0.1:8901 --seed 7 --policy uncertain
 # $V -m semabi.eval.v4_acquire ... --policy any        # the matched control
 # $V -m semabi.eval.v4_acquire --run runs/v4/opus_02_cellar_dev \
-#    --chain $M/opus_02_cellar_dev_source.json --reading "joint discrimination x2" \
+#    --chain $M/opus_02_cellar_dev_source.json --reading "source_choice" \
 #    --split 0.5 --control "button:Move vessel" --button "Move vessel" \
 #    --base http://127.0.0.1:8911 --seed 91 --policy unestablished
 

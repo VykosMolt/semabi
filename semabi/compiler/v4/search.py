@@ -24,7 +24,7 @@ from semabi.compiler.v2.graph import ObsGraph
 from semabi.compiler.v2.hypotheses import Hypotheses, SlotStat
 from semabi.compiler.v4.abstractor import V4Abstractor
 from semabi.compiler.v4 import objective
-from semabi.compiler.v4.identity import Reading, _Family, family_key, family_readings, reading_for
+from semabi.compiler.v4.identity import Reading, _Family, family_key, family_readings, other_key_values, reading_for, spoken_values
 
 MAX_ROUNDS = 4     # coordinate passes: a family judged against a base that later moves change
                    # is judged again, until no family moves (`docs/v4_frontier.md`)
@@ -137,6 +137,11 @@ def _materialise(unit, key_slot: str) -> None:
     unit.slots[key_slot] = stat
 
 
+def _evidence_tie(a, b) -> bool:
+    """Neither reading explains more, errs less, or names more of what the interface said."""
+    return (a.explained, a.errors, a.named) == (b.explained, b.errors, b.named)
+
+
 def _decided_by(before, after) -> dict[str, int]:
     """Which terms of the objective moved: the counterexamples a move answered."""
     out = {}
@@ -189,6 +194,7 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
         refuted = read_refutations(run_dir)
     reload_pairs = _reload_pairs(log)
     view_of = _view_of(H)
+    spoken = spoken_values(log)
     result = SearchResult()
 
     grouped: dict[str, list] = {}
@@ -200,7 +206,8 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
         # a family whose members are leaves on trial as objects may name itself with its own
         # text; a compound unit may not use its narration as its name
         leaf_family = bool(H.promoted) and all(u.template in H.promoted for u in units)
-        candidates = family_readings(units, reload_pairs, view_of, allow_prose=leaf_family)
+        candidates = family_readings(units, reload_pairs, view_of, allow_prose=leaf_family,
+                                     spoken=spoken, shared=other_key_values(H, name))
         gone = refuted.get(name, set())
         if gone:
             kept = [r for r in candidates if r.key_slot not in gone]
@@ -215,10 +222,17 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
             result.readings[unit.template] = candidates
 
     def assign(hyps: Hypotheses, name: str, reading: Reading) -> None:
+        parts = reading.key_slot.split("|") if reading.key_slot else []
         for unit in grouped[name]:
             if unit.template not in hyps.units:
                 continue
             target = hyps.units[unit.template]
+            if parts and not all(p in target.slots for p in parts):
+                # a template of the family that does not render the slot carries no identity
+                # under this reading (as `pinned.apply` already held); keying it anyway made
+                # `primary_key_values` fail on a column-reversed vet
+                target.key_slot = None
+                continue
             target.key_slot = reading.key_slot
             if reading.key_slot and "|" in reading.key_slot:
                 _materialise(target, reading.key_slot)
@@ -252,11 +266,18 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
             # evidence, and the alternatives are judged against it as they always were.
             v2_key = H.units[grouped[name][0].template].key_slot
             inherited = next((r for r in family_reading[name] if r.key_slot == v2_key), None)
+            if inherited is None and v2_key in refuted.get(name, set()):
+                # V2's key was refuted by an executed experiment: it is not inherited, and
+                # the hypotheses are moved off it to the best surviving reading (a refuted
+                # key must not reach a frozen manifest by this door either)
+                inherited = family_reading[name][0]
+                assign(base, name, inherited)
+                log_fn(f"v4 {name}: V2's key {v2_key!r} is refuted; starting from {inherited.key_slot!r}")
             if inherited is None:
                 inherited = reading_for(_Family(name, grouped[name]),
                                         tuple(v2_key.split("|")) if v2_key else (),
                                         reload_pairs, view_of, status="INHERITED",
-                                        why="V2's own key, outside the structural ranking")
+                                        why="V2's own key, outside the structural ranking", spoken=spoken)
                 if not v2_key:
                     inherited.status, inherited.why = "NO_IDENTITY", "V2 claimed no identity"
                 family_reading[name].append(inherited)
@@ -280,7 +301,16 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
                 except Exception as exc:  # noqa: BLE001 - a reading that cannot be built loses
                     log_fn(f"v4 {name} {reading.key_slot}: build failed ({type(exc).__name__})")
                     continue
-                if trial_score.better_than(score):
+                if (trial_score.better_than(score)
+                        and not (reading.is_identity and here.is_identity
+                                 and _evidence_tie(trial_score, score))):
+                    # Between two keys of one family only the evidence may move the reading:
+                    # explanation, error, or what the interface names.  The objective's own
+                    # tie-breaks -- atoms, complexity -- are about how an event is spelled,
+                    # and between keys they favoured whichever key happened not to union the
+                    # family with another (harbour's overview keyed by `Cargo` rather than
+                    # by the vessel's name, which the vessels table already keys by).  On a
+                    # tie the structurally ranked incumbent stays and the question is kept.
                     result.moves.append({"move": "identity", "round": round_no, "family": name,
                                          "templates": len(grouped[name]),
                                          "key_slot": reading.key_slot, "status": reading.status,
@@ -312,7 +342,8 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
                     for unit in grouped[name]:
                         result.chosen[unit.template] = reading
                     moved = True
-                elif trial_score.comparable_to(score):
+                elif trial_score.comparable_to(score) or (
+                        reading.is_identity and here.is_identity and _evidence_tie(trial_score, score)):
                     # neither dominates: either the two readings score identically, or one
                     # explains more while the other errs less.  Both are undecided, and an
                     # undecided reading is a question for the application, not a tie to break.
@@ -359,7 +390,7 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
         reported = result.chosen[units[0].template]
         if carried != reported.key_slot:
             harmonised = reading_for(_Family(name, units), tuple(carried.split("|")) if carried else (),
-                                     reload_pairs, view_of, status="HARMONISED",
+                                     reload_pairs, view_of, spoken=spoken, status="HARMONISED",
                                      why=f"the entity type it was unioned into adopted {carried!r} "
                                          f"across its templates; the search judged {reported.key_slot!r}")
             family_reading[name].append(harmonised)

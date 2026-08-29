@@ -54,3 +54,13 @@ def test_a_mention_conflict_is_an_error_the_reading_pays_for():
     assert coarse.errors == 6
     assert fine.better_than(coarse)
     assert not coarse.better_than(fine)
+
+
+def test_what_the_interface_names_breaks_a_tie_before_length():
+    # blend's draws: keying them explains no extra step and costs nothing, but every
+    # "Returned 2 gal to Orchard from Picnic" names a draw's fields; the keyed reading wins
+    # the tie even though it says what happened in more atoms
+    keyed = Behaviour(explained=151, named=40, delta_atoms=400, complexity=30)
+    unkeyed = Behaviour(explained=151, named=10, delta_atoms=379, complexity=30)
+    assert keyed.better_than(unkeyed)
+    assert not unkeyed.better_than(keyed)

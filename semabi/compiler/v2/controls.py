@@ -236,7 +236,7 @@ class ControlFamilies:
             d = ControlDescriptor(node.role,
                                   masked_label(node, data_tokens,
                                                is_data=_judge(getattr(H, "G", None), sig, node, data_tokens)),
-                                  units[root].template, H._relpath(obs, root, node.i))
+                                  units[root].template, H._relpath(obs, root, node.i, sig))
             fid = self.by_descriptor.get(d)
             if fid is None:
                 fid = self._nearest(d, H.tid_of_template.get(d.template), H.tid_of_template)
@@ -273,7 +273,7 @@ def induce(G, H, data_tokens: set[str]) -> ControlFamilies:
                 continue      # outside every recurring unit: keeps its existing identity
             descriptor = ControlDescriptor(
                 node.role, masked_label(node, data_tokens, is_data=_judge(G, sig, node, data_tokens)),
-                units[root].template, H._relpath(obs, root, node.i),
+                units[root].template, H._relpath(obs, root, node.i, sig),
             )
             row = occurrences[descriptor]
             row["n"] += 1

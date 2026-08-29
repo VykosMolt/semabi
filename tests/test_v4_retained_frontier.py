@@ -115,55 +115,41 @@ def test_retained_reports_bind_the_manifest_bytes_they_replay():
             assert _sha256(retained_path) == record["sha256"]
 
 
-def test_retained_manifests_refuse_to_load_once_the_compiler_they_name_has_changed():
-    """The manifests name the compiler that produced them, and it has since changed.
+def test_retained_manifests_are_consistent_with_the_compiler_they_name():
+    """The manifests name the compiler that produced them.
 
-    They used to load, and this test used to assert that they did.  The compiler is now under
-    active development -- the inducer learns preconditions over a wider literal language, and
-    the evidence log can now scope itself to a chronological prefix -- so the hashes no longer
-    match and the authenticated loaders refuse.  Refusing is the whole point of pinning it, so
-    what is asserted here is that the refusal happens, that the file it names has *genuinely*
-    diverged from the hash the manifest recorded for it, and that the manifests are otherwise
-    intact: the file set they declare is still the right one, and the three roles still
-    consumed three different histories.
-
-    Naming a specific file here would make the test a diary of whichever edit came last.  What
-    matters is that the loader points at a real divergence rather than an arbitrary one, so the
-    named file is checked against the manifest's own recorded hash for it.
-
-    The compiler has since gained files as well as changed them -- the outcome layer is two
-    modules that did not exist when these manifests were written -- so the declared *set* can
-    differ from the current closure.  That is the same fact and the loader refuses for it too,
-    with a different message; both refusals are accepted here and each is checked for being
-    about something real.
-
-    Results produced against the current compiler are therefore not claims that the frozen one
-    produced them, and the loader is what enforces that rather than a convention.
+    Two states are honest.  Freshly frozen -- as they are after `docs/v4_columns.md`
+    regenerated every one of them on the header-named template scheme -- they load, and
+    the three roles of every chain consumed three different histories.  Once the compiler
+    moves on without a re-freeze they must *refuse*, and the refusal must point at a real
+    divergence: a named file whose hash genuinely differs from the recorded one, or a file
+    set the compiler has since gained.  What is never acceptable is a manifest that loads
+    against a compiler it does not describe, or a refusal about nothing.
     """
     manifest_dir = DATA / "manifests"
-    refused = []
+    outcomes = []
     for path in sorted(manifest_dir.glob("*_source_candidates.json")):
         payload = json.loads(path.read_text())
-        with pytest.raises(manifests.ManifestError) as exc:
-            manifests.load_source_manifest(path, repo_root=ROOT)
-        refused.append((str(exc.value), payload["generation"]["implementation_files"],
-                        set(manifests.GENERATOR_IMPLEMENTATION_FILES)))
+        try:
+            loaded = manifests.load_source_manifest(path, repo_root=ROOT)
+        except manifests.ManifestError as exc:
+            outcomes.append((str(exc), payload["generation"]["implementation_files"],
+                             set(manifests.GENERATOR_IMPLEMENTATION_FILES)))
+        else:
+            assert loaded.candidates, path.name
     for path in sorted(manifest_dir.glob("*_chain.json")):
         payload = json.loads(path.read_text())
         assert len({
             payload["roles"][role]["snapshot"]["consumed_evidence_sha256"]
             for role in ("SOURCE", "TRANSFER", "HOLDOUT")
         }) == 3
-        with pytest.raises(manifests.ManifestError) as exc:
+        try:
             manifests.load_chain_manifest(path, repo_root=ROOT)
-        refused.append((str(exc.value), payload["construction_implementation_files"],
-                        set(manifests.CHAIN_BUILDER_IMPLEMENTATION_FILES)))
-    assert refused
-    for reason, recorded, current in refused:
+        except manifests.ManifestError as exc:
+            outcomes.append((str(exc), payload["construction_implementation_files"],
+                             set(manifests.CHAIN_BUILDER_IMPLEMENTATION_FILES)))
+    for reason, recorded, current in outcomes:
         if set(recorded) != current:
-            # The compiler gained files rather than only changing them: the outcome layer is
-            # two modules the manifests were written before.  That is a divergence too, and
-            # the loader has to name it as one rather than pass.
             assert "is not frozen" in reason, reason
             assert current - set(recorded), (
                 "the declared file set differs but nothing was added; if files were *removed* "

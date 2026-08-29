@@ -149,7 +149,8 @@ def test_rewriting_every_prediction_leaves_the_binding_untouched():
     from semabi.eval.v4_consequence_run import MUTATIONS
     from semabi.eval.v4_consequence_run import _candidates
 
-    readings = {c.name: c.reading for c in _candidates(HARBOUR_CHAIN)}
+    from tests.test_v4_prospective import with_loose_reading
+    readings = with_loose_reading({c.name: c.reading for c in _candidates(HARBOUR_CHAIN)})
     for name in ("joint discrimination x2", "promote cell[_]=cell#0"):
         model = fit(HARBOUR_RUN, readings[name], split=0.5)
         for mode in (ASSERTED, ATTESTED):
@@ -226,7 +227,8 @@ def test_on_the_real_trace_one_reading_determines_its_object_and_the_other_does_
     from semabi.compiler.v4.consequence import VALUE, fit, score
     from semabi.eval.v4_consequence_run import _candidates
 
-    readings = {c.name: c.reading for c in _candidates(HARBOUR_CHAIN)}
+    from tests.test_v4_prospective import with_loose_reading
+    readings = with_loose_reading({c.name: c.reading for c in _candidates(HARBOUR_CHAIN)})
     grounded_fit = fit(HARBOUR_RUN, readings["joint discrimination x2"], split=0.5)
     loose_fit = fit(HARBOUR_RUN, readings["promote cell[_]=cell#0"], split=0.5)
     grounded, loose = score(grounded_fit), score(loose_fit)
@@ -376,7 +378,8 @@ def test_an_effect_on_an_object_the_state_never_pins_is_not_a_well_formed_schema
     from semabi.compiler.v4.consequence import ATTESTED, VALUE, fit, score
     from semabi.eval.v4_consequence_run import _candidates
 
-    readings = {c.name: c.reading for c in _candidates(HARBOUR_CHAIN)}
+    from tests.test_v4_prospective import with_loose_reading
+    readings = with_loose_reading({c.name: c.reading for c in _candidates(HARBOUR_CHAIN)})
     grounded = score(fit(HARBOUR_RUN, readings["joint discrimination x2"], split=0.5)).schema()
     assert grounded["operators"] and not grounded["ill_formed"]
     # No operator has an effect target the state leaves open.  Some now have a *derived*

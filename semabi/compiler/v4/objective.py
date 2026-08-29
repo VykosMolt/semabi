@@ -79,6 +79,10 @@ class Behaviour:
     # two things with one name, and the merge is hiding a change (vet's two appointments
     # for one patient, keyed by the patient: a check-in on the second is silent)
     conflicts: int = 0
+    # the arguments of what the interface said -- "Returned 2 gal to Orchard from Picnic" --
+    # that are values of objects the reading posits: a reading under which the interface's
+    # own words about an action refer to its objects, against one where they refer to nothing
+    named: int = 0
     unexplained: int = 0
     spurious: int = 0
     explained: int = 0
@@ -138,10 +142,15 @@ class Behaviour:
         if self.explained > other.explained and self.errors <= other.errors:
             return True
         if (self.explained, self.errors) == (other.explained, other.errors):
-            # same explanatory power, same errors: prefer the reading that says what
-            # happened in fewer atomic changes.  One action that adds a thing is a create;
-            # the same action read as a shift of several rendered values is the same event
-            # spelled out at greater length, and length is what a description pays for.
+            # same explanatory power, same errors: first, the reading under which more of
+            # what the interface *said* refers to objects it posits -- blend's draws explain
+            # no extra step (a draw's gallons already move) but every "Returned 2 gal to
+            # Orchard from Picnic" names one -- then the reading that says what happened in
+            # fewer atomic changes.  One action that adds a thing is a create; the same
+            # action read as a shift of several rendered values is the same event spelled
+            # out at greater length, and length is what a description pays for.
+            if self.named != other.named:
+                return self.named > other.named
             if self.delta_atoms != other.delta_atoms:
                 return self.delta_atoms < other.delta_atoms
             return self.complexity < other.complexity
@@ -154,7 +163,7 @@ class Behaviour:
     def to_json(self) -> dict[str, Any]:
         return {"contradictions": self.contradictions, "churn": self.churn,
                 "visibility": self.visibility, "conflicts": self.conflicts,
-                "unexplained": self.unexplained,
+                "named": self.named, "unexplained": self.unexplained,
                 "spurious": self.spurious, "explained": self.explained,
                 "delta_atoms": self.delta_atoms,
                 "complexity": self.complexity, "steps": self.steps,
@@ -165,9 +174,26 @@ class Behaviour:
     def __str__(self) -> str:
         return (f"contradictions {self.contradictions}, churn {self.churn}, "
                 f"visibility {self.visibility}, conflicts {self.conflicts}, "
-                f"unexplained {self.unexplained}, "
+                f"named {self.named}, unexplained {self.unexplained}, "
                 f"spurious {self.spurious}, explained {self.explained}, "
                 f"atoms {self.delta_atoms}, complexity {self.complexity}")
+
+
+def _named_arguments(A, log, step, before_state, after_state) -> int:
+    """How many arguments of the interface's response to this step are values of objects
+    the reading posits -- a key, or an attribute -- in the state before or after it."""
+    from semabi.compiler.v4 import emission
+
+    event = emission.observed(log.obs(step.before), log.obs(step.after),
+                              getattr(A, "emissions", None))
+    if event is None or not event.args:
+        return 0
+    values: set[str] = set()
+    for st in (before_state, after_state):
+        for o in st.objs.values():
+            values.add(str(o.key))
+            values.update(str(v) for v in o.attrs.values() if v is not None)
+    return sum(1 for a in event.args if a in values)
 
 
 def evaluate(A: V2Abstractor, log: EvidenceLog, max_steps: int | None = None) -> Behaviour:
@@ -234,6 +260,7 @@ def evaluate(A: V2Abstractor, log: EvidenceLog, max_steps: int | None = None) ->
                     out.contradiction_steps.append(step.step)
                     verdict = "CONTRADICTION"
             elif step.action.kind in ("click", "select", "press", "type"):
+                out.named += _named_arguments(A, log, step, prev, state)
                 inside = _changed_inside_units(A, log, step)
                 if changed_domain and inside and not churned and not phantom:
                     out.explained += 1

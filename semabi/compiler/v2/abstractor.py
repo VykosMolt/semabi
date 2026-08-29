@@ -221,6 +221,11 @@ class V2Abstractor(Abstractor):
         n = self.G.obs[ui.sig].node(node)
         lab = sorted(self.G.labels(ui.sig, node))
         k = sid.split("#")[-1].split("@")[0]
+        header = self.G.column_header(ui.sig, node)
+        if header:
+            # a cell under a declared column header holds the attribute the column names,
+            # wherever the column stands (`semabi.eval.v4_columns`)
+            return "attr:" + " ".join(tokens(header)) + f"#{k}"
         if lab:
             return "attr:" + " ".join(lab) + f"#{k}"
         return "attr:" + sid  # unlabeled slots keep their positional id
@@ -513,8 +518,13 @@ class V2Abstractor(Abstractor):
                 key = f"{n.role}:{label}"
             else:
                 cnt = ordinals[idx] if idx is not None else ordinals.setdefault(-1, Counter())
-                key = f"{n.role}#{cnt[n.role]}"
-                cnt[n.role] += 1
+                # a leaf in a declared-header column is named by the column, not by its
+                # ordinal among the instance's leaves, which the column order would set
+                # (`semabi.eval.v4_columns`): `cell@Reason#0`, `text@Actions#0`
+                header = self._column_of(obs, sig, n.i)
+                role = f"{n.role}@{header}" if header else n.role
+                key = f"{role}#{cnt[role]}"
+                cnt[role] += 1
             if idx is not None:
                 if key not in instances[idx].slots:
                     instances[idx].slots[key] = (label, leaf_value(n))
@@ -524,6 +534,21 @@ class V2Abstractor(Abstractor):
                 statics[key] = (label, leaf_value(n))
             node_key[n.i] = key
         return ParsedObs(obs, instances, statics, node_instance, node_key)
+
+    def _column_of(self, obs: Observation, sig: str, i: int) -> str | None:
+        """The declared column header of the cell a node stands in, if any."""
+        column_header = getattr(self.G, "column_header", None)
+        if column_header is None:
+            return None
+        x = i
+        while x >= 0:
+            n = obs.node(x)
+            if n.role == "cell":
+                return column_header(sig, x)
+            if n.role in ("row", "table"):
+                return None
+            x = n.parent
+        return None
 
     def _record_instances(self, spec: dict, et: EntityType, ui: UnitInstance, anchor_key: str,
                           obs: Observation, sig: str, anchor_idx: int) -> list[Instance]:

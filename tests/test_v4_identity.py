@@ -96,3 +96,50 @@ def test_a_composite_keeps_its_single_components_proposable():
     keys = {r.key_slot for r in got}
     assert "a|c" in keys and "b|c" in keys                 # composites that separate
     assert {"a", "b", "c"} <= keys                          # and every component, single
+
+
+def test_the_name_the_interface_speaks_outranks_a_value_that_merely_differs():
+    # two columns separate every pair; the vessel's name is what the buttons refer to
+    from semabi.compiler.observation import Node, Observation
+    from semabi.compiler.v2.graph import ObsGraph
+    from semabi.compiler.v2.hypotheses import Hypotheses
+
+    def page(rows):
+        nodes = [("group", "", -1), ("table", "", 0), ("rowgroup", "", 1), ("row", "", 2),
+                 ("cell", "Vessel", 3), ("cell", "Length", 3), ("rowgroup", "", 1)]
+        for name, length in rows:
+            r = len(nodes)
+            nodes += [("row", "", 6), ("cell", name, r), ("cell", length, r)]
+        for name, _ in rows:
+            nodes.append(("button", f"Sign on {name}", 0))
+        return Observation([Node(i, p, role, nm) for i, (role, nm, p) in enumerate(nodes)])
+
+    G = ObsGraph()
+    for rows in ([("Selkie", "64 m"), ("Kestrel", "71 m"), ("Marlin", "58 m")],
+                 [("Kestrel", "71 m"), ("Selkie", "64 m"), ("Osprey", "90 m")]):
+        obs = page(rows)
+        G.add(obs.structural_signature(), obs)
+    H = Hypotheses(G)
+    H.fit()
+    unit = next(u for t, u in H.units.items() if t.startswith("row"))
+    # what the interface said over the history: "Selkie berthed", never "64 m berthed"
+    spoken = {"Selkie", "Kestrel", "Marlin", "Osprey"}
+    got = readings_for(unit, reload_pairs=[], spoken=spoken)
+    by = {r.key_slot: r for r in got}
+    assert by["cell@Vessel#0"].evidence.spoken == 1.0
+    assert by["cell@Length#0"].evidence.spoken == 0.0
+    assert got[0].key_slot == "cell@Vessel#0"
+    assert readings_for(unit, reload_pairs=[])[0].key_slot == "cell@Length#0"   # silent: alphabetical
+
+
+def test_the_name_another_rendering_is_keyed_by_outranks_an_unshared_column():
+    from types import SimpleNamespace as NS
+    rows = [("Selkie", "grain"), ("Kestrel", "ore"), ("Marlin", "timber")]
+    instances = [_instance("s1", i, name=n, cargo=c) for i, (n, c) in enumerate(rows)]
+    instances += [_instance("s2", i, name=n, cargo=c) for i, (n, c) in enumerate(rows)]
+    unit = _unit("row[_]", instances, ["name", "cargo"])
+    silent = readings_for(unit, reload_pairs=[])
+    assert silent[0].key_slot == "cargo"                        # alphabetical, on a bare tie
+    shared = readings_for(unit, reload_pairs=[], shared={"Selkie", "Kestrel", "Marlin"})
+    assert shared[0].key_slot == "name"
+    assert {r.key_slot: r.evidence.shared for r in shared}["cargo"] == 0.0

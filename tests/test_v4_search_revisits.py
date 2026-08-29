@@ -18,8 +18,9 @@ from semabi.compiler.v4.objective import Behaviour
 
 
 class _Unit:
-    def __init__(self, template, key_slot):
-        self.template, self.key_slot, self.instances, self.slots = template, key_slot, [], {}
+    def __init__(self, template, key_slot, slots=("p", "q", "r", "x", "junk")):
+        self.template, self.key_slot, self.instances = template, key_slot, []
+        self.slots = {k: SimpleNamespace(n=1, values={}) for k in slots}
 
 
 class _H:
@@ -45,7 +46,7 @@ def _install(monkeypatch, candidates, scores):
     `scores`: (key of family A, key of family B) -> (explained, visibility errors)."""
     monkeypatch.setattr(v4_search, "family_readings",
                         lambda units, *a, **k: [_reading(units[0].template, key)
-                                                for key in candidates[units[0].template]])
+                                                for key in candidates[v4_search.family_key(units[0].template)]])
     monkeypatch.setattr(v4_search, "reading_for",
                         lambda fam, slots, *a, **k: _reading(fam.template, "|".join(slots),
                                                              k.get("status", "SUPPORTED")))
@@ -94,3 +95,24 @@ def test_an_identity_that_ties_no_identity_exactly_is_unearned(monkeypatch):
     assert result.chosen["a[_]"].key_slot is None
     assert result.moves[0]["decided_by"] == {"unearned": "p"}
     assert [(q.left.key_slot, q.right.key_slot) for q in result.open_questions] == [(None, "p")]
+
+
+def test_a_template_without_the_slot_carries_no_identity_under_the_reading(monkeypatch):
+    H = _H({"a[_]": "p", "b[_]": None})
+    H.units["a[](x)"] = _Unit("a[](x)", "p", slots=("p",))        # a second template of family a
+    scores = {("p", None): (10, 1), ("r", None): (12, 0), (None, None): (5, 0)}
+    _install(monkeypatch, {"a[_]": ["p", "r"], "b[_]": [None]}, scores)
+    from semabi.compiler.v4 import identity
+    monkeypatch.setattr(v4_search, "family_key", lambda t: "a[_]" if t.startswith("a") else t)
+    result = v4_search.search(H, None, SimpleNamespace(steps=[]), refuted={})
+    assert result.hypotheses.units["a[_]"].key_slot == "r"
+    assert result.hypotheses.units["a[](x)"].key_slot is None        # it does not render "r"
+
+
+def test_a_refuted_v2_key_is_not_inherited(monkeypatch):
+    H = _H({"a[_]": "p", "b[_]": None})
+    scores = {("p", None): (10, 0), ("q", None): (10, 0), (None, None): (10, 0)}
+    _install(monkeypatch, {"a[_]": ["q", None], "b[_]": [None]}, scores)
+    result = v4_search.search(H, None, SimpleNamespace(steps=[]), refuted={"a[_]": {"p"}})
+    assert result.hypotheses.units["a[_]"].key_slot != "p"
+    assert result.chosen["a[_]"].key_slot != "p"

@@ -120,7 +120,7 @@ def _source_candidates(
         unit = promoted_H.units.get(leaf)
         if unit is None:
             continue
-        best = next((r for r in family_readings([unit], reload_pairs, view_of, allow_prose=True)
+        best = next((r for r in family_readings([unit], reload_pairs, view_of, allow_prose=True, spoken=v4_search.spoken_values(log))
                      if r.is_identity and r.status == "SUPPORTED"), None)
         if best is None:
             continue

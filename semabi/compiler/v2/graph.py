@@ -366,7 +366,10 @@ class ObsGraph:
                     # `Block 12` (a name with a number) from another column of the same
                     # rows, `Ticket` varied, and every draw was keyed `Ticket`.
                     sibs = [c for c in obs.children(n.parent) if obs.node(c).role == n.role]
-                    ppos = ppos + ((n.role, sibs.index(n.i)),)
+                    header = self.column_header(sig, n.i) if sig in self.obs else None
+                    # a column with a declared header is that column wherever it stands:
+                    # judged by its header, not by its index (`semabi.eval.v4_columns`)
+                    ppos = ppos + ((n.role, f"@{header}" if header else sibs.index(n.i)),)
                     key_pos = paths[n.i]
                     # and in every view that renders the same table.  The view skeleton
                     # told two tables apart that stand at the same place in two views
@@ -377,7 +380,9 @@ class ObsGraph:
                     while t >= 0 and obs.node(t).role != "table":
                         t = obs.node(t).parent
                     if t >= 0 and t in table_headers:
-                        skel_key = ("headers",) + table_headers[t]
+                        # the set of declared headers, not their order: the same table
+                        # rendered with its columns rearranged is the same table
+                        skel_key = ("headers",) + tuple(sorted(table_headers[t]))
                 elif n.role in WIDGET_ROLES:
                     # Two buttons side by side are two controls, not one control with two
                     # values: `Sign on` and `Sign off` are told apart by their place, and
@@ -562,6 +567,38 @@ class ObsGraph:
         if self.is_header(sig, i):
             return set(tokens(node_text(n)))
         return {t for t in tokens(node_text(n)) if not self.is_data_at(sig, i, t)}
+
+    def column_header(self, sig: str, i: int) -> str | None:
+        """The declared header text of the column a cell stands in, or None.
+
+        Only a table whose header row sits in a row group of its own (a `thead`) declares
+        its columns; there the header is the interface's own name for the column and the
+        cell's position is presentation (`semabi.eval.v4_columns`).  A cell of any other
+        row, or a column with an empty header, has no column name and keeps its position."""
+        obs = self.obs[sig]
+        n = obs.node(i)
+        if n.role != "cell" or n.parent < 0:
+            return None
+        cache = self.__dict__.setdefault("_column_header_cache", {})
+        if (sig, i) in cache:
+            return cache[(sig, i)]
+        row = n.parent
+        table = obs.node(row).parent
+        while table >= 0 and obs.node(table).role != "table":
+            table = obs.node(table).parent
+        out = None
+        if table >= 0:
+            rows = sorted(x for x in obs.subtree(table) if obs.node(x).role == "row")
+            declared = len(rows) > 1 and obs.node(rows[0]).parent != obs.node(rows[1]).parent
+            if declared and row != rows[0]:
+                cells = obs.children(row)
+                header_cells = obs.children(rows[0])
+                col = cells.index(i) if i in cells else -1
+                if 0 <= col < len(header_cells):
+                    text = node_text(obs.node(header_cells[col])).strip()
+                    out = text or None
+        cache[(sig, i)] = out
+        return out
 
     # ------------------------------------------------------------------ subtree template
     def subtree_template(self, sig: str, i: int) -> str:

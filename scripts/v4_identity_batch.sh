@@ -9,9 +9,9 @@ V=${V:-.venv/bin/python}
 M=docs/data/v4/manifests
 D=docs/data/v4
 
-for app in "blend_book_transfer:blend_book_chain.json:joint discrimination x3" \
-           "harbour_transfer:harbour_chain.json:joint discrimination x2" \
-           "opus_02_cellar_dev:opus_02_cellar_dev_source_sections.json:joint discrimination x3"; do
+for app in "blend_book_transfer:blend_book_chain.json:source_choice" \
+           "harbour_transfer:harbour_chain.json:source_choice" \
+           "opus_02_cellar_dev:opus_02_cellar_dev_source_sections.json:source_choice"; do
   IFS=: read -r run chain reading <<< "$app"
   (
     $V -m semabi.eval.v4_admissible --run runs/v4/$run --chain $M/$chain --reading "$reading" --split 0.5
@@ -23,5 +23,5 @@ for app in "blend_book_transfer:blend_book_chain.json:joint discrimination x3" \
   ) > $D/log_identity_$run.txt 2>&1 &
 done
 $V -m semabi.eval.v4_claim_substance --run runs/v4/vet_clinic_transfer --chain $M/vet_clinic_chain.json \
-   --reading "joint discrimination x3" --split 0.5 > $D/log_identity_vet_clinic_transfer.txt 2>&1 &
+   --reading "source_choice" --split 0.5 > $D/log_identity_vet_clinic_transfer.txt 2>&1 &
 wait

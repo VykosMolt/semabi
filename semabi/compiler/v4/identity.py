@@ -39,6 +39,15 @@ class IdentityEvidence:
     reload_lost: int = 0
     cross_view_values: int = 0      # values that also occur in another view
     numeric_share: float = 0.0
+    # the share of instances whose value the interface has *spoken* -- rendered as an
+    # argument of a status line, "Selkie berthed at W1", "Closed Chapel Row" -- against a
+    # value that merely happens to differ between instances ("64 m").  What the application
+    # calls the thing when it talks about it, which is behaviour, not a datatype
+    spoken: float = 0.0
+    # the share of instances whose value is a key value of some *other* family: the name a
+    # second rendering of the same thing is already known by (harbour's vessel overview and
+    # its vessels table), which is what unions by key overlap rest on
+    shared: float = 0.0
 
     @property
     def discrimination(self) -> float | None:
@@ -63,7 +72,8 @@ class IdentityEvidence:
                 "constant_share": round(self.constant_share, 3),
                 "reload_stability": self.reload_stability,
                 "cross_view_values": self.cross_view_values,
-                "numeric_share": round(self.numeric_share, 3)}
+                "numeric_share": round(self.numeric_share, 3),
+                "spoken": round(self.spoken, 3), "shared": round(self.shared, 3)}
 
 
 @dataclass
@@ -127,6 +137,34 @@ def family_key(template: str) -> str:
     return _collapse(_LITERAL.sub("[_]", template))
 
 
+def spoken_values(log) -> set[str]:
+    """Every argument of everything the interface said over a history: the values it uses
+    when it talks about its objects (`semabi.compiler.v4.emission`)."""
+    from semabi.compiler.v4 import emission
+
+    out: set[str] = set()
+    for step in getattr(log, "steps", ()):
+        try:
+            event = emission.observed(log.obs(step.before), log.obs(step.after))
+        except Exception:  # noqa: BLE001 - a step without both pages says nothing
+            continue
+        if event is not None:
+            out.update(event.args)
+    return out
+
+
+def other_key_values(H, family: str) -> set[str]:
+    """The key values of every unit outside `family` under the hypotheses as they stand."""
+    out: set[str] = set()
+    for template, unit in H.units.items():
+        if family_key(template) == family or not unit.key_slot:
+            continue
+        stat = unit.slots.get(unit.key_slot)
+        if stat is not None:
+            out.update(str(v) for v in stat.values)
+    return out
+
+
 def _copresence_pairs(unit) -> list[tuple[Any, Any]]:
     by_sig: dict[str, list] = defaultdict(list)
     for instance in unit.instances:
@@ -151,6 +189,16 @@ def _value(instance, slots: tuple[str, ...]) -> str | None:
             return None
         parts.append(v)
     return "|".join(parts)
+
+
+def _spoken_share(slots: tuple[str, ...], present, spoken) -> float:
+    """The share of instances whose value under these slots the interface has rendered as
+    an argument of something it said.  Only single-slot readings are scored: a composite's
+    value is never spoken whole."""
+    if not spoken or len(slots) != 1 or not present:
+        return 0.0
+    hits = sum(1 for inst in present if inst.slots.get(slots[0]) in spoken)
+    return hits / len(present)
 
 
 def _reload_evidence(unit, slots: tuple[str, ...], reload_pairs: list[tuple[str, str]],
@@ -194,7 +242,7 @@ class _Family:
 
 def readings_for(unit, reload_pairs: list[tuple[str, str]],
                  view_of: dict[str, str] | None = None,
-                 allow_prose: bool = False) -> list[Reading]:
+                 allow_prose: bool = False, spoken=None, shared=None) -> list[Reading]:
     """Every candidate identity reading of one family, each with its own evidence."""
     instances = unit.instances
     if not instances:
@@ -234,7 +282,7 @@ def readings_for(unit, reload_pairs: list[tuple[str, str]],
             candidates.append(combo)
 
     out: list[Reading] = [reading_for(unit, slots, reload_pairs, view_of, pairs=pairs,
-                                      positions=positions) for slots in candidates]
+                                      positions=positions, spoken=spoken, shared=shared) for slots in candidates]
     out.append(Reading(unit.template, (), IdentityEvidence(copresent_pairs=len(pairs)),
                        status="NO_IDENTITY", why="no identity-bearing observation claimed"))
     out.sort(key=_rank)
@@ -249,7 +297,7 @@ def readings_for(unit, reload_pairs: list[tuple[str, str]],
 
 def reading_for(unit, slots: tuple[str, ...], reload_pairs: list[tuple[str, str]],
                 view_of: dict[str, str] | None = None, *, pairs=None, positions=None,
-                status: str | None = None, why: str | None = None) -> Reading:
+                status: str | None = None, why: str | None = None, spoken=None, shared=None) -> Reading:
     """One candidate reading of a family -- these slots as its name -- with its evidence.
 
     `status` overrides the evidential classification: a key inherited from the V2 fit that
@@ -270,6 +318,8 @@ def reading_for(unit, slots: tuple[str, ...], reload_pairs: list[tuple[str, str]
     ev.constant_share = (values.most_common(1)[0][1] / len(present)) if present else 0.0
     ev.numeric_share = sum(1 for v in values if v and v.replace(".", "", 1).replace("-", "", 1).isdigit()) / max(1, len(values))
     ev.reload_kept, ev.reload_lost = _reload_evidence(unit, slots, reload_pairs, positions)
+    ev.spoken = _spoken_share(slots, present, spoken)
+    ev.shared = _spoken_share(slots, present, shared)     # the same measure against other keys
     if view_of:
         by_view: dict[str, set[str]] = defaultdict(set)
         for i in present:
@@ -322,6 +372,8 @@ def _rank(reading: Reading) -> tuple:
     return (_STATUS_RANK[reading.status],
             -(ev.discrimination or 0.0),
             len(reading.slots),
+            -ev.shared,              # the name another rendering of the thing is already keyed by
+            -ev.spoken,              # then what the interface calls it when it speaks
             -ev.coverage,
             -ev.distinct_values,
             reading.key_slot or "")
@@ -329,7 +381,7 @@ def _rank(reading: Reading) -> tuple:
 
 def family_readings(units: list, reload_pairs: list[tuple[str, str]],
                     view_of: dict[str, str] | None = None,
-                    allow_prose: bool = False) -> list[Reading]:
+                    allow_prose: bool = False, spoken=None, shared=None) -> list[Reading]:
     """Identity readings for a family, with evidence gathered over all of its templates.
 
     Instances of two templates of one family that are on the page together are peers, so
@@ -339,4 +391,4 @@ def family_readings(units: list, reload_pairs: list[tuple[str, str]],
     if not units:
         return []
     name = family_key(units[0].template)
-    return readings_for(_Family(name, units), reload_pairs, view_of, allow_prose)
+    return readings_for(_Family(name, units), reload_pairs, view_of, allow_prose, spoken=spoken, shared=shared)

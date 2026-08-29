@@ -819,6 +819,8 @@ def _validate_family_reading(value: Any, family: str) -> None:
         "NO_IDENTITY",
         "REFUTED",
         "VARIANT",
+        "INHERITED",      # V2's own key, outside the structural ranking (search)
+        "HARMONISED",     # a composite adopted across a union's templates, reported as such
     }:
         raise ManifestError(f"unknown family-reading status for {family}")
     discrimination = value["discrimination"]
@@ -837,6 +839,15 @@ def _validate_reading(
     repo_root: Path | None = None,
 ) -> PinnedReading:
     expected = {"version", "name", "families", "promoted_families", "refuted", "provenance"}
+    if "withheld_unions" in value:
+        # a union by key overlap the source withheld: two families the same values name
+        # (`PinnedReading.withheld_unions`); absent from readings frozen before it existed
+        unions = value["withheld_unions"]
+        if not isinstance(unions, list) or not all(
+                isinstance(pair, list) and len(pair) == 2 and all(isinstance(f, str) for f in pair)
+                for pair in unions):
+            raise ManifestError("withheld_unions must be a list of family pairs")
+        expected = expected | {"withheld_unions"}
     _exact_keys(value, expected, "pinned reading")
     if value["version"] != 1:
         raise ManifestError("wrong pinned-reading version")

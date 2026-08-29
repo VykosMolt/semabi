@@ -1,7 +1,7 @@
 {
  "run": "blend_book_transfer",
  "chain": "docs/data/v4/manifests/blend_book_chain.json",
- "chain_reading": "joint discrimination x3",
+ "chain_reading": "source_choice",
  "split": 0.5,
  "cut": 419,
  "search": {
@@ -10,6 +10,7 @@
    "churn": 0,
    "visibility": 0,
    "conflicts": 0,
+   "named": 383,
    "unexplained": 0,
    "spurious": 0,
    "explained": 151,
@@ -28,6 +29,7 @@
      "churn": 0,
      "visibility": 0,
      "conflicts": 0,
+     "named": 383,
      "unexplained": 0,
      "spurious": 0,
      "explained": 151,
@@ -52,6 +54,7 @@
      "churn": 0,
      "visibility": 0,
      "conflicts": 0,
+     "named": 383,
      "unexplained": 0,
      "spurious": 0,
      "explained": 151,
@@ -78,6 +81,7 @@
      "churn": 0,
      "visibility": 0,
      "conflicts": 0,
+     "named": 383,
      "unexplained": 0,
      "spurious": 0,
      "explained": 151,
@@ -102,6 +106,7 @@
      "churn": 0,
      "visibility": 0,
      "conflicts": 0,
+     "named": 383,
      "unexplained": 0,
      "spurious": 0,
      "explained": 151,
@@ -115,24 +120,145 @@
    }
   ],
   "withheld_unions": [],
-  "open_questions": [],
+  "open_questions": [
+   {
+    "template": "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))",
+    "left": {
+     "template": "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))",
+     "key_slot": "cell@Blend#0",
+     "status": "SUPPORTED",
+     "why": "separates 400/400 co-present pairs, 5 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 400,
+      "separated_pairs": 400,
+      "discrimination": 1.0,
+      "coverage": 1.0,
+      "distinct_values": 5,
+      "constant_share": 0.314,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 0.0,
+      "spoken": 1.0
+     }
+    },
+    "right": {
+     "template": "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))",
+     "key_slot": "cell@Year#0",
+     "status": "SUPPORTED",
+     "why": "separates 400/400 co-present pairs, 4 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 400,
+      "separated_pairs": 400,
+      "discrimination": 1.0,
+      "coverage": 1.0,
+      "distinct_values": 4,
+      "constant_share": 0.314,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 1.0,
+      "spoken": 0.0
+     }
+    },
+    "reason": "the trace so far scores both readings identically"
+   },
+   {
+    "template": "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))",
+    "left": {
+     "template": "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))",
+     "key_slot": "cell@Blend#0",
+     "status": "SUPPORTED",
+     "why": "separates 400/400 co-present pairs, 5 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 400,
+      "separated_pairs": 400,
+      "discrimination": 1.0,
+      "coverage": 1.0,
+      "distinct_values": 5,
+      "constant_share": 0.314,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 0.0,
+      "spoken": 1.0
+     }
+    },
+    "right": {
+     "template": "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))",
+     "key_slot": "cell@Style#0",
+     "status": "SUPPORTED",
+     "why": "separates 319/400 co-present pairs, 2 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 400,
+      "separated_pairs": 319,
+      "discrimination": 0.7975,
+      "coverage": 1.0,
+      "distinct_values": 2,
+      "constant_share": 0.574,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 0.0,
+      "spoken": 0.0
+     }
+    },
+    "reason": "the trace so far scores both readings identically"
+   },
+   {
+    "template": "row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))",
+    "left": {
+     "template": "row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))",
+     "key_slot": "cell@Vat#0",
+     "status": "SUPPORTED",
+     "why": "separates 400/400 co-present pairs, 7 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 400,
+      "separated_pairs": 400,
+      "discrimination": 1.0,
+      "coverage": 1.0,
+      "distinct_values": 7,
+      "constant_share": 0.272,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 0.0,
+      "spoken": 1.0
+     }
+    },
+    "right": {
+     "template": "row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))",
+     "key_slot": "cell@Varietal#0",
+     "status": "SUPPORTED",
+     "why": "separates 342/400 co-present pairs, 4 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 400,
+      "separated_pairs": 342,
+      "discrimination": 0.855,
+      "coverage": 1.0,
+      "distinct_values": 4,
+      "constant_share": 0.365,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 0.0,
+      "spoken": 0.0
+     }
+    },
+    "reason": "the trace so far scores both readings identically"
+   }
+  ],
   "entity_types": {
    "0": [
     {
-     "template": "row[](cell[_],cell[](button[Close _],button[_]))",
-     "key_slot": "cell#0"
+     "template": "row[](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[](button[Close _],button[_]))",
+     "key_slot": "cell@Vat#0"
     }
    ],
    "1": [
     {
-     "template": "row[](cell[_],cell[](button[Bottle _],button[Disgorge _]))",
-     "key_slot": "cell#0"
+     "template": "row[](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[](button[Bottle _],button[Disgorge _]))",
+     "key_slot": "cell@Blend#0"
     }
    ],
    "2": [
     {
-     "template": "row[](cell[Ticket _],cell[_ gal],cell[_],cell[](button[Return ticket _ gal from _ out of _]))",
-     "key_slot": "cell#0"
+     "template": "row[](cell@Amount[_ gal],cell@From vat[_],cell@Into blend[_],cell@Ticket[Ticket _],cell[](button[Return ticket _ gal from _ out of _]))",
+     "key_slot": "cell@Ticket#0"
     }
    ]
   },
@@ -152,15 +278,27 @@
      "status": "NO_IDENTITY",
      "discrimination": 0.0
     },
-    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": {
-     "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))))))": {
+     "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))))))",
      "key_slot": null,
      "status": "NO_IDENTITY",
      "discrimination": null
     },
-    "row[_](cell[_],cell[_](button[_]))": {
-     "family": "row[_](cell[_],cell[_](button[_]))",
-     "key_slot": "cell#0",
+    "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))": {
+     "family": "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))",
+     "key_slot": "cell@Ticket#0",
+     "status": "SUPPORTED",
+     "discrimination": 1.0
+    },
+    "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))": {
+     "family": "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))",
+     "key_slot": "cell@Blend#0",
+     "status": "SUPPORTED",
+     "discrimination": 1.0
+    },
+    "row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))": {
+     "family": "row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))",
+     "key_slot": "cell@Vat#0",
      "status": "SUPPORTED",
      "discrimination": 1.0
     },
@@ -179,13 +317,13 @@
    }
   },
   "notes": [
-   "v4 initial (V2 identities): contradictions 0, churn 0, visibility 0, conflicts 0, unexplained 26, spurious 0, explained 151, atoms 379, complexity 42",
-   "v4 evidence prior: contradictions 0, churn 0, visibility 0, conflicts 0, unexplained 0, spurious 0, explained 151, atoms 379, complexity 36",
-   "v4 button[_]: key -> None (contradictions 0, churn 0, visibility 0, conflicts 0, unexplained 0, spurious 0, explained 151, atoms 379, complexity 30)",
+   "v4 initial (V2 identities): contradictions 0, churn 0, visibility 0, conflicts 0, named 383, unexplained 26, spurious 0, explained 151, atoms 379, complexity 42",
+   "v4 evidence prior: contradictions 0, churn 0, visibility 0, conflicts 0, named 383, unexplained 0, spurious 0, explained 151, atoms 379, complexity 36",
+   "v4 button[_]: key -> None (contradictions 0, churn 0, visibility 0, conflicts 0, named 383, unexplained 0, spurious 0, explained 151, atoms 379, complexity 30)",
    "v4 cell[_]: key 'cell#0' -> None, unearned on an exact tie",
-   "v4 text[_](combobox[_]): key -> None (contradictions 0, churn 0, visibility 0, conflicts 0, unexplained 0, spurious 0, explained 151, atoms 379, complexity 25)",
+   "v4 text[_](combobox[_]): key -> None (contradictions 0, churn 0, visibility 0, conflicts 0, named 383, unexplained 0, spurious 0, explained 151, atoms 379, complexity 25)",
    "v4 round 0: moved; judging every family again against the new base",
-   "v4 final: contradictions 0, churn 0, visibility 0, conflicts 0, unexplained 0, spurious 0, explained 151, atoms 379, complexity 25; 0 open questions"
+   "v4 final: contradictions 0, churn 0, visibility 0, conflicts 0, named 383, unexplained 0, spurious 0, explained 151, atoms 379, complexity 25; 3 open questions"
   ]
  },
  "suffix_ledger": {
@@ -195,31 +333,41 @@
    "contradicted": 18
   },
   "chain": {
-   "right": 149,
-   "no rule": 82,
-   "contradicted": 18
+   "right": 145,
+   "no rule": 44,
+   "contradicted": 53,
+   "disagreed": 4,
+   "unbound": 3
   }
  },
  "families": {
   "button[_]": {
    "search": null,
-   "chain": "button#0"
+   "chain": null
   },
   "cell[_]": {
    "search": null,
-   "chain": "cell#0"
+   "chain": null
   },
-  "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))": {
-   "search": null,
-   "chain": "group/group/text#0@9"
-  },
-  "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))": {
+  "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))))))": {
    "search": null,
    "chain": null
   },
-  "row[_](cell[_],cell[_](button[_]))": {
-   "search": "cell#0",
-   "chain": "cell#0"
+  "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Ticket[_])))))": {
+   "search": null,
+   "chain": null
+  },
+  "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))": {
+   "search": "cell@Ticket#0",
+   "chain": null
+  },
+  "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))": {
+   "search": "cell@Blend#0",
+   "chain": "cell@Blend#0"
+  },
+  "row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))": {
+   "search": "cell@Vat#0",
+   "chain": "cell@Vat#0"
   },
   "text[_](combobox[_])": {
    "search": null,

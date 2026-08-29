@@ -1,287 +1,239 @@
 {
  "run": "opus_02_cellar_dev",
  "chain": "docs/data/v4/manifests/opus_02_cellar_dev_source_sections.json",
- "chain_reading": "joint discrimination x3",
+ "chain_reading": "source_choice",
  "split": 0.5,
  "cut": 195,
  "search": {
   "final": {
-   "contradictions": 7,
+   "contradictions": 0,
    "churn": 0,
-   "visibility": 7,
+   "visibility": 0,
    "conflicts": 0,
+   "named": 17,
    "unexplained": 0,
    "spurious": 0,
    "explained": 1,
-   "delta_atoms": 1,
-   "complexity": 36,
+   "delta_atoms": 2,
+   "complexity": 28,
    "steps": 195,
    "churn_steps": [],
-   "contradiction_steps": [
-    2,
-    7,
-    9,
-    16,
-    73,
-    127,
-    156
-   ],
-   "visibility_steps": [
-    2,
-    7,
-    9,
-    16,
-    73,
-    127,
-    156
-   ]
+   "contradiction_steps": [],
+   "visibility_steps": []
   },
   "moves": [
    {
     "move": "evidence_prior",
     "score": {
-     "contradictions": 9,
+     "contradictions": 0,
      "churn": 0,
-     "visibility": 14,
+     "visibility": 0,
      "conflicts": 0,
+     "named": 17,
      "unexplained": 0,
      "spurious": 0,
      "explained": 0,
      "delta_atoms": 0,
-     "complexity": 34,
+     "complexity": 31,
      "steps": 195,
      "churn_steps": [],
-     "contradiction_steps": [
-      2,
-      3,
-      7,
-      8,
-      9,
-      16,
-      73,
-      127,
-      156
-     ],
-     "visibility_steps": [
-      2,
-      3,
-      7,
-      8,
-      9,
-      12,
-      16,
-      18,
-      73,
-      80,
-      127,
-      129,
-      156,
-      165
-     ]
+     "contradiction_steps": [],
+     "visibility_steps": []
     }
    },
    {
     "move": "identity",
     "round": 0,
-    "family": "group[_](heading[_],text[_],table[_](rowgroup[_](row[_](cell[_]))))",
+    "family": "row[_](cell@Area[_],cell@Block[_],cell@Bottled so far[_],cell@Expected yield[_],cell@Picked[_],cell@Variety[_])",
     "templates": 1,
     "key_slot": null,
     "status": "NO_IDENTITY",
     "decided_by": {},
     "score": {
-     "contradictions": 9,
+     "contradictions": 0,
      "churn": 0,
-     "visibility": 14,
+     "visibility": 0,
      "conflicts": 0,
+     "named": 17,
      "unexplained": 0,
      "spurious": 0,
      "explained": 0,
      "delta_atoms": 0,
-     "complexity": 28,
+     "complexity": 20,
      "steps": 195,
      "churn_steps": [],
-     "contradiction_steps": [
-      2,
-      3,
-      7,
-      8,
-      9,
-      16,
-      73,
-      127,
-      156
-     ],
-     "visibility_steps": [
-      2,
-      3,
-      7,
-      8,
-      9,
-      12,
-      16,
-      18,
-      73,
-      80,
-      127,
-      129,
-      156,
-      165
-     ]
+     "contradiction_steps": [],
+     "visibility_steps": []
     }
    },
    {
     "move": "identity",
     "round": 0,
-    "family": "row[_](cell[_])",
-    "templates": 3,
-    "key_slot": "cell#0@3",
+    "family": "row[_](cell@Capacity[_],cell@Condition[_],cell@Holds[_],cell@Kind[_],cell@Vessel[_])",
+    "templates": 2,
+    "key_slot": "cell@Capacity#0",
     "status": "SUPPORTED",
     "decided_by": {
      "explained": 1
     },
     "score": {
-     "contradictions": 9,
+     "contradictions": 0,
      "churn": 0,
-     "visibility": 14,
+     "visibility": 0,
      "conflicts": 0,
+     "named": 17,
      "unexplained": 0,
      "spurious": 0,
      "explained": 1,
      "delta_atoms": 2,
-     "complexity": 36,
+     "complexity": 28,
      "steps": 195,
      "churn_steps": [],
-     "contradiction_steps": [
-      2,
-      3,
-      7,
-      8,
-      9,
-      16,
-      73,
-      127,
-      156
-     ],
-     "visibility_steps": [
-      2,
-      3,
-      7,
-      8,
-      9,
-      12,
-      16,
-      18,
-      73,
-      80,
-      127,
-      129,
-      156,
-      165
-     ]
-    }
-   },
-   {
-    "move": "identity",
-    "round": 0,
-    "family": "row[_](cell[_])",
-    "templates": 3,
-    "key_slot": "cell#1",
-    "status": "SUPPORTED",
-    "decided_by": {
-     "contradictions": 2,
-     "visibility": 7
-    },
-    "score": {
-     "contradictions": 7,
-     "churn": 0,
-     "visibility": 7,
-     "conflicts": 0,
-     "unexplained": 0,
-     "spurious": 0,
-     "explained": 1,
-     "delta_atoms": 1,
-     "complexity": 36,
-     "steps": 195,
-     "churn_steps": [],
-     "contradiction_steps": [
-      2,
-      7,
-      9,
-      16,
-      73,
-      127,
-      156
-     ],
-     "visibility_steps": [
-      2,
-      7,
-      9,
-      16,
-      73,
-      127,
-      156
-     ]
+     "contradiction_steps": [],
+     "visibility_steps": []
     }
    }
   ],
   "withheld_unions": [],
   "open_questions": [
    {
-    "template": "row[_](cell[_])",
+    "template": "group[_](heading[_],text[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Capacity[_],cell@Condition[_],cell@Holds[_],cell@Kind[_],cell@Vessel[_]))))",
     "left": {
-     "template": "row[_](cell[_])",
-     "key_slot": "cell#1",
+     "template": "group[_](heading[_],text[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Capacity[_],cell@Condition[_],cell@Holds[_],cell@Kind[_],cell@Vessel[_]))))",
+     "key_slot": "heading#0",
      "status": "SUPPORTED",
-     "why": "separates 287/400 co-present pairs, 3 values, coverage 0.54",
+     "why": "separates 99/99 co-present pairs, 4 values, coverage 1.00",
      "evidence": {
-      "copresent_pairs": 400,
-      "separated_pairs": 287,
-      "discrimination": 0.7175,
-      "coverage": 0.544,
-      "distinct_values": 3,
-      "constant_share": 0.573,
-      "reload_stability": 0.85,
+      "copresent_pairs": 99,
+      "separated_pairs": 99,
+      "discrimination": 1.0,
+      "coverage": 1.0,
+      "distinct_values": 4,
+      "constant_share": 0.333,
+      "reload_stability": 1.0,
       "cross_view_values": 0,
-      "numeric_share": 0.0
+      "numeric_share": 0.0,
+      "spoken": 0.667
      }
     },
     "right": {
-     "template": "row[_](cell[_])",
-     "key_slot": null,
-     "status": "NO_IDENTITY",
-     "why": "no identity-bearing observation claimed",
+     "template": "group[_](heading[_],text[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Capacity[_],cell@Condition[_],cell@Holds[_],cell@Kind[_],cell@Vessel[_]))))",
+     "key_slot": "table/rowgroup/row/cell#0",
+     "status": "CONTRADICTED",
+     "why": "one value only: it names no instance in particular",
      "evidence": {
-      "copresent_pairs": 400,
+      "copresent_pairs": 99,
       "separated_pairs": 0,
       "discrimination": 0.0,
-      "coverage": 0.0,
-      "distinct_values": 0,
-      "constant_share": 0.0,
-      "reload_stability": null,
+      "coverage": 1.0,
+      "distinct_values": 1,
+      "constant_share": 1.0,
+      "reload_stability": 1.0,
       "cross_view_values": 0,
-      "numeric_share": 0.0
+      "numeric_share": 0.0,
+      "spoken": 0.0
      }
     },
-    "reason": "undecided: chosen explains 1 with 14 errors, the alternative explains 0 with 0"
+    "reason": "the trace so far scores both readings identically"
+   },
+   {
+    "template": "row[_](cell@Capacity[_],cell@Condition[_],cell@Holds[_],cell@Kind[_],cell@Vessel[_])",
+    "left": {
+     "template": "row[_](cell@Capacity[_],cell@Condition[_],cell@Holds[_],cell@Kind[_],cell@Vessel[_])",
+     "key_slot": "cell@Capacity#0",
+     "status": "SUPPORTED",
+     "why": "separates 334/400 co-present pairs, 4 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 400,
+      "separated_pairs": 334,
+      "discrimination": 0.835,
+      "coverage": 1.0,
+      "distinct_values": 4,
+      "constant_share": 0.5,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 1.0,
+      "spoken": 0.0
+     }
+    },
+    "right": {
+     "template": "row[_](cell@Capacity[_],cell@Condition[_],cell@Holds[_],cell@Kind[_],cell@Vessel[_])",
+     "key_slot": "cell@Kind#0",
+     "status": "SUPPORTED",
+     "why": "separates 267/400 co-present pairs, 2 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 400,
+      "separated_pairs": 267,
+      "discrimination": 0.6675,
+      "coverage": 1.0,
+      "distinct_values": 2,
+      "constant_share": 0.5,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 0.0,
+      "spoken": 0.5
+     }
+    },
+    "reason": "the trace so far scores both readings identically"
+   },
+   {
+    "template": "row[_](cell@Capacity[_],cell@Condition[_],cell@Holds[_],cell@Kind[_],cell@Vessel[_])",
+    "left": {
+     "template": "row[_](cell@Capacity[_],cell@Condition[_],cell@Holds[_],cell@Kind[_],cell@Vessel[_])",
+     "key_slot": "cell@Capacity#0",
+     "status": "SUPPORTED",
+     "why": "separates 334/400 co-present pairs, 4 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 400,
+      "separated_pairs": 334,
+      "discrimination": 0.835,
+      "coverage": 1.0,
+      "distinct_values": 4,
+      "constant_share": 0.5,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 1.0,
+      "spoken": 0.0
+     }
+    },
+    "right": {
+     "template": "row[_](cell@Capacity[_],cell@Condition[_],cell@Holds[_],cell@Kind[_],cell@Vessel[_])",
+     "key_slot": "cell@Condition#0",
+     "status": "SUPPORTED",
+     "why": "separates 201/400 co-present pairs, 2 values, coverage 1.00",
+     "evidence": {
+      "copresent_pairs": 400,
+      "separated_pairs": 201,
+      "discrimination": 0.5025,
+      "coverage": 1.0,
+      "distinct_values": 2,
+      "constant_share": 0.75,
+      "reload_stability": 1.0,
+      "cross_view_values": 0,
+      "numeric_share": 0.0,
+      "spoken": 0.75
+     }
+    },
+    "reason": "the trace so far scores both readings identically"
    }
   ],
   "entity_types": {
    "0": [
     {
-     "template": "row[](cell[_],cell[_ L],cell[_])",
-     "key_slot": "cell#1"
+     "template": "group[](heading[_],text[Temperature _ C. Room for _ vessels _ standing here],table[](rowgroup[](row[](cell[_],cell[Kind],cell[Capacity],cell[Condition],cell[Holds])),rowgroup[](row[](cell@Capacity[_ L],cell@Condition[_],cell@Holds[_],cell@Kind[_],cell@Vessel[_]))))",
+     "key_slot": "heading#0"
     }
    ],
    "1": [
     {
-     "template": "row[](cell[_],cell[_ ha],cell[_ L],cell[_])",
-     "key_slot": "cell#1"
+     "template": "row[](cell@Capacity[_ L],cell@Condition[_],cell@Holds[_],cell@Kind[_],cell@Vessel[_])",
+     "key_slot": "cell@Capacity#0"
     }
    ],
    "2": [
     {
-     "template": "row[](cell[_])",
-     "key_slot": "cell#1"
+     "template": "row[](cell@Capacity[_],cell@Condition[_],cell@Holds[_],cell@Kind[_],cell@Vessel[_])",
+     "key_slot": "cell@Capacity#0"
     }
    ]
   },
@@ -289,17 +241,29 @@
    "version": 1,
    "name": "search",
    "families": {
-    "group[_](heading[_],text[_],table[_](rowgroup[_](row[_](cell[_]))))": {
-     "family": "group[_](heading[_],text[_],table[_](rowgroup[_](row[_](cell[_]))))",
+    "group[_](heading[_],text[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Capacity[_],cell@Condition[_],cell@Holds[_],cell@Kind[_],cell@Vessel[_]))))": {
+     "family": "group[_](heading[_],text[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Capacity[_],cell@Condition[_],cell@Holds[_],cell@Kind[_],cell@Vessel[_]))))",
+     "key_slot": "heading#0",
+     "status": "SUPPORTED",
+     "discrimination": 1.0
+    },
+    "row[_](cell@Area[_],cell@Block[_],cell@Bottled so far[_],cell@Expected yield[_],cell@Picked[_],cell@Variety[_])": {
+     "family": "row[_](cell@Area[_],cell@Block[_],cell@Bottled so far[_],cell@Expected yield[_],cell@Picked[_],cell@Variety[_])",
      "key_slot": null,
      "status": "NO_IDENTITY",
      "discrimination": 0.0
     },
-    "row[_](cell[_])": {
-     "family": "row[_](cell[_])",
-     "key_slot": "cell#1",
+    "row[_](cell@Capacity[_],cell@Condition[_],cell@Holds[_],cell@Kind[_],cell@Vessel[_])": {
+     "family": "row[_](cell@Capacity[_],cell@Condition[_],cell@Holds[_],cell@Kind[_],cell@Vessel[_])",
+     "key_slot": "cell@Capacity#0",
      "status": "SUPPORTED",
-     "discrimination": 0.7175
+     "discrimination": 0.835
+    },
+    "row[_](cell@From block[_],cell@Hall[_],cell@In vessel[_],cell@Lot[_],cell@Oaked[_],cell@Stage[_],cell@Variety[_],cell@Volume[_])": {
+     "family": "row[_](cell@From block[_],cell@Hall[_],cell@In vessel[_],cell@Lot[_],cell@Oaked[_],cell@Stage[_],cell@Variety[_],cell@Volume[_])",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "discrimination": null
     }
    },
    "promoted_families": [],
@@ -310,13 +274,12 @@
    }
   },
   "notes": [
-   "v4 initial (V2 identities): contradictions 9, churn 0, visibility 14, conflicts 0, unexplained 0, spurious 0, explained 0, atoms 0, complexity 35",
-   "v4 evidence prior: contradictions 9, churn 0, visibility 14, conflicts 0, unexplained 0, spurious 0, explained 0, atoms 0, complexity 34",
-   "v4 group[_](heading[_],text[_],table[_](rowgroup[_](row[_](cell[_])))): key -> None (contradictions 9, churn 0, visibility 14, conflicts 0, unexplained 0, spurious 0, explained 0, atoms 0, complexity 28)",
-   "v4 row[_](cell[_]): key -> cell#0@3 (contradictions 9, churn 0, visibility 14, conflicts 0, unexplained 0, spurious 0, explained 1, atoms 2, complexity 36)",
-   "v4 row[_](cell[_]): key -> cell#1 (contradictions 7, churn 0, visibility 7, conflicts 0, unexplained 0, spurious 0, explained 1, atoms 1, complexity 36)",
+   "v4 initial (V2 identities): contradictions 7, churn 0, visibility 0, conflicts 0, named 17, unexplained 0, spurious 0, explained 0, atoms 0, complexity 38",
+   "v4 evidence prior: contradictions 0, churn 0, visibility 0, conflicts 0, named 17, unexplained 0, spurious 0, explained 0, atoms 0, complexity 31",
+   "v4 row[_](cell@Area[_],cell@Block[_],cell@Bottled so far[_],cell@Expected yield[_],cell@Picked[_],cell@Variety[_]): key -> None (contradictions 0, churn 0, visibility 0, conflicts 0, named 17, unexplained 0, spurious 0, explained 0, atoms 0, complexity 20)",
+   "v4 row[_](cell@Capacity[_],cell@Condition[_],cell@Holds[_],cell@Kind[_],cell@Vessel[_]): key -> cell@Capacity#0 (contradictions 0, churn 0, visibility 0, conflicts 0, named 17, unexplained 0, spurious 0, explained 1, atoms 2, complexity 28)",
    "v4 round 0: moved; judging every family again against the new base",
-   "v4 final: contradictions 7, churn 0, visibility 7, conflicts 0, unexplained 0, spurious 0, explained 1, atoms 1, complexity 36; 1 open questions"
+   "v4 final: contradictions 0, churn 0, visibility 0, conflicts 0, named 17, unexplained 0, spurious 0, explained 1, atoms 2, complexity 28; 3 open questions"
   ]
  },
  "suffix_ledger": {
@@ -326,25 +289,25 @@
   "chain": {}
  },
  "families": {
-  "button[_]": {
-   "search": null,
-   "chain": "button#0"
-  },
   "cell[_]": {
    "search": null,
    "chain": null
   },
-  "group[_](heading[_],text[_],table[_](rowgroup[_](row[_](cell[_]))))": {
-   "search": null,
-   "chain": "heading#0"
+  "group[_](heading[_],text[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Capacity[_],cell@Condition[_],cell@Holds[_],cell@Kind[_],cell@Vessel[_]))))": {
+   "search": "heading#0",
+   "chain": null
   },
-  "group[_](heading[_],text[_],table[_](rowgroup[_](row[_](cell[_]))),heading[_],text[_],table[_](rowgroup[_](row[_](cell[_]))),group[_](heading[_],text[_](text[_],combobox[_],text[_],combobox[_],button[_])),group[_](heading[_],text[_](text[_],combobox[_],button[_])))": {
+  "row[_](cell@Area[_],cell@Block[_],cell@Bottled so far[_],cell@Expected yield[_],cell@Picked[_],cell@Variety[_])": {
    "search": null,
    "chain": null
   },
-  "row[_](cell[_])": {
-   "search": "cell#1",
-   "chain": "cell#0"
+  "row[_](cell@Capacity[_],cell@Condition[_],cell@Holds[_],cell@Kind[_],cell@Vessel[_])": {
+   "search": "cell@Capacity#0",
+   "chain": null
+  },
+  "row[_](cell@From block[_],cell@Hall[_],cell@In vessel[_],cell@Lot[_],cell@Oaked[_],cell@Stage[_],cell@Variety[_],cell@Volume[_])": {
+   "search": null,
+   "chain": null
   }
  }
 }

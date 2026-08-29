@@ -145,7 +145,21 @@ def harbour():
     generated them, and that is not what they are testing.
     """
     from semabi.eval.v4_consequence_run import _candidates
-    return {c.name: c.reading for c in _candidates(HARBOUR_CHAIN)}
+    return with_loose_reading({c.name: c.reading for c in _candidates(HARBOUR_CHAIN)})
+
+
+def with_loose_reading(readings: dict) -> dict:
+    """The loose harbour reading -- every childless cell an object keyed by its own text --
+    is no longer one the source generator proposes: since `docs/v4_columns.md` a cell under
+    a declared header is not a `cell[_]` leaf at all.  The reading is still constructible,
+    and what the tests about it test is what it does, so it is built from the incumbent when
+    the manifest does not carry it."""
+    from semabi.compiler.v4.pinned import FamilyReading
+    if "promote cell[_]=cell#0" not in readings:
+        readings["promote cell[_]=cell#0"] = readings["source_choice"].with_promotion(
+            "cell[_]", FamilyReading("cell[_]", "cell#0", "SUPPORTED", 1.0),
+            "promote cell[_]=cell#0")
+    return readings
 
 
 def _run(reading, mutate=None, split=0.6):

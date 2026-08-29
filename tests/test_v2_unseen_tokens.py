@@ -103,7 +103,7 @@ class _H:
         from types import SimpleNamespace
         return [SimpleNamespace(root=r, template=t) for r, t in self._units[sig]]
 
-    def _relpath(self, obs, root, i):
+    def _relpath(self, obs, root, i, sig=None):
         parts, x = [], i
         while x != root and x >= 0:
             parts.append(obs.node(x).role)

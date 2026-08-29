@@ -73,6 +73,6 @@ def test_a_column_is_keyed_by_the_table_it_belongs_to_in_every_view():
     vets = vets_view(["Yes", "No", "Yes"])
     key = G.variation_key[(vets.structural_signature(), _cells(vets, "Dr. Grace Kim")[0])]
     assert key[2] == ("headers", "Name", "On duty")
-    assert key[1][-2:] == (("row", "*"), ("cell", 0))
+    assert key[1][-2:] == (("row", "*"), ("cell", "@Name"))      # the column, by its header
     other = vets_view(["No", "No", "Yes"])
     assert G.variation_key[(other.structural_signature(), _cells(other, "Dr. Grace Kim")[0])] == key

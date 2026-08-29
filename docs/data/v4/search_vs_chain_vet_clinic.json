@@ -10,11 +10,12 @@
    "churn": 0,
    "visibility": 1,
    "conflicts": 0,
-   "unexplained": 0,
+   "named": 0,
+   "unexplained": 1,
    "spurious": 4,
-   "explained": 50,
-   "delta_atoms": 54,
-   "complexity": 53,
+   "explained": 49,
+   "delta_atoms": 53,
+   "complexity": 43,
    "steps": 448,
    "churn_steps": [],
    "contradiction_steps": [
@@ -41,11 +42,12 @@
      "churn": 0,
      "visibility": 148,
      "conflicts": 0,
+     "named": 0,
      "unexplained": 1,
      "spurious": 4,
      "explained": 47,
-     "delta_atoms": 75,
-     "complexity": 56,
+     "delta_atoms": 53,
+     "complexity": 46,
      "steps": 448,
      "churn_steps": [],
      "contradiction_steps": [
@@ -147,11 +149,12 @@
      "churn": 0,
      "visibility": 148,
      "conflicts": 0,
+     "named": 0,
      "unexplained": 1,
      "spurious": 4,
      "explained": 47,
-     "delta_atoms": 75,
-     "complexity": 45,
+     "delta_atoms": 53,
+     "complexity": 34,
      "steps": 448,
      "churn_steps": [],
      "contradiction_steps": [
@@ -243,131 +246,24 @@
    {
     "move": "identity",
     "round": 0,
-    "family": "row[_](cell[_])",
-    "templates": 2,
-    "key_slot": "cell#0|cell#0@3",
-    "status": "SUPPORTED",
-    "decided_by": {
-     "explained": 1
-    },
-    "score": {
-     "contradictions": 96,
-     "churn": 0,
-     "visibility": 148,
-     "conflicts": 0,
-     "unexplained": 0,
-     "spurious": 4,
-     "explained": 48,
-     "delta_atoms": 48,
-     "complexity": 38,
-     "steps": 448,
-     "churn_steps": [],
-     "contradiction_steps": [
-      4,
-      5,
-      12,
-      15,
-      16,
-      17,
-      27,
-      36,
-      41,
-      47,
-      52,
-      62,
-      67,
-      72,
-      77,
-      82,
-      87,
-      92,
-      97,
-      102,
-      107,
-      112,
-      121,
-      128,
-      133,
-      135,
-      144,
-      152,
-      155,
-      157,
-      159,
-      161,
-      163,
-      165,
-      169,
-      171,
-      176,
-      181,
-      183,
-      189
-     ],
-     "visibility_steps": [
-      4,
-      5,
-      12,
-      14,
-      15,
-      16,
-      17,
-      22,
-      27,
-      28,
-      36,
-      38,
-      41,
-      44,
-      47,
-      49,
-      52,
-      59,
-      62,
-      64,
-      67,
-      69,
-      72,
-      74,
-      77,
-      79,
-      82,
-      84,
-      87,
-      89,
-      92,
-      94,
-      97,
-      99,
-      102,
-      104,
-      107,
-      109,
-      112,
-      118
-     ]
-    }
-   },
-   {
-    "move": "identity",
-    "round": 0,
-    "family": "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))",
+    "family": "row[_](cell@Actions[_](textbox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
     "templates": 2,
     "key_slot": null,
     "status": "NO_IDENTITY",
     "decided_by": {
-     "unearned": "cell#0"
+     "unearned": "cell@Reason#0"
     },
     "score": {
      "contradictions": 96,
      "churn": 0,
      "visibility": 148,
      "conflicts": 0,
-     "unexplained": 0,
+     "named": 0,
+     "unexplained": 1,
      "spurious": 4,
-     "explained": 48,
-     "delta_atoms": 48,
-     "complexity": 38,
+     "explained": 47,
+     "delta_atoms": 53,
+     "complexity": 34,
      "steps": 448,
      "churn_steps": [],
      "contradiction_steps": [
@@ -459,9 +355,9 @@
    {
     "move": "identity",
     "round": 0,
-    "family": "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))",
+    "family": "row[_](cell@Actions[_](textbox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
     "templates": 2,
-    "key_slot": "cell#0@4",
+    "key_slot": "cell@Status#0",
     "status": "UNSUPPORTED",
     "decided_by": {
      "explained": 2
@@ -471,11 +367,226 @@
      "churn": 0,
      "visibility": 148,
      "conflicts": 0,
-     "unexplained": 0,
+     "named": 0,
+     "unexplained": 1,
      "spurious": 4,
-     "explained": 50,
-     "delta_atoms": 54,
-     "complexity": 58,
+     "explained": 49,
+     "delta_atoms": 59,
+     "complexity": 54,
+     "steps": 448,
+     "churn_steps": [],
+     "contradiction_steps": [
+      4,
+      5,
+      12,
+      15,
+      16,
+      17,
+      27,
+      36,
+      41,
+      47,
+      52,
+      62,
+      67,
+      72,
+      77,
+      82,
+      87,
+      92,
+      97,
+      102,
+      107,
+      112,
+      121,
+      128,
+      133,
+      135,
+      144,
+      152,
+      155,
+      157,
+      159,
+      161,
+      163,
+      165,
+      169,
+      171,
+      176,
+      181,
+      183,
+      189
+     ],
+     "visibility_steps": [
+      4,
+      5,
+      12,
+      14,
+      15,
+      16,
+      17,
+      22,
+      27,
+      28,
+      36,
+      38,
+      41,
+      44,
+      47,
+      49,
+      52,
+      59,
+      62,
+      64,
+      67,
+      69,
+      72,
+      74,
+      77,
+      79,
+      82,
+      84,
+      87,
+      89,
+      92,
+      94,
+      97,
+      99,
+      102,
+      104,
+      107,
+      109,
+      112,
+      118
+     ]
+    }
+   },
+   {
+    "move": "identity",
+    "round": 0,
+    "family": "row[_](cell@Name[_],cell@On duty[_],cell@Specialty[_])",
+    "templates": 1,
+    "key_slot": "cell@Specialty#0",
+    "status": "SUPPORTED",
+    "decided_by": {},
+    "score": {
+     "contradictions": 96,
+     "churn": 0,
+     "visibility": 148,
+     "conflicts": 0,
+     "named": 0,
+     "unexplained": 1,
+     "spurious": 4,
+     "explained": 49,
+     "delta_atoms": 53,
+     "complexity": 55,
+     "steps": 448,
+     "churn_steps": [],
+     "contradiction_steps": [
+      4,
+      5,
+      12,
+      15,
+      16,
+      17,
+      27,
+      36,
+      41,
+      47,
+      52,
+      62,
+      67,
+      72,
+      77,
+      82,
+      87,
+      92,
+      97,
+      102,
+      107,
+      112,
+      121,
+      128,
+      133,
+      135,
+      144,
+      152,
+      155,
+      157,
+      159,
+      161,
+      163,
+      165,
+      169,
+      171,
+      176,
+      181,
+      183,
+      189
+     ],
+     "visibility_steps": [
+      4,
+      5,
+      12,
+      14,
+      15,
+      16,
+      17,
+      22,
+      27,
+      28,
+      36,
+      38,
+      41,
+      44,
+      47,
+      49,
+      52,
+      59,
+      62,
+      64,
+      67,
+      69,
+      72,
+      74,
+      77,
+      79,
+      82,
+      84,
+      87,
+      89,
+      92,
+      94,
+      97,
+      99,
+      102,
+      104,
+      107,
+      109,
+      112,
+      118
+     ]
+    }
+   },
+   {
+    "move": "identity",
+    "round": 0,
+    "family": "row[_](cell@Name[_],cell@On duty[_],cell@Specialty[_])",
+    "templates": 1,
+    "key_slot": null,
+    "status": "NO_IDENTITY",
+    "decided_by": {},
+    "score": {
+     "contradictions": 96,
+     "churn": 0,
+     "visibility": 148,
+     "conflicts": 0,
+     "named": 0,
+     "unexplained": 1,
+     "spurious": 4,
+     "explained": 49,
+     "delta_atoms": 53,
+     "complexity": 48,
      "steps": 448,
      "churn_steps": [],
      "contradiction_steps": [
@@ -580,11 +691,12 @@
      "churn": 0,
      "visibility": 1,
      "conflicts": 0,
-     "unexplained": 0,
+     "named": 0,
+     "unexplained": 1,
      "spurious": 4,
-     "explained": 50,
-     "delta_atoms": 54,
-     "complexity": 53,
+     "explained": 49,
+     "delta_atoms": 53,
+     "complexity": 43,
      "steps": 448,
      "churn_steps": [],
      "contradiction_steps": [
@@ -598,44 +710,6 @@
   ],
   "withheld_unions": [],
   "open_questions": [
-   {
-    "template": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
-    "left": {
-     "template": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
-     "key_slot": "cell#0",
-     "status": "SUPPORTED",
-     "why": "separates 27/39 co-present pairs, 7 values, coverage 1.00",
-     "evidence": {
-      "copresent_pairs": 39,
-      "separated_pairs": 27,
-      "discrimination": 0.6923076923076923,
-      "coverage": 1.0,
-      "distinct_values": 7,
-      "constant_share": 0.351,
-      "reload_stability": null,
-      "cross_view_values": 0,
-      "numeric_share": 0.0
-     }
-    },
-    "right": {
-     "template": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
-     "key_slot": "cell#0|cell#0@3",
-     "status": "SUPPORTED",
-     "why": "separates 39/39 co-present pairs, 17 values, coverage 1.00",
-     "evidence": {
-      "copresent_pairs": 39,
-      "separated_pairs": 39,
-      "discrimination": 1.0,
-      "coverage": 1.0,
-      "distinct_values": 17,
-      "constant_share": 0.149,
-      "reload_stability": null,
-      "cross_view_values": 0,
-      "numeric_share": 0.0
-     }
-    },
-    "reason": "the trace so far scores both readings identically"
-   },
    {
     "template": "text[_](textbox[_])",
     "left": {
@@ -652,7 +726,8 @@
       "constant_share": 0.893,
       "reload_stability": 1.0,
       "cross_view_values": 0,
-      "numeric_share": 0.0
+      "numeric_share": 0.0,
+      "spoken": 0.0
      }
     },
     "right": {
@@ -669,10 +744,11 @@
       "constant_share": 0.0,
       "reload_stability": null,
       "cross_view_values": 0,
-      "numeric_share": 0.0
+      "numeric_share": 0.0,
+      "spoken": 0.0
      }
     },
-    "reason": "undecided: chosen explains 50 with 6 errors, the alternative explains 41 with 0"
+    "reason": "undecided: chosen explains 49 with 6 errors, the alternative explains 40 with 0"
    }
   ],
   "entity_types": {
@@ -690,34 +766,28 @@
    ],
    "2": [
     {
-     "template": "row[](cell[Dr _],cell[_])",
-     "key_slot": "cell#0|cell#0@3"
+     "template": "row[](cell@Actions[](combobox[_],button[Assign vet],button[Start exam],button[Cancel],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+     "key_slot": "cell@Reason#0"
+    },
+    {
+     "template": "row[](cell@Actions[](combobox[_],button[Assign vet],button[Check in],button[Cancel],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+     "key_slot": "cell@Reason#0"
+    },
+    {
+     "template": "row[](cell@Actions[_],cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+     "key_slot": "cell@Reason#0"
     }
    ],
    "3": [
     {
-     "template": "row[](cell[_],cell[](combobox[_],button[Assign vet],button[Start exam],button[Cancel],text[_]))",
-     "key_slot": "cell#0|cell#0@3"
-    },
-    {
-     "template": "row[](cell[_],cell[](combobox[_],button[Assign vet],button[Check in],button[Cancel],text[_]))",
-     "key_slot": "cell#0|cell#0@3"
-    },
-    {
-     "template": "row[](cell[_])",
-     "key_slot": "cell#0|cell#0@3"
+     "template": "row[](cell@Actions[](textbox[],button[Complete],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+     "key_slot": "cell@Status#0"
     }
    ],
    "4": [
     {
-     "template": "row[](cell[_],cell[](textbox[],button[Complete],text[_]))",
-     "key_slot": "cell#0@4"
-    }
-   ],
-   "5": [
-    {
-     "template": "row[](cell[_],cell[](textbox[_],button[Complete],text[_]))",
-     "key_slot": "cell#0@4"
+     "template": "row[](cell@Actions[](textbox[_],button[Complete],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+     "key_slot": "cell@Status#0"
     }
    ]
   },
@@ -737,23 +807,29 @@
      "status": "NO_IDENTITY",
      "discrimination": 0.0
     },
-    "row[_](cell[_])": {
-     "family": "row[_](cell[_])",
-     "key_slot": "cell#0|cell#0@3",
+    "row[_](cell@Actions[_](combobox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])": {
+     "family": "row[_](cell@Actions[_](combobox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+     "key_slot": "cell@Reason#0",
      "status": "SUPPORTED",
-     "discrimination": 1.0
+     "discrimination": 0.8717948717948718
     },
-    "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": {
-     "family": "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
-     "key_slot": "cell#0|cell#0@3",
-     "status": "HARMONISED",
-     "discrimination": 1.0
-    },
-    "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))": {
-     "family": "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))",
-     "key_slot": "cell#0@4",
+    "row[_](cell@Actions[_](textbox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])": {
+     "family": "row[_](cell@Actions[_](textbox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+     "key_slot": "cell@Status#0",
      "status": "UNSUPPORTED",
      "discrimination": null
+    },
+    "row[_](cell@Actions[_],cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])": {
+     "family": "row[_](cell@Actions[_],cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+     "key_slot": "cell@Reason#0",
+     "status": "SUPPORTED",
+     "discrimination": 0.9868766404199475
+    },
+    "row[_](cell@Name[_],cell@On duty[_],cell@Specialty[_])": {
+     "family": "row[_](cell@Name[_],cell@On duty[_],cell@Specialty[_])",
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "discrimination": 0.0
     },
     "text[_](combobox[_])": {
      "family": "text[_](combobox[_])",
@@ -776,58 +852,58 @@
    }
   },
   "notes": [
-   "v4 initial (V2 identities): contradictions 176, churn 0, visibility 228, conflicts 0, unexplained 1, spurious 4, explained 47, atoms 75, complexity 51",
-   "v4 cell[_]: key -> None (contradictions 96, churn 0, visibility 148, conflicts 0, unexplained 1, spurious 4, explained 47, atoms 75, complexity 56)",
-   "v4 group[_](heading[_],list[_](listitem[_])): key -> None (contradictions 96, churn 0, visibility 148, conflicts 0, unexplained 1, spurious 4, explained 47, atoms 75, complexity 45)",
-   "v4 row[_](cell[_]): key -> cell#0|cell#0@3 (contradictions 96, churn 0, visibility 148, conflicts 0, unexplained 0, spurious 4, explained 48, atoms 48, complexity 38)",
-   "v4 row[_](cell[_]) cell#0@4: build failed (KeyError)",
-   "v4 row[_](cell[_]) cell#0@5: build failed (KeyError)",
-   "v4 row[_](cell[_],cell[_](textbox[_],button[_],text[_])): key 'cell#0' -> None, unearned on an exact tie",
-   "v4 row[_](cell[_],cell[_](textbox[_],button[_],text[_])): key -> cell#0@4 (contradictions 96, churn 0, visibility 148, conflicts 0, unexplained 0, spurious 4, explained 50, atoms 54, complexity 58)",
-   "v4 text[_](combobox[_]): key -> None (contradictions 1, churn 0, visibility 1, conflicts 0, unexplained 0, spurious 4, explained 50, atoms 54, complexity 53)",
+   "v4 initial (V2 identities): contradictions 176, churn 0, visibility 228, conflicts 0, named 0, unexplained 1, spurious 4, explained 47, atoms 53, complexity 41",
+   "v4 cell[_]: key -> None (contradictions 96, churn 0, visibility 148, conflicts 0, named 0, unexplained 1, spurious 4, explained 47, atoms 53, complexity 46)",
+   "v4 group[_](heading[_],list[_](listitem[_])): key -> None (contradictions 96, churn 0, visibility 148, conflicts 0, named 0, unexplained 1, spurious 4, explained 47, atoms 53, complexity 34)",
+   "v4 row[_](cell@Actions[_](textbox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_]): key 'cell@Reason#0' -> None, unearned on an exact tie",
+   "v4 row[_](cell@Actions[_](textbox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_]): key -> cell@Status#0 (contradictions 96, churn 0, visibility 148, conflicts 0, named 0, unexplained 1, spurious 4, explained 49, atoms 59, complexity 54)",
+   "v4 row[_](cell@Name[_],cell@On duty[_],cell@Specialty[_]): key -> cell@Specialty#0 (contradictions 96, churn 0, visibility 148, conflicts 0, named 0, unexplained 1, spurious 4, explained 49, atoms 53, complexity 55)",
+   "v4 row[_](cell@Name[_],cell@On duty[_],cell@Specialty[_]): key -> None (contradictions 96, churn 0, visibility 148, conflicts 0, named 0, unexplained 1, spurious 4, explained 49, atoms 53, complexity 48)",
+   "v4 text[_](combobox[_]): key -> None (contradictions 1, churn 0, visibility 1, conflicts 0, named 0, unexplained 1, spurious 4, explained 49, atoms 53, complexity 43)",
    "v4 round 0: moved; judging every family again against the new base",
-   "v4 row[_](cell[_]) cell#0@4: build failed (KeyError)",
-   "v4 row[_](cell[_]) cell#0@5: build failed (KeyError)",
-   "v4 row[_](cell[_],cell[_](combobox[_],button[_],text[_])): key 'cell#0' -> 'cell#0|cell#0@3' by harmonisation, not judged",
-   "v4 final: contradictions 1, churn 0, visibility 1, conflicts 0, unexplained 0, spurious 4, explained 50, atoms 54, complexity 53; 2 open questions"
+   "v4 final: contradictions 1, churn 0, visibility 1, conflicts 0, named 0, unexplained 1, spurious 4, explained 49, atoms 53, complexity 43; 1 open questions"
   ]
  },
  "suffix_ledger": {
   "search": {
-   "right": 18,
+   "right": 16,
    "no rule": 7,
-   "contradicted": 1
+   "contradicted": 3
   },
   "chain": {
-   "right": 18,
-   "no rule": 7,
-   "contradicted": 1
+   "unbound": 16,
+   "contradicted": 12,
+   "disagreed": 16
   }
  },
  "families": {
   "cell[_]": {
    "search": null,
-   "chain": null
+   "chain": "cell#0"
   },
   "group[_](heading[_],list[_](listitem[_]))": {
    "search": null,
-   "chain": null
+   "chain": "heading#0"
   },
-  "row[_](cell[_])": {
-   "search": "cell#0|cell#0@3",
-   "chain": "cell#0"
+  "row[_](cell@Actions[_](combobox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])": {
+   "search": "cell@Reason#0",
+   "chain": "cell@Owner#0"
   },
-  "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))": {
-   "search": "cell#0|cell#0@3",
-   "chain": "cell#0|cell#0@4"
+  "row[_](cell@Actions[_](textbox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])": {
+   "search": "cell@Status#0",
+   "chain": "cell@Owner#0"
   },
-  "row[_](cell[_],cell[_](textbox[_],button[_],text[_]))": {
-   "search": "cell#0@4",
-   "chain": null
+  "row[_](cell@Actions[_],cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])": {
+   "search": "cell@Reason#0",
+   "chain": "cell@Owner#0"
+  },
+  "row[_](cell@Name[_],cell@On duty[_],cell@Specialty[_])": {
+   "search": null,
+   "chain": "cell@Name#0"
   },
   "text[_](combobox[_])": {
    "search": null,
-   "chain": null
+   "chain": "text#0"
   },
   "text[_](textbox[_])": {
    "search": "text#0",

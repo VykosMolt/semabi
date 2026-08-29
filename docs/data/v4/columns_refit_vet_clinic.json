@@ -1,0 +1,141 @@
+{
+ "run": "vet_clinic_transfer",
+ "transform": "reverse columns",
+ "comparison": "refit",
+ "split": 0.5,
+ "families": [
+  {
+   "family": "cell[_]",
+   "key_original": null,
+   "key_reversed": null,
+   "columns_original": [],
+   "columns_reversed": [],
+   "same_columns": true
+  },
+  {
+   "family": "group[_](heading[_],list[_](listitem[_]))",
+   "key_original": null,
+   "key_reversed": null,
+   "columns_original": [],
+   "columns_reversed": [],
+   "same_columns": true
+  },
+  {
+   "family": "row[_](cell@Actions[_](combobox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+   "key_original": "cell@Reason#0",
+   "key_reversed": "cell@Reason#0",
+   "columns_original": [
+    "Reason"
+   ],
+   "columns_reversed": [
+    "Reason"
+   ],
+   "same_columns": true
+  },
+  {
+   "family": "row[_](cell@Actions[_](textbox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+   "key_original": "cell@Status#0",
+   "key_reversed": "cell@Status#0",
+   "columns_original": [
+    "Status"
+   ],
+   "columns_reversed": [
+    "Status"
+   ],
+   "same_columns": true
+  },
+  {
+   "family": "row[_](cell@Actions[_],cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+   "key_original": "cell@Reason#0",
+   "key_reversed": "cell@Reason#0",
+   "columns_original": [
+    "Reason"
+   ],
+   "columns_reversed": [
+    "Reason"
+   ],
+   "same_columns": true
+  },
+  {
+   "family": "row[_](cell@Name[_],cell@On duty[_],cell@Specialty[_])",
+   "key_original": null,
+   "key_reversed": null,
+   "columns_original": [],
+   "columns_reversed": [],
+   "same_columns": true
+  },
+  {
+   "family": "text[_](combobox[_])",
+   "key_original": null,
+   "key_reversed": null,
+   "columns_original": [],
+   "columns_reversed": [],
+   "same_columns": true
+  },
+  {
+   "family": "text[_](textbox[_])",
+   "key_original": "text#0",
+   "key_reversed": "text#0",
+   "columns_original": [
+    "?"
+   ],
+   "columns_reversed": [
+    "?"
+   ],
+   "same_columns": true
+  }
+ ],
+ "n_families_differing": 0,
+ "withheld_original": [],
+ "withheld_reversed": [],
+ "final_original": {
+  "contradictions": 1,
+  "churn": 0,
+  "visibility": 1,
+  "conflicts": 0,
+  "unexplained": 1,
+  "spurious": 4,
+  "explained": 49,
+  "delta_atoms": 53,
+  "complexity": 43,
+  "steps": 448,
+  "churn_steps": [],
+  "contradiction_steps": [
+   4
+  ],
+  "visibility_steps": [
+   4
+  ]
+ },
+ "final_reversed": {
+  "contradictions": 1,
+  "churn": 0,
+  "visibility": 1,
+  "conflicts": 0,
+  "unexplained": 1,
+  "spurious": 4,
+  "explained": 49,
+  "delta_atoms": 53,
+  "complexity": 43,
+  "steps": 448,
+  "churn_steps": [],
+  "contradiction_steps": [
+   4
+  ],
+  "visibility_steps": [
+   4
+  ]
+ },
+ "suffix_ledger": {
+  "original": {
+   "right": 16,
+   "no rule": 7,
+   "contradicted": 3
+  },
+  "reversed": {
+   "right": 16,
+   "no rule": 7,
+   "contradicted": 3
+  }
+ }
+}

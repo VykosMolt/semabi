@@ -39,7 +39,7 @@ class _H:
     def parse_units(self, sig):
         return [SimpleNamespace(root=root, template=t) for root, t in self._units[sig]]
 
-    def _relpath(self, obs, root, i):
+    def _relpath(self, obs, root, i, sig=None):
         parts = []
         x = i
         while x != root and x >= 0:

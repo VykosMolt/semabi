@@ -70,10 +70,13 @@ def _rows_of(table: int, children: dict[int, list[int]], role: dict[int, str]) -
     return out
 
 
-def transform_page(obs: dict) -> tuple[dict, dict[int, int]]:
-    """The page with its collections reversed, and old node index -> new."""
+def transform_page(obs: dict, children_of=_reordered_children) -> tuple[dict, dict[int, int]]:
+    """The page with its collections reversed, and old node index -> new.
+
+    `children_of` is the rearrangement: the members of each collection reversed here, the
+    columns of each table reversed in `semabi.eval.v4_columns`."""
     nodes = obs["nodes"]
-    children = _reordered_children(nodes)
+    children = children_of(nodes)
     order: list[int] = []
     stack = [n["i"] for n in nodes if n["parent"] < 0][::-1]
     while stack:
@@ -94,26 +97,35 @@ def transform_page(obs: dict) -> tuple[dict, dict[int, int]]:
     return {**obs, "nodes": out_nodes}, new_of
 
 
-def transform_run(src: Path, dst: Path) -> None:
+def transform_run(src: Path, dst: Path, children_of=_reordered_children) -> None:
     if dst.exists():
         shutil.rmtree(dst)
     dst.mkdir(parents=True)
     for f in src.iterdir():
         if f.name not in ("observations.jsonl", "steps.jsonl") and f.is_file():
             shutil.copy(f, dst / f.name)
+    from semabi.compiler.observation import Observation
+
     maps: dict[str, dict[int, int]] = {}
+    sig_of: dict[str, str] = {}
     with (src / "observations.jsonl").open() as fin, (dst / "observations.jsonl").open("w") as fout:
         for line in fin:
             d = json.loads(line)
-            page, new_of = transform_page(d["obs"])
+            page, new_of = transform_page(d["obs"], children_of)
             maps[d["sig"]] = new_of
-            fout.write(json.dumps({**d, "obs": page}) + "\n")
+            # a transformed page is a different page: it carries its own structural
+            # signature, so that a fresh fit on the transformed run is self-consistent
+            sig_of[d["sig"]] = Observation.from_json(page).structural_signature()
+            fout.write(json.dumps({**d, "sig": sig_of[d["sig"]], "obs": page}) + "\n")
     with (src / "steps.jsonl").open() as fin, (dst / "steps.jsonl").open("w") as fout:
         for line in fin:
             d = json.loads(line)
             act = d.get("action") or {}
             if act.get("target") is not None:
                 act["target"] = maps[d["before"]][act["target"]]
+            for k in ("before", "after"):
+                if d.get(k) in sig_of:
+                    d[k] = sig_of[d[k]]
             fout.write(json.dumps(d) + "\n")
 
 

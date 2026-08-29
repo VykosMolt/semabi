@@ -181,7 +181,7 @@ class Hypotheses:
             toks = self.G.data_tokens(sig, i)
             if not toks:
                 continue
-            rel = self._relpath(obs, owner.root, i)
+            rel = self._relpath(obs, owner.root, i, sig)
             transient = obs.node(i).role in ("combobox", "textbox")
             prose = self.G.is_prose(sig, i)  # a sentence about entities: neither identity nor attribute
             for k, tok in enumerate(toks):
@@ -304,12 +304,15 @@ class Hypotheses:
         self._page_instances[sig] = {ui.root: ui for ui in insts}
         return insts
 
-    def _relpath(self, obs, root: int, i: int) -> str:
+    def _relpath(self, obs, root: int, i: int, sig: str | None = None) -> str:
         parts = []
         x = i
         while x != root and x >= 0:
             n = obs.node(x)
-            parts.append(n.role)
+            header = self.G.column_header(sig, x) if sig is not None and n.role == "cell" else None
+            # a cell under a declared column header is that column wherever it stands, so
+            # the slot is named by the header (`cell@Reason#0`) rather than by its offset
+            parts.append(f"{n.role}@{header}" if header else n.role)
             x = n.parent
         return "/".join(reversed(parts)) or obs.node(i).role
 

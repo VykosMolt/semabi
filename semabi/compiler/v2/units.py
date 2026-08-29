@@ -31,7 +31,14 @@ def collapsed_template(G: ObsGraph, sig: str, i: int, memo: dict) -> str:
         if m == "_" and parts and parts[-1] == "_":
             continue  # a run of data tokens is one slot
         parts.append(m)
-    ch = [collapsed_template(G, sig, c, memo) for c in obs.children(i)]
+    kids = obs.children(i)
+    ch = [collapsed_template(G, sig, c, memo) for c in kids]
+    if n.role == "row" and any(G.column_header(sig, c) for c in kids):
+        # the cells of a row under a declared header row are the row's columns, and a
+        # column is named by its header, not by where it stands: the template lists them
+        # in header order, so a table rendered with its columns rearranged is the same unit
+        ch = [c for _, c in sorted(zip([(G.column_header(sig, c) or "~", k)
+                                        for k, c in enumerate(kids)], ch))]
     if not parts and not ch and n.role in ("cell", "text", "group", "listitem", "heading"):
         parts = ["_"]  # an empty data cell is a slot without a value
     txt = " ".join(parts)
@@ -40,7 +47,9 @@ def collapsed_template(G: ObsGraph, sig: str, i: int, memo: dict) -> str:
         if out and out[-1] == c:
             continue  # repeated child templates count once (multiplicity-insensitive)
         out.append(c)
-    t = f"{n.role}[{txt}]" + ("(" + ",".join(out) + ")" if out else "")
+    header = G.column_header(sig, i) if n.role == "cell" else None
+    role = f"{n.role}@{header}" if header else n.role
+    t = f"{role}[{txt}]" + ("(" + ",".join(out) + ")" if out else "")
     memo[key] = t
     return t
 

@@ -72,8 +72,8 @@ def _unit(H, word):
 def test_a_row_no_word_identifies_is_keyed_by_its_ticket_number():
     H = fitted()
     t, draws = _unit(H, "Ticket")
-    assert draws.key_slot == "cell#0"
-    assert all(v.isdigit() for v in draws.slots["cell#0"].values)
+    assert draws.key_slot == "cell@Ticket#0"
+    assert all(v.isdigit() for v in draws.slots["cell@Ticket#0"].values)
     assert any(e.startswith("numeric key") for e in draws.evidence)
 
 

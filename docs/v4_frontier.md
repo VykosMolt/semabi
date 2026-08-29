@@ -1,5 +1,7 @@
 # The frontier, verified: what the seventy were, what Bottle does at nine, and what is left
 
+> Continued in `docs/v4_columns.md`: the side note about slot ids being DOM offsets was four leaks, all closed.
+
 The previous report (`docs/v4_selection.md`) ended with two claims about vet: that completed
 behaviour rejects the form-field type, and that no candidate reading is right because every
 clean reading leaves seventy held-out actions unbound -- "the generator's fault".  This run
