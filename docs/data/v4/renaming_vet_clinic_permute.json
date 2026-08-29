@@ -1,0 +1,41 @@
+{
+ "run": "vet_clinic_transfer",
+ "reading": "joint discrimination x3",
+ "scored_on": "vet_clinic_holdout",
+ "mode": "permute",
+ "seed": 0,
+ "keys_renamed": 9,
+ "types": {
+  "2": 5,
+  "3": 4
+ },
+ "sample": {
+  "Patient": "Owner",
+  "Owner": "Name",
+  "Name": "Species",
+  "Species": "Reason",
+  "Reason": "Patient",
+  "Grace Kim": "Wren Baxter",
+  "Wren Baxter": "Omar Reyes",
+  "Omar Reyes": "Yuki Tanaka",
+  "Yuki Tanaka": "Grace Kim"
+ },
+ "clicks": 547,
+ "same": {
+  "controls": 547,
+  "version space": 547,
+  "decision list": 547
+ },
+ "verdicts_before": {
+  "this application has no live region, so there is nothing to predict": 547
+ },
+ "verdicts_after": {
+  "this application has no live region, so there is nothing to predict": 547
+ },
+ "differences": [],
+ "n_differences": 0,
+ "ledger_steps": 544,
+ "ledger_same": 544,
+ "ledger_differences": [],
+ "n_ledger_differences": 0
+}

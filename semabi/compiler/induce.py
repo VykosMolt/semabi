@@ -1415,7 +1415,13 @@ class Inducer:
         if lit[0] not in ("attr", "attr_ne"):
             return ""
         _, param, slot, value = lit
-        if lit[0] == "attr" and self._is_key_slot(op, param, slot):
+        if self._is_key_slot(op, param, slot):
+            # Negated as well: *the vat is not North Wall* names the fitting instance as
+            # surely as *the vat is North Wall*.  `learn_pre` allowed one such exclusion per
+            # parameter as "the special object"; renaming every vat on a held-out history
+            # (`semabi.eval.v4_renaming`) changed the durable ledger at 27 steps on blend,
+            # every one of them a rule guarded by that exclusion, while harbour, which has
+            # none, was unmoved.  A guard that mentions a spelling is not a guard.
             return "identity constants never generalise"
         if (lit[0] == "attr" and not isinstance(value, bool)
                 and len({tr.binding.get(param) for tr in op.positives}) < 2):
@@ -1534,9 +1540,6 @@ class Inducer:
             if best_cov == 1 and len(tied) > 1:
                 break  # a single failure explained equally well by several literals: undetermined
             best = tied[0]
-            if best[0] == "attr_ne" and self._is_key_slot(op, best[1], best[2]) and \
-                    any(c[0] == "attr_ne" and c[1] == best[1] and self._is_key_slot(op, c[1], c[2]) for c in chosen):
-                break  # at most one "special object" exclusion per parameter; the rest stays unexplained
             chosen.append(best)
             if len(tied) > 1:
                 alternatives[best] = tied[1:]

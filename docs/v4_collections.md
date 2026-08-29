@@ -1,5 +1,7 @@
 # Collections, columns and keys: what a member of a listing is
 
+> Continued in `docs/v4_behaviour.md`.
+
 `docs/v4_open_world.md` removed one presentation coordinate from the observation model --
 which row a value stood in -- and eleven harbour types became five.  This run asked what
 other coordinates the model still reads, built the instruments that would show them, and

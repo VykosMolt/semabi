@@ -45,12 +45,22 @@ for app in "harbour_transfer:harbour_chain.json:joint discrimination x2:harbour_
   $V -m semabi.eval.v4_metamorphic --run runs/v4/$run --chain $M/$chain --reading "$reading" \
      --score-on runs/v4/$other --workdir $W/reversed_$name --out $D/reversal_$name.json > /dev/null 2>&1 &
 done
-for mode in fresh permute; do
-  $V -m semabi.eval.v4_renaming --run runs/v4/harbour_transfer --chain $M/harbour_chain.json \
-     --reading "joint discrimination x2" --score-on runs/v4/harbour_holdout --mode $mode \
-     --workdir $W/harbour_$mode --out $D/renaming_harbour_$mode.json > /dev/null 2>&1 &
-  $V -m semabi.eval.v4_renaming --run runs/v4/blend_book_transfer --chain $M/blend_book_chain.json \
-     --reading "joint discrimination x3" --score-on runs/v4/blend_book_holdout --mode $mode \
-     --workdir $W/blend_$mode --out $D/renaming_blend_book_$mode.json > /dev/null 2>&1 &
+# renaming: every name that only identifies, replaced (fresh) or permuted; the version
+# space, the chosen list and the durable ledger compared at every click
+for app in "harbour_transfer:harbour_chain.json:joint discrimination x2:harbour_holdout:harbour" \
+           "blend_book_transfer:blend_book_chain.json:joint discrimination x3:blend_book_holdout:blend_book" \
+           "vet_clinic_transfer:vet_clinic_chain.json:joint discrimination x3:vet_clinic_holdout:vet_clinic" \
+           "opus_02_cellar_dev:opus_02_cellar_dev_source_sections.json:joint discrimination x3:cellar_seed11:cellar"; do
+  IFS=: read -r run chain reading other name <<< "$app"
+  for mode in fresh permute; do
+    $V -m semabi.eval.v4_renaming --run runs/v4/$run --chain $M/$chain --reading "$reading" \
+       --score-on runs/v4/$other --mode $mode --workdir $W/${name}_$mode \
+       --out $D/renaming_${name}_$mode.json > /dev/null 2>&1 &
+  done
 done
+# what a control's label says against what it does
+$V -m semabi.eval.v4_roles --run runs/v4/blend_book_transfer --chain $M/blend_book_chain.json \
+   --reading "joint discrimination x3" --out $D/roles_blend_book_transfer.json > /dev/null 2>&1 &
+$V -m semabi.eval.v4_roles --run runs/v4/harbour_transfer --chain $M/harbour_chain.json \
+   --reading "joint discrimination x2" --out $D/roles_harbour_transfer.json > /dev/null 2>&1 &
 wait

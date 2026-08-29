@@ -200,6 +200,17 @@ def _verdicts(model, log) -> list[dict]:
     return out
 
 
+def _ledger(model, log) -> dict[int, list]:
+    """The durable-effect layer's verdicts at every held-out step, by the rule that made
+    them.  A rule whose precondition names a spelling -- `id(?o0) != 'North Wall'` -- fires
+    differently once the vat is called something else, and this is where it shows."""
+    m = replace(model, log=log, cut=0)
+    out: dict[int, list] = {}
+    for p in csq.score(m).predictions:
+        out.setdefault(p.step, []).append((p.operator, p.kind, str(p.slot), p.verdict))
+    return {k: sorted(v) for k, v in out.items()}
+
+
 def compare(run_dir: Path, chain: Path, reading_name: str, score_on: Path, *,
             mode: str = FRESH, seed: int = 0, split: float = 1.0,
             workdir: Path | None = None) -> dict:
@@ -222,6 +233,10 @@ def compare(run_dir: Path, chain: Path, reading_name: str, score_on: Path, *,
 
     before = _verdicts(model, log)
     after = _verdicts(model, renamed)
+    ledger_before, ledger_after = _ledger(model, log), _ledger(model, renamed)
+    ledger_diffs = [{"step": k, "before": ledger_before.get(k, []), "after": ledger_after.get(k, [])}
+                    for k in sorted(set(ledger_before) | set(ledger_after))
+                    if ledger_before.get(k) != ledger_after.get(k)]
     assert [b["step"] for b in before] == [a["step"] for a in after]
     sub = _substituter(mapping)
     same = Counter()
@@ -246,7 +261,10 @@ def compare(run_dir: Path, chain: Path, reading_name: str, score_on: Path, *,
             "clicks": len(before), "same": dict(same),
             "verdicts_before": dict(Counter(b["verdict"] for b in before)),
             "verdicts_after": dict(Counter(a["verdict"] for a in after)),
-            "differences": diffs[:80], "n_differences": len(diffs)}
+            "differences": diffs[:80], "n_differences": len(diffs),
+            "ledger_steps": len(set(ledger_before) | set(ledger_after)),
+            "ledger_same": len(set(ledger_before) | set(ledger_after)) - len(ledger_diffs),
+            "ledger_differences": ledger_diffs[:40], "n_ledger_differences": len(ledger_diffs)}
 
 
 def main(argv=None) -> int:
@@ -273,6 +291,11 @@ def main(argv=None) -> int:
     for d in r["differences"][:20]:
         print(f"    step {d['step']}: control {d['control']}  verdict {d['verdict']}  "
               f"admissible {d['admissible']}  list {d['list']}")
+    print(f"  durable ledger: {r['ledger_same']} of {r['ledger_steps']} steps identical, "
+          f"{r['n_ledger_differences']} differ")
+    for d in r["ledger_differences"][:12]:
+        print(f"    step {d['step']}: {[x for x in d['before'] if x not in d['after']]}  ->  "
+              f"{[x for x in d['after'] if x not in d['before']]}")
     if a.out:
         Path(a.out).write_text(json.dumps(r, indent=1, default=str))
         print(f"\nwrote {a.out}")
