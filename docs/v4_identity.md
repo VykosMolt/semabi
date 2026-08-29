@@ -256,6 +256,15 @@ Harbour (270 clicks): 91 forced, **77 right, 14 wrong**; 81 refused; 96 vacuous 
   cannot count.  `erased_by_the_state` shows the tickets rendered inside the owner's group and
   absent from its state, which is the right report and the wrong repair: what is missing is an
   aggregate, not a slot.
+  A count literal -- one per type present, equality on the number of its objects -- was
+  built and measured, and is **not in the tree**.  It leaves the eight cases inseparable,
+  because the draw rows are not a unit type under the frozen reading (their `Return ticket`
+  buttons sat outside every unit) and there is nothing to count; and it widens the admissible
+  sets everywhere a count happens to vary -- blend's second history 218 forced to 191, harbour's
+  91 to 73, three more `Close` states forced and wrong -- which is `docs/v4_admissibility.md`'s
+  finding about `structural` roles arriving through a literal that is true: expressiveness
+  bought without evidence manufactures justification.  The cardinality gap is real; the repair
+  is first an identity one.
 * harbour's 14: 2 on the frame (`Reopen`, inseparable) and 12 on an *argument* of `Schedule
   call`'s *Call C-107 opened for Selkie* -- the identifier of the call the click creates, which
   no pre-state can name.  A created object's key is not a prediction the outcome layer should
