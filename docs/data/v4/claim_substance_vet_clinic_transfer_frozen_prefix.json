@@ -5,29 +5,38 @@
   "regime": "FROZEN_PREFIX",
   "split": 0.5,
   "cut": 448,
-  "operators": 28,
-  "held_out_actions": 13,
-  "rules_offered_per_action": 1.0,
-  "applicable_claims_per_action": 1.0,
+  "operators": 16,
+  "held_out_actions": 44,
+  "rules_offered_per_action": 2.2,
+  "applicable_claims_per_action": 3.77,
   "distinct_decided_claims": 2,
   "composition": {
-   "an object brought into being": {
-    "claims": 17,
-    "decided": 17,
+   "a named constant": {
+    "claims": 21,
+    "decided": 0,
     "supported": 0,
-    "refuted": 17,
-    "supported_share": 0.0,
+    "refuted": 0,
+    "supported_share": null,
+    "distinct_claims": 0,
+    "examples": []
+   },
+   "an object brought into being": {
+    "claims": 131,
+    "decided": 87,
+    "supported": 53,
+    "refuted": 34,
+    "supported_share": 0.609,
     "distinct_claims": 1,
     "examples": [
      "id = new"
     ]
    },
    "removal": {
-    "claims": 13,
-    "decided": 13,
-    "supported": 12,
-    "refuted": 1,
-    "supported_share": 0.923,
+    "claims": 166,
+    "decided": 154,
+    "supported": 48,
+    "refuted": 106,
+    "supported_share": 0.312,
     "distinct_claims": 1,
     "examples": [
      "id = gone"
@@ -35,8 +44,9 @@
    }
   },
   "per_action": {
-   "every applicable rule was right": 12,
-   "every applicable rule was contradicted": 1
+   "every applicable rule was contradicted": 20,
+   "applicable rules disagreed": 18,
+   "every applicable rule was right": 6
   },
   "removal_exposure": {
    "base_rate_gone": 0.697,
@@ -45,12 +55,12 @@
     "none went (<10%)": 49,
     "some went": 28
    },
-   "reading_supported_share": 0.923,
-   "removal_claims": 13,
-   "steps_spoken_at": 13,
-   "per_click_control": 0.158,
-   "objects_in_those_steps": 76,
-   "margin_over_per_click_control": 0.765
+   "reading_supported_share": 0.312,
+   "removal_claims": 154,
+   "steps_spoken_at": 44,
+   "per_click_control": 0.199,
+   "objects_in_those_steps": 256,
+   "margin_over_per_click_control": 0.113
   }
  }
 ]

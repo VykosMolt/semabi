@@ -581,6 +581,16 @@ class Inducer:
                             self._view_steps.add(s.step)
                 prev = st
 
+    def _is_certified_sensing_click(self, s: Step) -> bool:
+        """A click an executed probe certified as sensing: the evaluator's predicate, not the
+        heuristic one below (which also admits static-mention clicks that choose a context)."""
+        if s.action.kind != "click":
+            return False
+        if getattr(self.A, "probe_by_step", {}).get(s.step, {}).get("status") == "VIEW":
+            return True
+        name = (s.action.target_desc or {}).get("name") if s.action.target_desc else None
+        return name is not None and name in getattr(self.A, "verified_view_controls", set())
+
     def _is_view_control_click(self, s: Step) -> bool:
         cat = getattr(self.A, "cat", None)
         if cat is None or s.action.kind != "click" or not s.action.target_desc:
@@ -641,6 +651,13 @@ class Inducer:
         for j in range(min(lo, enabling_lo), hi + 1):
             s = steps[j]
             if s.action.kind in ("reload", "reset"):
+                continue
+            if self._is_certified_sensing_click(s):
+                # A click a probe has certified as sensing is not part of what a domain action
+                # is, even when it reveals the control: once its delta is cleared above it is a
+                # no-op step, and folding it in as an enabling action made the tab switch the
+                # operator's core, a two-click macro no held-out single click instantiates.
+                # The evaluator skips these clicks by the same predicate; the learner must too.
                 continue
             if j >= lo and s.action.kind == "type" and s.action.text in eff_texts:
                 extra.append(s.step)

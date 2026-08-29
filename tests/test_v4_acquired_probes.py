@@ -55,3 +55,45 @@ def test_without_the_acquired_file_nothing_changes(tmp_path):
     A = _fitted()
     A.fit_view_controls(EvidenceLog(tmp_path))
     assert A.verified_view_controls == set()
+
+
+# --- the retained-evidence path: custody and the byte-level adapter ---------------------
+
+def test_the_acquired_file_is_consumed_evidence(tmp_path):
+    from tests.test_v4_manifests import _consumable_run
+    from semabi.compiler.v4 import custody
+
+    base = _consumable_run(tmp_path / "base", "same")
+    acquired = _consumable_run(tmp_path / "acquired", "same")
+    (acquired / "probes.acquired.jsonl").write_text(
+        '{"key":["click","button","Vets"],"status":"VIEW","acquired":true}\n')
+    a, b = custody.snapshot_run(base, "SOURCE"), custody.snapshot_run(acquired, "SOURCE")
+    assert a["consumed_evidence_sha256"] != b["consumed_evidence_sha256"]
+
+
+def test_the_retained_adapter_reads_acquired_probes_like_the_live_path(tmp_path):
+    from pathlib import Path
+
+    from tests.test_v4_probe_adapter import _valid_run, build_hypotheses
+    from semabi.compiler.v4.abstractor import V4Abstractor
+    from semabi.compiler.v4.frozen_evidence import from_bytes
+
+    role = _valid_run(tmp_path / "live")
+    probes = '{"step":2,"key":["click","button","open"],"status":"DOMAIN"}\n'
+    acquired = '{"key":["click","button","Vets"],"status":"VIEW","acquired":true}\n'
+    (role / "probes.jsonl").write_text(probes)
+    (role / "probes.acquired.jsonl").write_text(acquired)
+    live = EvidenceLog(role)
+    retained = from_bytes((role / "observations.jsonl").read_bytes(),
+                          (role / "steps.jsonl").read_bytes(),
+                          probes=probes.encode(), acquired_probes=acquired.encode(),
+                          run_dir=Path("/error-sentinel"))
+    lh, lg = build_hypotheses(role, live)
+    rh, rg = build_hypotheses(Path("/error-sentinel"), retained)
+    v2, v4 = V2Abstractor(lg, lh), V4Abstractor(rg, rh)
+    v2.fit_view_controls(live)
+    v4.fit_view_controls(retained)
+    assert "Vets" in v2.verified_view_controls
+    assert v4.verified_view_controls == v2.verified_view_controls
+    assert v4.verified_domain_controls == v2.verified_domain_controls
+    assert all(r.get("acquired") for r in retained.probe_records if r["key"][2] == "Vets")

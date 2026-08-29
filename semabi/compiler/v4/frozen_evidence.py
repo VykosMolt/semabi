@@ -35,11 +35,13 @@ class RetainedEvidenceLog(EvidenceLog):
         steps: bytes,
         *,
         probes: bytes | None = None,
+        acquired_probes: bytes | None = None,
         run_dir: Path,
     ) -> "RetainedEvidenceLog":
         """Construct a read-only parser from one retained byte object."""
 
-        retained = from_bytes(observations, steps, probes=probes, run_dir=run_dir)
+        retained = from_bytes(observations, steps, probes=probes,
+                              acquired_probes=acquired_probes, run_dir=run_dir)
         if not isinstance(retained, cls):
             raise TypeError("retained evidence class mismatch")
         return retained
@@ -50,12 +52,16 @@ def from_bytes(
     steps: bytes,
     *,
     probes: bytes | None = None,
+    acquired_probes: bytes | None = None,
     run_dir: Path,
 ) -> RetainedEvidenceLog:
     """Parse exact retained JSONL bytes without opening ``run_dir``.
 
     Probe records are parsed into a new object graph for every call.  The V4 abstractor
-    consumes that graph directly; the retained run path is provenance only.
+    consumes that graph directly; the retained run path is provenance only.  Acquired probes
+    (``probes.acquired.jsonl``: executed after the trace on a fresh instance, for controls the
+    explorer never probed) are records of the same kind and are parsed into the same graph,
+    each marked ``acquired``.
     """
 
     if not isinstance(observations, bytes) or not isinstance(steps, bytes):
@@ -67,7 +73,8 @@ def from_bytes(
     log.observations = {}
     log.steps = []
     log.typed_tokens = []
-    log.probe_records = _parse_probe_records(probes)
+    log.probe_records = _parse_probe_records(probes) + [
+        {**record, "acquired": True} for record in _parse_probe_records(acquired_probes)]
 
     def lines(raw: bytes, label: str) -> list[str]:
         try:

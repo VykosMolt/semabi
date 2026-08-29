@@ -33,14 +33,18 @@ RECOGNIZED_INPUTS = frozenset(
         "observations.jsonl",
         "steps.jsonl",
         "probes.jsonl",
+        "probes.acquired.jsonl",
         "identity_refutations_v4.json",
     }
 )
 REQUIRED_INPUTS = frozenset({"observations.jsonl", "steps.jsonl"})
-# ``probes.jsonl`` is a compiler input when present.  The identity-refutation
-# sidecar is consumed by SOURCE generation, but it is not evidence used by replay
-# and therefore must not establish role independence.
-CONSUMED_INPUTS = REQUIRED_INPUTS | frozenset({"probes.jsonl"})
+# ``probes.jsonl`` is a compiler input when present, and so is ``probes.acquired.jsonl``:
+# persistence probes executed on a fresh instance after the trace for controls the explorer
+# never probed (`semabi.eval.v4_probe_navigation`).  A probe is a fact about a control, not
+# about any state of the history, and the compiler reads both files alike.  The
+# identity-refutation sidecar is consumed by SOURCE generation, but it is not evidence used
+# by replay and therefore must not establish role independence.
+CONSUMED_INPUTS = REQUIRED_INPUTS | frozenset({"probes.jsonl", "probes.acquired.jsonl"})
 
 
 class CustodyError(ValueError):
@@ -438,6 +442,7 @@ class ConsumedRun:
             self.files["observations.jsonl"],
             self.files["steps.jsonl"],
             probes=self.files.get("probes.jsonl"),
+            acquired_probes=self.files.get("probes.acquired.jsonl"),
             run_dir=self.path,
         )
 

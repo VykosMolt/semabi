@@ -1,16 +1,16 @@
 
-vet_clinic_transfer  'joint discrimination x3'  FROZEN_PREFIX  cut=448  22 operators
-  257 held-out actions, 2.51 rules offered and 2.46 claims applicable per action
+vet_clinic_transfer  'joint discrimination x3'  FROZEN_PREFIX  cut=448  16 operators
+  44 held-out actions, 2.2 rules offered and 3.77 claims applicable per action
   2 distinct claims across all its decided predictions
     a named constant          21 claims,     0 decided, supported    -   0 distinct
-    an object brought into being  1312 claims,    80 decided, supported  66%   1 distinct
+    an object brought into being   131 claims,    87 decided, supported  61%   1 distinct
                            ['id = new']
-    removal                 1331 claims,   625 decided, supported  82%   1 distinct
+    removal                  166 claims,   154 decided, supported  31%   1 distinct
                            ['id = gone']
-    removal exposure: this reading 0.822, unconditional base rate 0.697, per-click control 0.697 (margin +0.125)
+    removal exposure: this reading 0.312, unconditional base rate 0.697, per-click control 0.199 (margin +0.113)
                            steps by fraction gone {"all went (>90%)": 180, "none went (<10%)": 49, "some went": 28}
-      186 ( 72%)  every applicable rule was right
-       53 ( 21%)  every applicable rule was contradicted
-       18 (  7%)  applicable rules disagreed
+       20 ( 45%)  every applicable rule was contradicted
+       18 ( 41%)  applicable rules disagreed
+        6 ( 14%)  every applicable rule was right
 
 wrote docs/data/v4/claim_substance_vet_clinic_transfer_frozen_prefix.json

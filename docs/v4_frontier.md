@@ -61,8 +61,10 @@ All six tabs are `VIEW` (seed 4245).  The measurements were then rerun unchanged
 |---|---|---|---|---|---|
 | instrument reading, before | 257 | 186 | 53 | 18 | 0 |
 | `cell[_]=cell#0` (no form type), before | 167 | 89 | 1 | 0 | **70** |
-| instrument reading, after | **13** | 12 | 1 | 0 | 0 |
-| every reading with patients and vets, after | 13 | 12 | 1 | 0 | **0** |
+| instrument reading, after the probes | **13** | 12 | 1 | 0 | 0 |
+| every reading with patients and vets, after the probes | 13 | 12 | 1 | 0 | **0** |
+| instrument reading, after the probes and the macro repair (below) | 44 | 6 | **20** | 18 | 0 |
+| `source_choice`, after both | 26 | **18** | 1 | 0 | 0 (7 no rule) |
 
 **Cellar**: the held-out ledger was 4 right / 5 contradicted before and is empty after.  All
 nine were navigation.  Cellar's outcome table is unchanged (29 refused / 11 vacuous): the
@@ -70,35 +72,81 @@ outcome layer never read those clicks.
 
 **Vet's candidate readings, prefix objective and suffix ledger, after**:
 
-| reading | types | explained | errors | of which contradictions | suffix |
+| reading | types | explained | errors | of which contradictions | suffix (right / contradicted / disagreed / unbound) |
 |---|---|---|---|---|---|
-| instrument (`joint discrimination x3`) | 5 | 19 | **424** | **176** | 12 / 1 |
-| `cell[_]=cell#0` | 3 | 19 | 312 | 146 | 12 / 1 |
-| `source_choice` | 2 | 19 | 20 | 0 | 12 / 1 |
-| `row[_](cell[_])=None` | 1 | 22 | 3 | 0 | -- |
-| appointments keyed by status alone | 4 | 33 | 0 | 0 | 6 right / 7 unbound |
+| instrument (`joint discrimination x3`) | 5 | 19 | **424** | **176** | 6 / **20** / 18 / 0 |
+| `cell[_]=cell#0` | 3 | 19 | 312 | 146 | 18 / 8 / 0 / 0 |
+| `source_choice` | 2 | 19 | 20 | 0 | **18** / 1 / 0 / 0 |
+| `row[_](cell[_])=None` | 1 | 22 | 3 | 0 | 11 / 5 / 0 / 9 |
+| appointments keyed by status alone | 4 | 33 | 0 | 0 | 6 / 2 / 1 / 17 |
+
+(Suffix figures are after the macro repair below; the probes alone had left every reading
+with patients and vets at 12 / 1, because the actions that separate them were then
+unscored.)
 
 Before the probes the instrument reading had 248 errors and no contradictions; it now has
 176, because an object that a certified sensing click creates or destroys *is* a
 contradiction, and the form labels and cells are exactly such objects.  The objective's
 verdict against the junk type has moved from its soft term (visibility, a structural
-proxy that also charged legitimate rows) to its hard one, which must be zero.  On the
-ablation the same: every removal of a junk family is accepted, and the suffix is 12 / 1
-either way.  What has not changed is the objective's own winner: a reading that keys an
-appointment by its status word still explains the most with no error, and its suffix is
-the thinnest.  Soundness is now measured in the right place; sufficiency is still not.
+proxy that also charged legitimate rows) to its hard one, which must be zero -- and once
+the domain actions are scored (below) the suffix agrees again, twenty contradictions and
+eighteen disagreements against one.  On the ablation the same: every removal of a junk
+family is accepted.  What has not changed is the objective's own winner: a reading that
+keys an appointment by its status word still explains the most with no error, and its
+suffix is the thinnest (17 unbound).  Soundness is now measured in the right place;
+sufficiency is still not.
 
-What the thirteen are.  `Check in` (7) and `Start exam` (6), all removal claims, twelve
-right and one wrong (`Rocket`'s row was still rendered).  Seventeen creation claims on
-`Check in` and `Complete` are refuted seventeen times and do not appear in the per-action
-count, because a creation is not a state claim there.  `Schedule` (13 held-out clicks),
-`Assign vet` (7) and `Cancel` (6) have no rule at all.  Those absences are the residue,
-below.
+What the probes alone left.  Thirteen scored actions -- `Check in` (7) and `Start exam`
+(6), all removal claims, twelve right and one wrong (`Rocket`'s row was still rendered);
+seventeen creation claims on `Check in` and `Complete` refuted seventeen times; and
+`Schedule` (13 held-out clicks), `Assign vet` (7) and `Cancel` (6) with no rule at all.
+That last fact was not a residue of the application.  It was a second defect the
+certification had just created.
 
-One thing the probes did not change: operators are still induced for a certified view
-control (`Appointments` carries seventeen, support 1 to 7, all churn).  The scorer and the
-objective skip them; the learner does not consult `view_controls`.  It is harmless to the
-numbers and wrong in the ABI, and it is noted here rather than fixed.
+## The debt the certification created
+
+After the probes, seventeen operators still carried the control `button:Appointments`.
+They were not navigation rules.  Traced to their transitions they are `Assign vet`
+(steps 68, 129, ...), `Cancel` (37, 218), `Check in`, `Complete` and `Schedule` -- and
+their action list is `click(Appointments), click(Assign vet@T1[?o0])`.  Before
+certification a tab click was a domain transition of its own and the macro extension
+skipped it; certified, its delta is cleared, it becomes a no-op step, and `_extend_macro`
+folds it in as an *enabling* action because it reveals the control (the `Assign vet`
+button is absent on the Clients view and present after the tab).  Its kind is `click`, so
+it sits in `core()`, `control_of(core[0])` names the rule after the tab, and a two-click
+macro is never applied to a held-out single click (`consequence._by_control`,
+`outcome.py`).  So the learner and the evaluator disagreed about the semantic class of
+the same step -- the evaluator skipped it as sensing, the learner made it the action --
+and the thirteen-action ledger above was that disagreement: `Assign vet` (7), `Cancel`
+(6) and `Schedule` (13) had rules and were reported as having none.
+
+The decision taken: a click a probe has certified as sensing is not part of what a domain
+action is, even when it reveals the control.  `_extend_macro` now excludes such a step by
+the evaluator's own predicate -- a `VIEW` probe at the step, or a name in
+`verified_view_controls`; not the broader heuristic that also admits static-mention
+clicks choosing a context (`Inducer._is_certified_sensing_click`;
+`tests/test_v4_sensing_not_in_macro.py`).  Reachability through a view-only tab is a
+runtime fact the operator does not carry; the executor's `_bring_into_view` covers owned
+controls, and an unowned control on another view remains a gap noted, not closed.  The
+acquired probe file is also now a consumed custody input and reaches the retained-bytes
+adapter (`custody.CONSUMED_INPUTS`, `frozen_evidence.from_bytes(acquired_probes=...)`).
+
+With the tab clicks out of the macros the operators' cores are the domain controls
+(`Assign vet`, `Cancel`, `Check in`, `Complete`, `Start exam`, `Schedule`), vet's
+held-out ledger under `source_choice` decides 26 actions -- 18 right, 1 contradicted, 7
+with no applicable rule -- and the creation claims flip: `Check in` 7 / 7 supported (the
+operator now has support 7 and a fresh key, where before it had seven fragments of
+support 1 each carrying its own fitting instance), `Cancel` 6 / 6, `Complete` 10 / 10,
+`Schedule` 6 supported and 7 refuted.  `Schedule`'s rule is right in form -- `type(reason),
+click(Schedule)` creates an appointment whose reason is the typed string, unassigned,
+`scheduled` -- and is refuted where the new row does not render at once.  The seven
+without a rule are `Assign vet`: its rule writes the vet column, whose values render as
+`Dr. Grace Kim`, and the vocabulary reads `Dr` as a slot of its own, so the effect stated
+is `'Dr'` and the checker cannot apply it.  Blend's, harbour's and cellar's ledgers are
+byte-identical before and after the repair; the renaming and reversal invariants hold on
+every application as before (vet's ledger under *fresh* renaming still moves, at every
+decided step now, for the reason it did: the instrument reading's keys are the column
+headers `Owner`, `Reason`, `Species`).
 
 ## Bottle at nine
 
@@ -153,17 +201,24 @@ through every transition is `Reason`; Patient + Reason is not in the chain.
 When it is offered -- the same reading with that one family re-keyed
 (`--rekey`, below) -- the prefix objective prefers it outright, and the suffix agrees:
 
-| appointment key | explained | errors | churn | suffix | `Check in` |
+| appointment key | explained | errors | churn | suffix (right / contradicted / disagreed / unbound) | `Check in` |
 |---|---|---|---|---|---|
-| Patient + Status (the search's choice) | 19 | 20 | 17 | 12 / 1 | seven operators, support 1 each: delete and create |
-| **Patient + Reason** | **36** | **3** | **0** | 12 / 1 | one operator, support 7: `status := checked_in` |
-| Reason alone | 32 | 3 | 0 | 7 / 0 | |
-| Patient + Owner | 25 | 1 | 0 | 0 / 3, 2 disagreed | `Luna`'s two appointments collide; the reason is "written" |
+| Patient + Status (the search's choice) | 19 | 20 | 17 | 18 / 1 / 0 / 0 | delete `Luna|scheduled`, create `Luna|checked_in` |
+| **Patient + Reason** | **36** | **3** | **0** | 18 / 1 / 0 / 0 | one attribute rule: `status := checked_in` |
+| Reason alone | 32 | 3 | 0 | 16 / 5 / 2 / 9 | |
+| Patient + Owner | 25 | 1 | 0 | 6 / **14** / 4 / 0 | `Luna`'s two appointments collide; the reason is "written" |
+
+(`docs/data/v4/reading_keys_vet_clinic.json`, after the macro repair; seven `Assign vet`
+actions have no applicable rule under every key.)
 
 The objective prefers every one of the three over the search's choice, because each
 removes the churn; between them it does not choose -- Patient + Owner has fewer errors and
 explains less, and the objective never trades -- and the one a fewest-errors rule would
-take is the one the suffix refutes.  So on this decision the selector rejects the chosen
+take is the one the suffix refutes fourteen times.  Patient + Status and Patient + Reason
+make the same claims on the suffix; they differ in what the claims *are* -- a deletion and
+a creation of two objects, or a mutation of one -- which is the difference between an
+appointment that survives its own check-in and one that does not, and it is the prefix
+objective's churn term, not the ledger, that sees it.  So on this decision the selector rejects the chosen
 key correctly and does not by itself settle the replacement; the candidate that is right
 was never generated, and when it is, the objective's preference and the suffix's verdict
 coincide on it.
@@ -182,11 +237,9 @@ same reason and rightly; vet's are not, and the retained evidence already says s
 distinguishes them.  Under the fused type a tab switch reads as *delete the patients,
 create the appointments*, and a sensing click that changes the domain is a contradiction.
 
-**Two smaller residues.**  `Assign vet` writes the vet column, whose values render as
-`Dr. Grace Kim`; the vocabulary reads `Dr` as a value of its own slot, so the effect the
-learner states is `'Dr'` and the checker cannot apply it (five claims `NOT_APPLICABLE`).
-`Schedule` submits a form whose result appears in a table the chosen reading keys badly;
-it has no operator under any candidate.
+**Two smaller residues.**  `Assign vet`'s `Dr` slot, above -- a vocabulary fact about a
+column whose values carry a title, not an identity question.  And `Schedule`'s seven
+refutations, where the created row is not on the page the moment after the click.
 
 ## The next bottleneck
 
@@ -237,8 +290,11 @@ needs.
   type's claims about *navigation*; without the navigation defect the type makes no
   claims the clean readings do not.
 * Every vet and cellar ledger figure in the last three reports counted navigation actions
-  as domain actions.  Vet's real held-out ledger at split 0.5 has thirteen decided
-  actions, cellar's none.
+  as domain actions.  Vet's real held-out ledger at split 0.5 has 26 decided actions under
+  the clean reading, cellar's none.
+* This report's own first draft said operators were "still induced for a certified view
+  control" and left it as debt.  They were domain operators misnamed after the tab click
+  that reached them, and the ledger of thirteen was that misnaming.
 
 ## Running it
 
@@ -253,7 +309,8 @@ python -m semabi.eval.v4_reading_selection --run runs/v4/vet_clinic_transfer \
     --chain docs/data/v4/manifests/vet_clinic_chain.json --reading source_choice \
     --rekey "row[_](cell[_],cell[_](combobox[_],button[_],text[_]))" \
     --slots "cell#0|cell#0@4,cell#0|cell#0@3,cell#0@3,cell#0|cell#0@2" --out reading_keys_vet_clinic.json
-python -m pytest tests/test_v4_acquired_probes.py
+python -m pytest tests/test_v4_acquired_probes.py tests/test_v4_sensing_not_in_macro.py
+bash scripts/v4_open_world_batch.sh      # every ledger, renaming and reversal, regenerated
 ```
 
 The Bottle intervention is retained under `runs/v4/blend_bottle_intervention/` with its
