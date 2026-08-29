@@ -202,12 +202,16 @@ def test_harbour_learns_the_condition_for_close_and_not_for_reopen():
     changing = [op for op in close
                 if any(e.kind == "set" and e.new == "closed" for e in op.effs)]
     assert changing, "no Close rule asserts the state change"
-    assert all(any(l[0] == "ref_null" for l in op.pre) for op in changing)
+    # *no call holds it*: the berth's own reference is null, or nothing refers to the berth
+    # -- the same fact from the two sides of the relation, and which the learner names
+    # depends on which side the reading renders (`docs/v4_open_world.md`)
+    assert all(any(l[0] in ("ref_null", "empty") and l[1] == "?o0" for l in op.pre)
+               for op in changing)
     refusing = [op for op in close if any(l[0] == "ref_set" for l in op.pre)]
     assert refusing and not any(e.kind == "set" for op in refusing for e in op.effs)
     assert all("cannot be" in (e.slot or "") for op in refusing for e in op.effs
                if e.kind == "emit")
-    assert not any(l[0] == "ref_null" for op in reopen for l in op.pre)
+    assert not any(l[0] in ("ref_null", "empty") for op in reopen for l in op.pre)
     assert all(op.unexplained_negatives == 0 for op in close)
 
 
@@ -231,11 +235,12 @@ def test_the_condition_for_close_is_available_to_a_half_trace_prefix_model():
 
     model, close, reopen = _close_and_reopen(FROZEN_PREFIX)
     assert close and reopen
-    assert any(l[0] == "ref_null" for op in close for l in op.pre)
+    assert any(l[0] in ("ref_null", "empty") and l[1] == "?o0" for op in close for l in op.pre)
     assert all(op.unexplained_negatives == 0 for op in close)
 
     # The counterexamples now show what holds the berth: at least one of them binds a berth
-    # whose Call reference is set, which is what the literal separates them on.
+    # that a call refers to, or whose own Call reference is set -- whichever side of the
+    # relation the reading renders -- which is what the literal separates them on.
     A, I = model.abstractor, model.inducer
     held = 0
     for op in close:
@@ -244,8 +249,12 @@ def test_the_condition_for_close_is_available_to_a_half_trace_prefix_model():
             b = I._rebind_negative(op, tr)
             if b is None:
                 continue
-            o = tr.before.objs.get(b.get("?o0"))
-            if o is not None and any(v is not None for v in o.refs.values()):
+            berth = b.get("?o0")
+            o = tr.before.objs.get(berth)
+            if o is None:
+                continue
+            if any(v is not None for v in o.refs.values()) or any(
+                    v == berth for other in tr.before.objs.values() for v in other.refs.values()):
                 held += 1
     assert held > 0
 

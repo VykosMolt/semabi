@@ -1,5 +1,7 @@
 # What a control is, what "forced" quantifies over, and which layer a confident error blames
 
+> **Superseded in part by `docs/v4_open_world.md`.**  The mechanisms and negatives here stand; the held-out numbers were computed on readings in which every constant cell of a stable row was a label -- eleven harbour types, no pilot type -- and the twelve harbour argument errors attributed below to a created identifier were the vessel's flag standing in for its name.  `scripts/v4_identity_batch.sh` regenerates the tables.
+
 `docs/v4_sections.md` closed on a decomposition: of blend's 32 forced-and-wrong held-out
 outcomes, 29 were states the literal language could separate from every fitting witness --
 "the search did not find the rule" -- and 3 were indistinguishable from a witness, the language

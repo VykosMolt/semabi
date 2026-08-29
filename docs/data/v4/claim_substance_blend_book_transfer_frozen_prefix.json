@@ -5,31 +5,33 @@
   "regime": "FROZEN_PREFIX",
   "split": 0.5,
   "cut": 419,
-  "operators": 53,
-  "held_out_actions": 235,
-  "rules_offered_per_action": 6.91,
-  "applicable_claims_per_action": 1.84,
-  "distinct_decided_claims": 14,
+  "operators": 20,
+  "held_out_actions": 249,
+  "rules_offered_per_action": 2.83,
+  "applicable_claims_per_action": 1.59,
+  "distinct_decided_claims": 17,
   "composition": {
    "a named constant": {
-    "claims": 610,
-    "decided": 63,
-    "supported": 63,
-    "refuted": 0,
-    "supported_share": 1.0,
-    "distinct_claims": 2,
+    "claims": 85,
+    "decided": 85,
+    "supported": 74,
+    "refuted": 11,
+    "supported_share": 0.871,
+    "distinct_claims": 4,
     "examples": [
      "attr:cell#0@4 = Closed",
-     "attr:cell#0@4 = Open"
+     "attr:cell#0@4 = Open",
+     "attr:cell#0@5 = Bottled",
+     "attr:cell#0@5 = In cask"
     ]
    },
    "an interface response": {
-    "claims": 3647,
-    "decided": 620,
-    "supported": 237,
-    "refuted": 383,
-    "supported_share": 0.382,
-    "distinct_claims": 10,
+    "claims": 1478,
+    "decided": 512,
+    "supported": 251,
+    "refuted": 261,
+    "supported_share": 0.49,
+    "distinct_claims": 11,
     "examples": [
      "<> <> . = <> <> .",
      "<> has <> committed ; need at least <> to bottle . = <> has <> committed ; need at least <> to bottle .",
@@ -40,11 +42,11 @@
     ]
    },
    "changes, unspecified": {
-    "claims": 3037,
-    "decided": 355,
-    "supported": 233,
-    "refuted": 122,
-    "supported_share": 0.656,
+    "claims": 1240,
+    "decided": 312,
+    "supported": 222,
+    "refuted": 90,
+    "supported_share": 0.712,
     "distinct_claims": 2,
     "examples": [
      "attr:cell#0@3 = changes",
@@ -53,11 +55,11 @@
    }
   },
   "per_action": {
-   "every applicable rule was right": 130,
-   "the rules could not say which object they were about": 50,
-   "every applicable rule was contradicted": 48,
-   "applicable rules disagreed": 4,
-   "only undecidable claims survived": 3
+   "every applicable rule was right": 144,
+   "every applicable rule was contradicted": 53,
+   "no rule applied": 44,
+   "the rules could not say which object they were about": 4,
+   "applicable rules disagreed": 4
   }
  }
 ]

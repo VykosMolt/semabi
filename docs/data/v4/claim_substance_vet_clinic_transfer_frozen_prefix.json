@@ -5,29 +5,29 @@
   "regime": "FROZEN_PREFIX",
   "split": 0.5,
   "cut": 448,
-  "operators": 25,
+  "operators": 22,
   "held_out_actions": 257,
-  "rules_offered_per_action": 2.5,
-  "applicable_claims_per_action": 2.08,
+  "rules_offered_per_action": 2.47,
+  "applicable_claims_per_action": 2.19,
   "distinct_decided_claims": 2,
   "composition": {
    "an object brought into being": {
-    "claims": 1329,
-    "decided": 72,
-    "supported": 45,
+    "claims": 1312,
+    "decided": 80,
+    "supported": 53,
     "refuted": 27,
-    "supported_share": 0.625,
+    "supported_share": 0.662,
     "distinct_claims": 1,
     "examples": [
      "id = new"
     ]
    },
    "removal": {
-    "claims": 1349,
-    "decided": 528,
-    "supported": 460,
-    "refuted": 68,
-    "supported_share": 0.871,
+    "claims": 1337,
+    "decided": 557,
+    "supported": 479,
+    "refuted": 78,
+    "supported_share": 0.86,
     "distinct_claims": 1,
     "examples": [
      "id = gone"
@@ -36,24 +36,23 @@
   },
   "per_action": {
    "every applicable rule was right": 186,
-   "the rules could not say which object they were about": 36,
-   "every applicable rule was contradicted": 14,
-   "applicable rules disagreed": 12,
-   "no rule applied": 9
+   "the rules could not say which object they were about": 33,
+   "every applicable rule was contradicted": 20,
+   "applicable rules disagreed": 18
   },
   "removal_exposure": {
-   "base_rate_gone": 0.71,
+   "base_rate_gone": 0.697,
    "steps_by_fraction_gone": {
     "all went (>90%)": 180,
-    "none went (<10%)": 55,
-    "some went": 22
+    "none went (<10%)": 49,
+    "some went": 28
    },
-   "reading_supported_share": 0.871,
-   "removal_claims": 528,
-   "steps_spoken_at": 212,
-   "per_click_control": 0.864,
-   "objects_in_those_steps": 891,
-   "margin_over_per_click_control": 0.007
+   "reading_supported_share": 0.86,
+   "removal_claims": 557,
+   "steps_spoken_at": 224,
+   "per_click_control": 0.8,
+   "objects_in_those_steps": 1024,
+   "margin_over_per_click_control": 0.06
   }
  }
 ]

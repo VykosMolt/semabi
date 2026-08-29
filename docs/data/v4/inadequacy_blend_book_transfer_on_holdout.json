@@ -4,17 +4,22 @@
  "regime": "FROZEN_PREFIX",
  "hypothesis": "rule",
  "cut": 0,
- "forced_wrong": 13,
+ "forced_wrong": 22,
  "kinds": {
-  "inseparable: every shared conjunction reaches another event": 8,
-  "once: seen, but not enough to found a rule": 5
+  "once: seen, but not enough to found a rule": 11,
+  "inseparable: every shared conjunction reaches another event": 9,
+  "unseen: the control never returned this event while fitting": 2
  },
  "by_control": {
+  "button:Bottle _": {
+   "once: seen, but not enough to found a rule": 6,
+   "unseen: the control never returned this event while fitting": 2
+  },
   "button:Close _": {
    "once: seen, but not enough to found a rule": 5
   },
   "button:Record draw": {
-   "inseparable: every shared conjunction reaches another event": 8
+   "inseparable: every shared conjunction reaches another event": 9
   }
  },
  "cases": [
@@ -25,19 +30,19 @@
     "Drew <> from <> into <> ."
    ],
    "actual": "The book already holds 12 records ; return a draw first .",
-   "why": "Drew <> from <> into <> . <- attr:cell#0@3(selection['combobox#0']:1) == '1' & attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cell#0@5(selection['combobox#1']:3) == None  [68 occasions]",
+   "why": "Drew <> from <> into <> . <- attr:cell#0@3(selection['combobox#0']:1) == '1' & attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cell#0@5(selection['combobox#1']:3) == 'In cask'  [72 occasions]",
    "kind": "inseparable: every shared conjunction reaches another event",
    "seen": 2,
    "witnesses": [
     17,
     25
    ],
-   "blockers": 2,
+   "blockers": 7,
    "blocked_by": {
-    "<> holds <> ; cannot draw <> .": 2
+    "<> holds <> ; cannot draw <> .": 7
    },
    "raw_difference": [
-    "node 5 status: 'Drew 1 gal from North Wall into Fe'/'None'  vs  'Drew 1 gal from Orchard into Festi'/'None'",
+    "node 5 status: 'Closed Chapel Row.'/'None'  vs  'Drew 1 gal from Orchard into Festi'/'None'",
     "node 10 combobox: ''/'North Wall (Syrah, 0'  vs  ''/'Orchard (Grenache, 1'",
     "node 12 combobox: ''/'Festival White 2020 '  vs  ''/'Festival White 2020 '",
     "node 28 cell: 'North Wall'/'None'  vs  'Orchard'/'None'",
@@ -53,19 +58,17 @@
     "Drew <> from <> into <> ."
    ],
    "actual": "The book already holds 12 records ; return a draw first .",
-   "why": "Drew <> from <> into <> . <- rel:6(owner) != property['attr:blend#0', None]:3 & ('unnamed', \"property['attr:cell#0@3', '0']:1\")  [6 occasions]",
+   "why": "Drew <> from <> into <> . <- attr:cell#0@3(selection['combobox#0']:1) == '1' & attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cell#0@5(selection['combobox#1']:3) == 'In cask'  [72 occasions]",
    "kind": "inseparable: every shared conjunction reaches another event",
    "seen": 2,
    "witnesses": [
     17,
     25
    ],
-   "blockers": 207,
+   "blockers": 27,
    "blocked_by": {
-    "Drew <> from <> into <> .": 101,
-    "<> is <> .": 26,
-    "<> is already <> .": 58,
-    "<> holds <> ; cannot draw <> .": 19,
+    "Drew <> from <> into <> .": 17,
+    "<> holds <> ; cannot draw <> .": 7,
     "<> is single-varietal ( <> ) ; <> is <> .": 3
    },
    "raw_difference": [
@@ -77,14 +80,7 @@
     "node 10 text: 'Blend'/'None'  vs  ''/'Orchard (Grenache, 1'",
     "node count 102 vs 142"
    ],
-   "erased_by_the_state": [
-    "owner: node 136 cell 'Ticket 9' rendered in the object's own group, not in its state",
-    "owner: node 138 cell 'Orchard' rendered in the object's own group, not in its state",
-    "owner: node 139 cell 'Festival White' rendered in the object's own group, not in its state",
-    "owner: node 129 cell 'Ticket 8' rendered in the object's own group, not in its state",
-    "owner: node 131 cell 'Orchard' rendered in the object's own group, not in its state",
-    "owner: node 132 cell 'Festival White' rendered in the object's own group, not in its state"
-   ]
+   "erased_by_the_state": []
   },
   {
    "control": "button:Close _",
@@ -106,19 +102,17 @@
     "Drew <> from <> into <> ."
    ],
    "actual": "The book already holds 12 records ; return a draw first .",
-   "why": "Drew <> from <> into <> . <- rel:6(owner) != property['attr:blend#0', None]:3 & ('unnamed', \"property['attr:cell#0@3', '0']:1\")  [6 occasions]",
+   "why": "Drew <> from <> into <> . <- attr:cell#0@3(selection['combobox#0']:1) == '1' & attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cell#0@5(selection['combobox#1']:3) == 'In cask'  [72 occasions]",
    "kind": "inseparable: every shared conjunction reaches another event",
    "seen": 2,
    "witnesses": [
     17,
     25
    ],
-   "blockers": 207,
+   "blockers": 27,
    "blocked_by": {
-    "Drew <> from <> into <> .": 101,
-    "<> is <> .": 26,
-    "<> is already <> .": 58,
-    "<> holds <> ; cannot draw <> .": 19,
+    "Drew <> from <> into <> .": 17,
+    "<> holds <> ; cannot draw <> .": 7,
     "<> is single-varietal ( <> ) ; <> is <> .": 3
    },
    "raw_difference": [
@@ -130,14 +124,7 @@
     "node 10 text: 'Blend'/'None'  vs  ''/'Orchard (Grenache, 1'",
     "node count 102 vs 142"
    ],
-   "erased_by_the_state": [
-    "owner: node 136 cell 'Ticket 9' rendered in the object's own group, not in its state",
-    "owner: node 138 cell 'Orchard' rendered in the object's own group, not in its state",
-    "owner: node 139 cell 'Festival White' rendered in the object's own group, not in its state",
-    "owner: node 129 cell 'Ticket 8' rendered in the object's own group, not in its state",
-    "owner: node 131 cell 'Orchard' rendered in the object's own group, not in its state",
-    "owner: node 132 cell 'Festival White' rendered in the object's own group, not in its state"
-   ]
+   "erased_by_the_state": []
   },
   {
    "control": "button:Close _",
@@ -159,17 +146,17 @@
     "Drew <> from <> into <> ."
    ],
    "actual": "The book already holds 12 records ; return a draw first .",
-   "why": "Drew <> from <> into <> . <- attr:cell#0@3(selection['combobox#0']:1) == '1' & attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cell#0@5(selection['combobox#1']:3) == None  [68 occasions]",
+   "why": "Drew <> from <> into <> . <- attr:cell#0@3(selection['combobox#0']:1) == '1' & attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cell#0@5(selection['combobox#1']:3) == 'In cask'  [72 occasions]",
    "kind": "inseparable: every shared conjunction reaches another event",
    "seen": 2,
    "witnesses": [
     17,
     25
    ],
-   "blockers": 20,
+   "blockers": 27,
    "blocked_by": {
-    "Drew <> from <> into <> .": 15,
-    "<> holds <> ; cannot draw <> .": 2,
+    "Drew <> from <> into <> .": 17,
+    "<> holds <> ; cannot draw <> .": 7,
     "<> is single-varietal ( <> ) ; <> is <> .": 3
    },
    "raw_difference": [
@@ -203,17 +190,17 @@
     "Drew <> from <> into <> ."
    ],
    "actual": "The book already holds 12 records ; return a draw first .",
-   "why": "Drew <> from <> into <> . <- attr:cell#0@3(selection['combobox#0']:1) == '1' & attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cell#0@5(selection['combobox#1']:3) == None  [68 occasions]",
+   "why": "Drew <> from <> into <> . <- attr:cell#0@3(selection['combobox#0']:1) == '1' & attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cell#0@5(selection['combobox#1']:3) == 'In cask'  [72 occasions]",
    "kind": "inseparable: every shared conjunction reaches another event",
    "seen": 2,
    "witnesses": [
     17,
     25
    ],
-   "blockers": 20,
+   "blockers": 27,
    "blocked_by": {
-    "Drew <> from <> into <> .": 15,
-    "<> holds <> ; cannot draw <> .": 2,
+    "Drew <> from <> into <> .": 17,
+    "<> holds <> ; cannot draw <> .": 7,
     "<> is single-varietal ( <> ) ; <> is <> .": 3
    },
    "raw_difference": [
@@ -234,17 +221,17 @@
     "Drew <> from <> into <> ."
    ],
    "actual": "The book already holds 12 records ; return a draw first .",
-   "why": "Drew <> from <> into <> . <- attr:cell#0@3(selection['combobox#0']:1) == '1' & attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cell#0@5(selection['combobox#1']:3) == None  [68 occasions]",
+   "why": "Drew <> from <> into <> . <- attr:cell#0@3(selection['combobox#0']:1) == '1' & attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cell#0@5(selection['combobox#1']:3) == 'In cask'  [72 occasions]",
    "kind": "inseparable: every shared conjunction reaches another event",
    "seen": 2,
    "witnesses": [
     17,
     25
    ],
-   "blockers": 20,
+   "blockers": 27,
    "blocked_by": {
-    "Drew <> from <> into <> .": 15,
-    "<> holds <> ; cannot draw <> .": 2,
+    "Drew <> from <> into <> .": 17,
+    "<> holds <> ; cannot draw <> .": 7,
     "<> is single-varietal ( <> ) ; <> is <> .": 3
    },
    "raw_difference": [
@@ -265,17 +252,17 @@
     "Drew <> from <> into <> ."
    ],
    "actual": "The book already holds 12 records ; return a draw first .",
-   "why": "Drew <> from <> into <> . <- attr:cell#0@3(selection['combobox#0']:1) == '1' & attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cell#0@5(selection['combobox#1']:3) == None  [68 occasions]",
+   "why": "Drew <> from <> into <> . <- attr:cell#0@3(selection['combobox#0']:1) == '1' & attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cell#0@5(selection['combobox#1']:3) == 'In cask'  [72 occasions]",
    "kind": "inseparable: every shared conjunction reaches another event",
    "seen": 2,
    "witnesses": [
     17,
     25
    ],
-   "blockers": 20,
+   "blockers": 27,
    "blocked_by": {
-    "Drew <> from <> into <> .": 15,
-    "<> holds <> ; cannot draw <> .": 2,
+    "Drew <> from <> into <> .": 17,
+    "<> holds <> ; cannot draw <> .": 7,
     "<> is single-varietal ( <> ) ; <> is <> .": 3
    },
    "raw_difference": [
@@ -287,6 +274,19 @@
     "node 10 text: 'Blend'/'None'  vs  ''/'Orchard (Grenache, 1'",
     "node count 102 vs 142"
    ],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Bottle _",
+   "step": 183,
+   "forced": [
+    "<> <> ."
+   ],
+   "actual": "<> has <> committed ; need at least <> to bottle .",
+   "why": "<> <> . <- attr:cell#0@2(owner) == '2020'  [4 occasions]",
+   "kind": "once: seen, but not enough to found a rule",
+   "seen": 1,
+   "raw_difference": [],
    "erased_by_the_state": []
   },
   {
@@ -303,23 +303,93 @@
    "erased_by_the_state": []
   },
   {
+   "control": "button:Bottle _",
+   "step": 203,
+   "forced": [
+    "<> <> ."
+   ],
+   "actual": "<> has <> committed ; need at least <> to bottle .",
+   "why": "<> <> . <- attr:cell#0@2(owner) == '2020'  [4 occasions]",
+   "kind": "once: seen, but not enough to found a rule",
+   "seen": 1,
+   "raw_difference": [],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Record draw",
+   "step": 306,
+   "forced": [
+    "Drew <> from <> into <> ."
+   ],
+   "actual": "<> is single-varietal ( <> ) ; <> is <> .",
+   "why": "Drew <> from <> into <> . <- attr:cell#0@3(selection['combobox#0']:1) == '4' & attr:cell#0@4(selection['combobox#0']:1) == 'Open'  [8 occasions]",
+   "kind": "inseparable: every shared conjunction reaches another event",
+   "seen": 3,
+   "witnesses": [
+    138,
+    140
+   ],
+   "blockers": 112,
+   "blocked_by": {
+    "Drew <> from <> into <> .": 91,
+    "<> holds <> ; cannot draw <> .": 19,
+    "The book already holds 12 records ; return a draw first .": 2
+   },
+   "raw_difference": [
+    "node 5 group: ''/'None'  vs  'Drew 1 gal from North Wall into Pi'/'None'",
+    "node 6 heading: 'Draw ticket'/'None'  vs  ''/'None'",
+    "node 7 group: ''/'None'  vs  'Draw ticket'/'None'",
+    "node 8 text: 'Vat'/'None'  vs  ''/'None'",
+    "node 9 combobox: ''/'Chapel Row (Chenin, '  vs  'Vat'/'None'",
+    "node 10 text: 'Blend'/'None'  vs  ''/'West Ridge (Chenin, '",
+    "node count 102 vs 128"
+   ],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Bottle _",
+   "step": 539,
+   "forced": [
+    "<> <> ."
+   ],
+   "actual": "<> is already <> .",
+   "why": "<> <> . <- attr:cell#0@2(owner) == '2020'  [4 occasions]",
+   "kind": "unseen: the control never returned this event while fitting",
+   "seen": 0,
+   "raw_difference": [],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Bottle _",
+   "step": 547,
+   "forced": [
+    "<> <> ."
+   ],
+   "actual": "<> has <> committed ; need at least <> to bottle .",
+   "why": "<> <> . <- attr:cell#0@2(owner) == '2020'  [4 occasions]",
+   "kind": "once: seen, but not enough to found a rule",
+   "seen": 1,
+   "raw_difference": [],
+   "erased_by_the_state": []
+  },
+  {
    "control": "button:Record draw",
    "step": 578,
    "forced": [
     "Drew <> from <> into <> ."
    ],
    "actual": "The book already holds 12 records ; return a draw first .",
-   "why": "Drew <> from <> into <> . <- attr:cell#0@5(property['attr:blend#0', None]:3) == None & attr:cell#0@3(selection['combobox#0']:1) == '1' & attr:cell#0@4(selection['combobox#0']:1) == 'Open'  [60 occasions]",
+   "why": "Drew <> from <> into <> . <- attr:cell#0@3(selection['combobox#0']:1) == '1' & attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cell#0@5(selection['combobox#1']:3) == 'In cask'  [72 occasions]",
    "kind": "inseparable: every shared conjunction reaches another event",
    "seen": 2,
    "witnesses": [
     17,
     25
    ],
-   "blockers": 20,
+   "blockers": 27,
    "blocked_by": {
-    "Drew <> from <> into <> .": 15,
-    "<> holds <> ; cannot draw <> .": 2,
+    "Drew <> from <> into <> .": 17,
+    "<> holds <> ; cannot draw <> .": 7,
     "<> is single-varietal ( <> ) ; <> is <> .": 3
    },
    "raw_difference": [
@@ -334,6 +404,45 @@
    "erased_by_the_state": []
   },
   {
+   "control": "button:Bottle _",
+   "step": 621,
+   "forced": [
+    "<> <> ."
+   ],
+   "actual": "<> is already <> .",
+   "why": "<> <> . <- attr:cell#0@2(owner) == '2020'  [4 occasions]",
+   "kind": "unseen: the control never returned this event while fitting",
+   "seen": 0,
+   "raw_difference": [],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Bottle _",
+   "step": 699,
+   "forced": [
+    "<> <> ."
+   ],
+   "actual": "<> has <> committed ; need at least <> to bottle .",
+   "why": "<> <> . <- attr:cell#0@2(owner) == '2020'  [4 occasions]",
+   "kind": "once: seen, but not enough to found a rule",
+   "seen": 1,
+   "raw_difference": [],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Bottle _",
+   "step": 724,
+   "forced": [
+    "<> <> ."
+   ],
+   "actual": "<> has <> committed ; need at least <> to bottle .",
+   "why": "<> <> . <- attr:cell#0@2(owner) == '2020'  [4 occasions]",
+   "kind": "once: seen, but not enough to found a rule",
+   "seen": 1,
+   "raw_difference": [],
+   "erased_by_the_state": []
+  },
+  {
    "control": "button:Close _",
    "step": 754,
    "forced": [
@@ -341,6 +450,19 @@
    ],
    "actual": "<> is already <> .",
    "why": "<> <> . <- attr:cell#0@2(owner) == 'Syrah'  [9 occasions]",
+   "kind": "once: seen, but not enough to found a rule",
+   "seen": 1,
+   "raw_difference": [],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Bottle _",
+   "step": 759,
+   "forced": [
+    "<> <> ."
+   ],
+   "actual": "<> has <> committed ; need at least <> to bottle .",
+   "why": "<> <> . <- attr:cell#0@2(owner) == '2020'  [4 occasions]",
    "kind": "once: seen, but not enough to found a rule",
    "seen": 1,
    "raw_difference": [],

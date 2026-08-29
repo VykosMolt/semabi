@@ -5,90 +5,79 @@
  "split": 0.5,
  "cut": 229,
  "control": null,
+ "scored_on": "harbour_transfer",
  "corroborated": true,
  "hypothesis": "list",
  "against_the_other_class": {
-  "list: no outcome is established | rule: no outcome is established": 38,
-  "list: one outcome, because the control has never done anything else | rule: one outcome, because the control has never done anything else": 35,
-  "list: the evidence forces one outcome | rule: the evidence forces one outcome": 29,
-  "list: the evidence forces one outcome | rule: no outcome is established": 9,
-  "list: the evidence forces one outcome (wrong) | rule: no outcome is established": 4,
-  "list: several outcomes remain admissible | rule: the evidence forces one outcome": 2,
-  "list: several outcomes remain admissible | rule: no outcome is established": 2
+  "list: the evidence forces one outcome | rule: the evidence forces one outcome": 82,
+  "list: one outcome, because the control has never done anything else | rule: one outcome, because the control has never done anything else": 42,
+  "list: several outcomes remain admissible | rule: several outcomes remain admissible": 1,
+  "list: the evidence forces one outcome (wrong) | rule: the evidence forces one outcome (wrong)": 1
  },
- "actions": 119,
+ "actions": 126,
  "what_the_evidence_establishes": {
-  "the evidence forces one outcome": 42,
-  "no outcome is established": 38,
-  "one outcome, because the control has never done anything else": 35,
-  "several outcomes remain admissible": 4
+  "the evidence forces one outcome": 83,
+  "one outcome, because the control has never done anything else": 42,
+  "several outcomes remain admissible": 1
  },
  "admissible_set_size": {
-  "0": 38,
-  "1": 77,
-  "2": 4
+  "1": 125,
+  "2": 1
  },
  "what_happened_was": {
-  "inside the admissible set": 53,
-  "outside it": 28,
-  "nothing was admissible": 38
+  "inside the admissible set": 94,
+  "outside it": 32
  },
  "the_list_where_the_evidence": {
-  "no outcome is established": {
-   "no determinate answer": 34,
-   "a different event": 4
-  },
   "one outcome, because the control has never done anything else": {
-   "the event the interface returned": 34,
+   "the event the interface returned": 41,
    "a different event": 1
   },
   "several outcomes remain admissible": {
-   "the event the interface returned": 4
+   "the event the interface returned": 1
   },
   "the evidence forces one outcome": {
-   "the event the interface returned": 34,
-   "a different event": 8
+   "the event the interface returned": 82,
+   "a different event": 1
   }
  },
  "policy_forced_then_list": {
-  "one outcome was admissible and it happened": 38,
-  "refused: nothing established": 38,
-  "the only outcome ever seen on this control, and it happened": 34,
-  "deferred to the list: the event the interface returned": 4,
-  "one outcome was admissible and a different one happened": 4,
-  "the only outcome ever seen on this control, and something else happened": 1
+  "one outcome was admissible and it happened": 82,
+  "the only outcome ever seen on this control, and it happened": 41,
+  "the only outcome ever seen on this control, and something else happened": 1,
+  "deferred to the list: the event the interface returned": 1,
+  "one outcome was admissible and a different one happened": 1
  },
- "distinct_events_forced": 10,
+ "distinct_events_forced": 13,
  "events_forced": {
-  "\u0000SILENT": 23,
+  "\u0000SILENT": 30,
   "<> <> is now <> .": 17,
+  "<> <> is already <> .": 15,
   "<> already has call <> on the board .": 12,
-  "<> <> is already <> .": 11,
-  "Call <> is not <> , so nothing has sailed .": 4,
-  "Call <> has <> berth allocated .": 4,
-  "Nothing chosen in the pilot list .": 2,
-  "Nothing chosen in the berth list .": 2
+  "<> is signed off .": 11,
+  "<> is already signed on .": 9,
+  "<> is signed on .": 8,
+  "<> is already signed off .": 6
  },
  "per_control": {
-  "button#cell/button@6bf899": {
-   "one outcome, because the control has never done anything else": 23
+  "button#cell/button": {
+   "one outcome, because the control has never done anything else": 30
   },
   "button:Reopen": {
-   "the evidence forces one outcome": 16,
-   "no outcome is established": 4
+   "the evidence forces one outcome": 20
   },
   "button:Schedule call": {
-   "the evidence forces one outcome": 13,
-   "several outcomes remain admissible": 4
+   "the evidence forces one outcome": 17
   },
   "button:Sign off": {
-   "no outcome is established": 17
+   "the evidence forces one outcome": 17
   },
   "button:Sign on": {
-   "no outcome is established": 17
+   "the evidence forces one outcome": 17
   },
   "button:Close": {
-   "the evidence forces one outcome": 13
+   "the evidence forces one outcome": 12,
+   "several outcomes remain admissible": 1
   },
   "button:Record departure": {
    "one outcome, because the control has never done anything else": 4
@@ -104,8 +93,8 @@
   }
  },
  "per_control_verdicts": {
-  "button#cell/button@6bf899": {
-   "the only outcome ever seen on this control, and it happened": 23
+  "button#cell/button": {
+   "the only outcome ever seen on this control, and it happened": 30
   },
   "button:Allocate berth": {
    "the only outcome ever seen on this control, and it happened": 2
@@ -118,36 +107,29 @@
    "the only outcome ever seen on this control, and it happened": 4
   },
   "button:Close": {
-   "one outcome was admissible and it happened": 13
+   "one outcome was admissible and it happened": 12,
+   "several outcomes remained admissible; the one that happened was among them": 1
   },
   "button:Record departure": {
    "the only outcome ever seen on this control, and it happened": 4
   },
   "button:Reopen": {
-   "one outcome was admissible and it happened": 16,
-   "no outcome is established for this state": 4
+   "one outcome was admissible and it happened": 20
   },
   "button:Schedule call": {
-   "one outcome was admissible and it happened": 9,
-   "several outcomes remained admissible; the one that happened was among them": 4,
-   "one outcome was admissible and a different one happened": 4
+   "one outcome was admissible and it happened": 17
   },
   "button:Sign off": {
-   "no outcome is established for this state": 17
+   "one outcome was admissible and it happened": 16,
+   "one outcome was admissible and a different one happened": 1
   },
   "button:Sign on": {
-   "no outcome is established for this state": 17
+   "one outcome was admissible and it happened": 17
   }
  },
  "controls": {
-  "button#cell/button@6bf899": {
-   "fitted": 34,
-   "events": 1,
-   "rules": 0,
-   "default": "returns nothing"
-  },
-  "button#cell/button@75b51d": {
-   "fitted": 9,
+  "button#cell/button": {
+   "fitted": 43,
    "events": 1,
    "rules": 0,
    "default": "returns nothing"
@@ -191,78 +173,38 @@
   "button:Schedule call": {
    "fitted": 19,
    "events": 2,
-   "rules": 4,
-   "default": "<> already has call <> on the board ."
+   "rules": 2,
+   "default": "Call <> opened for <> ."
   },
   "button:Sign off": {
    "fitted": 14,
    "events": 2,
-   "rules": 0,
-   "default": "undetermined"
+   "rules": 2,
+   "default": "<> is already signed off ."
   },
   "button:Sign on": {
    "fitted": 17,
    "events": 2,
-   "rules": 0,
-   "default": "undetermined"
+   "rules": 2,
+   "default": "<> is signed on ."
   }
  },
  "forced_but_wrong": [
   {
-   "step": 261,
-   "control": "button:Schedule call",
+   "step": 404,
+   "control": "button:Sign off",
    "admissible": [
-    "<> already has call <> on the board ."
+    "<> is signed off ."
    ],
    "hypothesis": "list",
-   "unordered": [],
-   "observed": "Call <> opened for <> .",
-   "returned": "Call C-102 opened for Bregagh.",
-   "verdict": "one outcome was admissible and a different one happened",
-   "level": "the event alone",
-   "why": "<> already has call <> on the board . <- ('unnamed', 'singleton[]:9')  [5 occasions]  after Call <> opened for <> ."
-  },
-  {
-   "step": 316,
-   "control": "button:Schedule call",
-   "admissible": [
-    "<> already has call <> on the board ."
+   "unordered": [
+    "<> is signed off ."
    ],
-   "hypothesis": "list",
-   "unordered": [],
-   "observed": "Call <> opened for <> .",
-   "returned": "Call C-103 opened for Bregagh.",
+   "observed": "<> cannot sign off while booked for call <> .",
+   "returned": "Tom Dorley cannot sign off while booked for call C-102.",
    "verdict": "one outcome was admissible and a different one happened",
    "level": "the event alone",
-   "why": "<> already has call <> on the board . <- ('unnamed', 'singleton[]:9')  [5 occasions]  after Call <> opened for <> ."
-  },
-  {
-   "step": 406,
-   "control": "button:Schedule call",
-   "admissible": [
-    "<> already has call <> on the board ."
-   ],
-   "hypothesis": "list",
-   "unordered": [],
-   "observed": "Call <> opened for <> .",
-   "returned": "Call C-103 opened for Corrina B.",
-   "verdict": "one outcome was admissible and a different one happened",
-   "level": "the event alone",
-   "why": "<> already has call <> on the board . <- ('unnamed', 'singleton[]:9')  [5 occasions]  after Call <> opened for <> ."
-  },
-  {
-   "step": 408,
-   "control": "button:Schedule call",
-   "admissible": [
-    "<> already has call <> on the board ."
-   ],
-   "hypothesis": "list",
-   "unordered": [],
-   "observed": "Call <> opened for <> .",
-   "returned": "Call C-104 opened for Kittiwake.",
-   "verdict": "one outcome was admissible and a different one happened",
-   "level": "the event alone",
-   "why": "<> already has call <> on the board . <- ('unnamed', 'singleton[]:9')  [5 occasions]  after Call <> opened for <> ."
+   "why": "<> is signed off . <- attr:cell#0@3(owner) == 'on duty'  [8 occasions]"
   }
  ]
 }

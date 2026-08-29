@@ -17,14 +17,14 @@ opus_02_cellar_dev  'joint discrimination x3'  FROZEN_PREFIX  cut=195  control=N
   forced where forced, list elsewhere:
        29  refused: nothing established
        11  the only outcome ever seen on this control, and it happened
-    button#button              fitted=  16 events= 1 rules= 0 forced-wrong=  0  {'one outcome, because the control has never done anything else': 9}
+    button:Lots                fitted=   9 events= 1 rules= 0 forced-wrong=  0  {'one outcome, because the control has never done anything else': 5}
     button:Bottle              fitted=   1 events= 1 rules= 0 forced-wrong=  0  {'no outcome is established': 5}
     button:Finish fermentation fitted=   1 events= 1 rules= 0 forced-wrong=  0  {'no outcome is established': 5}
     button:Rack                fitted=   1 events= 1 rules= 0 forced-wrong=  0  {'no outcome is established': 5}
+    button:Cellar              fitted=   7 events= 1 rules= 0 forced-wrong=  0  {'one outcome, because the control has never done anything else': 4}
     button:Move vessel         fitted=   5 events= 5 rules= 0 forced-wrong=  0  {'no outcome is established': 4}
     button:Wash out            fitted=   8 events= 3 rules= 2 forced-wrong=  0  {'no outcome is established': 3}
     button:Split               fitted=   1 events= 1 rules= 0 forced-wrong=  0  {'no outcome is established': 3}
-    button:Blend               fitted=   1 events= 1 rules= 0 forced-wrong=  0  {'no outcome is established': 3}
 
 wrote docs/data/v4/admissible_opus_02_cellar_dev_frozen_prefix.json
 
@@ -46,14 +46,14 @@ opus_02_cellar_dev  'joint discrimination x3'  FROZEN_PREFIX  cut=195  control=N
   forced where forced, list elsewhere:
        29  refused: nothing established
        11  the only outcome ever seen on this control, and it happened
-    button#button              fitted=  16 events= 1 rules= 0 forced-wrong=  0  {'one outcome, because the control has never done anything else': 9}
+    button:Lots                fitted=   9 events= 1 rules= 0 forced-wrong=  0  {'one outcome, because the control has never done anything else': 5}
     button:Bottle              fitted=   1 events= 1 rules= 0 forced-wrong=  0  {'no outcome is established': 5}
     button:Finish fermentation fitted=   1 events= 1 rules= 0 forced-wrong=  0  {'no outcome is established': 5}
     button:Rack                fitted=   1 events= 1 rules= 0 forced-wrong=  0  {'no outcome is established': 5}
+    button:Cellar              fitted=   7 events= 1 rules= 0 forced-wrong=  0  {'one outcome, because the control has never done anything else': 4}
     button:Move vessel         fitted=   5 events= 5 rules= 0 forced-wrong=  0  {'no outcome is established': 4}
     button:Wash out            fitted=   8 events= 3 rules= 2 forced-wrong=  0  {'no outcome is established': 3}
     button:Split               fitted=   1 events= 1 rules= 0 forced-wrong=  0  {'no outcome is established': 3}
-    button:Blend               fitted=   1 events= 1 rules= 0 forced-wrong=  0  {'no outcome is established': 3}
 
 wrote docs/data/v4/admissible_opus_02_cellar_dev_frozen_prefix_list.json
 
@@ -62,20 +62,18 @@ opus_02_cellar_dev  'joint discrimination x3'  cut=195  forced under the rule cl
 
 wrote docs/data/v4/inadequacy_opus_02_cellar_dev.json
 
-opus_02_cellar_dev  'joint discrimination x3'  FROZEN_PREFIX  cut=195  16 operators
-  9 held-out actions, 4.0 rules offered and 6.22 claims applicable per action
-  7 distinct claims across all its decided predictions
-    an interface response     35 claims,    19 decided, supported  53%   5 distinct
-                           ['<> already stands in <> . = <> already stands in <> .', '<> moved from <> to <> . = <> moved from <> to <> .', 'Nothing chosen in the hall list . = Nothing chosen in the hall list .', 'Nothing chosen in the lot list . = Nothing chosen in the lot list .', 'Nothing chosen in the vessel list . = Nothing chosen in the vessel list .']
-    an object brought into being    54 claims,    10 decided, supported   0%   1 distinct
+opus_02_cellar_dev  'joint discrimination x3'  FROZEN_PREFIX  cut=195  23 operators
+  12 held-out actions, 3.33 rules offered and 6.0 claims applicable per action
+  8 distinct claims across all its decided predictions
+    an interface response     38 claims,    22 decided, supported  55%   6 distinct
+                           ['<> already stands in <> . = <> already stands in <> .', '<> moved from <> to <> . = <> moved from <> to <> .', 'Nothing chosen in the block list . = Nothing chosen in the block list .', 'Nothing chosen in the hall list . = Nothing chosen in the hall list .', 'Nothing chosen in the lot list . = Nothing chosen in the lot list .', 'Nothing chosen in the vessel list . = Nothing chosen in the vessel list .']
+    an object brought into being   101 claims,    61 decided, supported   0%   1 distinct
                            ['id = new']
-    removal                  117 claims,    44 decided, supported  91%   1 distinct
+    removal                  105 claims,    72 decided, supported  81%   1 distinct
                            ['id = gone']
-    removal exposure: this reading 0.909, unconditional base rate 0.705, per-click control 0.579 (margin +0.33)
-                           steps by fraction gone {"all went (>90%)": 24, "none went (<10%)": 10, "some went": 6}
-        4 ( 44%)  every applicable rule was right
-        3 ( 33%)  the rules could not say which object they were about
-        1 ( 11%)  only undecidable claims survived
-        1 ( 11%)  every applicable rule was contradicted
+    removal exposure: this reading 0.806, unconditional base rate 0.786, per-click control 0.623 (margin +0.183)
+                           steps by fraction gone {"all went (>90%)": 30, "none went (<10%)": 10}
+        7 ( 58%)  every applicable rule was right
+        5 ( 42%)  every applicable rule was contradicted
 
 wrote docs/data/v4/claim_substance_opus_02_cellar_dev_frozen_prefix.json

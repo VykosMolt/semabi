@@ -5,6 +5,7 @@
  "split": 0.5,
  "cut": 195,
  "control": null,
+ "scored_on": "opus_02_cellar_dev",
  "corroborated": true,
  "hypothesis": "rule",
  "against_the_other_class": {
@@ -43,8 +44,8 @@
   "\u0000SILENT": 11
  },
  "per_control": {
-  "button#button": {
-   "one outcome, because the control has never done anything else": 9
+  "button:Lots": {
+   "one outcome, because the control has never done anything else": 5
   },
   "button:Bottle": {
    "no outcome is established": 5
@@ -54,6 +55,9 @@
   },
   "button:Rack": {
    "no outcome is established": 5
+  },
+  "button:Cellar": {
+   "one outcome, because the control has never done anything else": 4
   },
   "button:Move vessel": {
    "no outcome is established": 4
@@ -75,20 +79,23 @@
   }
  },
  "per_control_verdicts": {
-  "button#button": {
-   "the only outcome ever seen on this control, and it happened": 9
-  },
   "button:Blend": {
    "no outcome is established for this state": 3
   },
   "button:Bottle": {
    "no outcome is established for this state": 5
   },
+  "button:Cellar": {
+   "the only outcome ever seen on this control, and it happened": 4
+  },
   "button:Finish fermentation": {
    "no outcome is established for this state": 5
   },
   "button:Intake": {
    "the only outcome ever seen on this control, and it happened": 2
+  },
+  "button:Lots": {
+   "the only outcome ever seen on this control, and it happened": 5
   },
   "button:Move vessel": {
    "no outcome is established for this state": 4
@@ -107,12 +114,6 @@
   }
  },
  "controls": {
-  "button#button": {
-   "fitted": 16,
-   "events": 1,
-   "rules": 0,
-   "default": "returns nothing"
-  },
   "button:Blend": {
    "fitted": 1,
    "events": 1,
@@ -125,6 +126,12 @@
    "rules": 0,
    "default": "undetermined"
   },
+  "button:Cellar": {
+   "fitted": 7,
+   "events": 1,
+   "rules": 0,
+   "default": "returns nothing"
+  },
   "button:Finish fermentation": {
    "fitted": 1,
    "events": 1,
@@ -132,6 +139,12 @@
    "default": "undetermined"
   },
   "button:Intake": {
+   "fitted": 9,
+   "events": 1,
+   "rules": 0,
+   "default": "returns nothing"
+  },
+  "button:Lots": {
    "fitted": 9,
    "events": 1,
    "rules": 0,

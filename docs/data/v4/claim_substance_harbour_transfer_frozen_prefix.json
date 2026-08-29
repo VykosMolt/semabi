@@ -5,46 +5,48 @@
   "regime": "FROZEN_PREFIX",
   "split": 0.5,
   "cut": 229,
-  "operators": 35,
-  "held_out_actions": 33,
-  "rules_offered_per_action": 2.0,
-  "applicable_claims_per_action": 1.03,
-  "distinct_decided_claims": 12,
+  "operators": 15,
+  "held_out_actions": 67,
+  "rules_offered_per_action": 1.0,
+  "applicable_claims_per_action": 0.54,
+  "distinct_decided_claims": 13,
   "composition": {
    "a named constant": {
-    "claims": 66,
-    "decided": 34,
-    "supported": 34,
-    "refuted": 0,
-    "supported_share": 1.0,
-    "distinct_claims": 2,
+    "claims": 67,
+    "decided": 36,
+    "supported": 35,
+    "refuted": 1,
+    "supported_share": 0.972,
+    "distinct_claims": 4,
     "examples": [
+     "attr:cell#0@3 = off duty",
+     "attr:cell#0@3 = on duty",
      "attr:cell#0@5 = closed",
      "attr:cell#0@5 = open"
     ]
    },
    "an interface response": {
-    "claims": 418,
-    "decided": 136,
-    "supported": 93,
-    "refuted": 43,
-    "supported_share": 0.684,
-    "distinct_claims": 9,
+    "claims": 185,
+    "decided": 73,
+    "supported": 72,
+    "refuted": 1,
+    "supported_share": 0.986,
+    "distinct_claims": 8,
     "examples": [
-     "<> <> cannot be <> while call <> holds it . = <> <> cannot be <> while call <> holds it .",
      "<> <> is already <> . = <> <> is already <> .",
      "<> <> is now <> . = <> <> is now <> .",
-     "<> already has call <> on the board . = <> already has call <> on the board .",
      "<> is already signed off . = <> is already signed off .",
-     "<> is already signed on . = <> is already signed on ."
+     "<> is already signed on . = <> is already signed on .",
+     "<> is signed off . = <> is signed off .",
+     "<> is signed on . = <> is signed on ."
     ]
    },
    "an object brought into being": {
-    "claims": 136,
-    "decided": 28,
-    "supported": 7,
-    "refuted": 21,
-    "supported_share": 0.25,
+    "claims": 17,
+    "decided": 5,
+    "supported": 5,
+    "refuted": 0,
+    "supported_share": 1.0,
     "distinct_claims": 1,
     "examples": [
      "id = new"
@@ -52,8 +54,9 @@
    }
   },
   "per_action": {
-   "every applicable rule was right": 17,
-   "no rule applied": 16
+   "every applicable rule was right": 35,
+   "no rule applied": 31,
+   "every applicable rule was contradicted": 1
   }
  }
 ]

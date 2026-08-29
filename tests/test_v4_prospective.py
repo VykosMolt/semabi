@@ -223,7 +223,9 @@ def test_scoping_the_precondition_removes_predictions_the_rule_never_made(harbou
     result = _run(harbour["joint discrimination x2"])
     assert result.counts(CONTENT)[NOT_APPLICABLE] > 0
     scoped = prospective.local_separability(result, HARBOUR_RUN)[CONTENT]
-    assert scoped["refuted_contexts"] == 1, scoped
+    # one refuted context under the reading every vessel was a type of its own; two under
+    # the reading of `docs/v4_open_world.md`.  What the test is about is the comparison.
+    assert 1 <= scoped["refuted_contexts"] <= 2, scoped
     assert scoped["contexts_on_both_sides"] == 0, scoped
     assert scoped["diagnosis"].startswith("RULE_GAP"), scoped
 
@@ -361,5 +363,8 @@ def test_determinacy_never_compares_one_readings_literals_with_anothers(determin
              for name, result in determinacy.items()}
     assert slots["joint discrimination x2"] != slots["promote cell[_]=cell#0"]
     for result in determinacy.values():
+        # the controls whose clicks land in an object under either reading; the pilot
+        # buttons joined them when the pilots became a type (`docs/v4_open_world.md`)
         assert {g["control"] for g in result["groups"]} <= {
-            "button:Close", "button:Reopen", "button:Schedule call"}
+            "button:Close", "button:Reopen", "button:Schedule call",
+            "button:Sign on", "button:Sign off"}

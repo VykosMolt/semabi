@@ -285,9 +285,13 @@ def test_on_the_real_trace_one_reading_determines_its_object_and_the_other_does_
         # transition from where the click landed; if they disagreed, the ABI would be
         # describing a different operator from the one being measured.
         for op in fitted.operators:
-            core = op.core()[0]
-            at_runtime = ({core.owner} if core.owner and core.loc is not None
-                          and core.loc.owner_tid is not None else set())
+            # Every click supplies the object it lands in.  An operator of two clicks -- a
+            # call's reference button, then `Allocate berth` on the sheet it opens -- supplies
+            # two, and reaches support 2 on harbour once the reference buttons are one family
+            # (`docs/v4_open_world.md`).
+            at_runtime = {a.owner for a in op.acts
+                          if a.kind == "click" and a.owner and a.loc is not None
+                          and a.loc.owner_tid is not None}
             strings = {p for p, t in op.params.items() if t == "str"}
             assert set(exported.operators[op.name].supplied) - strings == at_runtime, op.name
 

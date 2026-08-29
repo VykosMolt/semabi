@@ -52,6 +52,11 @@ UNDETERMINED = "\x00UNDETERMINED"    # the evidence did not separate the remaini
 UNNAMED = "\x00UNNAMED"              # a role the list depends on names nothing here
 
 OWNER = "owner"                      # the object the clicked control sits in
+# An argument position filled by the key of an object the interaction *creates*.  No
+# pre-state role can name it: the value is fresh, and what the model claims is that it is --
+# that the message names the new object, and names it by a key nothing on the board had.
+CREATED = "created"
+FRESH = "*"                          # the prediction for such a position: a new name
 
 # The two hypothesis classes a version space can be asked about.  See `Evidence.admissible`.
 RULE = "rule"      # one conjunction, pure over every fitting occasion: a list's head
@@ -141,6 +146,29 @@ class Role:
                 return [o for o in here if o.refs.get(slot) == anchor.id]
             return [o for o in here if o.parent == anchor.id]
         return []
+
+
+def _components(key) -> set[str]:
+    """The values a key is made of: itself, and for a link type's composite key -- harbour's
+    call button, keyed `T0:Selkie|T3:C-107` -- each part with its type prefix removed."""
+    key = str(key)
+    parts = {key}
+    for part in key.split("|"):
+        parts.add(part.split(":", 1)[1] if part[:1] == "T" and ":" in part
+                  and part[1:part.index(":")].isdigit() else part)
+    return parts
+
+
+def _names_of(obj) -> set[str]:
+    """The values by which an object can be named: its key's components, and the keys of
+    the objects it refers to.  Harbour's call button is a link object keyed by its row and
+    column (`T0:Nordkapp|col:Call`) whose content, `C-102`, is a reference to the call, and
+    the message that opens the call names it by that."""
+    out = _components(obj.key)
+    for target in obj.refs.values():
+        if target is not None:
+            out |= _components(target[1])
+    return out
 
 
 def _bits(mask: int) -> int:
@@ -661,10 +689,20 @@ class ControlOutcome:
         """The values the predicted event's argument positions take in this state."""
         out: dict[int, str] = {}
         for position, role in (self.arg_roles.get(event) or {}).items():
+            if role.startswith(CREATED + ":"):
+                out[position] = FRESH
+                continue
             obj = bound.get(role)
             if obj is not None:
                 out[position] = str(obj.key)
         return out
+
+    def created_type(self, event: str, position: int):
+        """The type of the object whose key fills this position, where it is created."""
+        role = (self.arg_roles.get(event) or {}).get(position, "")
+        if role.startswith(CREATED + ":T"):
+            return int(role.split(":T", 1)[1])
+        return None
 
     def __str__(self) -> str:
         head = (f"{self.control}: {self.fitted} fitted occasions, "
@@ -905,7 +943,8 @@ def align(roles: dict[str, Role], occasions, bindings) -> dict[str, Role]:
 
     slots: dict[tuple, set] = {}
     disagree: set[tuple] = set()
-    for (_, _, frame, args), bound in zip(occasions, bindings):
+    for occasion, bound in zip(occasions, bindings):
+        _, _, frame, args = occasion[:4]
         for k, arg in enumerate(args):
             # The owner is bound whenever the click sits in an object, whether or not it is
             # one of this control's roles; the alignment is over roles.
@@ -934,7 +973,8 @@ def align(roles: dict[str, Role], occasions, bindings) -> dict[str, Role]:
     # message says which it was has been contradicted -- by the application, not by a score.
     right: dict[str, int] = {name: 0 for name in roles}
     wrong: dict[str, int] = {name: 0 for name in roles}
-    for (_, _, frame, args), bound in zip(occasions, bindings):
+    for occasion, bound in zip(occasions, bindings):
+        _, _, frame, args = occasion[:4]
         for name, obj in bound.items():
             if name not in parent:
                 continue
@@ -987,15 +1027,18 @@ def _about(lit: tuple, allowed: frozenset) -> bool:
 def learn_control(inducer, control: str, occasions, roles: dict[str, Role], *,
                   subject_restricted: bool = False, defaults: dict | None = None,
                   about: bool = False, simplest: bool = False) -> ControlOutcome:
-    """``occasions`` is a list of (abstract pre-state, owner object or None, frame, args)."""
+    """``occasions`` is a list of (abstract pre-state, owner object or None, frame, args)
+    -- optionally with a fifth element, the ``(tid, key)`` pairs of the objects the
+    interaction brought into being."""
     defaults = defaults or {}
     probe = ControlOutcome(control, roles)
-    bindings = [probe.bind(state, owner)[0] for state, owner, _frame, _args in occasions]
+    bindings = [probe.bind(occ[0], occ[1])[0] for occ in occasions]
     out = ControlOutcome(control, align(roles, occasions, bindings), defaults=defaults,
                          simplest=simplest)
     rows: list[tuple[set, str, frozenset]] = []
     seen: dict[str, int] = {}
-    for state, owner, event, _args in occasions:
+    for occ in occasions:
+        state, owner, event, _args = occ[:4]
         seen[event] = seen.get(event, 0) + 1
         bound, status = out.bind(state, owner)
         rows.append((_literals(inducer, state, bound, status, defaults), event,
@@ -1006,12 +1049,22 @@ def learn_control(inducer, control: str, occasions, roles: dict[str, Role], *,
     # position filled by different roles on different occasions is not a parameter of the
     # event, it is something this evidence has not resolved.
     fills: dict[str, dict[int, Counter]] = {}
-    for (state, owner, frame, args) in occasions:
+    for occ in occasions:
+        state, owner, frame, args = occ[:4]
+        created = occ[4] if len(occ) > 4 else frozenset()
         bound, _ = out.bind(state, owner)
         for k, arg in enumerate(args):
             tally = fills.setdefault(frame, {}).setdefault(k, Counter())
             named = [name for name, obj in bound.items() if str(obj.key) == arg]
-            tally[named[0] if len(named) == 1 else None] += 1
+            if len(named) == 1:
+                tally[named[0]] += 1
+                continue
+            # No object on the board is called this.  Where the value is the key of an
+            # object the interaction created -- harbour's `Call C-107 opened for Selkie`
+            # -- the position is filled by the new object's name, a claim that can be
+            # checked afterwards and never predicted in its spelling.
+            made = {tid for tid, name in created if name == arg}
+            tally[f"{CREATED}:T{next(iter(made))}" if len(made) == 1 else None] += 1
     for frame, positions in fills.items():
         for k, tally in positions.items():
             named = {role: n for role, n in tally.items() if role is not None}
@@ -1024,9 +1077,23 @@ def learn_control(inducer, control: str, occasions, roles: dict[str, Role], *,
             next(iter(seen), UNDETERMINED))
         return out
 
+    owner_tids = {occ[1].tid for occ in occasions if occ[1] is not None}
+
     def refuse(lit) -> bool:
-        """Identity constants never generalise, here for the same reason as everywhere else."""
-        if lit[0] != "attr" or len(lit) < 3 or lit[1] not in roles:
+        """Identity constants never generalise, here for the same reason as everywhere else.
+
+        The owner too.  It is not one of the roles the operators learned, so its key slipped
+        through, and harbour's `Book pilot` list guarded *Nothing chosen in the pilot list*
+        with `id(owner) == 'C-102'` -- found by renaming every call on a held-out history
+        (`semabi.eval.v4_renaming`): the version space, which asks for a third occasion,
+        was unmoved; the list changed its answer.
+        """
+        if lit[0] != "attr" or len(lit) < 3:
+            return False
+        if lit[1] == OWNER:
+            return any(t in inducer.A.types and lit[2] == inducer.A.types[t].key_slot
+                       for t in owner_tids)
+        if lit[1] not in roles:
             return False
         ti = inducer.A.types.get(roles[lit[1]].tid)
         return ti is not None and lit[2] == ti.key_slot
@@ -1146,7 +1213,9 @@ def learn(inducer, *, permute: int | None = None, subject_restricted: bool = Fal
         for tr, s, obs, event in rows:
             if event is None:
                 continue      # the live region did not move: re-emission or silence, unknown
-            occasions.append((tr.before, _owner(A, obs, s), event, tr.emission.args))
+            made = frozenset((o.tid, name) for o in (tr.d.added if tr.d is not None else ())
+                             if o.key not in (None, "") for name in _names_of(o))
+            occasions.append((tr.before, _owner(A, obs, s), event, tr.emission.args, made))
             pages.append(obs)
             shape = delta_shape(tr)
             deltas.setdefault(event, {})[shape] = deltas.setdefault(event, {}).get(shape, 0) + 1
@@ -1155,8 +1224,7 @@ def learn(inducer, *, permute: int | None = None, subject_restricted: bool = Fal
 
             shuffled = [o[2:] for o in occasions]
             random.Random(permute + len(occasions)).shuffle(shuffled)
-            occasions = [(st, ow, ev, ar) for (st, ow, _e, _a), (ev, ar)
-                         in zip(occasions, shuffled)]
+            occasions = [tuple(o[:2]) + tuple(rest) for o, rest in zip(occasions, shuffled)]
         model = learn_control(inducer, control, occasions, roles,
                               subject_restricted=subject_restricted, defaults=defaults,
                               about=about, simplest=simplest)
@@ -1204,7 +1272,7 @@ class Answer:
             shape, how = (self.delta or {}).get(e, (frozenset(), "unobserved"))
             args = (self.arguments or {}).get(e) or {}
             parts.append(f"{describe(e)}"
-                         + (f"({', '.join(str(v) for _, v in sorted(args.items()))})" if args
+                         + (f"({', '.join('a new name' if v == FRESH else str(v) for _, v in sorted(args.items()))})" if args
                             else "")
                          + (f" changing {sorted(shape)}" if how == "settled" and shape else
                             "" if how == "settled" else f" [delta {how}]"))
@@ -1271,6 +1339,88 @@ WITH_ARGUMENTS = "with its arguments"
 FRAME_ONLY = "the event alone"
 
 
+_KEYS_BEFORE: dict[int, list] = {}
+
+
+def _keys_before(model, step) -> set:
+    """Every ``(tid, key)`` rendered on any page of the history before this step's page.
+
+    What makes a created object's name *fresh* is that nothing on the board, on any earlier
+    page, was called that; a message naming a pre-existing object is a different claim.
+    Computed once per history and read off thereafter.
+    """
+    A, log = model.abstractor, model.log
+    table = _KEYS_BEFORE.get(id(log))
+    if table is None:
+        table = []
+        seen: set = set()
+        episode = None
+        for s in log.steps:
+            if s.episode != episode:
+                # A reset starts the application over: nothing from the episode before
+                # is on this board, and a name it used is free to be used again.  The
+                # page a reset step starts from is the old episode's; the page it
+                # produces is the new one's, which is why steps contribute what they
+                # produced.
+                seen, episode = set(), s.episode
+            table.append((s.step, frozenset(seen)))
+            for o in A.abstract(log.obs(s.after)).objs.values():
+                if o.key not in (None, ""):
+                    seen.update((o.tid, name) for name in _names_of(o))
+        _KEYS_BEFORE[id(log)] = table
+    before: frozenset = frozenset()
+    for at, keys in table:
+        if at >= step.step:
+            break
+        before = keys
+    return set(before)
+
+
+def _trailing_int(key: str) -> int | None:
+    m = __import__("re").search(r"(\d+)$", key or "")
+    return int(m.group(1)) if m else None
+
+
+def fresh_check(model, step, tid: int, value: str) -> dict:
+    """Is ``value`` the key of an object of type ``tid`` the step brought into being, and
+    a name nothing on the board had before?  Also whether it is the successor of the
+    greatest such name seen so far -- a regularity the report can state and the ABI does
+    not claim, since the application's behaviour would be the same under any fresh name."""
+    A, log = model.abstractor, model.log
+    pre = A.abstract(log.obs(step.before))
+    post = A.abstract(log.obs(step.after))
+    def names(state):
+        return {(o.tid, name) for o in state.objs.values() if o.key not in (None, "")
+                for name in _names_of(o)}
+    created = (tid, value) in names(post) and (tid, value) not in names(pre)
+    before = _keys_before(model, step) | names(pre)
+    fresh = (tid, value) not in before
+    prior = [n for t, k in before if t == tid for n in [_trailing_int(k)] if n is not None]
+    mine = _trailing_int(value)
+    successor = (mine is not None and bool(prior) and mine == max(prior) + 1)
+    return {"created": created, "fresh": fresh, "successor": successor}
+
+
+def _argument_disagreements(model, step, got, event, args: dict, observed) -> dict:
+    """Predicted argument values against the message, with a created position checked
+    for what it claims: that the name is new."""
+    out: dict = {}
+    for k, v in args.items():
+        actual = observed.args[k] if k < len(observed.args) else None
+        if v == FRESH:
+            tid = got.created_type(event, k)
+            if actual is None or tid is None:
+                out[k] = (v, actual)
+                continue
+            check = fresh_check(model, step, tid, actual)
+            if not (check["created"] and check["fresh"]):
+                out[k] = (v, actual, check)
+            continue
+        if actual != v:
+            out[k] = (v, actual)
+    return out
+
+
 def score_step(model, step, *, with_arguments: bool = True) -> dict:
     """Run the outcome model at one held-out click and check it against the raw page.
 
@@ -1316,9 +1466,7 @@ def score_step(model, step, *, with_arguments: bool = True) -> dict:
     if observed.frame != predicted:
         return {**out, "verdict": WRONG, "level": FRAME_ONLY}
     args = got.arguments(predicted, bound)
-    disagree = {k: (v, observed.args[k] if k < len(observed.args) else None)
-                for k, v in args.items()
-                if k >= len(observed.args) or observed.args[k] != v}
+    disagree = _argument_disagreements(model, step, got, predicted, args, observed)
     if with_arguments and disagree:
         return {**out, "verdict": WRONG, "level": WITH_ARGUMENTS, "arguments": disagree}
     return {**out, "verdict": RIGHT,
@@ -1383,9 +1531,12 @@ def score_step_admissible(model, step, *, corroborated: bool = False,
             return {**out, "verdict": SOLE_WRONG if sole else FORCED_WRONG,
                     "level": FRAME_ONLY, "why": str(options[only])}
         args = got.arguments(only, bound)
-        wrong_args = {k: (v, observed.args[k] if k < len(observed.args) else None)
-                      for k, v in args.items()
-                      if k >= len(observed.args) or observed.args[k] != v}
+        wrong_args = _argument_disagreements(model, step, got, only, args, observed)
+        fresh = {k: fresh_check(model, step, got.created_type(only, k), observed.args[k])
+                 for k, v in args.items()
+                 if v == FRESH and k < len(observed.args) and got.created_type(only, k) is not None}
+        if fresh:
+            out["fresh"] = fresh
         if wrong_args:
             return {**out, "verdict": SOLE_WRONG if sole else FORCED_WRONG,
                     "level": WITH_ARGUMENTS,

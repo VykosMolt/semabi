@@ -97,6 +97,7 @@ class Hypotheses:
         self.transient: set[str] = set()
         self.transient_positions: set[tuple] = set()
         self.force_link: set[str] = set()  # refinement: templates whose link/merge decision is flipped
+        self._page_instances: dict[str, dict[int, UnitInstance]] = {}  # last parse of each page, by root
         self.alias_map: dict[tuple[str, str], str] = {}  # (template, key value) -> canonical key value (another template's)
         self.key_overrides: dict[tuple[str, str, str], str] = {}  # (observation, template, rendered key) -> associated key
         self.persistent_widgets: set[tuple[str, str]] = set()  # (template, slot) widget values shown to survive reloads
@@ -293,6 +294,7 @@ class Hypotheses:
                 seen[k] += 1
                 if seen[k] > 1:
                     ui.slots[u.key_slot] = f"{ui.slots[u.key_slot]}#{seen[k]}"
+        self._page_instances[sig] = {ui.root: ui for ui in insts}
         return insts
 
     def _relpath(self, obs, root: int, i: int) -> str:
@@ -897,6 +899,16 @@ class Hypotheses:
                         et.evidence.append(f"{t[:30]} nested in T{ptid} ({c}/{len(self.units[t].instances)})")
 
     def _parent_key(self, ui: UnitInstance) -> str | None:
+        """The key of the unit instance enclosing this one, on the page it stands on.
+
+        This searched the fitting instances of the parent's unit type for the page and root,
+        and so answered for a fitted page and never for a held-out one: on every page of
+        another seed, harbour's call buttons -- link objects keyed by their row and column --
+        had no key and were not objects, and a click on one had no owner.  The page being
+        read has its own instances (`parse_units` keeps the last parse of each page); the
+        fitting instances are consulted first because the fit may have rewritten their keys
+        to a canonical spelling, and a held-out parse applies the same aliases itself.
+        """
         if ui.parent_root is None:
             return None
         pt = self.template(ui.sig, ui.parent_root)
@@ -906,6 +918,9 @@ class Hypotheses:
         for x in pu.instances:
             if x.sig == ui.sig and x.root == ui.parent_root:
                 return x.slots.get(pu.key_slot)
+        parent = self._page_instances.get(ui.sig, {}).get(ui.parent_root)
+        if parent is not None:
+            return parent.slots.get(pu.key_slot)
         return None
 
     def _created_later(self, u: UnitHyp, other: UnitHyp) -> bool:

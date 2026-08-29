@@ -4,8 +4,28 @@
  "regime": "FROZEN_PREFIX",
  "hypothesis": "rule",
  "cut": 229,
- "forced_wrong": 0,
- "kinds": {},
- "by_control": {},
- "cases": []
+ "forced_wrong": 1,
+ "kinds": {
+  "unseen: the control never returned this event while fitting": 1
+ },
+ "by_control": {
+  "button:Sign off": {
+   "unseen: the control never returned this event while fitting": 1
+  }
+ },
+ "cases": [
+  {
+   "control": "button:Sign off",
+   "step": 404,
+   "forced": [
+    "<> is signed off ."
+   ],
+   "actual": "<> cannot sign off while booked for call <> .",
+   "why": "<> is signed off . <- attr:cell#0@3(owner) == 'on duty'  [8 occasions]",
+   "kind": "unseen: the control never returned this event while fitting",
+   "seen": 0,
+   "raw_difference": [],
+   "erased_by_the_state": []
+  }
+ ]
 }

@@ -65,27 +65,56 @@ class TextTemplate:
     strings: Counter = field(default_factory=Counter)
     n: int = 0
 
+    _vary: tuple[int, set[str]] | None = None
+
     def varying_tokens(self) -> set[str]:
         """Tokens that vary across the distinct strings at this position (< 80% of them)."""
         if len(self.strings) < 2:
             return set()
+        if self._vary is not None and self._vary[0] == len(self.strings):
+            return self._vary[1]
         per = Counter()
         for s in self.strings:
             for t in set(tokens(s)):
                 if t[0].isalnum():
                     per[t] += 1
-        return {t for t, c in per.items() if c < 0.8 * len(self.strings)}
+        out = {t for t, c in per.items() if c < 0.8 * len(self.strings)}
+        self._vary = (len(self.strings), out)
+        return out
+
+    def sentence_length(self) -> bool:
+        """Four or more alphanumeric tokens: the length at which a text is a sentence
+        rather than a name, a value or a phrase."""
+        return sum(1 for c in self.position.split("|")[-1] if c in "aN") >= 4
+
+
+# Containers the accessibility tree declares as collections.  Their children are members of
+# one listing -- the rows of a table, the items of a list -- and what differs between members
+# at the same slot is content, whichever member it happens to be in.
+COLLECTIONS = {"table", "rowgroup", "list", "grid", "treegrid", "listbox", "menu", "tree"}
+WIDGET_ROLES = {"button", "link", "checkbox", "radio", "combobox", "textbox"}
 
 
 class ObsGraph:
+    # Whether variation is judged across the members of a declared collection.  Off, it is
+    # judged per indexed position only -- the reading every report before `docs/v4_open_world.md`
+    # was computed under -- which on a listing whose rows never reorder makes every constant
+    # cell of every row a label, and every row its own type.  Kept as a switch so that the
+    # two readings can be put side by side; nothing sets it but an experiment.
+    judge_by_collection: bool = True
+
     def __init__(self):
         self.nodes: dict[tuple[str, int], NodeDesc] = {}
         self.obs: dict[str, Observation] = {}
         self.templates: dict[str, TextTemplate] = {}  # position -> template
         self.position_of: dict[tuple[str, int], str] = {}
+        self.variation_key: dict[tuple[str, int], tuple] = {}  # (sig, node) -> templates_v key
         self._in_nonwidget: set[str] = set()  # tokens seen in a non-widget text or an input value
         self._whole: set[str] = set()  # complete texts / option labels / input values (lowercase data values)
         self._data: set[str] | None = None
+        self._listed_only: set[str] = set()   # values by collection variation alone
+        self._declared_headers: set[str] = set()  # texts of header rows in a row group of their own
+        self._pooled_views: dict[tuple, TextTemplate] = {}
         self._seen: set[str] = set()   # every token the corpus read anywhere, headers and options included
         self._value_paths: set[str] | None = None
         self.templates_v: dict[tuple, TextTemplate] = {}  # (position, indexed position, view skeleton) -> strings
@@ -98,30 +127,116 @@ class ObsGraph:
         only ever occur in static control labels (buttons/links whose text never appears in
         data text anywhere)."""
         if self._data is None:
-            d = set()
+            d0 = set()
             # variation is judged within one view: a heading that differs between views is
             # not data, a label that differs between the hives a panel shows is
             for tt in self.templates_v.values():
-                d |= tt.varying_tokens()
-            d = {t for t in d if t[0].isdigit() or t in self._in_nonwidget}
+                d0 |= tt.varying_tokens()
+            d0 = {t for t in d0 if t[0].isdigit() or t in self._in_nonwidget}
             # a lowercase word is a value only when it occurs on its own somewhere (a status
             # word in a cell, an option); inside sentences it is wording, not data
-            d = {t for t in d if t[0].isdigit() or t[0].isupper() or t in self._whole}
-            # prose positions (sentences with a vocabulary of >= 4 constant words) vary in
-            # wording, not in data: their varying tokens count only if data elsewhere
+            d = {t for t in d0 if t[0].isdigit() or t[0].isupper() or t in self._whole}
+            if not self.judge_by_collection:
+                # prose positions (sentences with a vocabulary of >= 4 constant words) vary in
+                # wording, not in data: their varying tokens count only if data elsewhere
+                prose = set()
+                for pos, tt in self.templates.items():
+                    vocab = {t for st in tt.strings for t in tokens(st) if t[0].isalpha() and t not in d}
+                    if len(vocab) >= 4 and len(tt.strings) >= 2:
+                        prose.add(pos)
+                if prose:
+                    d2 = set()
+                    for (pos, _, _), tt in self.templates_v.items():
+                        if pos not in prose:
+                            d2 |= tt.varying_tokens()
+                    d = {t for t in d if t[0].isdigit() or t in d2}
+                self._data = d
+                return self._data
+            # Prose -- a position whose strings are sentences, with a vocabulary of >= 4
+            # constant words, varying in wording rather than in data -- is judged where the
+            # variation is judged, per position, and not over every node in the application
+            # that shares a role path and a token pattern.  Pooled by role path, every
+            # two-word table cell of harbour was one position, the call sheet's field names
+            # (`Length overall`, `Hazardous cargo`) were its constant vocabulary, and the
+            # position was prose: so `United Kingdom`, `Ardent Rose` and `Aoife Marr`, which
+            # occur only in such cells, were wording -- labels -- and every vessel and pilot
+            # row a type of its own, while a name the prefix never saw was a value at the
+            # same cell.  A varying token at a prose position counts only if it is data at a
+            # position that is not prose.
+            # A cell is not a sentence.  The vocabulary test alone called harbour's vessel
+            # cells prose because the cargo words (`drummed solvents`, `frozen fish`) are
+            # lowercase and never stand alone -- constant vocabulary by the letter of the rule
+            # -- and vet's appointment reasons the same; a sentence has the length of one.
             prose = set()
-            for pos, tt in self.templates.items():
+            for key, tt in self.templates_v.items():
+                if not tt.sentence_length():
+                    continue
                 vocab = {t for st in tt.strings for t in tokens(st) if t[0].isalpha() and t not in d}
                 if len(vocab) >= 4 and len(tt.strings) >= 2:
-                    prose.add(pos)
-            if prose:
-                d2 = set()
-                for (pos, _, _), tt in self.templates_v.items():
-                    if pos not in prose:
-                        d2 |= tt.varying_tokens()
-                d = {t for t in d if t[0].isdigit() or t in d2}
+                    prose.add(key)
+            plain, listed = set(), set()
+            for key, tt in self.templates_v.items():
+                if key in prose:
+                    continue
+                v = tt.varying_tokens()
+                plain |= v
+                if any(x == "*" for _, x in key[1]):
+                    listed |= v
+            d = {t for t in d if t[0].isdigit() or t in plain}
+            # Inside a member of a declared collection the lowercase rule does not apply: what
+            # differs between the rows of one table at one cell is the cell's value whether
+            # or not it is ever shown on its own -- `on duty` / `off duty`, `single varietal`
+            # / `a blend` -- and reading it as wording made the duty of a pilot a difference
+            # between two row templates rather than an attribute of one.  Such a word is a
+            # value where it varies and wording anywhere else (`Sign on`): see `is_data_at`.
+            self._listed_only = {t for t in d0 if t in listed} - d
+            d |= self._listed_only
             self._data = d
+            # The same position seen in several views, for judging a page whose view the
+            # corpus never saw.
+            self._pooled_views = {}
+            for (pos, ppos, _skel), tt in self.templates_v.items():
+                merged = self._pooled_views.setdefault((pos, ppos), TextTemplate(pos))
+                merged.strings.update(tt.strings)
+                merged.n += tt.n
         return self._data
+
+    def _is_member(self, obs, i: int) -> bool:
+        """Is this node a member of a declared collection -- a row of a table, an item of a
+        list -- directly or through the grouping containers `sections.normalise` inserts?"""
+        n = obs.node(i)
+        while n.parent >= 0:
+            p = obs.node(n.parent)
+            if p.role in COLLECTIONS:
+                return True
+            if p.role != "group":
+                return False
+            n = p
+        return False
+
+    def position_pooled(self, obs, i: int) -> tuple:
+        """Indexed role path in which a member of a declared collection is unindexed.
+
+        The rows of a table are one listing: what differs between them at the same cell is
+        content, and which row it stands in is not part of the position.  Everything else
+        keeps its ordinal, so the headings of two sections stay two positions.
+        """
+        out = []
+        x = i
+        while x >= 0:
+            n = obs.node(x)
+            if n.parent >= 0:
+                leaf = not obs.children(x)
+                if self._is_member(obs, x):
+                    out.append((n.role, "*"))
+                else:
+                    sibs = [c for c in obs.children(n.parent)
+                            if obs.node(c).role == n.role and (not obs.children(c)) == leaf]
+                    out.append((n.role, sibs.index(x) * 2 + (1 if leaf else 0)))
+            else:
+                out.append((n.role, 0))
+            x = n.parent
+        return tuple(reversed(out))
 
     def position_idx(self, obs, i: int) -> tuple:
         """Indexed role path with leaf-aware ordinals (optional leaf siblings such as a
@@ -183,10 +298,31 @@ class ObsGraph:
             if n.role == "table":
                 rows = sorted(x for x in obs.subtree(n.i) if obs.node(x).role == "row")
                 if rows:
+                    # a header row in a row group of its own (a `thead`) is the interface
+                    # declaring it; a first row among the others may be one or may not
+                    declared = len(rows) > 1 and obs.node(rows[0]).parent != obs.node(rows[1]).parent
                     for k, c in enumerate(obs.children(rows[0])):
                         self.header.add((sig, c))
                         if self.learning:
                             self.header_strings[(paths[n.i], k)].add(node_text(obs.node(c)))
+                            if declared:
+                                self._declared_headers.add(node_text(obs.node(c)))
+        # Row headers.  A key-value table -- harbour's call sheet, `Flag | United Kingdom`
+        # -- names its fields down the first column, and judged across the members of the
+        # collection those names vary as its values do.  What tells a field name from a value
+        # is that the interface uses the same text as a declared column header elsewhere;
+        # such a first cell is a header, with the same escape as a column header
+        # (`is_header`).
+        if self.judge_by_collection:
+            known = {t for t in self._declared_headers if t}
+            for n in obs.nodes:
+                if n.role != "table":
+                    continue
+                rows = sorted(x for x in obs.subtree(n.i) if obs.node(x).role == "row")
+                for r in rows[1:]:
+                    cells = obs.children(r)
+                    if cells and node_text(obs.node(cells[0])) in known:
+                        self.header.add((sig, cells[0]))
         shapes = {}
         order = []                               # post-order, for the same reason as `depth`
         stack = [(n.i, False) for n in obs.nodes if n.parent < 0]
@@ -210,13 +346,26 @@ class ObsGraph:
             # structural position of a text: role path + parent's shape (what surrounds it)
             pos = paths[n.i] + "|" + token_pattern(node_text(n))
             self.position_of[(sig, n.i)] = pos
+            # variation is judged per (position, indexed position of the *parent*, view): two
+            # headings under different containers are different positions; the rows of one
+            # listing share theirs -- which the parent's plain index did not give a cell,
+            # whose parent is its own row: see `position_pooled`.
+            if n.parent < 0:
+                ppos: tuple = ()
+            elif self.judge_by_collection:
+                ppos = self.position_pooled(obs, n.parent)
+                if n.role in WIDGET_ROLES:
+                    # Two buttons side by side are two controls, not one control with two
+                    # values: `Sign on` and `Sign off` are told apart by their place, and
+                    # each is pooled only with itself in the other rows.
+                    sibs = [c for c in obs.children(n.parent) if obs.node(c).role == n.role]
+                    ppos = ppos + ((n.role, sibs.index(n.i)),)
+            else:
+                ppos = self.position_idx(obs, n.parent)
+            self.variation_key[(sig, n.i)] = (pos, ppos, skel)
             if not self.learning:
                 continue
             tt = self.templates.setdefault(pos, TextTemplate(pos))
-            # variation is judged per (position, indexed position of the *parent*, view): two
-            # headings under different containers are different positions; the rows of one
-            # listing share theirs (their own index would make every stable listing look constant)
-            ppos = self.position_idx(obs, n.parent) if n.parent >= 0 else ()
             tv = self.templates_v.setdefault((pos, ppos, skel), TextTemplate(pos))
             self._seen.update(tokens(node_text(n)))
             for o in n.options or ():
@@ -247,6 +396,7 @@ class ObsGraph:
             self.nodes.pop(key, None)
         for key in [k for k in self.position_of if k[0] == sig]:
             self.position_of.pop(key, None)
+            self.variation_key.pop(key, None)
         for key in [k for k in self.header if k[0] == sig]:
             self.header.discard(key)
 
@@ -280,7 +430,32 @@ class ObsGraph:
         name contains a word the prefix never used -- blend's `Block 12`, which was not an
         object on any of the 267 held-out pages that rendered it.
         """
-        if t in self.data_set() or t[0].isdigit():
+        if t[0].isdigit():
+            return True
+        d = self.data_set()
+        if self.judge_by_collection:
+            # A word admitted as a value only because it varies between the members of a
+            # collection -- `on` in the duty cell, `varietal` in the style cell -- is a value
+            # where it varies and wording anywhere else: `Sign on` keeps its label.  Every
+            # other data token is data wherever it stands, as before.  The alternative --
+            # judging every token at its position -- was tried and reads an entity name as
+            # wording wherever it was the only entity ever rendered there: `North Wall` in
+            # every one of a seed's return-ticket buttons, `S1` in a select whose choice
+            # never changed.  Which is the same thing a global vocabulary gets wrong about
+            # `Open` on the `Open North Wall` button, and there is no telling a name from a
+            # state word at this layer; the name is the costlier one to lose.
+            n = self.obs[sig].node(i)
+            if n.role in ("combobox", "textbox"):
+                return t[0].isalnum()      # what an input holds is its value, all of it
+            if t in d:
+                if t not in self._listed_only:
+                    return True
+                key = self.variation_key.get((sig, i))
+                tt = self.templates_v.get(key) if key is not None else None
+                if tt is None and key is not None:
+                    tt = self._pooled_views.get(key[:2])
+                return tt is not None and t in tt.varying_tokens()
+        elif t in d:
             return True
         if t in self._seen or self.learning:
             return False
@@ -335,7 +510,8 @@ class ObsGraph:
             # position as `Finish fermentation` and `Receive fruit`, whose four constant words
             # made `Press Hall` prose and cost the hall its key.  A sentence needs words.
             return False
-        tt = self.templates.get(self.position_of[(sig, i)])
+        tt = (self.templates_v.get(self.variation_key.get((sig, i))) if self.judge_by_collection
+              else self.templates.get(self.position_of[(sig, i)]))
         if tt is None:
             return False
         d = self.data_set()

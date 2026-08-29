@@ -165,7 +165,14 @@ def compile_v4(run_dir: Path, min_support: int = 1, conservative_belief: bool = 
                 v4_search._materialise(unit, key_slot)
 
     H._build_entity_types()
-    A = V4Abstractor(G, H, conservative_belief=conservative_belief)
+    # An entity is the set of its mentions.  Off, a second mention of an object on a page
+    # is dropped and the first -- in DOM order -- speaks for it; under a reading in which
+    # the calls table and the vessels table are one type keyed by the vessel's name
+    # (`docs/v4_open_world.md`), that left every vessel with a call on the board without
+    # its flag, its cargo or its current-call reference.  V2 switched this on by refinement
+    # decision only; here it is the reading of a page, and conflicts between mentions are
+    # still recorded rather than resolved.
+    A = V4Abstractor(G, H, conservative_belief=conservative_belief, merge_mentions=True)
     A.fit_view_controls(log)
     I = Inducer(A, log, read_outputs=read_outputs)
     I.run()

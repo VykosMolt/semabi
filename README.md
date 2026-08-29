@@ -104,7 +104,7 @@ the observation-model layer whatever they say. Three regimes are now named in th
 every fit and scored result carries the one that produced it. `docs/v4_handoff.md` remains the
 custody and protocol record.
 
-`docs/v4_identity.md` is the latest.  It opened on whether "forced" means what it claims and
+`docs/v4_open_world.md` is the latest.  It found that the observation model's judgement of which text is a value was made per row over time, so every constant cell of a stable listing was a label and every row its own type; judged across the members of a collection, harbour goes from eleven entity types to five and its refusals from 53 to none.  Before it, `docs/v4_identity.md`  It opened on whether "forced" means what it claims and
 found that the version space's search is exact for its class, that the class it quantified over
 was not the ordered-guard class the learner declares (both are now named, and the ABI answers
 for the declared one), and that the confident errors the previous run had triaged as search and
