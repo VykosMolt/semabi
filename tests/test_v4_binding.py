@@ -175,8 +175,13 @@ def test_rewriting_every_prediction_leaves_the_binding_untouched():
             counts = plain.counts("VALUE")
             if set(counts) - {"POSSIBLE", "NOT_APPLICABLE", "UNKNOWN"}:
                 assert counts != wrecked.counts("VALUE"), (name, mode)
-            else:
+            elif mode == ASSERTED:
                 assert plain.binding_summary()["hit_the_enumeration_bound"], (name, mode)
+            # Under the retired `attested` mode the loose reading is silent for the other
+            # reason that mode was retired for: it pins every parameter with the constant
+            # its one occasion showed, binds uniquely, and claims no value at all
+            # (`docs/v4_collections.md`).  The leakage invariants above are what this test
+            # is about, and they hold in both modes.
 
 
 def test_the_outcome_cannot_choose_the_binding():
@@ -404,7 +409,12 @@ def test_an_effect_on_an_object_the_state_never_pins_is_not_a_well_formed_schema
     # masked label the occasions pool (`docs/v4_identity.md`), the only attested literal left
     # for the open parameter is its column, and nothing pins it.  That is the mode doing what
     # it was retired for, and the ill-formed set is what it was.
-    assert score(loose_fit, applicability=ATTESTED).schema()["ill_formed"] == loose["ill_formed"]
+    # Under the column judgement of `docs/v4_collections.md` the loose reading's cell
+    # objects changed again, and `attested` pins the open parameter once more with the one
+    # constant its occasion showed -- `op8`, support 1, three cell parameters and no
+    # precondition, made "well-formed" by a memorised value.  Which is the mode doing what
+    # it was retired for, and it never makes an operator ill-formed that `asserted` does not.
+    assert set(score(loose_fit, applicability=ATTESTED).schema()["ill_formed"]) <= set(loose["ill_formed"])
 
     # And no binding query could have determined those parameters, because there is nothing
     # to determine them *from*: every ill-formed operator here has an action attributed to no
