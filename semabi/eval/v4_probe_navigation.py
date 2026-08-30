@@ -30,7 +30,12 @@ from semabi.compiler.browser import Browser, Primitive
 from semabi.compiler.v2.score import _same_view
 
 
-def probe(base: str, seed: int, names: list[str], *, attempts: int = 3) -> list[dict]:
+def probe(base: str, seed: int, names: list[str], *, attempts: int = 3,
+          via: str | None = None) -> list[dict]:
+    """``via`` names a button to click first from the reloaded page: harbour's `Record
+    departure` sits in a call's detail panel, opened by the call's own button on the board.
+    The prerequisite is part of the record; the verdict is still about what survives the
+    reload afterwards, read against what a reload shows by default."""
     browser = Browser(base + "/", base + "/reset")
     records: list[dict] = []
     try:
@@ -42,6 +47,13 @@ def probe(base: str, seed: int, names: list[str], *, attempts: int = 3) -> list[
             for attempt in range(attempts):
                 browser.act(Primitive("reload"))
                 before = browser.observe()
+                if via:
+                    door = next((n for n in before.nodes
+                                 if n.role == "button" and (n.name or "") == via), None)
+                    if door is None:
+                        continue
+                    browser.act(Primitive("click", target=door.i))
+                    before = browser.observe()
                 # from a view other than the button's own: from its own view a tab changes
                 # nothing, which is not evidence either way
                 others = [n.i for n in before.nodes
@@ -64,7 +76,7 @@ def probe(base: str, seed: int, names: list[str], *, attempts: int = 3) -> list[
                                 "mixed": [], "persisted_default": persisted,
                                 "changed_views": [name] if changed else [],
                                 "acquired": True, "probe": "navigation reload persistence",
-                                "seed": seed})
+                                "seed": seed, **({"via": via} if via else {})})
                 break
     finally:
         browser.close()
@@ -77,8 +89,9 @@ def main(argv=None) -> int:
     ap.add_argument("--seed", type=int, required=True, help="a seed no retained trace used")
     ap.add_argument("--buttons", required=True, help="comma-separated rendered names")
     ap.add_argument("--out", required=True, help="the run's probes.acquired.jsonl")
+    ap.add_argument("--via", default=None, help="a button to click first, from the reloaded page")
     a = ap.parse_args(argv)
-    records = probe(a.base, a.seed, a.buttons.split(","))
+    records = probe(a.base, a.seed, a.buttons.split(","), via=a.via)
     for r in records:
         print(f"  {r['key'][2]:20} {r['status']}")
     Path(a.out).write_text("".join(json.dumps(r) + "\n" for r in records))

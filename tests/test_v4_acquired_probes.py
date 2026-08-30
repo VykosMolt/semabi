@@ -48,6 +48,21 @@ def test_an_acquired_probe_certifies_a_view_control(tmp_path):
     assert "Clients" not in A.verified_view_controls      # never probed: not certified
 
 
+def test_an_acquired_probe_reached_through_a_prerequisite_certifies_a_domain_control(tmp_path):
+    """Harbour's `Record departure` sits in a call's detail panel, opened by the call's own
+    button: the probe clicks the door first (`--via`), and the departure survived the reload.
+    Uncertified, the departure removed objects while the view changed, and the objective could
+    only call it a visibility error; certified, it is a domain action."""
+    (tmp_path / "probes.acquired.jsonl").write_text(json.dumps(
+        {"key": ["click", "button", "Record departure", None], "status": "DOMAIN", "mixed": [],
+         "persisted_default": True, "changed_views": ["Record departure"], "acquired": True,
+         "probe": "navigation reload persistence", "seed": 9001, "via": "C-101"}) + "\n")
+    A = _fitted()
+    A.fit_view_controls(EvidenceLog(tmp_path))
+    assert "Record departure" in A.verified_domain_controls
+    assert "Record departure" not in A.verified_view_controls
+
+
 def test_without_the_acquired_file_nothing_changes(tmp_path):
     (tmp_path / "probes.jsonl").write_text(json.dumps(
         {"step": 3, "key": ["click", "button", "Schedule", None], "status": "DOMAIN",
