@@ -32,6 +32,26 @@
    "row[_](cell@Name[_],cell@On duty[_],cell@Specialty[_])": "cell@Name#0",
    "text[_](combobox[_])": "text#0",
    "text[_](textbox[_])": null
+  },
+  "Patient": {
+   "cell[_]": "cell#0",
+   "group[_](heading[_],list[_](listitem[_]))": "heading#0",
+   "row[_](cell@Actions[_](combobox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])": "cell@Patient#0",
+   "row[_](cell@Actions[_](textbox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])": "cell@Patient#0",
+   "row[_](cell@Actions[_],cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])": "cell@Patient#0",
+   "row[_](cell@Name[_],cell@On duty[_],cell@Specialty[_])": "cell@Name#0",
+   "text[_](combobox[_])": "text#0",
+   "text[_](textbox[_])": null
+  },
+  "Patient|Reason": {
+   "cell[_]": "cell#0",
+   "group[_](heading[_],list[_](listitem[_]))": "heading#0",
+   "row[_](cell@Actions[_](combobox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])": "cell@Patient#0|cell@Reason#0",
+   "row[_](cell@Actions[_](textbox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])": "cell@Patient#0|cell@Reason#0",
+   "row[_](cell@Actions[_],cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])": "cell@Patient#0|cell@Reason#0",
+   "row[_](cell@Name[_],cell@On duty[_],cell@Specialty[_])": "cell@Name#0",
+   "text[_](combobox[_])": "text#0",
+   "text[_](textbox[_])": null
   }
  },
  "actions": [
@@ -91,7 +111,9 @@
  ],
  "predictions": {
   "Owner": "the second appointment for the same owner collides with the first: one object with disagreeing mentions (Reason), a conflict, no second creation",
-  "Reason": "two appointments with different reasons are two objects: two creations, no conflict"
+  "Reason": "two appointments with different reasons are two objects: two creations, no conflict",
+  "Patient": "Luna's second and third appointments collide with her first: positional tie-breaks, one object",
+  "Patient|Reason": "three appointments for Luna with three reasons are three objects: no positional tie-break"
  },
  "test": "collision"
 }

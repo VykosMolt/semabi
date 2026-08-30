@@ -60,3 +60,38 @@ def test_a_nominal_number_is_not_ordered_by_coincidence():
     model = _learn(rows, ordered=ordered)
     assert fields.adopted({"Return": model}, ordered) == {}
     assert not any(lit[0] in ("attr_ge", "attr_lt") for r in model.rules for lit in r.condition)
+
+
+def test_a_one_sided_threshold_is_not_an_order():
+    # every washed vessel was smaller than the one never washed: the ordered literal
+    # separates the fitting occasions, and no occasion of another event stands above it
+    rows = [(500, "washed"), (1500, "washed"), (2400, "washed"), (500, "washed")]
+    ordered = {1: {"committed": ["500", "1500", "2400", "4000"]}}
+    model = _learn(rows, ordered=ordered)
+    assert fields.adopted({"Wash out": model}, ordered) == {}
+    # one vessel above the threshold is that vessel, not an order
+    rows += [(4000, "too big"), (4000, "too big")]
+    model = _learn(rows, ordered=ordered)
+    assert fields.adopted({"Wash out": model}, ordered) == {}
+    # refusals at two sizes above it witness the order on the far side as well
+    rows += [(6000, "too big"), (6000, "too big")]
+    ordered = {1: {"committed": ["500", "1500", "2400", "4000", "6000"]}}
+    model = _learn(rows, ordered=ordered)
+    assert fields.adopted({"Wash out": model}, ordered) == ordered
+
+
+def test_a_retained_intervention_corroborates_what_the_history_cannot(tmp_path):
+    # the prefix refuses at 0 only: one value on the far side, and the history alone will
+    # not order the field -- the intervention at 9 and 0 did, and is read from the sidecar
+    import json
+    rows = [(2, "bottled"), (3, "bottled"), (4, "bottled"), (0, "refused"), (0, "refused")]
+    ordered = {1: {"committed": ["0", "2", "3", "4"]}}
+    model = _learn(rows, ordered=ordered)
+    assert fields.adopted({"Bottle": model}, ordered) == {}
+    (tmp_path / fields.SIDECAR).write_text(json.dumps({"theories": [
+        {"attribute": "attr:committed", "theory": "ORDERED", "corroborated_by": "an intervention"}]}))
+    proposed = {1: {"attr:committed": ["0", "2", "3", "4"], "attr:year": ["2019", "2020", "2021"]}}
+    assert fields.corroborated(tmp_path, proposed) == {(1, "attr:committed")}
+    ordered_by_attr = {1: {"attr:committed": ["0", "2", "3", "4"]}}
+    assert fields.adopted({"Bottle": model}, ordered_by_attr, fields.corroborated(tmp_path, proposed)) == ordered_by_attr
+    assert fields.corroborated(tmp_path / "elsewhere", proposed) == set()

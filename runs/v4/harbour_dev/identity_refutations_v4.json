@@ -1,0 +1,45 @@
+{
+ "refuted": [
+  {
+   "family": "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])",
+   "key_slot": "cell@Status#0",
+   "why": "refuted by an executed experiment (harbour calls: Vessel vs Status): harm 5 on ['positional', 'conflicts'] against 0 for Vessel",
+   "evidence": {
+    "experiment": "harbour calls: Vessel vs Status",
+    "actions": [
+     {
+      "kind": "click",
+      "target": {
+       "role": "button",
+       "name": "Schedule call",
+       "nth": 2
+      }
+     },
+     {
+      "kind": "click",
+      "target": {
+       "role": "button",
+       "name": "Schedule call",
+       "nth": 3
+      }
+     }
+    ],
+    "delta": {
+     "explained": 1,
+     "conflicts": 0,
+     "churn": 1,
+     "contradictions": 0,
+     "visibility": 0,
+     "spurious": 0,
+     "named": 2,
+     "positional": 5
+    },
+    "decisive_terms": [
+     "positional",
+     "conflicts"
+    ],
+    "predicted": "the second call shares the key 'scheduled' with the first: one object with disagreeing mentions, a conflict, no second creation"
+   }
+  }
+ ]
+}

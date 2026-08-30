@@ -28,9 +28,7 @@ def theory(run_dir: Path, reading, *, split: float = 0.5) -> dict:
     ft = getattr(any_model, "field_theory", {"candidates": {}, "adopted": {}})
 
     def name(tid: int, slot: str) -> str:
-        et = A.H.entity_types.get(tid)
-        template = next((t for t in et.units if slot in A.H.units[t].slots), None) if et else None
-        return A.attr_name(et, template, slot) if template else f"attr:{slot}"
+        return slot          # a candidate field is named by its attribute already
 
     fields = []
     for tid, slots in ft["candidates"].items():
@@ -47,17 +45,49 @@ def theory(run_dir: Path, reading, *, split: float = 0.5) -> dict:
             "fields": fields, "model": model}
 
 
+def corroborate(intervention: Path, attribute: str, into: list[Path]) -> dict:
+    """Write what a retained intervention established about a field beside the histories
+    that will be fitted: the theory, the attribute, the intervention and its verdicts."""
+    from semabi.compiler.v4 import fields as field_theory
+
+    results = json.loads((Path(intervention) / "results.json").read_text())
+    hypotheses = json.loads((Path(intervention) / "hypotheses.json").read_text()) \
+        if (Path(intervention) / "hypotheses.json").is_file() else {}
+    record = {"attribute": attribute, "theory": "ORDERED",
+              "corroborated_by": str(intervention), "hypotheses": hypotheses,
+              "results": results,
+              "why": "the frozen ordered hypothesis was right at values no history contained "
+                     "and the equality guard was refuted there"}
+    for run_dir in into:
+        path = Path(run_dir) / field_theory.SIDECAR
+        payload = json.loads(path.read_text()) if path.is_file() else {"theories": []}
+        payload["theories"] = [t for t in payload["theories"] if t["attribute"] != attribute] + [record]
+        path.write_text(json.dumps(payload, indent=1, default=str))
+    return record
+
+
 def main(argv=None) -> int:
     from semabi.eval.v4_consequence_run import _candidates
 
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--run", required=True)
-    ap.add_argument("--chain", required=True)
-    ap.add_argument("--reading", required=True)
+    ap.add_argument("--corroborate", default=None, help="a retained intervention directory")
+    ap.add_argument("--attribute", default=None, help="the attribute the intervention was about")
+    ap.add_argument("--into", nargs="*", default=[], help="histories to write the sidecar beside")
+    a0, _ = ap.parse_known_args(argv)
+    if a0.corroborate:
+        rec = corroborate(Path(a0.corroborate), a0.attribute, [Path(p) for p in a0.into])
+        print(json.dumps({"wrote": [str(Path(p) / "field_theories_v4.json") for p in a0.into],
+                          "attribute": rec["attribute"]}, indent=1))
+        return 0
+    ap.add_argument("--run", required=False)
+    ap.add_argument("--chain", required=False)
+    ap.add_argument("--reading", required=False)
     ap.add_argument("--split", type=float, default=0.5)
     ap.add_argument("--control", default=None, help="a control to ask at every held-out state")
     ap.add_argument("--out", default=None)
     a = ap.parse_args(argv)
+    if not (a.run and a.chain and a.reading):
+        ap.error("--run, --chain and --reading are required (or --corroborate)")
     readings = {c.name: c.reading for c in _candidates(Path(a.chain))}
     r = theory(Path(a.run), readings[a.reading], split=a.split)
     model = r.pop("model")

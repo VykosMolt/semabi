@@ -145,15 +145,57 @@ def rescore(plan: dict, workdir: Path) -> dict:
     return verdict(plan, workdir, report)
 
 
+def propagate(result: dict, run_dir: Path | None = None) -> list[dict]:
+    """Feed a decided experiment back to the SOURCE history as retained refutations.
+
+    The search reads `identity_refutations_v4.json` beside a history and does not consider
+    a refuted key for that family again (`semabi.compiler.v4.search.read_refutations`), and
+    the freeze refuses a candidate that activates one.  A reading the experiment refuted is
+    written there for every family the plan keyed by it, with the experiment as provenance
+    -- which history, which actions, which terms decided -- so that the SOURCE learner's next
+    manifest carries what the application said, and nothing from the transfer histories."""
+    from semabi.compiler.v4 import search as v4_search
+
+    plan = result["plan"]
+    run_dir = Path(run_dir or plan["run"])
+    tie = plan["tie"]
+    families = tie.get("families") or [tie["family"]]
+    written = []
+    if result.get("outcome") != "DECIDED":
+        return written
+    for name in result.get("refuted", []):
+        reading = plan["readings"][name]
+        for family in families:
+            key = reading.get(family)
+            why = (f"refuted by an executed experiment ({plan.get('name', 'tie experiment')}): "
+                   f"harm {result['harm'][name]} on {result['decisive_terms']} against "
+                   f"{min(result['harm'].values())} for {', '.join(result['survivors'])}")
+            evidence = {"experiment": plan.get("name"), "actions": plan["actions"],
+                        "delta": result["delta"][name], "decisive_terms": result["decisive_terms"],
+                        "predicted": plan.get("predictions", {}).get(name)}
+            v4_search.write_refutation(run_dir, family, key, why, evidence)
+            written.append({"family": family, "key_slot": key})
+    return written
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--plan", required=True, help="JSON: run, base, readings, actions, predictions")
-    ap.add_argument("--workdir", required=True)
+    ap.add_argument("--workdir", default=None)
     ap.add_argument("--out", required=True)
     ap.add_argument("--rescore", action="store_true",
                     help="decide an experiment already performed in --workdir; no new steps")
+    ap.add_argument("--propagate", action="store_true",
+                    help="write the decided result at --out back to the SOURCE history as refutations")
     a = ap.parse_args(argv)
     plan = json.loads(Path(a.plan).read_text())
+    if a.propagate:
+        result = json.loads(Path(a.out).read_text())
+        written = propagate(result)
+        print(json.dumps({"propagated": written, "to": plan["run"]}, indent=1))
+        return 0
+    if not a.workdir:
+        ap.error("--workdir is required unless --propagate")
     report = rescore(plan, Path(a.workdir)) if a.rescore else run(plan, Path(a.workdir))
     Path(a.out).parent.mkdir(parents=True, exist_ok=True)
     Path(a.out).write_text(json.dumps(report, indent=1, default=str))

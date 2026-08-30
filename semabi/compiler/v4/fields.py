@@ -79,11 +79,48 @@ def holds(literal: tuple, obj) -> bool | None:
     return x >= numeric(v) if head == GE else x < numeric(v)
 
 
-def adopted(models: dict, candidates_: dict[int, dict[str, list[str]]]) -> dict[int, dict[str, list[str]]]:
-    """The candidate fields some control's fitted rule orders *and* is justified in ordering:
-    the rule's ordered literal covers fitting occasions with at least two distinct values of
-    the field, which is what an equality on the field could not have done."""
+SIDECAR = "field_theories_v4.json"
+
+
+def corroborated(run_dir, candidates_) -> set[tuple[int, str]]:
+    """Field theories a retained intervention corroborated, beside a history.
+
+    Blend's committed gallons: the fitting prefix refuses at 0 only, so the history alone
+    cannot tell an order from an equality there -- what did was the frozen ordered
+    hypothesis being right at 9 and at 0 on the live application while the equality guard
+    was refuted (`runs/v4/blend_bottle_intervention`).  That answer is written beside the
+    history as ``field_theories_v4.json`` -- the theory, the attribute, the intervention --
+    and read here, so the learner that posed the question consumes it as evidence.  A
+    candidate field is named by its attribute (`attr:Committed gal#0`), as the sidecar is."""
+    from pathlib import Path
+    import json
+
+    path = Path(run_dir) / SIDECAR
+    if not path.is_file():
+        return set()
+    wanted = {t["attribute"] for t in json.loads(path.read_text()).get("theories", [])
+              if t.get("theory") == "ORDERED"}
+    return {(tid, slot) for tid, slots in candidates_.items() for slot in slots if slot in wanted}
+
+
+def adopted(models: dict, candidates_: dict[int, dict[str, list[str]]],
+            corroborated_: set | None = None) -> dict[int, dict[str, list[str]]]:
+    """The candidate fields some control's fitted rule orders *and* is justified in ordering,
+    or that a retained intervention corroborated (`corroborated`).
+
+    Two things must hold of the rule's ordered literal ``x >= v`` (or ``x < v``) on the
+    control's fitting occasions.  It covers occasions with at least two distinct values of
+    the field -- what an equality could not have said.  And its threshold is witnessed on
+    *both* sides: occasions of the rule's event on the side it names, and occasions of some
+    other event on the other side.  Blend's `committed >= 2 -> bottled` has refusals at 0
+    and 1 below it; cellar's `capacity < 4000 -> already washed` had every washed vessel
+    below 4000 and one vessel above -- a threshold witnessed on the far side by a single
+    value is that instance, not an order, so the far side needs two values as well
+    (the version space's own `MIN_COVER` for a rule, applied to the order)."""
     out: dict[int, dict[str, list[str]]] = defaultdict(dict)
+    for tid, slot in (corroborated_ or ()):
+        if slot in candidates_.get(tid, {}):
+            out[tid][slot] = candidates_[tid][slot]
     for model in models.values():
         ev = model.evidence
         if ev is None:
@@ -92,7 +129,7 @@ def adopted(models: dict, candidates_: dict[int, dict[str, list[str]]]) -> dict[
             for lit in rule.condition:
                 if lit[0] not in (GE, LT):
                     continue
-                _head, role, slot, _v = lit
+                head, role, slot, v = lit
                 tid = getattr(model.roles.get(role), "tid", None)
                 if tid is None or slot not in candidates_.get(tid, {}):
                     continue
@@ -103,11 +140,30 @@ def adopted(models: dict, candidates_: dict[int, dict[str, list[str]]]) -> dict[
                 for b in bits:
                     cond |= 1 << b
                 covered = [i for i, m in enumerate(ev.masks) if m & cond == cond]
-                values = set()
-                for i in covered:
-                    for l, b in ev.index.items():
-                        if l[0] == "attr" and l[1] == role and l[2] == slot and ev.masks[i] & (1 << b):
-                            values.add(l[3])
-                if len(values) >= 2:
+                value_of = _field_values(ev, role, slot)
+                values = {value_of[i] for i in covered if i in value_of}
+                if len(values) < 2:
+                    continue
+                threshold = numeric(v)
+                named_side = (lambda x: x >= threshold) if head == GE else (lambda x: x < threshold)
+                other_side = {x for i, x in value_of.items()
+                              if not named_side(x) and ev.events[i] != rule.event}
+                # more than one value on the far side as well: a single instance there is
+                # that instance -- cellar's one 4000-gallon vessel -- and not an order
+                if len(other_side) >= 2:
                     out[tid][slot] = candidates_[tid][slot]
     return dict(out)
+
+
+def _field_values(ev, role: str, slot: str) -> dict[int, float]:
+    """Each fitting occasion's numeric value of a field, from the equality literals."""
+    out: dict[int, float] = {}
+    for l, b in ev.index.items():
+        if l[0] == "attr" and l[1] == role and l[2] == slot:
+            x = numeric(l[3])
+            if x is None:
+                continue
+            for i, m in enumerate(ev.masks):
+                if m & (1 << b):
+                    out[i] = x
+    return out

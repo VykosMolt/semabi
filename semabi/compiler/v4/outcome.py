@@ -1206,10 +1206,13 @@ def learn(inducer, *, permute: int | None = None, subject_restricted: bool = Fal
     proposed = field_theory.candidates(
         [tr.before for rows in by_control.values() for tr, _s, _o, _e in rows],
         getattr(A, "types", {}))
-    theory = {"candidates": proposed, "adopted": {}}
+    # what a retained intervention already corroborated, beside the history: a candidate
+    # field is named by its attribute, as the sidecar names it
+    corroborated = field_theory.corroborated(getattr(log, "dir", None) or "", proposed) if proposed else set()
+    theory = {"candidates": proposed, "adopted": {}, "corroborated": sorted(corroborated)}
     for ordered_pass in ([proposed, None] if proposed else [{}]):
         if ordered_pass is None:
-            adopted = field_theory.adopted(out, proposed)
+            adopted = field_theory.adopted(out, proposed, corroborated)
             theory["adopted"] = adopted
             if adopted == proposed:
                 break

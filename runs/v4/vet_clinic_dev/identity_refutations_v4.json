@@ -10,6 +10,240 @@
     "visibility": 0,
     "explained": 1
    }
+  },
+  {
+   "family": "row[_](cell@Actions[_](combobox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+   "key_slot": "cell@Owner#0",
+   "why": "refuted by an executed experiment (vet appointments: Owner vs Reason): harm 6 on ['positional', 'conflicts'] against 0 for Reason",
+   "evidence": {
+    "experiment": "vet appointments: Owner vs Reason",
+    "actions": [
+     {
+      "kind": "click",
+      "target": {
+       "role": "button",
+       "name": "Appointments"
+      }
+     },
+     {
+      "kind": "select",
+      "target": {
+       "role": "combobox",
+       "nth": 0
+      },
+      "option": 0
+     },
+     {
+      "kind": "type",
+      "target": {
+       "role": "textbox",
+       "nth": 0
+      },
+      "text": "probe alpha"
+     },
+     {
+      "kind": "click",
+      "target": {
+       "role": "button",
+       "name": "Schedule"
+      }
+     },
+     {
+      "kind": "select",
+      "target": {
+       "role": "combobox",
+       "nth": 0
+      },
+      "option": 0
+     },
+     {
+      "kind": "type",
+      "target": {
+       "role": "textbox",
+       "nth": 0
+      },
+      "text": "probe beta"
+     },
+     {
+      "kind": "click",
+      "target": {
+       "role": "button",
+       "name": "Schedule"
+      }
+     }
+    ],
+    "delta": {
+     "explained": 2,
+     "conflicts": 0,
+     "churn": 0,
+     "contradictions": 1,
+     "visibility": 3,
+     "spurious": 0,
+     "named": 0,
+     "positional": 6
+    },
+    "decisive_terms": [
+     "positional",
+     "conflicts"
+    ],
+    "predicted": "the second appointment for the same owner collides with the first: one object with disagreeing mentions (Reason), a conflict, no second creation"
+   }
+  },
+  {
+   "family": "row[_](cell@Actions[_](textbox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+   "key_slot": "cell@Owner#0",
+   "why": "refuted by an executed experiment (vet appointments: Owner vs Reason): harm 6 on ['positional', 'conflicts'] against 0 for Reason",
+   "evidence": {
+    "experiment": "vet appointments: Owner vs Reason",
+    "actions": [
+     {
+      "kind": "click",
+      "target": {
+       "role": "button",
+       "name": "Appointments"
+      }
+     },
+     {
+      "kind": "select",
+      "target": {
+       "role": "combobox",
+       "nth": 0
+      },
+      "option": 0
+     },
+     {
+      "kind": "type",
+      "target": {
+       "role": "textbox",
+       "nth": 0
+      },
+      "text": "probe alpha"
+     },
+     {
+      "kind": "click",
+      "target": {
+       "role": "button",
+       "name": "Schedule"
+      }
+     },
+     {
+      "kind": "select",
+      "target": {
+       "role": "combobox",
+       "nth": 0
+      },
+      "option": 0
+     },
+     {
+      "kind": "type",
+      "target": {
+       "role": "textbox",
+       "nth": 0
+      },
+      "text": "probe beta"
+     },
+     {
+      "kind": "click",
+      "target": {
+       "role": "button",
+       "name": "Schedule"
+      }
+     }
+    ],
+    "delta": {
+     "explained": 2,
+     "conflicts": 0,
+     "churn": 0,
+     "contradictions": 1,
+     "visibility": 3,
+     "spurious": 0,
+     "named": 0,
+     "positional": 6
+    },
+    "decisive_terms": [
+     "positional",
+     "conflicts"
+    ],
+    "predicted": "the second appointment for the same owner collides with the first: one object with disagreeing mentions (Reason), a conflict, no second creation"
+   }
+  },
+  {
+   "family": "row[_](cell@Actions[_],cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+   "key_slot": "cell@Owner#0",
+   "why": "refuted by an executed experiment (vet appointments: Owner vs Reason): harm 6 on ['positional', 'conflicts'] against 0 for Reason",
+   "evidence": {
+    "experiment": "vet appointments: Owner vs Reason",
+    "actions": [
+     {
+      "kind": "click",
+      "target": {
+       "role": "button",
+       "name": "Appointments"
+      }
+     },
+     {
+      "kind": "select",
+      "target": {
+       "role": "combobox",
+       "nth": 0
+      },
+      "option": 0
+     },
+     {
+      "kind": "type",
+      "target": {
+       "role": "textbox",
+       "nth": 0
+      },
+      "text": "probe alpha"
+     },
+     {
+      "kind": "click",
+      "target": {
+       "role": "button",
+       "name": "Schedule"
+      }
+     },
+     {
+      "kind": "select",
+      "target": {
+       "role": "combobox",
+       "nth": 0
+      },
+      "option": 0
+     },
+     {
+      "kind": "type",
+      "target": {
+       "role": "textbox",
+       "nth": 0
+      },
+      "text": "probe beta"
+     },
+     {
+      "kind": "click",
+      "target": {
+       "role": "button",
+       "name": "Schedule"
+      }
+     }
+    ],
+    "delta": {
+     "explained": 2,
+     "conflicts": 0,
+     "churn": 0,
+     "contradictions": 1,
+     "visibility": 3,
+     "spurious": 0,
+     "named": 0,
+     "positional": 6
+    },
+    "decisive_terms": [
+     "positional",
+     "conflicts"
+    ],
+    "predicted": "the second appointment for the same owner collides with the first: one object with disagreeing mentions (Reason), a conflict, no second creation"
+   }
   }
  ]
 }

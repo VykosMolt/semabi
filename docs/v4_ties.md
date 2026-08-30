@@ -108,6 +108,81 @@ The number, `cell@Ticket#1`, was among the search's own alternatives (`Ticket#0`
 `Ticket#1` is one of its open questions) and was added to the plan as a third reading; it
 is the only one the two draws did not touch.
 
+## Part III — the loop closed, and the four states of a tie
+
+**Propagation.**  A decided experiment is now retained evidence for the learner that posed
+the question.  `v4_tie_experiment --propagate` writes every reading the experiment refuted
+into the SOURCE history's `identity_refutations_v4.json` -- the sidecar the search already
+reads (`read_refutations`) and the freeze already enforces (a candidate activating a
+refuted key is refused) -- with the experiment as provenance: which actions, which terms,
+what each reading predicted.  Nothing from a transfer or held-out history enters; the
+application's answer to a question the SOURCE search asked is the only new fact.
+
+Rerun from SOURCE with those refutations in place:
+
+| SOURCE history | refuted by experiment | the search now keys the family by | note |
+|---|---|---|---|
+| harbour | calls: `Status` | `Vessel` | the survivor; `Length overall` is still an open alternative (below) |
+| blend | draws: `Ticket#0` (the word), `Amount` | `Ticket#1` (the number) | the survivor, `UNSUPPORTED` on a history that never showed two draws at once |
+| vet | appointments: `Owner` (three families) | `Reason|Vet` / `Patient` / none | not the survivor: a refutation removes a reading, it does not crown another, and the search re-decides among what is left |
+
+The vet row is the honest shape of the loop.  The experiment refuted `Owner`; among the
+remaining candidates the structural rank and the objective chose composites and the
+patient, and the same experiment bears on those too -- re-scored with `Patient` and
+`Patient|Reason` as readings it refutes `Patient` too (four positions for Luna's three
+appointments) and keeps `Reason` and `Patient|Reason` -- which is also the transfer
+history's open pair, decided by the same retained result.  Whether the SOURCE manifest carries the
+experimentally supported key therefore depends on the whole surviving set, not on one
+refutation; the mechanism that makes it converge is to keep asking.
+
+**Four states.**  A tie the search leaves is now one of four things, read off the fitted
+operators and the retained evidence (`semabi.eval.v4_identity_ties`):
+
+* **DECIDED** -- a retained experiment whose readings keyed the family by *both* contested
+  keys refuted one, or the history's own sidecar refutes one.  An experiment about another
+  pair of the same family decides nothing here (an early version marked `Vessel` vs
+  `Length overall` decided by the experiment about `Status`; it was not).
+* **DECIDABLE** -- an operator writes a contested slot, or a maker's instances in the
+  history already took the contested value more than once while the other key differed:
+  the collision a plan needs is a state the interaction is known to reach.
+* **REACHABLE, NOT DISCRIMINATING** -- an operator touches the family, and every instance
+  it ever made kept the two keys correlated.  `Schedule call` makes calls and every call
+  carried its vessel's own length: no reachable state separates `Vessel` from
+  `Length overall`.  Resolving that by parsimony would be a claim the evidence does not
+  make; the two readings are kept as provisionally equivalent.
+* **NO KNOWN EXPERIMENT** -- nothing the learner knows touches either key: berths by
+  `Berth` vs `Takes up to`, pilots by `Pilot` vs `Ticket to`, blends by `Blend` vs `Year`.
+
+| history | open | decided | decidable | reachable, not discriminating | no known experiment |
+|---|---|---|---|---|---|
+| harbour (transfer) | 5 | 0 | 0 | 1 (`Vessel` vs `Length overall`) | 4 |
+| harbour (dev) | 4 | 0 | 0 | 2 | 2 |
+| blend (transfer / dev) | 1 / 1 | 0 | 0 | 0 | 1 (`Blend` vs `Year`) |
+| vet (transfer) | 3 | 2 (`Patient|Reason` vs `Patient`, by `result_vet.json`) | 0 | 1 (the notes textbox) | 0 |
+| vet (dev) | 13 | 0 | 1 | 7 | 5 |
+
+(`docs/data/v4/identity_ties_*.json`.)
+
+Reachability and identifiability came apart on exactly one witness, and the machinery to
+tell them apart was small: the maker's own positives, read for whether the contested
+values ever repeated.  No planner was built; the three experiments were written by hand
+from what the instrument said, and the one further tie a SOURCE history demanded --
+blend's `Ticket#1` vs `Into blend` -- has the same shape as the one already run.
+
+**ORDERED under stress.**  Every version space is identical nominal and ordered on
+harbour, cellar and blend: no new forced prediction, no vacuity, no guard substituted on
+any suffix.  Harbour's `Length overall` and `Takes up to`, a vet count, blend's `Year` and
+`Gallons left` are candidates and stay nominal.  Cellar's `Capacity` was adopted on
+`Wash out: capacity < 4000 -> already washed [5]` -- every vessel washed in the fitting
+data happened to be smaller than the one never washed, a threshold witnessed on one side
+only.  Bottle's threshold has refusals below it and successes at and above it.  That is
+the difference between an order the application compares against and the accident of
+which instances a history used, and it is now the adoption criterion: the ordered rule's
+threshold must have occasions of the rule's event on its side and of another event on the
+other.  FIELDS_AFTER  The known false prediction -- "bottled" on an already-bottled blend
+still showing committed 3 -- predates ORDERED, is missing guard context (`state`), and is
+kept as a conformance counterexample, not repaired here.
+
 ## What this says
 
 A surviving tie is not a failure to decide; it is a statement that the history did not

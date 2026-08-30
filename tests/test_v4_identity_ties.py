@@ -60,3 +60,38 @@ def test_an_experiment_is_decided_on_its_own_terms(monkeypatch, tmp_path):
     plan["test"] = "mutation"
     got = exp.verdict(plan, tmp_path, dict(report, after={}, delta={}))
     assert got["outcome"] == "BOTH_HURT_ALIKE" and got["harm"] == {"A": 1, "B": 1}
+
+
+def test_reachable_is_not_identifiable_unless_the_history_separates_the_keys():
+    """Harbour's calls: `Schedule call` makes a call for a vessel, and every call it made
+    carried the vessel's own length -- the maker touches the family and never reaches a
+    state where two calls share a length but not a vessel.  That tie is reachable and not
+    discriminating; `Status`, which every new call shares, is."""
+    rows = [{"cell@Vessel#0": "Selkie", "cell@Length overall#0": "64 m", "cell@Status#0": "expected"},
+            {"cell@Vessel#0": "Kestrel", "cell@Length overall#0": "71 m", "cell@Status#0": "expected"},
+            {"cell@Vessel#0": "Selkie", "cell@Length overall#0": "64 m", "cell@Status#0": "alongside"}]
+    assert not ties._separable(rows, "cell@Length overall#0", ["cell@Vessel#0"])
+    assert ties._separable(rows, "cell@Status#0", ["cell@Vessel#0"])
+    assert ties._separable(rows, "cell@Vessel#0", ["cell@Status#0"])       # Selkie twice, statuses differ
+
+
+def test_a_retained_experiment_marks_a_family_decided(tmp_path):
+    import json
+    run = tmp_path / "v4" / "app_dev"
+    run.mkdir(parents=True)
+    exp = tmp_path / "v4" / "identity_experiments"
+    exp.mkdir()
+    (exp / "result_app.json").write_text(json.dumps({
+        "outcome": "DECIDED", "survivors": ["Vessel"], "refuted": ["Status"],
+        "plan": {"tie": {"family": "row[_](x)"}, "readings": {"Vessel": {"row[_](x)": "cell@Vessel#0"},
+                                                                "Status": {"row[_](x)": "cell@Status#0"}}}}))
+    got = ties._decided(run, "row[_](x)", ("cell@Vessel#0", "cell@Status#0"))
+    assert got["by"] == "experiment" and got["survivors"] == ["Vessel"] and got["keys"]["Status"] == "cell@Status#0"
+    assert ties._decided(run, "row[_](y)", ("cell@Vessel#0", "cell@Status#0")) is None
+    # an experiment about another pair of the same family decides nothing about this one
+    assert ties._decided(run, "row[_](x)", ("cell@Vessel#0", "cell@Length overall#0")) is None
+    # a refutation in the history's own sidecar does
+    (run / "identity_refutations_v4.json").write_text(json.dumps({"refuted": [
+        {"family": "row[_](x)", "key_slot": "cell@Length overall#0", "why": "probed", "evidence": {}}]}))
+    got = ties._decided(run, "row[_](x)", ("cell@Vessel#0", "cell@Length overall#0"))
+    assert got["by"] == "refutation" and got["survivors"] == ["cell@Vessel#0"]

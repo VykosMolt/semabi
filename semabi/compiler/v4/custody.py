@@ -35,6 +35,7 @@ RECOGNIZED_INPUTS = frozenset(
         "probes.jsonl",
         "probes.acquired.jsonl",
         "identity_refutations_v4.json",
+        "field_theories_v4.json",
     }
 )
 REQUIRED_INPUTS = frozenset({"observations.jsonl", "steps.jsonl"})
@@ -44,7 +45,11 @@ REQUIRED_INPUTS = frozenset({"observations.jsonl", "steps.jsonl"})
 # about any state of the history, and the compiler reads both files alike.  The
 # identity-refutation sidecar is consumed by SOURCE generation, but it is not evidence used
 # by replay and therefore must not establish role independence.
-CONSUMED_INPUTS = REQUIRED_INPUTS | frozenset({"probes.jsonl", "probes.acquired.jsonl"})
+# ``field_theories_v4.json`` -- the field theories a retained intervention corroborated
+# (`semabi.compiler.v4.fields`) -- is read when the outcome layer is learned, so it is
+# evidence used by replay and part of what is consumed.
+CONSUMED_INPUTS = REQUIRED_INPUTS | frozenset({"probes.jsonl", "probes.acquired.jsonl",
+                                               "field_theories_v4.json"})
 
 
 class CustodyError(ValueError):

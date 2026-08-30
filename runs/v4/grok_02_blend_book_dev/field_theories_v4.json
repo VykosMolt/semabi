@@ -1,0 +1,47 @@
+{
+ "theories": [
+  {
+   "attribute": "attr:Committed gal#0",
+   "theory": "ORDERED",
+   "corroborated_by": "runs/v4/blend_bottle_intervention",
+   "hypotheses": {
+    "H_nom": "success iff committed in {2,3,4} (fitting successes); else not established",
+    "H_neq1": "success iff committed != 1 (the learned guard)",
+    "H_ord": "success iff committed >= 2",
+    "frozen_at": "2026-08-29 15:25:58",
+    "seed": 4242,
+    "predictions": {
+     "A committed=7": {
+      "H_nom": "not established",
+      "H_neq1": "success",
+      "H_ord": "success"
+     },
+     "B committed=0": {
+      "H_nom": "not established",
+      "H_neq1": "success",
+      "H_ord": "refusal"
+     }
+    }
+   },
+   "results": [
+    {
+     "state": "A",
+     "blend": "Picnic",
+     "committed": 9,
+     "model": "forces <> <> .(Picnic) changing [('set', 'attr:cell#0@5')]",
+     "control": "button:Bottle _",
+     "returned": "Bottled Picnic."
+    },
+    {
+     "state": "B",
+     "blend": "Festival White",
+     "committed": 0,
+     "model": "not established here",
+     "control": "button:Bottle _",
+     "returned": "Festival White has 0 gal committed; need at least 2 to bottle."
+    }
+   ],
+   "why": "the frozen ordered hypothesis was right at values no history contained and the equality guard was refuted there"
+  }
+ ]
+}

@@ -25,8 +25,14 @@ from pathlib import Path
 from semabi.compiler.compile_v4 import compile_v4
 from semabi.compiler.v4.identity import family_key
 
-REACHABLE = "REACHABLE"                     # an operator writes a contested slot
-QUOTIENT_EQUIVALENT = "QUOTIENT_EQUIVALENT"  # no known interaction touches either key
+# Four things a surviving tie can be, and the evidence that puts it there.
+DECIDED = "DECIDED"                          # a retained experiment refuted one side
+DECIDABLE = "DECIDABLE"                      # a known interaction reaches a state that separates them
+REACHABLE_NOT_DISCRIMINATING = "REACHABLE_NOT_DISCRIMINATING"  # an interaction touches the family, but
+                                             # every state it reached kept the two keys correlated
+NO_KNOWN_EXPERIMENT = "NO_KNOWN_EXPERIMENT"  # nothing the learner knows touches either key
+REACHABLE = DECIDABLE                        # older name
+QUOTIENT_EQUIVALENT = NO_KNOWN_EXPERIMENT    # older name
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "docs/data/v4"
 
@@ -67,6 +73,80 @@ def _makers(operators, tids: list[int]) -> list[dict]:
             typed = [str(a) for a in op.acts if a.kind in ("type", "select")]
             out.append({**_describe(op), "test": "collision", "parameters": typed})
     return out
+
+
+def _made_values(operators, tids: list[int], slots: list[str]) -> dict[str, list[dict]]:
+    """For every maker, the contested values of the instances it made in the history: the
+    evidence for whether a collision on a slot is *reachable* (the maker's instances took
+    that value more than once while another contested slot differed) or only touched."""
+    out: dict[str, list[dict]] = {}
+    for op in operators:
+        if not any(eff.kind == "add" and eff.tid in tids for eff in op.effs):
+            continue
+        rows = []
+        for tr in getattr(op, "positives", []):
+            for o in (tr.d.added if tr.d is not None else ()):
+                if o.tid in tids:
+                    rows.append({s: o.attrs.get(_attr(s)) for s in slots} | {"key": o.key})
+        out[op.name] = rows
+    return out
+
+
+def _attr(slot: str) -> str:
+    """The attribute name an object carries for a hypothesis slot: `cell@Pilot#0` renders
+    as `attr:Pilot#0` (`V2Abstractor.attr_name`); the fallback keeps the slot itself."""
+    if slot.startswith("cell@"):
+        column, _, k = slot[5:].rpartition("#")
+        return f"attr:{column}#{k.split('@')[0]}"
+    return f"attr:{slot}"
+
+
+def _separable(rows: list[dict], slot: str, other: list[str]) -> bool:
+    """Do the made instances ever repeat `slot`'s value while some other contested slot
+    differs?  That is the state a collision experiment has to produce; if the maker never
+    produced it, the correlation may be one the application preserves (every vessel its own
+    length) and the tie is not identifiable by this interaction."""
+    seen: dict = {}
+    for r in rows:
+        v = r.get(slot)
+        if v is None:
+            continue
+        others = tuple(r.get(o) for o in other)
+        if v in seen and seen[v] != others:
+            return True
+        seen.setdefault(v, others)
+    return False
+
+
+def _decided(run_dir: Path, family: str, keys: tuple = ()) -> dict | None:
+    """What already decided this pair: a retained experiment whose readings keyed the
+    family by *both* contested keys (`runs/v4/identity_experiments`), or a refutation of
+    one side in the history's own sidecar (`identity_refutations_v4.json`).  An experiment
+    about another pair of the same family decides nothing here."""
+    root = Path(run_dir).resolve().parent / "identity_experiments"
+    wanted = set(keys)
+    if root.is_dir():
+        for path in sorted(root.glob("result_*.json")):
+            result = json.loads(path.read_text())
+            plan = result.get("plan", {})
+            tie = plan.get("tie", {})
+            families = tie.get("families") or ([tie["family"]] if "family" in tie else [])
+            if family not in families or result.get("outcome") != "DECIDED":
+                continue
+            keyed = {n: plan["readings"][n].get(family) for n in plan["readings"]}
+            if wanted and not wanted <= set(keyed.values()):
+                continue
+            return {"by": "experiment", "experiment": path.name, "survivors": result["survivors"],
+                    "refuted": result["refuted"], "keys": keyed}
+    sidecar = Path(run_dir) / "identity_refutations_v4.json"
+    if sidecar.is_file():
+        refuted = [r for r in json.loads(sidecar.read_text()).get("refuted", [])
+                   if r["family"] == family and r["key_slot"] in wanted]
+        if refuted:
+            return {"by": "refutation", "refuted": [r["key_slot"] for r in refuted],
+                    "survivors": sorted(wanted - {r["key_slot"] for r in refuted}),
+                    "why": refuted[0].get("why", "")[:120]}
+    return None
 
 
 def _movers(operators, tids: list[int]) -> list[dict]:
@@ -114,10 +194,24 @@ def analyse(run_dir: Path) -> dict:
         movers = _movers(operators, tids)
         tests = ([{"slot": slot, **w} for slot, ws in writers.items() for w in ws]
                  + makers + movers)
-        status = REACHABLE if tests else QUOTIENT_EQUIVALENT
+        decided = _decided(run_dir, q.template, (sides["left"], sides["right"]))
+        made = _made_values(operators, tids, contested) if makers else {}
+        separable = {slot: any(_separable(rows, slot, [o for o in contested if o != slot])
+                               for rows in made.values())
+                     for slot in contested} if made else {}
+        if decided is not None:
+            status = DECIDED
+        elif writers or any(separable.values()):
+            status = DECIDABLE
+        elif tests:
+            status = REACHABLE_NOT_DISCRIMINATING
+        else:
+            status = NO_KNOWN_EXPERIMENT
         entry = {"family": q.template, "left": sides["left"], "right": sides["right"],
                  "reason": q.reason, "tids": tids, "contested": contested, "status": status,
-                 "writers": writers, "makers": makers, "movers": movers}
+                 "writers": writers, "makers": makers, "movers": movers,
+                 "made_values": {op: rows[:12] for op, rows in made.items()},
+                 "separable_by_the_history": separable, "decided": decided}
         if writers:
             slot, ops = next(iter(writers.items()))
             entry["experiment"] = {
@@ -144,7 +238,7 @@ def analyse(run_dir: Path) -> dict:
         questions.append(entry)
     return {"run": Path(run_dir).name, "final": result.final.to_json(),
             "open_questions": len(questions), "questions": questions,
-            "reachable": sum(1 for q in questions if q["status"] == REACHABLE)}
+            "reachable": sum(1 for q in questions if q["status"] in (DECIDABLE, DECIDED))}
 
 
 def main(argv=None) -> int:
@@ -153,9 +247,17 @@ def main(argv=None) -> int:
     ap.add_argument("--out", default=None)
     a = ap.parse_args(argv)
     r = analyse(Path(a.run))
-    print(f"\n{r['run']}: {r['open_questions']} open questions, {r['reachable']} reachable")
+    counts = {}
     for q in r["questions"]:
-        print(f"  {q['status']:20} {q['family'][:52]:52} {q['left']!s:26} vs {q['right']!s:26} contested={q['contested']}")
+        counts[q["status"]] = counts.get(q["status"], 0) + 1
+    print(f"\n{r['run']}: {r['open_questions']} open questions {counts}")
+    for q in r["questions"]:
+        print(f"  {q['status']:28} {q['family'][:48]:48} {q['left']!s:24} vs {q['right']!s:24} contested={q['contested']}")
+        if q.get("decided"):
+            d = q["decided"]
+            print(f"      decided by {d['by']} {d.get('experiment', '')}: survivors {d['survivors']}")
+        if q.get("separable_by_the_history"):
+            print(f"      the history's makes separate: {q['separable_by_the_history']}")
         for slot, ops in q["writers"].items():
             for op in ops[:3]:
                 print(f"      {slot} is written by {op['control']} (support {op['support']}): {op['effect'][:80]}")
