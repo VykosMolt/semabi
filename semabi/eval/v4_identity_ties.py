@@ -241,11 +241,172 @@ def analyse(run_dir: Path) -> dict:
             "reachable": sum(1 for q in questions if q["status"] in (DECIDABLE, DECIDED))}
 
 
+def _override(reading_json: dict, family: str, key_slot: str | None) -> dict:
+    import copy
+    out = copy.deepcopy(reading_json)
+    fam = out["families"].setdefault(family, {"family": family})
+    fam["key_slot"] = key_slot
+    fam["status"] = "SUPPORTED" if key_slot else "NO_IDENTITY"
+    return out
+
+
+# What a version space can say about a step, partitioned by *correctness* rather than by
+# confidence: a rule-forced prediction and the only-outcome-ever-seen default are different
+# strengths of claim, but when both were right the application refuted neither, and a
+# semantic question must not be decided by which hypothesis class happened to answer.
+RIGHT = ("one outcome was admissible and it happened",
+         "the only outcome ever seen on this control, and it happened")
+WRONG = ("one outcome was admissible and a different one happened",
+         "the only outcome ever seen on this control, and something else happened")
+ESTABLISHED_RIGHT = RIGHT[0]      # kept for reading the reports
+ESTABLISHED_WRONG = WRONG[0]
+
+
+def retro_decision(left_rows: list[dict], right_rows: list[dict]) -> dict:
+    """Compare two readings' verdicts where they disagree, and decide only on dominance.
+
+    The differential discipline of `v4_tie_experiment.verdict`, applied to a history
+    instead of an intervention: a step both readings treat alike is no evidence between
+    them, so only the steps where the version spaces differ are read, and there a side is
+    refuted exactly when the other predicts strictly more of what the application actually
+    returned while getting nothing more wrong.  Right and wrong are about the returned
+    outcome, not the hypothesis class that called it: a step where both readings named
+    what happened -- one by rule, one as the only outcome ever seen -- counts for both.
+    Anything else -- both better somewhere, or no disagreement at all -- leaves the
+    question standing."""
+    by_left = {r["step"]: r for r in left_rows}
+    diffs = []
+    for r in right_rows:
+        l = by_left.get(r["step"])
+        if l is not None and (l["verdict"], l.get("admissible")) != (r["verdict"], r.get("admissible")):
+            diffs.append((l, r))
+    counts = {"left": {"right": 0, "wrong": 0}, "right": {"right": 0, "wrong": 0}}
+    details = []
+    for l, r in diffs:
+        counts["left"]["right"] += l["verdict"] in RIGHT
+        counts["left"]["wrong"] += l["verdict"] in WRONG
+        counts["right"]["right"] += r["verdict"] in RIGHT
+        counts["right"]["wrong"] += r["verdict"] in WRONG
+        details.append({"step": r["step"], "control": r.get("control"),
+                        "left": l["verdict"], "right": r["verdict"]})
+    out = {"disagreements": len(diffs), "counts": counts, "outcome": "UNDECIDED",
+           "details": details[:24]}
+    lc, rc = counts["left"], counts["right"]
+    if diffs and lc["right"] > rc["right"] and lc["wrong"] <= rc["wrong"]:
+        out["outcome"], out["refuted"], out["survivor"] = "DECIDED", "right", "left"
+    elif diffs and rc["right"] > lc["right"] and rc["wrong"] <= lc["wrong"]:
+        out["outcome"], out["refuted"], out["survivor"] = "DECIDED", "left", "right"
+    return out
+
+
+def retrospective(run_dir: Path, *, split: float = 0.5, propagate: bool = False) -> dict:
+    """Ask each open question what the retained history itself already answered.
+
+    Two readings that tie on the state objective can still differ in what the interface's
+    own responses let them say: harbour's vessels overview keyed by anything makes the
+    clicked row an object, `Schedule call` learns `ref_set(owner, rel) -> already has a
+    call`, and more of the history's actual responses are predicted with nothing more
+    wrong; unkeyed, the rule is inexpressible and those steps stay unestablished.  That is
+    behaviour the history retains, not an intervention -- so it is scored under the
+    frozen-prefix regime (fit on the prefix, judged on the suffix it never saw), on the
+    steps where the two readings disagree, and a side is refuted only by strict dominance
+    (`retro_decision`).  A verdict propagates exactly like an executed experiment's: a
+    refutation row beside the history, bound to what the slot held
+    (`semabi.compiler.v4.search.write_refutation`)."""
+    from semabi.compiler.evidence import EvidenceLog
+    from semabi.compiler.v4 import consequence as csq
+    from semabi.compiler.v4 import pinned as v4_pinned
+    from semabi.compiler.v4 import search as v4_search
+    from semabi.eval.v4_renaming import _verdicts
+
+    run_dir = Path(run_dir)
+    compiled = compile_v4(run_dir, min_support=2, write_diagnostics=False)
+    result, H = compiled.v4, compiled.hypotheses
+    reading_json = {"name": f"retrospective:{run_dir.name}", "families": {
+        family_key(t): {"family": family_key(t), "key_slot": r.key_slot, "status": r.status}
+        for t, r in result.chosen.items()}}
+    log = EvidenceLog(run_dir)
+    cut = int(len(log.steps) * split)
+    fits: dict = {}
+
+    def suffix_verdicts(family: str, key_slot: str | None) -> list[dict] | str:
+        token = (family, key_slot)
+        if token not in fits:
+            try:
+                pr = v4_pinned.PinnedReading.from_json(_override(reading_json, family, key_slot))
+                model = csq.fit(run_dir, pr, split=split)
+                fits[token] = [x for x in _verdicts(model, log) if x["step"] >= cut]
+            except Exception as exc:  # noqa: BLE001 - reported, never silently dropped
+                fits[token] = f"fit failed: {type(exc).__name__}: {exc}"
+        return fits[token]
+
+    rows = []
+    for q in result.open_questions:
+        sides = {"left": q.left.key_slot, "right": q.right.key_slot}
+        lv = suffix_verdicts(q.template, sides["left"])
+        rv = suffix_verdicts(q.template, sides["right"])
+        if isinstance(lv, str) or isinstance(rv, str):
+            rows.append({"family": q.template, **sides, "outcome": "UNESTABLISHED",
+                         "error": lv if isinstance(lv, str) else rv})
+            continue
+        decision = retro_decision(lv, rv)
+        row = {"family": q.template, **sides, "split": split, "cut": cut,
+               "suffix_steps": len(lv), "disagreements": decision["disagreements"],
+               "counts": decision["counts"], "details": decision["details"],
+               "outcome": decision["outcome"]}
+        if decision["outcome"] == "DECIDED":
+            row["refuted"] = sides[decision["refuted"]]
+            row["survivor"] = sides[decision["survivor"]]
+        rows.append(row)
+        if propagate and decision["outcome"] == "DECIDED":
+            win, lose = decision["counts"][decision["survivor"]], decision["counts"][decision["refuted"]]
+            why = (f"refuted by retained outcome evidence (frozen prefix at {cut}): on the "
+                   f"{decision['disagreements']} suffix steps where the readings disagree, "
+                   f"{win['right']} of the application's responses are predicted under "
+                   f"{row['survivor']!r} with {win['wrong']} wrong, against {lose['right']} "
+                   f"/ {lose['wrong']} under {row['refuted']!r}")
+            evidence = {"instrument": "retrospective outcome comparison", "split": split,
+                        "cut": cut, "disagreements": decision["disagreements"],
+                        "counts": decision["counts"], "details": decision["details"],
+                        "survivor": row["survivor"]}
+            held = sorted(v4_search.slot_values(H, q.template, row["refuted"]))
+            v4_search.write_refutation(run_dir, q.template, row["refuted"], why, evidence,
+                                       held=held)
+            row["propagated"] = True
+    return {"run": run_dir.name, "split": split, "questions": rows}
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--run", required=True)
     ap.add_argument("--out", default=None)
+    ap.add_argument("--retrospective", action="store_true",
+                    help="fit both readings of every open question on this history's frozen "
+                         "prefix and compare their suffix verdicts where they disagree")
+    ap.add_argument("--split", type=float, default=0.5)
+    ap.add_argument("--propagate", action="store_true",
+                    help="write a retrospective DECIDED verdict into the history's "
+                         "identity_refutations_v4.json, like an executed experiment's")
     a = ap.parse_args(argv)
+    if a.retrospective:
+        r = retrospective(Path(a.run), split=a.split, propagate=a.propagate)
+        print(f"\n{r['run']}: retrospective outcome comparison at split {r['split']}")
+        for q in r["questions"]:
+            print(f"  {q['outcome']:13} {q['family'][:44]:44} {q['left']!s:22} vs "
+                  f"{q['right']!s:22} disagreements={q.get('disagreements')}")
+            if q.get("counts"):
+                c = q["counts"]
+                print(f"      left right/wrong {c['left']['right']}/{c['left']['wrong']}, "
+                      f"right {c['right']['right']}/{c['right']['wrong']}"
+                      + (f"; survivor {q['survivor']!r}" if q.get("survivor") else "")
+                      + ("; propagated" if q.get("propagated") else ""))
+            if q.get("error"):
+                print(f"      {q['error'][:120]}")
+        if a.out:
+            path = OUT / a.out if not str(a.out).startswith("/") else Path(a.out)
+            path.write_text(json.dumps(r, indent=1, default=str))
+            print(f"wrote {path}")
+        return 0
     r = analyse(Path(a.run))
     counts = {}
     for q in r["questions"]:

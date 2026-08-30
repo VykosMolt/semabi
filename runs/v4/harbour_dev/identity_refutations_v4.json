@@ -44,6 +44,144 @@
     "alongside",
     "expected"
    ]
+  },
+  {
+   "family": "button[_]",
+   "key_slot": "button#0",
+   "why": "refuted by retained outcome evidence (frozen prefix at 186): on the 1 suffix steps where the readings disagree, 1 of the application's responses are predicted under None with 0 wrong, against 0 / 0 under 'button#0'",
+   "evidence": {
+    "instrument": "retrospective outcome comparison",
+    "split": 0.5,
+    "cut": 186,
+    "disagreements": 1,
+    "counts": {
+     "left": {
+      "right": 1,
+      "wrong": 0
+     },
+     "right": {
+      "right": 0,
+      "wrong": 0
+     }
+    },
+    "details": [
+     {
+      "step": 218,
+      "control": "button:Bring _",
+      "left": "one outcome was admissible and it happened",
+      "right": "no outcome is established for this state"
+     }
+    ],
+    "survivor": null
+   },
+   "held": [
+    "C-101",
+    "C-102",
+    "C-103"
+   ]
+  },
+  {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "key_slot": null,
+   "why": "refuted by retained outcome evidence (frozen prefix at 186): on the 13 suffix steps where the readings disagree, 12 of the application's responses are predicted under 'cell@Vessel#0' with 0 wrong, against 1 / 0 under None",
+   "evidence": {
+    "instrument": "retrospective outcome comparison",
+    "split": 0.5,
+    "cut": 186,
+    "disagreements": 13,
+    "counts": {
+     "left": {
+      "right": 1,
+      "wrong": 0
+     },
+     "right": {
+      "right": 12,
+      "wrong": 0
+     }
+    },
+    "details": [
+     {
+      "step": 192,
+      "control": "button:Schedule call",
+      "left": "no outcome is established for this state",
+      "right": "one outcome was admissible and it happened"
+     },
+     {
+      "step": 193,
+      "control": "button:Schedule call",
+      "left": "no outcome is established for this state",
+      "right": "one outcome was admissible and it happened"
+     },
+     {
+      "step": 198,
+      "control": "button:Schedule call",
+      "left": "no outcome is established for this state",
+      "right": "one outcome was admissible and it happened"
+     },
+     {
+      "step": 214,
+      "control": "button:Schedule call",
+      "left": "no outcome is established for this state",
+      "right": "one outcome was admissible and it happened"
+     },
+     {
+      "step": 218,
+      "control": "button:Bring _",
+      "left": "one outcome was admissible and it happened",
+      "right": "no outcome is established for this state"
+     },
+     {
+      "step": 250,
+      "control": "button:Schedule call",
+      "left": "no outcome is established for this state",
+      "right": "one outcome was admissible and it happened"
+     },
+     {
+      "step": 251,
+      "control": "button:Schedule call",
+      "left": "no outcome is established for this state",
+      "right": "one outcome was admissible and it happened"
+     },
+     {
+      "step": 260,
+      "control": "button:Schedule call",
+      "left": "no outcome is established for this state",
+      "right": "one outcome was admissible and it happened"
+     },
+     {
+      "step": 292,
+      "control": "button:Schedule call",
+      "left": "no outcome is established for this state",
+      "right": "one outcome was admissible and it happened"
+     },
+     {
+      "step": 314,
+      "control": "button:Schedule call",
+      "left": "no outcome is established for this state",
+      "right": "one outcome was admissible and it happened"
+     },
+     {
+      "step": 316,
+      "control": "button:Schedule call",
+      "left": "no outcome is established for this state",
+      "right": "one outcome was admissible and it happened"
+     },
+     {
+      "step": 342,
+      "control": "button:Schedule call",
+      "left": "no outcome is established for this state",
+      "right": "one outcome was admissible and it happened"
+     },
+     {
+      "step": 348,
+      "control": "button:Schedule call",
+      "left": "no outcome is established for this state",
+      "right": "one outcome was admissible and it happened"
+     }
+    ],
+    "survivor": "cell@Vessel#0"
+   },
+   "held": []
   }
  ]
 }

@@ -1,0 +1,306 @@
+{
+ "run": "harbour_dev",
+ "split": 0.5,
+ "questions": [
+  {
+   "family": "button[_]",
+   "left": null,
+   "right": "button#0",
+   "split": 0.5,
+   "cut": 186,
+   "suffix_steps": 107,
+   "disagreements": 1,
+   "counts": {
+    "left": {
+     "right": 1,
+     "wrong": 0
+    },
+    "right": {
+     "right": 0,
+     "wrong": 0
+    }
+   },
+   "details": [
+    {
+     "step": 218,
+     "control": "button:Bring _",
+     "left": "one outcome was admissible and it happened",
+     "right": "no outcome is established for this state"
+    }
+   ],
+   "outcome": "DECIDED",
+   "refuted": "button#0",
+   "survivor": null,
+   "propagated": true
+  },
+  {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+   "left": "cell@Berth#0",
+   "right": "cell@Takes up to#0",
+   "split": 0.5,
+   "cut": 186,
+   "suffix_steps": 107,
+   "disagreements": 0,
+   "counts": {
+    "left": {
+     "right": 0,
+     "wrong": 0
+    },
+    "right": {
+     "right": 0,
+     "wrong": 0
+    }
+   },
+   "details": [],
+   "outcome": "UNDECIDED"
+  },
+  {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+   "left": "cell@Pilot#0",
+   "right": "cell@Ticket to#0",
+   "split": 0.5,
+   "cut": 186,
+   "suffix_steps": 107,
+   "disagreements": 0,
+   "counts": {
+    "left": {
+     "right": 0,
+     "wrong": 0
+    },
+    "right": {
+     "right": 0,
+     "wrong": 0
+    }
+   },
+   "details": [],
+   "outcome": "UNDECIDED"
+  },
+  {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "left": null,
+   "right": "cell@Vessel#0",
+   "split": 0.5,
+   "cut": 186,
+   "suffix_steps": 107,
+   "disagreements": 13,
+   "counts": {
+    "left": {
+     "right": 1,
+     "wrong": 0
+    },
+    "right": {
+     "right": 12,
+     "wrong": 0
+    }
+   },
+   "details": [
+    {
+     "step": 192,
+     "control": "button:Schedule call",
+     "left": "no outcome is established for this state",
+     "right": "one outcome was admissible and it happened"
+    },
+    {
+     "step": 193,
+     "control": "button:Schedule call",
+     "left": "no outcome is established for this state",
+     "right": "one outcome was admissible and it happened"
+    },
+    {
+     "step": 198,
+     "control": "button:Schedule call",
+     "left": "no outcome is established for this state",
+     "right": "one outcome was admissible and it happened"
+    },
+    {
+     "step": 214,
+     "control": "button:Schedule call",
+     "left": "no outcome is established for this state",
+     "right": "one outcome was admissible and it happened"
+    },
+    {
+     "step": 218,
+     "control": "button:Bring _",
+     "left": "one outcome was admissible and it happened",
+     "right": "no outcome is established for this state"
+    },
+    {
+     "step": 250,
+     "control": "button:Schedule call",
+     "left": "no outcome is established for this state",
+     "right": "one outcome was admissible and it happened"
+    },
+    {
+     "step": 251,
+     "control": "button:Schedule call",
+     "left": "no outcome is established for this state",
+     "right": "one outcome was admissible and it happened"
+    },
+    {
+     "step": 260,
+     "control": "button:Schedule call",
+     "left": "no outcome is established for this state",
+     "right": "one outcome was admissible and it happened"
+    },
+    {
+     "step": 292,
+     "control": "button:Schedule call",
+     "left": "no outcome is established for this state",
+     "right": "one outcome was admissible and it happened"
+    },
+    {
+     "step": 314,
+     "control": "button:Schedule call",
+     "left": "no outcome is established for this state",
+     "right": "one outcome was admissible and it happened"
+    },
+    {
+     "step": 316,
+     "control": "button:Schedule call",
+     "left": "no outcome is established for this state",
+     "right": "one outcome was admissible and it happened"
+    },
+    {
+     "step": 342,
+     "control": "button:Schedule call",
+     "left": "no outcome is established for this state",
+     "right": "one outcome was admissible and it happened"
+    },
+    {
+     "step": 348,
+     "control": "button:Schedule call",
+     "left": "no outcome is established for this state",
+     "right": "one outcome was admissible and it happened"
+    }
+   ],
+   "outcome": "DECIDED",
+   "refuted": null,
+   "survivor": "cell@Vessel#0",
+   "propagated": true
+  },
+  {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "left": null,
+   "right": "cell@Cargo#0",
+   "split": 0.5,
+   "cut": 186,
+   "suffix_steps": 107,
+   "disagreements": 13,
+   "counts": {
+    "left": {
+     "right": 1,
+     "wrong": 0
+    },
+    "right": {
+     "right": 12,
+     "wrong": 0
+    }
+   },
+   "details": [
+    {
+     "step": 192,
+     "control": "button:Schedule call",
+     "left": "no outcome is established for this state",
+     "right": "one outcome was admissible and it happened"
+    },
+    {
+     "step": 193,
+     "control": "button:Schedule call",
+     "left": "no outcome is established for this state",
+     "right": "one outcome was admissible and it happened"
+    },
+    {
+     "step": 198,
+     "control": "button:Schedule call",
+     "left": "no outcome is established for this state",
+     "right": "one outcome was admissible and it happened"
+    },
+    {
+     "step": 214,
+     "control": "button:Schedule call",
+     "left": "no outcome is established for this state",
+     "right": "one outcome was admissible and it happened"
+    },
+    {
+     "step": 218,
+     "control": "button:Bring _",
+     "left": "one outcome was admissible and it happened",
+     "right": "no outcome is established for this state"
+    },
+    {
+     "step": 250,
+     "control": "button:Schedule call",
+     "left": "no outcome is established for this state",
+     "right": "one outcome was admissible and it happened"
+    },
+    {
+     "step": 251,
+     "control": "button:Schedule call",
+     "left": "no outcome is established for this state",
+     "right": "one outcome was admissible and it happened"
+    },
+    {
+     "step": 260,
+     "control": "button:Schedule call",
+     "left": "no outcome is established for this state",
+     "right": "one outcome was admissible and it happened"
+    },
+    {
+     "step": 292,
+     "control": "button:Schedule call",
+     "left": "no outcome is established for this state",
+     "right": "one outcome was admissible and it happened"
+    },
+    {
+     "step": 314,
+     "control": "button:Schedule call",
+     "left": "no outcome is established for this state",
+     "right": "one outcome was admissible and it happened"
+    },
+    {
+     "step": 316,
+     "control": "button:Schedule call",
+     "left": "no outcome is established for this state",
+     "right": "one outcome was admissible and it happened"
+    },
+    {
+     "step": 342,
+     "control": "button:Schedule call",
+     "left": "no outcome is established for this state",
+     "right": "one outcome was admissible and it happened"
+    },
+    {
+     "step": 348,
+     "control": "button:Schedule call",
+     "left": "no outcome is established for this state",
+     "right": "one outcome was admissible and it happened"
+    }
+   ],
+   "outcome": "DECIDED",
+   "refuted": null,
+   "survivor": "cell@Cargo#0",
+   "propagated": true
+  },
+  {
+   "family": "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])",
+   "left": "cell@Vessel#0",
+   "right": "cell@Length overall#0",
+   "split": 0.5,
+   "cut": 186,
+   "suffix_steps": 107,
+   "disagreements": 0,
+   "counts": {
+    "left": {
+     "right": 0,
+     "wrong": 0
+    },
+    "right": {
+     "right": 0,
+     "wrong": 0
+    }
+   },
+   "details": [],
+   "outcome": "UNDECIDED"
+  }
+ ]
+}

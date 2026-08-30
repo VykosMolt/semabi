@@ -95,3 +95,41 @@ def test_a_retained_experiment_marks_a_family_decided(tmp_path):
         {"family": "row[_](x)", "key_slot": "cell@Length overall#0", "why": "probed", "evidence": {}}]}))
     got = ties._decided(run, "row[_](x)", ("cell@Vessel#0", "cell@Length overall#0"))
     assert got["by"] == "refutation" and got["survivors"] == ["cell@Vessel#0"]
+
+
+def _row(step, verdict, admissible=("x",)):
+    return {"step": step, "verdict": verdict, "admissible": list(admissible)}
+
+
+def test_a_retained_history_decides_only_by_dominance_where_readings_disagree():
+    """The differential discipline applied to a history: steps both readings treat alike
+    say nothing; on the steps where they differ, a side wins only by predicting strictly
+    more of what the application returned while getting nothing more wrong."""
+    right, wrong = ties.ESTABLISHED_RIGHT, ties.ESTABLISHED_WRONG
+    none = "no outcome is established for this state"
+    # left predicts two steps the other leaves unestablished, nothing more wrong: decided
+    left = [_row(1, right), _row(2, right), _row(3, none)]
+    alt = [_row(1, none), _row(2, none), _row(3, none)]
+    d = ties.retro_decision(left, alt)
+    assert (d["outcome"], d["survivor"], d["disagreements"]) == ("DECIDED", "left", 2)
+    assert d["counts"]["left"] == {"right": 2, "wrong": 0}
+    # the mirror decides the other way
+    d = ties.retro_decision(alt, left)
+    assert (d["outcome"], d["survivor"]) == ("DECIDED", "right")
+    # a prediction bought with a wrong one is not dominance
+    d = ties.retro_decision([_row(1, right), _row(2, wrong)], [_row(1, none), _row(2, none)])
+    assert d["outcome"] == "UNDECIDED"
+    # identical verdicts everywhere: no disagreement, no evidence, no decision
+    d = ties.retro_decision(left, [dict(r) for r in left])
+    assert (d["outcome"], d["disagreements"]) == ("UNDECIDED", 0)
+    # both readings named what happened, one by rule and one as the only outcome ever
+    # seen: the application refuted neither, and confidence class decides nothing
+    only_right = "the only outcome ever seen on this control, and it happened"
+    d = ties.retro_decision([_row(1, right)], [_row(1, only_right)])
+    assert d["outcome"] == "UNDECIDED"
+    assert d["counts"] == {"left": {"right": 1, "wrong": 0}, "right": {"right": 1, "wrong": 0}}
+    # but the only-seen default being right where the other side established nothing is
+    # still the application agreeing with one side only
+    d = ties.retro_decision([_row(1, only_right)], [_row(1, "no outcome is established for this state")])
+    assert (d["outcome"], d["survivor"]) == ("DECIDED", "left")
+    assert d["details"][0]["left"] == only_right

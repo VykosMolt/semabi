@@ -82,6 +82,93 @@
     "1",
     "2"
    ]
+  },
+  {
+   "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))))))",
+   "key_slot": "group/table/rowgroup/row/cell#0",
+   "why": "refuted by retained outcome evidence (frozen prefix at 187): on the 2 suffix steps where the readings disagree, 2 of the application's responses are predicted under None with 0 wrong, against 0 / 0 under 'group/table/rowgroup/row/cell#0'",
+   "evidence": {
+    "instrument": "retrospective outcome comparison",
+    "split": 0.5,
+    "cut": 187,
+    "disagreements": 2,
+    "counts": {
+     "left": {
+      "right": 2,
+      "wrong": 0
+     },
+     "right": {
+      "right": 0,
+      "wrong": 0
+     }
+    },
+    "details": [
+     {
+      "step": 248,
+      "control": "button:Record draw",
+      "left": "one outcome was admissible and it happened",
+      "right": "no outcome is established for this state"
+     },
+     {
+      "step": 310,
+      "control": "button:Record draw",
+      "left": "one outcome was admissible and it happened",
+      "right": "no outcome is established for this state"
+     }
+    ],
+    "survivor": null
+   },
+   "held": [
+    "Gallons"
+   ]
+  },
+  {
+   "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))))))",
+   "key_slot": "status#0",
+   "why": "refuted by retained outcome evidence (frozen prefix at 187): on the 2 suffix steps where the readings disagree, 2 of the application's responses are predicted under None with 0 wrong, against 0 / 0 under 'status#0'",
+   "evidence": {
+    "instrument": "retrospective outcome comparison",
+    "split": 0.5,
+    "cut": 187,
+    "disagreements": 2,
+    "counts": {
+     "left": {
+      "right": 2,
+      "wrong": 0
+     },
+     "right": {
+      "right": 0,
+      "wrong": 0
+     }
+    },
+    "details": [
+     {
+      "step": 248,
+      "control": "button:Record draw",
+      "left": "one outcome was admissible and it happened",
+      "right": "no outcome is established for this state"
+     },
+     {
+      "step": 310,
+      "control": "button:Record draw",
+      "left": "one outcome was admissible and it happened",
+      "right": "no outcome is established for this state"
+     }
+    ],
+    "survivor": null
+   },
+   "held": [
+    "Bottled Picnic",
+    "Closed Block",
+    "Closed Creek Bed",
+    "Closed Low Barn",
+    "Closed North Wall",
+    "Disgorged Picnic",
+    "Opened Chapel Row",
+    "Opened Creek Bed",
+    "Opened Low Barn",
+    "Opened North Wall"
+   ]
   }
  ]
 }
