@@ -9,162 +9,174 @@
    "reading": "source_choice",
    "types": 6,
    "prefix_objective": {
-    "explained": 30,
-    "errors": 404,
-    "visibility": 228,
+    "explained": 48,
+    "errors": 13,
+    "visibility": 1,
     "churn": 0,
-    "spurious": 0,
-    "contradictions": 176,
+    "spurious": 4,
+    "contradictions": 1,
     "conflicts": 0,
     "named": 0,
-    "unexplained": 9
+    "positional": 7,
+    "unexplained": 2
    },
    "suffix_ledger": {
-    "unbound": 16,
-    "contradicted": 12,
-    "disagreed": 16
+    "unbound": 9,
+    "right": 18,
+    "no rule": 7,
+    "contradicted": 5
    }
   },
   {
    "reading": "promote listitem[_]=listitem#0!",
-   "types": 7,
+   "types": 6,
    "prefix_objective": {
-    "explained": 30,
-    "errors": 404,
-    "visibility": 228,
+    "explained": 48,
+    "errors": 184,
+    "visibility": 110,
     "churn": 0,
-    "spurious": 0,
-    "contradictions": 176,
+    "spurious": 4,
+    "contradictions": 63,
     "conflicts": 0,
     "named": 0,
-    "unexplained": 9
+    "positional": 7,
+    "unexplained": 2
    },
    "suffix_ledger": {
-    "unbound": 16,
-    "contradicted": 12,
-    "disagreed": 15,
-    "right": 1
+    "unbound": 9,
+    "right": 22,
+    "contradicted": 8
    }
   },
   {
    "reading": "promote cell[_]=cell#0",
    "types": 6,
    "prefix_objective": {
-    "explained": 30,
-    "errors": 404,
-    "visibility": 228,
+    "explained": 48,
+    "errors": 400,
+    "visibility": 220,
     "churn": 0,
-    "spurious": 0,
-    "contradictions": 176,
+    "spurious": 4,
+    "contradictions": 169,
     "conflicts": 0,
     "named": 0,
-    "unexplained": 9
+    "positional": 7,
+    "unexplained": 2
    },
    "suffix_ledger": {
-    "unbound": 16,
-    "contradicted": 12,
-    "disagreed": 16
+    "unbound": 9,
+    "right": 18,
+    "no rule": 7,
+    "contradicted": 5
    }
   },
   {
-   "reading": "cell[_]=None",
+   "reading": "joint discrimination x5",
+   "types": 7,
+   "prefix_objective": {
+    "explained": 44,
+    "errors": 423,
+    "visibility": 228,
+    "churn": 6,
+    "spurious": 4,
+    "contradictions": 176,
+    "conflicts": 2,
+    "named": 0,
+    "positional": 7,
+    "unexplained": 0
+   },
+   "suffix_ledger": {
+    "contradicted": 16,
+    "undecidable": 6,
+    "right": 7,
+    "disagreed": 13,
+    "no rule": 2
+   }
+  },
+  {
+   "reading": "cell[_]=cell#0",
    "types": 6,
    "prefix_objective": {
-    "explained": 30,
-    "errors": 244,
-    "visibility": 148,
+    "explained": 48,
+    "errors": 400,
+    "visibility": 220,
     "churn": 0,
-    "spurious": 0,
-    "contradictions": 96,
+    "spurious": 4,
+    "contradictions": 169,
     "conflicts": 0,
     "named": 0,
-    "unexplained": 9
+    "positional": 7,
+    "unexplained": 2
    },
    "suffix_ledger": {
-    "unbound": 16,
-    "contradicted": 12,
-    "disagreed": 16
+    "unbound": 9,
+    "right": 18,
+    "no rule": 7,
+    "contradicted": 5
    }
   },
   {
-   "reading": "group[_](heading[_],list=heading#1",
-   "types": 5,
+   "reading": "group[_](heading[_],list=heading#0",
+   "types": 7,
    "prefix_objective": {
-    "explained": 23,
-    "errors": 452,
-    "visibility": 228,
+    "explained": 48,
+    "errors": 13,
+    "visibility": 1,
     "churn": 0,
-    "spurious": 0,
-    "contradictions": 176,
-    "conflicts": 48,
+    "spurious": 4,
+    "contradictions": 1,
+    "conflicts": 0,
     "named": 0,
-    "unexplained": 16
+    "positional": 7,
+    "unexplained": 2
    },
    "suffix_ledger": {
-    "contradicted": 25,
-    "right": 6,
-    "disagreed": 13
+    "unbound": 9,
+    "right": 18,
+    "no rule": 7,
+    "contradicted": 5
    }
   },
   {
    "reading": "row[_](cell@Actions[_](c=cell@Reason#0|cell@Vet#0",
    "types": 5,
    "prefix_objective": {
-    "explained": 29,
-    "errors": 410,
-    "visibility": 228,
+    "explained": 44,
+    "errors": 21,
+    "visibility": 1,
     "churn": 6,
-    "spurious": 0,
-    "contradictions": 176,
-    "conflicts": 0,
+    "spurious": 4,
+    "contradictions": 1,
+    "conflicts": 2,
     "named": 0,
-    "unexplained": 4
+    "positional": 7,
+    "unexplained": 0
    },
    "suffix_ledger": {
-    "contradicted": 11,
-    "right": 11,
-    "disagreed": 22
+    "right": 20,
+    "contradicted": 6
    }
   },
   {
    "reading": "row[_](cell@Actions[_](t=None",
-   "types": 6,
+   "types": 4,
    "prefix_objective": {
-    "explained": 26,
-    "errors": 404,
-    "visibility": 228,
+    "explained": 44,
+    "errors": 13,
+    "visibility": 1,
     "churn": 0,
-    "spurious": 0,
-    "contradictions": 176,
+    "spurious": 4,
+    "contradictions": 1,
     "conflicts": 0,
     "named": 0,
-    "unexplained": 13
+    "positional": 7,
+    "unexplained": 4
    },
    "suffix_ledger": {
-    "unbound": 16,
-    "contradicted": 17,
-    "disagreed": 11
-   }
-  },
-  {
-   "reading": "row[_](cell@Actions[_],c=cell@Patient#0",
-   "types": 6,
-   "prefix_objective": {
-    "explained": 30,
-    "errors": 404,
-    "visibility": 228,
-    "churn": 0,
-    "spurious": 0,
-    "contradictions": 176,
-    "conflicts": 0,
-    "named": 0,
-    "unexplained": 9
-   },
-   "suffix_ledger": {
-    "unbound": 16,
-    "contradicted": 12,
-    "disagreed": 13,
-    "right": 3
+    "unbound": 9,
+    "right": 18,
+    "no rule": 7,
+    "contradicted": 5
    }
   }
  ]

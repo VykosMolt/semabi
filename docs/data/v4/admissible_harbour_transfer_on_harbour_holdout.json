@@ -9,12 +9,11 @@
  "corroborated": true,
  "hypothesis": "rule",
  "against_the_other_class": {
-  "rule: the evidence forces one outcome | list: the evidence forces one outcome": 145,
+  "rule: the evidence forces one outcome | list: the evidence forces one outcome": 146,
   "rule: one outcome, because the control has never done anything else | list: one outcome, because the control has never done anything else": 96,
   "rule: several outcomes remain admissible | list: several outcomes remain admissible": 13,
   "rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)": 8,
-  "rule: no outcome is established | list: no outcome is established": 7,
-  "rule: the evidence forces one outcome | list: several outcomes remain admissible": 1
+  "rule: no outcome is established | list: no outcome is established": 7
  },
  "actions": 270,
  "what_the_evidence_establishes": {
@@ -46,8 +45,8 @@
    "no determinate answer": 1
   },
   "the evidence forces one outcome": {
-   "the event the interface returned": 117,
-   "no determinate answer": 33,
+   "the event the interface returned": 115,
+   "no determinate answer": 35,
    "a different event": 4
   }
  },
@@ -222,7 +221,7 @@
    "returned": "Petrel Star already has call C-102 on the board.",
    "verdict": "one outcome was admissible and a different one happened",
    "level": "the event alone",
-   "why": "Call <> opened for <> . <- ('unnamed', \"selection['cell@Current call#1']:3\") & ('unnamed', \"selection['cell@Vessel#2']:0\") & ('unnamed', \"selection['cell@Vessel#3']:0\")  [5 occasions]"
+   "why": "Call <> opened for <> . <- attr:Status#0(selection['cell@Vessel#0']:0) == 'alongside' & ('unnamed', \"selection['cell@Current call#1']:3\") & ('unnamed', \"selection['cell@Vessel#2']:0\")  [5 occasions]"
   },
   {
    "step": 28,
@@ -270,7 +269,7 @@
    "returned": "Call C-104 opened for Kittiwake.",
    "verdict": "one outcome was admissible and a different one happened",
    "level": "the event alone",
-   "why": "<> already has call <> on the board . <- rel:2(selection['cell@Vessel#1']:0) != selection['cell@Vessel#2']:0 & ('unnamed', \"selection['cell@Current call#1']:3\")  [4 occasions]"
+   "why": "<> already has call <> on the board . <- rel:1(selection['cell@Vessel#1']:0) != selection['cell@Vessel#2']:0 & ('unnamed', \"selection['cell@Current call#1']:3\")  [4 occasions]"
   },
   {
    "step": 226,
@@ -302,7 +301,7 @@
    "returned": "Call C-104 opened for Nordkapp.",
    "verdict": "one outcome was admissible and a different one happened",
    "level": "the event alone",
-   "why": "<> already has call <> on the board . <- attr:Status#0(selection['cell@Vessel#0']:0) == 'alongside' & rel:2(selection['cell@Vessel#1']:0) != selection['cell@Vessel#2']:0  [17 occasions]"
+   "why": "<> already has call <> on the board . <- attr:Status#0(selection['cell@Vessel#0']:0) == 'alongside' & rel:1(selection['cell@Vessel#1']:0) != selection['cell@Vessel#2']:0  [17 occasions]"
   },
   {
    "step": 287,
@@ -334,7 +333,7 @@
    "returned": "Kittiwake already has call C-101 on the board.",
    "verdict": "one outcome was admissible and a different one happened",
    "level": "the event alone",
-   "why": "Call <> opened for <> . <- ('unnamed', \"selection['cell@Current call#1']:3\") & ('unnamed', \"selection['cell@Vessel#2']:0\") & ('unnamed', \"selection['cell@Vessel#3']:0\")  [5 occasions]"
+   "why": "Call <> opened for <> . <- attr:Status#0(selection['cell@Vessel#0']:0) == 'alongside' & ('unnamed', \"selection['cell@Current call#1']:3\") & ('unnamed', \"selection['cell@Vessel#2']:0\")  [5 occasions]"
   }
  ]
 }

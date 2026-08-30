@@ -2,19 +2,19 @@
  "applications": {
   "blend_book": {
    "attestation": "docs/data/v4/attestations/frontier_blend_book.execution.json",
-   "attestation_sha256": "e5a70ea3c2d792e6ae7269a4ab31efe06c8d8b56a5ee126eaa3dcb00ecd7cdc6",
+   "attestation_sha256": "731ccbb2ddf3b80211b68bb7be9edfa44de939681c7849078c3082e631ccb483",
    "holdout_classifications": {
     "cell[_]=cell#0": "CONFIRMED"
    },
    "holdout_outcome": "CONFIRMED",
    "holdout_pairwise_frontier": null,
    "report": "docs/data/v4/frontier_blend_book.json",
-   "report_sha256": "e910b6381defd340b4f5672fc04738bccc09350255adc028cd5b01878a313e76",
+   "report_sha256": "80e31c22dc4eb9ac49b53f9d5884f15f87f1c287d68a9c67053b2ee343002f5e",
    "selected": "cell[_]=cell#0",
    "source_choice_rejected": true,
    "survivors": [
     {
-     "decision_fingerprint": "9d8e6146ac91ae58",
+     "decision_fingerprint": "032a2c85d3ba10ca",
      "name": "cell[_]=cell#0"
     }
    ],
@@ -22,14 +22,14 @@
   },
   "harbour": {
    "attestation": "docs/data/v4/attestations/frontier_harbour.execution.json",
-   "attestation_sha256": "35689d34c9fb90b25b09a1c8b8765518d7a0457c9973a8d4fc6b0e2e5032fe77",
+   "attestation_sha256": "274233aa1e1014e93da8c121db7c108cfc269a7ffa0a98e75326361f0236da23",
    "holdout_classifications": {
     "joint discrimination x2": "PARTIALLY_CONTRADICTED"
    },
    "holdout_outcome": "PARTIALLY_CONTRADICTED",
    "holdout_pairwise_frontier": null,
    "report": "docs/data/v4/frontier_harbour.json",
-   "report_sha256": "0d859db551453c6fa9a68d08976e92c19b8ff0926c7f5f7801463b31e9753be0",
+   "report_sha256": "71423b71d46de4a15affad2020800f913923113028c5421cc896dc59b8c70934",
    "selected": "joint discrimination x2",
    "source_choice_rejected": true,
    "survivors": [
@@ -42,20 +42,20 @@
   },
   "vet_clinic": {
    "attestation": "docs/data/v4/attestations/frontier_vet_clinic.execution.json",
-   "attestation_sha256": "894cdfd7c32b58a9cf32233fc1e3dd2365ad06dc17cc30efd617cd3f511e9737",
+   "attestation_sha256": "aaa450039881794caec032c129cfc2ccfb0bd5f7a585da1a5f33f6bac478c84e",
    "holdout_classifications": {
-    "cell[_]=None": "INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE"
+    "group[_](heading[_],list=heading#0": "INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE"
    },
    "holdout_outcome": "INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE",
    "holdout_pairwise_frontier": null,
    "report": "docs/data/v4/frontier_vet_clinic.json",
-   "report_sha256": "08be42749ad4e7718366be8829b25d8e615617d195cc1adbe7859ebc21214651",
-   "selected": "cell[_]=None",
+   "report_sha256": "3d9cfc6a6870bc8594fa3939e180811f04d62e41a0b147ac2108e6f9ec5898b9",
+   "selected": "group[_](heading[_],list=heading#0",
    "source_choice_rejected": true,
    "survivors": [
     {
-     "decision_fingerprint": "7f2bcb8edc469fc3",
-     "name": "cell[_]=None"
+     "decision_fingerprint": "66ad46c42e3a00f9",
+     "name": "group[_](heading[_],list=heading#0"
     }
    ],
    "transfer_outcome": "UNIQUE_SURVIVOR"

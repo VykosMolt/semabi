@@ -14,26 +14,25 @@ blend_book_transfer  'source_choice'  FROZEN_PREFIX  cut=0  control=None  corrob
   admissible-set size {"0": 16, "1": 301, "2": 164, "3": 22}; what happened was {'inside the admissible set': 424, 'nothing was admissible': 16, 'outside it': 63}
   8 distinct events ever forced
   where no outcome is established, the chosen list:
-       11  no determinate answer
-        5  the event the interface returned
+       14  the event the interface returned
+        2  a different event
   where one outcome, because the control has never done anything else, the chosen list:
        37  a different event
        27  the event the interface returned
   where several outcomes remain admissible, the chosen list:
-      185  the event the interface returned
-        1  a different event
+      156  the event the interface returned
+       30  a different event
   where the evidence forces one outcome, the chosen list:
-      217  the event the interface returned
-       14  a different event
-        6  no determinate answer
+      148  the event the interface returned
+       89  a different event
   forced where forced, list elsewhere:
       216  one outcome was admissible and it happened
-      185  deferred to the list: the event the interface returned
+      156  deferred to the list: the event the interface returned
        37  the only outcome ever seen on this control, and something else happened
+       30  deferred to the list: a different event
        27  the only outcome ever seen on this control, and it happened
        21  one outcome was admissible and a different one happened
        16  refused: nothing established
-        1  deferred to the list: a different event
     button:Record draw         fitted= 209 events= 6 rules= 8 forced-wrong=  8  {'the evidence forces one outcome': 133, 'several outcomes remain admissible': 128}
     button:Return ticket _ gal fitted= 113 events= 2 rules= 2 forced-wrong=  0  {'the evidence forces one outcome': 63, 'several outcomes remain admissible': 58}
     button#cell/button         fitted=  22 events= 1 rules= 1 forced-wrong=  0  {'one outcome, because the control has never done anything else': 36}

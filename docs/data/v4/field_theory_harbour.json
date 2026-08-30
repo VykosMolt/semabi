@@ -1,0 +1,34 @@
+{
+ "run": "harbour_transfer",
+ "reading": "source_choice",
+ "split": 0.5,
+ "fields": [
+  {
+   "tid": 0,
+   "slot": "attr:Length overall#0",
+   "attribute": "attr:Length overall#0",
+   "thresholds": [
+    "64",
+    "78",
+    "96",
+    "112",
+    "132"
+   ],
+   "adopted": false,
+   "rules": []
+  },
+  {
+   "tid": 1,
+   "slot": "attr:Takes up to#0",
+   "attribute": "attr:Takes up to#0",
+   "thresholds": [
+    "70",
+    "90",
+    "120",
+    "160"
+   ],
+   "adopted": false,
+   "rules": []
+  }
+ ]
+}

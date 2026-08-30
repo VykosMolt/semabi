@@ -6,6 +6,7 @@
   "visibility": 0,
   "conflicts": 0,
   "named": 717,
+  "positional": 0,
   "unexplained": 0,
   "spurious": 0,
   "explained": 271,
@@ -16,84 +17,8 @@
   "contradiction_steps": [],
   "visibility_steps": []
  },
- "open_questions": 4,
+ "open_questions": 1,
  "questions": [
-  {
-   "family": "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))",
-   "left": "cell@Ticket#0",
-   "right": "cell@Into blend#0",
-   "reason": "the trace so far scores both readings identically",
-   "tids": [
-    2
-   ],
-   "contested": [
-    "cell@Into blend#0",
-    "cell@Ticket#0"
-   ],
-   "status": "REACHABLE",
-   "writers": {},
-   "makers": [
-    {
-     "operator": "op6",
-     "control": "button:Record draw",
-     "support": 109,
-     "acts": [
-      "click(button:Record draw)"
-     ],
-     "test": "collision",
-     "parameters": []
-    }
-   ],
-   "movers": [],
-   "experiment": {
-    "test": "collision",
-    "by": "button:Record draw",
-    "operator": "op6",
-    "parameters": [],
-    "predictions": {
-     "cell@Ticket#0": "a second instance with the same value is one object",
-     "cell@Into blend#0": "a second instance with the same value is one object"
-    }
-   }
-  },
-  {
-   "family": "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))",
-   "left": "cell@Ticket#0",
-   "right": "cell@Amount#0",
-   "reason": "the trace so far scores both readings identically",
-   "tids": [
-    2
-   ],
-   "contested": [
-    "cell@Amount#0",
-    "cell@Ticket#0"
-   ],
-   "status": "REACHABLE",
-   "writers": {},
-   "makers": [
-    {
-     "operator": "op6",
-     "control": "button:Record draw",
-     "support": 109,
-     "acts": [
-      "click(button:Record draw)"
-     ],
-     "test": "collision",
-     "parameters": []
-    }
-   ],
-   "movers": [],
-   "experiment": {
-    "test": "collision",
-    "by": "button:Record draw",
-    "operator": "op6",
-    "parameters": [],
-    "predictions": {
-     "cell@Ticket#0": "a second instance with the same value is one object",
-     "cell@Amount#0": "a second instance with the same value is one object"
-    }
-   }
-  },
   {
    "family": "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))",
    "left": "cell@Blend#0",
@@ -106,28 +31,14 @@
     "cell@Blend#0",
     "cell@Year#0"
    ],
-   "status": "QUOTIENT_EQUIVALENT",
+   "status": "NO_KNOWN_EXPERIMENT",
    "writers": {},
    "makers": [],
-   "movers": []
-  },
-  {
-   "family": "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))",
-   "left": "cell@Blend#0",
-   "right": "cell@Style#0",
-   "reason": "the trace so far scores both readings identically",
-   "tids": [
-    1
-   ],
-   "contested": [
-    "cell@Blend#0",
-    "cell@Style#0"
-   ],
-   "status": "QUOTIENT_EQUIVALENT",
-   "writers": {},
-   "makers": [],
-   "movers": []
+   "movers": [],
+   "made_values": {},
+   "separable_by_the_history": {},
+   "decided": null
   }
  ],
- "reachable": 2
+ "reachable": 0
 }

@@ -6,6 +6,7 @@
   "visibility": 74,
   "conflicts": 0,
   "named": 0,
+  "positional": 11,
   "unexplained": 7,
   "spurious": 0,
   "explained": 34,
@@ -100,40 +101,51 @@
    149
   ]
  },
- "open_questions": 14,
+ "open_questions": 13,
  "questions": [
   {
    "family": "cell[_]",
    "left": "cell#0",
    "right": null,
-   "reason": "undecided: chosen explains 34 with 133 errors, the alternative explains 7 with 70",
+   "reason": "undecided: chosen explains 34 with 144 errors, the alternative explains 11 with 72",
    "tids": [
     1
    ],
    "contested": [
     "cell#0"
    ],
-   "status": "REACHABLE",
+   "status": "REACHABLE_NOT_DISCRIMINATING",
    "writers": {},
    "makers": [
     {
-     "operator": "op5",
-     "control": "button:Assign vet@306493",
+     "operator": "op6",
+     "control": "button:Assign vet",
      "support": 1,
      "acts": [
       "context(text#0, ?o0)",
-      "click(button:Assign vet@306493@T4[?o1])"
+      "click(button:Assign vet@T3[?o1])"
      ],
      "test": "collision",
      "parameters": []
     },
     {
-     "operator": "op6",
-     "control": "button:Check in@306493",
+     "operator": "op7",
+     "control": "button:Assign vet",
      "support": 1,
      "acts": [
       "context(text#0, ?o0)",
-      "click(button:Check in@306493@T4[?o1])"
+      "click(button:Assign vet@T3[?o1])"
+     ],
+     "test": "collision",
+     "parameters": []
+    },
+    {
+     "operator": "op8",
+     "control": "button:Check in",
+     "support": 2,
+     "acts": [
+      "context(text#0, ?o0)",
+      "click(button:Check in@T3[?o1])"
      ],
      "test": "collision",
      "parameters": []
@@ -141,12 +153,12 @@
    ],
    "movers": [
     {
-     "operator": "op5",
-     "control": "button:Assign vet@306493",
+     "operator": "op6",
+     "control": "button:Assign vet",
      "support": 1,
      "acts": [
       "context(text#0, ?o0)",
-      "click(button:Assign vet@306493@T4[?o1])"
+      "click(button:Assign vet@T3[?o1])"
      ],
      "test": "re-typing",
      "from": [
@@ -157,12 +169,28 @@
      ]
     },
     {
-     "operator": "op6",
-     "control": "button:Check in@306493",
+     "operator": "op7",
+     "control": "button:Assign vet",
      "support": 1,
      "acts": [
       "context(text#0, ?o0)",
-      "click(button:Check in@306493@T4[?o1])"
+      "click(button:Assign vet@T3[?o1])"
+     ],
+     "test": "re-typing",
+     "from": [
+      1
+     ],
+     "to": [
+      1
+     ]
+    },
+    {
+     "operator": "op8",
+     "control": "button:Check in",
+     "support": 2,
+     "acts": [
+      "context(text#0, ?o0)",
+      "click(button:Check in@T3[?o1])"
      ],
      "test": "re-typing",
      "from": [
@@ -173,10 +201,38 @@
      ]
     }
    ],
+   "made_values": {
+    "op6": [
+     {
+      "cell#0": null,
+      "key": "Species"
+     }
+    ],
+    "op7": [
+     {
+      "cell#0": null,
+      "key": "Species"
+     }
+    ],
+    "op8": [
+     {
+      "cell#0": null,
+      "key": "Species"
+     },
+     {
+      "cell#0": null,
+      "key": "Species"
+     }
+    ]
+   },
+   "separable_by_the_history": {
+    "cell#0": false
+   },
+   "decided": null,
    "experiment": {
     "test": "collision",
-    "by": "button:Assign vet@306493",
-    "operator": "op5",
+    "by": "button:Assign vet",
+    "operator": "op6",
     "parameters": [],
     "predictions": {
      "cell#0": "a second instance with the same value is one object",
@@ -188,7 +244,7 @@
    "family": "group[_](heading[_],list[_](listitem[_]))",
    "left": "heading#0",
    "right": "heading#1",
-   "reason": "undecided: chosen explains 34 with 133 errors, the alternative explains 11 with 128",
+   "reason": "undecided: chosen explains 34 with 144 errors, the alternative explains 12 with 130",
    "tids": [
     0
    ],
@@ -196,21 +252,11 @@
     "heading#0",
     "heading#1"
    ],
-   "status": "REACHABLE",
+   "status": "REACHABLE_NOT_DISCRIMINATING",
    "writers": {},
    "makers": [
     {
-     "operator": "op4",
-     "control": "button:Start exam@a248b5",
-     "support": 1,
-     "acts": [
-      "click(button:Start exam@a248b5@T3[?o0])"
-     ],
-     "test": "collision",
-     "parameters": []
-    },
-    {
-     "operator": "op7",
+     "operator": "op9",
      "control": "?",
      "support": 1,
      "acts": [
@@ -224,7 +270,7 @@
    ],
    "movers": [
     {
-     "operator": "op7",
+     "operator": "op9",
      "control": "?",
      "support": 1,
      "acts": [
@@ -239,11 +285,37 @@
      ]
     }
    ],
+   "made_values": {
+    "op9": [
+     {
+      "heading#0": null,
+      "heading#1": null,
+      "key": "Piotr Kowalski 555-9376"
+     },
+     {
+      "heading#0": null,
+      "heading#1": null,
+      "key": "Maria Alvarez 555-8961"
+     },
+     {
+      "heading#0": null,
+      "heading#1": null,
+      "key": "Ada Okafor 555-7634"
+     }
+    ]
+   },
+   "separable_by_the_history": {
+    "heading#0": false,
+    "heading#1": false
+   },
+   "decided": null,
    "experiment": {
     "test": "collision",
-    "by": "button:Start exam@a248b5",
-    "operator": "op4",
-    "parameters": [],
+    "by": "?",
+    "operator": "op9",
+    "parameters": [
+     "type(textbox#textbox, ?s0)"
+    ],
     "predictions": {
      "heading#0": "a second instance with the same value is one object",
      "heading#1": "a second instance with the same value is one object"
@@ -254,28 +326,18 @@
    "family": "group[_](heading[_],list[_](listitem[_]))",
    "left": "heading#0",
    "right": null,
-   "reason": "undecided: chosen explains 34 with 133 errors, the alternative explains 10 with 126",
+   "reason": "undecided: chosen explains 34 with 144 errors, the alternative explains 11 with 128",
    "tids": [
     0
    ],
    "contested": [
     "heading#0"
    ],
-   "status": "REACHABLE",
+   "status": "REACHABLE_NOT_DISCRIMINATING",
    "writers": {},
    "makers": [
     {
-     "operator": "op4",
-     "control": "button:Start exam@a248b5",
-     "support": 1,
-     "acts": [
-      "click(button:Start exam@a248b5@T3[?o0])"
-     ],
-     "test": "collision",
-     "parameters": []
-    },
-    {
-     "operator": "op7",
+     "operator": "op9",
      "control": "?",
      "support": 1,
      "acts": [
@@ -289,7 +351,7 @@
    ],
    "movers": [
     {
-     "operator": "op7",
+     "operator": "op9",
      "control": "?",
      "support": 1,
      "acts": [
@@ -304,11 +366,33 @@
      ]
     }
    ],
+   "made_values": {
+    "op9": [
+     {
+      "heading#0": null,
+      "key": "Piotr Kowalski 555-9376"
+     },
+     {
+      "heading#0": null,
+      "key": "Maria Alvarez 555-8961"
+     },
+     {
+      "heading#0": null,
+      "key": "Ada Okafor 555-7634"
+     }
+    ]
+   },
+   "separable_by_the_history": {
+    "heading#0": false
+   },
+   "decided": null,
    "experiment": {
     "test": "collision",
-    "by": "button:Start exam@a248b5",
-    "operator": "op4",
-    "parameters": [],
+    "by": "?",
+    "operator": "op9",
+    "parameters": [
+     "type(textbox#textbox, ?s0)"
+    ],
     "predictions": {
      "heading#0": "a second instance with the same value is one object",
      "None": "a second instance is a second object"
@@ -319,442 +403,389 @@
    "family": "listitem[_]",
    "left": null,
    "right": "listitem#0!",
-   "reason": "undecided: chosen explains 34 with 133 errors, the alternative explains 17 with 128",
+   "reason": "undecided: chosen explains 34 with 144 errors, the alternative explains 21 with 130",
    "tids": [],
    "contested": [
     "listitem#0!"
    ],
-   "status": "QUOTIENT_EQUIVALENT",
+   "status": "NO_KNOWN_EXPERIMENT",
    "writers": {},
    "makers": [],
-   "movers": []
+   "movers": [],
+   "made_values": {},
+   "separable_by_the_history": {},
+   "decided": null
   },
   {
-   "family": "listitem[_]",
+   "family": "row[_](cell@Actions[_](combobox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+   "left": "cell@Reason#0|cell@Vet#0",
+   "right": "cell@Reason#0|cell@Status#0",
+   "reason": "undecided: chosen explains 34 with 144 errors, the alternative explains 10 with 131",
+   "tids": [
+    3
+   ],
+   "contested": [
+    "cell@Status#0",
+    "cell@Vet#0"
+   ],
+   "status": "DECIDABLE",
+   "writers": {
+    "cell@Status#0": [
+     {
+      "operator": "op3",
+      "control": "button:Check in",
+      "support": 1,
+      "acts": [
+       "click(button:Check in@T3[?o0])"
+      ],
+      "test": "mutation",
+      "effect": "attr:Status#0(?o0) := 'checked_in'"
+     },
+     {
+      "operator": "op4",
+      "control": "button:Check in",
+      "support": 2,
+      "acts": [
+       "click(button:Check in@T3[?o0])"
+      ],
+      "test": "mutation",
+      "effect": "attr:Status#0(?o0) := 'checked_in'"
+     },
+     {
+      "operator": "op8",
+      "control": "button:Check in",
+      "support": 2,
+      "acts": [
+       "context(text#0, ?o0)",
+       "click(button:Check in@T3[?o1])"
+      ],
+      "test": "mutation",
+      "effect": "attr:Status#0(?o1) := 'checked_in'"
+     }
+    ]
+   },
+   "makers": [
+    {
+     "operator": "op0",
+     "control": "button:Assign vet",
+     "support": 1,
+     "acts": [
+      "click(button:Assign vet@T3[?o0])"
+     ],
+     "test": "collision",
+     "parameters": []
+    },
+    {
+     "operator": "op7",
+     "control": "button:Assign vet",
+     "support": 1,
+     "acts": [
+      "context(text#0, ?o0)",
+      "click(button:Assign vet@T3[?o1])"
+     ],
+     "test": "collision",
+     "parameters": []
+    }
+   ],
+   "movers": [
+    {
+     "operator": "op0",
+     "control": "button:Assign vet",
+     "support": 1,
+     "acts": [
+      "click(button:Assign vet@T3[?o0])"
+     ],
+     "test": "re-typing",
+     "from": [
+      3
+     ],
+     "to": [
+      3
+     ]
+    },
+    {
+     "operator": "op7",
+     "control": "button:Assign vet",
+     "support": 1,
+     "acts": [
+      "context(text#0, ?o0)",
+      "click(button:Assign vet@T3[?o1])"
+     ],
+     "test": "re-typing",
+     "from": [
+      3
+     ],
+     "to": [
+      3
+     ]
+    }
+   ],
+   "made_values": {
+    "op0": [
+     {
+      "cell@Status#0": "scheduled",
+      "cell@Vet#0": "Omar Reyes",
+      "key": "Vaccination|Omar Reyes"
+     }
+    ],
+    "op7": [
+     {
+      "cell@Status#0": "scheduled",
+      "cell@Vet#0": "Omar Reyes",
+      "key": "Follow-up visit|Omar Reyes"
+     }
+    ]
+   },
+   "separable_by_the_history": {
+    "cell@Status#0": false,
+    "cell@Vet#0": false
+   },
+   "decided": null,
+   "experiment": {
+    "test": "mutation",
+    "change": "cell@Status#0",
+    "by": "button:Check in",
+    "operator": "op3",
+    "predictions": {
+     "cell@Reason#0|cell@Vet#0": "this instance persists and carries the new value",
+     "cell@Reason#0|cell@Status#0": "this instance is replaced by another object"
+    }
+   }
+  },
+  {
+   "family": "row[_](cell@Actions[_](combobox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+   "left": "cell@Reason#0|cell@Vet#0",
+   "right": "cell@Patient#0|cell@Reason#0",
+   "reason": "undecided: chosen explains 34 with 144 errors, the alternative explains 12 with 128",
+   "tids": [
+    3
+   ],
+   "contested": [
+    "cell@Patient#0",
+    "cell@Vet#0"
+   ],
+   "status": "REACHABLE_NOT_DISCRIMINATING",
+   "writers": {},
+   "makers": [
+    {
+     "operator": "op0",
+     "control": "button:Assign vet",
+     "support": 1,
+     "acts": [
+      "click(button:Assign vet@T3[?o0])"
+     ],
+     "test": "collision",
+     "parameters": []
+    },
+    {
+     "operator": "op7",
+     "control": "button:Assign vet",
+     "support": 1,
+     "acts": [
+      "context(text#0, ?o0)",
+      "click(button:Assign vet@T3[?o1])"
+     ],
+     "test": "collision",
+     "parameters": []
+    }
+   ],
+   "movers": [
+    {
+     "operator": "op0",
+     "control": "button:Assign vet",
+     "support": 1,
+     "acts": [
+      "click(button:Assign vet@T3[?o0])"
+     ],
+     "test": "re-typing",
+     "from": [
+      3
+     ],
+     "to": [
+      3
+     ]
+    },
+    {
+     "operator": "op7",
+     "control": "button:Assign vet",
+     "support": 1,
+     "acts": [
+      "context(text#0, ?o0)",
+      "click(button:Assign vet@T3[?o1])"
+     ],
+     "test": "re-typing",
+     "from": [
+      3
+     ],
+     "to": [
+      3
+     ]
+    }
+   ],
+   "made_values": {
+    "op0": [
+     {
+      "cell@Patient#0": "Ziggy",
+      "cell@Vet#0": "Omar Reyes",
+      "key": "Vaccination|Omar Reyes"
+     }
+    ],
+    "op7": [
+     {
+      "cell@Patient#0": "Biscuit",
+      "cell@Vet#0": "Omar Reyes",
+      "key": "Follow-up visit|Omar Reyes"
+     }
+    ]
+   },
+   "separable_by_the_history": {
+    "cell@Patient#0": false,
+    "cell@Vet#0": false
+   },
+   "decided": null,
+   "experiment": {
+    "test": "collision",
+    "by": "button:Assign vet",
+    "operator": "op0",
+    "parameters": [],
+    "predictions": {
+     "cell@Reason#0|cell@Vet#0": "a second instance with the same value is one object",
+     "cell@Patient#0|cell@Reason#0": "a second instance with the same value is one object"
+    }
+   }
+  },
+  {
+   "family": "row[_](cell@Actions[_](textbox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
    "left": null,
-   "right": "listitem#1!",
-   "reason": "undecided: chosen explains 34 with 133 errors, the alternative explains 17 with 128",
+   "right": "cell@Vet#0",
+   "reason": "undecided: chosen explains 34 with 144 errors, the alternative explains 11 with 130",
    "tids": [],
    "contested": [
-    "listitem#1!"
+    "cell@Vet#0"
    ],
-   "status": "QUOTIENT_EQUIVALENT",
+   "status": "NO_KNOWN_EXPERIMENT",
    "writers": {},
    "makers": [],
-   "movers": []
-  },
-  {
-   "family": "row[_](cell@Actions[_](combobox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
-   "left": "cell@Owner#0",
-   "right": "cell@Reason#0|cell@Vet#0",
-   "reason": "undecided: chosen explains 34 with 133 errors, the alternative explains 11 with 130",
-   "tids": [
-    0,
-    3,
-    4
-   ],
-   "contested": [
-    "cell@Owner#0",
-    "cell@Reason#0",
-    "cell@Vet#0"
-   ],
-   "status": "REACHABLE",
-   "writers": {},
-   "makers": [
-    {
-     "operator": "op2",
-     "control": "button:Check in@34d1f7",
-     "support": 1,
-     "acts": [
-      "click(button:Check in@34d1f7@T0[?o0])"
-     ],
-     "test": "collision",
-     "parameters": []
-    },
-    {
-     "operator": "op3",
-     "control": "button:Check in@34d1f7",
-     "support": 1,
-     "acts": [
-      "click(button:Check in@34d1f7@T0[?o0])"
-     ],
-     "test": "collision",
-     "parameters": []
-    },
-    {
-     "operator": "op4",
-     "control": "button:Start exam@a248b5",
-     "support": 1,
-     "acts": [
-      "click(button:Start exam@a248b5@T3[?o0])"
-     ],
-     "test": "collision",
-     "parameters": []
-    },
-    {
-     "operator": "op7",
-     "control": "?",
-     "support": 1,
-     "acts": [
-      "type(textbox#textbox, ?s0)"
-     ],
-     "test": "collision",
-     "parameters": [
-      "type(textbox#textbox, ?s0)"
-     ]
-    }
-   ],
-   "movers": [
-    {
-     "operator": "op4",
-     "control": "button:Start exam@a248b5",
-     "support": 1,
-     "acts": [
-      "click(button:Start exam@a248b5@T3[?o0])"
-     ],
-     "test": "re-typing",
-     "from": [
-      3
-     ],
-     "to": [
-      0
-     ]
-    },
-    {
-     "operator": "op7",
-     "control": "?",
-     "support": 1,
-     "acts": [
-      "type(textbox#textbox, ?s0)"
-     ],
-     "test": "re-typing",
-     "from": [
-      0
-     ],
-     "to": [
-      0
-     ]
-    }
-   ],
-   "experiment": {
-    "test": "collision",
-    "by": "button:Check in@34d1f7",
-    "operator": "op2",
-    "parameters": [],
-    "predictions": {
-     "cell@Owner#0": "a second instance with the same value is one object",
-     "cell@Reason#0|cell@Vet#0": "a second instance with the same value is one object"
-    }
-   }
-  },
-  {
-   "family": "row[_](cell@Actions[_](combobox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
-   "left": "cell@Owner#0",
-   "right": "cell@Reason#0|cell@Status#0",
-   "reason": "undecided: chosen explains 34 with 133 errors, the alternative explains 10 with 131",
-   "tids": [
-    0,
-    3,
-    4
-   ],
-   "contested": [
-    "cell@Owner#0",
-    "cell@Reason#0",
-    "cell@Status#0"
-   ],
-   "status": "REACHABLE",
-   "writers": {},
-   "makers": [
-    {
-     "operator": "op2",
-     "control": "button:Check in@34d1f7",
-     "support": 1,
-     "acts": [
-      "click(button:Check in@34d1f7@T0[?o0])"
-     ],
-     "test": "collision",
-     "parameters": []
-    },
-    {
-     "operator": "op3",
-     "control": "button:Check in@34d1f7",
-     "support": 1,
-     "acts": [
-      "click(button:Check in@34d1f7@T0[?o0])"
-     ],
-     "test": "collision",
-     "parameters": []
-    },
-    {
-     "operator": "op4",
-     "control": "button:Start exam@a248b5",
-     "support": 1,
-     "acts": [
-      "click(button:Start exam@a248b5@T3[?o0])"
-     ],
-     "test": "collision",
-     "parameters": []
-    },
-    {
-     "operator": "op7",
-     "control": "?",
-     "support": 1,
-     "acts": [
-      "type(textbox#textbox, ?s0)"
-     ],
-     "test": "collision",
-     "parameters": [
-      "type(textbox#textbox, ?s0)"
-     ]
-    }
-   ],
-   "movers": [
-    {
-     "operator": "op4",
-     "control": "button:Start exam@a248b5",
-     "support": 1,
-     "acts": [
-      "click(button:Start exam@a248b5@T3[?o0])"
-     ],
-     "test": "re-typing",
-     "from": [
-      3
-     ],
-     "to": [
-      0
-     ]
-    },
-    {
-     "operator": "op7",
-     "control": "?",
-     "support": 1,
-     "acts": [
-      "type(textbox#textbox, ?s0)"
-     ],
-     "test": "re-typing",
-     "from": [
-      0
-     ],
-     "to": [
-      0
-     ]
-    }
-   ],
-   "experiment": {
-    "test": "collision",
-    "by": "button:Check in@34d1f7",
-    "operator": "op2",
-    "parameters": [],
-    "predictions": {
-     "cell@Owner#0": "a second instance with the same value is one object",
-     "cell@Reason#0|cell@Status#0": "a second instance with the same value is one object"
-    }
-   }
-  },
-  {
-   "family": "row[_](cell@Actions[_](textbox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
-   "left": "cell@Owner#0",
-   "right": null,
-   "reason": "undecided: chosen explains 34 with 133 errors, the alternative explains 7 with 128",
-   "tids": [
-    0
-   ],
-   "contested": [
-    "cell@Owner#0"
-   ],
-   "status": "REACHABLE",
-   "writers": {},
-   "makers": [
-    {
-     "operator": "op4",
-     "control": "button:Start exam@a248b5",
-     "support": 1,
-     "acts": [
-      "click(button:Start exam@a248b5@T3[?o0])"
-     ],
-     "test": "collision",
-     "parameters": []
-    },
-    {
-     "operator": "op7",
-     "control": "?",
-     "support": 1,
-     "acts": [
-      "type(textbox#textbox, ?s0)"
-     ],
-     "test": "collision",
-     "parameters": [
-      "type(textbox#textbox, ?s0)"
-     ]
-    }
-   ],
-   "movers": [
-    {
-     "operator": "op7",
-     "control": "?",
-     "support": 1,
-     "acts": [
-      "type(textbox#textbox, ?s0)"
-     ],
-     "test": "re-typing",
-     "from": [
-      0
-     ],
-     "to": [
-      0
-     ]
-    }
-   ],
-   "experiment": {
-    "test": "collision",
-    "by": "button:Start exam@a248b5",
-    "operator": "op4",
-    "parameters": [],
-    "predictions": {
-     "cell@Owner#0": "a second instance with the same value is one object",
-     "None": "a second instance is a second object"
-    }
-   }
-  },
-  {
-   "family": "row[_](cell@Actions[_](textbox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
-   "left": "cell@Owner#0",
-   "right": "cell@Vet#0",
-   "reason": "undecided: chosen explains 34 with 133 errors, the alternative explains 7 with 128",
-   "tids": [
-    0
-   ],
-   "contested": [
-    "cell@Owner#0",
-    "cell@Vet#0"
-   ],
-   "status": "REACHABLE",
-   "writers": {},
-   "makers": [
-    {
-     "operator": "op4",
-     "control": "button:Start exam@a248b5",
-     "support": 1,
-     "acts": [
-      "click(button:Start exam@a248b5@T3[?o0])"
-     ],
-     "test": "collision",
-     "parameters": []
-    },
-    {
-     "operator": "op7",
-     "control": "?",
-     "support": 1,
-     "acts": [
-      "type(textbox#textbox, ?s0)"
-     ],
-     "test": "collision",
-     "parameters": [
-      "type(textbox#textbox, ?s0)"
-     ]
-    }
-   ],
-   "movers": [
-    {
-     "operator": "op7",
-     "control": "?",
-     "support": 1,
-     "acts": [
-      "type(textbox#textbox, ?s0)"
-     ],
-     "test": "re-typing",
-     "from": [
-      0
-     ],
-     "to": [
-      0
-     ]
-    }
-   ],
-   "experiment": {
-    "test": "collision",
-    "by": "button:Start exam@a248b5",
-    "operator": "op4",
-    "parameters": [],
-    "predictions": {
-     "cell@Owner#0": "a second instance with the same value is one object",
-     "cell@Vet#0": "a second instance with the same value is one object"
-    }
-   }
-  },
-  {
-   "family": "row[_](cell@Actions[_],cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
-   "left": "cell@Owner#0",
-   "right": "cell@Patient#0",
-   "reason": "undecided: chosen explains 34 with 133 errors, the alternative explains 7 with 128",
-   "tids": [
-    5
-   ],
-   "contested": [
-    "cell@Owner#0",
-    "cell@Patient#0"
-   ],
-   "status": "REACHABLE",
-   "writers": {},
-   "makers": [
-    {
-     "operator": "op1",
-     "control": "button:Cancel@dee0ff",
-     "support": 1,
-     "acts": [
-      "click(button:Cancel@dee0ff@T0[?o0])"
-     ],
-     "test": "collision",
-     "parameters": []
-    }
-   ],
    "movers": [],
-   "experiment": {
-    "test": "collision",
-    "by": "button:Cancel@dee0ff",
-    "operator": "op1",
-    "parameters": [],
-    "predictions": {
-     "cell@Owner#0": "a second instance with the same value is one object",
-     "cell@Patient#0": "a second instance with the same value is one object"
-    }
-   }
+   "made_values": {},
+   "separable_by_the_history": {},
+   "decided": null
   },
   {
-   "family": "row[_](cell@Actions[_],cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
-   "left": "cell@Owner#0",
+   "family": "row[_](cell@Actions[_](textbox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+   "left": null,
    "right": "cell@Reason#0",
-   "reason": "undecided: chosen explains 34 with 133 errors, the alternative explains 7 with 128",
-   "tids": [
-    5
-   ],
+   "reason": "undecided: chosen explains 34 with 144 errors, the alternative explains 12 with 130",
+   "tids": [],
    "contested": [
-    "cell@Owner#0",
     "cell@Reason#0"
    ],
-   "status": "REACHABLE",
+   "status": "NO_KNOWN_EXPERIMENT",
+   "writers": {},
+   "makers": [],
+   "movers": [],
+   "made_values": {},
+   "separable_by_the_history": {},
+   "decided": null
+  },
+  {
+   "family": "row[_](cell@Actions[_],cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+   "left": "cell@Patient#0",
+   "right": "cell@Reason#0",
+   "reason": "undecided: chosen explains 34 with 144 errors, the alternative explains 11 with 130",
+   "tids": [
+    4
+   ],
+   "contested": [
+    "cell@Patient#0",
+    "cell@Reason#0"
+   ],
+   "status": "REACHABLE_NOT_DISCRIMINATING",
    "writers": {},
    "makers": [
     {
      "operator": "op1",
-     "control": "button:Cancel@dee0ff",
+     "control": "button:Cancel",
      "support": 1,
      "acts": [
-      "click(button:Cancel@dee0ff@T0[?o0])"
+      "click(button:Cancel@T3[?o0])"
      ],
      "test": "collision",
      "parameters": []
     }
    ],
    "movers": [],
+   "made_values": {
+    "op1": [
+     {
+      "cell@Patient#0": null,
+      "cell@Reason#0": "Limping",
+      "key": "Rocket"
+     }
+    ]
+   },
+   "separable_by_the_history": {
+    "cell@Patient#0": false,
+    "cell@Reason#0": false
+   },
+   "decided": null,
    "experiment": {
     "test": "collision",
-    "by": "button:Cancel@dee0ff",
+    "by": "button:Cancel",
     "operator": "op1",
     "parameters": [],
     "predictions": {
-     "cell@Owner#0": "a second instance with the same value is one object",
+     "cell@Patient#0": "a second instance with the same value is one object",
      "cell@Reason#0": "a second instance with the same value is one object"
+    }
+   }
+  },
+  {
+   "family": "row[_](cell@Actions[_],cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+   "left": "cell@Patient#0",
+   "right": null,
+   "reason": "undecided: chosen explains 34 with 144 errors, the alternative explains 10 with 130",
+   "tids": [
+    4
+   ],
+   "contested": [
+    "cell@Patient#0"
+   ],
+   "status": "REACHABLE_NOT_DISCRIMINATING",
+   "writers": {},
+   "makers": [
+    {
+     "operator": "op1",
+     "control": "button:Cancel",
+     "support": 1,
+     "acts": [
+      "click(button:Cancel@T3[?o0])"
+     ],
+     "test": "collision",
+     "parameters": []
+    }
+   ],
+   "movers": [],
+   "made_values": {
+    "op1": [
+     {
+      "cell@Patient#0": null,
+      "key": "Rocket"
+     }
+    ]
+   },
+   "separable_by_the_history": {
+    "cell@Patient#0": false
+   },
+   "decided": null,
+   "experiment": {
+    "test": "collision",
+    "by": "button:Cancel",
+    "operator": "op1",
+    "parameters": [],
+    "predictions": {
+     "cell@Patient#0": "a second instance with the same value is one object",
+     "None": "a second instance is a second object"
     }
    }
   },
@@ -762,7 +793,7 @@
    "family": "row[_](cell@Name[_],cell@On duty[_],cell@Specialty[_])",
    "left": "cell@Name#0",
    "right": "cell@Specialty#0",
-   "reason": "undecided: chosen explains 34 with 133 errors, the alternative explains 7 with 128",
+   "reason": "undecided: chosen explains 34 with 144 errors, the alternative explains 11 with 130",
    "tids": [
     2
    ],
@@ -770,16 +801,19 @@
     "cell@Name#0",
     "cell@Specialty#0"
    ],
-   "status": "QUOTIENT_EQUIVALENT",
+   "status": "NO_KNOWN_EXPERIMENT",
    "writers": {},
    "makers": [],
-   "movers": []
+   "movers": [],
+   "made_values": {},
+   "separable_by_the_history": {},
+   "decided": null
   },
   {
    "family": "row[_](cell@Name[_],cell@On duty[_],cell@Specialty[_])",
    "left": "cell@Name#0",
    "right": "cell@On duty#0",
-   "reason": "undecided: chosen explains 34 with 133 errors, the alternative explains 7 with 128",
+   "reason": "undecided: chosen explains 34 with 144 errors, the alternative explains 11 with 130",
    "tids": [
     2
    ],
@@ -787,43 +821,57 @@
     "cell@Name#0",
     "cell@On duty#0"
    ],
-   "status": "QUOTIENT_EQUIVALENT",
+   "status": "NO_KNOWN_EXPERIMENT",
    "writers": {},
    "makers": [],
-   "movers": []
+   "movers": [],
+   "made_values": {},
+   "separable_by_the_history": {},
+   "decided": null
   },
   {
    "family": "text[_](combobox[_])",
    "left": "text#0",
    "right": null,
-   "reason": "undecided: chosen explains 34 with 133 errors, the alternative explains 7 with 76",
+   "reason": "undecided: chosen explains 34 with 144 errors, the alternative explains 11 with 58",
    "tids": [
     1
    ],
    "contested": [
     "text#0"
    ],
-   "status": "REACHABLE",
+   "status": "REACHABLE_NOT_DISCRIMINATING",
    "writers": {},
    "makers": [
     {
-     "operator": "op5",
-     "control": "button:Assign vet@306493",
+     "operator": "op6",
+     "control": "button:Assign vet",
      "support": 1,
      "acts": [
       "context(text#0, ?o0)",
-      "click(button:Assign vet@306493@T4[?o1])"
+      "click(button:Assign vet@T3[?o1])"
      ],
      "test": "collision",
      "parameters": []
     },
     {
-     "operator": "op6",
-     "control": "button:Check in@306493",
+     "operator": "op7",
+     "control": "button:Assign vet",
      "support": 1,
      "acts": [
       "context(text#0, ?o0)",
-      "click(button:Check in@306493@T4[?o1])"
+      "click(button:Assign vet@T3[?o1])"
+     ],
+     "test": "collision",
+     "parameters": []
+    },
+    {
+     "operator": "op8",
+     "control": "button:Check in",
+     "support": 2,
+     "acts": [
+      "context(text#0, ?o0)",
+      "click(button:Check in@T3[?o1])"
      ],
      "test": "collision",
      "parameters": []
@@ -831,12 +879,12 @@
    ],
    "movers": [
     {
-     "operator": "op5",
-     "control": "button:Assign vet@306493",
+     "operator": "op6",
+     "control": "button:Assign vet",
      "support": 1,
      "acts": [
       "context(text#0, ?o0)",
-      "click(button:Assign vet@306493@T4[?o1])"
+      "click(button:Assign vet@T3[?o1])"
      ],
      "test": "re-typing",
      "from": [
@@ -847,12 +895,28 @@
      ]
     },
     {
-     "operator": "op6",
-     "control": "button:Check in@306493",
+     "operator": "op7",
+     "control": "button:Assign vet",
      "support": 1,
      "acts": [
       "context(text#0, ?o0)",
-      "click(button:Check in@306493@T4[?o1])"
+      "click(button:Assign vet@T3[?o1])"
+     ],
+     "test": "re-typing",
+     "from": [
+      1
+     ],
+     "to": [
+      1
+     ]
+    },
+    {
+     "operator": "op8",
+     "control": "button:Check in",
+     "support": 2,
+     "acts": [
+      "context(text#0, ?o0)",
+      "click(button:Check in@T3[?o1])"
      ],
      "test": "re-typing",
      "from": [
@@ -863,10 +927,38 @@
      ]
     }
    ],
+   "made_values": {
+    "op6": [
+     {
+      "text#0": null,
+      "key": "Species"
+     }
+    ],
+    "op7": [
+     {
+      "text#0": null,
+      "key": "Species"
+     }
+    ],
+    "op8": [
+     {
+      "text#0": null,
+      "key": "Species"
+     },
+     {
+      "text#0": null,
+      "key": "Species"
+     }
+    ]
+   },
+   "separable_by_the_history": {
+    "text#0": false
+   },
+   "decided": null,
    "experiment": {
     "test": "collision",
-    "by": "button:Assign vet@306493",
-    "operator": "op5",
+    "by": "button:Assign vet",
+    "operator": "op6",
     "parameters": [],
     "predictions": {
      "text#0": "a second instance with the same value is one object",
@@ -875,5 +967,5 @@
    }
   }
  ],
- "reachable": 10
+ "reachable": 1
 }

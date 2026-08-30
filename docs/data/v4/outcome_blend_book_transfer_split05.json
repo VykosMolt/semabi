@@ -75,26 +75,25 @@
  },
  "outcome_model": {
   "controls": 6,
-  "rules": 13,
+  "rules": 11,
   "held_out_clicks": 123,
   "ledger": {
-   "the event the interface returned": 119,
-   "a different event": 4
+   "the event the interface returned": 67,
+   "a different event": 56
   },
-  "accuracy_where_it_answered": 0.967,
-  "distinct_events_asserted": 5,
+  "accuracy_where_it_answered": 0.545,
+  "distinct_events_asserted": 4,
   "answers_naming_an_event": 123,
-  "accuracy_where_it_named_an_event": 0.967,
+  "accuracy_where_it_named_an_event": 0.545,
   "by_level": {
-   "the event the interface returned / with its arguments": 119,
-   "a different event / the event alone": 4
+   "the event the interface returned / with its arguments": 67,
+   "a different event / the event alone": 56
   },
   "events_asserted": {
-   "Drew <> from <> into <> .": 52,
+   "The book already holds 12 records ; return a draw first .": 56,
    "<> is already <> .": 41,
    "<> is <> .": 19,
-   "<> holds <> ; cannot draw <> .": 7,
-   "The book already holds 12 records ; return a draw first .": 4
+   "<> holds <> ; cannot draw <> .": 7
   },
   "majority_frame_control_where_it_answered": {
    "right": 52,
@@ -105,56 +104,92 @@
   "by_control": {
    "button:Record draw": {
     "fitted": 112,
-    "rules": 7,
+    "rules": 5,
     "events_fitted": 5,
-    "the event the interface returned": 119,
-    "a different event": 4
+    "the event the interface returned": 67,
+    "a different event": 56
    }
   },
   "wrong": [
    {
-    "step": 541,
+    "step": 421,
     "control": "button:Record draw",
     "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "<> is single-varietal ( <> ) ; <> is <> .",
-    "returned": "Festival White is single-varietal (Pinot); Orchard is Syrah.",
+    "observed": "Drew <> from <> into <> .",
+    "returned": "Drew 1 gal from North Wall into Cloister.",
     "verdict": "a different event",
     "level": "the event alone"
    },
    {
-    "step": 546,
+    "step": 427,
     "control": "button:Record draw",
     "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "<> is single-varietal ( <> ) ; <> is <> .",
-    "returned": "Festival White is single-varietal (Pinot); Orchard is Syrah.",
+    "observed": "Drew <> from <> into <> .",
+    "returned": "Drew 1 gal from North Wall into Cloister.",
     "verdict": "a different event",
     "level": "the event alone"
    },
    {
-    "step": 548,
+    "step": 433,
     "control": "button:Record draw",
     "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "<> is single-varietal ( <> ) ; <> is <> .",
-    "returned": "Festival White is single-varietal (Pinot); Orchard is Syrah.",
+    "observed": "Drew <> from <> into <> .",
+    "returned": "Drew 1 gal from North Wall into Cloister.",
     "verdict": "a different event",
     "level": "the event alone"
    },
    {
-    "step": 556,
+    "step": 437,
     "control": "button:Record draw",
     "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "<> is single-varietal ( <> ) ; <> is <> .",
-    "returned": "Festival White is single-varietal (Pinot); Orchard is Syrah.",
+    "observed": "Drew <> from <> into <> .",
+    "returned": "Drew 1 gal from North Wall into Cloister.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 440,
+    "control": "button:Record draw",
+    "predicted": "The book already holds 12 records ; return a draw first .",
+    "observed": "Drew <> from <> into <> .",
+    "returned": "Drew 1 gal from North Wall into Cloister.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 443,
+    "control": "button:Record draw",
+    "predicted": "The book already holds 12 records ; return a draw first .",
+    "observed": "Drew <> from <> into <> .",
+    "returned": "Drew 1 gal from North Wall into Cloister.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 446,
+    "control": "button:Record draw",
+    "predicted": "The book already holds 12 records ; return a draw first .",
+    "observed": "Drew <> from <> into <> .",
+    "returned": "Drew 1 gal from North Wall into Cloister.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 449,
+    "control": "button:Record draw",
+    "predicted": "The book already holds 12 records ; return a draw first .",
+    "observed": "Drew <> from <> into <> .",
+    "returned": "Drew 1 gal from North Wall into Cloister.",
     "verdict": "a different event",
     "level": "the event alone"
    }
   ],
   "lists": {
    "button#cell/button": "button#cell/button: 12 fitted occasions, 1 distinct events\n    otherwise  ->  Opened <> .   [12]\n    otherwise -> Opened <> .\n    'Opened <> .' arguments: 0=owner",
-   "button:Bottle _": "button:Bottle _: 6 fitted occasions, 2 distinct events\n    role relation['backward', 'rel:1']:2<owner = relation['backward', 'rel:1'] from owner\n    ('ambiguous', \"relation['backward', 'rel:1']:2<owner\")  ->  <> <> .   [4]\n    otherwise -> undetermined\n    '<> <> .' arguments: 1=owner\n    '<> has <> committed ; need at least <> to bottle .' arguments: 0=owner, 2=relation['backward', 'rel:1']:2<owner",
+   "button:Bottle _": "button:Bottle _: 6 fitted occasions, 2 distinct events\n    role relation['backward', 'rel:1']:2<owner = relation['backward', 'rel:1'] from owner\n    attr:Committed gal#0(owner) >= '2'  ->  <> <> .   [5]\n    otherwise -> <> has <> committed ; need at least <> to bottle .\n    '<> <> .' arguments: 1=owner\n    '<> has <> committed ; need at least <> to bottle .' arguments: 0=owner, 2=relation['backward', 'rel:1']:2<owner",
    "button:Close _": "button:Close _: 16 fitted occasions, 2 distinct events\n    attr:Gate#0(owner) == 'Open'  ->  <> <> .   [15]\n    otherwise -> <> is already <> .\n    '<> <> .' arguments: 1=owner\n    '<> is already <> .' arguments: 0=owner",
    "button:Disgorge _": "button:Disgorge _: 4 fitted occasions, 1 distinct events\n    otherwise  ->  Disgorged <> .   [4]\n    otherwise -> Disgorged <> .\n    'Disgorged <> .' arguments: 0=owner",
-   "button:Record draw": "button:Record draw: 112 fitted occasions, 5 distinct events\n    role selection['combobox#0']:0 = selection['combobox#0']\n    role selection['combobox#1']:1 = selection['combobox#1']\n    role relation['forward', 'rel:0']:0<selection['combobox#2']:2 = relation['forward', 'rel:0'] from selection['combobox#2']:2\n    role selection['combobox#2']:2 = selection['combobox#2']\n    attr:State#0(selection['combobox#1']:1) == 'Bottled'  ->  <> is already <> .   [29]\n    attr:Gallons left#0(selection['combobox#0']:0) == '0' & attr:Gate#0(selection['combobox#0']:0) == 'Open'  ->  <> holds <> ; cannot draw <> .   [15]\n    attr:Gate#0(selection['combobox#0']:0) == 'Closed'  ->  <> is <> .   [9]\n    attr:Gallons left#0(selection['combobox#0']:0) == '1'  ->  Drew <> from <> into <> .   [47]\n    rel:0(selection['combobox#2']:2) == selection['combobox#0']:0  ->  Drew <> from <> into <> .   [6]\n    ('unnamed', \"selection['combobox#2']:2\")  ->  Drew <> from <> into <> .   [4]\n    otherwise  ->  The book already holds 12 records ; return a draw first .   [2]\n    otherwise -> The book already holds 12 records ; return a draw first .\n    '<> holds <> ; cannot draw <> .' arguments: 0=selection['combobox#0']:0, 2=selection['combobox#2']:2\n    '<> is <> .' arguments: 0=selection['combobox#0']:0\n    '<> is already <> .' arguments: 0=selection['combobox#1']:1\n    'Drew <> from <> into <> .' arguments: 2=selection['combobox#1']:1",
+   "button:Record draw": "button:Record draw: 112 fitted occasions, 5 distinct events\n    role selection['combobox#0']:0 = selection['combobox#0']\n    role selection['combobox#1']:1 = selection['combobox#1']\n    role relation['forward', 'rel:0']:0<selection['combobox#2']:2 = relation['forward', 'rel:0'] from selection['combobox#2']:2\n    role selection['combobox#2']:2 = selection['combobox#2']\n    attr:State#0(selection['combobox#1']:1) == 'Bottled'  ->  <> is already <> .   [29]\n    attr:Gallons left#0(selection['combobox#0']:0) == '0' & attr:Gate#0(selection['combobox#0']:0) == 'Open'  ->  <> holds <> ; cannot draw <> .   [15]\n    attr:Gate#0(selection['combobox#0']:0) == 'Closed'  ->  <> is <> .   [9]\n    attr:Committed gal#0(selection['combobox#1']:1) < '5'  ->  Drew <> from <> into <> .   [57]\n    otherwise  ->  The book already holds 12 records ; return a draw first .   [2]\n    otherwise -> The book already holds 12 records ; return a draw first .\n    '<> holds <> ; cannot draw <> .' arguments: 0=selection['combobox#0']:0, 2=selection['combobox#2']:2\n    '<> is <> .' arguments: 0=selection['combobox#0']:0\n    '<> is already <> .' arguments: 0=selection['combobox#1']:1\n    'Drew <> from <> into <> .' arguments: 2=selection['combobox#1']:1",
    "button:Return ticket _ gal from _ out of _": "button:Return ticket _ gal from _ out of _: 59 fitted occasions, 2 distinct events\n    role relation['forward', 'rel:0']:0<owner = relation['forward', 'rel:0'] from owner\n    role relation['forward', 'rel:1']:1<owner = relation['forward', 'rel:1'] from owner\n    attr:State#0(relation['forward', 'rel:1']:1<owner) == 'In cask'  ->  Returned <> to <> from <> .   [52]\n    otherwise  ->  <> is <> ; disgorge it before returning a draw .   [7]\n    otherwise -> <> is <> ; disgorge it before returning a draw .\n    '<> is <> ; disgorge it before returning a draw .' arguments: 0=relation['forward', 'rel:1']:1<owner\n    'Returned <> to <> from <> .' arguments: 1=relation['forward', 'rel:0']:0<owner, 2=relation['forward', 'rel:1']:1<owner"
   }
  },

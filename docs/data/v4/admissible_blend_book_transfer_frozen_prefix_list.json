@@ -12,32 +12,31 @@
   "list: the evidence forces one outcome | rule: the evidence forces one outcome": 151,
   "list: several outcomes remain admissible | rule: several outcomes remain admissible": 45,
   "list: one outcome, because the control has never done anything else | rule: one outcome, because the control has never done anything else": 32,
-  "list: no outcome is established | rule: no outcome is established": 14,
-  "list: the evidence forces one outcome (wrong) | rule: the evidence forces one outcome (wrong)": 5,
-  "list: the evidence forces one outcome | rule: no outcome is established": 2
+  "list: no outcome is established | rule: no outcome is established": 16,
+  "list: the evidence forces one outcome (wrong) | rule: the evidence forces one outcome (wrong)": 5
  },
  "actions": 249,
  "what_the_evidence_establishes": {
-  "the evidence forces one outcome": 158,
+  "the evidence forces one outcome": 156,
   "several outcomes remain admissible": 45,
   "one outcome, because the control has never done anything else": 32,
-  "no outcome is established": 14
+  "no outcome is established": 16
  },
  "admissible_set_size": {
-  "0": 14,
-  "1": 190,
+  "0": 16,
+  "1": 188,
   "2": 42,
   "3": 3
  },
  "what_happened_was": {
-  "inside the admissible set": 205,
+  "inside the admissible set": 203,
   "outside it": 30,
-  "nothing was admissible": 14
+  "nothing was admissible": 16
  },
  "the_list_where_the_evidence": {
   "no outcome is established": {
-   "no determinate answer": 11,
-   "the event the interface returned": 3
+   "the event the interface returned": 14,
+   "a different event": 2
   },
   "one outcome, because the control has never done anything else": {
    "a different event": 21,
@@ -48,22 +47,22 @@
    "a different event": 4
   },
   "the evidence forces one outcome": {
-   "the event the interface returned": 157,
-   "a different event": 1
+   "the event the interface returned": 103,
+   "a different event": 53
   }
  },
  "policy_forced_then_list": {
-  "one outcome was admissible and it happened": 153,
+  "one outcome was admissible and it happened": 151,
   "deferred to the list: the event the interface returned": 41,
   "the only outcome ever seen on this control, and something else happened": 20,
-  "refused: nothing established": 14,
+  "refused: nothing established": 16,
   "the only outcome ever seen on this control, and it happened": 12,
   "one outcome was admissible and a different one happened": 5,
   "deferred to the list: a different event": 4
  },
  "distinct_events_forced": 8,
  "events_forced": {
-  "Drew <> from <> into <> .": 52,
+  "Drew <> from <> into <> .": 50,
   "Returned <> to <> from <> .": 46,
   "<> is already <> .": 33,
   "Opened <> .": 23,
@@ -74,8 +73,9 @@
  },
  "per_control": {
   "button:Record draw": {
-   "the evidence forces one outcome": 94,
-   "several outcomes remain admissible": 29
+   "the evidence forces one outcome": 92,
+   "several outcomes remain admissible": 29,
+   "no outcome is established": 2
   },
   "button:Return ticket _ gal from _ out of _": {
    "the evidence forces one outcome": 48,
@@ -116,9 +116,10 @@
    "the only outcome ever seen on this control, and it happened": 1
   },
   "button:Record draw": {
-   "one outcome was admissible and it happened": 94,
+   "one outcome was admissible and it happened": 92,
    "several outcomes remained admissible; the one that happened was among them": 26,
-   "several outcomes remained admissible and none of them happened": 3
+   "several outcomes remained admissible and none of them happened": 3,
+   "no outcome is established for this state": 2
   },
   "button:Return ticket _ gal from _ out of _": {
    "one outcome was admissible and it happened": 48,
@@ -136,7 +137,7 @@
    "fitted": 6,
    "events": 2,
    "rules": 1,
-   "default": "undetermined"
+   "default": "<> has <> committed ; need at least <> to bottle ."
   },
   "button:Close _": {
    "fitted": 16,
@@ -153,7 +154,7 @@
   "button:Record draw": {
    "fitted": 112,
    "events": 5,
-   "rules": 7,
+   "rules": 5,
    "default": "The book already holds 12 records ; return a draw first ."
   },
   "button:Return ticket _ gal from _ out of _": {
