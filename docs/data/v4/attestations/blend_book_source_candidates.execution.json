@@ -1,7 +1,7 @@
 {
  "artifact": {
   "path": "docs/data/v4/manifests/blend_book_source_candidates.json",
-  "sha256": "4ec593180beae6e00fa0ac421fb160cbf755fee896320cdfe76a12d707055d55"
+  "sha256": "81ac504d1180cda30cc54a24df904c8ed5d527c93c0bb70144f16fa9fb6a62ed"
  },
  "authority": "V4_IMPORT_AUTHORITY_ACTIVE",
  "declared_static_closure": {
@@ -28,24 +28,26 @@
    "semabi/compiler/v2/graph.py",
    "semabi/compiler/v2/hypotheses.py",
    "semabi/compiler/v2/score.py",
+   "semabi/compiler/v2/sections.py",
    "semabi/compiler/v2/units.py",
    "semabi/compiler/v4/__init__.py",
    "semabi/compiler/v4/abstractor.py",
    "semabi/compiler/v4/custody.py",
+   "semabi/compiler/v4/emission.py",
    "semabi/compiler/v4/frozen_evidence.py",
    "semabi/compiler/v4/identity.py",
    "semabi/compiler/v4/manifests.py",
    "semabi/compiler/v4/objective.py",
    "semabi/compiler/v4/pinned.py",
    "semabi/compiler/v4/promote.py",
+   "semabi/compiler/v4/referring.py",
    "semabi/compiler/v4/search.py",
    "semabi/compiler/v4/source_candidates.py",
    "semabi/relmodel.py"
   ],
   "declared_but_not_executed": [
    "semabi/compiler/grounder.py",
-   "semabi/compiler/mentions.py",
-   "semabi/compiler/v2/controls.py"
+   "semabi/compiler/mentions.py"
   ],
   "entrypoint_kind": "freeze-source",
   "executed": [
@@ -65,19 +67,23 @@
    "semabi/compiler/parse.py",
    "semabi/compiler/v2/__init__.py",
    "semabi/compiler/v2/abstractor.py",
+   "semabi/compiler/v2/controls.py",
    "semabi/compiler/v2/graph.py",
    "semabi/compiler/v2/hypotheses.py",
    "semabi/compiler/v2/score.py",
+   "semabi/compiler/v2/sections.py",
    "semabi/compiler/v2/units.py",
    "semabi/compiler/v4/__init__.py",
    "semabi/compiler/v4/abstractor.py",
    "semabi/compiler/v4/custody.py",
+   "semabi/compiler/v4/emission.py",
    "semabi/compiler/v4/frozen_evidence.py",
    "semabi/compiler/v4/identity.py",
    "semabi/compiler/v4/manifests.py",
    "semabi/compiler/v4/objective.py",
    "semabi/compiler/v4/pinned.py",
    "semabi/compiler/v4/promote.py",
+   "semabi/compiler/v4/referring.py",
    "semabi/compiler/v4/search.py",
    "semabi/compiler/v4/source_candidates.py",
    "semabi/relmodel.py"
@@ -103,7 +109,7 @@
   "site_pth_processing": "DISABLED",
   "untracked_project_modules": "REJECTED"
  },
- "project_execution_sha256": "804a38b290da16f6877e316abd7d5a95f11b08243564bfc7e59bd6c84603a907",
+ "project_execution_sha256": "4740041fbe838bdacfe146ee42d0503e08de357a922033e68e0d7be5b83468ee",
  "project_modules": [
   {
    "executed_from_verified_memory": true,
@@ -150,8 +156,8 @@
    "package_search_locations": [],
    "path": "semabi/compiler/abstract.py",
    "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
-   "sha256": "07fd8b41fcfdfe3d563e6b5f28d6fbb0229fb706f944dbfe7626a363ade633f8",
-   "size": 27326
+   "sha256": "ad64ca460708b40feda42bd17e50dac0ad289563b3e346bea547fd116e8df4b6",
+   "size": 27597
   },
   {
    "executed_from_verified_memory": true,
@@ -194,8 +200,8 @@
    "package_search_locations": [],
    "path": "semabi/compiler/compile_v4.py",
    "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
-   "sha256": "dd6b17f26e98dc79291ececcbb35f1048a41f15f31e1793bf34ae443e592c778",
-   "size": 7771
+   "sha256": "670b8dfefcd729d3ee971d5fdf97c2e595d360f47fd06678579b565844814ef3",
+   "size": 10928
   },
   {
    "executed_from_verified_memory": true,
@@ -205,8 +211,8 @@
    "package_search_locations": [],
    "path": "semabi/compiler/evidence.py",
    "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
-   "sha256": "b4a5d0c9208f9b6c4588317078f8270a7bd0766bcb1a2e52722f72be74a90e51",
-   "size": 3341
+   "sha256": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+   "size": 7215
   },
   {
    "executed_from_verified_memory": true,
@@ -227,8 +233,8 @@
    "package_search_locations": [],
    "path": "semabi/compiler/induce.py",
    "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
-   "sha256": "46075088d34187ea121c77c3522055260e710a71199fd97de338f36f0c212b3e",
-   "size": 58900
+   "sha256": "83c4693fcbb51bb1825169401615307609e3fad096bf3fcceca1dd7c79354b1a",
+   "size": 80835
   },
   {
    "executed_from_verified_memory": true,
@@ -238,8 +244,8 @@
    "package_search_locations": [],
    "path": "semabi/compiler/model.py",
    "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
-   "sha256": "31b2d1207d678c05b743e70249db7947d7bb25759f668f2d013aef218aca6f36",
-   "size": 9478
+   "sha256": "5175ff650a75fdb39da8f943d5193c99a533f069929af158f0facfc963c9bf31",
+   "size": 12637
   },
   {
    "executed_from_verified_memory": true,
@@ -260,8 +266,8 @@
    "package_search_locations": [],
    "path": "semabi/compiler/parse.py",
    "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
-   "sha256": "c609e78b0f020f09bc22686168f22392cb54cea163a2ff84ab917528cb0ca922",
-   "size": 14679
+   "sha256": "eef0abc9d10e22267c776386245894175744bd81d91b00107718c713558a700e",
+   "size": 15679
   },
   {
    "executed_from_verified_memory": true,
@@ -284,8 +290,19 @@
    "package_search_locations": [],
    "path": "semabi/compiler/v2/abstractor.py",
    "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
-   "sha256": "8ef5620e76fbfd6047879814453d9cb1761d0d5f3641f354fa81dd9978110499",
-   "size": 40285
+   "sha256": "5c10ffdbd4f650000d8fdf82ed26b6727d295a6f4411324ec17b86cc4b7172da",
+   "size": 50626
+  },
+  {
+   "executed_from_verified_memory": true,
+   "is_package": false,
+   "loader": "V4_VERIFIED_SOURCE_LOADER",
+   "module": "semabi.compiler.v2.controls",
+   "package_search_locations": [],
+   "path": "semabi/compiler/v2/controls.py",
+   "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
+   "sha256": "e578b9735de3c817b16d742c5c86eefe3ea2ac75ae810cb2cf9aed31aa45687c",
+   "size": 16828
   },
   {
    "executed_from_verified_memory": true,
@@ -295,8 +312,8 @@
    "package_search_locations": [],
    "path": "semabi/compiler/v2/graph.py",
    "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
-   "sha256": "feb2ee73faca3bd5eaa91b3685bf84c047bf90027dddc56d02713b26a5501b6a",
-   "size": 12183
+   "sha256": "a84d65ec51f2147922b431b2cb0c7ce03c14c481ffb6c4d0e29dfd3b1db64c07",
+   "size": 33303
   },
   {
    "executed_from_verified_memory": true,
@@ -306,8 +323,8 @@
    "package_search_locations": [],
    "path": "semabi/compiler/v2/hypotheses.py",
    "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
-   "sha256": "fcb47e96015115c02efc56c9994fbcc1d2dcb2728d8b9ab51a89bfda5cffb92a",
-   "size": 49863
+   "sha256": "7128edf50a520fb87b5154d66034c4645ae8bf943dc64a76183ba0014255eb4f",
+   "size": 56396
   },
   {
    "executed_from_verified_memory": true,
@@ -317,8 +334,19 @@
    "package_search_locations": [],
    "path": "semabi/compiler/v2/score.py",
    "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
-   "sha256": "292ea78f2237e7b86dbbc943d624024ca9213218ead327b88080b71aebaaa95c",
-   "size": 9362
+   "sha256": "aaff604a4c91e8034fdb113c8b76e5e9415eb50bbc91d5ad25755492ae47524b",
+   "size": 9700
+  },
+  {
+   "executed_from_verified_memory": true,
+   "is_package": false,
+   "loader": "V4_VERIFIED_SOURCE_LOADER",
+   "module": "semabi.compiler.v2.sections",
+   "package_search_locations": [],
+   "path": "semabi/compiler/v2/sections.py",
+   "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
+   "sha256": "4bd39bf7e067a94ec19f6ad6c23c098d13ac01efdabafe2f6e15eb213003ba02",
+   "size": 6266
   },
   {
    "executed_from_verified_memory": true,
@@ -328,8 +356,8 @@
    "package_search_locations": [],
    "path": "semabi/compiler/v2/units.py",
    "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
-   "sha256": "c1a94e811f8259742e65e24d4beea8b869868bec6a2901f5420a96d60d5d7d58",
-   "size": 3203
+   "sha256": "8627e9a0f9aaed8861b59f2f1ce131a3e9a3f866f53d1181525a471551127398",
+   "size": 3828
   },
   {
    "executed_from_verified_memory": true,
@@ -363,8 +391,19 @@
    "package_search_locations": [],
    "path": "semabi/compiler/v4/custody.py",
    "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
-   "sha256": "75ec3a978d92f8d1e924e07ba76cb41294737c5c596210cd82fbecc3b2b55178",
-   "size": 27587
+   "sha256": "d703fdcfec1d9279de5b51628e1792c78207260a4afc92b1a68f046a9dff254c",
+   "size": 28010
+  },
+  {
+   "executed_from_verified_memory": true,
+   "is_package": false,
+   "loader": "V4_VERIFIED_SOURCE_LOADER",
+   "module": "semabi.compiler.v4.emission",
+   "package_search_locations": [],
+   "path": "semabi/compiler/v4/emission.py",
+   "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
+   "sha256": "5068810fe1d35b988649eb8ff8aecf6bd49dee5344cbdf72e94b156f6ec6cbbe",
+   "size": 10504
   },
   {
    "executed_from_verified_memory": true,
@@ -374,8 +413,8 @@
    "package_search_locations": [],
    "path": "semabi/compiler/v4/frozen_evidence.py",
    "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
-   "sha256": "ff80dc759a450cc64c90c913df63fb7d9eb70bb652ebc733dd40637a74b73738",
-   "size": 5569
+   "sha256": "cb3f7980fd9d24e888f45267ce5f7e597576ea2d2db63783988455bc340f3a65",
+   "size": 6048
   },
   {
    "executed_from_verified_memory": true,
@@ -385,8 +424,8 @@
    "package_search_locations": [],
    "path": "semabi/compiler/v4/identity.py",
    "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
-   "sha256": "4e718dd8b3d2ade2126c31c5e88a3d5d7b91662a08e1a95077f342c030039c05",
-   "size": 14509
+   "sha256": "6e30b1377906b6e4f6426b441cb1d13c48ff4aeb49b4f71dab2f51f2c3436ad2",
+   "size": 18583
   },
   {
    "executed_from_verified_memory": true,
@@ -396,8 +435,8 @@
    "package_search_locations": [],
    "path": "semabi/compiler/v4/manifests.py",
    "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
-   "sha256": "f38b79557ae4553d9f03c64fb9b160c027a3763f2577869372d660dbfd417afb",
-   "size": 73374
+   "sha256": "086e3c03591d0a21cfe0fe4717c184f1013fbd1becb86c42d376d98cbcf90b1f",
+   "size": 74126
   },
   {
    "executed_from_verified_memory": true,
@@ -407,8 +446,8 @@
    "package_search_locations": [],
    "path": "semabi/compiler/v4/objective.py",
    "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
-   "sha256": "b1040e3e65734524fbaac915b9e8da9eece4dfb442e5c67665d56d8350ea31e0",
-   "size": 13043
+   "sha256": "aad7cc8b8a542e77cd2f5d9ededd2d36ae759553780d182bd166c932fcf77a2b",
+   "size": 15513
   },
   {
    "executed_from_verified_memory": true,
@@ -418,8 +457,8 @@
    "package_search_locations": [],
    "path": "semabi/compiler/v4/pinned.py",
    "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
-   "sha256": "711305a95c1da238c4b9e4f213fb5f2421bf1757244b10bcbab5b14a83f8ad4d",
-   "size": 17708
+   "sha256": "20c3dbc0ae38528d1038b860d1b68e347b51c1c26b544f39f833f0baef36062e",
+   "size": 19884
   },
   {
    "executed_from_verified_memory": true,
@@ -436,12 +475,23 @@
    "executed_from_verified_memory": true,
    "is_package": false,
    "loader": "V4_VERIFIED_SOURCE_LOADER",
+   "module": "semabi.compiler.v4.referring",
+   "package_search_locations": [],
+   "path": "semabi/compiler/v4/referring.py",
+   "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
+   "sha256": "3bcde9c609efb22bb9f69a1c8c37848095133f12a5af66494d8095b44ccf7ff7",
+   "size": 21902
+  },
+  {
+   "executed_from_verified_memory": true,
+   "is_package": false,
+   "loader": "V4_VERIFIED_SOURCE_LOADER",
    "module": "semabi.compiler.v4.search",
    "package_search_locations": [],
    "path": "semabi/compiler/v4/search.py",
    "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
-   "sha256": "c1ad0bc10a94d146120192d77ac01da95158ed7ea738af9e84e889397305c839",
-   "size": 11750
+   "sha256": "5d1ed74cd120405554553a15767eba381ce47cc47f8f15e3ea648d0bc5e1b39e",
+   "size": 21776
   },
   {
    "executed_from_verified_memory": true,
@@ -451,8 +501,8 @@
    "package_search_locations": [],
    "path": "semabi/compiler/v4/source_candidates.py",
    "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
-   "sha256": "c7a5626fbf2b7b92ad1c0c4b9ed6aadc791771f314a291d21f38c5121d90f41f",
-   "size": 8591
+   "sha256": "e051353cfd2bbc9eb0e4eecfc14d402dcfc8cb80f84c412ff96250e8c560b129",
+   "size": 8628
   },
   {
    "executed_from_verified_memory": true,
@@ -462,8 +512,8 @@
    "package_search_locations": [],
    "path": "semabi/relmodel.py",
    "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
-   "sha256": "22ffbfe51a95a2b77307b9a2e0f3ba297dd58b2efd045ce7ab0263602abd74cf",
-   "size": 14667
+   "sha256": "2034f3a5dd7019c5333c8fb4e0283cf349e29905cfa5d0933e453180fa3a4827",
+   "size": 20463
   }
  ],
  "rejections": [],

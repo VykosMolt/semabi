@@ -2,42 +2,47 @@
  "run": "vet_clinic_transfer",
  "chain": "docs/data/v4/manifests/vet_clinic_chain.json",
  "split": 0.5,
- "ablated": "joint discrimination x3",
+ "ablated": "source_choice",
  "rekeyed": null,
  "readings": [
   {
-   "reading": "joint discrimination x3",
-   "types": 5,
+   "reading": "source_choice",
+   "types": 6,
    "prefix_objective": {
-    "explained": 19,
-    "errors": 424,
-    "visibility": 231,
-    "churn": 17,
+    "explained": 30,
+    "errors": 404,
+    "visibility": 228,
+    "churn": 0,
     "spurious": 0,
     "contradictions": 176,
-    "unexplained": 0
+    "conflicts": 0,
+    "named": 0,
+    "unexplained": 9
    },
    "suffix_ledger": {
-    "contradicted": 20,
-    "right": 6,
-    "disagreed": 18
+    "unbound": 16,
+    "contradicted": 12,
+    "disagreed": 16
    }
   },
   {
    "reading": "without cell[_]",
-   "types": 5,
+   "types": 6,
    "prefix_objective": {
-    "explained": 19,
-    "errors": 264,
-    "visibility": 151,
-    "churn": 17,
+    "explained": 30,
+    "errors": 244,
+    "visibility": 148,
+    "churn": 0,
     "spurious": 0,
     "contradictions": 96,
-    "unexplained": 0
+    "conflicts": 0,
+    "named": 0,
+    "unexplained": 9
    },
    "suffix_ledger": {
-    "contradicted": 26,
-    "disagreed": 18
+    "unbound": 16,
+    "contradicted": 12,
+    "disagreed": 16
    },
    "prefix_objective_accepts_removal": true
   },
@@ -45,43 +50,26 @@
    "reading": "without group[_](heading[_],list[_](listitem[_]))",
    "types": 3,
    "prefix_objective": {
-    "explained": 19,
-    "errors": 424,
-    "visibility": 231,
-    "churn": 17,
-    "spurious": 0,
-    "contradictions": 176,
-    "unexplained": 0
-   },
-   "suffix_ledger": {
-    "contradicted": 20,
-    "right": 6,
-    "disagreed": 18
-   },
-   "prefix_objective_accepts_removal": true
-  },
-  {
-   "reading": "without row[_](cell[_])",
-   "types": 4,
-   "prefix_objective": {
-    "explained": 22,
-    "errors": 407,
-    "visibility": 231,
+    "explained": 23,
+    "errors": 452,
+    "visibility": 228,
     "churn": 0,
     "spurious": 0,
     "contradictions": 176,
-    "unexplained": 10
+    "conflicts": 48,
+    "named": 0,
+    "unexplained": 16
    },
    "suffix_ledger": {
-    "contradicted": 27,
+    "contradicted": 25,
     "right": 6,
-    "disagreed": 11
+    "disagreed": 13
    },
-   "prefix_objective_accepts_removal": true
+   "prefix_objective_accepts_removal": false
   },
   {
-   "reading": "without row[_](cell[_],cell[_](combobox[_],button[_],text[_]))",
-   "types": 5,
+   "reading": "without row[_](cell@Actions[_](combobox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+   "types": 4,
    "prefix_objective": {
     "explained": 11,
     "errors": 404,
@@ -89,29 +77,100 @@
     "churn": 0,
     "spurious": 0,
     "contradictions": 176,
-    "unexplained": 3
+    "conflicts": 0,
+    "named": 0,
+    "unexplained": 7
    },
    "suffix_ledger": {
-    "contradicted": 38,
-    "right": 6
+    "contradicted": 27,
+    "right": 6,
+    "unbound": 6,
+    "disagreed": 5
    },
    "prefix_objective_accepts_removal": false
   },
   {
-   "reading": "without text[_](combobox[_])",
-   "types": 5,
+   "reading": "without row[_](cell@Actions[_](textbox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+   "types": 6,
    "prefix_objective": {
-    "explained": 19,
-    "errors": 312,
-    "visibility": 149,
-    "churn": 17,
+    "explained": 26,
+    "errors": 404,
+    "visibility": 228,
+    "churn": 0,
     "spurious": 0,
-    "contradictions": 146,
-    "unexplained": 0
+    "contradictions": 176,
+    "conflicts": 0,
+    "named": 0,
+    "unexplained": 13
    },
    "suffix_ledger": {
-    "right": 18,
-    "contradicted": 8
+    "unbound": 16,
+    "contradicted": 17,
+    "disagreed": 11
+   },
+   "prefix_objective_accepts_removal": false
+  },
+  {
+   "reading": "without row[_](cell@Actions[_],cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+   "types": 5,
+   "prefix_objective": {
+    "explained": 20,
+    "errors": 404,
+    "visibility": 228,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 176,
+    "conflicts": 0,
+    "named": 0,
+    "unexplained": 19
+   },
+   "suffix_ledger": {
+    "unbound": 16,
+    "contradicted": 12,
+    "disagreed": 16
+   },
+   "prefix_objective_accepts_removal": false
+  },
+  {
+   "reading": "without row[_](cell@Name[_],cell@On duty[_],cell@Specialty[_])",
+   "types": 5,
+   "prefix_objective": {
+    "explained": 30,
+    "errors": 404,
+    "visibility": 228,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 176,
+    "conflicts": 0,
+    "named": 0,
+    "unexplained": 9
+   },
+   "suffix_ledger": {
+    "unbound": 16,
+    "contradicted": 12,
+    "disagreed": 16
+   },
+   "prefix_objective_accepts_removal": true
+  },
+  {
+   "reading": "without text[_](combobox[_])",
+   "types": 6,
+   "prefix_objective": {
+    "explained": 30,
+    "errors": 346,
+    "visibility": 191,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 155,
+    "conflicts": 0,
+    "named": 0,
+    "unexplained": 9
+   },
+   "suffix_ledger": {
+    "unbound": 17,
+    "contradicted": 11,
+    "right": 11,
+    "disagreed": 5
    },
    "prefix_objective_accepts_removal": true
   }

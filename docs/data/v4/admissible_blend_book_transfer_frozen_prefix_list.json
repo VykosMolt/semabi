@@ -1,6 +1,6 @@
 {
  "run": "blend_book_transfer",
- "reading": "joint discrimination x3",
+ "reading": "source_choice",
  "regime": "FROZEN_PREFIX",
  "split": 0.5,
  "cut": 419,
@@ -178,7 +178,7 @@
    "returned": "Festival White is already bottled.",
    "verdict": "one outcome was admissible and a different one happened",
    "level": "the event alone",
-   "why": "<> <> . <- ('ambiguous', \"relation['backward', 'rel:3']:4<owner\")  [4 occasions]"
+   "why": "<> <> . <- attr:Committed gal#0(owner) == '4'  [3 occasions]"
   },
   {
    "step": 531,
@@ -194,7 +194,7 @@
    "returned": "West Ridge is already closed.",
    "verdict": "one outcome was admissible and a different one happened",
    "level": "the event alone",
-   "why": "<> <> . <- attr:cell#0@2(owner) == 'Pinot'  [3 occasions]"
+   "why": "<> <> . <- attr:Varietal#0(owner) == 'Pinot'  [3 occasions]"
   },
   {
    "step": 568,
@@ -210,7 +210,7 @@
    "returned": "West Ridge is already closed.",
    "verdict": "one outcome was admissible and a different one happened",
    "level": "the event alone",
-   "why": "<> <> . <- attr:cell#0@2(owner) == 'Pinot'  [3 occasions]"
+   "why": "<> <> . <- attr:Varietal#0(owner) == 'Pinot'  [3 occasions]"
   },
   {
    "step": 650,
@@ -226,7 +226,7 @@
    "returned": "Block 12 is already closed.",
    "verdict": "one outcome was admissible and a different one happened",
    "level": "the event alone",
-   "why": "<> <> . <- attr:cell#0@2(owner) == 'Syrah'  [7 occasions]"
+   "why": "<> <> . <- attr:Varietal#0(owner) == 'Syrah'  [7 occasions]"
   },
   {
    "step": 772,
@@ -242,7 +242,7 @@
    "returned": "Block 12 is already closed.",
    "verdict": "one outcome was admissible and a different one happened",
    "level": "the event alone",
-   "why": "<> <> . <- attr:cell#0@3(owner) == '7'  [3 occasions]"
+   "why": "<> <> . <- attr:Gallons left#0(owner) == '7'  [3 occasions]"
   }
  ]
 }

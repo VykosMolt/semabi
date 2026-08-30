@@ -1,6 +1,6 @@
 {
  "run": "blend_book_transfer",
- "reading": "joint discrimination x3",
+ "reading": "source_choice",
  "regime": "FROZEN_PREFIX",
  "split": 0.5,
  "control": "Record draw",
@@ -13,9 +13,9 @@
  "output": {
   "claims": 861,
   "verdicts": {
-   "NOT_APPLICABLE": 483,
+   "NOT_APPLICABLE": 485,
    "REFUTED": 180,
-   "SUPPORTED": 118,
+   "SUPPORTED": 116,
    "UNKNOWN": 80
   },
   "held_out_actions_with_an_output_claim": 123,
@@ -63,9 +63,9 @@
  },
  "state": {
   "verdicts": {
-   "NOT_APPLICABLE": 362,
+   "NOT_APPLICABLE": 366,
    "REFUTED": 14,
-   "SUPPORTED": 116
+   "SUPPORTED": 112
   },
   "per_action": {
    "no rule applied": 64,
@@ -150,20 +150,20 @@
    }
   ],
   "lists": {
-   "button#cell/button": "button#cell/button: 12 fitted occasions, 1 distinct events\n    role relation['forward', 'in:1']:1<owner = relation['forward', 'in:1'] from owner\n    otherwise  ->  Opened <> .   [12]\n    otherwise -> Opened <> .\n    'Opened <> .' arguments: 0=relation['forward', 'in:1']:1<owner",
-   "button:Bottle _": "button:Bottle _: 6 fitted occasions, 2 distinct events\n    role relation['backward', 'rel:3']:4<owner = relation['backward', 'rel:3'] from owner\n    ('ambiguous', \"relation['backward', 'rel:3']:4<owner\")  ->  <> <> .   [4]\n    otherwise -> undetermined\n    '<> <> .' arguments: 1=owner\n    '<> has <> committed ; need at least <> to bottle .' arguments: 0=owner, 2=relation['backward', 'rel:3']:4<owner",
-   "button:Close _": "button:Close _: 16 fitted occasions, 2 distinct events\n    attr:cell#0@4(owner) == 'Open'  ->  <> <> .   [15]\n    otherwise -> <> is already <> .\n    '<> <> .' arguments: 1=owner\n    '<> is already <> .' arguments: 0=owner",
+   "button#cell/button": "button#cell/button: 12 fitted occasions, 1 distinct events\n    otherwise  ->  Opened <> .   [12]\n    otherwise -> Opened <> .\n    'Opened <> .' arguments: 0=owner",
+   "button:Bottle _": "button:Bottle _: 6 fitted occasions, 2 distinct events\n    role relation['backward', 'rel:1']:2<owner = relation['backward', 'rel:1'] from owner\n    ('ambiguous', \"relation['backward', 'rel:1']:2<owner\")  ->  <> <> .   [4]\n    otherwise -> undetermined\n    '<> <> .' arguments: 1=owner\n    '<> has <> committed ; need at least <> to bottle .' arguments: 0=owner, 2=relation['backward', 'rel:1']:2<owner",
+   "button:Close _": "button:Close _: 16 fitted occasions, 2 distinct events\n    attr:Gate#0(owner) == 'Open'  ->  <> <> .   [15]\n    otherwise -> <> is already <> .\n    '<> <> .' arguments: 1=owner\n    '<> is already <> .' arguments: 0=owner",
    "button:Disgorge _": "button:Disgorge _: 4 fitted occasions, 1 distinct events\n    otherwise  ->  Disgorged <> .   [4]\n    otherwise -> Disgorged <> .\n    'Disgorged <> .' arguments: 0=owner",
-   "button:Record draw": "button:Record draw: 112 fitted occasions, 5 distinct events\n    role selection['combobox#0']:1 = selection['combobox#0']\n    role selection['combobox#1']:3 = selection['combobox#1']\n    role relation['forward', 'rel:1']:1<selection['combobox#2']:4 = relation['forward', 'rel:1'] from selection['combobox#2']:4\n    role selection['combobox#2']:4 = selection['combobox#2']\n    attr:cell#0@5(selection['combobox#1']:3) == 'Bottled'  ->  <> is already <> .   [29]\n    attr:cell#0@3(selection['combobox#0']:1) == '0' & attr:cell#0@4(selection['combobox#0']:1) == 'Open'  ->  <> holds <> ; cannot draw <> .   [15]\n    attr:cell#0@4(selection['combobox#0']:1) == 'Closed'  ->  <> is <> .   [9]\n    attr:cell#0@3(selection['combobox#0']:1) == '1'  ->  Drew <> from <> into <> .   [47]\n    rel:1(selection['combobox#2']:4) == selection['combobox#0']:1  ->  Drew <> from <> into <> .   [6]\n    ('unnamed', \"selection['combobox#2']:4\")  ->  Drew <> from <> into <> .   [4]\n    otherwise  ->  The book already holds 12 records ; return a draw first .   [2]\n    otherwise -> The book already holds 12 records ; return a draw first .\n    '<> holds <> ; cannot draw <> .' arguments: 0=selection['combobox#0']:1, 2=selection['combobox#2']:4\n    '<> is <> .' arguments: 0=selection['combobox#0']:1\n    '<> is already <> .' arguments: 0=selection['combobox#1']:3\n    'Drew <> from <> into <> .' arguments: 2=selection['combobox#1']:3",
-   "button:Return ticket _ gal from _ out of _": "button:Return ticket _ gal from _ out of _: 59 fitted occasions, 2 distinct events\n    role relation['forward', 'rel:1']:1<owner = relation['forward', 'rel:1'] from owner\n    role relation['forward', 'rel:3']:3<owner = relation['forward', 'rel:3'] from owner\n    attr:cell#0@5(relation['forward', 'rel:3']:3<owner) == 'In cask'  ->  Returned <> to <> from <> .   [52]\n    otherwise  ->  <> is <> ; disgorge it before returning a draw .   [7]\n    otherwise -> <> is <> ; disgorge it before returning a draw .\n    '<> is <> ; disgorge it before returning a draw .' arguments: 0=relation['forward', 'rel:3']:3<owner\n    'Returned <> to <> from <> .' arguments: 1=relation['forward', 'rel:1']:1<owner, 2=relation['forward', 'rel:3']:3<owner"
+   "button:Record draw": "button:Record draw: 112 fitted occasions, 5 distinct events\n    role selection['combobox#0']:0 = selection['combobox#0']\n    role selection['combobox#1']:1 = selection['combobox#1']\n    role relation['forward', 'rel:0']:0<selection['combobox#2']:2 = relation['forward', 'rel:0'] from selection['combobox#2']:2\n    role selection['combobox#2']:2 = selection['combobox#2']\n    attr:State#0(selection['combobox#1']:1) == 'Bottled'  ->  <> is already <> .   [29]\n    attr:Gallons left#0(selection['combobox#0']:0) == '0' & attr:Gate#0(selection['combobox#0']:0) == 'Open'  ->  <> holds <> ; cannot draw <> .   [15]\n    attr:Gate#0(selection['combobox#0']:0) == 'Closed'  ->  <> is <> .   [9]\n    attr:Gallons left#0(selection['combobox#0']:0) == '1'  ->  Drew <> from <> into <> .   [47]\n    rel:0(selection['combobox#2']:2) == selection['combobox#0']:0  ->  Drew <> from <> into <> .   [6]\n    ('unnamed', \"selection['combobox#2']:2\")  ->  Drew <> from <> into <> .   [4]\n    otherwise  ->  The book already holds 12 records ; return a draw first .   [2]\n    otherwise -> The book already holds 12 records ; return a draw first .\n    '<> holds <> ; cannot draw <> .' arguments: 0=selection['combobox#0']:0, 2=selection['combobox#2']:2\n    '<> is <> .' arguments: 0=selection['combobox#0']:0\n    '<> is already <> .' arguments: 0=selection['combobox#1']:1\n    'Drew <> from <> into <> .' arguments: 2=selection['combobox#1']:1",
+   "button:Return ticket _ gal from _ out of _": "button:Return ticket _ gal from _ out of _: 59 fitted occasions, 2 distinct events\n    role relation['forward', 'rel:0']:0<owner = relation['forward', 'rel:0'] from owner\n    role relation['forward', 'rel:1']:1<owner = relation['forward', 'rel:1'] from owner\n    attr:State#0(relation['forward', 'rel:1']:1<owner) == 'In cask'  ->  Returned <> to <> from <> .   [52]\n    otherwise  ->  <> is <> ; disgorge it before returning a draw .   [7]\n    otherwise -> <> is <> ; disgorge it before returning a draw .\n    '<> is <> ; disgorge it before returning a draw .' arguments: 0=relation['forward', 'rel:1']:1<owner\n    'Returned <> to <> from <> .' arguments: 1=relation['forward', 'rel:0']:0<owner, 2=relation['forward', 'rel:1']:1<owner"
   }
  },
  "ablation_live_region_unread": {
   "operators": 7,
   "state_verdicts": {
-   "NOT_APPLICABLE": 362,
+   "NOT_APPLICABLE": 366,
    "REFUTED": 14,
-   "SUPPORTED": 116
+   "SUPPORTED": 112
   },
   "state_per_action": {
    "no rule applied": 64,

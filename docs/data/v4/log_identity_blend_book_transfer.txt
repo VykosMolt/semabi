@@ -1,5 +1,5 @@
 
-blend_book_transfer  'joint discrimination x3'  FROZEN_PREFIX  cut=419  control=None  corroborated=True  hypothesis=rule
+blend_book_transfer  'source_choice'  FROZEN_PREFIX  cut=419  control=None  corroborated=True  hypothesis=rule
   249 held-out actions
       156  the evidence forces one outcome
        45  several outcomes remain admissible
@@ -43,7 +43,7 @@ blend_book_transfer  'joint discrimination x3'  FROZEN_PREFIX  cut=419  control=
 
 wrote docs/data/v4/admissible_blend_book_transfer_frozen_prefix.json
 
-blend_book_transfer  'joint discrimination x3'  FROZEN_PREFIX  cut=419  control=None  corroborated=True  hypothesis=list
+blend_book_transfer  'source_choice'  FROZEN_PREFIX  cut=419  control=None  corroborated=True  hypothesis=list
   249 held-out actions
       158  the evidence forces one outcome
        45  several outcomes remain admissible
@@ -87,7 +87,7 @@ blend_book_transfer  'joint discrimination x3'  FROZEN_PREFIX  cut=419  control=
 
 wrote docs/data/v4/admissible_blend_book_transfer_frozen_prefix_list.json
 
-blend_book_transfer  'joint discrimination x3'  cut=419  forced under the rule class
+blend_book_transfer  'source_choice'  cut=419  forced under the rule class
   forced and wrong on the frame: 5
        4  once: seen, but not enough to found a rule
        1  unseen: the control never returned this event while fitting
@@ -96,20 +96,20 @@ blend_book_transfer  'joint discrimination x3'  cut=419  forced under the rule c
 
 wrote docs/data/v4/inadequacy_blend_book_transfer.json
 
-blend_book_transfer  'joint discrimination x3'  FROZEN_PREFIX  cut=419  15 operators
-  249 held-out actions, 1.49 rules offered and 1.33 claims applicable per action
+blend_book_transfer  'source_choice'  FROZEN_PREFIX  cut=419  15 operators
+  249 held-out actions, 1.49 rules offered and 1.31 claims applicable per action
   18 distinct claims across all its decided predictions
     a named constant          62 claims,    62 decided, supported  82%   4 distinct
-                           ['attr:cell#0@4 = Closed', 'attr:cell#0@4 = Open', 'attr:cell#0@5 = Bottled', 'attr:cell#0@5 = In cask']
-    an interface response   1081 claims,   431 decided, supported  49%   10 distinct
+                           ['attr:Gate#0 = Closed', 'attr:Gate#0 = Open', 'attr:State#0 = Bottled', 'attr:State#0 = In cask']
+    an interface response   1081 claims,   429 decided, supported  49%   10 distinct
                            ['<> <> . = <> <> .', '<> holds <> ; cannot draw <> . = <> holds <> ; cannot draw <> .', '<> is <> . = <> is <> .', '<> is <> ; disgorge it before returning a draw . = <> is <> ; disgorge it before returning a draw .', '<> is already <> . = <> is already <> .', 'Disgorged <> . = Disgorged <> .']
-    an object brought into being   123 claims,    55 decided, supported  47%   1 distinct
+    an object brought into being   123 claims,    56 decided, supported  48%   1 distinct
                            ['id = new']
-    changes, unspecified     620 claims,   222 decided, supported  94%   2 distinct
-                           ['attr:cell#0@3 = changes', 'attr:cell#0@4 = changes']
+    changes, unspecified     620 claims,   218 decided, supported  94%   2 distinct
+                           ['attr:Committed gal#0 = changes', 'attr:Gallons left#0 = changes']
     removal                   64 claims,    46 decided, supported 100%   1 distinct
                            ['id = gone']
-    removal exposure: this reading 1.0, unconditional base rate 0.888, per-click control 0.987 (margin +0.013)
+    removal exposure: this reading 1.0, unconditional base rate 0.894, per-click control 0.991 (margin +0.009)
                            steps by fraction gone {"all went (>90%)": 217, "none went (<10%)": 23, "some went": 9}
       149 ( 60%)  every applicable rule was right
        82 ( 33%)  no rule applied

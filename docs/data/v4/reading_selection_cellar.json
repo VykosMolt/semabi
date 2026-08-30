@@ -7,7 +7,7 @@
  "readings": [
   {
    "reading": "source_choice",
-   "types": 0,
+   "types": 1,
    "prefix_objective": {
     "explained": 0,
     "errors": 0,
@@ -15,30 +15,15 @@
     "churn": 0,
     "spurious": 0,
     "contradictions": 0,
+    "conflicts": 0,
+    "named": 16,
     "unexplained": 0
    },
    "suffix_ledger": {}
   },
   {
-   "reading": "promote cell[_]=cell#0",
-   "types": 1,
-   "prefix_objective": {
-    "explained": 1,
-    "errors": 23,
-    "visibility": 14,
-    "churn": 0,
-    "spurious": 0,
-    "contradictions": 9,
-    "unexplained": 0
-   },
-   "suffix_ledger": {
-    "unbound": 3,
-    "right": 1
-   }
-  },
-  {
    "reading": "promote text[_]=text#0",
-   "types": 0,
+   "types": 1,
    "prefix_objective": {
     "explained": 0,
     "errors": 0,
@@ -46,13 +31,15 @@
     "churn": 0,
     "spurious": 0,
     "contradictions": 0,
+    "conflicts": 0,
+    "named": 16,
     "unexplained": 0
    },
    "suffix_ledger": {}
   },
   {
    "reading": "promote heading[_]=heading#0",
-   "types": 1,
+   "types": 2,
    "prefix_objective": {
     "explained": 0,
     "errors": 0,
@@ -60,13 +47,15 @@
     "churn": 0,
     "spurious": 0,
     "contradictions": 0,
+    "conflicts": 0,
+    "named": 19,
     "unexplained": 0
    },
    "suffix_ledger": {}
   },
   {
    "reading": "promote text[_]=text#0!",
-   "types": 1,
+   "types": 2,
    "prefix_objective": {
     "explained": 0,
     "errors": 0,
@@ -74,27 +63,15 @@
     "churn": 0,
     "spurious": 0,
     "contradictions": 0,
+    "conflicts": 0,
+    "named": 16,
     "unexplained": 1
    },
    "suffix_ledger": {}
   },
   {
-   "reading": "joint discrimination x3",
+   "reading": "joint discrimination x2",
    "types": 3,
-   "prefix_objective": {
-    "explained": 0,
-    "errors": 23,
-    "visibility": 14,
-    "churn": 0,
-    "spurious": 0,
-    "contradictions": 9,
-    "unexplained": 0
-   },
-   "suffix_ledger": {}
-  },
-  {
-   "reading": "button[_]=button#0",
-   "types": 0,
    "prefix_objective": {
     "explained": 0,
     "errors": 0,
@@ -102,13 +79,15 @@
     "churn": 0,
     "spurious": 0,
     "contradictions": 0,
+    "conflicts": 0,
+    "named": 17,
     "unexplained": 0
    },
    "suffix_ledger": {}
   },
   {
    "reading": "group[_](heading[_],text=heading#0",
-   "types": 1,
+   "types": 2,
    "prefix_objective": {
     "explained": 0,
     "errors": 0,
@@ -116,9 +95,45 @@
     "churn": 0,
     "spurious": 0,
     "contradictions": 0,
+    "conflicts": 0,
+    "named": 17,
     "unexplained": 0
    },
    "suffix_ledger": {}
+  },
+  {
+   "reading": "row[_](cell@Area[_],cell=cell@Area#0",
+   "types": 2,
+   "prefix_objective": {
+    "explained": 0,
+    "errors": 0,
+    "visibility": 0,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 0,
+    "conflicts": 0,
+    "named": 16,
+    "unexplained": 0
+   },
+   "suffix_ledger": {}
+  },
+  {
+   "reading": "row[_](cell@Capacity[_],=cell@Capacity#0",
+   "types": 3,
+   "prefix_objective": {
+    "explained": 1,
+    "errors": 2,
+    "visibility": 0,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 0,
+    "conflicts": 2,
+    "named": 16,
+    "unexplained": 0
+   },
+   "suffix_ledger": {
+    "unbound": 4
+   }
   }
  ]
 }

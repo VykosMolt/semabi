@@ -1,42 +1,57 @@
 [
  {
   "run": "vet_clinic_transfer",
-  "reading": "joint discrimination x3",
+  "reading": "source_choice",
   "regime": "FROZEN_PREFIX",
   "split": 0.5,
   "cut": 448,
-  "operators": 16,
+  "operators": 26,
   "held_out_actions": 44,
-  "rules_offered_per_action": 2.2,
-  "applicable_claims_per_action": 3.77,
-  "distinct_decided_claims": 2,
+  "rules_offered_per_action": 3.64,
+  "applicable_claims_per_action": 3.34,
+  "distinct_decided_claims": 6,
   "composition": {
    "a named constant": {
-    "claims": 21,
-    "decided": 0,
-    "supported": 0,
-    "refuted": 0,
-    "supported_share": null,
-    "distinct_claims": 0,
-    "examples": []
+    "claims": 111,
+    "decided": 23,
+    "supported": 10,
+    "refuted": 13,
+    "supported_share": 0.435,
+    "distinct_claims": 2,
+    "examples": [
+     "attr:Reason#0 = ?s0",
+     "attr:Status#0 = in_progress"
+    ]
    },
    "an object brought into being": {
-    "claims": 131,
-    "decided": 87,
-    "supported": 53,
-    "refuted": 34,
-    "supported_share": 0.609,
+    "claims": 139,
+    "decided": 84,
+    "supported": 2,
+    "refuted": 82,
+    "supported_share": 0.024,
     "distinct_claims": 1,
     "examples": [
      "id = new"
     ]
    },
+   "changes, unspecified": {
+    "claims": 24,
+    "decided": 18,
+    "supported": 0,
+    "refuted": 18,
+    "supported_share": 0.0,
+    "distinct_claims": 2,
+    "examples": [
+     "attr:Patient#0 = changes",
+     "attr:Reason#0 = changes"
+    ]
+   },
    "removal": {
-    "claims": 166,
-    "decided": 154,
-    "supported": 48,
-    "refuted": 106,
-    "supported_share": 0.312,
+    "claims": 229,
+    "decided": 104,
+    "supported": 23,
+    "refuted": 81,
+    "supported_share": 0.221,
     "distinct_claims": 1,
     "examples": [
      "id = gone"
@@ -44,23 +59,23 @@
    }
   },
   "per_action": {
-   "every applicable rule was contradicted": 20,
-   "applicable rules disagreed": 18,
-   "every applicable rule was right": 6
+   "the rules could not say which object they were about": 16,
+   "applicable rules disagreed": 16,
+   "every applicable rule was contradicted": 12
   },
   "removal_exposure": {
-   "base_rate_gone": 0.697,
+   "base_rate_gone": 0.699,
    "steps_by_fraction_gone": {
     "all went (>90%)": 180,
-    "none went (<10%)": 49,
-    "some went": 28
+    "none went (<10%)": 44,
+    "some went": 33
    },
-   "reading_supported_share": 0.312,
-   "removal_claims": 154,
-   "steps_spoken_at": 44,
-   "per_click_control": 0.199,
-   "objects_in_those_steps": 256,
-   "margin_over_per_click_control": 0.113
+   "reading_supported_share": 0.221,
+   "removal_claims": 104,
+   "steps_spoken_at": 28,
+   "per_click_control": 0.123,
+   "objects_in_those_steps": 163,
+   "margin_over_per_click_control": 0.098
   }
  }
 ]

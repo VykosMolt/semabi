@@ -43,7 +43,12 @@ def test_the_retained_witness_describes_the_retained_report():
     retained = json.loads(path.read_text())
     report = json.loads((DATA / "frontier_harbour.json").read_text())
     assert retained["survivors"] == report["survivor_names"]
-    assert report["outcome"] == "AMBIGUOUS_SURVIVOR_SET"
+    if report["outcome"] != "AMBIGUOUS_SURVIVOR_SET":
+        # Since `docs/v4_columns.md` harbour's survivor set is unique -- the loose reading
+        # the witness once separated from the joint one no longer exists there -- and a
+        # witness of an undecided pair has, correctly, no pair to describe.
+        assert retained["pairs"] == []
+        return
     for pair in retained["pairs"]:
         assert pair["left"] in report["survivor_names"]
         assert pair["right"] in report["survivor_names"]

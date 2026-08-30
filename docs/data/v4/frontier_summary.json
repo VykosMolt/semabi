@@ -2,19 +2,19 @@
  "applications": {
   "blend_book": {
    "attestation": "docs/data/v4/attestations/frontier_blend_book.execution.json",
-   "attestation_sha256": "986814a18a013d71aa9239aa86db4bf6922ead65b202babac692dc1d430ebc6b",
+   "attestation_sha256": "e5a70ea3c2d792e6ae7269a4ab31efe06c8d8b56a5ee126eaa3dcb00ecd7cdc6",
    "holdout_classifications": {
-    "cell[_]=cell#0": "INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE"
+    "cell[_]=cell#0": "CONFIRMED"
    },
-   "holdout_outcome": "INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE",
+   "holdout_outcome": "CONFIRMED",
    "holdout_pairwise_frontier": null,
    "report": "docs/data/v4/frontier_blend_book.json",
-   "report_sha256": "d349dc19191415b90d8c53751ae8fd94288accbb34c71ef358195418765ffcf0",
+   "report_sha256": "e910b6381defd340b4f5672fc04738bccc09350255adc028cd5b01878a313e76",
    "selected": "cell[_]=cell#0",
    "source_choice_rejected": true,
    "survivors": [
     {
-     "decision_fingerprint": "2b2cabacf05f5418",
+     "decision_fingerprint": "9d8e6146ac91ae58",
      "name": "cell[_]=cell#0"
     }
    ],
@@ -22,45 +22,40 @@
   },
   "harbour": {
    "attestation": "docs/data/v4/attestations/frontier_harbour.execution.json",
-   "attestation_sha256": "088fd805fd7d9730386096c302eb88697441c63ff2f1ea1b742ce890584528e6",
+   "attestation_sha256": "35689d34c9fb90b25b09a1c8b8765518d7a0457c9973a8d4fc6b0e2e5032fe77",
    "holdout_classifications": {
-    "joint discrimination x2": "INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE",
-    "promote cell[_]=cell#0": "INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE"
+    "joint discrimination x2": "PARTIALLY_CONTRADICTED"
    },
-   "holdout_outcome": "AMBIGUOUS_SURVIVOR_SET",
-   "holdout_pairwise_frontier": "AMBIGUOUS_SURVIVOR_SET",
+   "holdout_outcome": "PARTIALLY_CONTRADICTED",
+   "holdout_pairwise_frontier": null,
    "report": "docs/data/v4/frontier_harbour.json",
-   "report_sha256": "c34b15ced8ef410213251d0cb548c926754c29013ad30ad7be113f9115bd621c",
-   "selected": null,
+   "report_sha256": "0d859db551453c6fa9a68d08976e92c19b8ff0926c7f5f7801463b31e9753be0",
+   "selected": "joint discrimination x2",
    "source_choice_rejected": true,
    "survivors": [
     {
-     "decision_fingerprint": "d4aba37b5ad1da47",
+     "decision_fingerprint": "f144e9dff592d8cb",
      "name": "joint discrimination x2"
-    },
-    {
-     "decision_fingerprint": "f42d60b42e65461b",
-     "name": "promote cell[_]=cell#0"
     }
    ],
-   "transfer_outcome": "AMBIGUOUS_SURVIVOR_SET"
+   "transfer_outcome": "UNIQUE_SURVIVOR"
   },
   "vet_clinic": {
    "attestation": "docs/data/v4/attestations/frontier_vet_clinic.execution.json",
-   "attestation_sha256": "145ac88a0d7bde8231453dee6950d5bb46934980be9be9411a5a12237e54b8db",
+   "attestation_sha256": "894cdfd7c32b58a9cf32233fc1e3dd2365ad06dc17cc30efd617cd3f511e9737",
    "holdout_classifications": {
-    "row[_](cell[_])=None": "INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE"
+    "cell[_]=None": "INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE"
    },
    "holdout_outcome": "INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE",
    "holdout_pairwise_frontier": null,
    "report": "docs/data/v4/frontier_vet_clinic.json",
-   "report_sha256": "7fd83df198e5b7587303c883744d07e6e1ec173092ee22f8efb4c865d7ea015c",
-   "selected": "row[_](cell[_])=None",
+   "report_sha256": "08be42749ad4e7718366be8829b25d8e615617d195cc1adbe7859ebc21214651",
+   "selected": "cell[_]=None",
    "source_choice_rejected": true,
    "survivors": [
     {
-     "decision_fingerprint": "01f25b9f505de0d7",
-     "name": "row[_](cell[_])=None"
+     "decision_fingerprint": "7f2bcb8edc469fc3",
+     "name": "cell[_]=None"
     }
    ],
    "transfer_outcome": "UNIQUE_SURVIVOR"
@@ -69,10 +64,10 @@
  "claims": {
   "cross_trace_source_incumbent_rejection": "ESTABLISHED_ON_THREE_RETAINED_DEVELOPMENT_CHAINS",
   "fresh_generalization": "NOT_ESTABLISHED_THESE_ARE_SPENT_DEVELOPMENT_HISTORIES",
-  "identity_confirmed_on_holdout": "NOT_ESTABLISHED_ALL_PARTIAL_OR_INCONCLUSIVE",
+  "identity_confirmed_on_holdout": "SEE_PER_APPLICATION_CLASSIFICATIONS",
   "prospective_collection_chronology": "NOT_ESTABLISHED",
   "representation_transportability": "NOT_ESTABLISHED_RTC_ZERO_ON_DIAGNOSED_TRANSPORTS",
-  "unique_transfer_survivor": "ON_2_OF_3_DEVELOPMENT_APPLICATIONS: blend_book, vet_clinic"
+  "unique_transfer_survivor": "ON_3_OF_3_DEVELOPMENT_APPLICATIONS: blend_book, harbour, vet_clinic"
  },
  "custody_timing": "RETROACTIVE_SNAPSHOT_CHRONOLOGY_NOT_ESTABLISHED",
  "execution_authority": {

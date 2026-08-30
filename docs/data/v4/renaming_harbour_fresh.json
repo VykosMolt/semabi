@@ -1,6 +1,6 @@
 {
  "run": "harbour_transfer",
- "reading": "joint discrimination x2",
+ "reading": "source_choice",
  "scored_on": "harbour_holdout",
  "mode": "fresh",
  "seed": 0,
@@ -32,25 +32,1677 @@
   "decision list": 270
  },
  "verdicts_before": {
-  "one outcome was admissible and it happened": 151,
+  "one outcome was admissible and it happened": 146,
+  "one outcome was admissible and a different one happened": 8,
   "the only outcome ever seen on this control, and it happened": 92,
-  "one outcome was admissible and a different one happened": 4,
-  "several outcomes remained admissible; the one that happened was among them": 12,
+  "several outcomes remained admissible; the one that happened was among them": 13,
   "the only outcome ever seen on this control, and something else happened": 4,
   "no outcome is established for this state": 7
  },
  "verdicts_after": {
-  "one outcome was admissible and it happened": 151,
+  "one outcome was admissible and it happened": 146,
+  "one outcome was admissible and a different one happened": 8,
   "the only outcome ever seen on this control, and it happened": 92,
-  "one outcome was admissible and a different one happened": 4,
-  "several outcomes remained admissible; the one that happened was among them": 12,
+  "several outcomes remained admissible; the one that happened was among them": 13,
   "the only outcome ever seen on this control, and something else happened": 4,
   "no outcome is established for this state": 7
  },
  "differences": [],
  "n_differences": 0,
  "ledger_steps": 172,
- "ledger_same": 172,
- "ledger_differences": [],
- "n_ledger_differences": 0
+ "ledger_same": 159,
+ "ledger_differences": [
+  {
+   "step": 8,
+   "before": [
+    [
+     "op15",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op17",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op18",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op19",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op20",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op21",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "SUPPORTED"
+    ],
+    [
+     "op22",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op23",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op9",
+     "CREATION",
+     "id",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "OUTPUT",
+     "Call <> opened for <> .",
+     "UNKNOWN"
+    ]
+   ],
+   "after": [
+    [
+     "op15",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op17",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op18",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op19",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op20",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op21",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op22",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op23",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op9",
+     "CREATION",
+     "id",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "OUTPUT",
+     "Call <> opened for <> .",
+     "UNKNOWN"
+    ]
+   ]
+  },
+  {
+   "step": 40,
+   "before": [
+    [
+     "op15",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op17",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op18",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op19",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op20",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op21",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op22",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "SUPPORTED"
+    ],
+    [
+     "op23",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op9",
+     "CREATION",
+     "id",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "OUTPUT",
+     "Call <> opened for <> .",
+     "UNKNOWN"
+    ]
+   ],
+   "after": [
+    [
+     "op15",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op17",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op18",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op19",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op20",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op21",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op22",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op23",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op9",
+     "CREATION",
+     "id",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "OUTPUT",
+     "Call <> opened for <> .",
+     "UNKNOWN"
+    ]
+   ]
+  },
+  {
+   "step": 42,
+   "before": [
+    [
+     "op15",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op17",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op18",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op19",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op20",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "SUPPORTED"
+    ],
+    [
+     "op21",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op22",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op23",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op9",
+     "CREATION",
+     "id",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "OUTPUT",
+     "Call <> opened for <> .",
+     "UNKNOWN"
+    ]
+   ],
+   "after": [
+    [
+     "op15",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op17",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op18",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op19",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op20",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op21",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op22",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op23",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op9",
+     "CREATION",
+     "id",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "OUTPUT",
+     "Call <> opened for <> .",
+     "UNKNOWN"
+    ]
+   ]
+  },
+  {
+   "step": 43,
+   "before": [
+    [
+     "op15",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op17",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op18",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op19",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op20",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "SUPPORTED"
+    ],
+    [
+     "op21",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op22",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op23",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op9",
+     "CREATION",
+     "id",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "OUTPUT",
+     "Call <> opened for <> .",
+     "UNKNOWN"
+    ]
+   ],
+   "after": [
+    [
+     "op15",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op17",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op18",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op19",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op20",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op21",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op22",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op23",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op9",
+     "CREATION",
+     "id",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "OUTPUT",
+     "Call <> opened for <> .",
+     "UNKNOWN"
+    ]
+   ]
+  },
+  {
+   "step": 78,
+   "before": [
+    [
+     "op15",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op17",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op18",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op19",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op20",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op21",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op22",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "SUPPORTED"
+    ],
+    [
+     "op23",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op9",
+     "CREATION",
+     "id",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "OUTPUT",
+     "Call <> opened for <> .",
+     "UNKNOWN"
+    ]
+   ],
+   "after": [
+    [
+     "op15",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op17",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op18",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op19",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op20",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op21",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op22",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op23",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op9",
+     "CREATION",
+     "id",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "OUTPUT",
+     "Call <> opened for <> .",
+     "UNKNOWN"
+    ]
+   ]
+  },
+  {
+   "step": 84,
+   "before": [
+    [
+     "op15",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op17",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op18",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op19",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op20",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op21",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "SUPPORTED"
+    ],
+    [
+     "op22",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op23",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op9",
+     "CREATION",
+     "id",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "OUTPUT",
+     "Call <> opened for <> .",
+     "UNKNOWN"
+    ]
+   ],
+   "after": [
+    [
+     "op15",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op17",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op18",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op19",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op20",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op21",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op22",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op23",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op9",
+     "CREATION",
+     "id",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "OUTPUT",
+     "Call <> opened for <> .",
+     "UNKNOWN"
+    ]
+   ]
+  },
+  {
+   "step": 212,
+   "before": [
+    [
+     "op15",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op17",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op18",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op19",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op20",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op21",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "SUPPORTED"
+    ],
+    [
+     "op22",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op23",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op9",
+     "CREATION",
+     "id",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "OUTPUT",
+     "Call <> opened for <> .",
+     "UNKNOWN"
+    ]
+   ],
+   "after": [
+    [
+     "op15",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op17",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op18",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op19",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op20",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op21",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op22",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op23",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op9",
+     "CREATION",
+     "id",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "OUTPUT",
+     "Call <> opened for <> .",
+     "UNKNOWN"
+    ]
+   ]
+  },
+  {
+   "step": 221,
+   "before": [
+    [
+     "op15",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op17",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op18",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op19",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op20",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "SUPPORTED"
+    ],
+    [
+     "op21",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op22",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op23",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op9",
+     "CREATION",
+     "id",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "OUTPUT",
+     "Call <> opened for <> .",
+     "UNKNOWN"
+    ]
+   ],
+   "after": [
+    [
+     "op15",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op17",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op18",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op19",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op20",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op21",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op22",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op23",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op9",
+     "CREATION",
+     "id",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "OUTPUT",
+     "Call <> opened for <> .",
+     "UNKNOWN"
+    ]
+   ]
+  },
+  {
+   "step": 233,
+   "before": [
+    [
+     "op15",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op17",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op18",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op19",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op20",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op21",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op22",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "SUPPORTED"
+    ],
+    [
+     "op23",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op9",
+     "CREATION",
+     "id",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "OUTPUT",
+     "Call <> opened for <> .",
+     "UNKNOWN"
+    ]
+   ],
+   "after": [
+    [
+     "op15",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op17",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op18",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op19",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op20",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op21",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op22",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op23",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op9",
+     "CREATION",
+     "id",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "OUTPUT",
+     "Call <> opened for <> .",
+     "UNKNOWN"
+    ]
+   ]
+  },
+  {
+   "step": 249,
+   "before": [
+    [
+     "op15",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op17",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op18",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op19",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op20",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "SUPPORTED"
+    ],
+    [
+     "op21",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op22",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op23",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op9",
+     "CREATION",
+     "id",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "OUTPUT",
+     "Call <> opened for <> .",
+     "UNKNOWN"
+    ]
+   ],
+   "after": [
+    [
+     "op15",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op17",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op18",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op19",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op20",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op21",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op22",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op23",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op9",
+     "CREATION",
+     "id",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "OUTPUT",
+     "Call <> opened for <> .",
+     "UNKNOWN"
+    ]
+   ]
+  },
+  {
+   "step": 252,
+   "before": [
+    [
+     "op15",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op17",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op18",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op19",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op20",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op21",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op22",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "SUPPORTED"
+    ],
+    [
+     "op23",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "CREATION",
+     "id",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "OUTPUT",
+     "Call <> opened for <> .",
+     "UNKNOWN"
+    ]
+   ],
+   "after": [
+    [
+     "op15",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op17",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op18",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op19",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op20",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op21",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op22",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op23",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "CREATION",
+     "id",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "OUTPUT",
+     "Call <> opened for <> .",
+     "UNKNOWN"
+    ]
+   ]
+  },
+  {
+   "step": 298,
+   "before": [
+    [
+     "op15",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op17",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op18",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op19",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op20",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op21",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op22",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "SUPPORTED"
+    ],
+    [
+     "op23",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "CREATION",
+     "id",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "OUTPUT",
+     "Call <> opened for <> .",
+     "UNKNOWN"
+    ]
+   ],
+   "after": [
+    [
+     "op15",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op17",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op18",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op19",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op20",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op21",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op22",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op23",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "CREATION",
+     "id",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "OUTPUT",
+     "Call <> opened for <> .",
+     "UNKNOWN"
+    ]
+   ]
+  },
+  {
+   "step": 301,
+   "before": [
+    [
+     "op15",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op17",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op18",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op19",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op20",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "SUPPORTED"
+    ],
+    [
+     "op21",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op22",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op23",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "CREATION",
+     "id",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "OUTPUT",
+     "Call <> opened for <> .",
+     "UNKNOWN"
+    ]
+   ],
+   "after": [
+    [
+     "op15",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op17",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op18",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op19",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "UNKNOWN"
+    ],
+    [
+     "op20",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op21",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op22",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op23",
+     "OUTPUT",
+     "<> already has call <> on the board .",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "CREATION",
+     "id",
+     "REFUTED"
+    ],
+    [
+     "op9",
+     "OUTPUT",
+     "Call <> opened for <> .",
+     "UNKNOWN"
+    ]
+   ]
+  }
+ ],
+ "n_ledger_differences": 13
 }

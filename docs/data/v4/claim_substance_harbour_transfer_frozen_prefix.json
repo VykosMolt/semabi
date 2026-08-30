@@ -1,50 +1,50 @@
 [
  {
   "run": "harbour_transfer",
-  "reading": "joint discrimination x2",
+  "reading": "source_choice",
   "regime": "FROZEN_PREFIX",
   "split": 0.5,
   "cut": 229,
-  "operators": 15,
+  "operators": 19,
   "held_out_actions": 67,
   "rules_offered_per_action": 1.0,
-  "applicable_claims_per_action": 0.25,
+  "applicable_claims_per_action": 0.27,
   "distinct_decided_claims": 11,
   "composition": {
    "a named constant": {
     "claims": 67,
-    "decided": 17,
+    "decided": 18,
     "supported": 17,
-    "refuted": 0,
-    "supported_share": 1.0,
+    "refuted": 1,
+    "supported_share": 0.944,
     "distinct_claims": 2,
     "examples": [
-     "attr:cell#0@5 = closed",
-     "attr:cell#0@5 = open"
+     "attr:Condition#0 = closed",
+     "attr:Condition#0 = open"
     ]
    },
    "an interface response": {
-    "claims": 185,
-    "decided": 73,
-    "supported": 72,
-    "refuted": 1,
-    "supported_share": 0.986,
+    "claims": 253,
+    "decided": 72,
+    "supported": 68,
+    "refuted": 4,
+    "supported_share": 0.944,
     "distinct_claims": 8,
     "examples": [
      "<> <> is already <> . = <> <> is already <> .",
      "<> <> is now <> . = <> <> is now <> .",
+     "<> already has call <> on the board . = <> already has call <> on the board .",
      "<> is already signed off . = <> is already signed off .",
      "<> is already signed on . = <> is already signed on .",
-     "<> is signed off . = <> is signed off .",
-     "<> is signed on . = <> is signed on ."
+     "<> is signed off . = <> is signed off ."
     ]
    },
    "an object brought into being": {
     "claims": 17,
-    "decided": 5,
+    "decided": 17,
     "supported": 5,
-    "refuted": 0,
-    "supported_share": 1.0,
+    "refuted": 12,
+    "supported_share": 0.294,
     "distinct_claims": 1,
     "examples": [
      "id = new"
@@ -52,8 +52,9 @@
    }
   },
   "per_action": {
-   "no rule applied": 50,
-   "every applicable rule was right": 17
+   "no rule applied": 49,
+   "every applicable rule was right": 17,
+   "every applicable rule was contradicted": 1
   }
  }
 ]

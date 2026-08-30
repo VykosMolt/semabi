@@ -2,12 +2,12 @@
  "run": "blend_book_transfer",
  "chain": "docs/data/v4/manifests/blend_book_chain.json",
  "split": 0.5,
- "ablated": "joint discrimination x3",
+ "ablated": "source_choice",
  "rekeyed": null,
  "readings": [
   {
-   "reading": "joint discrimination x3",
-   "types": 5,
+   "reading": "source_choice",
+   "types": 3,
    "prefix_objective": {
     "explained": 151,
     "errors": 0,
@@ -15,6 +15,8 @@
     "churn": 0,
     "spurious": 0,
     "contradictions": 0,
+    "conflicts": 0,
+    "named": 383,
     "unexplained": 0
    },
    "suffix_ledger": {
@@ -24,8 +26,8 @@
    }
   },
   {
-   "reading": "without button[_]",
-   "types": 4,
+   "reading": "without row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))",
+   "types": 2,
    "prefix_objective": {
     "explained": 151,
     "errors": 0,
@@ -33,66 +35,60 @@
     "churn": 0,
     "spurious": 0,
     "contradictions": 0,
+    "conflicts": 0,
+    "named": 365,
     "unexplained": 0
    },
    "suffix_ledger": {
-    "right": 149,
-    "no rule": 82,
-    "contradicted": 18
-   },
-   "prefix_objective_accepts_removal": true
-  },
-  {
-   "reading": "without cell[_]",
-   "types": 4,
-   "prefix_objective": {
-    "explained": 151,
-    "errors": 0,
-    "visibility": 0,
-    "churn": 0,
-    "spurious": 0,
-    "contradictions": 0,
-    "unexplained": 0
-   },
-   "suffix_ledger": {
-    "right": 149,
-    "no rule": 82,
-    "contradicted": 18
-   },
-   "prefix_objective_accepts_removal": true
-  },
-  {
-   "reading": "without group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell[_],cell[_](button[_]))))))",
-   "types": 5,
-   "prefix_objective": {
-    "explained": 151,
-    "errors": 0,
-    "visibility": 0,
-    "churn": 0,
-    "spurious": 0,
-    "contradictions": 0,
-    "unexplained": 0
-   },
-   "suffix_ledger": {
-    "right": 149,
-    "no rule": 82,
-    "contradicted": 18
+    "right": 145,
+    "no rule": 44,
+    "contradicted": 53,
+    "disagreed": 4,
+    "unbound": 3
    },
    "prefix_objective_accepts_removal": false
   },
   {
-   "reading": "without row[_](cell[_],cell[_](button[_]))",
-   "types": 4,
+   "reading": "without row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))",
+   "types": 2,
    "prefix_objective": {
-    "explained": 0,
+    "explained": 142,
     "errors": 0,
     "visibility": 0,
     "churn": 0,
     "spurious": 0,
     "contradictions": 0,
+    "conflicts": 0,
+    "named": 370,
     "unexplained": 0
    },
-   "suffix_ledger": {},
+   "suffix_ledger": {
+    "right": 137,
+    "no rule": 42,
+    "contradicted": 31,
+    "disagreed": 16
+   },
+   "prefix_objective_accepts_removal": false
+  },
+  {
+   "reading": "without row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))",
+   "types": 2,
+   "prefix_objective": {
+    "explained": 124,
+    "errors": 0,
+    "visibility": 0,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 0,
+    "conflicts": 0,
+    "named": 337,
+    "unexplained": 0
+   },
+   "suffix_ledger": {
+    "right": 110,
+    "no rule": 61,
+    "contradicted": 39
+   },
    "prefix_objective_accepts_removal": false
   }
  ]

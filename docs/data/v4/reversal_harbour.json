@@ -1,30 +1,353 @@
 {
  "run": "harbour_transfer",
- "reading": "joint discrimination x2",
+ "reading": "source_choice",
  "scored_on": "harbour_holdout",
  "transform": "reverse",
  "clicks": 270,
  "same": {
   "controls": 270,
-  "version space": 270,
-  "decision list": 270
+  "version space": 258,
+  "decision list": 268
  },
  "verdicts_before": {
-  "one outcome was admissible and it happened": 151,
+  "one outcome was admissible and it happened": 146,
+  "one outcome was admissible and a different one happened": 8,
   "the only outcome ever seen on this control, and it happened": 92,
-  "one outcome was admissible and a different one happened": 4,
-  "several outcomes remained admissible; the one that happened was among them": 12,
+  "several outcomes remained admissible; the one that happened was among them": 13,
   "the only outcome ever seen on this control, and something else happened": 4,
   "no outcome is established for this state": 7
  },
  "verdicts_after": {
-  "one outcome was admissible and it happened": 151,
+  "one outcome was admissible and it happened": 137,
   "the only outcome ever seen on this control, and it happened": 92,
-  "one outcome was admissible and a different one happened": 4,
-  "several outcomes remained admissible; the one that happened was among them": 12,
+  "one outcome was admissible and a different one happened": 15,
+  "several outcomes remained admissible; the one that happened was among them": 13,
   "the only outcome ever seen on this control, and something else happened": 4,
-  "no outcome is established for this state": 7
+  "no outcome is established for this state": 9
  },
- "differences": [],
- "n_differences": 0
+ "differences": [
+  {
+   "step": 8,
+   "control": [
+    "button:Schedule call",
+    "button:Schedule call"
+   ],
+   "verdict": [
+    "one outcome was admissible and a different one happened",
+    "one outcome was admissible and it happened"
+   ],
+   "admissible": [
+    [
+     "Call <> opened for <> ."
+    ],
+    [
+     "<> already has call <> on the board ."
+    ]
+   ],
+   "list": [
+    "no determinate answer",
+    "no determinate answer"
+   ],
+   "observed": [
+    "<> already has call <> on the board .",
+    "<> already has call <> on the board ."
+   ]
+  },
+  {
+   "step": 30,
+   "control": [
+    "button:Schedule call",
+    "button:Schedule call"
+   ],
+   "verdict": [
+    "one outcome was admissible and it happened",
+    "one outcome was admissible and a different one happened"
+   ],
+   "admissible": [
+    [
+     "Call <> opened for <> ."
+    ],
+    [
+     "<> already has call <> on the board ."
+    ]
+   ],
+   "list": [
+    "no determinate answer",
+    "no determinate answer"
+   ],
+   "observed": [
+    "Call <> opened for <> .",
+    "Call <> opened for <> ."
+   ]
+  },
+  {
+   "step": 78,
+   "control": [
+    "button:Schedule call",
+    "button:Schedule call"
+   ],
+   "verdict": [
+    "one outcome was admissible and it happened",
+    "one outcome was admissible and a different one happened"
+   ],
+   "admissible": [
+    [
+     "<> already has call <> on the board ."
+    ],
+    [
+     "Call <> opened for <> ."
+    ]
+   ],
+   "list": [
+    "no determinate answer",
+    "no determinate answer"
+   ],
+   "observed": [
+    "<> already has call <> on the board .",
+    "<> already has call <> on the board ."
+   ]
+  },
+  {
+   "step": 84,
+   "control": [
+    "button:Schedule call",
+    "button:Schedule call"
+   ],
+   "verdict": [
+    "one outcome was admissible and it happened",
+    "one outcome was admissible and a different one happened"
+   ],
+   "admissible": [
+    [
+     "<> already has call <> on the board ."
+    ],
+    [
+     "Call <> opened for <> ."
+    ]
+   ],
+   "list": [
+    "no determinate answer",
+    "no determinate answer"
+   ],
+   "observed": [
+    "<> already has call <> on the board .",
+    "<> already has call <> on the board ."
+   ]
+  },
+  {
+   "step": 112,
+   "control": [
+    "button:Schedule call",
+    "button:Schedule call"
+   ],
+   "verdict": [
+    "one outcome was admissible and it happened",
+    "one outcome was admissible and a different one happened"
+   ],
+   "admissible": [
+    [
+     "Call <> opened for <> ."
+    ],
+    [
+     "<> already has call <> on the board ."
+    ]
+   ],
+   "list": [
+    "no determinate answer",
+    "no determinate answer"
+   ],
+   "observed": [
+    "Call <> opened for <> .",
+    "Call <> opened for <> ."
+   ]
+  },
+  {
+   "step": 201,
+   "control": [
+    "button:Schedule call",
+    "button:Schedule call"
+   ],
+   "verdict": [
+    "one outcome was admissible and it happened",
+    "one outcome was admissible and a different one happened"
+   ],
+   "admissible": [
+    [
+     "Call <> opened for <> ."
+    ],
+    [
+     "<> already has call <> on the board ."
+    ]
+   ],
+   "list": [
+    "no determinate answer",
+    "no determinate answer"
+   ],
+   "observed": [
+    "Call <> opened for <> .",
+    "Call <> opened for <> ."
+   ]
+  },
+  {
+   "step": 233,
+   "control": [
+    "button:Schedule call",
+    "button:Schedule call"
+   ],
+   "verdict": [
+    "one outcome was admissible and it happened",
+    "several outcomes remained admissible; the one that happened was among them"
+   ],
+   "admissible": [
+    [
+     "<> already has call <> on the board ."
+    ],
+    [
+     "<> already has call <> on the board .",
+     "Call <> opened for <> ."
+    ]
+   ],
+   "list": [
+    "no determinate answer",
+    "no determinate answer"
+   ],
+   "observed": [
+    "<> already has call <> on the board .",
+    "<> already has call <> on the board ."
+   ]
+  },
+  {
+   "step": 248,
+   "control": [
+    "button:Schedule call",
+    "button:Schedule call"
+   ],
+   "verdict": [
+    "one outcome was admissible and it happened",
+    "one outcome was admissible and a different one happened"
+   ],
+   "admissible": [
+    [
+     "Call <> opened for <> ."
+    ],
+    [
+     "<> already has call <> on the board ."
+    ]
+   ],
+   "list": [
+    "no determinate answer",
+    "no determinate answer"
+   ],
+   "observed": [
+    "Call <> opened for <> .",
+    "Call <> opened for <> ."
+   ]
+  },
+  {
+   "step": 345,
+   "control": [
+    "button:Schedule call",
+    "button:Schedule call"
+   ],
+   "verdict": [
+    "several outcomes remained admissible; the one that happened was among them",
+    "one outcome was admissible and a different one happened"
+   ],
+   "admissible": [
+    [
+     "<> already has call <> on the board .",
+     "Call <> opened for <> ."
+    ],
+    [
+     "<> already has call <> on the board ."
+    ]
+   ],
+   "list": [
+    "no determinate answer",
+    "no determinate answer"
+   ],
+   "observed": [
+    "Call <> opened for <> .",
+    "Call <> opened for <> ."
+   ]
+  },
+  {
+   "step": 393,
+   "control": [
+    "button:Schedule call",
+    "button:Schedule call"
+   ],
+   "verdict": [
+    "one outcome was admissible and it happened",
+    "no outcome is established for this state"
+   ],
+   "admissible": [
+    [
+     "Call <> opened for <> ."
+    ],
+    []
+   ],
+   "list": [
+    "the event the interface returned",
+    "no determinate answer"
+   ],
+   "observed": [
+    "Call <> opened for <> .",
+    "Call <> opened for <> ."
+   ]
+  },
+  {
+   "step": 416,
+   "control": [
+    "button:Schedule call",
+    "button:Schedule call"
+   ],
+   "verdict": [
+    "one outcome was admissible and it happened",
+    "no outcome is established for this state"
+   ],
+   "admissible": [
+    [
+     "Call <> opened for <> ."
+    ],
+    []
+   ],
+   "list": [
+    "the event the interface returned",
+    "no determinate answer"
+   ],
+   "observed": [
+    "Call <> opened for <> .",
+    "Call <> opened for <> ."
+   ]
+  },
+  {
+   "step": 438,
+   "control": [
+    "button:Schedule call",
+    "button:Schedule call"
+   ],
+   "verdict": [
+    "one outcome was admissible and it happened",
+    "one outcome was admissible and a different one happened"
+   ],
+   "admissible": [
+    [
+     "Call <> opened for <> ."
+    ],
+    [
+     "<> already has call <> on the board ."
+    ]
+   ],
+   "list": [
+    "no determinate answer",
+    "no determinate answer"
+   ],
+   "observed": [
+    "Call <> opened for <> .",
+    "Call <> opened for <> ."
+   ]
+  }
+ ],
+ "n_differences": 12
 }

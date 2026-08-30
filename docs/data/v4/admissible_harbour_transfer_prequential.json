@@ -1,6 +1,6 @@
 {
  "run": "harbour_transfer",
- "reading": "joint discrimination x2",
+ "reading": "source_choice",
  "regime": "CAUSAL_PREQUENTIAL",
  "split": 0.5,
  "cut": 229,
@@ -9,41 +9,53 @@
  "actions_scored": 32,
  "what_the_evidence_establishes": {
   "rule": {
-   "the evidence forces one outcome": 24,
-   "one outcome, because the control has never done anything else": 8
+   "the evidence forces one outcome": 21,
+   "one outcome, because the control has never done anything else": 8,
+   "several outcomes remain admissible": 2,
+   "no outcome is established": 1
   },
   "list": {
-   "the evidence forces one outcome": 24,
-   "one outcome, because the control has never done anything else": 8
+   "the evidence forces one outcome": 21,
+   "one outcome, because the control has never done anything else": 8,
+   "several outcomes remain admissible": 2,
+   "no outcome is established": 1
   }
  },
  "verdicts": {
   "rule": {
-   "one outcome was admissible and it happened": 24,
-   "the only outcome ever seen on this control, and it happened": 8
+   "one outcome was admissible and it happened": 19,
+   "the only outcome ever seen on this control, and it happened": 8,
+   "several outcomes remained admissible; the one that happened was among them": 2,
+   "one outcome was admissible and a different one happened": 2,
+   "no outcome is established for this state": 1
   },
   "list": {
-   "one outcome was admissible and it happened": 24,
-   "the only outcome ever seen on this control, and it happened": 8
+   "one outcome was admissible and it happened": 19,
+   "the only outcome ever seen on this control, and it happened": 8,
+   "several outcomes remained admissible; the one that happened was among them": 2,
+   "one outcome was admissible and a different one happened": 2,
+   "no outcome is established for this state": 1
   }
  },
  "rows": [
   {
    "step": 230,
    "rule": {
-    "bucket": "the evidence forces one outcome",
-    "verdict": "one outcome was admissible and it happened",
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
     "admissible": [
-     "<> already has call <> on the board ."
+     "<> already has call <> on the board .",
+     "Call <> opened for <> ."
     ],
     "observed": "<> already has call <> on the board ."
    },
    "control": "button:Schedule call",
    "list": {
-    "bucket": "the evidence forces one outcome",
-    "verdict": "one outcome was admissible and it happened",
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
     "admissible": [
-     "<> already has call <> on the board ."
+     "<> already has call <> on the board .",
+     "Call <> opened for <> ."
     ],
     "observed": "<> already has call <> on the board ."
    }
@@ -78,7 +90,7 @@
     ],
     "observed": "<> <> is now <> ."
    },
-   "control": "button#cell/button",
+   "control": "button#cell@Call/button",
    "list": {
     "bucket": "one outcome, because the control has never done anything else",
     "verdict": "the only outcome ever seen on this control, and it happened",
@@ -298,7 +310,7 @@
     ],
     "observed": "<> is already signed off ."
    },
-   "control": "button#cell/button",
+   "control": "button#cell@Call/button",
    "list": {
     "bucket": "one outcome, because the control has never done anything else",
     "verdict": "the only outcome ever seen on this control, and it happened",
@@ -311,39 +323,37 @@
   {
    "step": 309,
    "rule": {
-    "bucket": "the evidence forces one outcome",
-    "verdict": "one outcome was admissible and it happened",
-    "admissible": [
-     "Call <> opened for <> ."
-    ],
+    "bucket": "no outcome is established",
+    "verdict": "no outcome is established for this state",
+    "admissible": [],
     "observed": "Call <> opened for <> ."
    },
    "control": "button:Schedule call",
    "list": {
-    "bucket": "the evidence forces one outcome",
-    "verdict": "one outcome was admissible and it happened",
-    "admissible": [
-     "Call <> opened for <> ."
-    ],
+    "bucket": "no outcome is established",
+    "verdict": "no outcome is established for this state",
+    "admissible": [],
     "observed": "Call <> opened for <> ."
    }
   },
   {
    "step": 317,
    "rule": {
-    "bucket": "the evidence forces one outcome",
-    "verdict": "one outcome was admissible and it happened",
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
     "admissible": [
-     "<> already has call <> on the board ."
+     "<> already has call <> on the board .",
+     "Call <> opened for <> ."
     ],
     "observed": "<> already has call <> on the board ."
    },
    "control": "button:Schedule call",
    "list": {
-    "bucket": "the evidence forces one outcome",
-    "verdict": "one outcome was admissible and it happened",
+    "bucket": "several outcomes remain admissible",
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
     "admissible": [
-     "<> already has call <> on the board ."
+     "<> already has call <> on the board .",
+     "Call <> opened for <> ."
     ],
     "observed": "<> already has call <> on the board ."
    }
@@ -438,7 +448,7 @@
     ],
     "observed": "Ready ."
    },
-   "control": "button#cell/button",
+   "control": "button#cell@Call/button",
    "list": {
     "bucket": "one outcome, because the control has never done anything else",
     "verdict": "the only outcome ever seen on this control, and it happened",
@@ -532,18 +542,18 @@
    "step": 394,
    "rule": {
     "bucket": "the evidence forces one outcome",
-    "verdict": "one outcome was admissible and it happened",
+    "verdict": "one outcome was admissible and a different one happened",
     "admissible": [
-     "<> already has call <> on the board ."
+     "Call <> opened for <> ."
     ],
     "observed": "<> already has call <> on the board ."
    },
    "control": "button:Schedule call",
    "list": {
     "bucket": "the evidence forces one outcome",
-    "verdict": "one outcome was admissible and it happened",
+    "verdict": "one outcome was admissible and a different one happened",
     "admissible": [
-     "<> already has call <> on the board ."
+     "Call <> opened for <> ."
     ],
     "observed": "<> already has call <> on the board ."
    }
@@ -558,7 +568,7 @@
     ],
     "observed": "Ready ."
    },
-   "control": "button#cell/button",
+   "control": "button#cell@Call/button",
    "list": {
     "bucket": "one outcome, because the control has never done anything else",
     "verdict": "the only outcome ever seen on this control, and it happened",
@@ -572,18 +582,18 @@
    "step": 408,
    "rule": {
     "bucket": "the evidence forces one outcome",
-    "verdict": "one outcome was admissible and it happened",
+    "verdict": "one outcome was admissible and a different one happened",
     "admissible": [
-     "Call <> opened for <> ."
+     "<> already has call <> on the board ."
     ],
     "observed": "Call <> opened for <> ."
    },
    "control": "button:Schedule call",
    "list": {
     "bucket": "the evidence forces one outcome",
-    "verdict": "one outcome was admissible and it happened",
+    "verdict": "one outcome was admissible and a different one happened",
     "admissible": [
-     "Call <> opened for <> ."
+     "<> already has call <> on the board ."
     ],
     "observed": "Call <> opened for <> ."
    }
@@ -638,7 +648,7 @@
     ],
     "observed": "Ready ."
    },
-   "control": "button#cell/button",
+   "control": "button#cell@Call/button",
    "list": {
     "bucket": "one outcome, because the control has never done anything else",
     "verdict": "the only outcome ever seen on this control, and it happened",
@@ -658,7 +668,7 @@
     ],
     "observed": "Ready ."
    },
-   "control": "button#cell/button",
+   "control": "button#cell@Call/button",
    "list": {
     "bucket": "one outcome, because the control has never done anything else",
     "verdict": "the only outcome ever seen on this control, and it happened",

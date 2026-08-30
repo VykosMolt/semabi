@@ -594,14 +594,14 @@
    "semabi/compiler/v4/custody.py": "d703fdcfec1d9279de5b51628e1792c78207260a4afc92b1a68f046a9dff254c",
    "semabi/compiler/v4/emission.py": "5068810fe1d35b988649eb8ff8aecf6bd49dee5344cbdf72e94b156f6ec6cbbe",
    "semabi/compiler/v4/frozen_evidence.py": "cb3f7980fd9d24e888f45267ce5f7e597576ea2d2db63783988455bc340f3a65",
-   "semabi/compiler/v4/identity.py": "49b5847df0f5f41b1c983119f9cd94cb6053f3db850230684bac3cac5a533b64",
+   "semabi/compiler/v4/identity.py": "6e30b1377906b6e4f6426b441cb1d13c48ff4aeb49b4f71dab2f51f2c3436ad2",
    "semabi/compiler/v4/manifests.py": "086e3c03591d0a21cfe0fe4717c184f1013fbd1becb86c42d376d98cbcf90b1f",
-   "semabi/compiler/v4/objective.py": "a5e426ba23e70055c432b1a97043e8ebcd6e9b7c522103dfab12d35a2ec6f817",
+   "semabi/compiler/v4/objective.py": "aad7cc8b8a542e77cd2f5d9ededd2d36ae759553780d182bd166c932fcf77a2b",
    "semabi/compiler/v4/pinned.py": "20c3dbc0ae38528d1038b860d1b68e347b51c1c26b544f39f833f0baef36062e",
    "semabi/compiler/v4/promote.py": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65",
    "semabi/compiler/v4/referring.py": "3bcde9c609efb22bb9f69a1c8c37848095133f12a5af66494d8095b44ccf7ff7",
-   "semabi/compiler/v4/search.py": "fbc1618897673b14ecd95edab2f70382a4a6bd1002505454cb43849ff14b8e06",
-   "semabi/compiler/v4/source_candidates.py": "c7a5626fbf2b7b92ad1c0c4b9ed6aadc791771f314a291d21f38c5121d90f41f",
+   "semabi/compiler/v4/search.py": "5d1ed74cd120405554553a15767eba381ce47cc47f8f15e3ea648d0bc5e1b39e",
+   "semabi/compiler/v4/source_candidates.py": "e051353cfd2bbc9eb0e4eecfc14d402dcfc8cb80f84c412ff96250e8c560b129",
    "semabi/relmodel.py": "2034f3a5dd7019c5333c8fb4e0283cf349e29905cfa5d0933e453180fa3a4827"
   },
   "max_candidates": 8
@@ -763,6 +763,7 @@
     "contradictions": 58,
     "delta_atoms": 62,
     "explained": 34,
+    "named": 0,
     "spurious": 0,
     "steps": 403,
     "unexplained": 7,
@@ -822,7 +823,9 @@
        "distinct_values": 4,
        "numeric_share": 0.0,
        "reload_stability": null,
-       "separated_pairs": 147
+       "separated_pairs": 147,
+       "shared": 1.0,
+       "spoken": 0.0
       },
       "key_slot": "cell#0",
       "status": "SUPPORTED",
@@ -840,7 +843,9 @@
        "distinct_values": 0,
        "numeric_share": 0.0,
        "reload_stability": null,
-       "separated_pairs": 0
+       "separated_pairs": 0,
+       "shared": 0.0,
+       "spoken": 0.0
       },
       "key_slot": null,
       "status": "NO_IDENTITY",
@@ -860,7 +865,9 @@
        "distinct_values": 7,
        "numeric_share": 0.0,
        "reload_stability": 1.0,
-       "separated_pairs": 229
+       "separated_pairs": 229,
+       "shared": 0.812,
+       "spoken": 0.0
       },
       "key_slot": "heading#0",
       "status": "SUPPORTED",
@@ -878,7 +885,9 @@
        "distinct_values": 17,
        "numeric_share": 1.0,
        "reload_stability": 1.0,
-       "separated_pairs": 229
+       "separated_pairs": 229,
+       "shared": 0.0,
+       "spoken": 0.0
       },
       "key_slot": "heading#1",
       "status": "SUPPORTED",
@@ -898,7 +907,9 @@
        "distinct_values": 7,
        "numeric_share": 0.0,
        "reload_stability": 1.0,
-       "separated_pairs": 229
+       "separated_pairs": 229,
+       "shared": 0.812,
+       "spoken": 0.0
       },
       "key_slot": "heading#0",
       "status": "SUPPORTED",
@@ -916,7 +927,9 @@
        "distinct_values": 0,
        "numeric_share": 0.0,
        "reload_stability": null,
-       "separated_pairs": 0
+       "separated_pairs": 0,
+       "shared": 0.0,
+       "spoken": 0.0
       },
       "key_slot": null,
       "status": "NO_IDENTITY",
@@ -936,7 +949,9 @@
        "distinct_values": 6,
        "numeric_share": 0.0,
        "reload_stability": null,
-       "separated_pairs": 60
+       "separated_pairs": 60,
+       "shared": 1.0,
+       "spoken": 0.0
       },
       "key_slot": "cell@Owner#0",
       "status": "SUPPORTED",
@@ -954,7 +969,9 @@
        "distinct_values": 13,
        "numeric_share": 0.0,
        "reload_stability": null,
-       "separated_pairs": 88
+       "separated_pairs": 88,
+       "shared": 0.0,
+       "spoken": 0.0
       },
       "key_slot": "cell@Reason#0|cell@Vet#0",
       "status": "SUPPORTED",
@@ -974,7 +991,9 @@
        "distinct_values": 6,
        "numeric_share": 0.0,
        "reload_stability": null,
-       "separated_pairs": 60
+       "separated_pairs": 60,
+       "shared": 1.0,
+       "spoken": 0.0
       },
       "key_slot": "cell@Owner#0",
       "status": "SUPPORTED",
@@ -992,7 +1011,9 @@
        "distinct_values": 11,
        "numeric_share": 0.0,
        "reload_stability": null,
-       "separated_pairs": 87
+       "separated_pairs": 87,
+       "shared": 0.0,
+       "spoken": 0.0
       },
       "key_slot": "cell@Reason#0|cell@Status#0",
       "status": "SUPPORTED",
@@ -1012,7 +1033,9 @@
        "distinct_values": 2,
        "numeric_share": 0.0,
        "reload_stability": null,
-       "separated_pairs": 0
+       "separated_pairs": 0,
+       "shared": 1.0,
+       "spoken": 0.0
       },
       "key_slot": "cell@Owner#0",
       "status": "UNSUPPORTED",
@@ -1030,7 +1053,9 @@
        "distinct_values": 0,
        "numeric_share": 0.0,
        "reload_stability": null,
-       "separated_pairs": 0
+       "separated_pairs": 0,
+       "shared": 0.0,
+       "spoken": 0.0
       },
       "key_slot": null,
       "status": "NO_IDENTITY",
@@ -1050,7 +1075,9 @@
        "distinct_values": 2,
        "numeric_share": 0.0,
        "reload_stability": null,
-       "separated_pairs": 0
+       "separated_pairs": 0,
+       "shared": 1.0,
+       "spoken": 0.0
       },
       "key_slot": "cell@Owner#0",
       "status": "UNSUPPORTED",
@@ -1068,9 +1095,11 @@
        "distinct_values": 2,
        "numeric_share": 0.0,
        "reload_stability": null,
-       "separated_pairs": 0
+       "separated_pairs": 0,
+       "shared": 1.0,
+       "spoken": 0.0
       },
-      "key_slot": "cell@Reason#0",
+      "key_slot": "cell@Vet#0",
       "status": "UNSUPPORTED",
       "template": "row[_](cell@Actions[_](textbox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
       "why": "the family never rendered two instances at once, so nothing shows this value distinguishes instances"
@@ -1088,7 +1117,9 @@
        "distinct_values": 3,
        "numeric_share": 0.0,
        "reload_stability": null,
-       "separated_pairs": 2
+       "separated_pairs": 2,
+       "shared": 1.0,
+       "spoken": 0.0
       },
       "key_slot": "cell@Owner#0",
       "status": "SUPPORTED",
@@ -1106,7 +1137,9 @@
        "distinct_values": 3,
        "numeric_share": 0.0,
        "reload_stability": null,
-       "separated_pairs": 2
+       "separated_pairs": 2,
+       "shared": 0.0,
+       "spoken": 0.0
       },
       "key_slot": "cell@Patient#0",
       "status": "SUPPORTED",
@@ -1126,7 +1159,9 @@
        "distinct_values": 3,
        "numeric_share": 0.0,
        "reload_stability": null,
-       "separated_pairs": 2
+       "separated_pairs": 2,
+       "shared": 1.0,
+       "spoken": 0.0
       },
       "key_slot": "cell@Owner#0",
       "status": "SUPPORTED",
@@ -1144,7 +1179,9 @@
        "distinct_values": 2,
        "numeric_share": 0.0,
        "reload_stability": null,
-       "separated_pairs": 2
+       "separated_pairs": 2,
+       "shared": 0.0,
+       "spoken": 0.0
       },
       "key_slot": "cell@Reason#0",
       "status": "SUPPORTED",
@@ -1164,7 +1201,9 @@
        "distinct_values": 4,
        "numeric_share": 0.0,
        "reload_stability": null,
-       "separated_pairs": 5
+       "separated_pairs": 5,
+       "shared": 0.0,
+       "spoken": 0.0
       },
       "key_slot": "cell@Name#0",
       "status": "SUPPORTED",
@@ -1182,7 +1221,9 @@
        "distinct_values": 4,
        "numeric_share": 0.0,
        "reload_stability": null,
-       "separated_pairs": 5
+       "separated_pairs": 5,
+       "shared": 0.0,
+       "spoken": 0.0
       },
       "key_slot": "cell@Specialty#0",
       "status": "SUPPORTED",
@@ -1202,7 +1243,9 @@
        "distinct_values": 4,
        "numeric_share": 0.0,
        "reload_stability": null,
-       "separated_pairs": 5
+       "separated_pairs": 5,
+       "shared": 0.0,
+       "spoken": 0.0
       },
       "key_slot": "cell@Name#0",
       "status": "SUPPORTED",
@@ -1220,7 +1263,9 @@
        "distinct_values": 2,
        "numeric_share": 0.0,
        "reload_stability": null,
-       "separated_pairs": 5
+       "separated_pairs": 5,
+       "shared": 0.0,
+       "spoken": 0.0
       },
       "key_slot": "cell@On duty#0",
       "status": "SUPPORTED",
@@ -1240,7 +1285,9 @@
        "distinct_values": 3,
        "numeric_share": 0.0,
        "reload_stability": 1.0,
-       "separated_pairs": 119
+       "separated_pairs": 119,
+       "shared": 0.585,
+       "spoken": 0.0
       },
       "key_slot": "text#0",
       "status": "SUPPORTED",
@@ -1258,7 +1305,9 @@
        "distinct_values": 0,
        "numeric_share": 0.0,
        "reload_stability": null,
-       "separated_pairs": 0
+       "separated_pairs": 0,
+       "shared": 0.0,
+       "spoken": 0.0
       },
       "key_slot": null,
       "status": "NO_IDENTITY",

@@ -2,55 +2,11 @@
  "run": "opus_02_cellar_dev",
  "chain": "docs/data/v4/manifests/opus_02_cellar_dev_source_sections.json",
  "split": 0.5,
- "ablated": "joint discrimination x3",
+ "ablated": "source_choice",
  "rekeyed": null,
  "readings": [
   {
-   "reading": "joint discrimination x3",
-   "types": 3,
-   "prefix_objective": {
-    "explained": 0,
-    "errors": 23,
-    "visibility": 14,
-    "churn": 0,
-    "spurious": 0,
-    "contradictions": 9,
-    "unexplained": 0
-   },
-   "suffix_ledger": {}
-  },
-  {
-   "reading": "without button[_]",
-   "types": 3,
-   "prefix_objective": {
-    "explained": 0,
-    "errors": 23,
-    "visibility": 14,
-    "churn": 0,
-    "spurious": 0,
-    "contradictions": 9,
-    "unexplained": 0
-   },
-   "suffix_ledger": {},
-   "prefix_objective_accepts_removal": false
-  },
-  {
-   "reading": "without group[_](heading[_],text[_],table[_](rowgroup[_](row[_](cell[_]))))",
-   "types": 2,
-   "prefix_objective": {
-    "explained": 0,
-    "errors": 23,
-    "visibility": 14,
-    "churn": 0,
-    "spurious": 0,
-    "contradictions": 9,
-    "unexplained": 0
-   },
-   "suffix_ledger": {},
-   "prefix_objective_accepts_removal": true
-  },
-  {
-   "reading": "without row[_](cell[_])",
+   "reading": "source_choice",
    "types": 1,
    "prefix_objective": {
     "explained": 0,
@@ -59,6 +15,41 @@
     "churn": 0,
     "spurious": 0,
     "contradictions": 0,
+    "conflicts": 0,
+    "named": 16,
+    "unexplained": 0
+   },
+   "suffix_ledger": {}
+  },
+  {
+   "reading": "without row[_](cell@Capacity[_],cell@Condition[_],cell@Holds[_],cell@Kind[_],cell@Vessel[_])",
+   "types": 1,
+   "prefix_objective": {
+    "explained": 0,
+    "errors": 0,
+    "visibility": 0,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 0,
+    "conflicts": 0,
+    "named": 0,
+    "unexplained": 0
+   },
+   "suffix_ledger": {},
+   "prefix_objective_accepts_removal": false
+  },
+  {
+   "reading": "without row[_](cell@From block[_],cell@Hall[_],cell@In vessel[_],cell@Lot[_],cell@Oaked[_],cell@Stage[_],cell@Variety[_],cell@Volume[_])",
+   "types": 1,
+   "prefix_objective": {
+    "explained": 0,
+    "errors": 0,
+    "visibility": 0,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 0,
+    "conflicts": 0,
+    "named": 16,
     "unexplained": 0
    },
    "suffix_ledger": {},

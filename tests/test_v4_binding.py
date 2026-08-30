@@ -227,8 +227,9 @@ def test_on_the_real_trace_one_reading_determines_its_object_and_the_other_does_
     from semabi.compiler.v4.consequence import VALUE, fit, score
     from semabi.eval.v4_consequence_run import _candidates
 
-    from tests.test_v4_prospective import with_loose_reading
+    from tests.test_v4_prospective import require_distinct_loose_reading, with_loose_reading
     readings = with_loose_reading({c.name: c.reading for c in _candidates(HARBOUR_CHAIN)})
+    require_distinct_loose_reading(readings)
     grounded_fit = fit(HARBOUR_RUN, readings["joint discrimination x2"], split=0.5)
     loose_fit = fit(HARBOUR_RUN, readings["promote cell[_]=cell#0"], split=0.5)
     grounded, loose = score(grounded_fit), score(loose_fit)
@@ -388,6 +389,8 @@ def test_an_effect_on_an_object_the_state_never_pins_is_not_a_well_formed_schema
     assert all(not row["undetermined_effect_params"]
                for row in grounded["operators"].values())
 
+    from tests.test_v4_prospective import require_distinct_loose_reading
+    require_distinct_loose_reading(readings)
     loose_fit = fit(HARBOUR_RUN, readings["promote cell[_]=cell#0"], split=0.5)
     loose_result = score(loose_fit)
     loose = loose_result.schema()

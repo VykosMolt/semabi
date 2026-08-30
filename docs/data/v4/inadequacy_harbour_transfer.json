@@ -1,19 +1,86 @@
 {
  "run": "harbour_transfer",
- "reading": "joint discrimination x2",
+ "reading": "source_choice",
  "regime": "FROZEN_PREFIX",
  "hypothesis": "rule",
  "cut": 229,
- "forced_wrong": 1,
+ "forced_wrong": 3,
  "kinds": {
+  "inseparable: every shared conjunction reaches another event": 2,
   "unseen: the control never returned this event while fitting": 1
  },
  "by_control": {
+  "button:Schedule call": {
+   "inseparable: every shared conjunction reaches another event": 2
+  },
   "button:Sign off": {
    "unseen: the control never returned this event while fitting": 1
   }
  },
  "cases": [
+  {
+   "control": "button:Schedule call",
+   "step": 271,
+   "forced": [
+    "Call <> opened for <> ."
+   ],
+   "actual": "<> already has call <> on the board .",
+   "why": "Call <> opened for <> . <- ('unnamed', \"selection['cell@Current call#2']:3\") & ('unnamed', \"selection['cell@Vessel#1']:0\")  [4 occasions]",
+   "kind": "inseparable: every shared conjunction reaches another event",
+   "seen": 12,
+   "witnesses": [
+    8,
+    10
+   ],
+   "blockers": 2,
+   "blocked_by": {
+    "Call <> opened for <> .": 2
+   },
+   "raw_difference": [
+    "node 2 status: 'Berth S1 is already closed.'/'None'  vs  'Berth S1 is now open.'/'None'",
+    "node 19 cell: 'Ardent Rose'/'None'  vs  'Selkie'/'None'",
+    "node 20 cell: '96 m'/'None'  vs  '64 m'/'None'",
+    "node 21 cell: 'N1'/'None'  vs  '-'/'None'",
+    "node 23 cell: 'alongside'/'None'  vs  'expected'/'None'",
+    "node 27 cell: 'Hafnarfjord'/'None'  vs  'Bregagh'/'None'",
+    "node count 159 vs 167"
+   ],
+   "erased_by_the_state": [
+    "selection['cell@Vessel#0']:0: node 21 cell '-' rendered in the object's own row, not in its state (blocker shows 'N1')"
+   ]
+  },
+  {
+   "control": "button:Schedule call",
+   "step": 394,
+   "forced": [
+    "Call <> opened for <> ."
+   ],
+   "actual": "<> already has call <> on the board .",
+   "why": "Call <> opened for <> . <- ('unnamed', \"selection['cell@Current call#1']:3\") & ('unnamed', \"selection['cell@Current call#2']:3\")  [4 occasions]",
+   "kind": "inseparable: every shared conjunction reaches another event",
+   "seen": 12,
+   "witnesses": [
+    3,
+    4
+   ],
+   "blockers": 1,
+   "blocked_by": {
+    "Call <> opened for <> .": 1
+   },
+   "raw_difference": [
+    "node 2 status: 'Nordkapp already has call C-101 on'/'None'  vs  'Silas Nunn is signed on.'/'None'",
+    "node 19 cell: 'Nordkapp'/'None'  vs  'Petrel Star'/'None'",
+    "node 20 cell: '132 m'/'None'  vs  '148 m'/'None'",
+    "node 21 cell: 'S1'/'None'  vs  '-'/'None'",
+    "node 23 cell: 'alongside'/'None'  vs  'expected'/'None'",
+    "node 27 cell: 'Selkie'/'None'  vs  'Bregagh'/'None'",
+    "node count 149 vs 167"
+   ],
+   "erased_by_the_state": [
+    "selection['cell@Vessel#0']:0: node 21 cell '-' rendered in the object's own row, not in its state (blocker shows 'S1')",
+    "selection['cell@Vessel#1']:0: node 30 cell 'Tom Dorley' rendered in the object's own row, not in its state (blocker shows '-')"
+   ]
+  },
   {
    "control": "button:Sign off",
    "step": 404,
@@ -21,7 +88,7 @@
     "<> is signed off ."
    ],
    "actual": "<> cannot sign off while booked for call <> .",
-   "why": "<> is signed off . <- attr:duty#0(owner) == 'on'  [8 occasions]",
+   "why": "<> is signed off . <- attr:Duty#0(owner) == 'on'  [8 occasions]",
    "kind": "unseen: the control never returned this event while fitting",
    "seen": 0,
    "raw_difference": [],

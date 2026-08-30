@@ -1,6 +1,6 @@
 {
  "run": "blend_book_transfer",
- "reading": "joint discrimination x3",
+ "reading": "source_choice",
  "regime": "FROZEN_PREFIX",
  "hypothesis": "rule",
  "cut": 419,
@@ -25,7 +25,7 @@
     "<> <> ."
    ],
    "actual": "<> is already <> .",
-   "why": "<> <> . <- ('ambiguous', \"relation['backward', 'rel:3']:4<owner\")  [4 occasions]",
+   "why": "<> <> . <- ('ambiguous', \"relation['backward', 'rel:1']:2<owner\")  [4 occasions]",
    "kind": "unseen: the control never returned this event while fitting",
    "seen": 0,
    "raw_difference": [],
@@ -38,7 +38,7 @@
     "<> <> ."
    ],
    "actual": "<> is already <> .",
-   "why": "<> <> . <- attr:cell#0@2(owner) == 'Pinot'  [3 occasions]",
+   "why": "<> <> . <- attr:Varietal#0(owner) == 'Pinot'  [3 occasions]",
    "kind": "once: seen, but not enough to found a rule",
    "seen": 1,
    "raw_difference": [],
@@ -51,7 +51,7 @@
     "<> <> ."
    ],
    "actual": "<> is already <> .",
-   "why": "<> <> . <- attr:cell#0@2(owner) == 'Pinot'  [3 occasions]",
+   "why": "<> <> . <- attr:Varietal#0(owner) == 'Pinot'  [3 occasions]",
    "kind": "once: seen, but not enough to found a rule",
    "seen": 1,
    "raw_difference": [],
@@ -64,7 +64,7 @@
     "<> <> ."
    ],
    "actual": "<> is already <> .",
-   "why": "<> <> . <- attr:cell#0@2(owner) == 'Syrah'  [7 occasions]",
+   "why": "<> <> . <- attr:Varietal#0(owner) == 'Syrah'  [7 occasions]",
    "kind": "once: seen, but not enough to found a rule",
    "seen": 1,
    "raw_difference": [],
@@ -77,7 +77,7 @@
     "<> <> ."
    ],
    "actual": "<> is already <> .",
-   "why": "<> <> . <- attr:cell#0@3(owner) == '7'  [3 occasions]",
+   "why": "<> <> . <- attr:Gallons left#0(owner) == '7'  [3 occasions]",
    "kind": "once: seen, but not enough to found a rule",
    "seen": 1,
    "raw_difference": [],

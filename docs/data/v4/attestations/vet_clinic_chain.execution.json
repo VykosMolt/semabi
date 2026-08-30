@@ -1,7 +1,7 @@
 {
  "artifact": {
   "path": "docs/data/v4/manifests/vet_clinic_chain.json",
-  "sha256": "e294f5860540fe34daedb5581ce568a0a9114204642646615e9c6fc5872856ac"
+  "sha256": "a52f2ead99cc95d098d325fa56a507a3f50fac382782e46aec0f4bd8b335f28c"
  },
  "authority": "V4_IMPORT_AUTHORITY_ACTIVE",
  "declared_static_closure": {
@@ -29,12 +29,14 @@
    "semabi/compiler/v4/__init__.py",
    "semabi/compiler/v4/abstractor.py",
    "semabi/compiler/v4/custody.py",
+   "semabi/compiler/v4/emission.py",
    "semabi/compiler/v4/frozen_evidence.py",
    "semabi/compiler/v4/identity.py",
    "semabi/compiler/v4/manifests.py",
    "semabi/compiler/v4/objective.py",
    "semabi/compiler/v4/pinned.py",
    "semabi/compiler/v4/promote.py",
+   "semabi/compiler/v4/referring.py",
    "semabi/compiler/v4/search.py"
   ],
   "declared_but_not_executed": [
@@ -53,9 +55,11 @@
    "semabi/compiler/v2/score.py",
    "semabi/compiler/v2/units.py",
    "semabi/compiler/v4/abstractor.py",
+   "semabi/compiler/v4/emission.py",
    "semabi/compiler/v4/identity.py",
    "semabi/compiler/v4/objective.py",
    "semabi/compiler/v4/promote.py",
+   "semabi/compiler/v4/referring.py",
    "semabi/compiler/v4/search.py"
   ],
   "entrypoint_kind": "freeze-chain",
@@ -93,7 +97,7 @@
   "site_pth_processing": "DISABLED",
   "untracked_project_modules": "REJECTED"
  },
- "project_execution_sha256": "df88031fcbc02fe7ea1f18e50f67d822ca947b0132544776605372660715b5f1",
+ "project_execution_sha256": "697a741ca5cd99d6b1edf0cb7c80733fd17266e50fbbe7f8675ddfd8c73bfb63",
  "project_modules": [
   {
    "executed_from_verified_memory": true,
@@ -151,8 +155,8 @@
    "package_search_locations": [],
    "path": "semabi/compiler/evidence.py",
    "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
-   "sha256": "b4a5d0c9208f9b6c4588317078f8270a7bd0766bcb1a2e52722f72be74a90e51",
-   "size": 3341
+   "sha256": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+   "size": 7215
   },
   {
    "executed_from_verified_memory": true,
@@ -186,8 +190,8 @@
    "package_search_locations": [],
    "path": "semabi/compiler/v4/custody.py",
    "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
-   "sha256": "75ec3a978d92f8d1e924e07ba76cb41294737c5c596210cd82fbecc3b2b55178",
-   "size": 27587
+   "sha256": "d703fdcfec1d9279de5b51628e1792c78207260a4afc92b1a68f046a9dff254c",
+   "size": 28010
   },
   {
    "executed_from_verified_memory": true,
@@ -197,8 +201,8 @@
    "package_search_locations": [],
    "path": "semabi/compiler/v4/frozen_evidence.py",
    "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
-   "sha256": "ff80dc759a450cc64c90c913df63fb7d9eb70bb652ebc733dd40637a74b73738",
-   "size": 5569
+   "sha256": "cb3f7980fd9d24e888f45267ce5f7e597576ea2d2db63783988455bc340f3a65",
+   "size": 6048
   },
   {
    "executed_from_verified_memory": true,
@@ -208,8 +212,8 @@
    "package_search_locations": [],
    "path": "semabi/compiler/v4/manifests.py",
    "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
-   "sha256": "f38b79557ae4553d9f03c64fb9b160c027a3763f2577869372d660dbfd417afb",
-   "size": 73374
+   "sha256": "086e3c03591d0a21cfe0fe4717c184f1013fbd1becb86c42d376d98cbcf90b1f",
+   "size": 74126
   },
   {
    "executed_from_verified_memory": true,
@@ -219,8 +223,8 @@
    "package_search_locations": [],
    "path": "semabi/compiler/v4/pinned.py",
    "resolved_by": "CPYTHON_FILEFINDER_CROSSCHECKED_WITH_PATHFINDER",
-   "sha256": "711305a95c1da238c4b9e4f213fb5f2421bf1757244b10bcbab5b14a83f8ad4d",
-   "size": 17708
+   "sha256": "20c3dbc0ae38528d1038b860d1b68e347b51c1c26b544f39f833f0baef36062e",
+   "size": 19884
   }
  ],
  "rejections": [],

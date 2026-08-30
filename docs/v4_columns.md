@@ -151,6 +151,43 @@ the incumbent keeps them.  The transfer suffix then scores that reading at 16 un
 12 contradicted / 16 disagreed against the transfer-run search's 16 / 3 / 7.  A
 history can be too thin to reject a reading, and the manifest records what it supports.
 
+## The instruments under the regenerated SOURCE readings
+
+The chain design makes the SOURCE history decide the reading and the TRANSFER and HOLDOUT
+histories score it, and the regenerated `source_choice` readings are what the *dev*
+histories support under the rules above -- not what the transfer-run search finds.  The
+difference is now measurable, and it is recorded rather than tuned away, because tuning a
+SOURCE decision against the TRANSFER result is the leakage the chain exists to prevent.
+
+| application | SOURCE `source_choice` | renaming (fresh / permuted), ledger steps moved | reversal differences |
+|---|---|---|---|
+| blend | vats `Vat`, blends `Blend`, draws `Ticket` | 0 / 0 of 503 | 0 |
+| cellar | vessels `Vessel`, lots `In vessel` | 0 / 0 of 30 | 0 |
+| harbour | vessels `Vessel`, berths `Berth`, **calls `Pilot`**, overview none | **13 / 13** of 172 | **12** |
+| vet | V2's identities kept: cells, chooser labels, appointments by `Owner` | **106 / 90** of 106 | 0 |
+
+Harbour's dev history keys a call by its pilot -- `Pilot` and `Ticket to` separate every
+pair, neither is shared with another family, pilots are spoken and ticket numbers are not,
+and no sign-on changes a pilot on that history -- so the tie went to the pilot.  On the
+transfer history a pilot is what `Sign on` changes, and the reading pays: thirteen
+`already has call` refusals move under renaming and twelve `Schedule call` verdicts move
+under reversal, neither of which moved when the call was keyed by its ticket.  Vet's dev
+history, with seventy tab clicks and a handful of domain actions, rejects nothing.
+
+Both are the same fact as the section above: a tie on a thin history was settled by a
+prior -- the structural rank, the atoms tie-break -- and the retained transfer evidence
+says the prior was wrong.  The search records every such tie as an open question
+(harbour's dev search leaves five).  What turns an open question into evidence is an
+interaction on which the two readings' predictions differ, which the live application can
+supply and the histories cannot; that is the identity-tie campaign this report was asked
+to precede, and these two rows are its first two cases.
+
+Harbour's frontier survivor set is unique on the regenerated data (`joint discrimination
+x2`; `docs/data/v4/frontier_harbour.json`): the loose reading it was once undecided
+against -- every childless cell an object keyed by its own text -- is not a reading the
+header scheme can express there, so the retained separating witness now describes one
+survivor and no pair.
+
 ## What this says
 
 Name spelling, member order and column position are now three coordinates the model is

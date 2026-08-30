@@ -1,6 +1,6 @@
 {
  "run": "blend_book_transfer",
- "reading": "joint discrimination x3",
+ "reading": "source_choice",
  "regime": "FROZEN_PREFIX",
  "split": 1.0,
  "cut": 0,
@@ -9,23 +9,23 @@
  "corroborated": true,
  "hypothesis": "rule",
  "against_the_other_class": {
-  "rule: the evidence forces one outcome | list: the evidence forces one outcome": 219,
-  "rule: several outcomes remain admissible | list: several outcomes remain admissible": 183,
+  "rule: the evidence forces one outcome | list: the evidence forces one outcome": 216,
+  "rule: several outcomes remain admissible | list: several outcomes remain admissible": 186,
   "rule: one outcome, because the control has never done anything else | list: one outcome, because the control has never done anything else": 64,
   "rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)": 21,
   "rule: no outcome is established | list: no outcome is established": 16
  },
  "actions": 503,
  "what_the_evidence_establishes": {
-  "the evidence forces one outcome": 240,
-  "several outcomes remain admissible": 183,
+  "the evidence forces one outcome": 237,
+  "several outcomes remain admissible": 186,
   "one outcome, because the control has never done anything else": 64,
   "no outcome is established": 16
  },
  "admissible_set_size": {
   "0": 16,
-  "1": 304,
-  "2": 161,
+  "1": 301,
+  "2": 164,
   "3": 22
  },
  "what_happened_was": {
@@ -43,18 +43,18 @@
    "the event the interface returned": 27
   },
   "several outcomes remain admissible": {
-   "the event the interface returned": 182,
+   "the event the interface returned": 185,
    "a different event": 1
   },
   "the evidence forces one outcome": {
-   "the event the interface returned": 220,
+   "the event the interface returned": 217,
    "a different event": 14,
    "no determinate answer": 6
   }
  },
  "policy_forced_then_list": {
-  "one outcome was admissible and it happened": 219,
-  "deferred to the list: the event the interface returned": 182,
+  "one outcome was admissible and it happened": 216,
+  "deferred to the list: the event the interface returned": 185,
   "the only outcome ever seen on this control, and something else happened": 37,
   "the only outcome ever seen on this control, and it happened": 27,
   "one outcome was admissible and a different one happened": 21,
@@ -68,14 +68,14 @@
   "<> <> .": 41,
   "Opened <> .": 36,
   "Disgorged <> .": 28,
-  "<> is <> .": 19,
-  "<> is already <> .": 17,
+  "<> is <> .": 18,
+  "<> is already <> .": 15,
   "<> holds <> ; cannot draw <> .": 12
  },
  "per_control": {
   "button:Record draw": {
-   "the evidence forces one outcome": 136,
-   "several outcomes remain admissible": 125
+   "the evidence forces one outcome": 133,
+   "several outcomes remain admissible": 128
   },
   "button:Return ticket _ gal from _ out of _": {
    "the evidence forces one outcome": 63,
@@ -116,8 +116,8 @@
    "the only outcome ever seen on this control, and it happened": 4
   },
   "button:Record draw": {
-   "one outcome was admissible and it happened": 128,
-   "several outcomes remained admissible; the one that happened was among them": 124,
+   "several outcomes remained admissible; the one that happened was among them": 127,
+   "one outcome was admissible and it happened": 125,
    "one outcome was admissible and a different one happened": 8,
    "several outcomes remained admissible and none of them happened": 1
   },
@@ -179,7 +179,7 @@
    "returned": "The book already holds 12 records; return a draw first.",
    "verdict": "one outcome was admissible and a different one happened",
    "level": "the event alone",
-   "why": "Drew <> from <> into <> . <- attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cell#0@2(selection['combobox#1']:3) == '2020' & attr:cell#0@5(selection['combobox#1']:3) == 'In cask' & ('unnamed', \"selection['combobox#2']:4\")  [7 occasions]"
+   "why": "Drew <> from <> into <> . <- attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:State#0(selection['combobox#1']:1) == 'In cask' & attr:Year#0(selection['combobox#1']:1) == '2020' & ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#2']:2\")  [7 occasions]"
   },
   {
    "step": 87,
@@ -195,7 +195,7 @@
    "returned": "The book already holds 12 records; return a draw first.",
    "verdict": "one outcome was admissible and a different one happened",
    "level": "the event alone",
-   "why": "Drew <> from <> into <> . <- attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cell#0@2(selection['combobox#1']:3) == '2020' & attr:cell#0@5(selection['combobox#1']:3) == 'In cask' & ('unnamed', \"selection['combobox#2']:4\")  [7 occasions]"
+   "why": "Drew <> from <> into <> . <- attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:State#0(selection['combobox#1']:1) == 'In cask' & attr:Year#0(selection['combobox#1']:1) == '2020' & ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#2']:2\")  [7 occasions]"
   },
   {
    "step": 88,
@@ -211,7 +211,7 @@
    "returned": "Chapel Row is already closed.",
    "verdict": "one outcome was admissible and a different one happened",
    "level": "the event alone",
-   "why": "<> <> . <- attr:cell#0@3(owner) == '6'  [6 occasions]"
+   "why": "<> <> . <- attr:Gallons left#0(owner) == '6'  [6 occasions]"
   },
   {
    "step": 91,
@@ -227,7 +227,7 @@
    "returned": "The book already holds 12 records; return a draw first.",
    "verdict": "one outcome was admissible and a different one happened",
    "level": "the event alone",
-   "why": "Drew <> from <> into <> . <- attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cell#0@2(selection['combobox#1']:3) == '2020' & attr:cell#0@5(selection['combobox#1']:3) == 'In cask' & ('unnamed', \"selection['combobox#2']:4\")  [7 occasions]"
+   "why": "Drew <> from <> into <> . <- attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:State#0(selection['combobox#1']:1) == 'In cask' & attr:Year#0(selection['combobox#1']:1) == '2020' & ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#2']:2\")  [7 occasions]"
   },
   {
    "step": 106,
@@ -243,7 +243,7 @@
    "returned": "North Wall is already closed.",
    "verdict": "one outcome was admissible and a different one happened",
    "level": "the event alone",
-   "why": "<> <> . <- attr:cell#0@2(owner) == 'Syrah'  [9 occasions]"
+   "why": "<> <> . <- attr:Varietal#0(owner) == 'Syrah'  [9 occasions]"
   },
   {
    "step": 111,
@@ -259,7 +259,7 @@
    "returned": "The book already holds 12 records; return a draw first.",
    "verdict": "one outcome was admissible and a different one happened",
    "level": "the event alone",
-   "why": "Drew <> from <> into <> . <- attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cell#0@2(selection['combobox#1']:3) == '2020' & attr:cell#0@5(selection['combobox#1']:3) == 'In cask' & ('unnamed', \"selection['combobox#2']:4\")  [7 occasions]"
+   "why": "Drew <> from <> into <> . <- attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:State#0(selection['combobox#1']:1) == 'In cask' & attr:Year#0(selection['combobox#1']:1) == '2020' & ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#2']:2\")  [7 occasions]"
   },
   {
    "step": 113,
@@ -275,7 +275,7 @@
    "returned": "North Wall is already closed.",
    "verdict": "one outcome was admissible and a different one happened",
    "level": "the event alone",
-   "why": "<> <> . <- attr:cell#0@2(owner) == 'Syrah'  [9 occasions]"
+   "why": "<> <> . <- attr:Varietal#0(owner) == 'Syrah'  [9 occasions]"
   },
   {
    "step": 114,
@@ -291,7 +291,7 @@
    "returned": "The book already holds 12 records; return a draw first.",
    "verdict": "one outcome was admissible and a different one happened",
    "level": "the event alone",
-   "why": "Drew <> from <> into <> . <- attr:cell#0@4(selection['combobox#0']:1) == 'Open' & attr:cell#0@2(selection['combobox#1']:3) == '2020' & attr:cell#0@5(selection['combobox#1']:3) == 'In cask' & ('unnamed', \"selection['combobox#2']:4\")  [7 occasions]"
+   "why": "Drew <> from <> into <> . <- attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:State#0(selection['combobox#1']:1) == 'In cask' & attr:Year#0(selection['combobox#1']:1) == '2020' & ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#2']:2\")  [7 occasions]"
   }
  ]
 }

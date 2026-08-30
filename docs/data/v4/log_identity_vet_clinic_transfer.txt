@@ -1,16 +1,19 @@
 
-vet_clinic_transfer  'joint discrimination x3'  FROZEN_PREFIX  cut=448  16 operators
-  44 held-out actions, 2.2 rules offered and 3.77 claims applicable per action
-  2 distinct claims across all its decided predictions
-    a named constant          21 claims,     0 decided, supported    -   0 distinct
-    an object brought into being   131 claims,    87 decided, supported  61%   1 distinct
+vet_clinic_transfer  'source_choice'  FROZEN_PREFIX  cut=448  26 operators
+  44 held-out actions, 3.64 rules offered and 3.34 claims applicable per action
+  6 distinct claims across all its decided predictions
+    a named constant         111 claims,    23 decided, supported  44%   2 distinct
+                           ['attr:Reason#0 = ?s0', 'attr:Status#0 = in_progress']
+    an object brought into being   139 claims,    84 decided, supported   2%   1 distinct
                            ['id = new']
-    removal                  166 claims,   154 decided, supported  31%   1 distinct
+    changes, unspecified      24 claims,    18 decided, supported   0%   2 distinct
+                           ['attr:Patient#0 = changes', 'attr:Reason#0 = changes']
+    removal                  229 claims,   104 decided, supported  22%   1 distinct
                            ['id = gone']
-    removal exposure: this reading 0.312, unconditional base rate 0.697, per-click control 0.199 (margin +0.113)
-                           steps by fraction gone {"all went (>90%)": 180, "none went (<10%)": 49, "some went": 28}
-       20 ( 45%)  every applicable rule was contradicted
-       18 ( 41%)  applicable rules disagreed
-        6 ( 14%)  every applicable rule was right
+    removal exposure: this reading 0.221, unconditional base rate 0.699, per-click control 0.123 (margin +0.098)
+                           steps by fraction gone {"all went (>90%)": 180, "none went (<10%)": 44, "some went": 33}
+       16 ( 36%)  the rules could not say which object they were about
+       16 ( 36%)  applicable rules disagreed
+       12 ( 27%)  every applicable rule was contradicted
 
 wrote docs/data/v4/claim_substance_vet_clinic_transfer_frozen_prefix.json
