@@ -98,7 +98,7 @@ for a mutation -- and the reading with more harm there is the one the applicatio
 | experiment | readings and their frozen predictions | what happened | harm on the decisive terms | verdict |
 |---|---|---|---|---|
 | **vet**: two more appointments for `Luna (Linh Nguyen)`, reasons `probe alpha` and `probe beta` (`Schedule` ×2) | `Owner`: one object, disagreeing mentions; `Reason`: two objects | both rows appeared, `scheduled`, unassigned | `Owner` 6 positional, `Reason` 0 | **`Reason`** |
-| **blend**: 2 gal from West Ridge into Picnic, then 2 gal from Mill Race (the form had reset the blend to Festival White) (`Record draw` ×2) | `Ticket`: two objects; `Amount`: one object | `Ticket 1, 2 gal` and `Ticket 2, 2 gal` on the board | `Ticket` 1, `Amount` 1, `Ticket number` 0 | **`Ticket number`** (`cell@Ticket#1`) |
+| **blend**: 2 gal from West Ridge into Picnic, then 2 gal from Mill Race (the form had reset the blend to Festival White) (`Record draw` ×2) | `Ticket`: two objects; `Amount`: one object | `Ticket 1, 2 gal` and `Ticket 2, 2 gal` on the board | `Ticket` 1, `Amount` 1, `Ticket number` 0 | **`Ticket number`** (`cell@Ticket#1` then; `cell@Ticket#0` after Part IV) |
 | **harbour**: calls opened for Ardent Rose and Nordkapp, the two vessels not on the board at seed 4247 (`Schedule call` ×2; the first attempt hit two vessels that already had calls and was refused, which is recorded) | `Vessel`: two objects; `Status`: one object, disagreeing mentions | `C-103` and `C-104` opened, both `expected` | `Vessel` 0, `Status` 5 | **`Vessel`** |
 
 Blend's verdict corrected the question.  The dev history's key was `cell@Ticket#0`, the
@@ -191,6 +191,82 @@ overall` and `Takes up to` are nominal, and no field on any application is order
 threshold a single instance stood on the far side of.  The known false prediction -- "bottled" on an already-bottled blend
 still showing committed 3 -- predates ORDERED, is missing guard context (`state`), and is
 kept as a conformance counterexample, not repaired here.
+
+## Part IV — a key named by a split, and evidence that binds to what a slot held
+
+Rerunning from SOURCE with the three verdicts propagated did what the loop is for: the
+learner's own manifests carry harbour's calls keyed by `Vessel`, vet's appointments without
+`Owner`, blend's draws by the ticket number, and nothing from a transfer history.  And the
+frontier moved the other way on blend: from a unique transfer survivor to an ambiguous pair,
+the incumbent against the reading that keys draws by nothing.  Every candidate keying draws
+by `cell@Ticket#1` reported applicability 7/8 -- that slot is absent on the transfer
+author -- and with the key unapplied the two readings render identical deltas at every step.
+
+**Why the slot was `#1`.**  Both authors render a draw's ticket as one cell, `Ticket 1`,
+`Ticket 26`.  On the dev history at most one draw is ever on the page and every draw reads
+`Ticket 1`; the empty table reads `No draws recorded.` in a single spanning cell, and that
+cell had been given the first column's name by its offset.  The Ticket column's template
+therefore held two strings, `Ticket 1` and the placeholder, against which the word `Ticket`
+varied -- so it was a data token, the cell split into two spans, the word became
+`cell@Ticket#0` and the number `cell@Ticket#1`.  On the transfer author thirty tickets
+outvote the placeholder, `Ticket` is constant, and the number is `cell@Ticket#0`.  The key
+was named by a spurious split, and the earlier three-of-three transfer result was partly
+an artefact: the wrong key on the dev author (the word) happened to name the number on the
+transfer author.  This is the column attack one level down -- a within-cell coordinate that
+depended on how many values a history had shown.
+
+**Repair.**  A row not shaped like the header row declares no columns
+(`ObsGraph.column_header`): the placeholder's cell stands in no column, the Ticket column's
+one string keeps its label constant, and both authors put the number in `cell@Ticket#0`
+(`tests/test_v4_placeholder_row.py`; both tests fail on the previous code).
+
+**The defect underneath.**  The retained blend sidecar refuted draws keyed by
+`cell@Ticket#0` -- the word, when it was written.  After the repair the same name means the
+number, and a refutation applied by name would have blocked the key the experiment
+supported, silently, at the freeze.  Identity evidence had been recorded against a
+coordinate of the representation.  A refutation record now carries what the key slot
+*held* on the history when the experiment decided (`write_refutation(..., held=)`); the
+search applies a record only while the slot still holds those values and reports the rest
+as `STALE` or `UNBOUND` (`SearchResult.stale_refutations`); the freeze refuses to freeze on
+a record that does not bind, with what it held and what the slot holds now
+(`source_candidates`, `custody.parse_refutation_records`).  And an experiment retains the
+steps and pages it appended (`result_*.json: extension`), so that it can be scored again
+under a later representation instead of being trusted by the names it was scored under
+(`v4_tie_experiment --rescore --extension`).
+
+**The experiments re-run.**  The three plans were run again on the live applications
+under this representation -- blend's with the word reading removed (it is template text
+now, not a slot) and the number at `cell@Ticket#0`; the v1 plan and result are retained
+beside it -- and every sidecar re-derived from its result with `--propagate --fresh`:
+
+| experiment | harm on the decisive terms | survivor | sidecar now |
+|---|---|---|---|
+| blend, ticket number vs `Amount` (collision) | `Amount` 1, `Ticket number` 0 | `cell@Ticket#0` | `Amount#0` refuted, held `1`, `2` |
+| harbour, `Vessel` vs `Status` (collision) | `Vessel` 0, `Status` 5 | `Vessel` | `Status#0` refuted, held `alongside`, `expected` |
+| vet, `Owner` / `Patient` / `Reason` / `Patient|Reason` (collision) | 6 / 4 / 0 / 0 | `Reason`, `Patient|Reason` | `Owner#0`, `Patient#0` refuted in three families, with the names each held |
+
+The same verdicts as before, and for the first time bound to what they were verdicts about.
+
+**Regenerated from SOURCE on this representation** (authenticated; `docs/data/v4`):
+
+| application | SOURCE keys the family by | transfer | holdout | note |
+|---|---|---|---|---|
+| blend | draws: `cell@Ticket#0` (the number) | `UNIQUE_SURVIVOR`, every candidate applied 1/1 | `CONFIRMED` | the ambiguity of the first rerun is gone with the split that caused it |
+| harbour | calls: `Vessel` | `UNIQUE_SURVIVOR` | `PARTIALLY_CONTRADICTED` (as before) | unchanged |
+| vet | appointments: `Patient|Reason`, `Reason|Vet`, `Status`; no `Owner` | `UNIQUE_SURVIVOR` | `INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE` (as before) | the SOURCE reading's transfer errors fell from 795 (356 hard contradictions) under `Owner` to 7 (1) |
+
+**One spelling per attribute.**  The field-theory instrument printed harbour's and vet's
+candidate fields as `attr:attr:Length overall#0` and blend's as `attr:Committed gal#0`.  A
+nested part's slot flows to the enclosing unit under its attribute name, and that name
+was passed through `attr_name` again, whose fallback prefixes it again.  An already-named
+attribute now keeps its name (`tests/test_v4_attribute_named_once.py`); a fact has one
+spelling in the manifests, the field theories and the corroboration sidecar that matches
+them by name.
+
+No freeze reported a stale or unbound refutation: every retained record binds to what its
+slot holds on the history it sits beside.  The vet row is the propagated verdict doing
+work on a history the experiment never touched: the reading the application refuted on
+the dev instance was the one contradicting the transfer author 356 times.
 
 ## What this says
 

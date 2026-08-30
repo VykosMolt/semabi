@@ -213,6 +213,8 @@ class V2Abstractor(Abstractor):
         """Attribute names are shared across templates by their label context (the label
         tokens of the node holding the slot) so the same fact shown in two views maps to one
         attribute; numeric slots are named by their label context too."""
+        if sid.startswith("attr:"):
+            return sid          # a part's slot already named when it flowed to the enclosing unit
         u = self.H.units[t]
         ui = u.instances[0]
         node = ui.slot_nodes.get(sid)
