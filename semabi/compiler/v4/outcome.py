@@ -587,6 +587,10 @@ class ControlOutcome:
     # What each list this control sits with held the first time the model saw it, which is
     # what it holds untouched.  The literal language compares against these; see `_literals`.
     defaults: dict = field(default_factory=dict)
+    # The fields whose theory is ORDERED -- ``tid -> slot -> thresholds`` -- adopted per
+    # field from the fitting evidence (`semabi.compiler.v4.fields`).  The literal language
+    # compares against these thresholds; every other field is nominal.
+    ordered: dict = field(default_factory=dict)
     # Which of several pure conditions to vouch by: the widest, or the one with fewest
     # literals.  See `Evidence.admissible`.
     simplest: bool = False
@@ -858,10 +862,11 @@ def bind_language(inducer) -> None:
 def _pending_literals(model, state, bound, status) -> set:
     if _INDUCER is None:
         raise RuntimeError("call outcome.bind_language(inducer) before asking a model")
-    return _literals(_INDUCER, state, bound, status, model.defaults)
+    return _literals(_INDUCER, state, bound, status, model.defaults, model.ordered)
 
 
-def _literals(inducer, state, binding: dict, status: dict, defaults: dict | None = None) -> set:
+def _literals(inducer, state, binding: dict, status: dict, defaults: dict | None = None,
+              ordered: dict | None = None) -> set:
     """The inducer's own literal language, over role names instead of operator parameters.
 
     Plus two families it does not have: whether each role names anything here at all, and
@@ -874,6 +879,12 @@ def _literals(inducer, state, binding: dict, status: dict, defaults: dict | None
     lits = inducer._literals(None, fake)
     for role, how in status.items():
         lits.add((how, role))
+    if ordered:
+        # a field whose theory is ORDERED is also compared against the thresholds the
+        # history rendered; nominal fields get nothing here (`semabi.compiler.v4.fields`)
+        from semabi.compiler.v4 import fields as field_theory
+        for role, obj in binding.items():
+            lits |= field_theory.literals(role, obj, ordered)
     if COUNT_LITERALS:
         # How many objects of each type the state holds.  Every type the model knows, so
         # that an empty collection is a count of nought and not a missing fact.
@@ -1044,7 +1055,8 @@ def _about(lit: tuple, allowed: frozenset) -> bool:
 
 def learn_control(inducer, control: str, occasions, roles: dict[str, Role], *,
                   subject_restricted: bool = False, defaults: dict | None = None,
-                  about: bool = False, simplest: bool = False) -> ControlOutcome:
+                  about: bool = False, simplest: bool = False,
+                  ordered: dict | None = None) -> ControlOutcome:
     """``occasions`` is a list of (abstract pre-state, owner object or None, frame, args)
     -- optionally with a fifth element, the ``(tid, key)`` pairs of the objects the
     interaction brought into being."""
@@ -1052,14 +1064,14 @@ def learn_control(inducer, control: str, occasions, roles: dict[str, Role], *,
     probe = ControlOutcome(control, roles)
     bindings = [probe.bind(occ[0], occ[1])[0] for occ in occasions]
     out = ControlOutcome(control, align(roles, occasions, bindings), defaults=defaults,
-                         simplest=simplest)
+                         simplest=simplest, ordered=dict(ordered or {}))
     rows: list[tuple[set, str, frozenset]] = []
     seen: dict[str, int] = {}
     for occ in occasions:
         state, owner, event, _args = occ[:4]
         seen[event] = seen.get(event, 0) + 1
         bound, status = out.bind(state, owner)
-        rows.append((_literals(inducer, state, bound, status, defaults), event,
+        rows.append((_literals(inducer, state, bound, status, defaults, out.ordered), event,
                      frozenset(bound) | {OWNER}))
     out.fitted = len(rows)
     out.events = dict(sorted(seen.items(), key=lambda kv: -kv[1]))
@@ -1185,7 +1197,34 @@ def learn(inducer, *, permute: int | None = None, subject_restricted: bool = Fal
                      key=lambda t: t.steps[0]):
         for slot, value in (getattr(tr.before, "view", None) or {}).items():
             first_view.setdefault(slot, value)
+    # Field theories.  ORDERED is proposed for every numeric field the fitting states render
+    # (`semabi.compiler.v4.fields`), the controls are learned with those literals available,
+    # and a field keeps the theory only where a fitted rule orders it and is justified in
+    # doing so; the controls are then learned again with the adopted fields alone, so that
+    # the frozen model orders nothing the evidence did not.
+    from semabi.compiler.v4 import fields as field_theory
+    proposed = field_theory.candidates(
+        [tr.before for rows in by_control.values() for tr, _s, _o, _e in rows],
+        getattr(A, "types", {}))
+    theory = {"candidates": proposed, "adopted": {}}
+    for ordered_pass in ([proposed, None] if proposed else [{}]):
+        if ordered_pass is None:
+            adopted = field_theory.adopted(out, proposed)
+            theory["adopted"] = adopted
+            if adopted == proposed:
+                break
+            ordered_pass = adopted
+            out = {}
+        _learn_controls(inducer, A, log, by_control, ops_by_control, first_view, out,
+                        ordered_pass, permute=permute, subject_restricted=subject_restricted,
+                        structural=structural, touched=touched, about=about, simplest=simplest)
+    for model in out.values():
+        model.field_theory = theory
+    return out
 
+
+def _learn_controls(inducer, A, log, by_control, ops_by_control, first_view, out, ordered, *,
+                    permute, subject_restricted, structural, touched, about, simplest) -> None:
     for control, rows in by_control.items():
         roles = roles_of(inducer, ops_by_control.get(control, []))
         defaults: dict = {}
@@ -1211,7 +1250,7 @@ def learn(inducer, *, permute: int | None = None, subject_restricted: bool = Fal
             # every one of them from a control seen once or twice before the cut.
             silent = SILENT if len(rows) >= MIN_COVER else UNDETERMINED
             model = ControlOutcome(control, roles, [], silent, 0, {silent: len(rows)},
-                                   defaults=defaults, simplest=simplest)
+                                   defaults=defaults, simplest=simplest, ordered=dict(ordered or {}))
             # Returning nothing is an outcome, so the evidence for it is the occasions
             # themselves.  Only where the live region never moved on *any* of them: for a
             # control that sometimes speaks, an unchanged region is missing data rather than
@@ -1219,7 +1258,7 @@ def learn(inducer, *, permute: int | None = None, subject_restricted: bool = Fal
             silent_rows = []
             for tr, s_, obs_, _event in rows:
                 bound, status = model.bind(tr.before, _owner(A, obs_, s_))
-                silent_rows.append((_literals(inducer, tr.before, bound, status, defaults),
+                silent_rows.append((_literals(inducer, tr.before, bound, status, defaults, ordered),
                                     SILENT, frozenset(bound) | {OWNER}))
             model.evidence = Evidence(silent_rows)
             model.fitted = len(silent_rows)
@@ -1245,7 +1284,7 @@ def learn(inducer, *, permute: int | None = None, subject_restricted: bool = Fal
             occasions = [tuple(o[:2]) + tuple(rest) for o, rest in zip(occasions, shuffled)]
         model = learn_control(inducer, control, occasions, roles,
                               subject_restricted=subject_restricted, defaults=defaults,
-                              about=about, simplest=simplest)
+                              about=about, simplest=simplest, ordered=ordered)
         model.deltas = deltas
         # Which page each fitting occasion came from.  A forced-wrong prediction is only
         # diagnosable if the raw evidence behind the rule can be put beside the raw page that
@@ -1253,7 +1292,6 @@ def learn(inducer, *, permute: int | None = None, subject_restricted: bool = Fal
         if model.evidence is not None and len(pages) == len(model.evidence.events):
             model.evidence.occasion_obs = dict(enumerate(pages))
         out[control] = model
-    return out
 
 
 @dataclass(frozen=True)

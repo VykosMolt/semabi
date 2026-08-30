@@ -11,6 +11,7 @@
    "visibility": 0,
    "conflicts": 0,
    "named": 163,
+   "positional": 0,
    "unexplained": 0,
    "spurious": 0,
    "explained": 34,
@@ -30,6 +31,7 @@
      "visibility": 0,
      "conflicts": 0,
      "named": 163,
+     "positional": 0,
      "unexplained": 0,
      "spurious": 0,
      "explained": 34,
@@ -55,6 +57,7 @@
      "visibility": 0,
      "conflicts": 0,
      "named": 163,
+     "positional": 0,
      "unexplained": 0,
      "spurious": 0,
      "explained": 34,
@@ -106,48 +109,6 @@
       "cross_view_values": 0,
       "numeric_share": 1.0,
       "spoken": 0.0,
-      "shared": 0.0
-     }
-    },
-    "reason": "the trace so far scores both readings identically"
-   },
-   {
-    "template": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
-    "left": {
-     "template": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
-     "key_slot": "cell@Berth#0",
-     "status": "SUPPORTED",
-     "why": "separates 400/400 co-present pairs, 5 values, coverage 1.00",
-     "evidence": {
-      "copresent_pairs": 400,
-      "separated_pairs": 400,
-      "discrimination": 1.0,
-      "coverage": 1.0,
-      "distinct_values": 5,
-      "constant_share": 0.333,
-      "reload_stability": 1.0,
-      "cross_view_values": 0,
-      "numeric_share": 0.0,
-      "spoken": 0.905,
-      "shared": 0.0
-     }
-    },
-    "right": {
-     "template": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
-     "key_slot": "cell@Certified for hazardous cargo#0",
-     "status": "SUPPORTED",
-     "why": "separates 266/400 co-present pairs, 2 values, coverage 1.00",
-     "evidence": {
-      "copresent_pairs": 400,
-      "separated_pairs": 266,
-      "discrimination": 0.665,
-      "coverage": 1.0,
-      "distinct_values": 2,
-      "constant_share": 0.667,
-      "reload_stability": 1.0,
-      "cross_view_values": 0,
-      "numeric_share": 0.0,
-      "spoken": 0.667,
       "shared": 0.0
      }
     },
@@ -320,48 +281,6 @@
      }
     },
     "reason": "the trace so far scores both readings identically"
-   },
-   {
-    "template": "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])",
-    "left": {
-     "template": "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])",
-     "key_slot": "cell@Vessel#0",
-     "status": "SUPPORTED",
-     "why": "separates 400/400 co-present pairs, 5 values, coverage 1.00",
-     "evidence": {
-      "copresent_pairs": 400,
-      "separated_pairs": 400,
-      "discrimination": 1.0,
-      "coverage": 1.0,
-      "distinct_values": 5,
-      "constant_share": 0.317,
-      "reload_stability": 1.0,
-      "cross_view_values": 0,
-      "numeric_share": 0.0,
-      "spoken": 1.0,
-      "shared": 1.0
-     }
-    },
-    "right": {
-     "template": "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])",
-     "key_slot": "cell@Status#0",
-     "status": "SUPPORTED",
-     "why": "separates 244/400 co-present pairs, 2 values, coverage 1.00",
-     "evidence": {
-      "copresent_pairs": 400,
-      "separated_pairs": 244,
-      "discrimination": 0.61,
-      "coverage": 1.0,
-      "distinct_values": 2,
-      "constant_share": 0.639,
-      "reload_stability": 1.0,
-      "cross_view_values": 0,
-      "numeric_share": 0.0,
-      "spoken": 0.361,
-      "shared": 0.0
-     }
-    },
-    "reason": "the trace so far scores both readings identically"
    }
   ],
   "entity_types": {
@@ -439,11 +358,11 @@
    }
   },
   "notes": [
-   "v4 initial (V2 identities): contradictions 0, churn 0, visibility 0, conflicts 0, named 155, unexplained 43, spurious 0, explained 34, atoms 48, complexity 50",
-   "v4 evidence prior: contradictions 0, churn 0, visibility 0, conflicts 0, named 163, unexplained 0, spurious 0, explained 34, atoms 48, complexity 44",
-   "v4 button[_]: key -> None (contradictions 0, churn 0, visibility 0, conflicts 0, named 163, unexplained 0, spurious 0, explained 34, atoms 34, complexity 37)",
+   "v4 initial (V2 identities): contradictions 0, churn 0, visibility 0, conflicts 0, named 155, positional 0, unexplained 43, spurious 0, explained 34, atoms 48, complexity 50",
+   "v4 evidence prior: contradictions 0, churn 0, visibility 0, conflicts 0, named 163, positional 0, unexplained 0, spurious 0, explained 34, atoms 48, complexity 44",
+   "v4 button[_]: key -> None (contradictions 0, churn 0, visibility 0, conflicts 0, named 163, positional 0, unexplained 0, spurious 0, explained 34, atoms 34, complexity 37)",
    "v4 round 0: moved; judging every family again against the new base",
-   "v4 final: contradictions 0, churn 0, visibility 0, conflicts 0, named 163, unexplained 0, spurious 0, explained 34, atoms 34, complexity 37; 7 open questions"
+   "v4 final: contradictions 0, churn 0, visibility 0, conflicts 0, named 163, positional 0, unexplained 0, spurious 0, explained 34, atoms 34, complexity 37; 5 open questions"
   ]
  },
  "suffix_ledger": {
@@ -472,7 +391,7 @@
   },
   "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])": {
    "search": "cell@Pilot#0",
-   "chain": "cell@Ticket to#0"
+   "chain": "cell@Pilot#0"
   },
   "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": {
    "search": "cell@Vessel#0",

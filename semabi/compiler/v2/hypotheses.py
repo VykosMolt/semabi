@@ -36,6 +36,10 @@ class UnitInstance:
     slot_nodes: dict[str, int]  # slot id -> node
     nested: list[int]  # roots of nested unit instances (direct)
     parent_root: int | None = None
+    # the key did not name this instance: a sibling carried the same value, and the instance
+    # was told apart by its position (`name#2`).  A reading whose key needs this has named
+    # a position, which the objective charges (`semabi.compiler.v4.objective`).
+    positional: bool = False
 
 
 @dataclass
@@ -301,6 +305,7 @@ class Hypotheses:
                 seen[k] += 1
                 if seen[k] > 1:
                     ui.slots[u.key_slot] = f"{ui.slots[u.key_slot]}#{seen[k]}"
+                    ui.positional = True
         self._page_instances[sig] = {ui.root: ui for ui in insts}
         return insts
 

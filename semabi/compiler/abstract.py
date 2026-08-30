@@ -99,6 +99,7 @@ class AbsObj:
     refs: dict[str, tuple[int, str] | None] = field(default_factory=dict)  # slot -> (tid, key)
     ordinal: int = 0
     node: int = -1  # root node index in the observation (for grounding)
+    positional: bool = False  # named by its position among siblings, not by its key
 
     @property
     def id(self) -> tuple[int, str]:

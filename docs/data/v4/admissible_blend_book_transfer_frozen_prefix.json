@@ -12,9 +12,8 @@
   "rule: the evidence forces one outcome | list: the evidence forces one outcome": 151,
   "rule: several outcomes remain admissible | list: several outcomes remain admissible": 45,
   "rule: one outcome, because the control has never done anything else | list: one outcome, because the control has never done anything else": 32,
-  "rule: no outcome is established | list: no outcome is established": 14,
-  "rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)": 5,
-  "rule: no outcome is established | list: the evidence forces one outcome": 2
+  "rule: no outcome is established | list: no outcome is established": 16,
+  "rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)": 5
  },
  "actions": 249,
  "what_the_evidence_establishes": {
@@ -36,8 +35,8 @@
  },
  "the_list_where_the_evidence": {
   "no outcome is established": {
-   "no determinate answer": 11,
-   "the event the interface returned": 5
+   "the event the interface returned": 14,
+   "a different event": 2
   },
   "one outcome, because the control has never done anything else": {
    "a different event": 21,
@@ -48,8 +47,8 @@
    "a different event": 4
   },
   "the evidence forces one outcome": {
-   "the event the interface returned": 155,
-   "a different event": 1
+   "the event the interface returned": 103,
+   "a different event": 53
   }
  },
  "policy_forced_then_list": {
@@ -138,7 +137,7 @@
    "fitted": 6,
    "events": 2,
    "rules": 1,
-   "default": "undetermined"
+   "default": "<> has <> committed ; need at least <> to bottle ."
   },
   "button:Close _": {
    "fitted": 16,
@@ -155,7 +154,7 @@
   "button:Record draw": {
    "fitted": 112,
    "events": 5,
-   "rules": 7,
+   "rules": 5,
    "default": "The book already holds 12 records ; return a draw first ."
   },
   "button:Return ticket _ gal from _ out of _": {
@@ -180,7 +179,7 @@
    "returned": "Festival White is already bottled.",
    "verdict": "one outcome was admissible and a different one happened",
    "level": "the event alone",
-   "why": "<> <> . <- ('ambiguous', \"relation['backward', 'rel:1']:2<owner\")  [4 occasions]"
+   "why": "<> <> . <- attr:Committed gal#0(owner) == '4'  [3 occasions]"
   },
   {
    "step": 531,

@@ -181,6 +181,9 @@ def holds(literal: tuple, values: Mapping[str, Any], state) -> bool | None:
         ti = getattr(state, "types", {}).get(getattr(obj, "tid", None)) if state else None
         actual = obj.key if ti is not None and slot == ti.key_slot else obj.attrs.get(slot)
         return (actual == want) == (head == "attr")
+    if head in ("attr_ge", "attr_lt"):
+        from semabi.compiler.v4 import fields as field_theory
+        return field_theory.holds(literal, values[literal[1]])
     if head in ("ref", "ref_ne"):
         _, p, slot, q = literal
         return (_target(values[p].refs.get(slot)) == _target(values[q])) == (head == "ref")

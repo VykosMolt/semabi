@@ -1,0 +1,153 @@
+{
+ "run": "blend_book_transfer",
+ "reading": "source_choice",
+ "split": 0.5,
+ "fields": [
+  {
+   "tid": 0,
+   "slot": "attr:Gallons left#0",
+   "attribute": "attr:attr:Gallons left#0",
+   "thresholds": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7"
+   ],
+   "adopted": false,
+   "rules": []
+  },
+  {
+   "tid": 1,
+   "slot": "attr:Committed gal#0",
+   "attribute": "attr:attr:Committed gal#0",
+   "thresholds": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5"
+   ],
+   "adopted": true,
+   "rules": [
+    {
+     "control": "button:Record draw",
+     "rule": "attr:Committed gal#0(selection['combobox#1']:1) < '5'  ->  Drew <> from <> into <> .   [57]"
+    },
+    {
+     "control": "button:Bottle _",
+     "rule": "attr:Committed gal#0(owner) >= '2'  ->  <> <> .   [5]"
+    }
+   ]
+  },
+  {
+   "tid": 1,
+   "slot": "attr:Year#0",
+   "attribute": "attr:attr:Year#0",
+   "thresholds": [
+    "2019",
+    "2020",
+    "2021",
+    "2022"
+   ],
+   "adopted": false,
+   "rules": []
+  }
+ ],
+ "verdicts": [
+  {
+   "step": 461,
+   "verdict": "no outcome is established for this state",
+   "admissible": [],
+   "observed": "<> has <> committed ; need at least <> to bottle ."
+  },
+  {
+   "step": 467,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "<> <> ."
+   ],
+   "observed": "<> <> ."
+  },
+  {
+   "step": 521,
+   "verdict": "no outcome is established for this state",
+   "admissible": [],
+   "observed": "<> has <> committed ; need at least <> to bottle ."
+  },
+  {
+   "step": 523,
+   "verdict": "no outcome is established for this state",
+   "admissible": [],
+   "observed": "<> has <> committed ; need at least <> to bottle ."
+  },
+  {
+   "step": 526,
+   "verdict": "one outcome was admissible and a different one happened",
+   "admissible": [
+    "<> <> ."
+   ],
+   "observed": "<> is already <> ."
+  },
+  {
+   "step": 536,
+   "verdict": "no outcome is established for this state",
+   "admissible": [],
+   "observed": "<> has <> committed ; need at least <> to bottle ."
+  },
+  {
+   "step": 554,
+   "verdict": "no outcome is established for this state",
+   "admissible": [],
+   "observed": "<> has <> committed ; need at least <> to bottle ."
+  },
+  {
+   "step": 567,
+   "verdict": "no outcome is established for this state",
+   "admissible": [],
+   "observed": "<> has <> committed ; need at least <> to bottle ."
+  },
+  {
+   "step": 620,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "<> <> ."
+   ],
+   "observed": "<> <> ."
+  },
+  {
+   "step": 729,
+   "verdict": "no outcome is established for this state",
+   "admissible": [],
+   "observed": "<> has <> committed ; need at least <> to bottle ."
+  },
+  {
+   "step": 759,
+   "verdict": "no outcome is established for this state",
+   "admissible": [],
+   "observed": "<> has <> committed ; need at least <> to bottle ."
+  },
+  {
+   "step": 805,
+   "verdict": "no outcome is established for this state",
+   "admissible": [],
+   "observed": "<> has <> committed ; need at least <> to bottle ."
+  },
+  {
+   "step": 812,
+   "verdict": "no outcome is established for this state",
+   "admissible": [],
+   "observed": "<> has <> committed ; need at least <> to bottle ."
+  },
+  {
+   "step": 814,
+   "verdict": "no outcome is established for this state",
+   "admissible": [],
+   "observed": "<> has <> committed ; need at least <> to bottle ."
+  }
+ ]
+}

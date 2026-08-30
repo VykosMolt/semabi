@@ -84,6 +84,16 @@ for app in "blend_book_transfer:blend_book_holdout:blend_book" "harbour_transfer
 done
 $V -m semabi.eval.v4_columns --run runs/v4/vet_clinic_transfer --refit --workdir $W/columns_refit_vet \
    --out $D/columns_refit_vet_clinic.json > /dev/null 2>&1 &
+# the field theory (which fields are ORDERED, and Bottle at held-out values) and the identity ties
+$V -m semabi.eval.v4_field_theory --run runs/v4/blend_book_transfer --chain $M/blend_book_chain.json \
+   --reading source_choice --control "button:Bottle _" --out field_theory_blend_book.json > /dev/null 2>&1 &
+for run in harbour_transfer blend_book_transfer vet_clinic_transfer; do
+  $V -m semabi.eval.v4_identity_ties --run runs/v4/$run --out identity_ties_$run.json > /dev/null 2>&1 &
+done
+# the tie experiments run against the live applications and are retained under
+# runs/v4/identity_experiments/ (plan_*.json written before acting, result_*.json after):
+#   $V -m semabi.eval.v4_tie_experiment --plan runs/v4/identity_experiments/plan_vet.json \
+#      --workdir /tmp/semabi_ties/vet --out runs/v4/identity_experiments/result_vet.json
 # what a control's label says against what it does
 $V -m semabi.eval.v4_roles --run runs/v4/blend_book_transfer --chain $M/blend_book_chain.json \
    --reading "source_choice" --out $D/roles_blend_book_transfer.json > /dev/null 2>&1 &

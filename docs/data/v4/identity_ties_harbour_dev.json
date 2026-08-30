@@ -1,0 +1,154 @@
+{
+ "run": "harbour_dev",
+ "final": {
+  "contradictions": 0,
+  "churn": 0,
+  "visibility": 3,
+  "conflicts": 0,
+  "named": 240,
+  "unexplained": 41,
+  "spurious": 0,
+  "explained": 57,
+  "delta_atoms": 58,
+  "complexity": 32,
+  "steps": 373,
+  "churn_steps": [],
+  "contradiction_steps": [],
+  "visibility_steps": [
+   32,
+   107,
+   285
+  ]
+ },
+ "open_questions": 5,
+ "questions": [
+  {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+   "left": "cell@Berth#0",
+   "right": "cell@Takes up to#0",
+   "reason": "the trace so far scores both readings identically",
+   "tids": [
+    1
+   ],
+   "contested": [
+    "cell@Berth#0",
+    "cell@Takes up to#0"
+   ],
+   "status": "QUOTIENT_EQUIVALENT",
+   "writers": {},
+   "makers": [],
+   "movers": []
+  },
+  {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+   "left": "cell@Berth#0",
+   "right": "cell@Certified for hazardous cargo#0",
+   "reason": "the trace so far scores both readings identically",
+   "tids": [
+    1
+   ],
+   "contested": [
+    "cell@Berth#0",
+    "cell@Certified for hazardous cargo#0"
+   ],
+   "status": "QUOTIENT_EQUIVALENT",
+   "writers": {},
+   "makers": [],
+   "movers": []
+  },
+  {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+   "left": "cell@Pilot#0",
+   "right": "cell@Ticket to#0",
+   "reason": "the trace so far scores both readings identically",
+   "tids": [
+    2
+   ],
+   "contested": [
+    "cell@Pilot#0",
+    "cell@Ticket to#0"
+   ],
+   "status": "QUOTIENT_EQUIVALENT",
+   "writers": {},
+   "makers": [],
+   "movers": []
+  },
+  {
+   "family": "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])",
+   "left": "cell@Vessel#0",
+   "right": "cell@Length overall#0",
+   "reason": "the trace so far scores both readings identically",
+   "tids": [
+    0
+   ],
+   "contested": [
+    "cell@Length overall#0",
+    "cell@Vessel#0"
+   ],
+   "status": "REACHABLE",
+   "writers": {},
+   "makers": [
+    {
+     "operator": "op17",
+     "control": "button:Schedule call",
+     "support": 10,
+     "acts": [
+      "click(button:Schedule call)"
+     ],
+     "test": "collision",
+     "parameters": []
+    }
+   ],
+   "movers": [],
+   "experiment": {
+    "test": "collision",
+    "by": "button:Schedule call",
+    "operator": "op17",
+    "parameters": [],
+    "predictions": {
+     "cell@Vessel#0": "a second instance with the same value is one object",
+     "cell@Length overall#0": "a second instance with the same value is one object"
+    }
+   }
+  },
+  {
+   "family": "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])",
+   "left": "cell@Vessel#0",
+   "right": "cell@Status#0",
+   "reason": "the trace so far scores both readings identically",
+   "tids": [
+    0
+   ],
+   "contested": [
+    "cell@Status#0",
+    "cell@Vessel#0"
+   ],
+   "status": "REACHABLE",
+   "writers": {},
+   "makers": [
+    {
+     "operator": "op17",
+     "control": "button:Schedule call",
+     "support": 10,
+     "acts": [
+      "click(button:Schedule call)"
+     ],
+     "test": "collision",
+     "parameters": []
+    }
+   ],
+   "movers": [],
+   "experiment": {
+    "test": "collision",
+    "by": "button:Schedule call",
+    "operator": "op17",
+    "parameters": [],
+    "predictions": {
+     "cell@Vessel#0": "a second instance with the same value is one object",
+     "cell@Status#0": "a second instance with the same value is one object"
+    }
+   }
+  }
+ ],
+ "reachable": 2
+}

@@ -145,7 +145,7 @@ def _evidence_tie(a, b) -> bool:
 def _decided_by(before, after) -> dict[str, int]:
     """Which terms of the objective moved: the counterexamples a move answered."""
     out = {}
-    for term in ("contradictions", "churn", "visibility", "conflicts", "spurious"):
+    for term in ("contradictions", "churn", "visibility", "conflicts", "spurious", "positional"):
         d = getattr(before, term) - getattr(after, term)
         if d:
             out[term] = d

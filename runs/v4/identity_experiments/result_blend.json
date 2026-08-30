@@ -1,0 +1,271 @@
+{
+ "plan": {
+  "name": "blend draws: Ticket vs Amount",
+  "run": "runs/v4/grok_02_blend_book_dev",
+  "base": "http://127.0.0.1:8901",
+  "seed": 4247,
+  "tie": {
+   "family": "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))",
+   "left": "cell@Ticket#0",
+   "right": "cell@Amount#0",
+   "also": "cell@Ticket#1 -- the number in 'Ticket 2'; cell@Ticket#0 is the word, a key on the dev history only because it never showed two draws at once"
+  },
+  "readings": {
+   "Ticket": {
+    "button[_]": null,
+    "cell[_]": null,
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))))))": null,
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Ticket[_])))))": null,
+    "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))": "cell@Ticket#0",
+    "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))": "cell@Blend#0",
+    "row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))": "cell@Vat#0",
+    "text[_](combobox[_])": null
+   },
+   "Amount": {
+    "button[_]": null,
+    "cell[_]": null,
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))))))": null,
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Ticket[_])))))": null,
+    "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))": "cell@Amount#0",
+    "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))": "cell@Blend#0",
+    "row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))": "cell@Vat#0",
+    "text[_](combobox[_])": null
+   },
+   "Ticket number": {
+    "button[_]": null,
+    "cell[_]": null,
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))))))": null,
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Ticket[_])))))": null,
+    "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))": "cell@Ticket#1",
+    "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))": "cell@Blend#0",
+    "row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))": "cell@Vat#0",
+    "text[_](combobox[_])": null
+   }
+  },
+  "actions": [
+   {
+    "kind": "select",
+    "target": {
+     "role": "combobox",
+     "nth": 1
+    },
+    "option": 1
+   },
+   {
+    "kind": "select",
+    "target": {
+     "role": "combobox",
+     "nth": 0
+    },
+    "option": 0
+   },
+   {
+    "kind": "select",
+    "target": {
+     "role": "combobox",
+     "nth": 2
+    },
+    "option": 1
+   },
+   {
+    "kind": "click",
+    "target": {
+     "role": "button",
+     "name": "Record draw"
+    }
+   },
+   {
+    "kind": "select",
+    "target": {
+     "role": "combobox",
+     "nth": 0
+    },
+    "option": 1
+   },
+   {
+    "kind": "select",
+    "target": {
+     "role": "combobox",
+     "nth": 2
+    },
+    "option": 1
+   },
+   {
+    "kind": "click",
+    "target": {
+     "role": "button",
+     "name": "Record draw"
+    }
+   }
+  ],
+  "predictions": {
+   "Ticket": "two draws of 2 gal are two objects with fresh tickets: two creations, no conflict",
+   "Amount": "the second draw of 2 gal collides with the first: one object with two disagreeing mentions (From vat), a conflict, no second creation",
+   "Ticket number": "two draws are two objects named by their numbers: no positional tie-break, no conflict"
+  },
+  "test": "collision"
+ },
+ "before": {
+  "Ticket": {
+   "contradictions": 0,
+   "churn": 0,
+   "visibility": 0,
+   "conflicts": 0,
+   "named": 222,
+   "positional": 0,
+   "unexplained": 0,
+   "spurious": 0,
+   "explained": 52,
+   "delta_atoms": 59,
+   "complexity": 28,
+   "steps": 375,
+   "churn_steps": [],
+   "contradiction_steps": [],
+   "visibility_steps": []
+  },
+  "Amount": {
+   "contradictions": 0,
+   "churn": 0,
+   "visibility": 0,
+   "conflicts": 0,
+   "named": 222,
+   "positional": 0,
+   "unexplained": 0,
+   "spurious": 0,
+   "explained": 52,
+   "delta_atoms": 59,
+   "complexity": 28,
+   "steps": 375,
+   "churn_steps": [],
+   "contradiction_steps": [],
+   "visibility_steps": []
+  },
+  "Ticket number": {
+   "contradictions": 0,
+   "churn": 0,
+   "visibility": 0,
+   "conflicts": 0,
+   "named": 222,
+   "positional": 0,
+   "unexplained": 0,
+   "spurious": 0,
+   "explained": 52,
+   "delta_atoms": 59,
+   "complexity": 28,
+   "steps": 375,
+   "churn_steps": [],
+   "contradiction_steps": [],
+   "visibility_steps": []
+  }
+ },
+ "after": {
+  "Ticket": {
+   "contradictions": 0,
+   "churn": 1,
+   "visibility": 0,
+   "conflicts": 0,
+   "named": 226,
+   "positional": 1,
+   "unexplained": 0,
+   "spurious": 1,
+   "explained": 54,
+   "delta_atoms": 66,
+   "complexity": 28,
+   "steps": 383,
+   "churn_steps": [
+    375
+   ],
+   "contradiction_steps": [],
+   "visibility_steps": []
+  },
+  "Amount": {
+   "contradictions": 0,
+   "churn": 1,
+   "visibility": 0,
+   "conflicts": 0,
+   "named": 226,
+   "positional": 1,
+   "unexplained": 0,
+   "spurious": 1,
+   "explained": 54,
+   "delta_atoms": 65,
+   "complexity": 28,
+   "steps": 383,
+   "churn_steps": [
+    375
+   ],
+   "contradiction_steps": [],
+   "visibility_steps": []
+  },
+  "Ticket number": {
+   "contradictions": 0,
+   "churn": 1,
+   "visibility": 0,
+   "conflicts": 0,
+   "named": 226,
+   "positional": 0,
+   "unexplained": 0,
+   "spurious": 1,
+   "explained": 54,
+   "delta_atoms": 66,
+   "complexity": 28,
+   "steps": 383,
+   "churn_steps": [
+    375
+   ],
+   "contradiction_steps": [],
+   "visibility_steps": []
+  }
+ },
+ "delta": {
+  "Ticket": {
+   "explained": 2,
+   "conflicts": 0,
+   "churn": 1,
+   "contradictions": 0,
+   "visibility": 0,
+   "spurious": 1,
+   "named": 4,
+   "positional": 1
+  },
+  "Amount": {
+   "explained": 2,
+   "conflicts": 0,
+   "churn": 1,
+   "contradictions": 0,
+   "visibility": 0,
+   "spurious": 1,
+   "named": 4,
+   "positional": 1
+  },
+  "Ticket number": {
+   "explained": 2,
+   "conflicts": 0,
+   "churn": 1,
+   "contradictions": 0,
+   "visibility": 0,
+   "spurious": 1,
+   "named": 4,
+   "positional": 0
+  }
+ },
+ "steps": [],
+ "rescored": true,
+ "decisive_terms": [
+  "positional",
+  "conflicts"
+ ],
+ "harm": {
+  "Ticket": 1,
+  "Amount": 1,
+  "Ticket number": 0
+ },
+ "outcome": "DECIDED",
+ "refuted": [
+  "Ticket",
+  "Amount"
+ ],
+ "survivors": [
+  "Ticket number"
+ ]
+}

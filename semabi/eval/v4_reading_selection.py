@@ -60,6 +60,7 @@ def measure(run_dir: Path, reading, label: str, *, split: float = 0.5) -> dict:
                                  "visibility": beh.visibility, "churn": beh.churn,
                                  "spurious": beh.spurious, "contradictions": beh.contradictions,
                                  "conflicts": beh.conflicts, "named": beh.named,
+                                 "positional": beh.positional,
                                  "unexplained": beh.unexplained},
             "suffix_ledger": _ledger(csq.score(model)), "_behaviour": beh}
 

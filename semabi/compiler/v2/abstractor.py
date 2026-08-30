@@ -430,6 +430,7 @@ class V2Abstractor(Abstractor):
             key = self.entity_key(et, ui, {})
             parent_idx = idx_of_root.get(ui.parent_root) if ui.parent_root is not None else None
             inst = Instance(ui.root, tid, parent_idx, {}, {}, "v2")
+            inst.positional = bool(getattr(ui, "positional", False))
             inst.slots["id"] = ("", key if key is not None else "")
             record_spec = self.record_by_anchor.get(et_id)
             attr_slots = et.attr_slots[ui.template]
@@ -606,7 +607,8 @@ class V2Abstractor(Abstractor):
                 if k in inst.slots:
                     v = inst.slots[k][1]
                     refs[k] = (tgt, v) if v is not None else None
-            o = AbsObj(inst.tid, key, attrs, None, refs, 0, inst.root)
+            o = AbsObj(inst.tid, key, attrs, None, refs, 0, inst.root,
+                       positional=bool(getattr(inst, "positional", False)))
             inst_obj[idx] = o
             if o.id in objs:
                 if not self.merge_mentions:

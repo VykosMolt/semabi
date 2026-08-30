@@ -1,0 +1,53 @@
+{
+ "name": "harbour calls: Vessel vs Status",
+ "run": "runs/v4/harbour_dev",
+ "base": "http://127.0.0.1:8910",
+ "seed": 4247,
+ "tie": {
+  "family": "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])",
+  "left": "cell@Vessel#0",
+  "right": "cell@Status#0"
+ },
+ "readings": {
+  "Vessel": {
+   "button[_]": null,
+   "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))": "heading#0",
+   "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])": "cell@Berth#0",
+   "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])": "cell@Pilot#0",
+   "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": null,
+   "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": "cell@Vessel#0"
+  },
+  "Status": {
+   "button[_]": null,
+   "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))": "heading#0",
+   "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])": "cell@Berth#0",
+   "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])": "cell@Pilot#0",
+   "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": null,
+   "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": "cell@Status#0"
+  }
+ },
+ "actions": [
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Schedule call",
+    "nth": 2
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Schedule call",
+    "nth": 3
+   }
+  }
+ ],
+ "predictions": {
+  "Vessel": "two scheduled calls for two vessels are two objects: two creations, no conflict",
+  "Status": "the second call shares the key 'scheduled' with the first: one object with disagreeing mentions, a conflict, no second creation"
+ },
+ "note": "buttons 0 and 1 belong to vessels already on the board at seed 4247 (refused: 'already has call'); 2 and 3 are Ardent Rose and Nordkapp, free",
+ "test": "collision"
+}

@@ -1,0 +1,133 @@
+{
+ "run": "blend_book_transfer",
+ "final": {
+  "contradictions": 0,
+  "churn": 0,
+  "visibility": 0,
+  "conflicts": 0,
+  "named": 717,
+  "unexplained": 0,
+  "spurious": 0,
+  "explained": 271,
+  "delta_atoms": 691,
+  "complexity": 27,
+  "steps": 839,
+  "churn_steps": [],
+  "contradiction_steps": [],
+  "visibility_steps": []
+ },
+ "open_questions": 4,
+ "questions": [
+  {
+   "family": "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))",
+   "left": "cell@Ticket#0",
+   "right": "cell@Into blend#0",
+   "reason": "the trace so far scores both readings identically",
+   "tids": [
+    2
+   ],
+   "contested": [
+    "cell@Into blend#0",
+    "cell@Ticket#0"
+   ],
+   "status": "REACHABLE",
+   "writers": {},
+   "makers": [
+    {
+     "operator": "op6",
+     "control": "button:Record draw",
+     "support": 109,
+     "acts": [
+      "click(button:Record draw)"
+     ],
+     "test": "collision",
+     "parameters": []
+    }
+   ],
+   "movers": [],
+   "experiment": {
+    "test": "collision",
+    "by": "button:Record draw",
+    "operator": "op6",
+    "parameters": [],
+    "predictions": {
+     "cell@Ticket#0": "a second instance with the same value is one object",
+     "cell@Into blend#0": "a second instance with the same value is one object"
+    }
+   }
+  },
+  {
+   "family": "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))",
+   "left": "cell@Ticket#0",
+   "right": "cell@Amount#0",
+   "reason": "the trace so far scores both readings identically",
+   "tids": [
+    2
+   ],
+   "contested": [
+    "cell@Amount#0",
+    "cell@Ticket#0"
+   ],
+   "status": "REACHABLE",
+   "writers": {},
+   "makers": [
+    {
+     "operator": "op6",
+     "control": "button:Record draw",
+     "support": 109,
+     "acts": [
+      "click(button:Record draw)"
+     ],
+     "test": "collision",
+     "parameters": []
+    }
+   ],
+   "movers": [],
+   "experiment": {
+    "test": "collision",
+    "by": "button:Record draw",
+    "operator": "op6",
+    "parameters": [],
+    "predictions": {
+     "cell@Ticket#0": "a second instance with the same value is one object",
+     "cell@Amount#0": "a second instance with the same value is one object"
+    }
+   }
+  },
+  {
+   "family": "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))",
+   "left": "cell@Blend#0",
+   "right": "cell@Year#0",
+   "reason": "the trace so far scores both readings identically",
+   "tids": [
+    1
+   ],
+   "contested": [
+    "cell@Blend#0",
+    "cell@Year#0"
+   ],
+   "status": "QUOTIENT_EQUIVALENT",
+   "writers": {},
+   "makers": [],
+   "movers": []
+  },
+  {
+   "family": "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))",
+   "left": "cell@Blend#0",
+   "right": "cell@Style#0",
+   "reason": "the trace so far scores both readings identically",
+   "tids": [
+    1
+   ],
+   "contested": [
+    "cell@Blend#0",
+    "cell@Style#0"
+   ],
+   "status": "QUOTIENT_EQUIVALENT",
+   "writers": {},
+   "makers": [],
+   "movers": []
+  }
+ ],
+ "reachable": 2
+}

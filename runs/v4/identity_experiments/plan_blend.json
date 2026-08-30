@@ -1,0 +1,106 @@
+{
+ "name": "blend draws: Ticket vs Amount",
+ "run": "runs/v4/grok_02_blend_book_dev",
+ "base": "http://127.0.0.1:8901",
+ "seed": 4247,
+ "tie": {
+  "family": "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))",
+  "left": "cell@Ticket#0",
+  "right": "cell@Amount#0",
+  "also": "cell@Ticket#1 -- the number in 'Ticket 2'; cell@Ticket#0 is the word, a key on the dev history only because it never showed two draws at once"
+ },
+ "readings": {
+  "Ticket": {
+   "button[_]": null,
+   "cell[_]": null,
+   "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))))))": null,
+   "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Ticket[_])))))": null,
+   "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))": "cell@Ticket#0",
+   "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))": "cell@Blend#0",
+   "row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))": "cell@Vat#0",
+   "text[_](combobox[_])": null
+  },
+  "Amount": {
+   "button[_]": null,
+   "cell[_]": null,
+   "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))))))": null,
+   "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Ticket[_])))))": null,
+   "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))": "cell@Amount#0",
+   "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))": "cell@Blend#0",
+   "row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))": "cell@Vat#0",
+   "text[_](combobox[_])": null
+  },
+  "Ticket number": {
+   "button[_]": null,
+   "cell[_]": null,
+   "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))))))": null,
+   "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Ticket[_])))))": null,
+   "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))": "cell@Ticket#1",
+   "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))": "cell@Blend#0",
+   "row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))": "cell@Vat#0",
+   "text[_](combobox[_])": null
+  }
+ },
+ "actions": [
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 1
+   },
+   "option": 1
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 0
+   },
+   "option": 0
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 2
+   },
+   "option": 1
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Record draw"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 0
+   },
+   "option": 1
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 2
+   },
+   "option": 1
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Record draw"
+   }
+  }
+ ],
+ "predictions": {
+  "Ticket": "two draws of 2 gal are two objects with fresh tickets: two creations, no conflict",
+  "Amount": "the second draw of 2 gal collides with the first: one object with two disagreeing mentions (From vat), a conflict, no second creation",
+  "Ticket number": "two draws are two objects named by their numbers: no positional tie-break, no conflict"
+ },
+ "test": "collision"
+}

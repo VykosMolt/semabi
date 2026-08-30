@@ -83,6 +83,12 @@ class Behaviour:
     # that are values of objects the reading posits: a reading under which the interface's
     # own words about an action refer to its objects, against one where they refer to nothing
     named: int = 0
+    # instances the reading's key did not name: a sibling carried the same value and the
+    # instance was told apart by its position.  Blend's draws keyed by their amount, a
+    # patient's two appointments keyed by the patient: a key that fails to name is a
+    # position in disguise, and every retained attack on presentation coordinates says a
+    # position is not a name
+    positional: int = 0
     unexplained: int = 0
     spurious: int = 0
     explained: int = 0
@@ -108,7 +114,8 @@ class Behaviour:
     def errors(self) -> int:
         """Registered changes with nothing behind them: contradictions, re-keyings,
         visibility artifacts and deltas at steps where no unit content changed."""
-        return self.contradictions + self.churn + self.spurious + self.visibility + self.conflicts
+        return (self.contradictions + self.churn + self.spurious + self.visibility
+                + self.conflicts + self.positional)
 
     def delta_signature_digest(self) -> str:
         """Identity of everything this reading said changed, over the whole history.
@@ -163,7 +170,7 @@ class Behaviour:
     def to_json(self) -> dict[str, Any]:
         return {"contradictions": self.contradictions, "churn": self.churn,
                 "visibility": self.visibility, "conflicts": self.conflicts,
-                "named": self.named, "unexplained": self.unexplained,
+                "named": self.named, "positional": self.positional, "unexplained": self.unexplained,
                 "spurious": self.spurious, "explained": self.explained,
                 "delta_atoms": self.delta_atoms,
                 "complexity": self.complexity, "steps": self.steps,
@@ -174,7 +181,7 @@ class Behaviour:
     def __str__(self) -> str:
         return (f"contradictions {self.contradictions}, churn {self.churn}, "
                 f"visibility {self.visibility}, conflicts {self.conflicts}, "
-                f"named {self.named}, unexplained {self.unexplained}, "
+                f"named {self.named}, positional {self.positional}, unexplained {self.unexplained}, "
                 f"spurious {self.spurious}, explained {self.explained}, "
                 f"atoms {self.delta_atoms}, complexity {self.complexity}")
 
@@ -205,6 +212,7 @@ def evaluate(A: V2Abstractor, log: EvidenceLog, max_steps: int | None = None) ->
     that cost the search a reading which explains 35 transitions with no errors.
     """
     out = Behaviour()
+    positional_seen: set = set()
     steps = log.steps[:max_steps] if max_steps else log.steps
     by_episode: dict[int, list] = {}
     for step in steps:
@@ -216,6 +224,8 @@ def evaluate(A: V2Abstractor, log: EvidenceLog, max_steps: int | None = None) ->
         for step in episode_steps:
             state, discovered = tracker.observe(log.obs(step.after), step.action.kind)
             out.steps += 1
+            positional_seen.update((step.after, o.id) for o in state.objs.values()
+                                   if getattr(o, "positional", False))
             if step.action.kind == "reset":
                 prev = state
                 continue
@@ -286,4 +296,5 @@ def evaluate(A: V2Abstractor, log: EvidenceLog, max_steps: int | None = None) ->
     # distinct (object, slot, values, mentions) disagreements the abstractor recorded while
     # reading the pages this evaluation visited
     out.conflicts = len(getattr(A, "mention_conflicts", []) or [])
+    out.positional = len(positional_seen)
     return out

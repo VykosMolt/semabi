@@ -82,3 +82,19 @@ def test_a_value_is_judged_in_its_column_wherever_the_column_stands():
         nb = next(n.i for n in b.nodes if n.name == text)
         assert G.variation_key[(sa, na)] == G.variation_key[(sb, nb)], text
         assert G.is_data_at(sa, na, text.split()[0]) == G.is_data_at(sb, nb, text.split()[0])
+
+
+def test_a_key_that_fails_to_name_an_instance_is_a_position():
+    # two appointments for Luna: keyed by the patient, the second is told apart by its place
+    G, H, pages = _fit(("Patient", "Reason", "Status"), ("Status", "Reason", "Patient"))
+    unit = next(u for t, u in H.units.items() if t.startswith("row"))
+    unit.key_slot = "cell@Patient#0"
+    H._page_instances.clear() if hasattr(H, "_page_instances") else None
+    sig = pages[0].structural_signature()
+    instances = [i for i in H.parse_units(sig) if i.template == unit.template]
+    keys = sorted(i.slots["cell@Patient#0"] for i in instances)
+    assert keys == ["Luna", "Luna#2", "Peanut"]
+    assert [i.positional for i in sorted(instances, key=lambda i: i.slots["cell@Patient#0"])] == [False, True, False]
+    unit.key_slot = "cell@Reason#0"
+    H._page_instances.clear() if hasattr(H, "_page_instances") else None
+    assert not any(i.positional for i in H.parse_units(sig) if i.template == unit.template)

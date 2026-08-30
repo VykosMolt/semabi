@@ -1,6 +1,6 @@
 # Column position is a presentation coordinate: the attack, four leaks, and their repair
 
-> Continues `docs/v4_frontier.md`.
+> Continues `docs/v4_frontier.md`.  Continued in `docs/v4_ties.md`.
 
 The previous report noted in passing that a hypothesis slot is named by its node's offset
 within its unit -- `cell#0@3` -- and that such a name is a position, not a column.  This

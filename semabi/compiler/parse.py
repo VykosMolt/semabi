@@ -131,6 +131,7 @@ class Instance:
     slots: dict[str, tuple[str, Any]]  # relpath -> (label, value)
     context: dict[str, tuple[str, Any]]  # non-instance-ancestor leaves (absolute keys)
     anchor: str
+    positional: bool = False  # the key repeated among siblings and position told them apart
 
     @property
     def values(self) -> dict[str, Any]:

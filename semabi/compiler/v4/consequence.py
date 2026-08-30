@@ -620,9 +620,9 @@ def preconditions_hold(A, state, op, values, mode: str = ASSERTED) -> tuple[bool
 
 def _why_not(literal: tuple) -> str:
     head = literal[0]
-    if head in ("attr", "attr_ne"):
+    if head in ("attr", "attr_ne", "attr_ge", "attr_lt"):
         _, p, slot, value = literal
-        sign = "=" if head == "attr" else "!="
+        sign = {"attr": "=", "attr_ne": "!=", "attr_ge": ">=", "attr_lt": "<"}[head]
         return f"the rule requires {p}.{slot} {sign} {value!r}, which is not so here"
     if head in ("ref_null", "ref_set"):
         _, p, slot = literal
