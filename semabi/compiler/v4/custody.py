@@ -483,6 +483,25 @@ def parse_refutations(raw: bytes | None) -> dict[str, set[str | None]]:
     return out
 
 
+def parse_refutation_records(raw: bytes | None) -> list[dict[str, Any]]:
+    """The refutation records with what each slot ``held`` when the experiment decided.
+
+    `parse_refutations` keeps the family-to-keys map the manifest freezes; the freeze also
+    needs the binding, to refuse a record whose slot no longer holds those values
+    (`semabi.compiler.v4.search.stale_refutations`)."""
+    parse_refutations(raw)          # the shape checks
+    if raw is None:
+        return []
+    out: list[dict[str, Any]] = []
+    for row in json.loads(raw.decode("utf-8")).get("refuted", []):
+        held = row.get("held")
+        if held is not None and (not isinstance(held, list) or any(not isinstance(v, str) for v in held)):
+            raise CustodyError("identity refutation held values must be a list of strings")
+        out.append({"family": row["family"], "key_slot": row["key_slot"],
+                    "held": None if held is None else sorted(held)})
+    return out
+
+
 def _validate_probe_bytes(raw: bytes | None) -> None:
     """Eagerly validate the JSONL shape consumed by V2's probe reader.
 

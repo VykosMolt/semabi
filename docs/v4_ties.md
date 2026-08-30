@@ -179,7 +179,16 @@ only.  Bottle's threshold has refusals below it and successes at and above it.  
 the difference between an order the application compares against and the accident of
 which instances a history used, and it is now the adoption criterion: the ordered rule's
 threshold must have occasions of the rule's event on its side and of another event on the
-other.  FIELDS_AFTER  The known false prediction -- "bottled" on an already-bottled blend
+other.  With that criterion the history alone adopts *nothing*: blend's prefix refuses at 0 only,
+so its committed gallons are as one-sided there as cellar's capacity.  What separated the
+two cases was never in a history.  It was the intervention at 9 and 0, and the learner now
+consumes it the way it consumes a refuted key: `field_theories_v4.json` beside a history,
+written from the retained intervention (`v4_field_theory --corroborate`), names the
+attribute, the theory, and the verdicts, and a candidate theory it corroborates is adopted
+where the history alone would not.  Blend's committed gallons are ORDERED by corroboration
+and force bottling at 5, 6 and 9 as before; `Capacity`, `Gallons left`, `Year`, `Length
+overall` and `Takes up to` are nominal, and no field on any application is ordered by a
+threshold a single instance stood on the far side of.  The known false prediction -- "bottled" on an already-bottled blend
 still showing committed 3 -- predates ORDERED, is missing guard context (`state`), and is
 kept as a conformance counterexample, not repaired here.
 

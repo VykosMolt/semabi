@@ -593,7 +593,12 @@ class ObsGraph:
             if declared and row != rows[0]:
                 cells = obs.children(row)
                 header_cells = obs.children(rows[0])
-                col = cells.index(i) if i in cells else -1
+                # a row not shaped like the header row -- the one spanning cell of "No draws
+                # recorded." -- is not a member of the table's columns; giving its cell the
+                # first column's name by its offset put the placeholder's words into that
+                # column, where against a single ticket they made the column's own label
+                # vary, and a key was named by the split that followed
+                col = cells.index(i) if i in cells and len(cells) == len(header_cells) else -1
                 if 0 <= col < len(header_cells):
                     text = node_text(obs.node(header_cells[col])).strip()
                     out = text or None

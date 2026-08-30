@@ -1,6 +1,6 @@
 {
  "plan": {
-  "name": "blend draws: Ticket vs Amount",
+  "name": "blend draws: Ticket number vs Amount",
   "run": "runs/v4/grok_02_blend_book_dev",
   "base": "http://127.0.0.1:8901",
   "seed": 4247,
@@ -8,19 +8,9 @@
    "family": "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))",
    "left": "cell@Ticket#0",
    "right": "cell@Amount#0",
-   "also": "cell@Ticket#1 -- the number in 'Ticket 2'; cell@Ticket#0 is the word, a key on the dev history only because it never showed two draws at once"
+   "also": "under the representation before the placeholder-row repair (plan_blend.v1.json) the word 'Ticket' was cell@Ticket#0 and the number cell@Ticket#1; a placeholder row's spanning cell had been given the first column's name and made the column's label vary. The number is now cell@Ticket#0 on both authors. The actions are the v1 actions verbatim."
   },
   "readings": {
-   "Ticket": {
-    "button[_]": null,
-    "cell[_]": null,
-    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))))))": null,
-    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Ticket[_])))))": null,
-    "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))": "cell@Ticket#0",
-    "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))": "cell@Blend#0",
-    "row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))": "cell@Vat#0",
-    "text[_](combobox[_])": null
-   },
    "Amount": {
     "button[_]": null,
     "cell[_]": null,
@@ -36,7 +26,7 @@
     "cell[_]": null,
     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))))))": null,
     "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Ticket[_])))))": null,
-    "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))": "cell@Ticket#1",
+    "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))": "cell@Ticket#0",
     "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))": "cell@Blend#0",
     "row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))": "cell@Vat#0",
     "text[_](combobox[_])": null
@@ -99,30 +89,12 @@
    }
   ],
   "predictions": {
-   "Ticket": "two draws of 2 gal are two objects with fresh tickets: two creations, no conflict",
    "Amount": "the second draw of 2 gal collides with the first: one object with two disagreeing mentions (From vat), a conflict, no second creation",
    "Ticket number": "two draws are two objects named by their numbers: no positional tie-break, no conflict"
   },
   "test": "collision"
  },
  "before": {
-  "Ticket": {
-   "contradictions": 0,
-   "churn": 0,
-   "visibility": 0,
-   "conflicts": 0,
-   "named": 222,
-   "positional": 0,
-   "unexplained": 0,
-   "spurious": 0,
-   "explained": 52,
-   "delta_atoms": 59,
-   "complexity": 28,
-   "steps": 375,
-   "churn_steps": [],
-   "contradiction_steps": [],
-   "visibility_steps": []
-  },
   "Amount": {
    "contradictions": 0,
    "churn": 0,
@@ -130,11 +102,11 @@
    "conflicts": 0,
    "named": 222,
    "positional": 0,
-   "unexplained": 0,
+   "unexplained": 20,
    "spurious": 0,
    "explained": 52,
-   "delta_atoms": 59,
-   "complexity": 28,
+   "delta_atoms": 64,
+   "complexity": 34,
    "steps": 375,
    "churn_steps": [],
    "contradiction_steps": [],
@@ -147,11 +119,11 @@
    "conflicts": 0,
    "named": 222,
    "positional": 0,
-   "unexplained": 0,
+   "unexplained": 20,
    "spurious": 0,
    "explained": 52,
-   "delta_atoms": 59,
-   "complexity": 28,
+   "delta_atoms": 64,
+   "complexity": 34,
    "steps": 375,
    "churn_steps": [],
    "contradiction_steps": [],
@@ -159,25 +131,6 @@
   }
  },
  "after": {
-  "Ticket": {
-   "contradictions": 0,
-   "churn": 1,
-   "visibility": 0,
-   "conflicts": 0,
-   "named": 226,
-   "positional": 1,
-   "unexplained": 0,
-   "spurious": 1,
-   "explained": 54,
-   "delta_atoms": 66,
-   "complexity": 28,
-   "steps": 383,
-   "churn_steps": [
-    375
-   ],
-   "contradiction_steps": [],
-   "visibility_steps": []
-  },
   "Amount": {
    "contradictions": 0,
    "churn": 1,
@@ -185,11 +138,11 @@
    "conflicts": 0,
    "named": 226,
    "positional": 1,
-   "unexplained": 0,
+   "unexplained": 20,
    "spurious": 1,
    "explained": 54,
-   "delta_atoms": 65,
-   "complexity": 28,
+   "delta_atoms": 70,
+   "complexity": 34,
    "steps": 383,
    "churn_steps": [
     375
@@ -204,11 +157,11 @@
    "conflicts": 0,
    "named": 226,
    "positional": 0,
-   "unexplained": 0,
+   "unexplained": 20,
    "spurious": 1,
    "explained": 54,
-   "delta_atoms": 66,
-   "complexity": 28,
+   "delta_atoms": 71,
+   "complexity": 34,
    "steps": 383,
    "churn_steps": [
     375
@@ -218,16 +171,6 @@
   }
  },
  "delta": {
-  "Ticket": {
-   "explained": 2,
-   "conflicts": 0,
-   "churn": 1,
-   "contradictions": 0,
-   "visibility": 0,
-   "spurious": 1,
-   "named": 4,
-   "positional": 1
-  },
   "Amount": {
    "explained": 2,
    "conflicts": 0,
@@ -249,20 +192,9400 @@
    "positional": 0
   }
  },
- "steps": [],
- "rescored": true,
+ "steps": [
+  {
+   "step": 375,
+   "action": {
+    "kind": "select",
+    "target": {
+     "role": "combobox",
+     "nth": 1
+    },
+    "option": 1
+   },
+   "ok": true,
+   "error": null,
+   "status": null
+  },
+  {
+   "step": 376,
+   "action": {
+    "kind": "select",
+    "target": {
+     "role": "combobox",
+     "nth": 0
+    },
+    "option": 0
+   },
+   "ok": true,
+   "error": null,
+   "status": null
+  },
+  {
+   "step": 377,
+   "action": {
+    "kind": "select",
+    "target": {
+     "role": "combobox",
+     "nth": 2
+    },
+    "option": 1
+   },
+   "ok": true,
+   "error": null,
+   "status": null
+  },
+  {
+   "step": 378,
+   "action": {
+    "kind": "click",
+    "target": {
+     "role": "button",
+     "name": "Record draw"
+    }
+   },
+   "ok": true,
+   "error": null,
+   "status": "Drew 2 gal from West Ridge into Picnic."
+  },
+  {
+   "step": 379,
+   "action": {
+    "kind": "select",
+    "target": {
+     "role": "combobox",
+     "nth": 0
+    },
+    "option": 1
+   },
+   "ok": true,
+   "error": null,
+   "status": "Drew 2 gal from West Ridge into Picnic."
+  },
+  {
+   "step": 380,
+   "action": {
+    "kind": "select",
+    "target": {
+     "role": "combobox",
+     "nth": 2
+    },
+    "option": 1
+   },
+   "ok": true,
+   "error": null,
+   "status": "Drew 2 gal from West Ridge into Picnic."
+  },
+  {
+   "step": 381,
+   "action": {
+    "kind": "click",
+    "target": {
+     "role": "button",
+     "name": "Record draw"
+    }
+   },
+   "ok": true,
+   "error": null,
+   "status": "Drew 2 gal from Mill Race into Festival White."
+  },
+  {
+   "step": 382,
+   "action": {
+    "kind": "reload"
+   },
+   "ok": true,
+   "survived_reload": true
+  }
+ ],
+ "extension": {
+  "steps": [
+   {
+    "step": 375,
+    "episode": 1,
+    "action": {
+     "kind": "select",
+     "target": 11,
+     "text": "Picnic 2019 (may blend, open)",
+     "target_desc": {
+      "role": "combobox",
+      "name": "",
+      "placeholder": null
+     }
+    },
+    "ok": true,
+    "error": null,
+    "before": "f594463bc5a319d8",
+    "after": "6c3987f027c4cde2",
+    "typed_tokens": []
+   },
+   {
+    "step": 376,
+    "episode": 1,
+    "action": {
+     "kind": "select",
+     "target": 9,
+     "text": "West Ridge (Chenin, 6 gal, open)",
+     "target_desc": {
+      "role": "combobox",
+      "name": "",
+      "placeholder": null
+     }
+    },
+    "ok": true,
+    "error": null,
+    "before": "6c3987f027c4cde2",
+    "after": "6c3987f027c4cde2",
+    "typed_tokens": []
+   },
+   {
+    "step": 377,
+    "episode": 1,
+    "action": {
+     "kind": "select",
+     "target": 13,
+     "text": "2",
+     "target_desc": {
+      "role": "combobox",
+      "name": "",
+      "placeholder": null
+     }
+    },
+    "ok": true,
+    "error": null,
+    "before": "6c3987f027c4cde2",
+    "after": "e1d1764965ecb765",
+    "typed_tokens": []
+   },
+   {
+    "step": 378,
+    "episode": 1,
+    "action": {
+     "kind": "click",
+     "target": 14,
+     "target_desc": {
+      "role": "button",
+      "name": "Record draw",
+      "placeholder": null
+     }
+    },
+    "ok": true,
+    "error": null,
+    "before": "e1d1764965ecb765",
+    "after": "13f3b9dfbf3bed8a",
+    "typed_tokens": []
+   },
+   {
+    "step": 379,
+    "episode": 1,
+    "action": {
+     "kind": "select",
+     "target": 10,
+     "text": "Mill Race (Grenache, 5 gal, open)",
+     "target_desc": {
+      "role": "combobox",
+      "name": "",
+      "placeholder": null
+     }
+    },
+    "ok": true,
+    "error": null,
+    "before": "13f3b9dfbf3bed8a",
+    "after": "3e3e1246fdbb4d97",
+    "typed_tokens": []
+   },
+   {
+    "step": 380,
+    "episode": 1,
+    "action": {
+     "kind": "select",
+     "target": 14,
+     "text": "2",
+     "target_desc": {
+      "role": "combobox",
+      "name": "",
+      "placeholder": null
+     }
+    },
+    "ok": true,
+    "error": null,
+    "before": "3e3e1246fdbb4d97",
+    "after": "03a75784684699e8",
+    "typed_tokens": []
+   },
+   {
+    "step": 381,
+    "episode": 1,
+    "action": {
+     "kind": "click",
+     "target": 15,
+     "target_desc": {
+      "role": "button",
+      "name": "Record draw",
+      "placeholder": null
+     }
+    },
+    "ok": true,
+    "error": null,
+    "before": "03a75784684699e8",
+    "after": "fb6c7cdcc7e8e024",
+    "typed_tokens": []
+   },
+   {
+    "step": 382,
+    "episode": 1,
+    "action": {
+     "kind": "reload"
+    },
+    "ok": true,
+    "error": null,
+    "before": "fb6c7cdcc7e8e024",
+    "after": "fb6c7cdcc7e8e024",
+    "typed_tokens": []
+   }
+  ],
+  "observations": [
+   {
+    "sig": "f594463bc5a319d8",
+    "obs": {
+     "url": "http://127.0.0.1:8901/",
+     "nodes": [
+      {
+       "i": 0,
+       "parent": -1,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        0,
+        0,
+        1400,
+        1134
+       ]
+      },
+      {
+       "i": 1,
+       "parent": 0,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        0,
+        0,
+        1400,
+        126
+       ]
+      },
+      {
+       "i": 2,
+       "parent": 1,
+       "role": "heading",
+       "name": "Cellar Blend Book",
+       "bbox": [
+        22,
+        35,
+        1356,
+        37
+       ]
+      },
+      {
+       "i": 3,
+       "parent": 1,
+       "role": "text",
+       "name": "Draw from a vat into a blend, bottle when at least two gallons are committed, or return a draw.",
+       "bbox": [
+        22,
+        94,
+        1356,
+        18
+       ]
+      },
+      {
+       "i": 4,
+       "parent": 0,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        0,
+        126,
+        964,
+        1008
+       ]
+      },
+      {
+       "i": 5,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        175,
+        920,
+        285
+       ]
+      },
+      {
+       "i": 6,
+       "parent": 5,
+       "role": "heading",
+       "name": "Draw ticket",
+       "bbox": [
+        22,
+        175,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 7,
+       "parent": 5,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        227,
+        450,
+        233
+       ]
+      },
+      {
+       "i": 8,
+       "parent": 7,
+       "role": "text",
+       "name": "Vat",
+       "bbox": [
+        37,
+        240,
+        420,
+        51
+       ]
+      },
+      {
+       "i": 9,
+       "parent": 8,
+       "role": "combobox",
+       "name": "",
+       "value": "West Ridge (Chenin, 6 gal, open)",
+       "options": [
+        "West Ridge (Chenin, 6 gal, open)",
+        "Mill Race (Grenache, 5 gal, open)",
+        "Low Barn (Pinot, 4 gal, closed)"
+       ],
+       "bbox": [
+        37,
+        262,
+        420,
+        29
+       ]
+      },
+      {
+       "i": 10,
+       "parent": 7,
+       "role": "text",
+       "name": "Blend",
+       "bbox": [
+        37,
+        299,
+        420,
+        51
+       ]
+      },
+      {
+       "i": 11,
+       "parent": 10,
+       "role": "combobox",
+       "name": "",
+       "value": "Festival White 2020 (single varietal, open)",
+       "options": [
+        "Festival White 2020 (single varietal, open)",
+        "Picnic 2019 (may blend, open)",
+        "Cloister 2022 (may blend, open)"
+       ],
+       "bbox": [
+        37,
+        321,
+        420,
+        29
+       ]
+      },
+      {
+       "i": 12,
+       "parent": 7,
+       "role": "text",
+       "name": "Gallons",
+       "bbox": [
+        37,
+        358,
+        420,
+        51
+       ]
+      },
+      {
+       "i": 13,
+       "parent": 12,
+       "role": "combobox",
+       "name": "",
+       "value": "1",
+       "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+       ],
+       "bbox": [
+        37,
+        380,
+        420,
+        29
+       ]
+      },
+      {
+       "i": 14,
+       "parent": 7,
+       "role": "button",
+       "name": "Record draw",
+       "bbox": [
+        37,
+        417,
+        420,
+        30
+       ]
+      },
+      {
+       "i": 15,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        494,
+        920,
+        213
+       ]
+      },
+      {
+       "i": 16,
+       "parent": 15,
+       "role": "heading",
+       "name": "Vats",
+       "bbox": [
+        22,
+        494,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 17,
+       "parent": 15,
+       "role": "table",
+       "name": "",
+       "bbox": [
+        22,
+        546,
+        920,
+        161
+       ]
+      },
+      {
+       "i": 18,
+       "parent": 17,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        546,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 19,
+       "parent": 18,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        546,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 20,
+       "parent": 19,
+       "role": "cell",
+       "name": "Vat",
+       "bbox": [
+        23,
+        546,
+        138,
+        31
+       ]
+      },
+      {
+       "i": 21,
+       "parent": 19,
+       "role": "cell",
+       "name": "Varietal",
+       "bbox": [
+        160,
+        546,
+        119,
+        31
+       ]
+      },
+      {
+       "i": 22,
+       "parent": 19,
+       "role": "cell",
+       "name": "Gallons left",
+       "bbox": [
+        279,
+        546,
+        145,
+        31
+       ]
+      },
+      {
+       "i": 23,
+       "parent": 19,
+       "role": "cell",
+       "name": "Gate",
+       "bbox": [
+        424,
+        546,
+        95,
+        31
+       ]
+      },
+      {
+       "i": 24,
+       "parent": 19,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        546,
+        422,
+        31
+       ]
+      },
+      {
+       "i": 25,
+       "parent": 17,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        577,
+        919,
+        129
+       ]
+      },
+      {
+       "i": 26,
+       "parent": 25,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        577,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 27,
+       "parent": 26,
+       "role": "cell",
+       "name": "West Ridge",
+       "bbox": [
+        23,
+        577,
+        138,
+        43
+       ]
+      },
+      {
+       "i": 28,
+       "parent": 26,
+       "role": "cell",
+       "name": "Chenin",
+       "bbox": [
+        160,
+        577,
+        119,
+        43
+       ]
+      },
+      {
+       "i": 29,
+       "parent": 26,
+       "role": "cell",
+       "name": "6",
+       "bbox": [
+        279,
+        577,
+        145,
+        43
+       ]
+      },
+      {
+       "i": 30,
+       "parent": 26,
+       "role": "cell",
+       "name": "Open",
+       "bbox": [
+        424,
+        577,
+        95,
+        43
+       ]
+      },
+      {
+       "i": 31,
+       "parent": 26,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        577,
+        422,
+        43
+       ]
+      },
+      {
+       "i": 32,
+       "parent": 31,
+       "role": "button",
+       "name": "Close West Ridge",
+       "bbox": [
+        530,
+        584,
+        134,
+        30
+       ]
+      },
+      {
+       "i": 33,
+       "parent": 31,
+       "role": "button",
+       "name": "Open West Ridge",
+       "bbox": [
+        668,
+        584,
+        132,
+        30
+       ]
+      },
+      {
+       "i": 34,
+       "parent": 25,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        620,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 35,
+       "parent": 34,
+       "role": "cell",
+       "name": "Mill Race",
+       "bbox": [
+        23,
+        620,
+        138,
+        43
+       ]
+      },
+      {
+       "i": 36,
+       "parent": 34,
+       "role": "cell",
+       "name": "Grenache",
+       "bbox": [
+        160,
+        620,
+        119,
+        43
+       ]
+      },
+      {
+       "i": 37,
+       "parent": 34,
+       "role": "cell",
+       "name": "5",
+       "bbox": [
+        279,
+        620,
+        145,
+        43
+       ]
+      },
+      {
+       "i": 38,
+       "parent": 34,
+       "role": "cell",
+       "name": "Open",
+       "bbox": [
+        424,
+        620,
+        95,
+        43
+       ]
+      },
+      {
+       "i": 39,
+       "parent": 34,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        620,
+        422,
+        43
+       ]
+      },
+      {
+       "i": 40,
+       "parent": 39,
+       "role": "button",
+       "name": "Close Mill Race",
+       "bbox": [
+        530,
+        627,
+        124,
+        30
+       ]
+      },
+      {
+       "i": 41,
+       "parent": 39,
+       "role": "button",
+       "name": "Open Mill Race",
+       "bbox": [
+        658,
+        627,
+        122,
+        30
+       ]
+      },
+      {
+       "i": 42,
+       "parent": 25,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        663,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 43,
+       "parent": 42,
+       "role": "cell",
+       "name": "Low Barn",
+       "bbox": [
+        23,
+        663,
+        138,
+        43
+       ]
+      },
+      {
+       "i": 44,
+       "parent": 42,
+       "role": "cell",
+       "name": "Pinot",
+       "bbox": [
+        160,
+        663,
+        119,
+        43
+       ]
+      },
+      {
+       "i": 45,
+       "parent": 42,
+       "role": "cell",
+       "name": "4",
+       "bbox": [
+        279,
+        663,
+        145,
+        43
+       ]
+      },
+      {
+       "i": 46,
+       "parent": 42,
+       "role": "cell",
+       "name": "Closed",
+       "bbox": [
+        424,
+        663,
+        95,
+        43
+       ]
+      },
+      {
+       "i": 47,
+       "parent": 42,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        663,
+        422,
+        43
+       ]
+      },
+      {
+       "i": 48,
+       "parent": 47,
+       "role": "button",
+       "name": "Close Low Barn",
+       "bbox": [
+        530,
+        670,
+        125,
+        30
+       ]
+      },
+      {
+       "i": 49,
+       "parent": 47,
+       "role": "button",
+       "name": "Open Low Barn",
+       "bbox": [
+        658,
+        670,
+        123,
+        30
+       ]
+      },
+      {
+       "i": 50,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        740,
+        920,
+        213
+       ]
+      },
+      {
+       "i": 51,
+       "parent": 50,
+       "role": "heading",
+       "name": "Blends",
+       "bbox": [
+        22,
+        740,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 52,
+       "parent": 50,
+       "role": "table",
+       "name": "",
+       "bbox": [
+        22,
+        792,
+        920,
+        161
+       ]
+      },
+      {
+       "i": 53,
+       "parent": 52,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        793,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 54,
+       "parent": 53,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        793,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 55,
+       "parent": 54,
+       "role": "cell",
+       "name": "Blend",
+       "bbox": [
+        23,
+        793,
+        127,
+        31
+       ]
+      },
+      {
+       "i": 56,
+       "parent": 54,
+       "role": "cell",
+       "name": "Year",
+       "bbox": [
+        150,
+        793,
+        59,
+        31
+       ]
+      },
+      {
+       "i": 57,
+       "parent": 54,
+       "role": "cell",
+       "name": "Style",
+       "bbox": [
+        208,
+        793,
+        126,
+        31
+       ]
+      },
+      {
+       "i": 58,
+       "parent": 54,
+       "role": "cell",
+       "name": "Committed gal",
+       "bbox": [
+        335,
+        793,
+        136,
+        31
+       ]
+      },
+      {
+       "i": 59,
+       "parent": 54,
+       "role": "cell",
+       "name": "State",
+       "bbox": [
+        471,
+        793,
+        74,
+        31
+       ]
+      },
+      {
+       "i": 60,
+       "parent": 54,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        793,
+        397,
+        31
+       ]
+      },
+      {
+       "i": 61,
+       "parent": 52,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        824,
+        919,
+        129
+       ]
+      },
+      {
+       "i": 62,
+       "parent": 61,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        824,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 63,
+       "parent": 62,
+       "role": "cell",
+       "name": "Festival White",
+       "bbox": [
+        23,
+        824,
+        127,
+        43
+       ]
+      },
+      {
+       "i": 64,
+       "parent": 62,
+       "role": "cell",
+       "name": "2020",
+       "bbox": [
+        150,
+        824,
+        59,
+        43
+       ]
+      },
+      {
+       "i": 65,
+       "parent": 62,
+       "role": "cell",
+       "name": "Single varietal",
+       "bbox": [
+        208,
+        824,
+        126,
+        43
+       ]
+      },
+      {
+       "i": 66,
+       "parent": 62,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        335,
+        824,
+        136,
+        43
+       ]
+      },
+      {
+       "i": 67,
+       "parent": 62,
+       "role": "cell",
+       "name": "In cask",
+       "bbox": [
+        471,
+        824,
+        74,
+        43
+       ]
+      },
+      {
+       "i": 68,
+       "parent": 62,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        824,
+        397,
+        43
+       ]
+      },
+      {
+       "i": 69,
+       "parent": 68,
+       "role": "button",
+       "name": "Bottle Festival White",
+       "bbox": [
+        555,
+        830,
+        157,
+        30
+       ]
+      },
+      {
+       "i": 70,
+       "parent": 68,
+       "role": "button",
+       "name": "Disgorge Festival White",
+       "bbox": [
+        716,
+        830,
+        176,
+        30
+       ]
+      },
+      {
+       "i": 71,
+       "parent": 61,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        867,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 72,
+       "parent": 71,
+       "role": "cell",
+       "name": "Picnic",
+       "bbox": [
+        23,
+        867,
+        127,
+        43
+       ]
+      },
+      {
+       "i": 73,
+       "parent": 71,
+       "role": "cell",
+       "name": "2019",
+       "bbox": [
+        150,
+        867,
+        59,
+        43
+       ]
+      },
+      {
+       "i": 74,
+       "parent": 71,
+       "role": "cell",
+       "name": "May blend",
+       "bbox": [
+        208,
+        867,
+        126,
+        43
+       ]
+      },
+      {
+       "i": 75,
+       "parent": 71,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        335,
+        867,
+        136,
+        43
+       ]
+      },
+      {
+       "i": 76,
+       "parent": 71,
+       "role": "cell",
+       "name": "In cask",
+       "bbox": [
+        471,
+        867,
+        74,
+        43
+       ]
+      },
+      {
+       "i": 77,
+       "parent": 71,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        867,
+        397,
+        43
+       ]
+      },
+      {
+       "i": 78,
+       "parent": 77,
+       "role": "button",
+       "name": "Bottle Picnic",
+       "bbox": [
+        555,
+        873,
+        103,
+        30
+       ]
+      },
+      {
+       "i": 79,
+       "parent": 77,
+       "role": "button",
+       "name": "Disgorge Picnic",
+       "bbox": [
+        663,
+        873,
+        122,
+        30
+       ]
+      },
+      {
+       "i": 80,
+       "parent": 61,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        910,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 81,
+       "parent": 80,
+       "role": "cell",
+       "name": "Cloister",
+       "bbox": [
+        23,
+        910,
+        127,
+        43
+       ]
+      },
+      {
+       "i": 82,
+       "parent": 80,
+       "role": "cell",
+       "name": "2022",
+       "bbox": [
+        150,
+        910,
+        59,
+        43
+       ]
+      },
+      {
+       "i": 83,
+       "parent": 80,
+       "role": "cell",
+       "name": "May blend",
+       "bbox": [
+        208,
+        910,
+        126,
+        43
+       ]
+      },
+      {
+       "i": 84,
+       "parent": 80,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        335,
+        910,
+        136,
+        43
+       ]
+      },
+      {
+       "i": 85,
+       "parent": 80,
+       "role": "cell",
+       "name": "In cask",
+       "bbox": [
+        471,
+        910,
+        74,
+        43
+       ]
+      },
+      {
+       "i": 86,
+       "parent": 80,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        910,
+        397,
+        43
+       ]
+      },
+      {
+       "i": 87,
+       "parent": 86,
+       "role": "button",
+       "name": "Bottle Cloister",
+       "bbox": [
+        555,
+        916,
+        114,
+        30
+       ]
+      },
+      {
+       "i": 88,
+       "parent": 86,
+       "role": "button",
+       "name": "Disgorge Cloister",
+       "bbox": [
+        673,
+        916,
+        133,
+        30
+       ]
+      },
+      {
+       "i": 89,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        987,
+        920,
+        115
+       ]
+      },
+      {
+       "i": 90,
+       "parent": 89,
+       "role": "heading",
+       "name": "Draws",
+       "bbox": [
+        22,
+        987,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 91,
+       "parent": 89,
+       "role": "table",
+       "name": "",
+       "bbox": [
+        22,
+        1039,
+        920,
+        63
+       ]
+      },
+      {
+       "i": 92,
+       "parent": 91,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        1039,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 93,
+       "parent": 92,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        1039,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 94,
+       "parent": 93,
+       "role": "cell",
+       "name": "Ticket",
+       "bbox": [
+        23,
+        1039,
+        175,
+        31
+       ]
+      },
+      {
+       "i": 95,
+       "parent": 93,
+       "role": "cell",
+       "name": "Amount",
+       "bbox": [
+        197,
+        1039,
+        209,
+        31
+       ]
+      },
+      {
+       "i": 96,
+       "parent": 93,
+       "role": "cell",
+       "name": "From vat",
+       "bbox": [
+        406,
+        1039,
+        229,
+        31
+       ]
+      },
+      {
+       "i": 97,
+       "parent": 93,
+       "role": "cell",
+       "name": "Into blend",
+       "bbox": [
+        635,
+        1039,
+        249,
+        31
+       ]
+      },
+      {
+       "i": 98,
+       "parent": 93,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        884,
+        1039,
+        57,
+        31
+       ]
+      },
+      {
+       "i": 99,
+       "parent": 91,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        1070,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 100,
+       "parent": 99,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        1070,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 101,
+       "parent": 100,
+       "role": "cell",
+       "name": "No draws recorded.",
+       "bbox": [
+        23,
+        1070,
+        919,
+        31
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "sig": "6c3987f027c4cde2",
+    "obs": {
+     "url": "http://127.0.0.1:8901/",
+     "nodes": [
+      {
+       "i": 0,
+       "parent": -1,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        0,
+        0,
+        1400,
+        1134
+       ]
+      },
+      {
+       "i": 1,
+       "parent": 0,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        0,
+        0,
+        1400,
+        126
+       ]
+      },
+      {
+       "i": 2,
+       "parent": 1,
+       "role": "heading",
+       "name": "Cellar Blend Book",
+       "bbox": [
+        22,
+        35,
+        1356,
+        37
+       ]
+      },
+      {
+       "i": 3,
+       "parent": 1,
+       "role": "text",
+       "name": "Draw from a vat into a blend, bottle when at least two gallons are committed, or return a draw.",
+       "bbox": [
+        22,
+        94,
+        1356,
+        18
+       ]
+      },
+      {
+       "i": 4,
+       "parent": 0,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        0,
+        126,
+        964,
+        1008
+       ]
+      },
+      {
+       "i": 5,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        175,
+        920,
+        285
+       ]
+      },
+      {
+       "i": 6,
+       "parent": 5,
+       "role": "heading",
+       "name": "Draw ticket",
+       "bbox": [
+        22,
+        175,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 7,
+       "parent": 5,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        227,
+        450,
+        233
+       ]
+      },
+      {
+       "i": 8,
+       "parent": 7,
+       "role": "text",
+       "name": "Vat",
+       "bbox": [
+        37,
+        240,
+        420,
+        51
+       ]
+      },
+      {
+       "i": 9,
+       "parent": 8,
+       "role": "combobox",
+       "name": "",
+       "value": "West Ridge (Chenin, 6 gal, open)",
+       "options": [
+        "West Ridge (Chenin, 6 gal, open)",
+        "Mill Race (Grenache, 5 gal, open)",
+        "Low Barn (Pinot, 4 gal, closed)"
+       ],
+       "bbox": [
+        37,
+        262,
+        420,
+        29
+       ]
+      },
+      {
+       "i": 10,
+       "parent": 7,
+       "role": "text",
+       "name": "Blend",
+       "bbox": [
+        37,
+        299,
+        420,
+        51
+       ]
+      },
+      {
+       "i": 11,
+       "parent": 10,
+       "role": "combobox",
+       "name": "",
+       "value": "Picnic 2019 (may blend, open)",
+       "options": [
+        "Festival White 2020 (single varietal, open)",
+        "Picnic 2019 (may blend, open)",
+        "Cloister 2022 (may blend, open)"
+       ],
+       "bbox": [
+        37,
+        321,
+        420,
+        29
+       ]
+      },
+      {
+       "i": 12,
+       "parent": 7,
+       "role": "text",
+       "name": "Gallons",
+       "bbox": [
+        37,
+        358,
+        420,
+        51
+       ]
+      },
+      {
+       "i": 13,
+       "parent": 12,
+       "role": "combobox",
+       "name": "",
+       "value": "1",
+       "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+       ],
+       "bbox": [
+        37,
+        380,
+        420,
+        29
+       ]
+      },
+      {
+       "i": 14,
+       "parent": 7,
+       "role": "button",
+       "name": "Record draw",
+       "bbox": [
+        37,
+        417,
+        420,
+        30
+       ]
+      },
+      {
+       "i": 15,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        494,
+        920,
+        213
+       ]
+      },
+      {
+       "i": 16,
+       "parent": 15,
+       "role": "heading",
+       "name": "Vats",
+       "bbox": [
+        22,
+        494,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 17,
+       "parent": 15,
+       "role": "table",
+       "name": "",
+       "bbox": [
+        22,
+        546,
+        920,
+        161
+       ]
+      },
+      {
+       "i": 18,
+       "parent": 17,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        546,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 19,
+       "parent": 18,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        546,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 20,
+       "parent": 19,
+       "role": "cell",
+       "name": "Vat",
+       "bbox": [
+        23,
+        546,
+        138,
+        31
+       ]
+      },
+      {
+       "i": 21,
+       "parent": 19,
+       "role": "cell",
+       "name": "Varietal",
+       "bbox": [
+        160,
+        546,
+        119,
+        31
+       ]
+      },
+      {
+       "i": 22,
+       "parent": 19,
+       "role": "cell",
+       "name": "Gallons left",
+       "bbox": [
+        279,
+        546,
+        145,
+        31
+       ]
+      },
+      {
+       "i": 23,
+       "parent": 19,
+       "role": "cell",
+       "name": "Gate",
+       "bbox": [
+        424,
+        546,
+        95,
+        31
+       ]
+      },
+      {
+       "i": 24,
+       "parent": 19,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        546,
+        422,
+        31
+       ]
+      },
+      {
+       "i": 25,
+       "parent": 17,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        577,
+        919,
+        129
+       ]
+      },
+      {
+       "i": 26,
+       "parent": 25,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        577,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 27,
+       "parent": 26,
+       "role": "cell",
+       "name": "West Ridge",
+       "bbox": [
+        23,
+        577,
+        138,
+        43
+       ]
+      },
+      {
+       "i": 28,
+       "parent": 26,
+       "role": "cell",
+       "name": "Chenin",
+       "bbox": [
+        160,
+        577,
+        119,
+        43
+       ]
+      },
+      {
+       "i": 29,
+       "parent": 26,
+       "role": "cell",
+       "name": "6",
+       "bbox": [
+        279,
+        577,
+        145,
+        43
+       ]
+      },
+      {
+       "i": 30,
+       "parent": 26,
+       "role": "cell",
+       "name": "Open",
+       "bbox": [
+        424,
+        577,
+        95,
+        43
+       ]
+      },
+      {
+       "i": 31,
+       "parent": 26,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        577,
+        422,
+        43
+       ]
+      },
+      {
+       "i": 32,
+       "parent": 31,
+       "role": "button",
+       "name": "Close West Ridge",
+       "bbox": [
+        530,
+        584,
+        134,
+        30
+       ]
+      },
+      {
+       "i": 33,
+       "parent": 31,
+       "role": "button",
+       "name": "Open West Ridge",
+       "bbox": [
+        668,
+        584,
+        132,
+        30
+       ]
+      },
+      {
+       "i": 34,
+       "parent": 25,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        620,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 35,
+       "parent": 34,
+       "role": "cell",
+       "name": "Mill Race",
+       "bbox": [
+        23,
+        620,
+        138,
+        43
+       ]
+      },
+      {
+       "i": 36,
+       "parent": 34,
+       "role": "cell",
+       "name": "Grenache",
+       "bbox": [
+        160,
+        620,
+        119,
+        43
+       ]
+      },
+      {
+       "i": 37,
+       "parent": 34,
+       "role": "cell",
+       "name": "5",
+       "bbox": [
+        279,
+        620,
+        145,
+        43
+       ]
+      },
+      {
+       "i": 38,
+       "parent": 34,
+       "role": "cell",
+       "name": "Open",
+       "bbox": [
+        424,
+        620,
+        95,
+        43
+       ]
+      },
+      {
+       "i": 39,
+       "parent": 34,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        620,
+        422,
+        43
+       ]
+      },
+      {
+       "i": 40,
+       "parent": 39,
+       "role": "button",
+       "name": "Close Mill Race",
+       "bbox": [
+        530,
+        627,
+        124,
+        30
+       ]
+      },
+      {
+       "i": 41,
+       "parent": 39,
+       "role": "button",
+       "name": "Open Mill Race",
+       "bbox": [
+        658,
+        627,
+        122,
+        30
+       ]
+      },
+      {
+       "i": 42,
+       "parent": 25,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        663,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 43,
+       "parent": 42,
+       "role": "cell",
+       "name": "Low Barn",
+       "bbox": [
+        23,
+        663,
+        138,
+        43
+       ]
+      },
+      {
+       "i": 44,
+       "parent": 42,
+       "role": "cell",
+       "name": "Pinot",
+       "bbox": [
+        160,
+        663,
+        119,
+        43
+       ]
+      },
+      {
+       "i": 45,
+       "parent": 42,
+       "role": "cell",
+       "name": "4",
+       "bbox": [
+        279,
+        663,
+        145,
+        43
+       ]
+      },
+      {
+       "i": 46,
+       "parent": 42,
+       "role": "cell",
+       "name": "Closed",
+       "bbox": [
+        424,
+        663,
+        95,
+        43
+       ]
+      },
+      {
+       "i": 47,
+       "parent": 42,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        663,
+        422,
+        43
+       ]
+      },
+      {
+       "i": 48,
+       "parent": 47,
+       "role": "button",
+       "name": "Close Low Barn",
+       "bbox": [
+        530,
+        670,
+        125,
+        30
+       ]
+      },
+      {
+       "i": 49,
+       "parent": 47,
+       "role": "button",
+       "name": "Open Low Barn",
+       "bbox": [
+        658,
+        670,
+        123,
+        30
+       ]
+      },
+      {
+       "i": 50,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        740,
+        920,
+        213
+       ]
+      },
+      {
+       "i": 51,
+       "parent": 50,
+       "role": "heading",
+       "name": "Blends",
+       "bbox": [
+        22,
+        740,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 52,
+       "parent": 50,
+       "role": "table",
+       "name": "",
+       "bbox": [
+        22,
+        792,
+        920,
+        161
+       ]
+      },
+      {
+       "i": 53,
+       "parent": 52,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        793,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 54,
+       "parent": 53,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        793,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 55,
+       "parent": 54,
+       "role": "cell",
+       "name": "Blend",
+       "bbox": [
+        23,
+        793,
+        127,
+        31
+       ]
+      },
+      {
+       "i": 56,
+       "parent": 54,
+       "role": "cell",
+       "name": "Year",
+       "bbox": [
+        150,
+        793,
+        59,
+        31
+       ]
+      },
+      {
+       "i": 57,
+       "parent": 54,
+       "role": "cell",
+       "name": "Style",
+       "bbox": [
+        208,
+        793,
+        126,
+        31
+       ]
+      },
+      {
+       "i": 58,
+       "parent": 54,
+       "role": "cell",
+       "name": "Committed gal",
+       "bbox": [
+        335,
+        793,
+        136,
+        31
+       ]
+      },
+      {
+       "i": 59,
+       "parent": 54,
+       "role": "cell",
+       "name": "State",
+       "bbox": [
+        471,
+        793,
+        74,
+        31
+       ]
+      },
+      {
+       "i": 60,
+       "parent": 54,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        793,
+        397,
+        31
+       ]
+      },
+      {
+       "i": 61,
+       "parent": 52,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        824,
+        919,
+        129
+       ]
+      },
+      {
+       "i": 62,
+       "parent": 61,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        824,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 63,
+       "parent": 62,
+       "role": "cell",
+       "name": "Festival White",
+       "bbox": [
+        23,
+        824,
+        127,
+        43
+       ]
+      },
+      {
+       "i": 64,
+       "parent": 62,
+       "role": "cell",
+       "name": "2020",
+       "bbox": [
+        150,
+        824,
+        59,
+        43
+       ]
+      },
+      {
+       "i": 65,
+       "parent": 62,
+       "role": "cell",
+       "name": "Single varietal",
+       "bbox": [
+        208,
+        824,
+        126,
+        43
+       ]
+      },
+      {
+       "i": 66,
+       "parent": 62,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        335,
+        824,
+        136,
+        43
+       ]
+      },
+      {
+       "i": 67,
+       "parent": 62,
+       "role": "cell",
+       "name": "In cask",
+       "bbox": [
+        471,
+        824,
+        74,
+        43
+       ]
+      },
+      {
+       "i": 68,
+       "parent": 62,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        824,
+        397,
+        43
+       ]
+      },
+      {
+       "i": 69,
+       "parent": 68,
+       "role": "button",
+       "name": "Bottle Festival White",
+       "bbox": [
+        555,
+        830,
+        157,
+        30
+       ]
+      },
+      {
+       "i": 70,
+       "parent": 68,
+       "role": "button",
+       "name": "Disgorge Festival White",
+       "bbox": [
+        716,
+        830,
+        176,
+        30
+       ]
+      },
+      {
+       "i": 71,
+       "parent": 61,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        867,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 72,
+       "parent": 71,
+       "role": "cell",
+       "name": "Picnic",
+       "bbox": [
+        23,
+        867,
+        127,
+        43
+       ]
+      },
+      {
+       "i": 73,
+       "parent": 71,
+       "role": "cell",
+       "name": "2019",
+       "bbox": [
+        150,
+        867,
+        59,
+        43
+       ]
+      },
+      {
+       "i": 74,
+       "parent": 71,
+       "role": "cell",
+       "name": "May blend",
+       "bbox": [
+        208,
+        867,
+        126,
+        43
+       ]
+      },
+      {
+       "i": 75,
+       "parent": 71,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        335,
+        867,
+        136,
+        43
+       ]
+      },
+      {
+       "i": 76,
+       "parent": 71,
+       "role": "cell",
+       "name": "In cask",
+       "bbox": [
+        471,
+        867,
+        74,
+        43
+       ]
+      },
+      {
+       "i": 77,
+       "parent": 71,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        867,
+        397,
+        43
+       ]
+      },
+      {
+       "i": 78,
+       "parent": 77,
+       "role": "button",
+       "name": "Bottle Picnic",
+       "bbox": [
+        555,
+        873,
+        103,
+        30
+       ]
+      },
+      {
+       "i": 79,
+       "parent": 77,
+       "role": "button",
+       "name": "Disgorge Picnic",
+       "bbox": [
+        663,
+        873,
+        122,
+        30
+       ]
+      },
+      {
+       "i": 80,
+       "parent": 61,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        910,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 81,
+       "parent": 80,
+       "role": "cell",
+       "name": "Cloister",
+       "bbox": [
+        23,
+        910,
+        127,
+        43
+       ]
+      },
+      {
+       "i": 82,
+       "parent": 80,
+       "role": "cell",
+       "name": "2022",
+       "bbox": [
+        150,
+        910,
+        59,
+        43
+       ]
+      },
+      {
+       "i": 83,
+       "parent": 80,
+       "role": "cell",
+       "name": "May blend",
+       "bbox": [
+        208,
+        910,
+        126,
+        43
+       ]
+      },
+      {
+       "i": 84,
+       "parent": 80,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        335,
+        910,
+        136,
+        43
+       ]
+      },
+      {
+       "i": 85,
+       "parent": 80,
+       "role": "cell",
+       "name": "In cask",
+       "bbox": [
+        471,
+        910,
+        74,
+        43
+       ]
+      },
+      {
+       "i": 86,
+       "parent": 80,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        910,
+        397,
+        43
+       ]
+      },
+      {
+       "i": 87,
+       "parent": 86,
+       "role": "button",
+       "name": "Bottle Cloister",
+       "bbox": [
+        555,
+        916,
+        114,
+        30
+       ]
+      },
+      {
+       "i": 88,
+       "parent": 86,
+       "role": "button",
+       "name": "Disgorge Cloister",
+       "bbox": [
+        673,
+        916,
+        133,
+        30
+       ]
+      },
+      {
+       "i": 89,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        987,
+        920,
+        115
+       ]
+      },
+      {
+       "i": 90,
+       "parent": 89,
+       "role": "heading",
+       "name": "Draws",
+       "bbox": [
+        22,
+        987,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 91,
+       "parent": 89,
+       "role": "table",
+       "name": "",
+       "bbox": [
+        22,
+        1039,
+        920,
+        63
+       ]
+      },
+      {
+       "i": 92,
+       "parent": 91,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        1039,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 93,
+       "parent": 92,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        1039,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 94,
+       "parent": 93,
+       "role": "cell",
+       "name": "Ticket",
+       "bbox": [
+        23,
+        1039,
+        175,
+        31
+       ]
+      },
+      {
+       "i": 95,
+       "parent": 93,
+       "role": "cell",
+       "name": "Amount",
+       "bbox": [
+        197,
+        1039,
+        209,
+        31
+       ]
+      },
+      {
+       "i": 96,
+       "parent": 93,
+       "role": "cell",
+       "name": "From vat",
+       "bbox": [
+        406,
+        1039,
+        229,
+        31
+       ]
+      },
+      {
+       "i": 97,
+       "parent": 93,
+       "role": "cell",
+       "name": "Into blend",
+       "bbox": [
+        635,
+        1039,
+        249,
+        31
+       ]
+      },
+      {
+       "i": 98,
+       "parent": 93,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        884,
+        1039,
+        57,
+        31
+       ]
+      },
+      {
+       "i": 99,
+       "parent": 91,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        1070,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 100,
+       "parent": 99,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        1070,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 101,
+       "parent": 100,
+       "role": "cell",
+       "name": "No draws recorded.",
+       "bbox": [
+        23,
+        1070,
+        919,
+        31
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "sig": "e1d1764965ecb765",
+    "obs": {
+     "url": "http://127.0.0.1:8901/",
+     "nodes": [
+      {
+       "i": 0,
+       "parent": -1,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        0,
+        0,
+        1400,
+        1134
+       ]
+      },
+      {
+       "i": 1,
+       "parent": 0,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        0,
+        0,
+        1400,
+        126
+       ]
+      },
+      {
+       "i": 2,
+       "parent": 1,
+       "role": "heading",
+       "name": "Cellar Blend Book",
+       "bbox": [
+        22,
+        35,
+        1356,
+        37
+       ]
+      },
+      {
+       "i": 3,
+       "parent": 1,
+       "role": "text",
+       "name": "Draw from a vat into a blend, bottle when at least two gallons are committed, or return a draw.",
+       "bbox": [
+        22,
+        94,
+        1356,
+        18
+       ]
+      },
+      {
+       "i": 4,
+       "parent": 0,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        0,
+        126,
+        964,
+        1008
+       ]
+      },
+      {
+       "i": 5,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        175,
+        920,
+        285
+       ]
+      },
+      {
+       "i": 6,
+       "parent": 5,
+       "role": "heading",
+       "name": "Draw ticket",
+       "bbox": [
+        22,
+        175,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 7,
+       "parent": 5,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        227,
+        450,
+        233
+       ]
+      },
+      {
+       "i": 8,
+       "parent": 7,
+       "role": "text",
+       "name": "Vat",
+       "bbox": [
+        37,
+        240,
+        420,
+        51
+       ]
+      },
+      {
+       "i": 9,
+       "parent": 8,
+       "role": "combobox",
+       "name": "",
+       "value": "West Ridge (Chenin, 6 gal, open)",
+       "options": [
+        "West Ridge (Chenin, 6 gal, open)",
+        "Mill Race (Grenache, 5 gal, open)",
+        "Low Barn (Pinot, 4 gal, closed)"
+       ],
+       "bbox": [
+        37,
+        262,
+        420,
+        29
+       ]
+      },
+      {
+       "i": 10,
+       "parent": 7,
+       "role": "text",
+       "name": "Blend",
+       "bbox": [
+        37,
+        299,
+        420,
+        51
+       ]
+      },
+      {
+       "i": 11,
+       "parent": 10,
+       "role": "combobox",
+       "name": "",
+       "value": "Picnic 2019 (may blend, open)",
+       "options": [
+        "Festival White 2020 (single varietal, open)",
+        "Picnic 2019 (may blend, open)",
+        "Cloister 2022 (may blend, open)"
+       ],
+       "bbox": [
+        37,
+        321,
+        420,
+        29
+       ]
+      },
+      {
+       "i": 12,
+       "parent": 7,
+       "role": "text",
+       "name": "Gallons",
+       "bbox": [
+        37,
+        358,
+        420,
+        51
+       ]
+      },
+      {
+       "i": 13,
+       "parent": 12,
+       "role": "combobox",
+       "name": "",
+       "value": "2",
+       "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+       ],
+       "bbox": [
+        37,
+        380,
+        420,
+        29
+       ]
+      },
+      {
+       "i": 14,
+       "parent": 7,
+       "role": "button",
+       "name": "Record draw",
+       "bbox": [
+        37,
+        417,
+        420,
+        30
+       ]
+      },
+      {
+       "i": 15,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        494,
+        920,
+        213
+       ]
+      },
+      {
+       "i": 16,
+       "parent": 15,
+       "role": "heading",
+       "name": "Vats",
+       "bbox": [
+        22,
+        494,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 17,
+       "parent": 15,
+       "role": "table",
+       "name": "",
+       "bbox": [
+        22,
+        546,
+        920,
+        161
+       ]
+      },
+      {
+       "i": 18,
+       "parent": 17,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        546,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 19,
+       "parent": 18,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        546,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 20,
+       "parent": 19,
+       "role": "cell",
+       "name": "Vat",
+       "bbox": [
+        23,
+        546,
+        138,
+        31
+       ]
+      },
+      {
+       "i": 21,
+       "parent": 19,
+       "role": "cell",
+       "name": "Varietal",
+       "bbox": [
+        160,
+        546,
+        119,
+        31
+       ]
+      },
+      {
+       "i": 22,
+       "parent": 19,
+       "role": "cell",
+       "name": "Gallons left",
+       "bbox": [
+        279,
+        546,
+        145,
+        31
+       ]
+      },
+      {
+       "i": 23,
+       "parent": 19,
+       "role": "cell",
+       "name": "Gate",
+       "bbox": [
+        424,
+        546,
+        95,
+        31
+       ]
+      },
+      {
+       "i": 24,
+       "parent": 19,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        546,
+        422,
+        31
+       ]
+      },
+      {
+       "i": 25,
+       "parent": 17,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        577,
+        919,
+        129
+       ]
+      },
+      {
+       "i": 26,
+       "parent": 25,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        577,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 27,
+       "parent": 26,
+       "role": "cell",
+       "name": "West Ridge",
+       "bbox": [
+        23,
+        577,
+        138,
+        43
+       ]
+      },
+      {
+       "i": 28,
+       "parent": 26,
+       "role": "cell",
+       "name": "Chenin",
+       "bbox": [
+        160,
+        577,
+        119,
+        43
+       ]
+      },
+      {
+       "i": 29,
+       "parent": 26,
+       "role": "cell",
+       "name": "6",
+       "bbox": [
+        279,
+        577,
+        145,
+        43
+       ]
+      },
+      {
+       "i": 30,
+       "parent": 26,
+       "role": "cell",
+       "name": "Open",
+       "bbox": [
+        424,
+        577,
+        95,
+        43
+       ]
+      },
+      {
+       "i": 31,
+       "parent": 26,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        577,
+        422,
+        43
+       ]
+      },
+      {
+       "i": 32,
+       "parent": 31,
+       "role": "button",
+       "name": "Close West Ridge",
+       "bbox": [
+        530,
+        584,
+        134,
+        30
+       ]
+      },
+      {
+       "i": 33,
+       "parent": 31,
+       "role": "button",
+       "name": "Open West Ridge",
+       "bbox": [
+        668,
+        584,
+        132,
+        30
+       ]
+      },
+      {
+       "i": 34,
+       "parent": 25,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        620,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 35,
+       "parent": 34,
+       "role": "cell",
+       "name": "Mill Race",
+       "bbox": [
+        23,
+        620,
+        138,
+        43
+       ]
+      },
+      {
+       "i": 36,
+       "parent": 34,
+       "role": "cell",
+       "name": "Grenache",
+       "bbox": [
+        160,
+        620,
+        119,
+        43
+       ]
+      },
+      {
+       "i": 37,
+       "parent": 34,
+       "role": "cell",
+       "name": "5",
+       "bbox": [
+        279,
+        620,
+        145,
+        43
+       ]
+      },
+      {
+       "i": 38,
+       "parent": 34,
+       "role": "cell",
+       "name": "Open",
+       "bbox": [
+        424,
+        620,
+        95,
+        43
+       ]
+      },
+      {
+       "i": 39,
+       "parent": 34,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        620,
+        422,
+        43
+       ]
+      },
+      {
+       "i": 40,
+       "parent": 39,
+       "role": "button",
+       "name": "Close Mill Race",
+       "bbox": [
+        530,
+        627,
+        124,
+        30
+       ]
+      },
+      {
+       "i": 41,
+       "parent": 39,
+       "role": "button",
+       "name": "Open Mill Race",
+       "bbox": [
+        658,
+        627,
+        122,
+        30
+       ]
+      },
+      {
+       "i": 42,
+       "parent": 25,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        663,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 43,
+       "parent": 42,
+       "role": "cell",
+       "name": "Low Barn",
+       "bbox": [
+        23,
+        663,
+        138,
+        43
+       ]
+      },
+      {
+       "i": 44,
+       "parent": 42,
+       "role": "cell",
+       "name": "Pinot",
+       "bbox": [
+        160,
+        663,
+        119,
+        43
+       ]
+      },
+      {
+       "i": 45,
+       "parent": 42,
+       "role": "cell",
+       "name": "4",
+       "bbox": [
+        279,
+        663,
+        145,
+        43
+       ]
+      },
+      {
+       "i": 46,
+       "parent": 42,
+       "role": "cell",
+       "name": "Closed",
+       "bbox": [
+        424,
+        663,
+        95,
+        43
+       ]
+      },
+      {
+       "i": 47,
+       "parent": 42,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        663,
+        422,
+        43
+       ]
+      },
+      {
+       "i": 48,
+       "parent": 47,
+       "role": "button",
+       "name": "Close Low Barn",
+       "bbox": [
+        530,
+        670,
+        125,
+        30
+       ]
+      },
+      {
+       "i": 49,
+       "parent": 47,
+       "role": "button",
+       "name": "Open Low Barn",
+       "bbox": [
+        658,
+        670,
+        123,
+        30
+       ]
+      },
+      {
+       "i": 50,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        740,
+        920,
+        213
+       ]
+      },
+      {
+       "i": 51,
+       "parent": 50,
+       "role": "heading",
+       "name": "Blends",
+       "bbox": [
+        22,
+        740,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 52,
+       "parent": 50,
+       "role": "table",
+       "name": "",
+       "bbox": [
+        22,
+        792,
+        920,
+        161
+       ]
+      },
+      {
+       "i": 53,
+       "parent": 52,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        793,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 54,
+       "parent": 53,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        793,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 55,
+       "parent": 54,
+       "role": "cell",
+       "name": "Blend",
+       "bbox": [
+        23,
+        793,
+        127,
+        31
+       ]
+      },
+      {
+       "i": 56,
+       "parent": 54,
+       "role": "cell",
+       "name": "Year",
+       "bbox": [
+        150,
+        793,
+        59,
+        31
+       ]
+      },
+      {
+       "i": 57,
+       "parent": 54,
+       "role": "cell",
+       "name": "Style",
+       "bbox": [
+        208,
+        793,
+        126,
+        31
+       ]
+      },
+      {
+       "i": 58,
+       "parent": 54,
+       "role": "cell",
+       "name": "Committed gal",
+       "bbox": [
+        335,
+        793,
+        136,
+        31
+       ]
+      },
+      {
+       "i": 59,
+       "parent": 54,
+       "role": "cell",
+       "name": "State",
+       "bbox": [
+        471,
+        793,
+        74,
+        31
+       ]
+      },
+      {
+       "i": 60,
+       "parent": 54,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        793,
+        397,
+        31
+       ]
+      },
+      {
+       "i": 61,
+       "parent": 52,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        824,
+        919,
+        129
+       ]
+      },
+      {
+       "i": 62,
+       "parent": 61,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        824,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 63,
+       "parent": 62,
+       "role": "cell",
+       "name": "Festival White",
+       "bbox": [
+        23,
+        824,
+        127,
+        43
+       ]
+      },
+      {
+       "i": 64,
+       "parent": 62,
+       "role": "cell",
+       "name": "2020",
+       "bbox": [
+        150,
+        824,
+        59,
+        43
+       ]
+      },
+      {
+       "i": 65,
+       "parent": 62,
+       "role": "cell",
+       "name": "Single varietal",
+       "bbox": [
+        208,
+        824,
+        126,
+        43
+       ]
+      },
+      {
+       "i": 66,
+       "parent": 62,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        335,
+        824,
+        136,
+        43
+       ]
+      },
+      {
+       "i": 67,
+       "parent": 62,
+       "role": "cell",
+       "name": "In cask",
+       "bbox": [
+        471,
+        824,
+        74,
+        43
+       ]
+      },
+      {
+       "i": 68,
+       "parent": 62,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        824,
+        397,
+        43
+       ]
+      },
+      {
+       "i": 69,
+       "parent": 68,
+       "role": "button",
+       "name": "Bottle Festival White",
+       "bbox": [
+        555,
+        830,
+        157,
+        30
+       ]
+      },
+      {
+       "i": 70,
+       "parent": 68,
+       "role": "button",
+       "name": "Disgorge Festival White",
+       "bbox": [
+        716,
+        830,
+        176,
+        30
+       ]
+      },
+      {
+       "i": 71,
+       "parent": 61,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        867,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 72,
+       "parent": 71,
+       "role": "cell",
+       "name": "Picnic",
+       "bbox": [
+        23,
+        867,
+        127,
+        43
+       ]
+      },
+      {
+       "i": 73,
+       "parent": 71,
+       "role": "cell",
+       "name": "2019",
+       "bbox": [
+        150,
+        867,
+        59,
+        43
+       ]
+      },
+      {
+       "i": 74,
+       "parent": 71,
+       "role": "cell",
+       "name": "May blend",
+       "bbox": [
+        208,
+        867,
+        126,
+        43
+       ]
+      },
+      {
+       "i": 75,
+       "parent": 71,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        335,
+        867,
+        136,
+        43
+       ]
+      },
+      {
+       "i": 76,
+       "parent": 71,
+       "role": "cell",
+       "name": "In cask",
+       "bbox": [
+        471,
+        867,
+        74,
+        43
+       ]
+      },
+      {
+       "i": 77,
+       "parent": 71,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        867,
+        397,
+        43
+       ]
+      },
+      {
+       "i": 78,
+       "parent": 77,
+       "role": "button",
+       "name": "Bottle Picnic",
+       "bbox": [
+        555,
+        873,
+        103,
+        30
+       ]
+      },
+      {
+       "i": 79,
+       "parent": 77,
+       "role": "button",
+       "name": "Disgorge Picnic",
+       "bbox": [
+        663,
+        873,
+        122,
+        30
+       ]
+      },
+      {
+       "i": 80,
+       "parent": 61,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        910,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 81,
+       "parent": 80,
+       "role": "cell",
+       "name": "Cloister",
+       "bbox": [
+        23,
+        910,
+        127,
+        43
+       ]
+      },
+      {
+       "i": 82,
+       "parent": 80,
+       "role": "cell",
+       "name": "2022",
+       "bbox": [
+        150,
+        910,
+        59,
+        43
+       ]
+      },
+      {
+       "i": 83,
+       "parent": 80,
+       "role": "cell",
+       "name": "May blend",
+       "bbox": [
+        208,
+        910,
+        126,
+        43
+       ]
+      },
+      {
+       "i": 84,
+       "parent": 80,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        335,
+        910,
+        136,
+        43
+       ]
+      },
+      {
+       "i": 85,
+       "parent": 80,
+       "role": "cell",
+       "name": "In cask",
+       "bbox": [
+        471,
+        910,
+        74,
+        43
+       ]
+      },
+      {
+       "i": 86,
+       "parent": 80,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        910,
+        397,
+        43
+       ]
+      },
+      {
+       "i": 87,
+       "parent": 86,
+       "role": "button",
+       "name": "Bottle Cloister",
+       "bbox": [
+        555,
+        916,
+        114,
+        30
+       ]
+      },
+      {
+       "i": 88,
+       "parent": 86,
+       "role": "button",
+       "name": "Disgorge Cloister",
+       "bbox": [
+        673,
+        916,
+        133,
+        30
+       ]
+      },
+      {
+       "i": 89,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        987,
+        920,
+        115
+       ]
+      },
+      {
+       "i": 90,
+       "parent": 89,
+       "role": "heading",
+       "name": "Draws",
+       "bbox": [
+        22,
+        987,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 91,
+       "parent": 89,
+       "role": "table",
+       "name": "",
+       "bbox": [
+        22,
+        1039,
+        920,
+        63
+       ]
+      },
+      {
+       "i": 92,
+       "parent": 91,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        1039,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 93,
+       "parent": 92,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        1039,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 94,
+       "parent": 93,
+       "role": "cell",
+       "name": "Ticket",
+       "bbox": [
+        23,
+        1039,
+        175,
+        31
+       ]
+      },
+      {
+       "i": 95,
+       "parent": 93,
+       "role": "cell",
+       "name": "Amount",
+       "bbox": [
+        197,
+        1039,
+        209,
+        31
+       ]
+      },
+      {
+       "i": 96,
+       "parent": 93,
+       "role": "cell",
+       "name": "From vat",
+       "bbox": [
+        406,
+        1039,
+        229,
+        31
+       ]
+      },
+      {
+       "i": 97,
+       "parent": 93,
+       "role": "cell",
+       "name": "Into blend",
+       "bbox": [
+        635,
+        1039,
+        249,
+        31
+       ]
+      },
+      {
+       "i": 98,
+       "parent": 93,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        884,
+        1039,
+        57,
+        31
+       ]
+      },
+      {
+       "i": 99,
+       "parent": 91,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        1070,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 100,
+       "parent": 99,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        1070,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 101,
+       "parent": 100,
+       "role": "cell",
+       "name": "No draws recorded.",
+       "bbox": [
+        23,
+        1070,
+        919,
+        31
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "sig": "13f3b9dfbf3bed8a",
+    "obs": {
+     "url": "http://127.0.0.1:8901/?n=Drew%202%20gal%20from%20West%20Ridge%20into%20Picnic.",
+     "nodes": [
+      {
+       "i": 0,
+       "parent": -1,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        0,
+        0,
+        1400,
+        1198
+       ]
+      },
+      {
+       "i": 1,
+       "parent": 0,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        0,
+        0,
+        1400,
+        126
+       ]
+      },
+      {
+       "i": 2,
+       "parent": 1,
+       "role": "heading",
+       "name": "Cellar Blend Book",
+       "bbox": [
+        22,
+        35,
+        1356,
+        37
+       ]
+      },
+      {
+       "i": 3,
+       "parent": 1,
+       "role": "text",
+       "name": "Draw from a vat into a blend, bottle when at least two gallons are committed, or return a draw.",
+       "bbox": [
+        22,
+        94,
+        1356,
+        18
+       ]
+      },
+      {
+       "i": 4,
+       "parent": 0,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        0,
+        126,
+        964,
+        1072
+       ]
+      },
+      {
+       "i": 5,
+       "parent": 4,
+       "role": "status",
+       "name": "Drew 2 gal from West Ridge into Picnic.",
+       "bbox": [
+        22,
+        158,
+        920,
+        36
+       ]
+      },
+      {
+       "i": 6,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        227,
+        920,
+        285
+       ]
+      },
+      {
+       "i": 7,
+       "parent": 6,
+       "role": "heading",
+       "name": "Draw ticket",
+       "bbox": [
+        22,
+        227,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 8,
+       "parent": 6,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        279,
+        450,
+        233
+       ]
+      },
+      {
+       "i": 9,
+       "parent": 8,
+       "role": "text",
+       "name": "Vat",
+       "bbox": [
+        37,
+        292,
+        420,
+        51
+       ]
+      },
+      {
+       "i": 10,
+       "parent": 9,
+       "role": "combobox",
+       "name": "",
+       "value": "West Ridge (Chenin, 4 gal, open)",
+       "options": [
+        "West Ridge (Chenin, 4 gal, open)",
+        "Mill Race (Grenache, 5 gal, open)",
+        "Low Barn (Pinot, 4 gal, closed)"
+       ],
+       "bbox": [
+        37,
+        314,
+        420,
+        29
+       ]
+      },
+      {
+       "i": 11,
+       "parent": 8,
+       "role": "text",
+       "name": "Blend",
+       "bbox": [
+        37,
+        351,
+        420,
+        51
+       ]
+      },
+      {
+       "i": 12,
+       "parent": 11,
+       "role": "combobox",
+       "name": "",
+       "value": "Festival White 2020 (single varietal, open)",
+       "options": [
+        "Festival White 2020 (single varietal, open)",
+        "Picnic 2019 (may blend, open)",
+        "Cloister 2022 (may blend, open)"
+       ],
+       "bbox": [
+        37,
+        373,
+        420,
+        29
+       ]
+      },
+      {
+       "i": 13,
+       "parent": 8,
+       "role": "text",
+       "name": "Gallons",
+       "bbox": [
+        37,
+        410,
+        420,
+        51
+       ]
+      },
+      {
+       "i": 14,
+       "parent": 13,
+       "role": "combobox",
+       "name": "",
+       "value": "1",
+       "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+       ],
+       "bbox": [
+        37,
+        432,
+        420,
+        29
+       ]
+      },
+      {
+       "i": 15,
+       "parent": 8,
+       "role": "button",
+       "name": "Record draw",
+       "bbox": [
+        37,
+        469,
+        420,
+        30
+       ]
+      },
+      {
+       "i": 16,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        546,
+        920,
+        213
+       ]
+      },
+      {
+       "i": 17,
+       "parent": 16,
+       "role": "heading",
+       "name": "Vats",
+       "bbox": [
+        22,
+        546,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 18,
+       "parent": 16,
+       "role": "table",
+       "name": "",
+       "bbox": [
+        22,
+        598,
+        920,
+        161
+       ]
+      },
+      {
+       "i": 19,
+       "parent": 18,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        598,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 20,
+       "parent": 19,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        598,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 21,
+       "parent": 20,
+       "role": "cell",
+       "name": "Vat",
+       "bbox": [
+        23,
+        598,
+        138,
+        31
+       ]
+      },
+      {
+       "i": 22,
+       "parent": 20,
+       "role": "cell",
+       "name": "Varietal",
+       "bbox": [
+        160,
+        598,
+        119,
+        31
+       ]
+      },
+      {
+       "i": 23,
+       "parent": 20,
+       "role": "cell",
+       "name": "Gallons left",
+       "bbox": [
+        279,
+        598,
+        145,
+        31
+       ]
+      },
+      {
+       "i": 24,
+       "parent": 20,
+       "role": "cell",
+       "name": "Gate",
+       "bbox": [
+        424,
+        598,
+        95,
+        31
+       ]
+      },
+      {
+       "i": 25,
+       "parent": 20,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        598,
+        422,
+        31
+       ]
+      },
+      {
+       "i": 26,
+       "parent": 18,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        629,
+        919,
+        129
+       ]
+      },
+      {
+       "i": 27,
+       "parent": 26,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        629,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 28,
+       "parent": 27,
+       "role": "cell",
+       "name": "West Ridge",
+       "bbox": [
+        23,
+        629,
+        138,
+        43
+       ]
+      },
+      {
+       "i": 29,
+       "parent": 27,
+       "role": "cell",
+       "name": "Chenin",
+       "bbox": [
+        160,
+        629,
+        119,
+        43
+       ]
+      },
+      {
+       "i": 30,
+       "parent": 27,
+       "role": "cell",
+       "name": "4",
+       "bbox": [
+        279,
+        629,
+        145,
+        43
+       ]
+      },
+      {
+       "i": 31,
+       "parent": 27,
+       "role": "cell",
+       "name": "Open",
+       "bbox": [
+        424,
+        629,
+        95,
+        43
+       ]
+      },
+      {
+       "i": 32,
+       "parent": 27,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        629,
+        422,
+        43
+       ]
+      },
+      {
+       "i": 33,
+       "parent": 32,
+       "role": "button",
+       "name": "Close West Ridge",
+       "bbox": [
+        530,
+        636,
+        134,
+        30
+       ]
+      },
+      {
+       "i": 34,
+       "parent": 32,
+       "role": "button",
+       "name": "Open West Ridge",
+       "bbox": [
+        668,
+        636,
+        132,
+        30
+       ]
+      },
+      {
+       "i": 35,
+       "parent": 26,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        672,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 36,
+       "parent": 35,
+       "role": "cell",
+       "name": "Mill Race",
+       "bbox": [
+        23,
+        672,
+        138,
+        43
+       ]
+      },
+      {
+       "i": 37,
+       "parent": 35,
+       "role": "cell",
+       "name": "Grenache",
+       "bbox": [
+        160,
+        672,
+        119,
+        43
+       ]
+      },
+      {
+       "i": 38,
+       "parent": 35,
+       "role": "cell",
+       "name": "5",
+       "bbox": [
+        279,
+        672,
+        145,
+        43
+       ]
+      },
+      {
+       "i": 39,
+       "parent": 35,
+       "role": "cell",
+       "name": "Open",
+       "bbox": [
+        424,
+        672,
+        95,
+        43
+       ]
+      },
+      {
+       "i": 40,
+       "parent": 35,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        672,
+        422,
+        43
+       ]
+      },
+      {
+       "i": 41,
+       "parent": 40,
+       "role": "button",
+       "name": "Close Mill Race",
+       "bbox": [
+        530,
+        679,
+        124,
+        30
+       ]
+      },
+      {
+       "i": 42,
+       "parent": 40,
+       "role": "button",
+       "name": "Open Mill Race",
+       "bbox": [
+        658,
+        679,
+        122,
+        30
+       ]
+      },
+      {
+       "i": 43,
+       "parent": 26,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        715,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 44,
+       "parent": 43,
+       "role": "cell",
+       "name": "Low Barn",
+       "bbox": [
+        23,
+        715,
+        138,
+        43
+       ]
+      },
+      {
+       "i": 45,
+       "parent": 43,
+       "role": "cell",
+       "name": "Pinot",
+       "bbox": [
+        160,
+        715,
+        119,
+        43
+       ]
+      },
+      {
+       "i": 46,
+       "parent": 43,
+       "role": "cell",
+       "name": "4",
+       "bbox": [
+        279,
+        715,
+        145,
+        43
+       ]
+      },
+      {
+       "i": 47,
+       "parent": 43,
+       "role": "cell",
+       "name": "Closed",
+       "bbox": [
+        424,
+        715,
+        95,
+        43
+       ]
+      },
+      {
+       "i": 48,
+       "parent": 43,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        715,
+        422,
+        43
+       ]
+      },
+      {
+       "i": 49,
+       "parent": 48,
+       "role": "button",
+       "name": "Close Low Barn",
+       "bbox": [
+        530,
+        722,
+        125,
+        30
+       ]
+      },
+      {
+       "i": 50,
+       "parent": 48,
+       "role": "button",
+       "name": "Open Low Barn",
+       "bbox": [
+        658,
+        722,
+        123,
+        30
+       ]
+      },
+      {
+       "i": 51,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        792,
+        920,
+        213
+       ]
+      },
+      {
+       "i": 52,
+       "parent": 51,
+       "role": "heading",
+       "name": "Blends",
+       "bbox": [
+        22,
+        792,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 53,
+       "parent": 51,
+       "role": "table",
+       "name": "",
+       "bbox": [
+        22,
+        844,
+        920,
+        161
+       ]
+      },
+      {
+       "i": 54,
+       "parent": 53,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        845,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 55,
+       "parent": 54,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        845,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 56,
+       "parent": 55,
+       "role": "cell",
+       "name": "Blend",
+       "bbox": [
+        23,
+        845,
+        127,
+        31
+       ]
+      },
+      {
+       "i": 57,
+       "parent": 55,
+       "role": "cell",
+       "name": "Year",
+       "bbox": [
+        150,
+        845,
+        59,
+        31
+       ]
+      },
+      {
+       "i": 58,
+       "parent": 55,
+       "role": "cell",
+       "name": "Style",
+       "bbox": [
+        208,
+        845,
+        126,
+        31
+       ]
+      },
+      {
+       "i": 59,
+       "parent": 55,
+       "role": "cell",
+       "name": "Committed gal",
+       "bbox": [
+        335,
+        845,
+        136,
+        31
+       ]
+      },
+      {
+       "i": 60,
+       "parent": 55,
+       "role": "cell",
+       "name": "State",
+       "bbox": [
+        471,
+        845,
+        74,
+        31
+       ]
+      },
+      {
+       "i": 61,
+       "parent": 55,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        845,
+        397,
+        31
+       ]
+      },
+      {
+       "i": 62,
+       "parent": 53,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        876,
+        919,
+        129
+       ]
+      },
+      {
+       "i": 63,
+       "parent": 62,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        876,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 64,
+       "parent": 63,
+       "role": "cell",
+       "name": "Festival White",
+       "bbox": [
+        23,
+        876,
+        127,
+        43
+       ]
+      },
+      {
+       "i": 65,
+       "parent": 63,
+       "role": "cell",
+       "name": "2020",
+       "bbox": [
+        150,
+        876,
+        59,
+        43
+       ]
+      },
+      {
+       "i": 66,
+       "parent": 63,
+       "role": "cell",
+       "name": "Single varietal",
+       "bbox": [
+        208,
+        876,
+        126,
+        43
+       ]
+      },
+      {
+       "i": 67,
+       "parent": 63,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        335,
+        876,
+        136,
+        43
+       ]
+      },
+      {
+       "i": 68,
+       "parent": 63,
+       "role": "cell",
+       "name": "In cask",
+       "bbox": [
+        471,
+        876,
+        74,
+        43
+       ]
+      },
+      {
+       "i": 69,
+       "parent": 63,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        876,
+        397,
+        43
+       ]
+      },
+      {
+       "i": 70,
+       "parent": 69,
+       "role": "button",
+       "name": "Bottle Festival White",
+       "bbox": [
+        555,
+        882,
+        157,
+        30
+       ]
+      },
+      {
+       "i": 71,
+       "parent": 69,
+       "role": "button",
+       "name": "Disgorge Festival White",
+       "bbox": [
+        716,
+        882,
+        176,
+        30
+       ]
+      },
+      {
+       "i": 72,
+       "parent": 62,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        919,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 73,
+       "parent": 72,
+       "role": "cell",
+       "name": "Picnic",
+       "bbox": [
+        23,
+        919,
+        127,
+        43
+       ]
+      },
+      {
+       "i": 74,
+       "parent": 72,
+       "role": "cell",
+       "name": "2019",
+       "bbox": [
+        150,
+        919,
+        59,
+        43
+       ]
+      },
+      {
+       "i": 75,
+       "parent": 72,
+       "role": "cell",
+       "name": "May blend",
+       "bbox": [
+        208,
+        919,
+        126,
+        43
+       ]
+      },
+      {
+       "i": 76,
+       "parent": 72,
+       "role": "cell",
+       "name": "2",
+       "bbox": [
+        335,
+        919,
+        136,
+        43
+       ]
+      },
+      {
+       "i": 77,
+       "parent": 72,
+       "role": "cell",
+       "name": "In cask",
+       "bbox": [
+        471,
+        919,
+        74,
+        43
+       ]
+      },
+      {
+       "i": 78,
+       "parent": 72,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        919,
+        397,
+        43
+       ]
+      },
+      {
+       "i": 79,
+       "parent": 78,
+       "role": "button",
+       "name": "Bottle Picnic",
+       "bbox": [
+        555,
+        925,
+        103,
+        30
+       ]
+      },
+      {
+       "i": 80,
+       "parent": 78,
+       "role": "button",
+       "name": "Disgorge Picnic",
+       "bbox": [
+        663,
+        925,
+        122,
+        30
+       ]
+      },
+      {
+       "i": 81,
+       "parent": 62,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        962,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 82,
+       "parent": 81,
+       "role": "cell",
+       "name": "Cloister",
+       "bbox": [
+        23,
+        962,
+        127,
+        43
+       ]
+      },
+      {
+       "i": 83,
+       "parent": 81,
+       "role": "cell",
+       "name": "2022",
+       "bbox": [
+        150,
+        962,
+        59,
+        43
+       ]
+      },
+      {
+       "i": 84,
+       "parent": 81,
+       "role": "cell",
+       "name": "May blend",
+       "bbox": [
+        208,
+        962,
+        126,
+        43
+       ]
+      },
+      {
+       "i": 85,
+       "parent": 81,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        335,
+        962,
+        136,
+        43
+       ]
+      },
+      {
+       "i": 86,
+       "parent": 81,
+       "role": "cell",
+       "name": "In cask",
+       "bbox": [
+        471,
+        962,
+        74,
+        43
+       ]
+      },
+      {
+       "i": 87,
+       "parent": 81,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        962,
+        397,
+        43
+       ]
+      },
+      {
+       "i": 88,
+       "parent": 87,
+       "role": "button",
+       "name": "Bottle Cloister",
+       "bbox": [
+        555,
+        968,
+        114,
+        30
+       ]
+      },
+      {
+       "i": 89,
+       "parent": 87,
+       "role": "button",
+       "name": "Disgorge Cloister",
+       "bbox": [
+        673,
+        968,
+        133,
+        30
+       ]
+      },
+      {
+       "i": 90,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        1039,
+        920,
+        127
+       ]
+      },
+      {
+       "i": 91,
+       "parent": 90,
+       "role": "heading",
+       "name": "Draws",
+       "bbox": [
+        22,
+        1039,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 92,
+       "parent": 90,
+       "role": "table",
+       "name": "",
+       "bbox": [
+        22,
+        1091,
+        920,
+        75
+       ]
+      },
+      {
+       "i": 93,
+       "parent": 92,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        1091,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 94,
+       "parent": 93,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        1091,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 95,
+       "parent": 94,
+       "role": "cell",
+       "name": "Ticket",
+       "bbox": [
+        23,
+        1091,
+        94,
+        31
+       ]
+      },
+      {
+       "i": 96,
+       "parent": 94,
+       "role": "cell",
+       "name": "Amount",
+       "bbox": [
+        116,
+        1091,
+        99,
+        31
+       ]
+      },
+      {
+       "i": 97,
+       "parent": 94,
+       "role": "cell",
+       "name": "From vat",
+       "bbox": [
+        215,
+        1091,
+        121,
+        31
+       ]
+      },
+      {
+       "i": 98,
+       "parent": 94,
+       "role": "cell",
+       "name": "Into blend",
+       "bbox": [
+        336,
+        1091,
+        117,
+        31
+       ]
+      },
+      {
+       "i": 99,
+       "parent": 94,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        454,
+        1091,
+        488,
+        31
+       ]
+      },
+      {
+       "i": 100,
+       "parent": 92,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        1122,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 101,
+       "parent": 100,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        1122,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 102,
+       "parent": 101,
+       "role": "cell",
+       "name": "Ticket 1",
+       "bbox": [
+        23,
+        1122,
+        94,
+        43
+       ]
+      },
+      {
+       "i": 103,
+       "parent": 101,
+       "role": "cell",
+       "name": "2 gal",
+       "bbox": [
+        116,
+        1122,
+        99,
+        43
+       ]
+      },
+      {
+       "i": 104,
+       "parent": 101,
+       "role": "cell",
+       "name": "West Ridge",
+       "bbox": [
+        215,
+        1122,
+        121,
+        43
+       ]
+      },
+      {
+       "i": 105,
+       "parent": 101,
+       "role": "cell",
+       "name": "Picnic",
+       "bbox": [
+        336,
+        1122,
+        117,
+        43
+       ]
+      },
+      {
+       "i": 106,
+       "parent": 101,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        454,
+        1122,
+        488,
+        43
+       ]
+      },
+      {
+       "i": 107,
+       "parent": 106,
+       "role": "button",
+       "name": "Return ticket 1 (2 gal from West Ridge out of Picnic)",
+       "bbox": [
+        464,
+        1129,
+        360,
+        30
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "sig": "3e3e1246fdbb4d97",
+    "obs": {
+     "url": "http://127.0.0.1:8901/?n=Drew%202%20gal%20from%20West%20Ridge%20into%20Picnic.",
+     "nodes": [
+      {
+       "i": 0,
+       "parent": -1,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        0,
+        0,
+        1400,
+        1198
+       ]
+      },
+      {
+       "i": 1,
+       "parent": 0,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        0,
+        0,
+        1400,
+        126
+       ]
+      },
+      {
+       "i": 2,
+       "parent": 1,
+       "role": "heading",
+       "name": "Cellar Blend Book",
+       "bbox": [
+        22,
+        35,
+        1356,
+        37
+       ]
+      },
+      {
+       "i": 3,
+       "parent": 1,
+       "role": "text",
+       "name": "Draw from a vat into a blend, bottle when at least two gallons are committed, or return a draw.",
+       "bbox": [
+        22,
+        94,
+        1356,
+        18
+       ]
+      },
+      {
+       "i": 4,
+       "parent": 0,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        0,
+        126,
+        964,
+        1072
+       ]
+      },
+      {
+       "i": 5,
+       "parent": 4,
+       "role": "status",
+       "name": "Drew 2 gal from West Ridge into Picnic.",
+       "bbox": [
+        22,
+        158,
+        920,
+        36
+       ]
+      },
+      {
+       "i": 6,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        227,
+        920,
+        285
+       ]
+      },
+      {
+       "i": 7,
+       "parent": 6,
+       "role": "heading",
+       "name": "Draw ticket",
+       "bbox": [
+        22,
+        227,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 8,
+       "parent": 6,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        279,
+        450,
+        233
+       ]
+      },
+      {
+       "i": 9,
+       "parent": 8,
+       "role": "text",
+       "name": "Vat",
+       "bbox": [
+        37,
+        292,
+        420,
+        51
+       ]
+      },
+      {
+       "i": 10,
+       "parent": 9,
+       "role": "combobox",
+       "name": "",
+       "value": "Mill Race (Grenache, 5 gal, open)",
+       "options": [
+        "West Ridge (Chenin, 4 gal, open)",
+        "Mill Race (Grenache, 5 gal, open)",
+        "Low Barn (Pinot, 4 gal, closed)"
+       ],
+       "bbox": [
+        37,
+        314,
+        420,
+        29
+       ]
+      },
+      {
+       "i": 11,
+       "parent": 8,
+       "role": "text",
+       "name": "Blend",
+       "bbox": [
+        37,
+        351,
+        420,
+        51
+       ]
+      },
+      {
+       "i": 12,
+       "parent": 11,
+       "role": "combobox",
+       "name": "",
+       "value": "Festival White 2020 (single varietal, open)",
+       "options": [
+        "Festival White 2020 (single varietal, open)",
+        "Picnic 2019 (may blend, open)",
+        "Cloister 2022 (may blend, open)"
+       ],
+       "bbox": [
+        37,
+        373,
+        420,
+        29
+       ]
+      },
+      {
+       "i": 13,
+       "parent": 8,
+       "role": "text",
+       "name": "Gallons",
+       "bbox": [
+        37,
+        410,
+        420,
+        51
+       ]
+      },
+      {
+       "i": 14,
+       "parent": 13,
+       "role": "combobox",
+       "name": "",
+       "value": "1",
+       "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+       ],
+       "bbox": [
+        37,
+        432,
+        420,
+        29
+       ]
+      },
+      {
+       "i": 15,
+       "parent": 8,
+       "role": "button",
+       "name": "Record draw",
+       "bbox": [
+        37,
+        469,
+        420,
+        30
+       ]
+      },
+      {
+       "i": 16,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        546,
+        920,
+        213
+       ]
+      },
+      {
+       "i": 17,
+       "parent": 16,
+       "role": "heading",
+       "name": "Vats",
+       "bbox": [
+        22,
+        546,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 18,
+       "parent": 16,
+       "role": "table",
+       "name": "",
+       "bbox": [
+        22,
+        598,
+        920,
+        161
+       ]
+      },
+      {
+       "i": 19,
+       "parent": 18,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        598,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 20,
+       "parent": 19,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        598,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 21,
+       "parent": 20,
+       "role": "cell",
+       "name": "Vat",
+       "bbox": [
+        23,
+        598,
+        138,
+        31
+       ]
+      },
+      {
+       "i": 22,
+       "parent": 20,
+       "role": "cell",
+       "name": "Varietal",
+       "bbox": [
+        160,
+        598,
+        119,
+        31
+       ]
+      },
+      {
+       "i": 23,
+       "parent": 20,
+       "role": "cell",
+       "name": "Gallons left",
+       "bbox": [
+        279,
+        598,
+        145,
+        31
+       ]
+      },
+      {
+       "i": 24,
+       "parent": 20,
+       "role": "cell",
+       "name": "Gate",
+       "bbox": [
+        424,
+        598,
+        95,
+        31
+       ]
+      },
+      {
+       "i": 25,
+       "parent": 20,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        598,
+        422,
+        31
+       ]
+      },
+      {
+       "i": 26,
+       "parent": 18,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        629,
+        919,
+        129
+       ]
+      },
+      {
+       "i": 27,
+       "parent": 26,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        629,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 28,
+       "parent": 27,
+       "role": "cell",
+       "name": "West Ridge",
+       "bbox": [
+        23,
+        629,
+        138,
+        43
+       ]
+      },
+      {
+       "i": 29,
+       "parent": 27,
+       "role": "cell",
+       "name": "Chenin",
+       "bbox": [
+        160,
+        629,
+        119,
+        43
+       ]
+      },
+      {
+       "i": 30,
+       "parent": 27,
+       "role": "cell",
+       "name": "4",
+       "bbox": [
+        279,
+        629,
+        145,
+        43
+       ]
+      },
+      {
+       "i": 31,
+       "parent": 27,
+       "role": "cell",
+       "name": "Open",
+       "bbox": [
+        424,
+        629,
+        95,
+        43
+       ]
+      },
+      {
+       "i": 32,
+       "parent": 27,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        629,
+        422,
+        43
+       ]
+      },
+      {
+       "i": 33,
+       "parent": 32,
+       "role": "button",
+       "name": "Close West Ridge",
+       "bbox": [
+        530,
+        636,
+        134,
+        30
+       ]
+      },
+      {
+       "i": 34,
+       "parent": 32,
+       "role": "button",
+       "name": "Open West Ridge",
+       "bbox": [
+        668,
+        636,
+        132,
+        30
+       ]
+      },
+      {
+       "i": 35,
+       "parent": 26,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        672,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 36,
+       "parent": 35,
+       "role": "cell",
+       "name": "Mill Race",
+       "bbox": [
+        23,
+        672,
+        138,
+        43
+       ]
+      },
+      {
+       "i": 37,
+       "parent": 35,
+       "role": "cell",
+       "name": "Grenache",
+       "bbox": [
+        160,
+        672,
+        119,
+        43
+       ]
+      },
+      {
+       "i": 38,
+       "parent": 35,
+       "role": "cell",
+       "name": "5",
+       "bbox": [
+        279,
+        672,
+        145,
+        43
+       ]
+      },
+      {
+       "i": 39,
+       "parent": 35,
+       "role": "cell",
+       "name": "Open",
+       "bbox": [
+        424,
+        672,
+        95,
+        43
+       ]
+      },
+      {
+       "i": 40,
+       "parent": 35,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        672,
+        422,
+        43
+       ]
+      },
+      {
+       "i": 41,
+       "parent": 40,
+       "role": "button",
+       "name": "Close Mill Race",
+       "bbox": [
+        530,
+        679,
+        124,
+        30
+       ]
+      },
+      {
+       "i": 42,
+       "parent": 40,
+       "role": "button",
+       "name": "Open Mill Race",
+       "bbox": [
+        658,
+        679,
+        122,
+        30
+       ]
+      },
+      {
+       "i": 43,
+       "parent": 26,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        715,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 44,
+       "parent": 43,
+       "role": "cell",
+       "name": "Low Barn",
+       "bbox": [
+        23,
+        715,
+        138,
+        43
+       ]
+      },
+      {
+       "i": 45,
+       "parent": 43,
+       "role": "cell",
+       "name": "Pinot",
+       "bbox": [
+        160,
+        715,
+        119,
+        43
+       ]
+      },
+      {
+       "i": 46,
+       "parent": 43,
+       "role": "cell",
+       "name": "4",
+       "bbox": [
+        279,
+        715,
+        145,
+        43
+       ]
+      },
+      {
+       "i": 47,
+       "parent": 43,
+       "role": "cell",
+       "name": "Closed",
+       "bbox": [
+        424,
+        715,
+        95,
+        43
+       ]
+      },
+      {
+       "i": 48,
+       "parent": 43,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        715,
+        422,
+        43
+       ]
+      },
+      {
+       "i": 49,
+       "parent": 48,
+       "role": "button",
+       "name": "Close Low Barn",
+       "bbox": [
+        530,
+        722,
+        125,
+        30
+       ]
+      },
+      {
+       "i": 50,
+       "parent": 48,
+       "role": "button",
+       "name": "Open Low Barn",
+       "bbox": [
+        658,
+        722,
+        123,
+        30
+       ]
+      },
+      {
+       "i": 51,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        792,
+        920,
+        213
+       ]
+      },
+      {
+       "i": 52,
+       "parent": 51,
+       "role": "heading",
+       "name": "Blends",
+       "bbox": [
+        22,
+        792,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 53,
+       "parent": 51,
+       "role": "table",
+       "name": "",
+       "bbox": [
+        22,
+        844,
+        920,
+        161
+       ]
+      },
+      {
+       "i": 54,
+       "parent": 53,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        845,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 55,
+       "parent": 54,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        845,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 56,
+       "parent": 55,
+       "role": "cell",
+       "name": "Blend",
+       "bbox": [
+        23,
+        845,
+        127,
+        31
+       ]
+      },
+      {
+       "i": 57,
+       "parent": 55,
+       "role": "cell",
+       "name": "Year",
+       "bbox": [
+        150,
+        845,
+        59,
+        31
+       ]
+      },
+      {
+       "i": 58,
+       "parent": 55,
+       "role": "cell",
+       "name": "Style",
+       "bbox": [
+        208,
+        845,
+        126,
+        31
+       ]
+      },
+      {
+       "i": 59,
+       "parent": 55,
+       "role": "cell",
+       "name": "Committed gal",
+       "bbox": [
+        335,
+        845,
+        136,
+        31
+       ]
+      },
+      {
+       "i": 60,
+       "parent": 55,
+       "role": "cell",
+       "name": "State",
+       "bbox": [
+        471,
+        845,
+        74,
+        31
+       ]
+      },
+      {
+       "i": 61,
+       "parent": 55,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        845,
+        397,
+        31
+       ]
+      },
+      {
+       "i": 62,
+       "parent": 53,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        876,
+        919,
+        129
+       ]
+      },
+      {
+       "i": 63,
+       "parent": 62,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        876,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 64,
+       "parent": 63,
+       "role": "cell",
+       "name": "Festival White",
+       "bbox": [
+        23,
+        876,
+        127,
+        43
+       ]
+      },
+      {
+       "i": 65,
+       "parent": 63,
+       "role": "cell",
+       "name": "2020",
+       "bbox": [
+        150,
+        876,
+        59,
+        43
+       ]
+      },
+      {
+       "i": 66,
+       "parent": 63,
+       "role": "cell",
+       "name": "Single varietal",
+       "bbox": [
+        208,
+        876,
+        126,
+        43
+       ]
+      },
+      {
+       "i": 67,
+       "parent": 63,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        335,
+        876,
+        136,
+        43
+       ]
+      },
+      {
+       "i": 68,
+       "parent": 63,
+       "role": "cell",
+       "name": "In cask",
+       "bbox": [
+        471,
+        876,
+        74,
+        43
+       ]
+      },
+      {
+       "i": 69,
+       "parent": 63,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        876,
+        397,
+        43
+       ]
+      },
+      {
+       "i": 70,
+       "parent": 69,
+       "role": "button",
+       "name": "Bottle Festival White",
+       "bbox": [
+        555,
+        882,
+        157,
+        30
+       ]
+      },
+      {
+       "i": 71,
+       "parent": 69,
+       "role": "button",
+       "name": "Disgorge Festival White",
+       "bbox": [
+        716,
+        882,
+        176,
+        30
+       ]
+      },
+      {
+       "i": 72,
+       "parent": 62,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        919,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 73,
+       "parent": 72,
+       "role": "cell",
+       "name": "Picnic",
+       "bbox": [
+        23,
+        919,
+        127,
+        43
+       ]
+      },
+      {
+       "i": 74,
+       "parent": 72,
+       "role": "cell",
+       "name": "2019",
+       "bbox": [
+        150,
+        919,
+        59,
+        43
+       ]
+      },
+      {
+       "i": 75,
+       "parent": 72,
+       "role": "cell",
+       "name": "May blend",
+       "bbox": [
+        208,
+        919,
+        126,
+        43
+       ]
+      },
+      {
+       "i": 76,
+       "parent": 72,
+       "role": "cell",
+       "name": "2",
+       "bbox": [
+        335,
+        919,
+        136,
+        43
+       ]
+      },
+      {
+       "i": 77,
+       "parent": 72,
+       "role": "cell",
+       "name": "In cask",
+       "bbox": [
+        471,
+        919,
+        74,
+        43
+       ]
+      },
+      {
+       "i": 78,
+       "parent": 72,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        919,
+        397,
+        43
+       ]
+      },
+      {
+       "i": 79,
+       "parent": 78,
+       "role": "button",
+       "name": "Bottle Picnic",
+       "bbox": [
+        555,
+        925,
+        103,
+        30
+       ]
+      },
+      {
+       "i": 80,
+       "parent": 78,
+       "role": "button",
+       "name": "Disgorge Picnic",
+       "bbox": [
+        663,
+        925,
+        122,
+        30
+       ]
+      },
+      {
+       "i": 81,
+       "parent": 62,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        962,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 82,
+       "parent": 81,
+       "role": "cell",
+       "name": "Cloister",
+       "bbox": [
+        23,
+        962,
+        127,
+        43
+       ]
+      },
+      {
+       "i": 83,
+       "parent": 81,
+       "role": "cell",
+       "name": "2022",
+       "bbox": [
+        150,
+        962,
+        59,
+        43
+       ]
+      },
+      {
+       "i": 84,
+       "parent": 81,
+       "role": "cell",
+       "name": "May blend",
+       "bbox": [
+        208,
+        962,
+        126,
+        43
+       ]
+      },
+      {
+       "i": 85,
+       "parent": 81,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        335,
+        962,
+        136,
+        43
+       ]
+      },
+      {
+       "i": 86,
+       "parent": 81,
+       "role": "cell",
+       "name": "In cask",
+       "bbox": [
+        471,
+        962,
+        74,
+        43
+       ]
+      },
+      {
+       "i": 87,
+       "parent": 81,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        962,
+        397,
+        43
+       ]
+      },
+      {
+       "i": 88,
+       "parent": 87,
+       "role": "button",
+       "name": "Bottle Cloister",
+       "bbox": [
+        555,
+        968,
+        114,
+        30
+       ]
+      },
+      {
+       "i": 89,
+       "parent": 87,
+       "role": "button",
+       "name": "Disgorge Cloister",
+       "bbox": [
+        673,
+        968,
+        133,
+        30
+       ]
+      },
+      {
+       "i": 90,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        1039,
+        920,
+        127
+       ]
+      },
+      {
+       "i": 91,
+       "parent": 90,
+       "role": "heading",
+       "name": "Draws",
+       "bbox": [
+        22,
+        1039,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 92,
+       "parent": 90,
+       "role": "table",
+       "name": "",
+       "bbox": [
+        22,
+        1091,
+        920,
+        75
+       ]
+      },
+      {
+       "i": 93,
+       "parent": 92,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        1091,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 94,
+       "parent": 93,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        1091,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 95,
+       "parent": 94,
+       "role": "cell",
+       "name": "Ticket",
+       "bbox": [
+        23,
+        1091,
+        94,
+        31
+       ]
+      },
+      {
+       "i": 96,
+       "parent": 94,
+       "role": "cell",
+       "name": "Amount",
+       "bbox": [
+        116,
+        1091,
+        99,
+        31
+       ]
+      },
+      {
+       "i": 97,
+       "parent": 94,
+       "role": "cell",
+       "name": "From vat",
+       "bbox": [
+        215,
+        1091,
+        121,
+        31
+       ]
+      },
+      {
+       "i": 98,
+       "parent": 94,
+       "role": "cell",
+       "name": "Into blend",
+       "bbox": [
+        336,
+        1091,
+        117,
+        31
+       ]
+      },
+      {
+       "i": 99,
+       "parent": 94,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        454,
+        1091,
+        488,
+        31
+       ]
+      },
+      {
+       "i": 100,
+       "parent": 92,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        1122,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 101,
+       "parent": 100,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        1122,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 102,
+       "parent": 101,
+       "role": "cell",
+       "name": "Ticket 1",
+       "bbox": [
+        23,
+        1122,
+        94,
+        43
+       ]
+      },
+      {
+       "i": 103,
+       "parent": 101,
+       "role": "cell",
+       "name": "2 gal",
+       "bbox": [
+        116,
+        1122,
+        99,
+        43
+       ]
+      },
+      {
+       "i": 104,
+       "parent": 101,
+       "role": "cell",
+       "name": "West Ridge",
+       "bbox": [
+        215,
+        1122,
+        121,
+        43
+       ]
+      },
+      {
+       "i": 105,
+       "parent": 101,
+       "role": "cell",
+       "name": "Picnic",
+       "bbox": [
+        336,
+        1122,
+        117,
+        43
+       ]
+      },
+      {
+       "i": 106,
+       "parent": 101,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        454,
+        1122,
+        488,
+        43
+       ]
+      },
+      {
+       "i": 107,
+       "parent": 106,
+       "role": "button",
+       "name": "Return ticket 1 (2 gal from West Ridge out of Picnic)",
+       "bbox": [
+        464,
+        1129,
+        360,
+        30
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "sig": "03a75784684699e8",
+    "obs": {
+     "url": "http://127.0.0.1:8901/?n=Drew%202%20gal%20from%20West%20Ridge%20into%20Picnic.",
+     "nodes": [
+      {
+       "i": 0,
+       "parent": -1,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        0,
+        0,
+        1400,
+        1198
+       ]
+      },
+      {
+       "i": 1,
+       "parent": 0,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        0,
+        0,
+        1400,
+        126
+       ]
+      },
+      {
+       "i": 2,
+       "parent": 1,
+       "role": "heading",
+       "name": "Cellar Blend Book",
+       "bbox": [
+        22,
+        35,
+        1356,
+        37
+       ]
+      },
+      {
+       "i": 3,
+       "parent": 1,
+       "role": "text",
+       "name": "Draw from a vat into a blend, bottle when at least two gallons are committed, or return a draw.",
+       "bbox": [
+        22,
+        94,
+        1356,
+        18
+       ]
+      },
+      {
+       "i": 4,
+       "parent": 0,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        0,
+        126,
+        964,
+        1072
+       ]
+      },
+      {
+       "i": 5,
+       "parent": 4,
+       "role": "status",
+       "name": "Drew 2 gal from West Ridge into Picnic.",
+       "bbox": [
+        22,
+        158,
+        920,
+        36
+       ]
+      },
+      {
+       "i": 6,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        227,
+        920,
+        285
+       ]
+      },
+      {
+       "i": 7,
+       "parent": 6,
+       "role": "heading",
+       "name": "Draw ticket",
+       "bbox": [
+        22,
+        227,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 8,
+       "parent": 6,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        279,
+        450,
+        233
+       ]
+      },
+      {
+       "i": 9,
+       "parent": 8,
+       "role": "text",
+       "name": "Vat",
+       "bbox": [
+        37,
+        292,
+        420,
+        51
+       ]
+      },
+      {
+       "i": 10,
+       "parent": 9,
+       "role": "combobox",
+       "name": "",
+       "value": "Mill Race (Grenache, 5 gal, open)",
+       "options": [
+        "West Ridge (Chenin, 4 gal, open)",
+        "Mill Race (Grenache, 5 gal, open)",
+        "Low Barn (Pinot, 4 gal, closed)"
+       ],
+       "bbox": [
+        37,
+        314,
+        420,
+        29
+       ]
+      },
+      {
+       "i": 11,
+       "parent": 8,
+       "role": "text",
+       "name": "Blend",
+       "bbox": [
+        37,
+        351,
+        420,
+        51
+       ]
+      },
+      {
+       "i": 12,
+       "parent": 11,
+       "role": "combobox",
+       "name": "",
+       "value": "Festival White 2020 (single varietal, open)",
+       "options": [
+        "Festival White 2020 (single varietal, open)",
+        "Picnic 2019 (may blend, open)",
+        "Cloister 2022 (may blend, open)"
+       ],
+       "bbox": [
+        37,
+        373,
+        420,
+        29
+       ]
+      },
+      {
+       "i": 13,
+       "parent": 8,
+       "role": "text",
+       "name": "Gallons",
+       "bbox": [
+        37,
+        410,
+        420,
+        51
+       ]
+      },
+      {
+       "i": 14,
+       "parent": 13,
+       "role": "combobox",
+       "name": "",
+       "value": "2",
+       "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+       ],
+       "bbox": [
+        37,
+        432,
+        420,
+        29
+       ]
+      },
+      {
+       "i": 15,
+       "parent": 8,
+       "role": "button",
+       "name": "Record draw",
+       "bbox": [
+        37,
+        469,
+        420,
+        30
+       ]
+      },
+      {
+       "i": 16,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        546,
+        920,
+        213
+       ]
+      },
+      {
+       "i": 17,
+       "parent": 16,
+       "role": "heading",
+       "name": "Vats",
+       "bbox": [
+        22,
+        546,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 18,
+       "parent": 16,
+       "role": "table",
+       "name": "",
+       "bbox": [
+        22,
+        598,
+        920,
+        161
+       ]
+      },
+      {
+       "i": 19,
+       "parent": 18,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        598,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 20,
+       "parent": 19,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        598,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 21,
+       "parent": 20,
+       "role": "cell",
+       "name": "Vat",
+       "bbox": [
+        23,
+        598,
+        138,
+        31
+       ]
+      },
+      {
+       "i": 22,
+       "parent": 20,
+       "role": "cell",
+       "name": "Varietal",
+       "bbox": [
+        160,
+        598,
+        119,
+        31
+       ]
+      },
+      {
+       "i": 23,
+       "parent": 20,
+       "role": "cell",
+       "name": "Gallons left",
+       "bbox": [
+        279,
+        598,
+        145,
+        31
+       ]
+      },
+      {
+       "i": 24,
+       "parent": 20,
+       "role": "cell",
+       "name": "Gate",
+       "bbox": [
+        424,
+        598,
+        95,
+        31
+       ]
+      },
+      {
+       "i": 25,
+       "parent": 20,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        598,
+        422,
+        31
+       ]
+      },
+      {
+       "i": 26,
+       "parent": 18,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        629,
+        919,
+        129
+       ]
+      },
+      {
+       "i": 27,
+       "parent": 26,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        629,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 28,
+       "parent": 27,
+       "role": "cell",
+       "name": "West Ridge",
+       "bbox": [
+        23,
+        629,
+        138,
+        43
+       ]
+      },
+      {
+       "i": 29,
+       "parent": 27,
+       "role": "cell",
+       "name": "Chenin",
+       "bbox": [
+        160,
+        629,
+        119,
+        43
+       ]
+      },
+      {
+       "i": 30,
+       "parent": 27,
+       "role": "cell",
+       "name": "4",
+       "bbox": [
+        279,
+        629,
+        145,
+        43
+       ]
+      },
+      {
+       "i": 31,
+       "parent": 27,
+       "role": "cell",
+       "name": "Open",
+       "bbox": [
+        424,
+        629,
+        95,
+        43
+       ]
+      },
+      {
+       "i": 32,
+       "parent": 27,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        629,
+        422,
+        43
+       ]
+      },
+      {
+       "i": 33,
+       "parent": 32,
+       "role": "button",
+       "name": "Close West Ridge",
+       "bbox": [
+        530,
+        636,
+        134,
+        30
+       ]
+      },
+      {
+       "i": 34,
+       "parent": 32,
+       "role": "button",
+       "name": "Open West Ridge",
+       "bbox": [
+        668,
+        636,
+        132,
+        30
+       ]
+      },
+      {
+       "i": 35,
+       "parent": 26,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        672,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 36,
+       "parent": 35,
+       "role": "cell",
+       "name": "Mill Race",
+       "bbox": [
+        23,
+        672,
+        138,
+        43
+       ]
+      },
+      {
+       "i": 37,
+       "parent": 35,
+       "role": "cell",
+       "name": "Grenache",
+       "bbox": [
+        160,
+        672,
+        119,
+        43
+       ]
+      },
+      {
+       "i": 38,
+       "parent": 35,
+       "role": "cell",
+       "name": "5",
+       "bbox": [
+        279,
+        672,
+        145,
+        43
+       ]
+      },
+      {
+       "i": 39,
+       "parent": 35,
+       "role": "cell",
+       "name": "Open",
+       "bbox": [
+        424,
+        672,
+        95,
+        43
+       ]
+      },
+      {
+       "i": 40,
+       "parent": 35,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        672,
+        422,
+        43
+       ]
+      },
+      {
+       "i": 41,
+       "parent": 40,
+       "role": "button",
+       "name": "Close Mill Race",
+       "bbox": [
+        530,
+        679,
+        124,
+        30
+       ]
+      },
+      {
+       "i": 42,
+       "parent": 40,
+       "role": "button",
+       "name": "Open Mill Race",
+       "bbox": [
+        658,
+        679,
+        122,
+        30
+       ]
+      },
+      {
+       "i": 43,
+       "parent": 26,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        715,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 44,
+       "parent": 43,
+       "role": "cell",
+       "name": "Low Barn",
+       "bbox": [
+        23,
+        715,
+        138,
+        43
+       ]
+      },
+      {
+       "i": 45,
+       "parent": 43,
+       "role": "cell",
+       "name": "Pinot",
+       "bbox": [
+        160,
+        715,
+        119,
+        43
+       ]
+      },
+      {
+       "i": 46,
+       "parent": 43,
+       "role": "cell",
+       "name": "4",
+       "bbox": [
+        279,
+        715,
+        145,
+        43
+       ]
+      },
+      {
+       "i": 47,
+       "parent": 43,
+       "role": "cell",
+       "name": "Closed",
+       "bbox": [
+        424,
+        715,
+        95,
+        43
+       ]
+      },
+      {
+       "i": 48,
+       "parent": 43,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        715,
+        422,
+        43
+       ]
+      },
+      {
+       "i": 49,
+       "parent": 48,
+       "role": "button",
+       "name": "Close Low Barn",
+       "bbox": [
+        530,
+        722,
+        125,
+        30
+       ]
+      },
+      {
+       "i": 50,
+       "parent": 48,
+       "role": "button",
+       "name": "Open Low Barn",
+       "bbox": [
+        658,
+        722,
+        123,
+        30
+       ]
+      },
+      {
+       "i": 51,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        792,
+        920,
+        213
+       ]
+      },
+      {
+       "i": 52,
+       "parent": 51,
+       "role": "heading",
+       "name": "Blends",
+       "bbox": [
+        22,
+        792,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 53,
+       "parent": 51,
+       "role": "table",
+       "name": "",
+       "bbox": [
+        22,
+        844,
+        920,
+        161
+       ]
+      },
+      {
+       "i": 54,
+       "parent": 53,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        845,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 55,
+       "parent": 54,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        845,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 56,
+       "parent": 55,
+       "role": "cell",
+       "name": "Blend",
+       "bbox": [
+        23,
+        845,
+        127,
+        31
+       ]
+      },
+      {
+       "i": 57,
+       "parent": 55,
+       "role": "cell",
+       "name": "Year",
+       "bbox": [
+        150,
+        845,
+        59,
+        31
+       ]
+      },
+      {
+       "i": 58,
+       "parent": 55,
+       "role": "cell",
+       "name": "Style",
+       "bbox": [
+        208,
+        845,
+        126,
+        31
+       ]
+      },
+      {
+       "i": 59,
+       "parent": 55,
+       "role": "cell",
+       "name": "Committed gal",
+       "bbox": [
+        335,
+        845,
+        136,
+        31
+       ]
+      },
+      {
+       "i": 60,
+       "parent": 55,
+       "role": "cell",
+       "name": "State",
+       "bbox": [
+        471,
+        845,
+        74,
+        31
+       ]
+      },
+      {
+       "i": 61,
+       "parent": 55,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        845,
+        397,
+        31
+       ]
+      },
+      {
+       "i": 62,
+       "parent": 53,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        876,
+        919,
+        129
+       ]
+      },
+      {
+       "i": 63,
+       "parent": 62,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        876,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 64,
+       "parent": 63,
+       "role": "cell",
+       "name": "Festival White",
+       "bbox": [
+        23,
+        876,
+        127,
+        43
+       ]
+      },
+      {
+       "i": 65,
+       "parent": 63,
+       "role": "cell",
+       "name": "2020",
+       "bbox": [
+        150,
+        876,
+        59,
+        43
+       ]
+      },
+      {
+       "i": 66,
+       "parent": 63,
+       "role": "cell",
+       "name": "Single varietal",
+       "bbox": [
+        208,
+        876,
+        126,
+        43
+       ]
+      },
+      {
+       "i": 67,
+       "parent": 63,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        335,
+        876,
+        136,
+        43
+       ]
+      },
+      {
+       "i": 68,
+       "parent": 63,
+       "role": "cell",
+       "name": "In cask",
+       "bbox": [
+        471,
+        876,
+        74,
+        43
+       ]
+      },
+      {
+       "i": 69,
+       "parent": 63,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        876,
+        397,
+        43
+       ]
+      },
+      {
+       "i": 70,
+       "parent": 69,
+       "role": "button",
+       "name": "Bottle Festival White",
+       "bbox": [
+        555,
+        882,
+        157,
+        30
+       ]
+      },
+      {
+       "i": 71,
+       "parent": 69,
+       "role": "button",
+       "name": "Disgorge Festival White",
+       "bbox": [
+        716,
+        882,
+        176,
+        30
+       ]
+      },
+      {
+       "i": 72,
+       "parent": 62,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        919,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 73,
+       "parent": 72,
+       "role": "cell",
+       "name": "Picnic",
+       "bbox": [
+        23,
+        919,
+        127,
+        43
+       ]
+      },
+      {
+       "i": 74,
+       "parent": 72,
+       "role": "cell",
+       "name": "2019",
+       "bbox": [
+        150,
+        919,
+        59,
+        43
+       ]
+      },
+      {
+       "i": 75,
+       "parent": 72,
+       "role": "cell",
+       "name": "May blend",
+       "bbox": [
+        208,
+        919,
+        126,
+        43
+       ]
+      },
+      {
+       "i": 76,
+       "parent": 72,
+       "role": "cell",
+       "name": "2",
+       "bbox": [
+        335,
+        919,
+        136,
+        43
+       ]
+      },
+      {
+       "i": 77,
+       "parent": 72,
+       "role": "cell",
+       "name": "In cask",
+       "bbox": [
+        471,
+        919,
+        74,
+        43
+       ]
+      },
+      {
+       "i": 78,
+       "parent": 72,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        919,
+        397,
+        43
+       ]
+      },
+      {
+       "i": 79,
+       "parent": 78,
+       "role": "button",
+       "name": "Bottle Picnic",
+       "bbox": [
+        555,
+        925,
+        103,
+        30
+       ]
+      },
+      {
+       "i": 80,
+       "parent": 78,
+       "role": "button",
+       "name": "Disgorge Picnic",
+       "bbox": [
+        663,
+        925,
+        122,
+        30
+       ]
+      },
+      {
+       "i": 81,
+       "parent": 62,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        962,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 82,
+       "parent": 81,
+       "role": "cell",
+       "name": "Cloister",
+       "bbox": [
+        23,
+        962,
+        127,
+        43
+       ]
+      },
+      {
+       "i": 83,
+       "parent": 81,
+       "role": "cell",
+       "name": "2022",
+       "bbox": [
+        150,
+        962,
+        59,
+        43
+       ]
+      },
+      {
+       "i": 84,
+       "parent": 81,
+       "role": "cell",
+       "name": "May blend",
+       "bbox": [
+        208,
+        962,
+        126,
+        43
+       ]
+      },
+      {
+       "i": 85,
+       "parent": 81,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        335,
+        962,
+        136,
+        43
+       ]
+      },
+      {
+       "i": 86,
+       "parent": 81,
+       "role": "cell",
+       "name": "In cask",
+       "bbox": [
+        471,
+        962,
+        74,
+        43
+       ]
+      },
+      {
+       "i": 87,
+       "parent": 81,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        962,
+        397,
+        43
+       ]
+      },
+      {
+       "i": 88,
+       "parent": 87,
+       "role": "button",
+       "name": "Bottle Cloister",
+       "bbox": [
+        555,
+        968,
+        114,
+        30
+       ]
+      },
+      {
+       "i": 89,
+       "parent": 87,
+       "role": "button",
+       "name": "Disgorge Cloister",
+       "bbox": [
+        673,
+        968,
+        133,
+        30
+       ]
+      },
+      {
+       "i": 90,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        1039,
+        920,
+        127
+       ]
+      },
+      {
+       "i": 91,
+       "parent": 90,
+       "role": "heading",
+       "name": "Draws",
+       "bbox": [
+        22,
+        1039,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 92,
+       "parent": 90,
+       "role": "table",
+       "name": "",
+       "bbox": [
+        22,
+        1091,
+        920,
+        75
+       ]
+      },
+      {
+       "i": 93,
+       "parent": 92,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        1091,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 94,
+       "parent": 93,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        1091,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 95,
+       "parent": 94,
+       "role": "cell",
+       "name": "Ticket",
+       "bbox": [
+        23,
+        1091,
+        94,
+        31
+       ]
+      },
+      {
+       "i": 96,
+       "parent": 94,
+       "role": "cell",
+       "name": "Amount",
+       "bbox": [
+        116,
+        1091,
+        99,
+        31
+       ]
+      },
+      {
+       "i": 97,
+       "parent": 94,
+       "role": "cell",
+       "name": "From vat",
+       "bbox": [
+        215,
+        1091,
+        121,
+        31
+       ]
+      },
+      {
+       "i": 98,
+       "parent": 94,
+       "role": "cell",
+       "name": "Into blend",
+       "bbox": [
+        336,
+        1091,
+        117,
+        31
+       ]
+      },
+      {
+       "i": 99,
+       "parent": 94,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        454,
+        1091,
+        488,
+        31
+       ]
+      },
+      {
+       "i": 100,
+       "parent": 92,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        1122,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 101,
+       "parent": 100,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        1122,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 102,
+       "parent": 101,
+       "role": "cell",
+       "name": "Ticket 1",
+       "bbox": [
+        23,
+        1122,
+        94,
+        43
+       ]
+      },
+      {
+       "i": 103,
+       "parent": 101,
+       "role": "cell",
+       "name": "2 gal",
+       "bbox": [
+        116,
+        1122,
+        99,
+        43
+       ]
+      },
+      {
+       "i": 104,
+       "parent": 101,
+       "role": "cell",
+       "name": "West Ridge",
+       "bbox": [
+        215,
+        1122,
+        121,
+        43
+       ]
+      },
+      {
+       "i": 105,
+       "parent": 101,
+       "role": "cell",
+       "name": "Picnic",
+       "bbox": [
+        336,
+        1122,
+        117,
+        43
+       ]
+      },
+      {
+       "i": 106,
+       "parent": 101,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        454,
+        1122,
+        488,
+        43
+       ]
+      },
+      {
+       "i": 107,
+       "parent": 106,
+       "role": "button",
+       "name": "Return ticket 1 (2 gal from West Ridge out of Picnic)",
+       "bbox": [
+        464,
+        1129,
+        360,
+        30
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "sig": "fb6c7cdcc7e8e024",
+    "obs": {
+     "url": "http://127.0.0.1:8901/?n=Drew%202%20gal%20from%20Mill%20Race%20into%20Festival%20White.",
+     "nodes": [
+      {
+       "i": 0,
+       "parent": -1,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        0,
+        0,
+        1400,
+        1241
+       ]
+      },
+      {
+       "i": 1,
+       "parent": 0,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        0,
+        0,
+        1400,
+        126
+       ]
+      },
+      {
+       "i": 2,
+       "parent": 1,
+       "role": "heading",
+       "name": "Cellar Blend Book",
+       "bbox": [
+        22,
+        35,
+        1356,
+        37
+       ]
+      },
+      {
+       "i": 3,
+       "parent": 1,
+       "role": "text",
+       "name": "Draw from a vat into a blend, bottle when at least two gallons are committed, or return a draw.",
+       "bbox": [
+        22,
+        94,
+        1356,
+        18
+       ]
+      },
+      {
+       "i": 4,
+       "parent": 0,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        0,
+        126,
+        964,
+        1115
+       ]
+      },
+      {
+       "i": 5,
+       "parent": 4,
+       "role": "status",
+       "name": "Drew 2 gal from Mill Race into Festival White.",
+       "bbox": [
+        22,
+        158,
+        920,
+        36
+       ]
+      },
+      {
+       "i": 6,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        227,
+        920,
+        285
+       ]
+      },
+      {
+       "i": 7,
+       "parent": 6,
+       "role": "heading",
+       "name": "Draw ticket",
+       "bbox": [
+        22,
+        227,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 8,
+       "parent": 6,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        279,
+        450,
+        233
+       ]
+      },
+      {
+       "i": 9,
+       "parent": 8,
+       "role": "text",
+       "name": "Vat",
+       "bbox": [
+        37,
+        292,
+        420,
+        51
+       ]
+      },
+      {
+       "i": 10,
+       "parent": 9,
+       "role": "combobox",
+       "name": "",
+       "value": "West Ridge (Chenin, 4 gal, open)",
+       "options": [
+        "West Ridge (Chenin, 4 gal, open)",
+        "Mill Race (Grenache, 3 gal, open)",
+        "Low Barn (Pinot, 4 gal, closed)"
+       ],
+       "bbox": [
+        37,
+        314,
+        420,
+        29
+       ]
+      },
+      {
+       "i": 11,
+       "parent": 8,
+       "role": "text",
+       "name": "Blend",
+       "bbox": [
+        37,
+        351,
+        420,
+        51
+       ]
+      },
+      {
+       "i": 12,
+       "parent": 11,
+       "role": "combobox",
+       "name": "",
+       "value": "Festival White 2020 (single varietal, open)",
+       "options": [
+        "Festival White 2020 (single varietal, open)",
+        "Picnic 2019 (may blend, open)",
+        "Cloister 2022 (may blend, open)"
+       ],
+       "bbox": [
+        37,
+        373,
+        420,
+        29
+       ]
+      },
+      {
+       "i": 13,
+       "parent": 8,
+       "role": "text",
+       "name": "Gallons",
+       "bbox": [
+        37,
+        410,
+        420,
+        51
+       ]
+      },
+      {
+       "i": 14,
+       "parent": 13,
+       "role": "combobox",
+       "name": "",
+       "value": "1",
+       "options": [
+        "1",
+        "2",
+        "3",
+        "4"
+       ],
+       "bbox": [
+        37,
+        432,
+        420,
+        29
+       ]
+      },
+      {
+       "i": 15,
+       "parent": 8,
+       "role": "button",
+       "name": "Record draw",
+       "bbox": [
+        37,
+        469,
+        420,
+        30
+       ]
+      },
+      {
+       "i": 16,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        546,
+        920,
+        213
+       ]
+      },
+      {
+       "i": 17,
+       "parent": 16,
+       "role": "heading",
+       "name": "Vats",
+       "bbox": [
+        22,
+        546,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 18,
+       "parent": 16,
+       "role": "table",
+       "name": "",
+       "bbox": [
+        22,
+        598,
+        920,
+        161
+       ]
+      },
+      {
+       "i": 19,
+       "parent": 18,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        598,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 20,
+       "parent": 19,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        598,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 21,
+       "parent": 20,
+       "role": "cell",
+       "name": "Vat",
+       "bbox": [
+        23,
+        598,
+        138,
+        31
+       ]
+      },
+      {
+       "i": 22,
+       "parent": 20,
+       "role": "cell",
+       "name": "Varietal",
+       "bbox": [
+        160,
+        598,
+        119,
+        31
+       ]
+      },
+      {
+       "i": 23,
+       "parent": 20,
+       "role": "cell",
+       "name": "Gallons left",
+       "bbox": [
+        279,
+        598,
+        145,
+        31
+       ]
+      },
+      {
+       "i": 24,
+       "parent": 20,
+       "role": "cell",
+       "name": "Gate",
+       "bbox": [
+        424,
+        598,
+        95,
+        31
+       ]
+      },
+      {
+       "i": 25,
+       "parent": 20,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        598,
+        422,
+        31
+       ]
+      },
+      {
+       "i": 26,
+       "parent": 18,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        629,
+        919,
+        129
+       ]
+      },
+      {
+       "i": 27,
+       "parent": 26,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        629,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 28,
+       "parent": 27,
+       "role": "cell",
+       "name": "West Ridge",
+       "bbox": [
+        23,
+        629,
+        138,
+        43
+       ]
+      },
+      {
+       "i": 29,
+       "parent": 27,
+       "role": "cell",
+       "name": "Chenin",
+       "bbox": [
+        160,
+        629,
+        119,
+        43
+       ]
+      },
+      {
+       "i": 30,
+       "parent": 27,
+       "role": "cell",
+       "name": "4",
+       "bbox": [
+        279,
+        629,
+        145,
+        43
+       ]
+      },
+      {
+       "i": 31,
+       "parent": 27,
+       "role": "cell",
+       "name": "Open",
+       "bbox": [
+        424,
+        629,
+        95,
+        43
+       ]
+      },
+      {
+       "i": 32,
+       "parent": 27,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        629,
+        422,
+        43
+       ]
+      },
+      {
+       "i": 33,
+       "parent": 32,
+       "role": "button",
+       "name": "Close West Ridge",
+       "bbox": [
+        530,
+        636,
+        134,
+        30
+       ]
+      },
+      {
+       "i": 34,
+       "parent": 32,
+       "role": "button",
+       "name": "Open West Ridge",
+       "bbox": [
+        668,
+        636,
+        132,
+        30
+       ]
+      },
+      {
+       "i": 35,
+       "parent": 26,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        672,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 36,
+       "parent": 35,
+       "role": "cell",
+       "name": "Mill Race",
+       "bbox": [
+        23,
+        672,
+        138,
+        43
+       ]
+      },
+      {
+       "i": 37,
+       "parent": 35,
+       "role": "cell",
+       "name": "Grenache",
+       "bbox": [
+        160,
+        672,
+        119,
+        43
+       ]
+      },
+      {
+       "i": 38,
+       "parent": 35,
+       "role": "cell",
+       "name": "3",
+       "bbox": [
+        279,
+        672,
+        145,
+        43
+       ]
+      },
+      {
+       "i": 39,
+       "parent": 35,
+       "role": "cell",
+       "name": "Open",
+       "bbox": [
+        424,
+        672,
+        95,
+        43
+       ]
+      },
+      {
+       "i": 40,
+       "parent": 35,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        672,
+        422,
+        43
+       ]
+      },
+      {
+       "i": 41,
+       "parent": 40,
+       "role": "button",
+       "name": "Close Mill Race",
+       "bbox": [
+        530,
+        679,
+        124,
+        30
+       ]
+      },
+      {
+       "i": 42,
+       "parent": 40,
+       "role": "button",
+       "name": "Open Mill Race",
+       "bbox": [
+        658,
+        679,
+        122,
+        30
+       ]
+      },
+      {
+       "i": 43,
+       "parent": 26,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        715,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 44,
+       "parent": 43,
+       "role": "cell",
+       "name": "Low Barn",
+       "bbox": [
+        23,
+        715,
+        138,
+        43
+       ]
+      },
+      {
+       "i": 45,
+       "parent": 43,
+       "role": "cell",
+       "name": "Pinot",
+       "bbox": [
+        160,
+        715,
+        119,
+        43
+       ]
+      },
+      {
+       "i": 46,
+       "parent": 43,
+       "role": "cell",
+       "name": "4",
+       "bbox": [
+        279,
+        715,
+        145,
+        43
+       ]
+      },
+      {
+       "i": 47,
+       "parent": 43,
+       "role": "cell",
+       "name": "Closed",
+       "bbox": [
+        424,
+        715,
+        95,
+        43
+       ]
+      },
+      {
+       "i": 48,
+       "parent": 43,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        519,
+        715,
+        422,
+        43
+       ]
+      },
+      {
+       "i": 49,
+       "parent": 48,
+       "role": "button",
+       "name": "Close Low Barn",
+       "bbox": [
+        530,
+        722,
+        125,
+        30
+       ]
+      },
+      {
+       "i": 50,
+       "parent": 48,
+       "role": "button",
+       "name": "Open Low Barn",
+       "bbox": [
+        658,
+        722,
+        123,
+        30
+       ]
+      },
+      {
+       "i": 51,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        792,
+        920,
+        213
+       ]
+      },
+      {
+       "i": 52,
+       "parent": 51,
+       "role": "heading",
+       "name": "Blends",
+       "bbox": [
+        22,
+        792,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 53,
+       "parent": 51,
+       "role": "table",
+       "name": "",
+       "bbox": [
+        22,
+        844,
+        920,
+        161
+       ]
+      },
+      {
+       "i": 54,
+       "parent": 53,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        845,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 55,
+       "parent": 54,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        845,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 56,
+       "parent": 55,
+       "role": "cell",
+       "name": "Blend",
+       "bbox": [
+        23,
+        845,
+        127,
+        31
+       ]
+      },
+      {
+       "i": 57,
+       "parent": 55,
+       "role": "cell",
+       "name": "Year",
+       "bbox": [
+        150,
+        845,
+        59,
+        31
+       ]
+      },
+      {
+       "i": 58,
+       "parent": 55,
+       "role": "cell",
+       "name": "Style",
+       "bbox": [
+        208,
+        845,
+        126,
+        31
+       ]
+      },
+      {
+       "i": 59,
+       "parent": 55,
+       "role": "cell",
+       "name": "Committed gal",
+       "bbox": [
+        335,
+        845,
+        136,
+        31
+       ]
+      },
+      {
+       "i": 60,
+       "parent": 55,
+       "role": "cell",
+       "name": "State",
+       "bbox": [
+        471,
+        845,
+        74,
+        31
+       ]
+      },
+      {
+       "i": 61,
+       "parent": 55,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        845,
+        397,
+        31
+       ]
+      },
+      {
+       "i": 62,
+       "parent": 53,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        876,
+        919,
+        129
+       ]
+      },
+      {
+       "i": 63,
+       "parent": 62,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        876,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 64,
+       "parent": 63,
+       "role": "cell",
+       "name": "Festival White",
+       "bbox": [
+        23,
+        876,
+        127,
+        43
+       ]
+      },
+      {
+       "i": 65,
+       "parent": 63,
+       "role": "cell",
+       "name": "2020",
+       "bbox": [
+        150,
+        876,
+        59,
+        43
+       ]
+      },
+      {
+       "i": 66,
+       "parent": 63,
+       "role": "cell",
+       "name": "Single varietal",
+       "bbox": [
+        208,
+        876,
+        126,
+        43
+       ]
+      },
+      {
+       "i": 67,
+       "parent": 63,
+       "role": "cell",
+       "name": "2",
+       "bbox": [
+        335,
+        876,
+        136,
+        43
+       ]
+      },
+      {
+       "i": 68,
+       "parent": 63,
+       "role": "cell",
+       "name": "In cask",
+       "bbox": [
+        471,
+        876,
+        74,
+        43
+       ]
+      },
+      {
+       "i": 69,
+       "parent": 63,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        876,
+        397,
+        43
+       ]
+      },
+      {
+       "i": 70,
+       "parent": 69,
+       "role": "button",
+       "name": "Bottle Festival White",
+       "bbox": [
+        555,
+        882,
+        157,
+        30
+       ]
+      },
+      {
+       "i": 71,
+       "parent": 69,
+       "role": "button",
+       "name": "Disgorge Festival White",
+       "bbox": [
+        716,
+        882,
+        176,
+        30
+       ]
+      },
+      {
+       "i": 72,
+       "parent": 62,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        919,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 73,
+       "parent": 72,
+       "role": "cell",
+       "name": "Picnic",
+       "bbox": [
+        23,
+        919,
+        127,
+        43
+       ]
+      },
+      {
+       "i": 74,
+       "parent": 72,
+       "role": "cell",
+       "name": "2019",
+       "bbox": [
+        150,
+        919,
+        59,
+        43
+       ]
+      },
+      {
+       "i": 75,
+       "parent": 72,
+       "role": "cell",
+       "name": "May blend",
+       "bbox": [
+        208,
+        919,
+        126,
+        43
+       ]
+      },
+      {
+       "i": 76,
+       "parent": 72,
+       "role": "cell",
+       "name": "2",
+       "bbox": [
+        335,
+        919,
+        136,
+        43
+       ]
+      },
+      {
+       "i": 77,
+       "parent": 72,
+       "role": "cell",
+       "name": "In cask",
+       "bbox": [
+        471,
+        919,
+        74,
+        43
+       ]
+      },
+      {
+       "i": 78,
+       "parent": 72,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        919,
+        397,
+        43
+       ]
+      },
+      {
+       "i": 79,
+       "parent": 78,
+       "role": "button",
+       "name": "Bottle Picnic",
+       "bbox": [
+        555,
+        925,
+        103,
+        30
+       ]
+      },
+      {
+       "i": 80,
+       "parent": 78,
+       "role": "button",
+       "name": "Disgorge Picnic",
+       "bbox": [
+        663,
+        925,
+        122,
+        30
+       ]
+      },
+      {
+       "i": 81,
+       "parent": 62,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        962,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 82,
+       "parent": 81,
+       "role": "cell",
+       "name": "Cloister",
+       "bbox": [
+        23,
+        962,
+        127,
+        43
+       ]
+      },
+      {
+       "i": 83,
+       "parent": 81,
+       "role": "cell",
+       "name": "2022",
+       "bbox": [
+        150,
+        962,
+        59,
+        43
+       ]
+      },
+      {
+       "i": 84,
+       "parent": 81,
+       "role": "cell",
+       "name": "May blend",
+       "bbox": [
+        208,
+        962,
+        126,
+        43
+       ]
+      },
+      {
+       "i": 85,
+       "parent": 81,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        335,
+        962,
+        136,
+        43
+       ]
+      },
+      {
+       "i": 86,
+       "parent": 81,
+       "role": "cell",
+       "name": "In cask",
+       "bbox": [
+        471,
+        962,
+        74,
+        43
+       ]
+      },
+      {
+       "i": 87,
+       "parent": 81,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        545,
+        962,
+        397,
+        43
+       ]
+      },
+      {
+       "i": 88,
+       "parent": 87,
+       "role": "button",
+       "name": "Bottle Cloister",
+       "bbox": [
+        555,
+        968,
+        114,
+        30
+       ]
+      },
+      {
+       "i": 89,
+       "parent": 87,
+       "role": "button",
+       "name": "Disgorge Cloister",
+       "bbox": [
+        673,
+        968,
+        133,
+        30
+       ]
+      },
+      {
+       "i": 90,
+       "parent": 4,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        22,
+        1039,
+        920,
+        170
+       ]
+      },
+      {
+       "i": 91,
+       "parent": 90,
+       "role": "heading",
+       "name": "Draws",
+       "bbox": [
+        22,
+        1039,
+        920,
+        32
+       ]
+      },
+      {
+       "i": 92,
+       "parent": 90,
+       "role": "table",
+       "name": "",
+       "bbox": [
+        22,
+        1091,
+        920,
+        118
+       ]
+      },
+      {
+       "i": 93,
+       "parent": 92,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        1091,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 94,
+       "parent": 93,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        1091,
+        919,
+        31
+       ]
+      },
+      {
+       "i": 95,
+       "parent": 94,
+       "role": "cell",
+       "name": "Ticket",
+       "bbox": [
+        23,
+        1091,
+        86,
+        31
+       ]
+      },
+      {
+       "i": 96,
+       "parent": 94,
+       "role": "cell",
+       "name": "Amount",
+       "bbox": [
+        108,
+        1091,
+        90,
+        31
+       ]
+      },
+      {
+       "i": 97,
+       "parent": 94,
+       "role": "cell",
+       "name": "From vat",
+       "bbox": [
+        199,
+        1091,
+        111,
+        31
+       ]
+      },
+      {
+       "i": 98,
+       "parent": 94,
+       "role": "cell",
+       "name": "Into blend",
+       "bbox": [
+        310,
+        1091,
+        134,
+        31
+       ]
+      },
+      {
+       "i": 99,
+       "parent": 94,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        444,
+        1091,
+        497,
+        31
+       ]
+      },
+      {
+       "i": 100,
+       "parent": 92,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        23,
+        1122,
+        919,
+        86
+       ]
+      },
+      {
+       "i": 101,
+       "parent": 100,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        1122,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 102,
+       "parent": 101,
+       "role": "cell",
+       "name": "Ticket 1",
+       "bbox": [
+        23,
+        1122,
+        86,
+        43
+       ]
+      },
+      {
+       "i": 103,
+       "parent": 101,
+       "role": "cell",
+       "name": "2 gal",
+       "bbox": [
+        108,
+        1122,
+        90,
+        43
+       ]
+      },
+      {
+       "i": 104,
+       "parent": 101,
+       "role": "cell",
+       "name": "West Ridge",
+       "bbox": [
+        199,
+        1122,
+        111,
+        43
+       ]
+      },
+      {
+       "i": 105,
+       "parent": 101,
+       "role": "cell",
+       "name": "Picnic",
+       "bbox": [
+        310,
+        1122,
+        134,
+        43
+       ]
+      },
+      {
+       "i": 106,
+       "parent": 101,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        444,
+        1122,
+        497,
+        43
+       ]
+      },
+      {
+       "i": 107,
+       "parent": 106,
+       "role": "button",
+       "name": "Return ticket 1 (2 gal from West Ridge out of Picnic)",
+       "bbox": [
+        455,
+        1129,
+        360,
+        30
+       ]
+      },
+      {
+       "i": 108,
+       "parent": 100,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        23,
+        1165,
+        919,
+        43
+       ]
+      },
+      {
+       "i": 109,
+       "parent": 108,
+       "role": "cell",
+       "name": "Ticket 2",
+       "bbox": [
+        23,
+        1165,
+        86,
+        43
+       ]
+      },
+      {
+       "i": 110,
+       "parent": 108,
+       "role": "cell",
+       "name": "2 gal",
+       "bbox": [
+        108,
+        1165,
+        90,
+        43
+       ]
+      },
+      {
+       "i": 111,
+       "parent": 108,
+       "role": "cell",
+       "name": "Mill Race",
+       "bbox": [
+        199,
+        1165,
+        111,
+        43
+       ]
+      },
+      {
+       "i": 112,
+       "parent": 108,
+       "role": "cell",
+       "name": "Festival White",
+       "bbox": [
+        310,
+        1165,
+        134,
+        43
+       ]
+      },
+      {
+       "i": 113,
+       "parent": 108,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        444,
+        1165,
+        497,
+        43
+       ]
+      },
+      {
+       "i": 114,
+       "parent": 113,
+       "role": "button",
+       "name": "Return ticket 2 (2 gal from Mill Race out of Festival White)",
+       "bbox": [
+        455,
+        1172,
+        403,
+        30
+       ]
+      }
+     ]
+    }
+   }
+  ]
+ },
  "decisive_terms": [
   "positional",
   "conflicts"
  ],
  "harm": {
-  "Ticket": 1,
   "Amount": 1,
   "Ticket number": 0
  },
  "outcome": "DECIDED",
  "refuted": [
-  "Ticket",
   "Amount"
  ],
  "survivors": [

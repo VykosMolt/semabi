@@ -45,6 +45,36 @@ def _score(run_dir: Path, identity: dict) -> objective.Behaviour:
     return objective.evaluate(compiled.abstractor, compiled.log)
 
 
+def extension(source: Path, workdir: Path) -> dict:
+    """What the experiment appended to the history: its steps and the pages they reached.
+
+    The verdict is a reading of these steps under a representation; the representation
+    changes (a column's placeholder row stopped naming a column, and blend's ticket
+    number moved from `cell@Ticket#1` to `cell@Ticket#0`), and the steps do not.  Retained
+    with the result, they let the experiment be scored again under the representation of
+    the day (`rescore`) instead of being trusted by the names it was scored under."""
+    before = EvidenceLog(source)
+    after = EvidenceLog(workdir)
+    return {"steps": [s.to_json() for s in after.steps[len(before.steps):]],
+            "observations": [{"sig": sig, "obs": obs.to_json()} for sig, obs in after.observations.items()
+                             if sig not in before.observations]}
+
+
+def extend(plan: dict, ext: dict, workdir: Path) -> Path:
+    """The extended history again: the untouched source plus a retained extension."""
+    source = Path(plan["run"])
+    if workdir.exists():
+        shutil.rmtree(workdir)
+    shutil.copytree(source, workdir)
+    with (workdir / "observations.jsonl").open("a") as f:
+        for row in ext["observations"]:
+            f.write(json.dumps(row) + "\n")
+    with (workdir / "steps.jsonl").open("a") as f:
+        for row in ext["steps"]:
+            f.write(json.dumps(row) + "\n")
+    return workdir
+
+
 def run(plan: dict, workdir: Path) -> dict:
     source = Path(plan["run"])
     if workdir.exists():
@@ -94,6 +124,7 @@ def run(plan: dict, workdir: Path) -> dict:
                                 "survived_reload": obs.structural_signature() == settled.structural_signature()})
     finally:
         browser.close()
+    report["extension"] = extension(source, workdir)
     return verdict(plan, workdir, report)
 
 
@@ -135,17 +166,21 @@ def verdict(plan: dict, workdir: Path, report: dict) -> dict:
     return report
 
 
-def rescore(plan: dict, workdir: Path) -> dict:
+def rescore(plan: dict, workdir: Path, ext: dict | None = None) -> dict:
     """The verdict on an experiment already performed: the extended history in `workdir`
-    against the untouched history, without touching the application again."""
+    (or the source plus a retained extension, spliced there) against the untouched
+    history, without touching the application again."""
     source = Path(plan["run"])
+    if ext is not None:
+        extend(plan, ext, workdir)
     report = {"plan": plan, "before": {}, "after": {}, "delta": {}, "steps": [], "rescored": True}
     for name, identity in plan["readings"].items():
         report["before"][name] = _score(source, identity).to_json()
+    report["extension"] = ext if ext is not None else extension(source, workdir)
     return verdict(plan, workdir, report)
 
 
-def propagate(result: dict, run_dir: Path | None = None) -> list[dict]:
+def propagate(result: dict, run_dir: Path | None = None, fresh: bool = False) -> list[dict]:
     """Feed a decided experiment back to the SOURCE history as retained refutations.
 
     The search reads `identity_refutations_v4.json` beside a history and does not consider
@@ -153,7 +188,12 @@ def propagate(result: dict, run_dir: Path | None = None) -> list[dict]:
     the freeze refuses a candidate that activates one.  A reading the experiment refuted is
     written there for every family the plan keyed by it, with the experiment as provenance
     -- which history, which actions, which terms decided -- so that the SOURCE learner's next
-    manifest carries what the application said, and nothing from the transfer histories."""
+    manifest carries what the application said, and nothing from the transfer histories.
+    Each record carries what the refuted key slot *held* on the history, so that it binds
+    to the hypothesis tested and not to a name (`semabi.compiler.v4.search.write_refutation`).
+    `fresh` starts the sidecar over: the experiment is the evidence, the sidecar is derived
+    from it."""
+    from semabi.compiler.compile_v4 import build_hypotheses
     from semabi.compiler.v4 import search as v4_search
 
     plan = result["plan"]
@@ -163,6 +203,9 @@ def propagate(result: dict, run_dir: Path | None = None) -> list[dict]:
     written = []
     if result.get("outcome") != "DECIDED":
         return written
+    if fresh and (run_dir / v4_search.REFUTATIONS_FILE).exists():
+        (run_dir / v4_search.REFUTATIONS_FILE).unlink()
+    H, _G = build_hypotheses(run_dir, EvidenceLog(run_dir))
     for name in result.get("refuted", []):
         reading = plan["readings"][name]
         for family in families:
@@ -173,8 +216,9 @@ def propagate(result: dict, run_dir: Path | None = None) -> list[dict]:
             evidence = {"experiment": plan.get("name"), "actions": plan["actions"],
                         "delta": result["delta"][name], "decisive_terms": result["decisive_terms"],
                         "predicted": plan.get("predictions", {}).get(name)}
-            v4_search.write_refutation(run_dir, family, key, why, evidence)
-            written.append({"family": family, "key_slot": key})
+            held = sorted(v4_search.slot_values(H, family, key))
+            v4_search.write_refutation(run_dir, family, key, why, evidence, held=held)
+            written.append({"family": family, "key_slot": key, "held": held})
     return written
 
 
@@ -187,16 +231,20 @@ def main(argv=None) -> int:
                     help="decide an experiment already performed in --workdir; no new steps")
     ap.add_argument("--propagate", action="store_true",
                     help="write the decided result at --out back to the SOURCE history as refutations")
+    ap.add_argument("--fresh", action="store_true", help="with --propagate: start the sidecar over")
+    ap.add_argument("--extension", default=None,
+                    help="with --rescore: a retained result whose extension is spliced onto the source")
     a = ap.parse_args(argv)
     plan = json.loads(Path(a.plan).read_text())
     if a.propagate:
         result = json.loads(Path(a.out).read_text())
-        written = propagate(result)
+        written = propagate(result, fresh=a.fresh)
         print(json.dumps({"propagated": written, "to": plan["run"]}, indent=1))
         return 0
     if not a.workdir:
         ap.error("--workdir is required unless --propagate")
-    report = rescore(plan, Path(a.workdir)) if a.rescore else run(plan, Path(a.workdir))
+    ext = json.loads(Path(a.extension).read_text())["extension"] if a.extension else None
+    report = rescore(plan, Path(a.workdir), ext) if a.rescore else run(plan, Path(a.workdir))
     Path(a.out).parent.mkdir(parents=True, exist_ok=True)
     Path(a.out).write_text(json.dumps(report, indent=1, default=str))
     print(json.dumps({"outcome": report.get("outcome"), "harm": report.get("harm"),

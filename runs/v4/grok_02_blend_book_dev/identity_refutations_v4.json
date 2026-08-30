@@ -2,89 +2,10 @@
  "refuted": [
   {
    "family": "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))",
-   "key_slot": "cell@Ticket#0",
-   "why": "refuted by an executed experiment (blend draws: Ticket vs Amount): harm 1 on ['positional', 'conflicts'] against 0 for Ticket number",
-   "evidence": {
-    "experiment": "blend draws: Ticket vs Amount",
-    "actions": [
-     {
-      "kind": "select",
-      "target": {
-       "role": "combobox",
-       "nth": 1
-      },
-      "option": 1
-     },
-     {
-      "kind": "select",
-      "target": {
-       "role": "combobox",
-       "nth": 0
-      },
-      "option": 0
-     },
-     {
-      "kind": "select",
-      "target": {
-       "role": "combobox",
-       "nth": 2
-      },
-      "option": 1
-     },
-     {
-      "kind": "click",
-      "target": {
-       "role": "button",
-       "name": "Record draw"
-      }
-     },
-     {
-      "kind": "select",
-      "target": {
-       "role": "combobox",
-       "nth": 0
-      },
-      "option": 1
-     },
-     {
-      "kind": "select",
-      "target": {
-       "role": "combobox",
-       "nth": 2
-      },
-      "option": 1
-     },
-     {
-      "kind": "click",
-      "target": {
-       "role": "button",
-       "name": "Record draw"
-      }
-     }
-    ],
-    "delta": {
-     "explained": 2,
-     "conflicts": 0,
-     "churn": 1,
-     "contradictions": 0,
-     "visibility": 0,
-     "spurious": 1,
-     "named": 4,
-     "positional": 1
-    },
-    "decisive_terms": [
-     "positional",
-     "conflicts"
-    ],
-    "predicted": "two draws of 2 gal are two objects with fresh tickets: two creations, no conflict"
-   }
-  },
-  {
-   "family": "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))",
    "key_slot": "cell@Amount#0",
-   "why": "refuted by an executed experiment (blend draws: Ticket vs Amount): harm 1 on ['positional', 'conflicts'] against 0 for Ticket number",
+   "why": "refuted by an executed experiment (blend draws: Ticket number vs Amount): harm 1 on ['positional', 'conflicts'] against 0 for Ticket number",
    "evidence": {
-    "experiment": "blend draws: Ticket vs Amount",
+    "experiment": "blend draws: Ticket number vs Amount",
     "actions": [
      {
       "kind": "select",
@@ -156,7 +77,11 @@
      "conflicts"
     ],
     "predicted": "the second draw of 2 gal collides with the first: one object with two disagreeing mentions (From vat), a conflict, no second creation"
-   }
+   },
+   "held": [
+    "1",
+    "2"
+   ]
   }
  ]
 }

@@ -55,10 +55,12 @@ class SearchResult:
     hypotheses: Any = None          # the hypotheses the search settled on (not serialised)
     promoted: list[str] = field(default_factory=list)
     withheld_unions: list[tuple[str, str]] = field(default_factory=list)   # family pairs
+    stale_refutations: list[dict] = field(default_factory=list)   # retained records that no longer bind
 
     def to_json(self) -> dict[str, Any]:
         return {"promoted_leaves": list(self.promoted),
                 "withheld_unions": [list(p) for p in self.withheld_unions],
+                "stale_refutations": list(self.stale_refutations),
                 "families": {f: sorted(ts) for f, ts in sorted(self.families.items())},
                 "chosen": {t: r.to_json() for t, r in sorted(self.chosen.items())},
                 "readings": {t: [x.to_json() for x in rs] for t, rs in sorted(self.readings.items())},
@@ -90,14 +92,75 @@ def read_refutations(run_dir: Path | None) -> dict[str, set[str | None]]:
     return out
 
 
+def read_refutation_records(run_dir: Path | None) -> list[dict]:
+    """The sidecar's records themselves: family, key slot, and what the slot *held*."""
+    if run_dir is None:
+        return []
+    path = Path(run_dir) / REFUTATIONS_FILE
+    if not path.exists():
+        return []
+    return list(json.loads(path.read_text()).get("refuted", []))
+
+
 def write_refutation(run_dir: Path, family: str, key_slot: str | None, why: str,
-                     evidence: dict) -> None:
+                     evidence: dict, held: list[str] | None = None) -> None:
+    """Record a refuted reading beside the history it was fitted on.
+
+    A slot's name is a coordinate of the representation, not of the application: blend's
+    `cell@Ticket#0` was the word "Ticket" while a placeholder row made the column's label
+    vary, and the number once that was repaired.  A refutation written by name alone would
+    have followed the name to a hypothesis the experiment never tested.  So a record
+    carries ``held`` -- the distinct values the key slot took on the history when the
+    experiment decided -- and is applied only while the slot still holds them
+    (`stale_refutations`)."""
     path = Path(run_dir) / REFUTATIONS_FILE
     payload = json.loads(path.read_text()) if path.exists() else {"refuted": []}
     if not any(r["family"] == family and r["key_slot"] == key_slot for r in payload["refuted"]):
-        payload["refuted"].append({"family": family, "key_slot": key_slot, "why": why,
-                                   "evidence": evidence})
+        row = {"family": family, "key_slot": key_slot, "why": why, "evidence": evidence}
+        if held is not None:
+            row["held"] = sorted(held)
+        payload["refuted"].append(row)
     path.write_text(json.dumps(payload, indent=1))
+
+
+def slot_values(H: Hypotheses, family: str, key_slot: str | None) -> set[str]:
+    """The distinct values a slot takes across every unit of a family on this history."""
+    if key_slot is None:
+        return set()
+    out: set[str] = set()
+    for t, u in H.units.items():
+        if family_key(t) == family and key_slot in u.slots:
+            out |= {str(v) for v in u.slots[key_slot].values}
+    return out
+
+
+def stale_refutations(records: list[dict], H: Hypotheses) -> list[dict]:
+    """Records whose slot no longer holds what it held when the experiment decided.
+
+    A record without ``held`` binds by name only and is reported as unbound, since nothing
+    says the name still means what it meant."""
+    out = []
+    for r in records:
+        held = r.get("held")
+        if held is None:
+            out.append({**{k: r[k] for k in ("family", "key_slot")}, "state": "UNBOUND"})
+            continue
+        now = slot_values(H, r["family"], r.get("key_slot"))
+        if not set(held) <= now:
+            out.append({**{k: r[k] for k in ("family", "key_slot")}, "state": "STALE",
+                        "held": sorted(held), "holds": sorted(now)})
+    return out
+
+
+def active_refutations(records: list[dict], H: Hypotheses) -> tuple[dict[str, set[str | None]], list[dict]]:
+    """The refutations that still bind, per family, and the ones that do not."""
+    stale = stale_refutations(records, H)
+    gone = {(s["family"], s["key_slot"]) for s in stale}
+    out: dict[str, set[str | None]] = {}
+    for r in records:
+        if (r["family"], r.get("key_slot")) not in gone:
+            out.setdefault(r["family"], set()).add(r.get("key_slot"))
+    return out, stale
 
 
 def _reload_pairs(log: EvidenceLog) -> list[tuple[str, str]]:
@@ -190,12 +253,17 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
     Frozen SOURCE generation passes ``refuted`` parsed from the descriptor-bound
     custody bytes.  Path-based sidecar loading remains for live/probe callers only.
     """
+    stale: list[dict] = []
     if refuted is None:
-        refuted = read_refutations(run_dir)
+        refuted, stale = active_refutations(read_refutation_records(run_dir), H)
+        for s in stale:
+            log_fn(f"v4 {s['family']}: refutation of {s['key_slot']!r} is {s['state']} "
+                   f"(held {s.get('held')}, holds {s.get('holds')}); not applied")
     reload_pairs = _reload_pairs(log)
     view_of = _view_of(H)
     spoken = spoken_values(log)
     result = SearchResult()
+    result.stale_refutations = stale
 
     grouped: dict[str, list] = {}
     for template, unit in sorted(H.units.items()):

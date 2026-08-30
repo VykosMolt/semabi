@@ -22,9 +22,13 @@ def freeze(source: Path, output: Path, *, repo_root: Path | None = None) -> dict
         refuted = manifests.custody.parse_refutations(
             consumed.files.get("identity_refutations_v4.json")
         )
+        records = manifests.custody.parse_refutation_records(
+            consumed.files.get("identity_refutations_v4.json")
+        )
         log = consumed.evidence_log()
         result, candidates, notes, _hypotheses, _graph = source_candidates._source_candidates(
-            source, log, max_candidates=manifests.MAX_CANDIDATES, refuted=refuted
+            source, log, max_candidates=manifests.MAX_CANDIDATES, refuted=refuted,
+            records=records,
         )
         readings = [candidate for candidate in candidates]
         payload = manifests.build_source_manifest(

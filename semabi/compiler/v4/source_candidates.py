@@ -84,11 +84,21 @@ def _source_candidates(
     max_candidates: int = MAX_CANDIDATES,
     *,
     refuted: Mapping[str, set[str | None]] | None = None,
+    records: list[dict] | None = None,
 ):
     """Every reading the source history makes plausible, frozen, including the one it
     prefers.  Generating alternatives is the source's job; deciding between them is not.
     """
     H, G = build_hypotheses(source, log)
+    if records is not None:
+        # a retained refutation binds by what its slot held, not by its name; a record
+        # whose slot no longer holds those values (or that never said) cannot be frozen
+        stale = v4_search.stale_refutations(records, H)
+        if stale:
+            raise ValueError("retained refutations do not bind to this history: "
+                             + "; ".join(f"{s['family'][:40]}={s['key_slot']} {s['state']}"
+                                         f" held={s.get('held')} holds={s.get('holds')}" for s in stale)
+                             + " -- re-derive the experiment before freezing")
     result = v4_search.search(
         H, G, log, log_fn=lambda _m: None,
         run_dir=None if refuted is not None else source,

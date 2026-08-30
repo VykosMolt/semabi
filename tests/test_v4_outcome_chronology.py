@@ -50,6 +50,13 @@ def _truncate(run_dir: Path, cut: int, out: Path) -> Path:
             for line in probes.read_text().splitlines():
                 if json.loads(line).get("step", 0) < cut:
                     f.write(line + "\n")
+    # The same argument covers the other retained evidence beside a history: probes
+    # acquired on a fresh instance, refutations from executed experiments, field theories
+    # an intervention corroborated.  None is a step of the future; leaving any behind makes
+    # the amputated fit an input-poorer fit rather than an earlier one.
+    for sidecar in ("probes.acquired.jsonl", "identity_refutations_v4.json", "field_theories_v4.json"):
+        if (run_dir / sidecar).exists():
+            (out / sidecar).write_text((run_dir / sidecar).read_text())
     return out
 
 
