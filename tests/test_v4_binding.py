@@ -788,3 +788,47 @@ def test_a_control_naming_two_candidates_is_not_proposed_as_a_query():
     st = _world({"combobox#0": "North Wall (Chenin, 2 gal, open)"}, *vats)
     op = SimpleNamespace(name="op0", params={"?v": BERTH})
     assert referring._selection_queries(op, "?v", [(st, {"?v": vats[0]})]) == []
+
+
+def test_a_collection_members_cell_is_not_offered_as_a_selection_anchor():
+    """Harbour's unkeyed vessels overview rendered its cells as view slots numbered by
+    where the row stood -- `cell@Vessel#2` held whatever vessel was listed third -- and the
+    Schedule-call rules then quantified over those coordinates, which is exactly what the
+    member-reversal instrument caught.  A slot inside a collection member anchors nothing;
+    a header cell or a page-level control still can, and a state with no parse is read as
+    it always was."""
+    from semabi.compiler.v4 import referring
+
+    def obs_with_rows():
+        # group(combobox, table(rowgroup(row(cell), row(cell), row(cell))))
+        nodes = [
+            SimpleNamespace(i=0, role="group", parent=-1, name=""),
+            SimpleNamespace(i=1, role="combobox", parent=0, name=""),
+            SimpleNamespace(i=2, role="table", parent=0, name=""),
+            SimpleNamespace(i=3, role="rowgroup", parent=2, name=""),
+            SimpleNamespace(i=4, role="row", parent=3, name=""),      # header row
+            SimpleNamespace(i=5, role="cell", parent=4, name="Vessel"),
+            SimpleNamespace(i=6, role="row", parent=3, name=""),
+            SimpleNamespace(i=7, role="cell", parent=6, name="North Wall"),
+            SimpleNamespace(i=8, role="row", parent=3, name=""),
+            SimpleNamespace(i=9, role="cell", parent=8, name="Orchard"),
+        ]
+        by = {n.i: n for n in nodes}
+        return SimpleNamespace(nodes=nodes, node=lambda i, by=by: by[i])
+
+    po = SimpleNamespace(obs=obs_with_rows(),
+                         node_key={1: "combobox#0", 5: "cell#0",
+                                   7: "cell@Vessel#0", 9: "cell@Vessel#1"})
+    vats = [_vat("North Wall", 7), _vat("Orchard", 9)]
+    st = _world({"combobox#0": "North Wall (open)", "cell@Vessel#0": "North Wall"}, *vats)
+    st.parsed = po
+    op = SimpleNamespace(name="op0", params={"?v": BERTH})
+    got = referring._selection_queries(op, "?v", [(st, {"?v": vats[0]})])
+    assert got == ["combobox#0"]                     # the member cell was not proposed
+
+    assert referring._member_positioned(st, "cell@Vessel#0") is True
+    assert referring._member_positioned(st, "cell@Vessel#1") is True
+    assert referring._member_positioned(st, "cell#0") is False       # the header declares
+    assert referring._member_positioned(st, "combobox#0") is False
+    bare = _world({"cell@Vessel#0": "North Wall"}, *vats)             # no parse at all
+    assert referring._member_positioned(bare, "cell@Vessel#0") is False

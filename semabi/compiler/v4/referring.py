@@ -25,6 +25,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any
 
+from semabi.compiler.v2.graph import COLLECTIONS
+
 
 # The roles an operator's variables can play.  "Implicit" and "derived" are reserved for
 # objects that already exist and the action does not name -- the only class a referring query
@@ -259,6 +261,61 @@ def _singleton(op, var, evidence) -> bool:
     return True
 
 
+def _member_positioned(state, slot: str) -> bool:
+    """Whether a view slot is rendered inside a member of a declared collection.
+
+    Which value such a slot carries depends on where the member stands: harbour's unkeyed
+    vessels overview rendered ``cell@Vessel#2`` as whatever vessel was listed third, and the
+    member-reversal instrument (`semabi.eval.v4_metamorphic`) may permute the members of a
+    declared listing without changing what anything means.  Such a slot is a presentation
+    coordinate, not a control the interface is pointed at, and it anchors nothing.  A
+    table's first row is the interface's own declaration -- its header -- and stays put
+    under the instrument, so its cells are not positional; neither is anything outside a
+    declared collection.  Without a parse there is no coordinate to have read."""
+    po = getattr(state, "parsed", None)
+    obs = getattr(po, "obs", None)
+    if obs is None:
+        return False
+    cache = getattr(po, "_member_positioned_cache", None)
+    if cache is None:
+        cache = {}
+        try:
+            po._member_positioned_cache = cache
+        except (AttributeError, TypeError):
+            pass
+    if slot in cache:
+        return cache[slot]
+    child = next((n for n, k in (getattr(po, "node_key", None) or {}).items() if k == slot), None)
+    out = False
+    while child is not None and child >= 0:
+        parent = obs.node(child).parent
+        if parent is None or parent < 0:
+            break
+        prole = obs.node(parent).role
+        if prole in COLLECTIONS and prole != "table" and not (
+                prole == "rowgroup" and child == _first_table_row(obs, parent)):
+            out = True
+            break
+        child = parent
+    cache[slot] = out
+    return out
+
+
+def _first_table_row(obs, rowgroup: int) -> int | None:
+    """The first row of the table this row group belongs to, wherever the groups start."""
+    table = obs.node(rowgroup).parent
+    rows = []
+    for n in obs.nodes:
+        if n.role != "row":
+            continue
+        i = n.parent
+        while i is not None and i >= 0 and i != table:
+            i = obs.node(i).parent
+        if i == table:
+            rows.append(n.i)
+    return min(rows, default=None)
+
+
 def _selection_queries(op, var, evidence) -> list[str]:
     """View controls whose current value names the intended object, in every positive.
 
@@ -287,6 +344,8 @@ def _selection_queries(op, var, evidence) -> list[str]:
         here = set()
         for slot, value in (getattr(state, "view", None) or {}).items():
             if not isinstance(value, str) or not value:
+                continue
+            if _member_positioned(state, slot):
                 continue
             hits = [o for o in _candidates(state, tid) if o.key and value.startswith(o.key)]
             if len(hits) == 1 and _target(hits[0]) == _target(want):

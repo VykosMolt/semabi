@@ -942,6 +942,11 @@ class Inducer:
             return None
         for k, (_, v) in po.statics.items():
             if v == value:
+                if referring._member_positioned(state, k):
+                    # a cell of a collection member is a coordinate, not a source: which
+                    # value sits in it depends on where the member stands, and a member
+                    # reversal is entitled to move it (`semabi.compiler.v4.referring`)
+                    continue
                 if k.startswith("combobox"):
                     return ("select", Locator(k, ui_slot=k))
                 if k.startswith("textbox"):
