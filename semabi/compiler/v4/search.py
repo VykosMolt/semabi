@@ -370,15 +370,18 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
                     log_fn(f"v4 {name} {reading.key_slot}: build failed ({type(exc).__name__})")
                     continue
                 if (trial_score.better_than(score)
-                        and not (reading.is_identity and here.is_identity
+                        and not ((reading.is_identity or here.is_identity)
                                  and _evidence_tie(trial_score, score))):
-                    # Between two keys of one family only the evidence may move the reading:
-                    # explanation, error, or what the interface names.  The objective's own
-                    # tie-breaks -- atoms, complexity -- are about how an event is spelled,
-                    # and between keys they favoured whichever key happened not to union the
-                    # family with another (harbour's overview keyed by `Cargo` rather than
-                    # by the vessel's name, which the vessels table already keys by).  On a
-                    # tie the structurally ranked incumbent stays and the question is kept.
+                    # Where a move would change what identity is claimed, only the evidence
+                    # may make it: explanation, error, or what the interface names.  The
+                    # objective's own tie-breaks -- atoms, complexity -- are about how an
+                    # event is spelled, and between keys they favoured whichever key
+                    # happened not to union the family with another (harbour's overview
+                    # keyed by `Cargo` rather than by the vessel's name, which the vessels
+                    # table already keys by); between a key and no identity they favour
+                    # whichever spelling is shorter, which is not a fact about the objects
+                    # (harbour's vessels).  On such a tie the incumbent stays, or the
+                    # demotion below runs, and the question is kept either way.
                     result.moves.append({"move": "identity", "round": round_no, "family": name,
                                          "templates": len(grouped[name]),
                                          "key_slot": reading.key_slot, "status": reading.status,
@@ -391,15 +394,15 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
                     equal = []
                     moved = True
                 elif (not reading.is_identity and here.is_identity
-                      and trial_score.comparable_to(score)
-                      and (trial_score.explained, trial_score.errors) == (score.explained, score.errors)):
-                    # An identity has to earn its place against claiming none.  On a tie the
-                    # objective cannot break either way -- not by explanation, error, atoms or
-                    # complexity -- it has not: the objects it posits change nothing the trace
-                    # explains and cost nothing it charges, and on blend such a family, unioned
-                    # into the vats by key overlap, added mentions the outcome layer generalised
-                    # wrongly (`docs/v4_frontier.md`).  A tie `better_than` does break is left
-                    # to it, or the two rules would alternate.  The question stays open.
+                      and _evidence_tie(trial_score, score)):
+                    # An identity has to earn its place against claiming none, and earning
+                    # is by evidence -- explanation, error, or what the interface names --
+                    # never by the spelling: the objects it posits change nothing the trace
+                    # explains, and on blend such a family, unioned into the vats by key
+                    # overlap, added mentions the outcome layer generalised wrongly
+                    # (`docs/v4_frontier.md`).  Atoms and complexity may differ either way
+                    # (a key usually spells the same events longer); a spelling is not a
+                    # fact about the objects.  The question stays open.
                     result.moves.append({"move": "identity", "round": round_no, "family": name,
                                          "templates": len(grouped[name]), "key_slot": None,
                                          "status": reading.status, "decided_by": {"unearned": here.key_slot},
@@ -411,7 +414,7 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
                         result.chosen[unit.template] = reading
                     moved = True
                 elif trial_score.comparable_to(score) or (
-                        reading.is_identity and here.is_identity and _evidence_tie(trial_score, score)):
+                        (reading.is_identity or here.is_identity) and _evidence_tie(trial_score, score)):
                     # neither dominates: either the two readings score identically, or one
                     # explains more while the other errs less.  Both are undecided, and an
                     # undecided reading is a question for the application, not a tie to break.

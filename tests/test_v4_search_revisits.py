@@ -55,8 +55,9 @@ def _install(monkeypatch, candidates, scores):
     monkeypatch.setattr(v4_search, "_build", lambda H, G, log: H)
 
     def evaluate(H, log, max_steps=None):
-        explained, errors = scores[(H.units["a[_]"].key_slot, H.units["b[_]"].key_slot)]
-        return Behaviour(explained=explained, visibility=errors, complexity=10)
+        explained, errors, *atoms = scores[(H.units["a[_]"].key_slot, H.units["b[_]"].key_slot)]
+        return Behaviour(explained=explained, visibility=errors,
+                         delta_atoms=atoms[0] if atoms else 0, complexity=10)
     monkeypatch.setattr(v4_search.objective, "evaluate", evaluate)
 
 
@@ -116,3 +117,30 @@ def test_a_refuted_v2_key_is_not_inherited(monkeypatch):
     result = v4_search.search(H, None, SimpleNamespace(steps=[]), refuted={"a[_]": {"p"}})
     assert result.hypotheses.units["a[_]"].key_slot != "p"
     assert result.chosen["a[_]"].key_slot != "p"
+
+
+def test_a_shorter_spelling_does_not_take_an_identity_by_dominating_it(monkeypatch):
+    # family a's key "p" and reading a as no entity explain the same steps with the same
+    # errors and name the same amount of what the interface said; the no-identity spelling
+    # is merely shorter.  Atoms choose spellings, not objects: the identity is unearned,
+    # the demotion says so, and the question stays open (harbour's vessels overview).
+    H = _H({"a[_]": "p", "b[_]": None})
+    scores = {("p", None): (10, 2, 80), (None, None): (10, 2, 64)}
+    _install(monkeypatch, {"a[_]": ["p", None], "b[_]": [None]}, scores)
+    result = v4_search.search(H, None, SimpleNamespace(steps=[]), refuted={})
+    assert result.hypotheses.units["a[_]"].key_slot is None
+    assert result.moves[0]["decided_by"] == {"unearned": "p"}
+    assert [(q.left.key_slot, q.right.key_slot) for q in result.open_questions] == [(None, "p")]
+
+
+def test_a_shorter_spelling_does_not_earn_an_identity_either(monkeypatch):
+    # the mirror: no identity is the incumbent and the keyed reading spells the same
+    # events in fewer atoms.  It has explained nothing more and erred nothing less;
+    # it is an open question for the application, not a winner.
+    H = _H({"a[_]": None, "b[_]": None})
+    scores = {("p", None): (10, 2, 60), (None, None): (10, 2, 64)}
+    _install(monkeypatch, {"a[_]": [None, "p"], "b[_]": [None]}, scores)
+    result = v4_search.search(H, None, SimpleNamespace(steps=[]), refuted={})
+    assert result.hypotheses.units["a[_]"].key_slot is None
+    assert result.chosen["a[_]"].key_slot is None
+    assert [(q.left.key_slot, q.right.key_slot) for q in result.open_questions] == [(None, "p")]
