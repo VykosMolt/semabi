@@ -58,3 +58,35 @@ def test_a_renamed_run_renames_pages_messages_options_and_typed_values(tmp_path)
     s = json.loads((dst / "steps.jsonl").read_text())
     assert s["action"]["text"] == "Vevuna - 64 m" and s["typed_tokens"] == ["Vevuna"]
     assert (dst / "hidden_domain.json").exists()
+
+
+def test_a_tables_declaration_row_is_never_respelled(tmp_path):
+    """Vet keys its detail panel by field labels, which put `Reason` into the renaming
+    class -- and the substitution then rewrote the appointments table's own column header,
+    unparsing every row beneath it.  A token that identifies is renamed where it
+    identifies; where the interface declares it, the declaration stays, exactly as member
+    reversal leaves the first row where it is."""
+    src = tmp_path / "src"
+    src.mkdir()
+    obs = {"sig": "s1", "obs": {"url": "x", "nodes": [
+        {"i": 0, "parent": -1, "role": "group", "name": ""},
+        {"i": 1, "parent": 0, "role": "table", "name": ""},
+        {"i": 2, "parent": 1, "role": "rowgroup", "name": ""},
+        {"i": 3, "parent": 2, "role": "row", "name": ""},
+        {"i": 4, "parent": 3, "role": "cell", "name": "Patient"},
+        {"i": 5, "parent": 3, "role": "cell", "name": "Reason"},
+        {"i": 6, "parent": 2, "role": "row", "name": ""},
+        {"i": 7, "parent": 6, "role": "cell", "name": "Biscuit"},
+        {"i": 8, "parent": 6, "role": "cell", "name": "Limping"},
+        # the detail panel: a family genuinely keyed by the field label
+        {"i": 9, "parent": 0, "role": "text", "name": "Reason: Limping"}]}}
+    (src / "observations.jsonl").write_text(json.dumps(obs) + "\n")
+    (src / "steps.jsonl").write_text("")
+    dst = tmp_path / "dst"
+    rn.rename_run(src, dst, {"Reason": "Bipomi", "Biscuit": "Xef"})
+    nodes = json.loads((dst / "observations.jsonl").read_text())["obs"]["nodes"]
+    by = {n["i"]: n for n in nodes}
+    assert by[5]["name"] == "Reason"                    # the declaration stands
+    assert by[4]["name"] == "Patient"
+    assert by[7]["name"] == "Xef"                        # the value beneath it renames
+    assert by[9]["name"] == "Bipomi: Limping"            # the identity occurrence renames

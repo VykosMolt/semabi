@@ -151,8 +151,48 @@ def _substituter(mapping: dict[str, str]):
     return lambda s: pattern.sub(lambda m: mapping[m.group(1)], s) if s else s
 
 
+def _declaration_nodes(nodes: list[dict]) -> set[int]:
+    """Cells of each table's first row: the interface's declarations, not values.
+
+    Vet keys its detail panel by field labels -- `Patient`, `Owner`, `Reason` are the
+    *identities* of that family's rows -- which put those tokens into the renaming class,
+    and a token-level substitution then rewrote the appointments table's own column
+    header.  A renamed header is a changed grammar: the parse names columns by it, every
+    appointment row stopped instantiating, and seventy-one ledger claims collapsed to
+    UNKNOWN/NOT_APPLICABLE (`docs/v4_retained.md`).  The member-reversal instrument
+    already refuses to move a table's first row for the same reason; renaming now refuses
+    to respell it.  A token that identifies is renamed where it identifies -- the detail
+    panel's key cells included -- and left alone where the interface declares it."""
+    children: dict[int, list[int]] = {}
+    role = {n["i"]: n["role"] for n in nodes}
+    parent = {n["i"]: n["parent"] for n in nodes}
+    for n in nodes:
+        children.setdefault(n["parent"], []).append(n["i"])
+    out: set[int] = set()
+    for table in (n["i"] for n in nodes if n["role"] == "table"):
+        rows = []
+        stack = [table]
+        while stack:
+            x = stack.pop()
+            for c in children.get(x, ()):
+                if role.get(c) == "row":
+                    rows.append(c)
+                stack.append(c)
+        if not rows:
+            continue
+        first = min(rows)
+        stack = [first]
+        while stack:
+            x = stack.pop()
+            out.add(x)
+            stack.extend(children.get(x, ()))
+    return out
+
+
 def rename_run(src: Path, dst: Path, mapping: dict[str, str]) -> None:
-    """A copy of a run with every text renamed: pages, actions, typed values."""
+    """A copy of a run with every text renamed: pages, actions, typed values.
+
+    Except the declarations: see `_declaration_nodes`."""
     sub = _substituter(mapping)
     if dst.exists():
         shutil.rmtree(dst)
@@ -163,7 +203,10 @@ def rename_run(src: Path, dst: Path, mapping: dict[str, str]) -> None:
     with (src / "observations.jsonl").open() as fin, (dst / "observations.jsonl").open("w") as fout:
         for line in fin:
             d = json.loads(line)
+            declared = _declaration_nodes(d["obs"]["nodes"])
             for n in d["obs"]["nodes"]:
+                if n["i"] in declared:
+                    continue
                 for k in ("name", "value", "placeholder"):
                     if isinstance(n.get(k), str):
                         n[k] = sub(n[k])
