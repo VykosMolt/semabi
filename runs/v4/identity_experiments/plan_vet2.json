@@ -55,5 +55,9 @@
   "Reason|Vet": "checking Nala in changes a value the key does not contain: the appointment persists as one object whose status now reads checked_in",
   "Reason|Status": "checking Nala in changes a component of its own key: the scheduled appointment is replaced by another object -- a removal and a creation of the same kind, churn, no persistence"
  },
- "test": "mutation"
+ "test": "mutation",
+ "retired": {
+  "date": "2026-08-31",
+  "reason": "the question this plan was designed to decide no longer exists: under the current representation the search keys the appointment family by cell@Patient#0|cell@Reason#0, decided by behavioural evidence (churn 2, explained) rather than a tie, and Reason|Vet vs Reason|Status does not survive as an open question (identity_ties_vet_clinic_dev.json).  The plan is retained with its frozen predictions as the record of what would have been asked; an experiment is run to decide a live question, not because a plan exists."
+ }
 }

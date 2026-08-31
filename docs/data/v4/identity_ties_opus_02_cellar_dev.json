@@ -6,34 +6,86 @@
   "visibility": 0,
   "conflicts": 0,
   "named": 33,
+  "positional": 0,
   "unexplained": 0,
   "spurious": 0,
-  "explained": 2,
-  "delta_atoms": 8,
-  "complexity": 23,
+  "explained": 0,
+  "delta_atoms": 0,
+  "complexity": 18,
   "steps": 391,
   "churn_steps": [],
   "contradiction_steps": [],
   "visibility_steps": []
  },
- "open_questions": 1,
+ "open_questions": 4,
  "questions": [
   {
-   "family": "text[_]",
-   "left": "text#0!",
-   "right": "text#1!",
+   "family": "row[_](cell@Area[_],cell@Block[_],cell@Bottled so far[_],cell@Expected yield[_],cell@Picked[_],cell@Variety[_])",
+   "left": null,
+   "right": "cell@Area#0",
    "reason": "the trace so far scores both readings identically",
-   "tids": [
-    1
-   ],
+   "tids": [],
    "contested": [
-    "text#0!",
-    "text#1!"
+    "cell@Area#0"
    ],
-   "status": "QUOTIENT_EQUIVALENT",
+   "status": "NO_KNOWN_EXPERIMENT",
    "writers": {},
    "makers": [],
-   "movers": []
+   "movers": [],
+   "made_values": {},
+   "separable_by_the_history": {},
+   "decided": null
+  },
+  {
+   "family": "row[_](cell@Area[_],cell@Block[_],cell@Bottled so far[_],cell@Expected yield[_],cell@Picked[_],cell@Variety[_])",
+   "left": null,
+   "right": "cell@Block#0",
+   "reason": "the trace so far scores both readings identically",
+   "tids": [],
+   "contested": [
+    "cell@Block#0"
+   ],
+   "status": "NO_KNOWN_EXPERIMENT",
+   "writers": {},
+   "makers": [],
+   "movers": [],
+   "made_values": {},
+   "separable_by_the_history": {},
+   "decided": null
+  },
+  {
+   "family": "row[_](cell@From block[_],cell@Hall[_],cell@In vessel[_],cell@Lot[_],cell@Oaked[_],cell@Stage[_],cell@Variety[_],cell@Volume[_])",
+   "left": null,
+   "right": "cell@Hall#0",
+   "reason": "the trace so far scores both readings identically",
+   "tids": [],
+   "contested": [
+    "cell@Hall#0"
+   ],
+   "status": "NO_KNOWN_EXPERIMENT",
+   "writers": {},
+   "makers": [],
+   "movers": [],
+   "made_values": {},
+   "separable_by_the_history": {},
+   "decided": null
+  },
+  {
+   "family": "row[_](cell@From block[_],cell@Hall[_],cell@In vessel[_],cell@Lot[_],cell@Oaked[_],cell@Stage[_],cell@Variety[_],cell@Volume[_])",
+   "left": null,
+   "right": "cell@In vessel#0",
+   "reason": "the trace so far scores both readings identically",
+   "tids": [],
+   "contested": [
+    "cell@In vessel#0"
+   ],
+   "status": "NO_KNOWN_EXPERIMENT",
+   "writers": {},
+   "makers": [],
+   "movers": [],
+   "made_values": {},
+   "separable_by_the_history": {},
+   "decided": null
   }
  ],
  "reachable": 0

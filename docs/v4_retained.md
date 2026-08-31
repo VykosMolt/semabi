@@ -212,6 +212,35 @@ is unchanged: blend's `Committed gal` alone, by corroboration.  The tests that f
 the old survivor by name resolve the vessel-keyed reading by content
 (`v4_consequence_run.vessel_keyed`).
 
+## Part VI -- the same defect family, one instrument over
+
+The transfer frontier's last resort read "the readings said the same thing at every step"
+off the state-layer verdicts and let representational cost turn that into a defeat: on
+the regenerated harbour frontier it rejected `source_choice` in favour of variants one
+complexity unit cheaper, every one of which the history had never distinguished from it.
+That is the identity search's retired spelling tie-break, and the retrospective
+comparator's confidence-class blindness, wearing a third uniform -- a lossy projection
+allowed to make a stronger semantic judgement than it tested.
+
+The rule now (`semabi.compiler.v4.transfer`): readings whose verdicts, observable deltas
+*and* identity claims agree on everything the instrument reads are decided `EQUIVALENT`
+-- no loss, no win -- and a survivor set whose every pair is equivalent is an
+`EQUIVALENT_SURVIVOR_CLASS`: cost selects which spelling of the class travels,
+deterministically, and the report says that is all it did (the identification vocabulary
+`SELECTED_WITHIN_AN_INDISTINGUISHABLE_CLASS_ON_THIS_HISTORY` becomes true by construction
+rather than asserted after the fact).  A differing claim the history never adjudicated --
+an untested separation record, a delta spelled differently -- keeps the pair `UNDECIDED`:
+incomparability, never equivalence and never a defeat.  Parsimony may canonicalize inside
+an established equivalence class; it may not create the class, and it may not eliminate.
+
+This is the mapper-refinement discipline of active automata learning arrived at from the
+inside: an equivalence claimed under an abstraction is equivalence up to that mapper and
+nothing more, and fresh output values are interface behaviour, not decoration (Aarts et
+al.'s CEGAR mappers and Tomte's fresh-value learning; Vaandrager's model-learning
+survey).  SemABI's version is harder -- the ontology, the mapper and the model are learned
+together -- but the constraint transfers exactly: no instrument may spend evidence it
+never collected.
+
 ## The remaining pipeline
 
 The session was interrupted here by external termination of its background jobs, four in
