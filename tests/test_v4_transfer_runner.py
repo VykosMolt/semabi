@@ -113,8 +113,10 @@ def test_replay_uses_retained_loaders_and_never_generates_candidates(tmp_path, m
 
     assert {name for _run, name, _support in calls} == {"source_choice", "alternative"}
     assert all(run in (roles["TRANSFER"], roles["HOLDOUT"]) for run, _name, _ in calls)
-    assert report["outcome"] == "AMBIGUOUS_SURVIVOR_SET"
-    assert report["selected"] is None
+    # the fixture's two candidates return identical evidence: an equivalence class,
+    # canonicalized by name at equal cost (docs/v4_retained.md)
+    assert report["outcome"] == "EQUIVALENT_SURVIVOR_CLASS"
+    assert report["selected"]["name"] == "alternative"
     assert "source_candidates" not in Path(runner.__file__).read_text()
     assert "build_hypotheses" not in Path(runner.__file__).read_text()
 
@@ -145,6 +147,7 @@ def test_frontier_and_survivor_semantics_do_not_depend_on_candidate_order(tmp_pa
     ("frontier_outcome", "survivors", "expected_selected", "expected_changed"),
     [
         ("UNIQUE_SURVIVOR", ["alternative"], "alternative", True),
+        ("EQUIVALENT_SURVIVOR_CLASS", ["source_choice", "alternative"], "source_choice", False),
         ("AMBIGUOUS_SURVIVOR_SET", ["source_choice", "alternative"], None, None),
         ("NO_UNDEFEATED_READING", [], None, None),
     ],
@@ -186,6 +189,8 @@ def test_runner_serializes_unique_ambiguous_and_empty_frontiers(
     assert report["selection_changed"] == expected_changed
     assert report["holdout"]["outcome"] == (
         "NO_UNDEFEATED_READING" if not survivors else
+        # an established equivalence class takes the classification its members share
+        "INCONCLUSIVE_NO_PREDICTIONS" if frontier_outcome == "EQUIVALENT_SURVIVOR_CLASS" else
         "AMBIGUOUS_SURVIVOR_SET" if len(survivors) > 1 else "INCONCLUSIVE_NO_PREDICTIONS"
     )
     if not survivors:

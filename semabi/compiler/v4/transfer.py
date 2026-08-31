@@ -684,7 +684,12 @@ def decide(left: TransferEvidence, right: TransferEvidence) -> Decision:
     9. Otherwise, strict same-family separation dominance decides when one
        side is better on at least one shared family and worse on none.
     10. Otherwise, a larger confirmed-claim count wins.
-    11. Otherwise, cost breaks a tie only when verdicts match at every step.
+    11. Otherwise, readings whose verdicts, observable deltas and identity
+        claims match everywhere are ``EQUIVALENT`` -- an established equivalence
+        on everything this instrument reads, never a defeat; representational
+        cost selects a canonical member of such a class in ``all_pairs_frontier``
+        and eliminates nothing.  A differing claim the history never adjudicated
+        keeps the pair ``UNDECIDED``.
     12. Otherwise, return ``UNDECIDED``.
     """
     # This must precede differential(), makes_predictions, and every other
@@ -802,17 +807,33 @@ def decide(left: TransferEvidence, right: TransferEvidence) -> Decision:
                                 f"{min(left.separation_confirmed, right.separation_confirmed)} of "
                                 f"the other, on peers it had to tell apart here", left, right, diff,
                         separation_diff)
-    if left.verdicts == right.verdicts and left.complexity != right.complexity:
-        winner = "LEFT" if left.complexity < right.complexity else "RIGHT"
-        return Decision(winner, "the readings said the same thing at every step of this "
-                        "history; the tie is broken by representational cost",
+    def _claims(evidence: TransferEvidence) -> list[tuple]:
+        return sorted((r["family"], r["key_slot"], r["status"], r["copresent_pairs"],
+                       r["separated_pairs"]) for r in evidence.separation)
+
+    if (left.verdicts == right.verdicts
+            and left.delta_signature_sha256 == right.delta_signature_sha256
+            and _claims(left) == _claims(right)):
+        # Same verdict at every step, the same observable delta content behind each
+        # verdict, and the same identity claims put to the same tests: on everything this
+        # instrument reads, the readings are one behaviour.  That is an equivalence, not a
+        # defeat -- cost may choose which spelling of the class travels
+        # (`all_pairs_frontier`), but a spelling preference eliminating a reading is the
+        # same defect the identity search retired (`docs/v4_retained.md`).  Readings whose
+        # verdicts agree while their *claims* differ -- an untested separation claim, a
+        # delta spelled differently -- were never shown equivalent and fall through: the
+        # history did not adjudicate the difference, and neither may cost.
+        return Decision("EQUIVALENT", "the readings said the same thing, in the same "
+                        "observable deltas, with the same identity claims, at every step "
+                        "of this history; representational cost chooses a spelling among "
+                        "them, never a reading over another",
                         left, right, diff, separation_diff)
     return Decision("UNDECIDED", "the comparison history does not tell these readings apart",
                     left, right, diff, separation_diff)
 
 
-FRONTIER_OUTCOMES = ("UNIQUE_SURVIVOR", "AMBIGUOUS_SURVIVOR_SET",
-                     "NO_UNDEFEATED_READING")
+FRONTIER_OUTCOMES = ("UNIQUE_SURVIVOR", "EQUIVALENT_SURVIVOR_CLASS",
+                     "AMBIGUOUS_SURVIVOR_SET", "NO_UNDEFEATED_READING")
 
 
 @dataclass
@@ -894,6 +915,7 @@ def all_pairs_frontier(evidence) -> FrontierResult:
     losses = {name: [] for name in by_name}
     winners = {name: [] for name in by_name}
     pair_decisions: list[dict[str, Any]] = []
+    equivalent_pairs: set[tuple[str, str]] = set()
 
     for left, right in combinations(ordered, 2):
         decision = decide(left, right)
@@ -909,6 +931,8 @@ def all_pairs_frontier(evidence) -> FrontierResult:
         elif decision.outcome == "RIGHT":
             winners[right.name].append(left.name)
             losses[left.name].append(right.name)
+        elif decision.outcome == "EQUIVALENT":
+            equivalent_pairs.add((left.name, right.name))
 
     # Pair generation is canonical, and every opponent list is sorted again
     # here to make the invariant explicit rather than relying on combinations.
@@ -920,6 +944,14 @@ def all_pairs_frontier(evidence) -> FrontierResult:
     if len(survivors) == 1:
         outcome = "UNIQUE_SURVIVOR"
         selection = survivors[0]
+    elif survivors and all((a, b) in equivalent_pairs
+                           for i, a in enumerate(survivors) for b in survivors[i + 1:]):
+        # Every surviving pair was decided EQUIVALENT: the survivors are one established
+        # behavioural class on this projection, and choosing which member travels is
+        # canonicalization inside it, not a judgement between readings.  Least cost, then
+        # name, so the choice is deterministic and admits what it is.
+        outcome = "EQUIVALENT_SURVIVOR_CLASS"
+        selection = min(survivors, key=lambda n: (by_name[n].complexity, n))
     elif survivors:
         outcome = "AMBIGUOUS_SURVIVOR_SET"
         selection = None

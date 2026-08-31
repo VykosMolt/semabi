@@ -118,6 +118,8 @@ def classify_pair(left: transfer.TransferEvidence, right: transfer.TransferEvide
 
     if decision.outcome in ("LEFT", "RIGHT"):
         reason = DECIDED
+    elif decision.outcome == "EQUIVALENT":
+        reason = BEHAVIOURALLY_IDENTICAL
     elif sep.left_better > 0 and sep.right_better > 0:
         reason = SEPARATION_CONFLICT
     elif _fraction(left) != _fraction(right):

@@ -260,7 +260,7 @@ def replay(
     unique = transfer_frontier.outcome == "UNIQUE_SURVIVOR"
     selected_candidate = (
         candidate_by_name[transfer_frontier.selection]
-        if unique and transfer_frontier.selection is not None
+        if transfer_frontier.selection is not None
         else None
     )
     source_choice_rejected = source_choice_name not in transfer_frontier.survivors
@@ -323,6 +323,13 @@ def replay(
 
     if not survivor_candidates:
         holdout_outcome = "NO_UNDEFEATED_READING"
+    elif (transfer_frontier.outcome == "EQUIVALENT_SURVIVOR_CLASS"
+          and len(set(holdout_classifications.values())) == 1):
+        # The survivors are one established class on the transfer history and the holdout
+        # classifies every member alike: the classification is the class's, whichever
+        # spelling travels.  If the holdout separates them, the class was history-relative
+        # and the honest outcome is the ambiguity below.
+        holdout_outcome = next(iter(set(holdout_classifications.values())))
     elif len(survivor_candidates) > 1:
         # A holdout comparison is evidence, not permission to select among an ambiguous
         # transfer frontier.  Keep its mechanical frontier below, but do not promote it.
@@ -351,7 +358,9 @@ def replay(
     survivor_classes = [group for group in survivor_classes if group]
     winner_class = next((group for group in classes
                          if selected_candidate and selected_candidate.name in group), None)
-    if unique and winner_class is not None:
+    if transfer_frontier.outcome == "EQUIVALENT_SURVIVOR_CLASS":
+        identification = "SELECTED_WITHIN_AN_INDISTINGUISHABLE_CLASS_ON_THIS_HISTORY"
+    elif unique and winner_class is not None:
         identification = ("BEHAVIOURALLY_DISTINGUISHED_ON_THIS_HISTORY" if len(winner_class) == 1
                           else "SELECTED_WITHIN_AN_INDISTINGUISHABLE_CLASS_ON_THIS_HISTORY")
     elif not survivor_candidates:

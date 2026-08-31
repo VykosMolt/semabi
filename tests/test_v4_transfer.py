@@ -121,15 +121,47 @@ def test_a_reading_that_could_not_be_instantiated_cannot_win_on_cheapness():
     assert "same test" in decision.reason
 
 
-def test_cost_breaks_a_tie_only_when_the_readings_said_the_same_thing_everywhere():
+def test_identical_behaviour_is_an_equivalence_not_a_defeat():
+    """Cost decided this pair until docs/v4_retained.md: a reading that said the same
+    thing, in the same observable deltas, at every step has not been beaten by anything,
+    and parsimony may choose which spelling of the class travels but may not eliminate a
+    reading the projection never distinguished."""
     same = {1: "EXPLAINED", 2: "SILENT"}
     cheap = _ev("cheap", same, complexity=10)
     dear = _ev("dear", same, complexity=40)
-    assert decide(cheap, dear).outcome == "LEFT"
+    decision = decide(cheap, dear)
+    assert decision.outcome == "EQUIVALENT"
+    assert "spelling" in decision.reason
     # one extra prediction is a difference this history did not resolve, not a tie
     louder = _ev("louder", {1: "EXPLAINED", 2: "EXPLAINED"}, complexity=40)
     quieter = _ev("quieter", {1: "EXPLAINED", 2: "SILENT"}, complexity=10)
     assert decide(louder, quieter).outcome == "UNDECIDED"
+    # and equal verdicts over different observable deltas were never shown equivalent
+    a = _ev("a", same); a.delta_signature_sha256 = "aa"
+    b = _ev("b", same, complexity=40); b.delta_signature_sha256 = "bb"
+    assert decide(a, b).outcome == "UNDECIDED"
+    # nor were readings whose identity claims differ, however untested the difference:
+    # a claim the history never adjudicated is incomparability, not equivalence
+    c = _ev("c", same)
+    c.separation = [_sep("row[_]", "cell@X#0", 0, 0)]
+    d = _ev("d", same, complexity=40)
+    assert decide(c, d).outcome == "UNDECIDED"
+
+
+def test_an_equivalence_class_of_survivors_selects_its_cheapest_member():
+    same = {1: "EXPLAINED", 2: "SILENT"}
+    evs = [_ev("costly", same, complexity=40), _ev("cheap", same, complexity=10),
+           _ev("middle", same, complexity=20)]
+    result = all_pairs_frontier(evs)
+    assert result.outcome == "EQUIVALENT_SURVIVOR_CLASS"
+    assert sorted(result.survivors) == ["cheap", "costly", "middle"]
+    assert result.selection == "cheap"
+    assert all(not losses for losses in result.losses.values())
+    # a survivor pair the history left undecided is not a class: nothing is selected
+    other = _ev("other", {1: "EXPLAINED", 2: "EXPLAINED"}, complexity=15)
+    mixed = all_pairs_frontier([evs[0], evs[1], other])
+    assert mixed.outcome == "AMBIGUOUS_SURVIVOR_SET"
+    assert mixed.selection is None
 
 
 def test_an_identity_that_separates_nothing_it_names_is_refuted_by_the_fresh_history():
@@ -591,7 +623,10 @@ def test_frontier_is_order_invariant_and_keeps_harbour_survivor_set():
 
     frontiers = [all_pairs_frontier(order) for order in permutations(readings)]
 
-    assert {f.outcome for f in frontiers} == {"AMBIGUOUS_SURVIVOR_SET"}
+    # the two survivors are byte-identical evidence: since docs/v4_retained.md that is an
+    # established equivalence class with a canonical member, not an ambiguity
+    assert {f.outcome for f in frontiers} == {"EQUIVALENT_SURVIVOR_CLASS"}
+    assert {f.selection for f in frontiers} == {"reading_a"}
     assert {tuple(f.survivors) for f in frontiers} == {("reading_a", "reading_b")}
     result = frontiers[0]
     assert result.losses["source"] == ["reading_a", "reading_b"]

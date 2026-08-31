@@ -72,6 +72,12 @@ def test_retained_frontier_summary_binds_its_reports():
         if report["outcome"] == "UNIQUE_SURVIVOR":
             assert selected is not None and report["survivor_names"] == [selected], app
             assert report["selection_changed"] is (selected != report["source"]["source_choice"]["name"])
+        elif report["outcome"] == "EQUIVALENT_SURVIVOR_CLASS":
+            # canonicalization inside an established class: a selection exists, the class
+            # has more than one member, and every member survived
+            assert selected is not None and selected in report["survivor_names"], app
+            assert len(report["survivor_names"]) > 1, app
+            assert report["selection_changed"] is (selected != report["source"]["source_choice"]["name"])
         else:
             assert selected is None, app
             assert report["selection_changed"] is None, app
