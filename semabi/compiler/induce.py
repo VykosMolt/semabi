@@ -365,6 +365,8 @@ class Inducer:
         self._view_steps: set[int] = set()
         self.queries: dict[str, dict] = {}  # operator -> variable -> referring query
         self.reattributed = 0  # domain changes revealed by view switches / reloads
+        self._seen_keys: set[str] = set()  # every key any tracked state rendered, for the
+                                           # emission-argument guard in `lift`
         self.delayed_resolutions: list[dict[str, Any]] = []
         self.unattributed_sensing_changes: list[dict[str, Any]] = []
 
@@ -407,6 +409,8 @@ class Inducer:
             for i, s in enumerate(steps):
                 st, discovered = tracker.observe(self.log.obs(s.after), s.action.kind)
                 self._tracked_after[s.step] = st
+                self._seen_keys.update(str(o.key) for o in st.objs.values()
+                                       if o.key is not None)
                 if i + 1 < len(steps):
                     self._tracked_before[steps[i + 1].step] = st
                 if s.action.kind in ("reload", "reset"):
@@ -833,7 +837,20 @@ class Inducer:
                 # clusters the operator apart from its own family, so blend had one Drew rule
                 # naming its vat by parameter and another naming "Block 12" by name.
                 oid = already.get(a) or key_lookup(a, tr.before) or key_lookup(a, tr.after)
-                args.append(obj_p(oid) if oid else a)
+                if oid:
+                    args.append(obj_p(oid))
+                elif a in self._seen_keys:
+                    # The token identifies an entity the corpus tracks, but none this
+                    # transition can name: harbour's op13 was fitted from one occasion
+                    # whose output named the pilot's booked call while that call was off
+                    # the board, and the constant survived unanimity until the renaming
+                    # instrument reached call ids -- the moment they became keys -- and
+                    # refuted it twelve times (docs/v4_retained.md).  A name that only
+                    # identifies is never part of a rule's spelling; the argument is left
+                    # undetermined rather than memorised.
+                    args.append(VARIES)
+                else:
+                    args.append(a)
             # The subject is the first argument that names an object, so that an output about
             # an entity is typed by that entity and binds like any other effect.  An output
             # naming no object -- "Nothing chosen in the vessel list." -- has none, and says

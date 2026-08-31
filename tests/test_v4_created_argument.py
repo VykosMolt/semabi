@@ -63,3 +63,26 @@ def test_schedule_call_claims_a_fresh_name_and_the_held_out_calls_are_fresh():
     # and harbour numbers its calls in sequence -- a regularity the report states and the
     # model does not claim
     assert all(c["successor"] for c in checks)
+
+
+@pytest.mark.skipif(not (HARBOUR_RUN / "steps.jsonl").exists(), reason="retained trace absent")
+def test_an_identifying_token_is_never_an_emission_constant():
+    """op13 said 'cannot sign off while booked for call C-102' with C-102 as a fitted
+    constant -- one occasion, the call off the board, the spelling memorised -- and the
+    renaming instrument refuted it twelve times the moment call ids became keys.  A token
+    that identifies a tracked entity is an argument to determine or leave undetermined,
+    never part of the rule's spelling."""
+    from semabi.compiler.v4.consequence import fit
+    from semabi.eval.v4_consequence_run import _candidates, vessel_keyed
+
+    readings = {c.name: c.reading for c in _candidates(HARBOUR_CHAIN)}
+    model = fit(HARBOUR_RUN, vessel_keyed(readings), split=0.5)
+    seen = model.inducer._seen_keys
+    assert seen, "the walk accumulates every rendered key"
+    for op in model.inducer.operators:
+        for eff in op.effs:
+            if eff.kind != "emit":
+                continue
+            for _slot, value in eff.attrs:
+                if isinstance(value, str) and not value.startswith("?"):
+                    assert value not in seen, (op.name, value)
