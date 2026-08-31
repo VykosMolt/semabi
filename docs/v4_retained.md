@@ -395,6 +395,65 @@ not the mode bias.  The middle SemABI occupies is real, and Part VIII and Part I
 two live demonstrations: the constant/name boundary and the substitution class both moved
 because the learned ontology moved.
 
+## Part XI -- the order attack, and what a verdict's premises are
+
+The question that gated every repair here: can the same immutable evidence and the same
+initial semantic state produce two different authoritative ABIs solely because dependent
+verdicts were refreshed in a different order?  Answered on harbour by attack rather than
+argument.  One evidence corpus, one initial state (the raw experiment row alone), seven
+legal schedules of the dependency-aware loop -- sequential in prep order, reversed,
+button-first (the adversarial order that derives the known non-monotone verdict on the
+poorest base first), two randomized, Jacobi-batched, and a LIFO staleness policy -- each
+event-logged, with termination by exact state recurrence rather than a step budget.
+
+**All seven reached the same fixpoint**: the same final base, the same six-verdict set,
+every schedule `FIXPOINT`, none oscillating.  The traces carry the why.  Verdicts factor
+into *base-movers* (refutations of a chosen reading) whose direction, wherever they were
+re-derived, is the same on every base at or above their premise, and
+*alternative-refutations* that never move the base at all.  The one verdict that is
+genuinely non-monotone -- the button question, which reverses between the poorest base
+and the keyed one -- is exactly what invalidation exists for: every schedule that derived
+it early was forced to re-derive it after the movers landed, and every re-derivation of
+every other verdict was direction-stable.  The counterexample that makes invalidation
+load-bearing is retained too: the append-only loop *without* premise invalidation is
+schedule-dependent by construction -- the first campaign's batch derivation kept the
+button verdict its base had already outgrown, and only the manual lifting recovered it.
+
+So: a retrospective verdict's premises are the chosen reading it was compared under (the
+full pinned-reading fingerprint -- families, promotions, withheld unions), the evaluation
+cut, the comparator's claim semantics, and the question's two sides; the raw evidence
+itself is bound by custody already, and an executed experiment records no premises
+because its evidence is not a derivation.  `write_refutation` now carries that record --
+`held` binds the denotation, `premises` binds the derivation, orthogonal stalenesses --
+and the instrument's `--fixpoint` mode runs the loop the attack validated: invalidation
+first, an UNDECIDED answer never re-asked on the same base and always re-posed on a new
+one, and termination by state recurrence, where the disputed commitments stay open
+because no update order has semantic authority over a genuine cycle.  The loop's three
+policies -- flip self-correction, oscillation preserved as open, re-posing on richer
+bases -- are pinned as unit tests against scripted worlds, the oscillation case included,
+which no real application has yet produced.
+
+The attack certified the loop; the first live run then improved it.  Under the
+dereference semantics the button verdict briefly *oscillated* -- keying won on the
+unkeyed base, and on the keyed base the unkeyed side, its arguments now expressible
+through the same rel slots, won back -- and the trace showed the cycle was pure
+self-reference: both the attack engine and the first instrument computed a question's
+base with its own previous answer still in the sidecar.  A verdict must never be a
+premise of its own derivation -- the oldest rule of reason maintenance, that a
+justification may not contain the belief it supports.  The loop now uses lift-first
+premises: a question's base is the sidecar *without its own row*, for staleness and
+re-derivation alike, giving every question one canonical base.  Pure self-reference
+cycles dissolve; genuinely mutual cycles between different questions are still caught by
+state recurrence and preserved as open (the scripted mutual-defeat world pins exactly
+that).  The dereference interaction is worth stating plainly: strengthening what the
+*unkeyed* reading can say legitimately narrowed what keying *earns*, and only the
+premise discipline kept that narrowing from being resolved by schedule.
+
+This is deliberately not a JTMS: no justification network, no dependency-directed
+backtracking -- a premise fingerprint, lift-first recomputation, and a cycle guard
+turned out to be the whole of the reason maintenance SemABI needs on the evidence it
+actually has.
+
 ## What stands, and what is open
 
 Every metamorphic invariant is at zero on the regenerated state -- renaming (version
@@ -406,9 +465,26 @@ remainders.  ORDERED is unchanged: blend's committed gallons alone, by corrobora
 The vet mutation plan is retired because its question dissolved; no live experiment was
 warranted this campaign -- the retained histories kept answering first.
 
-Open, in the order they matter: the attribute-deref
-strengthening of emission arguments (op13's argument *is* determinable -- the pilot's own
-``Booked for call`` renders it -- and ``VARIES`` says less than the evidence supports);
-whether the retrospective fixpoint iteration should live inside the instrument rather
-than as driver choreography; and the JOIN/aggregate residuals, still waiting for
+The attribute-deref strengthening closed in the continuation: where an identifying
+emission argument is held, at the transition, by exactly one attribute or reference of
+exactly one object the transition already names, it is lifted as that dereference --
+op13's argument became ``('ref', ?o0, rel:3)``, the pilot's own booked call, and op6's
+the berth's holding call -- read from the pre-action page at prediction time, checked
+like any argument, and renaming-invariant because both sides rename together.  The
+twelve ledger claims the VARIES retreat had abstained on are checked again, as content
+rather than spelling.  No family, application or slot is named by the mechanism; it is
+the value-level twin of the referring layer's derived-prestate queries, discovered where
+the abstractor had already resolved the cell to a reference.
+
+The loop's live validation closed the question its first run opened: from the raw floor
+-- the executed experiment alone -- the instrument's fixpoint mode, under lift-first
+premises and the dereference semantics, reproduced the seven-schedule attack's endpoint
+exactly: the same seven rows, the button verdict flipping once and never again because
+its lifted base never moved afterwards, Cargo and Length overall deciding on the full
+base, and every derived row carrying its premises.  The dereference changed no final
+verdict; what it changed was how carefully the loop had to reason to keep them.
+
+Open: whether the fixpoint loop should ever need more than premises-plus-recomputation
+(an oscillation on a real application would reopen the semantics question Part XI's
+attack closed empirically); and the JOIN/aggregate residuals, still waiting for
 Bottle-quality evidence.

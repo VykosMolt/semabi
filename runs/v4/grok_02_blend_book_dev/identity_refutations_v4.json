@@ -124,7 +124,16 @@
    },
    "held": [
     "Gallons"
-   ]
+   ],
+   "premises": {
+    "base": "bf3a159a95bbb2e8",
+    "cut": 187,
+    "comparator": "claim-content-v2",
+    "question": {
+     "left": null,
+     "right": "group/table/rowgroup/row/cell#0"
+    }
+   }
   },
   {
    "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))))))",
@@ -176,7 +185,16 @@
     "Opened Creek Bed",
     "Opened Low Barn",
     "Opened North Wall"
-   ]
+   ],
+   "premises": {
+    "base": "bf3a159a95bbb2e8",
+    "cut": 187,
+    "comparator": "claim-content-v2",
+    "question": {
+     "left": null,
+     "right": "status#0"
+    }
+   }
   },
   {
    "family": "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))",
@@ -302,7 +320,16 @@
     "2020",
     "2021",
     "2022"
-   ]
+   ],
+   "premises": {
+    "base": "bf3a159a95bbb2e8",
+    "cut": 187,
+    "comparator": "claim-content-v2",
+    "question": {
+     "left": "cell@Blend#0",
+     "right": "cell@Year#0"
+    }
+   }
   }
  ]
 }

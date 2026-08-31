@@ -48,12 +48,10 @@
   {
    "family": "button[_]",
    "key_slot": null,
-   "why": "refuted by retained outcome evidence (frozen prefix at 186): on the 4 suffix steps where the readings' claims disagree, 12 content units -- events and their checked arguments -- are right under 'button#0' with 0 wrong, against 8 / 0 under None",
+   "held": [],
+   "why": "refuted by retained outcome evidence at the fixpoint (frozen prefix at 186)",
    "evidence": {
-    "instrument": "retrospective outcome comparison (claim content)",
-    "split": 0.5,
-    "cut": 186,
-    "disagreements": 4,
+    "instrument": "retrospective fixpoint",
     "counts": {
      "left": {
       "right": 8,
@@ -64,174 +62,31 @@
       "wrong": 0
      }
     },
-    "details": [
-     {
-      "step": 192,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "with its arguments"
-     },
-     {
-      "step": 214,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "with its arguments"
-     },
-     {
-      "step": 250,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "with its arguments"
-     },
-     {
-      "step": 342,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "with its arguments"
-     }
-    ],
-    "survivor": "button#0"
+    "split": 0.5
    },
-   "held": []
-  },
-  {
-   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
-   "key_slot": null,
-   "why": "refuted by retained outcome evidence (frozen prefix at 186): on the 12 suffix steps where the readings' claims disagree, 28 content units -- events and their checked arguments -- are right under 'cell@Vessel#0' with 0 wrong, against 0 / 0 under None",
-   "evidence": {
-    "instrument": "retrospective outcome comparison (claim content)",
-    "split": 0.5,
+   "premises": {
+    "base": "22fb5b8ceb03c44a",
     "cut": 186,
-    "disagreements": 12,
-    "counts": {
-     "left": {
-      "right": 0,
-      "wrong": 0
-     },
-     "right": {
-      "right": 28,
-      "wrong": 0
-     }
-    },
-    "details": [
-     {
-      "step": 192,
-      "control": "button:Schedule call",
-      "left": "no outcome is established for this state",
-      "left_level": null,
-      "right": "one outcome was admissible and it happened",
-      "right_level": "with its arguments"
-     },
-     {
-      "step": 193,
-      "control": "button:Schedule call",
-      "left": "no outcome is established for this state",
-      "left_level": null,
-      "right": "one outcome was admissible and it happened",
-      "right_level": "with its arguments"
-     },
-     {
-      "step": 198,
-      "control": "button:Schedule call",
-      "left": "no outcome is established for this state",
-      "left_level": null,
-      "right": "one outcome was admissible and it happened",
-      "right_level": "with its arguments"
-     },
-     {
-      "step": 214,
-      "control": "button:Schedule call",
-      "left": "no outcome is established for this state",
-      "left_level": null,
-      "right": "one outcome was admissible and it happened",
-      "right_level": "with its arguments"
-     },
-     {
-      "step": 250,
-      "control": "button:Schedule call",
-      "left": "no outcome is established for this state",
-      "left_level": null,
-      "right": "one outcome was admissible and it happened",
-      "right_level": "with its arguments"
-     },
-     {
-      "step": 251,
-      "control": "button:Schedule call",
-      "left": "no outcome is established for this state",
-      "left_level": null,
-      "right": "one outcome was admissible and it happened",
-      "right_level": "with its arguments"
-     },
-     {
-      "step": 260,
-      "control": "button:Schedule call",
-      "left": "no outcome is established for this state",
-      "left_level": null,
-      "right": "one outcome was admissible and it happened",
-      "right_level": "with its arguments"
-     },
-     {
-      "step": 292,
-      "control": "button:Schedule call",
-      "left": "no outcome is established for this state",
-      "left_level": null,
-      "right": "one outcome was admissible and it happened",
-      "right_level": "with its arguments"
-     },
-     {
-      "step": 314,
-      "control": "button:Schedule call",
-      "left": "no outcome is established for this state",
-      "left_level": null,
-      "right": "one outcome was admissible and it happened",
-      "right_level": "with its arguments"
-     },
-     {
-      "step": 316,
-      "control": "button:Schedule call",
-      "left": "no outcome is established for this state",
-      "left_level": null,
-      "right": "one outcome was admissible and it happened",
-      "right_level": "with its arguments"
-     },
-     {
-      "step": 342,
-      "control": "button:Schedule call",
-      "left": "no outcome is established for this state",
-      "left_level": null,
-      "right": "one outcome was admissible and it happened",
-      "right_level": "with its arguments"
-     },
-     {
-      "step": 348,
-      "control": "button:Schedule call",
-      "left": "no outcome is established for this state",
-      "left_level": null,
-      "right": "one outcome was admissible and it happened",
-      "right_level": "with its arguments"
-     }
-    ],
-    "survivor": "cell@Vessel#0"
-   },
-   "held": []
+    "comparator": "claim-content-v2",
+    "question": {
+     "left": null,
+     "right": "button#0"
+    }
+   }
   },
   {
    "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
    "key_slot": "cell@Takes up to#0",
-   "why": "refuted by retained outcome evidence (frozen prefix at 186): on the 26 suffix steps where the readings' claims disagree, 52 content units -- events and their checked arguments -- are right under 'cell@Berth#0' with 0 wrong, against 26 / 0 under 'cell@Takes up to#0'",
+   "held": [
+    "120",
+    "140",
+    "160",
+    "70",
+    "90"
+   ],
+   "why": "refuted by retained outcome evidence at the fixpoint (frozen prefix at 186)",
    "evidence": {
-    "instrument": "retrospective outcome comparison (claim content)",
-    "split": 0.5,
-    "cut": 186,
-    "disagreements": 26,
+    "instrument": "retrospective fixpoint",
     "counts": {
      "left": {
       "right": 52,
@@ -242,383 +97,30 @@
       "wrong": 0
      }
     },
-    "details": [
-     {
-      "step": 188,
-      "control": "button:Reopen",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 189,
-      "control": "button:Close",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 197,
-      "control": "button:Close",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 208,
-      "control": "button:Close",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 215,
-      "control": "button:Reopen",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 228,
-      "control": "button:Close",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 231,
-      "control": "button:Reopen",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 241,
-      "control": "button:Close",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 242,
-      "control": "button:Reopen",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 253,
-      "control": "button:Close",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 259,
-      "control": "button:Close",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 294,
-      "control": "button:Close",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     }
-    ],
-    "survivor": "cell@Berth#0"
+    "split": 0.5
    },
-   "held": [
-    "120",
-    "140",
-    "160",
-    "70",
-    "90"
-   ]
-  },
-  {
-   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
-   "key_slot": "cell@Cargo#0",
-   "why": "refuted by retained outcome evidence (frozen prefix at 186): on the 12 suffix steps where the readings' claims disagree, 28 content units -- events and their checked arguments -- are right under 'cell@Vessel#0' with 0 wrong, against 16 / 0 under 'cell@Cargo#0'",
-   "evidence": {
-    "instrument": "retrospective outcome comparison (claim content)",
-    "split": 0.5,
+   "premises": {
+    "base": "b140777be23863f6",
     "cut": 186,
-    "disagreements": 12,
-    "counts": {
-     "left": {
-      "right": 28,
-      "wrong": 0
-     },
-     "right": {
-      "right": 16,
-      "wrong": 0
-     }
-    },
-    "details": [
-     {
-      "step": 192,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "with its arguments"
-     },
-     {
-      "step": 193,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 198,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 214,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "with its arguments"
-     },
-     {
-      "step": 250,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "with its arguments"
-     },
-     {
-      "step": 251,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 260,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 292,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 314,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 316,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 342,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "with its arguments"
-     },
-     {
-      "step": 348,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     }
-    ],
-    "survivor": "cell@Vessel#0"
-   },
-   "held": [
-    "bagged fertiliser",
-    "containers",
-    "drummed solvents",
-    "frozen fish",
-    "livestock",
-    "milling grain",
-    "naphtha",
-    "sawn timber"
-   ]
-  },
-  {
-   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
-   "key_slot": "cell@Length overall#0",
-   "why": "refuted by retained outcome evidence (frozen prefix at 186): on the 12 suffix steps where the readings' claims disagree, 28 content units -- events and their checked arguments -- are right under 'cell@Vessel#0' with 0 wrong, against 16 / 0 under 'cell@Length overall#0'",
-   "evidence": {
-    "instrument": "retrospective outcome comparison (claim content)",
-    "split": 0.5,
-    "cut": 186,
-    "disagreements": 12,
-    "counts": {
-     "left": {
-      "right": 28,
-      "wrong": 0
-     },
-     "right": {
-      "right": 16,
-      "wrong": 0
-     }
-    },
-    "details": [
-     {
-      "step": 192,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "with its arguments"
-     },
-     {
-      "step": 193,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 198,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 214,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "with its arguments"
-     },
-     {
-      "step": 250,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "with its arguments"
-     },
-     {
-      "step": 251,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 260,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 292,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 314,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 316,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 342,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "with its arguments"
-     },
-     {
-      "step": 348,
-      "control": "button:Schedule call",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     }
-    ],
-    "survivor": "cell@Vessel#0"
-   },
-   "held": [
-    "112",
-    "132",
-    "148",
-    "54",
-    "64",
-    "78",
-    "88",
-    "96"
-   ]
+    "comparator": "claim-content-v2",
+    "question": {
+     "left": "cell@Berth#0",
+     "right": "cell@Takes up to#0"
+    }
+   }
   },
   {
    "family": "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
    "key_slot": "cell@Ticket to#0",
-   "why": "refuted by retained outcome evidence (frozen prefix at 186): on the 24 suffix steps where the readings' claims disagree, 48 content units -- events and their checked arguments -- are right under 'cell@Pilot#0' with 0 wrong, against 24 / 0 under 'cell@Ticket to#0'",
+   "held": [
+    "100",
+    "130",
+    "150",
+    "80"
+   ],
+   "why": "refuted by retained outcome evidence at the fixpoint (frozen prefix at 186)",
    "evidence": {
-    "instrument": "retrospective outcome comparison (claim content)",
-    "split": 0.5,
-    "cut": 186,
-    "disagreements": 24,
+    "instrument": "retrospective fixpoint",
     "counts": {
      "left": {
       "right": 48,
@@ -629,112 +131,122 @@
       "wrong": 0
      }
     },
-    "details": [
-     {
-      "step": 191,
-      "control": "button:Sign on",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 194,
-      "control": "button:Sign off",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 195,
-      "control": "button:Sign off",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 196,
-      "control": "button:Sign on",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 210,
-      "control": "button:Sign on",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 232,
-      "control": "button:Sign off",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 239,
-      "control": "button:Sign on",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 240,
-      "control": "button:Sign on",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 243,
-      "control": "button:Sign off",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 244,
-      "control": "button:Sign on",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 252,
-      "control": "button:Sign on",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     },
-     {
-      "step": 261,
-      "control": "button:Sign on",
-      "left": "one outcome was admissible and it happened",
-      "left_level": "with its arguments",
-      "right": "one outcome was admissible and it happened",
-      "right_level": "the event alone"
-     }
-    ],
-    "survivor": "cell@Pilot#0"
+    "split": 0.5
    },
+   "premises": {
+    "base": "b140777be23863f6",
+    "cut": 186,
+    "comparator": "claim-content-v2",
+    "question": {
+     "left": "cell@Pilot#0",
+     "right": "cell@Ticket to#0"
+    }
+   }
+  },
+  {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "key_slot": null,
+   "held": [],
+   "why": "refuted by retained outcome evidence at the fixpoint (frozen prefix at 186)",
+   "evidence": {
+    "instrument": "retrospective fixpoint",
+    "counts": {
+     "left": {
+      "right": 0,
+      "wrong": 0
+     },
+     "right": {
+      "right": 28,
+      "wrong": 0
+     }
+    },
+    "split": 0.5
+   },
+   "premises": {
+    "base": "80e46667526e29c0",
+    "cut": 186,
+    "comparator": "claim-content-v2",
+    "question": {
+     "left": null,
+     "right": "cell@Vessel#0"
+    }
+   }
+  },
+  {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "key_slot": "cell@Cargo#0",
    "held": [
-    "100",
-    "130",
-    "150",
-    "80"
-   ]
+    "bagged fertiliser",
+    "containers",
+    "drummed solvents",
+    "frozen fish",
+    "livestock",
+    "milling grain",
+    "naphtha",
+    "sawn timber"
+   ],
+   "why": "refuted by retained outcome evidence at the fixpoint (frozen prefix at 186)",
+   "evidence": {
+    "instrument": "retrospective fixpoint",
+    "counts": {
+     "left": {
+      "right": 28,
+      "wrong": 0
+     },
+     "right": {
+      "right": 16,
+      "wrong": 0
+     }
+    },
+    "split": 0.5
+   },
+   "premises": {
+    "base": "b140777be23863f6",
+    "cut": 186,
+    "comparator": "claim-content-v2",
+    "question": {
+     "left": "cell@Vessel#0",
+     "right": "cell@Cargo#0"
+    }
+   }
+  },
+  {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "key_slot": "cell@Length overall#0",
+   "held": [
+    "112",
+    "132",
+    "148",
+    "54",
+    "64",
+    "78",
+    "88",
+    "96"
+   ],
+   "why": "refuted by retained outcome evidence at the fixpoint (frozen prefix at 186)",
+   "evidence": {
+    "instrument": "retrospective fixpoint",
+    "counts": {
+     "left": {
+      "right": 28,
+      "wrong": 0
+     },
+     "right": {
+      "right": 16,
+      "wrong": 0
+     }
+    },
+    "split": 0.5
+   },
+   "premises": {
+    "base": "b140777be23863f6",
+    "cut": 186,
+    "comparator": "claim-content-v2",
+    "question": {
+     "left": "cell@Vessel#0",
+     "right": "cell@Length overall#0"
+    }
+   }
   }
  ]
 }
