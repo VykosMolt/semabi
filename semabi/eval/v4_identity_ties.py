@@ -19,6 +19,7 @@ live application with both readings' predictions recorded before the first click
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 
@@ -332,6 +333,114 @@ def retro_decision(left_rows: list[dict], right_rows: list[dict]) -> dict:
     return out
 
 
+def fixpoint(prep_fn, derive_fn, raw_rows: list, max_states: int = 64) -> dict:
+    """The dependency-aware verdict loop, pure so its policies are testable.
+
+    ``prep_fn(rows)`` -> {"base": fp, "questions": [{family,left,right}], "held": {...}}
+    for the sidecar state ``rows``; ``derive_fn(base_prep, family, left, right)`` -> a
+    `retro_decision` dict.  Invalidation first: a derived row whose recorded base is no
+    longer the current base is lifted and re-derived before any new question is answered.
+    A question that came back UNDECIDED is not re-asked on the same base, and is re-posed
+    on any new one.  Termination is by exact state recurrence, never by a step budget: a
+    recurring verdict state means two derivations each defeat the other's premise, no
+    update order has semantic authority there, and the loop stops with the disputed rows
+    lifted -- preserved as open, reported as OSCILLATION.  The harbour order attack
+    (seven schedules, one shared evidence corpus) reached one fixpoint under every legal
+    order this loop admits (docs/v4_retained.md)."""
+    derived: list[dict] = []
+    attempted: set = set()
+    events: list[dict] = []
+    def rows_now(excluding=None):
+        return list(raw_rows) + [
+            {"family": r["family"], "key_slot": r["refuted_key"], "held": r.get("held"),
+             "premises": r["premises"], "why": r.get("why", "")}
+            for r in derived if r is not excluding]
+    def state_key():
+        return tuple(sorted((r["family"], str(r["key_slot"])) for r in rows_now()))
+    states_seen = {state_key()}
+    while True:
+        # A verdict is never a premise of its own derivation: each question's base is the
+        # sidecar *without its own row* -- for staleness and for re-derivation alike.  The
+        # first live oscillation was pure self-reference (harbour's button verdict,
+        # include-self, defeated whichever state it created); with the row lifted, the
+        # question has one canonical base and the cycle dissolves, while genuinely mutual
+        # cycles between different questions are still caught below.
+        stale_r = None
+        for r in derived:
+            own = prep_fn(rows_now(excluding=r))
+            if r["premises"]["base"] != own["base"]:
+                stale_r = (r, own)
+                break
+        if stale_r is not None:
+            r, own = stale_r
+            qn = r["premises"]["question"]
+            d = derive_fn(own, r["family"], qn["left"], qn["right"])
+            events.append({"e": "REDERIVE", "family": r["family"], "q": qn,
+                           "base": own["base"], "out": d["outcome"], "refuted": d.get("refuted")})
+            before_key = str(r["refuted_key"])
+            derived.remove(r)
+            disputed = [r]
+            if d["outcome"] == "DECIDED":
+                side = d["refuted"]
+                key = qn[side]
+                row = {"family": r["family"], "refuted_key": key,
+                       "held": own["held"].get(f"{r['family']}||{key}"),
+                       "counts": d["counts"],
+                       "premises": {**r["premises"], "base": own["base"]}}
+                derived.append(row)
+                disputed = [row]
+                if str(key) == before_key:
+                    continue
+            else:
+                attempted.add((r["family"], str(qn["left"]), str(qn["right"]), own["base"]))
+            k = state_key()
+            if k in states_seen:
+                # only the question whose re-derivation closed the cycle is disputed;
+                # the settled rows keep their standing
+                for x in disputed:
+                    if x in derived:
+                        derived.remove(x)
+                events.append({"e": "CYCLE", "disputed": [r["family"]]})
+                return {"outcome": "OSCILLATION", "rows": derived, "events": events,
+                        "disputed": [{"family": r["family"], "question": qn}]}
+            states_seen.add(k)
+            if len(states_seen) > max_states:
+                events.append({"e": "STATE_CAP"})
+                return {"outcome": "STATE_CAP", "rows": derived, "events": events}
+            continue
+        pr = prep_fn(rows_now())
+        active_families = {(r["family"], str(r["premises"]["question"]["left"]),
+                            str(r["premises"]["question"]["right"])) for r in derived}
+        refuted_keys = {(r["family"], str(r["refuted_key"])) for r in derived}
+        openq = [qn for qn in pr["questions"]
+                 if (qn["family"], str(qn["left"]), str(qn["right"])) not in active_families
+                 and (qn["family"], str(qn["left"]), str(qn["right"]), pr["base"]) not in attempted
+                 and (qn["family"], str(qn["left"])) not in refuted_keys
+                 and (qn["family"], str(qn["right"])) not in refuted_keys]
+        if not openq:
+            return {"outcome": "FIXPOINT", "rows": derived, "base": pr["base"], "events": events}
+        qn = openq[0]
+        d = derive_fn(pr, qn["family"], qn["left"], qn["right"])
+        events.append({"e": "DERIVE", "family": qn["family"], "q": qn,
+                       "base": pr["base"], "out": d["outcome"], "refuted": d.get("refuted")})
+        if d["outcome"] == "DECIDED":
+            side = d["refuted"]
+            key = qn[side]
+            derived.append({"family": qn["family"], "refuted_key": key,
+                            "held": pr["held"].get(f"{qn['family']}||{key}"),
+                            "counts": d["counts"],
+                            "premises": {"base": pr["base"],
+                                          "question": {"left": qn["left"], "right": qn["right"]}}})
+            k = state_key()
+            if k in states_seen:
+                derived.pop()
+                events.append({"e": "CYCLE"})
+                return {"outcome": "OSCILLATION", "rows": derived, "events": events}
+            states_seen.add(k)
+        else:
+            attempted.add((qn["family"], str(qn["left"]), str(qn["right"]), pr["base"]))
+
+
 def retrospective(run_dir: Path, *, split: float = 0.5, propagate: bool = False) -> dict:
     """Ask each open question what the retained history itself already answered.
 
@@ -415,16 +524,124 @@ def retrospective(run_dir: Path, *, split: float = 0.5, propagate: bool = False)
                         "counts": decision["counts"], "details": decision["details"],
                         "survivor": row["survivor"]}
             held = sorted(v4_search.slot_values(H, q.template, row["refuted"]))
+            base_fp = v4_pinned.from_search(result, run_dir, "retrospective",
+                                            refuted=v4_search.read_refutations(run_dir)).fingerprint()
+            premises = {"base": base_fp, "cut": cut, "comparator": "claim-content-v2",
+                        "question": {"left": sides["left"], "right": sides["right"]}}
             v4_search.write_refutation(run_dir, q.template, row["refuted"], why, evidence,
-                                       held=held)
+                                       held=held, premises=premises)
             row["propagated"] = True
     return {"run": run_dir.name, "split": split, "questions": rows}
+
+
+def fixpoint_retrospective(run_dir: Path, *, split: float = 0.5) -> dict:
+    """Run the dependency-aware loop against a history until its verdict set is stable.
+
+    Raw experiment rows (no ``premises``) are the immutable floor; retrospective rows are
+    derived and re-derived by `fixpoint`, and the sidecar is rewritten from the loop's
+    result -- with each row's premises -- only on a FIXPOINT.  An OSCILLATION leaves the
+    sidecar at the raw floor plus the settled rows and reports the disputed questions as
+    open; no update order acquires semantic authority (docs/v4_retained.md)."""
+    from semabi.compiler.compile_v4 import build_hypotheses
+    from semabi.compiler.evidence import EvidenceLog
+    from semabi.compiler.v4 import consequence as csq
+    from semabi.compiler.v4 import outcome as oc
+    from semabi.compiler.v4 import pinned as v4_pinned
+    from semabi.compiler.v4 import search as v4_search
+    from semabi.compiler.v4.identity import family_key
+    from dataclasses import replace
+
+    run_dir = Path(run_dir)
+    sidecar = run_dir / v4_search.REFUTATIONS_FILE
+    original = json.loads(sidecar.read_text()) if sidecar.exists() else {"refuted": []}
+    raw_rows = [r for r in original.get("refuted", []) if "premises" not in r]
+    log = EvidenceLog(run_dir)
+    cut = int(len(log.steps) * split)
+    cache = run_dir / "fixpoint_fits"      # survives interruption: a fit is pure in
+    cache.mkdir(exist_ok=True)             # (run bytes, reading, split)
+    fits: dict = {}
+
+    def prep(rows):
+        state = hashlib.sha256(json.dumps(
+            sorted((r["family"], str(r["key_slot"])) for r in rows)).encode()).hexdigest()[:20]
+        disk = cache / f"prep_{state}.json"
+        if disk.exists():
+            return json.loads(disk.read_text())
+        sidecar.write_text(json.dumps({"refuted": rows}, indent=1))
+        H0, G = build_hypotheses(run_dir, log)
+        result = v4_search.search(H0, G, log, run_dir=run_dir)
+        H = result.hypotheses
+        reading = {"name": "fixpoint", "families": {
+            family_key(t): {"family": family_key(t), "key_slot": r.key_slot,
+                            "status": r.status} for t, r in result.chosen.items()}}
+        base = v4_pinned.from_search(result, run_dir, "retrospective",
+                                     refuted=v4_search.read_refutations(run_dir)).fingerprint()
+        questions = [{"family": q.template, "left": q.left.key_slot,
+                      "right": q.right.key_slot} for q in result.open_questions]
+        held = {}
+        for q in questions:
+            for k in (q["left"], q["right"]):
+                held[f"{q['family']}||{k}"] = sorted(
+                    v4_search.slot_values(H, q["family"], k))
+        out = {"base": base, "questions": questions, "held": held, "reading": reading}
+        disk.write_text(json.dumps(out, default=str))
+        return out
+
+    def derive(pr, family, left, right):
+        def rows_for(key):
+            token = (pr["base"], family, str(key))
+            disk = cache / (hashlib.sha256(repr(token).encode()).hexdigest()[:20] + ".json")
+            if token not in fits and disk.exists():
+                fits[token] = json.loads(disk.read_text())
+            if token not in fits:
+                reading = v4_pinned.PinnedReading.from_json(
+                    _override(pr["reading"], family, key))
+                model = csq.fit(run_dir, reading, split=split)
+                m = replace(model, log=log, cut=0)
+                out = []
+                for step in log.steps:
+                    if (step.step < cut or step.action.kind != "click"
+                            or step.action.target is None):
+                        continue
+                    v = oc.score_step_admissible(m, step, corroborated=True,
+                                                 hypothesis=oc.RULE)
+                    out.append({"step": step.step, "verdict": v["verdict"],
+                                "admissible": v.get("admissible"),
+                                "level": v.get("level"),
+                                "arguments": v.get("arguments"),
+                                "fresh": v.get("fresh")})
+                fits[token] = out
+                disk.write_text(json.dumps(out, default=str))
+            return fits[token]
+        d = retro_decision(rows_for(left), rows_for(right))
+        d.pop("details", None)
+        return d
+
+    out = fixpoint(prep, derive, raw_rows)
+    rows = list(raw_rows)
+    for r in out["rows"]:
+        q = r["premises"]["question"]
+        rows.append({"family": r["family"], "key_slot": r["refuted_key"],
+                     "held": r.get("held") or [],
+                     "why": ("refuted by retained outcome evidence at the fixpoint "
+                             "(frozen prefix at %d)" % cut),
+                     "evidence": {"instrument": "retrospective fixpoint",
+                                  "counts": r.get("counts"), "split": split},
+                     "premises": {"base": r["premises"]["base"], "cut": cut,
+                                   "comparator": "claim-content-v2", "question": q}})
+    sidecar.write_text(json.dumps({"refuted": rows}, indent=1))
+    return {"run": run_dir.name, "outcome": out["outcome"],
+            "rows": [(r["family"], str(r["key_slot"])) for r in rows],
+            "events": out["events"]}
 
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--run", required=True)
     ap.add_argument("--out", default=None)
+    ap.add_argument("--fixpoint", action="store_true",
+                    help="iterate derive/propagate/re-derive to a stable verdict set, "
+                         "rewriting the sidecar; oscillating questions stay open")
     ap.add_argument("--retrospective", action="store_true",
                     help="fit both readings of every open question on this history's frozen "
                          "prefix and compare their suffix verdicts where they disagree")
@@ -433,6 +650,16 @@ def main(argv=None) -> int:
                     help="write a retrospective DECIDED verdict into the history's "
                          "identity_refutations_v4.json, like an executed experiment's")
     a = ap.parse_args(argv)
+    if a.fixpoint:
+        r = fixpoint_retrospective(Path(a.run), split=a.split)
+        print(f"\n{r['run']}: fixpoint {r['outcome']} with {len(r['rows'])} sidecar rows")
+        for e in r["events"]:
+            print("  ", e["e"], str(e.get("q", ""))[:60], "->", e.get("out"),
+                  e.get("refuted") or "")
+        if a.out:
+            path = OUT / a.out if not str(a.out).startswith("/") else Path(a.out)
+            path.write_text(json.dumps(r, indent=1, default=str))
+        return 0
     if a.retrospective:
         r = retrospective(Path(a.run), split=a.split, propagate=a.propagate)
         print(f"\n{r['run']}: retrospective outcome comparison at split {r['split']}")

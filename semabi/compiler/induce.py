@@ -846,9 +846,32 @@ class Inducer:
                     # the board, and the constant survived unanimity until the renaming
                     # instrument reached call ids -- the moment they became keys -- and
                     # refuted it twelve times (docs/v4_retained.md).  A name that only
-                    # identifies is never part of a rule's spelling; the argument is left
+                    # identifies is never part of a rule's spelling.  Where exactly one
+                    # attribute of exactly one object this transition already names holds
+                    # the token, the interface itself provides the determining relation --
+                    # the pilot's own `Booked for call` renders it -- and the argument is
+                    # lifted as that dereference: read from the pre-action page at
+                    # prediction time, checked like any other argument, invariant under
+                    # renaming because both sides rename together.  Otherwise it is left
                     # undetermined rather than memorised.
-                    args.append(VARIES)
+                    holders = []
+                    for oid, param in obj_param.items():
+                        obj = tr.before.objs.get(oid)
+                        if obj is None:
+                            continue
+                        for slot, v in obj.attrs.items():
+                            if v == a:
+                                holders.append(("attr", param, slot))
+                        for slot, ref in obj.refs.items():
+                            # harbour resolves the holding call to a *reference*; the
+                            # rendered key travels with it whether or not the target is
+                            # on the page (`binding_context`)
+                            if ref is not None and str(ref[1]) == a:
+                                holders.append(("ref", param, slot))
+                    if len(holders) == 1:
+                        args.append(holders[0])
+                    else:
+                        args.append(VARIES)
                 else:
                     args.append(a)
             # The subject is the first argument that names an object, so that an output about

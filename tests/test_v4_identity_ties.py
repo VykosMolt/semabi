@@ -151,3 +151,89 @@ def test_a_claim_with_its_arguments_outweighs_the_event_alone():
     # and identical claims at identical levels are still no evidence
     d = ties.retro_decision([dict(args_row)], [dict(args_row)])
     assert (d["outcome"], d["disagreements"]) == ("UNDECIDED", 0)
+
+
+def _fp_prep(script):
+    """prep_fn from a script: sidecar-state key -> (base, questions)."""
+    def prep(rows):
+        key = tuple(sorted((r["family"], str(r["key_slot"])) for r in rows))
+        base, questions = script[key]
+        return {"base": base, "questions": [dict(q) for q in questions],
+                "held": {}}
+    return prep
+
+
+def test_the_fixpoint_loop_re_derives_a_verdict_its_base_outgrew():
+    """The harbour button flip, as a policy: a verdict derived on the poorer base is
+    lifted when the base moves and re-derived on the richer one, and the loop settles at
+    the same endpoint whichever question went first (the seven-schedule order attack,
+    in miniature)."""
+    Q_OV = {"family": "ov", "left": None, "right": "V"}
+    Q_BTN = {"family": "btn", "left": None, "right": "B"}
+    base00 = ((), (("btn", "None"),), (("ov", "None"),), (("btn", "None"), ("ov", "None")))
+    script = {
+        (): ("b00", [Q_BTN, Q_OV]),
+        (("btn", "B"),): ("b00", [Q_OV]),                    # btn's B refuted: base unmoved
+        (("btn", "None"),): ("b01", [Q_OV]),                 # btn's None refuted: keyed
+        (("ov", "None"),): ("b10", [Q_BTN]),                 # ov None refuted: base moves
+        (("btn", "B"), ("ov", "None")): ("b10", []),
+        (("btn", "None"), ("ov", "None")): ("b11", []),      # both movers: top base
+    }
+    def derive(pr, family, left, right):
+        if family == "ov":
+            return {"outcome": "DECIDED", "refuted": "left", "counts": {}}
+        # the button question flips with the base: wrong on the poorest, right above it
+        return {"outcome": "DECIDED",
+                "refuted": "right" if pr["base"] == "b00" else "left", "counts": {}}
+    for first in ([Q_BTN, Q_OV], [Q_OV, Q_BTN]):
+        script[()] = ("b00", list(first))
+        out = ties.fixpoint(_fp_prep(script), derive, [])
+        assert out["outcome"] == "FIXPOINT", out["events"]
+        assert {(r["family"], str(r["refuted_key"])) for r in out["rows"]} == {
+            ("ov", "None"), ("btn", "None")}
+        assert out["base"] == "b11"
+
+
+def test_two_verdicts_that_defeat_each_others_premise_stay_open():
+    """If two mutually dependent decisions cannot settle without an update order, the
+    order gets no semantic authority: each re-derivation here flips a key, the fourth
+    state revisits the second, and the loop stops with the disputed commitments open
+    rather than resolved by whichever schedule was running."""
+    QA = {"family": "a", "left": None, "right": "X"}
+    QB = {"family": "b", "left": None, "right": "Y"}
+    def prep(rows):
+        key = tuple(sorted((r["family"], str(r["key_slot"])) for r in rows))
+        return {"base": "|".join("=".join(k) for k in key) or "empty",
+                "questions": [dict(QA), dict(QB)], "held": {}}
+    def derive(pr, family, left, right):
+        b_none = "b=None" in pr["base"]
+        a_none = "a=None" in pr["base"]
+        if family == "a":
+            return {"outcome": "DECIDED", "refuted": "right" if b_none else "left",
+                    "counts": {}}
+        return {"outcome": "DECIDED", "refuted": "left" if a_none else "right",
+                "counts": {}}
+    out = ties.fixpoint(prep, derive, [])
+    assert out["outcome"] == "OSCILLATION", out["events"]
+
+
+def test_an_undecided_question_is_re_posed_on_a_richer_base():
+    """rand13's transition: symmetric on the poorer base, decidable on the richer one."""
+    Q_OV = {"family": "ov", "left": None, "right": "V"}
+    Q_KK = {"family": "ov2", "left": "V", "right": "C"}
+    script = {
+        (): ("b0", [Q_KK, Q_OV]),
+        (("ov", "None"),): ("b1", [Q_KK]),
+        (("ov2", "C"),): ("b0", [Q_OV]),         # an alternative-refutation: base unmoved
+        (("ov", "None"), ("ov2", "C")): ("b1", []),
+    }
+    def derive(pr, family, left, right):
+        if family == "ov":
+            return {"outcome": "DECIDED", "refuted": "left", "counts": {}}
+        if pr["base"] == "b0":
+            return {"outcome": "UNDECIDED", "counts": {}}
+        return {"outcome": "DECIDED", "refuted": "right", "counts": {}}
+    out = ties.fixpoint(_fp_prep(script), derive, [])
+    assert out["outcome"] == "FIXPOINT"
+    assert {(r["family"], str(r["refuted_key"])) for r in out["rows"]} == {
+        ("ov", "None"), ("ov2", "C")}

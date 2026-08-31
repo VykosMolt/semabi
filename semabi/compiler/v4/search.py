@@ -103,7 +103,8 @@ def read_refutation_records(run_dir: Path | None) -> list[dict]:
 
 
 def write_refutation(run_dir: Path, family: str, key_slot: str | None, why: str,
-                     evidence: dict, held: list[str] | None = None) -> None:
+                     evidence: dict, held: list[str] | None = None,
+                     premises: dict | None = None) -> None:
     """Record a refuted reading beside the history it was fitted on.
 
     A slot's name is a coordinate of the representation, not of the application: blend's
@@ -119,6 +120,15 @@ def write_refutation(run_dir: Path, family: str, key_slot: str | None, why: str,
         row = {"family": family, "key_slot": key_slot, "why": why, "evidence": evidence}
         if held is not None:
             row["held"] = sorted(held)
+        if premises is not None:
+            # ``held`` binds the *denotation*: does the slot still hold what was
+            # adjudicated.  ``premises`` binds the *derivation*: the base reading the
+            # verdict was compared under, the cut, the comparator, and the question's two
+            # sides -- so a fixpoint loop can detect that the base has moved out from
+            # under a derived verdict and re-derive it instead of trusting it
+            # (docs/v4_retained.md).  Orthogonal stalenesses; a raw executed experiment
+            # records no premises because its evidence is not a derivation.
+            row["premises"] = premises
         payload["refuted"].append(row)
     path.write_text(json.dumps(payload, indent=1))
 

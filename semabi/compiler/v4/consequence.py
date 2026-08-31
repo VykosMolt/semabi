@@ -1217,6 +1217,23 @@ def _output_prediction(pred: ScopedPrediction, A, post, eff, assignment, predict
         if value is VARIES:
             args.append(None)     # the action does not determine this argument: not checked
             continue
+        if isinstance(value, tuple) and len(value) == 3 and value[0] in ("attr", "ref"):
+            # a determinable argument: what the bound object's own attribute or reference
+            # renders on the pre-action page (`induce`: the lifted dereference), read at
+            # prediction time exactly as a relation query re-follows its slot
+            obj = assignment.get(value[1])
+            if obj is None:
+                held = None
+            elif value[0] == "attr":
+                held = obj.attrs.get(value[2])
+            else:
+                ref = obj.refs.get(value[2])
+                held = None if ref is None else ref[1]
+            if held is None:
+                args.append(None)          # the page does not determine it here: unchecked
+            else:
+                args.append(str(held))
+            continue
         if isinstance(value, str) and value.startswith("?"):
             obj = assignment.get(value)
             if obj is None:
@@ -1317,7 +1334,8 @@ def _creation_values(eff, assignment) -> tuple:
     """The values a creation claim is about, under one assignment."""
     out = []
     for _slot, value in tuple(eff.attrs) + tuple(eff.refs):
-        if value is VARIES or value is None:
+        if value is VARIES or value is None or (
+                isinstance(value, tuple) and len(value) == 3 and value[0] in ("attr", "ref")):
             out.append(None)
         elif isinstance(value, str) and value.startswith("?"):
             obj = assignment.get(value)
@@ -1346,7 +1364,8 @@ def _creation_prediction(pred: ScopedPrediction, pre, post, eff, assignment
     values: list[str] = []
     undetermined = 0
     for _slot, value in tuple(eff.attrs) + tuple(eff.refs):
-        if value is VARIES or value is None:
+        if value is VARIES or value is None or (
+                isinstance(value, tuple) and len(value) == 3 and value[0] in ("attr", "ref")):
             undetermined += 1
             continue
         if isinstance(value, str) and value.startswith("?"):
