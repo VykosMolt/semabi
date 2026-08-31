@@ -1,0 +1,59 @@
+{
+ "name": "vet appointments: Reason|Vet vs Reason|Status",
+ "run": "runs/v4/vet_clinic_dev",
+ "base": "http://127.0.0.1:8920",
+ "seed": 4247,
+ "tie": {
+  "families": [
+   "row[_](cell@Actions[_](combobox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+   "row[_](cell@Actions[_](textbox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+   "row[_](cell@Actions[_],cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])"
+  ],
+  "left": "cell@Reason#0|cell@Vet#0",
+  "right": "cell@Reason#0|cell@Status#0"
+ },
+ "readings": {
+  "Reason|Vet": {
+   "cell[_]": null,
+   "group[_](heading[_],list[_](listitem[_]))": null,
+   "row[_](cell@Actions[_](combobox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])": "cell@Reason#0|cell@Vet#0",
+   "row[_](cell@Actions[_](textbox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])": "cell@Reason#0|cell@Vet#0",
+   "row[_](cell@Actions[_],cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])": "cell@Reason#0|cell@Vet#0",
+   "row[_](cell@Name[_],cell@On duty[_],cell@Specialty[_])": null,
+   "text[_](combobox[_])": null,
+   "text[_](textbox[_])": "text#0"
+  },
+  "Reason|Status": {
+   "cell[_]": null,
+   "group[_](heading[_],list[_](listitem[_]))": null,
+   "row[_](cell@Actions[_](combobox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])": "cell@Reason#0|cell@Status#0",
+   "row[_](cell@Actions[_](textbox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])": "cell@Reason#0|cell@Status#0",
+   "row[_](cell@Actions[_],cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])": "cell@Reason#0|cell@Status#0",
+   "row[_](cell@Name[_],cell@On duty[_],cell@Specialty[_])": null,
+   "text[_](combobox[_])": null,
+   "text[_](textbox[_])": "text#0"
+  }
+ },
+ "actions": [
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Appointments"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Check in",
+    "nth": 0
+   }
+  }
+ ],
+ "predictions": {
+  "Reason|Vet": "checking Nala in changes a value the key does not contain: the appointment persists as one object whose status now reads checked_in",
+  "Reason|Status": "checking Nala in changes a component of its own key: the scheduled appointment is replaced by another object -- a removal and a creation of the same kind, churn, no persistence"
+ },
+ "test": "mutation"
+}

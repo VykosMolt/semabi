@@ -9,24 +9,24 @@
  "corroborated": true,
  "hypothesis": "rule",
  "against_the_other_class": {
-  "rule: the evidence forces one outcome | list: the evidence forces one outcome": 69,
+  "rule: the evidence forces one outcome | list: the evidence forces one outcome": 82,
   "rule: one outcome, because the control has never done anything else | list: one outcome, because the control has never done anything else": 42,
-  "rule: several outcomes remain admissible | list: several outcomes remain admissible": 12,
-  "rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)": 3
+  "rule: several outcomes remain admissible | list: several outcomes remain admissible": 1,
+  "rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)": 1
  },
  "actions": 126,
  "what_the_evidence_establishes": {
-  "the evidence forces one outcome": 72,
+  "the evidence forces one outcome": 83,
   "one outcome, because the control has never done anything else": 42,
-  "several outcomes remain admissible": 12
+  "several outcomes remain admissible": 1
  },
  "admissible_set_size": {
-  "1": 114,
-  "2": 12
+  "1": 125,
+  "2": 1
  },
  "what_happened_was": {
-  "inside the admissible set": 92,
-  "outside it": 34
+  "inside the admissible set": 94,
+  "outside it": 32
  },
  "the_list_where_the_evidence": {
   "one outcome, because the control has never done anything else": {
@@ -34,33 +34,30 @@
    "a different event": 1
   },
   "several outcomes remain admissible": {
-   "the event the interface returned": 11,
-   "a different event": 1
+   "the event the interface returned": 1
   },
   "the evidence forces one outcome": {
-   "the event the interface returned": 65,
-   "no determinate answer": 6,
+   "the event the interface returned": 82,
    "a different event": 1
   }
  },
  "policy_forced_then_list": {
-  "one outcome was admissible and it happened": 69,
+  "one outcome was admissible and it happened": 82,
   "the only outcome ever seen on this control, and it happened": 41,
-  "deferred to the list: the event the interface returned": 11,
-  "one outcome was admissible and a different one happened": 3,
   "the only outcome ever seen on this control, and something else happened": 1,
-  "deferred to the list: a different event": 1
+  "deferred to the list: the event the interface returned": 1,
+  "one outcome was admissible and a different one happened": 1
  },
- "distinct_events_forced": 12,
+ "distinct_events_forced": 13,
  "events_forced": {
   "\u0000SILENT": 30,
   "<> <> is now <> .": 17,
   "<> <> is already <> .": 15,
+  "<> already has call <> on the board .": 12,
   "<> is signed off .": 11,
   "<> is already signed on .": 9,
   "<> is signed on .": 8,
-  "<> is already signed off .": 6,
-  "Call <> opened for <> .": 6
+  "<> is already signed off .": 6
  },
  "per_control": {
   "button#cell@Call/button": {
@@ -70,8 +67,7 @@
    "the evidence forces one outcome": 20
   },
   "button:Schedule call": {
-   "several outcomes remain admissible": 11,
-   "the evidence forces one outcome": 6
+   "the evidence forces one outcome": 17
   },
   "button:Sign off": {
    "the evidence forces one outcome": 17
@@ -121,9 +117,7 @@
    "one outcome was admissible and it happened": 20
   },
   "button:Schedule call": {
-   "several outcomes remained admissible; the one that happened was among them": 11,
-   "one outcome was admissible and it happened": 4,
-   "one outcome was admissible and a different one happened": 2
+   "one outcome was admissible and it happened": 17
   },
   "button:Sign off": {
    "one outcome was admissible and it happened": 16,
@@ -179,8 +173,8 @@
   "button:Schedule call": {
    "fitted": 19,
    "events": 2,
-   "rules": 1,
-   "default": "undetermined"
+   "rules": 2,
+   "default": "Call <> opened for <> ."
   },
   "button:Sign off": {
    "fitted": 14,
@@ -196,38 +190,6 @@
   }
  },
  "forced_but_wrong": [
-  {
-   "step": 271,
-   "control": "button:Schedule call",
-   "admissible": [
-    "Call <> opened for <> ."
-   ],
-   "hypothesis": "rule",
-   "unordered": [
-    "Call <> opened for <> ."
-   ],
-   "observed": "<> already has call <> on the board .",
-   "returned": "Bregagh already has call C-102 on the board.",
-   "verdict": "one outcome was admissible and a different one happened",
-   "level": "the event alone",
-   "why": "Call <> opened for <> . <- ('unnamed', \"selection['cell@Current call#2']:3\") & ('unnamed', \"selection['cell@Vessel#1']:0\")  [4 occasions]"
-  },
-  {
-   "step": 394,
-   "control": "button:Schedule call",
-   "admissible": [
-    "Call <> opened for <> ."
-   ],
-   "hypothesis": "rule",
-   "unordered": [
-    "Call <> opened for <> ."
-   ],
-   "observed": "<> already has call <> on the board .",
-   "returned": "Bregagh already has call C-102 on the board.",
-   "verdict": "one outcome was admissible and a different one happened",
-   "level": "the event alone",
-   "why": "Call <> opened for <> . <- ('unnamed', \"selection['cell@Current call#1']:3\") & ('unnamed', \"selection['cell@Current call#2']:3\")  [4 occasions]"
-  },
   {
    "step": 404,
    "control": "button:Sign off",

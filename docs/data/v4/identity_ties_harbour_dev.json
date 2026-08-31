@@ -3,25 +3,21 @@
  "final": {
   "contradictions": 0,
   "churn": 0,
-  "visibility": 3,
+  "visibility": 0,
   "conflicts": 0,
   "named": 240,
   "positional": 0,
   "unexplained": 41,
   "spurious": 0,
-  "explained": 57,
-  "delta_atoms": 58,
-  "complexity": 32,
+  "explained": 60,
+  "delta_atoms": 93,
+  "complexity": 52,
   "steps": 373,
   "churn_steps": [],
   "contradiction_steps": [],
-  "visibility_steps": [
-   32,
-   107,
-   285
-  ]
+  "visibility_steps": []
  },
- "open_questions": 4,
+ "open_questions": 5,
  "questions": [
   {
    "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
@@ -29,7 +25,7 @@
    "right": "cell@Takes up to#0",
    "reason": "the trace so far scores both readings identically",
    "tids": [
-    1
+    0
    ],
    "contested": [
     "cell@Berth#0",
@@ -49,11 +45,51 @@
    "right": "cell@Ticket to#0",
    "reason": "the trace so far scores both readings identically",
    "tids": [
-    2
+    1
    ],
    "contested": [
     "cell@Pilot#0",
     "cell@Ticket to#0"
+   ],
+   "status": "NO_KNOWN_EXPERIMENT",
+   "writers": {},
+   "makers": [],
+   "movers": [],
+   "made_values": {},
+   "separable_by_the_history": {},
+   "decided": null
+  },
+  {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "left": "cell@Vessel#0",
+   "right": "cell@Cargo#0",
+   "reason": "the trace so far scores both readings identically",
+   "tids": [
+    2
+   ],
+   "contested": [
+    "cell@Cargo#0",
+    "cell@Vessel#0"
+   ],
+   "status": "NO_KNOWN_EXPERIMENT",
+   "writers": {},
+   "makers": [],
+   "movers": [],
+   "made_values": {},
+   "separable_by_the_history": {},
+   "decided": null
+  },
+  {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "left": "cell@Vessel#0",
+   "right": "cell@Length overall#0",
+   "reason": "the trace so far scores both readings identically",
+   "tids": [
+    2
+   ],
+   "contested": [
+    "cell@Length overall#0",
+    "cell@Vessel#0"
    ],
    "status": "NO_KNOWN_EXPERIMENT",
    "writers": {},
@@ -69,7 +105,7 @@
    "right": "cell@Length overall#0",
    "reason": "the trace so far scores both readings identically",
    "tids": [
-    0
+    4
    ],
    "contested": [
     "cell@Length overall#0",
@@ -83,7 +119,7 @@
      "control": "button:Schedule call",
      "support": 10,
      "acts": [
-      "click(button:Schedule call)"
+      "click(button:Schedule call@T2[?o0])"
      ],
      "test": "collision",
      "parameters": []
@@ -157,91 +193,6 @@
     "predictions": {
      "cell@Vessel#0": "a second instance with the same value is one object",
      "cell@Length overall#0": "a second instance with the same value is one object"
-    }
-   }
-  },
-  {
-   "family": "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])",
-   "left": "cell@Vessel#0",
-   "right": null,
-   "reason": "undecided: chosen explains 57 with 3 errors, the alternative explains 50 with 0",
-   "tids": [
-    0
-   ],
-   "contested": [
-    "cell@Vessel#0"
-   ],
-   "status": "REACHABLE_NOT_DISCRIMINATING",
-   "writers": {},
-   "makers": [
-    {
-     "operator": "op17",
-     "control": "button:Schedule call",
-     "support": 10,
-     "acts": [
-      "click(button:Schedule call)"
-     ],
-     "test": "collision",
-     "parameters": []
-    }
-   ],
-   "movers": [],
-   "made_values": {
-    "op17": [
-     {
-      "cell@Vessel#0": null,
-      "key": "Nordkapp"
-     },
-     {
-      "cell@Vessel#0": null,
-      "key": "Nordkapp"
-     },
-     {
-      "cell@Vessel#0": null,
-      "key": "Bregagh"
-     },
-     {
-      "cell@Vessel#0": null,
-      "key": "Bregagh"
-     },
-     {
-      "cell@Vessel#0": null,
-      "key": "Selkie"
-     },
-     {
-      "cell@Vessel#0": null,
-      "key": "Kittiwake"
-     },
-     {
-      "cell@Vessel#0": null,
-      "key": "Hafnarfjord"
-     },
-     {
-      "cell@Vessel#0": null,
-      "key": "Hafnarfjord"
-     },
-     {
-      "cell@Vessel#0": null,
-      "key": "Ardent Rose"
-     },
-     {
-      "cell@Vessel#0": null,
-      "key": "Petrel Star"
-     }
-    ]
-   },
-   "separable_by_the_history": {
-    "cell@Vessel#0": false
-   },
-   "decided": null,
-   "experiment": {
-    "test": "collision",
-    "by": "button:Schedule call",
-    "operator": "op17",
-    "parameters": [],
-    "predictions": {
-     "cell@Vessel#0": "a second instance with the same value is one object",
-     "None": "a second instance is a second object"
     }
    }
   }

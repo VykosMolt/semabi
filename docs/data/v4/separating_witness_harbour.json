@@ -1,8 +1,79 @@
 {
- "note": "a single survivor has nothing to separate",
- "pairs": [],
+ "pairs": [
+  {
+   "first_steps": [
+    16,
+    33,
+    96,
+    106,
+    122,
+    183,
+    198,
+    261,
+    309,
+    316,
+    406,
+    408
+   ],
+   "left": "group[_](heading[_],tabl=None",
+   "right": "row[_](cell@Actions[_](b=cell@Cargo#0",
+   "separating_actions": {
+    "click:button": 12
+   },
+   "steps_compared": 453,
+   "steps_where_the_deltas_differ": 12,
+   "verdict_at_those_steps": [
+    [
+     "EXPLAINED/EXPLAINED",
+     12
+    ]
+   ]
+  },
+  {
+   "first_steps": [
+    16,
+    33,
+    96,
+    106,
+    122,
+    183,
+    198,
+    261,
+    309,
+    316,
+    406,
+    408
+   ],
+   "left": "group[_](heading[_],tabl=None",
+   "right": "row[_](cell@Berth[_],cel=cell@Length overall#0",
+   "separating_actions": {
+    "click:button": 12
+   },
+   "steps_compared": 453,
+   "steps_where_the_deltas_differ": 12,
+   "verdict_at_those_steps": [
+    [
+     "EXPLAINED/EXPLAINED",
+     12
+    ]
+   ]
+  },
+  {
+   "first_steps": [],
+   "left": "row[_](cell@Actions[_](b=cell@Cargo#0",
+   "right": "row[_](cell@Berth[_],cel=cell@Length overall#0",
+   "separating_actions": {},
+   "steps_compared": 453,
+   "steps_where_the_deltas_differ": 0,
+   "verdict_at_those_steps": []
+  }
+ ],
  "report": "docs/data/v4/frontier_harbour.json",
+ "role": "TRANSFER",
+ "run": "/home/moloch/semabi/runs/v4/harbour_transfer",
  "survivors": [
-  "joint discrimination x2"
+  "group[_](heading[_],tabl=None",
+  "row[_](cell@Actions[_](b=cell@Cargo#0",
+  "row[_](cell@Berth[_],cel=cell@Length overall#0"
  ]
 }

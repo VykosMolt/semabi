@@ -5,18 +5,18 @@
   "regime": "FROZEN_PREFIX",
   "split": 0.5,
   "cut": 229,
-  "operators": 19,
+  "operators": 15,
   "held_out_actions": 67,
   "rules_offered_per_action": 1.0,
-  "applicable_claims_per_action": 0.27,
-  "distinct_decided_claims": 11,
+  "applicable_claims_per_action": 0.25,
+  "distinct_decided_claims": 10,
   "composition": {
    "a named constant": {
     "claims": 67,
-    "decided": 18,
+    "decided": 17,
     "supported": 17,
-    "refuted": 1,
-    "supported_share": 0.944,
+    "refuted": 0,
+    "supported_share": 1.0,
     "distinct_claims": 2,
     "examples": [
      "attr:Condition#0 = closed",
@@ -24,27 +24,27 @@
     ]
    },
    "an interface response": {
-    "claims": 253,
-    "decided": 72,
-    "supported": 68,
-    "refuted": 4,
-    "supported_share": 0.944,
-    "distinct_claims": 8,
+    "claims": 185,
+    "decided": 68,
+    "supported": 67,
+    "refuted": 1,
+    "supported_share": 0.985,
+    "distinct_claims": 7,
     "examples": [
      "<> <> is already <> . = <> <> is already <> .",
      "<> <> is now <> . = <> <> is now <> .",
-     "<> already has call <> on the board . = <> already has call <> on the board .",
      "<> is already signed off . = <> is already signed off .",
      "<> is already signed on . = <> is already signed on .",
-     "<> is signed off . = <> is signed off ."
+     "<> is signed off . = <> is signed off .",
+     "<> is signed on . = <> is signed on ."
     ]
    },
    "an object brought into being": {
     "claims": 17,
-    "decided": 17,
-    "supported": 5,
-    "refuted": 12,
-    "supported_share": 0.294,
+    "decided": 5,
+    "supported": 0,
+    "refuted": 5,
+    "supported_share": 0.0,
     "distinct_claims": 1,
     "examples": [
      "id = new"
@@ -52,9 +52,8 @@
    }
   },
   "per_action": {
-   "no rule applied": 49,
-   "every applicable rule was right": 17,
-   "every applicable rule was contradicted": 1
+   "no rule applied": 50,
+   "every applicable rule was right": 17
   }
  }
 ]

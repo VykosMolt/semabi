@@ -9,53 +9,41 @@
  "actions_scored": 32,
  "what_the_evidence_establishes": {
   "rule": {
-   "the evidence forces one outcome": 21,
-   "one outcome, because the control has never done anything else": 8,
-   "several outcomes remain admissible": 2,
-   "no outcome is established": 1
+   "the evidence forces one outcome": 24,
+   "one outcome, because the control has never done anything else": 8
   },
   "list": {
-   "the evidence forces one outcome": 21,
-   "one outcome, because the control has never done anything else": 8,
-   "several outcomes remain admissible": 2,
-   "no outcome is established": 1
+   "the evidence forces one outcome": 24,
+   "one outcome, because the control has never done anything else": 8
   }
  },
  "verdicts": {
   "rule": {
-   "one outcome was admissible and it happened": 19,
-   "the only outcome ever seen on this control, and it happened": 8,
-   "several outcomes remained admissible; the one that happened was among them": 2,
-   "one outcome was admissible and a different one happened": 2,
-   "no outcome is established for this state": 1
+   "one outcome was admissible and it happened": 24,
+   "the only outcome ever seen on this control, and it happened": 8
   },
   "list": {
-   "one outcome was admissible and it happened": 19,
-   "the only outcome ever seen on this control, and it happened": 8,
-   "several outcomes remained admissible; the one that happened was among them": 2,
-   "one outcome was admissible and a different one happened": 2,
-   "no outcome is established for this state": 1
+   "one outcome was admissible and it happened": 24,
+   "the only outcome ever seen on this control, and it happened": 8
   }
  },
  "rows": [
   {
    "step": 230,
    "rule": {
-    "bucket": "several outcomes remain admissible",
-    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
     "admissible": [
-     "<> already has call <> on the board .",
-     "Call <> opened for <> ."
+     "<> already has call <> on the board ."
     ],
     "observed": "<> already has call <> on the board ."
    },
    "control": "button:Schedule call",
    "list": {
-    "bucket": "several outcomes remain admissible",
-    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
     "admissible": [
-     "<> already has call <> on the board .",
-     "Call <> opened for <> ."
+     "<> already has call <> on the board ."
     ],
     "observed": "<> already has call <> on the board ."
    }
@@ -323,37 +311,39 @@
   {
    "step": 309,
    "rule": {
-    "bucket": "no outcome is established",
-    "verdict": "no outcome is established for this state",
-    "admissible": [],
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Call <> opened for <> ."
+    ],
     "observed": "Call <> opened for <> ."
    },
    "control": "button:Schedule call",
    "list": {
-    "bucket": "no outcome is established",
-    "verdict": "no outcome is established for this state",
-    "admissible": [],
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Call <> opened for <> ."
+    ],
     "observed": "Call <> opened for <> ."
    }
   },
   {
    "step": 317,
    "rule": {
-    "bucket": "several outcomes remain admissible",
-    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
     "admissible": [
-     "<> already has call <> on the board .",
-     "Call <> opened for <> ."
+     "<> already has call <> on the board ."
     ],
     "observed": "<> already has call <> on the board ."
    },
    "control": "button:Schedule call",
    "list": {
-    "bucket": "several outcomes remain admissible",
-    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
     "admissible": [
-     "<> already has call <> on the board .",
-     "Call <> opened for <> ."
+     "<> already has call <> on the board ."
     ],
     "observed": "<> already has call <> on the board ."
    }
@@ -542,18 +532,18 @@
    "step": 394,
    "rule": {
     "bucket": "the evidence forces one outcome",
-    "verdict": "one outcome was admissible and a different one happened",
+    "verdict": "one outcome was admissible and it happened",
     "admissible": [
-     "Call <> opened for <> ."
+     "<> already has call <> on the board ."
     ],
     "observed": "<> already has call <> on the board ."
    },
    "control": "button:Schedule call",
    "list": {
     "bucket": "the evidence forces one outcome",
-    "verdict": "one outcome was admissible and a different one happened",
+    "verdict": "one outcome was admissible and it happened",
     "admissible": [
-     "Call <> opened for <> ."
+     "<> already has call <> on the board ."
     ],
     "observed": "<> already has call <> on the board ."
    }
@@ -582,18 +572,18 @@
    "step": 408,
    "rule": {
     "bucket": "the evidence forces one outcome",
-    "verdict": "one outcome was admissible and a different one happened",
+    "verdict": "one outcome was admissible and it happened",
     "admissible": [
-     "<> already has call <> on the board ."
+     "Call <> opened for <> ."
     ],
     "observed": "Call <> opened for <> ."
    },
    "control": "button:Schedule call",
    "list": {
     "bucket": "the evidence forces one outcome",
-    "verdict": "one outcome was admissible and a different one happened",
+    "verdict": "one outcome was admissible and it happened",
     "admissible": [
-     "<> already has call <> on the board ."
+     "Call <> opened for <> ."
     ],
     "observed": "Call <> opened for <> ."
    }

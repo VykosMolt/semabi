@@ -8,8 +8,8 @@
  "permuted_events": null,
  "scored_on": "harbour_holdout",
  "cut": 459,
- "operators": 24,
- "operators_with_an_output": 24,
+ "operators": 17,
+ "operators_with_an_output": 17,
  "output": {
   "claims": 0,
   "verdicts": {},
@@ -44,16 +44,16 @@
   "rules": 14,
   "held_out_clicks": 270,
   "ledger": {
-   "the event the interface returned": 219,
-   "no determinate answer": 43,
-   "a different event": 8
+   "the event the interface returned": 255,
+   "a different event": 8,
+   "no determinate answer": 7
   },
-  "accuracy_where_it_answered": 0.965,
-  "distinct_events_asserted": 11,
-  "answers_naming_an_event": 148,
-  "accuracy_where_it_named_an_event": 0.946,
+  "accuracy_where_it_answered": 0.97,
+  "distinct_events_asserted": 13,
+  "answers_naming_an_event": 184,
+  "accuracy_where_it_named_an_event": 0.957,
   "by_level": {
-   "the event the interface returned / with its arguments": 136,
+   "the event the interface returned / with its arguments": 172,
    "the event the interface returned / the control returns nothing": 79,
    "a different event / the event alone": 8,
    "the event the interface returned / the event alone": 4
@@ -61,18 +61,18 @@
   "events_asserted": {
    "\u0000SILENT": 79,
    "<> <> is already <> .": 37,
+   "<> already has call <> on the board .": 25,
    "<> <> is now <> .": 21,
    "<> is already signed on .": 20,
    "<> is signed off .": 19,
    "<> is already signed off .": 14,
-   "<> is signed on .": 12,
-   "<> <> cannot be <> while call <> holds it .": 8
+   "<> is signed on .": 12
   },
   "majority_frame_control_where_it_answered": {
-   "right": 37,
-   "wrong": 190,
+   "right": 41,
+   "wrong": 222,
    "control_unseen_on_prefix": 0,
-   "accuracy": 0.163
+   "accuracy": 0.156
   },
   "by_control": {
    "button#cell@Call/button": {
@@ -91,7 +91,7 @@
     "fitted": 36,
     "rules": 2,
     "events_fitted": 2,
-    "no determinate answer": 36
+    "the event the interface returned": 36
    },
    "button:Sign off": {
     "fitted": 30,
@@ -119,7 +119,7 @@
     "no determinate answer": 7
    },
    "button:Record departure": {
-    "fitted": 7,
+    "fitted": 3,
     "rules": 1,
     "events_fitted": 1,
     "the event the interface returned": 4,
@@ -219,9 +219,9 @@
    "button:Book pilot": "button:Book pilot: 5 fitted occasions, 2 distinct events\n    otherwise -> undetermined",
    "button:Bring _": "button:Bring _: 8 fitted occasions, 1 distinct events\n    otherwise  ->  Call <> has <> berth allocated .   [8]\n    otherwise -> Call <> has <> berth allocated .\n    'Call <> has <> berth allocated .' arguments: 0=owner",
    "button:Close": "button:Close: 33 fitted occasions, 3 distinct events\n    role relation['forward', 'rel:3']:3<owner = relation['forward', 'rel:3'] from owner\n    ('ref_set', 'owner', 'rel:3')  ->  <> <> cannot be <> while call <> holds it .   [10]\n    attr:Condition#0(owner) == 'open'  ->  <> <> is now <> .   [14]\n    otherwise  ->  <> <> is already <> .   [9]\n    otherwise -> <> <> is already <> .\n    '<> <> cannot be <> while call <> holds it .' arguments: 1=owner, 3=relation['forward', 'rel:3']:3<owner\n    '<> <> is already <> .' arguments: 1=owner\n    '<> <> is now <> .' arguments: 1=owner",
-   "button:Record departure": "button:Record departure: 7 fitted occasions, 1 distinct events\n    otherwise  ->  Call <> is not <> , so nothing has sailed .   [7]\n    otherwise -> Call <> is not <> , so nothing has sailed .\n    'Call <> is not <> , so nothing has sailed .' arguments: 0=owner",
+   "button:Record departure": "button:Record departure: 3 fitted occasions, 1 distinct events\n    otherwise  ->  Call <> is not <> , so nothing has sailed .   [3]\n    otherwise -> Call <> is not <> , so nothing has sailed .\n    'Call <> is not <> , so nothing has sailed .' arguments: 0=owner",
    "button:Reopen": "button:Reopen: 38 fitted occasions, 2 distinct events\n    attr:Condition#0(owner) == 'open'  ->  <> <> is already <> .   [24]\n    otherwise  ->  <> <> is now <> .   [14]\n    otherwise -> <> <> is now <> .\n    '<> <> is already <> .' arguments: 1=owner\n    '<> <> is now <> .' arguments: 1=owner",
-   "button:Schedule call": "button:Schedule call: 36 fitted occasions, 2 distinct events\n    role selection['cell@Vessel#0']:0 = selection['cell@Vessel#0']\n    role selection['cell@Current call#0']:3 = selection['cell@Current call#0']\n    role selection['cell@Vessel#1']:0 = selection['cell@Vessel#1']\n    role selection['cell@Current call#1']:3 = selection['cell@Current call#1']\n    role selection['cell@Vessel#2']:0 = selection['cell@Vessel#2']\n    role selection['cell@Current call#2']:3 = selection['cell@Current call#2']\n    role selection['cell@Vessel#3']:0 = selection['cell@Vessel#3']\n    role selection['cell@Current call#3']:3 = selection['cell@Current call#3']\n    rel:2(selection['cell@Vessel#1']:0) != selection['cell@Current call#2']:3  ->  <> already has call <> on the board .   [15]\n    attr:Length overall#0(selection['cell@Vessel#0']:0) >= '96' & ('unnamed', \"selection['cell@Vessel#1']:0\")  ->  Call <> opened for <> .   [3]\n    otherwise -> undetermined\n    'Call <> opened for <> .' arguments: 1=created:T0",
+   "button:Schedule call": "button:Schedule call: 36 fitted occasions, 2 distinct events\n    ('ref_set', 'owner', 'rel:3')  ->  <> already has call <> on the board .   [24]\n    otherwise  ->  Call <> opened for <> .   [12]\n    otherwise -> Call <> opened for <> .\n    '<> already has call <> on the board .' arguments: 0=owner\n    'Call <> opened for <> .' arguments: 1=owner",
    "button:Sign off": "button:Sign off: 30 fitted occasions, 3 distinct events\n    role relation['forward', 'rel:3']:3<owner = relation['forward', 'rel:3'] from owner\n    attr:Duty#0(owner) == 'off'  ->  <> is already signed off .   [11]\n    ('unnamed', \"relation['forward', 'rel:3']:3<owner\")  ->  <> is signed off .   [18]\n    otherwise -> <> cannot sign off while booked for call <> .\n    '<> cannot sign off while booked for call <> .' arguments: 0=owner, 1=relation['forward', 'rel:3']:3<owner\n    '<> is already signed off .' arguments: 0=owner\n    '<> is signed off .' arguments: 0=owner",
    "button:Sign on": "button:Sign on: 34 fitted occasions, 2 distinct events\n    attr:Duty#0(owner) == 'on'  ->  <> is already signed on .   [18]\n    otherwise  ->  <> is signed on .   [16]\n    otherwise -> <> is signed on .\n    '<> is already signed on .' arguments: 0=owner\n    '<> is signed on .' arguments: 0=owner"
   }

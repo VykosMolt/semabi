@@ -1,8 +1,8 @@
 {
  "candidates": [
   {
-   "fingerprint": "e800f7fe005c1b67",
-   "full_reading_sha256": "3f9673fe6939d5f909bce8600e081bf7bc2fd804fd4c1376c2a0bdaf91f10efc",
+   "fingerprint": "22fb5b8ceb03c44a",
+   "full_reading_sha256": "2f6baf70a4e87fe7b56a28b7c76ce8ae7f529fc2daead597ffcca3bd3cd2eb86",
    "name": "source_choice",
    "reading": {
     "families": {
@@ -31,10 +31,10 @@
       "status": "SUPPORTED"
      },
      "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": {
-      "discrimination": 0.0,
+      "discrimination": 1.0,
       "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
-      "key_slot": null,
-      "status": "NO_IDENTITY"
+      "key_slot": "cell@Vessel#0",
+      "status": "SUPPORTED"
      },
      "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": {
       "discrimination": 1.0,
@@ -50,6 +50,12 @@
      "source_run": "runs/v4/harbour_dev"
     },
     "refuted": {
+     "button[_]": [
+      "button#0"
+     ],
+     "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": [
+      null
+     ],
      "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": [
       "cell@Status#0"
      ]
@@ -58,122 +64,8 @@
    }
   },
   {
-   "fingerprint": "f144e9dff592d8cb",
-   "full_reading_sha256": "fd8d313e0f12ad7531b6b1c7e86bb470fb2df043cae10785e041de1bd7324a42",
-   "name": "joint discrimination x2",
-   "reading": {
-    "families": {
-     "button[_]": {
-      "discrimination": 1.0,
-      "family": "button[_]",
-      "key_slot": "button#0",
-      "status": "SUPPORTED"
-     },
-     "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))": {
-      "discrimination": null,
-      "family": "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))",
-      "key_slot": "heading#0",
-      "status": "UNSUPPORTED"
-     },
-     "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])": {
-      "discrimination": 1.0,
-      "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
-      "key_slot": "cell@Berth#0",
-      "status": "SUPPORTED"
-     },
-     "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])": {
-      "discrimination": 1.0,
-      "family": "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
-      "key_slot": "cell@Pilot#0",
-      "status": "SUPPORTED"
-     },
-     "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": {
-      "discrimination": 1.0,
-      "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
-      "key_slot": "cell@Vessel#0",
-      "status": "SUPPORTED"
-     },
-     "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": {
-      "discrimination": 1.0,
-      "family": "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])",
-      "key_slot": "cell@Vessel#0",
-      "status": "SUPPORTED"
-     }
-    },
-    "name": "joint discrimination x2",
-    "promoted_families": [],
-    "provenance": {
-     "role": "SOURCE",
-     "source_run": "runs/v4/harbour_dev"
-    },
-    "refuted": {
-     "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": [
-      "cell@Status#0"
-     ]
-    },
-    "version": 1
-   }
-  },
-  {
-   "fingerprint": "80e46667526e29c0",
-   "full_reading_sha256": "922f3843dd7406092ddd624b5494560af526840808d8c9d9f434d446909f26cd",
-   "name": "button[_]=button#0",
-   "reading": {
-    "families": {
-     "button[_]": {
-      "discrimination": 1.0,
-      "family": "button[_]",
-      "key_slot": "button#0",
-      "status": "SUPPORTED"
-     },
-     "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))": {
-      "discrimination": null,
-      "family": "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))",
-      "key_slot": "heading#0",
-      "status": "UNSUPPORTED"
-     },
-     "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])": {
-      "discrimination": 1.0,
-      "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
-      "key_slot": "cell@Berth#0",
-      "status": "SUPPORTED"
-     },
-     "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])": {
-      "discrimination": 1.0,
-      "family": "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
-      "key_slot": "cell@Pilot#0",
-      "status": "SUPPORTED"
-     },
-     "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": {
-      "discrimination": 0.0,
-      "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
-      "key_slot": null,
-      "status": "NO_IDENTITY"
-     },
-     "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": {
-      "discrimination": 1.0,
-      "family": "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])",
-      "key_slot": "cell@Vessel#0",
-      "status": "SUPPORTED"
-     }
-    },
-    "name": "button[_]=button#0",
-    "promoted_families": [],
-    "provenance": {
-     "role": "SOURCE",
-     "source_run": "runs/v4/harbour_dev"
-    },
-    "refuted": {
-     "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": [
-      "cell@Status#0"
-     ]
-    },
-    "version": 1
-   }
-  },
-  {
-   "fingerprint": "c1b0c9483e66a3df",
-   "full_reading_sha256": "42fc109ff1c0e94c5a2f481fd506786da7a5dc70ff9d343c869b3eb5c6ff76a2",
+   "fingerprint": "911544aa958db1f4",
+   "full_reading_sha256": "da18e2e2b93491f8adc0a8ed9454cf2a70074baf964bd90ad147a27449fac40a",
    "name": "group[_](heading[_],tabl=None",
    "reading": {
     "families": {
@@ -202,10 +94,10 @@
       "status": "SUPPORTED"
      },
      "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": {
-      "discrimination": 0.0,
+      "discrimination": 1.0,
       "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
-      "key_slot": null,
-      "status": "NO_IDENTITY"
+      "key_slot": "cell@Vessel#0",
+      "status": "SUPPORTED"
      },
      "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": {
       "discrimination": 1.0,
@@ -221,6 +113,12 @@
      "source_run": "runs/v4/harbour_dev"
     },
     "refuted": {
+     "button[_]": [
+      "button#0"
+     ],
+     "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": [
+      null
+     ],
      "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": [
       "cell@Status#0"
      ]
@@ -229,8 +127,8 @@
    }
   },
   {
-   "fingerprint": "28376a0b7948603d",
-   "full_reading_sha256": "be629f3b30f81b200cea51f0a95b50072b8a45e57500abcb4be49d2050b9dd0a",
+   "fingerprint": "efdd90a0142fbb22",
+   "full_reading_sha256": "91885ba2ef117f48b7e3fef55c1426d677559e9e112928d9f5646f42337a30b0",
    "name": "row[_](cell@Actions[_](b=cell@Takes up to#0",
    "reading": {
     "families": {
@@ -259,10 +157,10 @@
       "status": "SUPPORTED"
      },
      "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": {
-      "discrimination": 0.0,
+      "discrimination": 1.0,
       "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
-      "key_slot": null,
-      "status": "NO_IDENTITY"
+      "key_slot": "cell@Vessel#0",
+      "status": "SUPPORTED"
      },
      "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": {
       "discrimination": 1.0,
@@ -278,6 +176,12 @@
      "source_run": "runs/v4/harbour_dev"
     },
     "refuted": {
+     "button[_]": [
+      "button#0"
+     ],
+     "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": [
+      null
+     ],
      "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": [
       "cell@Status#0"
      ]
@@ -286,8 +190,8 @@
    }
   },
   {
-   "fingerprint": "974830db5b338b5c",
-   "full_reading_sha256": "bb0bd23392a0bcb44f35a6905a9a78223c03b7dbde97bb80c1af4fd7a5083d35",
+   "fingerprint": "8ce3d0ce7dcecf02",
+   "full_reading_sha256": "3849f68d64e41c0f0c8c0722c9846f2d2bd6a8765813d4c042419d48da262d92",
    "name": "row[_](cell@Actions[_](b=cell@Ticket to#0",
    "reading": {
     "families": {
@@ -316,10 +220,10 @@
       "status": "SUPPORTED"
      },
      "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": {
-      "discrimination": 0.0,
+      "discrimination": 1.0,
       "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
-      "key_slot": null,
-      "status": "NO_IDENTITY"
+      "key_slot": "cell@Vessel#0",
+      "status": "SUPPORTED"
      },
      "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": {
       "discrimination": 1.0,
@@ -335,6 +239,12 @@
      "source_run": "runs/v4/harbour_dev"
     },
     "refuted": {
+     "button[_]": [
+      "button#0"
+     ],
+     "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": [
+      null
+     ],
      "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": [
       "cell@Status#0"
      ]
@@ -343,9 +253,9 @@
    }
   },
   {
-   "fingerprint": "22fb5b8ceb03c44a",
-   "full_reading_sha256": "59cca27cad96819691f14d0241d0401f8e2d77564442aa310aa5c180c6c8a949",
-   "name": "row[_](cell@Actions[_](b=cell@Vessel#0",
+   "fingerprint": "85af8b590f92c9e0",
+   "full_reading_sha256": "160e39394884e64dcf9e491263621e901e2f064eab8ceb93fde305f6d08a4c4b",
+   "name": "row[_](cell@Actions[_](b=cell@Cargo#0",
    "reading": {
     "families": {
      "button[_]": {
@@ -375,7 +285,7 @@
      "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": {
       "discrimination": 1.0,
       "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
-      "key_slot": "cell@Vessel#0",
+      "key_slot": "cell@Cargo#0",
       "status": "SUPPORTED"
      },
      "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": {
@@ -385,13 +295,19 @@
       "status": "SUPPORTED"
      }
     },
-    "name": "row[_](cell@Actions[_](b=cell@Vessel#0",
+    "name": "row[_](cell@Actions[_](b=cell@Cargo#0",
     "promoted_families": [],
     "provenance": {
      "role": "SOURCE",
      "source_run": "runs/v4/harbour_dev"
     },
     "refuted": {
+     "button[_]": [
+      "button#0"
+     ],
+     "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": [
+      null
+     ],
      "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": [
       "cell@Status#0"
      ]
@@ -400,8 +316,8 @@
    }
   },
   {
-   "fingerprint": "53d339f08505bbe9",
-   "full_reading_sha256": "1a8e87e13c179699f348e250ce6b9b06601693ec81eceaeff6e0bf6cf0972892",
+   "fingerprint": "19a5980f63feabf7",
+   "full_reading_sha256": "44d44724623beb71448e4390c51a1664d6830f22a10438c85c44358739af5a07",
    "name": "row[_](cell@Berth[_],cel=cell@Length overall#0",
    "reading": {
     "families": {
@@ -430,10 +346,10 @@
       "status": "SUPPORTED"
      },
      "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": {
-      "discrimination": 0.0,
+      "discrimination": 1.0,
       "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
-      "key_slot": null,
-      "status": "NO_IDENTITY"
+      "key_slot": "cell@Vessel#0",
+      "status": "SUPPORTED"
      },
      "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": {
       "discrimination": 1.0,
@@ -449,6 +365,12 @@
      "source_run": "runs/v4/harbour_dev"
     },
     "refuted": {
+     "button[_]": [
+      "button#0"
+     ],
+     "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": [
+      null
+     ],
      "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": [
       "cell@Status#0"
      ]
@@ -470,7 +392,7 @@
    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
    "semabi/compiler/explorer.py": "16827d3735c9eab4d51a60c585790226be3e692bb63b01794df29a9ba8c8c807",
    "semabi/compiler/grounder.py": "d272260d2bacd64dcd7fc88f2094c2f84b989736c89924460cc0053b8e97ac06",
-   "semabi/compiler/induce.py": "46da449b4682c2e67ed8c8ff8315f6b5158ba59ee307bf98bf80e0a476373919",
+   "semabi/compiler/induce.py": "cbccc726cdc29da44ed20e9f36d9ecf49b367680ccc89184cd13dbf7dd3cf1ca",
    "semabi/compiler/mentions.py": "800fa94e2e4f76bfc503c7557ec775f6d83a612f6634123a62f78a16de2b781c",
    "semabi/compiler/model.py": "5175ff650a75fdb39da8f943d5193c99a533f069929af158f0facfc963c9bf31",
    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
@@ -493,8 +415,8 @@
    "semabi/compiler/v4/objective.py": "16967d0d0e44377c8fc0a26a7093af4b72f5db992bb2525c09035f76b0525dd4",
    "semabi/compiler/v4/pinned.py": "20c3dbc0ae38528d1038b860d1b68e347b51c1c26b544f39f833f0baef36062e",
    "semabi/compiler/v4/promote.py": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65",
-   "semabi/compiler/v4/referring.py": "3bcde9c609efb22bb9f69a1c8c37848095133f12a5af66494d8095b44ccf7ff7",
-   "semabi/compiler/v4/search.py": "e26a7b5ea975c923d028a45013984353ea018b59d905b1842464dbd5a686b41a",
+   "semabi/compiler/v4/referring.py": "04140fef91ea1e13a7f3bf2f57346f2e24b496cfb8b57dbb5b64944587d827a3",
+   "semabi/compiler/v4/search.py": "1d62114c372ce7575b890c1f93e3a03293f91aacc5f3592b8f89466183844abb",
    "semabi/compiler/v4/source_candidates.py": "ff27669ba080d3ce8294bbb43cdc68e77409dd431dba390035aa88f85e8e08fd",
    "semabi/relmodel.py": "2034f3a5dd7019c5333c8fb4e0283cf349e29905cfa5d0933e453180fa3a4827"
   },
@@ -509,14 +431,14 @@
  "schema": "semabi.v4.source-candidates.v4",
  "source_path": "../../../../runs/v4/harbour_dev",
  "source_snapshot": {
-  "consumed_evidence_sha256": "5416f0703c3d0a9b7608dce44c6b51631e71379f42c678e63a2e536ae16f2758",
-  "content_tree_sha256": "a18c7c26d43c138be4c6441e9c58794fa1baa3c0df8bcedde390357621db2ff9",
+  "consumed_evidence_sha256": "47da7c63809454fc45ce4d3ac8463ea3537b5bd96160269a0c61d8f471302c51",
+  "content_tree_sha256": "7eb7543cb23605be9ca5b08bd37eb0c0cc2f3c1aa06ae282e485a84bff076394",
   "files": [
    {
     "mode": 420,
     "path": "identity_refutations_v4.json",
-    "sha256": "da55891d4c0f565d5bc0512992478262aa848afd922351c27553623b11f66c01",
-    "size": 1154
+    "sha256": "def29c31513464ecac66af1840f0722cd4483ad479a21c293f77014827b33859",
+    "size": 5300
    },
    {
     "mode": 420,
@@ -526,38 +448,23 @@
    },
    {
     "mode": 420,
+    "path": "probes.acquired.jsonl",
+    "sha256": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+    "size": 244
+   },
+   {
+    "mode": 420,
     "path": "steps.jsonl",
     "sha256": "37465c9e493fcb3a861222958f4dba697d81d4b4844eaf937d0f152db3e69d13",
     "size": 93914
    }
   ],
   "role": "SOURCE",
-  "role_bound_sha256": "2a720cbbcbd6baa4c4a265506235a14d23fd035ef725a0191ba58dedd33e6257",
+  "role_bound_sha256": "0f0531c031aac2db7b5d3c5e6cbd67a04e24f6c58fb54a7b1890e505a4385f71",
   "schema": "semabi.v4.compiler-snapshot.v2"
  },
  "source_summary": {
   "alternatives_generated": [
-   {
-    "alternative": "button#0",
-    "candidate": "joint discrimination x2",
-    "discrimination": 1.0,
-    "family": "button[_]",
-    "status": "SUPPORTED"
-   },
-   {
-    "alternative": "cell@Vessel#0",
-    "candidate": "joint discrimination x2",
-    "discrimination": 1.0,
-    "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
-    "status": "SUPPORTED"
-   },
-   {
-    "alternative": "button#0",
-    "candidate": "button[_]=button#0",
-    "discrimination": 1.0,
-    "family": "button[_]",
-    "status": "SUPPORTED"
-   },
    {
     "alternative": null,
     "candidate": "group[_](heading[_],tabl=None",
@@ -580,8 +487,8 @@
     "status": "SUPPORTED"
    },
    {
-    "alternative": "cell@Vessel#0",
-    "candidate": "row[_](cell@Actions[_](b=cell@Vessel#0",
+    "alternative": "cell@Cargo#0",
+    "candidate": "row[_](cell@Actions[_](b=cell@Cargo#0",
     "discrimination": 1.0,
     "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
     "status": "SUPPORTED"
@@ -607,23 +514,19 @@
    "local_final": {
     "churn": 0,
     "churn_steps": [],
-    "complexity": 32,
+    "complexity": 52,
     "conflicts": 0,
     "contradiction_steps": [],
     "contradictions": 0,
-    "delta_atoms": 58,
-    "explained": 57,
+    "delta_atoms": 93,
+    "explained": 60,
     "named": 240,
     "positional": 0,
     "spurious": 0,
     "steps": 373,
     "unexplained": 41,
-    "visibility": 3,
-    "visibility_steps": [
-     32,
-     107,
-     285
-    ]
+    "visibility": 0,
+    "visibility_steps": []
    },
    "open_questions": [
     {
@@ -713,6 +616,90 @@
     {
      "left": {
       "evidence": {
+       "constant_share": 0.188,
+       "copresent_pairs": 400,
+       "coverage": 1.0,
+       "cross_view_values": 0,
+       "discrimination": 1.0,
+       "distinct_values": 8,
+       "numeric_share": 0.0,
+       "reload_stability": 1.0,
+       "separated_pairs": 400,
+       "shared": 0.955,
+       "spoken": 0.955
+      },
+      "key_slot": "cell@Vessel#0",
+      "status": "SUPPORTED",
+      "template": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+      "why": "separates 400/400 co-present pairs, 8 values, coverage 1.00"
+     },
+     "reason": "the trace so far scores both readings identically",
+     "right": {
+      "evidence": {
+       "constant_share": 0.188,
+       "copresent_pairs": 400,
+       "coverage": 1.0,
+       "cross_view_values": 0,
+       "discrimination": 1.0,
+       "distinct_values": 8,
+       "numeric_share": 0.0,
+       "reload_stability": 1.0,
+       "separated_pairs": 400,
+       "shared": 0.0,
+       "spoken": 0.0
+      },
+      "key_slot": "cell@Cargo#0",
+      "status": "SUPPORTED",
+      "template": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+      "why": "separates 400/400 co-present pairs, 8 values, coverage 1.00"
+     },
+     "template": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])"
+    },
+    {
+     "left": {
+      "evidence": {
+       "constant_share": 0.188,
+       "copresent_pairs": 400,
+       "coverage": 1.0,
+       "cross_view_values": 0,
+       "discrimination": 1.0,
+       "distinct_values": 8,
+       "numeric_share": 0.0,
+       "reload_stability": 1.0,
+       "separated_pairs": 400,
+       "shared": 0.955,
+       "spoken": 0.955
+      },
+      "key_slot": "cell@Vessel#0",
+      "status": "SUPPORTED",
+      "template": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+      "why": "separates 400/400 co-present pairs, 8 values, coverage 1.00"
+     },
+     "reason": "the trace so far scores both readings identically",
+     "right": {
+      "evidence": {
+       "constant_share": 0.188,
+       "copresent_pairs": 400,
+       "coverage": 1.0,
+       "cross_view_values": 0,
+       "discrimination": 1.0,
+       "distinct_values": 8,
+       "numeric_share": 1.0,
+       "reload_stability": 1.0,
+       "separated_pairs": 400,
+       "shared": 0.0,
+       "spoken": 0.0
+      },
+      "key_slot": "cell@Length overall#0",
+      "status": "SUPPORTED",
+      "template": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+      "why": "separates 400/400 co-present pairs, 8 values, coverage 1.00"
+     },
+     "template": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])"
+    },
+    {
+     "left": {
+      "evidence": {
        "constant_share": 0.216,
        "copresent_pairs": 400,
        "coverage": 1.0,
@@ -749,48 +736,6 @@
       "status": "SUPPORTED",
       "template": "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])",
       "why": "separates 400/400 co-present pairs, 7 values, coverage 1.00"
-     },
-     "template": "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])"
-    },
-    {
-     "left": {
-      "evidence": {
-       "constant_share": 0.216,
-       "copresent_pairs": 400,
-       "coverage": 1.0,
-       "cross_view_values": 0,
-       "discrimination": 1.0,
-       "distinct_values": 7,
-       "numeric_share": 0.0,
-       "reload_stability": 1.0,
-       "separated_pairs": 400,
-       "shared": 1.0,
-       "spoken": 1.0
-      },
-      "key_slot": "cell@Vessel#0",
-      "status": "SUPPORTED",
-      "template": "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])",
-      "why": "separates 400/400 co-present pairs, 7 values, coverage 1.00"
-     },
-     "reason": "undecided: chosen explains 57 with 3 errors, the alternative explains 50 with 0",
-     "right": {
-      "evidence": {
-       "constant_share": 0.0,
-       "copresent_pairs": 400,
-       "coverage": 0.0,
-       "cross_view_values": 0,
-       "discrimination": 0.0,
-       "distinct_values": 0,
-       "numeric_share": 0.0,
-       "reload_stability": null,
-       "separated_pairs": 0,
-       "shared": 0.0,
-       "spoken": 0.0
-      },
-      "key_slot": null,
-      "status": "NO_IDENTITY",
-      "template": "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])",
-      "why": "no identity-bearing observation claimed"
      },
      "template": "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])"
     }

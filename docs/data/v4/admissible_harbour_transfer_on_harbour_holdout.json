@@ -9,27 +9,27 @@
  "corroborated": true,
  "hypothesis": "rule",
  "against_the_other_class": {
-  "rule: the evidence forces one outcome | list: the evidence forces one outcome": 146,
+  "rule: the evidence forces one outcome | list: the evidence forces one outcome": 151,
   "rule: one outcome, because the control has never done anything else | list: one outcome, because the control has never done anything else": 96,
-  "rule: several outcomes remain admissible | list: several outcomes remain admissible": 13,
-  "rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)": 8,
-  "rule: no outcome is established | list: no outcome is established": 7
+  "rule: several outcomes remain admissible | list: several outcomes remain admissible": 12,
+  "rule: no outcome is established | list: no outcome is established": 7,
+  "rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)": 4
  },
  "actions": 270,
  "what_the_evidence_establishes": {
-  "the evidence forces one outcome": 154,
+  "the evidence forces one outcome": 155,
   "one outcome, because the control has never done anything else": 96,
-  "several outcomes remain admissible": 13,
+  "several outcomes remain admissible": 12,
   "no outcome is established": 7
  },
  "admissible_set_size": {
   "0": 7,
-  "1": 250,
-  "2": 13
+  "1": 251,
+  "2": 12
  },
  "what_happened_was": {
-  "inside the admissible set": 172,
-  "outside it": 91,
+  "inside the admissible set": 176,
+  "outside it": 87,
   "nothing was admissible": 7
  },
  "the_list_where_the_evidence": {
@@ -41,23 +41,20 @@
    "a different event": 4
   },
   "several outcomes remain admissible": {
-   "the event the interface returned": 12,
-   "no determinate answer": 1
+   "the event the interface returned": 12
   },
   "the evidence forces one outcome": {
-   "the event the interface returned": 115,
-   "no determinate answer": 35,
+   "the event the interface returned": 151,
    "a different event": 4
   }
  },
  "policy_forced_then_list": {
-  "one outcome was admissible and it happened": 146,
+  "one outcome was admissible and it happened": 151,
   "the only outcome ever seen on this control, and it happened": 92,
   "deferred to the list: the event the interface returned": 12,
-  "one outcome was admissible and a different one happened": 8,
   "refused: nothing established": 7,
-  "the only outcome ever seen on this control, and something else happened": 4,
-  "deferred to the list: no determinate answer": 1
+  "one outcome was admissible and a different one happened": 4,
+  "the only outcome ever seen on this control, and something else happened": 4
  },
  "distinct_events_forced": 12,
  "events_forced": {
@@ -79,8 +76,7 @@
    "several outcomes remain admissible": 2
   },
   "button:Schedule call": {
-   "the evidence forces one outcome": 35,
-   "several outcomes remain admissible": 1
+   "the evidence forces one outcome": 36
   },
   "button:Sign off": {
    "the evidence forces one outcome": 33
@@ -132,9 +128,7 @@
    "several outcomes remained admissible; the one that happened was among them": 2
   },
   "button:Schedule call": {
-   "one outcome was admissible and it happened": 31,
-   "one outcome was admissible and a different one happened": 4,
-   "several outcomes remained admissible; the one that happened was among them": 1
+   "one outcome was admissible and it happened": 36
   },
   "button:Sign off": {
    "one outcome was admissible and it happened": 29,
@@ -176,7 +170,7 @@
    "default": "<> <> is already <> ."
   },
   "button:Record departure": {
-   "fitted": 7,
+   "fitted": 3,
    "events": 1,
    "rules": 1,
    "default": "Call <> is not <> , so nothing has sailed ."
@@ -191,7 +185,7 @@
    "fitted": 36,
    "events": 2,
    "rules": 2,
-   "default": "undetermined"
+   "default": "Call <> opened for <> ."
   },
   "button:Sign off": {
    "fitted": 30,
@@ -207,22 +201,6 @@
   }
  },
  "forced_but_wrong": [
-  {
-   "step": 8,
-   "control": "button:Schedule call",
-   "admissible": [
-    "Call <> opened for <> ."
-   ],
-   "hypothesis": "rule",
-   "unordered": [
-    "Call <> opened for <> ."
-   ],
-   "observed": "<> already has call <> on the board .",
-   "returned": "Petrel Star already has call C-102 on the board.",
-   "verdict": "one outcome was admissible and a different one happened",
-   "level": "the event alone",
-   "why": "Call <> opened for <> . <- attr:Status#0(selection['cell@Vessel#0']:0) == 'alongside' & ('unnamed', \"selection['cell@Current call#1']:3\") & ('unnamed', \"selection['cell@Vessel#2']:0\")  [5 occasions]"
-  },
   {
    "step": 28,
    "control": "button:Sign off",
@@ -256,22 +234,6 @@
    "why": "<> is signed off . <- attr:Duty#0(owner) == 'on' & ('unnamed', \"relation['forward', 'rel:3']:3<owner\")  [18 occasions]"
   },
   {
-   "step": 160,
-   "control": "button:Schedule call",
-   "admissible": [
-    "<> already has call <> on the board ."
-   ],
-   "hypothesis": "rule",
-   "unordered": [
-    "<> already has call <> on the board ."
-   ],
-   "observed": "Call <> opened for <> .",
-   "returned": "Call C-104 opened for Kittiwake.",
-   "verdict": "one outcome was admissible and a different one happened",
-   "level": "the event alone",
-   "why": "<> already has call <> on the board . <- rel:1(selection['cell@Vessel#1']:0) != selection['cell@Vessel#2']:0 & ('unnamed', \"selection['cell@Current call#1']:3\")  [4 occasions]"
-  },
-  {
    "step": 226,
    "control": "button:Sign off",
    "admissible": [
@@ -288,22 +250,6 @@
    "why": "<> is signed off . <- attr:Duty#0(owner) == 'on' & ('unnamed', \"relation['forward', 'rel:3']:3<owner\")  [18 occasions]"
   },
   {
-   "step": 251,
-   "control": "button:Schedule call",
-   "admissible": [
-    "<> already has call <> on the board ."
-   ],
-   "hypothesis": "rule",
-   "unordered": [
-    "<> already has call <> on the board ."
-   ],
-   "observed": "Call <> opened for <> .",
-   "returned": "Call C-104 opened for Nordkapp.",
-   "verdict": "one outcome was admissible and a different one happened",
-   "level": "the event alone",
-   "why": "<> already has call <> on the board . <- attr:Status#0(selection['cell@Vessel#0']:0) == 'alongside' & rel:1(selection['cell@Vessel#1']:0) != selection['cell@Vessel#2']:0  [17 occasions]"
-  },
-  {
    "step": 287,
    "control": "button:Sign off",
    "admissible": [
@@ -318,22 +264,6 @@
    "verdict": "one outcome was admissible and a different one happened",
    "level": "the event alone",
    "why": "<> is signed off . <- attr:Duty#0(owner) == 'on' & ('unnamed', \"relation['forward', 'rel:3']:3<owner\")  [18 occasions]"
-  },
-  {
-   "step": 331,
-   "control": "button:Schedule call",
-   "admissible": [
-    "Call <> opened for <> ."
-   ],
-   "hypothesis": "rule",
-   "unordered": [
-    "Call <> opened for <> ."
-   ],
-   "observed": "<> already has call <> on the board .",
-   "returned": "Kittiwake already has call C-101 on the board.",
-   "verdict": "one outcome was admissible and a different one happened",
-   "level": "the event alone",
-   "why": "Call <> opened for <> . <- attr:Status#0(selection['cell@Vessel#0']:0) == 'alongside' & ('unnamed', \"selection['cell@Current call#1']:3\") & ('unnamed', \"selection['cell@Vessel#2']:0\")  [5 occasions]"
   }
  ]
 }

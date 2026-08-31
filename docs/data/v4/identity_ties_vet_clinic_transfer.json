@@ -21,8 +21,42 @@
    4
   ]
  },
- "open_questions": 3,
+ "open_questions": 7,
  "questions": [
+  {
+   "family": "group[_](heading[_],list[_](listitem[_]))",
+   "left": null,
+   "right": "heading#1",
+   "reason": "the trace so far scores both readings identically",
+   "tids": [],
+   "contested": [
+    "heading#1"
+   ],
+   "status": "NO_KNOWN_EXPERIMENT",
+   "writers": {},
+   "makers": [],
+   "movers": [],
+   "made_values": {},
+   "separable_by_the_history": {},
+   "decided": null
+  },
+  {
+   "family": "group[_](heading[_],list[_](listitem[_]))",
+   "left": null,
+   "right": "heading#0",
+   "reason": "the trace so far scores both readings identically",
+   "tids": [],
+   "contested": [
+    "heading#0"
+   ],
+   "status": "NO_KNOWN_EXPERIMENT",
+   "writers": {},
+   "makers": [],
+   "movers": [],
+   "made_values": {},
+   "separable_by_the_history": {},
+   "decided": null
+  },
   {
    "family": "row[_](cell@Actions[_](combobox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
    "left": "cell@Patient#0|cell@Reason#0",
@@ -464,6 +498,40 @@
      "cell@Patient#0": "a second instance with the same value is one object"
     }
    }
+  },
+  {
+   "family": "row[_](cell@Name[_],cell@On duty[_],cell@Specialty[_])",
+   "left": null,
+   "right": "cell@Name#0",
+   "reason": "the trace so far scores both readings identically",
+   "tids": [],
+   "contested": [
+    "cell@Name#0"
+   ],
+   "status": "NO_KNOWN_EXPERIMENT",
+   "writers": {},
+   "makers": [],
+   "movers": [],
+   "made_values": {},
+   "separable_by_the_history": {},
+   "decided": null
+  },
+  {
+   "family": "row[_](cell@Name[_],cell@On duty[_],cell@Specialty[_])",
+   "left": null,
+   "right": "cell@Specialty#0",
+   "reason": "the trace so far scores both readings identically",
+   "tids": [],
+   "contested": [
+    "cell@Specialty#0"
+   ],
+   "status": "NO_KNOWN_EXPERIMENT",
+   "writers": {},
+   "makers": [],
+   "movers": [],
+   "made_values": {},
+   "separable_by_the_history": {},
+   "decided": null
   },
   {
    "family": "text[_](textbox[_])",
