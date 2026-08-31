@@ -9,30 +9,54 @@
    "split": 0.5,
    "cut": 186,
    "suffix_steps": 107,
-   "disagreements": 1,
+   "disagreements": 4,
    "counts": {
     "left": {
-     "right": 2,
+     "right": 8,
      "wrong": 0
     },
     "right": {
-     "right": 0,
+     "right": 12,
      "wrong": 0
     }
    },
    "details": [
     {
-     "step": 218,
-     "control": "button:Bring _",
+     "step": 192,
+     "control": "button:Schedule call",
      "left": "one outcome was admissible and it happened",
      "left_level": "with its arguments",
-     "right": "no outcome is established for this state",
-     "right_level": null
+     "right": "one outcome was admissible and it happened",
+     "right_level": "with its arguments"
+    },
+    {
+     "step": 214,
+     "control": "button:Schedule call",
+     "left": "one outcome was admissible and it happened",
+     "left_level": "with its arguments",
+     "right": "one outcome was admissible and it happened",
+     "right_level": "with its arguments"
+    },
+    {
+     "step": 250,
+     "control": "button:Schedule call",
+     "left": "one outcome was admissible and it happened",
+     "left_level": "with its arguments",
+     "right": "one outcome was admissible and it happened",
+     "right_level": "with its arguments"
+    },
+    {
+     "step": 342,
+     "control": "button:Schedule call",
+     "left": "one outcome was admissible and it happened",
+     "left_level": "with its arguments",
+     "right": "one outcome was admissible and it happened",
+     "right_level": "with its arguments"
     }
    ],
    "outcome": "DECIDED",
-   "refuted": "button#0",
-   "survivor": null,
+   "refuted": null,
+   "survivor": "button#0",
    "propagated": true
   },
   {
@@ -471,148 +495,19 @@
   },
   {
    "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
-   "left": null,
-   "right": "cell@Vessel#0",
-   "split": 0.5,
-   "cut": 186,
-   "suffix_steps": 107,
-   "disagreements": 13,
-   "counts": {
-    "left": {
-     "right": 2,
-     "wrong": 0
-    },
-    "right": {
-     "right": 24,
-     "wrong": 0
-    }
-   },
-   "details": [
-    {
-     "step": 192,
-     "control": "button:Schedule call",
-     "left": "no outcome is established for this state",
-     "left_level": null,
-     "right": "one outcome was admissible and it happened",
-     "right_level": "with its arguments"
-    },
-    {
-     "step": 193,
-     "control": "button:Schedule call",
-     "left": "no outcome is established for this state",
-     "left_level": null,
-     "right": "one outcome was admissible and it happened",
-     "right_level": "with its arguments"
-    },
-    {
-     "step": 198,
-     "control": "button:Schedule call",
-     "left": "no outcome is established for this state",
-     "left_level": null,
-     "right": "one outcome was admissible and it happened",
-     "right_level": "with its arguments"
-    },
-    {
-     "step": 214,
-     "control": "button:Schedule call",
-     "left": "no outcome is established for this state",
-     "left_level": null,
-     "right": "one outcome was admissible and it happened",
-     "right_level": "with its arguments"
-    },
-    {
-     "step": 218,
-     "control": "button:Bring _",
-     "left": "one outcome was admissible and it happened",
-     "left_level": "with its arguments",
-     "right": "no outcome is established for this state",
-     "right_level": null
-    },
-    {
-     "step": 250,
-     "control": "button:Schedule call",
-     "left": "no outcome is established for this state",
-     "left_level": null,
-     "right": "one outcome was admissible and it happened",
-     "right_level": "with its arguments"
-    },
-    {
-     "step": 251,
-     "control": "button:Schedule call",
-     "left": "no outcome is established for this state",
-     "left_level": null,
-     "right": "one outcome was admissible and it happened",
-     "right_level": "with its arguments"
-    },
-    {
-     "step": 260,
-     "control": "button:Schedule call",
-     "left": "no outcome is established for this state",
-     "left_level": null,
-     "right": "one outcome was admissible and it happened",
-     "right_level": "with its arguments"
-    },
-    {
-     "step": 292,
-     "control": "button:Schedule call",
-     "left": "no outcome is established for this state",
-     "left_level": null,
-     "right": "one outcome was admissible and it happened",
-     "right_level": "with its arguments"
-    },
-    {
-     "step": 314,
-     "control": "button:Schedule call",
-     "left": "no outcome is established for this state",
-     "left_level": null,
-     "right": "one outcome was admissible and it happened",
-     "right_level": "with its arguments"
-    },
-    {
-     "step": 316,
-     "control": "button:Schedule call",
-     "left": "no outcome is established for this state",
-     "left_level": null,
-     "right": "one outcome was admissible and it happened",
-     "right_level": "with its arguments"
-    },
-    {
-     "step": 342,
-     "control": "button:Schedule call",
-     "left": "no outcome is established for this state",
-     "left_level": null,
-     "right": "one outcome was admissible and it happened",
-     "right_level": "with its arguments"
-    },
-    {
-     "step": 348,
-     "control": "button:Schedule call",
-     "left": "no outcome is established for this state",
-     "left_level": null,
-     "right": "one outcome was admissible and it happened",
-     "right_level": "with its arguments"
-    }
-   ],
-   "outcome": "DECIDED",
-   "refuted": null,
-   "survivor": "cell@Vessel#0",
-   "propagated": true
-  },
-  {
-   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
-   "left": null,
+   "left": "cell@Vessel#0",
    "right": "cell@Cargo#0",
    "split": 0.5,
    "cut": 186,
    "suffix_steps": 107,
-   "disagreements": 13,
+   "disagreements": 4,
    "counts": {
     "left": {
-     "right": 2,
+     "right": 8,
      "wrong": 0
     },
     "right": {
-     "right": 24,
+     "right": 8,
      "wrong": 0
     }
    },
@@ -620,112 +515,91 @@
     {
      "step": 192,
      "control": "button:Schedule call",
-     "left": "no outcome is established for this state",
-     "left_level": null,
-     "right": "one outcome was admissible and it happened",
-     "right_level": "with its arguments"
-    },
-    {
-     "step": 193,
-     "control": "button:Schedule call",
-     "left": "no outcome is established for this state",
-     "left_level": null,
-     "right": "one outcome was admissible and it happened",
-     "right_level": "with its arguments"
-    },
-    {
-     "step": 198,
-     "control": "button:Schedule call",
-     "left": "no outcome is established for this state",
-     "left_level": null,
+     "left": "one outcome was admissible and it happened",
+     "left_level": "with its arguments",
      "right": "one outcome was admissible and it happened",
      "right_level": "with its arguments"
     },
     {
      "step": 214,
      "control": "button:Schedule call",
-     "left": "no outcome is established for this state",
-     "left_level": null,
-     "right": "one outcome was admissible and it happened",
-     "right_level": "with its arguments"
-    },
-    {
-     "step": 218,
-     "control": "button:Bring _",
      "left": "one outcome was admissible and it happened",
      "left_level": "with its arguments",
-     "right": "no outcome is established for this state",
-     "right_level": null
+     "right": "one outcome was admissible and it happened",
+     "right_level": "with its arguments"
     },
     {
      "step": 250,
      "control": "button:Schedule call",
-     "left": "no outcome is established for this state",
-     "left_level": null,
-     "right": "one outcome was admissible and it happened",
-     "right_level": "with its arguments"
-    },
-    {
-     "step": 251,
-     "control": "button:Schedule call",
-     "left": "no outcome is established for this state",
-     "left_level": null,
-     "right": "one outcome was admissible and it happened",
-     "right_level": "with its arguments"
-    },
-    {
-     "step": 260,
-     "control": "button:Schedule call",
-     "left": "no outcome is established for this state",
-     "left_level": null,
-     "right": "one outcome was admissible and it happened",
-     "right_level": "with its arguments"
-    },
-    {
-     "step": 292,
-     "control": "button:Schedule call",
-     "left": "no outcome is established for this state",
-     "left_level": null,
-     "right": "one outcome was admissible and it happened",
-     "right_level": "with its arguments"
-    },
-    {
-     "step": 314,
-     "control": "button:Schedule call",
-     "left": "no outcome is established for this state",
-     "left_level": null,
-     "right": "one outcome was admissible and it happened",
-     "right_level": "with its arguments"
-    },
-    {
-     "step": 316,
-     "control": "button:Schedule call",
-     "left": "no outcome is established for this state",
-     "left_level": null,
+     "left": "one outcome was admissible and it happened",
+     "left_level": "with its arguments",
      "right": "one outcome was admissible and it happened",
      "right_level": "with its arguments"
     },
     {
      "step": 342,
      "control": "button:Schedule call",
-     "left": "no outcome is established for this state",
-     "left_level": null,
-     "right": "one outcome was admissible and it happened",
-     "right_level": "with its arguments"
-    },
-    {
-     "step": 348,
-     "control": "button:Schedule call",
-     "left": "no outcome is established for this state",
-     "left_level": null,
+     "left": "one outcome was admissible and it happened",
+     "left_level": "with its arguments",
      "right": "one outcome was admissible and it happened",
      "right_level": "with its arguments"
     }
    ],
-   "outcome": "DECIDED",
-   "refuted": null,
-   "survivor": "cell@Cargo#0",
-   "propagated": true
+   "outcome": "UNDECIDED"
+  },
+  {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "left": "cell@Vessel#0",
+   "right": "cell@Length overall#0",
+   "split": 0.5,
+   "cut": 186,
+   "suffix_steps": 107,
+   "disagreements": 4,
+   "counts": {
+    "left": {
+     "right": 8,
+     "wrong": 0
+    },
+    "right": {
+     "right": 8,
+     "wrong": 0
+    }
+   },
+   "details": [
+    {
+     "step": 192,
+     "control": "button:Schedule call",
+     "left": "one outcome was admissible and it happened",
+     "left_level": "with its arguments",
+     "right": "one outcome was admissible and it happened",
+     "right_level": "with its arguments"
+    },
+    {
+     "step": 214,
+     "control": "button:Schedule call",
+     "left": "one outcome was admissible and it happened",
+     "left_level": "with its arguments",
+     "right": "one outcome was admissible and it happened",
+     "right_level": "with its arguments"
+    },
+    {
+     "step": 250,
+     "control": "button:Schedule call",
+     "left": "one outcome was admissible and it happened",
+     "left_level": "with its arguments",
+     "right": "one outcome was admissible and it happened",
+     "right_level": "with its arguments"
+    },
+    {
+     "step": 342,
+     "control": "button:Schedule call",
+     "left": "one outcome was admissible and it happened",
+     "left_level": "with its arguments",
+     "right": "one outcome was admissible and it happened",
+     "right_level": "with its arguments"
+    }
+   ],
+   "outcome": "UNDECIDED"
   },
   {
    "family": "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])",

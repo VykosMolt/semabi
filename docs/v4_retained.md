@@ -266,6 +266,24 @@ re-derive on the new base, and repeat until the verdict set is stable.  The loop
 vet precedent ("a refutation removes a reading, it does not crown another; the mechanism
 that makes it converge is to keep asking") applied to the instrument's own outputs.
 
+**The converged state on harbour.**  Three lifts and a clean pass later, the verdict set
+is stable and the history has answered every identity question its interface speaks about:
+
+| question | decided | by |
+|---|---|---|
+| overview: no identity vs `Vessel`/`Cargo` | iteration 1, re-derived stronger on each base (0/0 against 28/0 at the last) | argument evidence: `Schedule call` speaks the vessel |
+| berths: `Berth` vs `Takes up to` | 52/0 against 26/0, stable under every lift | spoken berth names |
+| pilots: `Pilot` vs `Ticket to` | 48/0 against 24/0, stable under every lift | spoken pilot names |
+| buttons: no identity vs `button#0` | **flipped** on the keyed base: 8/0 against 12/0 | the created call's checked fresh name |
+| overview: `Vessel` vs `Cargo` / `Length overall` | 8/8 UNDECIDED on the unkeyed-button base; 28/16 **decided** once the buttons were objects | the full base binds more of what is said |
+| board: `Vessel` vs `Length overall` | dissolved by the search on the converged base | -- |
+
+The final SOURCE search: zero open questions, no stale record, `named` up from 240 to 250
+-- keyed call buttons bind ten more of the interface's own words -- and the vessels
+overview keyed by the name the application speaks, earned three different ways.  The
+iteration reports are retained (`identity_retrospective_harbour_dev*.json`), and every
+verdict row in the sidecar carries the disagreement steps it was decided on.
+
 ## The remaining pipeline
 
 The session was interrupted here by external termination of its background jobs, four in
