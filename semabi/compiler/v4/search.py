@@ -214,6 +214,11 @@ def _decided_by(before, after) -> dict[str, int]:
             out[term] = d
     if after.explained != before.explained:
         out["explained"] = after.explained - before.explained
+    if after.named != before.named:
+        # what the interface said is evidence (`_evidence_tie`), and a move it decides
+        # must say so: harbour's board lost its key to a reading that binds more of the
+        # spoken call ids through the keyed buttons, and reported `decided_by: {}`
+        out["named"] = after.named - before.named
     return out
 
 
