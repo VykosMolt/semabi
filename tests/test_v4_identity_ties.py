@@ -133,3 +133,21 @@ def test_a_retained_history_decides_only_by_dominance_where_readings_disagree():
     d = ties.retro_decision([_row(1, only_right)], [_row(1, "no outcome is established for this state")])
     assert (d["outcome"], d["survivor"]) == ("DECIDED", "left")
     assert d["details"][0]["left"] == only_right
+
+
+def test_a_claim_with_its_arguments_outweighs_the_event_alone():
+    """A reading that names the created call's fresh name and the owner, checked against
+    the page, has said more than one that names the frame alone -- and the first version
+    of this comparison could not see it (docs/v4_retained.md)."""
+    right = ties.ESTABLISHED_RIGHT
+    args_row = {"step": 1, "verdict": right, "admissible": ["x"],
+                "level": "with its arguments", "arguments": {0: "fresh", 1: "Selkie"}}
+    frame_row = {"step": 1, "verdict": right, "admissible": ["x"],
+                 "level": "the event alone"}
+    d = ties.retro_decision([args_row], [frame_row])
+    assert (d["outcome"], d["survivor"]) == ("DECIDED", "left")
+    assert d["counts"]["left"] == {"right": 3, "wrong": 0}
+    assert d["counts"]["right"] == {"right": 1, "wrong": 0}
+    # and identical claims at identical levels are still no evidence
+    d = ties.retro_decision([dict(args_row)], [dict(args_row)])
+    assert (d["outcome"], d["disagreements"]) == ("UNDECIDED", 0)

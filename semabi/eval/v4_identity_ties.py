@@ -262,33 +262,66 @@ ESTABLISHED_RIGHT = RIGHT[0]      # kept for reading the reports
 ESTABLISHED_WRONG = WRONG[0]
 
 
+def _claim_signature(row: dict) -> tuple:
+    """Everything a reading claimed at this step, not just which event it named.
+
+    A rule that fires "Call <> opened for <>" *with its arguments* -- the created call's
+    fresh name checked against the page, the owner bound -- and a rule that fires the same
+    frame alone have said different amounts, and the first run of this instrument could
+    not see the difference: it refuted harbour's keyed call buttons on a one-step event
+    count while ignoring twelve correct fresh-name claims only that reading made
+    (`tests/test_v4_created_argument.py` caught it)."""
+    return (row["verdict"], str(row.get("admissible")), row.get("level"),
+            str(row.get("arguments")), str(row.get("fresh")))
+
+
+def _units(row: dict) -> tuple[int, int]:
+    """(right, wrong) content units: the event, plus each argument the claim named.
+
+    A wrong argument already turns the verdict wrong (`outcome._argument_disagreements`,
+    failed fresh checks included), so on a right verdict every named argument was checked
+    and held; on a wrong verdict at the argument level, the arguments field holds the
+    disagreements themselves."""
+    right = wrong = 0
+    args = row.get("arguments") or {}
+    if row["verdict"] in RIGHT:
+        right = 1 + (len(args) if row.get("level") == "with its arguments" else 0)
+    elif row["verdict"] in WRONG:
+        wrong = 1 + (len(args) if row.get("level") == "with its arguments" else 0)
+    return right, wrong
+
+
 def retro_decision(left_rows: list[dict], right_rows: list[dict]) -> dict:
-    """Compare two readings' verdicts where they disagree, and decide only on dominance.
+    """Compare two readings' claims where they disagree, and decide only on dominance.
 
     The differential discipline of `v4_tie_experiment.verdict`, applied to a history
     instead of an intervention: a step both readings treat alike is no evidence between
-    them, so only the steps where the version spaces differ are read, and there a side is
-    refuted exactly when the other predicts strictly more of what the application actually
-    returned while getting nothing more wrong.  Right and wrong are about the returned
-    outcome, not the hypothesis class that called it: a step where both readings named
-    what happened -- one by rule, one as the only outcome ever seen -- counts for both.
-    Anything else -- both better somewhere, or no disagreement at all -- leaves the
-    question standing."""
+    them, so only the steps where their claims differ are read, and there a side is
+    refuted exactly when the other predicts strictly more of what the application
+    actually returned while getting nothing more wrong.  Right and wrong are about
+    returned content, not the hypothesis class that called it: a step where both
+    readings named what happened -- one by rule, one as the only outcome ever seen --
+    counts once for both, and a reading that also named the arguments, checked against
+    the page, has said and risked more (`_units`).  Anything else -- both better
+    somewhere, or no disagreement at all -- leaves the question standing."""
     by_left = {r["step"]: r for r in left_rows}
     diffs = []
     for r in right_rows:
         l = by_left.get(r["step"])
-        if l is not None and (l["verdict"], l.get("admissible")) != (r["verdict"], r.get("admissible")):
+        if l is not None and _claim_signature(l) != _claim_signature(r):
             diffs.append((l, r))
     counts = {"left": {"right": 0, "wrong": 0}, "right": {"right": 0, "wrong": 0}}
     details = []
     for l, r in diffs:
-        counts["left"]["right"] += l["verdict"] in RIGHT
-        counts["left"]["wrong"] += l["verdict"] in WRONG
-        counts["right"]["right"] += r["verdict"] in RIGHT
-        counts["right"]["wrong"] += r["verdict"] in WRONG
+        lr, lw = _units(l)
+        rr, rw = _units(r)
+        counts["left"]["right"] += lr
+        counts["left"]["wrong"] += lw
+        counts["right"]["right"] += rr
+        counts["right"]["wrong"] += rw
         details.append({"step": r["step"], "control": r.get("control"),
-                        "left": l["verdict"], "right": r["verdict"]})
+                        "left": l["verdict"], "left_level": l.get("level"),
+                        "right": r["verdict"], "right_level": r.get("level")})
     out = {"disagreements": len(diffs), "counts": counts, "outcome": "UNDECIDED",
            "details": details[:24]}
     lc, rc = counts["left"], counts["right"]
@@ -313,11 +346,13 @@ def retrospective(run_dir: Path, *, split: float = 0.5, propagate: bool = False)
     (`retro_decision`).  A verdict propagates exactly like an executed experiment's: a
     refutation row beside the history, bound to what the slot held
     (`semabi.compiler.v4.search.write_refutation`)."""
+    from dataclasses import replace
+
     from semabi.compiler.evidence import EvidenceLog
     from semabi.compiler.v4 import consequence as csq
+    from semabi.compiler.v4 import outcome as oc
     from semabi.compiler.v4 import pinned as v4_pinned
     from semabi.compiler.v4 import search as v4_search
-    from semabi.eval.v4_renaming import _verdicts
 
     run_dir = Path(run_dir)
     compiled = compile_v4(run_dir, min_support=2, write_diagnostics=False)
@@ -335,7 +370,17 @@ def retrospective(run_dir: Path, *, split: float = 0.5, propagate: bool = False)
             try:
                 pr = v4_pinned.PinnedReading.from_json(_override(reading_json, family, key_slot))
                 model = csq.fit(run_dir, pr, split=split)
-                fits[token] = [x for x in _verdicts(model, log) if x["step"] >= cut]
+                m = replace(model, log=log, cut=0)
+                rows = []
+                for step in log.steps:
+                    if step.step < cut or step.action.kind != "click" or step.action.target is None:
+                        continue
+                    v = oc.score_step_admissible(m, step, corroborated=True, hypothesis=oc.RULE)
+                    rows.append({"step": step.step, "control": v.get("control"),
+                                 "verdict": v["verdict"], "admissible": v.get("admissible"),
+                                 "level": v.get("level"), "arguments": v.get("arguments"),
+                                 "fresh": v.get("fresh")})
+                fits[token] = rows
             except Exception as exc:  # noqa: BLE001 - reported, never silently dropped
                 fits[token] = f"fit failed: {type(exc).__name__}: {exc}"
         return fits[token]
