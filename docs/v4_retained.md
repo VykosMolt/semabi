@@ -309,9 +309,8 @@ ledger reads the renamed holdout identically: twelve differences to none
 
 Two corrections this episode forces on earlier reports.  The overnight summary claimed
 "renaming 0 in both modes everywhere"; vet's renaming *ledger* in fact carried 71
-differences then, and carries them at the pre-campaign checkpoint too -- a long-standing
-sensitivity of vet's EXISTENCE/CREATION/VALUE claims that predates every change here,
-misread overnight, now recorded as an open investigation rather than a clean invariant.
+differences then, and carries them at the pre-campaign checkpoint too -- misread
+overnight, and traced in the continuation (Part IX) to the instrument, not the model.
 And the transfer frontier moved once more on the regenerated state: with the board
 question decided by `named` at SOURCE and the buttons keyed, harbour's transfer history
 selects the board-keyed variant as a *behaviourally distinguished* unique survivor --
@@ -319,6 +318,82 @@ selects the board-keyed variant as a *behaviourally distinguished* unique surviv
 it had to tell apart" -- while SOURCE keeps its own reading; the two histories weigh the
 board key differently for reasons each can show, and the selection, not the
 representation, is what travels.
+
+## Part IX -- the substitution class meets the interface's declarations
+
+Vet's seventy-one, traced to first divergence: on the renamed holdout the frozen
+abstractor produced *zero* appointment objects -- the rows never instantiated -- because
+the renaming had respelled the appointments table's own column header.  `Reason` entered
+the substitution class legitimately: vet keys its labeled inputs by their label text
+(`Name`, `Age`, `Reason` are those families' identities on the page), and a key is
+exactly what the instrument renames.  But the same token is also a *declaration* -- the
+header the parse names columns by -- and a token-level substitution cannot tell the
+occurrences apart.  One token, three occurrence classes: a key of family X (rename it --
+that is the attack), a column declaration (renaming it changes the interface's grammar,
+not a name), and plain vocabulary of another family's rules.  The repair mirrors member
+reversal's oldest rule: each table's first row is the interface's own declaration, and
+the substitution now leaves it alone while identity occurrences everywhere else still
+rename, the label-keyed fields included.  Vet's ledger reads the renamed holdout
+identically -- seventy-one differences to none -- harbour stays at zero, and the
+exemption is pinned as a test.  With it, every metamorphic invariant is zero on every
+application, with no recorded exception left.
+
+The general lesson joins Part VIII's: an attack's substitution class is derived from the
+learned ontology, and where that ontology legitimately overlaps the interface's
+declarations, the transformation itself must respect the declaration or it stops being
+semantics-preserving.  The instrument was wrong here, not the model -- the reverse of
+op13 -- and both directions were only decidable by tracing the first divergence.
+
+The doctrine that falls out, now pinned by both episodes and by inspection of the
+instruments: **a metamorphic certificate is relative to the substitution class the attack
+was generated under**, and the classes divide by provenance.  Member reversal and
+declared-column reversal act on symmetries the *interface declares* (collection roles,
+header-named columns) -- their domains do not move when the ontology does, and their
+certificates age well.  Renaming's class is computed from the *learned* ontology
+(`_keys_on` reads the current abstractor's keys at every run), so it regenerates itself
+-- but its certificates are ontology-relative: every retained semantic revision that
+changes the set of identity-bearing values (keys earned, split, merged or removed)
+enlarges or reshapes the adversary, and the renaming battery must rerun after any such
+revision.  op13 is what a stale certificate silently misses; the header collision is what
+an ontology-derived class does when it outgrows the transformation's contract.
+
+## Part X -- what the bias accounting actually shows
+
+Classical ILP receives its constant/variable/type bias from the researcher: Progol's mode
+declarations say which argument positions take constants, and the bottom clause is
+variabilized under them.  The honest inventory of where SemABI's equivalents come from,
+after auditing the mechanisms rather than the slogan:
+
+*Learned from behaviour and the ontology.*  The identifying vocabulary (every key any
+tracked state rendered -- the class that may never be a rule's spelling and that the
+renaming instrument attacks); which slot, if any, names a family (earned against claiming
+nothing, by explanation, error and what the interface says); ORDERED per field, adopted
+only where a corroborated intervention showed the order was the application's; the
+emission vocabulary (frames split against the page's own rendered values); the renaming
+substitution class itself, derived from the current ontology -- which is why its reach
+grows with every earned identity.
+
+*Structural priors, hard-coded but content-free.*  Candidate identity slots must be
+present in half a family's instances; composites are proposed only when no single slot
+separates the co-present pairs; prose runs inside compound units are not candidate names;
+a candidate cap with the no-identity reading always kept proposable.  These shape the
+*proposal* space, never the decision -- the campaigns moved every decision criterion out
+of this layer.
+
+*Grammar-supplied, and honestly so.*  The token regex, the accessibility roles that count
+as collections, the three-plus-one referring forms (relation, singleton, property,
+selection), the key-followed-by-details convention that lets a control's value name an
+object, header-named columns, and min_support=2.  These are the hypothesis language, the
+analogue of a logic, not of the bias ILP asks the user for.
+
+So the defensible claim is narrower than "SemABI co-learns its bias" and more precise:
+the *semantic* bias -- which tokens are names, which fields carry order, which families
+have identity, what may be a constant -- is earned from behaviour, while the
+*representational* bias -- what a hypothesis can say at all -- is the fixed language.
+Classical ILP draws both from the designer; the magic-values line learns constants but
+not the mode bias.  The middle SemABI occupies is real, and Part VIII and Part IX are its
+two live demonstrations: the constant/name boundary and the substitution class both moved
+because the learned ontology moved.
 
 ## What stands, and what is open
 
@@ -331,7 +406,7 @@ remainders.  ORDERED is unchanged: blend's committed gallons alone, by corrobora
 The vet mutation plan is retired because its question dissolved; no live experiment was
 warranted this campaign -- the retained histories kept answering first.
 
-Open, in the order they matter: vet's ledger-71 under renaming; the attribute-deref
+Open, in the order they matter: the attribute-deref
 strengthening of emission arguments (op13's argument *is* determinable -- the pilot's own
 ``Booked for call`` renders it -- and ``VARIES`` says less than the evidence supports);
 whether the retrospective fixpoint iteration should live inside the instrument rather
