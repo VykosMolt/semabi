@@ -86,15 +86,15 @@
   {
    "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))))))",
    "key_slot": "group/table/rowgroup/row/cell#0",
-   "why": "refuted by retained outcome evidence (frozen prefix at 187): on the 2 suffix steps where the readings disagree, 2 of the application's responses are predicted under None with 0 wrong, against 0 / 0 under 'group/table/rowgroup/row/cell#0'",
+   "why": "refuted by retained outcome evidence (frozen prefix at 187): on the 2 suffix steps where the readings' claims disagree, 4 content units -- events and their checked arguments -- are right under None with 0 wrong, against 0 / 0 under 'group/table/rowgroup/row/cell#0'",
    "evidence": {
-    "instrument": "retrospective outcome comparison",
+    "instrument": "retrospective outcome comparison (claim content)",
     "split": 0.5,
     "cut": 187,
     "disagreements": 2,
     "counts": {
      "left": {
-      "right": 2,
+      "right": 4,
       "wrong": 0
      },
      "right": {
@@ -107,13 +107,17 @@
       "step": 248,
       "control": "button:Record draw",
       "left": "one outcome was admissible and it happened",
-      "right": "no outcome is established for this state"
+      "left_level": "with its arguments",
+      "right": "no outcome is established for this state",
+      "right_level": null
      },
      {
       "step": 310,
       "control": "button:Record draw",
       "left": "one outcome was admissible and it happened",
-      "right": "no outcome is established for this state"
+      "left_level": "with its arguments",
+      "right": "no outcome is established for this state",
+      "right_level": null
      }
     ],
     "survivor": null
@@ -125,15 +129,15 @@
   {
    "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))))))",
    "key_slot": "status#0",
-   "why": "refuted by retained outcome evidence (frozen prefix at 187): on the 2 suffix steps where the readings disagree, 2 of the application's responses are predicted under None with 0 wrong, against 0 / 0 under 'status#0'",
+   "why": "refuted by retained outcome evidence (frozen prefix at 187): on the 2 suffix steps where the readings' claims disagree, 4 content units -- events and their checked arguments -- are right under None with 0 wrong, against 0 / 0 under 'status#0'",
    "evidence": {
-    "instrument": "retrospective outcome comparison",
+    "instrument": "retrospective outcome comparison (claim content)",
     "split": 0.5,
     "cut": 187,
     "disagreements": 2,
     "counts": {
      "left": {
-      "right": 2,
+      "right": 4,
       "wrong": 0
      },
      "right": {
@@ -146,13 +150,17 @@
       "step": 248,
       "control": "button:Record draw",
       "left": "one outcome was admissible and it happened",
-      "right": "no outcome is established for this state"
+      "left_level": "with its arguments",
+      "right": "no outcome is established for this state",
+      "right_level": null
      },
      {
       "step": 310,
       "control": "button:Record draw",
       "left": "one outcome was admissible and it happened",
-      "right": "no outcome is established for this state"
+      "left_level": "with its arguments",
+      "right": "no outcome is established for this state",
+      "right_level": null
      }
     ],
     "survivor": null
@@ -168,6 +176,132 @@
     "Opened Creek Bed",
     "Opened Low Barn",
     "Opened North Wall"
+   ]
+  },
+  {
+   "family": "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))",
+   "key_slot": "cell@Year#0",
+   "why": "refuted by retained outcome evidence (frozen prefix at 187): on the 32 suffix steps where the readings' claims disagree, 64 content units -- events and their checked arguments -- are right under 'cell@Blend#0' with 0 wrong, against 32 / 0 under 'cell@Year#0'",
+   "evidence": {
+    "instrument": "retrospective outcome comparison (claim content)",
+    "split": 0.5,
+    "cut": 187,
+    "disagreements": 32,
+    "counts": {
+     "left": {
+      "right": 64,
+      "wrong": 0
+     },
+     "right": {
+      "right": 32,
+      "wrong": 0
+     }
+    },
+    "details": [
+     {
+      "step": 192,
+      "control": "button:Bottle _",
+      "left": "one outcome was admissible and it happened",
+      "left_level": "with its arguments",
+      "right": "one outcome was admissible and it happened",
+      "right_level": "the event alone"
+     },
+     {
+      "step": 195,
+      "control": "button:Bottle _",
+      "left": "one outcome was admissible and it happened",
+      "left_level": "with its arguments",
+      "right": "one outcome was admissible and it happened",
+      "right_level": "the event alone"
+     },
+     {
+      "step": 203,
+      "control": "button:Bottle _",
+      "left": "one outcome was admissible and it happened",
+      "left_level": "with its arguments",
+      "right": "one outcome was admissible and it happened",
+      "right_level": "the event alone"
+     },
+     {
+      "step": 206,
+      "control": "button:Bottle _",
+      "left": "one outcome was admissible and it happened",
+      "left_level": "with its arguments",
+      "right": "one outcome was admissible and it happened",
+      "right_level": "the event alone"
+     },
+     {
+      "step": 212,
+      "control": "button:Bottle _",
+      "left": "one outcome was admissible and it happened",
+      "left_level": "with its arguments",
+      "right": "one outcome was admissible and it happened",
+      "right_level": "the event alone"
+     },
+     {
+      "step": 213,
+      "control": "button:Bottle _",
+      "left": "one outcome was admissible and it happened",
+      "left_level": "with its arguments",
+      "right": "one outcome was admissible and it happened",
+      "right_level": "the event alone"
+     },
+     {
+      "step": 217,
+      "control": "button:Bottle _",
+      "left": "one outcome was admissible and it happened",
+      "left_level": "with its arguments",
+      "right": "one outcome was admissible and it happened",
+      "right_level": "the event alone"
+     },
+     {
+      "step": 219,
+      "control": "button:Bottle _",
+      "left": "one outcome was admissible and it happened",
+      "left_level": "with its arguments",
+      "right": "one outcome was admissible and it happened",
+      "right_level": "the event alone"
+     },
+     {
+      "step": 226,
+      "control": "button:Disgorge _",
+      "left": "one outcome was admissible and it happened",
+      "left_level": "with its arguments",
+      "right": "one outcome was admissible and it happened",
+      "right_level": "the event alone"
+     },
+     {
+      "step": 253,
+      "control": "button:Disgorge _",
+      "left": "one outcome was admissible and it happened",
+      "left_level": "with its arguments",
+      "right": "one outcome was admissible and it happened",
+      "right_level": "the event alone"
+     },
+     {
+      "step": 262,
+      "control": "button:Disgorge _",
+      "left": "one outcome was admissible and it happened",
+      "left_level": "with its arguments",
+      "right": "one outcome was admissible and it happened",
+      "right_level": "the event alone"
+     },
+     {
+      "step": 265,
+      "control": "button:Bottle _",
+      "left": "one outcome was admissible and it happened",
+      "left_level": "with its arguments",
+      "right": "one outcome was admissible and it happened",
+      "right_level": "the event alone"
+     }
+    ],
+    "survivor": "cell@Blend#0"
+   },
+   "held": [
+    "2019",
+    "2020",
+    "2021",
+    "2022"
    ]
   }
  ]

@@ -241,6 +241,31 @@ survey).  SemABI's version is harder -- the ontology, the mapper and the model a
 together -- but the constraint transfers exactly: no instrument may spend evidence it
 never collected.
 
+## Part VII -- a verdict is a derivation under its base
+
+Re-derived with the claim-content comparison, harbour's history decided far more than
+before: the berths and pilots questions -- NO_KNOWN_EXPERIMENT for the operator planner,
+UNDECIDED at the event level -- fall to argument evidence (the interface speaks berth and
+pilot names; 52/0 against 26/0 and 48/0 against 24/0 on the steps where the claims
+differ), and blend's `Blend` vs `Year` -- the doctrine's own example of a tie no
+intervention reaches -- is decided 64/0 against 32/0 because bottling answers with the
+blend's name and only name-keying binds it.  A key earns its place where the application
+*speaks* its values.
+
+But the same batch showed that a retrospective verdict is not a fact about the history
+alone: it is a derivation under the base it was compared on.  The button question was
+decided for no-identity on the old base -- where the overview was unkeyed, `Schedule
+call` could not fit its created-argument rule, and keying the buttons earned nothing on
+the one step that differed -- while the batch itself moved the base by keying the
+overview, on which the same comparison plausibly reverses.  An executed experiment is raw
+evidence and survives its interpreter; a retrospective refutation is *compiled* from
+retained evidence and a base, and when propagation moves the base the compilation is
+stale in a sense `held` cannot see.  The discipline that follows: iterate -- keep the raw
+experiment rows and the verdicts propagation itself only strengthens, lift the rest,
+re-derive on the new base, and repeat until the verdict set is stable.  The loop is the
+vet precedent ("a refutation removes a reading, it does not crown another; the mechanism
+that makes it converge is to keep asking") applied to the instrument's own outputs.
+
 ## The remaining pipeline
 
 The session was interrupted here by external termination of its background jobs, four in

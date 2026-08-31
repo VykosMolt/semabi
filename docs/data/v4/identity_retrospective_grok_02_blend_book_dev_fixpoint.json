@@ -1,0 +1,111 @@
+{
+ "run": "grok_02_blend_book_dev",
+ "split": 0.5,
+ "questions": [
+  {
+   "family": "button[_]",
+   "left": null,
+   "right": "button#0",
+   "split": 0.5,
+   "cut": 187,
+   "suffix_steps": 76,
+   "disagreements": 0,
+   "counts": {
+    "left": {
+     "right": 0,
+     "wrong": 0
+    },
+    "right": {
+     "right": 0,
+     "wrong": 0
+    }
+   },
+   "details": [],
+   "outcome": "UNDECIDED"
+  },
+  {
+   "family": "cell[_]",
+   "left": null,
+   "right": "cell#0",
+   "split": 0.5,
+   "cut": 187,
+   "suffix_steps": 76,
+   "disagreements": 0,
+   "counts": {
+    "left": {
+     "right": 0,
+     "wrong": 0
+    },
+    "right": {
+     "right": 0,
+     "wrong": 0
+    }
+   },
+   "details": [],
+   "outcome": "UNDECIDED"
+  },
+  {
+   "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+   "left": null,
+   "right": "group/table/rowgroup/row/cell#0",
+   "split": 0.5,
+   "cut": 187,
+   "suffix_steps": 76,
+   "disagreements": 0,
+   "counts": {
+    "left": {
+     "right": 0,
+     "wrong": 0
+    },
+    "right": {
+     "right": 0,
+     "wrong": 0
+    }
+   },
+   "details": [],
+   "outcome": "UNDECIDED"
+  },
+  {
+   "family": "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+   "left": null,
+   "right": "status#0",
+   "split": 0.5,
+   "cut": 187,
+   "suffix_steps": 76,
+   "disagreements": 0,
+   "counts": {
+    "left": {
+     "right": 0,
+     "wrong": 0
+    },
+    "right": {
+     "right": 0,
+     "wrong": 0
+    }
+   },
+   "details": [],
+   "outcome": "UNDECIDED"
+  },
+  {
+   "family": "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))",
+   "left": "cell@Ticket#0",
+   "right": "cell@From vat#1",
+   "split": 0.5,
+   "cut": 187,
+   "suffix_steps": 76,
+   "disagreements": 0,
+   "counts": {
+    "left": {
+     "right": 0,
+     "wrong": 0
+    },
+    "right": {
+     "right": 0,
+     "wrong": 0
+    }
+   },
+   "details": [],
+   "outcome": "UNDECIDED"
+  }
+ ]
+}
