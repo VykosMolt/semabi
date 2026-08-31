@@ -23,10 +23,10 @@ HARBOUR_RUN = ROOT / "runs/v4/harbour_transfer"
 @pytest.mark.skipif(not (HARBOUR_RUN / "steps.jsonl").exists(), reason="retained trace absent")
 def test_a_reference_never_targets_a_link_type_and_a_ship_resolves_the_call_it_holds():
     from semabi.compiler.v4.consequence import fit
-    from semabi.eval.v4_consequence_run import _candidates
+    from semabi.eval.v4_consequence_run import _candidates, vessel_keyed
 
     readings = {c.name: c.reading for c in _candidates(HARBOUR_CHAIN)}
-    fitted = fit(HARBOUR_RUN, readings["joint discrimination x2"], split=0.5)
+    fitted = fit(HARBOUR_RUN, vessel_keyed(readings), split=0.5)
     A, log = fitted.abstractor, fitted.log
     H = A.H
     by_tid = {et.tid: et for et in H.entity_types.values()}

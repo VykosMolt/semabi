@@ -21,6 +21,8 @@ from types import SimpleNamespace
 
 import pytest
 
+from semabi.eval.v4_consequence_run import vessel_keyed
+
 from semabi.compiler.v4 import prospective
 from semabi.compiler.v4.prospective import (CONTENT, NOT_APPLICABLE, POSITION, REFUTED,
                                             SUPPORTED, INVARIANT, NO_BASIS,
@@ -144,7 +146,7 @@ def harbour():
     need is the readings, which are data; the guarantee being given up is that this compiler
     generated them, and that is not what they are testing.
     """
-    from semabi.eval.v4_consequence_run import _candidates
+    from semabi.eval.v4_consequence_run import _candidates, vessel_keyed
     return with_loose_reading({c.name: c.reading for c in _candidates(HARBOUR_CHAIN)})
 
 
@@ -203,13 +205,13 @@ def test_the_positional_claim_was_the_learner_memorising_an_ordinal(harbour):
 
 def test_the_reading_that_names_entities_by_a_stable_value_makes_no_positional_claim(harbour):
     """Not a confirmation.  A is unfalsified by a test its ontology never faces."""
-    result = _run(harbour["joint discrimination x2"])
+    result = _run(vessel_keyed(harbour))
     assert result.counts(POSITION) == Counter()
 
 
 def test_the_prospective_test_can_refute_the_surviving_reading_too(harbour):
     """Control.  Without this, A's clean positional record would establish nothing."""
-    broken = _run(harbour["joint discrimination x2"],
+    broken = _run(vessel_keyed(harbour),
                   mutate=lambda v: f"{v.split('#')[0]}#9")
     assert broken.counts(POSITION)[REFUTED] >= 1
     assert broken.counts(POSITION)[SUPPORTED] == 0
@@ -217,7 +219,7 @@ def test_the_prospective_test_can_refute_the_surviving_reading_too(harbour):
 
 def test_predicting_a_value_the_application_never_renders_is_refuted_not_ignored(harbour):
     """Control for the opposite failure: a test that quietly excuses a false prediction."""
-    broken = _run(harbour["joint discrimination x2"],
+    broken = _run(vessel_keyed(harbour),
                   mutate=lambda v: "ZZ_NEVER_RENDERED_BY_THIS_APPLICATION")
     assert broken.counts(CONTENT)[SUPPORTED] == 0
     assert broken.counts(CONTENT)[REFUTED] >= 1
@@ -247,7 +249,7 @@ def test_scoping_the_precondition_removes_predictions_the_rule_never_made(harbou
     tables -- it is undefined for 88% of vet_clinic's clicks, which those runs report as
     NOT_APPLICABLE.
     """
-    result = _run(harbour["joint discrimination x2"])
+    result = _run(vessel_keyed(harbour))
     assert result.counts(CONTENT)[NOT_APPLICABLE] > 0
     scoped = prospective.local_separability(result, HARBOUR_RUN)[CONTENT]
     # one refuted context under the reading every vessel was a type of its own; two under
@@ -258,7 +260,7 @@ def test_scoping_the_precondition_removes_predictions_the_rule_never_made(harbou
 
     monkeypatch.setattr(prospective, "enclosing_scope",
                         lambda obs, idx, role="row": Counter(n.name for n in obs.nodes))
-    unscoped = _run(harbour["joint discrimination x2"])
+    unscoped = _run(vessel_keyed(harbour))
     monkeypatch.undo()          # separability must measure with the real scope
     loose = prospective.local_separability(unscoped, HARBOUR_RUN)[CONTENT]
     assert loose["refuted_contexts"] > scoped["refuted_contexts"], loose
@@ -276,7 +278,7 @@ def test_a_refutation_is_diagnosed_as_a_rule_gap_when_the_acted_on_state_separat
     row it is clicked in, which is a property of the object the action names.
     """
     from semabi.compiler.v4.prospective import local_separability
-    result = _run(harbour["joint discrimination x2"])
+    result = _run(vessel_keyed(harbour))
     diagnosis = local_separability(result, HARBOUR_RUN)
     assert diagnosis[CONTENT]["diagnosis"].startswith("RULE_GAP")
     assert diagnosis[CONTENT]["contexts_on_both_sides"] == 0
@@ -296,7 +298,7 @@ def test_there_is_no_positional_diagnosis_left_to_make(harbour):
 
 def test_the_diagnosis_says_nothing_when_there_are_no_refutations(harbour):
     from semabi.compiler.v4.prospective import local_separability
-    result = _run(harbour["joint discrimination x2"])
+    result = _run(vessel_keyed(harbour))
     assert local_separability(result, HARBOUR_RUN)[POSITION]["diagnosis"] == "NO_REFUTATIONS"
 
 
@@ -310,7 +312,7 @@ def test_the_result_reports_why_it_was_silent(harbour):
     CONTENT prediction is untested for a single reason, and the summary is what makes that
     legible rather than hiding it behind a clean refutation count.
     """
-    result = _run(harbour["joint discrimination x2"])
+    result = _run(vessel_keyed(harbour))
     silence = result.silence(CONTENT)
     assert silence["instrument_reached_this_application"] is True
     assert silence["tested"] > 0 and silence["untested"] > 0
@@ -324,8 +326,9 @@ def test_the_result_reports_why_it_was_silent(harbour):
 @pytest.fixture(scope="module")
 def determinacy(harbour):
     from semabi.compiler.v4.prospective import action_effect_determinacy
-    return {name: action_effect_determinacy(HARBOUR_RUN, harbour[name], split=0.6)
-            for name in ("joint discrimination x2", "promote cell[_]=cell#0")}
+    return {name: action_effect_determinacy(HARBOUR_RUN, reading, split=0.6)
+            for name, reading in (("vessel-keyed", vessel_keyed(harbour)),
+                                  ("promote cell[_]=cell#0", harbour["promote cell[_]=cell#0"]))}
 
 
 def _group(result, control):
@@ -343,7 +346,7 @@ def test_a_stable_naming_gives_one_effect_per_observable_action(determinacy):
     It does not establish that the literal is correct; that is what CONTENT and POSITION
     are for, and this reading is refuted there too.
     """
-    result = determinacy["joint discrimination x2"]
+    result = determinacy["vessel-keyed"]
     assert result["totals"].get("BASE_AMBIGUOUS", 0) == 0
     assert result["totals"].get("ORDINAL_AMBIGUOUS", 0) == 0
     for control in ("button:Close", "button:Reopen"):
@@ -388,9 +391,9 @@ def test_determinacy_never_compares_one_readings_literals_with_anothers(determin
     """
     slots = {name: {g["slot"] for g in result["groups"]}
              for name, result in determinacy.items()}
-    if slots["joint discrimination x2"] == slots["promote cell[_]=cell#0"]:
+    if slots["vessel-keyed"] == slots["promote cell[_]=cell#0"]:
         require_distinct_loose_reading({"_loose_is_constructed": True})
-    assert slots["joint discrimination x2"] != slots["promote cell[_]=cell#0"]
+    assert slots["vessel-keyed"] != slots["promote cell[_]=cell#0"]
     for result in determinacy.values():
         # the controls whose clicks land in an object under either reading; the pilot
         # buttons joined them when the pilots became a type (`docs/v4_open_world.md`)

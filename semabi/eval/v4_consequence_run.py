@@ -21,6 +21,30 @@ class _Candidate:
         self.reading = reading
 
 
+def vessel_keyed(readings: dict):
+    """Harbour's reading that makes the rows vessels: the overview and the board both
+    keyed by the vessel's name.  The retained manifests carried it as the candidate
+    'joint discrimination x2' until the retrospective campaign (`docs/v4_retained.md`)
+    refuted keying the call buttons by their labels and refuted the overview's
+    no-identity; since then the source choice itself carries both keys and the old
+    candidate name is gone.  The content is verified either way, so a test names the
+    semantics it exercises rather than trusting a label."""
+    def carries_vessels(reading) -> bool:
+        fams = getattr(reading, "families", None) or {}
+        overview = next((f for t, f in fams.items() if "cell@Calls logged" in t), None)
+        board = next((f for t, f in fams.items() if "cell@Berth[_],cell@Call" in t), None)
+        return (overview is not None and board is not None
+                and getattr(overview, "key_slot", None) == "cell@Vessel#0"
+                and getattr(board, "key_slot", None) == "cell@Vessel#0")
+
+    for name in ("joint discrimination x2", "source_choice"):
+        reading = readings.get(name)
+        if reading is not None and carries_vessels(reading):
+            return reading
+    raise KeyError("no retained harbour reading keys the overview and the board by "
+                   "cell@Vessel#0 (docs/v4_retained.md)")
+
+
 def _candidates(path: Path):
     """The candidate readings, from a chain manifest or from a bare source manifest.
 

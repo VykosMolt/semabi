@@ -52,7 +52,12 @@ def test_the_retained_witness_describes_the_retained_report():
     for pair in retained["pairs"]:
         assert pair["left"] in report["survivor_names"]
         assert pair["right"] in report["survivor_names"]
-        # the point of the artifact: the history does separate them, the rule did not
-        assert pair["steps_where_the_deltas_differ"] > 0
         assert sum(pair["separating_actions"].values()) == pair["steps_where_the_deltas_differ"]
         assert len(pair["first_steps"]) <= pair["steps_where_the_deltas_differ"]
+        if pair["steps_where_the_deltas_differ"] == 0:
+            # Two survivors can be delta-identical on the comparison history: since the
+            # retrospective campaign (docs/v4_retained.md) harbour's Cargo and Length
+            # overall variants say the same thing at every step, survive together, and the
+            # witness records that indistinguishability rather than manufacturing a
+            # separation.  A pair the history does separate still has to say where.
+            assert pair["separating_actions"] == {} and pair["first_steps"] == []

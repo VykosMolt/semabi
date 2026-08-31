@@ -161,10 +161,10 @@ def test_a_learned_reference_condition_becomes_a_planning_precondition():
 
 def _close_and_reopen(regime, split=0.5):
     from semabi.compiler.v4.consequence import fit
-    from semabi.eval.v4_consequence_run import _candidates
+    from semabi.eval.v4_consequence_run import _candidates, vessel_keyed
 
     readings = {c.name: c.reading for c in _candidates(HARBOUR_CHAIN)}
-    model = fit(HARBOUR_RUN, readings["joint discrimination x2"], split=split, regime=regime)
+    model = fit(HARBOUR_RUN, vessel_keyed(readings), split=split, regime=regime)
     by_control = {}
     for op in model.operators:
         core = op.core()

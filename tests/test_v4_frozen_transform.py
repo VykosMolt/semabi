@@ -198,10 +198,10 @@ def test_fitting_a_reading_leaves_a_model_that_no_longer_learns():
     transforms is not the prefix.
     """
     from semabi.compiler.v4 import consequence as csq
-    from semabi.eval.v4_consequence_run import _candidates
+    from semabi.eval.v4_consequence_run import _candidates, vessel_keyed
 
     readings = {c.name: c.reading for c in _candidates(HARBOUR_CHAIN)}
-    model = csq.fit(HARBOUR_RUN, readings["joint discrimination x2"], split=0.5)
+    model = csq.fit(HARBOUR_RUN, vessel_keyed(readings), split=0.5)
     A = model.abstractor
     assert A.G.learning is False
     assert A._controls is not None
@@ -289,11 +289,11 @@ def test_a_prequential_model_is_not_built_from_the_outcome_it_is_about_to_predic
     about which signatures are present.
     """
     from semabi.compiler.v4 import consequence as csq
-    from semabi.eval.v4_consequence_run import _candidates
+    from semabi.eval.v4_consequence_run import _candidates, vessel_keyed
 
     readings = {c.name: c.reading for c in _candidates(HARBOUR_CHAIN)}
     t = 200
-    model = csq.fit(HARBOUR_RUN, readings["joint discrimination x2"], at=t,
+    model = csq.fit(HARBOUR_RUN, vessel_keyed(readings), at=t,
                     regime=csq.CAUSAL_PREQUENTIAL)
     seen, whole = model.evidence, model.log
     assert model.cut == t
@@ -324,10 +324,10 @@ def test_deleting_the_future_does_not_move_the_model_that_predicted_the_present(
     from semabi.compiler.v4 import consequence as csq
     from semabi.compiler.v4.prequential import fingerprint
     from semabi.compiler.evidence import EvidenceLog
-    from semabi.eval.v4_consequence_run import _candidates
+    from semabi.eval.v4_consequence_run import _candidates, vessel_keyed
 
     readings = {c.name: c.reading for c in _candidates(HARBOUR_CHAIN)}
-    reading = readings["joint discrimination x2"]
+    reading = vessel_keyed(readings)
     t = 120
 
     whole = csq.fit(HARBOUR_RUN, reading, at=t, regime=csq.CAUSAL_PREQUENTIAL)
@@ -428,13 +428,13 @@ def test_the_application_says_what_it_did_and_the_model_reads_it_as_an_outcome()
     from semabi.compiler.parse import DATA_ROLES
     from semabi.compiler.v4 import consequence as csq
     from semabi.compiler.v4 import emission as em
-    from semabi.eval.v4_consequence_run import _candidates
+    from semabi.eval.v4_consequence_run import _candidates, vessel_keyed
 
     # A role is state or output, never both: read twice, a message would be a domain change.
     assert not (set(em.LIVE_ROLES) & DATA_ROLES)
 
     readings = {c.name: c.reading for c in _candidates(HARBOUR_CHAIN)}
-    model = csq.fit(HARBOUR_RUN, readings["joint discrimination x2"], split=0.5)
+    model = csq.fit(HARBOUR_RUN, vessel_keyed(readings), split=0.5)
     A, log = model.abstractor, model.evidence
 
     checked = placed = in_view = 0
