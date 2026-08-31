@@ -29,13 +29,6 @@ def test_the_components_and_referents_of_a_key_name_the_object():
 
 
 @pytest.mark.skipif(not (HARBOUR_RUN / "steps.jsonl").exists(), reason="retained trace absent")
-@pytest.mark.xfail(strict=False, reason=(
-    "the created-call claim lives on the reading that keys the call buttons by their "
-    "labels; the first retrospective run refuted that keying on an event-level count "
-    "that was blind to twelve correct fresh-name claims, the comparison has been "
-    "extended to claim content, and the verdict is reopened but not yet re-derived "
-    "(docs/v4_retained.md).  This test is the counterexample that caught the "
-    "blindness; it must pass again once the re-derivation lands"))
 def test_schedule_call_claims_a_fresh_name_and_the_held_out_calls_are_fresh():
     from semabi.compiler.v4.consequence import fit, clicked_control
     from semabi.eval.v4_consequence_run import _candidates, vessel_keyed
@@ -44,7 +37,11 @@ def test_schedule_call_claims_a_fresh_name_and_the_held_out_calls_are_fresh():
     model = fit(HARBOUR_RUN, vessel_keyed(readings), split=0.5)
     got = model.outcomes["button:Schedule call"]
     opened = "Call <> opened for <> ."
-    assert got.arg_roles[opened][0] == f"{oc.CREATED}:T4"      # the call button link object
+    created_tid = got.created_type(opened, 0)
+    assert created_tid is not None                              # position 0 is a creation claim
+    button_type = next(et.tid for et in model.abstractor.H.entity_types.values()
+                       if "button[_]" in et.units)
+    assert created_tid == button_type                           # ...of a call button object
     assert got.arg_roles[opened][1] == oc.OWNER
 
     A, log = model.abstractor, model.log

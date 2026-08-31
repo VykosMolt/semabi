@@ -2,7 +2,7 @@
  "candidates": [
   {
    "fingerprint": "bf3a159a95bbb2e8",
-   "full_reading_sha256": "ca2660843ee97d944ec34c52b323735919e04cfe69c2c5b0a51148a8b3017a18",
+   "full_reading_sha256": "4f6dab327a854c85676d93c4f1492e05e6358bd572dd054a5c299b941ecd8cc1",
    "name": "source_choice",
    "reading": {
     "families": {
@@ -68,6 +68,9 @@
      ],
      "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))": [
       "cell@Amount#0"
+     ],
+     "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))": [
+      "cell@Year#0"
      ]
     },
     "version": 1
@@ -75,7 +78,7 @@
   },
   {
    "fingerprint": "56c944f015c6a72c",
-   "full_reading_sha256": "65e6f40ea83a56eaf2284fa98e4fe7efa58ea75ee4863d88fe2453c43eb060fd",
+   "full_reading_sha256": "bcbed6c01b7a90c2640fb7d118ea4864ed67d8f192041b25064e35a4b714030a",
    "name": "joint discrimination x3",
    "reading": {
     "families": {
@@ -141,6 +144,9 @@
      ],
      "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))": [
       "cell@Amount#0"
+     ],
+     "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))": [
+      "cell@Year#0"
      ]
     },
     "version": 1
@@ -148,7 +154,7 @@
   },
   {
    "fingerprint": "4ff64cd841357731",
-   "full_reading_sha256": "a13cad16d3bc091f2fb7e83c8b39ed943b1aa756400c6eefc7b2f6b9128769ec",
+   "full_reading_sha256": "c37644e7b9e2e1593e125646c68fd57ad1d651aa5b3d0991ad6adb190eed1d7a",
    "name": "button[_]=button#0",
    "reading": {
     "families": {
@@ -214,6 +220,9 @@
      ],
      "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))": [
       "cell@Amount#0"
+     ],
+     "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))": [
+      "cell@Year#0"
      ]
     },
     "version": 1
@@ -221,7 +230,7 @@
   },
   {
    "fingerprint": "032a2c85d3ba10ca",
-   "full_reading_sha256": "870138b4860bd59fb7165597453a6e7f1862d027e464764e1e9fafcee66744ec",
+   "full_reading_sha256": "c38c463b60871ce72eddb8370cf40bc659519ead52839b0bfa94ab614c8c84ee",
    "name": "cell[_]=cell#0",
    "reading": {
     "families": {
@@ -287,6 +296,9 @@
      ],
      "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))": [
       "cell@Amount#0"
+     ],
+     "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))": [
+      "cell@Year#0"
      ]
     },
     "version": 1
@@ -294,7 +306,7 @@
   },
   {
    "fingerprint": "f6315225d6092b47",
-   "full_reading_sha256": "4bfbb03c2acb16cc0af616ac7212e63154a2e944fdc58cf075252088cc009056",
+   "full_reading_sha256": "61eb1a89e69b28620a2a90fa26b21f689cf73b6d6ec19a2368a8bed788b3d337",
    "name": "row[_](cell@Amount[_],ce=None",
    "reading": {
     "families": {
@@ -360,15 +372,18 @@
      ],
      "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))": [
       "cell@Amount#0"
+     ],
+     "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))": [
+      "cell@Year#0"
      ]
     },
     "version": 1
    }
   },
   {
-   "fingerprint": "68d09754a86c7e15",
-   "full_reading_sha256": "2402c3b14a7f780f6954d8ad7747b69b45fcb6194c671e320d5a10a8ee7e5bc8",
-   "name": "row[_](cell@Blend[_],cel=cell@Year#0",
+   "fingerprint": "2d3950b5c95677cb",
+   "full_reading_sha256": "bc3a1b982fececc0e08e5eb55e3c8cb100343b1e88aa547098a3d4259fc1e670",
+   "name": "row[_](cell@Blend[_],cel=cell@Style#0",
    "reading": {
     "families": {
      "button[_]": {
@@ -402,9 +417,9 @@
       "status": "UNSUPPORTED"
      },
      "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))": {
-      "discrimination": 1.0,
+      "discrimination": 0.7575,
       "family": "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))",
-      "key_slot": "cell@Year#0",
+      "key_slot": "cell@Style#0",
       "status": "SUPPORTED"
      },
      "row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))": {
@@ -420,7 +435,7 @@
       "status": "NO_IDENTITY"
      }
     },
-    "name": "row[_](cell@Blend[_],cel=cell@Year#0",
+    "name": "row[_](cell@Blend[_],cel=cell@Style#0",
     "promoted_families": [],
     "provenance": {
      "role": "SOURCE",
@@ -433,6 +448,9 @@
      ],
      "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))": [
       "cell@Amount#0"
+     ],
+     "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))": [
+      "cell@Year#0"
      ]
     },
     "version": 1
@@ -440,7 +458,7 @@
   },
   {
    "fingerprint": "b30f5126f236b139",
-   "full_reading_sha256": "5a7ad953ba44a2a4d4ebb803efb712289dafd06ff94a78495f9e0b38e0c18fd2",
+   "full_reading_sha256": "0ddac8996d89ca1f16c95b519d7b6b3689a6b87d4df01da4c7a7e0ef03ab9a1a",
    "name": "row[_](cell@Gallons left=cell@Gallons left#0",
    "reading": {
     "families": {
@@ -506,6 +524,9 @@
      ],
      "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))": [
       "cell@Amount#0"
+     ],
+     "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))": [
+      "cell@Year#0"
      ]
     },
     "version": 1
@@ -513,7 +534,7 @@
   },
   {
    "fingerprint": "03d8ab02fd97a0b6",
-   "full_reading_sha256": "e7c0aa4008a0aa50ddc384c5c860bcb0b88d5ff797ea60b54f8899d6abc17444",
+   "full_reading_sha256": "c2b3eab3d316cf7ac82ef75fbc57fb4ba7097244ae27b86e4c153bdaf3b8b66b",
    "name": "text[_](combobox[_])=text#0",
    "reading": {
     "families": {
@@ -579,6 +600,9 @@
      ],
      "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))": [
       "cell@Amount#0"
+     ],
+     "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))": [
+      "cell@Year#0"
      ]
     },
     "version": 1
@@ -598,7 +622,7 @@
    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
    "semabi/compiler/explorer.py": "16827d3735c9eab4d51a60c585790226be3e692bb63b01794df29a9ba8c8c807",
    "semabi/compiler/grounder.py": "d272260d2bacd64dcd7fc88f2094c2f84b989736c89924460cc0053b8e97ac06",
-   "semabi/compiler/induce.py": "cbccc726cdc29da44ed20e9f36d9ecf49b367680ccc89184cd13dbf7dd3cf1ca",
+   "semabi/compiler/induce.py": "b67cad8b2bc77253034f6d5d45ef5f016e7d65923f2656caed970fb95ca324d6",
    "semabi/compiler/mentions.py": "800fa94e2e4f76bfc503c7557ec775f6d83a612f6634123a62f78a16de2b781c",
    "semabi/compiler/model.py": "5175ff650a75fdb39da8f943d5193c99a533f069929af158f0facfc963c9bf31",
    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
@@ -622,7 +646,7 @@
    "semabi/compiler/v4/pinned.py": "20c3dbc0ae38528d1038b860d1b68e347b51c1c26b544f39f833f0baef36062e",
    "semabi/compiler/v4/promote.py": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65",
    "semabi/compiler/v4/referring.py": "04140fef91ea1e13a7f3bf2f57346f2e24b496cfb8b57dbb5b64944587d827a3",
-   "semabi/compiler/v4/search.py": "1d62114c372ce7575b890c1f93e3a03293f91aacc5f3592b8f89466183844abb",
+   "semabi/compiler/v4/search.py": "b0343f8c8dc8c875dca8a5613a00cecb9f41eb2381376c10e83a0d6155d86d84",
    "semabi/compiler/v4/source_candidates.py": "ff27669ba080d3ce8294bbb43cdc68e77409dd431dba390035aa88f85e8e08fd",
    "semabi/relmodel.py": "2034f3a5dd7019c5333c8fb4e0283cf349e29905cfa5d0933e453180fa3a4827"
   },
@@ -638,7 +662,7 @@
  "source_path": "../../../../runs/v4/grok_02_blend_book_dev",
  "source_snapshot": {
   "consumed_evidence_sha256": "ef717ce187cbd766e7cddcc86b804906410b7d5d37b4f0771031740c0a9bc83d",
-  "content_tree_sha256": "fb2df17af32461f079f8accc8b6ae668c4109a003f5b92b43eee0f87d1dc14b5",
+  "content_tree_sha256": "996db9e6fd16e172eb610d682d29765b97c787477cc7d6d7417ccab9d287fbcc",
   "files": [
    {
     "mode": 420,
@@ -649,8 +673,8 @@
    {
     "mode": 420,
     "path": "identity_refutations_v4.json",
-    "sha256": "ca93ab1c7cb7a05117b914ada332707fa479d3b38e8b6ed3fc1374a4cc4868e8",
-    "size": 5205
+    "sha256": "5e1783ef90ae27b91e6b21be0295e2534f7a22139354a7c938e474031fe97366",
+    "size": 9682
    },
    {
     "mode": 420,
@@ -666,7 +690,7 @@
    }
   ],
   "role": "SOURCE",
-  "role_bound_sha256": "c9f074d8d17556b8b7129440ec591a757f54962973523b1c802e5116538b6c27",
+  "role_bound_sha256": "f1895bd48850c08433cd8f8b8ecd455d4b3a93728d68b92ed2cc81f3a53c6bec",
   "schema": "semabi.v4.compiler-snapshot.v2"
  },
  "source_summary": {
@@ -714,9 +738,9 @@
     "status": "NO_IDENTITY"
    },
    {
-    "alternative": "cell@Year#0",
-    "candidate": "row[_](cell@Blend[_],cel=cell@Year#0",
-    "discrimination": 1.0,
+    "alternative": "cell@Style#0",
+    "candidate": "row[_](cell@Blend[_],cel=cell@Style#0",
+    "discrimination": 0.7575,
     "family": "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))",
     "status": "SUPPORTED"
    },
@@ -974,48 +998,6 @@
       "why": "the family never rendered two instances at once, so nothing shows this value distinguishes instances"
      },
      "template": "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))"
-    },
-    {
-     "left": {
-      "evidence": {
-       "constant_share": 0.341,
-       "copresent_pairs": 400,
-       "coverage": 1.0,
-       "cross_view_values": 0,
-       "discrimination": 1.0,
-       "distinct_values": 5,
-       "numeric_share": 0.0,
-       "reload_stability": 1.0,
-       "separated_pairs": 400,
-       "shared": 1.0,
-       "spoken": 1.0
-      },
-      "key_slot": "cell@Blend#0",
-      "status": "SUPPORTED",
-      "template": "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))",
-      "why": "separates 400/400 co-present pairs, 5 values, coverage 1.00"
-     },
-     "reason": "the trace so far scores both readings identically",
-     "right": {
-      "evidence": {
-       "constant_share": 0.337,
-       "copresent_pairs": 400,
-       "coverage": 1.0,
-       "cross_view_values": 0,
-       "discrimination": 1.0,
-       "distinct_values": 4,
-       "numeric_share": 1.0,
-       "reload_stability": 1.0,
-       "separated_pairs": 400,
-       "shared": 0.0,
-       "spoken": 0.0
-      },
-      "key_slot": "cell@Year#0",
-      "status": "SUPPORTED",
-      "template": "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))",
-      "why": "separates 400/400 co-present pairs, 4 values, coverage 1.00"
-     },
-     "template": "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))"
     }
    ]
   }

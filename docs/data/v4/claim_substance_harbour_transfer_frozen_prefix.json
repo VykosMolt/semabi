@@ -9,7 +9,7 @@
   "held_out_actions": 67,
   "rules_offered_per_action": 1.0,
   "applicable_claims_per_action": 0.25,
-  "distinct_decided_claims": 10,
+  "distinct_decided_claims": 12,
   "composition": {
    "a named constant": {
     "claims": 67,
@@ -25,26 +25,26 @@
    },
    "an interface response": {
     "claims": 185,
-    "decided": 68,
-    "supported": 67,
+    "decided": 81,
+    "supported": 80,
     "refuted": 1,
-    "supported_share": 0.985,
-    "distinct_claims": 7,
+    "supported_share": 0.988,
+    "distinct_claims": 9,
     "examples": [
+     "<> <> cannot be <> while call <> holds it . = <> <> cannot be <> while call <> holds it .",
      "<> <> is already <> . = <> <> is already <> .",
      "<> <> is now <> . = <> <> is now <> .",
+     "<> already has call <> on the board . = <> already has call <> on the board .",
      "<> is already signed off . = <> is already signed off .",
-     "<> is already signed on . = <> is already signed on .",
-     "<> is signed off . = <> is signed off .",
-     "<> is signed on . = <> is signed on ."
+     "<> is already signed on . = <> is already signed on ."
     ]
    },
    "an object brought into being": {
     "claims": 17,
     "decided": 5,
-    "supported": 0,
-    "refuted": 5,
-    "supported_share": 0.0,
+    "supported": 5,
+    "refuted": 0,
+    "supported_share": 1.0,
     "distinct_claims": 1,
     "examples": [
      "id = new"

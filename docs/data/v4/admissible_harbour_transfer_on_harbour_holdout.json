@@ -9,61 +9,61 @@
  "corroborated": true,
  "hypothesis": "rule",
  "against_the_other_class": {
-  "rule: the evidence forces one outcome | list: the evidence forces one outcome": 151,
+  "rule: the evidence forces one outcome | list: the evidence forces one outcome": 159,
   "rule: one outcome, because the control has never done anything else | list: one outcome, because the control has never done anything else": 96,
-  "rule: several outcomes remain admissible | list: several outcomes remain admissible": 12,
-  "rule: no outcome is established | list: no outcome is established": 7,
-  "rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)": 4
+  "rule: no outcome is established | list: no outcome is established": 8,
+  "rule: several outcomes remain admissible | list: several outcomes remain admissible": 4,
+  "rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)": 3
  },
  "actions": 270,
  "what_the_evidence_establishes": {
-  "the evidence forces one outcome": 155,
+  "the evidence forces one outcome": 162,
   "one outcome, because the control has never done anything else": 96,
-  "several outcomes remain admissible": 12,
-  "no outcome is established": 7
+  "no outcome is established": 8,
+  "several outcomes remain admissible": 4
  },
  "admissible_set_size": {
-  "0": 7,
-  "1": 251,
-  "2": 12
+  "0": 8,
+  "1": 258,
+  "2": 4
  },
  "what_happened_was": {
   "inside the admissible set": 176,
-  "outside it": 87,
-  "nothing was admissible": 7
+  "outside it": 86,
+  "nothing was admissible": 8
  },
  "the_list_where_the_evidence": {
   "no outcome is established": {
-   "no determinate answer": 7
+   "no determinate answer": 7,
+   "the event the interface returned": 1
   },
   "one outcome, because the control has never done anything else": {
    "the event the interface returned": 92,
    "a different event": 4
   },
   "several outcomes remain admissible": {
-   "the event the interface returned": 12
+   "the event the interface returned": 4
   },
   "the evidence forces one outcome": {
-   "the event the interface returned": 151,
-   "a different event": 4
+   "the event the interface returned": 162
   }
  },
  "policy_forced_then_list": {
-  "one outcome was admissible and it happened": 151,
+  "one outcome was admissible and it happened": 159,
   "the only outcome ever seen on this control, and it happened": 92,
-  "deferred to the list: the event the interface returned": 12,
-  "refused: nothing established": 7,
-  "one outcome was admissible and a different one happened": 4,
-  "the only outcome ever seen on this control, and something else happened": 4
+  "refused: nothing established": 8,
+  "the only outcome ever seen on this control, and something else happened": 4,
+  "deferred to the list: the event the interface returned": 4,
+  "one outcome was admissible and a different one happened": 3
  },
- "distinct_events_forced": 12,
+ "distinct_events_forced": 13,
  "events_forced": {
   "\u0000SILENT": 79,
   "<> <> is already <> .": 35,
   "<> already has call <> on the board .": 25,
   "<> is already signed on .": 20,
   "<> <> is now <> .": 19,
-  "<> is signed off .": 19,
+  "<> is signed off .": 18,
   "<> is already signed off .": 14,
   "<> is signed on .": 12
  },
@@ -79,14 +79,15 @@
    "the evidence forces one outcome": 36
   },
   "button:Sign off": {
-   "the evidence forces one outcome": 33
+   "the evidence forces one outcome": 32,
+   "no outcome is established": 1
   },
   "button:Sign on": {
    "the evidence forces one outcome": 32
   },
   "button:Close": {
-   "the evidence forces one outcome": 19,
-   "several outcomes remain admissible": 10
+   "the evidence forces one outcome": 27,
+   "several outcomes remain admissible": 2
   },
   "button:Book pilot": {
    "no outcome is established": 7
@@ -116,8 +117,8 @@
    "the only outcome ever seen on this control, and it happened": 5
   },
   "button:Close": {
-   "one outcome was admissible and it happened": 19,
-   "several outcomes remained admissible; the one that happened was among them": 10
+   "one outcome was admissible and it happened": 27,
+   "several outcomes remained admissible; the one that happened was among them": 2
   },
   "button:Record departure": {
    "the only outcome ever seen on this control, and it happened": 4,
@@ -132,7 +133,8 @@
   },
   "button:Sign off": {
    "one outcome was admissible and it happened": 29,
-   "one outcome was admissible and a different one happened": 4
+   "one outcome was admissible and a different one happened": 3,
+   "no outcome is established for this state": 1
   },
   "button:Sign on": {
    "one outcome was admissible and it happened": 32
@@ -215,7 +217,7 @@
    "returned": "Aoife Marr cannot sign off while booked for call C-102.",
    "verdict": "one outcome was admissible and a different one happened",
    "level": "the event alone",
-   "why": "<> is signed off . <- attr:Duty#0(owner) == 'on' & ('unnamed', \"relation['forward', 'rel:3']:3<owner\")  [18 occasions]"
+   "why": "<> is signed off . <- attr:Duty#0(owner) == 'on' & attr:Ticket to#0(owner) == '150'  [7 occasions]"
   },
   {
    "step": 101,
@@ -231,7 +233,7 @@
    "returned": "Aoife Marr cannot sign off while booked for call C-102.",
    "verdict": "one outcome was admissible and a different one happened",
    "level": "the event alone",
-   "why": "<> is signed off . <- attr:Duty#0(owner) == 'on' & ('unnamed', \"relation['forward', 'rel:3']:3<owner\")  [18 occasions]"
+   "why": "<> is signed off . <- attr:Duty#0(owner) == 'on' & attr:Ticket to#0(owner) == '150'  [7 occasions]"
   },
   {
    "step": 226,
@@ -247,23 +249,7 @@
    "returned": "Aoife Marr cannot sign off while booked for call C-102.",
    "verdict": "one outcome was admissible and a different one happened",
    "level": "the event alone",
-   "why": "<> is signed off . <- attr:Duty#0(owner) == 'on' & ('unnamed', \"relation['forward', 'rel:3']:3<owner\")  [18 occasions]"
-  },
-  {
-   "step": 287,
-   "control": "button:Sign off",
-   "admissible": [
-    "<> is signed off ."
-   ],
-   "hypothesis": "rule",
-   "unordered": [
-    "<> is signed off ."
-   ],
-   "observed": "<> cannot sign off while booked for call <> .",
-   "returned": "Tom Dorley cannot sign off while booked for call C-102.",
-   "verdict": "one outcome was admissible and a different one happened",
-   "level": "the event alone",
-   "why": "<> is signed off . <- attr:Duty#0(owner) == 'on' & ('unnamed', \"relation['forward', 'rel:3']:3<owner\")  [18 occasions]"
+   "why": "<> is signed off . <- attr:Duty#0(owner) == 'on' & attr:Ticket to#0(owner) == '150'  [7 occasions]"
   }
  ]
 }

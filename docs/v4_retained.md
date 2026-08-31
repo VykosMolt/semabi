@@ -284,31 +284,56 @@ overview keyed by the name the application speaks, earned three different ways. 
 iteration reports are retained (`identity_retrospective_harbour_dev*.json`), and every
 verdict row in the sidecar carries the disagreement steps it was decided on.
 
-## The remaining pipeline
+## Part VIII -- an instrument's reach grows with the ontology, and catches a memorised name
 
-The session was interrupted here by external termination of its background jobs, four in
-a row; nothing partial was retained -- every sidecar byte matches the regenerated
-manifests.  In order: (1) re-derive the harbour and blend retrospective verdicts under
-the claim-content comparison and re-propagate (`--retrospective --propagate`; the
-overview's `None` refutation can only widen, the button verdict is genuinely open --
-twelve checked fresh-name claims against one silent `Bring` step); (2) rerun the SOURCE
-search and regenerate manifests, frontier, witness and battery on whatever the sidecars
-then say; (3) the created-argument xfail must resolve; (4) regenerate the four dev-side
-ties reports; (5) the vet mutation experiment `plan_vet2.json` -- frozen before any
-action: `Check in` writes `Status`, separating appointments keyed `Reason|Vet`
-(persists) from `Reason|Status` (replaced) -- pending confirmation of the tie by the
-fresh vet report.
+Regenerated on the converged sidecars, the metamorphic battery held everywhere it had
+held before -- member reversal, declared-column reversal and the renaming version spaces
+all at zero on every application -- and the renaming *ledger* flagged twelve harbour
+steps that had been silent the night before.  Not a regression: a gain of reach.  Keying
+the call buttons made call ids the keys of a tracked type, which put them inside the
+renaming instrument's substitution class for the first time, and it immediately found two
+operators whose fitted outputs had memorised concrete calls -- `op13`'s ``cannot sign off
+while booked for call C-102`` from a single occasion whose call was off the board, and
+`op6`'s ``C-101`` unanimous across ten occasions of a fixture that never varied it.
+Unanimity across a history's occasions is not evidence that a spelling belongs to a rule.
 
-## What this says
+The repair sits at the emission-argument lifting: a token that identifies a tracked
+entity -- any key the corpus ever rendered -- but names no object the transition can
+reach is left undetermined (``VARIES``, which every consumer already reads as an
+unchecked argument position) instead of surviving as a constant.  Vocabulary the
+interface genuinely speaks -- ``closed``, ``open``, ``alongside`` -- is untouched, and
+the outcome layer's referring queries continue to *determine* such arguments where the
+evidence supports a query; only the ledger's memorised spelling is gone.  Refit, the
+ledger reads the renamed holdout identically: twelve differences to none
+(`tests/test_v4_created_argument.py` pins the invariant).
 
-The twelve differences were never an exception to explain away; they were the visible end
-of a chain that started at a tie-break.  A spelling preference chose "no identity"; the
-missing identity pushed row content into positional statics; the referring layer read the
-positions; and only a metamorphic instrument could see the result, because on any single
-history a coordinate is indistinguishable from a name.  Each layer got its own repair, and
-none of them names harbour: the search keeps identity questions a spelling cannot close,
-the referring language refuses coordinates wherever a collection declares members, and the
-ties machinery now asks, before looking for an experiment, whether the history it already
-holds answers the question.  Ambiguity that survives all three -- `Vessel` vs `Cargo` vs
-`Length overall`, three keys no retained behaviour and no reachable intervention
-separates -- is kept as exactly what it is.
+Two corrections this episode forces on earlier reports.  The overnight summary claimed
+"renaming 0 in both modes everywhere"; vet's renaming *ledger* in fact carried 71
+differences then, and carries them at the pre-campaign checkpoint too -- a long-standing
+sensitivity of vet's EXISTENCE/CREATION/VALUE claims that predates every change here,
+misread overnight, now recorded as an open investigation rather than a clean invariant.
+And the transfer frontier moved once more on the regenerated state: with the board
+question decided by `named` at SOURCE and the buttons keyed, harbour's transfer history
+selects the board-keyed variant as a *behaviourally distinguished* unique survivor --
+"the history confirms 5 identity claims of this reading against 4 of the other, on peers
+it had to tell apart" -- while SOURCE keeps its own reading; the two histories weigh the
+board key differently for reasons each can show, and the selection, not the
+representation, is what travels.
+
+## What stands, and what is open
+
+Every metamorphic invariant is at zero on the regenerated state -- renaming (version
+space and ledger), member reversal, declared-column reversal -- on all four applications,
+with vet's pre-existing ledger-71 the one recorded exception, older than this campaign.
+Harbour's development history now answers every identity question its search can pose;
+blend keeps five NO_KNOWN_EXPERIMENT questions and vet and cellar their honest
+remainders.  ORDERED is unchanged: blend's committed gallons alone, by corroboration.
+The vet mutation plan is retired because its question dissolved; no live experiment was
+warranted this campaign -- the retained histories kept answering first.
+
+Open, in the order they matter: vet's ledger-71 under renaming; the attribute-deref
+strengthening of emission arguments (op13's argument *is* determinable -- the pilot's own
+``Booked for call`` renders it -- and ``VARIES`` says less than the evidence supports);
+whether the retrospective fixpoint iteration should live inside the instrument rather
+than as driver choreography; and the JOIN/aggregate residuals, still waiting for
+Bottle-quality evidence.

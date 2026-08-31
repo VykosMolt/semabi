@@ -4,13 +4,13 @@
  "regime": "FROZEN_PREFIX",
  "hypothesis": "rule",
  "cut": 0,
- "forced_wrong": 4,
+ "forced_wrong": 3,
  "kinds": {
-  "once: seen, but not enough to found a rule": 4
+  "once: seen, but not enough to found a rule": 3
  },
  "by_control": {
   "button:Sign off": {
-   "once: seen, but not enough to found a rule": 4
+   "once: seen, but not enough to found a rule": 3
   }
  },
  "cases": [
@@ -21,7 +21,7 @@
     "<> is signed off ."
    ],
    "actual": "<> cannot sign off while booked for call <> .",
-   "why": "<> is signed off . <- attr:Duty#0(owner) == 'on' & ('unnamed', \"relation['forward', 'rel:3']:3<owner\")  [18 occasions]",
+   "why": "<> is signed off . <- attr:Duty#0(owner) == 'on' & attr:Ticket to#0(owner) == '150'  [7 occasions]",
    "kind": "once: seen, but not enough to found a rule",
    "seen": 1,
    "raw_difference": [],
@@ -34,7 +34,7 @@
     "<> is signed off ."
    ],
    "actual": "<> cannot sign off while booked for call <> .",
-   "why": "<> is signed off . <- attr:Duty#0(owner) == 'on' & ('unnamed', \"relation['forward', 'rel:3']:3<owner\")  [18 occasions]",
+   "why": "<> is signed off . <- attr:Duty#0(owner) == 'on' & attr:Ticket to#0(owner) == '150'  [7 occasions]",
    "kind": "once: seen, but not enough to found a rule",
    "seen": 1,
    "raw_difference": [],
@@ -47,20 +47,7 @@
     "<> is signed off ."
    ],
    "actual": "<> cannot sign off while booked for call <> .",
-   "why": "<> is signed off . <- attr:Duty#0(owner) == 'on' & ('unnamed', \"relation['forward', 'rel:3']:3<owner\")  [18 occasions]",
-   "kind": "once: seen, but not enough to found a rule",
-   "seen": 1,
-   "raw_difference": [],
-   "erased_by_the_state": []
-  },
-  {
-   "control": "button:Sign off",
-   "step": 287,
-   "forced": [
-    "<> is signed off ."
-   ],
-   "actual": "<> cannot sign off while booked for call <> .",
-   "why": "<> is signed off . <- attr:Duty#0(owner) == 'on' & ('unnamed', \"relation['forward', 'rel:3']:3<owner\")  [18 occasions]",
+   "why": "<> is signed off . <- attr:Duty#0(owner) == 'on' & attr:Ticket to#0(owner) == '150'  [7 occasions]",
    "kind": "once: seen, but not enough to found a rule",
    "seen": 1,
    "raw_difference": [],

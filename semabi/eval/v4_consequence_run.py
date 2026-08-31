@@ -30,12 +30,18 @@ def vessel_keyed(readings: dict):
     candidate name is gone.  The content is verified either way, so a test names the
     semantics it exercises rather than trusting a label."""
     def carries_vessels(reading) -> bool:
+        # What the tests exercise: the overview rows are vessels and the call buttons are
+        # objects (the created-argument claim needs them).  The board key is deliberately
+        # unconstrained -- since the retrospective campaign SOURCE holds it unkeyed by its
+        # own named evidence while the transfer survivor keys it, and neither reading
+        # stops being the vessels-as-objects one.
         fams = getattr(reading, "families", None) or {}
         overview = next((f for t, f in fams.items() if "cell@Calls logged" in t), None)
-        board = next((f for t, f in fams.items() if "cell@Berth[_],cell@Call" in t), None)
-        return (overview is not None and board is not None
+        buttons = fams.get("button[_]")
+        return (overview is not None
                 and getattr(overview, "key_slot", None) == "cell@Vessel#0"
-                and getattr(board, "key_slot", None) == "cell@Vessel#0")
+                and buttons is not None
+                and getattr(buttons, "key_slot", None) == "button#0")
 
     for name in ("joint discrimination x2", "source_choice"):
         reading = readings.get(name)
