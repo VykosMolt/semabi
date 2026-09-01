@@ -1,0 +1,194 @@
+{
+ "name": "stale_lifo",
+ "outcome": "FIXPOINT",
+ "events": [
+  {
+   "e": "DERIVE",
+   "q": [
+    "button[_]",
+    null,
+    "button#0"
+   ],
+   "base": "37189a82e3f64a3d",
+   "out": "DECIDED",
+   "refuted": "right"
+  },
+  {
+   "e": "DERIVE",
+   "q": [
+    "row[_](cell@Actions[_](button[",
+    "cell@Berth#0",
+    "cell@Takes up to#0"
+   ],
+   "base": "37189a82e3f64a3d",
+   "out": "DECIDED",
+   "refuted": "right"
+  },
+  {
+   "e": "DERIVE",
+   "q": [
+    "row[_](cell@Actions[_](button[",
+    "cell@Pilot#0",
+    "cell@Ticket to#0"
+   ],
+   "base": "37189a82e3f64a3d",
+   "out": "DECIDED",
+   "refuted": "right"
+  },
+  {
+   "e": "DERIVE",
+   "q": [
+    "row[_](cell@Actions[_](button[",
+    null,
+    "cell@Cargo#0"
+   ],
+   "base": "37189a82e3f64a3d",
+   "out": "DECIDED",
+   "refuted": "left"
+  },
+  {
+   "e": "REDERIVE",
+   "q": [
+    "row[_](cell@Actions[_](button[",
+    null,
+    "cell@Cargo#0"
+   ],
+   "base": "56bc1beada604b90",
+   "out": "DECIDED",
+   "refuted": "left"
+  },
+  {
+   "e": "REDERIVE",
+   "q": [
+    "row[_](cell@Actions[_](button[",
+    "cell@Pilot#0",
+    "cell@Ticket to#0"
+   ],
+   "base": "56bc1beada604b90",
+   "out": "DECIDED",
+   "refuted": "right"
+  },
+  {
+   "e": "REDERIVE",
+   "q": [
+    "row[_](cell@Actions[_](button[",
+    "cell@Berth#0",
+    "cell@Takes up to#0"
+   ],
+   "base": "56bc1beada604b90",
+   "out": "DECIDED",
+   "refuted": "right"
+  },
+  {
+   "e": "REDERIVE",
+   "q": [
+    "button[_]",
+    null,
+    "button#0"
+   ],
+   "base": "56bc1beada604b90",
+   "out": "DECIDED",
+   "refuted": "left"
+  },
+  {
+   "e": "REDERIVE",
+   "q": [
+    "button[_]",
+    null,
+    "button#0"
+   ],
+   "base": "71467b9b61c4f33c",
+   "out": "DECIDED",
+   "refuted": "left"
+  },
+  {
+   "e": "REDERIVE",
+   "q": [
+    "row[_](cell@Actions[_](button[",
+    "cell@Berth#0",
+    "cell@Takes up to#0"
+   ],
+   "base": "71467b9b61c4f33c",
+   "out": "DECIDED",
+   "refuted": "right"
+  },
+  {
+   "e": "REDERIVE",
+   "q": [
+    "row[_](cell@Actions[_](button[",
+    "cell@Pilot#0",
+    "cell@Ticket to#0"
+   ],
+   "base": "71467b9b61c4f33c",
+   "out": "DECIDED",
+   "refuted": "right"
+  },
+  {
+   "e": "REDERIVE",
+   "q": [
+    "row[_](cell@Actions[_](button[",
+    null,
+    "cell@Cargo#0"
+   ],
+   "base": "71467b9b61c4f33c",
+   "out": "DECIDED",
+   "refuted": "left"
+  },
+  {
+   "e": "DERIVE",
+   "q": [
+    "row[_](cell@Actions[_](button[",
+    "cell@Vessel#0",
+    "cell@Cargo#0"
+   ],
+   "base": "71467b9b61c4f33c",
+   "out": "DECIDED",
+   "refuted": "right"
+  },
+  {
+   "e": "DERIVE",
+   "q": [
+    "row[_](cell@Actions[_](button[",
+    "cell@Vessel#0",
+    "cell@Length overall#0"
+   ],
+   "base": "71467b9b61c4f33c",
+   "out": "DECIDED",
+   "refuted": "right"
+  }
+ ],
+ "final": [
+  [
+   "button[_]",
+   "None"
+  ],
+  [
+   "row[_](cell@Actions[_](button[_]),cell@B",
+   "cell@Takes up to#0"
+  ],
+  [
+   "row[_](cell@Actions[_](button[_]),cell@B",
+   "cell@Ticket to#0"
+  ],
+  [
+   "row[_](cell@Actions[_](button[_]),cell@C",
+   "None"
+  ],
+  [
+   "row[_](cell@Actions[_](button[_]),cell@C",
+   "cell@Cargo#0"
+  ],
+  [
+   "row[_](cell@Actions[_](button[_]),cell@C",
+   "cell@Length overall#0"
+  ]
+ ],
+ "final_base": "71467b9b61c4f33c",
+ "final_chosen": {
+  "button[_]": "button#0",
+  "group[_](heading[_],table[_](rowgroup[_]": "heading#0",
+  "row[_](cell@Actions[_](button[_]),cell@B": "cell@Pilot#0",
+  "row[_](cell@Actions[_](button[_]),cell@C": "cell@Vessel#0",
+  "row[_](cell@Berth[_],cell@Call[_](button": null
+ }
+}

@@ -456,35 +456,22 @@ actually has.
 
 ## What stands, and what is open
 
-Every metamorphic invariant is at zero on the regenerated state -- renaming (version
-space and ledger), member reversal, declared-column reversal -- on all four applications,
-with vet's pre-existing ledger-71 the one recorded exception, older than this campaign.
-Harbour's development history now answers every identity question its search can pose;
-blend keeps five NO_KNOWN_EXPERIMENT questions and vet and cellar their honest
-remainders.  ORDERED is unchanged: blend's committed gallons alone, by corroboration.
-The vet mutation plan is retired because its question dissolved; no live experiment was
-warranted this campaign -- the retained histories kept answering first.
+The regenerated state, end to end: every metamorphic invariant reads zero on every
+application -- member reversal, declared-column reversal, and renaming in both modes,
+version space and durable ledger alike, with no recorded exception anywhere for the
+first time.  Harbour's development history answers every identity question its search
+can pose, its sidecar rebuilt by the fixpoint instrument from the raw experiment alone
+and every derived verdict carrying its premises; blend's three retrospective verdicts
+carry backfilled premises beside a premise-less executed experiment.  The three transfer
+frontiers are unique survivors -- harbour and vet behaviourally distinguished, blend
+selected within a labelled equivalence class -- and harbour's holdout is
+CONFIRMED_WHERE_APPLICABLE.  The order-attack evidence is retained
+(`docs/data/v4/order_attack/`): seven schedules and the live reproduction, eight
+fixpoints, one endpoint.
 
-The attribute-deref strengthening closed in the continuation: where an identifying
-emission argument is held, at the transition, by exactly one attribute or reference of
-exactly one object the transition already names, it is lifted as that dereference --
-op13's argument became ``('ref', ?o0, rel:3)``, the pilot's own booked call, and op6's
-the berth's holding call -- read from the pre-action page at prediction time, checked
-like any argument, and renaming-invariant because both sides rename together.  The
-twelve ledger claims the VARIES retreat had abstained on are checked again, as content
-rather than spelling.  No family, application or slot is named by the mechanism; it is
-the value-level twin of the referring layer's derived-prestate queries, discovered where
-the abstractor had already resolved the cell to a reference.
-
-The loop's live validation closed the question its first run opened: from the raw floor
--- the executed experiment alone -- the instrument's fixpoint mode, under lift-first
-premises and the dereference semantics, reproduced the seven-schedule attack's endpoint
-exactly: the same seven rows, the button verdict flipping once and never again because
-its lifted base never moved afterwards, Cargo and Length overall deciding on the full
-base, and every derived row carrying its premises.  The dereference changed no final
-verdict; what it changed was how carefully the loop had to reason to keep them.
-
-Open: whether the fixpoint loop should ever need more than premises-plus-recomputation
-(an oscillation on a real application would reopen the semantics question Part XI's
-attack closed empirically); and the JOIN/aggregate residuals, still waiting for
-Bottle-quality evidence.
+ORDERED stands where the intervention put it and nowhere else.  JOIN and aggregate
+remain unearned, still waiting for Bottle-quality evidence.  Open beyond them: an
+oscillation on a real application would reopen the semantics question the order attack
+closed empirically -- the loop's cycle guard preserves it as open if it ever comes --
+and the prequential summary remains too coarse to register identity-level changes, a
+resolution question rather than a defect.

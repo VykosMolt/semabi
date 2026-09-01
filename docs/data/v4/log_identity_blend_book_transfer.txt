@@ -84,30 +84,33 @@ blend_book_transfer  'source_choice'  FROZEN_PREFIX  cut=419  control=None  corr
     button:Disgorge _          fitted=   4 events= 1 rules= 1 forced-wrong=  0  {'one outcome, because the control has never done anything else': 9}
 
 wrote docs/data/v4/admissible_blend_book_transfer_frozen_prefix_list.json
-Traceback (most recent call last):
-  File "<frozen runpy>", line 198, in _run_module_as_main
-  File "<frozen runpy>", line 88, in _run_code
-  File "/home/moloch/semabi/semabi/eval/v4_inadequacy.py", line 242, in <module>
-    raise SystemExit(main())
-                     ^^^^^^
-  File "/home/moloch/semabi/semabi/eval/v4_inadequacy.py", line 216, in main
-    r = diagnose(Path(a.run), Path(a.chain), a.reading, split=a.split, hypothesis=a.hypothesis,
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/moloch/semabi/semabi/eval/v4_inadequacy.py", line 160, in diagnose
-    readings = {c.name: c.reading for c in _candidates(chain)}
-                                           ^^^^^^^^^^^^^^^^^^
-  File "/home/moloch/semabi/semabi/eval/v4_consequence_run.py", line 69, in _candidates
-    return manifests.load_chain_manifest(path).source_manifest.candidates
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/moloch/semabi/semabi/compiler/v4/manifests.py", line 1672, in load_chain_manifest
-    return _validate_chain_payload(
-           ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/moloch/semabi/semabi/compiler/v4/manifests.py", line 1563, in _validate_chain_payload
-    _verify_implementation_file(
-  File "/home/moloch/semabi/semabi/compiler/v4/manifests.py", line 795, in _verify_implementation_file
-    _verify_bytecode_caches(relative, path, data, stat_result)
-  File "/home/moloch/semabi/semabi/compiler/v4/manifests.py", line 778, in _verify_bytecode_caches
-    _verify_bytecode_cache_file(
-  File "/home/moloch/semabi/semabi/compiler/v4/manifests.py", line 705, in _verify_bytecode_cache_file
-    raise ManifestError(
-semabi.compiler.v4.manifests.ManifestError: live bytecode cache diverges from authenticated source: semabi/compiler/v4/pinned.py
+
+blend_book_transfer  'source_choice'  cut=419  forced under the rule class
+  forced and wrong on the frame: 5
+       4  once: seen, but not enough to found a rule
+       1  unseen: the control never returned this event while fitting
+    button:Bottle _: {'unseen: the control never returned this event while fitting': 1}
+    button:Close _: {'once: seen, but not enough to found a rule': 4}
+
+wrote docs/data/v4/inadequacy_blend_book_transfer.json
+
+blend_book_transfer  'source_choice'  FROZEN_PREFIX  cut=419  15 operators
+  249 held-out actions, 1.49 rules offered and 1.31 claims applicable per action
+  18 distinct claims across all its decided predictions
+    a named constant          62 claims,    62 decided, supported  82%   4 distinct
+                           ['attr:Gate#0 = Closed', 'attr:Gate#0 = Open', 'attr:State#0 = Bottled', 'attr:State#0 = In cask']
+    an interface response   1081 claims,   429 decided, supported  49%   10 distinct
+                           ['<> <> . = <> <> .', '<> holds <> ; cannot draw <> . = <> holds <> ; cannot draw <> .', '<> is <> . = <> is <> .', '<> is <> ; disgorge it before returning a draw . = <> is <> ; disgorge it before returning a draw .', '<> is already <> . = <> is already <> .', 'Disgorged <> . = Disgorged <> .']
+    an object brought into being   123 claims,    56 decided, supported  48%   1 distinct
+                           ['id = new']
+    changes, unspecified     620 claims,   218 decided, supported  94%   2 distinct
+                           ['attr:Committed gal#0 = changes', 'attr:Gallons left#0 = changes']
+    removal                   64 claims,    46 decided, supported 100%   1 distinct
+                           ['id = gone']
+    removal exposure: this reading 1.0, unconditional base rate 0.894, per-click control 0.991 (margin +0.009)
+                           steps by fraction gone {"all went (>90%)": 217, "none went (<10%)": 23, "some went": 9}
+      149 ( 60%)  every applicable rule was right
+       82 ( 33%)  no rule applied
+       18 (  7%)  every applicable rule was contradicted
+
+wrote docs/data/v4/claim_substance_blend_book_transfer_frozen_prefix.json
