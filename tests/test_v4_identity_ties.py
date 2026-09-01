@@ -196,18 +196,25 @@ def test_the_fixpoint_loop_re_derives_a_verdict_its_base_outgrew():
 
 def test_two_verdicts_that_defeat_each_others_premise_stay_open():
     """If two mutually dependent decisions cannot settle without an update order, the
-    order gets no semantic authority: each re-derivation here flips a key, the fourth
-    state revisits the second, and the loop stops with the disputed commitments open
-    rather than resolved by whichever schedule was running."""
+    order gets no semantic authority: each re-derivation here flips a key and the
+    verdict state recurs.  The WHOLE orbit is then in dispute -- both commitments are
+    lifted and preserved open, not only the one whose re-derivation happened to close
+    the loop -- and the loop runs on to quiescence, so an independent question posed
+    after the dance still reaches its verdict instead of being abandoned with the
+    dispute.  (The closer-only lift failed both halves by schedule: two residues from
+    nine worklist orders in the scripted battery, one after the orbit policy.)"""
     QA = {"family": "a", "left": None, "right": "X"}
     QB = {"family": "b", "left": None, "right": "Y"}
+    QC = {"family": "c", "left": None, "right": "Z"}    # independent, posed last
     def prep(rows):
         key = tuple(sorted((r["family"], str(r["key_slot"])) for r in rows))
         return {"base": "|".join("=".join(k) for k in key) or "empty",
-                "questions": [dict(QA), dict(QB)], "held": {}}
+                "questions": [dict(QA), dict(QB), dict(QC)], "held": {}}
     def derive(pr, family, left, right):
         b_none = "b=None" in pr["base"]
         a_none = "a=None" in pr["base"]
+        if family == "c":
+            return {"outcome": "DECIDED", "refuted": "right", "counts": {}}
         if family == "a":
             return {"outcome": "DECIDED", "refuted": "right" if b_none else "left",
                     "counts": {}}
@@ -215,6 +222,9 @@ def test_two_verdicts_that_defeat_each_others_premise_stay_open():
                 "counts": {}}
     out = ties.fixpoint(prep, derive, [])
     assert out["outcome"] == "OSCILLATION", out["events"]
+    assert {d["family"] for d in out["disputed"]} == {"a", "b"}, out["disputed"]
+    assert {(r["family"], str(r["refuted_key"])) for r in out["rows"]} == {("c", "Z")}, \
+        "the dispute must lift both participants and still reach the independent verdict"
 
 
 def test_an_undecided_question_is_re_posed_on_a_richer_base():

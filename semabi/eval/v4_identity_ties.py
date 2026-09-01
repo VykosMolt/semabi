@@ -341,15 +341,26 @@ def fixpoint(prep_fn, derive_fn, raw_rows: list, max_states: int = 64) -> dict:
     `retro_decision` dict.  Invalidation first: a derived row whose recorded base is no
     longer the current base is lifted and re-derived before any new question is answered.
     A question that came back UNDECIDED is not re-asked on the same base, and is re-posed
-    on any new one.  Termination is by exact state recurrence, never by a step budget: a
-    recurring verdict state means two derivations each defeat the other's premise, no
-    update order has semantic authority there, and the loop stops with the disputed rows
-    lifted -- preserved as open, reported as OSCILLATION.  The harbour order attack
-    (seven schedules, one shared evidence corpus) reached one fixpoint under every legal
-    order this loop admits (docs/v4_retained.md)."""
+    on any new one.  Cycles are found by exact state recurrence, never by a step budget.
+
+    A recurring state names an orbit -- every verdict state visited since that state
+    first stood -- and everything that moved inside the orbit is in dispute, not only
+    the question whose re-derivation happened to close the loop.  All moved rows are
+    lifted together, their questions are closed against re-posing, and the loop runs on
+    to quiescence, so verdicts independent of the dispute are still reached.  The
+    scripted schedule battery is why the dispute is orbit-wide: lifting only the closer
+    kept a standing verdict from inside the mutual defeat and let the worklist order
+    decide whether unrelated settled material survived -- two residues from nine
+    schedules, one after this policy.  The harbour corpora never cycle (seven schedules,
+    one fixpoint; docs/v4_retained.md) and are unaffected.  Termination: each cycle
+    permanently closes at least one question, derivations are memoised per
+    (question, base), and the state space is finite."""
     derived: list[dict] = []
     attempted: set = set()
     events: list[dict] = []
+    disputed_out: list[dict] = []
+    closed: set = set()          # (family, left, right) no longer poseable
+    questions_seen: dict = {}    # family -> its question, for reporting a dispute
     def rows_now(excluding=None):
         return list(raw_rows) + [
             {"family": r["family"], "key_slot": r["refuted_key"], "held": r.get("held"),
@@ -357,14 +368,49 @@ def fixpoint(prep_fn, derive_fn, raw_rows: list, max_states: int = 64) -> dict:
             for r in derived if r is not excluding]
     def state_key():
         return tuple(sorted((r["family"], str(r["key_slot"])) for r in rows_now()))
+    def snapshot():
+        return frozenset((r["family"], str(r["refuted_key"])) for r in derived)
     states_seen = {state_key()}
+    history: list[tuple] = [(state_key(), snapshot())]
+    def on_cycle(key, closer_family) -> None:
+        # the recurring orbit: everything since this state first stood
+        first = next((i for i, (k, _) in enumerate(history) if k == key), 0)
+        orbit = [snap for _, snap in history[first:]] + [snapshot()]
+        fams = {f for snap in orbit for f, _ in snap}
+        moved = {fam for fam in fams
+                 if len({frozenset(k for f, k in snap if f == fam) for snap in orbit}) > 1}
+        moved = moved or {closer_family}
+        for r in [r for r in derived if r["family"] in moved]:
+            derived.remove(r)
+        for fam in sorted(moved):
+            qn = questions_seen.get(fam)
+            if qn is not None:
+                closed.add((fam, str(qn["left"]), str(qn["right"])))
+            disputed_out.append({"family": fam, "question": qn})
+        events.append({"e": "CYCLE", "disputed": sorted(moved)})
+        states_seen.clear()
+        states_seen.add(state_key())
+        history.clear()
+        history.append((state_key(), snapshot()))
+    def note_change(closer_family) -> bool:
+        """Record a state change; a recurrence opens the orbit's dispute.  True iff capped."""
+        k = state_key()
+        if k in states_seen:
+            on_cycle(k, closer_family)
+            return False
+        states_seen.add(k)
+        history.append((k, snapshot()))
+        if len(states_seen) > max_states:
+            events.append({"e": "STATE_CAP"})
+            return True
+        return False
     while True:
         # A verdict is never a premise of its own derivation: each question's base is the
         # sidecar *without its own row* -- for staleness and for re-derivation alike.  The
         # first live oscillation was pure self-reference (harbour's button verdict,
         # include-self, defeated whichever state it created); with the row lifted, the
         # question has one canonical base and the cycle dissolves, while genuinely mutual
-        # cycles between different questions are still caught below.
+        # cycles between different questions are still caught by the orbit policy.
         stale_r = None
         for r in derived:
             own = prep_fn(rows_now(excluding=r))
@@ -374,38 +420,24 @@ def fixpoint(prep_fn, derive_fn, raw_rows: list, max_states: int = 64) -> dict:
         if stale_r is not None:
             r, own = stale_r
             qn = r["premises"]["question"]
+            questions_seen[r["family"]] = qn
             d = derive_fn(own, r["family"], qn["left"], qn["right"])
             events.append({"e": "REDERIVE", "family": r["family"], "q": qn,
                            "base": own["base"], "out": d["outcome"], "refuted": d.get("refuted")})
             before_key = str(r["refuted_key"])
             derived.remove(r)
-            disputed = [r]
             if d["outcome"] == "DECIDED":
                 side = d["refuted"]
                 key = qn[side]
-                row = {"family": r["family"], "refuted_key": key,
-                       "held": own["held"].get(f"{r['family']}||{key}"),
-                       "counts": d["counts"],
-                       "premises": {**r["premises"], "base": own["base"]}}
-                derived.append(row)
-                disputed = [row]
+                derived.append({"family": r["family"], "refuted_key": key,
+                                "held": own["held"].get(f"{r['family']}||{key}"),
+                                "counts": d["counts"],
+                                "premises": {**r["premises"], "base": own["base"]}})
                 if str(key) == before_key:
                     continue
             else:
                 attempted.add((r["family"], str(qn["left"]), str(qn["right"]), own["base"]))
-            k = state_key()
-            if k in states_seen:
-                # only the question whose re-derivation closed the cycle is disputed;
-                # the settled rows keep their standing
-                for x in disputed:
-                    if x in derived:
-                        derived.remove(x)
-                events.append({"e": "CYCLE", "disputed": [r["family"]]})
-                return {"outcome": "OSCILLATION", "rows": derived, "events": events,
-                        "disputed": [{"family": r["family"], "question": qn}]}
-            states_seen.add(k)
-            if len(states_seen) > max_states:
-                events.append({"e": "STATE_CAP"})
+            if note_change(r["family"]):
                 return {"outcome": "STATE_CAP", "rows": derived, "events": events}
             continue
         pr = prep_fn(rows_now())
@@ -414,12 +446,16 @@ def fixpoint(prep_fn, derive_fn, raw_rows: list, max_states: int = 64) -> dict:
         refuted_keys = {(r["family"], str(r["refuted_key"])) for r in derived}
         openq = [qn for qn in pr["questions"]
                  if (qn["family"], str(qn["left"]), str(qn["right"])) not in active_families
+                 and (qn["family"], str(qn["left"]), str(qn["right"])) not in closed
                  and (qn["family"], str(qn["left"]), str(qn["right"]), pr["base"]) not in attempted
                  and (qn["family"], str(qn["left"])) not in refuted_keys
                  and (qn["family"], str(qn["right"])) not in refuted_keys]
         if not openq:
-            return {"outcome": "FIXPOINT", "rows": derived, "base": pr["base"], "events": events}
+            outcome = "OSCILLATION" if disputed_out else "FIXPOINT"
+            return {"outcome": outcome, "rows": derived, "base": pr["base"],
+                    "events": events, "disputed": disputed_out or None}
         qn = openq[0]
+        questions_seen[qn["family"]] = {"left": qn["left"], "right": qn["right"]}
         d = derive_fn(pr, qn["family"], qn["left"], qn["right"])
         events.append({"e": "DERIVE", "family": qn["family"], "q": qn,
                        "base": pr["base"], "out": d["outcome"], "refuted": d.get("refuted")})
@@ -431,12 +467,8 @@ def fixpoint(prep_fn, derive_fn, raw_rows: list, max_states: int = 64) -> dict:
                             "counts": d["counts"],
                             "premises": {"base": pr["base"],
                                           "question": {"left": qn["left"], "right": qn["right"]}}})
-            k = state_key()
-            if k in states_seen:
-                derived.pop()
-                events.append({"e": "CYCLE"})
-                return {"outcome": "OSCILLATION", "rows": derived, "events": events}
-            states_seen.add(k)
+            if note_change(qn["family"]):
+                return {"outcome": "STATE_CAP", "rows": derived, "events": events}
         else:
             attempted.add((qn["family"], str(qn["left"]), str(qn["right"]), pr["base"]))
 
