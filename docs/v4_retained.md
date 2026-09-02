@@ -454,6 +454,105 @@ backtracking -- a premise fingerprint, lift-first recomputation, and a cycle gua
 turned out to be the whole of the reason maintenance SemABI needs on the evidence it
 actually has.
 
+## Part XII -- a prediction is judged under what its own moment justified
+
+The behavioural ledgers rebuilt the model before every scored action from exactly the
+evidence that existed when the action was chosen, and then scored it under the
+*settled* identity reading -- the verdict state the whole history eventually reached,
+projected backward over every step.  Part VII made that inconsistent: a derived verdict
+is premise-bound, invalidatable, revocable, and a prediction at step t may only be
+judged under what the evidence available by t justified.  The temporal convention was
+read off the code rather than assumed.  `CAUSAL_PREQUENTIAL` at t is
+`EvidenceLog.before_action(t)`: every completed transition, the page in front of the
+agent (unioned explicitly), and nothing about how the action turns out -- an event's
+own observation becomes evidence only *after* the prediction associated with it.  On
+the verdict side the convention was the opposite, and codified: the chronology attack
+copies the identity sidecar whole into the amputated past on the principle that a
+refutation is "not a step of the future".  Right for the model-leak attack, where an
+input-poorer fit is not an earlier one; wrong as a claim about what was known.  The
+dates settle it: harbour's trace was committed on 24 August, the executed experiment
+and the acquired probes on the 30th -- future evidence at every step of the trace.
+
+The closure of an evidence prefix, closure(E_t), is therefore defined as the
+reason-maintained verdict state justified by that prefix under the same current rules:
+literally the production fixpoint -- invalidation first, lift-first, memoised per
+(question, base), exact recurrence -- run on an on-disk truncation of the trace at t,
+with an empty raw floor, no acquired probes, and its comparator cut at half of what it
+can see.  Fourteen boundaries across harbour's suffix, each closure computed from
+scratch and each behavioural claim scored twice under one model regime -- once under
+the settled reading, once under the prefix's own: fourteen fixpoints, no oscillation,
+and fourteen agreements.  The prequential and retrospective scorings coincide on every
+probed claim, which is the expected shape when the settled reading was mostly right
+early; what differs is the verdict *state* behind them, and that is where the campaign
+found its material.
+
+A prefix closure is prefix-relative all the way down.  At t=188 it names families under
+its own headers, opens seven identity questions where the settled state has none, holds
+the berth/call question the later experiment decides as UNDECIDED rather than
+manufacturing it, and refutes a key -- `cell@Current call#0` -- that the settled
+ontology does not even pose.  That last row falsified a pre-registered prediction that
+refutations only accumulate: they are ontology-relative, and a verdict can become
+*moot* -- its question retired from the version space -- which is a third staleness
+beside `held` (the denotation moved) and `premises` (the derivation base moved).
+
+### The orbit policy
+
+Before any production semantics was given to the prefix loop, its cycle handling was
+attacked with scripted worlds.  Two questions defeating each other's premise, and a
+third question independent of both, run through the production loop under nine
+worklist orders: two residues.  Lifting only the question whose re-derivation closed the
+cycle left a standing verdict from *inside* the mutual defeat, and whether the
+independent verdict survived at all depended on whether the cycle closed before it was
+derived.  The sidecar is written from that residue, so order held exactly the authority
+the loop exists to revoke.  A recurring state now names an orbit; everything whose
+verdict moved inside the orbit is lifted together and closed against re-posing, and the
+loop runs on to quiescence so independent questions still reach their verdicts.  One
+residue under every schedule.  Never exercised on real data -- harbour settles
+everywhere -- but thin prefixes are where a live cycle is most likely, and their
+oscillations must mean evidence.
+
+### The twin ledger: two doctrines delete an evidenced hypothesis
+
+For the second campaign an application was built to admit two coherent ontologies: a
+docket desk whose inbox lists every docket and whose register lists the registered ones
+-- the same entity rendered twice, so turning a registered docket's stamp co-updates
+both rows.  Read as one family the co-update is a same-object write; read as two, the
+register row is its own object.  Two corpora were collected: unlocked, with forty-four
+co-updates in 375 steps, and a locked variant in which a registered docket's stamp is
+refused, so the two readings cohere on everything it can ever show.  The instrument and
+both corpora are retained.
+
+The search never posed the question.  Under the hypothesis builder's own keys all three
+row templates share one entity type, key overlap 1.00; the search then withdraws the
+register family's key as unearned on an exact tie -- Code and Title are both unique per
+docket -- and withdrawal has an undeclared consequence: only keyed units enter the
+union-find, so the register leaves the entity system altogether.  A tid-less family
+explains nothing it does, co-update or not, and the objective sees it: 117 unexplained
+atoms of 164 on the unlocked corpus, 62 of 82 on the locked one, no collapse between
+them.  Two individually sound doctrines -- a key must be earned; unions come from key
+overlap -- compose into deleting the hypothesis the evidence demands, and they delete
+its two-type alternative with it, because withheld unions are only ever generated from
+unions that exist.  The one mitigation is real: the withdrawal was filed as open
+questions, None against Code and None against Title, so nothing false is asserted.
+
+Nothing true can be concluded either.  The fixpoint on the unlocked corpus derived all
+four questions UNDECIDED and changed nothing, and the reason is a blind spot in the
+comparator itself: it judges two readings only through what the click *returned* --
+the emission, its arguments, its fresh names -- and the co-updates are state-side
+consequences, rows changing in another table, which the objective counts and the
+comparator never scores.  Both readings predict the same message.  This is the lesson
+of the survivor inspection returning one layer deeper: a comparison that discards
+delta-level evidence cannot arbitrate an identity whose consequences are delta-level.
+The honest description of the system on this corpus is that it maintains a
+self-consistent wrong ontology while holding the distinguishing evidence in its hands,
+and says so by keeping the question open.  A comparator that also counts a reading's
+checked state claims -- one unit per supported claim with a checked value, one wrong
+per refuted, silence earning nothing -- is implemented beside the campaign and has
+survived its scripted attack; its adoption is gated on the live regressions of Part
+XIII, and the premises machinery of Part VII carries the migration, since the
+comparator's name is a premise and every v2-derived verdict is stale under v3 by
+construction.
+
 ## What stands, and what is open
 
 The regenerated state, end to end: every metamorphic invariant reads zero on every
