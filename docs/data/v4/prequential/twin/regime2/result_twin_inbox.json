@@ -1,0 +1,3027 @@
+{
+ "plan": {
+  "run": "runs/v4/twin_retitle_dev",
+  "base": "http://127.0.0.1:8992",
+  "seed": 0,
+  "actions": [
+   {
+    "kind": "click",
+    "target": {
+     "role": "button",
+     "name": "Retitle",
+     "nth": 0
+    }
+   },
+   {
+    "kind": "click",
+    "target": {
+     "role": "button",
+     "name": "Retitle",
+     "nth": 2
+    }
+   }
+  ],
+  "test": "mutation",
+  "note": "seed 0: dockets 1 and 3 (Retitle buttons 0 and 2, in id order) are on the register; retitling a registered docket changes the Title cell in BOTH tables",
+  "name": "twin inbox: Code vs Title (planner mutation test)",
+  "tie": {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+   "left": "cell@Code#0",
+   "right": "cell@Title#0"
+  },
+  "readings": {
+   "Code": {
+    "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])": "cell@Code#0",
+    "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])": null
+   },
+   "Title": {
+    "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])": "cell@Title#0",
+    "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])": null
+   }
+  },
+  "predictions": {
+   "Code": "the retitled docket persists as the same object and carries the new title",
+   "Title": "the retitled docket is replaced: one object gone, a new one with the new title"
+  }
+ },
+ "before": {
+  "Code": {
+   "contradictions": 0,
+   "churn": 0,
+   "visibility": 2,
+   "conflicts": 0,
+   "named": 0,
+   "positional": 0,
+   "unexplained": 95,
+   "spurious": 0,
+   "explained": 146,
+   "delta_atoms": 146,
+   "complexity": 10,
+   "steps": 375,
+   "churn_steps": [],
+   "contradiction_steps": [],
+   "visibility_steps": [
+    205,
+    208
+   ]
+  },
+  "Title": {
+   "contradictions": 0,
+   "churn": 1,
+   "visibility": 3,
+   "conflicts": 9,
+   "named": 0,
+   "positional": 32,
+   "unexplained": 91,
+   "spurious": 0,
+   "explained": 148,
+   "delta_atoms": 171,
+   "complexity": 10,
+   "steps": 375,
+   "churn_steps": [
+    72
+   ],
+   "contradiction_steps": [],
+   "visibility_steps": [
+    205,
+    208,
+    334
+   ]
+  }
+ },
+ "after": {
+  "Code": {
+   "contradictions": 0,
+   "churn": 0,
+   "visibility": 2,
+   "conflicts": 0,
+   "named": 0,
+   "positional": 0,
+   "unexplained": 95,
+   "spurious": 0,
+   "explained": 148,
+   "delta_atoms": 152,
+   "complexity": 10,
+   "steps": 378,
+   "churn_steps": [],
+   "contradiction_steps": [],
+   "visibility_steps": [
+    205,
+    208
+   ]
+  },
+  "Title": {
+   "contradictions": 0,
+   "churn": 2,
+   "visibility": 3,
+   "conflicts": 9,
+   "named": 0,
+   "positional": 32,
+   "unexplained": 91,
+   "spurious": 0,
+   "explained": 149,
+   "delta_atoms": 172,
+   "complexity": 10,
+   "steps": 378,
+   "churn_steps": [
+    375,
+    72
+   ],
+   "contradiction_steps": [],
+   "visibility_steps": [
+    205,
+    208,
+    334
+   ]
+  }
+ },
+ "delta": {
+  "Code": {
+   "explained": 2,
+   "conflicts": 0,
+   "churn": 0,
+   "contradictions": 0,
+   "visibility": 0,
+   "spurious": 0,
+   "named": 0,
+   "positional": 0
+  },
+  "Title": {
+   "explained": 1,
+   "conflicts": 0,
+   "churn": 1,
+   "contradictions": 0,
+   "visibility": 0,
+   "spurious": 0,
+   "named": 0,
+   "positional": 0
+  }
+ },
+ "steps": [
+  {
+   "step": 375,
+   "action": {
+    "kind": "click",
+    "target": {
+     "role": "button",
+     "name": "Retitle",
+     "nth": 0
+    }
+   },
+   "ok": true,
+   "error": null,
+   "status": null
+  },
+  {
+   "step": 376,
+   "action": {
+    "kind": "click",
+    "target": {
+     "role": "button",
+     "name": "Retitle",
+     "nth": 2
+    }
+   },
+   "ok": true,
+   "error": null,
+   "status": null
+  },
+  {
+   "step": 377,
+   "action": {
+    "kind": "reload"
+   },
+   "ok": true,
+   "survived_reload": false
+  }
+ ],
+ "extension": {
+  "steps": [
+   {
+    "step": 375,
+    "episode": 1,
+    "action": {
+     "kind": "click",
+     "target": 28,
+     "target_desc": {
+      "role": "button",
+      "name": "Retitle",
+      "placeholder": null
+     }
+    },
+    "ok": true,
+    "error": null,
+    "before": "65eb45886763b86e",
+    "after": "c6d15928273537bb",
+    "typed_tokens": []
+   },
+   {
+    "step": 376,
+    "episode": 1,
+    "action": {
+     "kind": "click",
+     "target": 48,
+     "target_desc": {
+      "role": "button",
+      "name": "Retitle",
+      "placeholder": null
+     }
+    },
+    "ok": true,
+    "error": null,
+    "before": "c6d15928273537bb",
+    "after": "5af54b5344f9a5d4",
+    "typed_tokens": []
+   },
+   {
+    "step": 377,
+    "episode": 1,
+    "action": {
+     "kind": "reload"
+    },
+    "ok": true,
+    "error": null,
+    "before": "5af54b5344f9a5d4",
+    "after": "d478477bd0e42942",
+    "typed_tokens": []
+   }
+  ],
+  "observations": [
+   {
+    "sig": "c6d15928273537bb",
+    "obs": {
+     "url": "http://127.0.0.1:8992/",
+     "nodes": [
+      {
+       "i": 0,
+       "parent": -1,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        19,
+        21,
+        1362,
+        582
+       ]
+      },
+      {
+       "i": 1,
+       "parent": 0,
+       "role": "heading",
+       "name": "Twin Ledger",
+       "bbox": [
+        19,
+        21,
+        1362,
+        43
+       ]
+      },
+      {
+       "i": 2,
+       "parent": 0,
+       "role": "text",
+       "name": "Docket D-101 retitled from Harbour dues to Crane maintenance.",
+       "bbox": [
+        19,
+        86,
+        1362,
+        22
+       ]
+      },
+      {
+       "i": 3,
+       "parent": 0,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        19,
+        128,
+        1362,
+        476
+       ]
+      },
+      {
+       "i": 4,
+       "parent": 3,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        19,
+        128,
+        1362,
+        76
+       ]
+      },
+      {
+       "i": 5,
+       "parent": 4,
+       "role": "heading",
+       "name": "Desk",
+       "bbox": [
+        19,
+        128,
+        1362,
+        33
+       ]
+      },
+      {
+       "i": 6,
+       "parent": 4,
+       "role": "text",
+       "name": "",
+       "bbox": [
+        19,
+        181,
+        1362,
+        23
+       ]
+      },
+      {
+       "i": 7,
+       "parent": 6,
+       "role": "button",
+       "name": "File docket",
+       "bbox": [
+        19,
+        183,
+        80,
+        21
+       ]
+      },
+      {
+       "i": 8,
+       "parent": 3,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        19,
+        224,
+        1362,
+        213
+       ]
+      },
+      {
+       "i": 9,
+       "parent": 8,
+       "role": "heading",
+       "name": "Inbox",
+       "bbox": [
+        19,
+        224,
+        1362,
+        33
+       ]
+      },
+      {
+       "i": 10,
+       "parent": 8,
+       "role": "table",
+       "name": "",
+       "bbox": [
+        19,
+        277,
+        742,
+        160
+       ]
+      },
+      {
+       "i": 11,
+       "parent": 10,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        20,
+        277,
+        741,
+        31
+       ]
+      },
+      {
+       "i": 12,
+       "parent": 11,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        20,
+        277,
+        741,
+        31
+       ]
+      },
+      {
+       "i": 13,
+       "parent": 12,
+       "role": "cell",
+       "name": "Code",
+       "bbox": [
+        20,
+        277,
+        64,
+        31
+       ]
+      },
+      {
+       "i": 14,
+       "parent": 12,
+       "role": "cell",
+       "name": "Title",
+       "bbox": [
+        84,
+        277,
+        167,
+        31
+       ]
+      },
+      {
+       "i": 15,
+       "parent": 12,
+       "role": "cell",
+       "name": "Stamp",
+       "bbox": [
+        251,
+        277,
+        71,
+        31
+       ]
+      },
+      {
+       "i": 16,
+       "parent": 12,
+       "role": "cell",
+       "name": "Notes",
+       "bbox": [
+        322,
+        277,
+        68,
+        31
+       ]
+      },
+      {
+       "i": 17,
+       "parent": 12,
+       "role": "cell",
+       "name": "Actions",
+       "bbox": [
+        390,
+        277,
+        371,
+        31
+       ]
+      },
+      {
+       "i": 18,
+       "parent": 10,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        20,
+        308,
+        741,
+        128
+       ]
+      },
+      {
+       "i": 19,
+       "parent": 18,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        20,
+        308,
+        741,
+        32
+       ]
+      },
+      {
+       "i": 20,
+       "parent": 19,
+       "role": "cell",
+       "name": "D-101",
+       "bbox": [
+        20,
+        308,
+        64,
+        32
+       ]
+      },
+      {
+       "i": 21,
+       "parent": 19,
+       "role": "cell",
+       "name": "Crane maintenance",
+       "bbox": [
+        84,
+        308,
+        167,
+        32
+       ]
+      },
+      {
+       "i": 22,
+       "parent": 19,
+       "role": "cell",
+       "name": "dry",
+       "bbox": [
+        251,
+        308,
+        71,
+        32
+       ]
+      },
+      {
+       "i": 23,
+       "parent": 19,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        322,
+        308,
+        68,
+        32
+       ]
+      },
+      {
+       "i": 24,
+       "parent": 19,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        390,
+        308,
+        371,
+        32
+       ]
+      },
+      {
+       "i": 25,
+       "parent": 24,
+       "role": "button",
+       "name": "Strike from register",
+       "bbox": [
+        400,
+        315,
+        129,
+        21
+       ]
+      },
+      {
+       "i": 26,
+       "parent": 24,
+       "role": "button",
+       "name": "Turn stamp",
+       "bbox": [
+        533,
+        315,
+        83,
+        21
+       ]
+      },
+      {
+       "i": 27,
+       "parent": 24,
+       "role": "button",
+       "name": "Add note",
+       "bbox": [
+        620,
+        315,
+        69,
+        21
+       ]
+      },
+      {
+       "i": 28,
+       "parent": 24,
+       "role": "button",
+       "name": "Retitle",
+       "bbox": [
+        693,
+        315,
+        54,
+        21
+       ]
+      },
+      {
+       "i": 29,
+       "parent": 18,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        20,
+        340,
+        741,
+        32
+       ]
+      },
+      {
+       "i": 30,
+       "parent": 29,
+       "role": "cell",
+       "name": "D-102",
+       "bbox": [
+        20,
+        340,
+        64,
+        32
+       ]
+      },
+      {
+       "i": 31,
+       "parent": 29,
+       "role": "cell",
+       "name": "Salvage claim",
+       "bbox": [
+        84,
+        340,
+        167,
+        32
+       ]
+      },
+      {
+       "i": 32,
+       "parent": 29,
+       "role": "cell",
+       "name": "wet",
+       "bbox": [
+        251,
+        340,
+        71,
+        32
+       ]
+      },
+      {
+       "i": 33,
+       "parent": 29,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        322,
+        340,
+        68,
+        32
+       ]
+      },
+      {
+       "i": 34,
+       "parent": 29,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        390,
+        340,
+        371,
+        32
+       ]
+      },
+      {
+       "i": 35,
+       "parent": 34,
+       "role": "button",
+       "name": "Enter on register",
+       "bbox": [
+        400,
+        347,
+        115,
+        21
+       ]
+      },
+      {
+       "i": 36,
+       "parent": 34,
+       "role": "button",
+       "name": "Turn stamp",
+       "bbox": [
+        519,
+        347,
+        83,
+        21
+       ]
+      },
+      {
+       "i": 37,
+       "parent": 34,
+       "role": "button",
+       "name": "Add note",
+       "bbox": [
+        606,
+        347,
+        69,
+        21
+       ]
+      },
+      {
+       "i": 38,
+       "parent": 34,
+       "role": "button",
+       "name": "Retitle",
+       "bbox": [
+        679,
+        347,
+        54,
+        21
+       ]
+      },
+      {
+       "i": 39,
+       "parent": 18,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        20,
+        372,
+        741,
+        32
+       ]
+      },
+      {
+       "i": 40,
+       "parent": 39,
+       "role": "cell",
+       "name": "D-103",
+       "bbox": [
+        20,
+        372,
+        64,
+        32
+       ]
+      },
+      {
+       "i": 41,
+       "parent": 39,
+       "role": "cell",
+       "name": "Victualling account",
+       "bbox": [
+        84,
+        372,
+        167,
+        32
+       ]
+      },
+      {
+       "i": 42,
+       "parent": 39,
+       "role": "cell",
+       "name": "wet",
+       "bbox": [
+        251,
+        372,
+        71,
+        32
+       ]
+      },
+      {
+       "i": 43,
+       "parent": 39,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        322,
+        372,
+        68,
+        32
+       ]
+      },
+      {
+       "i": 44,
+       "parent": 39,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        390,
+        372,
+        371,
+        32
+       ]
+      },
+      {
+       "i": 45,
+       "parent": 44,
+       "role": "button",
+       "name": "Strike from register",
+       "bbox": [
+        400,
+        379,
+        129,
+        21
+       ]
+      },
+      {
+       "i": 46,
+       "parent": 44,
+       "role": "button",
+       "name": "Turn stamp",
+       "bbox": [
+        533,
+        379,
+        83,
+        21
+       ]
+      },
+      {
+       "i": 47,
+       "parent": 44,
+       "role": "button",
+       "name": "Add note",
+       "bbox": [
+        620,
+        379,
+        69,
+        21
+       ]
+      },
+      {
+       "i": 48,
+       "parent": 44,
+       "role": "button",
+       "name": "Retitle",
+       "bbox": [
+        693,
+        379,
+        54,
+        21
+       ]
+      },
+      {
+       "i": 49,
+       "parent": 18,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        20,
+        404,
+        741,
+        32
+       ]
+      },
+      {
+       "i": 50,
+       "parent": 49,
+       "role": "cell",
+       "name": "D-104",
+       "bbox": [
+        20,
+        404,
+        64,
+        32
+       ]
+      },
+      {
+       "i": 51,
+       "parent": 49,
+       "role": "cell",
+       "name": "Chandlery invoice",
+       "bbox": [
+        84,
+        404,
+        167,
+        32
+       ]
+      },
+      {
+       "i": 52,
+       "parent": 49,
+       "role": "cell",
+       "name": "dry",
+       "bbox": [
+        251,
+        404,
+        71,
+        32
+       ]
+      },
+      {
+       "i": 53,
+       "parent": 49,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        322,
+        404,
+        68,
+        32
+       ]
+      },
+      {
+       "i": 54,
+       "parent": 49,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        390,
+        404,
+        371,
+        32
+       ]
+      },
+      {
+       "i": 55,
+       "parent": 54,
+       "role": "button",
+       "name": "Enter on register",
+       "bbox": [
+        400,
+        411,
+        115,
+        21
+       ]
+      },
+      {
+       "i": 56,
+       "parent": 54,
+       "role": "button",
+       "name": "Turn stamp",
+       "bbox": [
+        519,
+        411,
+        83,
+        21
+       ]
+      },
+      {
+       "i": 57,
+       "parent": 54,
+       "role": "button",
+       "name": "Add note",
+       "bbox": [
+        606,
+        411,
+        69,
+        21
+       ]
+      },
+      {
+       "i": 58,
+       "parent": 54,
+       "role": "button",
+       "name": "Retitle",
+       "bbox": [
+        679,
+        411,
+        54,
+        21
+       ]
+      },
+      {
+       "i": 59,
+       "parent": 3,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        19,
+        456,
+        1362,
+        147
+       ]
+      },
+      {
+       "i": 60,
+       "parent": 59,
+       "role": "heading",
+       "name": "Register",
+       "bbox": [
+        19,
+        456,
+        1362,
+        33
+       ]
+      },
+      {
+       "i": 61,
+       "parent": 59,
+       "role": "table",
+       "name": "",
+       "bbox": [
+        19,
+        509,
+        304,
+        94
+       ]
+      },
+      {
+       "i": 62,
+       "parent": 61,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        20,
+        510,
+        303,
+        31
+       ]
+      },
+      {
+       "i": 63,
+       "parent": 62,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        20,
+        510,
+        303,
+        31
+       ]
+      },
+      {
+       "i": 64,
+       "parent": 63,
+       "role": "cell",
+       "name": "Code",
+       "bbox": [
+        20,
+        510,
+        64,
+        31
+       ]
+      },
+      {
+       "i": 65,
+       "parent": 63,
+       "role": "cell",
+       "name": "Title",
+       "bbox": [
+        84,
+        510,
+        167,
+        31
+       ]
+      },
+      {
+       "i": 66,
+       "parent": 63,
+       "role": "cell",
+       "name": "Stamp",
+       "bbox": [
+        251,
+        510,
+        71,
+        31
+       ]
+      },
+      {
+       "i": 67,
+       "parent": 61,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        20,
+        541,
+        303,
+        62
+       ]
+      },
+      {
+       "i": 68,
+       "parent": 67,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        20,
+        541,
+        303,
+        31
+       ]
+      },
+      {
+       "i": 69,
+       "parent": 68,
+       "role": "cell",
+       "name": "D-101",
+       "bbox": [
+        20,
+        541,
+        64,
+        31
+       ]
+      },
+      {
+       "i": 70,
+       "parent": 68,
+       "role": "cell",
+       "name": "Crane maintenance",
+       "bbox": [
+        84,
+        541,
+        167,
+        31
+       ]
+      },
+      {
+       "i": 71,
+       "parent": 68,
+       "role": "cell",
+       "name": "dry",
+       "bbox": [
+        251,
+        541,
+        71,
+        31
+       ]
+      },
+      {
+       "i": 72,
+       "parent": 67,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        20,
+        572,
+        303,
+        31
+       ]
+      },
+      {
+       "i": 73,
+       "parent": 72,
+       "role": "cell",
+       "name": "D-103",
+       "bbox": [
+        20,
+        572,
+        64,
+        31
+       ]
+      },
+      {
+       "i": 74,
+       "parent": 72,
+       "role": "cell",
+       "name": "Victualling account",
+       "bbox": [
+        84,
+        572,
+        167,
+        31
+       ]
+      },
+      {
+       "i": 75,
+       "parent": 72,
+       "role": "cell",
+       "name": "wet",
+       "bbox": [
+        251,
+        572,
+        71,
+        31
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "sig": "5af54b5344f9a5d4",
+    "obs": {
+     "url": "http://127.0.0.1:8992/",
+     "nodes": [
+      {
+       "i": 0,
+       "parent": -1,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        19,
+        21,
+        1362,
+        582
+       ]
+      },
+      {
+       "i": 1,
+       "parent": 0,
+       "role": "heading",
+       "name": "Twin Ledger",
+       "bbox": [
+        19,
+        21,
+        1362,
+        43
+       ]
+      },
+      {
+       "i": 2,
+       "parent": 0,
+       "role": "text",
+       "name": "Docket D-103 retitled from Victualling account to Harbour dues.",
+       "bbox": [
+        19,
+        86,
+        1362,
+        22
+       ]
+      },
+      {
+       "i": 3,
+       "parent": 0,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        19,
+        128,
+        1362,
+        476
+       ]
+      },
+      {
+       "i": 4,
+       "parent": 3,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        19,
+        128,
+        1362,
+        76
+       ]
+      },
+      {
+       "i": 5,
+       "parent": 4,
+       "role": "heading",
+       "name": "Desk",
+       "bbox": [
+        19,
+        128,
+        1362,
+        33
+       ]
+      },
+      {
+       "i": 6,
+       "parent": 4,
+       "role": "text",
+       "name": "",
+       "bbox": [
+        19,
+        181,
+        1362,
+        23
+       ]
+      },
+      {
+       "i": 7,
+       "parent": 6,
+       "role": "button",
+       "name": "File docket",
+       "bbox": [
+        19,
+        183,
+        80,
+        21
+       ]
+      },
+      {
+       "i": 8,
+       "parent": 3,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        19,
+        224,
+        1362,
+        213
+       ]
+      },
+      {
+       "i": 9,
+       "parent": 8,
+       "role": "heading",
+       "name": "Inbox",
+       "bbox": [
+        19,
+        224,
+        1362,
+        33
+       ]
+      },
+      {
+       "i": 10,
+       "parent": 8,
+       "role": "table",
+       "name": "",
+       "bbox": [
+        19,
+        277,
+        742,
+        160
+       ]
+      },
+      {
+       "i": 11,
+       "parent": 10,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        20,
+        277,
+        741,
+        31
+       ]
+      },
+      {
+       "i": 12,
+       "parent": 11,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        20,
+        277,
+        741,
+        31
+       ]
+      },
+      {
+       "i": 13,
+       "parent": 12,
+       "role": "cell",
+       "name": "Code",
+       "bbox": [
+        20,
+        277,
+        64,
+        31
+       ]
+      },
+      {
+       "i": 14,
+       "parent": 12,
+       "role": "cell",
+       "name": "Title",
+       "bbox": [
+        84,
+        277,
+        167,
+        31
+       ]
+      },
+      {
+       "i": 15,
+       "parent": 12,
+       "role": "cell",
+       "name": "Stamp",
+       "bbox": [
+        251,
+        277,
+        71,
+        31
+       ]
+      },
+      {
+       "i": 16,
+       "parent": 12,
+       "role": "cell",
+       "name": "Notes",
+       "bbox": [
+        322,
+        277,
+        68,
+        31
+       ]
+      },
+      {
+       "i": 17,
+       "parent": 12,
+       "role": "cell",
+       "name": "Actions",
+       "bbox": [
+        390,
+        277,
+        371,
+        31
+       ]
+      },
+      {
+       "i": 18,
+       "parent": 10,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        20,
+        308,
+        741,
+        128
+       ]
+      },
+      {
+       "i": 19,
+       "parent": 18,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        20,
+        308,
+        741,
+        32
+       ]
+      },
+      {
+       "i": 20,
+       "parent": 19,
+       "role": "cell",
+       "name": "D-101",
+       "bbox": [
+        20,
+        308,
+        64,
+        32
+       ]
+      },
+      {
+       "i": 21,
+       "parent": 19,
+       "role": "cell",
+       "name": "Crane maintenance",
+       "bbox": [
+        84,
+        308,
+        167,
+        32
+       ]
+      },
+      {
+       "i": 22,
+       "parent": 19,
+       "role": "cell",
+       "name": "dry",
+       "bbox": [
+        251,
+        308,
+        71,
+        32
+       ]
+      },
+      {
+       "i": 23,
+       "parent": 19,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        322,
+        308,
+        68,
+        32
+       ]
+      },
+      {
+       "i": 24,
+       "parent": 19,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        390,
+        308,
+        371,
+        32
+       ]
+      },
+      {
+       "i": 25,
+       "parent": 24,
+       "role": "button",
+       "name": "Strike from register",
+       "bbox": [
+        400,
+        315,
+        129,
+        21
+       ]
+      },
+      {
+       "i": 26,
+       "parent": 24,
+       "role": "button",
+       "name": "Turn stamp",
+       "bbox": [
+        533,
+        315,
+        83,
+        21
+       ]
+      },
+      {
+       "i": 27,
+       "parent": 24,
+       "role": "button",
+       "name": "Add note",
+       "bbox": [
+        620,
+        315,
+        69,
+        21
+       ]
+      },
+      {
+       "i": 28,
+       "parent": 24,
+       "role": "button",
+       "name": "Retitle",
+       "bbox": [
+        693,
+        315,
+        54,
+        21
+       ]
+      },
+      {
+       "i": 29,
+       "parent": 18,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        20,
+        340,
+        741,
+        32
+       ]
+      },
+      {
+       "i": 30,
+       "parent": 29,
+       "role": "cell",
+       "name": "D-102",
+       "bbox": [
+        20,
+        340,
+        64,
+        32
+       ]
+      },
+      {
+       "i": 31,
+       "parent": 29,
+       "role": "cell",
+       "name": "Salvage claim",
+       "bbox": [
+        84,
+        340,
+        167,
+        32
+       ]
+      },
+      {
+       "i": 32,
+       "parent": 29,
+       "role": "cell",
+       "name": "wet",
+       "bbox": [
+        251,
+        340,
+        71,
+        32
+       ]
+      },
+      {
+       "i": 33,
+       "parent": 29,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        322,
+        340,
+        68,
+        32
+       ]
+      },
+      {
+       "i": 34,
+       "parent": 29,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        390,
+        340,
+        371,
+        32
+       ]
+      },
+      {
+       "i": 35,
+       "parent": 34,
+       "role": "button",
+       "name": "Enter on register",
+       "bbox": [
+        400,
+        347,
+        115,
+        21
+       ]
+      },
+      {
+       "i": 36,
+       "parent": 34,
+       "role": "button",
+       "name": "Turn stamp",
+       "bbox": [
+        519,
+        347,
+        83,
+        21
+       ]
+      },
+      {
+       "i": 37,
+       "parent": 34,
+       "role": "button",
+       "name": "Add note",
+       "bbox": [
+        606,
+        347,
+        69,
+        21
+       ]
+      },
+      {
+       "i": 38,
+       "parent": 34,
+       "role": "button",
+       "name": "Retitle",
+       "bbox": [
+        679,
+        347,
+        54,
+        21
+       ]
+      },
+      {
+       "i": 39,
+       "parent": 18,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        20,
+        372,
+        741,
+        32
+       ]
+      },
+      {
+       "i": 40,
+       "parent": 39,
+       "role": "cell",
+       "name": "D-103",
+       "bbox": [
+        20,
+        372,
+        64,
+        32
+       ]
+      },
+      {
+       "i": 41,
+       "parent": 39,
+       "role": "cell",
+       "name": "Harbour dues",
+       "bbox": [
+        84,
+        372,
+        167,
+        32
+       ]
+      },
+      {
+       "i": 42,
+       "parent": 39,
+       "role": "cell",
+       "name": "wet",
+       "bbox": [
+        251,
+        372,
+        71,
+        32
+       ]
+      },
+      {
+       "i": 43,
+       "parent": 39,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        322,
+        372,
+        68,
+        32
+       ]
+      },
+      {
+       "i": 44,
+       "parent": 39,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        390,
+        372,
+        371,
+        32
+       ]
+      },
+      {
+       "i": 45,
+       "parent": 44,
+       "role": "button",
+       "name": "Strike from register",
+       "bbox": [
+        400,
+        379,
+        129,
+        21
+       ]
+      },
+      {
+       "i": 46,
+       "parent": 44,
+       "role": "button",
+       "name": "Turn stamp",
+       "bbox": [
+        533,
+        379,
+        83,
+        21
+       ]
+      },
+      {
+       "i": 47,
+       "parent": 44,
+       "role": "button",
+       "name": "Add note",
+       "bbox": [
+        620,
+        379,
+        69,
+        21
+       ]
+      },
+      {
+       "i": 48,
+       "parent": 44,
+       "role": "button",
+       "name": "Retitle",
+       "bbox": [
+        693,
+        379,
+        54,
+        21
+       ]
+      },
+      {
+       "i": 49,
+       "parent": 18,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        20,
+        404,
+        741,
+        32
+       ]
+      },
+      {
+       "i": 50,
+       "parent": 49,
+       "role": "cell",
+       "name": "D-104",
+       "bbox": [
+        20,
+        404,
+        64,
+        32
+       ]
+      },
+      {
+       "i": 51,
+       "parent": 49,
+       "role": "cell",
+       "name": "Chandlery invoice",
+       "bbox": [
+        84,
+        404,
+        167,
+        32
+       ]
+      },
+      {
+       "i": 52,
+       "parent": 49,
+       "role": "cell",
+       "name": "dry",
+       "bbox": [
+        251,
+        404,
+        71,
+        32
+       ]
+      },
+      {
+       "i": 53,
+       "parent": 49,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        322,
+        404,
+        68,
+        32
+       ]
+      },
+      {
+       "i": 54,
+       "parent": 49,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        390,
+        404,
+        371,
+        32
+       ]
+      },
+      {
+       "i": 55,
+       "parent": 54,
+       "role": "button",
+       "name": "Enter on register",
+       "bbox": [
+        400,
+        411,
+        115,
+        21
+       ]
+      },
+      {
+       "i": 56,
+       "parent": 54,
+       "role": "button",
+       "name": "Turn stamp",
+       "bbox": [
+        519,
+        411,
+        83,
+        21
+       ]
+      },
+      {
+       "i": 57,
+       "parent": 54,
+       "role": "button",
+       "name": "Add note",
+       "bbox": [
+        606,
+        411,
+        69,
+        21
+       ]
+      },
+      {
+       "i": 58,
+       "parent": 54,
+       "role": "button",
+       "name": "Retitle",
+       "bbox": [
+        679,
+        411,
+        54,
+        21
+       ]
+      },
+      {
+       "i": 59,
+       "parent": 3,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        19,
+        456,
+        1362,
+        147
+       ]
+      },
+      {
+       "i": 60,
+       "parent": 59,
+       "role": "heading",
+       "name": "Register",
+       "bbox": [
+        19,
+        456,
+        1362,
+        33
+       ]
+      },
+      {
+       "i": 61,
+       "parent": 59,
+       "role": "table",
+       "name": "",
+       "bbox": [
+        19,
+        509,
+        304,
+        94
+       ]
+      },
+      {
+       "i": 62,
+       "parent": 61,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        20,
+        510,
+        303,
+        31
+       ]
+      },
+      {
+       "i": 63,
+       "parent": 62,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        20,
+        510,
+        303,
+        31
+       ]
+      },
+      {
+       "i": 64,
+       "parent": 63,
+       "role": "cell",
+       "name": "Code",
+       "bbox": [
+        20,
+        510,
+        64,
+        31
+       ]
+      },
+      {
+       "i": 65,
+       "parent": 63,
+       "role": "cell",
+       "name": "Title",
+       "bbox": [
+        84,
+        510,
+        167,
+        31
+       ]
+      },
+      {
+       "i": 66,
+       "parent": 63,
+       "role": "cell",
+       "name": "Stamp",
+       "bbox": [
+        251,
+        510,
+        71,
+        31
+       ]
+      },
+      {
+       "i": 67,
+       "parent": 61,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        20,
+        541,
+        303,
+        62
+       ]
+      },
+      {
+       "i": 68,
+       "parent": 67,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        20,
+        541,
+        303,
+        31
+       ]
+      },
+      {
+       "i": 69,
+       "parent": 68,
+       "role": "cell",
+       "name": "D-101",
+       "bbox": [
+        20,
+        541,
+        64,
+        31
+       ]
+      },
+      {
+       "i": 70,
+       "parent": 68,
+       "role": "cell",
+       "name": "Crane maintenance",
+       "bbox": [
+        84,
+        541,
+        167,
+        31
+       ]
+      },
+      {
+       "i": 71,
+       "parent": 68,
+       "role": "cell",
+       "name": "dry",
+       "bbox": [
+        251,
+        541,
+        71,
+        31
+       ]
+      },
+      {
+       "i": 72,
+       "parent": 67,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        20,
+        572,
+        303,
+        31
+       ]
+      },
+      {
+       "i": 73,
+       "parent": 72,
+       "role": "cell",
+       "name": "D-103",
+       "bbox": [
+        20,
+        572,
+        64,
+        31
+       ]
+      },
+      {
+       "i": 74,
+       "parent": 72,
+       "role": "cell",
+       "name": "Harbour dues",
+       "bbox": [
+        84,
+        572,
+        167,
+        31
+       ]
+      },
+      {
+       "i": 75,
+       "parent": 72,
+       "role": "cell",
+       "name": "wet",
+       "bbox": [
+        251,
+        572,
+        71,
+        31
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "sig": "d478477bd0e42942",
+    "obs": {
+     "url": "http://127.0.0.1:8992/",
+     "nodes": [
+      {
+       "i": 0,
+       "parent": -1,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        19,
+        21,
+        1362,
+        582
+       ]
+      },
+      {
+       "i": 1,
+       "parent": 0,
+       "role": "heading",
+       "name": "Twin Ledger",
+       "bbox": [
+        19,
+        21,
+        1362,
+        43
+       ]
+      },
+      {
+       "i": 2,
+       "parent": 0,
+       "role": "text",
+       "name": "Ready.",
+       "bbox": [
+        19,
+        86,
+        1362,
+        22
+       ]
+      },
+      {
+       "i": 3,
+       "parent": 0,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        19,
+        128,
+        1362,
+        476
+       ]
+      },
+      {
+       "i": 4,
+       "parent": 3,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        19,
+        128,
+        1362,
+        76
+       ]
+      },
+      {
+       "i": 5,
+       "parent": 4,
+       "role": "heading",
+       "name": "Desk",
+       "bbox": [
+        19,
+        128,
+        1362,
+        33
+       ]
+      },
+      {
+       "i": 6,
+       "parent": 4,
+       "role": "text",
+       "name": "",
+       "bbox": [
+        19,
+        181,
+        1362,
+        23
+       ]
+      },
+      {
+       "i": 7,
+       "parent": 6,
+       "role": "button",
+       "name": "File docket",
+       "bbox": [
+        19,
+        183,
+        80,
+        21
+       ]
+      },
+      {
+       "i": 8,
+       "parent": 3,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        19,
+        224,
+        1362,
+        213
+       ]
+      },
+      {
+       "i": 9,
+       "parent": 8,
+       "role": "heading",
+       "name": "Inbox",
+       "bbox": [
+        19,
+        224,
+        1362,
+        33
+       ]
+      },
+      {
+       "i": 10,
+       "parent": 8,
+       "role": "table",
+       "name": "",
+       "bbox": [
+        19,
+        277,
+        742,
+        160
+       ]
+      },
+      {
+       "i": 11,
+       "parent": 10,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        20,
+        277,
+        741,
+        31
+       ]
+      },
+      {
+       "i": 12,
+       "parent": 11,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        20,
+        277,
+        741,
+        31
+       ]
+      },
+      {
+       "i": 13,
+       "parent": 12,
+       "role": "cell",
+       "name": "Code",
+       "bbox": [
+        20,
+        277,
+        64,
+        31
+       ]
+      },
+      {
+       "i": 14,
+       "parent": 12,
+       "role": "cell",
+       "name": "Title",
+       "bbox": [
+        84,
+        277,
+        167,
+        31
+       ]
+      },
+      {
+       "i": 15,
+       "parent": 12,
+       "role": "cell",
+       "name": "Stamp",
+       "bbox": [
+        251,
+        277,
+        71,
+        31
+       ]
+      },
+      {
+       "i": 16,
+       "parent": 12,
+       "role": "cell",
+       "name": "Notes",
+       "bbox": [
+        322,
+        277,
+        68,
+        31
+       ]
+      },
+      {
+       "i": 17,
+       "parent": 12,
+       "role": "cell",
+       "name": "Actions",
+       "bbox": [
+        390,
+        277,
+        371,
+        31
+       ]
+      },
+      {
+       "i": 18,
+       "parent": 10,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        20,
+        308,
+        741,
+        128
+       ]
+      },
+      {
+       "i": 19,
+       "parent": 18,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        20,
+        308,
+        741,
+        32
+       ]
+      },
+      {
+       "i": 20,
+       "parent": 19,
+       "role": "cell",
+       "name": "D-101",
+       "bbox": [
+        20,
+        308,
+        64,
+        32
+       ]
+      },
+      {
+       "i": 21,
+       "parent": 19,
+       "role": "cell",
+       "name": "Crane maintenance",
+       "bbox": [
+        84,
+        308,
+        167,
+        32
+       ]
+      },
+      {
+       "i": 22,
+       "parent": 19,
+       "role": "cell",
+       "name": "dry",
+       "bbox": [
+        251,
+        308,
+        71,
+        32
+       ]
+      },
+      {
+       "i": 23,
+       "parent": 19,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        322,
+        308,
+        68,
+        32
+       ]
+      },
+      {
+       "i": 24,
+       "parent": 19,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        390,
+        308,
+        371,
+        32
+       ]
+      },
+      {
+       "i": 25,
+       "parent": 24,
+       "role": "button",
+       "name": "Strike from register",
+       "bbox": [
+        400,
+        315,
+        129,
+        21
+       ]
+      },
+      {
+       "i": 26,
+       "parent": 24,
+       "role": "button",
+       "name": "Turn stamp",
+       "bbox": [
+        533,
+        315,
+        83,
+        21
+       ]
+      },
+      {
+       "i": 27,
+       "parent": 24,
+       "role": "button",
+       "name": "Add note",
+       "bbox": [
+        620,
+        315,
+        69,
+        21
+       ]
+      },
+      {
+       "i": 28,
+       "parent": 24,
+       "role": "button",
+       "name": "Retitle",
+       "bbox": [
+        693,
+        315,
+        54,
+        21
+       ]
+      },
+      {
+       "i": 29,
+       "parent": 18,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        20,
+        340,
+        741,
+        32
+       ]
+      },
+      {
+       "i": 30,
+       "parent": 29,
+       "role": "cell",
+       "name": "D-102",
+       "bbox": [
+        20,
+        340,
+        64,
+        32
+       ]
+      },
+      {
+       "i": 31,
+       "parent": 29,
+       "role": "cell",
+       "name": "Salvage claim",
+       "bbox": [
+        84,
+        340,
+        167,
+        32
+       ]
+      },
+      {
+       "i": 32,
+       "parent": 29,
+       "role": "cell",
+       "name": "wet",
+       "bbox": [
+        251,
+        340,
+        71,
+        32
+       ]
+      },
+      {
+       "i": 33,
+       "parent": 29,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        322,
+        340,
+        68,
+        32
+       ]
+      },
+      {
+       "i": 34,
+       "parent": 29,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        390,
+        340,
+        371,
+        32
+       ]
+      },
+      {
+       "i": 35,
+       "parent": 34,
+       "role": "button",
+       "name": "Enter on register",
+       "bbox": [
+        400,
+        347,
+        115,
+        21
+       ]
+      },
+      {
+       "i": 36,
+       "parent": 34,
+       "role": "button",
+       "name": "Turn stamp",
+       "bbox": [
+        519,
+        347,
+        83,
+        21
+       ]
+      },
+      {
+       "i": 37,
+       "parent": 34,
+       "role": "button",
+       "name": "Add note",
+       "bbox": [
+        606,
+        347,
+        69,
+        21
+       ]
+      },
+      {
+       "i": 38,
+       "parent": 34,
+       "role": "button",
+       "name": "Retitle",
+       "bbox": [
+        679,
+        347,
+        54,
+        21
+       ]
+      },
+      {
+       "i": 39,
+       "parent": 18,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        20,
+        372,
+        741,
+        32
+       ]
+      },
+      {
+       "i": 40,
+       "parent": 39,
+       "role": "cell",
+       "name": "D-103",
+       "bbox": [
+        20,
+        372,
+        64,
+        32
+       ]
+      },
+      {
+       "i": 41,
+       "parent": 39,
+       "role": "cell",
+       "name": "Harbour dues",
+       "bbox": [
+        84,
+        372,
+        167,
+        32
+       ]
+      },
+      {
+       "i": 42,
+       "parent": 39,
+       "role": "cell",
+       "name": "wet",
+       "bbox": [
+        251,
+        372,
+        71,
+        32
+       ]
+      },
+      {
+       "i": 43,
+       "parent": 39,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        322,
+        372,
+        68,
+        32
+       ]
+      },
+      {
+       "i": 44,
+       "parent": 39,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        390,
+        372,
+        371,
+        32
+       ]
+      },
+      {
+       "i": 45,
+       "parent": 44,
+       "role": "button",
+       "name": "Strike from register",
+       "bbox": [
+        400,
+        379,
+        129,
+        21
+       ]
+      },
+      {
+       "i": 46,
+       "parent": 44,
+       "role": "button",
+       "name": "Turn stamp",
+       "bbox": [
+        533,
+        379,
+        83,
+        21
+       ]
+      },
+      {
+       "i": 47,
+       "parent": 44,
+       "role": "button",
+       "name": "Add note",
+       "bbox": [
+        620,
+        379,
+        69,
+        21
+       ]
+      },
+      {
+       "i": 48,
+       "parent": 44,
+       "role": "button",
+       "name": "Retitle",
+       "bbox": [
+        693,
+        379,
+        54,
+        21
+       ]
+      },
+      {
+       "i": 49,
+       "parent": 18,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        20,
+        404,
+        741,
+        32
+       ]
+      },
+      {
+       "i": 50,
+       "parent": 49,
+       "role": "cell",
+       "name": "D-104",
+       "bbox": [
+        20,
+        404,
+        64,
+        32
+       ]
+      },
+      {
+       "i": 51,
+       "parent": 49,
+       "role": "cell",
+       "name": "Chandlery invoice",
+       "bbox": [
+        84,
+        404,
+        167,
+        32
+       ]
+      },
+      {
+       "i": 52,
+       "parent": 49,
+       "role": "cell",
+       "name": "dry",
+       "bbox": [
+        251,
+        404,
+        71,
+        32
+       ]
+      },
+      {
+       "i": 53,
+       "parent": 49,
+       "role": "cell",
+       "name": "0",
+       "bbox": [
+        322,
+        404,
+        68,
+        32
+       ]
+      },
+      {
+       "i": 54,
+       "parent": 49,
+       "role": "cell",
+       "name": "",
+       "bbox": [
+        390,
+        404,
+        371,
+        32
+       ]
+      },
+      {
+       "i": 55,
+       "parent": 54,
+       "role": "button",
+       "name": "Enter on register",
+       "bbox": [
+        400,
+        411,
+        115,
+        21
+       ]
+      },
+      {
+       "i": 56,
+       "parent": 54,
+       "role": "button",
+       "name": "Turn stamp",
+       "bbox": [
+        519,
+        411,
+        83,
+        21
+       ]
+      },
+      {
+       "i": 57,
+       "parent": 54,
+       "role": "button",
+       "name": "Add note",
+       "bbox": [
+        606,
+        411,
+        69,
+        21
+       ]
+      },
+      {
+       "i": 58,
+       "parent": 54,
+       "role": "button",
+       "name": "Retitle",
+       "bbox": [
+        679,
+        411,
+        54,
+        21
+       ]
+      },
+      {
+       "i": 59,
+       "parent": 3,
+       "role": "group",
+       "name": "",
+       "bbox": [
+        19,
+        456,
+        1362,
+        147
+       ]
+      },
+      {
+       "i": 60,
+       "parent": 59,
+       "role": "heading",
+       "name": "Register",
+       "bbox": [
+        19,
+        456,
+        1362,
+        33
+       ]
+      },
+      {
+       "i": 61,
+       "parent": 59,
+       "role": "table",
+       "name": "",
+       "bbox": [
+        19,
+        509,
+        304,
+        94
+       ]
+      },
+      {
+       "i": 62,
+       "parent": 61,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        20,
+        510,
+        303,
+        31
+       ]
+      },
+      {
+       "i": 63,
+       "parent": 62,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        20,
+        510,
+        303,
+        31
+       ]
+      },
+      {
+       "i": 64,
+       "parent": 63,
+       "role": "cell",
+       "name": "Code",
+       "bbox": [
+        20,
+        510,
+        64,
+        31
+       ]
+      },
+      {
+       "i": 65,
+       "parent": 63,
+       "role": "cell",
+       "name": "Title",
+       "bbox": [
+        84,
+        510,
+        167,
+        31
+       ]
+      },
+      {
+       "i": 66,
+       "parent": 63,
+       "role": "cell",
+       "name": "Stamp",
+       "bbox": [
+        251,
+        510,
+        71,
+        31
+       ]
+      },
+      {
+       "i": 67,
+       "parent": 61,
+       "role": "rowgroup",
+       "name": "",
+       "bbox": [
+        20,
+        541,
+        303,
+        62
+       ]
+      },
+      {
+       "i": 68,
+       "parent": 67,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        20,
+        541,
+        303,
+        31
+       ]
+      },
+      {
+       "i": 69,
+       "parent": 68,
+       "role": "cell",
+       "name": "D-101",
+       "bbox": [
+        20,
+        541,
+        64,
+        31
+       ]
+      },
+      {
+       "i": 70,
+       "parent": 68,
+       "role": "cell",
+       "name": "Crane maintenance",
+       "bbox": [
+        84,
+        541,
+        167,
+        31
+       ]
+      },
+      {
+       "i": 71,
+       "parent": 68,
+       "role": "cell",
+       "name": "dry",
+       "bbox": [
+        251,
+        541,
+        71,
+        31
+       ]
+      },
+      {
+       "i": 72,
+       "parent": 67,
+       "role": "row",
+       "name": "",
+       "bbox": [
+        20,
+        572,
+        303,
+        31
+       ]
+      },
+      {
+       "i": 73,
+       "parent": 72,
+       "role": "cell",
+       "name": "D-103",
+       "bbox": [
+        20,
+        572,
+        64,
+        31
+       ]
+      },
+      {
+       "i": 74,
+       "parent": 72,
+       "role": "cell",
+       "name": "Harbour dues",
+       "bbox": [
+        84,
+        572,
+        167,
+        31
+       ]
+      },
+      {
+       "i": 75,
+       "parent": 72,
+       "role": "cell",
+       "name": "wet",
+       "bbox": [
+        251,
+        572,
+        71,
+        31
+       ]
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "decisive_terms": [
+  "churn",
+  "contradictions"
+ ],
+ "harm": {
+  "Code": 0,
+  "Title": 1
+ },
+ "outcome": "DECIDED",
+ "refuted": [
+  "Title"
+ ],
+ "survivors": [
+  "Code"
+ ]
+}

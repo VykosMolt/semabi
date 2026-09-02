@@ -1,0 +1,106 @@
+{
+ "refuted": [
+  {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+   "key_slot": "cell@Title#0",
+   "why": "refuted by an executed experiment (twin inbox: Code vs Title (planner mutation test)): harm 1 on ['churn', 'contradictions'] against 0 for Code",
+   "evidence": {
+    "experiment": "twin inbox: Code vs Title (planner mutation test)",
+    "actions": [
+     {
+      "kind": "click",
+      "target": {
+       "role": "button",
+       "name": "Retitle",
+       "nth": 0
+      }
+     },
+     {
+      "kind": "click",
+      "target": {
+       "role": "button",
+       "name": "Retitle",
+       "nth": 2
+      }
+     }
+    ],
+    "delta": {
+     "explained": 1,
+     "conflicts": 0,
+     "churn": 1,
+     "contradictions": 0,
+     "visibility": 0,
+     "spurious": 0,
+     "named": 0,
+     "positional": 0
+    },
+    "decisive_terms": [
+     "churn",
+     "contradictions"
+    ],
+    "predicted": "the retitled docket is replaced: one object gone, a new one with the new title"
+   },
+   "held": [
+    "Ballast survey",
+    "Chandlery invoice",
+    "Crane maintenance",
+    "Harbour dues",
+    "Mooring audit",
+    "Quay repairs",
+    "Salvage claim",
+    "Victualling account"
+   ]
+  },
+  {
+   "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+   "key_slot": "cell@Title#0",
+   "why": "refuted by an executed experiment (twin register: Code vs Title (hand-authored; the register keyed either way)): harm 1 on ['churn', 'contradictions'] against 0 for Code",
+   "evidence": {
+    "experiment": "twin register: Code vs Title (hand-authored; the register keyed either way)",
+    "actions": [
+     {
+      "kind": "click",
+      "target": {
+       "role": "button",
+       "name": "Retitle",
+       "nth": 0
+      }
+     },
+     {
+      "kind": "click",
+      "target": {
+       "role": "button",
+       "name": "Retitle",
+       "nth": 2
+      }
+     }
+    ],
+    "delta": {
+     "explained": 1,
+     "conflicts": 0,
+     "churn": 1,
+     "contradictions": 0,
+     "visibility": 0,
+     "spurious": 0,
+     "named": 0,
+     "positional": 0
+    },
+    "decisive_terms": [
+     "churn",
+     "contradictions"
+    ],
+    "predicted": "the register row is replaced: the old register object vanishes and a new one appears"
+   },
+   "held": [
+    "Ballast survey",
+    "Chandlery invoice",
+    "Crane maintenance",
+    "Harbour dues",
+    "Mooring audit",
+    "Quay repairs",
+    "Salvage claim",
+    "Victualling account"
+   ]
+  }
+ ]
+}

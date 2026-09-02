@@ -1,0 +1,136 @@
+{
+ "run": "vet_clinic_dev",
+ "steps": 403,
+ "unions_under_builder_keys": [
+  [
+   "cell[_]",
+   "text[_](combobox[_])",
+   "text[_](textbox[_])"
+  ],
+  [
+   "group[_](heading[_],list[_](listitem[_]))",
+   "row[_](cell@Actions[_](combobox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+   "row[_](cell@Actions[_](textbox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])"
+  ]
+ ],
+ "unions_under_chosen_keys": [],
+ "unions_lost": [
+  {
+   "union": [
+    "cell[_]",
+    "text[_](combobox[_])",
+    "text[_](textbox[_])"
+   ],
+   "cause": "key withdrawn: ['cell[_]', 'text[_](combobox[_])']",
+   "ambiguity_survives_as_question": true,
+   "judged_by_evidence": false
+  },
+  {
+   "union": [
+    "group[_](heading[_],list[_](listitem[_]))",
+    "row[_](cell@Actions[_](combobox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+    "row[_](cell@Actions[_](textbox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])"
+   ],
+   "cause": "key withdrawn: ['group[_](heading[_],list[_](listitem[_]))']",
+   "ambiguity_survives_as_question": false,
+   "judged_by_evidence": false
+  }
+ ],
+ "withheld_unions": [],
+ "link_decisions": [
+  {
+   "unit": "row[](cell@Actions[](combobox[_],button[Assign vet],button[Start exam]",
+   "evidence": "key overlaps group[](heading[_],list[](listitem[_ age but repeats within observations: link type"
+  },
+  {
+   "unit": "row[](cell@Actions[](combobox[_],button[Assign vet],button[Start exam]",
+   "evidence": "key overlaps group[](heading[_],list[](listitem[_ age but repeats within observations: link type"
+  },
+  {
+   "unit": "row[](cell@Actions[](combobox[_],button[Assign vet],button[Check in],b",
+   "evidence": "key overlaps group[](heading[_],list[](listitem[_ age but repeats within observations: link type"
+  },
+  {
+   "unit": "row[](cell@Actions[](combobox[_],button[Assign vet],button[Check in],b",
+   "evidence": "key overlaps group[](heading[_],list[](listitem[_ age but repeats within observations: link type"
+  },
+  {
+   "unit": "row[](cell@Actions[_],cell@Notes[_],cell@Owner[_],cell@Patient[_],cell",
+   "evidence": "key overlaps group[](heading[_],list[](listitem[_ age but repeats within observations: link type"
+  },
+  {
+   "unit": "row[](cell@Actions[_],cell@Notes[_],cell@Owner[_],cell@Patient[_],cell",
+   "evidence": "key overlaps group[](heading[_],list[](listitem[_ age but repeats within observations: link type"
+  }
+ ],
+ "moves": [
+  {
+   "move": "evidence_prior",
+   "family": "",
+   "decided_by": null
+  },
+  {
+   "move": "identity",
+   "family": "cell[_]",
+   "decided_by": {
+    "contradictions": 28,
+    "visibility": 30
+   }
+  },
+  {
+   "move": "identity",
+   "family": "group[_](heading[_],list[_](listitem[_]))",
+   "decided_by": {
+    "churn": 1,
+    "explained": 1
+   }
+  },
+  {
+   "move": "identity",
+   "family": "row[_](cell@Actions[_](combobox[_],button[_],text[_]),cell@N",
+   "decided_by": {
+    "churn": 2,
+    "explained": 1
+   }
+  },
+  {
+   "move": "identity",
+   "family": "row[_](cell@Actions[_](textbox[_],button[_],text[_]),cell@No",
+   "decided_by": {
+    "explained": 2
+   }
+  },
+  {
+   "move": "identity",
+   "family": "row[_](cell@Name[_],cell@On duty[_],cell@Specialty[_])",
+   "decided_by": {
+    "unearned": "cell@Name#0"
+   }
+  },
+  {
+   "move": "identity",
+   "family": "text[_](combobox[_])",
+   "decided_by": {
+    "contradictions": 18,
+    "visibility": 36
+   }
+  }
+ ],
+ "open_questions": [
+  {
+   "family": "row[_](cell@Name[_],cell@On duty[_],cell@Specialty[_])",
+   "left": null,
+   "right": "cell@Name#0"
+  },
+  {
+   "family": "row[_](cell@Name[_],cell@On duty[_],cell@Specialty[_])",
+   "left": null,
+   "right": "cell@Specialty#0"
+  },
+  {
+   "family": "text[_](textbox[_])",
+   "left": "text#0",
+   "right": null
+  }
+ ]
+}

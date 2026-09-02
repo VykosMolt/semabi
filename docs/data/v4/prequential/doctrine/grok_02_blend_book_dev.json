@@ -1,0 +1,128 @@
+{
+ "run": "grok_02_blend_book_dev",
+ "steps": 375,
+ "unions_under_builder_keys": [
+  [
+   "button[_]",
+   "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))",
+   "row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))"
+  ],
+  [
+   "button[_]",
+   "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))"
+  ],
+  [
+   "cell[_]",
+   "text[_](combobox[_])"
+  ],
+  [
+   "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+   "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))))))"
+  ]
+ ],
+ "unions_under_chosen_keys": [],
+ "unions_lost": [
+  {
+   "union": [
+    "button[_]",
+    "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))",
+    "row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))"
+   ],
+   "cause": "key withdrawn: ['button[_]']",
+   "ambiguity_survives_as_question": true,
+   "judged_by_evidence": false
+  },
+  {
+   "union": [
+    "button[_]",
+    "row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))"
+   ],
+   "cause": "key withdrawn: ['button[_]']",
+   "ambiguity_survives_as_question": true,
+   "judged_by_evidence": false
+  },
+  {
+   "union": [
+    "cell[_]",
+    "text[_](combobox[_])"
+   ],
+   "cause": "key withdrawn: ['cell[_]', 'text[_](combobox[_])']",
+   "ambiguity_survives_as_question": true,
+   "judged_by_evidence": false
+  },
+  {
+   "union": [
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))",
+    "group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))))))"
+   ],
+   "cause": "key withdrawn: ['group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])))))', 'group[_](status[_],group[_](heading[_],group[_](text[_](combobox[_]),button[_])),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))))),group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))))))']",
+   "ambiguity_survives_as_question": true,
+   "judged_by_evidence": false
+  }
+ ],
+ "withheld_unions": [],
+ "link_decisions": [],
+ "moves": [
+  {
+   "move": "evidence_prior",
+   "family": "",
+   "decided_by": null
+  },
+  {
+   "move": "identity",
+   "family": "button[_]",
+   "decided_by": {
+    "unearned": "button#0"
+   }
+  },
+  {
+   "move": "identity",
+   "family": "cell[_]",
+   "decided_by": {
+    "unearned": "cell#0"
+   }
+  },
+  {
+   "move": "identity",
+   "family": "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],ce",
+   "decided_by": {
+    "named": 5
+   }
+  },
+  {
+   "move": "identity",
+   "family": "text[_](combobox[_])",
+   "decided_by": {
+    "spurious": 2,
+    "named": -27
+   }
+  }
+ ],
+ "open_questions": [
+  {
+   "family": "button[_]",
+   "left": null,
+   "right": "button#0"
+  },
+  {
+   "family": "cell[_]",
+   "left": null,
+   "right": "cell#0"
+  },
+  {
+   "family": "group[_](status[_],group[_](heading[_],group[_](text[_](comb",
+   "left": null,
+   "right": "group/table/rowgroup/row/cell#0"
+  },
+  {
+   "family": "group[_](status[_],group[_](heading[_],group[_](text[_](comb",
+   "left": null,
+   "right": "status#0"
+  },
+  {
+   "family": "row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],ce",
+   "left": "cell@Ticket#0",
+   "right": "cell@From vat#1"
+  }
+ ]
+}

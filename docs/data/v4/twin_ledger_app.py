@@ -98,6 +98,19 @@ class Ledger(object):
         d["stamp"] = "dry" if d["stamp"] == "wet" else "wet"
         return True, "Docket %s stamp turned to %s." % (d["code"], d["stamp"])
 
+    def op_retitle_docket(self, args):
+        # writes a contested key candidate (Title): under a Title-keyed reading of
+        # the register this replaces the object; under Code it mutates one
+        d = self.objects.get(args.get("docket"))
+        if d is None:
+            return False, "No such docket."
+        used = {x["title"] for x in self.objects.values()}
+        free = [t for t in TITLE_POOL if t not in used]
+        if not free:
+            return False, "No unused title remains for docket %s." % d["code"]
+        old, d["title"] = d["title"], free[0]
+        return True, "Docket %s retitled from %s to %s." % (d["code"], old, d["title"])
+
     def op_add_note(self, args):
         d = self.objects.get(args.get("docket"))
         if d is None:
@@ -162,6 +175,10 @@ DOMAIN = {
         {"name": "add_note", "params": [["?docket", "Docket"]],
          "precondition": "None.",
          "effect": "Increments notes by one."},
+        {"name": "retitle_docket", "params": [["?docket", "Docket"]],
+         "precondition": "Some title in the pool is not in use.",
+         "effect": "Sets the docket's title to the first unused pool title.  The same "
+                   "docket, with a new title, in both tables."},
     ],
 }
 
@@ -221,6 +238,8 @@ function inboxSection() {
       onclick: function () { op('turn_stamp', {docket: d.id}); }}));
     acts.push(el('button', {type: 'button', text: 'Add note',
       onclick: function () { op('add_note', {docket: d.id}); }}));
+    acts.push(el('button', {type: 'button', text: 'Retitle',
+      onclick: function () { op('retitle_docket', {docket: d.id}); }}));
     return el('tr', {'data-eid': 'd' + d.id}, [td(d.code), td(d.title), td(d.stamp),
                                                td(d.notes), el('td', null, acts)]);
   });

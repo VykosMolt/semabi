@@ -634,3 +634,136 @@ ok; frontier_harbour identification/holdout fields byte-identical to before
 (only digests/timestamps moved); every metamorphic report at zero (renaming
 fresh/permute x4 apps, reversal x4, columns x3); no tracebacks.  Doc closing
 section rewritten.  outcome + admissible stages pending.
+
+## Night plan (21:40): (1) exhaustive reachable-fixpoint enumeration at
+t188/t263 (is ∩{fwd,rev} the true intersection? pre-registered yes at
+t188); (2) twin ledger regime 2 -- retitle_docket added to the app (writes
+the contested key candidate Title), locked server on 8992, corpus
+runs/v4/twin_retitle_dev collecting; then tie planning -> live experiment
+with frozen predictions -> refutation row -> fixpoint invalidation;
+(3) identity scoreboard v0 over the shared node-keyed surface.
+Doctrine-interaction probe folded into step 2 (user's request): for a corpus,
+unions the builder forms under its own keys vs unions surviving the chosen
+keys; each lost union attributed to its move (withdrawn key / withheld by
+trial / link) and whether the ambiguity survives as an open question or was
+silently deleted; plus every created-later link decision (structural, never
+judged).  Launched on twin_ledger_dev, twin_ledger_locked_dev, harbour_dev,
+vet_clinic_dev, grok_02_blend_book_dev.  Pre-registered: both twin corpora
+show one silently-deleted union (register x inbox) with the ambiguity
+surviving only as the register's None-vs-key questions; harbour shows the
+overview x board union judged by trial (withheld) or reformed under chosen
+keys; vet/blend unknown -- if either shows a silent deletion, the
+interaction is not twin-specific.
+Identity scoreboard v0 (identity_scoreboard.py) launched on harbour's chain:
+per candidate reading, coverage and contradictions over the SHARED
+node-keyed surface (atoms every candidate claims), unshared claims as
+provenance only, transfer identification + holdout from the frontier,
+survivor set, declared assumptions (promotions, withheld unions).  No claim
+counts anywhere.  Pre-registered: source_choice has the highest shared
+coverage with no more contradictions than any alternative; alternatives
+keyed by non-identifying columns (Duty, Certified...) show contradictions on
+the shared surface; unshared counts vary by granularity and must not
+correlate with the frontier's verdict.
+
+## Doctrine probe results (22:20)
+Twin (both corpora): one builder union inbox x register, lost by the
+register's key withdrawal; the ambiguity survives ENCODED (the register's
+None-vs-key questions re-form the union if decided) -- the probe's
+"question survives" criterion accepts that encoding; it is not a posed
+union question.
+Blend: FOUR builder unions, all lost by key withdrawals (button[_] x row
+families; a combobox's text x a cell; a page group x itself) -- junk
+unions deleted by the same mechanism that deleted the twin's evidenced one.
+The interaction is real on a real app and there it mostly removes junk.
+Harbour: zero builder unions; FOUR created-later/repeats link decisions --
+the board read as a link type to the overview ("key overlaps ... but repeats
+within observations") and button[_] linked to the call-sheet group --
+structural, never judged.  Finding 7's overview x board union exists only
+under the Vessel override on the floor, not under the builder's keys.
+Vet: probe crashed on a harmonised composite key (my naive key re-application);
+fixed to read unions off the search's own final hypotheses; rerunning.
+
+## Doctrine probe, refined attribution (22:35)
+Union dissolutions classified by the responsible key moves' decided_by:
+- DOCTRINE-ONLY (unearned tie, nothing behavioural moved): twin_ledger_dev,
+  twin_ledger_locked_dev (the evidenced inbox x register union, ambiguity
+  encoded in the register's key questions), and ONE on blend (button[_] x
+  the blends table -- a spurious union; ambiguity encoded).
+- EVIDENCE-decided (terms moved): blend x2, vet x2 -- including vet's
+  no-question case (patient list x appointment rows, decided by churn /
+  explained; the builder already reads those rows as links to the list).
+- UNATTRIBUTED: one blend page-group self-union (no identity move recorded).
+Verdict: on the three real apps no doctrine-only move deleted an EVIDENCED
+union; the doctrine-only deletions there removed junk.  The twin ledger is
+the only corpus where the interaction deleted a hypothesis the evidence
+supported.  The interaction is real and general; its harm so far is
+instrument-specific.  Vet's earlier "silently deleted: 1" was my probe's
+coarse attribution, withdrawn.
+twin_retitle_dev collected (375 steps / 528s, locked variant + retitle);
+doctrine probe, search and tie analysis launched on it (22:45).
+Pre-registered: the register family's None-vs-Code / None-vs-Title
+questions are DECIDABLE by a mutation test on Title (retitle is a writer of
+the contested slot); the doctrine probe shows the same union dissolution.
+
+## Regime 2 experiments (23:00)
+Tie analysis on twin_retitle_dev: inbox Code-vs-Title DECIDABLE (mutation
+via Retitle, support 38; Code: persists with new value / Title: replaced);
+register None-vs-Code/Title NO_KNOWN_EXPERIMENT (unkeyed rows are not acted
+on).  Two plans on the same live actions (retitle registered dockets 1 and
+3 at seed 0): A = planner's inbox test; B = hand-authored register test,
+readings differing only on the register key (Code vs Title -- the world the
+unshared comparator picked).  Pre-registered: both refute Title (the object
+persists, both tables show the new title on the same code); the register's
+None-vs-Code stays open (co-update vs coupled write remain equivalent);
+after propagation the fixpoint re-derives with the raw rows present and
+nothing else moves.
+Scoreboard harbour (23:10): shared surface 193 atoms; source_choice
+coverage 75 / contradictions 9 / unshared 29; Calls-logged key 75/9 (a
+genuine near-equivalent); Certified 74/9; board-Vessel 67/9; Duty-keyed
+62/30 with 165 unshared -- a wrong key shows as MORE contradictions on the
+shared surface plus unscored volume.  Pre-registration held.  Transfer
+BEHAVIOURALLY_DISTINGUISHED, holdout CONFIRMED_WHERE_APPLICABLE.
+Experiments relaunched as execute-then-propagate per plan (23:15).
+
+## Scoreboards vet/blend (23:30)
+Blend: shared 244 atoms; source_choice 95/0, tied by button/cell variants
+(the frontier's indistinguishable class reproduced); wrong keys contradict
+on the shared surface (Style 5, combobox text 14); Gallons-left 96/1 is
+dominance-incomparable, correctly no winner.
+Vet: shared surface 15 atoms; all eight candidates 4/11 -- the scoreboard
+cannot separate them and says so; matches holdout
+INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE.  Vet's transfer verdict
+(BEHAVIOURALLY_DISTINGUISHED) rests on evidence outside the shared state
+surface -- to be examined, not assumed.
+Scoreboard v0 verdict: it reproduces harbour's and blend's frontier
+judgments without claim counts, and refuses vet's; unshared volume never
+correlates with the verdict (Duty 165 unshared, worst; blend combobox 38,
+contradicted).
+
+## Exhaustive enumeration at t263 (22:15): ONE reachable fixpoint
+80 states, 0 cycles, every path into the same 3-row endpoint = the fwd
+tournament's.  At t263 the schedule family is moot by exhaustion.  t188
+still enumerating (194 fits).
+
+## Regime 2 result (22:25): both experiments DECIDED, Title refuted
+Inbox test (planner) and register test (hand-authored): survivors Code,
+refuted Title, harm Title 1 (churn) / Code 0; delta Code explained 2 churn
+0 vs Title explained 1 churn 1.  The two-type world the vocabulary
+comparator picked is refuted by external intervention.  Raw rows propagated
+into runs/v4/twin_retitle_dev (bound to the held titles); fixpoint
+(tournament x emission, fwd+rev) launched over the corpus with them
+present.  Pre-registered: register None-vs-Code stays open; nothing else
+moves.
+
+## Exhaustive enumeration at t188 (22:35): {fwd,rev} recovers the true intersection
+3 reachable fixpoints (50/6/2 paths; 588 states; 0 cycles) -- a THIRD world
+the fixed-order attacks never found (endpoint 2 minus the berth/call row).
+Intersection over all three == intersection over {fwd, rev} == the four-row
+core; no over-approximation.  Pre-registration held.  With t263 (one
+fixpoint) the schedule generator is a checked parameter at both boundaries.
+
+## Regime 2 closed (22:50): fixpoint over the retitle corpus with the two
+experiment rows: FIXPOINT, fwd == rev (base b531eac5), ZERO derived rows --
+Title absent from every candidate set, every remaining question undecided on
+its neutral base, register None-vs-Code open.  Pre-registration held.
+Night campaign complete; Part XIV filled; committing.

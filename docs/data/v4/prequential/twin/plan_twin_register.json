@@ -1,0 +1,45 @@
+{
+ "run": "runs/v4/twin_retitle_dev",
+ "base": "http://127.0.0.1:8992",
+ "seed": 0,
+ "actions": [
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Retitle",
+    "nth": 0
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Retitle",
+    "nth": 2
+   }
+  }
+ ],
+ "test": "mutation",
+ "note": "seed 0: dockets 1 and 3 (Retitle buttons 0 and 2, in id order) are on the register; retitling a registered docket changes the Title cell in BOTH tables",
+ "name": "twin register: Code vs Title (hand-authored; the register keyed either way)",
+ "tie": {
+  "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+  "left": "cell@Code#0",
+  "right": "cell@Title#0"
+ },
+ "readings": {
+  "Code": {
+   "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])": "cell@Code#0",
+   "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])": "cell@Code#0"
+  },
+  "Title": {
+   "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])": "cell@Code#0",
+   "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])": "cell@Title#0"
+  }
+ },
+ "predictions": {
+  "Code": "the register row is the same object with a new title (one attribute write, no churn)",
+  "Title": "the register row is replaced: the old register object vanishes and a new one appears"
+ }
+}

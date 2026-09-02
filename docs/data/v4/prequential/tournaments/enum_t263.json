@@ -1,0 +1,53 @@
+{
+ "stamp": {
+  "pid": 2203411,
+  "git_head": "c022930",
+  "engine_sha": "dbd7bfc7ed3e6d44",
+  "started": "2026-09-02 22:06:31",
+  "argv": [
+   "/home/moloch/semabi-scratch/preq/t263_enum",
+   "t263",
+   "/home/moloch/semabi-scratch/preq/logs/enum_t263.json",
+   "5000"
+  ]
+ },
+ "run": "/home/moloch/semabi-scratch/preq/t263_enum",
+ "name": "t263",
+ "reachable_fixpoints": 1,
+ "states_visited": 80,
+ "cycles": 0,
+ "endpoints": [
+  {
+   "rows": [
+    [
+     "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+     "cell@Takes up to#0"
+    ],
+    [
+     "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+     "cell@Ticket to#0"
+    ],
+    [
+     "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+     "None"
+    ]
+   ],
+   "paths": 16
+  }
+ ],
+ "intersection_all": [
+  [
+   "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+   "cell@Takes up to#0"
+  ],
+  [
+   "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+   "cell@Ticket to#0"
+  ],
+  [
+   "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "None"
+  ]
+ ],
+ "disputed_all": []
+}

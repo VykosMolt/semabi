@@ -1,0 +1,301 @@
+{
+ "run": "twin_retitle_dev",
+ "final": {
+  "contradictions": 0,
+  "churn": 0,
+  "visibility": 2,
+  "conflicts": 0,
+  "named": 0,
+  "positional": 0,
+  "unexplained": 95,
+  "spurious": 0,
+  "explained": 146,
+  "delta_atoms": 146,
+  "complexity": 10,
+  "steps": 375,
+  "churn_steps": [],
+  "contradiction_steps": [],
+  "visibility_steps": [
+   205,
+   208
+  ]
+ },
+ "open_questions": 4,
+ "questions": [
+  {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+   "left": "cell@Code#0",
+   "right": "cell@Title#0",
+   "reason": "undecided: chosen explains 146 with 2 errors, the alternative explains 148 with 36",
+   "tids": [
+    0
+   ],
+   "contested": [
+    "cell@Code#0",
+    "cell@Title#0"
+   ],
+   "status": "DECIDABLE",
+   "writers": {
+    "cell@Title#0": [
+     {
+      "operator": "op2",
+      "control": "button:Retitle",
+      "support": 38,
+      "acts": [
+       "click(button:Retitle@T0[?o0])"
+      ],
+      "test": "mutation",
+      "effect": "attr:Title#0(?o0) := *"
+     }
+    ]
+   },
+   "makers": [
+    {
+     "operator": "op1",
+     "control": "button:File docket",
+     "support": 22,
+     "acts": [
+      "click(button:File docket)"
+     ],
+     "test": "collision",
+     "parameters": []
+    }
+   ],
+   "movers": [],
+   "made_values": {
+    "op1": [
+     {
+      "cell@Code#0": null,
+      "cell@Title#0": "Ballast survey",
+      "key": "D-106"
+     },
+     {
+      "cell@Code#0": null,
+      "cell@Title#0": "Ballast survey",
+      "key": "D-106"
+     },
+     {
+      "cell@Code#0": null,
+      "cell@Title#0": "Ballast survey",
+      "key": "D-106"
+     },
+     {
+      "cell@Code#0": null,
+      "cell@Title#0": "Ballast survey",
+      "key": "D-107"
+     },
+     {
+      "cell@Code#0": null,
+      "cell@Title#0": "Ballast survey",
+      "key": "D-107"
+     },
+     {
+      "cell@Code#0": null,
+      "cell@Title#0": "Ballast survey",
+      "key": "D-107"
+     },
+     {
+      "cell@Code#0": null,
+      "cell@Title#0": "Harbour dues",
+      "key": "D-106"
+     },
+     {
+      "cell@Code#0": null,
+      "cell@Title#0": "Harbour dues",
+      "key": "D-106"
+     },
+     {
+      "cell@Code#0": null,
+      "cell@Title#0": "Harbour dues",
+      "key": "D-107"
+     },
+     {
+      "cell@Code#0": null,
+      "cell@Title#0": "Harbour dues",
+      "key": "D-107"
+     },
+     {
+      "cell@Code#0": null,
+      "cell@Title#0": "Quay repairs",
+      "key": "D-108"
+     },
+     {
+      "cell@Code#0": null,
+      "cell@Title#0": "Quay repairs",
+      "key": "D-108"
+     }
+    ]
+   },
+   "separable_by_the_history": {
+    "cell@Code#0": false,
+    "cell@Title#0": false
+   },
+   "decided": null,
+   "experiment": {
+    "test": "mutation",
+    "change": "cell@Title#0",
+    "by": "button:Retitle",
+    "operator": "op2",
+    "predictions": {
+     "cell@Code#0": "this instance persists and carries the new value",
+     "cell@Title#0": "this instance is replaced by another object"
+    }
+   }
+  },
+  {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+   "left": "cell@Code#0",
+   "right": "cell@Notes#0",
+   "reason": "undecided: chosen explains 146 with 2 errors, the alternative explains 174 with 973",
+   "tids": [
+    0
+   ],
+   "contested": [
+    "cell@Code#0",
+    "cell@Notes#0"
+   ],
+   "status": "DECIDABLE",
+   "writers": {
+    "cell@Notes#0": [
+     {
+      "operator": "op0",
+      "control": "button:Add note",
+      "support": 56,
+      "acts": [
+       "click(button:Add note@T0[?o0])"
+      ],
+      "test": "mutation",
+      "effect": "attr:Notes#0(?o0) := *"
+     }
+    ]
+   },
+   "makers": [
+    {
+     "operator": "op1",
+     "control": "button:File docket",
+     "support": 22,
+     "acts": [
+      "click(button:File docket)"
+     ],
+     "test": "collision",
+     "parameters": []
+    }
+   ],
+   "movers": [],
+   "made_values": {
+    "op1": [
+     {
+      "cell@Code#0": null,
+      "cell@Notes#0": "0",
+      "key": "D-106"
+     },
+     {
+      "cell@Code#0": null,
+      "cell@Notes#0": "0",
+      "key": "D-106"
+     },
+     {
+      "cell@Code#0": null,
+      "cell@Notes#0": "0",
+      "key": "D-106"
+     },
+     {
+      "cell@Code#0": null,
+      "cell@Notes#0": "0",
+      "key": "D-107"
+     },
+     {
+      "cell@Code#0": null,
+      "cell@Notes#0": "0",
+      "key": "D-107"
+     },
+     {
+      "cell@Code#0": null,
+      "cell@Notes#0": "0",
+      "key": "D-107"
+     },
+     {
+      "cell@Code#0": null,
+      "cell@Notes#0": "0",
+      "key": "D-106"
+     },
+     {
+      "cell@Code#0": null,
+      "cell@Notes#0": "0",
+      "key": "D-106"
+     },
+     {
+      "cell@Code#0": null,
+      "cell@Notes#0": "0",
+      "key": "D-107"
+     },
+     {
+      "cell@Code#0": null,
+      "cell@Notes#0": "0",
+      "key": "D-107"
+     },
+     {
+      "cell@Code#0": null,
+      "cell@Notes#0": "0",
+      "key": "D-108"
+     },
+     {
+      "cell@Code#0": null,
+      "cell@Notes#0": "0",
+      "key": "D-108"
+     }
+    ]
+   },
+   "separable_by_the_history": {
+    "cell@Code#0": false,
+    "cell@Notes#0": false
+   },
+   "decided": null,
+   "experiment": {
+    "test": "mutation",
+    "change": "cell@Notes#0",
+    "by": "button:Add note",
+    "operator": "op0",
+    "predictions": {
+     "cell@Code#0": "this instance persists and carries the new value",
+     "cell@Notes#0": "this instance is replaced by another object"
+    }
+   }
+  },
+  {
+   "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+   "left": null,
+   "right": "cell@Code#0",
+   "reason": "the trace so far scores both readings identically",
+   "tids": [],
+   "contested": [
+    "cell@Code#0"
+   ],
+   "status": "NO_KNOWN_EXPERIMENT",
+   "writers": {},
+   "makers": [],
+   "movers": [],
+   "made_values": {},
+   "separable_by_the_history": {},
+   "decided": null
+  },
+  {
+   "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+   "left": null,
+   "right": "cell@Title#0",
+   "reason": "undecided: chosen explains 146 with 2 errors, the alternative explains 196 with 43",
+   "tids": [],
+   "contested": [
+    "cell@Title#0"
+   ],
+   "status": "NO_KNOWN_EXPERIMENT",
+   "writers": {},
+   "makers": [],
+   "movers": [],
+   "made_values": {},
+   "separable_by_the_history": {},
+   "decided": null
+  }
+ ],
+ "reachable": 2
+}

@@ -1,0 +1,160 @@
+{
+ "stamp": {
+  "pid": 2202384,
+  "git_head": "c022930",
+  "engine_sha": "dbd7bfc7ed3e6d44",
+  "started": "2026-09-02 22:18:58",
+  "argv": [
+   "/home/moloch/semabi-scratch/preq/t188_enum",
+   "t188",
+   "/home/moloch/semabi-scratch/preq/logs/enum_t188.json",
+   "5000"
+  ]
+ },
+ "run": "/home/moloch/semabi-scratch/preq/t188_enum",
+ "name": "t188",
+ "reachable_fixpoints": 3,
+ "states_visited": 588,
+ "cycles": 0,
+ "endpoints": [
+  {
+   "rows": [
+    [
+     "button[_]",
+     "None"
+    ],
+    [
+     "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+     "cell@Takes up to#0"
+    ],
+    [
+     "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+     "cell@Ticket to#0"
+    ],
+    [
+     "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+     "None"
+    ],
+    [
+     "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+     "cell@Cargo#0"
+    ],
+    [
+     "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+     "cell@Current call#0"
+    ],
+    [
+     "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+     "cell@Length overall#0"
+    ]
+   ],
+   "paths": 50
+  },
+  {
+   "rows": [
+    [
+     "button[_]",
+     "button#0"
+    ],
+    [
+     "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+     "cell@Takes up to#0"
+    ],
+    [
+     "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+     "cell@Ticket to#0"
+    ],
+    [
+     "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+     "cell@Cargo#0"
+    ],
+    [
+     "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+     "cell@Length overall#0"
+    ],
+    [
+     "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+     "cell@Vessel#0"
+    ],
+    [
+     "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])",
+     "cell@Length overall#0"
+    ]
+   ],
+   "paths": 6
+  },
+  {
+   "rows": [
+    [
+     "button[_]",
+     "button#0"
+    ],
+    [
+     "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+     "cell@Takes up to#0"
+    ],
+    [
+     "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+     "cell@Ticket to#0"
+    ],
+    [
+     "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+     "cell@Cargo#0"
+    ],
+    [
+     "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+     "cell@Length overall#0"
+    ],
+    [
+     "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+     "cell@Vessel#0"
+    ]
+   ],
+   "paths": 2
+  }
+ ],
+ "intersection_all": [
+  [
+   "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+   "cell@Takes up to#0"
+  ],
+  [
+   "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+   "cell@Ticket to#0"
+  ],
+  [
+   "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "cell@Cargo#0"
+  ],
+  [
+   "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "cell@Length overall#0"
+  ]
+ ],
+ "disputed_all": [
+  [
+   "button[_]",
+   "None"
+  ],
+  [
+   "button[_]",
+   "button#0"
+  ],
+  [
+   "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "None"
+  ],
+  [
+   "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "cell@Current call#0"
+  ],
+  [
+   "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "cell@Vessel#0"
+  ],
+  [
+   "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])",
+   "cell@Length overall#0"
+  ]
+ ]
+}

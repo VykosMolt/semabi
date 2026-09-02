@@ -658,6 +658,73 @@ shared comparator -- with every scripted attack that found these defects promote
 test, and the fits every base poses are prefetched in parallel, since the loop is
 sequential by nature but its fits are not.
 
+## Part XIV -- the schedule family, the doctrines, and a scoreboard without counts
+
+Three loose ends from Part XIII were attacked in one night.
+
+**The schedule family.**  The closure over schedules was defined as the intersection of
+reachable tournament fixpoints, and `{fwd, rev}` was a sample of that set -- a semantic
+parameter until shown otherwise.  The loop's only nondeterminism is which stale family is
+re-run first and which open family is taken next, so the reachable set was enumerated
+exhaustively as a search over those choice points, memoised on state, at steps 188 and
+263.  Step 263 has one reachable fixpoint: sixteen paths, eighty states, one endpoint,
+the fwd tournament's three rows.  Step 188 has three -- fifty paths into the first,
+six into the second, two into a third that the fixed-order attacks never found, five
+hundred and eighty-eight states, no cycle -- and the intersection over all three is
+exactly the four rows the pair had already found.  The sampled family recovers the true
+intersection at both boundaries, with nothing over-approximated; the generator is a
+checked parameter now, not a semantic one, and the check is retained as an instrument
+for any boundary where it is doubted.
+
+**The doctrines, probed.**  For each corpus, the entity-type unions the hypothesis builder
+forms under its own keys against the unions surviving the search's chosen keys, every
+lost union attributed to the moves responsible by what decided them, and every link
+decision the created-later doctrine imposed.  On the twin ledger the inbox-and-register
+union is lost by an unearned-tie withdrawal with nothing behavioural moved, the ambiguity
+surviving only encoded in the register's own key questions.  On blend four builder
+unions are lost -- one by doctrine alone, a button family unioned with the blends table,
+plainly spurious.  On vet two are lost, both by evidence-decided key moves, one of them
+with no question surviving: the patient list and the appointment rows, whose relation
+the builder already reads as a link.  On harbour there is no builder union at all and
+four link decisions.  So the interaction is general, and on the three real applications
+no doctrine-only move deleted an evidenced hypothesis; the twin ledger is still the only
+corpus where it did.  The probe is retained as the first instrument of the
+doctrine-interaction discipline, and its coarse first attribution -- which called vet's
+evidenced loss silent -- is retained as a correction.
+
+**A scoreboard without claim counts.**  Per candidate reading of a chain: the transfer
+identification and the holdout verdict from the frontier; explanatory coverage and
+contradictions over the *shared* node-keyed surface -- atoms every candidate claims --
+with unshared claims counted as provenance and never scored; the survivor set; declared
+assumptions.  On harbour, 193 shared atoms: the source choice covers 75 with 9
+contradictions, tied only by the calls-logged key, a genuine near-equivalent, while the
+Duty-keyed alternative shows a wrong key's signature -- 30 contradictions on the shared
+surface and 165 unshared claims the metric refuses to count.  On blend, 244 atoms: the
+source choice covers 95 with none wrong, tied exactly by the variants the frontier had
+already placed in one class, and every wrong key contradicts.  On vet the shared surface
+is fifteen atoms and all eight candidates score alike: the scoreboard cannot separate
+them and says so, which agrees with the holdout and casts a question over the transfer
+verdict that the ledger never could.  Unshared volume never tracks the verdict anywhere.
+
+**The second regime, exercised.**  As built, the twin ledger had no separator: both
+readings explain the co-update.  A retitle operation writes a contested key candidate,
+which is exactly the mutation test the tie planner designs -- under a Title-keyed
+reading a retitled docket is replaced, under Code it persists -- and on the new corpus
+the planner classified the inbox question DECIDABLE through it, while the register's
+questions stayed NO_KNOWN_EXPERIMENT because its unkeyed rows are acted on by nothing.
+Two experiments on the same live actions, retitling two registered dockets: the
+planner's inbox test, and a hand-authored register test whose readings differ only on
+the register's key -- the world the vocabulary comparator had chosen.  Both decided, and
+decided the same way: Title refuted, Code surviving, on churn -- under a Title-keyed
+reading each retitle is a replaced object, under Code the same object explained twice --
+with the predictions frozen before the first click.  The refutations were propagated
+into the corpus as executed-experiment rows bound to the titles they held, and the
+tournament closure over the corpus then reached a confluent fixpoint with no derived row
+at all: Title is gone from every candidate set, every remaining question is undecided on
+its neutral base, and the register's None-against-Code stands open, as it should.  The
+world the vocabulary comparator chose is refuted by intervention, and nothing was
+manufactured in its place.
+
 ## What stands, and what is open
 
 The retained state, regenerated once more: harbour's development sidecar is now written by
@@ -679,7 +746,9 @@ What the two campaigns settled.  A prediction is judged under the closure of its
 evidence prefix, and that closure is what every schedule agrees on -- on harbour's full
 corpus, everything; at step 188, four rows and three open questions.  Claim comparison
 scores only the surface two readings share.  The twin ledger stays open under both
-repairs, which is the truth about that corpus.  Six findings were dissolved as
+repairs, which is the truth about that corpus -- and when the interface was given an
+operation that writes a contested key, the wrong reading was refuted by a live experiment
+with frozen predictions, and the closure re-derived with nothing manufactured in its place.  Six findings were dissolved as
 instrument defects or repaired at the semantics: the cycle residue, the emission-blind
 comparator, the vocabulary bias, the sibling-sensitive pruning, the retired-question
 re-derivation, and the closer-only lift.
@@ -689,10 +758,14 @@ architecture: a family's neutral base un-decides the cross-family structure its 
 triggers, so a tournament under the shared comparator settles the full harbour corpus
 into a second self-consistent world, and only external evidence -- transfer, holdout --
 says which world the retained one should be.  Two doctrines composed to delete an
-evidenced hypothesis on the twin ledger, and no doctrine-interaction discipline yet
-exists beyond that one instrument.  The behavioural ledgers agree with the prequential
+evidenced hypothesis on the twin ledger; the doctrine probe now shows the interaction is
+general -- it fires on blend and vet -- and that on the real applications it has so far
+deleted only junk, which is a fact about those corpora, not a guarantee.  The behavioural ledgers agree with the prequential
 closures on every probed claim, which means the ledger cannot see what the identity
 layer changes; identity should be judged on transfer and explanation, and the ledger is
-the wrong yardstick for it.  ORDERED stands where the intervention put it.  JOIN and
+the wrong yardstick for it; the scoreboard over the shared surface is a first one that
+reproduces the frontier's judgments on harbour and blend without counting claims, and
+declines to judge vet.  The schedule family behind the closure is checked by exhaustion at
+the two boundaries where it was doubted.  ORDERED stands where the intervention put it.  JOIN and
 aggregate remain unearned and are the next competence frontier, to be attacked as JOIN
 first, on its own.

@@ -1,0 +1,411 @@
+{
+ "run": "twin_retitle_dev",
+ "method": "tournament",
+ "comparator": "claim-content-v2",
+ "outcome": "FIXPOINT",
+ "rows": [
+  [
+   "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+   "cell@Title#0"
+  ],
+  [
+   "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+   "cell@Title#0"
+  ]
+ ],
+ "disputed": [],
+ "per_schedule": {
+  "fwd": {
+   "outcome": "FIXPOINT",
+   "base": "b531eac59d3e3cbf",
+   "rows": [],
+   "events": [
+    {
+     "e": "ROUND",
+     "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+     "candidates": [
+      "cell@Code#0",
+      "cell@Notes#0",
+      "cell@Actions/button#0"
+     ],
+     "newly_posed": []
+    },
+    {
+     "e": "TOURNAMENT",
+     "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+     "base": "b531eac59d3e3cbf",
+     "candidates": [
+      "cell@Code#0",
+      "cell@Notes#0",
+      "cell@Actions/button#0"
+     ],
+     "pairs": [
+      {
+       "left": "cell@Actions/button#0",
+       "right": "cell@Code#0",
+       "out": "UNDECIDED",
+       "refuted": null
+      },
+      {
+       "left": "cell@Actions/button#0",
+       "right": "cell@Notes#0",
+       "out": "UNDECIDED",
+       "refuted": null
+      },
+      {
+       "left": "cell@Code#0",
+       "right": "cell@Notes#0",
+       "out": "UNDECIDED",
+       "refuted": null
+      }
+     ],
+     "survivors": [
+      "cell@Code#0",
+      "cell@Notes#0",
+      "cell@Actions/button#0"
+     ],
+     "cyclic": false
+    },
+    {
+     "e": "ROUND",
+     "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+     "candidates": [
+      "None",
+      "cell@Code#0",
+      "cell@Stamp#0"
+     ],
+     "newly_posed": []
+    },
+    {
+     "e": "TOURNAMENT",
+     "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+     "base": "b531eac59d3e3cbf",
+     "candidates": [
+      "None",
+      "cell@Code#0",
+      "cell@Stamp#0"
+     ],
+     "pairs": [
+      {
+       "left": null,
+       "right": "cell@Code#0",
+       "out": "UNDECIDED",
+       "refuted": null
+      },
+      {
+       "left": null,
+       "right": "cell@Stamp#0",
+       "out": "UNDECIDED",
+       "refuted": null
+      },
+      {
+       "left": "cell@Code#0",
+       "right": "cell@Stamp#0",
+       "out": "UNDECIDED",
+       "refuted": null
+      }
+     ],
+     "survivors": [
+      "None",
+      "cell@Code#0",
+      "cell@Stamp#0"
+     ],
+     "cyclic": false
+    }
+   ]
+  },
+  "rev": {
+   "outcome": "FIXPOINT",
+   "base": "b531eac59d3e3cbf",
+   "rows": [],
+   "events": [
+    {
+     "e": "ROUND",
+     "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+     "candidates": [
+      "None",
+      "cell@Code#0",
+      "cell@Stamp#0"
+     ],
+     "newly_posed": []
+    },
+    {
+     "e": "TOURNAMENT",
+     "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+     "base": "b531eac59d3e3cbf",
+     "candidates": [
+      "None",
+      "cell@Code#0",
+      "cell@Stamp#0"
+     ],
+     "pairs": [
+      {
+       "left": null,
+       "right": "cell@Code#0",
+       "out": "UNDECIDED",
+       "refuted": null
+      },
+      {
+       "left": null,
+       "right": "cell@Stamp#0",
+       "out": "UNDECIDED",
+       "refuted": null
+      },
+      {
+       "left": "cell@Code#0",
+       "right": "cell@Stamp#0",
+       "out": "UNDECIDED",
+       "refuted": null
+      }
+     ],
+     "survivors": [
+      "None",
+      "cell@Code#0",
+      "cell@Stamp#0"
+     ],
+     "cyclic": false
+    },
+    {
+     "e": "ROUND",
+     "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+     "candidates": [
+      "cell@Code#0",
+      "cell@Notes#0",
+      "cell@Actions/button#0"
+     ],
+     "newly_posed": []
+    },
+    {
+     "e": "TOURNAMENT",
+     "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+     "base": "b531eac59d3e3cbf",
+     "candidates": [
+      "cell@Code#0",
+      "cell@Notes#0",
+      "cell@Actions/button#0"
+     ],
+     "pairs": [
+      {
+       "left": "cell@Actions/button#0",
+       "right": "cell@Code#0",
+       "out": "UNDECIDED",
+       "refuted": null
+      },
+      {
+       "left": "cell@Actions/button#0",
+       "right": "cell@Notes#0",
+       "out": "UNDECIDED",
+       "refuted": null
+      },
+      {
+       "left": "cell@Code#0",
+       "right": "cell@Notes#0",
+       "out": "UNDECIDED",
+       "refuted": null
+      }
+     ],
+     "survivors": [
+      "cell@Code#0",
+      "cell@Notes#0",
+      "cell@Actions/button#0"
+     ],
+     "cyclic": false
+    }
+   ]
+  }
+ },
+ "events": [
+  {
+   "e": "ROUND",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+   "candidates": [
+    "cell@Code#0",
+    "cell@Notes#0",
+    "cell@Actions/button#0"
+   ],
+   "newly_posed": [],
+   "schedule": "fwd"
+  },
+  {
+   "e": "TOURNAMENT",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+   "base": "b531eac59d3e3cbf",
+   "candidates": [
+    "cell@Code#0",
+    "cell@Notes#0",
+    "cell@Actions/button#0"
+   ],
+   "pairs": [
+    {
+     "left": "cell@Actions/button#0",
+     "right": "cell@Code#0",
+     "out": "UNDECIDED",
+     "refuted": null
+    },
+    {
+     "left": "cell@Actions/button#0",
+     "right": "cell@Notes#0",
+     "out": "UNDECIDED",
+     "refuted": null
+    },
+    {
+     "left": "cell@Code#0",
+     "right": "cell@Notes#0",
+     "out": "UNDECIDED",
+     "refuted": null
+    }
+   ],
+   "survivors": [
+    "cell@Code#0",
+    "cell@Notes#0",
+    "cell@Actions/button#0"
+   ],
+   "cyclic": false,
+   "schedule": "fwd"
+  },
+  {
+   "e": "ROUND",
+   "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+   "candidates": [
+    "None",
+    "cell@Code#0",
+    "cell@Stamp#0"
+   ],
+   "newly_posed": [],
+   "schedule": "fwd"
+  },
+  {
+   "e": "TOURNAMENT",
+   "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+   "base": "b531eac59d3e3cbf",
+   "candidates": [
+    "None",
+    "cell@Code#0",
+    "cell@Stamp#0"
+   ],
+   "pairs": [
+    {
+     "left": null,
+     "right": "cell@Code#0",
+     "out": "UNDECIDED",
+     "refuted": null
+    },
+    {
+     "left": null,
+     "right": "cell@Stamp#0",
+     "out": "UNDECIDED",
+     "refuted": null
+    },
+    {
+     "left": "cell@Code#0",
+     "right": "cell@Stamp#0",
+     "out": "UNDECIDED",
+     "refuted": null
+    }
+   ],
+   "survivors": [
+    "None",
+    "cell@Code#0",
+    "cell@Stamp#0"
+   ],
+   "cyclic": false,
+   "schedule": "fwd"
+  },
+  {
+   "e": "ROUND",
+   "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+   "candidates": [
+    "None",
+    "cell@Code#0",
+    "cell@Stamp#0"
+   ],
+   "newly_posed": [],
+   "schedule": "rev"
+  },
+  {
+   "e": "TOURNAMENT",
+   "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+   "base": "b531eac59d3e3cbf",
+   "candidates": [
+    "None",
+    "cell@Code#0",
+    "cell@Stamp#0"
+   ],
+   "pairs": [
+    {
+     "left": null,
+     "right": "cell@Code#0",
+     "out": "UNDECIDED",
+     "refuted": null
+    },
+    {
+     "left": null,
+     "right": "cell@Stamp#0",
+     "out": "UNDECIDED",
+     "refuted": null
+    },
+    {
+     "left": "cell@Code#0",
+     "right": "cell@Stamp#0",
+     "out": "UNDECIDED",
+     "refuted": null
+    }
+   ],
+   "survivors": [
+    "None",
+    "cell@Code#0",
+    "cell@Stamp#0"
+   ],
+   "cyclic": false,
+   "schedule": "rev"
+  },
+  {
+   "e": "ROUND",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+   "candidates": [
+    "cell@Code#0",
+    "cell@Notes#0",
+    "cell@Actions/button#0"
+   ],
+   "newly_posed": [],
+   "schedule": "rev"
+  },
+  {
+   "e": "TOURNAMENT",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+   "base": "b531eac59d3e3cbf",
+   "candidates": [
+    "cell@Code#0",
+    "cell@Notes#0",
+    "cell@Actions/button#0"
+   ],
+   "pairs": [
+    {
+     "left": "cell@Actions/button#0",
+     "right": "cell@Code#0",
+     "out": "UNDECIDED",
+     "refuted": null
+    },
+    {
+     "left": "cell@Actions/button#0",
+     "right": "cell@Notes#0",
+     "out": "UNDECIDED",
+     "refuted": null
+    },
+    {
+     "left": "cell@Code#0",
+     "right": "cell@Notes#0",
+     "out": "UNDECIDED",
+     "refuted": null
+    }
+   ],
+   "survivors": [
+    "cell@Code#0",
+    "cell@Notes#0",
+    "cell@Actions/button#0"
+   ],
+   "cyclic": false,
+   "schedule": "rev"
+  }
+ ]
+}

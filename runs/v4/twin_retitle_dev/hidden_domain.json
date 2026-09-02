@@ -1,0 +1,79 @@
+{
+ "name": "Twin Ledger docket desk",
+ "types": [
+  {
+   "name": "Docket",
+   "attrs": {
+    "code": "str",
+    "title": "str",
+    "stamp": "str",
+    "notes": "int",
+    "registered": "bool"
+   }
+  }
+ ],
+ "relations": [],
+ "operators": [
+  {
+   "name": "file_docket",
+   "params": [],
+   "precondition": "Some title in the pool is not yet filed.",
+   "effect": "Creates a Docket with the next code D-101, D-102, ..., the first free title, stamp 'wet', notes 0, registered false."
+  },
+  {
+   "name": "enter_register",
+   "params": [
+    [
+     "?docket",
+     "Docket"
+    ]
+   ],
+   "precondition": "The docket's registered is false.",
+   "effect": "Sets registered true.  The docket now also appears in the register table; it is the same docket, not a copy."
+  },
+  {
+   "name": "strike_register",
+   "params": [
+    [
+     "?docket",
+     "Docket"
+    ]
+   ],
+   "precondition": "The docket's registered is true.",
+   "effect": "Sets registered false."
+  },
+  {
+   "name": "turn_stamp",
+   "params": [
+    [
+     "?docket",
+     "Docket"
+    ]
+   ],
+   "precondition": "None.",
+   "effect": "Flips stamp between 'wet' and 'dry'.  A registered docket's row in the register table shows the new stamp too: one entity, two rows."
+  },
+  {
+   "name": "add_note",
+   "params": [
+    [
+     "?docket",
+     "Docket"
+    ]
+   ],
+   "precondition": "None.",
+   "effect": "Increments notes by one."
+  },
+  {
+   "name": "retitle_docket",
+   "params": [
+    [
+     "?docket",
+     "Docket"
+    ]
+   ],
+   "precondition": "Some title in the pool is not in use.",
+   "effect": "Sets the docket's title to the first unused pool title.  The same docket, with a new title, in both tables."
+  }
+ ]
+}

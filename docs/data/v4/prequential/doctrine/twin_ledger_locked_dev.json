@@ -1,0 +1,55 @@
+{
+ "run": "twin_ledger_locked_dev",
+ "steps": 216,
+ "unions_under_builder_keys": [
+  [
+   "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+   "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])"
+  ]
+ ],
+ "unions_under_chosen_keys": [],
+ "unions_lost": [
+  {
+   "union": [
+    "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+    "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])"
+   ],
+   "cause": "key withdrawn: ['row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])']",
+   "ambiguity_survives_as_question": true,
+   "judged_by_evidence": false
+  }
+ ],
+ "withheld_unions": [],
+ "link_decisions": [],
+ "moves": [
+  {
+   "move": "identity",
+   "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+   "decided_by": {
+    "unearned": "cell@Code#0"
+   }
+  }
+ ],
+ "open_questions": [
+  {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_]",
+   "left": "cell@Code#0",
+   "right": "cell@Title#0"
+  },
+  {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_]",
+   "left": "cell@Code#0",
+   "right": "cell@Notes#0"
+  },
+  {
+   "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+   "left": null,
+   "right": "cell@Code#0"
+  },
+  {
+   "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+   "left": null,
+   "right": "cell@Title#0"
+  }
+ ]
+}
