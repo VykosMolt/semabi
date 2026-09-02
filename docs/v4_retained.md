@@ -725,6 +725,104 @@ its neutral base, and the register's None-against-Code stands open, as it should
 world the vocabulary comparator chose is refuted by intervention, and nothing was
 manufactured in its place.
 
+## Part XV -- the wall, judged in its own worlds; and where JOIN actually is
+
+**Conditional bases.**  Finding 7's diagnosis was that a pairwise comparison judged
+inside a third world -- the neutral base, where the family is unkeyed -- confounds the
+two keys with the cross-family structure each key triggers.  The repair that follows is
+to judge each side in the world its own key implies: the search settled with the family
+pinned to that key -- pinning is lifting the family's own rows and refuting its other
+posed candidates -- and every other family free to re-settle; the verdict's premises then
+carry both conditional bases beside the neutral one that still governs invalidation.  A
+scripted miniature reproduces the confound (on the floor the wrong key wins by a
+collision the other world does not have) and shows the conditional judgement reversing
+it, order-free.  The production run on harbour's full corpus under the shared comparator
+(P15, pre-registered to reproduce the retained six rows) had not finished when this
+session paused on 2026-09-03; until it lands the conditional derivation stays a scratch
+instrument (`docs/data/v4/prequential/instruments/conditional.py`) and this paragraph
+claims nothing about harbour.
+
+**The link doctrine, judged.**  The builder's created-later rule turns a key-overlapping
+template into a link type -- a reference, not an identity -- when its key repeats within
+observations or its rows appear later for keys the other family already showed; harbour
+carries four such decisions, vet six, none of them ever judged.  V2 refinement's own
+toggle, `force_link`, flips a decision per template, so each one can be tried the other
+way: the union reading fitted, both readings' node-keyed claims collected, and the two
+compared on the shared surface exactly as candidate keys are.  The prediction was that
+harbour's links would hold; one does not.  The rule had read the page's `button[_]`
+family as a reference into the call-sheet group because the button repeats within an
+observation; read as one entity with the sheet instead, the reading is right about eight
+more of the atoms both readings claim and wrong about nothing more -- dominance on a
+shared surface, with no unshared claims on either side, so not a vocabulary artifact.
+That is the first doctrine decision falsified by evidence rather than by an adversarial
+instrument, and it was sitting in the retained model.  The board's link to the vessels
+overview is inert under the flip -- both readings claim the same atoms with the same
+verdicts -- and vet's three link decisions are undecidable on its development history.
+On harbour's transfer history the picture is mirrored: the button's flip is inert there,
+and the board's link to the vessels overview loses to its union by nine shared atoms with
+nothing more wrong -- the union Finding 7's floor base had formed under a collision, now
+formed under the transfer reading's own keys and explaining more.  Each of the retained
+model's judged links loses once, on one history, and is inert on the other: a doctrine
+decision is history-relative evidence, to be accumulated the way refutations are.  The
+link doctrine is therefore a hypothesis the probe can now judge, and on harbour it was
+judged wrong twice.
+
+**The scoreboard with both channels, on both histories.**  The emission channel --
+what a click returned, claimed per step -- joins the state channel on the same terms:
+shared steps only.  On vet's development history it contributes nothing, because vet's
+controls return nothing scorable, and the state surface is fifteen atoms on which all
+eight candidates score alike.  On vet's *transfer* history the surface grows to
+seventeen and the candidates separate: the source choice covers all seventeen with
+nothing wrong and the alternatives cover eleven -- the frontier's "behaviourally
+distinguished" verdict, visible at last on a surface every candidate addresses.  On
+harbour the two histories agree with each other, and the emission channel scores every
+key alike at ninety right and one wrong of ninety-one shared steps: harbour's keys are
+separated by state, not by messages.  On blend the transfer surface is nearly a thousand
+atoms with contradictions in the hundreds under every reading -- the known imperfection
+of blend's transfer, shared by all candidates and so no evidence between them -- and the
+class the frontier declared indistinguishable scores identically to the atom.  Unshared
+volume never tracks a verdict on any history.
+
+**Where JOIN is.**  The inducer's precondition literals are an object's attribute against
+a constant -- equal, unequal, at least, below, which is where Bottle's earned thresholds
+live -- its parent, and its reference slots against other bound objects.  There is no
+literal comparing one bound object's attribute with another's.  Harbour's berth
+allocation needs exactly that: the berth's capacity against the vessel's length, both
+objects bound -- the vessel through the clicked call's reference, the berth through the
+selection -- and it is inexpressible rather than unlearned.  The corpus says the same
+from the other side: the explorer attempted the allocation thirteen times on the
+development history and never once succeeded; six refusals are explained by unary facts
+and seven only by the comparison, all of them the same 132-metre vessel offered the same
+90-metre berth.  The learned operators say it a third way: the current compile has no success operator for
+the allocation at all, only refusals, and the length refusal is an emission with memorised
+constants -- `'<> is <> overall ; berth <> <> .'(?o2, 132 m, ?o3, takes 90 m)` -- whose two
+arguments are the vessel's and the berth's own attributes, under spurious unary
+preconditions, because the condition that actually fires it is the one comparison the
+grammar lacks.  So the first competence wall has two faces.  The grammar needs a
+comparison literal over pairs of bound variables' numeric slots, generated bottom-clause
+style from the positives' values and judged like every other literal; and the history
+needs positives to generate from, which the random explorer never produced.  Aggregation
+is a different problem and is not part of this one.
+
+Both faces were then addressed, and neither result is in yet.  The comparison belongs to
+the outcome layer's field theory rather than to the operator grammar: that layer already
+proposes harbour's `Length overall` and `Takes up to` as ORDERED candidates in bare
+numbers (the unit lives in the header-named template), so the earlier reading of a unit
+gap was the operator layer's emission arguments, not the abstract state.  The literal
+`p.a >= q.b` / `p.a < q.b` over the ordered fields of two bound roles is generated,
+evaluated and rendered beside the thresholds, and adopted by the same discipline over
+pairs of values -- at least two distinct pairs covered, at least two distinct reversed
+pairs on other events -- adopting both fields.  On the four existing corpora it changes
+nothing (identical candidates, rules and verdicts against the unchanged code), as it
+cannot: no corpus holds a positive allocation.  The corpus face was breached the same
+night through the experiment runner -- *Berth W1 allocated to call C-102.* at seed
+4247 -- and further extensions with a second refusal and three more seeds were
+collecting when the session paused.  Whether the fitted model then states the
+comparison, adopts the two fields, and transfers it to a holdout built on the other
+history is pre-registered as P21 in the campaign notes and not yet known; the role
+reaching the vessel row from the allocate button is the one place it could fail for a
+reason the ontology owns.
+
 ## What stands, and what is open
 
 The retained state, regenerated once more: harbour's development sidecar is now written by
@@ -760,7 +858,8 @@ into a second self-consistent world, and only external evidence -- transfer, hol
 says which world the retained one should be.  Two doctrines composed to delete an
 evidenced hypothesis on the twin ledger; the doctrine probe now shows the interaction is
 general -- it fires on blend and vet -- and that on the real applications it has so far
-deleted only junk, which is a fact about those corpora, not a guarantee.  The behavioural ledgers agree with the prequential
+deleted only junk, which is a fact about those corpora, not a guarantee; and the link
+doctrine, judged for the first time, was wrong once in harbour's retained model.  The behavioural ledgers agree with the prequential
 closures on every probed claim, which means the ledger cannot see what the identity
 layer changes; identity should be judged on transfer and explanation, and the ledger is
 the wrong yardstick for it; the scoreboard over the shared surface is a first one that

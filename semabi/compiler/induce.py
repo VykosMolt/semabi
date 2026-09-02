@@ -205,6 +205,10 @@ def _lit_str(l: tuple) -> str:
         return f"{l[2]}({l[1]}) >= {l[3]!r}"
     if k == "attr_lt":
         return f"{l[2]}({l[1]}) < {l[3]!r}"
+    if k == "attr_cmp_ge":
+        return f"{l[2]}({l[1]}) >= {l[4]}({l[3]})"
+    if k == "attr_cmp_lt":
+        return f"{l[2]}({l[1]}) < {l[4]}({l[3]})"
     if k == "parent":
         return f"parent({l[1]}) == {l[2]}"
     if k == "parent_ne":

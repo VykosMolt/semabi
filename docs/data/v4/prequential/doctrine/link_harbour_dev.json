@@ -1,0 +1,43 @@
+{
+ "run": "harbour_dev",
+ "links": [
+  {
+   "template": "button[_]",
+   "link_vs_union": "DECIDED",
+   "refuted": "link",
+   "counts": {
+    "left": {
+     "right": 91,
+     "wrong": 1
+    },
+    "right": {
+     "right": 99,
+     "wrong": 1
+    }
+   },
+   "unshared": {
+    "left": 0,
+    "right": 0
+   }
+  },
+  {
+   "template": "row[](cell@Berth[_],cell@Call[](button[_]),cell@Length overall[_ m],cell@Pilot[_",
+   "link_vs_union": "UNDECIDED",
+   "refuted": null,
+   "counts": {
+    "left": {
+     "right": 0,
+     "wrong": 0
+    },
+    "right": {
+     "right": 0,
+     "wrong": 0
+    }
+   },
+   "unshared": {
+    "left": 0,
+    "right": 0
+   }
+  }
+ ]
+}

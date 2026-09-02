@@ -9,9 +9,9 @@ equality could not have said -- and it never reaches a field the evidence does n
 """
 from __future__ import annotations
 
-from semabi.compiler.v4 import fields
+from semabi.compiler.v4 import binding, fields
 from semabi.compiler.v4 import outcome as oc
-from tests.test_v4_outcome import FakeInducer, ROLE, _occasions, _state
+from tests.test_v4_outcome import FakeInducer, Obj, ROLE, State, _occasions, _state
 
 
 def _bottle(rows):
@@ -95,3 +95,55 @@ def test_a_retained_intervention_corroborates_what_the_history_cannot(tmp_path):
     ordered_by_attr = {1: {"attr:committed": ["0", "2", "3", "4"]}}
     assert fields.adopted({"Bottle": model}, ordered_by_attr, fields.corroborated(tmp_path, proposed)) == ordered_by_attr
     assert fields.corroborated(tmp_path / "elsewhere", proposed) == set()
+
+
+BERTH_ROLES = {"vessel": oc.Role("vessel", oc.referring.SINGLETON, (), 1),
+               "berth": oc.Role("berth", oc.referring.SINGLETON, (), 2)}
+BERTH_FIELDS = {1: {"length": ["64", "78", "96", "100", "132", "140", "148", "150"]},
+                2: {"takes": ["70", "90", "100", "120", "140", "160"]}}
+
+
+def _berthing(rows):
+    """rows: ((vessel length, berth capacity), event) with one vessel and one berth."""
+    return [(State({(1, "v"): Obj(1, "v", {"length": str(l)}), (2, "b"): Obj(2, "b", {"takes": str(t)})}),
+             None, event, ("v", "b")) for (l, t), event in rows]
+
+
+def _allocate(rows):
+    return oc.learn_control(FakeInducer(), "Allocate", _berthing(rows), BERTH_ROLES, ordered=BERTH_FIELDS)
+
+
+def test_a_rule_may_compare_one_objects_field_with_anothers():
+    # no threshold on either field separates these: the longest vessel berthed (140 m) is
+    # longer than the shortest refused (132 m), and a 120 m berth took one and refused one
+    rows = [((78, 140), "berthed"), ((96, 120), "berthed"), ((100, 160), "berthed"),
+            ((64, 70), "berthed"), ((140, 160), "berthed"),
+            ((132, 90), "refused"), ((150, 120), "refused"), ((148, 100), "refused")]
+    model = _allocate(rows)
+    compared = {fields.ordered_fields(l) for r in model.rules for l in r.condition if len(l) == 5}
+    assert compared and compared <= {(("vessel", "length"), ("berth", "takes")),
+                                     (("berth", "takes"), ("vessel", "length"))}
+    assert fields.adopted({"Allocate": model}, BERTH_FIELDS) == BERTH_FIELDS
+    for (length, takes), expected in [((85, 90), "berthed"), ((200, 160), "refused")]:
+        state = _berthing([((length, takes), expected)])[0][0]
+        bound, status = model.bind(state, None)
+        assert model.predict(oc._literals(FakeInducer(), state, bound, status, {}, model.ordered)) == expected
+
+
+def test_a_comparison_witnessed_by_one_pair_on_the_far_side_is_that_instance():
+    rows = [((78, 140), "berthed"), ((96, 120), "berthed"), ((100, 160), "berthed"),
+            ((64, 70), "berthed"), ((140, 160), "berthed")] + [((132, 90), "refused")] * 3
+    assert fields.adopted({"Allocate": _allocate(rows)}, BERTH_FIELDS) == {}
+    rows += [((150, 120), "refused")] * 2
+    assert fields.adopted({"Allocate": _allocate(rows)}, BERTH_FIELDS) == BERTH_FIELDS
+
+
+def test_the_binding_evaluates_a_comparison_and_declines_an_unbound_one():
+    from semabi.compiler.induce import _lit_str
+    v, b = Obj(1, "v", {"length": "132"}), Obj(2, "b", {"takes": "90"})
+    ge, lt = ("attr_cmp_ge", "?v", "length", "?b", "takes"), ("attr_cmp_lt", "?v", "length", "?b", "takes")
+    assert binding.holds(ge, {"?v": v, "?b": b}, None) is True
+    assert binding.holds(lt, {"?v": v, "?b": b}, None) is False
+    assert binding.holds(ge, {"?v": v}, None) is None
+    assert binding.holds(ge, {"?v": v, "?b": Obj(2, "b", {})}, None) is None
+    assert _lit_str(ge) == "length(?v) >= takes(?b)"

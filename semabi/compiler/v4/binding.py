@@ -184,6 +184,9 @@ def holds(literal: tuple, values: Mapping[str, Any], state) -> bool | None:
     if head in ("attr_ge", "attr_lt"):
         from semabi.compiler.v4 import fields as field_theory
         return field_theory.holds(literal, values[literal[1]])
+    if head in ("attr_cmp_ge", "attr_cmp_lt"):
+        from semabi.compiler.v4 import fields as field_theory
+        return field_theory.holds_pair(literal, values[literal[1]], values[literal[3]])
     if head in ("ref", "ref_ne"):
         _, p, slot, q = literal
         return (_target(values[p].refs.get(slot)) == _target(values[q])) == (head == "ref")

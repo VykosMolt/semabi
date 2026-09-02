@@ -15,6 +15,7 @@ import json
 from pathlib import Path
 
 from semabi.compiler.v4 import consequence as csq
+from semabi.compiler.v4 import fields as field_theory
 from semabi.compiler.v4 import outcome as oc
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -36,7 +37,7 @@ def theory(run_dir: Path, reading, *, split: float = 0.5) -> dict:
             using = []
             for control, m in model.outcomes.items():
                 for rule in m.rules:
-                    if any(l[0] in ("attr_ge", "attr_lt") and l[2] == slot for l in rule.condition):
+                    if any(slot in [s for _, s in field_theory.ordered_fields(l)] for l in rule.condition):
                         using.append({"control": control, "rule": str(rule)})
             fields.append({"tid": tid, "slot": slot, "attribute": name(tid, slot),
                            "thresholds": thresholds,
@@ -48,8 +49,6 @@ def theory(run_dir: Path, reading, *, split: float = 0.5) -> dict:
 def corroborate(intervention: Path, attribute: str, into: list[Path]) -> dict:
     """Write what a retained intervention established about a field beside the histories
     that will be fitted: the theory, the attribute, the intervention and its verdicts."""
-    from semabi.compiler.v4 import fields as field_theory
-
     results = json.loads((Path(intervention) / "results.json").read_text())
     hypotheses = json.loads((Path(intervention) / "hypotheses.json").read_text()) \
         if (Path(intervention) / "hypotheses.json").is_file() else {}

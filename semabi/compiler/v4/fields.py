@@ -11,7 +11,9 @@ shape of a token: ORDERED is *proposed* for a numeric field and *adopted* only w
 ordered rule over it is justified on the history and says something an equality cannot --
 it covers occasions with more than one value of the field.  Adopted, it gives the outcome
 language two literals over that field, ``x >= v`` and ``x < v`` for the thresholds the
-history rendered, and nothing over any other field.
+history rendered, and nothing over any other field.  Between two bound objects it also gives
+``p.a >= q.b`` and ``p.a < q.b`` over their ordered fields -- a berth takes a vessel no longer
+than its capacity -- judged and adopted by the same discipline, over pairs of values.
 """
 from __future__ import annotations
 
@@ -20,6 +22,7 @@ from typing import Any
 
 MIN_DISTINCT = 3       # a field with fewer distinct numbers has no order to speak of
 GE, LT = "attr_ge", "attr_lt"
+CMP_GE, CMP_LT = "attr_cmp_ge", "attr_cmp_lt"
 
 
 def numeric(value: Any) -> float | None:
@@ -70,6 +73,18 @@ def literals(role: str, obj, ordered: dict[int, dict[str, list[str]]]) -> set[tu
     return out
 
 
+def pair_literals(binding: dict, ordered: dict[int, dict[str, list[str]]]) -> set[tuple]:
+    """The comparisons true between the ordered fields of any two bound objects."""
+    fields_ = []
+    for role, obj in binding.items():
+        for slot in ordered.get(getattr(obj, "tid", None), {}):
+            x = numeric(getattr(obj, "attrs", {}).get(slot))
+            if x is not None:
+                fields_.append((role, slot, x))
+    return {(CMP_GE if xp >= xq else CMP_LT, p, sp, q, sq)
+            for p, sp, xp in fields_ for q, sq, xq in fields_ if p != q}
+
+
 def holds(literal: tuple, obj) -> bool | None:
     """Whether an ordered literal is true of an object, or None when it has no number there."""
     head, _role, slot, v = literal
@@ -77,6 +92,24 @@ def holds(literal: tuple, obj) -> bool | None:
     if x is None:
         return None
     return x >= numeric(v) if head == GE else x < numeric(v)
+
+
+def holds_pair(literal: tuple, p_obj, q_obj) -> bool | None:
+    head, _p, slot_p, _q, slot_q = literal
+    xp = numeric(getattr(p_obj, "attrs", {}).get(slot_p))
+    xq = numeric(getattr(q_obj, "attrs", {}).get(slot_q))
+    if xp is None or xq is None:
+        return None
+    return xp >= xq if head == CMP_GE else xp < xq
+
+
+def ordered_fields(literal: tuple) -> tuple[tuple[str, str], ...]:
+    """The (role, slot) fields an ordered literal compares; none for any other literal."""
+    if literal[0] in (GE, LT):
+        return ((literal[1], literal[2]),)
+    if literal[0] in (CMP_GE, CMP_LT):
+        return ((literal[1], literal[2]), (literal[3], literal[4]))
+    return ()
 
 
 SIDECAR = "field_theories_v4.json"
@@ -116,7 +149,9 @@ def adopted(models: dict, candidates_: dict[int, dict[str, list[str]]],
     and 1 below it; cellar's `capacity < 4000 -> already washed` had every washed vessel
     below 4000 and one vessel above -- a threshold witnessed on the far side by a single
     value is that instance, not an order, so the far side needs two values as well
-    (the version space's own `MIN_COVER` for a rule, applied to the order)."""
+    (the version space's own `MIN_COVER` for a rule, applied to the order).  A comparison
+    between two objects' fields is judged the same way over pairs of values, and adopts
+    both fields."""
     out: dict[int, dict[str, list[str]]] = defaultdict(dict)
     for tid, slot in (corroborated_ or ()):
         if slot in candidates_.get(tid, {}):
@@ -126,33 +161,41 @@ def adopted(models: dict, candidates_: dict[int, dict[str, list[str]]],
         if ev is None:
             continue
         for rule in model.rules:
+            bits = [ev.index[l] for l in rule.condition if l in ev.index]
+            if len(bits) != len(rule.condition):
+                continue
+            cond = 0
+            for b in bits:
+                cond |= 1 << b
+            covered = [i for i, m in enumerate(ev.masks) if m & cond == cond]
             for lit in rule.condition:
-                if lit[0] not in (GE, LT):
+                fields_ = [(getattr(model.roles.get(role), "tid", None), slot)
+                           for role, slot in ordered_fields(lit)]
+                if not fields_ or any(slot not in candidates_.get(tid, {}) for tid, slot in fields_):
                     continue
-                head, role, slot, v = lit
-                tid = getattr(model.roles.get(role), "tid", None)
-                if tid is None or slot not in candidates_.get(tid, {}):
-                    continue
-                bits = [ev.index[l] for l in rule.condition if l in ev.index]
-                if len(bits) != len(rule.condition):
-                    continue
-                cond = 0
-                for b in bits:
-                    cond |= 1 << b
-                covered = [i for i, m in enumerate(ev.masks) if m & cond == cond]
-                value_of = _field_values(ev, role, slot)
+                if lit[0] in (GE, LT):
+                    value_of = _field_values(ev, lit[1], lit[2])
+                    threshold = numeric(lit[3])
+                    named_side = (lambda x: x >= threshold) if lit[0] == GE else (lambda x: x < threshold)
+                else:
+                    value_of = _pair_values(ev, lit[1], lit[2], lit[3], lit[4])
+                    named_side = (lambda x: x[0] >= x[1]) if lit[0] == CMP_GE else (lambda x: x[0] < x[1])
                 values = {value_of[i] for i in covered if i in value_of}
                 if len(values) < 2:
                     continue
-                threshold = numeric(v)
-                named_side = (lambda x: x >= threshold) if head == GE else (lambda x: x < threshold)
                 other_side = {x for i, x in value_of.items()
                               if not named_side(x) and ev.events[i] != rule.event}
                 # more than one value on the far side as well: a single instance there is
                 # that instance -- cellar's one 4000-gallon vessel -- and not an order
                 if len(other_side) >= 2:
-                    out[tid][slot] = candidates_[tid][slot]
+                    for tid, slot in fields_:
+                        out[tid][slot] = candidates_[tid][slot]
     return dict(out)
+
+
+def _pair_values(ev, p: str, slot_p: str, q: str, slot_q: str) -> dict[int, tuple[float, float]]:
+    a, b = _field_values(ev, p, slot_p), _field_values(ev, q, slot_q)
+    return {i: (a[i], b[i]) for i in a if i in b}
 
 
 def _field_values(ev, role: str, slot: str) -> dict[int, float]:

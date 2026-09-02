@@ -1,0 +1,45 @@
+{
+ "name": "harbour: positive berth allocations (JOIN corpus)",
+ "run": "runs/v4/harbour_dev",
+ "base": "http://127.0.0.1:8910",
+ "seed": 4247,
+ "tie": {
+  "family": "join",
+  "left": null,
+  "right": null
+ },
+ "readings": {
+  "A": {},
+  "B": {}
+ },
+ "actions": [
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-102"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 0
+   },
+   "text": "W1 - West Basin - takes 140 m - certified for hazardous cargo - open"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Allocate berth"
+   }
+  }
+ ],
+ "test": "mutation",
+ "predictions": {
+  "A": "n/a",
+  "B": "n/a"
+ },
+ "note": "C-102 (Kittiwake, 78 m) -> W1 (takes 140 m)"
+}

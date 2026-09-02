@@ -767,3 +767,260 @@ experiment rows: FIXPOINT, fwd == rev (base b531eac5), ZERO derived rows --
 Title absent from every candidate set, every remaining question undecided on
 its neutral base, register None-vs-Code open.  Pre-registration held.
 Night campaign complete; Part XIV filled; committing.
+
+# Eight-hour program (start 23:05, 2026-09-02)
+1. Finding 7 -- conditional bases.  A pairwise comparison F=a vs F=b judged
+   inside a third world (the floor, F unkeyed) confounds the keys with the
+   cross-family structure each key implies.  Repair candidate: judge each side
+   in the world its key implies -- the search settled with F pinned to that
+   key (pin = temporary refutation of F's other posed candidates), other
+   families free.  Premises record base_a and base_b.
+   P15: on harbour under tournament x shared, conditional bases reproduce the
+   retained six rows (Vessel world: board None, no collision) -- Finding 7's
+   divergence dissolves.  P16: t188 stays confluent-by-intersection.
+2. Link doctrine probe: for each created-later link decision, the union
+   alternative via H.force_link, both scored on the shared surface.
+   P17: harbour's four links are right (union contradicts on creation);
+   vet's six: unknown -- pre-registered as at least one undecidable.
+3. Scoreboard v0.1: add the emission channel's shared surface.  P18: vet's
+   candidates separate on emissions where the state surface could not.
+4. JOIN wall, located: does the harbour model express assign_berth's
+   cross-object length precondition (berth.max >= vessel.length via the
+   visit's refs)?  P19: it does not; the precondition language has no
+   two-object comparison.
+23:20 scripted_r8 4/4 (neutral-base confound reproduced; conditional bases
+judge each key in its own world; order-free; bases recorded).  Launched:
+conditional harbour (shared) for P15; link probes (force_link flip, shared
+surface) on harbour and vet for P17; scoreboard v0.1 with the emission
+channel on three apps for P18.  JOIN: harbour's model text mentions no
+berth capacity / vessel length anywhere -- format check pending.
+JOIN diagnostic (23:35): harbour model_v4.txt preconditions are all unary
+literals on one bound object (attr == / != value, id != value); multi-object
+operators exist (context + refs) but no two-object comparison anywhere;
+Allocate berth is not among fitted operators in that (possibly stale) text.
+Recompiling to dump the berth-allocation operators and their refusals.
+
+## JOIN wall, grammar level (23:45)
+induce._lit_str enumerates the precondition literals: attr / attr_ne /
+attr_ge / attr_lt -- an object's attribute against a CONSTANT (Bottle's
+thresholds live here); parent / parent_ne (structure); ref / ref_ne -- an
+object's reference slot against another BOUND object.  There is no literal
+comparing one bound object's attribute with another's (attr(?o0) >= attr(?o1)).
+assign_berth's rule -- berth.max_length >= vessel.length, with vessel reached
+from the clicked visit by a ref and the berth by the select act, both BOUND --
+is therefore inexpressible, not unlearned.  P19 holds at the grammar level;
+the fitted operator's unexplained refusals are the corpus-level half (join
+probe pending).
+Repair shape (next campaign, not tonight -- induce.py is hash-frozen and any
+change regenerates the manifests): an attr_cmp literal over pairs of bound
+variables' numeric slots with {>=, <=, ==}, candidates generated
+bottom-clause style from the positives' values, judged like every other
+literal by the existing cover/negatives discipline.  Aggregation (count/sum)
+is a different problem and stays out of it.
+
+## JOIN, corpus level (23:55): harbour_dev assign_berth 13 attempts, 0 ok
+6 refusals explained by unary facts; 7 explained ONLY by the cross-object
+rule (C-103 / Nordkapp 132 m onto N2 / 90 m, seven times).  Two walls: the
+grammar cannot state berth.max >= vessel.length, and the corpus has no
+positive allocation for any learner to learn the effect from.  The JOIN
+campaign needs a corpus that reaches a valid allocation (targeted explorer
+or acquired probe).  P19 holds at grammar and corpus level.
+Vet reconciled: the frontier separates candidates by observable state
+DELTAS on the TRANSFER history; the scoreboard scored dev.  Pre-registered
+P20: on vet_clinic_transfer the shared surface grows and candidates
+separate; harbour/blend transfer agree with their dev scoreboards.
+
+## Transfer scoreboards (00:20): P20 holds
+Vet transfer: shared 17 atoms; source_choice 17/0 vs alternatives 11/0 --
+the frontier's distinction is visible on the shared surface; emission
+channel 0 shared steps on vet in both histories (its controls emit nothing
+scorable).  Harbour transfer: 235 atoms; source_choice 102/1 == Calls-logged;
+Duty 87/40; emission 90/1 of 91 for every key -- messages do not separate
+harbour's keys, state does.  Blend transfer: 968 atoms; contradictions high
+and shared across candidates (the known transfer imperfection, not
+identity); the indistinguishable class holds (215/197 == cell variant,
+button 218/197); wrong keys worse (Style 215/358, Gallons 159/351).
+Dev scoreboards v0.1 (00:35): emission channel on dev -- harbour 67/4 of 71
+shared for every key (Duty too), blend 69/1 of 70 for every candidate:
+messages separate no keys on either app in either history; state does.
+Link probes crashed on csq.fit(run, None): fitting without a pinned reading
+runs the search inside the prefix view (graph lacks full sigs).  Fixed:
+settle the search's reading once, pin it, fit under the force_link patch.
+Relaunched on harbour and vet.
+
+## JOIN, operator level (00:45): the refusal is memorised
+Current harbour compile, Allocate berth: no success operator; refusals only
+-- "Nothing chosen in the berth list" (support 4), "already alongside; her
+berth cannot be changed" (unary), and the length refusal as an emission with
+MEMORISED constants: '<> is <> overall ; berth <> <> .'(?o2, 132 m, ?o3,
+takes 90 m) under spurious unary preconditions (Calls logged != 1/3).  The
+arguments are the vessel's and the berth's attributes; the deref lifting
+misses them ("takes 90 m" is not the attribute token), and the firing
+condition attr(?o3) < attr(?o2) is inexpressible.  P19 at three levels:
+grammar, corpus, learned operator.
+00:55 conditional harbour restarted with parallel pin prefetch (6 searches
+in private copies, then fits); link probes relaunched after removing a dead
+line of mine (model.inducer.H) that crashed vet after the pinned-reading fix.
+
+## Link doctrine probe (01:10): P17 partly falsified
+Harbour: button[_] linked to the call-sheet group by the repeats doctrine;
+the union flip is BETTER on the shared surface (99/1 vs 91/1, unshared
+0/0): the link decision is refuted by dominance -- the first doctrine
+decision falsified by evidence.  The board->overview link is inert under
+the flip (identical claims).  Vet: three link decisions UNDECIDED on dev
+(one with unshared 7 vs 5, no shared disagreement).  P17's "harbour's four
+links are right" is wrong for button[_]; the union's extra right atoms are
+shared atoms, not vocabulary.
+
+# Open-ended program (from 23:15, 2026-09-02) -- the queue
+A. Land P15 (conditional bases).  If it holds: promote conditional
+   derivation + pin prefetch into the production instrument behind
+   --bases conditional, promote scripted_r8 to tests, confirm on a harbour
+   copy under both comparators, fill Part XV, commit.
+B. Judged links (compiler change, hash-frozen -> manifests + battery regen):
+   the created-later/repeats link decision becomes a trial the search
+   judges on the shared surface via force_link, like withhold_union.
+   Gate: the transfer corroboration of button[_]'s flip (running).
+E. Bundle with B: key withdrawal on an exact tie keeps the union question
+   POSED (R3), so a doctrine-only dissolution can never be silent.
+D. Scoreboard adoption: semabi/eval/v4_identity_scoreboard.py + tests +
+   retained outputs for all three apps on both histories.
+C. JOIN campaign: (1) a harbour corpus with positive allocations, collected
+   as a targeted extension (select a fitting berth, Allocate) through the
+   experiment runner or Browser primitives; (2) attr_cmp literals over
+   pairs of bound variables in induce.py (frozen -> regen), bottom-clause
+   candidates from positives, judged by the cover/negatives discipline;
+   (3) attack: does the model learn berth.max >= vessel.length, does it
+   transfer, does it survive the metamorphic battery.
+F. Scoreboard term "minimum additional assumptions"; vet transfer evidence
+   -- reconciled by the transfer scoreboard, closed.
+Commit at each settled milestone; push; memory; the retained doc grows a
+Part per settled item.  Stop only on the user's word.
+D (23:30): semabi/eval/v4_identity_scoreboard.py + tests/test_v4_identity_scoreboard.py
+(4 pure tests: vocabulary cannot win, wrong key contradicts on shared,
+unchecked support earns nothing, empty surface separates no one).
+Retained outputs regenerating through the production instrument for all
+three apps on both histories (docs/data/v4/identity_scoreboard_*).
+
+## Link probe on harbour_transfer (23:45): each link loses once, on one history
+Transfer: button[_] flip INERT (0/0); the BOARD link refuted by its union
+(21/5 vs 12/5 on the shared surface; the link reading carries 17 unshared,
+the union 0).  Dev: button[_] refuted, board inert.  So on harbour both of
+the retained model's judged links lose to their unions on at least one
+history and are inert on the other -- doctrine decisions are history-
+relative evidence, to be accumulated like refutation rows.  The board's
+union winning on transfer is the very union Finding 7's floor base formed
+-- there under the Vessel override with a collision; here under the
+transfer reading's own keys, explaining nine more shared atoms.  The
+judged-links compiler move (B) is clearly worth its regeneration.
+
+## attr_cmp design (00:05), from the code
+Thresholds are field-theory literals (v4/fields.py GE/LT), proposed for a
+field whose rendered values are all bare numbers with >= 3 distinct values,
+adopted only when an ordered rule is justified; evaluated in binding.holds.
+Ground-truth literals per transition come from induce._literals over the
+bound objects (attr equalities, refs, parents, str_ne_attr -- a typed string
+against an attribute is already a cross-value comparison).
+Two facts for the JOIN literal:
+1. fields.numeric("78 m") is None -- harbour renders lengths WITH units, so
+   no ORDERED candidate ever forms on lengths or capacities.  A unit-aware
+   parse (leading number + unit token, comparable only across equal units)
+   is a precondition of any comparison on harbour.
+2. attr_cmp: ("attr_cmp_ge"|"attr_cmp_lt", p, slot_p, q, slot_q) over pairs
+   of BOUND objects whose two fields are both ORDERED candidates with the same
+   unit; generated in _literals as ground truth per transition (holds iff
+   num(p.slot_p) >= num(q.slot_q)), evaluated in binding.holds, adopted by
+   the same justification discipline (must cover occasions with more than
+   one value pair).  Candidate count bounded by bound objects x ordered
+   slots.  Hash-frozen files (induce.py, v4/fields.py, v4/binding.py,
+   consequence.py rendering) -> manifests + battery regeneration.
+Gate: the JOIN corpus (extensions across seeds) with positive allocations.
+Production scoreboard verified on vet (dev 15 shared 4/11 all; transfer 17 shared, source 17/0).
+Review pass (23:30, user's directive): production docstrings cut to what
+each function does, narrative comments removed, prefetch dedup simplified;
+23 production + 33 scripted tests pass; the reviewed instrument regenerates
+harbour's sidecar identically (rows, bases, held).  Committed 4ace613 with
+the four remaining scoreboard outputs.  Old eight-hour clock stopped; the
+open-ended hourly clock runs.
+
+## attr_cmp implemented (2026-09-03 00:05)
+Correction to the attr_cmp design note: the outcome layer's field theory
+already proposes harbour's `attr:Length overall#0` (64..132) and
+`attr:Takes up to#0` (70..160) as bare numbers -- the header-named templates
+carry the unit in the template (`cell[_ m]`), so fields.numeric sees "112".
+field_theory_harbour.json shows both, neither adopted.  No unit-aware parse
+is needed; the "78 m" observation came from the operator layer's emission
+arguments, not from the abstract state.
+Implemented: (attr_cmp_ge|attr_cmp_lt, p, slot_p, q, slot_q) literals,
+generated by fields.pair_literals over ordered pairs of distinct bound roles
+(both orientations, so >= and < each way), evaluated by fields.holds_pair via
+binding.holds, rendered by induce._lit_str, adopted by fields.adopted under
+the same discipline over PAIRS of values (>= 2 distinct covered pairs, >= 2
+distinct reversed pairs on other events); adoption takes both fields.
+Tests: three in tests/test_v4_fields.py.  Hash-frozen files touched (fields,
+outcome, binding, induce) -> manifests + battery regeneration before the
+retained artifacts are committed.  Regenerating the four field-theory reports
+as a no-change check on the existing corpora (harbour has no positive
+allocation, so nothing new can be adopted there).
+
+## P21 pre-registered (2026-09-03 00:40), before any JOIN corpus is fitted
+First JOIN extension landed: "Berth W1 allocated to call C-102." at step 375
+of harbour_join (seed 4247) -- the corpus wall is breached by one success.
+Merge (join_merge.py): dev = harbour_dev + join (1 success) + join2 (2
+successes, 1 refusal 78m->70m); holdout = harbour_dev + s11 + s12 + s13
+(positives only).  Prediction P21: fitted on dev with the comparison literals,
+the Allocate berth control's rule for the allocation event carries
+Takes up to(berth) >= Length overall(vessel) or its < mirror, both fields
+adopted (dev has >= 2 distinct pairs each side: successes 78/140, 96/120,
+78/140 ...; refusals 132/90 x7, 78/70); on the holdout its allocation claims
+are right where the control decides.  Under the unchanged code the control
+has no allocation rule (no literal separates the successes from the length
+refusals) and the holdout allocations are abstained or wrong.  If the roles
+never reach the vessel row from the Allocate button, the comparison cannot
+form and P21 fails for a reason the ontology owns (role reachability), to be
+recorded as such and not patched by a corpus-specific role.
+Regeneration check of the four retained field-theory reports under the new
+code: rules and verdicts identical on all four; harbour and cellar differ in
+PROPOSED candidates only (type ids renumbered, `Calls logged` proposed,
+cellar's Capacity gone) -- A/B against HEAD in a worktree running to
+attribute that to representation drift since 08-30 rather than to the change.
+00:55 chain bug: the join2 lane's wait loop grepped 'preq-join-collect-', which
+matched its own scope name, so it waited on itself for an hour after join1
+finished (23:47).  Stopped it and launched join2 directly; the seeds lane
+waits on the JOIN_COLLECT_DONE file and follows.
+01:05 A/B settled: HEAD (worktree) and the new code produce identical
+candidates, rules and verdicts on harbour_transfer and opus_02_cellar_dev; the
+differences from the retained 08-30 reports (type ids, `Calls logged`
+proposed, cellar's Capacity gone) are representation drift since then and will
+be refreshed by the battery.  The comparison literal is invariant on every
+existing corpus, as pre-registered (no positive allocation anywhere).
+Protocol fix for P21: --score-on scores every click of the other trace, so
+the holdout is harbour_transfer + s11..s13 (join_merge.py takes the base
+explicitly), never the fitted dev base.
+
+# Session paused (2026-09-03 01:20) -- user needs the machine for a MATS project
+Stopped: preq-cond2-harbour (P15, conditional bases on harbour, shared comparator,
+~1.3h in; pinned preps and fits are cached under harbour_cond/fixpoint_fits, so a
+relaunch resumes from cache).  Relaunch:
+  systemd-run --user --slice=preq.slice --scope --unit=preq-cond2-harbour-$(date +%s) \
+    -p MemoryMax=20G -q nice -n 19 env PYTHONPATH=/home/moloch/semabi \
+    /home/moloch/semabi/.venv/bin/python /home/moloch/semabi-scratch/preq/conditional_live.py \
+    /home/moloch/semabi-scratch/preq/harbour_cond harbour shared \
+    /home/moloch/semabi-scratch/preq/logs/cond_harbour_shared.json
+Left running (single-core, memory-capped, need the harbour fixture app on 8910):
+preq-join2-run (writes logs/result_join_harbour2.json, then JOIN_COLLECT_DONE) and
+preq-join-seeds (s11..s13 -> logs/result_join_s1{1,2,3}.json, then JOIN_ALL_DONE).
+Stop everything with: systemctl --user stop 'preq-*' 'join1-*'
+Resume order: (1) join_attack.sh dev once result_join_harbour2.json exists; read
+ft_join_dev.json / outcome_join_dev.json for the Allocate berth control's roles and
+rules (P21); (2) join_attack.sh holdout once JOIN_ALL_DONE exists; compare
+outcome_join_hold.json (new code) with outcome_join_hold_base.json (HEAD worktree
+at scratchpad/base -- recreate with `git worktree add <dir> <pre-change commit>` if
+the scratchpad is gone); (3) if P21 holds, battery regeneration (scripts/
+run_battery.sh) for the hash-frozen files, then commit retained artifacts and Part
+XVI; (4) relaunch P15; (5) B judged links + E posed union question.
+01:35 join1 fit (harbour_join, split 0.99, new code): `button:Allocate berth` has 8
+fitted occasions, 4 events, 0 rules -- one success is below MIN_COVER, as expected;
+the report does not print roles, so role reachability (vessel row from the allocate
+button) is still unknown: in the dev phase read model.outcomes[c].roles directly
+(csq.fit + oc) before judging P21.  Hourly clock monitor stopped for the pause.
