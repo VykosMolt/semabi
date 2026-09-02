@@ -553,24 +553,146 @@ XIII, and the premises machinery of Part VII carries the migration, since the
 comparator's name is a premise and every v2-derived verdict is stale under v3 by
 construction.
 
+## Part XIII -- no schedule has authority, and what that costs
+
+The prefix closures were computed under one worklist order, and Part XI's confluence
+result was about the full corpus.  So the first falsification target was prefix
+scheduler-independence: the same evidence prefix, resolved through six materially
+different worklist orders.  At step 188 every schedule reached a fixpoint and they reached
+*three*: four orders agreed, `rev` and a random order each found something else.  The
+traces give the mechanism exactly.  One question -- `Vessel vs Length overall` in the
+calls family -- is decided one way when a sibling row (None already refuted) is in the
+base and the other way when it is not; lift-first excludes a question's own row from its
+base but not its siblings', and on thin evidence the dominance direction is sensitive to
+them.  Then irreversibility finishes the job: a refuted key is never re-posed, so in
+`rev` the question that would have refuted None is never asked, and the pruning order is
+the survivor.  Step 263 split three against three on a single row, by a second mechanism:
+the button question was decided on the initial base and then *re-derived* on a later base
+on which the search no longer poses it at all -- a retired question given a verdict.  The
+full corpus was confluent only because every pairwise verdict there is direction-stable
+across bases.  The rows every schedule shared at step 188 were four; the evidence-determined
+content of that closure is those four rows, and the button verdict, the calls survivor and
+the berth/call family were schedule.
+
+The repair follows the mechanism.  A family's identity is one question over its
+candidates, decided by every pairwise comparison judged on the same base with no rows of
+that family present -- lift-first extended to siblings -- refuting exactly the dominated
+candidates and only when an undominated one exists; a dominance cycle refutes nothing.
+Because the search poses ties against a family's *current* key, a candidate can surface
+only once a survivor has emerged (harbour's Length overall is posed against Vessel, never
+against None), so the tournament runs in rounds, re-judging the accumulated candidates on
+the same neutral base until the posed set stops growing.  Under it the full harbour
+corpus reproduces the retained six derived rows exactly, on the retained base, and every
+prefix closure reaches the same reading the sequential closure reached, confluent at each
+of the four boundaries where two family orders were run.
+
+And yet step 188 still admits two worlds under the tournament.  Judged after the button
+verdict, the calls family's round poses five candidates and Vessel wins; judged first, on
+the empty floor, the posed set lacks None and Current call dominates, after which the
+button verdict goes the other way.  Each is a legitimate fixpoint under the recorded
+premises: the reading fingerprint is a faithful premise for *verdicts*, but the search's
+posed question set depends on refutation rows beyond the fingerprint, so candidate
+discovery is path-dependent and invalidation cannot see it.  The rows the two worlds share
+are exactly the four the sequential attack found invariant.  So the closure is not any
+single schedule's fixpoint.  It is the intersection of the tournament fixpoints over a
+schedule family, and every row in the union but not the intersection is written to the
+sidecar as order-disputed with the orders that reached it -- preserved open, with the
+competing survivors on record.  On the full harbour corpus the two family orders reach the
+same six-row fixpoint on the retained base and the disputed section is empty: what the
+retained state asserts is exactly what every order agrees on, and step 188 is what the
+distinction was for.
+
+### The comparator, attacked
+
+The delta-aware comparator of Part XII decided the twin ledger's register family -- for
+Title, a key with no overlap with the Code-keyed inbox: the two-type ontology, beating
+both None and Code by 79 checked units to 47 with the same 13 wrong.  The cached rows say
+why: forty supported creation claims against eight.  Entering a docket on the register is
+a creation of a register-row object under two types and an unclaimed membership change
+under one, so the finer partition out-claimed the coarser on the same events without being
+more right about anything both addressed.  Volume alone did not fool the rule -- the wild
+alternative keys, thousands of claims and hundreds wrong, stayed undecided -- but
+asymmetric vocabulary did.  Claim-content dominance is not ontology-neutral -- and
+not only on the instrument built to show it: run on harbour's full corpus, the same
+comparator moves the settled reading to a different base, refutes the vessel key the
+frontier's survivor is built on, and drops two retained refutations.  Its own output is
+retained as the evidence against it.
+
+The amended comparator scores only the shared claim surface: a state claim's atom is its
+kind and its page node, an ontology-neutral coordinate two readings share whatever they
+call the slot or the subject; only atoms both readings claim earn units; unshared claims
+are counted as provenance and never as evidence; and a step is a disagreement only on the
+emission signature or on a shared atom.  Separation needs a shared atom with differing
+predictions.  On the twin corpus this leaves all four questions undecided and the sidecar
+empty, which is the truth: the two ontologies are observationally equivalent on what that
+application showed, and the system now says so instead of picking the one with the larger
+vocabulary.  On harbour the same comparator reproduces the six retained verdicts exactly, on
+the retained base, with no question left undecided: the state channel changes nothing
+where the emission channel had already decided, and refuses to decide where the evidence
+does not.
+
+Run together on the full harbour corpus, the two repairs disagree with the retained
+state, and the disagreement is the campaign's deepest finding.  The tournament is
+confluent under the shared comparator -- both family orders reach one fixpoint -- but the
+fixpoint keys the vessels overview by Cargo, refuting Vessel, the key the frontier's
+survivor is built on.  The decisive pair is Vessel against Cargo on the overview's
+neutral base, tied under the emission channel and decided by four refuted creation claims
+under Vessel: on that base the *board* is keyed by Vessel and the overview is unkeyed, so
+the override overlaps the board's key, the builder reads the two tables as one entity,
+and scheduling a call creates an object whose identity already exists.  On the settled
+base the overview is Vessel and the board is None; nothing overlaps, the creation is
+supported under both keys, and the emission arguments decide for Vessel.  The two
+families' keys are mutually dependent through the union the overlap triggers.  The
+sequential loop asked the question on the floor, refuted Vessel, and re-derived it once
+the settled base existed; the tournament's neutral base *is* the floor for this family
+by construction -- lifting a family's own rows also un-decides the unions its key
+triggers -- and it never iterates out.  So the full corpus admits two self-consistent
+worlds too, visible only through creation claims, and the retained one is the one with
+external support: behaviourally distinguished on transfer, confirmed on the holdout.
+The retained state is not regenerated under that combination; the divergent closure is
+kept beside it as evidence, and the neutral base's treatment of cross-family structure is
+the open question the next campaign inherits.
+
+Both are in the instrument behind flags -- the tournament closure over schedules and the
+shared comparator -- with every scripted attack that found these defects promoted to a
+test, and the fits every base poses are prefetched in parallel, since the loop is
+sequential by nature but its fits are not.
+
 ## What stands, and what is open
 
-The regenerated state, end to end: every metamorphic invariant reads zero on every
-application -- member reversal, declared-column reversal, and renaming in both modes,
-version space and durable ledger alike, with no recorded exception anywhere for the
-first time.  Harbour's development history answers every identity question its search
-can pose, its sidecar rebuilt by the fixpoint instrument from the raw experiment alone
-and every derived verdict carrying its premises; blend's three retrospective verdicts
-carry backfilled premises beside a premise-less executed experiment.  The three transfer
-frontiers are unique survivors -- harbour and vet behaviourally distinguished, blend
-selected within a labelled equivalence class -- and harbour's holdout is
-CONFIRMED_WHERE_APPLICABLE.  The order-attack evidence is retained
-(`docs/data/v4/order_attack/`): seven schedules and the live reproduction, eight
-fixpoints, one endpoint.
+The retained state, regenerated once more: harbour's development sidecar is now written by
+the tournament closure over two family orders -- the same seven rows as before, the same
+bindings, every derived verdict carrying its comparator, its schedules and the pairwise
+losses that earned it, and no order-disputed section because the full corpus is confluent.
+Under it the authenticated manifests, the three transfer frontiers and the metamorphic
+battery were regenerated: harbour behaviourally distinguished with the holdout confirmed
+where applicable, vet and blend as they stood, and every invariant -- member reversal,
+declared-column reversal, renaming fresh and permuted -- at zero on every application, no
+exception recorded anywhere.  The full suite passes (542, no failures, the browser-driven
+tests included once Chromium was reinstalled), and the campaign's evidence is retained
+beside its conclusions under `docs/data/v4/prequential/`: fourteen prefix closures and
+their cells, twelve schedule attacks, the tournament fleet, the twin-ledger corpora and
+searches, both comparators' harbour runs -- including the rejected one's -- and the
+divergent tournament-and-shared closure kept as evidence against itself.
 
-ORDERED stands where the intervention put it and nowhere else.  JOIN and aggregate
-remain unearned, still waiting for Bottle-quality evidence.  Open beyond them: an
-oscillation on a real application would reopen the semantics question the order attack
-closed empirically -- the loop's cycle guard preserves it as open if it ever comes --
-and the prequential summary remains too coarse to register identity-level changes, a
-resolution question rather than a defect.
+What the two campaigns settled.  A prediction is judged under the closure of its own
+evidence prefix, and that closure is what every schedule agrees on -- on harbour's full
+corpus, everything; at step 188, four rows and three open questions.  Claim comparison
+scores only the surface two readings share.  The twin ledger stays open under both
+repairs, which is the truth about that corpus.  Six findings were dissolved as
+instrument defects or repaired at the semantics: the cycle residue, the emission-blind
+comparator, the vocabulary bias, the sibling-sensitive pruning, the retired-question
+re-derivation, and the closer-only lift.
+
+What is not dissolved.  The seventh finding is a semantic wall in the present
+architecture: a family's neutral base un-decides the cross-family structure its own key
+triggers, so a tournament under the shared comparator settles the full harbour corpus
+into a second self-consistent world, and only external evidence -- transfer, holdout --
+says which world the retained one should be.  Two doctrines composed to delete an
+evidenced hypothesis on the twin ledger, and no doctrine-interaction discipline yet
+exists beyond that one instrument.  The behavioural ledgers agree with the prequential
+closures on every probed claim, which means the ledger cannot see what the identity
+layer changes; identity should be judged on transfer and explanation, and the ledger is
+the wrong yardstick for it.  ORDERED stands where the intervention put it.  JOIN and
+aggregate remain unearned and are the next competence frontier, to be attacked as JOIN
+first, on its own.

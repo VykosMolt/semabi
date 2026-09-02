@@ -1,16 +1,11 @@
 {
  "run": "harbour_transfer",
- "reading": "joint discrimination x2",
+ "reading": "source_choice",
  "regime": "FROZEN_PREFIX",
  "split": 0.5,
  "cut": 229,
  "control": null,
  "bundle_determinism": {
-  "button#text/button": {
-   "occasions": 4,
-   "frames": 1,
-   "frames_with_more_than_one_delta_shape": 0
-  },
   "button:Allocate berth": {
    "occasions": 3,
    "frames": 1,
@@ -18,6 +13,11 @@
   },
   "button:Book pilot": {
    "occasions": 3,
+   "frames": 1,
+   "frames_with_more_than_one_delta_shape": 0
+  },
+  "button:Bring _": {
+   "occasions": 4,
    "frames": 1,
    "frames_with_more_than_one_delta_shape": 0
   },
@@ -39,7 +39,7 @@
   "button:Schedule call": {
    "occasions": 19,
    "frames": 2,
-   "frames_with_more_than_one_delta_shape": 1
+   "frames_with_more_than_one_delta_shape": 0
   },
   "button:Sign off": {
    "occasions": 14,
@@ -53,361 +53,17 @@
   }
  },
  "claims": {
-  "a bundle the evidence has shown": 48,
-  "the outcome layer did not name an event": 43,
-  "a combination of frame and delta never observed together": 21
+  "a bundle the evidence has shown": 96
  },
  "what_durably_changed": {
   "the branch's own delta": {
-   "right": 27,
-   "undetermined": 17,
-   "wrong": 5
+   "right": 95,
+   "wrong": 1
   },
   "the union of firing operators": {
-   "right": 40,
-   "wrong": 9
+   "right": 95,
+   "wrong": 1
   }
  },
- "hybrids": [
-  {
-   "step": 230,
-   "control": "button:Schedule call",
-   "frame": "Call <> opened for <> .",
-   "claimed_delta": [],
-   "deltas_this_frame_has": [
-    [
-     [
-      "add",
-      0
-     ],
-     [
-      "add",
-      10
-     ]
-    ],
-    [
-     [
-      "add",
-      10
-     ]
-    ],
-    [
-     [
-      "add",
-      10
-     ],
-     [
-      "rel",
-      "rel:7"
-     ]
-    ]
-   ]
-  },
-  {
-   "step": 243,
-   "control": "button:Schedule call",
-   "frame": "Call <> opened for <> .",
-   "claimed_delta": [],
-   "deltas_this_frame_has": [
-    [
-     [
-      "add",
-      0
-     ],
-     [
-      "add",
-      10
-     ]
-    ],
-    [
-     [
-      "add",
-      10
-     ]
-    ],
-    [
-     [
-      "add",
-      10
-     ],
-     [
-      "rel",
-      "rel:7"
-     ]
-    ]
-   ]
-  },
-  {
-   "step": 261,
-   "control": "button:Schedule call",
-   "frame": "Call <> opened for <> .",
-   "claimed_delta": [],
-   "deltas_this_frame_has": [
-    [
-     [
-      "add",
-      0
-     ],
-     [
-      "add",
-      10
-     ]
-    ],
-    [
-     [
-      "add",
-      10
-     ]
-    ],
-    [
-     [
-      "add",
-      10
-     ],
-     [
-      "rel",
-      "rel:7"
-     ]
-    ]
-   ]
-  },
-  {
-   "step": 271,
-   "control": "button:Schedule call",
-   "frame": "Call <> opened for <> .",
-   "claimed_delta": [],
-   "deltas_this_frame_has": [
-    [
-     [
-      "add",
-      0
-     ],
-     [
-      "add",
-      10
-     ]
-    ],
-    [
-     [
-      "add",
-      10
-     ]
-    ],
-    [
-     [
-      "add",
-      10
-     ],
-     [
-      "rel",
-      "rel:7"
-     ]
-    ]
-   ]
-  },
-  {
-   "step": 309,
-   "control": "button:Schedule call",
-   "frame": "Call <> opened for <> .",
-   "claimed_delta": [],
-   "deltas_this_frame_has": [
-    [
-     [
-      "add",
-      0
-     ],
-     [
-      "add",
-      10
-     ]
-    ],
-    [
-     [
-      "add",
-      10
-     ]
-    ],
-    [
-     [
-      "add",
-      10
-     ],
-     [
-      "rel",
-      "rel:7"
-     ]
-    ]
-   ]
-  },
-  {
-   "step": 316,
-   "control": "button:Schedule call",
-   "frame": "Call <> opened for <> .",
-   "claimed_delta": [],
-   "deltas_this_frame_has": [
-    [
-     [
-      "add",
-      0
-     ],
-     [
-      "add",
-      10
-     ]
-    ],
-    [
-     [
-      "add",
-      10
-     ]
-    ],
-    [
-     [
-      "add",
-      10
-     ],
-     [
-      "rel",
-      "rel:7"
-     ]
-    ]
-   ]
-  },
-  {
-   "step": 317,
-   "control": "button:Schedule call",
-   "frame": "Call <> opened for <> .",
-   "claimed_delta": [],
-   "deltas_this_frame_has": [
-    [
-     [
-      "add",
-      0
-     ],
-     [
-      "add",
-      10
-     ]
-    ],
-    [
-     [
-      "add",
-      10
-     ]
-    ],
-    [
-     [
-      "add",
-      10
-     ],
-     [
-      "rel",
-      "rel:7"
-     ]
-    ]
-   ]
-  },
-  {
-   "step": 331,
-   "control": "button:Schedule call",
-   "frame": "Call <> opened for <> .",
-   "claimed_delta": [],
-   "deltas_this_frame_has": [
-    [
-     [
-      "add",
-      0
-     ],
-     [
-      "add",
-      10
-     ]
-    ],
-    [
-     [
-      "add",
-      10
-     ]
-    ],
-    [
-     [
-      "add",
-      10
-     ],
-     [
-      "rel",
-      "rel:7"
-     ]
-    ]
-   ]
-  },
-  {
-   "step": 343,
-   "control": "button:Schedule call",
-   "frame": "Call <> opened for <> .",
-   "claimed_delta": [],
-   "deltas_this_frame_has": [
-    [
-     [
-      "add",
-      0
-     ],
-     [
-      "add",
-      10
-     ]
-    ],
-    [
-     [
-      "add",
-      10
-     ]
-    ],
-    [
-     [
-      "add",
-      10
-     ],
-     [
-      "rel",
-      "rel:7"
-     ]
-    ]
-   ]
-  },
-  {
-   "step": 349,
-   "control": "button:Schedule call",
-   "frame": "Call <> opened for <> .",
-   "claimed_delta": [],
-   "deltas_this_frame_has": [
-    [
-     [
-      "add",
-      0
-     ],
-     [
-      "add",
-      10
-     ]
-    ],
-    [
-     [
-      "add",
-      10
-     ]
-    ],
-    [
-     [
-      "add",
-      10
-     ],
-     [
-      "rel",
-      "rel:7"
-     ]
-    ]
-   ]
-  }
- ]
+ "hybrids": []
 }

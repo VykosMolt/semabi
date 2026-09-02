@@ -1,0 +1,55 @@
+{
+ "run": "twin_ledger_dev",
+ "outcome": "FIXPOINT",
+ "rows": [],
+ "events": [
+  {
+   "e": "DERIVE",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+   "q": {
+    "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+    "left": "cell@Code#0",
+    "right": "cell@Title#0"
+   },
+   "base": "b531eac59d3e3cbf",
+   "out": "UNDECIDED",
+   "refuted": null
+  },
+  {
+   "e": "DERIVE",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+   "q": {
+    "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+    "left": "cell@Code#0",
+    "right": "cell@Notes#0"
+   },
+   "base": "b531eac59d3e3cbf",
+   "out": "UNDECIDED",
+   "refuted": null
+  },
+  {
+   "e": "DERIVE",
+   "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+   "q": {
+    "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+    "left": null,
+    "right": "cell@Code#0"
+   },
+   "base": "b531eac59d3e3cbf",
+   "out": "UNDECIDED",
+   "refuted": null
+  },
+  {
+   "e": "DERIVE",
+   "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+   "q": {
+    "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+    "left": null,
+    "right": "cell@Title#0"
+   },
+   "base": "b531eac59d3e3cbf",
+   "out": "UNDECIDED",
+   "refuted": null
+  }
+ ]
+}

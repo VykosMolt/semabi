@@ -49,19 +49,10 @@
    "family": "button[_]",
    "key_slot": null,
    "held": [],
-   "why": "refuted by retained outcome evidence at the fixpoint (frozen prefix at 186)",
+   "why": "refuted by retained outcome evidence at the tournament closure (frozen prefix at 186)",
    "evidence": {
-    "instrument": "retrospective fixpoint",
-    "counts": {
-     "left": {
-      "right": 8,
-      "wrong": 0
-     },
-     "right": {
-      "right": 12,
-      "wrong": 0
-     }
-    },
+    "instrument": "retrospective tournament closure",
+    "counts": null,
     "split": 0.5
    },
    "premises": {
@@ -71,7 +62,14 @@
     "question": {
      "left": null,
      "right": "button#0"
-    }
+    },
+    "losses": [
+     "button#0"
+    ],
+    "schedules": [
+     "fwd",
+     "rev"
+    ]
    }
   },
   {
@@ -84,19 +82,10 @@
     "70",
     "90"
    ],
-   "why": "refuted by retained outcome evidence at the fixpoint (frozen prefix at 186)",
+   "why": "refuted by retained outcome evidence at the tournament closure (frozen prefix at 186)",
    "evidence": {
-    "instrument": "retrospective fixpoint",
-    "counts": {
-     "left": {
-      "right": 52,
-      "wrong": 0
-     },
-     "right": {
-      "right": 26,
-      "wrong": 0
-     }
-    },
+    "instrument": "retrospective tournament closure",
+    "counts": null,
     "split": 0.5
    },
    "premises": {
@@ -104,9 +93,16 @@
     "cut": 186,
     "comparator": "claim-content-v2",
     "question": {
-     "left": "cell@Berth#0",
-     "right": "cell@Takes up to#0"
-    }
+     "left": "cell@Takes up to#0",
+     "right": "cell@Berth#0"
+    },
+    "losses": [
+     "cell@Berth#0"
+    ],
+    "schedules": [
+     "fwd",
+     "rev"
+    ]
    }
   },
   {
@@ -118,19 +114,10 @@
     "150",
     "80"
    ],
-   "why": "refuted by retained outcome evidence at the fixpoint (frozen prefix at 186)",
+   "why": "refuted by retained outcome evidence at the tournament closure (frozen prefix at 186)",
    "evidence": {
-    "instrument": "retrospective fixpoint",
-    "counts": {
-     "left": {
-      "right": 48,
-      "wrong": 0
-     },
-     "right": {
-      "right": 24,
-      "wrong": 0
-     }
-    },
+    "instrument": "retrospective tournament closure",
+    "counts": null,
     "split": 0.5
    },
    "premises": {
@@ -138,28 +125,26 @@
     "cut": 186,
     "comparator": "claim-content-v2",
     "question": {
-     "left": "cell@Pilot#0",
-     "right": "cell@Ticket to#0"
-    }
+     "left": "cell@Ticket to#0",
+     "right": "cell@Pilot#0"
+    },
+    "losses": [
+     "cell@Pilot#0"
+    ],
+    "schedules": [
+     "fwd",
+     "rev"
+    ]
    }
   },
   {
    "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
    "key_slot": null,
    "held": [],
-   "why": "refuted by retained outcome evidence at the fixpoint (frozen prefix at 186)",
+   "why": "refuted by retained outcome evidence at the tournament closure (frozen prefix at 186)",
    "evidence": {
-    "instrument": "retrospective fixpoint",
-    "counts": {
-     "left": {
-      "right": 0,
-      "wrong": 0
-     },
-     "right": {
-      "right": 28,
-      "wrong": 0
-     }
-    },
+    "instrument": "retrospective tournament closure",
+    "counts": null,
     "split": 0.5
    },
    "premises": {
@@ -168,8 +153,17 @@
     "comparator": "claim-content-v2",
     "question": {
      "left": null,
-     "right": "cell@Vessel#0"
-    }
+     "right": "cell@Cargo#0"
+    },
+    "losses": [
+     "cell@Cargo#0",
+     "cell@Length overall#0",
+     "cell@Vessel#0"
+    ],
+    "schedules": [
+     "fwd",
+     "rev"
+    ]
    }
   },
   {
@@ -185,29 +179,27 @@
     "naphtha",
     "sawn timber"
    ],
-   "why": "refuted by retained outcome evidence at the fixpoint (frozen prefix at 186)",
+   "why": "refuted by retained outcome evidence at the tournament closure (frozen prefix at 186)",
    "evidence": {
-    "instrument": "retrospective fixpoint",
-    "counts": {
-     "left": {
-      "right": 28,
-      "wrong": 0
-     },
-     "right": {
-      "right": 16,
-      "wrong": 0
-     }
-    },
+    "instrument": "retrospective tournament closure",
+    "counts": null,
     "split": 0.5
    },
    "premises": {
-    "base": "b140777be23863f6",
+    "base": "80e46667526e29c0",
     "cut": 186,
     "comparator": "claim-content-v2",
     "question": {
-     "left": "cell@Vessel#0",
-     "right": "cell@Cargo#0"
-    }
+     "left": "cell@Cargo#0",
+     "right": "cell@Vessel#0"
+    },
+    "losses": [
+     "cell@Vessel#0"
+    ],
+    "schedules": [
+     "fwd",
+     "rev"
+    ]
    }
   },
   {
@@ -223,29 +215,27 @@
     "88",
     "96"
    ],
-   "why": "refuted by retained outcome evidence at the fixpoint (frozen prefix at 186)",
+   "why": "refuted by retained outcome evidence at the tournament closure (frozen prefix at 186)",
    "evidence": {
-    "instrument": "retrospective fixpoint",
-    "counts": {
-     "left": {
-      "right": 28,
-      "wrong": 0
-     },
-     "right": {
-      "right": 16,
-      "wrong": 0
-     }
-    },
+    "instrument": "retrospective tournament closure",
+    "counts": null,
     "split": 0.5
    },
    "premises": {
-    "base": "b140777be23863f6",
+    "base": "80e46667526e29c0",
     "cut": 186,
     "comparator": "claim-content-v2",
     "question": {
-     "left": "cell@Vessel#0",
-     "right": "cell@Length overall#0"
-    }
+     "left": "cell@Length overall#0",
+     "right": "cell@Vessel#0"
+    },
+    "losses": [
+     "cell@Vessel#0"
+    ],
+    "schedules": [
+     "fwd",
+     "rev"
+    ]
    }
   }
  ]

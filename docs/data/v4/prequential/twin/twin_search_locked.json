@@ -1,0 +1,82 @@
+{
+ "run": "twin_ledger_locked_dev",
+ "steps": 216,
+ "chosen": {
+  "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])": {
+   "key": "cell@Code#0",
+   "status": "SUPPORTED"
+  },
+  "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])": {
+   "key": null,
+   "status": "NO_IDENTITY"
+  }
+ },
+ "withheld_unions": [],
+ "promoted": [],
+ "open_questions": [
+  {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+   "left": "cell@Code#0",
+   "right": "cell@Title#0",
+   "why": null
+  },
+  {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+   "left": "cell@Code#0",
+   "right": "cell@Notes#0",
+   "why": null
+  },
+  {
+   "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+   "left": null,
+   "right": "cell@Code#0",
+   "why": null
+  },
+  {
+   "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+   "left": null,
+   "right": "cell@Title#0",
+   "why": null
+  }
+ ],
+ "moves": [
+  {
+   "move": "identity",
+   "round": 0,
+   "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+   "templates": 1,
+   "key_slot": null,
+   "status": "NO_IDENTITY",
+   "decided_by": {
+    "unearned": "cell@Code#0"
+   },
+   "score": {
+    "contradictions": 0,
+    "churn": 0,
+    "visibility": 3,
+    "conflicts": 0,
+    "named": 0,
+    "positional": 0,
+    "unexplained": 62,
+    "spurious": 0,
+    "explained": 82,
+    "delta_atoms": 82,
+    "complexity": 10,
+    "steps": 216,
+    "churn_steps": [],
+    "contradiction_steps": [],
+    "visibility_steps": [
+     138,
+     201,
+     208
+    ]
+   }
+  }
+ ],
+ "search_log": [
+  "v4 initial (V2 identities): contradictions 0, churn 0, visibility 3, conflicts 0, named 0, positional 0, unexplained 62, spurious 0, explained 82, atoms 82, complexity 10",
+  "v4 row[_](cell@Code[_],cell@Stamp[_],cell@Title[_]): key 'cell@Code#0' -> None, unearned on an exact tie",
+  "v4 round 0: moved; judging every family again against the new base",
+  "v4 final: contradictions 0, churn 0, visibility 3, conflicts 0, named 0, positional 0, unexplained 62, spurious 0, explained 82, atoms 82, complexity 10; 4 open questions"
+ ]
+}

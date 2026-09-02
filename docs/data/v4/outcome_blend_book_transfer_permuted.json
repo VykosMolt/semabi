@@ -1,6 +1,6 @@
 {
  "run": "blend_book_transfer",
- "reading": "joint discrimination x3",
+ "reading": "source_choice",
  "regime": "FROZEN_PREFIX",
  "split": 0.7,
  "control": "Record draw",
@@ -8,31 +8,27 @@
  "permuted_events": 7,
  "scored_on": "blend_book_transfer",
  "cut": 587,
- "operators": 51,
- "operators_with_an_output": 48,
+ "operators": 16,
+ "operators_with_an_output": 16,
  "output": {
-  "claims": 1702,
+  "claims": 592,
   "verdicts": {
-   "NOT_APPLICABLE": 1282,
-   "POSSIBLE": 10,
-   "REFUTED": 145,
-   "SUPPORTED": 151,
-   "UNKNOWN": 114
+   "NOT_APPLICABLE": 365,
+   "REFUTED": 83,
+   "SUPPORTED": 77,
+   "UNKNOWN": 67
   },
   "held_out_actions_with_an_output_claim": 74,
-  "distinct_decided_claims": 14,
+  "distinct_decided_claims": 11,
   "distinct_decided_frames": 5,
   "per_action": {
-   "applicable rules disagreed": 71,
-   "every applicable rule was contradicted": 3
+   "applicable rules disagreed": 74
   },
   "frame_only": {
-   "among": 71,
-   "wrong": 3
+   "among": 74
   },
   "model_level": {
-   "undetermined, the right event among them": 71,
-   "undetermined, and not among them": 3
+   "undetermined, the right event among them": 74
   },
   "distinct_events_where_determinate": 0,
   "majority_frame_control_where_determinate": {
@@ -42,10 +38,8 @@
    "accuracy": null
   },
   "distinct_events_predicted_per_action": {
-   "2": 54,
-   "3": 13,
-   "4": 3,
-   "5": 4
+   "2": 65,
+   "3": 9
   },
   "majority_frame_control": {
    "right": 34,
@@ -62,52 +56,90 @@
  },
  "state": {
   "verdicts": {
-   "NOT_APPLICABLE": 2265,
-   "REFUTED": 73,
-   "SUPPORTED": 246,
-   "UNKNOWN": 376
+   "NOT_APPLICABLE": 216,
+   "REFUTED": 6,
+   "SUPPORTED": 74
   },
   "per_action": {
+   "no rule applied": 37,
    "every applicable rule was right": 34,
-   "no rule applied": 25,
-   "every applicable rule was contradicted": 12,
-   "applicable rules disagreed": 3
+   "every applicable rule was contradicted": 3
   }
  },
  "outcome_model": {
   "controls": 6,
-  "rules": 23,
+  "rules": 15,
   "held_out_clicks": 74,
   "ledger": {
-   "no determinate answer": 73,
-   "a different event": 1
+   "no determinate answer": 67,
+   "a different event": 6,
+   "the event the interface returned": 1
   },
-  "accuracy_where_it_answered": 0.0,
-  "distinct_events_asserted": 1,
-  "answers_naming_an_event": 1,
-  "accuracy_where_it_named_an_event": 0.0,
+  "accuracy_where_it_answered": 0.143,
+  "distinct_events_asserted": 2,
+  "answers_naming_an_event": 7,
+  "accuracy_where_it_named_an_event": 0.143,
   "by_level": {
-   "a different event / the event alone": 1
+   "a different event / the event alone": 6,
+   "the event the interface returned / the event alone": 1
   },
   "events_asserted": {
-   "Drew <> from <> into <> .": 1
+   "<> is already <> .": 5,
+   "Drew <> from <> into <> .": 2
   },
   "majority_frame_control_where_it_answered": {
-   "right": 0,
-   "wrong": 1,
+   "right": 4,
+   "wrong": 3,
    "control_unseen_on_prefix": 0,
-   "accuracy": 0.0
+   "accuracy": 0.571
   },
   "by_control": {
    "button:Record draw": {
     "fitted": 150,
-    "rules": 6,
+    "rules": 3,
     "events_fitted": 6,
-    "no determinate answer": 73,
-    "a different event": 1
+    "no determinate answer": 67,
+    "a different event": 6,
+    "the event the interface returned": 1
    }
   },
   "wrong": [
+   {
+    "step": 701,
+    "control": "button:Record draw",
+    "predicted": "<> is already <> .",
+    "observed": "Drew <> from <> into <> .",
+    "returned": "Drew 1 gal from Low Barn into Fair Day.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 810,
+    "control": "button:Record draw",
+    "predicted": "<> is already <> .",
+    "observed": "<> is <> .",
+    "returned": "Low Barn is closed.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 816,
+    "control": "button:Record draw",
+    "predicted": "<> is already <> .",
+    "observed": "<> is <> .",
+    "returned": "Low Barn is closed.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 825,
+    "control": "button:Record draw",
+    "predicted": "<> is already <> .",
+    "observed": "Drew <> from <> into <> .",
+    "returned": "Drew 1 gal from Low Barn into House Red.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
    {
     "step": 827,
     "control": "button:Record draw",
@@ -116,15 +148,24 @@
     "returned": "Creek Bed is closed.",
     "verdict": "a different event",
     "level": "the event alone"
+   },
+   {
+    "step": 830,
+    "control": "button:Record draw",
+    "predicted": "<> is already <> .",
+    "observed": "Drew <> from <> into <> .",
+    "returned": "Drew 1 gal from Low Barn into Fair Day.",
+    "verdict": "a different event",
+    "level": "the event alone"
    }
   ],
   "lists": {
-   "button#cell/button": "button#cell/button: 15 fitted occasions, 1 distinct events\n    role relation['forward', 'in:1']:1<owner = relation['forward', 'in:1'] from owner\n    role singleton[]:5 = singleton[]\n    role singleton[]:6 = singleton[]\n    otherwise  ->  Opened <> .   [15]\n    otherwise -> Opened <> .\n    'Opened <> .' arguments: 0=relation['forward', 'in:1']:1<owner",
-   "button:Bottle _": "button:Bottle _: 2 fitted occasions, 2 distinct events\n    role singleton[]:8 = singleton[]\n    otherwise -> undetermined\n    '<> <> .' arguments: 1=owner\n    '<> has <> committed ; need at least <> to bottle .' arguments: 0=owner",
-   "button:Close _": "button:Close _: 17 fitted occasions, 2 distinct events\n    role singleton[]:7 = singleton[]\n    role singleton[]:10 = singleton[]\n    ('ref_set', 'singleton[]:7', 'rel:5')  ->  <> <> .   [10]\n    attr:cell#0@2(owner) == 'Chenin'  ->  <> <> .   [3]\n    otherwise -> undetermined\n    '<> <> .' arguments: 1=owner",
-   "button:Disgorge _": "button:Disgorge _: 3 fitted occasions, 1 distinct events\n    role singleton[]:5 = singleton[]\n    role singleton[]:7 = singleton[]\n    otherwise  ->  Disgorged <> .   [3]\n    otherwise -> Disgorged <> .\n    'Disgorged <> .' arguments: 0=owner",
-   "button:Record draw": "button:Record draw: 150 fitted occasions, 6 distinct events\n    role selection['combobox#0']:1 = selection['combobox#0']\n    role selection['combobox#1']:3 = selection['combobox#1'][35/57] or property['attr:blend#0', None][35/59]\n    attr:.#0(owner) == 'Opened Creek Bed'  ->  Drew <> from <> into <> .   [3]\n    attr:cell#0@3(selection['combobox#0']:1) == '6'  ->  Drew <> from <> into <> .   [3]\n    attr:( ) , gal open#1(owner) == 'Pinot'  ->  <> is already <> .   [2]\n    attr:( ) , closed gal#1(owner) == 'Chenin'  ->  <> is already <> .   [2]\n    attr:.#0(owner) == 'Closed Mill Race'  ->  Drew <> from <> into <> .   [2]\n    attr:.#0(owner) == 'Opened Orchard' & no_children(owner)  ->  <> is already <> .   [2]\n    otherwise -> undetermined\n    '<> holds <> ; cannot draw <> .' arguments: 0=selection['combobox#0']:1\n    '<> is <> .' arguments: 0=selection['combobox#0']:1\n    '<> is already <> .' arguments: 0=selection['combobox#1']:3\n    'Drew <> from <> into <> .' arguments: 1=selection['combobox#0']:1, 2=selection['combobox#1']:3",
-   "button:Return ticket _ gal from _ out of _": "button:Return ticket _ gal from _ out of _: 76 fitted occasions, 2 distinct events\n    role relation['forward', 'rel:1']:1<owner = relation['forward', 'rel:1'] from owner\n    role relation['forward', 'rel:3']:3<owner = relation['forward', 'rel:3'] from owner\n    attr:cell#1(owner) == '3'  ->  Returned <> to <> from <> .   [6]\n    attr:cell#1(owner) == '4'  ->  Returned <> to <> from <> .   [5]\n    attr:cell#1(owner) == '6'  ->  Returned <> to <> from <> .   [3]\n    attr:cell#1(owner) == '5'  ->  Returned <> to <> from <> .   [3]\n    attr:cell#1(owner) == '18'  ->  Returned <> to <> from <> .   [3]\n    attr:cell#1(owner) == '14'  ->  Returned <> to <> from <> .   [3]\n    attr:cell#1(owner) == '13'  ->  Returned <> to <> from <> .   [3]\n    attr:cell#1(owner) == '12'  ->  Returned <> to <> from <> .   [3]\n    attr:cell#1(owner) == '11'  ->  Returned <> to <> from <> .   [3]\n    attr:gal#0(owner) == '2'  ->  Returned <> to <> from <> .   [2]\n    attr:cell#1(owner) == '24'  ->  Returned <> to <> from <> .   [2]\n    attr:cell#1(owner) == '21'  ->  Returned <> to <> from <> .   [2]\n    attr:cell#1(owner) == '15'  ->  Returned <> to <> from <> .   [2]\n    otherwise -> undetermined\n    '<> is <> ; disgorge it before returning a draw .' arguments: 0=relation['forward', 'rel:3']:3<owner\n    'Returned <> to <> from <> .' arguments: 1=relation['forward', 'rel:1']:1<owner, 2=relation['forward', 'rel:3']:3<owner"
+   "button#cell/button": "button#cell/button: 15 fitted occasions, 1 distinct events\n    otherwise  ->  Opened <> .   [15]\n    otherwise -> Opened <> .\n    'Opened <> .' arguments: 0=owner",
+   "button:Bottle _": "button:Bottle _: 7 fitted occasions, 2 distinct events\n    role relation['backward', 'rel:1']:2<owner = relation['backward', 'rel:1'] from owner\n    attr:Committed gal#0(owner) < '4'  ->  <> <> .   [3]\n    attr:Year#0(owner) == '2020'  ->  <> <> .   [2]\n    otherwise -> undetermined\n    '<> <> .' arguments: 1=owner\n    '<> has <> committed ; need at least <> to bottle .' arguments: 0=owner",
+   "button:Close _": "button:Close _: 17 fitted occasions, 2 distinct events\n    attr:Varietal#0(owner) == 'Chenin'  ->  <> <> .   [6]\n    attr:Varietal#0(owner) == 'Pinot'  ->  <> <> .   [4]\n    attr:Gallons left#0(owner) == '7'  ->  <> <> .   [3]\n    attr:Gallons left#0(owner) == '0'  ->  <> <> .   [2]\n    otherwise -> undetermined\n    '<> <> .' arguments: 1=owner",
+   "button:Disgorge _": "button:Disgorge _: 5 fitted occasions, 1 distinct events\n    otherwise  ->  Disgorged <> .   [5]\n    otherwise -> Disgorged <> .\n    'Disgorged <> .' arguments: 0=owner",
+   "button:Record draw": "button:Record draw: 150 fitted occasions, 6 distinct events\n    role selection['combobox#0']:0 = selection['combobox#0']\n    role selection['combobox#1']:1 = selection['combobox#1']\n    role relation['forward', 'rel:0']:0<selection['combobox#2']:2 = relation['forward', 'rel:0'] from selection['combobox#2']:2\n    role selection['combobox#2']:2 = selection['combobox#2']\n    attr:Gallons left#0(selection['combobox#0']:0) == '6'  ->  Drew <> from <> into <> .   [3]\n    attr:Gallons left#0(relation['forward', 'rel:0']:0<selection['combobox#2']:2) == '3'  ->  Drew <> from <> into <> .   [2]\n    attr:cell@Vat#1(selection['combobox#0']:0) == None & no_children(selection['combobox#1']:1)  ->  <> is already <> .   [2]\n    otherwise -> undetermined\n    '<> holds <> ; cannot draw <> .' arguments: 0=selection['combobox#0']:0, 2=selection['combobox#2']:2\n    '<> is <> .' arguments: 0=selection['combobox#0']:0\n    '<> is already <> .' arguments: 0=selection['combobox#1']:1\n    '<> is single-varietal ( <> ) ; <> is <> .' arguments: 0=selection['combobox#1']:1",
+   "button:Return ticket _ gal from _ out of _": "button:Return ticket _ gal from _ out of _: 76 fitted occasions, 2 distinct events\n    role relation['forward', 'rel:0']:0<owner = relation['forward', 'rel:0'] from owner\n    role relation['forward', 'rel:1']:1<owner = relation['forward', 'rel:1'] from owner\n    attr:Committed gal#0(relation['forward', 'rel:1']:1<owner) < '4'  ->  Returned <> to <> from <> .   [5]\n    attr:Gallons left#0(relation['forward', 'rel:0']:0<owner) == '1'  ->  Returned <> to <> from <> .   [5]\n    attr:Gate#0(relation['forward', 'rel:0']:0<owner) == 'Open' & attr:State#0(relation['forward', 'rel:1']:1<owner) == 'Bottled'  ->  Returned <> to <> from <> .   [7]\n    attr:Gate#0(relation['forward', 'rel:0']:0<owner) == 'Closed' & attr:Varietal#0(relation['forward', 'rel:0']:0<owner) == 'Syrah'  ->  Returned <> to <> from <> .   [2]\n    otherwise -> undetermined\n    '<> is <> ; disgorge it before returning a draw .' arguments: 0=relation['forward', 'rel:1']:1<owner\n    'Returned <> to <> from <> .' arguments: 1=relation['forward', 'rel:0']:0<owner, 2=relation['forward', 'rel:1']:1<owner"
   }
  }
 }

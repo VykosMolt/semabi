@@ -1,0 +1,212 @@
+{
+ "stamp": {
+  "pid": 1874685,
+  "git_head": "ba5f0e0",
+  "engine_sha": "dbd7bfc7ed3e6d44",
+  "started": "2026-09-02 15:00:55",
+  "argv": [
+   "/home/moloch/semabi-scratch/preq/twin_v3",
+   "twin",
+   "/home/moloch/semabi-scratch/preq/logs/r1_twin.json"
+  ]
+ },
+ "run": "/home/moloch/semabi-scratch/preq/twin_v3",
+ "name": "twin",
+ "comparator": "claim-content-v3-delta",
+ "raw_floor": [],
+ "outcome": "FIXPOINT",
+ "endpoint": [
+  [
+   "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+   "cell@Title#0"
+  ],
+  [
+   "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+   "None"
+  ],
+  [
+   "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+   "cell@Code#0"
+  ]
+ ],
+ "base": "a3e9f33d7b4cd38c",
+ "disputed": null,
+ "events": [
+  {
+   "e": "DERIVE",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+   "q": {
+    "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+    "left": "cell@Code#0",
+    "right": "cell@Title#0"
+   },
+   "base": "b531eac59d3e3cbf",
+   "out": "UNDECIDED",
+   "refuted": null
+  },
+  {
+   "e": "DERIVE",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+   "q": {
+    "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+    "left": "cell@Code#0",
+    "right": "cell@Notes#0"
+   },
+   "base": "b531eac59d3e3cbf",
+   "out": "UNDECIDED",
+   "refuted": null
+  },
+  {
+   "e": "DERIVE",
+   "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+   "q": {
+    "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+    "left": null,
+    "right": "cell@Code#0"
+   },
+   "base": "b531eac59d3e3cbf",
+   "out": "UNDECIDED",
+   "refuted": null
+  },
+  {
+   "e": "DERIVE",
+   "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+   "q": {
+    "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+    "left": null,
+    "right": "cell@Title#0"
+   },
+   "base": "b531eac59d3e3cbf",
+   "out": "DECIDED",
+   "refuted": "left"
+  },
+  {
+   "e": "DERIVE",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+   "q": {
+    "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+    "left": "cell@Code#0",
+    "right": "cell@Title#0"
+   },
+   "base": "5b4b1a9daf9e95ae",
+   "out": "UNDECIDED",
+   "refuted": null
+  },
+  {
+   "e": "DERIVE",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+   "q": {
+    "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+    "left": "cell@Code#0",
+    "right": "cell@Notes#0"
+   },
+   "base": "5b4b1a9daf9e95ae",
+   "out": "UNDECIDED",
+   "refuted": null
+  },
+  {
+   "e": "DERIVE",
+   "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+   "q": {
+    "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+    "left": "cell@Code#0",
+    "right": "cell@Title#0"
+   },
+   "base": "5b4b1a9daf9e95ae",
+   "out": "DECIDED",
+   "refuted": "left"
+  },
+  {
+   "e": "DERIVE",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+   "q": {
+    "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+    "left": "cell@Code#0",
+    "right": "cell@Title#0"
+   },
+   "base": "a3e9f33d7b4cd38c",
+   "out": "DECIDED",
+   "refuted": "right"
+  },
+  {
+   "e": "DERIVE",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+   "q": {
+    "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+    "left": "cell@Code#0",
+    "right": "cell@Notes#0"
+   },
+   "base": "a3e9f33d7b4cd38c",
+   "out": "UNDECIDED",
+   "refuted": null
+  },
+  {
+   "e": "DERIVE",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+   "q": {
+    "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+    "left": "cell@Code#0",
+    "right": "cell@Actions/button#0"
+   },
+   "base": "a3e9f33d7b4cd38c",
+   "out": "UNDECIDED",
+   "refuted": null
+  },
+  {
+   "e": "DERIVE",
+   "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+   "q": {
+    "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+    "left": "cell@Title#0",
+    "right": "cell@Stamp#0"
+   },
+   "base": "a3e9f33d7b4cd38c",
+   "out": "UNDECIDED",
+   "refuted": null
+  }
+ ],
+ "rows": [
+  {
+   "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+   "refuted_key": null,
+   "counts": {
+    "left": {
+     "right": 47,
+     "wrong": 13
+    },
+    "right": {
+     "right": 79,
+     "wrong": 13
+    }
+   }
+  },
+  {
+   "family": "row[_](cell@Code[_],cell@Stamp[_],cell@Title[_])",
+   "refuted_key": "cell@Code#0",
+   "counts": {
+    "left": {
+     "right": 47,
+     "wrong": 13
+    },
+    "right": {
+     "right": 79,
+     "wrong": 13
+    }
+   }
+  },
+  {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Code[_],cell@Notes[_],cell@Stamp[_],cell@Title[_])",
+   "refuted_key": "cell@Title#0",
+   "counts": {
+    "left": {
+     "right": 105,
+     "wrong": 13
+    },
+    "right": {
+     "right": 100,
+     "wrong": 137
+    }
+   }
+  }
+ ]
+}

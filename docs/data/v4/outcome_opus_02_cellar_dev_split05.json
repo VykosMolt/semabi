@@ -1,6 +1,6 @@
 {
  "run": "opus_02_cellar_dev",
- "reading": "joint discrimination x2",
+ "reading": "source_choice",
  "regime": "FROZEN_PREFIX",
  "split": 0.5,
  "control": null,
@@ -8,32 +8,30 @@
  "permuted_events": null,
  "scored_on": "opus_02_cellar_dev",
  "cut": 195,
- "operators": 15,
+ "operators": 12,
  "operators_with_an_output": 12,
  "output": {
-  "claims": 35,
+  "claims": 37,
   "verdicts": {
-   "NOT_APPLICABLE": 1,
-   "REFUTED": 9,
-   "SUPPORTED": 10,
-   "UNKNOWN": 15
+   "REFUTED": 26,
+   "SUPPORTED": 11
   },
-  "held_out_actions_with_an_output_claim": 13,
-  "distinct_decided_claims": 5,
-  "distinct_decided_frames": 5,
+  "held_out_actions_with_an_output_claim": 14,
+  "distinct_decided_claims": 9,
+  "distinct_decided_frames": 9,
   "per_action": {
-   "every applicable rule was right": 7,
-   "applicable rules disagreed": 3,
+   "applicable rules disagreed": 7,
+   "every applicable rule was right": 4,
    "every applicable rule was contradicted": 3
   },
   "frame_only": {
-   "among": 4,
-   "right": 7,
+   "among": 8,
+   "right": 4,
    "wrong": 2
   },
   "model_level": {
-   "determinate and right": 7,
-   "undetermined, the right event among them": 4,
+   "undetermined, the right event among them": 8,
+   "determinate and right": 4,
    "determinate and wrong": 2
   },
   "distinct_events_where_determinate": 0,
@@ -44,69 +42,63 @@
    "accuracy": null
   },
   "distinct_events_predicted_per_action": {
-   "1": 9,
-   "2": 3,
-   "4": 1
+   "1": 6,
+   "2": 1,
+   "3": 3,
+   "5": 4
   },
   "majority_frame_control": {
-   "right": 4,
+   "right": 5,
    "wrong": 9,
    "control_unseen_on_prefix": 0,
-   "accuracy": 0.308
+   "accuracy": 0.357
   },
   "observed_frame_distribution": {
    "Nothing chosen in the vessel list .": 6,
    "Nothing chosen in the lot list .": 4,
    "Enter a whole number of litres .": 2,
+   "Nothing chosen in the block list .": 1,
    "<> moved from <> to <> .": 1
   }
  },
  "state": {
-  "verdicts": {
-   "NOT_APPLICABLE": 32,
-   "SUPPORTED": 32,
-   "UNKNOWN": 17
-  },
-  "per_action": {
-   "the rules could not say which object they were about": 5,
-   "every applicable rule was right": 4
-  }
+  "verdicts": {},
+  "per_action": {}
  },
  "outcome_model": {
-  "controls": 10,
-  "rules": 2,
+  "controls": 11,
+  "rules": 0,
   "held_out_clicks": 40,
   "ledger": {
-   "no determinate answer": 20,
-   "the event the interface returned": 18,
+   "no determinate answer": 23,
+   "the event the interface returned": 15,
    "a different event": 2
   },
-  "accuracy_where_it_answered": 0.9,
-  "distinct_events_asserted": 3,
-  "answers_naming_an_event": 9,
-  "accuracy_where_it_named_an_event": 0.778,
+  "accuracy_where_it_answered": 0.882,
+  "distinct_events_asserted": 2,
+  "answers_naming_an_event": 6,
+  "accuracy_where_it_named_an_event": 0.667,
   "by_level": {
    "the event the interface returned / the control returns nothing": 11,
-   "the event the interface returned / the event alone": 7,
+   "the event the interface returned / the event alone": 4,
    "a different event / the event alone": 2
   },
   "events_asserted": {
    "\u0000SILENT": 11,
-   "Nothing chosen in the lot list .": 6,
-   "Nothing chosen in the vessel list .": 3
+   "Nothing chosen in the lot list .": 6
   },
   "majority_frame_control_where_it_answered": {
    "right": 10,
-   "wrong": 10,
+   "wrong": 7,
    "control_unseen_on_prefix": 0,
-   "accuracy": 0.5
+   "accuracy": 0.588
   },
   "by_control": {
-   "button#button": {
-    "fitted": 16,
+   "button:Lots": {
+    "fitted": 9,
     "rules": 0,
     "events_fitted": 1,
-    "the event the interface returned": 9
+    "the event the interface returned": 5
    },
    "button:Bottle": {
     "fitted": 1,
@@ -126,6 +118,12 @@
     "events_fitted": 1,
     "no determinate answer": 5
    },
+   "button:Cellar": {
+    "fitted": 7,
+    "rules": 0,
+    "events_fitted": 1,
+    "the event the interface returned": 4
+   },
    "button:Move vessel": {
     "fitted": 5,
     "rules": 0,
@@ -134,9 +132,9 @@
    },
    "button:Wash out": {
     "fitted": 8,
-    "rules": 2,
+    "rules": 0,
     "events_fitted": 3,
-    "the event the interface returned": 3
+    "no determinate answer": 3
    },
    "button:Split": {
     "fitted": 1,
@@ -185,28 +183,22 @@
    }
   ],
   "lists": {
-   "button#button": "button#button: 16 fitted occasions, 1 distinct events\n    role singleton[]:1 = singleton[]\n    otherwise -> returns nothing",
    "button:Blend": "button:Blend: 1 fitted occasions, 1 distinct events\n    otherwise -> Nothing chosen in the lot list .",
    "button:Bottle": "button:Bottle: 1 fitted occasions, 1 distinct events\n    otherwise -> undetermined",
+   "button:Cellar": "button:Cellar: 7 fitted occasions, 1 distinct events\n    otherwise -> returns nothing",
    "button:Finish fermentation": "button:Finish fermentation: 1 fitted occasions, 1 distinct events\n    otherwise -> undetermined",
    "button:Intake": "button:Intake: 9 fitted occasions, 1 distinct events\n    otherwise -> returns nothing",
-   "button:Move vessel": "button:Move vessel: 5 fitted occasions, 5 distinct events\n    role selection['combobox#0']:1 = selection['combobox#0']\n    otherwise -> undetermined\n    '<> already stands in <> .' arguments: 0=selection['combobox#0']:1\n    '<> is a full <> and cannot be shifted .' arguments: 0=selection['combobox#0']:1\n    '<> moved from <> to <> .' arguments: 0=selection['combobox#0']:1",
+   "button:Lots": "button:Lots: 9 fitted occasions, 1 distinct events\n    otherwise -> returns nothing",
+   "button:Move vessel": "button:Move vessel: 5 fitted occasions, 5 distinct events\n    otherwise -> undetermined",
    "button:Rack": "button:Rack: 1 fitted occasions, 1 distinct events\n    otherwise -> undetermined",
    "button:Receive fruit": "button:Receive fruit: 3 fitted occasions, 2 distinct events\n    otherwise -> undetermined",
    "button:Split": "button:Split: 1 fitted occasions, 1 distinct events\n    otherwise -> Nothing chosen in the lot list .",
-   "button:Wash out": "button:Wash out: 8 fitted occasions, 3 distinct events\n    role selection['combobox#2']:1 = selection['combobox#2']\n    attr:cell#4(selection['combobox#2']:1) == None  ->  <> is already <> .   [5]\n    ('unnamed', \"selection['combobox#2']:1\")  ->  Nothing chosen in the vessel list .   [2]\n    otherwise -> <> cannot be washed out while lot <> is in it .\n    '<> cannot be washed out while lot <> is in it .' arguments: 0=selection['combobox#2']:1\n    '<> is already <> .' arguments: 0=selection['combobox#2']:1"
+   "button:Wash out": "button:Wash out: 8 fitted occasions, 3 distinct events\n    otherwise -> undetermined"
   }
  },
  "ablation_live_region_unread": {
-  "operators": 3,
-  "state_verdicts": {
-   "NOT_APPLICABLE": 32,
-   "SUPPORTED": 32,
-   "UNKNOWN": 17
-  },
-  "state_per_action": {
-   "the rules could not say which object they were about": 5,
-   "every applicable rule was right": 4
-  }
+  "operators": 0,
+  "state_verdicts": {},
+  "state_per_action": {}
  }
 }

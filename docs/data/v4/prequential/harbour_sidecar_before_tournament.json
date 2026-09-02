@@ -1,0 +1,252 @@
+{
+ "refuted": [
+  {
+   "family": "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])",
+   "key_slot": "cell@Status#0",
+   "why": "refuted by an executed experiment (harbour calls: Vessel vs Status): harm 5 on ['positional', 'conflicts'] against 0 for Vessel",
+   "evidence": {
+    "experiment": "harbour calls: Vessel vs Status",
+    "actions": [
+     {
+      "kind": "click",
+      "target": {
+       "role": "button",
+       "name": "Schedule call",
+       "nth": 2
+      }
+     },
+     {
+      "kind": "click",
+      "target": {
+       "role": "button",
+       "name": "Schedule call",
+       "nth": 3
+      }
+     }
+    ],
+    "delta": {
+     "explained": 1,
+     "conflicts": 0,
+     "churn": 1,
+     "contradictions": 0,
+     "visibility": 0,
+     "spurious": 0,
+     "named": 2,
+     "positional": 5
+    },
+    "decisive_terms": [
+     "positional",
+     "conflicts"
+    ],
+    "predicted": "the second call shares the key 'scheduled' with the first: one object with disagreeing mentions, a conflict, no second creation"
+   },
+   "held": [
+    "alongside",
+    "expected"
+   ]
+  },
+  {
+   "family": "button[_]",
+   "key_slot": null,
+   "held": [],
+   "why": "refuted by retained outcome evidence at the fixpoint (frozen prefix at 186)",
+   "evidence": {
+    "instrument": "retrospective fixpoint",
+    "counts": {
+     "left": {
+      "right": 8,
+      "wrong": 0
+     },
+     "right": {
+      "right": 12,
+      "wrong": 0
+     }
+    },
+    "split": 0.5
+   },
+   "premises": {
+    "base": "22fb5b8ceb03c44a",
+    "cut": 186,
+    "comparator": "claim-content-v2",
+    "question": {
+     "left": null,
+     "right": "button#0"
+    }
+   }
+  },
+  {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+   "key_slot": "cell@Takes up to#0",
+   "held": [
+    "120",
+    "140",
+    "160",
+    "70",
+    "90"
+   ],
+   "why": "refuted by retained outcome evidence at the fixpoint (frozen prefix at 186)",
+   "evidence": {
+    "instrument": "retrospective fixpoint",
+    "counts": {
+     "left": {
+      "right": 52,
+      "wrong": 0
+     },
+     "right": {
+      "right": 26,
+      "wrong": 0
+     }
+    },
+    "split": 0.5
+   },
+   "premises": {
+    "base": "b140777be23863f6",
+    "cut": 186,
+    "comparator": "claim-content-v2",
+    "question": {
+     "left": "cell@Berth#0",
+     "right": "cell@Takes up to#0"
+    }
+   }
+  },
+  {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+   "key_slot": "cell@Ticket to#0",
+   "held": [
+    "100",
+    "130",
+    "150",
+    "80"
+   ],
+   "why": "refuted by retained outcome evidence at the fixpoint (frozen prefix at 186)",
+   "evidence": {
+    "instrument": "retrospective fixpoint",
+    "counts": {
+     "left": {
+      "right": 48,
+      "wrong": 0
+     },
+     "right": {
+      "right": 24,
+      "wrong": 0
+     }
+    },
+    "split": 0.5
+   },
+   "premises": {
+    "base": "b140777be23863f6",
+    "cut": 186,
+    "comparator": "claim-content-v2",
+    "question": {
+     "left": "cell@Pilot#0",
+     "right": "cell@Ticket to#0"
+    }
+   }
+  },
+  {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "key_slot": null,
+   "held": [],
+   "why": "refuted by retained outcome evidence at the fixpoint (frozen prefix at 186)",
+   "evidence": {
+    "instrument": "retrospective fixpoint",
+    "counts": {
+     "left": {
+      "right": 0,
+      "wrong": 0
+     },
+     "right": {
+      "right": 28,
+      "wrong": 0
+     }
+    },
+    "split": 0.5
+   },
+   "premises": {
+    "base": "80e46667526e29c0",
+    "cut": 186,
+    "comparator": "claim-content-v2",
+    "question": {
+     "left": null,
+     "right": "cell@Vessel#0"
+    }
+   }
+  },
+  {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "key_slot": "cell@Cargo#0",
+   "held": [
+    "bagged fertiliser",
+    "containers",
+    "drummed solvents",
+    "frozen fish",
+    "livestock",
+    "milling grain",
+    "naphtha",
+    "sawn timber"
+   ],
+   "why": "refuted by retained outcome evidence at the fixpoint (frozen prefix at 186)",
+   "evidence": {
+    "instrument": "retrospective fixpoint",
+    "counts": {
+     "left": {
+      "right": 28,
+      "wrong": 0
+     },
+     "right": {
+      "right": 16,
+      "wrong": 0
+     }
+    },
+    "split": 0.5
+   },
+   "premises": {
+    "base": "b140777be23863f6",
+    "cut": 186,
+    "comparator": "claim-content-v2",
+    "question": {
+     "left": "cell@Vessel#0",
+     "right": "cell@Cargo#0"
+    }
+   }
+  },
+  {
+   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "key_slot": "cell@Length overall#0",
+   "held": [
+    "112",
+    "132",
+    "148",
+    "54",
+    "64",
+    "78",
+    "88",
+    "96"
+   ],
+   "why": "refuted by retained outcome evidence at the fixpoint (frozen prefix at 186)",
+   "evidence": {
+    "instrument": "retrospective fixpoint",
+    "counts": {
+     "left": {
+      "right": 28,
+      "wrong": 0
+     },
+     "right": {
+      "right": 16,
+      "wrong": 0
+     }
+    },
+    "split": 0.5
+   },
+   "premises": {
+    "base": "b140777be23863f6",
+    "cut": 186,
+    "comparator": "claim-content-v2",
+    "question": {
+     "left": "cell@Vessel#0",
+     "right": "cell@Length overall#0"
+    }
+   }
+  }
+ ]
+}

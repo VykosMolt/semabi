@@ -1,0 +1,265 @@
+{
+ "stamp": {
+  "pid": 1872807,
+  "git_head": "ba5f0e0",
+  "engine_sha": "dbd7bfc7ed3e6d44",
+  "started": "2026-09-02 16:38:13",
+  "argv": [
+   "/home/moloch/semabi-scratch/preq/harbour_full",
+   "harbour",
+   "fwd",
+   "/home/moloch/semabi-scratch/preq/logs/tour_harbour_fwd.json"
+  ]
+ },
+ "run": "/home/moloch/semabi-scratch/preq/harbour_full",
+ "name": "harbour",
+ "order": "fwd",
+ "raw_floor": [
+  [
+   "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])",
+   "cell@Status#0"
+  ]
+ ],
+ "outcome": "FIXPOINT",
+ "endpoint": [
+  [
+   "button[_]",
+   "None"
+  ],
+  [
+   "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+   "cell@Takes up to#0"
+  ],
+  [
+   "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+   "cell@Ticket to#0"
+  ],
+  [
+   "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "None"
+  ],
+  [
+   "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "cell@Cargo#0"
+  ]
+ ],
+ "base": "b140777be23863f6",
+ "disputed": null,
+ "events": [
+  {
+   "e": "TOURNAMENT",
+   "family": "button[_]",
+   "base": "e800f7fe005c1b67",
+   "candidates": [
+    "None",
+    "button#0"
+   ],
+   "pairs": [
+    {
+     "left": null,
+     "right": "button#0",
+     "out": "DECIDED",
+     "refuted": "right"
+    }
+   ],
+   "survivors": [
+    "None"
+   ],
+   "cyclic": false
+  },
+  {
+   "e": "TOURNAMENT",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+   "base": "e800f7fe005c1b67",
+   "candidates": [
+    "cell@Berth#0",
+    "cell@Takes up to#0"
+   ],
+   "pairs": [
+    {
+     "left": "cell@Berth#0",
+     "right": "cell@Takes up to#0",
+     "out": "DECIDED",
+     "refuted": "right"
+    }
+   ],
+   "survivors": [
+    "cell@Berth#0"
+   ],
+   "cyclic": false
+  },
+  {
+   "e": "TOURNAMENT",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+   "base": "e800f7fe005c1b67",
+   "candidates": [
+    "cell@Pilot#0",
+    "cell@Ticket to#0"
+   ],
+   "pairs": [
+    {
+     "left": "cell@Pilot#0",
+     "right": "cell@Ticket to#0",
+     "out": "DECIDED",
+     "refuted": "right"
+    }
+   ],
+   "survivors": [
+    "cell@Pilot#0"
+   ],
+   "cyclic": false
+  },
+  {
+   "e": "TOURNAMENT",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "base": "e800f7fe005c1b67",
+   "candidates": [
+    "None",
+    "cell@Vessel#0",
+    "cell@Cargo#0"
+   ],
+   "pairs": [
+    {
+     "left": null,
+     "right": "cell@Cargo#0",
+     "out": "DECIDED",
+     "refuted": "left"
+    },
+    {
+     "left": null,
+     "right": "cell@Vessel#0",
+     "out": "DECIDED",
+     "refuted": "left"
+    },
+    {
+     "left": "cell@Cargo#0",
+     "right": "cell@Vessel#0",
+     "out": "UNDECIDED",
+     "refuted": null
+    }
+   ],
+   "survivors": [
+    "cell@Vessel#0",
+    "cell@Cargo#0"
+   ],
+   "cyclic": false
+  },
+  {
+   "e": "RETOURNAMENT",
+   "family": "button[_]",
+   "base": "22fb5b8ceb03c44a"
+  },
+  {
+   "e": "TOURNAMENT",
+   "family": "button[_]",
+   "base": "22fb5b8ceb03c44a",
+   "candidates": [
+    "None",
+    "button#0"
+   ],
+   "pairs": [
+    {
+     "left": null,
+     "right": "button#0",
+     "out": "DECIDED",
+     "refuted": "left"
+    }
+   ],
+   "survivors": [
+    "button#0"
+   ],
+   "cyclic": false
+  },
+  {
+   "e": "RETOURNAMENT",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+   "base": "b140777be23863f6"
+  },
+  {
+   "e": "TOURNAMENT",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+   "base": "b140777be23863f6",
+   "candidates": [
+    "cell@Berth#0",
+    "cell@Takes up to#0"
+   ],
+   "pairs": [
+    {
+     "left": "cell@Berth#0",
+     "right": "cell@Takes up to#0",
+     "out": "DECIDED",
+     "refuted": "right"
+    }
+   ],
+   "survivors": [
+    "cell@Berth#0"
+   ],
+   "cyclic": false
+  },
+  {
+   "e": "RETOURNAMENT",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+   "base": "b140777be23863f6"
+  },
+  {
+   "e": "TOURNAMENT",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+   "base": "b140777be23863f6",
+   "candidates": [
+    "cell@Pilot#0",
+    "cell@Ticket to#0"
+   ],
+   "pairs": [
+    {
+     "left": "cell@Pilot#0",
+     "right": "cell@Ticket to#0",
+     "out": "DECIDED",
+     "refuted": "right"
+    }
+   ],
+   "survivors": [
+    "cell@Pilot#0"
+   ],
+   "cyclic": false
+  },
+  {
+   "e": "RETOURNAMENT",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "base": "80e46667526e29c0"
+  },
+  {
+   "e": "TOURNAMENT",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "base": "80e46667526e29c0",
+   "candidates": [
+    "None",
+    "cell@Vessel#0",
+    "cell@Cargo#0"
+   ],
+   "pairs": [
+    {
+     "left": null,
+     "right": "cell@Cargo#0",
+     "out": "DECIDED",
+     "refuted": "left"
+    },
+    {
+     "left": null,
+     "right": "cell@Vessel#0",
+     "out": "DECIDED",
+     "refuted": "left"
+    },
+    {
+     "left": "cell@Cargo#0",
+     "right": "cell@Vessel#0",
+     "out": "DECIDED",
+     "refuted": "left"
+    }
+   ],
+   "survivors": [
+    "cell@Vessel#0"
+   ],
+   "cyclic": false
+  }
+ ]
+}

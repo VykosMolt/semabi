@@ -1,0 +1,170 @@
+{
+ "run": "vet_clinic_transfer",
+ "reading": "source_choice",
+ "regime": "FROZEN_PREFIX",
+ "split": 0.5,
+ "cut": 448,
+ "claims": 22,
+ "verdicts": {
+  "NOT_APPLICABLE": 3,
+  "SUPPORTED": 19
+ },
+ "supported_share": 1.0,
+ "distinct_decided_claims": 2,
+ "operators_creating": 6,
+ "per_click_exposure": {
+  "cancelled": {
+   "clicks_sampled": 24,
+   "would_have_been_supported": 1,
+   "rate": 0.042
+  },
+  "completed + Dr": {
+   "clicks_sampled": 24,
+   "would_have_been_supported": 3,
+   "rate": 0.125
+  }
+ },
+ "mean_per_click_exposure": 0.084,
+ "witnesses": [
+  {
+   "step": 576,
+   "control": "button:Cancel",
+   "operator": "op1",
+   "kind": "CREATION",
+   "support": 1,
+   "slot": "id",
+   "predicted": "new",
+   "expected": "",
+   "subject": "",
+   "feature_node": null,
+   "correspondence": "",
+   "admissible": [],
+   "observed": [],
+   "verdict": "NOT_APPLICABLE",
+   "detail": "the rendered state contradicts every assignment (1 tried)",
+   "layers": [],
+   "action_local": null,
+   "bindings": 0,
+   "binding_status": "NONE",
+   "binding_evidence": ""
+  },
+  {
+   "step": 576,
+   "control": "button:Cancel",
+   "operator": "op2",
+   "kind": "CREATION",
+   "support": 6,
+   "slot": "id",
+   "predicted": "new",
+   "expected": "cancelled",
+   "subject": "",
+   "feature_node": null,
+   "correspondence": "",
+   "admissible": [],
+   "observed": [
+    "1 after"
+   ],
+   "verdict": "SUPPORTED",
+   "detail": "the page gained a structure carrying ['cancelled']: 0 -> 1",
+   "layers": [],
+   "action_local": null,
+   "bindings": 1,
+   "binding_status": "UNIQUE",
+   "binding_evidence": "supported"
+  },
+  {
+   "step": 588,
+   "control": "button:Cancel",
+   "operator": "op1",
+   "kind": "CREATION",
+   "support": 1,
+   "slot": "id",
+   "predicted": "new",
+   "expected": "",
+   "subject": "",
+   "feature_node": null,
+   "correspondence": "",
+   "admissible": [],
+   "observed": [],
+   "verdict": "NOT_APPLICABLE",
+   "detail": "the rendered state contradicts every assignment (1 tried)",
+   "layers": [],
+   "action_local": null,
+   "bindings": 0,
+   "binding_status": "NONE",
+   "binding_evidence": ""
+  },
+  {
+   "step": 588,
+   "control": "button:Cancel",
+   "operator": "op2",
+   "kind": "CREATION",
+   "support": 6,
+   "slot": "id",
+   "predicted": "new",
+   "expected": "cancelled",
+   "subject": "",
+   "feature_node": null,
+   "correspondence": "",
+   "admissible": [],
+   "observed": [
+    "2 after"
+   ],
+   "verdict": "SUPPORTED",
+   "detail": "the page gained a structure carrying ['cancelled']: 1 -> 2",
+   "layers": [],
+   "action_local": null,
+   "bindings": 1,
+   "binding_status": "UNIQUE",
+   "binding_evidence": "supported"
+  },
+  {
+   "step": 619,
+   "control": "button:Cancel",
+   "operator": "op1",
+   "kind": "CREATION",
+   "support": 1,
+   "slot": "id",
+   "predicted": "new",
+   "expected": "cancelled",
+   "subject": "",
+   "feature_node": null,
+   "correspondence": "",
+   "admissible": [],
+   "observed": [
+    "3 after"
+   ],
+   "verdict": "SUPPORTED",
+   "detail": "the page gained a structure carrying ['cancelled']: 2 -> 3",
+   "layers": [],
+   "action_local": null,
+   "bindings": 1,
+   "binding_status": "UNIQUE",
+   "binding_evidence": "supported"
+  },
+  {
+   "step": 619,
+   "control": "button:Cancel",
+   "operator": "op2",
+   "kind": "CREATION",
+   "support": 6,
+   "slot": "id",
+   "predicted": "new",
+   "expected": "cancelled",
+   "subject": "",
+   "feature_node": null,
+   "correspondence": "",
+   "admissible": [],
+   "observed": [
+    "3 after"
+   ],
+   "verdict": "SUPPORTED",
+   "detail": "the page gained a structure carrying ['cancelled']: 2 -> 3",
+   "layers": [],
+   "action_local": null,
+   "bindings": 1,
+   "binding_status": "UNIQUE",
+   "binding_evidence": "supported"
+  }
+ ]
+}

@@ -1,6 +1,6 @@
 {
  "run": "blend_book_transfer",
- "reading": "joint discrimination x3",
+ "reading": "source_choice",
  "regime": "CAUSAL_PREQUENTIAL",
  "split": 0.5,
  "cut": 419,
@@ -8,16 +8,14 @@
  "stride": 8,
  "actions_scored": 17,
  "ledger": {
-  "the event the interface returned": 15,
-  "a different event": 1,
-  "no determinate answer": 1
+  "the event the interface returned": 12,
+  "a different event": 5
  },
  "by_level": {
   "the event the interface returned / with its arguments": 12,
-  "the event the interface returned / the event alone": 3,
-  "a different event / the event alone": 1
+  "a different event / the event alone": 5
  },
- "accuracy_where_it_answered": 0.938,
+ "accuracy_where_it_answered": 0.706,
  "distinct_events_asserted": 5,
  "rows": [
   {
@@ -35,15 +33,11 @@
   {
    "step": 456,
    "control": "button:Record draw",
-   "predicted": "Drew <> from <> into <> .",
+   "predicted": "The book already holds 12 records ; return a draw first .",
    "observed": "Drew <> from <> into <> .",
    "returned": "Drew 1 gal from West Ridge into Festival White.",
-   "verdict": "the event the interface returned",
-   "level": "with its arguments",
-   "arguments": {
-    "1": "West Ridge",
-    "2": "Festival White"
-   }
+   "verdict": "a different event",
+   "level": "the event alone"
   },
   {
    "step": 473,
@@ -84,7 +78,7 @@
   {
    "step": 578,
    "control": "button:Record draw",
-   "predicted": "<> is single-varietal ( <> ) ; <> is <> .",
+   "predicted": "The book already holds 12 records ; return a draw first .",
    "observed": "Drew <> from <> into <> .",
    "returned": "Drew 1 gal from Block 12 into Festival White.",
    "verdict": "a different event",
@@ -93,10 +87,11 @@
   {
    "step": 593,
    "control": "button:Record draw",
-   "predicted": "\u0000UNDETERMINED",
+   "predicted": "The book already holds 12 records ; return a draw first .",
    "observed": "Drew <> from <> into <> .",
    "returned": "Drew 1 gal from Block 12 into Festival White.",
-   "verdict": "no determinate answer"
+   "verdict": "a different event",
+   "level": "the event alone"
   },
   {
    "step": 616,
@@ -141,20 +136,19 @@
    "observed": "<> is already <> .",
    "returned": "Festival White is already bottled.",
    "verdict": "the event the interface returned",
-   "level": "the event alone",
-   "arguments": {}
+   "level": "with its arguments",
+   "arguments": {
+    "0": "Festival White"
+   }
   },
   {
    "step": 733,
    "control": "button:Record draw",
-   "predicted": "<> holds <> ; cannot draw <> .",
+   "predicted": "The book already holds 12 records ; return a draw first .",
    "observed": "<> holds <> ; cannot draw <> .",
    "returned": "Low Barn holds 0 gal; cannot draw 1.",
-   "verdict": "the event the interface returned",
-   "level": "with its arguments",
-   "arguments": {
-    "0": "Low Barn"
-   }
+   "verdict": "a different event",
+   "level": "the event alone"
   },
   {
    "step": 749,
@@ -165,7 +159,7 @@
    "verdict": "the event the interface returned",
    "level": "with its arguments",
    "arguments": {
-    "1": "Low Barn"
+    "2": "Fair Day"
    }
   },
   {
@@ -177,7 +171,7 @@
    "verdict": "the event the interface returned",
    "level": "with its arguments",
    "arguments": {
-    "1": "Low Barn"
+    "2": "Fair Day"
    }
   },
   {
@@ -187,8 +181,10 @@
    "observed": "<> is <> .",
    "returned": "Low Barn is closed.",
    "verdict": "the event the interface returned",
-   "level": "the event alone",
-   "arguments": {}
+   "level": "with its arguments",
+   "arguments": {
+    "0": "Low Barn"
+   }
   },
   {
    "step": 810,
@@ -197,20 +193,19 @@
    "observed": "<> is <> .",
    "returned": "Low Barn is closed.",
    "verdict": "the event the interface returned",
-   "level": "the event alone",
-   "arguments": {}
+   "level": "with its arguments",
+   "arguments": {
+    "0": "Low Barn"
+   }
   },
   {
    "step": 837,
    "control": "button:Record draw",
-   "predicted": "Drew <> from <> into <> .",
+   "predicted": "The book already holds 12 records ; return a draw first .",
    "observed": "Drew <> from <> into <> .",
    "returned": "Drew 1 gal from Low Barn into Fair Day.",
-   "verdict": "the event the interface returned",
-   "level": "with its arguments",
-   "arguments": {
-    "1": "Low Barn"
-   }
+   "verdict": "a different event",
+   "level": "the event alone"
   }
  ]
 }

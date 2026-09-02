@@ -644,22 +644,28 @@ def tournament_fixpoint(prep_fn, derive_fn, raw_rows: list, fam_key=str,
 
     def run_family(family, neutral):
         seen = list(candidates_of(neutral, family))
+        # `held` binds a refutation to what the slot held; a candidate surfaced in a
+        # later round is known to the prep that posed it, not to the neutral one
+        held = {c: neutral["held"].get(f"{family}||{c}") for c in seen}
         while True:
             t = tournament(derive_fn, neutral, family, seen)
             for r in [r for r in derived if r["family"] == family]:
                 derived.remove(r)
             for c in t["dominated"]:
                 derived.append({"family": family, "refuted_key": c,
-                                "held": neutral["held"].get(f"{family}||{c}"),
+                                "held": held.get(c),
                                 "premises": {"base": neutral["base"],
                                              "question": {"left": c,
                                                           "right": t["losses"][str(c)][0]},
                                              "losses": t["losses"][str(c)]}})
-            grown = [c for c in candidates_of(prep_fn(rows_now()), family) if c not in seen]
+            later = prep_fn(rows_now())
+            grown = [c for c in candidates_of(later, family) if c not in seen]
             events.append({"e": "ROUND", "family": family, "candidates": [str(c) for c in seen],
                            "newly_posed": [str(c) for c in grown]})
             if not grown:
                 break
+            for c in grown:
+                held[c] = later["held"].get(f"{family}||{c}")
             seen.extend(grown)
         attempted.add((family, neutral["base"]))
         events.append({"e": "TOURNAMENT", "family": family, "base": neutral["base"],

@@ -1,0 +1,201 @@
+{
+ "stamp": {
+  "pid": 1875987,
+  "git_head": "ba5f0e0",
+  "engine_sha": "dbd7bfc7ed3e6d44",
+  "started": "2026-09-02 14:56:35",
+  "argv": [
+   "/home/moloch/semabi-scratch/preq/t331_tour_fwd",
+   "t331",
+   "fwd",
+   "/home/moloch/semabi-scratch/preq/logs/tour_t331_fwd.json"
+  ]
+ },
+ "run": "/home/moloch/semabi-scratch/preq/t331_tour_fwd",
+ "name": "t331",
+ "order": "fwd",
+ "raw_floor": [],
+ "outcome": "FIXPOINT",
+ "endpoint": [
+  [
+   "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+   "cell@Takes up to#0"
+  ],
+  [
+   "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+   "cell@Ticket to#0"
+  ],
+  [
+   "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "None"
+  ]
+ ],
+ "base": "5a8be6c057bd646f",
+ "disputed": null,
+ "events": [
+  {
+   "e": "TOURNAMENT",
+   "family": "button[_]",
+   "base": "e800f7fe005c1b67",
+   "candidates": [
+    "None",
+    "button#0"
+   ],
+   "pairs": [
+    {
+     "left": null,
+     "right": "button#0",
+     "out": "DECIDED",
+     "refuted": "right"
+    }
+   ],
+   "survivors": [
+    "None"
+   ],
+   "cyclic": false
+  },
+  {
+   "e": "TOURNAMENT",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+   "base": "e800f7fe005c1b67",
+   "candidates": [
+    "cell@Berth#0",
+    "cell@Takes up to#0"
+   ],
+   "pairs": [
+    {
+     "left": "cell@Berth#0",
+     "right": "cell@Takes up to#0",
+     "out": "DECIDED",
+     "refuted": "right"
+    }
+   ],
+   "survivors": [
+    "cell@Berth#0"
+   ],
+   "cyclic": false
+  },
+  {
+   "e": "TOURNAMENT",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+   "base": "e800f7fe005c1b67",
+   "candidates": [
+    "cell@Pilot#0",
+    "cell@Ticket to#0"
+   ],
+   "pairs": [
+    {
+     "left": "cell@Pilot#0",
+     "right": "cell@Ticket to#0",
+     "out": "DECIDED",
+     "refuted": "right"
+    }
+   ],
+   "survivors": [
+    "cell@Pilot#0"
+   ],
+   "cyclic": false
+  },
+  {
+   "e": "TOURNAMENT",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "base": "e800f7fe005c1b67",
+   "candidates": [
+    "None",
+    "cell@Vessel#0",
+    "cell@Cargo#0"
+   ],
+   "pairs": [
+    {
+     "left": null,
+     "right": "cell@Cargo#0",
+     "out": "DECIDED",
+     "refuted": "left"
+    },
+    {
+     "left": null,
+     "right": "cell@Vessel#0",
+     "out": "DECIDED",
+     "refuted": "left"
+    },
+    {
+     "left": "cell@Cargo#0",
+     "right": "cell@Vessel#0",
+     "out": "UNDECIDED",
+     "refuted": null
+    }
+   ],
+   "survivors": [
+    "cell@Vessel#0",
+    "cell@Cargo#0"
+   ],
+   "cyclic": false
+  },
+  {
+   "e": "RETOURNAMENT",
+   "family": "button[_]",
+   "base": "5a8be6c057bd646f"
+  },
+  {
+   "e": "TOURNAMENT",
+   "family": "button[_]",
+   "base": "5a8be6c057bd646f",
+   "candidates": [],
+   "pairs": [],
+   "survivors": [],
+   "cyclic": true
+  },
+  {
+   "e": "RETOURNAMENT",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+   "base": "5a8be6c057bd646f"
+  },
+  {
+   "e": "TOURNAMENT",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+   "base": "5a8be6c057bd646f",
+   "candidates": [
+    "cell@Berth#0",
+    "cell@Takes up to#0"
+   ],
+   "pairs": [
+    {
+     "left": "cell@Berth#0",
+     "right": "cell@Takes up to#0",
+     "out": "DECIDED",
+     "refuted": "right"
+    }
+   ],
+   "survivors": [
+    "cell@Berth#0"
+   ],
+   "cyclic": false
+  },
+  {
+   "e": "RETOURNAMENT",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+   "base": "5a8be6c057bd646f"
+  },
+  {
+   "e": "TOURNAMENT",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+   "base": "5a8be6c057bd646f",
+   "candidates": [
+    "cell@Pilot#0",
+    "cell@Ticket to#0"
+   ],
+   "pairs": [
+    {
+     "left": "cell@Pilot#0",
+     "right": "cell@Ticket to#0",
+     "out": "DECIDED",
+     "refuted": "right"
+    }
+   ],
+   "survivors": [
+    "cell@Pilot#0"
+   ],
+   "cyclic": false
+  }
+ ]
+}

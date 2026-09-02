@@ -1,251 +1,275 @@
 {
  "run": "blend_book_transfer",
- "reading": "joint discrimination x3",
+ "reading": "source_choice",
  "regime": "FROZEN_PREFIX",
  "split": 0.5,
  "cut": 419,
  "control": null,
  "bundle_determinism": {
-  "button#0": {
-   "occasions": 10,
-   "frames": 2,
-   "frames_with_more_than_one_delta_shape": 0
-  },
-  "button#1": {
+  "button#cell/button": {
    "occasions": 12,
-   "frames": 2,
-   "frames_with_more_than_one_delta_shape": 0
-  },
-  "button#2": {
-   "occasions": 14,
-   "frames": 2,
-   "frames_with_more_than_one_delta_shape": 0
-  },
-  "button#3": {
-   "occasions": 10,
-   "frames": 2,
-   "frames_with_more_than_one_delta_shape": 0
-  },
-  "button#4": {
-   "occasions": 3,
    "frames": 1,
    "frames_with_more_than_one_delta_shape": 0
   },
-  "button#5": {
-   "occasions": 4,
-   "frames": 1,
-   "frames_with_more_than_one_delta_shape": 0
-  },
-  "button#button": {
-   "occasions": 33,
-   "frames": 5,
-   "frames_with_more_than_one_delta_shape": 3
-  },
-  "button#group/table/rowgroup/row/cell/button": {
+  "button:Bottle _": {
    "occasions": 6,
    "frames": 2,
+   "frames_with_more_than_one_delta_shape": 0
+  },
+  "button:Close _": {
+   "occasions": 16,
+   "frames": 2,
+   "frames_with_more_than_one_delta_shape": 0
+  },
+  "button:Disgorge _": {
+   "occasions": 4,
+   "frames": 1,
    "frames_with_more_than_one_delta_shape": 0
   },
   "button:Record draw": {
    "occasions": 112,
    "frames": 5,
+   "frames_with_more_than_one_delta_shape": 1
+  },
+  "button:Return ticket _ gal from _ out of _": {
+   "occasions": 59,
+   "frames": 2,
    "frames_with_more_than_one_delta_shape": 0
   }
  },
  "claims": {
-  "a bundle the evidence has shown": 181,
-  "a combination of frame and delta never observed together": 86,
-  "the outcome layer did not name an event": 23
+  "a bundle the evidence has shown": 235,
+  "a combination of frame and delta never observed together": 84
  },
  "what_durably_changed": {
   "the branch's own delta": {
-   "right": 162,
-   "wrong": 63
+   "right": 174,
+   "wrong": 75
   },
   "the union of firing operators": {
-   "wrong": 118,
-   "right": 107
+   "right": 202,
+   "wrong": 47
   }
  },
  "hybrids": [
   {
    "step": 421,
    "control": "button:Record draw",
-   "frame": "Drew <> from <> into <> .",
-   "claimed_delta": [],
-   "deltas_this_frame_has": [
+   "frame": "The book already holds 12 records ; return a draw first .",
+   "claimed_delta": [
     [
-     [
-      "set",
-      "attr:cell#0@3"
-     ],
-     [
-      "set",
-      "attr:cell#0@4"
-     ]
+     "add",
+     2
+    ],
+    [
+     "set",
+     "attr:Committed gal#0"
+    ],
+    [
+     "set",
+     "attr:Gallons left#0"
     ]
+   ],
+   "deltas_this_frame_has": [
+    []
    ]
   },
   {
    "step": 427,
    "control": "button:Record draw",
-   "frame": "Drew <> from <> into <> .",
-   "claimed_delta": [],
-   "deltas_this_frame_has": [
+   "frame": "The book already holds 12 records ; return a draw first .",
+   "claimed_delta": [
     [
-     [
-      "set",
-      "attr:cell#0@3"
-     ],
-     [
-      "set",
-      "attr:cell#0@4"
-     ]
+     "add",
+     2
+    ],
+    [
+     "set",
+     "attr:Committed gal#0"
+    ],
+    [
+     "set",
+     "attr:Gallons left#0"
     ]
+   ],
+   "deltas_this_frame_has": [
+    []
    ]
   },
   {
    "step": 433,
    "control": "button:Record draw",
-   "frame": "Drew <> from <> into <> .",
-   "claimed_delta": [],
-   "deltas_this_frame_has": [
+   "frame": "The book already holds 12 records ; return a draw first .",
+   "claimed_delta": [
     [
-     [
-      "set",
-      "attr:cell#0@3"
-     ],
-     [
-      "set",
-      "attr:cell#0@4"
-     ]
+     "add",
+     2
+    ],
+    [
+     "set",
+     "attr:Committed gal#0"
+    ],
+    [
+     "set",
+     "attr:Gallons left#0"
     ]
+   ],
+   "deltas_this_frame_has": [
+    []
    ]
   },
   {
    "step": 437,
    "control": "button:Record draw",
-   "frame": "Drew <> from <> into <> .",
-   "claimed_delta": [],
-   "deltas_this_frame_has": [
+   "frame": "The book already holds 12 records ; return a draw first .",
+   "claimed_delta": [
     [
-     [
-      "set",
-      "attr:cell#0@3"
-     ],
-     [
-      "set",
-      "attr:cell#0@4"
-     ]
+     "add",
+     2
+    ],
+    [
+     "set",
+     "attr:Committed gal#0"
+    ],
+    [
+     "set",
+     "attr:Gallons left#0"
     ]
+   ],
+   "deltas_this_frame_has": [
+    []
    ]
   },
   {
    "step": 440,
    "control": "button:Record draw",
-   "frame": "Drew <> from <> into <> .",
-   "claimed_delta": [],
-   "deltas_this_frame_has": [
+   "frame": "The book already holds 12 records ; return a draw first .",
+   "claimed_delta": [
     [
-     [
-      "set",
-      "attr:cell#0@3"
-     ],
-     [
-      "set",
-      "attr:cell#0@4"
-     ]
+     "add",
+     2
+    ],
+    [
+     "set",
+     "attr:Committed gal#0"
+    ],
+    [
+     "set",
+     "attr:Gallons left#0"
     ]
+   ],
+   "deltas_this_frame_has": [
+    []
    ]
   },
   {
    "step": 443,
    "control": "button:Record draw",
-   "frame": "Drew <> from <> into <> .",
-   "claimed_delta": [],
-   "deltas_this_frame_has": [
+   "frame": "The book already holds 12 records ; return a draw first .",
+   "claimed_delta": [
     [
-     [
-      "set",
-      "attr:cell#0@3"
-     ],
-     [
-      "set",
-      "attr:cell#0@4"
-     ]
+     "add",
+     2
+    ],
+    [
+     "set",
+     "attr:Committed gal#0"
+    ],
+    [
+     "set",
+     "attr:Gallons left#0"
     ]
+   ],
+   "deltas_this_frame_has": [
+    []
    ]
   },
   {
    "step": 446,
    "control": "button:Record draw",
-   "frame": "Drew <> from <> into <> .",
-   "claimed_delta": [],
-   "deltas_this_frame_has": [
+   "frame": "The book already holds 12 records ; return a draw first .",
+   "claimed_delta": [
     [
-     [
-      "set",
-      "attr:cell#0@3"
-     ],
-     [
-      "set",
-      "attr:cell#0@4"
-     ]
+     "add",
+     2
+    ],
+    [
+     "set",
+     "attr:Committed gal#0"
+    ],
+    [
+     "set",
+     "attr:Gallons left#0"
     ]
+   ],
+   "deltas_this_frame_has": [
+    []
    ]
   },
   {
    "step": 449,
    "control": "button:Record draw",
-   "frame": "Drew <> from <> into <> .",
-   "claimed_delta": [],
-   "deltas_this_frame_has": [
+   "frame": "The book already holds 12 records ; return a draw first .",
+   "claimed_delta": [
     [
-     [
-      "set",
-      "attr:cell#0@3"
-     ],
-     [
-      "set",
-      "attr:cell#0@4"
-     ]
+     "add",
+     2
+    ],
+    [
+     "set",
+     "attr:Committed gal#0"
+    ],
+    [
+     "set",
+     "attr:Gallons left#0"
     ]
+   ],
+   "deltas_this_frame_has": [
+    []
    ]
   },
   {
    "step": 453,
    "control": "button:Record draw",
-   "frame": "Drew <> from <> into <> .",
-   "claimed_delta": [],
-   "deltas_this_frame_has": [
+   "frame": "The book already holds 12 records ; return a draw first .",
+   "claimed_delta": [
     [
-     [
-      "set",
-      "attr:cell#0@3"
-     ],
-     [
-      "set",
-      "attr:cell#0@4"
-     ]
+     "add",
+     2
+    ],
+    [
+     "set",
+     "attr:Committed gal#0"
+    ],
+    [
+     "set",
+     "attr:Gallons left#0"
     ]
+   ],
+   "deltas_this_frame_has": [
+    []
    ]
   },
   {
    "step": 456,
    "control": "button:Record draw",
-   "frame": "Drew <> from <> into <> .",
-   "claimed_delta": [],
-   "deltas_this_frame_has": [
+   "frame": "The book already holds 12 records ; return a draw first .",
+   "claimed_delta": [
     [
-     [
-      "set",
-      "attr:cell#0@3"
-     ],
-     [
-      "set",
-      "attr:cell#0@4"
-     ]
+     "add",
+     2
+    ],
+    [
+     "set",
+     "attr:Committed gal#0"
+    ],
+    [
+     "set",
+     "attr:Gallons left#0"
     ]
+   ],
+   "deltas_this_frame_has": [
+    []
    ]
   }
  ]

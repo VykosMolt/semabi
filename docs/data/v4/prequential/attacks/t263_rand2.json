@@ -1,0 +1,101 @@
+{
+ "stamp": {
+  "pid": 1864093,
+  "git_head": "ba5f0e0",
+  "engine_sha": "dbd7bfc7ed3e6d44",
+  "started": "2026-09-02 15:14:00",
+  "argv": [
+   "263",
+   "rand2"
+  ]
+ },
+ "t": 263,
+ "schedule": "rand2",
+ "outcome": "FIXPOINT",
+ "endpoint": [
+  [
+   "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+   "cell@Takes up to#0"
+  ],
+  [
+   "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+   "cell@Ticket to#0"
+  ],
+  [
+   "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "None"
+  ],
+  [
+   "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "cell@Cargo#0"
+  ],
+  [
+   "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "cell@Length overall#0"
+  ]
+ ],
+ "base": "5a8be6c057bd646f",
+ "disputed": null,
+ "events": [
+  {
+   "e": "DERIVE",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "q": {
+    "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+    "left": null,
+    "right": "cell@Cargo#0"
+   },
+   "base": "e800f7fe005c1b67",
+   "out": "DECIDED",
+   "refuted": "left"
+  },
+  {
+   "e": "DERIVE",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "q": {
+    "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+    "left": "cell@Vessel#0",
+    "right": "cell@Cargo#0"
+   },
+   "base": "5a8be6c057bd646f",
+   "out": "DECIDED",
+   "refuted": "right"
+  },
+  {
+   "e": "DERIVE",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "q": {
+    "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+    "left": "cell@Vessel#0",
+    "right": "cell@Length overall#0"
+   },
+   "base": "5a8be6c057bd646f",
+   "out": "DECIDED",
+   "refuted": "right"
+  },
+  {
+   "e": "DERIVE",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+   "q": {
+    "family": "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+    "left": "cell@Pilot#0",
+    "right": "cell@Ticket to#0"
+   },
+   "base": "5a8be6c057bd646f",
+   "out": "DECIDED",
+   "refuted": "right"
+  },
+  {
+   "e": "DERIVE",
+   "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+   "q": {
+    "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+    "left": "cell@Berth#0",
+    "right": "cell@Takes up to#0"
+   },
+   "base": "5a8be6c057bd646f",
+   "out": "DECIDED",
+   "refuted": "right"
+  }
+ ]
+}
