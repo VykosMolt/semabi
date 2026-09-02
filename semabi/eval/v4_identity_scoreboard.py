@@ -1,24 +1,11 @@
-"""How a reading's identity claims stand, on a surface every candidate addresses.
+"""An identity scoreboard scored only on what every candidate addresses.
 
-The behavioural ledger cannot see what the identity layer changes: fourteen prefix
-closures of harbour with materially different verdict states scored every probed claim
-identically (docs/v4_retained.md, Part XII).  Identity needs its own scoreboard, and the
-one thing it must not do is count claims -- a finer ontology makes claims a coarser one
-cannot, and out-claimed the true reading 79 to 47 on the twin ledger without being more
-right about anything both addressed (Part XIII).  So every term here is scored over the
-*shared* surface: state claims keyed by kind and page node -- an ontology-neutral
-coordinate two readings share whatever they call the slot or the subject -- and emission
-claims keyed by step, counted only where every candidate makes one.  Claims only some
-candidates make are reported as provenance and never as units.
-
-Per candidate reading of a chain's source manifest: transfer identification and the
-holdout verdict from the retained frontier; coverage and contradictions on the shared
-state surface; right and wrong on the shared emission steps; unshared volume on both
-channels, as provenance; the survivor set the frontier could not distinguish; and the
-assumptions the reading declares beyond its keys (promoted families, withheld unions).
-On harbour and blend it reproduces the frontier's judgments; on vet's development
-history it declines to judge -- fifteen shared atoms on which every candidate scores
-alike -- and on vet's transfer history the candidates separate (Parts XIV-XV).
+Per candidate reading of a chain: the frontier's transfer identification and holdout
+verdict; coverage and contradictions on the shared state surface (claims keyed by kind
+and page node, an ontology-neutral coordinate); right and wrong on the shared emission
+steps; unshared volume on both channels as provenance, never units; the survivor set;
+the assumptions a reading declares beyond its keys.  Counting claims would let a finer
+ontology win by vocabulary (docs/v4_retained.md, Parts XIII-XV).
 """
 from __future__ import annotations
 
@@ -64,8 +51,7 @@ def claims_for(args) -> tuple:
 
 
 def score(results: dict, assumptions: dict) -> dict:
-    """The scoreboard from each candidate's claims: shared surfaces, units on them,
-    unshared volume as provenance.  Pure, so it can be attacked without a fit."""
+    """Shared surfaces, units on them, unshared volume as provenance.  Pure."""
     shared = set.intersection(*[set(r["state"]) for r in results.values()]) if results else set()
     shared_em = set.intersection(*[set(r["emission"]) for r in results.values()]) if results else set()
     board = {}

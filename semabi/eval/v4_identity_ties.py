@@ -334,27 +334,14 @@ def retro_decision(left_rows: list[dict], right_rows: list[dict]) -> dict:
 
 
 def fixpoint(prep_fn, derive_fn, raw_rows: list, max_states: int = 64) -> dict:
-    """The dependency-aware verdict loop, pure so its policies are testable.
+    """The dependency-aware verdict loop over one worklist order.
 
-    ``prep_fn(rows)`` -> {"base": fp, "questions": [{family,left,right}], "held": {...}}
-    for the sidecar state ``rows``; ``derive_fn(base_prep, family, left, right)`` -> a
-    `retro_decision` dict.  Invalidation first: a derived row whose recorded base is no
-    longer the current base is lifted and re-derived before any new question is answered.
-    A question that came back UNDECIDED is not re-asked on the same base, and is re-posed
-    on any new one.  Cycles are found by exact state recurrence, never by a step budget.
-
-    A recurring state names an orbit -- every verdict state visited since that state
-    first stood -- and everything that moved inside the orbit is in dispute, not only
-    the question whose re-derivation happened to close the loop.  All moved rows are
-    lifted together, their questions are closed against re-posing, and the loop runs on
-    to quiescence, so verdicts independent of the dispute are still reached.  The
-    scripted schedule battery is why the dispute is orbit-wide: lifting only the closer
-    kept a standing verdict from inside the mutual defeat and let the worklist order
-    decide whether unrelated settled material survived -- two residues from nine
-    schedules, one after this policy.  The harbour corpora never cycle (seven schedules,
-    one fixpoint; docs/v4_retained.md) and are unaffected.  Termination: each cycle
-    permanently closes at least one question, derivations are memoised per
-    (question, base), and the state space is finite."""
+    ``prep_fn(rows)`` -> {"base", "questions", "held", ...} for a sidecar state;
+    ``derive_fn(prep, family, left, right)`` -> a `retro_decision` dict.  Invalidation
+    first: a row whose base moved is re-derived before any new question is posed, and a
+    question's base never includes its own row.  Termination is exact state recurrence:
+    a recurring state names an orbit, everything that moved inside it is lifted together
+    and closed, and the loop runs on so independent questions still settle."""
     derived: list[dict] = []
     attempted: set = set()
     events: list[dict] = []
@@ -373,7 +360,6 @@ def fixpoint(prep_fn, derive_fn, raw_rows: list, max_states: int = 64) -> dict:
     states_seen = {state_key()}
     history: list[tuple] = [(state_key(), snapshot())]
     def on_cycle(key, closer_family) -> None:
-        # the recurring orbit: everything since this state first stood
         first = next((i for i, (k, _) in enumerate(history) if k == key), 0)
         orbit = [snap for _, snap in history[first:]] + [snapshot()]
         fams = {f for snap in orbit for f, _ in snap}
@@ -405,12 +391,6 @@ def fixpoint(prep_fn, derive_fn, raw_rows: list, max_states: int = 64) -> dict:
             return True
         return False
     while True:
-        # A verdict is never a premise of its own derivation: each question's base is the
-        # sidecar *without its own row* -- for staleness and for re-derivation alike.  The
-        # first live oscillation was pure self-reference (harbour's button verdict,
-        # include-self, defeated whichever state it created); with the row lifted, the
-        # question has one canonical base and the cycle dissolves, while genuinely mutual
-        # cycles between different questions are still caught by the orbit policy.
         stale_r = None
         for r in derived:
             own = prep_fn(rows_now(excluding=r))
@@ -481,11 +461,8 @@ SUPPORTED, REFUTED = "SUPPORTED", "REFUTED"
 
 
 def _atoms(row: dict) -> dict:
-    """A step's state claims keyed by an ontology-neutral coordinate.
-
-    Two readings name the same page cell under different slot names and different
-    subjects; the page node is what they share.  (Falls back to the slot when a claim
-    recorded no node.)"""
+    """A step's state claims keyed by (kind, page node): the coordinate two readings
+    share whatever they call the slot or the subject.  Falls back to the slot."""
     out = {}
     for c in row.get("state") or []:
         out[(c["kind"], c.get("node") if c.get("node") is not None else c["slot"])] = c
@@ -493,20 +470,12 @@ def _atoms(row: dict) -> dict:
 
 
 def retro_decision_shared(left_rows: list[dict], right_rows: list[dict]) -> dict:
-    """`retro_decision` with the state channel, scored over the shared claim surface.
+    """`retro_decision` with the state channel, scored on the shared surface only.
 
-    The emission comparator is blind to consequences that land in another table (the
-    twin ledger's co-updates: 117 unexplained atoms the search could see and the
-    comparator never scored).  Counting every state claim a reading makes is the wrong
-    repair: a finer ontology makes claims a coarser one cannot -- entering a docket on
-    the register is a *creation* under two types and an unclaimed membership change under
-    one -- and it out-claimed the true reading 79 to 47 without being more right about
-    anything both addressed.  So only atoms both readings claim are scored, one right unit
-    per supported claim with a checked value, one wrong per refuted; unshared claims are
-    counted as provenance and never as units; and a step is a disagreement only on the
-    emission signature or on a shared atom.  Separation needs a shared atom with
-    differing predictions.  On the twin corpus this leaves the two ontologies where the
-    evidence leaves them: open."""
+    Atoms both readings claim earn one unit per supported claim with a checked value
+    and one wrong per refuted; unshared claims are counted as provenance, never units,
+    so a finer ontology cannot win by vocabulary.  A step is a disagreement only on the
+    emission signature or on a shared atom."""
     by_left = {r["step"]: r for r in left_rows}
     counts = {"left": {"right": 0, "wrong": 0}, "right": {"right": 0, "wrong": 0}}
     unshared = {"left": 0, "right": 0}
@@ -544,10 +513,10 @@ def retro_decision_shared(left_rows: list[dict], right_rows: list[dict]) -> dict
 # ---------------------------------------------------------------- the tournament closure
 
 def tournament(derive_fn, pr: dict, family: str, candidates: list) -> dict:
-    """Every pairwise verdict among a family's candidates on ONE base.
+    """Every pairwise verdict among a family's candidates on one base.
 
-    Refute exactly the dominated candidates, and only when an undominated one exists: a
-    dominance cycle refutes nothing and leaves the family open."""
+    Refutes exactly the dominated candidates, and only when an undominated one exists:
+    a dominance cycle refutes nothing."""
     from itertools import combinations
     losses: dict = {c: set() for c in candidates}
     pairs = []
@@ -568,20 +537,11 @@ def tournament_fixpoint(prep_fn, derive_fn, raw_rows: list, fam_key=str,
                         max_states: int = 64) -> dict:
     """A family's identity decided by a tournament on a family-neutral base.
 
-    The sequential `fixpoint` prunes a family's candidates pairwise in worklist order,
-    each comparison judged on whatever base the earlier prunings left; on thin evidence
-    the dominance direction is sensitive to sibling rows (harbour at step 188: `Vessel vs
-    Length overall` flips), and a refuted key is never re-posed, so the pruning order
-    became the survivor -- three endpoints from six schedules.  Here a family is one
-    question over n candidates: every pairwise comparison is judged on the same base with
-    no rows of that family present (lift-first extended to siblings), in rounds -- the
-    search poses ties against the family's *current* key, so a candidate can surface only
-    once a survivor has emerged, and the accumulated candidates are re-judged on the same
-    neutral base until the posed set stops growing.  Cross-family dependency stays with
-    invalidation: a family's rows are stale when its neutral base moved.  Recurrence
-    handling is the orbit policy, unchanged.  Order-free for the verdicts among a
-    candidate set; the posed set itself can still depend on other families' rows (see
-    `closure_over_schedules`)."""
+    Each family is one question over its candidates, judged pairwise on the base with
+    none of its own rows present, in rounds: the search poses ties against the current
+    key, so candidates surface as survivors emerge and are re-judged on the same base
+    until the posed set stops growing.  Cross-family dependency stays with invalidation;
+    recurrence handling is the orbit policy of `fixpoint`."""
     derived: list[dict] = []
     attempted: set = set()
     events: list[dict] = []
@@ -644,8 +604,6 @@ def tournament_fixpoint(prep_fn, derive_fn, raw_rows: list, fam_key=str,
 
     def run_family(family, neutral):
         seen = list(candidates_of(neutral, family))
-        # `held` binds a refutation to what the slot held; a candidate surfaced in a
-        # later round is known to the prep that posed it, not to the neutral one
         held = {c: neutral["held"].get(f"{family}||{c}") for c in seen}
         while True:
             t = tournament(derive_fn, neutral, family, seen)
@@ -721,19 +679,13 @@ SCHEDULE_KEYS = {
 
 def closure_over_schedules(prep_fn, derive_fn, raw_rows: list,
                            orders: tuple = ("fwd", "rev")) -> dict:
-    """The closure is what every schedule agrees on; the rest is preserved open.
+    """The closure is what every schedule agrees on.
 
-    Harbour at step 188 admits two self-consistent verdict worlds: judged after the
-    button verdict, the calls family's round poses five candidates and Vessel wins;
-    judged first, on the empty floor, the posed set lacks None and Current call
-    dominates, and the button verdict then goes the other way.  Each is a legitimate
-    fixpoint under the recorded premises -- the reading fingerprint is a faithful premise
-    for verdicts, but the search's posed question set depends on refutation rows beyond
-    it -- and the rows the worlds share are exactly the schedule-invariant core the
-    six-schedule sequential attack found.  So no single schedule has authority: the
-    tournament fixpoint runs under each order, the intersection is the closure, and every
-    row in the union but not the intersection is reported as order-disputed with the
-    orders that reached it.  An oscillation under any order propagates."""
+    The posed question set depends on refutation rows the reading fingerprint does not
+    carry, so two orders can settle into different self-consistent worlds.  Runs the
+    tournament fixpoint under each order; the intersection is the closure, rows in the
+    union but not the intersection are reported as order-disputed, and an oscillation
+    under any order propagates."""
     runs = {o: tournament_fixpoint(prep_fn, derive_fn, raw_rows, fam_key=SCHEDULE_KEYS[o])
             for o in orders}
     sets = {o: {(r["family"], str(r["refuted_key"])): r for r in runs[o]["rows"]} for o in orders}
@@ -773,10 +725,7 @@ def _rows_cache_path(cache: Path, base: str, family: str, key, comparator: str) 
 
 def _fit_rows(args) -> str:
     """One frozen-prefix fit and its suffix rows, written atomically to the cache.
-
-    Module-level so a process pool can run it: the fixpoint is sequential by nature (a
-    verdict can invalidate the next) but its fits are not -- every candidate a base poses
-    needs one, independent of the others."""
+    Module-level so a process pool can run it."""
     import os
     from dataclasses import replace
     from semabi.compiler.evidence import EvidenceLog
@@ -820,13 +769,9 @@ def _fit_rows(args) -> str:
 def _prefetch(run_dir: Path, cache: Path, pr: dict, split: float, comparator: str,
               workers: int) -> int:
     from concurrent.futures import ProcessPoolExecutor
-    keys = []
-    for q in pr["questions"]:
-        for k in (q["left"], q["right"]):
-            if (q["family"], str(k)) not in {(f, str(kk)) for f, kk in keys}:
-                keys.append((q["family"], k))
+    keys = {(q["family"], str(k)): (q["family"], k) for q in pr["questions"] for k in (q["left"], q["right"])}
     todo = [(str(run_dir), str(cache), pr["reading"], pr["base"], f, k, split, comparator)
-            for f, k in keys
+            for f, k in keys.values()
             if not _rows_cache_path(cache, pr["base"], f, k, comparator).exists()]
     if not todo:
         return 0
@@ -933,16 +878,10 @@ def fixpoint_retrospective(run_dir: Path, *, split: float = 0.5, method: str = "
                           schedules: tuple = ("fwd", "rev"), prefetch_workers: int = 0) -> dict:
     """Run a closure against a history until its verdict set is stable, and retain it.
 
-    Raw experiment rows (no ``premises``) are the immutable floor.  ``method``
-    ``sequential`` is the dependency-aware loop `fixpoint`; ``tournament`` is
-    `closure_over_schedules` -- the intersection of tournament fixpoints under
-    ``schedules``, with order-disputed rows preserved open in the sidecar's ``disputed``
-    section, which the search's reader ignores (only ``refuted`` binds it).  ``comparator``
-    names the claim comparator and is written into every derived row's premises, so
-    changing it makes every earlier verdict premise-stale by construction.  Fits are pure
-    in (run bytes, reading, split, comparator) and cached beside the history;
-    ``prefetch_workers`` fits every candidate a base poses in parallel before the loop
-    reads them (docs/v4_retained.md, Parts XI-XIII)."""
+    Raw experiment rows (no ``premises``) are the floor.  ``method`` is the sequential
+    loop or the tournament closure over ``schedules``; ``comparator`` is written into
+    every derived row's premises, so changing it makes earlier verdicts stale by
+    construction.  Fits are cached beside the history and may be prefetched."""
     from semabi.compiler.compile_v4 import build_hypotheses
     from semabi.compiler.evidence import EvidenceLog
     from semabi.compiler.v4 import pinned as v4_pinned
@@ -955,8 +894,8 @@ def fixpoint_retrospective(run_dir: Path, *, split: float = 0.5, method: str = "
     raw_rows = [r for r in original.get("refuted", []) if "premises" not in r]
     log = EvidenceLog(run_dir)
     cut = int(len(log.steps) * split)
-    cache = run_dir / "fixpoint_fits"      # survives interruption: a fit is pure in
-    cache.mkdir(exist_ok=True)             # (run bytes, reading, split, comparator)
+    cache = run_dir / "fixpoint_fits"
+    cache.mkdir(exist_ok=True)
     decide = retro_decision if comparator == EMISSION_COMPARATOR else retro_decision_shared
 
     def prep(rows):
