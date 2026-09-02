@@ -247,3 +247,160 @@ def test_an_undecided_question_is_re_posed_on_a_richer_base():
     assert out["outcome"] == "FIXPOINT"
     assert {(r["family"], str(r["refuted_key"])) for r in out["rows"]} == {
         ("ov", "None"), ("ov2", "C")}
+
+
+# ----------------------------------------------------------------- the tournament closure
+
+def _dec(refuted):
+    return {"outcome": "DECIDED", "refuted": refuted, "counts": {}}
+
+
+_UNDECIDED = {"outcome": "UNDECIDED", "counts": {}}
+
+
+def _rows_of(c):
+    return tuple(sorted((r["family"], str(r["refuted_key"])) for r in c["rows"]))
+
+
+def test_transitive_dominance_yields_a_unique_survivor_and_a_cycle_refutes_nothing():
+    order = {"A": 0, "B": 1, "C": 2}
+    t = ties.tournament(lambda pr, f, a, b: _dec("left" if order[a] > order[b] else "right"),
+                        {"base": "x"}, "F", ["A", "B", "C"])
+    assert t["survivors"] == ["A"] and sorted(t["dominated"]) == ["B", "C"]
+    beats = {("A", "B"), ("B", "C"), ("C", "A"), ("A", "D")}
+    def cyclic(pr, f, a, b):
+        if (a, b) in beats: return _dec("right")
+        if (b, a) in beats: return _dec("left")
+        return _UNDECIDED
+    t = ties.tournament(cyclic, {"base": "x"}, "F", ["A", "B", "C", "D"])
+    assert t["cyclic"] and t["dominated"] == [], "a disputed winner's victories earn nothing"
+
+
+def _sibling_sensitive(question_order):
+    """harbour at step 188 in miniature: the pairwise verdict V-vs-L depends on whether a
+    SIBLING row (F, N refuted) is already in the base; N always loses to V."""
+    Q = {"N": {"family": "F", "left": "V", "right": "N"},
+         "L": {"family": "F", "left": "V", "right": "L"}}
+    def prep(rows):
+        refuted = {k for f, k in ((r["family"], str(r["key_slot"])) for r in rows) if f == "F"}
+        return {"base": "b|" + "|".join(sorted(refuted)),
+                "questions": [Q[q] for q in question_order], "held": {}}
+    def derive(pr, fam, a, b):
+        if {a, b} == {"V", "N"}:
+            return _dec("right" if a == "V" else "left")
+        if {a, b} == {"V", "L"}:
+            if "N" in pr["base"]:
+                return _dec("right" if a == "V" else "left")     # V beats L
+            return _dec("left" if a == "V" else "right")         # L beats V
+        return _UNDECIDED
+    return prep, derive
+
+
+def test_the_sequential_loop_is_order_dependent_where_the_tournament_is_not():
+    """The worklist order is the question order prep returns.  Two orders, two sequential
+    endpoints -- the defect the six-schedule attack found -- and one tournament endpoint,
+    judged on the base with no rows of the family present."""
+    ends_seq, ends_tour = set(), set()
+    for order in (("N", "L"), ("L", "N")):
+        prep, derive = _sibling_sensitive(order)
+        ends_seq.add(_rows_of(ties.fixpoint(prep, derive, [])))
+        for key in (str, lambda f: "".join(chr(255 - ord(c)) for c in str(f))):
+            ends_tour.add(_rows_of(ties.tournament_fixpoint(prep, derive, [], fam_key=key)))
+    assert len(ends_seq) == 2, ends_seq
+    assert ends_tour == {(("F", "N"), ("F", "V"))}, ends_tour
+
+
+def test_a_candidate_posed_only_against_the_survivor_is_judged_in_a_second_round():
+    """The search poses ties against a family's current key, so a candidate can surface only
+    once a survivor has emerged (harbour's calls: Length overall is posed against Vessel,
+    never against None).  Rounds accumulate the posed candidates on the same neutral base."""
+    def prep(rows):
+        refuted = {k for f, k in ((r["family"], str(r["key_slot"])) for r in rows) if f == "F"}
+        qs = ([{"family": "F", "left": None, "right": "V"}, {"family": "F", "left": None, "right": "C"}]
+              if "None" not in refuted else [{"family": "F", "left": "V", "right": "L"}])
+        return {"base": "b|" + "|".join(sorted(refuted)), "questions": qs, "held": {}}
+    def derive(pr, fam, a, b):
+        if "V" in {a, b}:
+            return _dec("left" if a != "V" else "right")
+        return _UNDECIDED
+    r = ties.tournament_fixpoint(prep, derive, [])
+    assert r["outcome"] == "FIXPOINT"
+    assert _rows_of(r) == (("F", "C"), ("F", "L"), ("F", "None"))
+    assert [e["newly_posed"] for e in r["events"] if e["e"] == "ROUND"] == [["L"], []]
+
+
+def test_the_closure_over_schedules_keeps_what_every_order_agrees_on():
+    """Two self-consistent worlds (harbour at step 188): the base fingerprint sees only F's
+    rows, but which candidates the search poses for F depends on whether G's row is present.
+    F first: {a, b}, a survives.  G first: {a, b, c}, c beats a.  Neither order has
+    authority; the closure is their intersection and F:a is reported as order-disputed."""
+    def prep(rows):
+        have = {(r["family"], str(r["key_slot"])) for r in rows}
+        f_ref = sorted(k for f, k in have if f == "F")
+        cands = ["a", "b"] + (["c"] if ("G", "g1") in have else [])
+        qs = [{"family": "F", "left": cands[0], "right": k} for k in cands[1:]
+              if k not in f_ref and cands[0] not in f_ref]
+        if ("G", "g1") not in have:
+            qs.append({"family": "G", "left": "g1", "right": "g2"})
+        return {"base": "F|" + "|".join(f_ref), "questions": qs, "held": {}}
+    def derive(pr, fam, x, y):
+        if fam == "G":
+            return _dec("left" if x == "g1" else "right")           # g1 loses
+        beats = {("a", "b"), ("c", "a"), ("c", "b")}
+        if (x, y) in beats: return _dec("right")
+        if (y, x) in beats: return _dec("left")
+        return _UNDECIDED
+    out = ties.closure_over_schedules(prep, derive, [], ("fwd", "rev"))
+    assert out["outcome"] == "DISPUTED"
+    assert _rows_of(out) == (("F", "b"), ("G", "g1"))
+    assert [(d["family"], d["key"], d["refuted_under"]) for d in out["disputed"]] == \
+        [("F", "a", ["rev"])]
+    assert all(r["premises"]["schedules"] == ["fwd", "rev"] for r in out["rows"])
+
+
+def test_a_confluent_world_closes_as_a_fixpoint_under_every_schedule():
+    prep, derive = _sibling_sensitive(("N", "L"))
+    out = ties.closure_over_schedules(prep, derive, [], ("fwd", "rev"))
+    assert out["outcome"] == "FIXPOINT" and out["disputed"] == []
+
+
+# ----------------------------------------------------------------- the shared claim surface
+
+_E = {"verdict": "one outcome was admissible and it happened", "admissible": ["did"],
+      "level": "frame only", "arguments": None, "fresh": None}
+
+
+def _srow(step, state=None, **emission):
+    return {"step": step, **{**_E, **emission}, "state": state or []}
+
+
+def _claim(kind, node, verdict, expected="x", slot="s"):
+    return {"operator": "op", "kind": kind, "slot": slot, "subject": "o", "verdict": verdict,
+            "expected": expected, "node": node}
+
+
+def test_vocabulary_asymmetry_is_provenance_not_evidence():
+    """The twin ledger: the finer ontology makes CREATION claims the coarser one never
+    makes, and both are right about every atom they share.  Open, with the asymmetry
+    counted."""
+    shared = [_claim("VALUE", 7, "SUPPORTED")]
+    d = ties.retro_decision_shared([_srow(1, state=shared + [_claim("CREATION", 9, "SUPPORTED")])],
+                                   [_srow(1, state=shared)])
+    assert d["outcome"] == "UNDECIDED" and d["disagreements"] == 0
+    assert d["unshared"] == {"left": 1, "right": 0}
+
+
+def test_a_shared_atom_with_differing_verdicts_decides_and_the_node_is_the_coordinate():
+    d = ties.retro_decision_shared([_srow(1, state=[_claim("VALUE", 7, "SUPPORTED", slot="Stamp")])],
+                                   [_srow(1, state=[_claim("VALUE", 7, "REFUTED", slot="stamp_col")])])
+    assert d["outcome"] == "DECIDED" and d["refuted"] == "right"
+    d = ties.retro_decision_shared([_srow(1, state=[_claim("VALUE", 7, "SUPPORTED")])],
+                                   [_srow(1, state=[_claim("VALUE", 8, "REFUTED")])])
+    assert d["outcome"] == "UNDECIDED" and d["unshared"] == {"left": 1, "right": 1}
+
+
+def test_the_emission_channel_still_decides_under_the_shared_comparator():
+    d = ties.retro_decision_shared(
+        [_srow(1, level="with its arguments", arguments={"0": "D-104"})],
+        [_srow(1, verdict="one outcome was admissible and a different one happened")])
+    assert d["outcome"] == "DECIDED" and d["refuted"] == "right"

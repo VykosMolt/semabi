@@ -473,6 +473,362 @@ def fixpoint(prep_fn, derive_fn, raw_rows: list, max_states: int = 64) -> dict:
             attempted.add((qn["family"], str(qn["left"]), str(qn["right"]), pr["base"]))
 
 
+# ------------------------------------------------------------------ the state channel
+
+EMISSION_COMPARATOR = "claim-content-v2"
+SHARED_COMPARATOR = "claim-content-v3s-shared"
+SUPPORTED, REFUTED = "SUPPORTED", "REFUTED"
+
+
+def _atoms(row: dict) -> dict:
+    """A step's state claims keyed by an ontology-neutral coordinate.
+
+    Two readings name the same page cell under different slot names and different
+    subjects; the page node is what they share.  (Falls back to the slot when a claim
+    recorded no node.)"""
+    out = {}
+    for c in row.get("state") or []:
+        out[(c["kind"], c.get("node") if c.get("node") is not None else c["slot"])] = c
+    return out
+
+
+def retro_decision_shared(left_rows: list[dict], right_rows: list[dict]) -> dict:
+    """`retro_decision` with the state channel, scored over the shared claim surface.
+
+    The emission comparator is blind to consequences that land in another table (the
+    twin ledger's co-updates: 117 unexplained atoms the search could see and the
+    comparator never scored).  Counting every state claim a reading makes is the wrong
+    repair: a finer ontology makes claims a coarser one cannot -- entering a docket on
+    the register is a *creation* under two types and an unclaimed membership change under
+    one -- and it out-claimed the true reading 79 to 47 without being more right about
+    anything both addressed.  So only atoms both readings claim are scored, one right unit
+    per supported claim with a checked value, one wrong per refuted; unshared claims are
+    counted as provenance and never as units; and a step is a disagreement only on the
+    emission signature or on a shared atom.  Separation needs a shared atom with
+    differing predictions.  On the twin corpus this leaves the two ontologies where the
+    evidence leaves them: open."""
+    by_left = {r["step"]: r for r in left_rows}
+    counts = {"left": {"right": 0, "wrong": 0}, "right": {"right": 0, "wrong": 0}}
+    unshared = {"left": 0, "right": 0}
+    diffs = 0
+    for r in right_rows:
+        l = by_left.get(r["step"])
+        if l is None:
+            continue
+        la, ra = _atoms(l), _atoms(r)
+        shared = set(la) & set(ra)
+        sig = lambda a: tuple(sorted((k, a[k]["verdict"], str(a[k].get("expected"))) for k in shared))
+        if _claim_signature(l) == _claim_signature(r) and sig(la) == sig(ra):
+            unshared["left"] += len(la) - len(shared)
+            unshared["right"] += len(ra) - len(shared)
+            continue
+        diffs += 1
+        for side, atoms, row in (("left", la, l), ("right", ra, r)):
+            er, ew = _units(row)
+            sr = sum(1 for k in shared if atoms[k]["verdict"] == SUPPORTED
+                     and str(atoms[k].get("expected") or "") != "")
+            sw = sum(1 for k in shared if atoms[k]["verdict"] == REFUTED)
+            counts[side]["right"] += er + sr
+            counts[side]["wrong"] += ew + sw
+            unshared[side] += len(atoms) - len(shared)
+    out = {"comparator": SHARED_COMPARATOR, "disagreements": diffs, "counts": counts,
+           "unshared": unshared, "outcome": "UNDECIDED"}
+    lc, rc = counts["left"], counts["right"]
+    if diffs and lc["right"] > rc["right"] and lc["wrong"] <= rc["wrong"]:
+        out.update(outcome="DECIDED", refuted="right", survivor="left")
+    elif diffs and rc["right"] > lc["right"] and rc["wrong"] <= lc["wrong"]:
+        out.update(outcome="DECIDED", refuted="left", survivor="right")
+    return out
+
+
+# ---------------------------------------------------------------- the tournament closure
+
+def tournament(derive_fn, pr: dict, family: str, candidates: list) -> dict:
+    """Every pairwise verdict among a family's candidates on ONE base.
+
+    Refute exactly the dominated candidates, and only when an undominated one exists: a
+    dominance cycle refutes nothing and leaves the family open."""
+    from itertools import combinations
+    losses: dict = {c: set() for c in candidates}
+    pairs = []
+    for a, b in combinations(sorted(candidates, key=str), 2):
+        d = derive_fn(pr, family, a, b)
+        pairs.append({"left": a, "right": b, "out": d["outcome"], "refuted": d.get("refuted")})
+        if d["outcome"] == "DECIDED":
+            loser, winner = (a, b) if d["refuted"] == "left" else (b, a)
+            losses[loser].add(winner)
+    survivors = [c for c in candidates if not losses[c]]
+    dominated = [c for c in candidates if losses[c]] if survivors else []
+    return {"pairs": pairs, "survivors": survivors, "dominated": dominated,
+            "losses": {str(c): sorted(map(str, v)) for c, v in losses.items() if v},
+            "cyclic": not survivors}
+
+
+def tournament_fixpoint(prep_fn, derive_fn, raw_rows: list, fam_key=str,
+                        max_states: int = 64) -> dict:
+    """A family's identity decided by a tournament on a family-neutral base.
+
+    The sequential `fixpoint` prunes a family's candidates pairwise in worklist order,
+    each comparison judged on whatever base the earlier prunings left; on thin evidence
+    the dominance direction is sensitive to sibling rows (harbour at step 188: `Vessel vs
+    Length overall` flips), and a refuted key is never re-posed, so the pruning order
+    became the survivor -- three endpoints from six schedules.  Here a family is one
+    question over n candidates: every pairwise comparison is judged on the same base with
+    no rows of that family present (lift-first extended to siblings), in rounds -- the
+    search poses ties against the family's *current* key, so a candidate can surface only
+    once a survivor has emerged, and the accumulated candidates are re-judged on the same
+    neutral base until the posed set stops growing.  Cross-family dependency stays with
+    invalidation: a family's rows are stale when its neutral base moved.  Recurrence
+    handling is the orbit policy, unchanged.  Order-free for the verdicts among a
+    candidate set; the posed set itself can still depend on other families' rows (see
+    `closure_over_schedules`)."""
+    derived: list[dict] = []
+    attempted: set = set()
+    events: list[dict] = []
+    disputed_out: list[dict] = []
+    closed: set = set()
+
+    def rows_now(excluding_family=None):
+        return list(raw_rows) + [
+            {"family": r["family"], "key_slot": r["refuted_key"], "held": r.get("held"),
+             "premises": r["premises"], "why": r.get("why", "")}
+            for r in derived if r["family"] != excluding_family]
+
+    def state_key():
+        return tuple(sorted((r["family"], str(r["key_slot"])) for r in rows_now()))
+
+    def snapshot():
+        return frozenset((r["family"], str(r["refuted_key"])) for r in derived)
+
+    states_seen = {state_key()}
+    history: list[tuple] = [(state_key(), snapshot())]
+
+    def on_cycle(key, closer_family) -> None:
+        first = next((i for i, (k, _) in enumerate(history) if k == key), 0)
+        orbit = [snap for _, snap in history[first:]] + [snapshot()]
+        fams = {f for snap in orbit for f, _ in snap}
+        moved = {fam for fam in fams
+                 if len({frozenset(k for f, k in snap if f == fam) for snap in orbit}) > 1}
+        moved = moved or {closer_family}
+        for r in [r for r in derived if r["family"] in moved]:
+            derived.remove(r)
+        for fam in sorted(moved):
+            closed.add(fam)
+            disputed_out.append({"family": fam, "question": "orbit"})
+        events.append({"e": "CYCLE", "disputed": sorted(moved)})
+        states_seen.clear()
+        states_seen.add(state_key())
+        history.clear()
+        history.append((state_key(), snapshot()))
+
+    def note_change(closer_family) -> bool:
+        k = state_key()
+        if k in states_seen:
+            on_cycle(k, closer_family)
+            return False
+        states_seen.add(k)
+        history.append((k, snapshot()))
+        if len(states_seen) > max_states:
+            events.append({"e": "STATE_CAP"})
+            return True
+        return False
+
+    def candidates_of(pr, family):
+        cands = []
+        for q in pr["questions"]:
+            if q["family"] == family:
+                for k in (q["left"], q["right"]):
+                    if k not in cands:
+                        cands.append(k)
+        return cands
+
+    def run_family(family, neutral):
+        seen = list(candidates_of(neutral, family))
+        while True:
+            t = tournament(derive_fn, neutral, family, seen)
+            for r in [r for r in derived if r["family"] == family]:
+                derived.remove(r)
+            for c in t["dominated"]:
+                derived.append({"family": family, "refuted_key": c,
+                                "held": neutral["held"].get(f"{family}||{c}"),
+                                "premises": {"base": neutral["base"],
+                                             "question": {"left": c,
+                                                          "right": t["losses"][str(c)][0]},
+                                             "losses": t["losses"][str(c)]}})
+            grown = [c for c in candidates_of(prep_fn(rows_now()), family) if c not in seen]
+            events.append({"e": "ROUND", "family": family, "candidates": [str(c) for c in seen],
+                           "newly_posed": [str(c) for c in grown]})
+            if not grown:
+                break
+            seen.extend(grown)
+        attempted.add((family, neutral["base"]))
+        events.append({"e": "TOURNAMENT", "family": family, "base": neutral["base"],
+                       "candidates": [str(c) for c in seen], "pairs": t["pairs"],
+                       "survivors": [str(s) for s in t["survivors"]], "cyclic": t["cyclic"]})
+
+    while True:
+        stale = None
+        for fam in sorted({r["family"] for r in derived}, key=fam_key):
+            own = prep_fn(rows_now(excluding_family=fam))
+            if any(r["premises"]["base"] != own["base"] for r in derived if r["family"] == fam):
+                stale = (fam, own)
+                break
+        if stale is not None:
+            fam, own = stale
+            before = snapshot()
+            for r in [r for r in derived if r["family"] == fam]:
+                derived.remove(r)
+            events.append({"e": "RETOURNAMENT", "family": fam, "base": own["base"]})
+            run_family(fam, own)
+            if snapshot() == before:
+                continue
+            if note_change(fam):
+                return {"outcome": "STATE_CAP", "rows": derived, "events": events}
+            continue
+        pr = prep_fn(rows_now())
+        active = {r["family"] for r in derived}
+        fams = []
+        for q in pr["questions"]:
+            if q["family"] not in fams and q["family"] not in active and q["family"] not in closed:
+                fams.append(q["family"])
+        fams = [f for f in sorted(fams, key=fam_key)
+                if (f, prep_fn(rows_now(excluding_family=f))["base"]) not in attempted]
+        if not fams:
+            outcome = "OSCILLATION" if disputed_out else "FIXPOINT"
+            return {"outcome": outcome, "rows": derived, "base": pr["base"],
+                    "events": events, "disputed": disputed_out or None}
+        fam = fams[0]
+        neutral = prep_fn(rows_now(excluding_family=fam))
+        before = snapshot()
+        run_family(fam, neutral)
+        if snapshot() == before:
+            continue
+        if note_change(fam):
+            return {"outcome": "STATE_CAP", "rows": derived, "events": events}
+
+
+SCHEDULE_KEYS = {
+    "fwd": lambda f: str(f),
+    "rev": lambda f: "".join(chr(255 - ord(c)) for c in str(f)),
+}
+
+
+def closure_over_schedules(prep_fn, derive_fn, raw_rows: list,
+                           orders: tuple = ("fwd", "rev")) -> dict:
+    """The closure is what every schedule agrees on; the rest is preserved open.
+
+    Harbour at step 188 admits two self-consistent verdict worlds: judged after the
+    button verdict, the calls family's round poses five candidates and Vessel wins;
+    judged first, on the empty floor, the posed set lacks None and Current call
+    dominates, and the button verdict then goes the other way.  Each is a legitimate
+    fixpoint under the recorded premises -- the reading fingerprint is a faithful premise
+    for verdicts, but the search's posed question set depends on refutation rows beyond
+    it -- and the rows the worlds share are exactly the schedule-invariant core the
+    six-schedule sequential attack found.  So no single schedule has authority: the
+    tournament fixpoint runs under each order, the intersection is the closure, and every
+    row in the union but not the intersection is reported as order-disputed with the
+    orders that reached it.  An oscillation under any order propagates."""
+    runs = {o: tournament_fixpoint(prep_fn, derive_fn, raw_rows, fam_key=SCHEDULE_KEYS[o])
+            for o in orders}
+    sets = {o: {(r["family"], str(r["refuted_key"])): r for r in runs[o]["rows"]} for o in orders}
+    common = set.intersection(*[set(s) for s in sets.values()])
+    union = set.union(*[set(s) for s in sets.values()])
+    rows = []
+    for k in sorted(common, key=str):
+        r = dict(sets[orders[0]][k])
+        r["premises"] = {**r["premises"], "schedules": list(orders)}
+        rows.append(r)
+    disputed = [{"family": f, "key": k, "refuted_under": [o for o in orders if (f, k) in sets[o]]}
+                for f, k in sorted(union - common, key=str)]
+    for o in orders:
+        for d in runs[o].get("disputed") or []:
+            disputed.append({"family": d["family"], "key": None, "refuted_under": [],
+                             "orbit_under": o})
+    if any(r["outcome"] == "OSCILLATION" for r in runs.values()):
+        outcome = "OSCILLATION"
+    elif disputed:
+        outcome = "DISPUTED"
+    else:
+        outcome = "FIXPOINT"
+    return {"outcome": outcome, "rows": rows, "disputed": disputed,
+            "per_schedule": {o: {"outcome": r["outcome"], "base": r.get("base"),
+                                 "rows": sorted(sets[o], key=str), "events": r["events"]}
+                             for o, r in runs.items()},
+            "events": [{**e, "schedule": o} for o in orders for e in runs[o]["events"]]}
+
+
+# -------------------------------------------------------------------- fits, prefetched
+
+def _rows_cache_path(cache: Path, base: str, family: str, key, comparator: str) -> Path:
+    token = ((base, family, str(key)) if comparator == EMISSION_COMPARATOR
+             else (base, family, str(key), comparator, "node"))
+    return cache / (hashlib.sha256(repr(token).encode()).hexdigest()[:20] + ".json")
+
+
+def _fit_rows(args) -> str:
+    """One frozen-prefix fit and its suffix rows, written atomically to the cache.
+
+    Module-level so a process pool can run it: the fixpoint is sequential by nature (a
+    verdict can invalidate the next) but its fits are not -- every candidate a base poses
+    needs one, independent of the others."""
+    import os
+    from dataclasses import replace
+    from semabi.compiler.evidence import EvidenceLog
+    from semabi.compiler.v4 import consequence as csq
+    from semabi.compiler.v4 import outcome as oc
+    from semabi.compiler.v4 import pinned as v4_pinned
+    run_dir, cache, reading_json, base, family, key, split, comparator = args
+    run_dir, cache = Path(run_dir), Path(cache)
+    path = _rows_cache_path(cache, base, family, key, comparator)
+    if path.exists():
+        return "cached"
+    log = EvidenceLog(run_dir)
+    cut = int(len(log.steps) * split)
+    reading = v4_pinned.PinnedReading.from_json(_override(reading_json, family, key))
+    model = csq.fit(run_dir, reading, split=split)
+    m = replace(model, log=log, cut=0)
+    state_by_step: dict = {}
+    if comparator == SHARED_COMPARATOR:
+        for p in csq.score(model).predictions:
+            state_by_step.setdefault(p.step, []).append(
+                {"operator": p.operator, "kind": p.kind, "slot": p.slot, "subject": p.subject,
+                 "verdict": p.verdict, "expected": p.expected, "node": p.feature_node,
+                 "predicted": p.predicted})
+    rows = []
+    for step in log.steps:
+        if step.step < cut or step.action.kind != "click" or step.action.target is None:
+            continue
+        v = oc.score_step_admissible(m, step, corroborated=True, hypothesis=oc.RULE)
+        row = {"step": step.step, "verdict": v["verdict"], "admissible": v.get("admissible"),
+               "level": v.get("level"), "arguments": v.get("arguments"), "fresh": v.get("fresh")}
+        if comparator == SHARED_COMPARATOR:
+            row["state"] = state_by_step.get(step.step, [])
+        rows.append(row)
+    cache.mkdir(exist_ok=True)
+    tmp = path.with_suffix(".tmp")
+    tmp.write_text(json.dumps(rows, default=str))
+    os.replace(tmp, path)
+    return "fitted"
+
+
+def _prefetch(run_dir: Path, cache: Path, pr: dict, split: float, comparator: str,
+              workers: int) -> int:
+    from concurrent.futures import ProcessPoolExecutor
+    keys = []
+    for q in pr["questions"]:
+        for k in (q["left"], q["right"]):
+            if (q["family"], str(k)) not in {(f, str(kk)) for f, kk in keys}:
+                keys.append((q["family"], k))
+    todo = [(str(run_dir), str(cache), pr["reading"], pr["base"], f, k, split, comparator)
+            for f, k in keys
+            if not _rows_cache_path(cache, pr["base"], f, k, comparator).exists()]
+    if not todo:
+        return 0
+    with ProcessPoolExecutor(max_workers=min(workers, len(todo))) as ex:
+        return list(ex.map(_fit_rows, todo)).count("fitted")
+
+
+
 def retrospective(run_dir: Path, *, split: float = 0.5, propagate: bool = False) -> dict:
     """Ask each open question what the retained history itself already answered.
 
@@ -566,22 +922,26 @@ def retrospective(run_dir: Path, *, split: float = 0.5, propagate: bool = False)
     return {"run": run_dir.name, "split": split, "questions": rows}
 
 
-def fixpoint_retrospective(run_dir: Path, *, split: float = 0.5) -> dict:
-    """Run the dependency-aware loop against a history until its verdict set is stable.
+def fixpoint_retrospective(run_dir: Path, *, split: float = 0.5, method: str = "sequential",
+                          comparator: str = EMISSION_COMPARATOR,
+                          schedules: tuple = ("fwd", "rev"), prefetch_workers: int = 0) -> dict:
+    """Run a closure against a history until its verdict set is stable, and retain it.
 
-    Raw experiment rows (no ``premises``) are the immutable floor; retrospective rows are
-    derived and re-derived by `fixpoint`, and the sidecar is rewritten from the loop's
-    result -- with each row's premises -- only on a FIXPOINT.  An OSCILLATION leaves the
-    sidecar at the raw floor plus the settled rows and reports the disputed questions as
-    open; no update order acquires semantic authority (docs/v4_retained.md)."""
+    Raw experiment rows (no ``premises``) are the immutable floor.  ``method``
+    ``sequential`` is the dependency-aware loop `fixpoint`; ``tournament`` is
+    `closure_over_schedules` -- the intersection of tournament fixpoints under
+    ``schedules``, with order-disputed rows preserved open in the sidecar's ``disputed``
+    section, which the search's reader ignores (only ``refuted`` binds it).  ``comparator``
+    names the claim comparator and is written into every derived row's premises, so
+    changing it makes every earlier verdict premise-stale by construction.  Fits are pure
+    in (run bytes, reading, split, comparator) and cached beside the history;
+    ``prefetch_workers`` fits every candidate a base poses in parallel before the loop
+    reads them (docs/v4_retained.md, Parts XI-XIII)."""
     from semabi.compiler.compile_v4 import build_hypotheses
     from semabi.compiler.evidence import EvidenceLog
-    from semabi.compiler.v4 import consequence as csq
-    from semabi.compiler.v4 import outcome as oc
     from semabi.compiler.v4 import pinned as v4_pinned
     from semabi.compiler.v4 import search as v4_search
     from semabi.compiler.v4.identity import family_key
-    from dataclasses import replace
 
     run_dir = Path(run_dir)
     sidecar = run_dir / v4_search.REFUTATIONS_FILE
@@ -590,80 +950,79 @@ def fixpoint_retrospective(run_dir: Path, *, split: float = 0.5) -> dict:
     log = EvidenceLog(run_dir)
     cut = int(len(log.steps) * split)
     cache = run_dir / "fixpoint_fits"      # survives interruption: a fit is pure in
-    cache.mkdir(exist_ok=True)             # (run bytes, reading, split)
-    fits: dict = {}
+    cache.mkdir(exist_ok=True)             # (run bytes, reading, split, comparator)
+    decide = retro_decision if comparator == EMISSION_COMPARATOR else retro_decision_shared
 
     def prep(rows):
         state = hashlib.sha256(json.dumps(
             sorted((r["family"], str(r["key_slot"])) for r in rows)).encode()).hexdigest()[:20]
         disk = cache / f"prep_{state}.json"
         if disk.exists():
-            return json.loads(disk.read_text())
-        sidecar.write_text(json.dumps({"refuted": rows}, indent=1))
-        H0, G = build_hypotheses(run_dir, log)
-        result = v4_search.search(H0, G, log, run_dir=run_dir)
-        H = result.hypotheses
-        reading = {"name": "fixpoint", "families": {
-            family_key(t): {"family": family_key(t), "key_slot": r.key_slot,
-                            "status": r.status} for t, r in result.chosen.items()}}
-        base = v4_pinned.from_search(result, run_dir, "retrospective",
-                                     refuted=v4_search.read_refutations(run_dir)).fingerprint()
-        questions = [{"family": q.template, "left": q.left.key_slot,
-                      "right": q.right.key_slot} for q in result.open_questions]
-        held = {}
-        for q in questions:
-            for k in (q["left"], q["right"]):
-                held[f"{q['family']}||{k}"] = sorted(
-                    v4_search.slot_values(H, q["family"], k))
-        out = {"base": base, "questions": questions, "held": held, "reading": reading}
-        disk.write_text(json.dumps(out, default=str))
+            out = json.loads(disk.read_text())
+        else:
+            sidecar.write_text(json.dumps({"refuted": rows}, indent=1))
+            H0, G = build_hypotheses(run_dir, log)
+            result = v4_search.search(H0, G, log, run_dir=run_dir)
+            H = result.hypotheses
+            reading = {"name": "fixpoint", "families": {
+                family_key(t): {"family": family_key(t), "key_slot": r.key_slot,
+                                "status": r.status} for t, r in result.chosen.items()}}
+            base = v4_pinned.from_search(result, run_dir, "retrospective",
+                                         refuted=v4_search.read_refutations(run_dir)).fingerprint()
+            questions = [{"family": q.template, "left": q.left.key_slot,
+                          "right": q.right.key_slot} for q in result.open_questions]
+            held = {}
+            for q in questions:
+                for k in (q["left"], q["right"]):
+                    held[f"{q['family']}||{k}"] = sorted(
+                        v4_search.slot_values(H, q["family"], k))
+            out = {"base": base, "questions": questions, "held": held, "reading": reading}
+            disk.write_text(json.dumps(out, default=str))
+        if prefetch_workers > 0:
+            _prefetch(run_dir, cache, out, split, comparator, prefetch_workers)
         return out
 
+    def rows_for(pr, family, key):
+        path = _rows_cache_path(cache, pr["base"], family, key, comparator)
+        if not path.exists():
+            _fit_rows((str(run_dir), str(cache), pr["reading"], pr["base"], family, key,
+                       split, comparator))
+        return json.loads(path.read_text())
+
     def derive(pr, family, left, right):
-        def rows_for(key):
-            token = (pr["base"], family, str(key))
-            disk = cache / (hashlib.sha256(repr(token).encode()).hexdigest()[:20] + ".json")
-            if token not in fits and disk.exists():
-                fits[token] = json.loads(disk.read_text())
-            if token not in fits:
-                reading = v4_pinned.PinnedReading.from_json(
-                    _override(pr["reading"], family, key))
-                model = csq.fit(run_dir, reading, split=split)
-                m = replace(model, log=log, cut=0)
-                out = []
-                for step in log.steps:
-                    if (step.step < cut or step.action.kind != "click"
-                            or step.action.target is None):
-                        continue
-                    v = oc.score_step_admissible(m, step, corroborated=True,
-                                                 hypothesis=oc.RULE)
-                    out.append({"step": step.step, "verdict": v["verdict"],
-                                "admissible": v.get("admissible"),
-                                "level": v.get("level"),
-                                "arguments": v.get("arguments"),
-                                "fresh": v.get("fresh")})
-                fits[token] = out
-                disk.write_text(json.dumps(out, default=str))
-            return fits[token]
-        d = retro_decision(rows_for(left), rows_for(right))
+        d = decide(rows_for(pr, family, left), rows_for(pr, family, right))
         d.pop("details", None)
         return d
 
-    out = fixpoint(prep, derive, raw_rows)
+    if method == "tournament":
+        out = closure_over_schedules(prep, derive, raw_rows, tuple(schedules))
+    elif method == "sequential":
+        out = fixpoint(prep, derive, raw_rows)
+    else:
+        raise ValueError(f"unknown closure method {method!r}")
     rows = list(raw_rows)
     for r in out["rows"]:
         q = r["premises"]["question"]
+        premises = {"base": r["premises"]["base"], "cut": cut, "comparator": comparator,
+                    "question": q}
+        for extra in ("losses", "schedules"):
+            if extra in r["premises"]:
+                premises[extra] = r["premises"][extra]
         rows.append({"family": r["family"], "key_slot": r["refuted_key"],
                      "held": r.get("held") or [],
-                     "why": ("refuted by retained outcome evidence at the fixpoint "
-                             "(frozen prefix at %d)" % cut),
-                     "evidence": {"instrument": "retrospective fixpoint",
+                     "why": ("refuted by retained outcome evidence at the %s closure "
+                             "(frozen prefix at %d)" % (method, cut)),
+                     "evidence": {"instrument": f"retrospective {method} closure",
                                   "counts": r.get("counts"), "split": split},
-                     "premises": {"base": r["premises"]["base"], "cut": cut,
-                                   "comparator": "claim-content-v2", "question": q}})
-    sidecar.write_text(json.dumps({"refuted": rows}, indent=1))
-    return {"run": run_dir.name, "outcome": out["outcome"],
+                     "premises": premises})
+    payload = {"refuted": rows}
+    if method == "tournament" and out.get("disputed"):
+        payload["disputed"] = out["disputed"]
+    sidecar.write_text(json.dumps(payload, indent=1))
+    return {"run": run_dir.name, "method": method, "comparator": comparator,
+            "outcome": out["outcome"],
             "rows": [(r["family"], str(r["key_slot"])) for r in rows],
+            "disputed": out.get("disputed"), "per_schedule": out.get("per_schedule"),
             "events": out["events"]}
 
 
@@ -678,13 +1037,26 @@ def main(argv=None) -> int:
                     help="fit both readings of every open question on this history's frozen "
                          "prefix and compare their suffix verdicts where they disagree")
     ap.add_argument("--split", type=float, default=0.5)
+    ap.add_argument("--method", choices=("sequential", "tournament"), default="sequential",
+                    help="the closure: the sequential loop, or the intersection of "
+                         "tournament fixpoints over --schedules")
+    ap.add_argument("--comparator", choices=("emission", "shared"), default="emission",
+                    help="claim comparator: emission only, or emission plus the shared "
+                         "state-claim surface")
+    ap.add_argument("--schedules", default="fwd,rev")
+    ap.add_argument("--prefetch", type=int, default=0,
+                    help="fit every candidate a base poses in this many parallel processes")
     ap.add_argument("--propagate", action="store_true",
                     help="write a retrospective DECIDED verdict into the history's "
                          "identity_refutations_v4.json, like an executed experiment's")
     a = ap.parse_args(argv)
     if a.fixpoint:
-        r = fixpoint_retrospective(Path(a.run), split=a.split)
-        print(f"\n{r['run']}: fixpoint {r['outcome']} with {len(r['rows'])} sidecar rows")
+        r = fixpoint_retrospective(
+            Path(a.run), split=a.split, method=a.method,
+            comparator=EMISSION_COMPARATOR if a.comparator == "emission" else SHARED_COMPARATOR,
+            schedules=tuple(a.schedules.split(",")), prefetch_workers=a.prefetch)
+        print(f"\n{r['run']}: {r['method']} closure {r['outcome']} with {len(r['rows'])} "
+              f"sidecar rows" + (f", {len(r['disputed'])} order-disputed" if r.get("disputed") else ""))
         for e in r["events"]:
             print("  ", e["e"], str(e.get("q", ""))[:60], "->", e.get("out"),
                   e.get("refuted") or "")
