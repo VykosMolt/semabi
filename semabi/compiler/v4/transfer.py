@@ -212,7 +212,7 @@ def _validate_separation_records(evidence: TransferEvidence) -> None:
             raise ValueError(f"{prefix} must be an object")
         expected_fields = {
             "family", "key_slot", "status", "copresent_pairs", "separated_pairs", "rate",
-            "population_hash",
+            "population_hash", "instances", "corresponding",
         }
         if set(record) != expected_fields:
             raise ValueError(
@@ -246,12 +246,27 @@ def _validate_separation_records(evidence: TransferEvidence) -> None:
         status = record.get("status")
         if status not in SEPARATION_STATUSES:
             raise ValueError(f"{prefix} has unknown separation status {status!r}")
+        instances, corresponding = record.get("instances"), record.get("corresponding")
+        if type(instances) is not int or type(corresponding) is not int:
+            raise ValueError(f"{prefix} correspondence counts must be exact non-bool integers")
+        if instances < 0 or corresponding < 0 or corresponding > instances:
+            raise ValueError(f"{prefix} corresponding cannot exceed instances")
         if copresent_pairs == 0:
-            if status != "UNTESTED" or separated_pairs != 0:
+            # a family that never renders peers is tested by correspondence, if at all
+            if separated_pairs != 0:
+                raise ValueError(f"{prefix} zero co-present pairs require separated_pairs=0")
+            if instances == 0:
+                if status != "UNTESTED" or record["rate"] is not None:
+                    raise ValueError(f"{prefix} nothing tested requires UNTESTED and a null rate")
+                continue
+            expected_status = (
+                "REFUTED" if corresponding == 0 else
+                "CONFIRMED" if corresponding == instances else
+                "PARTIAL")
+            if status != expected_status:
                 raise ValueError(
-                    f"{prefix} zero co-present pairs require UNTESTED and separated_pairs=0")
-            if record["rate"] is not None:
-                raise ValueError(f"{prefix} UNTESTED rate must be null")
+                    f"{prefix} status {status!r} does not follow from correspondence "
+                    f"{corresponding}/{instances}")
             continue
 
         expected_status = (

@@ -374,6 +374,8 @@ def _separation(status: str) -> list[dict]:
         "separated_pairs": separated,
         "rate": rate,
         "population_hash": "0" * 64,
+        "instances": 0,
+        "corresponding": 0,
     }]
 
 

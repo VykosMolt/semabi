@@ -306,32 +306,44 @@ def save(reading: PinnedReading, path: Path) -> None:
 
 @dataclass
 class Separation:
+    """A key's claim, tested on the destination.  A family that renders peers at once
+    claims its value tells them apart (co-present pairs); a family that never does -- a
+    detail view keyed by what it names -- claims its value names an object the page
+    shows, and is tested by correspondence: each instance's value is a key of another
+    family on the same page."""
     family: str
     key_slot: str
     copresent_pairs: int = 0
     separated_pairs: int = 0
     population_hash: str = ""
+    instances: int = 0
+    corresponding: int = 0
 
     @property
     def status(self) -> str:
-        if self.copresent_pairs == 0:
+        tried, won = ((self.copresent_pairs, self.separated_pairs) if self.copresent_pairs
+                      else (self.instances, self.corresponding))
+        if tried == 0:
             return "UNTESTED"
-        if self.separated_pairs == 0:
+        if won == 0:
             return "REFUTED"
-        if self.separated_pairs == self.copresent_pairs:
+        if won == tried:
             return "CONFIRMED"
         return "PARTIAL"
 
     @property
     def rate(self) -> float | None:
-        return None if not self.copresent_pairs else self.separated_pairs / self.copresent_pairs
+        if self.copresent_pairs:
+            return self.separated_pairs / self.copresent_pairs
+        return self.corresponding / self.instances if self.instances else None
 
     def to_json(self) -> dict[str, Any]:
         return {"family": self.family, "key_slot": self.key_slot, "status": self.status,
                 "copresent_pairs": self.copresent_pairs,
                 "separated_pairs": self.separated_pairs,
                 "rate": None if self.rate is None else round(self.rate, 3),
-                "population_hash": self.population_hash}
+                "population_hash": self.population_hash,
+                "instances": self.instances, "corresponding": self.corresponding}
 
 
 def _stable_instance_identity(instance: Any) -> tuple[str, str, int]:
@@ -374,6 +386,18 @@ def separation(H, reading: PinnedReading, transport: Transport) -> list[Separati
     grouped: dict[str, list] = {}
     for template, unit in sorted(H.units.items()):
         grouped.setdefault(family_key(template), []).append(unit)
+    # the keys every page shows, per family: what a view's value may correspond to
+    keys_by_sig: dict[str, dict[str, set]] = {}
+    for family, units in grouped.items():
+        source = reading.families.get(family)
+        if source is None or source.key_slot is None or transport.applied.get(family) != source.key_slot:
+            continue
+        slots = tuple(source.key_slot.split("|"))
+        for u in units:
+            for inst in u.instances:
+                v = _value(inst, slots)
+                if v is not None:
+                    keys_by_sig.setdefault(inst.sig, {}).setdefault(family, set()).add(v)
     out: list[Separation] = []
     for family, units in sorted(grouped.items()):
         source = reading.families.get(family)
@@ -398,6 +422,15 @@ def separation(H, reading: PinnedReading, transport: Transport) -> list[Separati
             left, right = _value(a, slots), _value(b, slots)
             if left is not None and right is not None and left != right:
                 record.separated_pairs += 1
+        if not pairs:
+            for inst in merged.instances:
+                v = _value(inst, slots)
+                if v is None:
+                    continue
+                record.instances += 1
+                others = keys_by_sig.get(inst.sig, {})
+                if any(v in ks for f, ks in others.items() if f != family):
+                    record.corresponding += 1
         out.append(record)
     return out
 

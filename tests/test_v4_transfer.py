@@ -29,16 +29,35 @@ def _ev(name, verdicts, *, complexity=10, applicability=1.0, applicability_fract
 
 
 def _sep(family, key_slot, separated_pairs, copresent_pairs, *, status=None,
-         population_hash="0" * 64):
-    rate = None if copresent_pairs == 0 else round(separated_pairs / copresent_pairs, 3)
+         population_hash="0" * 64, instances=0, corresponding=0):
+    tried, won = (copresent_pairs, separated_pairs) if copresent_pairs else (instances, corresponding)
+    rate = None if tried == 0 else round(won / tried, 3)
     if status is None:
-        status = ("UNTESTED" if copresent_pairs == 0 else
-                  "REFUTED" if separated_pairs == 0 else
-                  "CONFIRMED" if separated_pairs == copresent_pairs else
+        status = ("UNTESTED" if tried == 0 else
+                  "REFUTED" if won == 0 else
+                  "CONFIRMED" if won == tried else
                   "PARTIAL")
     return {"family": family, "key_slot": key_slot, "status": status,
             "copresent_pairs": copresent_pairs, "separated_pairs": separated_pairs,
-            "rate": rate, "population_hash": population_hash}
+            "rate": rate, "population_hash": population_hash,
+            "instances": instances, "corresponding": corresponding}
+
+
+def test_a_view_keyed_by_what_it_names_is_confirmed_by_correspondence():
+    # harbour's call sheet: never two at once, keyed by the call it names; on the holdout
+    # every sheet names a call the page shows
+    view = _ev("view", {1: "EXPLAINED"})
+    view.separation = [_sep("group[_]", "heading#0", 0, 0, instances=9, corresponding=9)]
+    assert view.separation[0]["status"] == "CONFIRMED" and view.separation_tested == 1
+    partial = _ev("partial", {1: "EXPLAINED"})
+    partial.separation = [_sep("group[_]", "heading#0", 0, 0, instances=9, corresponding=4)]
+    assert partial.separation[0]["status"] == "PARTIAL"
+    import pytest
+    from semabi.compiler.v4 import transfer
+    bad = _ev("bad", {1: "EXPLAINED"})
+    bad.separation = [_sep("group[_]", "heading#0", 0, 0, instances=9, corresponding=9, status="UNTESTED")]
+    with pytest.raises(ValueError):
+        transfer._validate_separation_records(bad)
 
 
 def test_a_step_where_one_reading_is_right_and_the_other_wrong_is_the_comparable_one():
