@@ -823,6 +823,70 @@ history is pre-registered as P21 in the campaign notes and not yet known; the ro
 reaching the vessel row from the allocate button is the one place it could fail for a
 reason the ontology owns.
 
+## Part XVI -- JOIN, attacked: the comparison holds, the context object does not
+
+**The literal, and its discipline.**  The comparison between two bound objects' fields
+was built into the outcome layer's field theory rather than into the operator grammar:
+`p.a >= q.b` and `p.a < q.b` over the ordered candidates of two roles, generated beside
+the thresholds, evaluated by the binding, rendered by the same printer, and adopted only
+where a fitted rule uses it and is justified in doing so.  An independent review of the
+first cut found the adoption discipline weaker than the scalar one it copied: distinct
+*pairs* of values are cheap, so a comparison could be adopted, and adopt both fields, on
+evidence where one field never changed -- exactly what a threshold over that field would
+have been refused for.  The repair asks each field to vary on each side, the owner is
+kept out of pair literals because it is not a role the model could later justify, and an
+ordered literal over an unbound role is undecidable rather than an exception.  On the
+four existing corpora the change is invariant against the unchanged code -- identical
+candidates, rules and verdicts -- as it must be where no positive pair exists.  The
+earlier note of a unit gap was half right: the vessel register renders lengths as bare
+numbers under a header-named template and is already an ordered candidate; the call
+sheet's own value cells keep their units, and any comparison through *them* would need
+a number that carries one.
+
+**The corpus.**  The experiment runner extended harbour's development history with five
+retained extensions across four seeds: eight allocations succeeded -- *Berth W1
+allocated to call C-102* and its kin -- one was refused for length (*Petrel Star is
+148 m overall; berth S2 takes 70 m*), and three planned length refusals landed on a
+different refusal, *Berth S2 is held by call C-101*, because the seed planner reused
+berths the live application already held.  That accident is evidence of the right kind:
+a second refusal whose length pair falls on either side of the comparison.  Merged, the
+development corpus holds two distinct allocated pairs and two distinct refused pairs, the
+minimum the discipline asks; the holdout is the transfer history with the other three
+seeds.
+
+**P21 and P22, both falsified.**  Fitted on the merged corpus under the retained reading,
+the allocate control has twelve occasions, six events, and *no roles at all* -- identical
+under the pre-change code, thirteen abstentions on the holdout either way.  The
+comparison never had two objects to compare.  The operator layer reaches both: its
+allocation operator binds the berth through the selection and the vessel through the
+call's reference, and the call through the *earlier click* that opened its sheet, which
+the inducer folds into a two-click core as an enabling action because the allocate
+button does not exist before it.  The outcome layer takes a control's roles from
+operators with a single-click core and finds the button's owner by walking up the parsed
+instances; the button belongs to no instance, because the call sheet -- a group with the
+heading *Call sheet C-102* and a Field/Value table -- is a page fragment the abstraction
+does not instantiate: its family is keyed by the heading and UNSUPPORTED under every
+retained reading, and absent from the search's own reading of the extended corpus, which
+otherwise moves with the evidence (the overview call row gains an identity, keyed by
+vessel).  So the arguments of the join exist one click too early for a pre-state
+question, and no form in the referring language reads the page's own statement of the
+context.
+
+**Finding 8, the context object.**  This is the JOIN's third face and the one that is not
+an instrument defect.  The grammar can state the comparison; the corpus has positives;
+what is missing is a route from the pre-state of the allocate click to the call whose
+sheet is open, and that route is an identity verdict of the reading -- the sheet is not
+a thing -- compounded by the referring language, which names objects by singleton,
+property, selection and relation and not by mention in a heading or a cell.  It is not
+corpus-specific: any detail view that names its subject in prose and offers controls
+beneath it has the same shape.  The candidate mechanism is a *mention* form -- the object
+of a type whose key exactly one text slot names -- learned like the other forms from an
+operator's positives, together with letting a control take roles from an operator whose
+core ends at it when every earlier click's variable has a pre-state form of its own.
+Page-read roles were measured once before and were harmful on blend (fifty of
+seventy-nine unestablished states turned into forced claims, eighteen right); that
+measurement is the attack any such form must survive, and it has not been run.
+
 ## What stands, and what is open
 
 The retained state, regenerated once more: harbour's development sidecar is now written by
@@ -865,6 +929,8 @@ layer changes; identity should be judged on transfer and explanation, and the le
 the wrong yardstick for it; the scoreboard over the shared surface is a first one that
 reproduces the frontier's judgments on harbour and blend without counting claims, and
 declines to judge vet.  The schedule family behind the closure is checked by exhaustion at
-the two boundaries where it was doubted.  ORDERED stands where the intervention put it.  JOIN and
-aggregate remain unearned and are the next competence frontier, to be attacked as JOIN
-first, on its own.
+the two boundaries where it was doubted.  ORDERED stands where the intervention put it.  JOIN was
+attacked on its own: the comparison is expressible and disciplined, the corpus has
+positives, and the eighth finding locates the wall at the context object -- a detail
+view the reading does not identify and the referring language cannot name from the page.
+Aggregate remains unearned behind it.
