@@ -1047,7 +1047,7 @@ Six fits launched (join_fits.sh): inspect / inspect-base, hold / hold-base,
 ft, dev.  join_inspect.py prints the control's roles, rules, adopted fields and
 per-occasion ordered literals -- the role-reachability question directly.
 
-## P21 judged (12:05): FALSIFIED, for the reason the pre-registration reserved
+## P21 judged (11:30): FALSIFIED, for the reason the pre-registration reserved
 Six fits (11:20-11:27).  `button:Allocate berth` on harbour_join_dev under
 source_choice: 12 occasions, 6 events, ZERO ROLES, 0 rules; identical under the
 pre-change worktree; holdout 13 abstentions either way.  The comparison literal
@@ -1083,13 +1083,13 @@ links Value#0 to the vessel row), and the comparison forms.  If the sheet
 stays UNSUPPORTED, the wall stands at the reading and the honest options are
 (a) a referring form for a context stated by a heading (a language change, to
 be attacked before adoption) or (b) more evidence.  No corpus-specific role.
-Reviewer (opus-specialist) on ab565f9: ACCEPT-WITH-FIXES; fixed 12:00 --
+Reviewer (opus-specialist) on ab565f9: ACCEPT-WITH-FIXES; fixed 11:40 --
 adoption over pairs now requires each field to vary on each side (_varies),
 the owner is excluded from pair literals, binding.holds returns None for an
 unbound role of an ordered literal, loop variables renamed; one new test with
 two scenarios where only the comparison separates.  Suite running.
 
-## P22 judged (12:25): the reading moves, the wall does not
+## P22 judged (11:58): the reading moves, the wall does not
 The search's own reading of harbour_join_dev differs from the base: the overview
 call row gains identity (cell@Vessel#0, SUPPORTED; NO_IDENTITY on harbour_dev)
 and the call-sheet family is no longer among the families at all.  Under it the
@@ -1102,7 +1102,7 @@ Operator layer under the search reading: op0 binds ?o1 berth (selection),
 ?o2 vessel (forward in:4 from the call), ?o0 the call bound by the enabling
 click -- the arguments exist, one click too early for a pre-state question.
 Suite over the reviewer fixes: 550 passed, 3 skipped, 1 xfailed (24:32);
-committed.  Battery regeneration launched 12:30 (run_battery.sh; previous
+committed.  Battery regeneration launched 12:03 (run_battery.sh; previous
 markers moved to battery_prev/); the manifests digest induce.py, whose
 renderer changed in ab565f9.
 Design note for the next step (not started): the page states the context --
@@ -1115,3 +1115,30 @@ Value#0 under a reading keyed by vessel name, and the berth by the select
 "nothing established" states turned into forced claims, 18 wrong).  Any
 page-read role must face that same measurement before adoption.  Not a
 corpus-specific role: the principle is the page's own statement of context.
+
+## Finding 8, sharpened (12:25)
+Diagnostic compile of the JOIN corpus (harbour_join_diag/model_v4.txt): the V2
+hypothesis layer DOES make the call sheet a type -- T11 (n=2) and T12 (n=7), both
+`group[](heading[Call sheet _],table[](rowgroup[](row[](cell[Field],cell[Value]))...)`,
+key=heading#0 score 1.50 -- with attrs=[]: the Field/Value rows are nested rows,
+not slots of the group, so the sheet object carries nothing.  identity._classify
+gives UNSUPPORTED exactly when "the family never rendered two instances at once",
+which is always true of a detail view; UNSUPPORTED "starts with no identity at
+all, and has to win one back from behaviour", and with no attributes there is no
+behaviour to win it back with (the allocation changes the sheet's Berth row
+'none allocated' -> 'W1', invisible as an attribute).  The button[_] type T13
+links to T12 ("ref button#0 -> T12", "key overlaps ... but repeats within
+observations: link type").  So the wall is at the OBSERVATION MODEL: a
+label/value table is not read as the attributes of its enclosing unit.  That is
+prior to the referring language (B: MENTION) -- if the sheet had attributes and
+an identity, the Allocate button's owner would be the sheet, the berth would be
+learned by selection and the vessel by the sheet's Vessel value (a reference,
+since those values are vessel keys), and the comparison would run through the
+owner's own 'Length overall' ("78 m": unit-aware numeric needed) or the ref.
+Mechanism A (observation model: a two-column table whose first column is a
+label is a property list of its container) is the principled candidate; B is
+a fallback that reads prose.  Both are new campaigns with full regeneration;
+A touches frozen files.  Neither started.
+The diagnostics writer (compile_v4 write_diagnostics=True) crashes on
+induce.VARIES (`_Varies` not JSON serialisable) -- checking against the base
+worktree whether that predates ab565f9.

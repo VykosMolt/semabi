@@ -875,17 +875,28 @@ context.
 **Finding 8, the context object.**  This is the JOIN's third face and the one that is not
 an instrument defect.  The grammar can state the comparison; the corpus has positives;
 what is missing is a route from the pre-state of the allocate click to the call whose
-sheet is open, and that route is an identity verdict of the reading -- the sheet is not
-a thing -- compounded by the referring language, which names objects by singleton,
-property, selection and relation and not by mention in a heading or a cell.  It is not
-corpus-specific: any detail view that names its subject in prose and offers controls
-beneath it has the same shape.  The candidate mechanism is a *mention* form -- the object
-of a type whose key exactly one text slot names -- learned like the other forms from an
-operator's positives, together with letting a control take roles from an operator whose
-core ends at it when every earlier click's variable has a pre-state form of its own.
-Page-read roles were measured once before and were harmful on blend (fifty of
-seventy-nine unestablished states turned into forced claims, eighteen right); that
-measurement is the attack any such form must survive, and it has not been run.
+sheet is open, and the diagnostic compile locates where that route is cut.  The
+hypothesis layer does make the sheet a type -- keyed by its heading, at a key score no
+worse than the rows' -- but with *no attribute slots*: a Field/Value table is nested rows
+to the observation model, not properties of the group that contains them, so the sheet
+object would carry nothing.  And the identity layer classifies the family UNSUPPORTED
+for the one reason a detail view can never escape: it never renders two instances at
+once, so nothing shows its key discriminates; such a family "has to win an identity back
+from behaviour", and an object without attributes has no behaviour to win it with -- the
+allocation writes *W1* into the sheet's Berth row and the reading cannot see it.  It is
+not corpus-specific: any detail view that states its subject's properties as a labelled
+list and offers controls beneath them has this shape.  Two mechanisms are candidates and
+neither has been built.  The principled one is in the observation model: a two-column
+table whose first column is a label is a property list of its container, which would give
+the sheet attributes (its length with a unit, so the number would have to carry one), a
+reference to the vessel through the value that names it, behaviour for the search to
+support its key with, and the allocate button an owner -- after which the existing forms
+name the berth by selection and the vessel by relation, and the comparison runs.  The
+fallback is in the referring language: a *mention* form, the object of a type whose key
+exactly one text slot names, together with roles taken from an operator whose core ends
+at the control.  Page-read roles were measured once before and were harmful on blend
+(fifty of seventy-nine unestablished states turned into forced claims, eighteen right);
+that measurement is the attack either mechanism must survive.
 
 ## What stands, and what is open
 
