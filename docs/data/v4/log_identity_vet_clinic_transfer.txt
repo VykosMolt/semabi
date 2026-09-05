@@ -1,16 +1,15 @@
 
-vet_clinic_transfer  'source_choice'  FROZEN_PREFIX  cut=448  16 operators
-  39 held-out actions, 1.79 rules offered and 0.87 claims applicable per action
+vet_clinic_transfer  'source_choice'  FROZEN_PREFIX  cut=448  10 operators
+  39 held-out actions, 1.49 rules offered and 0.87 claims applicable per action
   3 distinct claims across all its decided predictions
-    a named constant          26 claims,     7 decided, supported 100%   1 distinct
+    a named constant          14 claims,     7 decided, supported 100%   1 distinct
                            ['attr:Status#0 = checked_in']
-    an object brought into being    22 claims,    19 decided, supported 100%   1 distinct
+    an object brought into being    17 claims,    14 decided, supported 100%   1 distinct
                            ['id = new']
-    changes, unspecified      12 claims,     0 decided, supported    -   0 distinct
     removal                   57 claims,    27 decided, supported  52%   1 distinct
                            ['id = gone']
-    removal exposure: this reading 0.519, unconditional base rate 0.632, per-click control 0.177 (margin +0.342)
-                           steps by fraction gone {"all went (>90%)": 109, "none went (<10%)": 44, "some went": 33}
+    removal exposure: this reading 0.519, unconditional base rate 0.637, per-click control 0.239 (margin +0.28)
+                           steps by fraction gone {"all went (>90%)": 45, "none went (<10%)": 16, "some went": 22}
        18 ( 46%)  every applicable rule was right
         9 ( 23%)  the rules could not say which object they were about
         7 ( 18%)  no rule applied

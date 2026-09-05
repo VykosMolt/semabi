@@ -1,31 +1,36 @@
 
 harbour_transfer  'source_choice'  FROZEN_PREFIX  cut=229  control=None  corroborated=True  hypothesis=rule
   126 held-out actions
-       84  the evidence forces one outcome
+       83  the evidence forces one outcome
        42  one outcome, because the control has never done anything else
+        1  several outcomes remain admissible
   against the other hypothesis class:
-       83  rule: the evidence forces one outcome | list: the evidence forces one outcome
+       82  rule: the evidence forces one outcome | list: the evidence forces one outcome
        42  rule: one outcome, because the control has never done anything else | list: one outcome, because the control has never done anything else
+        1  rule: several outcomes remain admissible | list: several outcomes remain admissible
         1  rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)
-  admissible-set size {"1": 126}; what happened was {'inside the admissible set': 94, 'outside it': 32}
-  14 distinct events ever forced
+  admissible-set size {"1": 125, "2": 1}; what happened was {'inside the admissible set': 94, 'outside it': 32}
+  13 distinct events ever forced
   where one outcome, because the control has never done anything else, the chosen list:
        41  the event the interface returned
         1  a different event
+  where several outcomes remain admissible, the chosen list:
+        1  the event the interface returned
   where the evidence forces one outcome, the chosen list:
-       83  the event the interface returned
+       82  the event the interface returned
         1  a different event
   forced where forced, list elsewhere:
-       83  one outcome was admissible and it happened
+       82  one outcome was admissible and it happened
        41  the only outcome ever seen on this control, and it happened
         1  the only outcome ever seen on this control, and something else happened
+        1  deferred to the list: the event the interface returned
         1  one outcome was admissible and a different one happened
     button#cell@Call/button    fitted=  43 events= 1 rules= 0 forced-wrong=  0  {'one outcome, because the control has never done anything else': 30}
     button:Reopen              fitted=  18 events= 2 rules= 2 forced-wrong=  0  {'the evidence forces one outcome': 20}
     button:Schedule call       fitted=  19 events= 2 rules= 2 forced-wrong=  0  {'the evidence forces one outcome': 17}
     button:Sign off            fitted=  14 events= 2 rules= 2 forced-wrong=  1  {'the evidence forces one outcome': 17}
     button:Sign on             fitted=  17 events= 2 rules= 2 forced-wrong=  0  {'the evidence forces one outcome': 17}
-    button:Close               fitted=  20 events= 3 rules= 3 forced-wrong=  0  {'the evidence forces one outcome': 13}
+    button:Close               fitted=  20 events= 3 rules= 3 forced-wrong=  0  {'the evidence forces one outcome': 12, 'several outcomes remain admissible': 1}
     button:Record departure    fitted=   3 events= 1 rules= 1 forced-wrong=  0  {'one outcome, because the control has never done anything else': 4}
     button:Bring _             fitted=   4 events= 1 rules= 1 forced-wrong=  0  {'one outcome, because the control has never done anything else': 4}
 
@@ -33,31 +38,36 @@ wrote docs/data/v4/admissible_harbour_transfer_frozen_prefix.json
 
 harbour_transfer  'source_choice'  FROZEN_PREFIX  cut=229  control=None  corroborated=True  hypothesis=list
   126 held-out actions
-       84  the evidence forces one outcome
+       83  the evidence forces one outcome
        42  one outcome, because the control has never done anything else
+        1  several outcomes remain admissible
   against the other hypothesis class:
-       83  list: the evidence forces one outcome | rule: the evidence forces one outcome
+       82  list: the evidence forces one outcome | rule: the evidence forces one outcome
        42  list: one outcome, because the control has never done anything else | rule: one outcome, because the control has never done anything else
+        1  list: several outcomes remain admissible | rule: several outcomes remain admissible
         1  list: the evidence forces one outcome (wrong) | rule: the evidence forces one outcome (wrong)
-  admissible-set size {"1": 126}; what happened was {'inside the admissible set': 94, 'outside it': 32}
-  14 distinct events ever forced
+  admissible-set size {"1": 125, "2": 1}; what happened was {'inside the admissible set': 94, 'outside it': 32}
+  13 distinct events ever forced
   where one outcome, because the control has never done anything else, the chosen list:
        41  the event the interface returned
         1  a different event
+  where several outcomes remain admissible, the chosen list:
+        1  the event the interface returned
   where the evidence forces one outcome, the chosen list:
-       83  the event the interface returned
+       82  the event the interface returned
         1  a different event
   forced where forced, list elsewhere:
-       83  one outcome was admissible and it happened
+       82  one outcome was admissible and it happened
        41  the only outcome ever seen on this control, and it happened
         1  the only outcome ever seen on this control, and something else happened
+        1  deferred to the list: the event the interface returned
         1  one outcome was admissible and a different one happened
     button#cell@Call/button    fitted=  43 events= 1 rules= 0 forced-wrong=  0  {'one outcome, because the control has never done anything else': 30}
     button:Reopen              fitted=  18 events= 2 rules= 2 forced-wrong=  0  {'the evidence forces one outcome': 20}
     button:Schedule call       fitted=  19 events= 2 rules= 2 forced-wrong=  0  {'the evidence forces one outcome': 17}
     button:Sign off            fitted=  14 events= 2 rules= 2 forced-wrong=  1  {'the evidence forces one outcome': 17}
     button:Sign on             fitted=  17 events= 2 rules= 2 forced-wrong=  0  {'the evidence forces one outcome': 17}
-    button:Close               fitted=  20 events= 3 rules= 3 forced-wrong=  0  {'the evidence forces one outcome': 13}
+    button:Close               fitted=  20 events= 3 rules= 3 forced-wrong=  0  {'the evidence forces one outcome': 12, 'several outcomes remain admissible': 1}
     button:Record departure    fitted=   3 events= 1 rules= 1 forced-wrong=  0  {'one outcome, because the control has never done anything else': 4}
     button:Bring _             fitted=   4 events= 1 rules= 1 forced-wrong=  0  {'one outcome, because the control has never done anything else': 4}
 
@@ -71,15 +81,16 @@ harbour_transfer  'source_choice'  cut=229  forced under the rule class
 wrote docs/data/v4/inadequacy_harbour_transfer.json
 
 harbour_transfer  'source_choice'  FROZEN_PREFIX  cut=229  15 operators
-  67 held-out actions, 1.0 rules offered and 0.25 claims applicable per action
+  67 held-out actions, 1.0 rules offered and 0.27 claims applicable per action
   12 distinct claims across all its decided predictions
-    a named constant          67 claims,    17 decided, supported 100%   2 distinct
+    a named constant          67 claims,    18 decided, supported  94%   2 distinct
                            ['attr:Condition#0 = closed', 'attr:Condition#0 = open']
-    an interface response    185 claims,    81 decided, supported  99%   9 distinct
+    an interface response    185 claims,    82 decided, supported  98%   9 distinct
                            ['<> <> cannot be <> while call <> holds it . = <> <> cannot be <> while call <> holds it .', '<> <> is already <> . = <> <> is already <> .', '<> <> is now <> . = <> <> is now <> .', '<> already has call <> on the board . = <> already has call <> on the board .', '<> is already signed off . = <> is already signed off .', '<> is already signed on . = <> is already signed on .']
     an object brought into being    17 claims,     5 decided, supported 100%   1 distinct
                            ['id = new']
-       50 ( 75%)  no rule applied
+       49 ( 73%)  no rule applied
        17 ( 25%)  every applicable rule was right
+        1 (  1%)  every applicable rule was contradicted
 
 wrote docs/data/v4/claim_substance_harbour_transfer_frozen_prefix.json

@@ -1,0 +1,123 @@
+{
+ "dev": "/home/moloch/semabi-scratch/preq/harbour_ref_dev",
+ "hold": "/home/moloch/semabi-scratch/preq/harbour_ref_hold",
+ "reading": "search",
+ "ledger": {
+  "one outcome was admissible and it happened": 194,
+  "the only outcome ever seen on this control, and it happened": 99,
+  "several outcomes remained admissible; the one that happened was among them": 27,
+  "the only outcome ever seen on this control, and something else happened": 7,
+  "one outcome was admissible and a different one happened": 4,
+  "no outcome is established for this state": 3
+ },
+ "by_control": {
+  "button:Reopen": {
+   "one outcome was admissible and it happened": 41
+  },
+  "button:Sign off": {
+   "one outcome was admissible and it happened": 29,
+   "several outcomes remained admissible; the one that happened was among them": 2
+  },
+  "button:Sign on": {
+   "one outcome was admissible and it happened": 34
+  },
+  "button:Close": {
+   "one outcome was admissible and it happened": 25,
+   "several outcomes remained admissible; the one that happened was among them": 9
+  },
+  "button#cell@Call/button": {
+   "the only outcome ever seen on this control, and it happened": 99
+  },
+  "button:Schedule call": {
+   "one outcome was admissible and it happened": 29,
+   "several outcomes remained admissible; the one that happened was among them": 12,
+   "one outcome was admissible and a different one happened": 3
+  },
+  "button:Allocate berth": {
+   "one outcome was admissible and it happened": 21,
+   "several outcomes remained admissible; the one that happened was among them": 3,
+   "no outcome is established for this state": 3
+  },
+  "button:Book pilot": {
+   "one outcome was admissible and it happened": 5,
+   "one outcome was admissible and a different one happened": 1,
+   "several outcomes remained admissible; the one that happened was among them": 1
+  },
+  "button:Record departure": {
+   "the only outcome ever seen on this control, and something else happened": 7
+  },
+  "button:Bring _": {
+   "one outcome was admissible and it happened": 10
+  }
+ },
+ "control": "button:Book pilot",
+ "rows": [
+  {
+   "step": 65,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "Nothing chosen in the pilot list ."
+   ],
+   "observed": "Nothing chosen in the pilot list .",
+   "level": "the event alone"
+  },
+  {
+   "step": 159,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "Nothing chosen in the pilot list ."
+   ],
+   "observed": "Nothing chosen in the pilot list .",
+   "level": "the event alone"
+  },
+  {
+   "step": 185,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "Nothing chosen in the pilot list ."
+   ],
+   "observed": "Nothing chosen in the pilot list .",
+   "level": "the event alone"
+  },
+  {
+   "step": 328,
+   "verdict": "one outcome was admissible and a different one happened",
+   "admissible": [
+    "<> booked for call <> ."
+   ],
+   "observed": "<> is already booked for call <> .",
+   "level": "the event alone"
+  },
+  {
+   "step": 356,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "Nothing chosen in the pilot list ."
+   ],
+   "observed": "Nothing chosen in the pilot list .",
+   "level": "the event alone"
+  },
+  {
+   "step": 480,
+   "verdict": "several outcomes remained admissible; the one that happened was among them",
+   "admissible": [
+    "<> booked for call <> .",
+    "Nothing chosen in the pilot list ."
+   ],
+   "observed": "<> booked for call <> .",
+   "level": null
+  },
+  {
+   "step": 543,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "<> booked for call <> ."
+   ],
+   "observed": "<> booked for call <> .",
+   "level": "with its arguments"
+  }
+ ],
+ "lists": {
+  "button:Book pilot": "button:Book pilot: 11 fitted occasions, 4 distinct events\n    role selection['combobox#1']:2 = selection['combobox#1']\n    role relation['forward', 'rel:0']:0<owner = relation['forward', 'rel:0'] from owner\n    ('unnamed', \"selection['combobox#1']:2\")  ->  Nothing chosen in the pilot list .   [6]\n    attr:Length overall#0(owner) == '96'  ->  <> booked for call <> .   [2]\n    otherwise -> undetermined\n    '<> booked for call <> .' arguments: 0=selection['combobox#1']:2, 1=relation['forward', 'rel:0']:0<owner\n    '<> is not <> .' arguments: 0=selection['combobox#1']:2\n    'Call <> is already <> ; <> pilot is needed .' arguments: 0=relation['forward', 'rel:0']:0<owner, 1=owner"
+ }
+}

@@ -5,11 +5,11 @@
   "regime": "FROZEN_PREFIX",
   "split": 0.5,
   "cut": 419,
-  "operators": 15,
+  "operators": 13,
   "held_out_actions": 249,
-  "rules_offered_per_action": 1.49,
-  "applicable_claims_per_action": 1.31,
-  "distinct_decided_claims": 18,
+  "rules_offered_per_action": 1.0,
+  "applicable_claims_per_action": 1.21,
+  "distinct_decided_claims": 17,
   "composition": {
    "a named constant": {
     "claims": 62,
@@ -26,74 +26,39 @@
     ]
    },
    "an interface response": {
-    "claims": 1081,
-    "decided": 429,
-    "supported": 209,
-    "refuted": 220,
-    "supported_share": 0.487,
-    "distinct_claims": 10,
+    "claims": 835,
+    "decided": 384,
+    "supported": 166,
+    "refuted": 218,
+    "supported_share": 0.432,
+    "distinct_claims": 11,
     "examples": [
      "<> <> . = <> <> .",
+     "<> has <> committed ; need at least <> to bottle . = <> has <> committed ; need at least <> to bottle .",
      "<> holds <> ; cannot draw <> . = <> holds <> ; cannot draw <> .",
      "<> is <> . = <> is <> .",
      "<> is <> ; disgorge it before returning a draw . = <> is <> ; disgorge it before returning a draw .",
-     "<> is already <> . = <> is already <> .",
-     "Disgorged <> . = Disgorged <> ."
-    ]
-   },
-   "an object brought into being": {
-    "claims": 123,
-    "decided": 56,
-    "supported": 27,
-    "refuted": 29,
-    "supported_share": 0.482,
-    "distinct_claims": 1,
-    "examples": [
-     "id = new"
+     "<> is already <> . = <> is already <> ."
     ]
    },
    "changes, unspecified": {
-    "claims": 620,
-    "decided": 218,
-    "supported": 204,
-    "refuted": 14,
-    "supported_share": 0.936,
+    "claims": 374,
+    "decided": 148,
+    "supported": 104,
+    "refuted": 44,
+    "supported_share": 0.703,
     "distinct_claims": 2,
     "examples": [
      "attr:Committed gal#0 = changes",
      "attr:Gallons left#0 = changes"
     ]
-   },
-   "removal": {
-    "claims": 64,
-    "decided": 46,
-    "supported": 46,
-    "refuted": 0,
-    "supported_share": 1.0,
-    "distinct_claims": 1,
-    "examples": [
-     "id = gone"
-    ]
    }
   },
   "per_action": {
-   "every applicable rule was right": 149,
-   "no rule applied": 82,
-   "every applicable rule was contradicted": 18
-  },
-  "removal_exposure": {
-   "base_rate_gone": 0.894,
-   "steps_by_fraction_gone": {
-    "all went (>90%)": 217,
-    "none went (<10%)": 23,
-    "some went": 9
-   },
-   "reading_supported_share": 1.0,
-   "removal_claims": 46,
-   "steps_spoken_at": 46,
-   "per_click_control": 0.991,
-   "objects_in_those_steps": 452,
-   "margin_over_per_click_control": 0.009
+   "every applicable rule was right": 103,
+   "no rule applied": 67,
+   "only undecidable claims survived": 46,
+   "every applicable rule was contradicted": 33
   }
  }
 ]

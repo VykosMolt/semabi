@@ -41,22 +41,21 @@
  },
  "outcome_model": {
   "controls": 10,
-  "rules": 14,
+  "rules": 16,
   "held_out_clicks": 270,
   "ledger": {
-   "the event the interface returned": 259,
-   "no determinate answer": 7,
-   "a different event": 4
+   "the event the interface returned": 260,
+   "a different event": 10
   },
-  "accuracy_where_it_answered": 0.985,
-  "distinct_events_asserted": 14,
-  "answers_naming_an_event": 184,
-  "accuracy_where_it_named_an_event": 0.978,
+  "accuracy_where_it_answered": 0.963,
+  "distinct_events_asserted": 16,
+  "answers_naming_an_event": 191,
+  "accuracy_where_it_named_an_event": 0.948,
   "by_level": {
    "the event the interface returned / with its arguments": 176,
    "the event the interface returned / the control returns nothing": 79,
-   "a different event / the event alone": 4,
-   "the event the interface returned / the event alone": 4
+   "a different event / the event alone": 10,
+   "the event the interface returned / the event alone": 5
   },
   "events_asserted": {
    "\u0000SILENT": 79,
@@ -69,8 +68,8 @@
    "<> is signed on .": 12
   },
   "majority_frame_control_where_it_answered": {
-   "right": 41,
-   "wrong": 222,
+   "right": 42,
+   "wrong": 228,
    "control_unseen_on_prefix": 0,
    "accuracy": 0.156
   },
@@ -113,9 +112,10 @@
    },
    "button:Book pilot": {
     "fitted": 5,
-    "rules": 0,
+    "rules": 2,
     "events_fitted": 2,
-    "no determinate answer": 7
+    "a different event": 6,
+    "the event the interface returned": 1
    },
    "button:Record departure": {
     "fitted": 3,
@@ -149,11 +149,56 @@
     "level": "the event alone"
    },
    {
+    "step": 158,
+    "control": "button:Book pilot",
+    "predicted": "<> is already booked for call <> .",
+    "observed": "Nothing chosen in the pilot list .",
+    "returned": "Nothing chosen in the pilot list.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 172,
+    "control": "button:Book pilot",
+    "predicted": "<> is already booked for call <> .",
+    "observed": "Nothing chosen in the pilot list .",
+    "returned": "Nothing chosen in the pilot list.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
     "step": 223,
     "control": "button:Record departure",
     "predicted": "Call <> is not <> , so nothing has sailed .",
     "observed": "<> has sailed on call <> ; berth <> is clear .",
     "returned": "Bregagh has sailed on call C-101; berth N2 is clear.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 236,
+    "control": "button:Book pilot",
+    "predicted": "<> is already booked for call <> .",
+    "observed": "Nothing chosen in the pilot list .",
+    "returned": "Nothing chosen in the pilot list.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 260,
+    "control": "button:Book pilot",
+    "predicted": "<> is already booked for call <> .",
+    "observed": "Nothing chosen in the pilot list .",
+    "returned": "Nothing chosen in the pilot list.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 316,
+    "control": "button:Book pilot",
+    "predicted": "<> is already booked for call <> .",
+    "observed": "Nothing chosen in the pilot list .",
+    "returned": "Nothing chosen in the pilot list.",
     "verdict": "a different event",
     "level": "the event alone"
    },
@@ -165,21 +210,12 @@
     "returned": "Berth S1 is held by call C-101.",
     "verdict": "a different event",
     "level": "the event alone"
-   },
-   {
-    "step": 377,
-    "control": "button:Allocate berth",
-    "predicted": "Nothing chosen in the berth list .",
-    "observed": "Call <> is already <> ; her berth cannot be changed .",
-    "returned": "Call C-101 is already alongside; her berth cannot be changed.",
-    "verdict": "a different event",
-    "level": "the event alone"
    }
   ],
   "lists": {
    "button#cell@Call/button": "button#cell@Call/button: 73 fitted occasions, 1 distinct events\n    otherwise -> returns nothing",
    "button:Allocate berth": "button:Allocate berth: 5 fitted occasions, 1 distinct events\n    otherwise  ->  Nothing chosen in the berth list .   [5]\n    otherwise -> Nothing chosen in the berth list .",
-   "button:Book pilot": "button:Book pilot: 5 fitted occasions, 2 distinct events\n    otherwise -> undetermined",
+   "button:Book pilot": "button:Book pilot: 5 fitted occasions, 2 distinct events\n    attr:Status#0(owner) == 'alongside'  ->  Nothing chosen in the pilot list .   [2]\n    attr:Hazardous cargo#0(owner) == 'yes'  ->  Nothing chosen in the pilot list .   [2]\n    otherwise -> <> is already booked for call <> .",
    "button:Bring _": "button:Bring _: 8 fitted occasions, 1 distinct events\n    otherwise  ->  Call <> has <> berth allocated .   [8]\n    otherwise -> Call <> has <> berth allocated .\n    'Call <> has <> berth allocated .' arguments: 0=owner",
    "button:Close": "button:Close: 33 fitted occasions, 3 distinct events\n    ('ref_set', 'owner', 'rel:3')  ->  <> <> cannot be <> while call <> holds it .   [10]\n    attr:Condition#0(owner) == 'open'  ->  <> <> is now <> .   [14]\n    otherwise  ->  <> <> is already <> .   [9]\n    otherwise -> <> <> is already <> .\n    '<> <> cannot be <> while call <> holds it .' arguments: 1=owner\n    '<> <> is already <> .' arguments: 1=owner\n    '<> <> is now <> .' arguments: 1=owner",
    "button:Record departure": "button:Record departure: 3 fitted occasions, 1 distinct events\n    otherwise  ->  Call <> is not <> , so nothing has sailed .   [3]\n    otherwise -> Call <> is not <> , so nothing has sailed .\n    'Call <> is not <> , so nothing has sailed .' arguments: 0=owner",

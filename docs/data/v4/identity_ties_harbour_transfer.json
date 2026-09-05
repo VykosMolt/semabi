@@ -5,19 +5,19 @@
   "churn": 0,
   "visibility": 0,
   "conflicts": 0,
-  "named": 312,
+  "named": 315,
   "positional": 0,
-  "unexplained": 0,
+  "unexplained": 73,
   "spurious": 0,
   "explained": 74,
   "delta_atoms": 74,
-  "complexity": 39,
+  "complexity": 45,
   "steps": 459,
   "churn_steps": [],
   "contradiction_steps": [],
   "visibility_steps": []
  },
- "open_questions": 6,
+ "open_questions": 4,
  "questions": [
   {
    "family": "button[_]",
@@ -67,46 +67,6 @@
    "contested": [
     "cell@Pilot#0",
     "cell@Ticket to#0"
-   ],
-   "status": "NO_KNOWN_EXPERIMENT",
-   "writers": {},
-   "makers": [],
-   "movers": [],
-   "made_values": {},
-   "separable_by_the_history": {},
-   "decided": null
-  },
-  {
-   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
-   "left": "cell@Vessel#0",
-   "right": "cell@Cargo#0",
-   "reason": "the trace so far scores both readings identically",
-   "tids": [
-    2
-   ],
-   "contested": [
-    "cell@Cargo#0",
-    "cell@Vessel#0"
-   ],
-   "status": "NO_KNOWN_EXPERIMENT",
-   "writers": {},
-   "makers": [],
-   "movers": [],
-   "made_values": {},
-   "separable_by_the_history": {},
-   "decided": null
-  },
-  {
-   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
-   "left": "cell@Vessel#0",
-   "right": "cell@Length overall#0",
-   "reason": "the trace so far scores both readings identically",
-   "tids": [
-    2
-   ],
-   "contested": [
-    "cell@Length overall#0",
-    "cell@Vessel#0"
    ],
    "status": "NO_KNOWN_EXPERIMENT",
    "writers": {},

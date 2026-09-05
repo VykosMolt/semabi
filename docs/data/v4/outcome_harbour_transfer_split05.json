@@ -13,8 +13,8 @@
  "output": {
   "claims": 185,
   "verdicts": {
-   "NOT_APPLICABLE": 99,
-   "REFUTED": 1,
+   "NOT_APPLICABLE": 98,
+   "REFUTED": 2,
    "SUPPORTED": 80,
    "UNKNOWN": 5
   },
@@ -22,18 +22,21 @@
   "distinct_decided_claims": 32,
   "distinct_decided_frames": 9,
   "per_action": {
-   "every applicable rule was right": 80,
+   "every applicable rule was right": 79,
    "the rules could not say which object they were about": 5,
    "no rule applied": 2,
+   "applicable rules disagreed": 1,
    "every applicable rule was contradicted": 1
   },
   "frame_only": {
-   "right": 80,
+   "among": 1,
+   "right": 79,
    "wrong": 1
   },
   "model_level": {
-   "determinate and right": 80,
+   "determinate and right": 79,
    "no branch applied": 7,
+   "undetermined, the right event among them": 1,
    "determinate and wrong": 1
   },
   "distinct_events_where_determinate": 0,
@@ -45,7 +48,8 @@
   },
   "distinct_events_predicted_per_action": {
    "0": 7,
-   "1": 81
+   "1": 80,
+   "2": 1
   },
   "majority_frame_control": {
    "right": 47,
@@ -66,12 +70,14 @@
  },
  "state": {
   "verdicts": {
-   "NOT_APPLICABLE": 50,
+   "NOT_APPLICABLE": 49,
+   "REFUTED": 1,
    "SUPPORTED": 17
   },
   "per_action": {
-   "no rule applied": 50,
-   "every applicable rule was right": 17
+   "no rule applied": 49,
+   "every applicable rule was right": 17,
+   "every applicable rule was contradicted": 1
   }
  },
  "outcome_model": {
@@ -208,12 +214,14 @@
  "ablation_live_region_unread": {
   "operators": 5,
   "state_verdicts": {
-   "NOT_APPLICABLE": 50,
+   "NOT_APPLICABLE": 49,
+   "REFUTED": 1,
    "SUPPORTED": 17
   },
   "state_per_action": {
-   "no rule applied": 50,
-   "every applicable rule was right": 17
+   "no rule applied": 49,
+   "every applicable rule was right": 17,
+   "every applicable rule was contradicted": 1
   }
  }
 }

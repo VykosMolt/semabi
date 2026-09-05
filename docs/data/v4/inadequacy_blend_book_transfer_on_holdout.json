@@ -4,10 +4,10 @@
  "regime": "FROZEN_PREFIX",
  "hypothesis": "rule",
  "cut": 0,
- "forced_wrong": 21,
+ "forced_wrong": 29,
  "kinds": {
+  "inseparable: every shared conjunction reaches another event": 16,
   "once: seen, but not enough to found a rule": 11,
-  "inseparable: every shared conjunction reaches another event": 8,
   "unseen: the control never returned this event while fitting": 2
  },
  "by_control": {
@@ -19,7 +19,10 @@
    "once: seen, but not enough to found a rule": 5
   },
   "button:Record draw": {
-   "inseparable: every shared conjunction reaches another event": 8
+   "inseparable: every shared conjunction reaches another event": 9
+  },
+  "button:Return ticket _ gal from _ out of _": {
+   "inseparable: every shared conjunction reaches another event": 7
   }
  },
  "cases": [
@@ -30,7 +33,7 @@
     "Drew <> from <> into <> ."
    ],
    "actual": "The book already holds 12 records ; return a draw first .",
-   "why": "Drew <> from <> into <> . <- attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:State#0(selection['combobox#1']:1) == 'In cask' & attr:Year#0(selection['combobox#1']:1) == '2020' & ('unnamed', \"selection['combobox#2']:2\")  [7 occasions]",
+   "why": "Drew <> from <> into <> . <- attr:Gallons left#0(selection['combobox#0']:0) == '1' & attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:State#0(selection['combobox#1']:1) == 'In cask'  [72 occasions]",
    "kind": "inseparable: every shared conjunction reaches another event",
    "seen": 2,
    "witnesses": [
@@ -52,13 +55,187 @@
    "erased_by_the_state": []
   },
   {
+   "control": "button:Return ticket _ gal from _ out of _",
+   "step": 41,
+   "forced": [
+    "Returned <> to <> from <> ."
+   ],
+   "actual": "<> is <> ; disgorge it before returning a draw .",
+   "why": "Returned <> to <> from <> . <- attr:Committed gal#0(property['attr:Style#0', 'Single varietal']:1) == '5'  [34 occasions]",
+   "kind": "inseparable: every shared conjunction reaches another event",
+   "seen": 16,
+   "witnesses": [
+    14,
+    18
+   ],
+   "blockers": 1,
+   "blocked_by": {
+    "Returned <> to <> from <> .": 1
+   },
+   "raw_difference": [
+    "node 5 status: 'Drew 1 gal from Block 12 into Picn'/'None'  vs  'Festival White is already bottled.'/'None'",
+    "node 10 combobox: ''/'Block 12 (Syrah, 4 g'  vs  ''/'Orchard (Grenache, 1'",
+    "node 28 cell: 'Block 12'/'None'  vs  'Orchard'/'None'",
+    "node 29 cell: 'Syrah'/'None'  vs  'Grenache'/'None'",
+    "node 30 cell: '4'/'None'  vs  '1'/'None'",
+    "node 31 cell: 'Open'/'None'  vs  'Closed'/'None'",
+    "node count 121 vs 142"
+   ],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Return ticket _ gal from _ out of _",
+   "step": 59,
+   "forced": [
+    "Returned <> to <> from <> ."
+   ],
+   "actual": "<> is <> ; disgorge it before returning a draw .",
+   "why": "Returned <> to <> from <> . <- attr:Committed gal#0(property['attr:Style#0', 'Single varietal']:1) == '5'  [34 occasions]",
+   "kind": "inseparable: every shared conjunction reaches another event",
+   "seen": 16,
+   "witnesses": [
+    14,
+    18
+   ],
+   "blockers": 1,
+   "blocked_by": {
+    "Returned <> to <> from <> .": 1
+   },
+   "raw_difference": [
+    "node 5 status: 'Drew 1 gal from Block 12 into Picn'/'None'  vs  'Festival White is already bottled.'/'None'",
+    "node 10 combobox: ''/'Block 12 (Syrah, 4 g'  vs  ''/'Orchard (Grenache, 2'",
+    "node 28 cell: 'Block 12'/'None'  vs  'Orchard'/'None'",
+    "node 29 cell: 'Syrah'/'None'  vs  'Grenache'/'None'",
+    "node 30 cell: '4'/'None'  vs  '2'/'None'",
+    "node 33 button: 'Close Block 12'/'None'  vs  'Close Orchard'/'None'",
+    "node count 121 vs 135"
+   ],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Return ticket _ gal from _ out of _",
+   "step": 62,
+   "forced": [
+    "Returned <> to <> from <> ."
+   ],
+   "actual": "<> is <> ; disgorge it before returning a draw .",
+   "why": "Returned <> to <> from <> . <- attr:Committed gal#0(property['attr:Style#0', 'Single varietal']:1) == '5'  [34 occasions]",
+   "kind": "inseparable: every shared conjunction reaches another event",
+   "seen": 16,
+   "witnesses": [
+    14,
+    18
+   ],
+   "blockers": 1,
+   "blocked_by": {
+    "Returned <> to <> from <> .": 1
+   },
+   "raw_difference": [
+    "node 5 status: 'Drew 1 gal from Block 12 into Picn'/'None'  vs  'Festival White is already bottled.'/'None'",
+    "node 10 combobox: ''/'Block 12 (Syrah, 4 g'  vs  ''/'Orchard (Grenache, 2'",
+    "node 28 cell: 'Block 12'/'None'  vs  'Orchard'/'None'",
+    "node 29 cell: 'Syrah'/'None'  vs  'Grenache'/'None'",
+    "node 30 cell: '4'/'None'  vs  '2'/'None'",
+    "node 33 button: 'Close Block 12'/'None'  vs  'Close Orchard'/'None'",
+    "node count 121 vs 135"
+   ],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Return ticket _ gal from _ out of _",
+   "step": 65,
+   "forced": [
+    "Returned <> to <> from <> ."
+   ],
+   "actual": "<> is <> ; disgorge it before returning a draw .",
+   "why": "Returned <> to <> from <> . <- attr:Committed gal#0(property['attr:Style#0', 'Single varietal']:1) == '5'  [34 occasions]",
+   "kind": "inseparable: every shared conjunction reaches another event",
+   "seen": 16,
+   "witnesses": [
+    14,
+    18
+   ],
+   "blockers": 1,
+   "blocked_by": {
+    "Returned <> to <> from <> .": 1
+   },
+   "raw_difference": [
+    "node 5 status: 'Drew 1 gal from Block 12 into Picn'/'None'  vs  'Festival White is already bottled.'/'None'",
+    "node 10 combobox: ''/'Block 12 (Syrah, 4 g'  vs  ''/'Orchard (Grenache, 2'",
+    "node 28 cell: 'Block 12'/'None'  vs  'Orchard'/'None'",
+    "node 29 cell: 'Syrah'/'None'  vs  'Grenache'/'None'",
+    "node 30 cell: '4'/'None'  vs  '2'/'None'",
+    "node 33 button: 'Close Block 12'/'None'  vs  'Close Orchard'/'None'",
+    "node count 121 vs 135"
+   ],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Return ticket _ gal from _ out of _",
+   "step": 71,
+   "forced": [
+    "Returned <> to <> from <> ."
+   ],
+   "actual": "<> is <> ; disgorge it before returning a draw .",
+   "why": "Returned <> to <> from <> . <- attr:Committed gal#0(property['attr:Style#0', 'Single varietal']:1) == '5'  [34 occasions]",
+   "kind": "inseparable: every shared conjunction reaches another event",
+   "seen": 16,
+   "witnesses": [
+    14,
+    18
+   ],
+   "blockers": 1,
+   "blocked_by": {
+    "Returned <> to <> from <> .": 1
+   },
+   "raw_difference": [
+    "node 5 status: 'Drew 1 gal from Block 12 into Picn'/'None'  vs  'Festival White is already bottled.'/'None'",
+    "node 10 combobox: ''/'Block 12 (Syrah, 4 g'  vs  ''/'Orchard (Grenache, 2'",
+    "node 28 cell: 'Block 12'/'None'  vs  'Orchard'/'None'",
+    "node 29 cell: 'Syrah'/'None'  vs  'Grenache'/'None'",
+    "node 30 cell: '4'/'None'  vs  '2'/'None'",
+    "node 33 button: 'Close Block 12'/'None'  vs  'Close Orchard'/'None'",
+    "node count 121 vs 135"
+   ],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Return ticket _ gal from _ out of _",
+   "step": 76,
+   "forced": [
+    "Returned <> to <> from <> ."
+   ],
+   "actual": "<> is <> ; disgorge it before returning a draw .",
+   "why": "Returned <> to <> from <> . <- attr:Committed gal#0(property['attr:Style#0', 'Single varietal']:1) == '5'  [34 occasions]",
+   "kind": "inseparable: every shared conjunction reaches another event",
+   "seen": 16,
+   "witnesses": [
+    14,
+    18
+   ],
+   "blockers": 1,
+   "blocked_by": {
+    "Returned <> to <> from <> .": 1
+   },
+   "raw_difference": [
+    "node 5 status: 'Drew 1 gal from Block 12 into Picn'/'None'  vs  'Festival White is already bottled.'/'None'",
+    "node 10 combobox: ''/'Block 12 (Syrah, 4 g'  vs  ''/'Orchard (Grenache, 2'",
+    "node 28 cell: 'Block 12'/'None'  vs  'Orchard'/'None'",
+    "node 29 cell: 'Syrah'/'None'  vs  'Grenache'/'None'",
+    "node 30 cell: '4'/'None'  vs  '2'/'None'",
+    "node 33 button: 'Close Block 12'/'None'  vs  'Close Orchard'/'None'",
+    "node count 121 vs 135"
+   ],
+   "erased_by_the_state": []
+  },
+  {
    "control": "button:Record draw",
    "step": 87,
    "forced": [
     "Drew <> from <> into <> ."
    ],
    "actual": "The book already holds 12 records ; return a draw first .",
-   "why": "Drew <> from <> into <> . <- attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:State#0(selection['combobox#1']:1) == 'In cask' & attr:Year#0(selection['combobox#1']:1) == '2020' & ('unnamed', \"selection['combobox#2']:2\")  [7 occasions]",
+   "why": "Drew <> from <> into <> . <- attr:Gallons left#0(selection['combobox#0']:0) == '1' & attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:State#0(selection['combobox#1']:1) == 'In cask'  [72 occasions]",
    "kind": "inseparable: every shared conjunction reaches another event",
    "seen": 2,
    "witnesses": [
@@ -102,7 +279,7 @@
     "Drew <> from <> into <> ."
    ],
    "actual": "The book already holds 12 records ; return a draw first .",
-   "why": "Drew <> from <> into <> . <- attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:State#0(selection['combobox#1']:1) == 'In cask' & attr:Year#0(selection['combobox#1']:1) == '2020' & ('unnamed', \"selection['combobox#2']:2\")  [7 occasions]",
+   "why": "Drew <> from <> into <> . <- attr:Gallons left#0(selection['combobox#0']:0) == '1' & attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:State#0(selection['combobox#1']:1) == 'In cask'  [72 occasions]",
    "kind": "inseparable: every shared conjunction reaches another event",
    "seen": 2,
    "witnesses": [
@@ -146,7 +323,7 @@
     "Drew <> from <> into <> ."
    ],
    "actual": "The book already holds 12 records ; return a draw first .",
-   "why": "Drew <> from <> into <> . <- attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:State#0(selection['combobox#1']:1) == 'In cask' & attr:Year#0(selection['combobox#1']:1) == '2020' & ('unnamed', \"selection['combobox#2']:2\")  [7 occasions]",
+   "why": "Drew <> from <> into <> . <- attr:Gallons left#0(selection['combobox#0']:0) == '1' & attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:State#0(selection['combobox#1']:1) == 'In cask'  [72 occasions]",
    "kind": "inseparable: every shared conjunction reaches another event",
    "seen": 2,
    "witnesses": [
@@ -190,7 +367,7 @@
     "Drew <> from <> into <> ."
    ],
    "actual": "The book already holds 12 records ; return a draw first .",
-   "why": "Drew <> from <> into <> . <- attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:State#0(selection['combobox#1']:1) == 'In cask' & attr:Year#0(selection['combobox#1']:1) == '2020' & ('unnamed', \"selection['combobox#2']:2\")  [7 occasions]",
+   "why": "Drew <> from <> into <> . <- attr:Gallons left#0(selection['combobox#0']:0) == '1' & attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:State#0(selection['combobox#1']:1) == 'In cask'  [72 occasions]",
    "kind": "inseparable: every shared conjunction reaches another event",
    "seen": 2,
    "witnesses": [
@@ -221,7 +398,7 @@
     "Drew <> from <> into <> ."
    ],
    "actual": "The book already holds 12 records ; return a draw first .",
-   "why": "Drew <> from <> into <> . <- attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:State#0(selection['combobox#1']:1) == 'In cask' & attr:Year#0(selection['combobox#1']:1) == '2020' & ('unnamed', \"selection['combobox#2']:2\")  [7 occasions]",
+   "why": "Drew <> from <> into <> . <- attr:Gallons left#0(selection['combobox#0']:0) == '1' & attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:State#0(selection['combobox#1']:1) == 'In cask'  [72 occasions]",
    "kind": "inseparable: every shared conjunction reaches another event",
    "seen": 2,
    "witnesses": [
@@ -252,7 +429,7 @@
     "Drew <> from <> into <> ."
    ],
    "actual": "The book already holds 12 records ; return a draw first .",
-   "why": "Drew <> from <> into <> . <- attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:State#0(selection['combobox#1']:1) == 'In cask' & attr:Year#0(selection['combobox#1']:1) == '2020' & ('unnamed', \"selection['combobox#2']:2\")  [7 occasions]",
+   "why": "Drew <> from <> into <> . <- attr:Gallons left#0(selection['combobox#0']:0) == '1' & attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:State#0(selection['combobox#1']:1) == 'In cask'  [72 occasions]",
    "kind": "inseparable: every shared conjunction reaches another event",
    "seen": 2,
    "witnesses": [
@@ -316,13 +493,73 @@
    "erased_by_the_state": []
   },
   {
+   "control": "button:Record draw",
+   "step": 306,
+   "forced": [
+    "Drew <> from <> into <> ."
+   ],
+   "actual": "<> is single-varietal ( <> ) ; <> is <> .",
+   "why": "Drew <> from <> into <> . <- attr:Gallons left#0(selection['combobox#0']:0) == '4' & attr:Gate#0(selection['combobox#0']:0) == 'Open'  [8 occasions]",
+   "kind": "inseparable: every shared conjunction reaches another event",
+   "seen": 3,
+   "witnesses": [
+    138,
+    140
+   ],
+   "blockers": 112,
+   "blocked_by": {
+    "Drew <> from <> into <> .": 91,
+    "<> holds <> ; cannot draw <> .": 19,
+    "The book already holds 12 records ; return a draw first .": 2
+   },
+   "raw_difference": [
+    "node 5 group: ''/'None'  vs  'Drew 1 gal from North Wall into Pi'/'None'",
+    "node 6 heading: 'Draw ticket'/'None'  vs  ''/'None'",
+    "node 7 group: ''/'None'  vs  'Draw ticket'/'None'",
+    "node 8 text: 'Vat'/'None'  vs  ''/'None'",
+    "node 9 combobox: ''/'Chapel Row (Chenin, '  vs  'Vat'/'None'",
+    "node 10 text: 'Blend'/'None'  vs  ''/'West Ridge (Chenin, '",
+    "node count 102 vs 128"
+   ],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Return ticket _ gal from _ out of _",
+   "step": 326,
+   "forced": [
+    "Returned <> to <> from <> ."
+   ],
+   "actual": "<> is <> ; disgorge it before returning a draw .",
+   "why": "Returned <> to <> from <> . <- attr:State#0(property['attr:Style#0', 'Single varietal']:1) == 'In cask'  [96 occasions]",
+   "kind": "inseparable: every shared conjunction reaches another event",
+   "seen": 16,
+   "witnesses": [
+    18,
+    19
+   ],
+   "blockers": 71,
+   "blocked_by": {
+    "Returned <> to <> from <> .": 71
+   },
+   "raw_difference": [
+    "node 5 status: 'Creek Bed holds 0 gal; cannot draw'/'None'  vs  'Drew 1 gal from North Wall into Pi'/'None'",
+    "node 10 combobox: ''/'Creek Bed (Pinot, 0 '  vs  ''/'North Wall (Syrah, 0'",
+    "node 12 combobox: ''/'Picnic 2022 (single '  vs  ''/'Picnic 2022 (single '",
+    "node 28 cell: 'Creek Bed'/'None'  vs  'North Wall'/'None'",
+    "node 29 cell: 'Pinot'/'None'  vs  'Syrah'/'None'",
+    "node 33 button: 'Close Creek Bed'/'None'  vs  'Close North Wall'/'None'",
+    "node count 129 vs 128"
+   ],
+   "erased_by_the_state": []
+  },
+  {
    "control": "button:Bottle _",
    "step": 539,
    "forced": [
     "<> <> ."
    ],
    "actual": "<> is already <> .",
-   "why": "<> <> . <- ('ambiguous', \"relation['backward', 'rel:1']:2<owner\")  [6 occasions]",
+   "why": "<> <> . <- attr:Year#0(owner) == '2020'  [4 occasions]",
    "kind": "unseen: the control never returned this event while fitting",
    "seen": 0,
    "raw_difference": [],
@@ -348,7 +585,7 @@
     "Drew <> from <> into <> ."
    ],
    "actual": "The book already holds 12 records ; return a draw first .",
-   "why": "Drew <> from <> into <> . <- attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:State#0(selection['combobox#1']:1) == 'In cask' & attr:Year#0(selection['combobox#1']:1) == '2020' & ('unnamed', \"selection['combobox#2']:2\")  [7 occasions]",
+   "why": "Drew <> from <> into <> . <- attr:Gallons left#0(selection['combobox#0']:0) == '1' & attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:State#0(selection['combobox#1']:1) == 'In cask'  [72 occasions]",
    "kind": "inseparable: every shared conjunction reaches another event",
    "seen": 2,
    "witnesses": [
@@ -379,7 +616,7 @@
     "<> <> ."
    ],
    "actual": "<> is already <> .",
-   "why": "<> <> . <- ('ambiguous', \"relation['backward', 'rel:1']:2<owner\")  [6 occasions]",
+   "why": "<> <> . <- attr:Year#0(owner) == '2020'  [4 occasions]",
    "kind": "unseen: the control never returned this event while fitting",
    "seen": 0,
    "raw_difference": [],

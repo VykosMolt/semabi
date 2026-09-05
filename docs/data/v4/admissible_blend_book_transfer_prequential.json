@@ -9,14 +9,14 @@
  "actions_scored": 32,
  "what_the_evidence_establishes": {
   "rule": {
-   "the evidence forces one outcome": 23,
-   "several outcomes remain admissible": 5,
+   "the evidence forces one outcome": 24,
+   "several outcomes remain admissible": 4,
    "one outcome, because the control has never done anything else": 3,
    "no outcome is established": 1
   },
   "list": {
-   "the evidence forces one outcome": 23,
-   "several outcomes remain admissible": 5,
+   "the evidence forces one outcome": 24,
+   "several outcomes remain admissible": 4,
    "one outcome, because the control has never done anything else": 3,
    "no outcome is established": 1
   }
@@ -24,17 +24,17 @@
  "verdicts": {
   "rule": {
    "one outcome was admissible and it happened": 22,
-   "several outcomes remained admissible; the one that happened was among them": 5,
+   "several outcomes remained admissible; the one that happened was among them": 4,
+   "one outcome was admissible and a different one happened": 2,
    "the only outcome ever seen on this control, and something else happened": 2,
-   "one outcome was admissible and a different one happened": 1,
    "no outcome is established for this state": 1,
    "the only outcome ever seen on this control, and it happened": 1
   },
   "list": {
    "one outcome was admissible and it happened": 22,
-   "several outcomes remained admissible; the one that happened was among them": 5,
+   "several outcomes remained admissible; the one that happened was among them": 4,
+   "one outcome was admissible and a different one happened": 2,
    "the only outcome ever seen on this control, and something else happened": 2,
-   "one outcome was admissible and a different one happened": 1,
    "no outcome is established for this state": 1,
    "the only outcome ever seen on this control, and it happened": 1
   }
@@ -363,21 +363,19 @@
   {
    "step": 629,
    "rule": {
-    "bucket": "several outcomes remain admissible",
-    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
     "admissible": [
-     "<> is <> ; disgorge it before returning a draw .",
-     "Returned <> to <> from <> ."
+     "<> is <> ; disgorge it before returning a draw ."
     ],
     "observed": "<> is <> ; disgorge it before returning a draw ."
    },
    "control": "button:Return ticket _ gal from _ out of _",
    "list": {
-    "bucket": "several outcomes remain admissible",
-    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "bucket": "the evidence forces one outcome",
+    "verdict": "one outcome was admissible and it happened",
     "admissible": [
-     "<> is <> ; disgorge it before returning a draw .",
-     "Returned <> to <> from <> ."
+     "<> is <> ; disgorge it before returning a draw ."
     ],
     "observed": "<> is <> ; disgorge it before returning a draw ."
    }
@@ -426,18 +424,18 @@
    "step": 678,
    "rule": {
     "bucket": "the evidence forces one outcome",
-    "verdict": "one outcome was admissible and it happened",
+    "verdict": "one outcome was admissible and a different one happened",
     "admissible": [
-     "Returned <> to <> from <> ."
+     "<> is <> ; disgorge it before returning a draw ."
     ],
     "observed": "Returned <> to <> from <> ."
    },
    "control": "button:Return ticket _ gal from _ out of _",
    "list": {
     "bucket": "the evidence forces one outcome",
-    "verdict": "one outcome was admissible and it happened",
+    "verdict": "one outcome was admissible and a different one happened",
     "admissible": [
-     "Returned <> to <> from <> ."
+     "<> is <> ; disgorge it before returning a draw ."
     ],
     "observed": "Returned <> to <> from <> ."
    }

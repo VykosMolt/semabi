@@ -5,14 +5,14 @@
   "regime": "FROZEN_PREFIX",
   "split": 0.5,
   "cut": 448,
-  "operators": 16,
+  "operators": 10,
   "held_out_actions": 39,
-  "rules_offered_per_action": 1.79,
+  "rules_offered_per_action": 1.49,
   "applicable_claims_per_action": 0.87,
   "distinct_decided_claims": 3,
   "composition": {
    "a named constant": {
-    "claims": 26,
+    "claims": 14,
     "decided": 7,
     "supported": 7,
     "refuted": 0,
@@ -23,24 +23,15 @@
     ]
    },
    "an object brought into being": {
-    "claims": 22,
-    "decided": 19,
-    "supported": 19,
+    "claims": 17,
+    "decided": 14,
+    "supported": 14,
     "refuted": 0,
     "supported_share": 1.0,
     "distinct_claims": 1,
     "examples": [
      "id = new"
     ]
-   },
-   "changes, unspecified": {
-    "claims": 12,
-    "decided": 0,
-    "supported": 0,
-    "refuted": 0,
-    "supported_share": null,
-    "distinct_claims": 0,
-    "examples": []
    },
    "removal": {
     "claims": 57,
@@ -61,18 +52,18 @@
    "every applicable rule was contradicted": 5
   },
   "removal_exposure": {
-   "base_rate_gone": 0.632,
+   "base_rate_gone": 0.637,
    "steps_by_fraction_gone": {
-    "all went (>90%)": 109,
-    "none went (<10%)": 44,
-    "some went": 33
+    "all went (>90%)": 45,
+    "none went (<10%)": 16,
+    "some went": 22
    },
    "reading_supported_share": 0.519,
    "removal_claims": 27,
    "steps_spoken_at": 16,
-   "per_click_control": 0.177,
-   "objects_in_those_steps": 62,
-   "margin_over_per_click_control": 0.342
+   "per_click_control": 0.239,
+   "objects_in_those_steps": 46,
+   "margin_over_per_click_control": 0.28
   }
  }
 ]

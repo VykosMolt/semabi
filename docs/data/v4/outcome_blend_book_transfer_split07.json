@@ -8,18 +8,17 @@
  "permuted_events": null,
  "scored_on": "blend_book_transfer",
  "cut": 587,
- "operators": 16,
- "operators_with_an_output": 16,
+ "operators": 14,
+ "operators_with_an_output": 14,
  "output": {
-  "claims": 592,
+  "claims": 444,
   "verdicts": {
-   "NOT_APPLICABLE": 365,
-   "REFUTED": 83,
-   "SUPPORTED": 77,
-   "UNKNOWN": 67
+   "NOT_APPLICABLE": 290,
+   "REFUTED": 80,
+   "SUPPORTED": 74
   },
   "held_out_actions_with_an_output_claim": 74,
-  "distinct_decided_claims": 11,
+  "distinct_decided_claims": 10,
   "distinct_decided_frames": 5,
   "per_action": {
    "applicable rules disagreed": 74
@@ -38,8 +37,8 @@
    "accuracy": null
   },
   "distinct_events_predicted_per_action": {
-   "2": 65,
-   "3": 9
+   "2": 68,
+   "3": 6
   },
   "majority_frame_control": {
    "right": 34,
@@ -56,14 +55,12 @@
  },
  "state": {
   "verdicts": {
-   "NOT_APPLICABLE": 216,
-   "REFUTED": 6,
-   "SUPPORTED": 74
+   "NOT_APPLICABLE": 80,
+   "SUPPORTED": 68
   },
   "per_action": {
-   "no rule applied": 37,
-   "every applicable rule was right": 34,
-   "every applicable rule was contradicted": 3
+   "no rule applied": 40,
+   "every applicable rule was right": 34
   }
  },
  "outcome_model": {
@@ -75,7 +72,7 @@
    "the event the interface returned": 34
   },
   "accuracy_where_it_answered": 0.459,
-  "distinct_events_asserted": 4,
+  "distinct_events_asserted": 3,
   "answers_naming_an_event": 74,
   "accuracy_where_it_named_an_event": 0.459,
   "by_level": {
@@ -83,10 +80,9 @@
    "the event the interface returned / with its arguments": 34
   },
   "events_asserted": {
-   "The book already holds 12 records ; return a draw first .": 33,
+   "The book already holds 12 records ; return a draw first .": 40,
    "<> is already <> .": 20,
-   "<> is <> .": 14,
-   "<> is single-varietal ( <> ) ; <> is <> .": 7
+   "<> is <> .": 14
   },
   "majority_frame_control_where_it_answered": {
    "right": 34,
@@ -170,7 +166,7 @@
    {
     "step": 704,
     "control": "button:Record draw",
-    "predicted": "<> is single-varietal ( <> ) ; <> is <> .",
+    "predicted": "The book already holds 12 records ; return a draw first .",
     "observed": "Drew <> from <> into <> .",
     "returned": "Drew 1 gal from Low Barn into Fair Day.",
     "verdict": "a different event",
@@ -179,24 +175,22 @@
   ],
   "lists": {
    "button#cell/button": "button#cell/button: 15 fitted occasions, 1 distinct events\n    otherwise  ->  Opened <> .   [15]\n    otherwise -> Opened <> .\n    'Opened <> .' arguments: 0=owner",
-   "button:Bottle _": "button:Bottle _: 7 fitted occasions, 2 distinct events\n    role relation['backward', 'rel:1']:2<owner = relation['backward', 'rel:1'] from owner\n    attr:Committed gal#0(owner) >= '2'  ->  <> <> .   [6]\n    otherwise -> <> has <> committed ; need at least <> to bottle .\n    '<> <> .' arguments: 1=owner\n    '<> has <> committed ; need at least <> to bottle .' arguments: 0=owner, 2=relation['backward', 'rel:1']:2<owner",
+   "button:Bottle _": "button:Bottle _: 7 fitted occasions, 2 distinct events\n    attr:Committed gal#0(owner) >= '2'  ->  <> <> .   [6]\n    otherwise -> <> has <> committed ; need at least <> to bottle .\n    '<> <> .' arguments: 1=owner\n    '<> has <> committed ; need at least <> to bottle .' arguments: 0=owner",
    "button:Close _": "button:Close _: 17 fitted occasions, 2 distinct events\n    attr:Gate#0(owner) == 'Open'  ->  <> <> .   [16]\n    otherwise -> <> is already <> .\n    '<> <> .' arguments: 1=owner\n    '<> is already <> .' arguments: 0=owner",
    "button:Disgorge _": "button:Disgorge _: 5 fitted occasions, 1 distinct events\n    otherwise  ->  Disgorged <> .   [5]\n    otherwise -> Disgorged <> .\n    'Disgorged <> .' arguments: 0=owner",
-   "button:Record draw": "button:Record draw: 150 fitted occasions, 6 distinct events\n    role selection['combobox#0']:0 = selection['combobox#0']\n    role selection['combobox#1']:1 = selection['combobox#1']\n    role relation['forward', 'rel:0']:0<selection['combobox#2']:2 = relation['forward', 'rel:0'] from selection['combobox#2']:2\n    role selection['combobox#2']:2 = selection['combobox#2']\n    attr:State#0(selection['combobox#1']:1) == 'Bottled'  ->  <> is already <> .   [43]\n    attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:Gallons left#0(selection['combobox#0']:0) < '1'  ->  <> holds <> ; cannot draw <> .   [16]\n    attr:Gate#0(selection['combobox#0']:0) == 'Closed'  ->  <> is <> .   [14]\n    attr:Gallons left#0(selection['combobox#0']:0) < '5'  ->  Drew <> from <> into <> .   [66]\n    attr:Committed gal#0(selection['combobox#1']:1) < '3'  ->  Drew <> from <> into <> .   [6]\n    rel:1(selection['combobox#2']:2) == selection['combobox#1']:1  ->  <> is single-varietal ( <> ) ; <> is <> .   [3]\n    otherwise  ->  The book already holds 12 records ; return a draw first .   [2]\n    otherwise -> The book already holds 12 records ; return a draw first .\n    '<> holds <> ; cannot draw <> .' arguments: 0=selection['combobox#0']:0, 2=selection['combobox#2']:2\n    '<> is <> .' arguments: 0=selection['combobox#0']:0\n    '<> is already <> .' arguments: 0=selection['combobox#1']:1\n    '<> is single-varietal ( <> ) ; <> is <> .' arguments: 0=selection['combobox#1']:1, 2=selection['combobox#0']:0\n    'Drew <> from <> into <> .' arguments: 2=selection['combobox#1']:1",
-   "button:Return ticket _ gal from _ out of _": "button:Return ticket _ gal from _ out of _: 76 fitted occasions, 2 distinct events\n    role relation['forward', 'rel:0']:0<owner = relation['forward', 'rel:0'] from owner\n    role relation['forward', 'rel:1']:1<owner = relation['forward', 'rel:1'] from owner\n    attr:State#0(relation['forward', 'rel:1']:1<owner) == 'In cask'  ->  Returned <> to <> from <> .   [63]\n    otherwise  ->  <> is <> ; disgorge it before returning a draw .   [13]\n    otherwise -> <> is <> ; disgorge it before returning a draw .\n    '<> is <> ; disgorge it before returning a draw .' arguments: 0=relation['forward', 'rel:1']:1<owner\n    'Returned <> to <> from <> .' arguments: 1=relation['forward', 'rel:0']:0<owner, 2=relation['forward', 'rel:1']:1<owner"
+   "button:Record draw": "button:Record draw: 150 fitted occasions, 6 distinct events\n    role selection['combobox#0']:0 = selection['combobox#0']\n    role selection['combobox#1']:1 = selection['combobox#1']\n    attr:State#0(selection['combobox#1']:1) == 'Bottled'  ->  <> is already <> .   [43]\n    attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:Gallons left#0(selection['combobox#0']:0) < '1'  ->  <> holds <> ; cannot draw <> .   [16]\n    attr:Gate#0(selection['combobox#0']:0) == 'Closed'  ->  <> is <> .   [14]\n    attr:Gallons left#0(selection['combobox#0']:0) < '5'  ->  Drew <> from <> into <> .   [66]\n    attr:Committed gal#0(selection['combobox#1']:1) < '3'  ->  Drew <> from <> into <> .   [6]\n    attr:Committed gal#0(selection['combobox#1']:1) < '5'  ->  <> is single-varietal ( <> ) ; <> is <> .   [3]\n    otherwise  ->  The book already holds 12 records ; return a draw first .   [2]\n    otherwise -> The book already holds 12 records ; return a draw first .\n    '<> holds <> ; cannot draw <> .' arguments: 0=selection['combobox#0']:0\n    '<> is <> .' arguments: 0=selection['combobox#0']:0\n    '<> is already <> .' arguments: 0=selection['combobox#1']:1\n    '<> is single-varietal ( <> ) ; <> is <> .' arguments: 0=selection['combobox#1']:1, 2=selection['combobox#0']:0\n    'Drew <> from <> into <> .' arguments: 1=selection['combobox#0']:0, 2=selection['combobox#1']:1",
+   "button:Return ticket _ gal from _ out of _": "button:Return ticket _ gal from _ out of _: 76 fitted occasions, 2 distinct events\n    role property['attr:Style#0', 'Single varietal']:1 = property['attr:Style#0', 'Single varietal']\n    attr:State#0(property['attr:Style#0', 'Single varietal']:1) == 'In cask'  ->  Returned <> to <> from <> .   [63]\n    otherwise  ->  <> is <> ; disgorge it before returning a draw .   [13]\n    otherwise -> <> is <> ; disgorge it before returning a draw .\n    '<> is <> ; disgorge it before returning a draw .' arguments: 0=property['attr:Style#0', 'Single varietal']:1\n    'Returned <> to <> from <> .' arguments: 2=property['attr:Style#0', 'Single varietal']:1"
   }
  },
  "ablation_live_region_unread": {
-  "operators": 7,
+  "operators": 6,
   "state_verdicts": {
-   "NOT_APPLICABLE": 216,
-   "REFUTED": 6,
-   "SUPPORTED": 74
+   "NOT_APPLICABLE": 80,
+   "SUPPORTED": 68
   },
   "state_per_action": {
-   "no rule applied": 37,
-   "every applicable rule was right": 34,
-   "every applicable rule was contradicted": 3
+   "no rule applied": 40,
+   "every applicable rule was right": 34
   }
  }
 }

@@ -8,30 +8,28 @@
  "permuted_events": null,
  "scored_on": "blend_book_transfer",
  "cut": 419,
- "operators": 15,
- "operators_with_an_output": 15,
+ "operators": 13,
+ "operators_with_an_output": 13,
  "output": {
-  "claims": 861,
+  "claims": 615,
   "verdicts": {
-   "NOT_APPLICABLE": 485,
-   "REFUTED": 180,
-   "SUPPORTED": 116,
-   "UNKNOWN": 80
+   "NOT_APPLICABLE": 349,
+   "REFUTED": 147,
+   "SUPPORTED": 119
   },
   "held_out_actions_with_an_output_claim": 123,
-  "distinct_decided_claims": 16,
+  "distinct_decided_claims": 15,
   "distinct_decided_frames": 5,
   "per_action": {
-   "applicable rules disagreed": 112,
-   "every applicable rule was contradicted": 11
+   "applicable rules disagreed": 119,
+   "every applicable rule was contradicted": 4
   },
   "frame_only": {
-   "among": 112,
-   "wrong": 11
+   "among": 119,
+   "wrong": 4
   },
   "model_level": {
-   "undetermined, the right event among them": 112,
-   "determinate and wrong": 7,
+   "undetermined, the right event among them": 119,
    "undetermined, and not among them": 4
   },
   "distinct_events_where_determinate": 0,
@@ -42,10 +40,8 @@
    "accuracy": null
   },
   "distinct_events_predicted_per_action": {
-   "1": 7,
-   "2": 77,
-   "3": 25,
-   "4": 14
+   "2": 103,
+   "3": 20
   },
   "majority_frame_control": {
    "right": 52,
@@ -63,14 +59,14 @@
  },
  "state": {
   "verdicts": {
-   "NOT_APPLICABLE": 366,
-   "REFUTED": 14,
-   "SUPPORTED": 112
+   "NOT_APPLICABLE": 134,
+   "REFUTED": 8,
+   "SUPPORTED": 104
   },
   "per_action": {
-   "no rule applied": 64,
+   "no rule applied": 67,
    "every applicable rule was right": 52,
-   "every applicable rule was contradicted": 7
+   "every applicable rule was contradicted": 4
   }
  },
  "outcome_model": {
@@ -186,24 +182,24 @@
   ],
   "lists": {
    "button#cell/button": "button#cell/button: 12 fitted occasions, 1 distinct events\n    otherwise  ->  Opened <> .   [12]\n    otherwise -> Opened <> .\n    'Opened <> .' arguments: 0=owner",
-   "button:Bottle _": "button:Bottle _: 6 fitted occasions, 2 distinct events\n    role relation['backward', 'rel:1']:2<owner = relation['backward', 'rel:1'] from owner\n    attr:Committed gal#0(owner) >= '2'  ->  <> <> .   [5]\n    otherwise -> <> has <> committed ; need at least <> to bottle .\n    '<> <> .' arguments: 1=owner\n    '<> has <> committed ; need at least <> to bottle .' arguments: 0=owner, 2=relation['backward', 'rel:1']:2<owner",
+   "button:Bottle _": "button:Bottle _: 6 fitted occasions, 2 distinct events\n    attr:Committed gal#0(owner) >= '2'  ->  <> <> .   [5]\n    otherwise -> <> has <> committed ; need at least <> to bottle .\n    '<> <> .' arguments: 1=owner\n    '<> has <> committed ; need at least <> to bottle .' arguments: 0=owner",
    "button:Close _": "button:Close _: 16 fitted occasions, 2 distinct events\n    attr:Gate#0(owner) == 'Open'  ->  <> <> .   [15]\n    otherwise -> <> is already <> .\n    '<> <> .' arguments: 1=owner\n    '<> is already <> .' arguments: 0=owner",
    "button:Disgorge _": "button:Disgorge _: 4 fitted occasions, 1 distinct events\n    otherwise  ->  Disgorged <> .   [4]\n    otherwise -> Disgorged <> .\n    'Disgorged <> .' arguments: 0=owner",
-   "button:Record draw": "button:Record draw: 112 fitted occasions, 5 distinct events\n    role selection['combobox#0']:0 = selection['combobox#0']\n    role selection['combobox#1']:1 = selection['combobox#1']\n    role relation['forward', 'rel:0']:0<selection['combobox#2']:2 = relation['forward', 'rel:0'] from selection['combobox#2']:2\n    role selection['combobox#2']:2 = selection['combobox#2']\n    attr:State#0(selection['combobox#1']:1) == 'Bottled'  ->  <> is already <> .   [29]\n    attr:Gallons left#0(selection['combobox#0']:0) == '0' & attr:Gate#0(selection['combobox#0']:0) == 'Open'  ->  <> holds <> ; cannot draw <> .   [15]\n    attr:Gate#0(selection['combobox#0']:0) == 'Closed'  ->  <> is <> .   [9]\n    attr:Committed gal#0(selection['combobox#1']:1) < '5'  ->  Drew <> from <> into <> .   [57]\n    otherwise  ->  The book already holds 12 records ; return a draw first .   [2]\n    otherwise -> The book already holds 12 records ; return a draw first .\n    '<> holds <> ; cannot draw <> .' arguments: 0=selection['combobox#0']:0, 2=selection['combobox#2']:2\n    '<> is <> .' arguments: 0=selection['combobox#0']:0\n    '<> is already <> .' arguments: 0=selection['combobox#1']:1\n    'Drew <> from <> into <> .' arguments: 2=selection['combobox#1']:1",
-   "button:Return ticket _ gal from _ out of _": "button:Return ticket _ gal from _ out of _: 59 fitted occasions, 2 distinct events\n    role relation['forward', 'rel:0']:0<owner = relation['forward', 'rel:0'] from owner\n    role relation['forward', 'rel:1']:1<owner = relation['forward', 'rel:1'] from owner\n    attr:State#0(relation['forward', 'rel:1']:1<owner) == 'In cask'  ->  Returned <> to <> from <> .   [52]\n    otherwise  ->  <> is <> ; disgorge it before returning a draw .   [7]\n    otherwise -> <> is <> ; disgorge it before returning a draw .\n    '<> is <> ; disgorge it before returning a draw .' arguments: 0=relation['forward', 'rel:1']:1<owner\n    'Returned <> to <> from <> .' arguments: 1=relation['forward', 'rel:0']:0<owner, 2=relation['forward', 'rel:1']:1<owner"
+   "button:Record draw": "button:Record draw: 112 fitted occasions, 5 distinct events\n    role selection['combobox#0']:0 = selection['combobox#0']\n    role selection['combobox#1']:1 = selection['combobox#1']\n    attr:State#0(selection['combobox#1']:1) == 'Bottled'  ->  <> is already <> .   [29]\n    attr:Gallons left#0(selection['combobox#0']:0) == '0' & attr:Gate#0(selection['combobox#0']:0) == 'Open'  ->  <> holds <> ; cannot draw <> .   [15]\n    attr:Gate#0(selection['combobox#0']:0) == 'Closed'  ->  <> is <> .   [9]\n    attr:Committed gal#0(selection['combobox#1']:1) < '5'  ->  Drew <> from <> into <> .   [57]\n    otherwise  ->  The book already holds 12 records ; return a draw first .   [2]\n    otherwise -> The book already holds 12 records ; return a draw first .\n    '<> holds <> ; cannot draw <> .' arguments: 0=selection['combobox#0']:0\n    '<> is <> .' arguments: 0=selection['combobox#0']:0\n    '<> is already <> .' arguments: 0=selection['combobox#1']:1\n    'Drew <> from <> into <> .' arguments: 1=selection['combobox#0']:0, 2=selection['combobox#1']:1",
+   "button:Return ticket _ gal from _ out of _": "button:Return ticket _ gal from _ out of _: 59 fitted occasions, 2 distinct events\n    role property['attr:Style#0', 'Single varietal']:1 = property['attr:Style#0', 'Single varietal']\n    attr:State#0(property['attr:Style#0', 'Single varietal']:1) == 'In cask'  ->  Returned <> to <> from <> .   [52]\n    otherwise  ->  <> is <> ; disgorge it before returning a draw .   [7]\n    otherwise -> <> is <> ; disgorge it before returning a draw .\n    '<> is <> ; disgorge it before returning a draw .' arguments: 0=property['attr:Style#0', 'Single varietal']:1\n    'Returned <> to <> from <> .' arguments: 2=property['attr:Style#0', 'Single varietal']:1"
   }
  },
  "ablation_live_region_unread": {
-  "operators": 7,
+  "operators": 6,
   "state_verdicts": {
-   "NOT_APPLICABLE": 366,
-   "REFUTED": 14,
-   "SUPPORTED": 112
+   "NOT_APPLICABLE": 134,
+   "REFUTED": 8,
+   "SUPPORTED": 104
   },
   "state_per_action": {
-   "no rule applied": 64,
+   "no rule applied": 67,
    "every applicable rule was right": 52,
-   "every applicable rule was contradicted": 7
+   "every applicable rule was contradicted": 4
   }
  }
 }

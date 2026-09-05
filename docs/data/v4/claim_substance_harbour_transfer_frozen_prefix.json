@@ -8,15 +8,15 @@
   "operators": 15,
   "held_out_actions": 67,
   "rules_offered_per_action": 1.0,
-  "applicable_claims_per_action": 0.25,
+  "applicable_claims_per_action": 0.27,
   "distinct_decided_claims": 12,
   "composition": {
    "a named constant": {
     "claims": 67,
-    "decided": 17,
+    "decided": 18,
     "supported": 17,
-    "refuted": 0,
-    "supported_share": 1.0,
+    "refuted": 1,
+    "supported_share": 0.944,
     "distinct_claims": 2,
     "examples": [
      "attr:Condition#0 = closed",
@@ -25,10 +25,10 @@
    },
    "an interface response": {
     "claims": 185,
-    "decided": 81,
+    "decided": 82,
     "supported": 80,
-    "refuted": 1,
-    "supported_share": 0.988,
+    "refuted": 2,
+    "supported_share": 0.976,
     "distinct_claims": 9,
     "examples": [
      "<> <> cannot be <> while call <> holds it . = <> <> cannot be <> while call <> holds it .",
@@ -52,8 +52,9 @@
    }
   },
   "per_action": {
-   "no rule applied": 50,
-   "every applicable rule was right": 17
+   "no rule applied": 49,
+   "every applicable rule was right": 17,
+   "every applicable rule was contradicted": 1
   }
  }
 ]

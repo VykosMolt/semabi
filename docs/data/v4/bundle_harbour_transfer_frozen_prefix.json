@@ -53,7 +53,8 @@
   }
  },
  "claims": {
-  "a bundle the evidence has shown": 96
+  "a bundle the evidence has shown": 96,
+  "a combination of frame and delta never observed together": 1
  },
  "what_durably_changed": {
   "the branch's own delta": {
@@ -61,9 +62,24 @@
    "wrong": 1
   },
   "the union of firing operators": {
-   "right": 95,
-   "wrong": 1
+   "right": 94,
+   "wrong": 2
   }
  },
- "hybrids": []
+ "hybrids": [
+  {
+   "step": 367,
+   "control": "button:Close",
+   "frame": "<> <> cannot be <> while call <> holds it .",
+   "claimed_delta": [
+    [
+     "set",
+     "attr:Condition#0"
+    ]
+   ],
+   "deltas_this_frame_has": [
+    []
+   ]
+  }
+ ]
 }

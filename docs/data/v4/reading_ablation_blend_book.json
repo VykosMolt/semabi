@@ -7,27 +7,6 @@
  "readings": [
   {
    "reading": "source_choice",
-   "types": 3,
-   "prefix_objective": {
-    "explained": 151,
-    "errors": 0,
-    "visibility": 0,
-    "churn": 0,
-    "spurious": 0,
-    "contradictions": 0,
-    "conflicts": 0,
-    "named": 383,
-    "positional": 0,
-    "unexplained": 0
-   },
-   "suffix_ledger": {
-    "right": 149,
-    "no rule": 82,
-    "contradicted": 18
-   }
-  },
-  {
-   "reading": "without row[_](cell@Amount[_],cell@From vat[_],cell@Into blend[_],cell@Ticket[_],cell[_](button[_]))",
    "types": 2,
    "prefix_objective": {
     "explained": 151,
@@ -46,12 +25,11 @@
     "right": 103,
     "no rule": 67,
     "contradicted": 33
-   },
-   "prefix_objective_accepts_removal": false
+   }
   },
   {
    "reading": "without row[_](cell@Blend[_],cell@Committed gal[_],cell@State[_],cell@Style[_],cell@Year[_],cell[_](button[_]))",
-   "types": 2,
+   "types": 1,
    "prefix_objective": {
     "explained": 142,
     "errors": 0,
@@ -60,21 +38,21 @@
     "spurious": 0,
     "contradictions": 0,
     "conflicts": 0,
-    "named": 370,
+    "named": 186,
     "positional": 0,
     "unexplained": 0
    },
    "suffix_ledger": {
-    "right": 137,
-    "no rule": 42,
-    "contradicted": 31,
-    "disagreed": 16
+    "undecidable": 46,
+    "right": 91,
+    "no rule": 46,
+    "contradicted": 43
    },
    "prefix_objective_accepts_removal": false
   },
   {
    "reading": "without row[_](cell@Gallons left[_],cell@Gate[_],cell@Varietal[_],cell@Vat[_],cell[_](button[_]))",
-   "types": 2,
+   "types": 1,
    "prefix_objective": {
     "explained": 124,
     "errors": 0,
@@ -83,14 +61,15 @@
     "spurious": 0,
     "contradictions": 0,
     "conflicts": 0,
-    "named": 337,
+    "named": 179,
     "positional": 0,
     "unexplained": 0
    },
    "suffix_ledger": {
-    "right": 110,
-    "no rule": 61,
-    "contradicted": 39
+    "undecidable": 46,
+    "right": 64,
+    "no rule": 43,
+    "contradicted": 57
    },
    "prefix_objective_accepts_removal": false
   }

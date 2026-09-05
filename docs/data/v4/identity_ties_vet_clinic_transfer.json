@@ -9,9 +9,9 @@
   "positional": 0,
   "unexplained": 0,
   "spurious": 5,
-  "explained": 98,
-  "delta_atoms": 108,
-  "complexity": 44,
+  "explained": 93,
+  "delta_atoms": 93,
+  "complexity": 24,
   "steps": 897,
   "churn_steps": [],
   "contradiction_steps": [
@@ -21,7 +21,7 @@
    4
   ]
  },
- "open_questions": 7,
+ "open_questions": 9,
  "questions": [
   {
    "family": "group[_](heading[_],list[_](listitem[_]))",
@@ -73,56 +73,16 @@
    "makers": [
     {
      "operator": "op3",
-     "control": "button:Complete@33131b",
+     "control": "button:Complete",
      "support": 4,
      "acts": [
-      "click(button:Complete@33131b@T3[?o0])"
+      "click(button:Complete)"
      ],
      "test": "collision",
      "parameters": []
     },
     {
      "operator": "op4",
-     "control": "button:Complete@6f6b57",
-     "support": 1,
-     "acts": [
-      "click(button:Complete@6f6b57@T4[?o0])"
-     ],
-     "test": "collision",
-     "parameters": []
-    },
-    {
-     "operator": "op5",
-     "control": "button:Complete@6f6b57",
-     "support": 1,
-     "acts": [
-      "click(button:Complete@6f6b57@T4[?o0])"
-     ],
-     "test": "collision",
-     "parameters": []
-    },
-    {
-     "operator": "op6",
-     "control": "button:Complete@6f6b57",
-     "support": 1,
-     "acts": [
-      "click(button:Complete@6f6b57@T4[?o0])"
-     ],
-     "test": "collision",
-     "parameters": []
-    },
-    {
-     "operator": "op7",
-     "control": "button:Complete@6f6b57",
-     "support": 1,
-     "acts": [
-      "click(button:Complete@6f6b57@T4[?o0])"
-     ],
-     "test": "collision",
-     "parameters": []
-    },
-    {
-     "operator": "op8",
      "control": "button:Schedule",
      "support": 13,
      "acts": [
@@ -132,16 +92,16 @@
      "parameters": []
     },
     {
-     "operator": "op16",
-     "control": "button:Complete@6f6b57",
-     "support": 1,
+     "operator": "op7",
+     "control": "button:Complete",
+     "support": 5,
      "acts": [
-      "type(textbox#cell@Actions/textbox@6f6b57@T4[?o0], ?s0)",
-      "click(button:Complete@6f6b57@T4[?o0])"
+      "type(textbox#cell@Actions/textbox, ?s0)",
+      "click(button:Complete)"
      ],
      "test": "collision",
      "parameters": [
-      "type(textbox#cell@Actions/textbox@6f6b57@T4[?o0], ?s0)"
+      "type(textbox#cell@Actions/textbox, ?s0)"
      ]
     }
    ],
@@ -166,30 +126,6 @@
      }
     ],
     "op4": [
-     {
-      "cell@Reason#0": "zp37",
-      "key": "Biscuit|zp37"
-     }
-    ],
-    "op5": [
-     {
-      "cell@Reason#0": "Annual checkup",
-      "key": "Ziggy|Annual checkup"
-     }
-    ],
-    "op6": [
-     {
-      "cell@Reason#0": "ak41",
-      "key": "Luna|ak41"
-     }
-    ],
-    "op7": [
-     {
-      "cell@Reason#0": "rk35",
-      "key": "Sable|rk35"
-     }
-    ],
-    "op8": [
      {
       "cell@Reason#0": "tp79",
       "key": "Luna|tp79"
@@ -239,7 +175,23 @@
       "key": "Sable|nj12"
      }
     ],
-    "op16": [
+    "op7": [
+     {
+      "cell@Reason#0": "ak41",
+      "key": "Luna|ak41"
+     },
+     {
+      "cell@Reason#0": "zp37",
+      "key": "Biscuit|zp37"
+     },
+     {
+      "cell@Reason#0": "Annual checkup",
+      "key": "Ziggy|Annual checkup"
+     },
+     {
+      "cell@Reason#0": "rk35",
+      "key": "Sable|rk35"
+     },
      {
       "cell@Reason#0": "Vaccination",
       "key": "Shadow|Vaccination"
@@ -269,7 +221,7 @@
    },
    "experiment": {
     "test": "collision",
-    "by": "button:Complete@33131b",
+    "by": "button:Complete",
     "operator": "op3",
     "parameters": [],
     "predictions": {
@@ -277,6 +229,40 @@
      "cell@Patient#0": "a second instance with the same value is one object"
     }
    }
+  },
+  {
+   "family": "row[_](cell@Actions[_](textbox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+   "left": null,
+   "right": "cell@Reason#0",
+   "reason": "the trace so far scores both readings identically",
+   "tids": [],
+   "contested": [
+    "cell@Reason#0"
+   ],
+   "status": "NO_KNOWN_EXPERIMENT",
+   "writers": {},
+   "makers": [],
+   "movers": [],
+   "made_values": {},
+   "separable_by_the_history": {},
+   "decided": null
+  },
+  {
+   "family": "row[_](cell@Actions[_](textbox[_],button[_],text[_]),cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
+   "left": null,
+   "right": "cell@Owner#0",
+   "reason": "the trace so far scores both readings identically",
+   "tids": [],
+   "contested": [
+    "cell@Owner#0"
+   ],
+   "status": "NO_KNOWN_EXPERIMENT",
+   "writers": {},
+   "makers": [],
+   "movers": [],
+   "made_values": {},
+   "separable_by_the_history": {},
+   "decided": null
   },
   {
    "family": "row[_](cell@Actions[_],cell@Notes[_],cell@Owner[_],cell@Patient[_],cell@Reason[_],cell@Status[_],cell@Vet[_])",
@@ -294,56 +280,16 @@
    "makers": [
     {
      "operator": "op3",
-     "control": "button:Complete@33131b",
+     "control": "button:Complete",
      "support": 4,
      "acts": [
-      "click(button:Complete@33131b@T3[?o0])"
+      "click(button:Complete)"
      ],
      "test": "collision",
      "parameters": []
     },
     {
      "operator": "op4",
-     "control": "button:Complete@6f6b57",
-     "support": 1,
-     "acts": [
-      "click(button:Complete@6f6b57@T4[?o0])"
-     ],
-     "test": "collision",
-     "parameters": []
-    },
-    {
-     "operator": "op5",
-     "control": "button:Complete@6f6b57",
-     "support": 1,
-     "acts": [
-      "click(button:Complete@6f6b57@T4[?o0])"
-     ],
-     "test": "collision",
-     "parameters": []
-    },
-    {
-     "operator": "op6",
-     "control": "button:Complete@6f6b57",
-     "support": 1,
-     "acts": [
-      "click(button:Complete@6f6b57@T4[?o0])"
-     ],
-     "test": "collision",
-     "parameters": []
-    },
-    {
-     "operator": "op7",
-     "control": "button:Complete@6f6b57",
-     "support": 1,
-     "acts": [
-      "click(button:Complete@6f6b57@T4[?o0])"
-     ],
-     "test": "collision",
-     "parameters": []
-    },
-    {
-     "operator": "op8",
      "control": "button:Schedule",
      "support": 13,
      "acts": [
@@ -353,16 +299,16 @@
      "parameters": []
     },
     {
-     "operator": "op16",
-     "control": "button:Complete@6f6b57",
-     "support": 1,
+     "operator": "op7",
+     "control": "button:Complete",
+     "support": 5,
      "acts": [
-      "type(textbox#cell@Actions/textbox@6f6b57@T4[?o0], ?s0)",
-      "click(button:Complete@6f6b57@T4[?o0])"
+      "type(textbox#cell@Actions/textbox, ?s0)",
+      "click(button:Complete)"
      ],
      "test": "collision",
      "parameters": [
-      "type(textbox#cell@Actions/textbox@6f6b57@T4[?o0], ?s0)"
+      "type(textbox#cell@Actions/textbox, ?s0)"
      ]
     }
    ],
@@ -387,30 +333,6 @@
      }
     ],
     "op4": [
-     {
-      "cell@Reason#0": "zp37",
-      "key": "Biscuit|zp37"
-     }
-    ],
-    "op5": [
-     {
-      "cell@Reason#0": "Annual checkup",
-      "key": "Ziggy|Annual checkup"
-     }
-    ],
-    "op6": [
-     {
-      "cell@Reason#0": "ak41",
-      "key": "Luna|ak41"
-     }
-    ],
-    "op7": [
-     {
-      "cell@Reason#0": "rk35",
-      "key": "Sable|rk35"
-     }
-    ],
-    "op8": [
      {
       "cell@Reason#0": "tp79",
       "key": "Luna|tp79"
@@ -460,7 +382,23 @@
       "key": "Sable|nj12"
      }
     ],
-    "op16": [
+    "op7": [
+     {
+      "cell@Reason#0": "ak41",
+      "key": "Luna|ak41"
+     },
+     {
+      "cell@Reason#0": "zp37",
+      "key": "Biscuit|zp37"
+     },
+     {
+      "cell@Reason#0": "Annual checkup",
+      "key": "Ziggy|Annual checkup"
+     },
+     {
+      "cell@Reason#0": "rk35",
+      "key": "Sable|rk35"
+     },
      {
       "cell@Reason#0": "Vaccination",
       "key": "Shadow|Vaccination"
@@ -490,7 +428,7 @@
    },
    "experiment": {
     "test": "collision",
-    "by": "button:Complete@33131b",
+    "by": "button:Complete",
     "operator": "op3",
     "parameters": [],
     "predictions": {
@@ -537,7 +475,7 @@
    "family": "text[_](textbox[_])",
    "left": "text#0",
    "right": null,
-   "reason": "undecided: chosen explains 98 with 7 errors, the alternative explains 77 with 0",
+   "reason": "undecided: chosen explains 93 with 7 errors, the alternative explains 72 with 0",
    "tids": [
     0,
     1
@@ -549,7 +487,7 @@
    "writers": {},
    "makers": [
     {
-     "operator": "op17",
+     "operator": "op8",
      "control": "?",
      "support": 6,
      "acts": [
@@ -563,7 +501,7 @@
    ],
    "movers": [],
    "made_values": {
-    "op17": [
+    "op8": [
      {
       "text#0": null,
       "key": "Reason"
@@ -597,7 +535,7 @@
    "experiment": {
     "test": "collision",
     "by": "?",
-    "operator": "op17",
+    "operator": "op8",
     "parameters": [
      "type(textbox#textbox@0af5a3@T0[?o0], ?s0)"
     ],

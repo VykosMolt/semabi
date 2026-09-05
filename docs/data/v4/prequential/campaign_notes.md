@@ -1418,3 +1418,13 @@ Whole holdout ledger, search reading: new 194 forced right / 99 sole right /
 the baseline's 162 / 99 / 19 / 44 / 3 / 7: forty-one unestablished states
 became right answers; one more forced-wrong elsewhere (located below).
 Scorings retained (docs/data/v4/prequential/join/detail_view/p25_score_*).
+
+Book pilot on the holdout (20:22): 5 forced right, 1 several, 1 wrong -- step 328
+predicted "booked for call" where the pilot was already booked for another
+call; its list is `unnamed(pilot select) -> Nothing chosen [6]` and
+`Length overall(owner) == 96 -> booked [2]`, a memorised constant from two
+bookings; the pilot's ticket-vs-length join and the clash (ref_set on the
+pilot's booked-for) are unlearned for want of occasions.  Same shape as P24.
+Battery #2 under 001fc88 launched 20:03 (regen stage); compare with
+battery_compare.py b3c9d11 when it lands.  User asked for status at 20:13;
+reported.

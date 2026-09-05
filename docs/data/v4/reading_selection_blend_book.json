@@ -7,90 +7,6 @@
  "readings": [
   {
    "reading": "source_choice",
-   "types": 3,
-   "prefix_objective": {
-    "explained": 151,
-    "errors": 0,
-    "visibility": 0,
-    "churn": 0,
-    "spurious": 0,
-    "contradictions": 0,
-    "conflicts": 0,
-    "named": 383,
-    "positional": 0,
-    "unexplained": 0
-   },
-   "suffix_ledger": {
-    "right": 149,
-    "no rule": 82,
-    "contradicted": 18
-   }
-  },
-  {
-   "reading": "joint discrimination x3",
-   "types": 5,
-   "prefix_objective": {
-    "explained": 151,
-    "errors": 0,
-    "visibility": 0,
-    "churn": 0,
-    "spurious": 0,
-    "contradictions": 0,
-    "conflicts": 0,
-    "named": 383,
-    "positional": 0,
-    "unexplained": 0
-   },
-   "suffix_ledger": {
-    "right": 147,
-    "no rule": 62,
-    "contradicted": 40
-   }
-  },
-  {
-   "reading": "button[_]=button#0",
-   "types": 4,
-   "prefix_objective": {
-    "explained": 151,
-    "errors": 0,
-    "visibility": 0,
-    "churn": 0,
-    "spurious": 0,
-    "contradictions": 0,
-    "conflicts": 0,
-    "named": 383,
-    "positional": 0,
-    "unexplained": 0
-   },
-   "suffix_ledger": {
-    "right": 149,
-    "no rule": 82,
-    "contradicted": 18
-   }
-  },
-  {
-   "reading": "cell[_]=cell#0",
-   "types": 4,
-   "prefix_objective": {
-    "explained": 151,
-    "errors": 0,
-    "visibility": 0,
-    "churn": 0,
-    "spurious": 0,
-    "contradictions": 0,
-    "conflicts": 0,
-    "named": 383,
-    "positional": 0,
-    "unexplained": 0
-   },
-   "suffix_ledger": {
-    "right": 149,
-    "no rule": 82,
-    "contradicted": 18
-   }
-  },
-  {
-   "reading": "row[_](cell@Amount[_],ce=None",
    "types": 2,
    "prefix_objective": {
     "explained": 151,
@@ -112,52 +28,7 @@
    }
   },
   {
-   "reading": "row[_](cell@Blend[_],cel=cell@Style#0",
-   "types": 3,
-   "prefix_objective": {
-    "explained": 151,
-    "errors": 85,
-    "visibility": 0,
-    "churn": 0,
-    "spurious": 0,
-    "contradictions": 0,
-    "conflicts": 0,
-    "named": 383,
-    "positional": 85,
-    "unexplained": 0
-   },
-   "suffix_ledger": {
-    "right": 149,
-    "no rule": 42,
-    "contradicted": 42,
-    "disagreed": 16
-   }
-  },
-  {
-   "reading": "row[_](cell@Gallons left=cell@Gallons left#0",
-   "types": 3,
-   "prefix_objective": {
-    "explained": 146,
-    "errors": 13,
-    "visibility": 0,
-    "churn": 5,
-    "spurious": 0,
-    "contradictions": 0,
-    "conflicts": 0,
-    "named": 383,
-    "positional": 8,
-    "unexplained": 0
-   },
-   "suffix_ledger": {
-    "right": 142,
-    "unbound": 78,
-    "disagreed": 4,
-    "contradicted": 24,
-    "no rule": 1
-   }
-  },
-  {
-   "reading": "text[_](combobox[_])=text#0",
+   "reading": "joint discrimination x3",
    "types": 4,
    "prefix_objective": {
     "explained": 151,
@@ -167,14 +38,126 @@
     "spurious": 0,
     "contradictions": 0,
     "conflicts": 0,
-    "named": 383,
+    "named": 365,
     "positional": 0,
     "unexplained": 0
    },
    "suffix_ledger": {
-    "right": 147,
-    "no rule": 62,
-    "contradicted": 40
+    "undecidable": 46,
+    "right": 101,
+    "no rule": 44,
+    "contradicted": 58
+   }
+  },
+  {
+   "reading": "button[_]=button#0",
+   "types": 3,
+   "prefix_objective": {
+    "explained": 151,
+    "errors": 0,
+    "visibility": 0,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 0,
+    "conflicts": 0,
+    "named": 365,
+    "positional": 0,
+    "unexplained": 0
+   },
+   "suffix_ledger": {
+    "undecidable": 46,
+    "right": 103,
+    "no rule": 67,
+    "contradicted": 33
+   }
+  },
+  {
+   "reading": "cell[_]=cell#0",
+   "types": 3,
+   "prefix_objective": {
+    "explained": 151,
+    "errors": 0,
+    "visibility": 0,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 0,
+    "conflicts": 0,
+    "named": 365,
+    "positional": 0,
+    "unexplained": 0
+   },
+   "suffix_ledger": {
+    "undecidable": 46,
+    "right": 103,
+    "no rule": 67,
+    "contradicted": 33
+   }
+  },
+  {
+   "reading": "row[_](cell@Blend[_],cel=cell@Style#0",
+   "types": 2,
+   "prefix_objective": {
+    "explained": 151,
+    "errors": 85,
+    "visibility": 0,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 0,
+    "conflicts": 0,
+    "named": 365,
+    "positional": 85,
+    "unexplained": 0
+   },
+   "suffix_ledger": {
+    "undecidable": 46,
+    "right": 103,
+    "no rule": 46,
+    "contradicted": 54
+   }
+  },
+  {
+   "reading": "row[_](cell@Gallons left=cell@Gallons left#0",
+   "types": 2,
+   "prefix_objective": {
+    "explained": 146,
+    "errors": 13,
+    "visibility": 0,
+    "churn": 5,
+    "spurious": 0,
+    "contradictions": 0,
+    "conflicts": 0,
+    "named": 365,
+    "positional": 8,
+    "unexplained": 0
+   },
+   "suffix_ledger": {
+    "right": 136,
+    "unbound": 40,
+    "disagreed": 48,
+    "contradicted": 24,
+    "no rule": 1
+   }
+  },
+  {
+   "reading": "text[_](combobox[_])=text#0",
+   "types": 3,
+   "prefix_objective": {
+    "explained": 151,
+    "errors": 0,
+    "visibility": 0,
+    "churn": 0,
+    "spurious": 0,
+    "contradictions": 0,
+    "conflicts": 0,
+    "named": 365,
+    "positional": 0,
+    "unexplained": 0
+   },
+   "suffix_ledger": {
+    "undecidable": 46,
+    "right": 101,
+    "no rule": 44,
+    "contradicted": 58
    }
   }
  ]

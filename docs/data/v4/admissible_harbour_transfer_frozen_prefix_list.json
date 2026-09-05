@@ -9,17 +9,20 @@
  "corroborated": true,
  "hypothesis": "list",
  "against_the_other_class": {
-  "list: the evidence forces one outcome | rule: the evidence forces one outcome": 83,
+  "list: the evidence forces one outcome | rule: the evidence forces one outcome": 82,
   "list: one outcome, because the control has never done anything else | rule: one outcome, because the control has never done anything else": 42,
+  "list: several outcomes remain admissible | rule: several outcomes remain admissible": 1,
   "list: the evidence forces one outcome (wrong) | rule: the evidence forces one outcome (wrong)": 1
  },
  "actions": 126,
  "what_the_evidence_establishes": {
-  "the evidence forces one outcome": 84,
-  "one outcome, because the control has never done anything else": 42
+  "the evidence forces one outcome": 83,
+  "one outcome, because the control has never done anything else": 42,
+  "several outcomes remain admissible": 1
  },
  "admissible_set_size": {
-  "1": 126
+  "1": 125,
+  "2": 1
  },
  "what_happened_was": {
   "inside the admissible set": 94,
@@ -30,18 +33,22 @@
    "the event the interface returned": 41,
    "a different event": 1
   },
+  "several outcomes remain admissible": {
+   "the event the interface returned": 1
+  },
   "the evidence forces one outcome": {
-   "the event the interface returned": 83,
+   "the event the interface returned": 82,
    "a different event": 1
   }
  },
  "policy_forced_then_list": {
-  "one outcome was admissible and it happened": 83,
+  "one outcome was admissible and it happened": 82,
   "the only outcome ever seen on this control, and it happened": 41,
   "the only outcome ever seen on this control, and something else happened": 1,
+  "deferred to the list: the event the interface returned": 1,
   "one outcome was admissible and a different one happened": 1
  },
- "distinct_events_forced": 14,
+ "distinct_events_forced": 13,
  "events_forced": {
   "\u0000SILENT": 30,
   "<> <> is now <> .": 17,
@@ -69,7 +76,8 @@
    "the evidence forces one outcome": 17
   },
   "button:Close": {
-   "the evidence forces one outcome": 13
+   "the evidence forces one outcome": 12,
+   "several outcomes remain admissible": 1
   },
   "button:Record departure": {
    "one outcome, because the control has never done anything else": 4
@@ -99,7 +107,8 @@
    "the only outcome ever seen on this control, and it happened": 4
   },
   "button:Close": {
-   "one outcome was admissible and it happened": 13
+   "one outcome was admissible and it happened": 12,
+   "several outcomes remained admissible; the one that happened was among them": 1
   },
   "button:Record departure": {
    "the only outcome ever seen on this control, and it happened": 4
