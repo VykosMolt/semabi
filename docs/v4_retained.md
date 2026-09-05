@@ -1002,6 +1002,33 @@ answers and one forced-wrong answer appears on the pilot-booking control, which 
 seven unestablished to six right and one wrong; its own join (a pilot's ticket against the
 vessel's length) has the same shape and a thinner corpus.
 
+**The regeneration, and what it caught.**  The retained state was regenerated three times
+under the new code.  The second regeneration caught three positional assumptions of my
+own -- the row header looked for and registered in a row's *first* cell, and a declared
+header row's cells listed in document order -- so that swapping the sheet's two columns
+changed its family and several claims; and it caught the identity search keying the
+one-at-a-time sheet by whatever field made the fewest objects, once a status word, which
+the renaming instrument then renamed as an identity.  Each is now stated the other way
+round: the header cell is the one header cell of its row wherever it stands, header rows
+sort like the columns they name, a one-valued key names nothing, and a family that never
+renders two instances at once is keyed only by a field whose values another family is
+already keyed by -- correspondence, which is V2's union principle at the family layer --
+or not at all.  Harbour's sheet is then keyed by the call it names.  The third
+regeneration passed: every column-reversal, member-reversal and renaming invariant at
+zero on all four applications; harbour and blend select as before; harbour's holdout is
+inconclusive on *identity* evidence only, because a view's identity is confirmed by
+correspondence, which the holdout classifier does not score, while its behavioural terms
+improved; and vet's retained source choice, which had keyed its own one-at-a-time family
+(an appointment row in edit mode) by a status word, now coincides with the selected
+reading -- the former distinction between them was carried by an unearned key.  The
+outcome ledgers are unchanged except in two places, both recorded: harbour's cross-trace
+ledger moves from 259 right, 7 abstained and 4 wrong to 260, 0 and 10, all of it on the
+pilot-booking control, which now has roles and learns two rules from five occasions that
+memorise constants and are wrong on the other trace where before it abstained; and
+blend's permuted-label control finds fewer rules on shuffled labels.  The first is the
+thin-corpus shape of P24 on a second control, and the next extension (P26) is aimed at
+it; it is retained as a regression, not explained away.
+
 **What this settles, and what it does not.**  The first competence wall has fallen at the
 layer it stood on.  JOIN was never a grammar problem in the end: the comparison was a
 morning's work and invariant everywhere; the wall was the observation model reading a

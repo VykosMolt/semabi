@@ -1428,3 +1428,120 @@ pilot's booked-for) are unlearned for want of occasions.  Same shape as P24.
 Battery #2 under 001fc88 launched 20:03 (regen stage); compare with
 battery_compare.py b3c9d11 when it lands.  User asked for status at 20:13;
 reported.
+
+## Battery #2 (001fc88), open-world stage (21:47): three changes, all harbour
+frontier harbour holdout CONFIRMED_WHERE_APPLICABLE_PARTIAL_COVERAGE ->
+INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE (explained 61 -> 108, applicability
+0.83 -> 1.0; the sheet family keyed text/button#0 UNSUPPORTED has no
+discrimination evidence on the holdout); columns_frozen_harbour 0 -> 1
+(step 456 Book pilot: operator-level claims NOT_APPLICABLE under column
+reversal); renaming_harbour_fresh 0 -> 1 (step 235 Record departure: the
+status word 'alongside' was renamed -- the search's arbitrary key for the
+one-at-a-time sheet resolves to a status value, and the instrument renamed it
+as an identity).  vet and blend unchanged; all other invariants zero.
+Battery #2 stopped in its identity stage; its outcome stage never ran.
+Three positional assumptions of mine and one classification order:
+  graph.row_header assumed the header cell first in its row (now: the one
+  header cell of the row, wherever it stands); the row-header registration in
+  ObsGraph.add looked only at cells[0] (now: the one cell whose text is a
+  declared header); the declared header row's own cells were listed in
+  document order in the template (now sorted, as the columns are);
+  identity._classify gave a one-valued key UNSUPPORTED before CONTRADICTED
+  for a never-two-at-once family (now: one value names no instance, peers or
+  not; test updated with the rationale).  Swapped-column sheet added to the
+  detail-view test; 25 tests pass.  Verifying on harbour (columns, renaming,
+  search's key for the sheet) and the full suite before battery #3.
+
+21:56 verification under the positional fixes: columns_frozen_harbour 0
+differences (fixed); renaming_harbour_fresh still 1 (step 235, 'alongside'
+renamed) -- but scored against battery #2's manifests, whose reading keys the
+sheet by text/button#0 -> stale.  The search itself, with one-valued keys
+CONTRADICTED, now keys the sheet by `table/rowgroup/row/cell@Hazardous cargo#0`
+(yes/no) and poses Hazardous cargo vs Berth: an arbitrary pick among
+UNSUPPORTED candidates by behaviour, which prefers whichever key makes the
+fewest objects.  Rule added (identity.readings_for): a family none of whose
+candidates ever had a peer to separate is keyed only by correspondence -- a
+candidate whose values are, for at least half its instances, another family's
+keys (ev.shared >= 0.5) -- or not at all.  V2's union-by-key-overlap at the
+family layer.  Tests: the singleton-family tests now pass `shared`; a new
+test with vessel / hazard / status fields keeps vessel only.  18 pass;
+full suite relaunched; search rerun on both harbour corpora.
+
+22:00 search under the correspondence rule: the sheet is keyed heading#0
+(the call reference, C-102...) UNSUPPORTED, no open questions, on both
+harbour_dev and harbour_join_dev -- the sheet is the call it names.  User
+asked what the batteries are and what changed; answered.
+
+22:22 battery #3 aborted at regen: v4_authority freeze-source refuses a source
+file "on disk [that] differs from the authenticated candidate content" -- it
+freezes committed content only, and the positional/identity fixes are
+uncommitted (battery #2 passed this stage because 001fc88 was committed).
+Order: suite -> commit -> battery.  Full suite over the fixes shows one
+failure at ~70%; awaiting the summary.
+
+22:31 suite over the fixes: 556 passed, 3 skipped, 1 xfailed, 1 failed --
+test_v4_navigation_settling (browser timing under load; 3/3 alone).  Fixes
+committed; battery #3 relaunched on committed code.
+
+## Battery #3 (30150dd), regen stage (22:53): frontiers
+harbour: identification unchanged; holdout CONFIRMED_WHERE_APPLICABLE_PARTIAL_
+COVERAGE -> INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE (sheet keyed heading#0
+UNSUPPORTED; applicability 1.0, explained 63 vs 61, errors 0).  blend
+unchanged.  vet: identification BEHAVIOURALLY_DISTINGUISHED -> SELECTED_
+WITHIN_AN_INDISTINGUISHABLE_CLASS with the same selected reading -- an app
+without a detail view moved; investigating which candidate joined the class
+(header-row template sort? the correspondence rule on a never-two-at-once
+family? the classify order?).
+
+22:54 vet explained: its edit-mode appointment row family (Actions holds a
+textbox; one at a time; discrimination None) was keyed cell@Status#0
+UNSUPPORTED in the retained source choice -- a status word, the same disease
+as harbour's sheet -- and is now None NO_IDENTITY under the correspondence
+rule; text[_](textbox[_]) went text#0 SUPPORTED -> None HARMONISED in the same
+search.  The candidate set changed accordingly ('row[_](cell@Actions[_](t=None'
+gone, 'row[_](cell@Actions[_],c=cell@Reason#0' present, joint discrimination
+x5 -> x6), and source_choice now sits in the selected reading's class:
+identical observable deltas at every step.  The former "behavioural
+distinction" between them was carried by an unearned key.  Selected reading
+and survivor unchanged.  harbour's holdout is INCONCLUSIVE_PARTIAL_IDENTITY_
+EVIDENCE for the honest reason that a view's identity is confirmed by
+correspondence, which the holdout classifier does not score; its behavioural
+terms improved (applicability 0.83 -> 1.0, explained 61 -> 63, errors 0).
+
+## Battery #3 (30150dd), open-world stage ended 23:59 rc=0 (00:00)
+All sixteen invariants at zero against b3c9d11: columns_frozen x3, renaming
+fresh/permute x4 apps, reversal x4.  Battery capped at CPUQuota=1200% from
+23:06 at the user's request ("use it but don't assault it"); the user's own
+job (ouro_project dev_diagnostic) shares the machine.  Remaining: identity,
+outcome, admissible.
+
+## Follow-through while battery #3 finishes (01:13)
+Cellar's outcome ledger under the new code: unchanged (23 abstain / 15 right /
+2 wrong, 11 controls, 0 rules) -- its "detail panel" gains nothing and loses
+nothing.  The holdout classifier (run_v4_transfer._holdout_classification):
+INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE whenever some keyed family's
+separation row is PARTIAL or UNTESTED -- the sheet (never two at once) is
+UNTESTED; a view's identity would be tested by correspondence.  Research item
+(d) after P26.
+P26 (pre-registered): pilot bookings, the same join shape (Ticket to(pilot)
+>= Length overall(vessel)), rule order alongside / off duty / already booked /
+ticket too short.  join_plan_pilots.py: too-short attempts with free pilots
+first, one pilot signed off and asked for twice then signed on, >= 3 bookings
+on distinct pilots, a booked pilot asked for twice.  Dev seeds 51/52/53
+(ok 2+1+1, too short 3+1+2, off duty 2+2+2, already booked 2+1+2) on
+harbour_dev; holdout 61/62/63 (ok 1+1+1, too short 1+0+1, off duty 2+2+2,
+already booked 2+1+2) on harbour_transfer, app 8912.  Two chains under
+CPUQuota=400% / MemoryMax=4G.  Prediction: fitted on dev + pil51..53 under the
+search reading, Book pilot learns Ticket to(selection) < Length overall(
+vessel via owner) -> ticket too short (or the >= form for the booking), with
+both fields adopted, and on transfer + pil61..63 it is right where it decides.
+
+## Battery #3 judged and retained (01:19)
+All stages rc=0 (22:30 -> 01:17 under the CPU cap).  Invariants all zero.
+Outcome ledgers: harbour cross_trace 259/7/4 -> 260/0/10 (Book pilot: roles
+now, 2 rules from 5 occasions, 1 right 6 wrong where it abstained on 7) --
+RETAINED AS A REGRESSION, the P24 shape on a second control; P26 running.
+blend permuted control: Record draw rules 3 -> 1, 67/6/1 -> 73/1/0 (fewer
+spurious rules on shuffled labels; real ledgers unchanged).  cellar, vet
+unchanged.  Committed with the regenerated state; Part XVII gains the
+regeneration paragraph.
