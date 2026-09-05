@@ -1,0 +1,1872 @@
+{
+ "run": "/home/moloch/semabi-scratch/preq/harbour_ref_dev",
+ "control": "button:Allocate berth",
+ "split": 0.999,
+ "families": null,
+ "roles": {
+  "owner": {
+   "kind": "action",
+   "form": [],
+   "tid": 3,
+   "anchor": null
+  },
+  "selection['combobox#0']:0": {
+   "kind": "selection",
+   "form": [
+    "combobox#0"
+   ],
+   "tid": 0,
+   "anchor": null
+  }
+ },
+ "rules": [
+  "('unnamed', \"selection['combobox#0']:0\")  ->  Nothing chosen in the berth list .   [4]",
+  "attr:Status#0(owner) == 'alongside'  ->  Call <> is already <> ; her berth cannot be changed .   [5]",
+  "attr:Condition#0(selection['combobox#0']:0) == 'closed'  ->  <> <> is <> .   [4]",
+  "attr:Takes up to#0(selection['combobox#0']:0) == '70'  ->  <> is <> overall ; berth <> <> .   [4]",
+  "('ref_set', \"selection['combobox#0']:0\", 'rel:3')  ->  <> <> is held by call <> .   [3]",
+  "attr:Takes up to#0(selection['combobox#0']:0) == '160'  ->  <> <> allocated to call <> .   [3]"
+ ],
+ "default": "\u0000UNDETERMINED",
+ "events": {
+  "<> is <> overall ; berth <> <> .": 6,
+  "Call <> is already <> ; her berth cannot be changed .": 5,
+  "<> <> is <> .": 4,
+  "Nothing chosen in the berth list .": 4,
+  "<> <> allocated to call <> .": 4,
+  "<> <> is held by call <> .": 3
+ },
+ "ordered": {},
+ "field_theory": {
+  "candidates": {
+   "0": {
+    "attr:Takes up to#0": [
+     "70",
+     "90",
+     "120",
+     "140",
+     "160"
+    ]
+   },
+   "1": {
+    "attr:Ticket to#0": [
+     "80",
+     "100",
+     "130",
+     "150"
+    ]
+   },
+   "2": {
+    "attr:Calls logged#0": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5"
+    ],
+    "attr:Length overall#0": [
+     "54",
+     "64",
+     "78",
+     "88",
+     "96",
+     "112",
+     "132",
+     "148"
+    ]
+   },
+   "3": {
+    "attr:Length overall#0": [
+     "64",
+     "78",
+     "88",
+     "96",
+     "112",
+     "132",
+     "148"
+    ]
+   }
+  },
+  "adopted": {},
+  "corroborated": []
+ },
+ "occasions": [
+  {
+   "event": "<> <> is <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Takes up to#0",
+     "160"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Condition#0",
+     "closed"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Quay#0",
+     "South Quay"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Certified for hazardous cargo#0",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "event": "<> is <> overall ; berth <> <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Condition#0",
+     "open"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Quay#0",
+     "North Quay"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "bagged fertiliser"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Takes up to#0",
+     "90"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Certified for hazardous cargo#0",
+     "no"
+    ]
+   ]
+  },
+  {
+   "event": "Nothing chosen in the berth list .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "alongside"
+    ]
+   ]
+  },
+  {
+   "event": "Call <> is already <> ; her berth cannot be changed .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Takes up to#0",
+     "160"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Condition#0",
+     "closed"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Quay#0",
+     "South Quay"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Certified for hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "alongside"
+    ]
+   ]
+  },
+  {
+   "event": "Nothing chosen in the berth list .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "bagged fertiliser"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ]
+   ]
+  },
+  {
+   "event": "Call <> is already <> ; her berth cannot be changed .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Takes up to#0",
+     "160"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Condition#0",
+     "closed"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Quay#0",
+     "South Quay"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Certified for hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "alongside"
+    ]
+   ]
+  },
+  {
+   "event": "Nothing chosen in the berth list .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Iceland"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "frozen fish"
+    ]
+   ]
+  },
+  {
+   "event": "Nothing chosen in the berth list .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "naphtha"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Malta"
+    ]
+   ]
+  },
+  {
+   "event": "<> <> allocated to call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Condition#0",
+     "open"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Quay#0",
+     "North Quay"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Takes up to#0",
+     "90"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Certified for hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "sawn timber"
+    ]
+   ]
+  },
+  {
+   "event": "<> <> is held by call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Condition#0",
+     "open"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Quay#0",
+     "North Quay"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Takes up to#0",
+     "90"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Certified for hazardous cargo#0",
+     "no"
+    ]
+   ]
+  },
+  {
+   "event": "<> <> is <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Takes up to#0",
+     "160"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Condition#0",
+     "closed"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Quay#0",
+     "South Quay"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Certified for hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "sawn timber"
+    ]
+   ]
+  },
+  {
+   "event": "<> <> allocated to call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Takes up to#0",
+     "160"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Quay#0",
+     "South Quay"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Certified for hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Condition#0",
+     "open"
+    ]
+   ]
+  },
+  {
+   "event": "<> <> is held by call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Takes up to#0",
+     "160"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Quay#0",
+     "South Quay"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Certified for hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Condition#0",
+     "open"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "sawn timber"
+    ]
+   ]
+  },
+  {
+   "event": "Call <> is already <> ; her berth cannot be changed .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Condition#0",
+     "open"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Quay#0",
+     "North Quay"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Certified for hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "sawn timber"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Takes up to#0",
+     "120"
+    ]
+   ]
+  },
+  {
+   "event": "<> <> allocated to call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Takes up to#0",
+     "160"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Quay#0",
+     "South Quay"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Certified for hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Condition#0",
+     "open"
+    ]
+   ]
+  },
+  {
+   "event": "<> <> is held by call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Takes up to#0",
+     "160"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Quay#0",
+     "South Quay"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Certified for hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Condition#0",
+     "open"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "bagged fertiliser"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ]
+   ]
+  },
+  {
+   "event": "<> <> is <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Condition#0",
+     "closed"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Quay#0",
+     "South Quay"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Certified for hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Takes up to#0",
+     "70"
+    ]
+   ]
+  },
+  {
+   "event": "<> is <> overall ; berth <> <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Quay#0",
+     "South Quay"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Condition#0",
+     "open"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Certified for hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Takes up to#0",
+     "70"
+    ]
+   ]
+  },
+  {
+   "event": "<> is <> overall ; berth <> <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Quay#0",
+     "South Quay"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Condition#0",
+     "open"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "bagged fertiliser"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Certified for hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Takes up to#0",
+     "70"
+    ]
+   ]
+  },
+  {
+   "event": "Call <> is already <> ; her berth cannot be changed .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Condition#0",
+     "open"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Quay#0",
+     "North Quay"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Takes up to#0",
+     "90"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Certified for hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "alongside"
+    ]
+   ]
+  },
+  {
+   "event": "<> <> is <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Takes up to#0",
+     "160"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Condition#0",
+     "closed"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Quay#0",
+     "South Quay"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Certified for hazardous cargo#0",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "event": "<> <> allocated to call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Takes up to#0",
+     "160"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Quay#0",
+     "South Quay"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Certified for hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Condition#0",
+     "open"
+    ]
+   ]
+  },
+  {
+   "event": "<> is <> overall ; berth <> <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Quay#0",
+     "South Quay"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Condition#0",
+     "open"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Certified for hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Takes up to#0",
+     "70"
+    ]
+   ]
+  },
+  {
+   "event": "<> is <> overall ; berth <> <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Condition#0",
+     "open"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Quay#0",
+     "North Quay"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Takes up to#0",
+     "90"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Certified for hazardous cargo#0",
+     "no"
+    ]
+   ]
+  },
+  {
+   "event": "<> is <> overall ; berth <> <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Quay#0",
+     "South Quay"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Condition#0",
+     "open"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "bagged fertiliser"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Certified for hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Takes up to#0",
+     "70"
+    ]
+   ]
+  },
+  {
+   "event": "Call <> is already <> ; her berth cannot be changed .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Condition#0",
+     "open"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Quay#0",
+     "North Quay"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Takes up to#0",
+     "90"
+    ],
+    [
+     "attr",
+     "selection['combobox#0']:0",
+     "attr:Certified for hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "alongside"
+    ]
+   ]
+  }
+ ]
+}

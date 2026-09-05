@@ -1,0 +1,2604 @@
+{
+ "run": "/home/moloch/semabi-scratch/preq/harbour_join_dev",
+ "reading": {
+  "version": 1,
+  "name": "link-probe",
+  "families": {
+   "button[_]": {
+    "family": "button[_]",
+    "key_slot": "button#0",
+    "status": "SUPPORTED",
+    "discrimination": 1.0
+   },
+   "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))": {
+    "family": "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))",
+    "key_slot": "text/button#0",
+    "status": "UNSUPPORTED",
+    "discrimination": null
+   },
+   "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])": {
+    "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+    "key_slot": "cell@Berth#0",
+    "status": "SUPPORTED",
+    "discrimination": 1.0
+   },
+   "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])": {
+    "family": "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+    "key_slot": "cell@Pilot#0",
+    "status": "SUPPORTED",
+    "discrimination": 1.0
+   },
+   "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": {
+    "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+    "key_slot": "cell@Vessel#0",
+    "status": "SUPPORTED",
+    "discrimination": 1.0
+   },
+   "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": {
+    "family": "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])",
+    "key_slot": null,
+    "status": "NO_IDENTITY",
+    "discrimination": 0.0
+   }
+  },
+  "promoted_families": [],
+  "refuted": {
+   "button[_]": [
+    null
+   ],
+   "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])": [
+    "cell@Takes up to#0"
+   ],
+   "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])": [
+    "cell@Ticket to#0"
+   ],
+   "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": [
+    null,
+    "cell@Cargo#0",
+    "cell@Length overall#0"
+   ],
+   "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": [
+    "cell@Status#0"
+   ]
+  },
+  "provenance": {
+   "source_run": "/home/moloch/semabi-scratch/preq/harbour_join_dev",
+   "role": "SOURCE"
+  }
+ },
+ "types": {
+  "0": {
+   "tid": "0",
+   "n_instances": "1",
+   "seen_after_reload": "1",
+   "lost_on_reload": "0",
+   "key_slot": "id",
+   "slots": "{'id': SlotInfo(key='id', n_present=1, n_total=1, values=Counter(), seen_after_reload=1, presence_lo",
+   "merged": "{}",
+   "merged_map": "{}",
+   "parent_tids": "Counter()",
+   "refs": "{}",
+   "keys_survive_reload": "0",
+   "selector_of": "None"
+  },
+  "1": {
+   "tid": "1",
+   "n_instances": "1",
+   "seen_after_reload": "1",
+   "lost_on_reload": "0",
+   "key_slot": "id",
+   "slots": "{'id': SlotInfo(key='id', n_present=1, n_total=1, values=Counter(), seen_after_reload=1, presence_lo",
+   "merged": "{}",
+   "merged_map": "{}",
+   "parent_tids": "Counter()",
+   "refs": "{'rel:0': 0}",
+   "keys_survive_reload": "0",
+   "selector_of": "None"
+  },
+  "2": {
+   "tid": "2",
+   "n_instances": "1",
+   "seen_after_reload": "1",
+   "lost_on_reload": "0",
+   "key_slot": "id",
+   "slots": "{'id': SlotInfo(key='id', n_present=1, n_total=1, values=Counter(), seen_after_reload=1, presence_lo",
+   "merged": "{}",
+   "merged_map": "{}",
+   "parent_tids": "Counter()",
+   "refs": "{'rel:0': 0}",
+   "keys_survive_reload": "0",
+   "selector_of": "None"
+  },
+  "3": {
+   "tid": "3",
+   "n_instances": "1",
+   "seen_after_reload": "1",
+   "lost_on_reload": "0",
+   "key_slot": "id",
+   "slots": "{'id': SlotInfo(key='id', n_present=1, n_total=1, values=Counter(), seen_after_reload=1, presence_lo",
+   "merged": "{}",
+   "merged_map": "{}",
+   "parent_tids": "Counter()",
+   "refs": "{'rel:0': 0}",
+   "keys_survive_reload": "0",
+   "selector_of": "None"
+  },
+  "4": {
+   "tid": "4",
+   "n_instances": "1",
+   "seen_after_reload": "1",
+   "lost_on_reload": "0",
+   "key_slot": "id",
+   "slots": "{'id': SlotInfo(key='id', n_present=1, n_total=1, values=Counter(), seen_after_reload=1, presence_lo",
+   "merged": "{}",
+   "merged_map": "{}",
+   "parent_tids": "Counter()",
+   "refs": "{'rel:0': 0, 'rel:1': 1, 'rel:2': 2, 'rel:3': 3}",
+   "keys_survive_reload": "0",
+   "selector_of": "None"
+  }
+ },
+ "allocate_operators": [
+  {
+   "name": "op0",
+   "how": "click(button#cell@Call/button@T0[?o0]) click(button:Allocate berth@T4[?o1])",
+   "support": 2,
+   "core": [
+    "click(button#cell@Call/button@T0[?o0])",
+    "click(button:Allocate berth@T4[?o1])"
+   ],
+   "params": {
+    "?o0": 0,
+    "?o1": 4,
+    "?o2": 1
+   },
+   "queries": {
+    "?o2": {
+     "kind": "selection",
+     "form": "('combobox#0',)",
+     "given": "()"
+    }
+   },
+   "pre": [
+    "('attr_ne', '?o1', 'attr:Cargo#0', 'containers')"
+   ],
+   "effs": [
+    "emit '<> <> allocated to call <> .'(Berth, ?o2, ?o0)",
+    "rel:0(?o2) := '?o0'",
+    "rel:1(?o1) := '?o2'"
+   ]
+  },
+  {
+   "name": "op1",
+   "how": "click(button#cell@Call/button@T0[?o0]) click(button:Allocate berth@T4[?o1])",
+   "support": 1,
+   "core": [
+    "click(button#cell@Call/button@T0[?o0])",
+    "click(button:Allocate berth@T4[?o1])"
+   ],
+   "params": {
+    "?o0": 0,
+    "?o1": 4,
+    "?o2": 1,
+    "?o3": 0
+   },
+   "queries": {
+    "?o2": {
+     "kind": "selection",
+     "form": "('combobox#0',)",
+     "given": "()"
+    },
+    "?o3": {
+     "kind": "relation",
+     "form": "('forward', 'rel:0')",
+     "given": "('?o1',)"
+    }
+   },
+   "pre": [
+    "('ref_ne', '?o1', 'rel:0', '?o0')"
+   ],
+   "effs": [
+    "emit '<> <> allocated to call <> .'(Berth, ?o2, ?o3)",
+    "rel:0(?o2) := 'T0:C-103'",
+    "rel:1(?o1) := '?o2'"
+   ]
+  },
+  {
+   "name": "op2",
+   "how": "click(button#cell@Call/button@T0[?o0]) click(button:Allocate berth@T4[?o1])",
+   "support": 1,
+   "core": [
+    "click(button#cell@Call/button@T0[?o0])",
+    "click(button:Allocate berth@T4[?o1])"
+   ],
+   "params": {
+    "?o0": 0,
+    "?o1": 4,
+    "?o2": 1
+   },
+   "queries": {
+    "?o2": {
+     "kind": "selection",
+     "form": "('combobox#0',)",
+     "given": "()"
+    }
+   },
+   "pre": [
+    "('attr_ne', '?o1', 'attr:Flag#0', 'Norway')",
+    "('attr_ne', '?o1', 'attr:Status#0', 'alongside')"
+   ],
+   "effs": [
+    "emit '<> <> is <> .'(Berth, ?o2, closed)"
+   ]
+  },
+  {
+   "name": "op3",
+   "how": "click(button#cell@Call/button@T0[?o0]) click(button:Allocate berth@T4[?o1])",
+   "support": 1,
+   "core": [
+    "click(button#cell@Call/button@T0[?o0])",
+    "click(button:Allocate berth@T4[?o1])"
+   ],
+   "params": {
+    "?o0": 0,
+    "?o1": 4,
+    "?o2": 1,
+    "?o3": 0
+   },
+   "queries": {
+    "?o2": {
+     "kind": "selection",
+     "form": "('combobox#0',)",
+     "given": "()"
+    },
+    "?o3": {
+     "kind": "relation",
+     "form": "('forward', 'rel:0')",
+     "given": "('?o2',)"
+    }
+   },
+   "pre": [
+    "('ref_set', '?o2', 'rel:0')"
+   ],
+   "effs": [
+    "emit '<> <> is held by call <> .'(Berth, ?o2, ?o3)"
+   ]
+  },
+  {
+   "name": "op4",
+   "how": "click(button#cell@Call/button@T0[?o0]) click(button:Allocate berth@T4[?o1])",
+   "support": 2,
+   "core": [
+    "click(button#cell@Call/button@T0[?o0])",
+    "click(button:Allocate berth@T4[?o1])"
+   ],
+   "params": {
+    "?o0": 0,
+    "?o1": 4
+   },
+   "queries": {},
+   "pre": [
+    "('attr_ne', '?o1', 'attr:Status#0', 'expected')"
+   ],
+   "effs": [
+    "emit 'Call <> is already <> ; her berth cannot be changed .'(*, ?o1)"
+   ]
+  },
+  {
+   "name": "op22",
+   "how": "click(button:Allocate berth@T4[?o0])",
+   "support": 1,
+   "core": [
+    "click(button:Allocate berth@T4[?o0])"
+   ],
+   "params": {
+    "?o0": 4,
+    "?o1": 3,
+    "?o2": 1
+   },
+   "queries": {
+    "?o1": {
+     "kind": "relation",
+     "form": "('forward', 'rel:3')",
+     "given": "('?o0',)"
+    },
+    "?o2": {
+     "kind": "selection",
+     "form": "('combobox#0',)",
+     "given": "()"
+    }
+   },
+   "pre": [],
+   "effs": [
+    "emit '<> is <> overall ; berth <> <> .'(?o1, 132 m, ?o2, takes 90 m)"
+   ]
+  },
+  {
+   "name": "op23",
+   "how": "click(button:Allocate berth@T4[?o0])",
+   "support": 4,
+   "core": [
+    "click(button:Allocate berth@T4[?o0])"
+   ],
+   "params": {
+    "?o0": 4
+   },
+   "queries": {},
+   "pre": [],
+   "effs": [
+    "emit 'Nothing chosen in the berth list .'"
+   ]
+  }
+ ],
+ "allocate_steps": [
+  {
+   "step": 15,
+   "status": "Berth S1 is closed.",
+   "owner": "(4, 'alongside')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 4,
+      "root": 32,
+      "root_is_object": true,
+      "id_slot": "('', 'alongside')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'alongside')",
+       "attr:Cargo#0": "('', 'containers')",
+       "attr:Flag#0": "('', 'Panama')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '96')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(4, 'alongside')": {
+     "id": "(4, 'alongside')",
+     "tid": 4,
+     "key": "alongside",
+     "attrs": {
+      "attr:Cargo#0": "containers",
+      "attr:Flag#0": "Panama",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "96",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'none booked')",
+      "rel:3": "(3, 'Ardent Rose')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:3->(3, 'Ardent Rose')": {
+     "id": "(3, 'Ardent Rose')",
+     "tid": 3,
+     "key": "Ardent Rose",
+     "attrs": {
+      "attr:Calls logged#0": "2",
+      "attr:Cargo#0": "containers",
+      "attr:Flag#0": "Panama",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "96"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')"
+     },
+     "parent": "None"
+    },
+    "rel:3->rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Kittiwake",
+    "cell@Length overall#0": "78 m",
+    "cell@Berth#0": "N2",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "alongside",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Ardent Rose",
+    "cell@Length overall#1": "96 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "-",
+    "cell@Status#1": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell@Berth#2": "Quay",
+    "cell#7": "Takes up to",
+    "cell#8": "Certified for hazardous cargo",
+    "cell#9": "Condition",
+    "cell#10": "Held by call",
+    "cell#11": "Actions",
+    "heading#3": "Pilots",
+    "cell#12": "Pilot",
+    "cell#13": "Ticket to",
+    "cell#14": "Duty",
+    "cell#15": "Booked for call",
+    "cell#16": "Actions",
+    "heading#4": "Vessels",
+    "cell#17": "Vessel",
+    "cell#18": "Flag",
+    "cell#19": "Length overall",
+    "cell#20": "Hazardous cargo",
+    "cell#21": "Cargo",
+    "cell#22": "Calls logged",
+    "cell#23": "Current call",
+    "cell#24": "Actions",
+    "combobox#0": "S1 - South Quay - takes 160 m - certified for hazardous cargo - closed",
+    "combobox#1": "Aoife Marr - ticket to 150 m - on duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "step": 49,
+   "status": "Nordkapp is 132 m overall; berth N2 takes 90 m.",
+   "owner": "(4, 'alongside')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 4,
+      "root": 32,
+      "root_is_object": true,
+      "id_slot": "('', 'alongside')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'alongside')",
+       "attr:Cargo#0": "('', 'bagged fertiliser')",
+       "attr:Flag#0": "('', 'Norway')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '132')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(4, 'alongside')": {
+     "id": "(4, 'alongside')",
+     "tid": 4,
+     "key": "alongside",
+     "attrs": {
+      "attr:Cargo#0": "bagged fertiliser",
+      "attr:Flag#0": "Norway",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "132",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-103')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'none booked')",
+      "rel:3": "(3, 'Nordkapp')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-103')": {
+     "id": "(0, 'C-103')",
+     "tid": 0,
+     "key": "C-103",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:3->(3, 'Nordkapp')": {
+     "id": "(3, 'Nordkapp')",
+     "tid": 3,
+     "key": "Nordkapp",
+     "attrs": {
+      "attr:Calls logged#0": "4",
+      "attr:Cargo#0": "bagged fertiliser",
+      "attr:Flag#0": "Norway",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "132"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-103')"
+     },
+     "parent": "None"
+    },
+    "rel:3->rel:0->(0, 'C-103')": {
+     "id": "(0, 'C-103')",
+     "tid": 0,
+     "key": "C-103",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Ardent Rose",
+    "cell@Length overall#0": "96 m",
+    "cell@Berth#0": "-",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "expected",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Nordkapp",
+    "cell@Length overall#1": "132 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "-",
+    "cell@Status#1": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell@Berth#2": "Quay",
+    "cell#7": "Takes up to",
+    "cell#8": "Certified for hazardous cargo",
+    "cell#9": "Condition",
+    "cell#10": "Held by call",
+    "cell#11": "Actions",
+    "heading#3": "Pilots",
+    "cell#12": "Pilot",
+    "cell#13": "Ticket to",
+    "cell#14": "Duty",
+    "cell#15": "Booked for call",
+    "cell#16": "Actions",
+    "heading#4": "Vessels",
+    "cell#17": "Vessel",
+    "cell#18": "Flag",
+    "cell#19": "Length overall",
+    "cell#20": "Hazardous cargo",
+    "cell#21": "Cargo",
+    "cell#22": "Calls logged",
+    "cell#23": "Current call",
+    "cell#24": "Actions",
+    "combobox#0": "N2 - North Quay - takes 90 m - no hazardous cargo - open",
+    "combobox#1": "no pilot chosen"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "step": 66,
+   "status": "Nothing chosen in the berth list.",
+   "owner": "(4, 'alongside')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 4,
+      "root": 24,
+      "root_is_object": true,
+      "id_slot": "('', 'alongside')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'alongside')",
+       "attr:Cargo#0": "('', 'containers')",
+       "attr:Flag#0": "('', 'Panama')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '96')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(4, 'alongside')": {
+     "id": "(4, 'alongside')",
+     "tid": 4,
+     "key": "alongside",
+     "attrs": {
+      "attr:Cargo#0": "containers",
+      "attr:Flag#0": "Panama",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "96",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "alongside"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-101')",
+      "rel:1": "(1, 'N1')",
+      "rel:2": "(2, 'none booked')",
+      "rel:3": "(3, 'Ardent Rose')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-101')": {
+     "id": "(0, 'C-101')",
+     "tid": 0,
+     "key": "C-101",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:1->(1, 'N1')": {
+     "id": "(1, 'N1')",
+     "tid": 1,
+     "key": "N1",
+     "attrs": {
+      "attr:Certified for hazardous cargo#0": "no",
+      "attr:Condition#0": "open",
+      "attr:Quay#0": "North Quay",
+      "attr:Takes up to#0": "120"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-101')"
+     },
+     "parent": "None"
+    },
+    "rel:1->rel:0->(0, 'C-101')": {
+     "id": "(0, 'C-101')",
+     "tid": 0,
+     "key": "C-101",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:3->(3, 'Ardent Rose')": {
+     "id": "(3, 'Ardent Rose')",
+     "tid": 3,
+     "key": "Ardent Rose",
+     "attrs": {
+      "attr:Calls logged#0": "1",
+      "attr:Cargo#0": "containers",
+      "attr:Flag#0": "Panama",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "96"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-101')"
+     },
+     "parent": "None"
+    },
+    "rel:3->rel:0->(0, 'C-101')": {
+     "id": "(0, 'C-101')",
+     "tid": 0,
+     "key": "C-101",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Ardent Rose",
+    "cell@Length overall#0": "96 m",
+    "cell@Berth#0": "N1",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "alongside",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell@Berth#1": "Quay",
+    "cell#7": "Takes up to",
+    "cell#8": "Certified for hazardous cargo",
+    "cell#9": "Condition",
+    "cell#10": "Held by call",
+    "cell#11": "Actions",
+    "heading#3": "Pilots",
+    "cell#12": "Pilot",
+    "cell#13": "Ticket to",
+    "cell#14": "Duty",
+    "cell#15": "Booked for call",
+    "cell#16": "Actions",
+    "heading#4": "Vessels",
+    "cell#17": "Vessel",
+    "cell#18": "Flag",
+    "cell#19": "Length overall",
+    "cell#20": "Hazardous cargo",
+    "cell#21": "Cargo",
+    "cell#22": "Calls logged",
+    "cell#23": "Current call",
+    "cell#24": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "Tom Dorley - ticket to 100 m - on duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "step": 76,
+   "status": "Call C-101 is already alongside; her berth cannot be changed.",
+   "owner": "(4, 'alongside')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 4,
+      "root": 32,
+      "root_is_object": true,
+      "id_slot": "('', 'alongside')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'alongside')",
+       "attr:Cargo#0": "('', 'containers')",
+       "attr:Flag#0": "('', 'Panama')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '96')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(4, 'alongside')": {
+     "id": "(4, 'alongside')",
+     "tid": 4,
+     "key": "alongside",
+     "attrs": {
+      "attr:Cargo#0": "containers",
+      "attr:Flag#0": "Panama",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "96",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "alongside"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-101')",
+      "rel:1": "(1, 'N1')",
+      "rel:2": "(2, 'none booked')",
+      "rel:3": "(3, 'Ardent Rose')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-101')": {
+     "id": "(0, 'C-101')",
+     "tid": 0,
+     "key": "C-101",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:1->(1, 'N1')": {
+     "id": "(1, 'N1')",
+     "tid": 1,
+     "key": "N1",
+     "attrs": {
+      "attr:Certified for hazardous cargo#0": "no",
+      "attr:Condition#0": "open",
+      "attr:Quay#0": "North Quay",
+      "attr:Takes up to#0": "120"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-101')"
+     },
+     "parent": "None"
+    },
+    "rel:1->rel:0->(0, 'C-101')": {
+     "id": "(0, 'C-101')",
+     "tid": 0,
+     "key": "C-101",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:3->(3, 'Ardent Rose')": {
+     "id": "(3, 'Ardent Rose')",
+     "tid": 3,
+     "key": "Ardent Rose",
+     "attrs": {
+      "attr:Calls logged#0": "1",
+      "attr:Cargo#0": "containers",
+      "attr:Flag#0": "Panama",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "96"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-101')"
+     },
+     "parent": "None"
+    },
+    "rel:3->rel:0->(0, 'C-101')": {
+     "id": "(0, 'C-101')",
+     "tid": 0,
+     "key": "C-101",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Ardent Rose",
+    "cell@Length overall#0": "96 m",
+    "cell@Berth#0": "N1",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "alongside",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Hafnarfjord",
+    "cell@Length overall#1": "112 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "-",
+    "cell@Status#1": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell@Berth#2": "Quay",
+    "cell#7": "Takes up to",
+    "cell#8": "Certified for hazardous cargo",
+    "cell#9": "Condition",
+    "cell#10": "Held by call",
+    "cell#11": "Actions",
+    "heading#3": "Pilots",
+    "cell#12": "Pilot",
+    "cell#13": "Ticket to",
+    "cell#14": "Duty",
+    "cell#15": "Booked for call",
+    "cell#16": "Actions",
+    "heading#4": "Vessels",
+    "cell#17": "Vessel",
+    "cell#18": "Flag",
+    "cell#19": "Length overall",
+    "cell#20": "Hazardous cargo",
+    "cell#21": "Cargo",
+    "cell#22": "Calls logged",
+    "cell#23": "Current call",
+    "cell#24": "Actions",
+    "combobox#0": "S1 - South Quay - takes 160 m - certified for hazardous cargo - closed",
+    "combobox#1": "no pilot chosen"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "step": 97,
+   "status": "Nothing chosen in the berth list.",
+   "owner": "(4, 'alongside')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 4,
+      "root": 40,
+      "root_is_object": true,
+      "id_slot": "('', 'alongside')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'alongside')",
+       "attr:Cargo#0": "('', 'bagged fertiliser')",
+       "attr:Flag#0": "('', 'Norway')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '132')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(4, 'alongside')": {
+     "id": "(4, 'alongside')",
+     "tid": 4,
+     "key": "alongside",
+     "attrs": {
+      "attr:Cargo#0": "bagged fertiliser",
+      "attr:Flag#0": "Norway",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "132",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-103')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'none booked')",
+      "rel:3": "(3, 'Nordkapp')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-103')": {
+     "id": "(0, 'C-103')",
+     "tid": 0,
+     "key": "C-103",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:3->(3, 'Nordkapp')": {
+     "id": "(3, 'Nordkapp')",
+     "tid": 3,
+     "key": "Nordkapp",
+     "attrs": {
+      "attr:Calls logged#0": "3",
+      "attr:Cargo#0": "bagged fertiliser",
+      "attr:Flag#0": "Norway",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "132"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-103')"
+     },
+     "parent": "None"
+    },
+    "rel:3->rel:0->(0, 'C-103')": {
+     "id": "(0, 'C-103')",
+     "tid": 0,
+     "key": "C-103",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Ardent Rose",
+    "cell@Length overall#0": "96 m",
+    "cell@Berth#0": "N1",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "alongside",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Hafnarfjord",
+    "cell@Length overall#1": "112 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "-",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Nordkapp",
+    "cell@Length overall#2": "132 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "-",
+    "cell@Status#2": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell@Berth#3": "Quay",
+    "cell#7": "Takes up to",
+    "cell#8": "Certified for hazardous cargo",
+    "cell#9": "Condition",
+    "cell#10": "Held by call",
+    "cell#11": "Actions",
+    "heading#3": "Pilots",
+    "cell#12": "Pilot",
+    "cell#13": "Ticket to",
+    "cell#14": "Duty",
+    "cell#15": "Booked for call",
+    "cell#16": "Actions",
+    "heading#4": "Vessels",
+    "cell#17": "Vessel",
+    "cell#18": "Flag",
+    "cell#19": "Length overall",
+    "cell#20": "Hazardous cargo",
+    "cell#21": "Cargo",
+    "cell#22": "Calls logged",
+    "cell#23": "Current call",
+    "cell#24": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "no pilot chosen"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "step": 98,
+   "status": "Nothing chosen in the berth list.",
+   "owner": "(4, 'alongside')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 4,
+      "root": 40,
+      "root_is_object": true,
+      "id_slot": "('', 'alongside')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'alongside')",
+       "attr:Cargo#0": "('', 'bagged fertiliser')",
+       "attr:Flag#0": "('', 'Norway')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '132')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(4, 'alongside')": {
+     "id": "(4, 'alongside')",
+     "tid": 4,
+     "key": "alongside",
+     "attrs": {
+      "attr:Cargo#0": "bagged fertiliser",
+      "attr:Flag#0": "Norway",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "132",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-103')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'none booked')",
+      "rel:3": "(3, 'Nordkapp')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-103')": {
+     "id": "(0, 'C-103')",
+     "tid": 0,
+     "key": "C-103",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:3->(3, 'Nordkapp')": {
+     "id": "(3, 'Nordkapp')",
+     "tid": 3,
+     "key": "Nordkapp",
+     "attrs": {
+      "attr:Calls logged#0": "3",
+      "attr:Cargo#0": "bagged fertiliser",
+      "attr:Flag#0": "Norway",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "132"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-103')"
+     },
+     "parent": "None"
+    },
+    "rel:3->rel:0->(0, 'C-103')": {
+     "id": "(0, 'C-103')",
+     "tid": 0,
+     "key": "C-103",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Ardent Rose",
+    "cell@Length overall#0": "96 m",
+    "cell@Berth#0": "N1",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "alongside",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Hafnarfjord",
+    "cell@Length overall#1": "112 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "-",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Nordkapp",
+    "cell@Length overall#2": "132 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "-",
+    "cell@Status#2": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell@Berth#3": "Quay",
+    "cell#7": "Takes up to",
+    "cell#8": "Certified for hazardous cargo",
+    "cell#9": "Condition",
+    "cell#10": "Held by call",
+    "cell#11": "Actions",
+    "heading#3": "Pilots",
+    "cell#12": "Pilot",
+    "cell#13": "Ticket to",
+    "cell#14": "Duty",
+    "cell#15": "Booked for call",
+    "cell#16": "Actions",
+    "heading#4": "Vessels",
+    "cell#17": "Vessel",
+    "cell#18": "Flag",
+    "cell#19": "Length overall",
+    "cell#20": "Hazardous cargo",
+    "cell#21": "Cargo",
+    "cell#22": "Calls logged",
+    "cell#23": "Current call",
+    "cell#24": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "no pilot chosen"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "step": 106,
+   "status": "Call C-101 is already alongside; her berth cannot be changed.",
+   "owner": "(4, 'alongside')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 4,
+      "root": 40,
+      "root_is_object": true,
+      "id_slot": "('', 'alongside')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'alongside')",
+       "attr:Cargo#0": "('', 'containers')",
+       "attr:Flag#0": "('', 'Panama')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '96')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(4, 'alongside')": {
+     "id": "(4, 'alongside')",
+     "tid": 4,
+     "key": "alongside",
+     "attrs": {
+      "attr:Cargo#0": "containers",
+      "attr:Flag#0": "Panama",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "96",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "alongside"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-101')",
+      "rel:1": "(1, 'N1')",
+      "rel:2": "(2, 'none booked')",
+      "rel:3": "(3, 'Ardent Rose')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-101')": {
+     "id": "(0, 'C-101')",
+     "tid": 0,
+     "key": "C-101",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:1->(1, 'N1')": {
+     "id": "(1, 'N1')",
+     "tid": 1,
+     "key": "N1",
+     "attrs": {
+      "attr:Certified for hazardous cargo#0": "no",
+      "attr:Condition#0": "open",
+      "attr:Quay#0": "North Quay",
+      "attr:Takes up to#0": "120"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-101')"
+     },
+     "parent": "None"
+    },
+    "rel:1->rel:0->(0, 'C-101')": {
+     "id": "(0, 'C-101')",
+     "tid": 0,
+     "key": "C-101",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:3->(3, 'Ardent Rose')": {
+     "id": "(3, 'Ardent Rose')",
+     "tid": 3,
+     "key": "Ardent Rose",
+     "attrs": {
+      "attr:Calls logged#0": "1",
+      "attr:Cargo#0": "containers",
+      "attr:Flag#0": "Panama",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "96"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-101')"
+     },
+     "parent": "None"
+    },
+    "rel:3->rel:0->(0, 'C-101')": {
+     "id": "(0, 'C-101')",
+     "tid": 0,
+     "key": "C-101",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Ardent Rose",
+    "cell@Length overall#0": "96 m",
+    "cell@Berth#0": "N1",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "alongside",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Hafnarfjord",
+    "cell@Length overall#1": "112 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "-",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Nordkapp",
+    "cell@Length overall#2": "132 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "-",
+    "cell@Status#2": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell@Berth#3": "Quay",
+    "cell#7": "Takes up to",
+    "cell#8": "Certified for hazardous cargo",
+    "cell#9": "Condition",
+    "cell#10": "Held by call",
+    "cell#11": "Actions",
+    "heading#3": "Pilots",
+    "cell#12": "Pilot",
+    "cell#13": "Ticket to",
+    "cell#14": "Duty",
+    "cell#15": "Booked for call",
+    "cell#16": "Actions",
+    "heading#4": "Vessels",
+    "cell#17": "Vessel",
+    "cell#18": "Flag",
+    "cell#19": "Length overall",
+    "cell#20": "Hazardous cargo",
+    "cell#21": "Cargo",
+    "cell#22": "Calls logged",
+    "cell#23": "Current call",
+    "cell#24": "Actions",
+    "combobox#0": "S1 - South Quay - takes 160 m - certified for hazardous cargo - closed",
+    "combobox#1": "Aoife Marr - ticket to 150 m - on duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "step": 160,
+   "status": "Nothing chosen in the berth list.",
+   "owner": "(4, 'alongside')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 4,
+      "root": 32,
+      "root_is_object": true,
+      "id_slot": "('', 'alongside')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'alongside')",
+       "attr:Cargo#0": "('', 'frozen fish')",
+       "attr:Flag#0": "('', 'Iceland')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '112')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(4, 'alongside')": {
+     "id": "(4, 'alongside')",
+     "tid": 4,
+     "key": "alongside",
+     "attrs": {
+      "attr:Cargo#0": "frozen fish",
+      "attr:Flag#0": "Iceland",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "112",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'none booked')",
+      "rel:3": "(3, 'Hafnarfjord')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:3->(3, 'Hafnarfjord')": {
+     "id": "(3, 'Hafnarfjord')",
+     "tid": 3,
+     "key": "Hafnarfjord",
+     "attrs": {
+      "attr:Calls logged#0": "1",
+      "attr:Cargo#0": "frozen fish",
+      "attr:Flag#0": "Iceland",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "112"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')"
+     },
+     "parent": "None"
+    },
+    "rel:3->rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Nordkapp",
+    "cell@Length overall#0": "132 m",
+    "cell@Berth#0": "S1",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "alongside",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Hafnarfjord",
+    "cell@Length overall#1": "112 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "-",
+    "cell@Status#1": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell@Berth#2": "Quay",
+    "cell#7": "Takes up to",
+    "cell#8": "Certified for hazardous cargo",
+    "cell#9": "Condition",
+    "cell#10": "Held by call",
+    "cell#11": "Actions",
+    "heading#3": "Pilots",
+    "cell#12": "Pilot",
+    "cell#13": "Ticket to",
+    "cell#14": "Duty",
+    "cell#15": "Booked for call",
+    "cell#16": "Actions",
+    "heading#4": "Vessels",
+    "cell#17": "Vessel",
+    "cell#18": "Flag",
+    "cell#19": "Length overall",
+    "cell#20": "Hazardous cargo",
+    "cell#21": "Cargo",
+    "cell#22": "Calls logged",
+    "cell#23": "Current call",
+    "cell#24": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "no pilot chosen"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "step": 365,
+   "status": "Nothing chosen in the berth list.",
+   "owner": "(4, 'alongside')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 4,
+      "root": 40,
+      "root_is_object": true,
+      "id_slot": "('', 'alongside')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'alongside')",
+       "attr:Cargo#0": "('', 'naphtha')",
+       "attr:Flag#0": "('', 'Malta')",
+       "attr:Hazardous cargo#0": "('', 'yes')",
+       "attr:Length overall#0": "('', '148')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(4, 'alongside')": {
+     "id": "(4, 'alongside')",
+     "tid": 4,
+     "key": "alongside",
+     "attrs": {
+      "attr:Cargo#0": "naphtha",
+      "attr:Flag#0": "Malta",
+      "attr:Hazardous cargo#0": "yes",
+      "attr:Length overall#0": "148",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-101')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'none booked')",
+      "rel:3": "(3, 'Petrel Star')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-101')": {
+     "id": "(0, 'C-101')",
+     "tid": 0,
+     "key": "C-101",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:3->(3, 'Petrel Star')": {
+     "id": "(3, 'Petrel Star')",
+     "tid": 3,
+     "key": "Petrel Star",
+     "attrs": {
+      "attr:Calls logged#0": "0",
+      "attr:Cargo#0": "naphtha",
+      "attr:Flag#0": "Malta",
+      "attr:Hazardous cargo#0": "yes",
+      "attr:Length overall#0": "148"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-101')"
+     },
+     "parent": "None"
+    },
+    "rel:3->rel:0->(0, 'C-101')": {
+     "id": "(0, 'C-101')",
+     "tid": 0,
+     "key": "C-101",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Petrel Star",
+    "cell@Length overall#0": "148 m",
+    "cell@Berth#0": "-",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "expected",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Bregagh",
+    "cell@Length overall#1": "88 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "Tom Dorley",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Kittiwake",
+    "cell@Length overall#2": "78 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "-",
+    "cell@Status#2": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell@Berth#3": "Quay",
+    "cell#7": "Takes up to",
+    "cell#8": "Certified for hazardous cargo",
+    "cell#9": "Condition",
+    "cell#10": "Held by call",
+    "cell#11": "Actions",
+    "heading#3": "Pilots",
+    "cell#12": "Pilot",
+    "cell#13": "Ticket to",
+    "cell#14": "Duty",
+    "cell#15": "Booked for call",
+    "cell#16": "Actions",
+    "heading#4": "Vessels",
+    "cell#17": "Vessel",
+    "cell#18": "Flag",
+    "cell#19": "Length overall",
+    "cell#20": "Hazardous cargo",
+    "cell#21": "Cargo",
+    "cell#22": "Calls logged",
+    "cell#23": "Current call",
+    "cell#24": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "Silas Nunn - ticket to 80 m - off duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "step": 375,
+   "status": "Berth W1 allocated to call C-102.",
+   "owner": "(4, 'alongside')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 4,
+      "root": 32,
+      "root_is_object": true,
+      "id_slot": "('', 'alongside')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'alongside')",
+       "attr:Cargo#0": "('', 'sawn timber')",
+       "attr:Flag#0": "('', 'Norway')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '78')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(4, 'alongside')": {
+     "id": "(4, 'alongside')",
+     "tid": 4,
+     "key": "alongside",
+     "attrs": {
+      "attr:Cargo#0": "sawn timber",
+      "attr:Flag#0": "Norway",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "78",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'Ruth Kealy')",
+      "rel:3": "(3, 'Kittiwake')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:2->(2, 'Ruth Kealy')": {
+     "id": "(2, 'Ruth Kealy')",
+     "tid": 2,
+     "key": "Ruth Kealy",
+     "attrs": {
+      "attr:Duty#0": "on",
+      "attr:Ticket to#0": "130"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')"
+     },
+     "parent": "None"
+    },
+    "rel:2->rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:3->(3, 'Kittiwake')": {
+     "id": "(3, 'Kittiwake')",
+     "tid": 3,
+     "key": "Kittiwake",
+     "attrs": {
+      "attr:Calls logged#0": "4",
+      "attr:Cargo#0": "sawn timber",
+      "attr:Flag#0": "Norway",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "78"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')"
+     },
+     "parent": "None"
+    },
+    "rel:3->rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Corrina B",
+    "cell@Length overall#0": "54 m",
+    "cell@Berth#0": "S2",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "alongside",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Kittiwake",
+    "cell@Length overall#1": "78 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "Ruth Kealy",
+    "cell@Status#1": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell@Berth#2": "Quay",
+    "cell#7": "Takes up to",
+    "cell#8": "Certified for hazardous cargo",
+    "cell#9": "Condition",
+    "cell#10": "Held by call",
+    "cell#11": "Actions",
+    "heading#3": "Pilots",
+    "cell#12": "Pilot",
+    "cell#13": "Ticket to",
+    "cell#14": "Duty",
+    "cell#15": "Booked for call",
+    "cell#16": "Actions",
+    "heading#4": "Vessels",
+    "cell#17": "Vessel",
+    "cell#18": "Flag",
+    "cell#19": "Length overall",
+    "cell#20": "Hazardous cargo",
+    "cell#21": "Cargo",
+    "cell#22": "Calls logged",
+    "cell#23": "Current call",
+    "cell#24": "Actions",
+    "combobox#0": "W1 - West Basin - takes 140 m - certified for hazardous cargo - open",
+    "combobox#1": "no pilot chosen"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "step": 379,
+   "status": "Berth W1 allocated to call C-102.",
+   "owner": "(4, 'alongside')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 4,
+      "root": 32,
+      "root_is_object": true,
+      "id_slot": "('', 'alongside')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'alongside')",
+       "attr:Cargo#0": "('', 'sawn timber')",
+       "attr:Flag#0": "('', 'Norway')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '78')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(4, 'alongside')": {
+     "id": "(4, 'alongside')",
+     "tid": 4,
+     "key": "alongside",
+     "attrs": {
+      "attr:Cargo#0": "sawn timber",
+      "attr:Flag#0": "Norway",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "78",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'Ruth Kealy')",
+      "rel:3": "(3, 'Kittiwake')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:2->(2, 'Ruth Kealy')": {
+     "id": "(2, 'Ruth Kealy')",
+     "tid": 2,
+     "key": "Ruth Kealy",
+     "attrs": {
+      "attr:Duty#0": "on",
+      "attr:Ticket to#0": "130"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')"
+     },
+     "parent": "None"
+    },
+    "rel:2->rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:3->(3, 'Kittiwake')": {
+     "id": "(3, 'Kittiwake')",
+     "tid": 3,
+     "key": "Kittiwake",
+     "attrs": {
+      "attr:Calls logged#0": "4",
+      "attr:Cargo#0": "sawn timber",
+      "attr:Flag#0": "Norway",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "78"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')"
+     },
+     "parent": "None"
+    },
+    "rel:3->rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Corrina B",
+    "cell@Length overall#0": "54 m",
+    "cell@Berth#0": "S2",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "alongside",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Kittiwake",
+    "cell@Length overall#1": "78 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "Ruth Kealy",
+    "cell@Status#1": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell@Berth#2": "Quay",
+    "cell#7": "Takes up to",
+    "cell#8": "Certified for hazardous cargo",
+    "cell#9": "Condition",
+    "cell#10": "Held by call",
+    "cell#11": "Actions",
+    "heading#3": "Pilots",
+    "cell#12": "Pilot",
+    "cell#13": "Ticket to",
+    "cell#14": "Duty",
+    "cell#15": "Booked for call",
+    "cell#16": "Actions",
+    "heading#4": "Vessels",
+    "cell#17": "Vessel",
+    "cell#18": "Flag",
+    "cell#19": "Length overall",
+    "cell#20": "Hazardous cargo",
+    "cell#21": "Cargo",
+    "cell#22": "Calls logged",
+    "cell#23": "Current call",
+    "cell#24": "Actions",
+    "combobox#0": "W1 - West Basin - takes 140 m - certified for hazardous cargo - open",
+    "combobox#1": "no pilot chosen"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "step": 383,
+   "status": "Berth N1 allocated to call C-103.",
+   "owner": "(4, 'alongside')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 4,
+      "root": 40,
+      "root_is_object": true,
+      "id_slot": "('', 'alongside')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'alongside')",
+       "attr:Cargo#0": "('', 'containers')",
+       "attr:Flag#0": "('', 'Panama')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '96')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(4, 'alongside')": {
+     "id": "(4, 'alongside')",
+     "tid": 4,
+     "key": "alongside",
+     "attrs": {
+      "attr:Cargo#0": "containers",
+      "attr:Flag#0": "Panama",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "96",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-103')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'none booked')",
+      "rel:3": "(3, 'Ardent Rose')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-103')": {
+     "id": "(0, 'C-103')",
+     "tid": 0,
+     "key": "C-103",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:3->(3, 'Ardent Rose')": {
+     "id": "(3, 'Ardent Rose')",
+     "tid": 3,
+     "key": "Ardent Rose",
+     "attrs": {
+      "attr:Calls logged#0": "1",
+      "attr:Cargo#0": "containers",
+      "attr:Flag#0": "Panama",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "96"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-103')"
+     },
+     "parent": "None"
+    },
+    "rel:3->rel:0->(0, 'C-103')": {
+     "id": "(0, 'C-103')",
+     "tid": 0,
+     "key": "C-103",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Corrina B",
+    "cell@Length overall#0": "54 m",
+    "cell@Berth#0": "S2",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "alongside",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Kittiwake",
+    "cell@Length overall#1": "78 m",
+    "cell@Berth#1": "W1",
+    "cell@Pilot#1": "Ruth Kealy",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Ardent Rose",
+    "cell@Length overall#2": "96 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "-",
+    "cell@Status#2": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell@Berth#3": "Quay",
+    "cell#7": "Takes up to",
+    "cell#8": "Certified for hazardous cargo",
+    "cell#9": "Condition",
+    "cell#10": "Held by call",
+    "cell#11": "Actions",
+    "heading#3": "Pilots",
+    "cell#12": "Pilot",
+    "cell#13": "Ticket to",
+    "cell#14": "Duty",
+    "cell#15": "Booked for call",
+    "cell#16": "Actions",
+    "heading#4": "Vessels",
+    "cell#17": "Vessel",
+    "cell#18": "Flag",
+    "cell#19": "Length overall",
+    "cell#20": "Hazardous cargo",
+    "cell#21": "Cargo",
+    "cell#22": "Calls logged",
+    "cell#23": "Current call",
+    "cell#24": "Actions",
+    "combobox#0": "N1 - North Quay - takes 120 m - no hazardous cargo - open",
+    "combobox#1": "no pilot chosen"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "step": 387,
+   "status": "Berth S2 is held by call C-101.",
+   "owner": "(4, 'alongside')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 4,
+      "root": 48,
+      "root_is_object": true,
+      "id_slot": "('', 'alongside')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'alongside')",
+       "attr:Cargo#0": "('', 'sawn timber')",
+       "attr:Flag#0": "('', 'Norway')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '78')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(4, 'alongside')": {
+     "id": "(4, 'alongside')",
+     "tid": 4,
+     "key": "alongside",
+     "attrs": {
+      "attr:Cargo#0": "sawn timber",
+      "attr:Flag#0": "Norway",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "78",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')",
+      "rel:1": "(1, 'W1')",
+      "rel:2": "(2, 'Ruth Kealy')",
+      "rel:3": "(3, 'Kittiwake')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:1->(1, 'W1')": {
+     "id": "(1, 'W1')",
+     "tid": 1,
+     "key": "W1",
+     "attrs": {
+      "attr:Certified for hazardous cargo#0": "yes",
+      "attr:Condition#0": "open",
+      "attr:Quay#0": "West Basin",
+      "attr:Takes up to#0": "140"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')"
+     },
+     "parent": "None"
+    },
+    "rel:1->rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:2->(2, 'Ruth Kealy')": {
+     "id": "(2, 'Ruth Kealy')",
+     "tid": 2,
+     "key": "Ruth Kealy",
+     "attrs": {
+      "attr:Duty#0": "on",
+      "attr:Ticket to#0": "130"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')"
+     },
+     "parent": "None"
+    },
+    "rel:2->rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:3->(3, 'Kittiwake')": {
+     "id": "(3, 'Kittiwake')",
+     "tid": 3,
+     "key": "Kittiwake",
+     "attrs": {
+      "attr:Calls logged#0": "4",
+      "attr:Cargo#0": "sawn timber",
+      "attr:Flag#0": "Norway",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "78"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')"
+     },
+     "parent": "None"
+    },
+    "rel:3->rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Corrina B",
+    "cell@Length overall#0": "54 m",
+    "cell@Berth#0": "S2",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "alongside",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Kittiwake",
+    "cell@Length overall#1": "78 m",
+    "cell@Berth#1": "W1",
+    "cell@Pilot#1": "Ruth Kealy",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Ardent Rose",
+    "cell@Length overall#2": "96 m",
+    "cell@Berth#2": "N1",
+    "cell@Pilot#2": "-",
+    "cell@Status#2": "expected",
+    "cell@Call#3": "",
+    "cell@Vessel#3": "Nordkapp",
+    "cell@Length overall#3": "132 m",
+    "cell@Berth#3": "-",
+    "cell@Pilot#3": "-",
+    "cell@Status#3": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell@Berth#4": "Quay",
+    "cell#7": "Takes up to",
+    "cell#8": "Certified for hazardous cargo",
+    "cell#9": "Condition",
+    "cell#10": "Held by call",
+    "cell#11": "Actions",
+    "heading#3": "Pilots",
+    "cell#12": "Pilot",
+    "cell#13": "Ticket to",
+    "cell#14": "Duty",
+    "cell#15": "Booked for call",
+    "cell#16": "Actions",
+    "heading#4": "Vessels",
+    "cell#17": "Vessel",
+    "cell#18": "Flag",
+    "cell#19": "Length overall",
+    "cell#20": "Hazardous cargo",
+    "cell#21": "Cargo",
+    "cell#22": "Calls logged",
+    "cell#23": "Current call",
+    "cell#24": "Actions",
+    "combobox#0": "S2 - South Quay - takes 70 m - no hazardous cargo - open",
+    "combobox#1": "no pilot chosen"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ ],
+ "allocate_transitions": [
+  {
+   "steps": [
+    15
+   ],
+   "macro": [
+    8,
+    15
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Allocate berth@T4[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit '<> <> is <> .'(Berth, S1, closed)",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  },
+  {
+   "steps": [
+    49
+   ],
+   "macro": [
+    49
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button:Allocate berth@T4[?o0])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit '<> is <> overall ; berth <> <> .'(Nordkapp, 132 m, N2, takes 90 m)",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  },
+  {
+   "steps": [
+    66
+   ],
+   "macro": [
+    64,
+    66
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Allocate berth@T4[?o0])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit 'Nothing chosen in the berth list .'",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  },
+  {
+   "steps": [
+    76
+   ],
+   "macro": [
+    74,
+    76
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Allocate berth@T4[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit 'Call <> is already <> ; her berth cannot be changed .'(C-101, alongside)",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  },
+  {
+   "steps": [
+    97
+   ],
+   "macro": [
+    96,
+    97
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Allocate berth@T4[?o0])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit 'Nothing chosen in the berth list .'",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  },
+  {
+   "steps": [
+    106
+   ],
+   "macro": [
+    96,
+    106
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Allocate berth@T4[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit 'Call <> is already <> ; her berth cannot be changed .'(C-101, alongside)",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  },
+  {
+   "steps": [
+    160
+   ],
+   "macro": [
+    160
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button:Allocate berth@T4[?o0])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit 'Nothing chosen in the berth list .'",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  },
+  {
+   "steps": [
+    365
+   ],
+   "macro": [
+    363,
+    365
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Allocate berth@T4[?o0])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit 'Nothing chosen in the berth list .'",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  },
+  {
+   "steps": [
+    375
+   ],
+   "macro": [
+    373,
+    375
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Allocate berth@T4[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [
+    375
+   ],
+   "emission": "emit '<> <> allocated to call <> .'(Berth, W1, C-102)",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 2
+   }
+  },
+  {
+   "steps": [
+    379
+   ],
+   "macro": [
+    377,
+    379
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Allocate berth@T4[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [
+    379
+   ],
+   "emission": "emit '<> <> allocated to call <> .'(Berth, W1, C-102)",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 2
+   }
+  },
+  {
+   "steps": [
+    383
+   ],
+   "macro": [
+    377,
+    383
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Allocate berth@T4[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [
+    383
+   ],
+   "emission": "emit '<> <> allocated to call <> .'(Berth, N1, C-103)",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 2
+   }
+  },
+  {
+   "steps": [
+    387
+   ],
+   "macro": [
+    377,
+    387
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Allocate berth@T4[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit '<> <> is held by call <> .'(Berth, S2, C-101)",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  }
+ ]
+}

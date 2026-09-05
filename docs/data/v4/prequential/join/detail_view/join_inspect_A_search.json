@@ -1,0 +1,979 @@
+{
+ "run": "/home/moloch/semabi-scratch/preq/harbour_join_dev",
+ "control": "button:Allocate berth",
+ "split": 0.999,
+ "families": {
+  "button[_]": [
+   "button#0",
+   "SUPPORTED"
+  ],
+  "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))": [
+   "text/button#0",
+   "UNSUPPORTED"
+  ],
+  "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])": [
+   "cell@Berth#0",
+   "SUPPORTED"
+  ],
+  "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": [
+   "cell@Vessel#0",
+   "SUPPORTED"
+  ],
+  "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])": [
+   "cell@Pilot#0",
+   "SUPPORTED"
+  ],
+  "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": [
+   null,
+   "NO_IDENTITY"
+  ]
+ },
+ "roles": {
+  "owner": {
+   "kind": "action",
+   "form": [],
+   "tid": 4,
+   "anchor": null
+  },
+  "relation['forward', 'rel:3']:3<owner": {
+   "kind": "relation",
+   "form": [
+    "forward",
+    "rel:3"
+   ],
+   "tid": 3,
+   "anchor": "owner"
+  }
+ },
+ "rules": [],
+ "default": "\u0000UNDETERMINED",
+ "events": {
+  "Nothing chosen in the berth list .": 4,
+  "<> <> allocated to call <> .": 3,
+  "Call <> is already <> ; her berth cannot be changed .": 2,
+  "<> <> is <> .": 1,
+  "<> is <> overall ; berth <> <> .": 1,
+  "<> <> is held by call <> .": 1
+ },
+ "ordered": {},
+ "field_theory": {
+  "candidates": {
+   "1": {
+    "attr:Takes up to#0": [
+     "70",
+     "90",
+     "120",
+     "140",
+     "160"
+    ]
+   },
+   "2": {
+    "attr:Ticket to#0": [
+     "80",
+     "100",
+     "130",
+     "150"
+    ]
+   },
+   "3": {
+    "attr:Calls logged#0": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5"
+    ],
+    "attr:Length overall#0": [
+     "54",
+     "64",
+     "78",
+     "88",
+     "96",
+     "112",
+     "132",
+     "148"
+    ]
+   },
+   "4": {
+    "attr:Length overall#0": [
+     "64",
+     "78",
+     "88",
+     "96",
+     "112",
+     "132",
+     "148"
+    ]
+   }
+  },
+  "adopted": {},
+  "corroborated": []
+ },
+ "occasions": [
+  {
+   "event": "<> <> is <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Calls logged#0",
+     "2"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ]
+   ]
+  },
+  {
+   "event": "<> is <> overall ; berth <> <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Calls logged#0",
+     "4"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Cargo#0",
+     "bagged fertiliser"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "bagged fertiliser"
+    ]
+   ]
+  },
+  {
+   "event": "Nothing chosen in the berth list .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Calls logged#0",
+     "1"
+    ]
+   ]
+  },
+  {
+   "event": "Call <> is already <> ; her berth cannot be changed .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Calls logged#0",
+     "1"
+    ]
+   ]
+  },
+  {
+   "event": "Nothing chosen in the berth list .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Cargo#0",
+     "bagged fertiliser"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "bagged fertiliser"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Calls logged#0",
+     "3"
+    ]
+   ]
+  },
+  {
+   "event": "Call <> is already <> ; her berth cannot be changed .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Calls logged#0",
+     "1"
+    ]
+   ]
+  },
+  {
+   "event": "Nothing chosen in the berth list .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Calls logged#0",
+     "1"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Iceland"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Cargo#0",
+     "frozen fish"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "frozen fish"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Flag#0",
+     "Iceland"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Length overall#0",
+     "112"
+    ]
+   ]
+  },
+  {
+   "event": "Nothing chosen in the berth list .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Malta"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Cargo#0",
+     "naphtha"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Calls logged#0",
+     "0"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "naphtha"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Flag#0",
+     "Malta"
+    ]
+   ]
+  },
+  {
+   "event": "<> <> allocated to call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Calls logged#0",
+     "4"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Cargo#0",
+     "sawn timber"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "sawn timber"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Length overall#0",
+     "78"
+    ]
+   ]
+  },
+  {
+   "event": "<> <> allocated to call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Calls logged#0",
+     "4"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Cargo#0",
+     "sawn timber"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "sawn timber"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Length overall#0",
+     "78"
+    ]
+   ]
+  },
+  {
+   "event": "<> <> allocated to call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Calls logged#0",
+     "1"
+    ]
+   ]
+  },
+  {
+   "event": "<> <> is held by call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Calls logged#0",
+     "4"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Cargo#0",
+     "sawn timber"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "sawn timber"
+    ],
+    [
+     "attr",
+     "relation['forward', 'rel:3']:3<owner",
+     "attr:Length overall#0",
+     "78"
+    ]
+   ]
+  }
+ ]
+}

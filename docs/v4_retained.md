@@ -898,6 +898,121 @@ at the control.  Page-read roles were measured once before and were harmful on b
 (fifty of seventy-nine unestablished states turned into forced claims, eighteen right);
 that measurement is the attack either mechanism must survive.
 
+## Part XVII -- the context object, read as a view of the things it names
+
+**The wall, at its layer.**  The eighth finding located the JOIN's missing route at the
+observation model, and a diagnostic compile of the extended corpus made the doctrine
+exact.  Each labelled row of the call sheet -- *Vessel | Kittiwake*, *Length overall |
+78 m* -- recurs as a unit template of its own, with one slot, and is therefore keyed by
+its own value; the reload closes the sheet, so every one of those positions is "cleared
+by reload, never kept", the rule that drops feedback lines drops them, and their tokens
+flow to nothing.  The sheet survives with its heading and no attribute.  Two different
+things had been conflated: a feedback line, whose tokens are prose, and a detail panel,
+whose tokens are the keys and attributes of persistent objects shown elsewhere on the
+same page -- the vessel's name, flag, cargo and length in the register, the berth's code,
+the pilot's name.  The second is a *view* of persistent objects, and its content belongs
+to the unit that contains it.
+
+**Five rules, each the transposition of one the model already had.**  A first-column cell
+whose text the interface uses as a declared column header elsewhere was already a row
+header; now the cells beside it are *named* by it, as the cells of a declared column are
+named by theirs, so the sheet's length cell is `attr:Length overall#0` -- the register
+column's own attribute name, "the same fact shown in two views maps to one attribute"
+-- and a row-named cell is not a presentation coordinate that reversing the table's rows
+would rename.  A table of labelled rows, its row groups and its rows are fields of their
+container and not units.  The template lists a row group's labelled rows in header order,
+as a declared table lists its columns in theirs; without this, reversing the sheet's rows
+made a second family.  A cleared position inside a table or group that names two or more
+persistent objects by their keys, and is not itself a sentence, is a mirror and stays
+out of the transient set; and a unit keyed by such keys is a view moving between objects
+when its key changes at the next step, not interface state vanishing -- the second
+transient rule had to learn the same distinction as the first.  Each rule was forced by
+the synthetic detail-view test (`tests/test_v4_detail_view.py`) or by the harbour
+corpus, and each is stated for any application: a detail view that states its subject's
+properties as a labelled list has this shape wherever it appears.
+
+**Two consequences downstream.**  Once the sheet is an object, its berth select is a
+widget inside an instance and vanished from the page view, the only surface the selection
+form and the inducer's provenance search read; a control is a control of the page
+wherever it sits, so the view now carries the widgets inside instances under their page
+names where those are unique (a select in every row of a table is positional and stays
+out).  And the outcome layer took a control's roles only from operators with a
+single-click core, while the allocation's core is the click that opened the sheet
+followed by the allocate click; it now takes them from an operator whose core ends at
+the control when the earlier clicks bound the same object the control's click binds, or
+bound nothing.
+
+**P23, on harbour.**  Under the new code the extended corpus has one sheet unit, keyed by
+its vessel field (score 1.10, functional determination 0.81, seven values), "same entity
+as" the vessel register row and the overview call row; the entity carries cargo, flag,
+hazard and length from both views, its heading references the call, its berth and pilot
+fields reference the berth and pilot types; no template is transient.  The identity
+search then does something worth recording: its own ranking prefers the vessel field
+(it is shared with another family's keys and spoken by the interface), but a family that
+never renders two instances at once is UNSUPPORTED for every key, and the search's
+behavioural moves settle on *one key for every sheet* -- the panel as a singleton object
+whose vessel field is a reference.  That is a legitimate second world (the panel is a
+widget; the union says the panel is a view of the vessel), both worlds admit the
+comparison, and the tie is one the search should pose rather than pick silently.  Under
+the retained reading, which does not list the new family and so takes the hypotheses'
+own key, the allocate button's owner is the vessel.
+
+**P24, on the same corpus: the roles arrive, the comparison does not.**  Under both
+readings the allocate control now has the owner (the sheet, as the vessel or as the
+panel), the berth by its select, and under the search reading the vessel by relation from
+the owner; ordered candidates exist for both fields, so the comparison was in the pass-one
+vocabulary.  The rules learned are the untouched list, the *already alongside* refusal on
+the owner's status, and for the allocation `Takes up to(berth) == 140` -- an equality on
+the berth's capacity.  The reason is in the corpus I built: the second extension repeats
+the first's allocation, so two of three allocations are the same pair and a pure equality
+covers them, while the comparison, which is necessary and not sufficient, also covers the
+one refusal at a closed berth and the two at a call already alongside; the refusals that
+would precede it in a decision list have one occasion each, below the cover a rule needs.
+The purity-first learner prefers the equality.  Nothing was adopted.  On the holdout the
+same fitted model answers five of the allocate control's thirteen clicks rightly and
+abstains on the rest where it abstained on all thirteen before, and harbour's whole
+holdout ledger moves from 255 right, 26 abstained and 11 wrong to 269, 12 and 11: fourteen
+abstentions became right answers on other controls of the sheet, nothing new wrong.
+
+**P25: a corpus with the refusals in it, and the join transfers.**  The corpus defect was
+repaired at its source.  A planner simulates the application's own rule order --
+already alongside, closed, held, too long, not certified -- from a seed's live view and
+manufactures each refusal: it schedules a call for every idle vessel, allocates distinct
+berths, tries a held berth twice and a closed one twice, reopens it for more successes,
+tries the berths that are too short, books a pilot and brings up to three berthed calls
+alongside before re-allocating them.  Six extensions ran against the live application:
+three dev seeds on the development history (four successes on distinct pairs, eight held,
+six closed, five too-long and three alongside refusals) and three holdout seeds on the
+transfer history (three successes, eight held, four closed, seven too-long, two
+alongside).  Fitted on the merged development corpus under the search's own reading, the
+allocate control's list is the untouched select, the owner's *alongside* status, the
+berth's *closed* condition, a threshold under 90 m for the too-long refusal, the held
+berth by its reference, and for the allocation the join itself: `Length overall(vessel,
+by relation from the owner) < Takes up to(berth, by selection) & the berth holds no
+call`, with both fields adopted -- the length on the vessel type, the capacity on the
+berth type.  Under the retained reading, where the owner *is* the vessel, an equality on
+160 m still wins the allocation, because three of the four dev successes are on the same
+berth; the baseline without the mechanism has no roles under either reading.  On the
+holdout -- a history the model never saw -- the allocate control is forced right on
+twenty-one of twenty-seven clicks, right among several on three, unestablished on three
+and wrong on none: the allocations, every too-long refusal, every held and closed berth,
+the alongside call, the untouched list.  The baseline establishes nothing on all
+twenty-seven.  Across the whole holdout, forty-one unestablished states become right
+answers and one forced-wrong answer appears on the pilot-booking control, which went from
+seven unestablished to six right and one wrong; its own join (a pilot's ticket against the
+vessel's length) has the same shape and a thinner corpus.
+
+**What this settles, and what it does not.**  The first competence wall has fallen at the
+layer it stood on.  JOIN was never a grammar problem in the end: the comparison was a
+morning's work and invariant everywhere; the wall was the observation model reading a
+detail view as interface state, and the repair is five rules that transpose ones the
+model already had, each forced by a counterexample.  It is not corpus-specific -- the
+rules mention no application -- and it has been attacked on one application only; the
+regeneration of every retained artefact under the new code, with the metamorphic battery
+on all four applications, is the attack that decides whether it is retained.  The
+identity search's silent choice between the panel-as-widget and the panel-as-view worlds
+is the next open question, and aggregation remains behind it.
+
 ## What stands, and what is open
 
 The retained state, regenerated once more: harbour's development sidecar is now written by

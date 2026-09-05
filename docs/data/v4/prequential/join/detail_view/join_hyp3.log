@@ -1,0 +1,48 @@
+UNIT group[](heading[Call sheet _],table[](rowgroup[](row[](cell[Field],cell[Value])),rowgroup[](row[](ce | n 190
+   key heading#0 -> heading#0 | slots ['heading#0', 'text/button#0']
+   evidence ['key heading#0 score 1.33 fd 1.00 values 3']
+UNIT row[](cell@Field[Vessel],cell@Value[_]) | n 190
+   key cell@Value#0 -> None | slots ['cell@Value#0']
+   evidence ['key cell@Value#0 score 1.00 fd 1.00 values 7', 'transient: its position is cleared by reload (6650 cases, never kept)']
+UNIT row[](cell@Field[Flag],cell@Value[_]) | n 190
+   key cell@Value#0 -> None | slots ['cell@Value#0']
+   evidence ['key cell@Value#0 score 1.00 fd 1.00 values 6', 'transient: its position is cleared by reload (6650 cases, never kept)']
+UNIT row[](cell@Field[Length overall],cell@Value[_]) | n 190
+   key cell@Value#0 -> None | slots ['cell@Value#0', 'cell@Value#1']
+   evidence ['key cell@Value#0 score 1.00 fd 1.00 values 7', 'transient: its position is cleared by reload (6650 cases, never kept)']
+UNIT row[](cell@Field[Hazardous cargo],cell@Value[_]) | n 190
+   key cell@Value#0 -> None | slots ['cell@Value#0']
+   evidence ['key cell@Value#0 score 1.00 fd 1.00 values 2', 'transient: its position is cleared by reload (6650 cases, never kept)']
+UNIT row[](cell@Field[Cargo],cell@Value[_]) | n 190
+   key cell@Value#0 -> None | slots ['cell@Value#0']
+   evidence ['key cell@Value#0 score 1.00 fd 1.00 values 7', 'transient: its position is cleared by reload (6650 cases, never kept)']
+UNIT row[](cell@Field[Status],cell@Value[_]) | n 190
+   key cell@Value#0 -> None | slots ['cell@Value#0']
+   evidence ['key cell@Value#0 score 1.25 fd 1.00 values 2', 'transient: its position is cleared by reload (6650 cases, never kept)']
+UNIT row[](cell@Field[Berth],cell@Value[_]) | n 190
+   key cell@Value#0 -> None | slots ['cell@Value#0']
+   evidence ['key cell@Value#0 score 1.00 fd 1.00 values 5', 'transient: its position is cleared by reload (6650 cases, never kept)']
+UNIT row[](cell@Field[Pilot],cell@Value[_]) | n 190
+   key cell@Value#0 -> None | slots ['cell@Value#0']
+   evidence ['key cell@Value#0 score 1.00 fd 1.00 values 4', 'transient: its position is cleared by reload (6650 cases, never kept)']
+sheet root 48 position (('group', 0), ('group', 0), ('group', 2)) transient? False
+    heading 49 'Call sheet C-102' data ['C-102'] labels ['Call', 'sheet'] hdr None tpos False
+    cell 78 'Pilot' data [] labels ['Pilot'] hdr Field tpos True
+    cell 79 'Ruth Kealy' data ['Ruth Kealy'] labels [] hdr Value tpos True
+    cell 75 'Berth' data [] labels ['Berth'] hdr Field tpos True
+    cell 76 'W1' data ['W1'] labels [] hdr Value tpos True
+    cell 72 'Status' data [] labels ['Status'] hdr Field tpos True
+    cell 73 'expected' data ['expected'] labels [] hdr Value tpos True
+    cell 69 'Cargo' data [] labels ['Cargo'] hdr Field tpos True
+    cell 70 'sawn timber' data ['sawn timber'] labels [] hdr Value tpos True
+    cell 66 'Hazardous cargo' data [] labels ['Hazardous', 'cargo'] hdr Field tpos True
+    cell 67 'no' data ['no'] labels [] hdr Value tpos True
+    cell 63 'Length overall' data [] labels ['Length', 'overall'] hdr Field tpos True
+    cell 64 '78 m' data ['78', 'm'] labels [] hdr Value tpos True
+    cell 60 'Flag' data [] labels ['Flag'] hdr Field tpos True
+    cell 61 'Norway' data ['Norway'] labels [] hdr Value tpos True
+    cell 57 'Vessel' data [] labels ['Vessel'] hdr Field tpos True
+    cell 58 'Kittiwake' data ['Kittiwake'] labels [] hdr Value tpos True
+    cell 53 'Field' data [] labels ['Field'] hdr None tpos True
+    cell 54 'Value' data [] labels ['Value'] hdr None tpos True
+reload pairs 44 transient positions 41

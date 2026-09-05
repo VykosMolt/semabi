@@ -1,0 +1,657 @@
+{
+ "run": "/home/moloch/semabi-scratch/preq/harbour_join_dev",
+ "control": "button:Allocate berth",
+ "split": 0.999,
+ "families": null,
+ "roles": {
+  "owner": {
+   "kind": "action",
+   "form": [],
+   "tid": 3,
+   "anchor": null
+  }
+ },
+ "rules": [],
+ "default": "\u0000UNDETERMINED",
+ "events": {
+  "Nothing chosen in the berth list .": 4,
+  "<> <> allocated to call <> .": 3,
+  "Call <> is already <> ; her berth cannot be changed .": 2,
+  "<> <> is <> .": 1,
+  "<> is <> overall ; berth <> <> .": 1,
+  "<> <> is held by call <> .": 1
+ },
+ "ordered": {},
+ "field_theory": {
+  "candidates": {
+   "0": {
+    "attr:Takes up to#0": [
+     "70",
+     "90",
+     "120",
+     "140",
+     "160"
+    ]
+   },
+   "1": {
+    "attr:Ticket to#0": [
+     "80",
+     "100",
+     "130",
+     "150"
+    ]
+   },
+   "2": {
+    "attr:Calls logged#0": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5"
+    ],
+    "attr:Length overall#0": [
+     "54",
+     "64",
+     "78",
+     "88",
+     "96",
+     "112",
+     "132",
+     "148"
+    ]
+   },
+   "3": {
+    "attr:Length overall#0": [
+     "64",
+     "78",
+     "88",
+     "96",
+     "112",
+     "132",
+     "148"
+    ]
+   }
+  },
+  "adopted": {},
+  "corroborated": []
+ },
+ "occasions": [
+  {
+   "event": "<> <> is <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ]
+   ]
+  },
+  {
+   "event": "<> is <> overall ; berth <> <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "bagged fertiliser"
+    ]
+   ]
+  },
+  {
+   "event": "Nothing chosen in the berth list .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "alongside"
+    ]
+   ]
+  },
+  {
+   "event": "Call <> is already <> ; her berth cannot be changed .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "alongside"
+    ]
+   ]
+  },
+  {
+   "event": "Nothing chosen in the berth list .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "bagged fertiliser"
+    ]
+   ]
+  },
+  {
+   "event": "Call <> is already <> ; her berth cannot be changed .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "alongside"
+    ]
+   ]
+  },
+  {
+   "event": "Nothing chosen in the berth list .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Iceland"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "frozen fish"
+    ]
+   ]
+  },
+  {
+   "event": "Nothing chosen in the berth list .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "naphtha"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Malta"
+    ]
+   ]
+  },
+  {
+   "event": "<> <> allocated to call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "sawn timber"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ]
+   ]
+  },
+  {
+   "event": "<> <> allocated to call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "sawn timber"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ]
+   ]
+  },
+  {
+   "event": "<> <> allocated to call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ]
+   ]
+  },
+  {
+   "event": "<> <> is held by call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "sawn timber"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ]
+   ]
+  }
+ ]
+}

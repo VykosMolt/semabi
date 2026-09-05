@@ -5,10 +5,11 @@ abstract state around the button's owner at each allocation step.
 Usage: join_reach.py <run_dir> <out_json> [chain reading]
 """
 import json
+import os
 import sys
 from pathlib import Path
 
-sys.path.insert(0, "/home/moloch/semabi")
+sys.path.insert(0, os.environ.get("SEMABI_ROOT", "/home/moloch/semabi"))
 
 
 def obj_row(o):
@@ -50,6 +51,18 @@ def main():
                                     "given": str(getattr(x, "given", None))} for v, x in q.items()},
                     "pre": [str(l) for l in getattr(op, "pre", [])][:8],
                     "effs": [str(e) for e in op.effs][:6]})
+    transitions = []
+    for tr in list(ind.transitions):
+        acts = [str(a) for a in tr.acts]
+        if not any("Allocate berth" in a for a in acts):
+            continue
+        transitions.append({"steps": list(tr.steps), "macro": list(getattr(tr, "macro", [])),
+                            "acts": [(a.kind, str(a)[:70]) for a in tr.acts],
+                            "view_steps": [i for i in tr.steps if i in getattr(ind, "_view_steps", set())],
+                            "changing_steps": [i for i in tr.steps if i in getattr(ind, "_changing_steps", set())],
+                            "emission": str(getattr(tr, "emission", None))[:80],
+                            "delta": {"added": len(tr.d.added), "attr_changes": len(tr.d.attr_changes),
+                                      "rel_changes": len(tr.d.rel_changes)} if tr.d is not None else None})
     steps = []
     for s in log.steps:
         if s.action.kind != "click" or s.action.target is None:
@@ -95,9 +108,12 @@ def main():
                       "near": near, "view": {k: str(v)[:80] for k, v in view.items()},
                       "types_present": sorted({o.tid for o in state.objs.values()})})
     rec = {"run": str(run), "reading": reading.to_json() if reading is not None else None,
-           "types": types, "allocate_operators": ops, "allocate_steps": steps}
+           "types": types, "allocate_operators": ops, "allocate_steps": steps,
+           "allocate_transitions": transitions}
     out.write_text(json.dumps(rec, indent=1, default=str))
     print(json.dumps({"types": types, "operators": [(o["name"], o["support"], o["core"]) for o in ops]}, indent=1, default=str)[:6000])
+    for tr in transitions:
+        print("TR", tr)
     for st in steps[-3:]:
         print(st["step"], st["status"], "owner", st["owner"])
         for link in st["near"]["instance_chain"]:

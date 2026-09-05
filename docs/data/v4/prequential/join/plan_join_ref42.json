@@ -1,0 +1,143 @@
+{
+ "name": "harbour: refusals and allocations, seed 42",
+ "run": "runs/v4/harbour_transfer",
+ "base": "http://127.0.0.1:8912",
+ "seed": 42,
+ "tie": {
+  "family": "join",
+  "left": null,
+  "right": null
+ },
+ "readings": {
+  "A": {},
+  "B": {}
+ },
+ "actions": [
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Schedule call",
+    "nth": 1
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Schedule call",
+    "nth": 2
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Close",
+    "nth": 2
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-102"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 0
+   },
+   "text": "S2 - South Quay - takes 70 m - no hazardous cargo - closed"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Allocate berth"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-103"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 0
+   },
+   "text": "S2 - South Quay - takes 70 m - no hazardous cargo - closed"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Allocate berth"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Reopen",
+    "nth": 2
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-103"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 0
+   },
+   "text": "S2 - South Quay - takes 70 m - no hazardous cargo - open"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Allocate berth"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-103"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 0
+   },
+   "text": "N2 - North Quay - takes 90 m - no hazardous cargo - open"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Allocate berth"
+   }
+  }
+ ],
+ "test": "mutation",
+ "predictions": {
+  "A": "n/a",
+  "B": "n/a"
+ },
+ "note": "scheduled C-102 for Selkie (64 m); scheduled C-103 for Hafnarfjord (112 m); shut S2; closed: C-102 (64 m) -> S2 (70 m); closed: C-103 (112 m) -> S2 (70 m); reopened S2; too long: C-103 (112 m) -> S2 (70 m); too long: C-103 (112 m) -> N2 (90 m)"
+}

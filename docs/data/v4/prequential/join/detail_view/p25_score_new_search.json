@@ -1,0 +1,299 @@
+{
+ "dev": "/home/moloch/semabi-scratch/preq/harbour_ref_dev",
+ "hold": "/home/moloch/semabi-scratch/preq/harbour_ref_hold",
+ "reading": "search",
+ "ledger": {
+  "one outcome was admissible and it happened": 194,
+  "the only outcome ever seen on this control, and it happened": 99,
+  "several outcomes remained admissible; the one that happened was among them": 27,
+  "the only outcome ever seen on this control, and something else happened": 7,
+  "one outcome was admissible and a different one happened": 4,
+  "no outcome is established for this state": 3
+ },
+ "by_control": {
+  "button:Reopen": {
+   "one outcome was admissible and it happened": 41
+  },
+  "button:Sign off": {
+   "one outcome was admissible and it happened": 29,
+   "several outcomes remained admissible; the one that happened was among them": 2
+  },
+  "button:Sign on": {
+   "one outcome was admissible and it happened": 34
+  },
+  "button:Close": {
+   "one outcome was admissible and it happened": 25,
+   "several outcomes remained admissible; the one that happened was among them": 9
+  },
+  "button#cell@Call/button": {
+   "the only outcome ever seen on this control, and it happened": 99
+  },
+  "button:Schedule call": {
+   "one outcome was admissible and it happened": 29,
+   "several outcomes remained admissible; the one that happened was among them": 12,
+   "one outcome was admissible and a different one happened": 3
+  },
+  "button:Allocate berth": {
+   "one outcome was admissible and it happened": 21,
+   "several outcomes remained admissible; the one that happened was among them": 3,
+   "no outcome is established for this state": 3
+  },
+  "button:Book pilot": {
+   "one outcome was admissible and it happened": 5,
+   "one outcome was admissible and a different one happened": 1,
+   "several outcomes remained admissible; the one that happened was among them": 1
+  },
+  "button:Record departure": {
+   "the only outcome ever seen on this control, and something else happened": 7
+  },
+  "button:Bring _": {
+   "one outcome was admissible and it happened": 10
+  }
+ },
+ "control": "button:Allocate berth",
+ "rows": [
+  {
+   "step": 59,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "Nothing chosen in the berth list ."
+   ],
+   "observed": "Nothing chosen in the berth list .",
+   "level": "the event alone"
+  },
+  {
+   "step": 164,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "Nothing chosen in the berth list ."
+   ],
+   "observed": "Nothing chosen in the berth list .",
+   "level": "the event alone"
+  },
+  {
+   "step": 194,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "Nothing chosen in the berth list ."
+   ],
+   "observed": "Nothing chosen in the berth list .",
+   "level": "the event alone"
+  },
+  {
+   "step": 340,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "Nothing chosen in the berth list ."
+   ],
+   "observed": "Nothing chosen in the berth list .",
+   "level": "the event alone"
+  },
+  {
+   "step": 357,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "Nothing chosen in the berth list ."
+   ],
+   "observed": "Nothing chosen in the berth list .",
+   "level": "the event alone"
+  },
+  {
+   "step": 464,
+   "verdict": "several outcomes remained admissible; the one that happened was among them",
+   "admissible": [
+    "<> <> is <> .",
+    "<> is <> overall ; berth <> <> ."
+   ],
+   "observed": "<> <> is <> .",
+   "level": null
+  },
+  {
+   "step": 467,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "<> <> is <> ."
+   ],
+   "observed": "<> <> is <> .",
+   "level": "\u0000SILENT"
+  },
+  {
+   "step": 471,
+   "verdict": "several outcomes remained admissible; the one that happened was among them",
+   "admissible": [
+    "<> <> allocated to call <> .",
+    "<> is <> overall ; berth <> <> ."
+   ],
+   "observed": "<> <> allocated to call <> .",
+   "level": null
+  },
+  {
+   "step": 474,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "<> is <> overall ; berth <> <> ."
+   ],
+   "observed": "<> is <> overall ; berth <> <> .",
+   "level": "with its arguments"
+  },
+  {
+   "step": 477,
+   "verdict": "no outcome is established for this state",
+   "admissible": [],
+   "observed": "<> is <> overall ; berth <> <> .",
+   "level": null
+  },
+  {
+   "step": 485,
+   "verdict": "several outcomes remained admissible; the one that happened was among them",
+   "admissible": [
+    "<> is <> overall ; berth <> <> .",
+    "Call <> is already <> ; her berth cannot be changed ."
+   ],
+   "observed": "Call <> is already <> ; her berth cannot be changed .",
+   "level": null
+  },
+  {
+   "step": 492,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "<> <> is <> ."
+   ],
+   "observed": "<> <> is <> .",
+   "level": "with its arguments"
+  },
+  {
+   "step": 495,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "<> <> is <> ."
+   ],
+   "observed": "<> <> is <> .",
+   "level": "\u0000SILENT"
+  },
+  {
+   "step": 499,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "<> is <> overall ; berth <> <> ."
+   ],
+   "observed": "<> is <> overall ; berth <> <> .",
+   "level": "with its arguments"
+  },
+  {
+   "step": 502,
+   "verdict": "no outcome is established for this state",
+   "admissible": [],
+   "observed": "<> is <> overall ; berth <> <> .",
+   "level": null
+  },
+  {
+   "step": 509,
+   "verdict": "no outcome is established for this state",
+   "admissible": [],
+   "observed": "<> <> allocated to call <> .",
+   "level": null
+  },
+  {
+   "step": 512,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "<> <> is held by call <> ."
+   ],
+   "observed": "<> <> is held by call <> .",
+   "level": "with its arguments"
+  },
+  {
+   "step": 515,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "<> <> is held by call <> ."
+   ],
+   "observed": "<> <> is held by call <> .",
+   "level": "\u0000SILENT"
+  },
+  {
+   "step": 518,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "<> <> is <> ."
+   ],
+   "observed": "<> <> is <> .",
+   "level": "with its arguments"
+  },
+  {
+   "step": 521,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "<> <> is <> ."
+   ],
+   "observed": "<> <> is <> .",
+   "level": "\u0000SILENT"
+  },
+  {
+   "step": 525,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "<> <> allocated to call <> ."
+   ],
+   "observed": "<> <> allocated to call <> .",
+   "level": "with its arguments"
+  },
+  {
+   "step": 528,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "<> <> is held by call <> ."
+   ],
+   "observed": "<> <> is held by call <> .",
+   "level": "with its arguments"
+  },
+  {
+   "step": 531,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "<> <> is held by call <> ."
+   ],
+   "observed": "<> <> is held by call <> .",
+   "level": "\u0000SILENT"
+  },
+  {
+   "step": 534,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "<> is <> overall ; berth <> <> ."
+   ],
+   "observed": "<> is <> overall ; berth <> <> .",
+   "level": "with its arguments"
+  },
+  {
+   "step": 537,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "<> is <> overall ; berth <> <> ."
+   ],
+   "observed": "<> is <> overall ; berth <> <> .",
+   "level": "with its arguments"
+  },
+  {
+   "step": 540,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "<> is <> overall ; berth <> <> ."
+   ],
+   "observed": "<> is <> overall ; berth <> <> .",
+   "level": "with its arguments"
+  },
+  {
+   "step": 548,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "Call <> is already <> ; her berth cannot be changed ."
+   ],
+   "observed": "Call <> is already <> ; her berth cannot be changed .",
+   "level": "with its arguments"
+  }
+ ],
+ "lists": {
+  "button:Allocate berth": "button:Allocate berth: 26 fitted occasions, 6 distinct events\n    role relation['forward', 'rel:3']:3<owner = relation['forward', 'rel:3'] from owner\n    role selection['combobox#0']:1 = selection['combobox#0']\n    ('unnamed', \"selection['combobox#0']:1\")  ->  Nothing chosen in the berth list .   [4]\n    attr:Status#0(owner) == 'alongside'  ->  Call <> is already <> ; her berth cannot be changed .   [5]\n    attr:Condition#0(selection['combobox#0']:1) == 'closed'  ->  <> <> is <> .   [4]\n    attr:Takes up to#0(selection['combobox#0']:1) < '90'  ->  <> is <> overall ; berth <> <> .   [4]\n    attr:Length overall#0(relation['forward', 'rel:3']:3<owner) < attr:Takes up to#0(selection['combobox#0']:1) & ('ref_null', \"selection['combobox#0']:1\", 'rel:0')  ->  <> <> allocated to call <> .   [4]\n    ('ref_set', \"selection['combobox#0']:1\", 'rel:0')  ->  <> <> is held by call <> .   [3]\n    otherwise  ->  <> is <> overall ; berth <> <> .   [2]\n    otherwise -> <> is <> overall ; berth <> <> .\n    '<> <> allocated to call <> .' arguments: 1=selection['combobox#0']:1\n    '<> <> is <> .' arguments: 1=selection['combobox#0']:1\n    '<> <> is held by call <> .' arguments: 1=selection['combobox#0']:1\n    '<> is <> overall ; berth <> <> .' arguments: 0=relation['forward', 'rel:3']:3<owner, 2=selection['combobox#0']:1\n    'Call <> is already <> ; her berth cannot be changed .' arguments: 1=owner"
+ }
+}

@@ -1142,3 +1142,279 @@ A touches frozen files.  Neither started.
 The diagnostics writer (compile_v4 write_diagnostics=True) crashes on
 induce.VARIES (`_Varies` not JSON serialisable) -- checking against the base
 worktree whether that predates ab565f9.
+
+## Finding 8 at the observation model, exactly (12:45)
+Round-one hypotheses on harbour_join_dev (join_hyp3.log): every labelled row of
+the call sheet is its own unit type -- row[](cell@Field[Vessel],cell@Value[_]),
+... -- whose only slot is cell@Value#0, so each is KEYED BY ITS OWN VALUE
+("Kittiwake" keys the Vessel row, "78" the Length overall row; data_tokens
+splits "78 m" into '78' and 'm', so the number is bare here too).  Then
+_drop_transient rules each "transient: its position is cleared by reload (6650
+cases, never kept)" -- the reload closes the panel -- and parse_units skips
+every node at a transient position, so the cells' tokens flow to no unit.  The
+sheet group itself survives (its position is kept across some reloads) keyed by
+the heading's data token 'C-102' (score 1.50) and with no other slot.
+The doctrine conflates two kinds of cleared content: a feedback line, whose
+tokens are prose, and a detail panel, whose tokens are the keys and attributes
+of persistent units shown elsewhere on the same page (Kittiwake / Norway / 78 /
+sawn timber in the vessel register; W1 a berth key; Ruth Kealy a pilot key).
+The second is a VIEW of persistent objects, and its values belong to the unit
+that contains them.
+
+## Mechanism A pre-registered (P23), not yet built
+A1 (graph): a table column whose cells carry only label tokens in every row
+labels its rows, as a header row labels its columns; a cell in such a row has
+the row label as label context.  Consequences without further code: attr_name
+gives the sheet's value cells "attr:Length overall#0" etc. -- the same name as
+the register column, "the same fact shown in two views maps to one attribute";
+referring._member_positioned no longer treats a row-labelled cell as a
+presentation coordinate (its name does not move under member reversal).
+A2 (hypotheses): a cleared position whose data tokens are key values of
+persistent (kept) units is a mirror, not interface state: it is exempt from
+transient_positions and its tokens flow to the enclosing unit.  Feedback lines
+are untouched (prose, no keys).
+Expected on harbour_join_dev: the sheet unit keyed C-102 with attrs Length
+overall / Status / Flag / Cargo / Hazardous cargo and references Vessel ->
+vessel type, Berth -> berth type, Pilot -> pilot type; key overlap with the
+overview call row (C-102...) proposes a union the search judges.  The Allocate
+button then has an owner.
+B (outcome): a control takes roles from an operator whose core ENDS at its
+click when the earlier core clicks bind the same object as the last (the call
+button and the sheet are one entity under the union) or bind nothing;
+otherwise the operator is skipped as now.  Then roles = owner (the call/sheet),
+selection (berth), relation<owner (vessel) -- all pre-state -- and the
+comparison literal can form.
+P23: under A alone, the sheet is an object with those attributes on
+harbour_join_dev and the identity search poses (or decides) sheet-vs-call-row.
+P24: under A+B, `button:Allocate berth` has >= 3 roles, learns
+Takes up to(berth) >= Length overall(vessel) (or the < mirror) with both
+fields adopted, and on harbour_join_hold its allocation claims are right where
+it decides.  Attacks before retention: (i) full regeneration on all apps --
+retained readings/frontiers must not move except where a detail view exists
+and the change is explicable; (ii) member reversal invariant (the sheet's rows
+reversed change nothing); (iii) renaming invariant; (iv) blend's held-out
+forced-claim ledger must not worsen (the page-read-roles measurement);
+(v) cellar: its "detail panel shown for different objects" (units docstring)
+is the second detail view in the corpus -- what A does there is reported, not
+tuned.  Built in the dev worktree; main tree untouched until the battery ends.
+12:53 the diagnostics writer crash (compile_v4 write_diagnostics=True ->
+json.dumps of induce.VARIES) reproduces on the pre-change worktree (4ace613):
+pre-existing, not on the battery's path (regen rc=0).  Left as found; note for
+a later fix (default=str, or render the sentinel).
+Mechanism A+B built in the dev worktree (scratchpad/dev): graph.row_header /
+cell_header; hypotheses._property_row (a labelled row is not a unit), _relpath
+by cell_header, _mirror_positions (cleared region naming >= 2 kept keys, not
+prose, climbing while every sibling vanished too); parse.ParsedObs.row_named;
+abstractor.attr_name / _column_of by cell_header; referring._member_positioned
+spares row-named cells; outcome._ops_by_control (last core click, enabling
+clicks bind the same owner or nothing).  tests/test_v4_detail_view.py: five
+tests on a synthetic register + call sheet + feedback line.
+
+## Mechanism A+B built and tested (dev worktree, 13:03)
+tests/test_v4_detail_view.py 5/5 on a synthetic register + call sheet + feedback
+line.  Refinements forced by the test, each a principle: (1) the mirror rule is
+structural -- a cleared, non-prose position inside a table/group that names >= 2
+kept keys (climbing a vanished chain broke on a shared field value and on a
+label cell that stays beside its value); the region qualifies for itself, so
+the sheet root survives; (2) a table or row group of labelled rows is a field
+list of its container, not a unit (else the row group took the fields);
+(3) the template lists a row group's labelled rows in header order (the
+transposed column rule) -- without it, reversing the sheet's rows made another
+family; (4) mentions must merge (compile_v4 already passes merge_mentions=True)
+for the sheet mention's berth reference and call heading to reach the object.
+On the fixture the reading is: the sheet keyed by its Vessel field (score
+1.33, fd 0.83) and "same entity as" the register row -- a view of the vessel --
+carrying attr:Length#0 / attr:Flag#0 under the register's names, attr:Call
+sheet#0 = the call, rel -> berth.  Under it the Allocate button's owner is the
+vessel object.  Fits under the new code launched on harbour_join_dev (search
+and pinned readings) plus the reachability probe.
+
+## P23 on harbour_join_dev, hypotheses layer (13:06): HOLDS
+A second rule had to learn the same distinction: the sheet survived the reload
+rule and was then dropped by the next-step rule ("key survives the next step
+in 3/7 cases") -- opening another call's sheet changes the key, which the rule
+read as state vanishing.  A unit keyed by the keys of persistent objects is a
+view moving between them (_names_kept, on the mirror keys); the feedback lines
+are not.  Under the new code (join_hyp_dev3.log): the sheet is ONE unit
+(n=190; header-order rows) keyed table/rowgroup/row/cell@Vessel#0 (score 1.10,
+fd 0.81, 7 values), "same entity as" the overview call row AND the vessel
+register row (key jaccard 1.00 each); entity 3 = register row + sheet, attrs
+Cargo/Flag/Hazardous cargo/Length overall from both views; the sheet's
+heading#0 references T0 (the call), Berth -> T1, Pilot -> T2.  No transient
+templates; 41 mirror positions; 21 mirror keys.  The panel is a view of the
+vessel that names its call, its berth and its pilot.  Fits launched for P24.
+Touched suites under the dev code (before the last two patches): 130 passed.
+
+## C: a control inside an object's panel (13:25)
+Under the new code the search-mode fit gave Allocate berth an owner role (the
+sheet/vessel) and a vessel role by relation from it, but no berth role: once
+the sheet is an instance its combobox is an instance slot and vanishes from
+the page view, which is the only surface the selection form and the inducer's
+provenance search read.  Rule: a control is a control of the page wherever it
+sits -- abstractor._instance_widgets adds the widgets inside instances to the
+view under their page names where unique (a select in every row of a table is
+positional and stays out); induce._find_view_source reads the view as well as
+the statics.  Test added (6/6).  Fits relaunched (join_inspect_B_*, reach_B --
+the earlier reach_A ran the main tree's code through a hard-coded path and is
+void).
+
+## P24 judged on harbour_join_dev (13:37): roles YES, comparison NO -- corpus
+Under A+B+C,  has roles under both readings: owner (the
+sheet, one entity with the vessel), selection['combobox#0'] (the berth), and
+under the search reading relation['forward','rel:3']<owner (the vessel).
+Ordered candidates exist for both fields (Takes up to on the berth type,
+Length overall on the owner/vessel), so the comparison was in the pass-1
+vocabulary.  Rules learned: unnamed(selection) -> Nothing chosen [4];
+Status(owner) == alongside -> already alongside [2]; and for the allocation
+ [2] -- an equality on the berth's capacity,
+because join2 repeats join's first allocation (C-102 -> W1 twice) and the
+purity-first learner prefers a pure equality over the comparison, which also
+covers the one refusal at a CLOSED berth (S1 takes 160 >= 96) and the
+'alongside' refusals: the comparison is necessary, not sufficient, and the
+refusals that would precede it in a decision list have one occasion each
+(closed 1, held 1, length 1 < MIN_COVER).  Adopted: {}.  P24 falsified on this
+corpus for a corpus reason of my own making (the duplicated extension) plus a
+thin refusal structure.  The mechanism did what was pre-registered up to the
+literal; the literal needs a corpus with the refusal kinds represented.
+P25 (pre-registered): a live extension per seed with >= 3 distinct successful
+pairs on distinct berths and >= 2 occasions each of the four refusals (closed
+berth, call already alongside, berth held, vessel too long); fitted under A+B+C
+the list learns the length refusal as Takes up to(berth) < Length overall(
+vessel) with both fields adopted, and the allocation as the comparison or as
+the residue after the refusals; on a second seed's extension it transfers.
+Battery: open_world ended 13:35 rc=0; identity running.
+
+## P24 judged on harbour_join_dev (13:38): roles YES, comparison NO -- corpus
+Under A+B+C, button:Allocate berth has roles under both readings: owner (the
+sheet, one entity with the vessel), selection[combobox#0] (the berth), and
+under the search reading relation[forward rel:3]<owner (the vessel).  Ordered
+candidates exist for both fields (Takes up to on the berth type, Length
+overall on the owner/vessel), so the comparison was in the pass-1 vocabulary.
+Rules learned: unnamed(selection) -> Nothing chosen [4]; Status(owner) ==
+alongside -> already alongside [2]; for the allocation `Takes up to(selection)
+== 140` [2] -- an equality on the berth's capacity, because join2 repeats
+join's first allocation (C-102 -> W1 twice) and the purity-first learner
+prefers a pure equality over the comparison, which also covers the one refusal
+at a CLOSED berth (S1 takes 160 >= 96) and the alongside refusals: the
+comparison is necessary, not sufficient, and the refusals that would precede
+it in a decision list have one occasion each (closed 1, held 1, length 1 <
+MIN_COVER).  Adopted: {}.  P24 falsified on this corpus for a corpus reason
+of my own making (the duplicated extension) plus a thin refusal structure.
+The mechanism did what was pre-registered up to the literal.
+Also seen (reach_B, search reading): the sheet object's key is 'alongside' --
+the V4 search's key for a never-two-at-once family is arbitrary among
+UNSUPPORTED candidates (chosen text/button#0; resolved to the Status value),
+while the pinned source_choice reading falls back to the V2 key (Vessel).
+_rank has -ev.shared ("the name another rendering of the thing is already
+keyed by") as a tie-breaker; why it did not prefer the Vessel slot is the
+next question (candidate dump).
+P25 (pre-registered): a live extension per seed with >= 3 distinct successful
+pairs on distinct berths and >= 2 occasions each of the four refusals (closed
+berth, call already alongside, berth held, vessel too long); fitted under
+A+B+C the list learns the length refusal as Takes up to(berth) < Length
+overall(vessel) with both fields adopted, and the allocation as the comparison
+or as the residue after the refusals; on a second seed's extension it
+transfers.  Battery: open_world ended 13:35 rc=0; identity running.
+
+Candidate dump for the sheet family (13:40, join_candidates.log): identity's own
+ranking puts NO_IDENTITY first, then Vessel (shared 1.00, spoken 1.00, 7
+values), heading (3 values), Berth, Pilot, text/button#0 (1 value).  The
+search's behavioural moves nonetheless settle on text/button#0: ONE key for
+every sheet -- "the open call sheet" as a singleton panel object whose Vessel
+value references the vessel.  That is a legitimate second world (the panel is
+a widget; V2's union says the panel is a view of the vessel); both admit the
+comparison (owner.rel->vessel.Length overall, or owner.Length overall).  Not
+a blocker for P24; a tie the search should pose rather than pick silently,
+noted for the identity campaign.  Stale full suite under dev (A+B, C partial):
+555 passed, 3 skipped, 1 xfailed.
+
+## P25 corpus: refusal-rich extensions (13:42)
+join_plan_refusals.py simulates the app's rule order (alongside, closed, held,
+too long, hazard) from the seed's live view: schedules a call per idle vessel,
+allocates distinct berths, tries a held berth twice, a closed berth twice
+(closing one if none), reopens it for more successes and a second held berth,
+tries the free berths that are too short, books a pilot and brings up to three
+berthed calls alongside and re-allocates them.  Six plans: dev seeds 31/32/33
+(ok 2+1+1, held 4+1+0, closed 2+2+2, too long 0+2+3, alongside 1+1+1) on
+harbour_dev; holdout seeds 41/42/43 (ok 1+0+2, held 0+0+4, closed 2+2+2, too
+long 2+2+3, alongside 1+0+1) on harbour_transfer.  Running in sequence
+against the fixture app (restarted on 8910), results logs/result_join_ref*.
+Then: merge dev = harbour_dev + ref31..33 (join_merge), hold = transfer +
+ref41..43; fit under A+B+C; judge P25.
+
+Holdout under A+B+C, dev-fitted (thin corpus), scored on harbour_join_hold
+(13:44, outcome_join_hold_B.json): Allocate berth 5 right / 8 abstained / 0 wrong
+(old code: 13 abstained); whole holdout ledger 269 right / 12 abstained / 11
+wrong against 255 / 26 / 11 under the old code -- fourteen abstentions became
+right answers, nothing new wrong.  The allocation message's arguments now bind:
+1 = the berth (selection), 2 = the call (owner).
+
+18:10: the machine suspended at ~14:06 and resumed at 17:58 (journal: sleep lock,
+"Resumed scheduling"); the battery's outcome stage (started 13:41, ~20 min in)
+and the ref32/33/41 runs (CPU ~12 min each) slept through it and resumed.
+Seed 31 had landed before the sleep.  Seeds 32/33/41 run on app instances
+8912/8913/8914 in their own memory-capped scopes; 42/43 follow on 8912/8913.
+
+## Battery under ab565f9+b8921a2 done (18:53); mechanism applied to main
+Battery (12:03 -> 18:51 with the 4 h sleep): regen, open_world, identity,
+outcome, admissible all rc=0.  Frontiers as retained (harbour BEHAVIOURALLY_
+DISTINGUISHED / holdout CONFIRMED_WHERE_APPLICABLE_PARTIAL_COVERAGE; vet
+BEHAVIOURALLY_DISTINGUISHED / INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE; blend
+SELECTED_WITHIN_AN_INDISTINGUISHABLE_CLASS / CONFIRMED); column reversal,
+member reversal and renaming (fresh, permuted) at zero on every app.
+Committed b3c9d11.  The A+B+C mechanism (8 source files, +160/-20) and
+tests/test_v4_detail_view.py applied to the main tree from the dev worktree;
+full suite running there.  Baseline worktree for P25 at b3c9d11
+(scratchpad/base2).  Extensions: 31/32/41 landed, 33 finishing, 42/43 next.
+
+## P25 on harbour_ref_dev (harbour_dev + ref31/32/33, 468 steps) (19:26): HOLDS under
+## the search reading
+New code, search reading -- roles owner / relation[forward rel:3]<owner (the
+vessel) / selection[combobox#0] (the berth); rules:
+  unnamed(selection) -> Nothing chosen [4]
+  Status(owner) == alongside -> already alongside [5]
+  Condition(selection) == closed -> Berth is closed [4]
+  Takes up to(selection) < 90 -> too long [4]           (a threshold)
+  Length overall(vessel) < Takes up to(berth) & ref_null(berth, rel:0)
+      -> allocated [4]                                  (THE JOIN)
+  ref_set(berth, rel:0) -> held by call [3]
+  otherwise -> too long [2]
+adopted: Length overall [54..148] on the vessel type, Takes up to [70..160] on
+the berth type; 44 comparison literals in the final evidence.
+New code, pinned source_choice: roles owner / selection (the owner is the
+vessel entity itself under V2's union, no relation role); the equality
+Takes up to(selection) == 160 -> allocated [3] wins over the comparison (three
+of the four dev successes are on S1, 160 m) and == 70 -> too long [4]; ordered
+{}.  Baseline (b3c9d11, no mechanism): roles [] under both readings.
+So the learner states berth.max >= vessel.length where the vessel is reached
+by a pre-state relation from the owner; where the owner IS the vessel the
+purity-first learner still prefers a constant that three occasions share.
+Holdout (transfer + ref41/42/43) next: join_score.py scores a dev-fitted
+model on another history under a settled or pinned reading.
+
+Six extensions landed (19:35); live outcomes as planned.  Dev seeds 31/32/33:
+successes N2/88? no -- 31: N2<-C-102 (Kittiwake 78), S1<-C-103 (Ardent Rose
+96); 32: S1<-C-102 (96); 33: S1<-C-101; held x8; closed x6 (+3 "now closed/
+open" berth toggles); too long x5 (96/70, 132/70, 96/90); alongside x3 with
+pilots booked.  Holdout seeds 41/42/43 on harbour_transfer: successes S1<-
+C-102 (Nordkapp 132), N2<-C-104 (Bregagh 88), S1<-C-101 (148); too long x7
+(132/90, 112/90, 112/70, 148/70, 88/70); closed x4; held x8; alongside x2.
+Merged harbour_ref_hold = transfer + 41/42/43 (550 steps).  Four holdout
+scorings launched (join_score.py: new/base x search/chain).  Extra app
+instances 8912-8914 stopped; 8910 kept for the battery's live stages.
+
+## P25 holdout (20:02): HOLDS -- the join transfers
+harbour_ref_hold (transfer + ref41/42/43, 550 steps), dev-fitted model
+(harbour_ref_dev), Allocate berth over 27 never-seen clicks:
+  new code, search reading: forced right 21, right among several 3,
+    unestablished 3, WRONG 0 -- allocations (525 forced, 471 several), too
+    long x5 forced (474/499/534/537/540), held x4 forced, closed x6 forced,
+    alongside 548 forced / 485 several, Nothing chosen x5 forced.
+  new code, pinned source_choice: forced 18, several 6, unestablished 3,
+    wrong 0 (the equality world admits 'allocated' beside 'held' twice).
+  baseline b3c9d11 (either reading): 27 unestablished.
+Whole holdout ledger, search reading: new 194 forced right / 99 sole right /
+27 several right / 3 unestablished / 4 forced wrong / 7 sole wrong, against
+the baseline's 162 / 99 / 19 / 44 / 3 / 7: forty-one unestablished states
+became right answers; one more forced-wrong elsewhere (located below).
+Scorings retained (docs/data/v4/prequential/join/detail_view/p25_score_*).
