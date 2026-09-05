@@ -181,16 +181,24 @@ def adopted(models: dict, candidates_: dict[int, dict[str, list[str]]],
                     value_of = _pair_values(ev, lit[1], lit[2], lit[3], lit[4])
                     named_side = (lambda x: x[0] >= x[1]) if lit[0] == CMP_GE else (lambda x: x[0] < x[1])
                 values = {value_of[i] for i in covered if i in value_of}
-                if len(values) < 2:
-                    continue
                 other_side = {x for i, x in value_of.items()
                               if not named_side(x) and ev.events[i] != rule.event}
                 # more than one value on the far side as well: a single instance there is
-                # that instance -- cellar's one 4000-gallon vessel -- and not an order
-                if len(other_side) >= 2:
-                    for tid, slot in fields_:
-                        out[tid][slot] = candidates_[tid][slot]
+                # that instance -- cellar's one 4000-gallon vessel -- and not an order.
+                # A comparison must vary in each of its fields on each side: distinct
+                # pairs are cheap, and a field constant across them is not ordered.
+                if _varies(values) and _varies(other_side):
+                    for t, slot_t in fields_:
+                        out[t][slot_t] = candidates_[t][slot_t]
     return dict(out)
+
+
+def _varies(values: set) -> bool:
+    if len(values) < 2:
+        return False
+    if not isinstance(next(iter(values)), tuple):
+        return True
+    return all(len({v[k] for v in values}) >= 2 for k in (0, 1))
 
 
 def _pair_values(ev, p: str, slot_p: str, q: str, slot_q: str) -> dict[int, tuple[float, float]]:

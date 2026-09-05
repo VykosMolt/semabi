@@ -138,6 +138,26 @@ def test_a_comparison_witnessed_by_one_pair_on_the_far_side_is_that_instance():
     assert fields.adopted({"Allocate": _allocate(rows)}, BERTH_FIELDS) == BERTH_FIELDS
 
 
+def test_a_comparison_over_pairs_must_vary_in_each_field_on_each_side():
+    # every berth took 160 m and one refused at 160 m too, so no threshold separates and
+    # the comparison does; the pairs are distinct, the berth's field is not, and a
+    # threshold over it would never have been adopted -- neither is the comparison
+    rows = [((64, 160), "berthed"), ((78, 160), "berthed"), ((96, 160), "berthed"),
+            ((100, 160), "berthed"), ((140, 160), "berthed"),
+            ((132, 90), "refused"), ((148, 100), "refused"), ((150, 120), "refused"),
+            ((200, 160), "refused")]
+    model = _allocate(rows)
+    assert any(len(l) == 5 for r in model.rules for l in r.condition)
+    assert fields.adopted({"Allocate": model}, BERTH_FIELDS) == {}
+    # and on the far side alike: every refusal at the same 90 m berth
+    rows = [((78, 140), "berthed"), ((96, 120), "berthed"), ((100, 160), "berthed"),
+            ((64, 90), "berthed"), ((140, 160), "berthed"),
+            ((132, 90), "refused"), ((148, 90), "refused"), ((150, 90), "refused")]
+    model = _allocate(rows)
+    assert any(len(l) == 5 for r in model.rules for l in r.condition)
+    assert fields.adopted({"Allocate": model}, BERTH_FIELDS) == {}
+
+
 def test_the_binding_evaluates_a_comparison_and_declines_an_unbound_one():
     from semabi.compiler.induce import _lit_str
     v, b = Obj(1, "v", {"length": "132"}), Obj(2, "b", {"takes": "90"})
@@ -145,5 +165,7 @@ def test_the_binding_evaluates_a_comparison_and_declines_an_unbound_one():
     assert binding.holds(ge, {"?v": v, "?b": b}, None) is True
     assert binding.holds(lt, {"?v": v, "?b": b}, None) is False
     assert binding.holds(ge, {"?v": v}, None) is None
+    assert binding.holds(("attr_cmp_ge", "vessel", "length", "berth", "takes"), {"vessel": v}, None) is None
+    assert binding.holds(("attr_ge", "berth", "takes", "90"), {"vessel": v}, None) is None
     assert binding.holds(ge, {"?v": v, "?b": Obj(2, "b", {})}, None) is None
     assert _lit_str(ge) == "length(?v) >= takes(?b)"

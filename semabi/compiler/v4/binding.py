@@ -181,11 +181,13 @@ def holds(literal: tuple, values: Mapping[str, Any], state) -> bool | None:
         ti = getattr(state, "types", {}).get(getattr(obj, "tid", None)) if state else None
         actual = obj.key if ti is not None and slot == ti.key_slot else obj.attrs.get(slot)
         return (actual == want) == (head == "attr")
-    if head in ("attr_ge", "attr_lt"):
+    if head in ("attr_ge", "attr_lt", "attr_cmp_ge", "attr_cmp_lt"):
         from semabi.compiler.v4 import fields as field_theory
-        return field_theory.holds(literal, values[literal[1]])
-    if head in ("attr_cmp_ge", "attr_cmp_lt"):
-        from semabi.compiler.v4 import fields as field_theory
+        roles = [x for x in literal[1::2] if isinstance(x, str)][:2 if head.startswith("attr_cmp") else 1]
+        if any(r not in values for r in roles):
+            return None
+        if head in ("attr_ge", "attr_lt"):
+            return field_theory.holds(literal, values[literal[1]])
         return field_theory.holds_pair(literal, values[literal[1]], values[literal[3]])
     if head in ("ref", "ref_ne"):
         _, p, slot, q = literal

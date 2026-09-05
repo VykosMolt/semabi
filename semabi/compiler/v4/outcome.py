@@ -885,7 +885,9 @@ def _literals(inducer, state, binding: dict, status: dict, defaults: dict | None
         from semabi.compiler.v4 import fields as field_theory
         for role, obj in binding.items():
             lits |= field_theory.literals(role, obj, ordered)
-        lits |= field_theory.pair_literals(binding, ordered)
+        # never the owner: it is not one of the model's roles, so nothing it compares
+        # could be justified afterwards
+        lits |= field_theory.pair_literals({r: o for r, o in binding.items() if r != OWNER}, ordered)
     if COUNT_LITERALS:
         # How many objects of each type the state holds.  Every type the model knows, so
         # that an empty collection is a count of nought and not a missing fact.
