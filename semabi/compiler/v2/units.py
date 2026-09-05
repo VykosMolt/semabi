@@ -39,6 +39,13 @@ def collapsed_template(G: ObsGraph, sig: str, i: int, memo: dict) -> str:
         # in header order, so a table rendered with its columns rearranged is the same unit
         ch = [c for _, c in sorted(zip([(G.column_header(sig, c) or "~", k)
                                         for k, c in enumerate(kids)], ch))]
+    if n.role == "rowgroup" and kids:
+        # the rows of a key-value table are its fields, named by their row headers, and a
+        # field is the same field wherever it stands: the template lists them in header
+        # order, as a declared table's columns are listed in theirs
+        heads = [G.row_header(sig, obs.children(c)[1]) if len(obs.children(c)) >= 2 else None for c in kids]
+        if all(heads):
+            ch = [c for _, c in sorted(zip(heads, ch))]
     if not parts and not ch and n.role in ("cell", "text", "group", "listitem", "heading"):
         parts = ["_"]  # an empty data cell is a slot without a value
     txt = " ".join(parts)

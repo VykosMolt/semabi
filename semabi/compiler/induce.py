@@ -984,7 +984,10 @@ class Inducer:
         po = state.parsed
         if po is None:
             return None
-        for k, (_, v) in po.statics.items():
+        slots = dict(po.statics)
+        for k, v in getattr(state, "view", {}).items():
+            slots.setdefault(k, (None, v))      # a widget inside an object's panel
+        for k, (_, v) in slots.items():
             if v == value:
                 if referring._member_positioned(state, k):
                     # a cell of a collection member is a coordinate, not a source: which

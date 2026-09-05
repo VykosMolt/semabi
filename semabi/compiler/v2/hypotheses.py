@@ -27,6 +27,9 @@ LEAF_DATA = {"text", "heading", "cell", "listitem", "alert", "status"}
 WIDGET = {"button", "link", "checkbox", "radio", "combobox", "textbox"}
 
 
+REGIONS = ("table", "group", "region", "article", "section", "listitem")
+
+
 @dataclass
 class UnitInstance:
     sig: str
@@ -103,6 +106,8 @@ class Hypotheses:
         self.ctx_split: dict[tuple[str, str | None], str] = {}  # (template, enclosing template) -> split template
         self.transient: set[str] = set()
         self.transient_positions: set[tuple] = set()
+        self.mirror_positions: set[tuple] = set()
+        self.mirror_keys: set[str] = set()
         self.force_link: set[str] = set()  # refinement: templates whose link/merge decision is flipped
         # pairs of templates whose union by key overlap is withheld: a reading in which two
         # families that name the same values are two kinds of thing (an appointment row
@@ -158,7 +163,8 @@ class Hypotheses:
             n = obs.node(i)
             t = self.template(sig, i)
             hdr = (sig, i) in self.G.header and not self.G.is_header(sig, i)
-            is_unit = n.parent >= 0 and self.is_unit_template(t, n.role, bool(obs.children(i)), hdr)
+            is_unit = n.parent >= 0 and self.is_unit_template(t, n.role, bool(obs.children(i)), hdr) \
+                and not self._property_list(obs, sig, i)
             if is_unit:
                 parent_t = self.template(sig, chain[-1]) if chain else None
                 ui = UnitInstance(sig, i, self.ctx_split.get((t, parent_t), t), {}, {}, [], chain[-1] if chain else None)
@@ -309,12 +315,27 @@ class Hypotheses:
         self._page_instances[sig] = {ui.root: ui for ui in insts}
         return insts
 
+    def _property_list(self, obs, sig: str, i: int) -> bool:
+        """A key-value table, its row groups and its rows are fields of their container,
+        not units: a value cell is named by its row's header (`ObsGraph.row_header`) and
+        flows to the enclosing unit."""
+        n = obs.node(i)
+        if n.role == "row":
+            cells = obs.children(i)
+            return len(cells) >= 2 and self.G.row_header(sig, cells[1]) is not None
+        if n.role not in ("table", "rowgroup"):
+            return False
+        rows = [x for x in obs.subtree(i) if obs.node(x).role == "row"]
+        labelled = {x for x in rows if self._property_list(obs, sig, x)}
+        bare = lambda x: not any(self.G.data_tokens(sig, c) for c in obs.children(x))   # a header row
+        return bool(labelled) and all(x in labelled or bare(x) for x in rows)
+
     def _relpath(self, obs, root: int, i: int, sig: str | None = None) -> str:
         parts = []
         x = i
         while x != root and x >= 0:
             n = obs.node(x)
-            header = self.G.column_header(sig, x) if sig is not None and n.role == "cell" else None
+            header = self.G.cell_header(sig, x) if sig is not None and n.role == "cell" else None
             # a cell under a declared column header is that column wherever it stands, so
             # the slot is named by the header (`cell@Reason#0`) rather than by its offset
             parts.append(f"{n.role}@{header}" if header else n.role)
@@ -380,6 +401,7 @@ class Hypotheses:
             return
         gone: Counter = Counter()
         kept: Counter = Counter()
+        samples: dict[tuple, list[tuple[str, int]]] = defaultdict(list)
         for a, b in self.reload_pairs:
             if a not in self.G.obs or b not in self.G.obs:
                 continue
@@ -397,9 +419,13 @@ class Hypotheses:
                     kept[key] += 1
                 else:
                     gone[key] += 1
-        for key, g in gone.items():
-            if g >= 2 and kept[key] == 0:
-                self.transient_positions.add(key)
+                    if len(samples[key]) < 4:
+                        samples[key].append((a, n.i))
+        cleared = {key for key, g in gone.items() if g >= 2 and kept[key] == 0}
+        self.mirror_keys |= self._kept_keys(kept)
+        mirrors = self._mirror_positions(cleared, samples)
+        self.mirror_positions |= mirrors
+        self.transient_positions |= cleared - mirrors
         # interface state also fails to survive ordinary actions: a keyed unit whose key is
         # usually gone at the next step although the view stayed (feedback lines in views
         # that a reload never shows)
@@ -408,7 +434,7 @@ class Hypotheses:
             for u in f:
                 fam_of[u.template] = f
         for t, u in list(self.units.items()):
-            if not u.key_slot or len(u.instances) < 5:
+            if not u.key_slot or len(u.instances) < 5 or self._names_kept(u):
                 continue
             keys_at: dict[str, set[str]] = defaultdict(set)
             for v in fam_of.get(t, [u]):
@@ -469,12 +495,48 @@ class Hypotheses:
             g = k = 0
             for ui in u.instances[:200]:
                 key = self._position(self.G.obs[ui.sig], ui.root)
-                g += gone[key]
+                g += gone[key] if key not in self.mirror_positions else 0
                 k += kept[key]
             if g >= 2 and k == 0:
                 u.key_slot = None
                 u.evidence.append(f"transient: its position is cleared by reload ({g} cases, never kept)")
                 self.transient.add(t)
+
+    def _kept_keys(self, kept: Counter) -> set[str]:
+        """The keys of units whose content a reload keeps: the persistent objects."""
+        out: set[str] = set()
+        for u in self.units.values():
+            if u.key_slot and any(kept[self._position(self.G.obs[ui.sig], ui.root)] > 0
+                                  for ui in u.instances[:50]):
+                out |= u.primary_key_values()
+        return out
+
+    def _names_kept(self, u: UnitHyp) -> bool:
+        """A unit keyed by the keys of persistent objects is a view of them: its key changes
+        when the view moves to another object, which is not interface state vanishing."""
+        vals = u.primary_key_values()
+        return bool(vals) and len(vals & self.mirror_keys) >= max(2, len(vals) / 2)
+
+    def _mirror_positions(self, cleared: set, samples: dict) -> set:
+        """Cleared positions that belong to a detail view rather than to the interface: a
+        table or group that names at least two persistent objects by their keys, and the
+        position is not a sentence.  A feedback line names objects too, in prose."""
+        out: set = set()
+        for key in cleared:
+            for sig, i in samples.get(key, ()):
+                obs = self.G.obs[sig]
+                if self.G.is_prose(sig, i):
+                    break
+                x = i
+                while x >= 0 and obs.node(x).parent >= 0:
+                    if obs.node(x).role in REGIONS and \
+                            len({t for _, t in self.G.subtree_data(sig, x)} & self.mirror_keys) >= 2:
+                        out.add(key)
+                        break
+                    x = obs.node(x).parent
+                if key in out:
+                    break
+        return out
 
     def _position(self, obs, i: int) -> tuple:
         """Indexed role path: (role, leaf-aware ordinal) at every level."""

@@ -223,10 +223,11 @@ class V2Abstractor(Abstractor):
         n = self.G.obs[ui.sig].node(node)
         lab = sorted(self.G.labels(ui.sig, node))
         k = sid.split("#")[-1].split("@")[0]
-        header = self.G.column_header(ui.sig, node)
+        header = self.G.cell_header(ui.sig, node)
         if header:
             # a cell under a declared column header holds the attribute the column names,
-            # wherever the column stands (`semabi.eval.v4_columns`)
+            # wherever the column stands (`semabi.eval.v4_columns`); a cell beside a row
+            # header likewise
             return "attr:" + " ".join(tokens(header)) + f"#{k}"
         if lab:
             return "attr:" + " ".join(lab) + f"#{k}"
@@ -403,6 +404,7 @@ class V2Abstractor(Abstractor):
         instances: list[Instance] = []
         node_instance: dict[int, int] = {}
         node_key: dict[int, str] = {}
+        row_named: set[int] = set()
         statics: dict[str, tuple[str, Any]] = {}
         idx_of_root: dict[int, int] = {}
         ordinals: dict[int, Counter] = {}
@@ -525,6 +527,8 @@ class V2Abstractor(Abstractor):
                 # ordinal among the instance's leaves, which the column order would set
                 # (`semabi.eval.v4_columns`): `cell@Reason#0`, `text@Actions#0`
                 header = self._column_of(obs, sig, n.i)
+                if header and self._row_named(obs, sig, n.i):
+                    row_named.add(n.i)
                 role = f"{n.role}@{header}" if header else n.role
                 key = f"{role}#{cnt[role]}"
                 cnt[role] += 1
@@ -536,18 +540,25 @@ class V2Abstractor(Abstractor):
                     key = f"{key}@{n.i}"
                 statics[key] = (label, leaf_value(n))
             node_key[n.i] = key
-        return ParsedObs(obs, instances, statics, node_instance, node_key)
+        return ParsedObs(obs, instances, statics, node_instance, node_key, row_named)
 
     def _column_of(self, obs: Observation, sig: str, i: int) -> str | None:
-        """The declared column header of the cell a node stands in, if any."""
-        column_header = getattr(self.G, "column_header", None)
-        if column_header is None:
+        """The declared name of the cell a node stands in: its row header, else its column
+        header, if any."""
+        return self._cell_name(obs, sig, i, "cell_header")
+
+    def _row_named(self, obs: Observation, sig: str, i: int) -> bool:
+        return self._cell_name(obs, sig, i, "row_header") is not None
+
+    def _cell_name(self, obs: Observation, sig: str, i: int, how: str) -> str | None:
+        name = getattr(self.G, how, None)
+        if name is None:
             return None
         x = i
         while x >= 0:
             n = obs.node(x)
             if n.role == "cell":
-                return column_header(sig, x)
+                return name(sig, x)
             if n.role in ("row", "table"):
                 return None
             x = n.parent
@@ -588,6 +599,7 @@ class V2Abstractor(Abstractor):
         po = self.parsed(obs)
         objs: dict[tuple[int, str], AbsObj] = {}
         view: dict[str, Any] = {k: v for k, (_, v) in po.statics.items()}
+        view.update(_instance_widgets(po))
         inst_obj: dict[int, AbsObj] = {}
         # keys present per type (for resolving references by primary key)
         keys_by_tid: dict[int, dict[str, str]] = defaultdict(dict)
@@ -830,6 +842,18 @@ class V2Abstractor(Abstractor):
         return (self.H.report()
                 + "\nverified view controls: " + ", ".join(sorted(self.verified_view_controls))
                 + "\nheuristic view candidates: " + ", ".join(sorted(self.heuristic_view_controls)))
+
+
+def _instance_widgets(po) -> dict[str, Any]:
+    """The input widgets that sit inside an object's own panel, as view slots of the page:
+    a control is a control of the page wherever it stands, named as the page names it
+    where that name is unique (a select in every row of a table is positional and is not)."""
+    seen: dict[str, list] = defaultdict(list)
+    for inst in po.instances:
+        for k, (_, v) in inst.slots.items():
+            if k.split("#")[0] in ("combobox", "textbox"):
+                seen[k].append(v)
+    return {k: vs[0] for k, vs in seen.items() if len(vs) == 1 and k not in po.statics}
 
 
 def _rendered_under(po, node: int) -> set[str]:

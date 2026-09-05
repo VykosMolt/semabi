@@ -1173,11 +1173,7 @@ def learn(inducer, *, permute: int | None = None, subject_restricted: bool = Fal
     bind_language(inducer)
     A, log = inducer.A, inducer.log
     by_control: dict[str, list] = {}
-    ops_by_control: dict[str, list] = {}
-    for op in inducer.operators:
-        core = op.core()
-        if len(core) == 1 and core[0].kind == "click" and core[0].loc is not None:
-            ops_by_control.setdefault(control_of(core[0].loc.slot), []).append(op)
+    ops_by_control = _ops_by_control(inducer.operators, control_of)
     steps = {s.step: s for s in log.steps}
     for tr in list(inducer.transitions) + list(inducer.noops):
         if len(tr.steps) != 1:
@@ -1226,6 +1222,23 @@ def learn(inducer, *, permute: int | None = None, subject_restricted: bool = Fal
                         structural=structural, touched=touched, about=about, simplest=simplest)
     for model in out.values():
         model.field_theory = theory
+    return out
+
+
+def _ops_by_control(operators, control_of) -> dict[str, list]:
+    """The operators whose roles a control may take: those whose core is a chain of clicks
+    ending at it.  A click before the last is an enabling one -- it opened the panel the
+    control sits in -- and may bind the object the control's own click binds, or nothing;
+    an object bound only by an earlier click is a route the pre-state does not have."""
+    out: dict[str, list] = {}
+    for op in operators:
+        core = op.core()
+        if not core or any(a.kind != "click" or a.loc is None for a in core):
+            continue
+        last = core[-1]
+        if any(a.owner not in (None, last.owner) for a in core[:-1]):
+            continue
+        out.setdefault(control_of(last.loc.slot), []).append(op)
     return out
 
 

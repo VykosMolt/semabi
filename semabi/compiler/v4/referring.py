@@ -287,6 +287,11 @@ def _member_positioned(state, slot: str) -> bool:
         return cache[slot]
     child = next((n for n, k in (getattr(po, "node_key", None) or {}).items() if k == slot), None)
     out = False
+    if child is not None and child in getattr(po, "row_named", ()):
+        # named by its row's header: a field of a key-value table, which reversing the
+        # table's rows does not rename
+        cache[slot] = False
+        return False
     while child is not None and child >= 0:
         parent = obs.node(child).parent
         if parent is None or parent < 0:

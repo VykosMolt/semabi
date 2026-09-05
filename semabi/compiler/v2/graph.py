@@ -605,6 +605,29 @@ class ObsGraph:
         cache[(sig, i)] = out
         return out
 
+    def row_header(self, sig: str, i: int) -> str | None:
+        """The header text of the row a cell stands in, or None.
+
+        A key-value table names its fields down the first column, and such a first cell is
+        a header when the interface uses its text as a declared column header elsewhere
+        (found above).  The other cells of that row are named by it, as the cells of a
+        declared column are named by theirs; the table's own header row names nothing."""
+        obs = self.obs[sig]
+        n = obs.node(i)
+        if n.role != "cell" or n.parent < 0:
+            return None
+        cells = obs.children(n.parent)
+        if len(cells) < 2 or cells[0] == i or (sig, cells[0]) not in self.header:
+            return None
+        if not self.is_header(sig, cells[0]) or self.is_header(sig, i):
+            return None
+        text = node_text(obs.node(cells[0])).strip()
+        return text or None
+
+    def cell_header(self, sig: str, i: int) -> str | None:
+        """The interface's own name for a cell: its row header, else its column header."""
+        return self.row_header(sig, i) or self.column_header(sig, i)
+
     # ------------------------------------------------------------------ subtree template
     def subtree_template(self, sig: str, i: int) -> str:
         """Shape plus label tokens of every node in the subtree (data tokens removed)."""

@@ -145,6 +145,7 @@ class ParsedObs:
     statics: dict[str, tuple[str, Any]]  # leaves outside any instance, keyed by absolute indexed path
     node_instance: dict[int, int]  # node index -> instance index (innermost)
     node_key: dict[int, str] = field(default_factory=dict)  # leaf node index -> slot key
+    row_named: set[int] = field(default_factory=set)  # leaves named by their row's header
 
     def instances_of(self, tid: int) -> list[Instance]:
         return [x for x in self.instances if x.tid == tid]
