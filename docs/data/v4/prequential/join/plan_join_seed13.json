@@ -1,0 +1,105 @@
+{
+ "name": "harbour JOIN corpus seed 13",
+ "run": "runs/v4/harbour_dev",
+ "base": "http://127.0.0.1:8910",
+ "seed": 13,
+ "tie": {
+  "family": "join",
+  "left": null,
+  "right": null
+ },
+ "readings": {
+  "A": {},
+  "B": {}
+ },
+ "actions": [
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-102"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 0
+   },
+   "text": "N2 - North Quay - takes 90 m - no hazardous cargo - open"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Allocate berth"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Schedule call",
+    "nth": 2
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-103"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 0
+   },
+   "text": "S2 - South Quay - takes 70 m - no hazardous cargo - open"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Allocate berth"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Schedule call",
+    "nth": 3
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-101"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 0
+   },
+   "text": "S2 - South Quay - takes 70 m - no hazardous cargo - open"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Allocate berth"
+   }
+  }
+ ],
+ "test": "mutation",
+ "predictions": {
+  "A": "n/a",
+  "B": "n/a"
+ },
+ "note": "C-102 (88 m) -> N2 (90 m); C-103 (54 m) -> S2 (70 m); REFUSAL C-101 (148 m) -> S2 (70 m)"
+}

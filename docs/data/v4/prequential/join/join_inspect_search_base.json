@@ -1,0 +1,126 @@
+{
+ "run": "/home/moloch/semabi/runs/v4/harbour_dev",
+ "control": "button:Allocate berth",
+ "split": 0.999,
+ "families": {
+  "button[_]": [
+   "button#0",
+   "SUPPORTED"
+  ],
+  "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))": [
+   "heading#0",
+   "UNSUPPORTED"
+  ],
+  "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])": [
+   "cell@Berth#0",
+   "SUPPORTED"
+  ],
+  "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": [
+   "cell@Vessel#0",
+   "SUPPORTED"
+  ],
+  "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])": [
+   "cell@Pilot#0",
+   "SUPPORTED"
+  ],
+  "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": [
+   null,
+   "NO_IDENTITY"
+  ]
+ },
+ "roles": {},
+ "rules": [],
+ "default": "\u0000UNDETERMINED",
+ "events": {
+  "Nothing chosen in the berth list .": 4,
+  "Call <> is already <> ; her berth cannot be changed .": 2,
+  "<> <> is <> .": 1,
+  "<> is <> overall ; berth <> <> .": 1
+ },
+ "ordered": {},
+ "field_theory": {
+  "candidates": {
+   "0": {
+    "attr:Takes up to#0": [
+     "70",
+     "90",
+     "120",
+     "140",
+     "160"
+    ]
+   },
+   "1": {
+    "attr:Ticket to#0": [
+     "80",
+     "100",
+     "130",
+     "150"
+    ]
+   },
+   "2": {
+    "attr:Calls logged#0": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5"
+    ],
+    "attr:Length overall#0": [
+     "54",
+     "64",
+     "78",
+     "88",
+     "96",
+     "112",
+     "132",
+     "148"
+    ]
+   }
+  },
+  "adopted": {},
+  "corroborated": []
+ },
+ "occasions": [
+  {
+   "event": "<> <> is <> .",
+   "ordered": [],
+   "attrs": []
+  },
+  {
+   "event": "<> is <> overall ; berth <> <> .",
+   "ordered": [],
+   "attrs": []
+  },
+  {
+   "event": "Nothing chosen in the berth list .",
+   "ordered": [],
+   "attrs": []
+  },
+  {
+   "event": "Call <> is already <> ; her berth cannot be changed .",
+   "ordered": [],
+   "attrs": []
+  },
+  {
+   "event": "Nothing chosen in the berth list .",
+   "ordered": [],
+   "attrs": []
+  },
+  {
+   "event": "Call <> is already <> ; her berth cannot be changed .",
+   "ordered": [],
+   "attrs": []
+  },
+  {
+   "event": "Nothing chosen in the berth list .",
+   "ordered": [],
+   "attrs": []
+  },
+  {
+   "event": "Nothing chosen in the berth list .",
+   "ordered": [],
+   "attrs": []
+  }
+ ]
+}

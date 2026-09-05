@@ -1,0 +1,228 @@
+{
+ "run": "harbour_join_dev",
+ "reading": "source_choice",
+ "regime": "FROZEN_PREFIX",
+ "split": 0.999,
+ "control": null,
+ "subject_restricted": false,
+ "permuted_events": null,
+ "scored_on": "harbour_join_hold",
+ "cut": 388,
+ "operators": 27,
+ "operators_with_an_output": 27,
+ "output": {
+  "claims": 0,
+  "verdicts": {},
+  "held_out_actions_with_an_output_claim": 0,
+  "distinct_decided_claims": 0,
+  "distinct_decided_frames": 0,
+  "per_action": {},
+  "frame_only": {},
+  "model_level": {},
+  "distinct_events_where_determinate": 0,
+  "majority_frame_control_where_determinate": {
+   "right": 0,
+   "wrong": 0,
+   "control_unseen_on_prefix": 0,
+   "accuracy": null
+  },
+  "distinct_events_predicted_per_action": {},
+  "majority_frame_control": {
+   "right": 0,
+   "wrong": 0,
+   "control_unseen_on_prefix": 0,
+   "accuracy": null
+  },
+  "observed_frame_distribution": {}
+ },
+ "state": {
+  "verdicts": {},
+  "per_action": {}
+ },
+ "outcome_model": {
+  "controls": 10,
+  "rules": 14,
+  "held_out_clicks": 292,
+  "ledger": {
+   "the event the interface returned": 255,
+   "no determinate answer": 26,
+   "a different event": 11
+  },
+  "accuracy_where_it_answered": 0.959,
+  "distinct_events_asserted": 12,
+  "answers_naming_an_event": 185,
+  "accuracy_where_it_named_an_event": 0.941,
+  "by_level": {
+   "the event the interface returned / with its arguments": 174,
+   "the event the interface returned / the control returns nothing": 81,
+   "a different event / the event alone": 9,
+   "a different event / with its arguments": 2
+  },
+  "events_asserted": {
+   "\u0000SILENT": 81,
+   "<> <> is already <> .": 33,
+   "<> <> is now <> .": 28,
+   "<> already has call <> on the board .": 24,
+   "<> is signed off .": 20,
+   "Call <> opened for <> .": 18,
+   "<> is already signed on .": 18,
+   "<> is signed on .": 16
+  },
+  "majority_frame_control_where_it_answered": {
+   "right": 30,
+   "wrong": 236,
+   "control_unseen_on_prefix": 0,
+   "accuracy": 0.113
+  },
+  "by_control": {
+   "button#cell@Call/button": {
+    "fitted": 54,
+    "rules": 0,
+    "events_fitted": 1,
+    "the event the interface returned": 81
+   },
+   "button:Schedule call": {
+    "fitted": 27,
+    "rules": 2,
+    "events_fitted": 2,
+    "the event the interface returned": 40,
+    "a different event": 2
+   },
+   "button:Reopen": {
+    "fitted": 25,
+    "rules": 2,
+    "events_fitted": 2,
+    "the event the interface returned": 38
+   },
+   "button:Sign on": {
+    "fitted": 27,
+    "rules": 2,
+    "events_fitted": 2,
+    "the event the interface returned": 34
+   },
+   "button:Close": {
+    "fitted": 27,
+    "rules": 3,
+    "events_fitted": 3,
+    "the event the interface returned": 33
+   },
+   "button:Sign off": {
+    "fitted": 22,
+    "rules": 4,
+    "events_fitted": 3,
+    "the event the interface returned": 29,
+    "a different event": 2
+   },
+   "button:Allocate berth": {
+    "fitted": 12,
+    "rules": 0,
+    "events_fitted": 6,
+    "no determinate answer": 13
+   },
+   "button:Bring _": {
+    "fitted": 9,
+    "rules": 0,
+    "events_fitted": 2,
+    "no determinate answer": 8
+   },
+   "button:Record departure": {
+    "fitted": 3,
+    "rules": 1,
+    "events_fitted": 1,
+    "a different event": 7
+   },
+   "button:Book pilot": {
+    "fitted": 9,
+    "rules": 0,
+    "events_fitted": 4,
+    "no determinate answer": 5
+   }
+  },
+  "wrong": [
+   {
+    "step": 53,
+    "control": "button:Sign off",
+    "predicted": "<> is signed off .",
+    "observed": "<> is already signed off .",
+    "returned": "Aoife Marr is already signed off.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 87,
+    "control": "button:Record departure",
+    "predicted": "<> has sailed on call <> ; berth <> is clear .",
+    "observed": "Call <> is not <> , so nothing has sailed .",
+    "returned": "Call C-103 is not alongside, so nothing has sailed.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 170,
+    "control": "button:Record departure",
+    "predicted": "<> has sailed on call <> ; berth <> is clear .",
+    "observed": "Call <> is not <> , so nothing has sailed .",
+    "returned": "Call C-103 is not alongside, so nothing has sailed.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 220,
+    "control": "button:Record departure",
+    "predicted": "<> has sailed on call <> ; berth <> is clear .",
+    "observed": "Call <> is not <> , so nothing has sailed .",
+    "returned": "Call C-102 is not alongside, so nothing has sailed.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 283,
+    "control": "button:Record departure",
+    "predicted": "<> has sailed on call <> ; berth <> is clear .",
+    "observed": "Call <> is not <> , so nothing has sailed .",
+    "returned": "Call C-102 is not alongside, so nothing has sailed.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 301,
+    "control": "button:Sign off",
+    "predicted": "<> is signed off .",
+    "observed": "<> is already signed off .",
+    "returned": "Aoife Marr is already signed off.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 379,
+    "control": "button:Record departure",
+    "predicted": "<> has sailed on call <> ; berth <> is clear .",
+    "observed": "Call <> is not <> , so nothing has sailed .",
+    "returned": "Call C-103 is not alongside, so nothing has sailed.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 428,
+    "control": "button:Record departure",
+    "predicted": "<> has sailed on call <> ; berth <> is clear .",
+    "observed": "Call <> is not <> , so nothing has sailed .",
+    "returned": "Call C-104 is not alongside, so nothing has sailed.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   }
+  ],
+  "lists": {
+   "button#cell@Call/button": "button#cell@Call/button: 54 fitted occasions, 1 distinct events\n    otherwise -> returns nothing",
+   "button:Allocate berth": "button:Allocate berth: 12 fitted occasions, 6 distinct events\n    otherwise -> undetermined",
+   "button:Book pilot": "button:Book pilot: 9 fitted occasions, 4 distinct events\n    otherwise -> undetermined",
+   "button:Bring _": "button:Bring _: 9 fitted occasions, 2 distinct events\n    otherwise -> undetermined",
+   "button:Close": "button:Close: 27 fitted occasions, 3 distinct events\n    role relation['forward', 'rel:0']:0<owner = relation['forward', 'rel:0'] from owner\n    attr:Condition#0(owner) == 'closed'  ->  <> <> is already <> .   [11]\n    ('unnamed', \"relation['forward', 'rel:0']:0<owner\")  ->  <> <> is now <> .   [12]\n    otherwise  ->  <> <> cannot be <> while call <> holds it .   [4]\n    otherwise -> <> <> cannot be <> while call <> holds it .\n    '<> <> cannot be <> while call <> holds it .' arguments: 1=owner, 3=relation['forward', 'rel:0']:0<owner\n    '<> <> is already <> .' arguments: 1=owner\n    '<> <> is now <> .' arguments: 1=owner",
+   "button:Record departure": "button:Record departure: 3 fitted occasions, 1 distinct events\n    otherwise  ->  <> has sailed on call <> ; berth <> is clear .   [3]\n    otherwise -> <> has sailed on call <> ; berth <> is clear .",
+   "button:Reopen": "button:Reopen: 25 fitted occasions, 2 distinct events\n    attr:Condition#0(owner) == 'open'  ->  <> <> is already <> .   [16]\n    otherwise  ->  <> <> is now <> .   [9]\n    otherwise -> <> <> is now <> .\n    '<> <> is already <> .' arguments: 1=owner\n    '<> <> is now <> .' arguments: 1=owner",
+   "button:Schedule call": "button:Schedule call: 27 fitted occasions, 2 distinct events\n    role relation['forward', 'rel:0']:0<owner = relation['forward', 'rel:0'] from owner\n    ('ref_set', 'owner', 'rel:0')  ->  <> already has call <> on the board .   [15]\n    otherwise  ->  Call <> opened for <> .   [12]\n    otherwise -> Call <> opened for <> .\n    '<> already has call <> on the board .' arguments: 0=owner, 1=relation['forward', 'rel:0']:0<owner\n    'Call <> opened for <> .' arguments: 0=created:T0, 1=owner",
+   "button:Sign off": "button:Sign off: 22 fitted occasions, 3 distinct events\n    role relation['forward', 'rel:0']:0<owner = relation['forward', 'rel:0'] from owner\n    attr:Ticket to#0(owner) == '150' & ('unnamed', \"relation['forward', 'rel:0']:0<owner\")  ->  <> is signed off .   [6]\n    attr:Duty#0(owner) == 'on' & ('unnamed', \"relation['forward', 'rel:0']:0<owner\")  ->  <> is signed off .   [6]\n    ('ref_set', 'owner', 'rel:0')  ->  <> cannot sign off while booked for call <> .   [5]\n    otherwise  ->  <> is already signed off .   [5]\n    otherwise -> <> is already signed off .\n    '<> cannot sign off while booked for call <> .' arguments: 0=owner, 1=relation['forward', 'rel:0']:0<owner\n    '<> is already signed off .' arguments: 0=owner\n    '<> is signed off .' arguments: 0=owner",
+   "button:Sign on": "button:Sign on: 27 fitted occasions, 2 distinct events\n    attr:Duty#0(owner) == 'on'  ->  <> is already signed on .   [16]\n    otherwise  ->  <> is signed on .   [11]\n    otherwise -> <> is signed on .\n    '<> is already signed on .' arguments: 0=owner\n    '<> is signed on .' arguments: 0=owner"
+  }
+ }
+}

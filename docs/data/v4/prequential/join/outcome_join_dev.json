@@ -1,0 +1,74 @@
+{
+ "run": "harbour_join_dev",
+ "reading": "source_choice",
+ "regime": "FROZEN_PREFIX",
+ "split": 0.999,
+ "control": null,
+ "subject_restricted": false,
+ "permuted_events": null,
+ "scored_on": "harbour_join_dev",
+ "cut": 388,
+ "operators": 27,
+ "operators_with_an_output": 27,
+ "output": {
+  "claims": 0,
+  "verdicts": {},
+  "held_out_actions_with_an_output_claim": 0,
+  "distinct_decided_claims": 0,
+  "distinct_decided_frames": 0,
+  "per_action": {},
+  "frame_only": {},
+  "model_level": {},
+  "distinct_events_where_determinate": 0,
+  "majority_frame_control_where_determinate": {
+   "right": 0,
+   "wrong": 0,
+   "control_unseen_on_prefix": 0,
+   "accuracy": null
+  },
+  "distinct_events_predicted_per_action": {},
+  "majority_frame_control": {
+   "right": 0,
+   "wrong": 0,
+   "control_unseen_on_prefix": 0,
+   "accuracy": null
+  },
+  "observed_frame_distribution": {}
+ },
+ "state": {
+  "verdicts": {},
+  "per_action": {}
+ },
+ "outcome_model": {
+  "controls": 10,
+  "rules": 14,
+  "held_out_clicks": 0,
+  "ledger": {},
+  "accuracy_where_it_answered": null,
+  "distinct_events_asserted": 0,
+  "answers_naming_an_event": 0,
+  "accuracy_where_it_named_an_event": null,
+  "by_level": {},
+  "events_asserted": {},
+  "majority_frame_control_where_it_answered": {
+   "right": 0,
+   "wrong": 0,
+   "control_unseen_on_prefix": 0,
+   "accuracy": null
+  },
+  "by_control": {},
+  "wrong": [],
+  "lists": {
+   "button#cell@Call/button": "button#cell@Call/button: 54 fitted occasions, 1 distinct events\n    otherwise -> returns nothing",
+   "button:Allocate berth": "button:Allocate berth: 12 fitted occasions, 6 distinct events\n    otherwise -> undetermined",
+   "button:Book pilot": "button:Book pilot: 9 fitted occasions, 4 distinct events\n    otherwise -> undetermined",
+   "button:Bring _": "button:Bring _: 9 fitted occasions, 2 distinct events\n    otherwise -> undetermined",
+   "button:Close": "button:Close: 27 fitted occasions, 3 distinct events\n    role relation['forward', 'rel:0']:0<owner = relation['forward', 'rel:0'] from owner\n    attr:Condition#0(owner) == 'closed'  ->  <> <> is already <> .   [11]\n    ('unnamed', \"relation['forward', 'rel:0']:0<owner\")  ->  <> <> is now <> .   [12]\n    otherwise  ->  <> <> cannot be <> while call <> holds it .   [4]\n    otherwise -> <> <> cannot be <> while call <> holds it .\n    '<> <> cannot be <> while call <> holds it .' arguments: 1=owner, 3=relation['forward', 'rel:0']:0<owner\n    '<> <> is already <> .' arguments: 1=owner\n    '<> <> is now <> .' arguments: 1=owner",
+   "button:Record departure": "button:Record departure: 3 fitted occasions, 1 distinct events\n    otherwise  ->  <> has sailed on call <> ; berth <> is clear .   [3]\n    otherwise -> <> has sailed on call <> ; berth <> is clear .",
+   "button:Reopen": "button:Reopen: 25 fitted occasions, 2 distinct events\n    attr:Condition#0(owner) == 'open'  ->  <> <> is already <> .   [16]\n    otherwise  ->  <> <> is now <> .   [9]\n    otherwise -> <> <> is now <> .\n    '<> <> is already <> .' arguments: 1=owner\n    '<> <> is now <> .' arguments: 1=owner",
+   "button:Schedule call": "button:Schedule call: 27 fitted occasions, 2 distinct events\n    role relation['forward', 'rel:0']:0<owner = relation['forward', 'rel:0'] from owner\n    ('ref_set', 'owner', 'rel:0')  ->  <> already has call <> on the board .   [15]\n    otherwise  ->  Call <> opened for <> .   [12]\n    otherwise -> Call <> opened for <> .\n    '<> already has call <> on the board .' arguments: 0=owner, 1=relation['forward', 'rel:0']:0<owner\n    'Call <> opened for <> .' arguments: 0=created:T0, 1=owner",
+   "button:Sign off": "button:Sign off: 22 fitted occasions, 3 distinct events\n    role relation['forward', 'rel:0']:0<owner = relation['forward', 'rel:0'] from owner\n    attr:Ticket to#0(owner) == '150' & ('unnamed', \"relation['forward', 'rel:0']:0<owner\")  ->  <> is signed off .   [6]\n    attr:Duty#0(owner) == 'on' & ('unnamed', \"relation['forward', 'rel:0']:0<owner\")  ->  <> is signed off .   [6]\n    ('ref_set', 'owner', 'rel:0')  ->  <> cannot sign off while booked for call <> .   [5]\n    otherwise  ->  <> is already signed off .   [5]\n    otherwise -> <> is already signed off .\n    '<> cannot sign off while booked for call <> .' arguments: 0=owner, 1=relation['forward', 'rel:0']:0<owner\n    '<> is already signed off .' arguments: 0=owner\n    '<> is signed off .' arguments: 0=owner",
+   "button:Sign on": "button:Sign on: 27 fitted occasions, 2 distinct events\n    attr:Duty#0(owner) == 'on'  ->  <> is already signed on .   [16]\n    otherwise  ->  <> is signed on .   [11]\n    otherwise -> <> is signed on .\n    '<> is already signed on .' arguments: 0=owner\n    '<> is signed on .' arguments: 0=owner"
+  }
+ }
+}

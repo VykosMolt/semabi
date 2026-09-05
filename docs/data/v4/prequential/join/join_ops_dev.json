@@ -1,0 +1,97 @@
+{
+ "berth_operators": [
+  {
+   "name": "op0",
+   "how": "click(button#cell@Call/button@T0[?o0]) click(button:Allocate berth)",
+   "support": 2,
+   "pre": [
+    "('ref_set', '?o2', 'rel:2')",
+    "('attr_ne', '?o1', 'attr:Certified for hazardous cargo#0', 'no')"
+   ],
+   "effs": [
+    "emit '<> <> allocated to call <> .'(Berth, ?o1, ?o0)",
+    "rel:0(?o1) := '?o0'",
+    "rel:1(?o2) := 'T1:W1'"
+   ],
+   "neg": null,
+   "unexplained_failures": null
+  },
+  {
+   "name": "op1",
+   "how": "click(button#cell@Call/button@T0[?o0]) click(button:Allocate berth)",
+   "support": 1,
+   "pre": [
+    "('attr_ne', '?o1', 'attr:Certified for hazardous cargo#0', 'yes')"
+   ],
+   "effs": [
+    "emit '<> <> allocated to call <> .'(Berth, ?o1, ?o2)",
+    "rel:0(?o1) := 'T0:C-103'",
+    "rel:1(?o3) := '?o1'"
+   ],
+   "neg": null,
+   "unexplained_failures": null
+  },
+  {
+   "name": "op2",
+   "how": "click(button#cell@Call/button@T0[?o0]) click(button:Allocate berth)",
+   "support": 1,
+   "pre": [
+    "('attr_ne', '?o1', 'attr:Condition#0', 'open')"
+   ],
+   "effs": [
+    "emit '<> <> is <> .'(Berth, ?o1, closed)"
+   ],
+   "neg": null,
+   "unexplained_failures": null
+  },
+  {
+   "name": "op3",
+   "how": "click(button#cell@Call/button@T0[?o0]) click(button:Allocate berth)",
+   "support": 1,
+   "pre": [
+    "('ref_set', '?o1', 'rel:0')"
+   ],
+   "effs": [
+    "emit '<> <> is held by call <> .'(Berth, ?o1, ?o2)"
+   ],
+   "neg": null,
+   "unexplained_failures": null
+  },
+  {
+   "name": "op4",
+   "how": "click(button#cell@Call/button@T0[?o0]) click(button:Allocate berth)",
+   "support": 1,
+   "pre": [
+    "('attr_ne', '?o1', 'attr:Certified for hazardous cargo#0', 'yes')"
+   ],
+   "effs": [
+    "emit '<> is <> overall ; berth <> <> .'(('ref', '?o0', 'in:4'), 132 m, ?o1, takes 90 m)"
+   ],
+   "neg": null,
+   "unexplained_failures": null
+  },
+  {
+   "name": "op5",
+   "how": "click(button#cell@Call/button@T0[?o0]) click(button:Allocate berth)",
+   "support": 2,
+   "pre": [],
+   "effs": [
+    "emit 'Call <> is already <> ; her berth cannot be changed .'(*, alongside)"
+   ],
+   "neg": null,
+   "unexplained_failures": null
+  },
+  {
+   "name": "op6",
+   "how": "click(button#cell@Call/button@T0[?o0]) click(button:Allocate berth)",
+   "support": 4,
+   "pre": [],
+   "effs": [
+    "emit 'Nothing chosen in the berth list .'"
+   ],
+   "neg": null,
+   "unexplained_failures": null
+  }
+ ],
+ "total": 27
+}

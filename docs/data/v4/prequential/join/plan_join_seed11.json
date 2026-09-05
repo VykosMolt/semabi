@@ -1,0 +1,113 @@
+{
+ "name": "harbour JOIN corpus seed 11",
+ "run": "runs/v4/harbour_dev",
+ "base": "http://127.0.0.1:8910",
+ "seed": 11,
+ "tie": {
+  "family": "join",
+  "left": null,
+  "right": null
+ },
+ "readings": {
+  "A": {},
+  "B": {}
+ },
+ "actions": [
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Schedule call",
+    "nth": 1
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-102"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 0
+   },
+   "text": "N1 - North Quay - takes 120 m - no hazardous cargo - open"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Allocate berth"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Schedule call",
+    "nth": 2
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Schedule call",
+    "nth": 3
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-104"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 0
+   },
+   "text": "N2 - North Quay - takes 90 m - no hazardous cargo - open"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Allocate berth"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-101"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 0
+   },
+   "text": "N2 - North Quay - takes 90 m - no hazardous cargo - open"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Allocate berth"
+   }
+  }
+ ],
+ "test": "mutation",
+ "predictions": {
+  "A": "n/a",
+  "B": "n/a"
+ },
+ "note": "C-102 (112 m) -> N1 (120 m); C-104 (88 m) -> N2 (90 m); REFUSAL C-101 (64 m) -> N2 (90 m)"
+}

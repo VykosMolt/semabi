@@ -1,0 +1,122 @@
+{
+ "run": "/home/moloch/semabi-scratch/preq/harbour_join_dev",
+ "control": "button:Allocate berth",
+ "split": 0.999,
+ "roles": {},
+ "rules": [],
+ "default": "\u0000UNDETERMINED",
+ "events": {
+  "Nothing chosen in the berth list .": 4,
+  "<> <> allocated to call <> .": 3,
+  "Call <> is already <> ; her berth cannot be changed .": 2,
+  "<> <> is <> .": 1,
+  "<> is <> overall ; berth <> <> .": 1,
+  "<> <> is held by call <> .": 1
+ },
+ "ordered": {},
+ "field_theory": {
+  "candidates": {
+   "1": {
+    "attr:Takes up to#0": [
+     "70",
+     "90",
+     "120",
+     "140",
+     "160"
+    ]
+   },
+   "2": {
+    "attr:Ticket to#0": [
+     "80",
+     "100",
+     "130",
+     "150"
+    ]
+   },
+   "3": {
+    "attr:Calls logged#0": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5"
+    ],
+    "attr:Length overall#0": [
+     "54",
+     "64",
+     "78",
+     "88",
+     "96",
+     "112",
+     "132",
+     "148"
+    ]
+   }
+  },
+  "adopted": {},
+  "corroborated": []
+ },
+ "occasions": [
+  {
+   "event": "<> <> is <> .",
+   "ordered": [],
+   "attrs": []
+  },
+  {
+   "event": "<> is <> overall ; berth <> <> .",
+   "ordered": [],
+   "attrs": []
+  },
+  {
+   "event": "Nothing chosen in the berth list .",
+   "ordered": [],
+   "attrs": []
+  },
+  {
+   "event": "Call <> is already <> ; her berth cannot be changed .",
+   "ordered": [],
+   "attrs": []
+  },
+  {
+   "event": "Nothing chosen in the berth list .",
+   "ordered": [],
+   "attrs": []
+  },
+  {
+   "event": "Call <> is already <> ; her berth cannot be changed .",
+   "ordered": [],
+   "attrs": []
+  },
+  {
+   "event": "Nothing chosen in the berth list .",
+   "ordered": [],
+   "attrs": []
+  },
+  {
+   "event": "Nothing chosen in the berth list .",
+   "ordered": [],
+   "attrs": []
+  },
+  {
+   "event": "<> <> allocated to call <> .",
+   "ordered": [],
+   "attrs": []
+  },
+  {
+   "event": "<> <> allocated to call <> .",
+   "ordered": [],
+   "attrs": []
+  },
+  {
+   "event": "<> <> allocated to call <> .",
+   "ordered": [],
+   "attrs": []
+  },
+  {
+   "event": "<> <> is held by call <> .",
+   "ordered": [],
+   "attrs": []
+  }
+ ]
+}

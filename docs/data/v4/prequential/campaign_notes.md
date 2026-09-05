@@ -1024,3 +1024,94 @@ fitted occasions, 4 events, 0 rules -- one success is below MIN_COVER, as expect
 the report does not print roles, so role reachability (vessel row from the allocate
 button) is still unknown: in the dev phase read model.outcomes[c].roles directly
 (csq.fit + oc) before judging P21.  Hourly clock monitor stopped for the pause.
+
+# Resumed 2026-09-05 11:20 (machine rebooted 09-04; scratchpad and HEAD worktree
+# recreated at 4ace613)
+All five JOIN extensions landed on 09-03 (join 23:47, join2 00:24, s11 00:50, s12
+01:30, s13 02:14).  Live outcomes: positives 78->140 (x2, join and join2 share the
+first action), 96->120, 112->120, 88->90 (x3), 54->70; the one length refusal
+outside the base is s12's "Petrel Star is 148 m overall; berth S2 takes 70 m."
+Three planned length refusals landed on "Berth <> is held by call <>" instead: the
+seed planner's `taken` set only knew its own allocations, and the live app had
+already had those berths held.  Not a defect of the experiment: a second refusal
+event, with a pair on the wrong side of the comparison in join2 (78 vs 70) and on
+the right side in s11 (64 vs 90), which is exactly the negative a comparison
+rule must not be fooled by.
+Merged: harbour_join_dev = harbour_dev + join + join2 (389 steps; the shared
+first allocation is a repeated occasion, one distinct pair); harbour_join_hold =
+harbour_transfer + s11 + s12 + s13 (492 steps).  Dev distinct pairs: allocated
+(78,140),(96,120); far side on other events (132,90) x7 length refusals,
+(78,70) held-by -- two each, so adoption is reachable if the roles bind both
+objects.  P21 stands as pre-registered on 09-03.
+Six fits launched (join_fits.sh): inspect / inspect-base, hold / hold-base,
+ft, dev.  join_inspect.py prints the control's roles, rules, adopted fields and
+per-occasion ordered literals -- the role-reachability question directly.
+
+## P21 judged (12:05): FALSIFIED, for the reason the pre-registration reserved
+Six fits (11:20-11:27).  `button:Allocate berth` on harbour_join_dev under
+source_choice: 12 occasions, 6 events, ZERO ROLES, 0 rules; identical under the
+pre-change worktree; holdout 13 abstentions either way.  The comparison literal
+never had two objects to compare.
+Why (join_reach.py, join_ops): the operator layer reaches both arguments --
+op0 (support 2): ?o1 = berth by the selection (combobox#0), ?o2 = vessel by the
+forward reference in:4 of ?o0, ?o0 = the call, bound as the OWNER OF THE EARLIER
+CLICK that opened the sheet; the inducer folds that click into the core as an
+enabling action (induce._extend_macro: the Allocate button is absent before it,
+present after).  The Allocate click itself has no owner: under the retained
+reading the call-sheet family group[_](heading[_],table[_](...cell@Field/
+cell@Value...),text[_](combobox,button)...) is keyed heading#0 and UNSUPPORTED,
+and the overview call row has key None / NO_IDENTITY.  outcome.learn takes
+roles only from single-click cores (ops_by_control) and _owner_object finds
+nothing, so the control has no roles at all.  The page states the context in
+prose -- heading "Call sheet C-102", Field/Value rows Vessel/Length overall --
+which no pre-state query in the referring language reads.
+Also: op0's vessel-berth effect memorises 'T1:W1' because join and join2 share
+the first allocation (support 2, one distinct berth); and the sheet's own
+Length overall Value cell renders "78 m" (template cell@Value[_] keeps the
+unit), so a comparison through the sheet's attributes WOULD need a unit-aware
+number -- the earlier "unit gap" note was right for that path and wrong for the
+vessel-register path.
+This is Finding 8: JOIN's third face is the CONTEXT OBJECT.  The comparison is
+expressible and the corpus has positives; what is missing is a pre-state route
+to the call whose sheet is open, and that is an identity verdict of the reading
+(the sheet UNSUPPORTED), not a grammar gap.
+Next, in order and pre-registered: P22 -- the search's own reading of
+harbour_join_dev (more sheets opened, three allocations) SUPPORTS the sheet
+family; fitted under it the Allocate click gets the sheet as owner, roles
+appear (berth by selection; vessel by the sheet's reference if the reading
+links Value#0 to the vessel row), and the comparison forms.  If the sheet
+stays UNSUPPORTED, the wall stands at the reading and the honest options are
+(a) a referring form for a context stated by a heading (a language change, to
+be attacked before adoption) or (b) more evidence.  No corpus-specific role.
+Reviewer (opus-specialist) on ab565f9: ACCEPT-WITH-FIXES; fixed 12:00 --
+adoption over pairs now requires each field to vary on each side (_varies),
+the owner is excluded from pair literals, binding.holds returns None for an
+unbound role of an ordered literal, loop variables renamed; one new test with
+two scenarios where only the comparison separates.  Suite running.
+
+## P22 judged (12:25): the reading moves, the wall does not
+The search's own reading of harbour_join_dev differs from the base: the overview
+call row gains identity (cell@Vessel#0, SUPPORTED; NO_IDENTITY on harbour_dev)
+and the call-sheet family is no longer among the families at all.  Under it the
+Allocate control still has zero roles and zero rules.  join_reach under that
+reading: po.node_instance has NO entry for the Allocate button -- the sheet is
+not a unit the abstraction instantiates, so the owner walk has nowhere to start.
+Same under source_choice.  P22 falsified; Finding 8 stands at the abstraction,
+below the reading: the sheet is a page fragment, not an instance.
+Operator layer under the search reading: op0 binds ?o1 berth (selection),
+?o2 vessel (forward in:4 from the call), ?o0 the call bound by the enabling
+click -- the arguments exist, one click too early for a pre-state question.
+Suite over the reviewer fixes: 550 passed, 3 skipped, 1 xfailed (24:32);
+committed.  Battery regeneration launched 12:30 (run_battery.sh; previous
+markers moved to battery_prev/); the manifests digest induce.py, whose
+renderer changed in ab565f9.
+Design note for the next step (not started): the page states the context --
+heading "Call sheet C-102", Value#0 "Kittiwake" -- and the referring language
+has no form that reads a text slot naming an object (SELECTION reads a
+combobox by key prefix).  A MENTION form ("the object of type T whose key this
+text slot names, exactly one") would give the outcome layer the vessel by
+Value#0 under a reading keyed by vessel name, and the berth by the select
+(structural_roles, off by default: measured harmful on blend -- 50 of 79
+"nothing established" states turned into forced claims, 18 wrong).  Any
+page-read role must face that same measurement before adoption.  Not a
+corpus-specific role: the principle is the page's own statement of context.
