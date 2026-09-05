@@ -27,7 +27,7 @@ VESSELS = [(name, str(60 + 7 * i), flag) for i, (name, flag) in enumerate(
 BERTHS = [("W1", "140"), ("N1", "120"), ("N2", "90"), ("S1", "160"), ("S2", "70"), ("E1", "100")]
 
 
-def page(sheet=None, feedback=None, reverse_fields=False) -> Observation:
+def page(sheet=None, feedback=None, reverse_fields=False, swap_columns=False) -> Observation:
     rows = [("group", "", -1), ("heading", "Ardnavie Harbour", 0)]
 
     def table(parent, headers, body):
@@ -52,7 +52,11 @@ def page(sheet=None, feedback=None, reverse_fields=False) -> Observation:
         rows.append(("group", "", 0)); g = len(rows) - 1
         rows.append(("heading", f"Call sheet {call}", g))
         fields = [("Vessel", vessel), ("Length", length), ("Flag", flag), ("Berth", berth)]
-        table(g, ["Field", "Value"], list(reversed(fields)) if reverse_fields else fields)
+        fields = list(reversed(fields)) if reverse_fields else fields
+        if swap_columns:
+            table(g, ["Value", "Field"], [(v, k) for k, v in fields])
+        else:
+            table(g, ["Field", "Value"], fields)
         rows.append(("text", "", g)); x = len(rows) - 1
         rows.append(("text", "Berth", x)); rows.append(("combobox", "no berth chosen", x))
         rows.append(("button", "Allocate berth", x))
@@ -124,11 +128,13 @@ def test_the_cleared_panel_is_spared_and_the_feedback_line_is_not():
 def test_the_panel_object_carries_the_fields_under_the_shared_names_and_reversal_keeps_them():
     G, H, pages = fitted()
     A = V2Abstractor(G, H, merge_mentions=True)   # as compile_v4 builds it
-    s1b, rev = pages["s1b"], page(("C-102", "Kittiwake", "60", "Norway", "N1"), reverse_fields=True)
-    G.add(_sig(rev), rev)
+    s1b = pages["s1b"]
+    rev = page(("C-102", "Kittiwake", "60", "Norway", "N1"), reverse_fields=True)
+    swapped = page(("C-102", "Kittiwake", "60", "Norway", "N1"), swap_columns=True)
+    G.add(_sig(rev), rev); G.add(_sig(swapped), swapped)
     vessel_tid = A.tid_map[H.tid_of_template[next(t for t in H.units if "cell@Vessel[_]" in t and t.startswith("row"))]]
     berth_tid = A.tid_map[H.tid_of_template[next(t for t in H.units if "cell@Berth[_]" in t and t.startswith("row"))]]
-    for obs in (s1b, rev):
+    for obs in (s1b, rev, swapped):        # rows reversed; columns swapped
         state = A.abstract(obs)
         # the sheet: the one object whose heading names the call; the fields under the
         # register's own names; the vessel it shows either is it (one entity, by key

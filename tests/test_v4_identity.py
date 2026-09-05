@@ -21,15 +21,37 @@ def _unit(template, instances, slot_names):
 
 
 def test_a_value_that_never_had_a_peer_to_separate_is_unsupported_not_perfect():
-    # one instance per observation: the value is constant and nothing ever tested it
+    # one instance per observation: the values vary and nothing ever tested them
     unit = _unit("text[_](textbox[_])",
-                 [_instance("s1", 0, label="Name"), _instance("s2", 0, label="Name"),
-                  _instance("s3", 0, label="Name")],
+                 [_instance("s1", 0, label="Name"), _instance("s2", 0, label="Owner"),
+                  _instance("s3", 0, label="Reason")],
                  ["label"])
-    readings = readings_for(unit, reload_pairs=[])
+    readings = readings_for(unit, reload_pairs=[], shared={"Name", "Owner", "Reason"})
     by_slot = {r.key_slot: r for r in readings}
     assert by_slot["label"].status == "UNSUPPORTED"
     assert by_slot["label"].evidence.discrimination is None
+    # a value that is the same on every page names no instance, peers or not: harbour's
+    # call sheet is one at a time, and its button's label is not its name
+    constant = _unit("text[_](textbox[_])",
+                     [_instance("s1", 0, label="Name"), _instance("s2", 0, label="Name"),
+                      _instance("s3", 0, label="Name")],
+                     ["label"])
+    by_slot = {r.key_slot: r for r in readings_for(constant, reload_pairs=[], shared={"Name"})}
+    assert by_slot["label"].status == "CONTRADICTED"
+
+
+def test_a_one_at_a_time_family_is_keyed_only_by_what_another_family_is_keyed_by():
+    # a detail view: one instance per page, a vessel field, a yes/no field, a status field;
+    # only the vessel field's values are another family's keys
+    sheet = _unit("group[_](heading[_],table[_])",
+                  [_instance("s1", 0, vessel="Kittiwake", hazard="no", status="expected"),
+                   _instance("s2", 0, vessel="Nordkapp", hazard="yes", status="alongside"),
+                   _instance("s3", 0, vessel="Petrel", hazard="no", status="expected")],
+                  ["vessel", "hazard", "status"])
+    readings = readings_for(sheet, reload_pairs=[], shared={"Kittiwake", "Nordkapp", "Petrel", "W1"})
+    keys = [r.key_slot for r in readings]
+    assert "vessel" in keys and "hazard" not in keys and "status" not in keys
+    assert readings[0].key_slot is None
     # and with no evidence for it, claiming no identity ranks ahead of claiming one
     assert readings[0].key_slot is None
 

@@ -283,6 +283,12 @@ def readings_for(unit, reload_pairs: list[tuple[str, str]],
 
     out: list[Reading] = [reading_for(unit, slots, reload_pairs, view_of, pairs=pairs,
                                       positions=positions, spoken=spoken, shared=shared) for slots in candidates]
+    if out and all(r.evidence.discrimination is None for r in out):
+        # never two at once: nothing separates instances, and the only evidence of identity
+        # left is correspondence -- a value another family is already keyed by (harbour's
+        # call sheet names its vessel).  A key with no such tie is behaviour's to choose
+        # among, and behaviour prefers whichever makes the fewest objects.
+        out = [r for r in out if r.evidence.shared >= 0.5]
     out.append(Reading(unit.template, (), IdentityEvidence(copresent_pairs=len(pairs)),
                        status="NO_IDENTITY", why="no identity-bearing observation claimed"))
     out.sort(key=_rank)
@@ -345,12 +351,12 @@ def _classify(ev: IdentityEvidence) -> tuple[str, str]:
     with its rivals is a behavioural question, not a structural one, so it is passed to the
     search with its discrimination recorded instead of being accepted or rejected here.
     """
+    if ev.distinct_values < 2:
+        return ("CONTRADICTED", "one value only: it names no instance in particular")
     if ev.discrimination is None:
         return ("UNSUPPORTED",
                 "the family never rendered two instances at once, so nothing shows this "
                 "value distinguishes instances")
-    if ev.distinct_values < 2:
-        return ("CONTRADICTED", "one value only: it names no instance in particular")
     if ev.discrimination == 0.0:
         return ("CONTRADICTED",
                 f"separates none of the {ev.copresent_pairs} co-present pairs")

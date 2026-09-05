@@ -321,8 +321,7 @@ class Hypotheses:
         flows to the enclosing unit."""
         n = obs.node(i)
         if n.role == "row":
-            cells = obs.children(i)
-            return len(cells) >= 2 and self.G.row_header(sig, cells[1]) is not None
+            return any(self.G.row_header(sig, c) for c in obs.children(i))
         if n.role not in ("table", "rowgroup"):
             return False
         rows = [x for x in obs.subtree(i) if obs.node(x).role == "row"]

@@ -323,9 +323,9 @@ class ObsGraph:
                     continue
                 rows = sorted(x for x in obs.subtree(n.i) if obs.node(x).role == "row")
                 for r in rows[1:]:
-                    cells = obs.children(r)
-                    if cells and node_text(obs.node(cells[0])) in known:
-                        self.header.add((sig, cells[0]))
+                    named = [c for c in obs.children(r) if node_text(obs.node(c)) in known]
+                    if len(named) == 1:          # the field's name, wherever the column stands
+                        self.header.add((sig, named[0]))
         shapes = {}
         order = []                               # post-order, for the same reason as `depth`
         stack = [(n.i, False) for n in obs.nodes if n.parent < 0]
@@ -614,14 +614,12 @@ class ObsGraph:
         declared column are named by theirs; the table's own header row names nothing."""
         obs = self.obs[sig]
         n = obs.node(i)
-        if n.role != "cell" or n.parent < 0:
+        if n.role != "cell" or n.parent < 0 or self.is_header(sig, i):
             return None
-        cells = obs.children(n.parent)
-        if len(cells) < 2 or cells[0] == i or (sig, cells[0]) not in self.header:
+        heads = [c for c in obs.children(n.parent) if c != i and (sig, c) in self.header and self.is_header(sig, c)]
+        if len(heads) != 1:
             return None
-        if not self.is_header(sig, cells[0]) or self.is_header(sig, i):
-            return None
-        text = node_text(obs.node(cells[0])).strip()
+        text = node_text(obs.node(heads[0])).strip()
         return text or None
 
     def cell_header(self, sig: str, i: int) -> str | None:
