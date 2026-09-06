@@ -189,3 +189,23 @@ def test_a_held_out_state_is_asked_in_the_language_the_evidence_was_fitted_in():
     assert model.predict(query) == "refused"
     assert "refused" in model.admissible(query, corroborated=True)
     assert "refused" not in model.admissible(nominal, corroborated=True)
+
+
+def test_an_acquired_occasion_refits_the_evidence_in_the_fitted_language():
+    # the refit rebuilt the control without its field theory, so every query after an
+    # acquisition lost the thresholds and comparisons again (harbour's pilot bookings)
+    from types import SimpleNamespace
+    from semabi.eval.v4_acquire import refit_with
+    rows = [((78, 140), "berthed"), ((96, 120), "berthed"), ((100, 160), "berthed"),
+            ((64, 70), "berthed"), ((140, 160), "berthed"),
+            ((132, 90), "refused"), ((150, 120), "refused"), ((148, 100), "refused")]
+    model = _allocate(rows)
+    assert model.ordered
+    fit = SimpleNamespace(inducer=FakeInducer(), outcomes={"Allocate": model})
+    state = _berthing([((200, 160), "refused")])[0][0]
+    fresh = refit_with(fit, "Allocate", [{"state": state, "owner": None, "frame": "refused",
+                                          "discriminating": True}])
+    assert fresh.ordered == model.ordered
+    assert fresh.fitted == model.fitted + 1
+    bound, status = fresh.bind(state, None)
+    assert "refused" in fresh.admissible(oc.query_literals(fit, fresh, state, bound, status), corroborated=True)

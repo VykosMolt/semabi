@@ -1960,3 +1960,15 @@ outcome: noted, not chased.
 
 09:38 full suite on the regenerated tree (2205e37's data, afbcde2's source): 560 passed,
 3 skipped, 1 xfailed, no failures (37 min).
+
+## P30 first run (10:06): confounded by the refit path, which dropped the field theory
+uncertain: 8 acquired at states with 2 admissible outcomes (22 such states seen, 3 with
+one), 5 usable, all five returning "Call <> is already <> ; <> pilot is needed", 3 silent.
+any: 12 acquired at states with 1 admissible, 1 usable ("Nothing chosen").  But the
+"after" ledgers -- uncertain 8/10/2/1, any 12/6/2/1 (forced right / several / wrong /
+unestablished) -- are NOMINAL-vocabulary ledgers: v4_acquire.refit_with rebuilt the
+ControlOutcome without `ordered`, so the refitted control's queries lost the thresholds
+and comparisons again (the same defect class as P28, on the refit path).  `any`'s after
+equals the old nominal ledger exactly.  Fixed (ordered carried through the refit); the
+pre-registration stands unchanged; both policies re-run at seed 71 (the driver is
+deterministic given the model and the seed).
