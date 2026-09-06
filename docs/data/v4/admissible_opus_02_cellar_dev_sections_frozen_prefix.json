@@ -1,0 +1,185 @@
+{
+ "run": "opus_02_cellar_dev",
+ "reading": "source_choice",
+ "regime": "FROZEN_PREFIX",
+ "split": 0.5,
+ "cut": 195,
+ "control": null,
+ "scored_on": "opus_02_cellar_dev",
+ "corroborated": true,
+ "hypothesis": "rule",
+ "against_the_other_class": {
+  "rule: no outcome is established | list: no outcome is established": 29,
+  "rule: one outcome, because the control has never done anything else | list: one outcome, because the control has never done anything else": 11
+ },
+ "actions": 40,
+ "what_the_evidence_establishes": {
+  "no outcome is established": 29,
+  "one outcome, because the control has never done anything else": 11
+ },
+ "admissible_set_size": {
+  "0": 29,
+  "1": 11
+ },
+ "what_happened_was": {
+  "outside it": 11,
+  "nothing was admissible": 29
+ },
+ "the_list_where_the_evidence": {
+  "no outcome is established": {
+   "no determinate answer": 20,
+   "the event the interface returned": 7,
+   "a different event": 2
+  },
+  "one outcome, because the control has never done anything else": {
+   "the event the interface returned": 11
+  }
+ },
+ "policy_forced_then_list": {
+  "refused: nothing established": 29,
+  "the only outcome ever seen on this control, and it happened": 11
+ },
+ "distinct_events_forced": 1,
+ "events_forced": {
+  "\u0000SILENT": 11
+ },
+ "per_control": {
+  "button:Lots": {
+   "one outcome, because the control has never done anything else": 5
+  },
+  "button:Bottle": {
+   "no outcome is established": 5
+  },
+  "button:Finish fermentation": {
+   "no outcome is established": 5
+  },
+  "button:Rack": {
+   "no outcome is established": 5
+  },
+  "button:Cellar": {
+   "one outcome, because the control has never done anything else": 4
+  },
+  "button:Move vessel": {
+   "no outcome is established": 4
+  },
+  "button:Wash out": {
+   "no outcome is established": 3
+  },
+  "button:Split": {
+   "no outcome is established": 3
+  },
+  "button:Blend": {
+   "no outcome is established": 3
+  },
+  "button:Intake": {
+   "one outcome, because the control has never done anything else": 2
+  },
+  "button:Receive fruit": {
+   "no outcome is established": 1
+  }
+ },
+ "per_control_verdicts": {
+  "button:Blend": {
+   "no outcome is established for this state": 3
+  },
+  "button:Bottle": {
+   "no outcome is established for this state": 5
+  },
+  "button:Cellar": {
+   "the only outcome ever seen on this control, and it happened": 4
+  },
+  "button:Finish fermentation": {
+   "no outcome is established for this state": 5
+  },
+  "button:Intake": {
+   "the only outcome ever seen on this control, and it happened": 2
+  },
+  "button:Lots": {
+   "the only outcome ever seen on this control, and it happened": 5
+  },
+  "button:Move vessel": {
+   "no outcome is established for this state": 4
+  },
+  "button:Rack": {
+   "no outcome is established for this state": 5
+  },
+  "button:Receive fruit": {
+   "no outcome is established for this state": 1
+  },
+  "button:Split": {
+   "no outcome is established for this state": 3
+  },
+  "button:Wash out": {
+   "no outcome is established for this state": 3
+  }
+ },
+ "controls": {
+  "button:Blend": {
+   "fitted": 1,
+   "events": 1,
+   "rules": 0,
+   "default": "Nothing chosen in the lot list ."
+  },
+  "button:Bottle": {
+   "fitted": 1,
+   "events": 1,
+   "rules": 0,
+   "default": "undetermined"
+  },
+  "button:Cellar": {
+   "fitted": 7,
+   "events": 1,
+   "rules": 0,
+   "default": "returns nothing"
+  },
+  "button:Finish fermentation": {
+   "fitted": 1,
+   "events": 1,
+   "rules": 0,
+   "default": "undetermined"
+  },
+  "button:Intake": {
+   "fitted": 9,
+   "events": 1,
+   "rules": 0,
+   "default": "returns nothing"
+  },
+  "button:Lots": {
+   "fitted": 9,
+   "events": 1,
+   "rules": 0,
+   "default": "returns nothing"
+  },
+  "button:Move vessel": {
+   "fitted": 5,
+   "events": 5,
+   "rules": 0,
+   "default": "undetermined"
+  },
+  "button:Rack": {
+   "fitted": 1,
+   "events": 1,
+   "rules": 0,
+   "default": "undetermined"
+  },
+  "button:Receive fruit": {
+   "fitted": 3,
+   "events": 2,
+   "rules": 0,
+   "default": "undetermined"
+  },
+  "button:Split": {
+   "fitted": 1,
+   "events": 1,
+   "rules": 0,
+   "default": "Nothing chosen in the lot list ."
+  },
+  "button:Wash out": {
+   "fitted": 8,
+   "events": 3,
+   "rules": 2,
+   "default": "<> cannot be washed out while lot <> is in it ."
+  }
+ },
+ "forced_but_wrong": []
+}

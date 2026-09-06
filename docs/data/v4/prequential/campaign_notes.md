@@ -1863,3 +1863,65 @@ identical.  cellar's admissible_..._frozen_prefix.json reverted to the plain-sou
 (Wash out 0 rules, undetermined) exactly as the provenance explanation predicts.
 test_v4_retained_frontier + test_v4_transfer: 53 passed.  Committing the regenerated
 state with Part XVIII; full suite on the regenerated tree running beside it.
+
+09:02 committed: 2205e37 (battery #5's state, Part XVIII, ties correction, closing
+amended, instruments and evidence) and a25a8da (identity batch names cellar's sections
+fits admissible_opus_02_cellar_dev_sections_frozen_prefix[_list].json).  Partial battery
+#6 -- identity then admissible stages under a25a8da -- launched at 12 cores; the full
+suite on the regenerated tree runs beside it.
+Next mechanism, measured before it is built: the objective credits a reading for an
+object that a click brings into view (the sheet, keyed by the call, "appears").  An
+added object whose key another applied family already shows on the page is a rendering
+of a thing already tracked, not a creation -- the correspondence test of P27 applied to
+the objective.  First the measurement (explained_kinds.py): per application under the
+settled reading, how many EXPLAINED steps consist only of such correspondence
+creations.  Pre-registered: on harbour_pil_dev the count is the 8 sheet-opening steps
+(the rivals audit's differing steps) or a superset of them; on blend and vet it is 0
+or small, and I state the number before deciding anything.
+
+09:02 first launch of the partial battery #6 exited 127 on both stages: the transient
+unit's working directory is not the repository and the scripts were named relatively
+(run_battery.sh does its own cd).  Relaunched with an explicit cd; nothing was written.
+
+## explained_kinds (09:12; p29_explained_kinds_harbour/others.json) -- the objective term, measured and NOT built
+Of the EXPLAINED steps under the settled reading, those that are only the creation of an
+object whose key another applied family already shows on the page:
+  harbour_pil_dev     8 of 82   -- exactly the eight sheet openings (pre-registered: met)
+  harbour_transfer   12 of 74   -- every one a Schedule call creating the call keyed by its
+                                   VESSEL's name (the retained reading keys calls by Vessel)
+  blend_book          0 of 271
+  vet_clinic          6 of 93   -- an object of T1 keyed by the word 'Reason', target ''
+Decision: a correspondence discount in the objective is refuted before it is built -- on
+harbour_transfer it would un-explain twelve genuine creations (a new call named after an
+existing vessel) along with the eight view openings.  Correspondence says "named after a
+tracked thing"; it does not say "a rendering of it".  What separates the two on these
+histories is the action, not the state: the sheet opens on a click whose control IS the
+corresponding object's own button (target 'C-103', added key 'C-103'), the call is made
+by a form button ('Schedule call') from a selection.  A view-opening is also what a
+persistence probe certifies as a view control (`verified_view_controls`: a click that
+changes only the page is sensing).  Parked with the numbers; the objective question stays
+open in the retained doc with this sharper statement.
+Side finding to look at: vet's T1 keyed by 'Reason' -- a header word as a key value on
+six explained creations.
+
+09:15 partial battery #6 under a25a8da: identity stage rc=0 -- the sections-named
+cellar files are byte-identical in content to battery #5's identity output (the _list
+file shows no diff; the RULE one is new), the plain-named RULE file untouched, blend and
+harbour identity files identical: pre-registration met.  admissible stage rc=1 after
+writing blend's two files and harbour's admissible file: the bundle step's authority
+check raised "bytecode cache at an optimization level this check cannot reproduce:
+pinned.cpython-312.opt-3.pyc" -- no such file exists now (only pinned.cpython-312.pyc,
+09:14:05, and the 3.14 one); the explained_kinds runs and the full suite were compiling
+beside it.  Rerunning the admissible batch alone.
+
+09:15 cause of the opt-3 refusal: tests/test_v4_manifests.py:718 writes an `-OOO`
+(opt-3) cache for pinned.py to exercise exactly that refusal, and the full suite was
+running beside the admissible batch.  A race of my scheduling, not a defect of the
+check -- the check did what it is for.  Rule for the notes: never run the suite beside
+a stage that authenticates.  Admissible batch rerunning alone.
+
+09:24 admissible batch rerun alone: rc=0, eight files written, git shows none of them
+modified -- byte-identical to battery #5's (2205e37).  Partial battery #6 pre-registration
+met in full: plain-named cellar RULE file = plain-source fit (Wash out 0 rules), the two
+sections-named files = the identity stage's fits (2 rules), every other artefact
+identical.  Committing.

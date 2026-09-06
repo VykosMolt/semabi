@@ -1206,6 +1206,28 @@ next battery on.  In blend's bundle ledger the claims a shown bundle accounts fo
 from 247 to 249 and the frame-and-delta combinations never observed together fall from
 96 to 94; the retained-state tests pass on the regenerated artefacts.
 
+**The objective term, measured before it was built, and not built.**  Part XVII's
+parked question -- should a reading be credited for positing an object that a click
+brings into view -- suggested a term: an added object whose key another applied family
+already shows on the same page is a rendering of a tracked thing, not a creation, the
+correspondence test of P27 turned on the objective.  Measured first
+(`explained_kinds.py`, `p29_explained_kinds_harbour.json`,
+`p29_explained_kinds_others.json`): of the steps the settled reading explains, those that
+are only such a creation are eight of 82 on the pilot corpus -- exactly the eight sheet
+openings of the rivals audit -- none of 271 on blend, six of 93 on vet, and twelve of 74
+on harbour's retained history, where every one is a *Schedule call* creating the call
+keyed, as the retained reading keys calls, by its vessel's name.  A term that discounts
+correspondence would take those twelve genuine creations with the eight view openings,
+so it is refuted before it is built.  Correspondence says *named after a tracked thing*;
+it does not say *a rendering of it*.  What separates the two on these histories is the
+action rather than the state: the sheet opens on a click whose control is the
+corresponding object's own button, the call is made by a form button from a selection;
+and a view opening is also what a persistence probe certifies as a view control, under
+which a domain change is already a contradiction.  The question stays open with that
+sharper statement.  Vet's six are an object keyed by the word *Reason* -- a header word
+as a key value under the search's own reading -- and are noted for the open-world
+instruments rather than pursued here.
+
 ## What stands, and what is open
 
 The retained state, regenerated once more: harbour's development sidecar is now written by
