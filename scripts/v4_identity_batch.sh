@@ -14,9 +14,13 @@ for app in "blend_book_transfer:blend_book_chain.json:source_choice" \
            "opus_02_cellar_dev:opus_02_cellar_dev_source_sections.json:source_choice"; do
   IFS=: read -r run chain reading <<< "$app"
   (
-    $V -m semabi.eval.v4_admissible --run runs/v4/$run --chain $M/$chain --reading "$reading" --split 0.5
+    # cellar is fitted here under its sections manifest and in v4_admissible_batch.sh under
+    # the plain one; the outputs are named by the manifest so that neither overwrites the other
+    tag=$([ "$chain" = "opus_02_cellar_dev_source_sections.json" ] && echo "${run}_sections" || echo "$run")
     $V -m semabi.eval.v4_admissible --run runs/v4/$run --chain $M/$chain --reading "$reading" --split 0.5 \
-       --hypothesis list --out admissible_${run}_frozen_prefix_list.json
+       --out admissible_${tag}_frozen_prefix.json
+    $V -m semabi.eval.v4_admissible --run runs/v4/$run --chain $M/$chain --reading "$reading" --split 0.5 \
+       --hypothesis list --out admissible_${tag}_frozen_prefix_list.json
     $V -m semabi.eval.v4_inadequacy --run runs/v4/$run --chain $M/$chain --reading "$reading" --split 0.5 \
        --out $D/inadequacy_${run}.json
     $V -m semabi.eval.v4_claim_substance --run runs/v4/$run --chain $M/$chain --reading "$reading" --split 0.5
