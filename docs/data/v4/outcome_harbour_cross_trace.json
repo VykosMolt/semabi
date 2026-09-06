@@ -52,10 +52,10 @@
   "answers_naming_an_event": 191,
   "accuracy_where_it_named_an_event": 0.948,
   "by_level": {
-   "the event the interface returned / with its arguments": 176,
+   "the event the interface returned / with its arguments": 172,
    "the event the interface returned / the control returns nothing": 79,
    "a different event / the event alone": 10,
-   "the event the interface returned / the event alone": 5
+   "the event the interface returned / the event alone": 9
   },
   "events_asserted": {
    "\u0000SILENT": 79,
@@ -216,12 +216,12 @@
    "button#cell@Call/button": "button#cell@Call/button: 73 fitted occasions, 1 distinct events\n    otherwise -> returns nothing",
    "button:Allocate berth": "button:Allocate berth: 5 fitted occasions, 1 distinct events\n    otherwise  ->  Nothing chosen in the berth list .   [5]\n    otherwise -> Nothing chosen in the berth list .",
    "button:Book pilot": "button:Book pilot: 5 fitted occasions, 2 distinct events\n    attr:Status#0(owner) == 'alongside'  ->  Nothing chosen in the pilot list .   [2]\n    attr:Hazardous cargo#0(owner) == 'yes'  ->  Nothing chosen in the pilot list .   [2]\n    otherwise -> <> is already booked for call <> .",
-   "button:Bring _": "button:Bring _: 8 fitted occasions, 1 distinct events\n    otherwise  ->  Call <> has <> berth allocated .   [8]\n    otherwise -> Call <> has <> berth allocated .\n    'Call <> has <> berth allocated .' arguments: 0=owner",
-   "button:Close": "button:Close: 33 fitted occasions, 3 distinct events\n    ('ref_set', 'owner', 'rel:3')  ->  <> <> cannot be <> while call <> holds it .   [10]\n    attr:Condition#0(owner) == 'open'  ->  <> <> is now <> .   [14]\n    otherwise  ->  <> <> is already <> .   [9]\n    otherwise -> <> <> is already <> .\n    '<> <> cannot be <> while call <> holds it .' arguments: 1=owner\n    '<> <> is already <> .' arguments: 1=owner\n    '<> <> is now <> .' arguments: 1=owner",
-   "button:Record departure": "button:Record departure: 3 fitted occasions, 1 distinct events\n    otherwise  ->  Call <> is not <> , so nothing has sailed .   [3]\n    otherwise -> Call <> is not <> , so nothing has sailed .\n    'Call <> is not <> , so nothing has sailed .' arguments: 0=owner",
+   "button:Bring _": "button:Bring _: 8 fitted occasions, 1 distinct events\n    role relation['forward', 'rel:0']:0<owner = relation['forward', 'rel:0'] from owner\n    otherwise  ->  Call <> has <> berth allocated .   [8]\n    otherwise -> Call <> has <> berth allocated .\n    'Call <> has <> berth allocated .' arguments: 0=relation['forward', 'rel:0']:0<owner",
+   "button:Close": "button:Close: 33 fitted occasions, 3 distinct events\n    role relation['forward', 'rel:0']:0<owner = relation['forward', 'rel:0'] from owner\n    ('ref_set', 'owner', 'rel:0')  ->  <> <> cannot be <> while call <> holds it .   [10]\n    attr:Condition#0(owner) == 'open'  ->  <> <> is now <> .   [14]\n    otherwise  ->  <> <> is already <> .   [9]\n    otherwise -> <> <> is already <> .\n    '<> <> cannot be <> while call <> holds it .' arguments: 1=owner, 3=relation['forward', 'rel:0']:0<owner\n    '<> <> is already <> .' arguments: 1=owner\n    '<> <> is now <> .' arguments: 1=owner",
+   "button:Record departure": "button:Record departure: 3 fitted occasions, 1 distinct events\n    otherwise  ->  Call <> is not <> , so nothing has sailed .   [3]\n    otherwise -> Call <> is not <> , so nothing has sailed .",
    "button:Reopen": "button:Reopen: 38 fitted occasions, 2 distinct events\n    attr:Condition#0(owner) == 'open'  ->  <> <> is already <> .   [24]\n    otherwise  ->  <> <> is now <> .   [14]\n    otherwise -> <> <> is now <> .\n    '<> <> is already <> .' arguments: 1=owner\n    '<> <> is now <> .' arguments: 1=owner",
-   "button:Schedule call": "button:Schedule call: 36 fitted occasions, 2 distinct events\n    ('ref_set', 'owner', 'rel:3')  ->  <> already has call <> on the board .   [24]\n    otherwise  ->  Call <> opened for <> .   [12]\n    otherwise -> Call <> opened for <> .\n    '<> already has call <> on the board .' arguments: 0=owner\n    'Call <> opened for <> .' arguments: 0=created:T4, 1=owner",
-   "button:Sign off": "button:Sign off: 30 fitted occasions, 3 distinct events\n    attr:Duty#0(owner) == 'off'  ->  <> is already signed off .   [11]\n    ('ref_null', 'owner', 'rel:3')  ->  <> is signed off .   [18]\n    otherwise -> <> cannot sign off while booked for call <> .\n    '<> cannot sign off while booked for call <> .' arguments: 0=owner\n    '<> is already signed off .' arguments: 0=owner\n    '<> is signed off .' arguments: 0=owner",
+   "button:Schedule call": "button:Schedule call: 36 fitted occasions, 2 distinct events\n    role relation['forward', 'rel:0']:0<owner = relation['forward', 'rel:0'] from owner\n    ('ref_set', 'owner', 'rel:0')  ->  <> already has call <> on the board .   [24]\n    otherwise  ->  Call <> opened for <> .   [12]\n    otherwise -> Call <> opened for <> .\n    '<> already has call <> on the board .' arguments: 0=owner, 1=relation['forward', 'rel:0']:0<owner\n    'Call <> opened for <> .' arguments: 0=created:T0, 1=owner",
+   "button:Sign off": "button:Sign off: 30 fitted occasions, 3 distinct events\n    role relation['forward', 'rel:0']:0<owner = relation['forward', 'rel:0'] from owner\n    attr:Duty#0(owner) == 'off'  ->  <> is already signed off .   [11]\n    ('unnamed', \"relation['forward', 'rel:0']:0<owner\")  ->  <> is signed off .   [18]\n    otherwise -> <> cannot sign off while booked for call <> .\n    '<> cannot sign off while booked for call <> .' arguments: 0=owner, 1=relation['forward', 'rel:0']:0<owner\n    '<> is already signed off .' arguments: 0=owner\n    '<> is signed off .' arguments: 0=owner",
    "button:Sign on": "button:Sign on: 34 fitted occasions, 2 distinct events\n    attr:Duty#0(owner) == 'on'  ->  <> is already signed on .   [18]\n    otherwise  ->  <> is signed on .   [16]\n    otherwise -> <> is signed on .\n    '<> is already signed on .' arguments: 0=owner\n    '<> is signed on .' arguments: 0=owner"
   }
  }

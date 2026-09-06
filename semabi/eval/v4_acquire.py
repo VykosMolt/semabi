@@ -109,6 +109,22 @@ def _selects(obs) -> list[int]:
     return [n.i for n in obs.nodes if n.role == "combobox" and (n.options or ())]
 
 
+def contested(got, literals, options) -> bool:
+    """A state where the list's own guard fires for one event while a justified rule
+    vouches for another.
+
+    Acting where the admissible set merely has two members found new behaviour before it
+    narrowed anything (P30): the states that falsify a coincidence are the ones that hold
+    its supporting value fixed while the factor the application actually checks differs.
+    The decision list is where that factor is written down -- *the selection names a
+    pilot* -- so a state where its guard fires and a rival vouch still stands is one where
+    the answer refutes either the vouch or the guard, and cannot leave both.  A guard with
+    no condition is the list's residue and names no factor."""
+    fired = next((r.event for r in got.rules
+                  if r.condition and all(l in literals for l in r.condition)), None)
+    return fired is not None and any(event != fired for event in options)
+
+
 def acquire(model, control_key: str, button: str, base: str, *, seed: int,
             budget: int = 40, want: int = 12, policy: str = "uncertain", log=print) -> dict:
     """Drive the application, acting where the model does not know the outcome.
@@ -165,6 +181,8 @@ def acquire(model, control_key: str, button: str, base: str, *, seed: int,
                     want_here = any(set(ev_._condition(ev_.masks[i])) <= here_
                                     for e_, idxs_ in ev_.by_event.items()
                                     if len(idxs_) < oc.MIN_COVER for i in idxs_)
+                elif policy == "counterexample":
+                    want_here = contested(got, oc.query_literals(model, got, state, b_, s_), opts_)
                 else:
                     want_here = (len(opts_) > 1 if policy != "unestablished" else not opts_)
                 if chosen is None or (want_here and not chosen[-1]):
@@ -188,6 +206,9 @@ def acquire(model, control_key: str, button: str, base: str, *, seed: int,
                 lone = [i for e, idxs in ev.by_event.items() if len(idxs) < oc.MIN_COVER
                         for i in idxs]
                 discriminating = any(set(ev._condition(ev.masks[i])) <= here for i in lone)
+            elif policy == "counterexample":
+                discriminating = contested(
+                    got, oc.query_literals(model, got, state, bound, status), options)
             else:
                 discriminating = (len(options) > 1 if policy != "unestablished"
                                   else not options)
@@ -197,7 +218,8 @@ def acquire(model, control_key: str, button: str, base: str, *, seed: int,
             # nothing selected twenty times and learning only that nothing was selected.
             fresh = frozenset(
                 oc.query_literals(model, got, state, bound, status)) not in asked
-            if (discriminating and fresh if policy in ("uncertain", "unestablished", "corroborate")
+            if (discriminating and fresh
+                    if policy in ("uncertain", "unestablished", "corroborate", "counterexample")
                     else True) or (
                     turn % 3 == 2 and len(acquired) < want):
                 before = emit_mod.live_text(obs)
@@ -311,7 +333,7 @@ def main(argv=None) -> int:
     ap.add_argument("--budget", type=int, default=40)
     ap.add_argument("--want", type=int, default=12)
     ap.add_argument("--policy", default="uncertain",
-                    choices=("uncertain", "any", "unestablished", "corroborate"),
+                    choices=("uncertain", "any", "unestablished", "corroborate", "counterexample"),
                     help="'any' is the matched control: act without consulting uncertainty")
     a = ap.parse_args(argv)
     from semabi.eval.v4_consequence_run import _candidates

@@ -209,3 +209,31 @@ def test_an_acquired_occasion_refits_the_evidence_in_the_fitted_language():
     assert fresh.fitted == model.fitted + 1
     bound, status = fresh.bind(state, None)
     assert "refused" in fresh.admissible(oc.query_literals(fit, fresh, state, bound, status), corroborated=True)
+
+
+def test_a_contested_state_is_one_where_the_list_fires_against_a_standing_vouch():
+    # at 130 m against a 140 m berth the list's comparison fires "berthed" while a pair of
+    # thresholds still vouches "refused": acting there refutes one of them.  Where the
+    # list and every vouch agree, or only the list's residue answers, nothing is contested.
+    from types import SimpleNamespace
+    from semabi.eval.v4_acquire import contested
+    rows = [((78, 140), "berthed"), ((96, 120), "berthed"), ((100, 160), "berthed"),
+            ((64, 70), "berthed"), ((140, 160), "berthed"),
+            ((132, 90), "refused"), ((150, 120), "refused"), ((148, 100), "refused")]
+    model = _allocate(rows)
+    fit = SimpleNamespace(inducer=FakeInducer(), outcomes={"Allocate": model})
+    def at(length, takes):
+        state = _berthing([((length, takes), "?")])[0][0]
+        bound, status = model.bind(state, None)
+        lits = oc.query_literals(fit, model, state, bound, status)
+        return lits, model.admissible(lits, corroborated=True)
+    lits, options = at(130, 140)
+    assert model.predict(lits) == "berthed" and set(options) == {"berthed", "refused"}
+    assert contested(model, lits, options)
+    assert not contested(model, lits, {"berthed": options["berthed"]})
+    lits, options = at(85, 90)
+    assert model.predict(lits) == "berthed" and set(options) == {"berthed"}
+    assert not contested(model, lits, options)
+    lits, options = at(200, 160)
+    assert model.predict(lits) == "refused" and set(options) == {"berthed", "refused"}
+    assert not contested(model, lits, options)      # the residue answers, no guard fires

@@ -2075,3 +2075,89 @@ probe, which is what Part XVII asked for.  Committing; battery #7 under the crit
 pre-registered: frontiers, invariants and every ledger unchanged on all four
 applications (harbour's retained reading has no step the criterion touches: 74 both
 ways); the source diagnostics' open questions may gain the sheet tie on harbour.
+
+## P32 pre-registered (11:22): a corpus that separates the comparison from threshold pairs
+The user's nuance: the pilot corpus underdetermines the representation; a purposely
+separating corpus is the right response, and it is not a learner failure until the corpus
+holds cases where the theories diverge.  The app's grid: tickets in {80, 100, 130, 150},
+vessels in {54, 64, 78, 88, 96, 112, 132, 148} m.  The theories diverge only where a
+threshold box is pure on one outcome for want of the straddling case -- ticket 130 vs
+132 m, 100 vs 112 m -- so the planner (join_plan_separating.py) asks every on-duty pilot
+for every expected call: refusals first while pilots are free, then one booking per
+pilot, then an already-booked ask each.  Dev seeds 81/82/83/85 on harbour_dev; holdout
+seeds 91/92/93 on harbour_transfer (Silas 80, Ruth 130, Aoife 150 against 64..148).
+Expected, fitted on the merged dev under the search's settled reading and scored on the
+merged holdout (join_score.py, RULE, corroborated): every threshold box pure for
+`booked` on the P26 dev holds a refusal here, so at the straddling holdout states only
+the comparison vouches the refusal and `several` falls against the P26 holdout's 14 of
+21; no wrong verdict; the join literal is the too-short rule with both fields adopted.
+Where a threshold box is coextensive with the comparison on this grid (ticket >= 150,
+or ticket < 130 & length >= 112) the two theories agree and nothing separates them --
+stated, not counted against the corpus.
+
+11:23 P32 seeds: dev 81/82/83/85 on harbour_dev (Tom 100, Ruth 130, Aoife 150 against
+64..148 m: refusals 100v112 x3, 100v132, 130v132, 100v148, 130v148 x2; bookings 150v132,
+130v112 x2, 100v64, 150v112, 100v88, 150v148, 130v88; nine already-booked asks).  Holdout
+93/95/99 on harbour_transfer, chosen for divergent pairs: 100v132 (95), 100v112 (99),
+130v148 (93).  Collected with v4_tie_experiment (--plan/--workdir/--out) sequentially on
+the app at 8910, merged with join_merge.py into harbour_sep_dev / harbour_sep_hold.
+
+## Battery #7 regen (11:54; 11:20 -> 11:53 rc=0): a finding, as pre-registered "any change is"
+Frontiers identical on all three (identification, holdout outcome, selected reading's
+name, survivor classes).  But harbour_source_candidates.json: every candidate's
+fingerprint moved, and the difference is one family in each -- the call sheet, keyed
+heading#0 (UNSUPPORTED) before, table/rowgroup/row/cell@Vessel#0 (UNSUPPORTED) now, in
+source_choice and in all five alternatives.  vet and blend candidates identical.  So on
+the retained harbour history the criterion did touch the search: with the openings no
+longer credited the sheet is keyed by its vessel -- the panel-as-view world -- where P27
+retained it as a record of the call.  Reading the search log for whether that was
+decided (by named) or a tie the search posed.
+
+11:55 harbour's retained search under the criterion (manifest diagnostics, old -> new):
+local_final explained 60 -> 58 (the two sheet openings in that history), named 265 both,
+complexity 51 -> 40 (the sheet one entity with its vessel); open questions [] -> three:
+the sheet (cell@Vessel#0 vs heading#0, identical scores -- the tie POSED, incumbent
+Vessel kept), and the board row family twice (no identity vs cell@Vessel#0; no identity
+vs cell@Length overall#0): the board's key no longer explains a step that reading it as
+no entity does not -- an identity unearned on this history, posed, incumbent kept.  The
+frontier: selected reading's name, identification and holdout outcome unchanged; the
+sheet's holdout correspondence 167/167 under its vessel key as it was under the call's.
+So the criterion's retained effect on harbour is wider than the pre-registration's
+"74 both ways" (which was the pinned reading's count, not the search's): it removes the
+two credited openings, moves the sheet's retained key to the vessel with the question
+open, and un-earns the board's key -- all three now for the probe.  Recorded as the
+finding it was pre-registered to be; open_world running.
+
+13:13 memory pressure: the harness killed three of my background waiter shells "because
+the system is running low on memory"; `free` a minute later showed 7 GB used / 23 GB
+available, the largest process the user's own job (ouro_project run_pilot.py, 2.1 GB,
+just started) beside battery #7's open_world stage and the P32 collection's browser.
+The work itself was not killed (collection at seed 83, battery open_world 80 min in).
+Battery #7's CPUQuota lowered to 800% while the user's job shares the machine; waiters
+re-armed; a memory monitor (available < 4 GB) armed.
+
+13:28 battery #7 open_world 11:53 -> 13:28 rc=0 (at 8 cores from ~13:10): all sixteen
+invariants zero -- as pre-registered.  identity running.  P32 collection: seeds 81 and 82
+done, seed 83 running for over an hour where the others took minutes -- inspecting.
+
+13:28 correction: seed 83's collector is 24 minutes in at full CPU with steps.jsonl
+still growing -- v4_tie_experiment compiles and scores the extended history after the
+actions, which is where the time goes (seeds 81 and 82 took about 25 minutes each).
+Seven seeds is roughly three hours beside the battery; left to run.
+
+## P33 pre-registered (13:30): acquisition v2, counterexample-seeking
+User's nuance: target states where a candidate rule's supporting value is held fixed
+while another factor changes and the outcome differs -- actively falsifying a vouch.
+The decision list is where the other factor is written down (`unnamed(selection) ->
+Nothing chosen`; `Ticket to < Length overall -> too short`), so v4_acquire gains policy
+`counterexample`: act where a list guard fires for one event while a justified vouch
+stands for another (acquire.contested); the answer refutes the vouch or the guard and
+cannot leave both.  Test: at 200 m against a 160 m berth the comparison fires "refused"
+while a threshold pair vouches "berthed".
+Run (after the P32 collection frees the app): harbour_pil_dev's settled reading, seed 71,
+budget 40, want 12 -- the same seed as P30 so the three policies compare.  Expected:
+(i) at least one contested state reached; (ii) after the refit with every acquired
+occasion the pil holdout's Book pilot ledger has no wrong verdict and fewer `several`
+than 14 (P30's `uncertain` gave 17, `any` 14); (iii) at least one vouch present before is
+absent after -- named in the result.  If `several` does not fall, seed 71's states did
+not carry the coincidences' supporting values, and that is the result.
