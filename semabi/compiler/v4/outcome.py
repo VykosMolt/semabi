@@ -591,6 +591,9 @@ class ControlOutcome:
     # field from the fitting evidence (`semabi.compiler.v4.fields`).  The literal language
     # compares against these thresholds; every other field is nominal.
     ordered: dict = field(default_factory=dict)
+    # The comparisons between two fields a fitted rule justified (`fields.adopted_pairs`);
+    # None while every candidate pair is available, which is the first learning pass.
+    pairs: frozenset | None = None
     # Which of several pure conditions to vouch by: the widest, or the one with fewest
     # literals.  See `Evidence.admissible`.
     simplest: bool = False
@@ -836,7 +839,8 @@ def roles_of(inducer, operators) -> dict[str, Role]:
     out: dict[str, Role] = {}
     for op in operators:
         queries = inducer.queries.get(op.name) or {}
-        bound = {a.owner for a in op.core() if a.owner}
+        core = op.core()
+        bound = {core[-1].owner} if core and core[-1].owner else set()
         for var in op.params:
             role = _canon(op, var, queries, bound)
             if role is not None and role.tid is not None:
@@ -862,11 +866,11 @@ def bind_language(inducer) -> None:
 def _pending_literals(model, state, bound, status) -> set:
     if _INDUCER is None:
         raise RuntimeError("call outcome.bind_language(inducer) before asking a model")
-    return _literals(_INDUCER, state, bound, status, model.defaults, model.ordered)
+    return _literals(_INDUCER, state, bound, status, model.defaults, model.ordered, model.pairs)
 
 
 def _literals(inducer, state, binding: dict, status: dict, defaults: dict | None = None,
-              ordered: dict | None = None) -> set:
+              ordered: dict | None = None, pairs: frozenset | None = None) -> set:
     """The inducer's own literal language, over role names instead of operator parameters.
 
     Plus two families it does not have: whether each role names anything here at all, and
@@ -885,9 +889,10 @@ def _literals(inducer, state, binding: dict, status: dict, defaults: dict | None
         from semabi.compiler.v4 import fields as field_theory
         for role, obj in binding.items():
             lits |= field_theory.literals(role, obj, ordered)
-        # never the owner: it is not one of the model's roles, so nothing it compares
-        # could be justified afterwards
-        lits |= field_theory.pair_literals({r: o for r, o in binding.items() if r != OWNER}, ordered)
+        # the owner too: it is a role with a type wherever an operator binds it, its
+        # thresholds are adopted like any other's, and under a reading that keys the sheet
+        # by its vessel the length a ticket is measured against is the acted-on object's
+        lits |= field_theory.pair_literals(binding, ordered, pairs)
     if COUNT_LITERALS:
         # How many objects of each type the state holds.  Every type the model knows, so
         # that an empty collection is a count of nought and not a missing fact.
@@ -1059,7 +1064,7 @@ def _about(lit: tuple, allowed: frozenset) -> bool:
 def learn_control(inducer, control: str, occasions, roles: dict[str, Role], *,
                   subject_restricted: bool = False, defaults: dict | None = None,
                   about: bool = False, simplest: bool = False,
-                  ordered: dict | None = None) -> ControlOutcome:
+                  ordered: dict | None = None, pairs: frozenset | None = None) -> ControlOutcome:
     """``occasions`` is a list of (abstract pre-state, owner object or None, frame, args)
     -- optionally with a fifth element, the ``(tid, key)`` pairs of the objects the
     interaction brought into being."""
@@ -1067,14 +1072,14 @@ def learn_control(inducer, control: str, occasions, roles: dict[str, Role], *,
     probe = ControlOutcome(control, roles)
     bindings = [probe.bind(occ[0], occ[1])[0] for occ in occasions]
     out = ControlOutcome(control, align(roles, occasions, bindings), defaults=defaults,
-                         simplest=simplest, ordered=dict(ordered or {}))
+                         simplest=simplest, ordered=dict(ordered or {}), pairs=pairs)
     rows: list[tuple[set, str, frozenset]] = []
     seen: dict[str, int] = {}
     for occ in occasions:
         state, owner, event, _args = occ[:4]
         seen[event] = seen.get(event, 0) + 1
         bound, status = out.bind(state, owner)
-        rows.append((_literals(inducer, state, bound, status, defaults, out.ordered), event,
+        rows.append((_literals(inducer, state, bound, status, defaults, out.ordered, out.pairs), event,
                      frozenset(bound) | {OWNER}))
     out.fitted = len(rows)
     out.events = dict(sorted(seen.items(), key=lambda kv: -kv[1]))
@@ -1173,7 +1178,7 @@ def learn(inducer, *, permute: int | None = None, subject_restricted: bool = Fal
     bind_language(inducer)
     A, log = inducer.A, inducer.log
     by_control: dict[str, list] = {}
-    ops_by_control = _ops_by_control(inducer.operators, control_of)
+    ops_by_control = _ops_by_control(inducer.operators, control_of, inducer.queries)
     steps = {s.step: s for s in log.steps}
     for tr in list(inducer.transitions) + list(inducer.noops):
         if len(tr.steps) != 1:
@@ -1208,41 +1213,47 @@ def learn(inducer, *, permute: int | None = None, subject_restricted: bool = Fal
     # what a retained intervention already corroborated, beside the history: a candidate
     # field is named by its attribute, as the sidecar names it
     corroborated = field_theory.corroborated(getattr(log, "dir", None) or "", proposed) if proposed else set()
-    theory = {"candidates": proposed, "adopted": {}, "corroborated": sorted(corroborated)}
+    theory = {"candidates": proposed, "adopted": {}, "adopted_pairs": [],
+              "corroborated": sorted(corroborated)}
+    pairs = None
     for ordered_pass in ([proposed, None] if proposed else [{}]):
         if ordered_pass is None:
             adopted = field_theory.adopted(out, proposed, corroborated)
+            pairs = field_theory.adopted_pairs(out, proposed)
             theory["adopted"] = adopted
-            if adopted == proposed:
-                break
+            theory["adopted_pairs"] = sorted(sorted(map(list, pair)) for pair in pairs)
             ordered_pass = adopted
             out = {}
         _learn_controls(inducer, A, log, by_control, ops_by_control, first_view, out,
-                        ordered_pass, permute=permute, subject_restricted=subject_restricted,
+                        ordered_pass, pairs, permute=permute, subject_restricted=subject_restricted,
                         structural=structural, touched=touched, about=about, simplest=simplest)
     for model in out.values():
         model.field_theory = theory
     return out
 
 
-def _ops_by_control(operators, control_of) -> dict[str, list]:
+def _ops_by_control(operators, control_of, queries=None) -> dict[str, list]:
     """The operators whose roles a control may take: those whose core is a chain of clicks
     ending at it.  A click before the last is an enabling one -- it opened the panel the
-    control sits in -- and may bind the object the control's own click binds, or nothing;
-    an object bound only by an earlier click is a route the pre-state does not have."""
+    control sits in -- and may bind the object the control's own click binds, nothing, or
+    an object the operator's own queries name from what the acting click binds: harbour's
+    call button opens the sheet, and under a reading that keys the sheet by its vessel
+    the button's call is the vessel's current call.  An object bound only by an earlier
+    click and named by no query is a route the pre-state does not have."""
     out: dict[str, list] = {}
     for op in operators:
         core = op.core()
         if not core or any(a.kind != "click" or a.loc is None for a in core):
             continue
         last = core[-1]
-        if any(a.owner not in (None, last.owner) for a in core[:-1]):
+        named = (queries or {}).get(op.name) or {}
+        if any(a.owner not in (None, last.owner) and a.owner not in named for a in core[:-1]):
             continue
         out.setdefault(control_of(last.loc.slot), []).append(op)
     return out
 
 
-def _learn_controls(inducer, A, log, by_control, ops_by_control, first_view, out, ordered, *,
+def _learn_controls(inducer, A, log, by_control, ops_by_control, first_view, out, ordered, pairs, *,
                     permute, subject_restricted, structural, touched, about, simplest) -> None:
     for control, rows in by_control.items():
         roles = roles_of(inducer, ops_by_control.get(control, []))
@@ -1269,7 +1280,8 @@ def _learn_controls(inducer, A, log, by_control, ops_by_control, first_view, out
             # every one of them from a control seen once or twice before the cut.
             silent = SILENT if len(rows) >= MIN_COVER else UNDETERMINED
             model = ControlOutcome(control, roles, [], silent, 0, {silent: len(rows)},
-                                   defaults=defaults, simplest=simplest, ordered=dict(ordered or {}))
+                                   defaults=defaults, simplest=simplest, ordered=dict(ordered or {}),
+                                   pairs=pairs)
             # Returning nothing is an outcome, so the evidence for it is the occasions
             # themselves.  Only where the live region never moved on *any* of them: for a
             # control that sometimes speaks, an unchanged region is missing data rather than
@@ -1277,7 +1289,7 @@ def _learn_controls(inducer, A, log, by_control, ops_by_control, first_view, out
             silent_rows = []
             for tr, s_, obs_, _event in rows:
                 bound, status = model.bind(tr.before, _owner(A, obs_, s_))
-                silent_rows.append((_literals(inducer, tr.before, bound, status, defaults, ordered),
+                silent_rows.append((_literals(inducer, tr.before, bound, status, defaults, ordered, pairs),
                                     SILENT, frozenset(bound) | {OWNER}))
             model.evidence = Evidence(silent_rows)
             model.fitted = len(silent_rows)
@@ -1303,7 +1315,7 @@ def _learn_controls(inducer, A, log, by_control, ops_by_control, first_view, out
             occasions = [tuple(o[:2]) + tuple(rest) for o, rest in zip(occasions, shuffled)]
         model = learn_control(inducer, control, occasions, roles,
                               subject_restricted=subject_restricted, defaults=defaults,
-                              about=about, simplest=simplest, ordered=ordered)
+                              about=about, simplest=simplest, ordered=ordered, pairs=pairs)
         model.deltas = deltas
         # Which page each fitting occasion came from.  A forced-wrong prediction is only
         # diagnosable if the raw evidence behind the rule can be put beside the raw page that
@@ -1504,7 +1516,7 @@ def query_literals(model, got: ControlOutcome, state, bound: dict, status: dict)
     so no ordered rule could fire at a held-out state and the version space vouched by
     whatever nominal literals the witnesses shared (harbour's pilot bookings, blend's
     bottling; `docs/v4_retained.md`)."""
-    return _literals(model.inducer, state, bound, status, got.defaults, got.ordered)
+    return _literals(model.inducer, state, bound, status, got.defaults, got.ordered, got.pairs)
 
 
 def score_step(model, step, *, with_arguments: bool = True) -> dict:

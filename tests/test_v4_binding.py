@@ -612,6 +612,23 @@ def test_a_relation_from_the_action_object_names_what_the_rule_changes():
     assert blind.outcomes() == {"?z": referring.NO_QUERY}
 
 
+def test_an_enabling_clicks_owner_is_named_from_the_acting_object_or_not_at_all():
+    """Harbour's call button opens the sheet; under a reading that keys the sheet by its
+    vessel the acting click binds the vessel and the enabling click the call.  The call is
+    not in hand at prediction time, so it is wanted like an effect object and named by a
+    relation from the vessel where one exists."""
+    from semabi.compiler.v4 import referring
+    call = obj("C-103", tid=CALL)
+    vessel = obj("Bregagh", holds="C-103")
+    st = state(vessel, obj("Selkie"), call, obj("C-104", tid=CALL))
+    op = _grounding_fixture(params={"?v": BERTH, "?c": CALL}, effect_on="?v")
+    got = referring.ground(op, [(st, {"?v": vessel, "?c": call})], {"?v"}, _never_refuses, enabling={"?c"})
+    assert str(got.queries["?c"]) == "?c = ?v.rel:holds given ?v"
+    # not wanted, not searched for
+    plain = referring.ground(op, [(st, {"?v": vessel, "?c": call})], {"?v"}, _never_refuses)
+    assert "?c" not in plain.queries
+
+
 def test_two_indistinguishable_objects_leave_the_rule_unable_to_say_which():
     """And the negative: nothing legitimate separates the target from its twin."""
     from semabi.compiler.v4 import referring

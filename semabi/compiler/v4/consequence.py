@@ -760,14 +760,16 @@ def _learn_queries(inducer, operators) -> dict:
         # the clicked control and nothing else: a typed or selected string was carried by the
         # concrete step, and the rule is not given the step.  Treating such a variable as
         # supplied told this search there was nothing to look for.
-        bound = {a.owner for a in op.core() if a.owner}
+        core = op.core()
+        bound = {core[-1].owner} if core and core[-1].owner else set()
+        enabling = {a.owner for a in core[:-1] if a.owner} - bound
         evidence = [(tr.before,
                      {q: tr.before.objs.get(v) for q, v in tr.binding.items()
                       if isinstance(v, tuple)})
                     for tr in op.positives]
         got = referring.ground(op, evidence, bound,
                                inducer.memorises_the_fitting_instance,
-                               referring.collection_types(inducer.A))
+                               referring.collection_types(inducer.A), enabling=enabling)
         if got.queries:
             out[op.name] = dict(got.queries)
     return out

@@ -73,16 +73,25 @@ def literals(role: str, obj, ordered: dict[int, dict[str, list[str]]]) -> set[tu
     return out
 
 
-def pair_literals(binding: dict, ordered: dict[int, dict[str, list[str]]]) -> set[tuple]:
-    """The comparisons true between the ordered fields of any two bound objects."""
+def pair_literals(binding: dict, ordered: dict[int, dict[str, list[str]]],
+                  pairs: frozenset | None = None) -> set[tuple]:
+    """The comparisons true between the ordered fields of any two bound objects.
+
+    ``pairs`` restricts them to the comparisons a fitted rule justified (`adopted_pairs`):
+    a field is ordered only where a rule ordered it, and a comparison between two fields is
+    in the language only where a rule compared them -- a ticket's length against a vessel's
+    is one, a ticket's length against a count of calls is not.  None leaves every pair
+    available, which is what the first learning pass needs to find them."""
     fields_ = []
     for role, obj in binding.items():
-        for slot in ordered.get(getattr(obj, "tid", None), {}):
+        tid = getattr(obj, "tid", None)
+        for slot in ordered.get(tid, {}):
             x = numeric(getattr(obj, "attrs", {}).get(slot))
             if x is not None:
-                fields_.append((role, slot, x))
+                fields_.append((role, tid, slot, x))
     return {(CMP_GE if xp >= xq else CMP_LT, p, sp, q, sq)
-            for p, sp, xp in fields_ for q, sq, xq in fields_ if p != q}
+            for p, tp, sp, xp in fields_ for q, tq, sq, xq in fields_
+            if p != q and (pairs is None or frozenset(((tp, sp), (tq, sq))) in pairs)}
 
 
 def holds(literal: tuple, obj) -> bool | None:
@@ -156,6 +165,21 @@ def adopted(models: dict, candidates_: dict[int, dict[str, list[str]]],
     for tid, slot in (corroborated_ or ()):
         if slot in candidates_.get(tid, {}):
             out[tid][slot] = candidates_[tid][slot]
+    for _lit, fields_ in _justified(models, candidates_):
+        for t, slot_t in fields_:
+            out[t][slot_t] = candidates_[t][slot_t]
+    return dict(out)
+
+
+def adopted_pairs(models: dict, candidates_: dict[int, dict[str, list[str]]]) -> frozenset:
+    """The comparisons some fitted rule justified, as unordered pairs of (type, field)."""
+    return frozenset(frozenset(fields_) for lit, fields_ in _justified(models, candidates_)
+                     if lit[0] in (CMP_GE, CMP_LT))
+
+
+def _justified(models: dict, candidates_: dict[int, dict[str, list[str]]]):
+    """Every ordered literal of a fitted rule that passes the discipline, with its
+    (type, field) pairs."""
     for model in models.values():
         ev = model.evidence
         if ev is None:
@@ -188,9 +212,7 @@ def adopted(models: dict, candidates_: dict[int, dict[str, list[str]]],
                 # A comparison must vary in each of its fields on each side: distinct
                 # pairs are cheap, and a field constant across them is not ordered.
                 if _varies(values) and _varies(other_side):
-                    for t, slot_t in fields_:
-                        out[t][slot_t] = candidates_[t][slot_t]
-    return dict(out)
+                    yield lit, fields_
 
 
 def _varies(values: set) -> bool:

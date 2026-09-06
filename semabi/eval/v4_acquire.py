@@ -312,7 +312,7 @@ def refit_with(model, control_key: str, acquired: list[dict],
     fresh = oc.ControlOutcome(got.control, got.roles, list(got.rules), got.default,
                               got.fitted + len(extra), dict(got.events), got.arg_roles,
                               deltas=dict(got.deltas), defaults=dict(got.defaults),
-                              ordered=dict(got.ordered), simplest=got.simplest)
+                              ordered=dict(got.ordered), pairs=got.pairs, simplest=got.simplest)
     fresh.evidence = oc.Evidence.extend(got.evidence, extra)
     for row in extra:
         fresh.events[row[1]] = fresh.events.get(row[1], 0) + 1

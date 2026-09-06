@@ -1,0 +1,336 @@
+{
+ "dev": "/home/moloch/semabi-scratch/preq/harbour_sep_dev",
+ "hold": "/home/moloch/semabi-scratch/preq/harbour_sep_hold",
+ "reading": "search",
+ "ledger": {
+  "one outcome was admissible and it happened": 166,
+  "the only outcome ever seen on this control, and it happened": 98,
+  "several outcomes remained admissible; the one that happened was among them": 52,
+  "the only outcome ever seen on this control, and something else happened": 7,
+  "one outcome was admissible and a different one happened": 4,
+  "no outcome is established for this state": 3
+ },
+ "by_control": {
+  "button:Reopen": {
+   "one outcome was admissible and it happened": 38
+  },
+  "button:Sign off": {
+   "one outcome was admissible and it happened": 29,
+   "several outcomes remained admissible; the one that happened was among them": 2
+  },
+  "button:Sign on": {
+   "one outcome was admissible and it happened": 37
+  },
+  "button:Close": {
+   "one outcome was admissible and it happened": 18,
+   "several outcomes remained admissible; the one that happened was among them": 15
+  },
+  "button#cell@Call/button": {
+   "the only outcome ever seen on this control, and it happened": 98
+  },
+  "button:Schedule call": {
+   "one outcome was admissible and it happened": 21,
+   "several outcomes remained admissible; the one that happened was among them": 22
+  },
+  "button:Allocate berth": {
+   "one outcome was admissible and it happened": 5
+  },
+  "button:Book pilot": {
+   "one outcome was admissible and it happened": 10,
+   "several outcomes remained admissible; the one that happened was among them": 13,
+   "one outcome was admissible and a different one happened": 4,
+   "no outcome is established for this state": 3
+  },
+  "button:Record departure": {
+   "the only outcome ever seen on this control, and something else happened": 7
+  },
+  "button:Bring _": {
+   "one outcome was admissible and it happened": 8
+  }
+ },
+ "control": "button:Book pilot",
+ "rows": [
+  {
+   "step": 65,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "Nothing chosen in the pilot list ."
+   ],
+   "observed": "Nothing chosen in the pilot list .",
+   "level": "the event alone"
+  },
+  {
+   "step": 159,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "Nothing chosen in the pilot list ."
+   ],
+   "observed": "Nothing chosen in the pilot list .",
+   "level": "the event alone"
+  },
+  {
+   "step": 185,
+   "verdict": "several outcomes remained admissible; the one that happened was among them",
+   "admissible": [
+    "<> booked for call <> .",
+    "Nothing chosen in the pilot list ."
+   ],
+   "observed": "Nothing chosen in the pilot list .",
+   "level": null
+  },
+  {
+   "step": 328,
+   "verdict": "several outcomes remained admissible; the one that happened was among them",
+   "admissible": [
+    "<> booked for call <> .",
+    "<> is already booked for call <> ."
+   ],
+   "observed": "<> is already booked for call <> .",
+   "level": null
+  },
+  {
+   "step": 356,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "Nothing chosen in the pilot list ."
+   ],
+   "observed": "Nothing chosen in the pilot list .",
+   "level": "the event alone"
+  },
+  {
+   "step": 464,
+   "verdict": "one outcome was admissible and a different one happened",
+   "admissible": [
+    "<> booked for call <> ."
+   ],
+   "observed": "<> holds a <> ; <> is <> overall .",
+   "level": "the event alone"
+  },
+  {
+   "step": 467,
+   "verdict": "no outcome is established for this state",
+   "admissible": [],
+   "observed": "<> holds a <> ; <> is <> overall .",
+   "level": null
+  },
+  {
+   "step": 470,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "<> booked for call <> ."
+   ],
+   "observed": "<> booked for call <> .",
+   "level": "with its arguments"
+  },
+  {
+   "step": 473,
+   "verdict": "several outcomes remained admissible; the one that happened was among them",
+   "admissible": [
+    "<> booked for call <> .",
+    "<> is already booked for call <> ."
+   ],
+   "observed": "<> booked for call <> .",
+   "level": null
+  },
+  {
+   "step": 476,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "<> booked for call <> ."
+   ],
+   "observed": "<> booked for call <> .",
+   "level": "with its arguments"
+  },
+  {
+   "step": 479,
+   "verdict": "several outcomes remained admissible; the one that happened was among them",
+   "admissible": [
+    "<> holds a <> ; <> is <> overall .",
+    "<> is already booked for call <> ."
+   ],
+   "observed": "<> is already booked for call <> .",
+   "level": null
+  },
+  {
+   "step": 482,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "<> is already booked for call <> ."
+   ],
+   "observed": "<> is already booked for call <> .",
+   "level": "with its arguments"
+  },
+  {
+   "step": 485,
+   "verdict": "several outcomes remained admissible; the one that happened was among them",
+   "admissible": [
+    "<> booked for call <> .",
+    "<> is already booked for call <> ."
+   ],
+   "observed": "<> is already booked for call <> .",
+   "level": null
+  },
+  {
+   "step": 492,
+   "verdict": "one outcome was admissible and a different one happened",
+   "admissible": [
+    "<> booked for call <> ."
+   ],
+   "observed": "<> holds a <> ; <> is <> overall .",
+   "level": "the event alone"
+  },
+  {
+   "step": 495,
+   "verdict": "one outcome was admissible and a different one happened",
+   "admissible": [
+    "Nothing chosen in the pilot list ."
+   ],
+   "observed": "<> holds a <> ; <> is <> overall .",
+   "level": "the event alone"
+  },
+  {
+   "step": 498,
+   "verdict": "several outcomes remained admissible; the one that happened was among them",
+   "admissible": [
+    "<> holds a <> ; <> is <> overall .",
+    "Nothing chosen in the pilot list ."
+   ],
+   "observed": "<> holds a <> ; <> is <> overall .",
+   "level": null
+  },
+  {
+   "step": 501,
+   "verdict": "several outcomes remained admissible; the one that happened was among them",
+   "admissible": [
+    "<> booked for call <> .",
+    "<> is already booked for call <> .",
+    "Nothing chosen in the pilot list ."
+   ],
+   "observed": "<> booked for call <> .",
+   "level": null
+  },
+  {
+   "step": 504,
+   "verdict": "several outcomes remained admissible; the one that happened was among them",
+   "admissible": [
+    "<> booked for call <> .",
+    "<> holds a <> ; <> is <> overall ."
+   ],
+   "observed": "<> booked for call <> .",
+   "level": null
+  },
+  {
+   "step": 507,
+   "verdict": "several outcomes remained admissible; the one that happened was among them",
+   "admissible": [
+    "<> booked for call <> .",
+    "Nothing chosen in the pilot list ."
+   ],
+   "observed": "<> booked for call <> .",
+   "level": null
+  },
+  {
+   "step": 510,
+   "verdict": "several outcomes remained admissible; the one that happened was among them",
+   "admissible": [
+    "<> booked for call <> .",
+    "<> is already booked for call <> ."
+   ],
+   "observed": "<> is already booked for call <> .",
+   "level": null
+  },
+  {
+   "step": 513,
+   "verdict": "several outcomes remained admissible; the one that happened was among them",
+   "admissible": [
+    "<> booked for call <> .",
+    "<> is already booked for call <> .",
+    "Nothing chosen in the pilot list ."
+   ],
+   "observed": "<> is already booked for call <> .",
+   "level": null
+  },
+  {
+   "step": 521,
+   "verdict": "one outcome was admissible and a different one happened",
+   "admissible": [
+    "<> booked for call <> ."
+   ],
+   "observed": "<> holds a <> ; <> is <> overall .",
+   "level": "the event alone"
+  },
+  {
+   "step": 524,
+   "verdict": "no outcome is established for this state",
+   "admissible": [],
+   "observed": "<> holds a <> ; <> is <> overall .",
+   "level": null
+  },
+  {
+   "step": 527,
+   "verdict": "no outcome is established for this state",
+   "admissible": [],
+   "observed": "<> holds a <> ; <> is <> overall .",
+   "level": null
+  },
+  {
+   "step": 530,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "<> holds a <> ; <> is <> overall ."
+   ],
+   "observed": "<> holds a <> ; <> is <> overall .",
+   "level": "with its arguments"
+  },
+  {
+   "step": 533,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "<> holds a <> ; <> is <> overall ."
+   ],
+   "observed": "<> holds a <> ; <> is <> overall .",
+   "level": "with its arguments"
+  },
+  {
+   "step": 536,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "<> booked for call <> ."
+   ],
+   "observed": "<> booked for call <> .",
+   "level": "with its arguments"
+  },
+  {
+   "step": 539,
+   "verdict": "one outcome was admissible and it happened",
+   "admissible": [
+    "<> booked for call <> ."
+   ],
+   "observed": "<> booked for call <> .",
+   "level": "with its arguments"
+  },
+  {
+   "step": 542,
+   "verdict": "several outcomes remained admissible; the one that happened was among them",
+   "admissible": [
+    "<> booked for call <> .",
+    "<> is already booked for call <> ."
+   ],
+   "observed": "<> is already booked for call <> .",
+   "level": null
+  },
+  {
+   "step": 545,
+   "verdict": "several outcomes remained admissible; the one that happened was among them",
+   "admissible": [
+    "<> holds a <> ; <> is <> overall .",
+    "<> is already booked for call <> ."
+   ],
+   "observed": "<> is already booked for call <> .",
+   "level": null
+  }
+ ],
+ "lists": {
+  "button:Book pilot": "button:Book pilot: 37 fitted occasions, 6 distinct events\n    role relation['forward', 'rel:0']:0<owner = relation['forward', 'rel:0'] from owner\n    role selection['combobox#1']:2 = selection['combobox#1']\n    role relation['forward', 'rel:0']:0<selection['combobox#1']:2 = relation['forward', 'rel:0'] from selection['combobox#1']:2\n    attr:Status#0(owner) == 'expected' & ('ref_set', \"selection['combobox#1']:2\", 'rel:0')  ->  <> is already booked for call <> .   [9]\n    ('unnamed', \"selection['combobox#1']:2\")  ->  Nothing chosen in the pilot list .   [6]\n    attr:Length overall#0(owner) < '88'  ->  <> booked for call <> .   [3]\n    attr:Duty#0(selection['combobox#1']:2) == 'on' & attr:Length overall#0(owner) < '96'  ->  <> booked for call <> .   [3]\n    attr:Ticket to#0(selection['combobox#1']:2) == '100'  ->  <> holds a <> ; <> is <> overall .   [5]\n    attr:Calls logged#0(owner) == '1'  ->  <> booked for call <> .   [2]\n    attr:Length overall#0(owner) == '112' & ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#1']:2\")  ->  <> booked for call <> .   [2]\n    attr:Ticket to#0(selection['combobox#1']:2) == '150' & ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#1']:2\")  ->  <> booked for call <> .   [2]\n    attr:Length overall#0(owner) >= '132'  ->  <> holds a <> ; <> is <> overall .   [3]\n    otherwise -> undetermined\n    '<> booked for call <> .' arguments: 0=selection['combobox#1']:2, 1=relation['forward', 'rel:0']:0<owner\n    '<> holds a <> ; <> is <> overall .' arguments: 0=selection['combobox#1']:2, 2=owner\n    '<> is already booked for call <> .' arguments: 0=selection['combobox#1']:2, 1=relation['forward', 'rel:0']:0<selection['combobox#1']:2\n    '<> is not <> .' arguments: 0=selection['combobox#1']:2\n    'Call <> is already <> ; <> pilot is needed .' arguments: 0=relation['forward', 'rel:0']:0<owner"
+ }
+}

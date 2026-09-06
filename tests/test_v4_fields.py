@@ -237,3 +237,46 @@ def test_a_contested_state_is_one_where_the_list_fires_against_a_standing_vouch(
     lits, options = at(200, 160)
     assert model.predict(lits) == "refused" and set(options) == {"berthed", "refused"}
     assert not contested(model, lits, options)      # the residue answers, no guard fires
+
+
+def test_a_comparison_may_be_about_the_object_acted_on():
+    # the sheet keyed by its vessel: the booking's owner is the vessel, and a ticket is
+    # measured against the owner's own length
+    berth = {"berth": oc.Role("berth", oc.referring.SINGLETON, (), 2),
+             oc.OWNER: oc.Role(oc.OWNER, "action", (), 1)}
+    rows = [((78, 140), "berthed"), ((96, 120), "berthed"), ((100, 160), "berthed"),
+            ((64, 70), "berthed"), ((140, 160), "berthed"),
+            ((132, 90), "refused"), ((150, 120), "refused"), ((148, 100), "refused")]
+    occasions = [(State({(1, "v"): Obj(1, "v", {"length": str(l)}), (2, "b"): Obj(2, "b", {"takes": str(t)})}),
+                  Obj(1, "v", {"length": str(l)}), event, ("v", "b")) for (l, t), event in rows]
+    model = oc.learn_control(FakeInducer(), "Allocate", occasions, berth, ordered=BERTH_FIELDS)
+    compared = {fields.ordered_fields(l) for r in model.rules for l in r.condition if len(l) == 5}
+    assert compared and compared <= {(("owner", "length"), ("berth", "takes")),
+                                     (("berth", "takes"), ("owner", "length"))}
+    assert fields.adopted({"Allocate": model}, BERTH_FIELDS) == BERTH_FIELDS
+
+
+def test_a_comparison_is_in_the_language_only_where_a_rule_justified_that_pair():
+    # adoption records the compared pair; a query over the adopted fields then holds the
+    # justified comparison and not every comparison two ordered fields could form
+    from types import SimpleNamespace
+    rows = [((78, 140), "berthed"), ((96, 120), "berthed"), ((100, 160), "berthed"),
+            ((64, 70), "berthed"), ((140, 160), "berthed"),
+            ((132, 90), "refused"), ((150, 120), "refused"), ((148, 100), "refused")]
+    model = _allocate(rows)
+    pairs = fields.adopted_pairs({"Allocate": model}, BERTH_FIELDS)
+    assert pairs == frozenset({frozenset({(1, "length"), (2, "takes")})})
+    v, b = Obj(1, "v", {"length": "132", "age": "7"}), Obj(2, "b", {"takes": "90", "depth": "9"})
+    wide = {1: {"length": ["64", "132"], "age": ["5", "7"]}, 2: {"takes": ["90", "160"], "depth": ["9", "12"]}}
+    every = fields.pair_literals({"vessel": v, "berth": b}, wide)
+    justified = fields.pair_literals({"vessel": v, "berth": b}, wide, pairs)
+    assert ("attr_cmp_ge", "vessel", "length", "berth", "takes") in justified
+    assert len(justified) == 2 and len(every) == 8
+    assert not any(l[2] == "age" or l[4] == "depth" for l in justified)
+    # and the model carries them from the second pass on
+    fit = SimpleNamespace(inducer=FakeInducer())
+    refit = oc.learn_control(FakeInducer(), "Allocate", _berthing(rows), BERTH_ROLES, ordered=BERTH_FIELDS, pairs=pairs)
+    assert refit.pairs == pairs
+    state = _berthing([((200, 160), "refused")])[0][0]
+    bound, status = refit.bind(state, None)
+    assert any(len(l) == 5 for l in oc.query_literals(fit, refit, state, bound, status))

@@ -168,10 +168,16 @@ def test_a_select_inside_the_panel_is_a_control_of_the_page():
 
 def test_a_control_takes_roles_from_the_operator_its_enabling_click_leads_to():
     act = lambda slot, owner: SimpleNamespace(kind="click", loc=SimpleNamespace(slot=slot), owner=owner)
-    op = lambda *core: SimpleNamespace(core=lambda: core)
+    op = lambda *core: SimpleNamespace(name="op", core=lambda: core)
     ops = [op(act("call", "?o0"), act("allocate", "?o0")),      # the sheet is the call it opened
            op(act("call", "?o0"), act("allocate", None)),       # bound only by the earlier click
            op(act("tab", None), act("allocate", "?o1")),        # the earlier click bound nothing
            op(act("allocate", "?o2"))]
     grouped = oc._ops_by_control(ops, lambda slot: slot)
     assert grouped == {"allocate": [ops[0], ops[2], ops[3]]}
+    # the sheet keyed by its vessel: the call button binds the call, the acting click the
+    # vessel, and the operator's own query names the call from the vessel
+    routed = op(act("call", "?o0"), act("allocate", "?o1"))
+    routed.name = "routed"
+    assert oc._ops_by_control([routed], lambda slot: slot) == {}
+    assert oc._ops_by_control([routed], lambda slot: slot, {"routed": {"?o0": object()}}) == {"allocate": [routed]}

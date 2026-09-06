@@ -1,0 +1,253 @@
+{
+ "name": "harbour: separating pilot bookings, seed 99",
+ "run": "runs/v4/harbour_transfer",
+ "base": "http://127.0.0.1:8910",
+ "seed": 99,
+ "tie": {
+  "family": "join",
+  "left": null,
+  "right": null
+ },
+ "readings": {
+  "A": {},
+  "B": {}
+ },
+ "actions": [
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Sign on",
+    "nth": 0
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Schedule call",
+    "nth": 1
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Schedule call",
+    "nth": 2
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Schedule call",
+    "nth": 3
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-104"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 1
+   },
+   "text": "Silas Nunn - ticket to 80 m - on duty"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Book pilot"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-102"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 1
+   },
+   "text": "Silas Nunn - ticket to 80 m - on duty"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Book pilot"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-103"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 1
+   },
+   "text": "Silas Nunn - ticket to 80 m - on duty"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Book pilot"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-102"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 1
+   },
+   "text": "Tom Dorley - ticket to 100 m - on duty"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Book pilot"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-103"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 1
+   },
+   "text": "Tom Dorley - ticket to 100 m - on duty"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Book pilot"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-103"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 1
+   },
+   "text": "Aoife Marr - ticket to 150 m - on duty"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Book pilot"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-104"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 1
+   },
+   "text": "Tom Dorley - ticket to 100 m - on duty"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Book pilot"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-102"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 1
+   },
+   "text": "Aoife Marr - ticket to 150 m - on duty"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Book pilot"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-102"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 1
+   },
+   "text": "Tom Dorley - ticket to 100 m - on duty"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Book pilot"
+   }
+  }
+ ],
+ "test": "mutation",
+ "predictions": {
+  "A": "n/a",
+  "B": "n/a"
+ },
+ "note": "signed on Silas Nunn; scheduled C-102 for Hafnarfjord (112 m); scheduled C-103 for Petrel Star (148 m); scheduled C-104 for Bregagh (88 m); ticket too short: C-104 (88 m) <- Silas Nunn (ticket 80 m); ticket too short: C-102 (112 m) <- Silas Nunn (ticket 80 m); ticket too short: C-103 (148 m) <- Silas Nunn (ticket 80 m); ticket too short: C-102 (112 m) <- Tom Dorley (ticket 100 m); ticket too short: C-103 (148 m) <- Tom Dorley (ticket 100 m); ok: C-103 (148 m) <- Aoife Marr (ticket 150 m); ok: C-104 (88 m) <- Tom Dorley (ticket 100 m); already booked: C-102 (112 m) <- Aoife Marr (ticket 150 m); already booked: C-102 (112 m) <- Tom Dorley (ticket 100 m)"
+}

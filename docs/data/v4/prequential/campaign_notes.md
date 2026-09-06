@@ -2189,3 +2189,237 @@ renderings):
     The unrestricted split05 and cross-trace records are unchanged.
 Both are the incumbent Vessel reading being carried while the sheet question is open;
 the probe that decides the tie decides them.  Recorded; retaining.
+
+## P32 dev fit (15:15, p32_inspect_search.json): Book pilot has NO ROLES on the separating corpus
+Under the search's reading on harbour_sep_dev (473 steps) the board row family is
+NO_IDENTITY, the sheet keyed by its vessel; Book pilot fits with roles {}, one memorised
+rule (Calls logged == 2 & Length overall == 88 -> booked [2]), ordered {}, no ordered
+literal on any occasion.  Without a selection role there is no pilot object, no ticket,
+no comparison: the corpus was collected under 8936ffb-era code and the fit runs under
+306a328 (the view-opening criterion), so the suspicion is that P31 un-earned the board's
+identity here -- the openings no longer credit it, the evidence prior starts it at no
+identity, and nothing wins it back -- and the outcome layer loses the operator that
+gave Book pilot its roles.  Checking the pilot corpus (P26) under the current code the
+same way before judging P32.
+
+## REGRESSION (15:36, p31_pil_inspect.json): P26 does not reproduce under 306a328
+On harbour_pil_dev under the search's current reading -- sheet keyed by its vessel,
+board NO_IDENTITY (as under P26) -- Book pilot fits with roles {}, two memorised rules
+on owner attributes (Flag == Norway -> Nothing chosen [4]; Calls logged == 0 -> too short
+[2]), ordered {}: no selection role, no pilot object, no ticket, no join.  Under 26f3f76
+the same corpus gave owner + selection[combobox#1] + relation[backward rel:3]<owner, the
+comparison rule and both fields adopted.  The only difference is the sheet's key: the
+view-opening criterion left the tie open and the incumbent VESSEL key carried, and under
+that reading the outcome layer loses Book pilot's operator.  Battery #7 could not see it
+(no retained ledger involves the join corpora).  Hypothesis: one vessel object with two
+renderings (table row and open sheet) carries one node, and the button inside the sheet
+does not find its owner or its effects through the second mention -- the same fact the
+fidelity audit counted (34 values not rendered under their object).  Two checks now:
+(a) the same fit with the sheet's key overridden to heading#0 (roles return?), (b) the
+operators touching Book pilot under the vessel key (join_reach).  P32 and P33 wait on
+this: a fit without roles judges nothing.
+
+15:40 P32 collection complete: seven seeds rc=0; harbour_sep_dev 473 steps (base
+harbour_dev + seeds 81/82/83/85), harbour_sep_hold 547 steps (base harbour_transfer +
+93/95/99).  The app is free.  P32's fits and P33's run are held until the Book pilot
+roles regression is resolved; the sep corpora will be judged under a reading whose
+outcome layer has the roles (the sheet keyed by the call, as under P26) if the override
+check confirms that as the difference.  Full suite launched on 306a328 (nothing
+authenticating runs beside it).
+
+## P32 under the call key (16:03; p32_score_heading.json) -- and the regression's cause narrowed
+With the sheet's key overridden to heading#0 on harbour_sep_dev the roles are back
+(owner, selection[combobox#1], relation[backward rel:3]<owner), the list learns the join
+(Ticket to(pilot) < Length overall(vessel) -> too short), unnamed -> Nothing chosen [6],
+the already-booked guard, and two booking rules -- Calls logged(vessel) < 3 -> booked [8]
+and Length overall(owner) < 88 -> booked [2] -- with fields adopted.  So the key IS the
+difference: the vessel-keyed sheet loses the outcome layer its operator; the call-keyed
+sheet has it.  P32 holdout (harbour_sep_hold, 30 Book pilot clicks): 13 forced right /
+17 several / 0 wrong / 0 unestablished; whole holdout 164 forced right / 98 sole / 56
+several / ... no wrong recorded in the control's rows.  Against the pre-registration:
+no wrong (met); the join is the too-short rule (met); `several` 17 of 30 (57%) against
+P26's 14 of 21 (67%) -- lower as a share but not the fall pre-registered, because at the
+divergent states a DIFFERENT pure conjunction vouches `booked` (Calls logged(vessel) < 3,
+a threshold on a third field), not a ticket/length pair: the corpus separates the
+comparison from ticket/length boxes as designed and not from every coincidence.
+Dumping the vouch conditions per held-out state next to say exactly which.
+
+## The regression's mechanism (16:13; p31_override_pil.json, p31_reach_pil.json)
+Override on harbour_pil_dev: settled (vessel-keyed sheet) -> roles {}, six operators
+touch Book pilot; call-keyed -> the three roles, nine operators.  Reach: every Book pilot
+transition's core is [click the call button (a leaf object, T0['C-103']), click Book
+pilot@T3 (the vessel)].  _ops_by_control keeps an operator only if every earlier click's
+owner is None or the acting click's owner ("an object bound only by an earlier click is
+a route the pre-state does not have").  Under the call key the sheet and the call button
+share the key 'C-103' and are one entity, so both clicks bind the same object; under the
+vessel key the enabling click binds the call button and the acting click binds the
+vessel -- two objects -- and the operator is dropped, roles with it.  The interface's
+own message ("Silas Nunn booked for call C-103") names the call; `named` did not
+separate the readings because the call button object carries 'C-103' under both.
+Repair (P34, pre-registered): an earlier click's owner is also acceptable when the
+pre-state can name it from the acting object -- the operator's queries express it (a
+referring expression from ?o1), i.e. the route exists.  Expected: on harbour_pil_dev
+under the settled vessel-keyed reading Book pilot regains its roles (owner = the vessel,
+the selection, and the call by reference), learns the join as Ticket to(pilot) <
+Length overall(owner) with the fields adopted, and the pil holdout ledger has no wrong
+verdict and `several` no higher than under the call key; the call-keyed fit is unchanged;
+battery: no retained ledger moves (harbour_transfer's Book pilot occasions are few) --
+any change a finding.
+
+16:18 P34 implemented: referring.ground takes `enabling` variables and wants them like
+effect objects; induce.learn_queries and consequence._learn_queries bind only the acting
+click's owner and pass the earlier clicks' owners as enabling; outcome.roles_of binds the
+acting owner only (so an enabling owner takes its query's role instead of a second
+OWNER); _ops_by_control keeps an operator whose earlier click's owner is named by one of
+its queries and is given inducer.queries.  Tests: the routed operator kept only with a
+query naming its enabling owner (test_v4_detail_view); an enabling owner named by a
+relation from the acting object, and not searched for when not wanted
+(test_v4_binding).  Focused tests running; then harbour_pil_dev under the settled
+vessel-keyed reading is the P34 measurement.
+
+16:18 full suite on 306a328: 563 passed, 3 skipped, 1 xfailed (37 min); the P34 edits
+landed while it ran, so it is advisory and is rerun after P34 is committed.  P34
+measurement launched: Book pilot on harbour_pil_dev under the settled reading.
+
+## P32 judged from the vouches (16:25; p32_score_callkey_vouches.json)
+The 17 `several` on the separating holdout, by what stands beside the comparison:
+  (a) 9 are ORDER: the pilot is already booked (ref_set) and the RULE class cannot say
+      the already-booked guard precedes the join -- 328/473/479/482/485/501/513/542/545;
+      the list class orders them.  Not an identifiability question.
+  (b) 4 are the comparison against a SINGLE threshold on the vessel's length: at 464/492/
+      521 (Silas 80 vs 88 / 96 / 88 -> too short) "booked" is vouched by Duty on &
+      Length overall(owner) < 96 (or < 112) & ref_null -- pure on dev because dev's
+      seeds 81/82/83/85 have NO 80 m ticket: every dev call on a vessel under 96 m was
+      booked.  The holdout has Silas; dev does not.
+  (c) 1 is the comparison against a THRESHOLD PAIR, the case P32 was built for: at 504
+      (Tom 100 vs Ardent Rose 96 -> booked) "too short" is vouched by Length(vessel) >=
+      96 & Ticket < 130 -- pure on dev because dev's ticket-100 bookings were on 64 and
+      88 m vessels and its ticket-100 refusals on 112/132/148.  The holdout separates;
+      the dev did not contain the separating booking.
+  (d) 5 are the nominal coincidence Flag(vessel) == Norway & Calls logged < 3 vouching
+      "Nothing chosen" (495/498/501/507/513) -- the P30 coincidence again.
+Verdict on P32 as pre-registered: the join is the too-short rule (met); no wrong (met);
+`several` did not fall as far as pre-registered because the DEV side lacks the refuting
+occasions -- an 80 m ticket against a small vessel, and a ticket-100 booking on a vessel
+of 96 m or more -- which my seed survey did not check for.  The holdout side does
+contain the divergent states and the comparison is right at every one of them (464, 492,
+504, 521) while a threshold vouch is wrong: the theories diverge, and the comparison is
+the one the application follows.  Next: dev seeds whose worlds hold Silas (80) with an
+88 or 96 m vessel and Tom (100) with an expected 96 or 112 m call; then the version space
+should force the comparison at those states.
+
+## P32b pre-registered (16:26): the refuting dev occasions added
+Seeds whose worlds hold them: 107 and 119 (Silas 80 with an 88/96 m vessel AND Tom 100
+with a 96/112 m one), 113 (Silas with 96), 103 (Tom with 96).  Collected with the same
+planner onto harbour_dev and merged with the four P32 dev seeds into harbour_sep2_dev;
+the holdout stays harbour_sep_hold.  Expected, fitted under the call key (the roles
+question is P34's): the single-threshold vouches for "booked" (Length overall(owner) <
+96 / < 112) and the pair Length(vessel) >= 96 & Ticket < 130 for "too short" are impure
+on the new dev and vanish, so 464, 492, 504 and 521 become forced right by the
+comparison; the nine order cases and the five Norway coincidences stay `several`
+unless the new seeds happen to contradict Flag == Norway with a named selection;
+`several` therefore falls to at most 13 of 30 (from 17), no wrong; the join stays the
+too-short rule with both fields adopted.
+
+16:27 focused tests under P34 (binding, detail view, outcome, fields, objective, search
+revisits): 71 passed, 2 skipped.  Full suite launched on the P34 tree; P34 measurement on
+harbour_sep_dev launched beside the pilot one.
+
+## P34 measured on harbour_pil_dev (16:40; p34_pil_inspect.json, p34_pil_score.json)
+Roles return under the vessel-keyed sheet: owner = the vessel (T3), selection[combobox#1]
+= the pilot (T2), relation[forward rel:0]<owner = the call (the button object, reached
+from the vessel's current call), and the pilot's own booked call.  Met.  But the join is
+NOT learned: the too-short rule is `Ticket to(selection) == '80'` [5] (an equality),
+adopted fields are the vessel's Length overall and Calls logged only, and no occasion
+carries a comparison literal -- because pair_literals excludes the OWNER role ("never
+the owner") and under this reading the vessel IS the owner: Ticket to(pilot) against
+Length overall(owner) is never generated, where under the call key the vessel was a
+relation role and the pair existed.  Holdout: 9 forced right / 11 several / 1 wrong
+(513: Nothing chosen forced by the Norway coincidence, a booking observed) -- `several`
+11 < 14 (met), one wrong (not met).  So P34 restores the roles and exposes the next
+assumption: a comparison may not be about the acted-on object.  Reading why that
+exclusion was made before lifting it.
+
+## P35 pre-registered (16:41): a comparison may be about the acted-on object
+The exclusion of the owner from pair literals was a reviewer's fix on ab565f9 ("it is
+not one of the model's roles, so nothing it compares could be justified afterwards").
+That premise no longer holds: the owner is a role with a type wherever an operator
+binds it (fields.adopted reads its tid from model.roles), and thresholds over the
+owner's fields are generated and adopted already (Length overall(owner) < 88).  Lifted:
+pair literals range over every bound role, the owner included, under the same
+two-sided, per-field `_varies` discipline.  Test: an owner carrying the compared field.
+Expected: harbour_pil_dev under the settled vessel-keyed reading learns the too-short
+rule as Ticket to(selection) < Length overall(owner) with Ticket to (pilot) and Length
+overall (vessel) adopted, and the pil holdout has `several` <= 11 and no more than the
+one wrong (513, the Norway coincidence); under the call key the same join may be spelt
+against the sheet's own Length overall row instead of the vessel relation -- the same
+rule; blend: a comparison between the acted-on blend's committed gallons and the chosen
+vat's gallons left is now expressible and is adopted only if it passes the discipline --
+its retained lists are reported either way; harbour_transfer, cellar, vet: no change
+expected.  Battery #8 judges all of it.
+
+16:42 P35 implemented: pair_literals over every bound role including the owner; test
+(an owner carrying the compared field, with the owner role typed) passes with the fields
+and outcome and admissible tests.  P35 measurement on harbour_pil_dev launched (settled
+vessel-keyed reading).  The full suite that was running caught the P35 edit mid-run and
+is advisory again; the P34 measurement on harbour_sep_dev runs on the pre-P35 module.
+
+16:49 P34 alone on harbour_sep_dev (pre-P35 module; p34_sep_inspect/score.json): roles
+return (owner = vessel, selection = pilot, the call by relation from each); without the
+owner comparison the list memorises -- Ticket to == 100 -> too short [5], Length
+overall(owner) < 88 / < 96 -> booked, >= 132 -> too short, equalities on Calls logged and
+Ticket to == 150 -- adopting the vessel's two fields only; holdout Book pilot 10 forced
+right / 13 several / 4 wrong / 3 unestablished (30), against 13/17/0/0 under the call
+key.  The roles repair is necessary and not sufficient; P35 (the owner in comparisons)
+is the other half.  P35 measurement on the separating corpus launched beside the pilot
+one.
+
+## P35 measured on harbour_pil_dev (17:03; p35_pil_inspect.json, p35_pil_score.json)
+Under the vessel-keyed sheet the join is learned against the acted-on object:
+Ticket to(selection) < Length overall(owner) -> too short [6]; adopted Ticket to (pilot)
+and Length overall + Calls logged (vessel); 19 of 25 occasions carry a comparison.
+Holdout Book pilot 5 forced right / 16 several / 0 wrong / 0 unestablished.  Met: the
+join and its fields, no wrong.  Not met: `several` 16 > 11.  Cause, by the vocabulary:
+pair literals are generated for EVERY pair of adopted fields across two roles, so the
+query now also holds Ticket to(pilot) >= Calls logged(vessel) -- a ticket length against
+a count, always true, commensurable with nothing -- and such a literal makes pure
+conjunctions easier and vouches wider.  A field is ordered only where a rule justified
+it; a comparison should be in the language only where a rule justified THAT pair.
+P36 pre-registered: adoption records the justified pairs beside the fields; after pass
+one, pair literals are generated for adopted pairs only (pass one keeps every candidate
+pair so the learner can find them).  Expected on harbour_pil_dev: the join and its
+fields as under P35; the pair (Ticket to, Length overall) adopted and no other; holdout
+`several` <= 14 (the call-key figure) with no wrong; on the separating corpus likewise;
+blend, harbour_transfer, cellar, vet unchanged.
+
+17:05 P36 implemented: fields.adopted_pairs (the justified comparisons as unordered
+(type, field) pairs, from the same discipline as adoption); pair_literals takes `pairs`
+(None = every pair, the first pass); ControlOutcome.pairs travels with the model through
+learn_control, the rows, the silent rows, the query, the answer and the refit; the
+second pass learns with the adopted fields and pairs; the theory record carries
+adopted_pairs.  Tests: the berth fixture adopts exactly (length, takes); a query over
+two ordered fields each holds the justified comparison and not the six others; the
+refit keeps the pairs.  Focused tests 44 passed.  Advisory full suite (P34 tree, P35
+landing mid-run): 564 passed, 3 skipped, 1 xfailed.  P36 measurements launched on
+harbour_pil_dev and harbour_sep_dev.
+
+17:12 P35 on harbour_sep_dev (p35_sep_inspect/score.json): the join against the acted-on
+object, Ticket to(selection) < Length overall(owner) -> too short [8]; Ticket to, Length
+overall and Calls logged adopted; 31 of 37 occasions carry a comparison; holdout 12
+forced right / 18 several / 0 wrong / 0 unestablished -- the call-key figure was
+13/17/0/0.  With P34 and P35 the vessel-keyed reading's outcome layer states the join
+and transfers it as the call-keyed one does.  P36's measurement decides the junk pairs.
+
+## P36 measured (17:28; p36_*_inspect/score.json)
+Adopted pairs on both corpora: exactly (Ticket to, Length overall); the ticket-against-
+count comparison is out of the language.  The join and the adopted fields as under P35.
+Holdout ledgers IDENTICAL to P35's: pil 5 forced right / 16 several, sep 12 / 18, no
+wrong on either.  So the junk pair was not what widened the admissible sets under the
+vessel key -- that hypothesis is refuted; the two extra `several` on the pilot holdout
+(16 against the call key's 14) come from elsewhere in that reading's vocabulary and are
+left open, small and recorded.  P36 stays on its own ground -- a comparison is in the
+language only where a rule justified it, the same discipline as a field's order -- and
+changed no verdict here.  Committing P34 + P35 + P36; battery #8 under the commit,
+pre-registered as in P34/P35: retained ledgers unchanged except where a comparison
+against the acted-on object is now expressible and adopted (blend is where it could
+be), the frontier and invariants unchanged; anything else a finding.

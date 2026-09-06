@@ -1,0 +1,2088 @@
+{
+ "run": "/home/moloch/semabi-scratch/preq/harbour_sep_dev",
+ "control": "button:Book pilot",
+ "split": 0.999,
+ "families": {
+  "button[_]": [
+   "button#0",
+   "SUPPORTED"
+  ],
+  "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))": [
+   "table/rowgroup/row/cell@Vessel#0",
+   "UNSUPPORTED"
+  ],
+  "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])": [
+   "cell@Berth#0",
+   "SUPPORTED"
+  ],
+  "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": [
+   "cell@Vessel#0",
+   "SUPPORTED"
+  ],
+  "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])": [
+   "cell@Pilot#0",
+   "SUPPORTED"
+  ],
+  "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": [
+   null,
+   "NO_IDENTITY"
+  ]
+ },
+ "roles": {},
+ "rules": [
+  "attr:Calls logged#0(owner) == '2' & attr:Length overall#0(owner) == '88'  ->  <> booked for call <> .   [2]"
+ ],
+ "default": "\u0000UNDETERMINED",
+ "events": {
+  "<> booked for call <> .": 12,
+  "<> is already booked for call <> .": 9,
+  "<> holds a <> ; <> is <> overall .": 8,
+  "Nothing chosen in the pilot list .": 6,
+  "Call <> is already <> ; <> pilot is needed .": 1,
+  "<> is not <> .": 1
+ },
+ "ordered": {},
+ "field_theory": {
+  "candidates": {
+   "1": {
+    "attr:Takes up to#0": [
+     "70",
+     "90",
+     "120",
+     "140",
+     "160"
+    ]
+   },
+   "2": {
+    "attr:Ticket to#0": [
+     "80",
+     "100",
+     "130",
+     "150"
+    ]
+   },
+   "3": {
+    "attr:Calls logged#0": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5"
+    ],
+    "attr:Length overall#0": [
+     "54",
+     "64",
+     "78",
+     "88",
+     "96",
+     "112",
+     "132",
+     "148"
+    ]
+   }
+  },
+  "adopted": {},
+  "corroborated": []
+ },
+ "occasions": [
+  {
+   "event": "Nothing chosen in the pilot list .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "2"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ]
+   ]
+  },
+  {
+   "event": "Nothing chosen in the pilot list .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "sawn timber"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "0"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "alongside"
+    ]
+   ]
+  },
+  {
+   "event": "Nothing chosen in the pilot list .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "4"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "bagged fertiliser"
+    ]
+   ]
+  },
+  {
+   "event": "Nothing chosen in the pilot list .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "2"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "bagged fertiliser"
+    ]
+   ]
+  },
+  {
+   "event": "Nothing chosen in the pilot list .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "2"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "bagged fertiliser"
+    ]
+   ]
+  },
+  {
+   "event": "Nothing chosen in the pilot list .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "frozen fish"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "1"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Iceland"
+    ]
+   ]
+  },
+  {
+   "event": "<> booked for call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "drummed solvents"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "3"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "United Kingdom"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ]
+   ]
+  },
+  {
+   "event": "Call <> is already <> ; <> pilot is needed .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "4"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "frozen fish"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Iceland"
+    ]
+   ]
+  },
+  {
+   "event": "<> is not <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "3"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Ireland"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "milling grain"
+    ]
+   ]
+  },
+  {
+   "event": "<> holds a <> ; <> is <> overall .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "2"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "frozen fish"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Iceland"
+    ]
+   ]
+  },
+  {
+   "event": "<> holds a <> ; <> is <> overall .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "bagged fertiliser"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "3"
+    ]
+   ]
+  },
+  {
+   "event": "<> holds a <> ; <> is <> overall .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "bagged fertiliser"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "3"
+    ]
+   ]
+  },
+  {
+   "event": "<> booked for call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "bagged fertiliser"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "3"
+    ]
+   ]
+  },
+  {
+   "event": "<> booked for call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "2"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "frozen fish"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Iceland"
+    ]
+   ]
+  },
+  {
+   "event": "<> booked for call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "0"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "drummed solvents"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "United Kingdom"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ]
+   ]
+  },
+  {
+   "event": "<> is already booked for call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "0"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "drummed solvents"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "United Kingdom"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ]
+   ]
+  },
+  {
+   "event": "<> is already booked for call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "bagged fertiliser"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "3"
+    ]
+   ]
+  },
+  {
+   "event": "<> is already booked for call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "bagged fertiliser"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "3"
+    ]
+   ]
+  },
+  {
+   "event": "<> holds a <> ; <> is <> overall .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "frozen fish"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "1"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Iceland"
+    ]
+   ]
+  },
+  {
+   "event": "<> booked for call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "frozen fish"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "1"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Iceland"
+    ]
+   ]
+  },
+  {
+   "event": "<> booked for call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "frozen fish"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "1"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Iceland"
+    ]
+   ]
+  },
+  {
+   "event": "<> booked for call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "4"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "drummed solvents"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "United Kingdom"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ]
+   ]
+  },
+  {
+   "event": "<> is already booked for call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "frozen fish"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "1"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Iceland"
+    ]
+   ]
+  },
+  {
+   "event": "<> is already booked for call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "4"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "drummed solvents"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "United Kingdom"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ]
+   ]
+  },
+  {
+   "event": "<> holds a <> ; <> is <> overall .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "0"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "frozen fish"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Iceland"
+    ]
+   ]
+  },
+  {
+   "event": "<> holds a <> ; <> is <> overall .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "2"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Malta"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "naphtha"
+    ]
+   ]
+  },
+  {
+   "event": "<> holds a <> ; <> is <> overall .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "2"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Malta"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "naphtha"
+    ]
+   ]
+  },
+  {
+   "event": "<> booked for call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "2"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Malta"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "naphtha"
+    ]
+   ]
+  },
+  {
+   "event": "<> booked for call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "0"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "frozen fish"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Iceland"
+    ]
+   ]
+  },
+  {
+   "event": "<> booked for call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "4"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Ireland"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "milling grain"
+    ]
+   ]
+  },
+  {
+   "event": "<> is already booked for call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "drummed solvents"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "3"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "United Kingdom"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ]
+   ]
+  },
+  {
+   "event": "<> is already booked for call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "drummed solvents"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "3"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "United Kingdom"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ]
+   ]
+  },
+  {
+   "event": "<> is already booked for call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "drummed solvents"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "3"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "United Kingdom"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ]
+   ]
+  },
+  {
+   "event": "<> holds a <> ; <> is <> overall .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "0"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Malta"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "naphtha"
+    ]
+   ]
+  },
+  {
+   "event": "<> booked for call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "2"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Ireland"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "milling grain"
+    ]
+   ]
+  },
+  {
+   "event": "<> booked for call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "2"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Ireland"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "milling grain"
+    ]
+   ]
+  },
+  {
+   "event": "<> is already booked for call <> .",
+   "ordered": [],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Calls logged#0",
+     "0"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Malta"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "naphtha"
+    ]
+   ]
+  }
+ ]
+}

@@ -417,7 +417,8 @@ def collection_types(A) -> frozenset:
     return frozenset(out)
 
 
-def ground(op, evidence, action_bound, refuses, collections=frozenset()) -> Grounding:
+def ground(op, evidence, action_bound, refuses, collections=frozenset(),
+           enabling=frozenset()) -> Grounding:
     """Search for a query naming each effect object, one variable at a time.
 
     Stratified rather than joint: a variable a query has already determined becomes something
@@ -454,7 +455,10 @@ def ground(op, evidence, action_bound, refuses, collections=frozenset()) -> Grou
     if not evidence:
         return out
     known = set(action_bound)
-    wanted = [v for v in effect_vars + output_vars
+    # An enabling click's owner -- the call button that opened the sheet -- is not in hand
+    # at prediction time either: only the acting click's owner is.  It is wanted the way an
+    # effect object is, and named or not by the same search.
+    wanted = [v for v in effect_vars + output_vars + tuple(sorted(enabling))
               if v not in action_bound and v not in created]
     progress = True
     while progress:

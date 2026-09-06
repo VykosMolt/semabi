@@ -1512,13 +1512,15 @@ class Inducer:
         """
         out: dict[str, dict] = {}
         for op in self.operators:
-            bound = {a.owner for a in op.core() if a.owner}
+            core = op.core()
+            bound = {core[-1].owner} if core and core[-1].owner else set()
+            enabling = {a.owner for a in core[:-1] if a.owner} - bound
             evidence = [(tr.before,
                          {q: tr.before.objs.get(v) for q, v in tr.binding.items()
                           if isinstance(v, tuple)})
                         for tr in op.positives]
             got = referring.ground(op, evidence, bound, self.memorises_the_fitting_instance,
-                                   referring.collection_types(self.A))
+                                   referring.collection_types(self.A), enabling=enabling)
             if got.queries:
                 out[op.name] = dict(got.queries)
         return out

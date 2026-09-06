@@ -1,0 +1,4717 @@
+{
+ "run": "/home/moloch/semabi-scratch/preq/harbour_pil_dev",
+ "reading": {
+  "version": 1,
+  "name": "link-probe",
+  "families": {
+   "button[_]": {
+    "family": "button[_]",
+    "key_slot": "button#0",
+    "status": "SUPPORTED",
+    "discrimination": 1.0
+   },
+   "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))": {
+    "family": "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))",
+    "key_slot": "table/rowgroup/row/cell@Vessel#0",
+    "status": "UNSUPPORTED",
+    "discrimination": null
+   },
+   "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])": {
+    "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+    "key_slot": "cell@Berth#0",
+    "status": "SUPPORTED",
+    "discrimination": 1.0
+   },
+   "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])": {
+    "family": "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+    "key_slot": "cell@Pilot#0",
+    "status": "SUPPORTED",
+    "discrimination": 1.0
+   },
+   "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": {
+    "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+    "key_slot": "cell@Vessel#0",
+    "status": "SUPPORTED",
+    "discrimination": 1.0
+   },
+   "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": {
+    "family": "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])",
+    "key_slot": null,
+    "status": "NO_IDENTITY",
+    "discrimination": 0.0
+   }
+  },
+  "promoted_families": [],
+  "refuted": {
+   "button[_]": [
+    null
+   ],
+   "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])": [
+    "cell@Takes up to#0"
+   ],
+   "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])": [
+    "cell@Ticket to#0"
+   ],
+   "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": [
+    null,
+    "cell@Cargo#0",
+    "cell@Length overall#0"
+   ],
+   "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": [
+    "cell@Status#0"
+   ]
+  },
+  "provenance": {
+   "source_run": "/home/moloch/semabi-scratch/preq/harbour_pil_dev",
+   "role": "SOURCE"
+  }
+ },
+ "types": {
+  "0": {
+   "tid": "0",
+   "n_instances": "1",
+   "seen_after_reload": "1",
+   "lost_on_reload": "0",
+   "key_slot": "id",
+   "slots": "{'id': SlotInfo(key='id', n_present=1, n_total=1, values=Counter(), seen_after_reload=1, presence_lo",
+   "merged": "{}",
+   "merged_map": "{}",
+   "parent_tids": "Counter()",
+   "refs": "{}",
+   "keys_survive_reload": "0",
+   "selector_of": "None"
+  },
+  "1": {
+   "tid": "1",
+   "n_instances": "1",
+   "seen_after_reload": "1",
+   "lost_on_reload": "0",
+   "key_slot": "id",
+   "slots": "{'id': SlotInfo(key='id', n_present=1, n_total=1, values=Counter(), seen_after_reload=1, presence_lo",
+   "merged": "{}",
+   "merged_map": "{}",
+   "parent_tids": "Counter()",
+   "refs": "{'rel:0': 0}",
+   "keys_survive_reload": "0",
+   "selector_of": "None"
+  },
+  "2": {
+   "tid": "2",
+   "n_instances": "1",
+   "seen_after_reload": "1",
+   "lost_on_reload": "0",
+   "key_slot": "id",
+   "slots": "{'id': SlotInfo(key='id', n_present=1, n_total=1, values=Counter(), seen_after_reload=1, presence_lo",
+   "merged": "{}",
+   "merged_map": "{}",
+   "parent_tids": "Counter()",
+   "refs": "{'rel:0': 0}",
+   "keys_survive_reload": "0",
+   "selector_of": "None"
+  },
+  "3": {
+   "tid": "3",
+   "n_instances": "1",
+   "seen_after_reload": "1",
+   "lost_on_reload": "0",
+   "key_slot": "id",
+   "slots": "{'id': SlotInfo(key='id', n_present=1, n_total=1, values=Counter(), seen_after_reload=1, presence_lo",
+   "merged": "{}",
+   "merged_map": "{}",
+   "parent_tids": "Counter()",
+   "refs": "{'rel:0': 0, 'rel:1': 1, 'rel:2': 2}",
+   "keys_survive_reload": "0",
+   "selector_of": "None"
+  }
+ },
+ "allocate_operators": [
+  {
+   "name": "op4",
+   "how": "click(button#cell@Call/button@T0[?o0]) click(button:Book pilot@T3[?o1])",
+   "support": 5,
+   "core": [
+    "click(button#cell@Call/button@T0[?o0])",
+    "click(button:Book pilot@T3[?o1])"
+   ],
+   "params": {
+    "?o0": 0,
+    "?o1": 3,
+    "?o2": 2
+   },
+   "queries": {
+    "?o2": {
+     "kind": "selection",
+     "form": "('combobox#1',)",
+     "given": "()"
+    }
+   },
+   "pre": [
+    "('attr_ne', '?o1', 'attr:Cargo#0', 'naphtha')",
+    "('attr', '?o2', 'attr:Duty#0', 'on')",
+    "('attr', '?o1', 'attr:Status#0', 'expected')",
+    "('attr_ne', '?o1', 'attr:Calls logged#0', '0')"
+   ],
+   "effs": [
+    "emit '<> booked for call <> .'(?o2, ?o0)",
+    "rel:0(?o2) := '?o0'",
+    "rel:2(?o1) := '?o2'"
+   ]
+  },
+  {
+   "name": "op5",
+   "how": "click(button#cell@Call/button@T0[?o0]) click(button:Book pilot@T3[?o1])",
+   "support": 6,
+   "core": [
+    "click(button#cell@Call/button@T0[?o0])",
+    "click(button:Book pilot@T3[?o1])"
+   ],
+   "params": {
+    "?o0": 0,
+    "?o1": 3,
+    "?o2": 2
+   },
+   "queries": {
+    "?o2": {
+     "kind": "selection",
+     "form": "('combobox#1',)",
+     "given": "()"
+    }
+   },
+   "pre": [
+    "('attr', '?o2', 'attr:Duty#0', 'on')",
+    "('ref_null', '?o2', 'rel:0')",
+    "('attr_ne', '?o1', 'attr:Flag#0', 'Norway')",
+    "('attr_ne', '?o1', 'attr:Calls logged#0', '1')",
+    "('attr_ne', '?o1', 'attr:Flag#0', 'United Kingdom')"
+   ],
+   "effs": [
+    "emit '<> holds a <> ; <> is <> overall .'(?o2, *, ?o1, *)"
+   ]
+  },
+  {
+   "name": "op6",
+   "how": "click(button#cell@Call/button@T0[?o0]) click(button:Book pilot@T3[?o1])",
+   "support": 3,
+   "core": [
+    "click(button#cell@Call/button@T0[?o0])",
+    "click(button:Book pilot@T3[?o1])"
+   ],
+   "params": {
+    "?o0": 0,
+    "?o1": 3,
+    "?o2": 2,
+    "?o3": 0
+   },
+   "queries": {
+    "?o2": {
+     "kind": "selection",
+     "form": "('combobox#1',)",
+     "given": "()"
+    },
+    "?o3": {
+     "kind": "relation",
+     "form": "('forward', 'rel:0')",
+     "given": "('?o2',)"
+    }
+   },
+   "pre": [
+    "('ref_set', '?o2', 'rel:0')",
+    "('attr', '?o1', 'attr:Status#0', 'expected')",
+    "('attr_ne', '?o1', 'attr:Calls logged#0', '0')"
+   ],
+   "effs": [
+    "emit '<> is already booked for call <> .'(?o2, ?o3)"
+   ]
+  },
+  {
+   "name": "op7",
+   "how": "click(button#cell@Call/button@T0[?o0]) click(button:Book pilot@T3[?o1])",
+   "support": 4,
+   "core": [
+    "click(button#cell@Call/button@T0[?o0])",
+    "click(button:Book pilot@T3[?o1])"
+   ],
+   "params": {
+    "?o0": 0,
+    "?o1": 3,
+    "?o2": 2
+   },
+   "queries": {
+    "?o2": {
+     "kind": "selection",
+     "form": "('combobox#1',)",
+     "given": "()"
+    }
+   },
+   "pre": [
+    "('attr', '?o2', 'attr:Duty#0', 'off')",
+    "('attr_ne', '?o1', 'attr:Flag#0', 'Norway')",
+    "('attr_ne', '?o1', 'attr:Cargo#0', 'frozen fish')"
+   ],
+   "effs": [
+    "emit '<> is not <> .'(?o2, on duty)"
+   ]
+  },
+  {
+   "name": "op8",
+   "how": "click(button#cell@Call/button@T0[?o0]) click(button:Book pilot@T3[?o1])",
+   "support": 1,
+   "core": [
+    "click(button#cell@Call/button@T0[?o0])",
+    "click(button:Book pilot@T3[?o1])"
+   ],
+   "params": {
+    "?o0": 0,
+    "?o1": 3
+   },
+   "queries": {},
+   "pre": [
+    "('attr_ne', '?o1', 'attr:Status#0', 'expected')",
+    "('attr_ne', '?o1', 'attr:Flag#0', 'Norway')"
+   ],
+   "effs": [
+    "emit 'Call <> is already <> ; <> pilot is needed .'(?o0, alongside, no)"
+   ]
+  },
+  {
+   "name": "op9",
+   "how": "click(button#cell@Call/button@T0[?o0]) click(button:Book pilot@T3[?o1])",
+   "support": 6,
+   "core": [
+    "click(button#cell@Call/button@T0[?o0])",
+    "click(button:Book pilot@T3[?o1])"
+   ],
+   "params": {
+    "?o0": 0,
+    "?o1": 3
+   },
+   "queries": {},
+   "pre": [
+    "('attr', '?o1', 'attr:Hazardous cargo#0', 'no')",
+    "('attr_ne', '?o1', 'attr:Cargo#0', 'milling grain')",
+    "('attr_ne', '?o1', 'attr:Calls logged#0', '3')"
+   ],
+   "effs": [
+    "emit 'Nothing chosen in the pilot list .'"
+   ]
+  }
+ ],
+ "allocate_steps": [
+  {
+   "step": 9,
+   "status": "Nothing chosen in the pilot list.",
+   "owner": "(3, 'Ardent Rose')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 32,
+      "root_is_object": true,
+      "id_slot": "('', 'Ardent Rose')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Ardent Rose')",
+       "attr:Cargo#0": "('', 'containers')",
+       "attr:Flag#0": "('', 'Panama')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '96')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Ardent Rose')": {
+     "id": "(3, 'Ardent Rose')",
+     "tid": 3,
+     "key": "Ardent Rose",
+     "attrs": {
+      "attr:Cargo#0": "containers",
+      "attr:Flag#0": "Panama",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "96",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "2"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'none booked')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Kittiwake",
+    "cell@Length overall#0": "78 m",
+    "cell@Berth#0": "N2",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "alongside",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Ardent Rose",
+    "cell@Length overall#1": "96 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "-",
+    "cell@Status#1": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "no pilot chosen"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 30,
+   "status": "Nothing chosen in the pilot list.",
+   "owner": "(3, 'Kittiwake')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 32,
+      "root_is_object": true,
+      "id_slot": "('', 'Kittiwake')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Kittiwake')",
+       "attr:Cargo#0": "('', 'sawn timber')",
+       "attr:Flag#0": "('', 'Norway')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '78')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Kittiwake')": {
+     "id": "(3, 'Kittiwake')",
+     "tid": 3,
+     "key": "Kittiwake",
+     "attrs": {
+      "attr:Cargo#0": "sawn timber",
+      "attr:Flag#0": "Norway",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "78",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "alongside",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "0"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-101')",
+      "rel:1": "(1, 'N2')",
+      "rel:2": "(2, 'none booked')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-101')": {
+     "id": "(0, 'C-101')",
+     "tid": 0,
+     "key": "C-101",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:1->(1, 'N2')": {
+     "id": "(1, 'N2')",
+     "tid": 1,
+     "key": "N2",
+     "attrs": {
+      "attr:Certified for hazardous cargo#0": "no",
+      "attr:Condition#0": "open",
+      "attr:Quay#0": "North Quay",
+      "attr:Takes up to#0": "90"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-101')"
+     },
+     "parent": "None"
+    },
+    "rel:1->rel:0->(0, 'C-101')": {
+     "id": "(0, 'C-101')",
+     "tid": 0,
+     "key": "C-101",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Kittiwake",
+    "cell@Length overall#0": "78 m",
+    "cell@Berth#0": "N2",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "alongside",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Ardent Rose",
+    "cell@Length overall#1": "96 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "-",
+    "cell@Status#1": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "no pilot chosen"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 45,
+   "status": "Nothing chosen in the pilot list.",
+   "owner": "(3, 'Nordkapp')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 32,
+      "root_is_object": true,
+      "id_slot": "('', 'Nordkapp')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Nordkapp')",
+       "attr:Cargo#0": "('', 'bagged fertiliser')",
+       "attr:Flag#0": "('', 'Norway')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '132')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Nordkapp')": {
+     "id": "(3, 'Nordkapp')",
+     "tid": 3,
+     "key": "Nordkapp",
+     "attrs": {
+      "attr:Cargo#0": "bagged fertiliser",
+      "attr:Flag#0": "Norway",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "132",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "4"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-103')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'none booked')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-103')": {
+     "id": "(0, 'C-103')",
+     "tid": 0,
+     "key": "C-103",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Ardent Rose",
+    "cell@Length overall#0": "96 m",
+    "cell@Berth#0": "-",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "expected",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Nordkapp",
+    "cell@Length overall#1": "132 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "-",
+    "cell@Status#1": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "N2 - North Quay - takes 90 m - no hazardous cargo - open",
+    "combobox#1": "no pilot chosen"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 134,
+   "status": "Nothing chosen in the pilot list.",
+   "owner": "(3, 'Nordkapp')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 24,
+      "root_is_object": true,
+      "id_slot": "('', 'Nordkapp')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Nordkapp')",
+       "attr:Cargo#0": "('', 'bagged fertiliser')",
+       "attr:Flag#0": "('', 'Norway')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '132')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Nordkapp')": {
+     "id": "(3, 'Nordkapp')",
+     "tid": 3,
+     "key": "Nordkapp",
+     "attrs": {
+      "attr:Cargo#0": "bagged fertiliser",
+      "attr:Flag#0": "Norway",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "132",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "alongside",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "2"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-101')",
+      "rel:1": "(1, 'S1')",
+      "rel:2": "(2, 'none booked')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-101')": {
+     "id": "(0, 'C-101')",
+     "tid": 0,
+     "key": "C-101",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:1->(1, 'S1')": {
+     "id": "(1, 'S1')",
+     "tid": 1,
+     "key": "S1",
+     "attrs": {
+      "attr:Certified for hazardous cargo#0": "yes",
+      "attr:Condition#0": "open",
+      "attr:Quay#0": "South Quay",
+      "attr:Takes up to#0": "160"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-101')"
+     },
+     "parent": "None"
+    },
+    "rel:1->rel:0->(0, 'C-101')": {
+     "id": "(0, 'C-101')",
+     "tid": 0,
+     "key": "C-101",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Nordkapp",
+    "cell@Length overall#0": "132 m",
+    "cell@Berth#0": "S1",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "alongside",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "N2 - North Quay - takes 90 m - no hazardous cargo - open",
+    "combobox#1": "no pilot chosen"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 143,
+   "status": "Nothing chosen in the pilot list.",
+   "owner": "(3, 'Nordkapp')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 32,
+      "root_is_object": true,
+      "id_slot": "('', 'Nordkapp')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Nordkapp')",
+       "attr:Cargo#0": "('', 'bagged fertiliser')",
+       "attr:Flag#0": "('', 'Norway')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '132')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Nordkapp')": {
+     "id": "(3, 'Nordkapp')",
+     "tid": 3,
+     "key": "Nordkapp",
+     "attrs": {
+      "attr:Cargo#0": "bagged fertiliser",
+      "attr:Flag#0": "Norway",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "132",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "alongside",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "2"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-101')",
+      "rel:1": "(1, 'S1')",
+      "rel:2": "(2, 'none booked')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-101')": {
+     "id": "(0, 'C-101')",
+     "tid": 0,
+     "key": "C-101",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:1->(1, 'S1')": {
+     "id": "(1, 'S1')",
+     "tid": 1,
+     "key": "S1",
+     "attrs": {
+      "attr:Certified for hazardous cargo#0": "yes",
+      "attr:Condition#0": "open",
+      "attr:Quay#0": "South Quay",
+      "attr:Takes up to#0": "160"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-101')"
+     },
+     "parent": "None"
+    },
+    "rel:1->rel:0->(0, 'C-101')": {
+     "id": "(0, 'C-101')",
+     "tid": 0,
+     "key": "C-101",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Nordkapp",
+    "cell@Length overall#0": "132 m",
+    "cell@Berth#0": "S1",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "alongside",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Hafnarfjord",
+    "cell@Length overall#1": "112 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "-",
+    "cell@Status#1": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "no pilot chosen"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 167,
+   "status": "Nothing chosen in the pilot list.",
+   "owner": "(3, 'Hafnarfjord')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 40,
+      "root_is_object": true,
+      "id_slot": "('', 'Hafnarfjord')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Hafnarfjord')",
+       "attr:Cargo#0": "('', 'frozen fish')",
+       "attr:Flag#0": "('', 'Iceland')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '112')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Hafnarfjord')": {
+     "id": "(3, 'Hafnarfjord')",
+     "tid": 3,
+     "key": "Hafnarfjord",
+     "attrs": {
+      "attr:Cargo#0": "frozen fish",
+      "attr:Flag#0": "Iceland",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "112",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "1"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'none booked')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Nordkapp",
+    "cell@Length overall#0": "132 m",
+    "cell@Berth#0": "S1",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "alongside",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Hafnarfjord",
+    "cell@Length overall#1": "112 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "-",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Selkie",
+    "cell@Length overall#2": "64 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "-",
+    "cell@Status#2": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "S2 - South Quay - takes 70 m - no hazardous cargo - open",
+    "combobox#1": "no pilot chosen"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 202,
+   "status": "Ruth Kealy booked for call C-101.",
+   "owner": "(3, 'Selkie')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 32,
+      "root_is_object": true,
+      "id_slot": "('', 'Selkie')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Selkie')",
+       "attr:Cargo#0": "('', 'drummed solvents')",
+       "attr:Flag#0": "('', 'United Kingdom')",
+       "attr:Hazardous cargo#0": "('', 'yes')",
+       "attr:Length overall#0": "('', '64')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Selkie')": {
+     "id": "(3, 'Selkie')",
+     "tid": 3,
+     "key": "Selkie",
+     "attrs": {
+      "attr:Cargo#0": "drummed solvents",
+      "attr:Flag#0": "United Kingdom",
+      "attr:Hazardous cargo#0": "yes",
+      "attr:Length overall#0": "64",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "3"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-101')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'none booked')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-101')": {
+     "id": "(0, 'C-101')",
+     "tid": 0,
+     "key": "C-101",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Selkie",
+    "cell@Length overall#0": "64 m",
+    "cell@Berth#0": "-",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "expected",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Petrel Star",
+    "cell@Length overall#1": "148 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "-",
+    "cell@Status#1": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "N2 - North Quay - takes 90 m - no hazardous cargo - closed",
+    "combobox#1": "Ruth Kealy - ticket to 130 m - on duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 269,
+   "status": "Call C-101 is already alongside; no pilot is needed.",
+   "owner": "(3, 'Hafnarfjord')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 40,
+      "root_is_object": true,
+      "id_slot": "('', 'Hafnarfjord')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Hafnarfjord')",
+       "attr:Cargo#0": "('', 'frozen fish')",
+       "attr:Flag#0": "('', 'Iceland')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '112')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Hafnarfjord')": {
+     "id": "(3, 'Hafnarfjord')",
+     "tid": 3,
+     "key": "Hafnarfjord",
+     "attrs": {
+      "attr:Cargo#0": "frozen fish",
+      "attr:Flag#0": "Iceland",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "112",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "alongside",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "4"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-101')",
+      "rel:1": "(1, 'S1')",
+      "rel:2": "(2, 'none booked')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-101')": {
+     "id": "(0, 'C-101')",
+     "tid": 0,
+     "key": "C-101",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:1->(1, 'S1')": {
+     "id": "(1, 'S1')",
+     "tid": 1,
+     "key": "S1",
+     "attrs": {
+      "attr:Certified for hazardous cargo#0": "yes",
+      "attr:Condition#0": "open",
+      "attr:Quay#0": "South Quay",
+      "attr:Takes up to#0": "160"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-101')"
+     },
+     "parent": "None"
+    },
+    "rel:1->rel:0->(0, 'C-101')": {
+     "id": "(0, 'C-101')",
+     "tid": 0,
+     "key": "C-101",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Hafnarfjord",
+    "cell@Length overall#0": "112 m",
+    "cell@Berth#0": "S1",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "alongside",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Petrel Star",
+    "cell@Length overall#1": "148 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "Aoife Marr",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Bregagh",
+    "cell@Length overall#2": "88 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "-",
+    "cell@Status#2": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "W1 - West Basin - takes 140 m - certified for hazardous cargo - closed",
+    "combobox#1": "Aoife Marr - ticket to 150 m - on duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 295,
+   "status": "Ruth Kealy is not on duty.",
+   "owner": "(3, 'Bregagh')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 32,
+      "root_is_object": true,
+      "id_slot": "('', 'Bregagh')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Bregagh')",
+       "attr:Cargo#0": "('', 'milling grain')",
+       "attr:Flag#0": "('', 'Ireland')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '88')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Bregagh')": {
+     "id": "(3, 'Bregagh')",
+     "tid": 3,
+     "key": "Bregagh",
+     "attrs": {
+      "attr:Cargo#0": "milling grain",
+      "attr:Flag#0": "Ireland",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "88",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "3"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-103')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'none booked')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-103')": {
+     "id": "(0, 'C-103')",
+     "tid": 0,
+     "key": "C-103",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Petrel Star",
+    "cell@Length overall#0": "148 m",
+    "cell@Berth#0": "-",
+    "cell@Pilot#0": "Aoife Marr",
+    "cell@Status#0": "expected",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Bregagh",
+    "cell@Length overall#1": "88 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "-",
+    "cell@Status#1": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "Ruth Kealy - ticket to 130 m - off duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 378,
+   "status": "Silas Nunn holds a ticket to 80 m; Hafnarfjord is 112 m overall.",
+   "owner": "(3, 'Hafnarfjord')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 48,
+      "root_is_object": true,
+      "id_slot": "('', 'Hafnarfjord')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Hafnarfjord')",
+       "attr:Cargo#0": "('', 'frozen fish')",
+       "attr:Flag#0": "('', 'Iceland')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '112')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Hafnarfjord')": {
+     "id": "(3, 'Hafnarfjord')",
+     "tid": 3,
+     "key": "Hafnarfjord",
+     "attrs": {
+      "attr:Cargo#0": "frozen fish",
+      "attr:Flag#0": "Iceland",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "112",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "3"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'none booked')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Selkie",
+    "cell@Length overall#0": "64 m",
+    "cell@Berth#0": "-",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "expected",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Hafnarfjord",
+    "cell@Length overall#1": "112 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "-",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Petrel Star",
+    "cell@Length overall#2": "148 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "-",
+    "cell@Status#2": "expected",
+    "cell@Call#3": "",
+    "cell@Vessel#3": "Bregagh",
+    "cell@Length overall#3": "88 m",
+    "cell@Berth#3": "-",
+    "cell@Pilot#3": "-",
+    "cell@Status#3": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "Silas Nunn - ticket to 80 m - on duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 381,
+   "status": "Silas Nunn holds a ticket to 80 m; Petrel Star is 148 m overall.",
+   "owner": "(3, 'Petrel Star')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 48,
+      "root_is_object": true,
+      "id_slot": "('', 'Petrel Star')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Petrel Star')",
+       "attr:Cargo#0": "('', 'naphtha')",
+       "attr:Flag#0": "('', 'Malta')",
+       "attr:Hazardous cargo#0": "('', 'yes')",
+       "attr:Length overall#0": "('', '148')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Petrel Star')": {
+     "id": "(3, 'Petrel Star')",
+     "tid": 3,
+     "key": "Petrel Star",
+     "attrs": {
+      "attr:Cargo#0": "naphtha",
+      "attr:Flag#0": "Malta",
+      "attr:Hazardous cargo#0": "yes",
+      "attr:Length overall#0": "148",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "0"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-103')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'none booked')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-103')": {
+     "id": "(0, 'C-103')",
+     "tid": 0,
+     "key": "C-103",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Selkie",
+    "cell@Length overall#0": "64 m",
+    "cell@Berth#0": "-",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "expected",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Hafnarfjord",
+    "cell@Length overall#1": "112 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "-",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Petrel Star",
+    "cell@Length overall#2": "148 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "-",
+    "cell@Status#2": "expected",
+    "cell@Call#3": "",
+    "cell@Vessel#3": "Bregagh",
+    "cell@Length overall#3": "88 m",
+    "cell@Berth#3": "-",
+    "cell@Pilot#3": "-",
+    "cell@Status#3": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "Silas Nunn - ticket to 80 m - on duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 384,
+   "status": "Silas Nunn holds a ticket to 80 m; Bregagh is 88 m overall.",
+   "owner": "(3, 'Bregagh')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 48,
+      "root_is_object": true,
+      "id_slot": "('', 'Bregagh')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Bregagh')",
+       "attr:Cargo#0": "('', 'milling grain')",
+       "attr:Flag#0": "('', 'Ireland')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '88')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Bregagh')": {
+     "id": "(3, 'Bregagh')",
+     "tid": 3,
+     "key": "Bregagh",
+     "attrs": {
+      "attr:Cargo#0": "milling grain",
+      "attr:Flag#0": "Ireland",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "88",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "2"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-104')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'none booked')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-104')": {
+     "id": "(0, 'C-104')",
+     "tid": 0,
+     "key": "C-104",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Selkie",
+    "cell@Length overall#0": "64 m",
+    "cell@Berth#0": "-",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "expected",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Hafnarfjord",
+    "cell@Length overall#1": "112 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "-",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Petrel Star",
+    "cell@Length overall#2": "148 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "-",
+    "cell@Status#2": "expected",
+    "cell@Call#3": "",
+    "cell@Vessel#3": "Bregagh",
+    "cell@Length overall#3": "88 m",
+    "cell@Berth#3": "-",
+    "cell@Pilot#3": "-",
+    "cell@Status#3": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "Silas Nunn - ticket to 80 m - on duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 388,
+   "status": "Aoife Marr is not on duty.",
+   "owner": "(3, 'Selkie')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 48,
+      "root_is_object": true,
+      "id_slot": "('', 'Selkie')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Selkie')",
+       "attr:Cargo#0": "('', 'drummed solvents')",
+       "attr:Flag#0": "('', 'United Kingdom')",
+       "attr:Hazardous cargo#0": "('', 'yes')",
+       "attr:Length overall#0": "('', '64')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Selkie')": {
+     "id": "(3, 'Selkie')",
+     "tid": 3,
+     "key": "Selkie",
+     "attrs": {
+      "attr:Cargo#0": "drummed solvents",
+      "attr:Flag#0": "United Kingdom",
+      "attr:Hazardous cargo#0": "yes",
+      "attr:Length overall#0": "64",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "1"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-101')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'none booked')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-101')": {
+     "id": "(0, 'C-101')",
+     "tid": 0,
+     "key": "C-101",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Selkie",
+    "cell@Length overall#0": "64 m",
+    "cell@Berth#0": "-",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "expected",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Hafnarfjord",
+    "cell@Length overall#1": "112 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "-",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Petrel Star",
+    "cell@Length overall#2": "148 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "-",
+    "cell@Status#2": "expected",
+    "cell@Call#3": "",
+    "cell@Vessel#3": "Bregagh",
+    "cell@Length overall#3": "88 m",
+    "cell@Berth#3": "-",
+    "cell@Pilot#3": "-",
+    "cell@Status#3": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "Aoife Marr - ticket to 150 m - off duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 391,
+   "status": "Aoife Marr is not on duty.",
+   "owner": "(3, 'Hafnarfjord')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 48,
+      "root_is_object": true,
+      "id_slot": "('', 'Hafnarfjord')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Hafnarfjord')",
+       "attr:Cargo#0": "('', 'frozen fish')",
+       "attr:Flag#0": "('', 'Iceland')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '112')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Hafnarfjord')": {
+     "id": "(3, 'Hafnarfjord')",
+     "tid": 3,
+     "key": "Hafnarfjord",
+     "attrs": {
+      "attr:Cargo#0": "frozen fish",
+      "attr:Flag#0": "Iceland",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "112",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "3"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'none booked')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Selkie",
+    "cell@Length overall#0": "64 m",
+    "cell@Berth#0": "-",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "expected",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Hafnarfjord",
+    "cell@Length overall#1": "112 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "-",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Petrel Star",
+    "cell@Length overall#2": "148 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "-",
+    "cell@Status#2": "expected",
+    "cell@Call#3": "",
+    "cell@Vessel#3": "Bregagh",
+    "cell@Length overall#3": "88 m",
+    "cell@Berth#3": "-",
+    "cell@Pilot#3": "-",
+    "cell@Status#3": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "Aoife Marr - ticket to 150 m - off duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 395,
+   "status": "Silas Nunn booked for call C-101.",
+   "owner": "(3, 'Selkie')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 48,
+      "root_is_object": true,
+      "id_slot": "('', 'Selkie')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Selkie')",
+       "attr:Cargo#0": "('', 'drummed solvents')",
+       "attr:Flag#0": "('', 'United Kingdom')",
+       "attr:Hazardous cargo#0": "('', 'yes')",
+       "attr:Length overall#0": "('', '64')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Selkie')": {
+     "id": "(3, 'Selkie')",
+     "tid": 3,
+     "key": "Selkie",
+     "attrs": {
+      "attr:Cargo#0": "drummed solvents",
+      "attr:Flag#0": "United Kingdom",
+      "attr:Hazardous cargo#0": "yes",
+      "attr:Length overall#0": "64",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "1"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-101')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'none booked')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-101')": {
+     "id": "(0, 'C-101')",
+     "tid": 0,
+     "key": "C-101",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Selkie",
+    "cell@Length overall#0": "64 m",
+    "cell@Berth#0": "-",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "expected",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Hafnarfjord",
+    "cell@Length overall#1": "112 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "-",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Petrel Star",
+    "cell@Length overall#2": "148 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "-",
+    "cell@Status#2": "expected",
+    "cell@Call#3": "",
+    "cell@Vessel#3": "Bregagh",
+    "cell@Length overall#3": "88 m",
+    "cell@Berth#3": "-",
+    "cell@Pilot#3": "-",
+    "cell@Status#3": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "Silas Nunn - ticket to 80 m - on duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 398,
+   "status": "Aoife Marr booked for call C-102.",
+   "owner": "(3, 'Hafnarfjord')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 48,
+      "root_is_object": true,
+      "id_slot": "('', 'Hafnarfjord')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Hafnarfjord')",
+       "attr:Cargo#0": "('', 'frozen fish')",
+       "attr:Flag#0": "('', 'Iceland')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '112')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Hafnarfjord')": {
+     "id": "(3, 'Hafnarfjord')",
+     "tid": 3,
+     "key": "Hafnarfjord",
+     "attrs": {
+      "attr:Cargo#0": "frozen fish",
+      "attr:Flag#0": "Iceland",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "112",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "3"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'none booked')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Selkie",
+    "cell@Length overall#0": "64 m",
+    "cell@Berth#0": "-",
+    "cell@Pilot#0": "Silas Nunn",
+    "cell@Status#0": "expected",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Hafnarfjord",
+    "cell@Length overall#1": "112 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "-",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Petrel Star",
+    "cell@Length overall#2": "148 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "-",
+    "cell@Status#2": "expected",
+    "cell@Call#3": "",
+    "cell@Vessel#3": "Bregagh",
+    "cell@Length overall#3": "88 m",
+    "cell@Berth#3": "-",
+    "cell@Pilot#3": "-",
+    "cell@Status#3": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "Aoife Marr - ticket to 150 m - on duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 401,
+   "status": "Silas Nunn is already booked for call C-101.",
+   "owner": "(3, 'Hafnarfjord')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 48,
+      "root_is_object": true,
+      "id_slot": "('', 'Hafnarfjord')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Hafnarfjord')",
+       "attr:Cargo#0": "('', 'frozen fish')",
+       "attr:Flag#0": "('', 'Iceland')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '112')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Hafnarfjord')": {
+     "id": "(3, 'Hafnarfjord')",
+     "tid": 3,
+     "key": "Hafnarfjord",
+     "attrs": {
+      "attr:Cargo#0": "frozen fish",
+      "attr:Flag#0": "Iceland",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "112",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "3"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'Aoife Marr')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:2->(2, 'Aoife Marr')": {
+     "id": "(2, 'Aoife Marr')",
+     "tid": 2,
+     "key": "Aoife Marr",
+     "attrs": {
+      "attr:Duty#0": "on",
+      "attr:Ticket to#0": "150"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')"
+     },
+     "parent": "None"
+    },
+    "rel:2->rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Selkie",
+    "cell@Length overall#0": "64 m",
+    "cell@Berth#0": "-",
+    "cell@Pilot#0": "Silas Nunn",
+    "cell@Status#0": "expected",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Hafnarfjord",
+    "cell@Length overall#1": "112 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "Aoife Marr",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Petrel Star",
+    "cell@Length overall#2": "148 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "-",
+    "cell@Status#2": "expected",
+    "cell@Call#3": "",
+    "cell@Vessel#3": "Bregagh",
+    "cell@Length overall#3": "88 m",
+    "cell@Berth#3": "-",
+    "cell@Pilot#3": "-",
+    "cell@Status#3": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "Silas Nunn - ticket to 80 m - on duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 404,
+   "status": "Silas Nunn is already booked for call C-101.",
+   "owner": "(3, 'Petrel Star')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 48,
+      "root_is_object": true,
+      "id_slot": "('', 'Petrel Star')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Petrel Star')",
+       "attr:Cargo#0": "('', 'naphtha')",
+       "attr:Flag#0": "('', 'Malta')",
+       "attr:Hazardous cargo#0": "('', 'yes')",
+       "attr:Length overall#0": "('', '148')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Petrel Star')": {
+     "id": "(3, 'Petrel Star')",
+     "tid": 3,
+     "key": "Petrel Star",
+     "attrs": {
+      "attr:Cargo#0": "naphtha",
+      "attr:Flag#0": "Malta",
+      "attr:Hazardous cargo#0": "yes",
+      "attr:Length overall#0": "148",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "0"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-103')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'none booked')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-103')": {
+     "id": "(0, 'C-103')",
+     "tid": 0,
+     "key": "C-103",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Selkie",
+    "cell@Length overall#0": "64 m",
+    "cell@Berth#0": "-",
+    "cell@Pilot#0": "Silas Nunn",
+    "cell@Status#0": "expected",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Hafnarfjord",
+    "cell@Length overall#1": "112 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "Aoife Marr",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Petrel Star",
+    "cell@Length overall#2": "148 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "-",
+    "cell@Status#2": "expected",
+    "cell@Call#3": "",
+    "cell@Vessel#3": "Bregagh",
+    "cell@Length overall#3": "88 m",
+    "cell@Berth#3": "-",
+    "cell@Pilot#3": "-",
+    "cell@Status#3": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "Silas Nunn - ticket to 80 m - on duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 409,
+   "status": "Ruth Kealy holds a ticket to 130 m; Petrel Star is 148 m overall.",
+   "owner": "(3, 'Petrel Star')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 40,
+      "root_is_object": true,
+      "id_slot": "('', 'Petrel Star')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Petrel Star')",
+       "attr:Cargo#0": "('', 'naphtha')",
+       "attr:Flag#0": "('', 'Malta')",
+       "attr:Hazardous cargo#0": "('', 'yes')",
+       "attr:Length overall#0": "('', '148')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Petrel Star')": {
+     "id": "(3, 'Petrel Star')",
+     "tid": 3,
+     "key": "Petrel Star",
+     "attrs": {
+      "attr:Cargo#0": "naphtha",
+      "attr:Flag#0": "Malta",
+      "attr:Hazardous cargo#0": "yes",
+      "attr:Length overall#0": "148",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "4"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'Aoife Marr')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:2->(2, 'Aoife Marr')": {
+     "id": "(2, 'Aoife Marr')",
+     "tid": 2,
+     "key": "Aoife Marr",
+     "attrs": {
+      "attr:Duty#0": "on",
+      "attr:Ticket to#0": "150"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')"
+     },
+     "parent": "None"
+    },
+    "rel:2->rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Hafnarfjord",
+    "cell@Length overall#0": "112 m",
+    "cell@Berth#0": "S1",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "alongside",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Petrel Star",
+    "cell@Length overall#1": "148 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "Aoife Marr",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Bregagh",
+    "cell@Length overall#2": "88 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "-",
+    "cell@Status#2": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "Ruth Kealy - ticket to 130 m - on duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 413,
+   "status": "Ruth Kealy is not on duty.",
+   "owner": "(3, 'Petrel Star')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 40,
+      "root_is_object": true,
+      "id_slot": "('', 'Petrel Star')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Petrel Star')",
+       "attr:Cargo#0": "('', 'naphtha')",
+       "attr:Flag#0": "('', 'Malta')",
+       "attr:Hazardous cargo#0": "('', 'yes')",
+       "attr:Length overall#0": "('', '148')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Petrel Star')": {
+     "id": "(3, 'Petrel Star')",
+     "tid": 3,
+     "key": "Petrel Star",
+     "attrs": {
+      "attr:Cargo#0": "naphtha",
+      "attr:Flag#0": "Malta",
+      "attr:Hazardous cargo#0": "yes",
+      "attr:Length overall#0": "148",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "4"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'Aoife Marr')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:2->(2, 'Aoife Marr')": {
+     "id": "(2, 'Aoife Marr')",
+     "tid": 2,
+     "key": "Aoife Marr",
+     "attrs": {
+      "attr:Duty#0": "on",
+      "attr:Ticket to#0": "150"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')"
+     },
+     "parent": "None"
+    },
+    "rel:2->rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Hafnarfjord",
+    "cell@Length overall#0": "112 m",
+    "cell@Berth#0": "S1",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "alongside",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Petrel Star",
+    "cell@Length overall#1": "148 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "Aoife Marr",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Bregagh",
+    "cell@Length overall#2": "88 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "-",
+    "cell@Status#2": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "Ruth Kealy - ticket to 130 m - off duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 416,
+   "status": "Ruth Kealy is not on duty.",
+   "owner": "(3, 'Bregagh')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 40,
+      "root_is_object": true,
+      "id_slot": "('', 'Bregagh')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Bregagh')",
+       "attr:Cargo#0": "('', 'milling grain')",
+       "attr:Flag#0": "('', 'Ireland')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '88')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Bregagh')": {
+     "id": "(3, 'Bregagh')",
+     "tid": 3,
+     "key": "Bregagh",
+     "attrs": {
+      "attr:Cargo#0": "milling grain",
+      "attr:Flag#0": "Ireland",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "88",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "1"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-103')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'none booked')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-103')": {
+     "id": "(0, 'C-103')",
+     "tid": 0,
+     "key": "C-103",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Hafnarfjord",
+    "cell@Length overall#0": "112 m",
+    "cell@Berth#0": "S1",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "alongside",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Petrel Star",
+    "cell@Length overall#1": "148 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "Aoife Marr",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Bregagh",
+    "cell@Length overall#2": "88 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "-",
+    "cell@Status#2": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "Ruth Kealy - ticket to 130 m - off duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 420,
+   "status": "Ruth Kealy booked for call C-103.",
+   "owner": "(3, 'Bregagh')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 40,
+      "root_is_object": true,
+      "id_slot": "('', 'Bregagh')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Bregagh')",
+       "attr:Cargo#0": "('', 'milling grain')",
+       "attr:Flag#0": "('', 'Ireland')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '88')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Bregagh')": {
+     "id": "(3, 'Bregagh')",
+     "tid": 3,
+     "key": "Bregagh",
+     "attrs": {
+      "attr:Cargo#0": "milling grain",
+      "attr:Flag#0": "Ireland",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "88",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "1"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-103')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'none booked')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-103')": {
+     "id": "(0, 'C-103')",
+     "tid": 0,
+     "key": "C-103",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Hafnarfjord",
+    "cell@Length overall#0": "112 m",
+    "cell@Berth#0": "S1",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "alongside",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Petrel Star",
+    "cell@Length overall#1": "148 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "Aoife Marr",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Bregagh",
+    "cell@Length overall#2": "88 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "-",
+    "cell@Status#2": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "Ruth Kealy - ticket to 130 m - on duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 423,
+   "status": "Ruth Kealy is already booked for call C-103.",
+   "owner": "(3, 'Petrel Star')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 40,
+      "root_is_object": true,
+      "id_slot": "('', 'Petrel Star')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Petrel Star')",
+       "attr:Cargo#0": "('', 'naphtha')",
+       "attr:Flag#0": "('', 'Malta')",
+       "attr:Hazardous cargo#0": "('', 'yes')",
+       "attr:Length overall#0": "('', '148')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Petrel Star')": {
+     "id": "(3, 'Petrel Star')",
+     "tid": 3,
+     "key": "Petrel Star",
+     "attrs": {
+      "attr:Cargo#0": "naphtha",
+      "attr:Flag#0": "Malta",
+      "attr:Hazardous cargo#0": "yes",
+      "attr:Length overall#0": "148",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "4"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'Aoife Marr')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:2->(2, 'Aoife Marr')": {
+     "id": "(2, 'Aoife Marr')",
+     "tid": 2,
+     "key": "Aoife Marr",
+     "attrs": {
+      "attr:Duty#0": "on",
+      "attr:Ticket to#0": "150"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')"
+     },
+     "parent": "None"
+    },
+    "rel:2->rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Hafnarfjord",
+    "cell@Length overall#0": "112 m",
+    "cell@Berth#0": "S1",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "alongside",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Petrel Star",
+    "cell@Length overall#1": "148 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "Aoife Marr",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Bregagh",
+    "cell@Length overall#2": "88 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "Ruth Kealy",
+    "cell@Status#2": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "Ruth Kealy - ticket to 130 m - on duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 429,
+   "status": "Silas Nunn holds a ticket to 80 m; Petrel Star is 148 m overall.",
+   "owner": "(3, 'Petrel Star')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 48,
+      "root_is_object": true,
+      "id_slot": "('', 'Petrel Star')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Petrel Star')",
+       "attr:Cargo#0": "('', 'naphtha')",
+       "attr:Flag#0": "('', 'Malta')",
+       "attr:Hazardous cargo#0": "('', 'yes')",
+       "attr:Length overall#0": "('', '148')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Petrel Star')": {
+     "id": "(3, 'Petrel Star')",
+     "tid": 3,
+     "key": "Petrel Star",
+     "attrs": {
+      "attr:Cargo#0": "naphtha",
+      "attr:Flag#0": "Malta",
+      "attr:Hazardous cargo#0": "yes",
+      "attr:Length overall#0": "148",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "3"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-101')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'none booked')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-101')": {
+     "id": "(0, 'C-101')",
+     "tid": 0,
+     "key": "C-101",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Petrel Star",
+    "cell@Length overall#0": "148 m",
+    "cell@Berth#0": "-",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "expected",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Bregagh",
+    "cell@Length overall#1": "88 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "Ruth Kealy",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Corrina B",
+    "cell@Length overall#2": "54 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "-",
+    "cell@Status#2": "expected",
+    "cell@Call#3": "",
+    "cell@Vessel#3": "Kittiwake",
+    "cell@Length overall#3": "78 m",
+    "cell@Berth#3": "-",
+    "cell@Pilot#3": "-",
+    "cell@Status#3": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "Silas Nunn - ticket to 80 m - on duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 432,
+   "status": "Silas Nunn holds a ticket to 80 m; Bregagh is 88 m overall.",
+   "owner": "(3, 'Bregagh')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 48,
+      "root_is_object": true,
+      "id_slot": "('', 'Bregagh')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Bregagh')",
+       "attr:Cargo#0": "('', 'milling grain')",
+       "attr:Flag#0": "('', 'Ireland')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '88')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Bregagh')": {
+     "id": "(3, 'Bregagh')",
+     "tid": 3,
+     "key": "Bregagh",
+     "attrs": {
+      "attr:Cargo#0": "milling grain",
+      "attr:Flag#0": "Ireland",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "88",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "0"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'Ruth Kealy')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:2->(2, 'Ruth Kealy')": {
+     "id": "(2, 'Ruth Kealy')",
+     "tid": 2,
+     "key": "Ruth Kealy",
+     "attrs": {
+      "attr:Duty#0": "on",
+      "attr:Ticket to#0": "130"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')"
+     },
+     "parent": "None"
+    },
+    "rel:2->rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Petrel Star",
+    "cell@Length overall#0": "148 m",
+    "cell@Berth#0": "-",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "expected",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Bregagh",
+    "cell@Length overall#1": "88 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "Ruth Kealy",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Corrina B",
+    "cell@Length overall#2": "54 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "-",
+    "cell@Status#2": "expected",
+    "cell@Call#3": "",
+    "cell@Vessel#3": "Kittiwake",
+    "cell@Length overall#3": "78 m",
+    "cell@Berth#3": "-",
+    "cell@Pilot#3": "-",
+    "cell@Status#3": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "Silas Nunn - ticket to 80 m - on duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 436,
+   "status": "Silas Nunn is not on duty.",
+   "owner": "(3, 'Petrel Star')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 48,
+      "root_is_object": true,
+      "id_slot": "('', 'Petrel Star')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Petrel Star')",
+       "attr:Cargo#0": "('', 'naphtha')",
+       "attr:Flag#0": "('', 'Malta')",
+       "attr:Hazardous cargo#0": "('', 'yes')",
+       "attr:Length overall#0": "('', '148')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Petrel Star')": {
+     "id": "(3, 'Petrel Star')",
+     "tid": 3,
+     "key": "Petrel Star",
+     "attrs": {
+      "attr:Cargo#0": "naphtha",
+      "attr:Flag#0": "Malta",
+      "attr:Hazardous cargo#0": "yes",
+      "attr:Length overall#0": "148",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "3"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-101')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'none booked')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-101')": {
+     "id": "(0, 'C-101')",
+     "tid": 0,
+     "key": "C-101",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Petrel Star",
+    "cell@Length overall#0": "148 m",
+    "cell@Berth#0": "-",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "expected",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Bregagh",
+    "cell@Length overall#1": "88 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "Ruth Kealy",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Corrina B",
+    "cell@Length overall#2": "54 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "-",
+    "cell@Status#2": "expected",
+    "cell@Call#3": "",
+    "cell@Vessel#3": "Kittiwake",
+    "cell@Length overall#3": "78 m",
+    "cell@Berth#3": "-",
+    "cell@Pilot#3": "-",
+    "cell@Status#3": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "Silas Nunn - ticket to 80 m - off duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 439,
+   "status": "Silas Nunn is not on duty.",
+   "owner": "(3, 'Bregagh')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 48,
+      "root_is_object": true,
+      "id_slot": "('', 'Bregagh')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Bregagh')",
+       "attr:Cargo#0": "('', 'milling grain')",
+       "attr:Flag#0": "('', 'Ireland')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '88')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Bregagh')": {
+     "id": "(3, 'Bregagh')",
+     "tid": 3,
+     "key": "Bregagh",
+     "attrs": {
+      "attr:Cargo#0": "milling grain",
+      "attr:Flag#0": "Ireland",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "88",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "0"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'Ruth Kealy')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:2->(2, 'Ruth Kealy')": {
+     "id": "(2, 'Ruth Kealy')",
+     "tid": 2,
+     "key": "Ruth Kealy",
+     "attrs": {
+      "attr:Duty#0": "on",
+      "attr:Ticket to#0": "130"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')"
+     },
+     "parent": "None"
+    },
+    "rel:2->rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Petrel Star",
+    "cell@Length overall#0": "148 m",
+    "cell@Berth#0": "-",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "expected",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Bregagh",
+    "cell@Length overall#1": "88 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "Ruth Kealy",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Corrina B",
+    "cell@Length overall#2": "54 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "-",
+    "cell@Status#2": "expected",
+    "cell@Call#3": "",
+    "cell@Vessel#3": "Kittiwake",
+    "cell@Length overall#3": "78 m",
+    "cell@Berth#3": "-",
+    "cell@Pilot#3": "-",
+    "cell@Status#3": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "Silas Nunn - ticket to 80 m - off duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 443,
+   "status": "Silas Nunn booked for call C-103.",
+   "owner": "(3, 'Corrina B')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 48,
+      "root_is_object": true,
+      "id_slot": "('', 'Corrina B')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Corrina B')",
+       "attr:Cargo#0": "('', 'livestock')",
+       "attr:Flag#0": "('', 'United Kingdom')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '54')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Corrina B')": {
+     "id": "(3, 'Corrina B')",
+     "tid": 3,
+     "key": "Corrina B",
+     "attrs": {
+      "attr:Cargo#0": "livestock",
+      "attr:Flag#0": "United Kingdom",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "54",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "2"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-103')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'none booked')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-103')": {
+     "id": "(0, 'C-103')",
+     "tid": 0,
+     "key": "C-103",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Petrel Star",
+    "cell@Length overall#0": "148 m",
+    "cell@Berth#0": "-",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "expected",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Bregagh",
+    "cell@Length overall#1": "88 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "Ruth Kealy",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Corrina B",
+    "cell@Length overall#2": "54 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "-",
+    "cell@Status#2": "expected",
+    "cell@Call#3": "",
+    "cell@Vessel#3": "Kittiwake",
+    "cell@Length overall#3": "78 m",
+    "cell@Berth#3": "-",
+    "cell@Pilot#3": "-",
+    "cell@Status#3": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "Silas Nunn - ticket to 80 m - on duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 446,
+   "status": "Silas Nunn is already booked for call C-103.",
+   "owner": "(3, 'Petrel Star')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 48,
+      "root_is_object": true,
+      "id_slot": "('', 'Petrel Star')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Petrel Star')",
+       "attr:Cargo#0": "('', 'naphtha')",
+       "attr:Flag#0": "('', 'Malta')",
+       "attr:Hazardous cargo#0": "('', 'yes')",
+       "attr:Length overall#0": "('', '148')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Petrel Star')": {
+     "id": "(3, 'Petrel Star')",
+     "tid": 3,
+     "key": "Petrel Star",
+     "attrs": {
+      "attr:Cargo#0": "naphtha",
+      "attr:Flag#0": "Malta",
+      "attr:Hazardous cargo#0": "yes",
+      "attr:Length overall#0": "148",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "3"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-101')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'none booked')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-101')": {
+     "id": "(0, 'C-101')",
+     "tid": 0,
+     "key": "C-101",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Petrel Star",
+    "cell@Length overall#0": "148 m",
+    "cell@Berth#0": "-",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "expected",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Bregagh",
+    "cell@Length overall#1": "88 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "Ruth Kealy",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Corrina B",
+    "cell@Length overall#2": "54 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "Silas Nunn",
+    "cell@Status#2": "expected",
+    "cell@Call#3": "",
+    "cell@Vessel#3": "Kittiwake",
+    "cell@Length overall#3": "78 m",
+    "cell@Berth#3": "-",
+    "cell@Pilot#3": "-",
+    "cell@Status#3": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "Silas Nunn - ticket to 80 m - on duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  },
+  {
+   "step": 449,
+   "status": "Silas Nunn is already booked for call C-103.",
+   "owner": "(3, 'Bregagh')",
+   "near": {
+    "instance_chain": [
+     {
+      "tid": 3,
+      "root": 48,
+      "root_is_object": true,
+      "id_slot": "('', 'Bregagh')",
+      "object_by_key": "True",
+      "slots": {
+       "id": "('', 'Bregagh')",
+       "attr:Cargo#0": "('', 'milling grain')",
+       "attr:Flag#0": "('', 'Ireland')",
+       "attr:Hazardous cargo#0": "('', 'no')",
+       "attr:Length overall#0": "('', '88')",
+       "attr:Length overall#1": "('', 'm')"
+      }
+     }
+    ],
+    "(3, 'Bregagh')": {
+     "id": "(3, 'Bregagh')",
+     "tid": 3,
+     "key": "Bregagh",
+     "attrs": {
+      "attr:Cargo#0": "milling grain",
+      "attr:Flag#0": "Ireland",
+      "attr:Hazardous cargo#0": "no",
+      "attr:Length overall#0": "88",
+      "attr:Length overall#1": "m",
+      "attr:Status#0": "expected",
+      "attr:Bring#0": "alongside",
+      "attr:Calls logged#0": "0"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')",
+      "rel:1": "(1, 'none allocated')",
+      "rel:2": "(2, 'Ruth Kealy')"
+     },
+     "parent": "None"
+    },
+    "rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    },
+    "rel:2->(2, 'Ruth Kealy')": {
+     "id": "(2, 'Ruth Kealy')",
+     "tid": 2,
+     "key": "Ruth Kealy",
+     "attrs": {
+      "attr:Duty#0": "on",
+      "attr:Ticket to#0": "130"
+     },
+     "refs": {
+      "rel:0": "(0, 'C-102')"
+     },
+     "parent": "None"
+    },
+    "rel:2->rel:0->(0, 'C-102')": {
+     "id": "(0, 'C-102')",
+     "tid": 0,
+     "key": "C-102",
+     "attrs": {
+      "attr:Call#col": "Call"
+     },
+     "refs": {},
+     "parent": "None"
+    }
+   },
+   "view": {
+    "heading#0": "Ardnavie Harbour - Berth Desk",
+    "heading#1": "Calls",
+    "cell#0": "Call",
+    "cell#1": "Vessel",
+    "cell#2": "Length overall",
+    "cell#3": "Berth",
+    "cell#4": "Pilot",
+    "cell#5": "Status",
+    "cell@Call#0": "",
+    "cell@Vessel#0": "Petrel Star",
+    "cell@Length overall#0": "148 m",
+    "cell@Berth#0": "-",
+    "cell@Pilot#0": "-",
+    "cell@Status#0": "expected",
+    "cell@Call#1": "",
+    "cell@Vessel#1": "Bregagh",
+    "cell@Length overall#1": "88 m",
+    "cell@Berth#1": "-",
+    "cell@Pilot#1": "Ruth Kealy",
+    "cell@Status#1": "expected",
+    "cell@Call#2": "",
+    "cell@Vessel#2": "Corrina B",
+    "cell@Length overall#2": "54 m",
+    "cell@Berth#2": "-",
+    "cell@Pilot#2": "Silas Nunn",
+    "cell@Status#2": "expected",
+    "cell@Call#3": "",
+    "cell@Vessel#3": "Kittiwake",
+    "cell@Length overall#3": "78 m",
+    "cell@Berth#3": "-",
+    "cell@Pilot#3": "-",
+    "cell@Status#3": "expected",
+    "heading#2": "Berths",
+    "cell#6": "Berth",
+    "cell#7": "Quay",
+    "cell#8": "Takes up to",
+    "cell#9": "Certified for hazardous cargo",
+    "cell#10": "Condition",
+    "cell#11": "Held by call",
+    "cell#12": "Actions",
+    "heading#3": "Pilots",
+    "cell#13": "Pilot",
+    "cell#14": "Ticket to",
+    "cell#15": "Duty",
+    "cell#16": "Booked for call",
+    "cell#17": "Actions",
+    "heading#4": "Vessels",
+    "cell#18": "Vessel",
+    "cell#19": "Flag",
+    "cell#20": "Length overall",
+    "cell#21": "Hazardous cargo",
+    "cell#22": "Cargo",
+    "cell#23": "Calls logged",
+    "cell#24": "Current call",
+    "cell#25": "Actions",
+    "combobox#0": "no berth chosen",
+    "combobox#1": "Silas Nunn - ticket to 80 m - on duty"
+   },
+   "types_present": [
+    0,
+    1,
+    2,
+    3
+   ]
+  }
+ ],
+ "allocate_transitions": [
+  {
+   "steps": [
+    9
+   ],
+   "macro": [
+    8,
+    9
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Book pilot@T3[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit 'Nothing chosen in the pilot list .'",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  },
+  {
+   "steps": [
+    30
+   ],
+   "macro": [
+    25,
+    30
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Book pilot@T3[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit 'Nothing chosen in the pilot list .'",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  },
+  {
+   "steps": [
+    45
+   ],
+   "macro": [
+    44,
+    45
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Book pilot@T3[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit 'Nothing chosen in the pilot list .'",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  },
+  {
+   "steps": [
+    134
+   ],
+   "macro": [
+    126,
+    134
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Book pilot@T3[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit 'Nothing chosen in the pilot list .'",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  },
+  {
+   "steps": [
+    143
+   ],
+   "macro": [
+    140,
+    143
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Book pilot@T3[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit 'Nothing chosen in the pilot list .'",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  },
+  {
+   "steps": [
+    167
+   ],
+   "macro": [
+    159,
+    167
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Book pilot@T3[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit 'Nothing chosen in the pilot list .'",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  },
+  {
+   "steps": [
+    202
+   ],
+   "macro": [
+    199,
+    202
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Book pilot@T3[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [
+    202
+   ],
+   "emission": "emit '<> booked for call <> .'(Ruth Kealy, C-101)",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 2
+   }
+  },
+  {
+   "steps": [
+    269
+   ],
+   "macro": [
+    262,
+    269
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Book pilot@T3[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit 'Call <> is already <> ; <> pilot is needed .'(C-101, alongside, no)",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  },
+  {
+   "steps": [
+    295
+   ],
+   "macro": [
+    286,
+    295
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Book pilot@T3[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit '<> is not <> .'(Ruth Kealy, on duty)",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  },
+  {
+   "steps": [
+    378
+   ],
+   "macro": [
+    376,
+    378
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Book pilot@T3[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit '<> holds a <> ; <> is <> overall .'(Silas Nunn, ticket to 80 m, Hafnarfjor",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  },
+  {
+   "steps": [
+    381
+   ],
+   "macro": [
+    379,
+    381
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Book pilot@T3[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit '<> holds a <> ; <> is <> overall .'(Silas Nunn, ticket to 80 m, Petrel Sta",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  },
+  {
+   "steps": [
+    384
+   ],
+   "macro": [
+    382,
+    384
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Book pilot@T3[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit '<> holds a <> ; <> is <> overall .'(Silas Nunn, ticket to 80 m, Bregagh, 8",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  },
+  {
+   "steps": [
+    388
+   ],
+   "macro": [
+    386,
+    388
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Book pilot@T3[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit '<> is not <> .'(Aoife Marr, on duty)",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  },
+  {
+   "steps": [
+    395
+   ],
+   "macro": [
+    393,
+    395
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Book pilot@T3[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [
+    395
+   ],
+   "emission": "emit '<> booked for call <> .'(Silas Nunn, C-101)",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 2
+   }
+  },
+  {
+   "steps": [
+    398
+   ],
+   "macro": [
+    396,
+    398
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Book pilot@T3[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [
+    398
+   ],
+   "emission": "emit '<> booked for call <> .'(Aoife Marr, C-102)",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 2
+   }
+  },
+  {
+   "steps": [
+    401
+   ],
+   "macro": [
+    396,
+    401
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Book pilot@T3[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit '<> is already booked for call <> .'(Silas Nunn, C-101)",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  },
+  {
+   "steps": [
+    409
+   ],
+   "macro": [
+    407,
+    409
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Book pilot@T3[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit '<> holds a <> ; <> is <> overall .'(Ruth Kealy, ticket to 130 m, Petrel St",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  },
+  {
+   "steps": [
+    413
+   ],
+   "macro": [
+    407,
+    413
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Book pilot@T3[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit '<> is not <> .'(Ruth Kealy, on duty)",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  },
+  {
+   "steps": [
+    420
+   ],
+   "macro": [
+    414,
+    420
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Book pilot@T3[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [
+    420
+   ],
+   "emission": "emit '<> booked for call <> .'(Ruth Kealy, C-103)",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 2
+   }
+  },
+  {
+   "steps": [
+    423
+   ],
+   "macro": [
+    421,
+    423
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Book pilot@T3[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit '<> is already booked for call <> .'(Ruth Kealy, C-103)",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  },
+  {
+   "steps": [
+    429
+   ],
+   "macro": [
+    427,
+    429
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Book pilot@T3[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit '<> holds a <> ; <> is <> overall .'(Silas Nunn, ticket to 80 m, Petrel Sta",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  },
+  {
+   "steps": [
+    432
+   ],
+   "macro": [
+    430,
+    432
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Book pilot@T3[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit '<> holds a <> ; <> is <> overall .'(Silas Nunn, ticket to 80 m, Bregagh, 8",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  },
+  {
+   "steps": [
+    436
+   ],
+   "macro": [
+    434,
+    436
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Book pilot@T3[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit '<> is not <> .'(Silas Nunn, on duty)",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  },
+  {
+   "steps": [
+    443
+   ],
+   "macro": [
+    441,
+    443
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Book pilot@T3[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [
+    443
+   ],
+   "emission": "emit '<> booked for call <> .'(Silas Nunn, C-103)",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 2
+   }
+  },
+  {
+   "steps": [
+    446
+   ],
+   "macro": [
+    444,
+    446
+   ],
+   "acts": [
+    [
+     "click",
+     "click(button#cell@Call/button@T0[?o0])"
+    ],
+    [
+     "click",
+     "click(button:Book pilot@T3[?o1])"
+    ]
+   ],
+   "view_steps": [],
+   "changing_steps": [],
+   "emission": "emit '<> is already booked for call <> .'(Silas Nunn, C-103)",
+   "delta": {
+    "added": 0,
+    "attr_changes": 0,
+    "rel_changes": 0
+   }
+  }
+ ]
+}

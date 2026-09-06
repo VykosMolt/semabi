@@ -1,0 +1,94 @@
+{
+ "settled": {
+  "sheet_key": "table/rowgroup/row/cell@Vessel#0",
+  "roles": {},
+  "rules": [
+   "attr:Flag#0(owner) == 'Norway'  ->  Nothing chosen in the pilot list .   [4]",
+   "attr:Calls logged#0(owner) == '0'  ->  <> holds a <> ; <> is <> overall .   [2]"
+  ],
+  "ordered": {},
+  "operators_touching": [
+   "op4",
+   "op5",
+   "op6",
+   "op7",
+   "op8",
+   "op9"
+  ]
+ },
+ "overridden": {
+  "sheet_key": "heading#0",
+  "roles": {
+   "owner": [
+    "action",
+    []
+   ],
+   "selection['combobox#1']:1": [
+    "selection",
+    [
+     "combobox#1"
+    ]
+   ],
+   "relation['backward', 'rel:3']:2<owner": [
+    "relation",
+    [
+     "backward",
+     "rel:3"
+    ]
+   ]
+  },
+  "rules": [
+   "('unnamed', \"selection['combobox#1']:1\")  ->  Nothing chosen in the pilot list .   [6]",
+   "attr:Duty#0(selection['combobox#1']:1) == 'off'  ->  <> is not <> .   [4]",
+   "attr:Length overall#0(owner) < '88'  ->  <> booked for call <> .   [3]",
+   "attr:Ticket to#0(selection['combobox#1']:1) < '150' & ('ref_set', \"selection['combobox#1']:1\", 'rel:3')  ->  <> is already booked for call <> .   [3]",
+   "attr:Ticket to#0(selection['combobox#1']:1) < attr:Length overall#0(relation['backward', 'rel:3']:2<owner)  ->  <> holds a <> ; <> is <> overall .   [6]",
+   "('ref_null', \"selection['combobox#1']:1\", 'rel:3')  ->  <> booked for call <> .   [2]"
+  ],
+  "ordered": {
+   "3": {
+    "attr:Length overall#0": [
+     "54",
+     "64",
+     "78",
+     "88",
+     "96",
+     "112",
+     "132",
+     "148"
+    ]
+   },
+   "1": {
+    "attr:Ticket to#0": [
+     "80",
+     "100",
+     "130",
+     "150"
+    ]
+   },
+   "2": {
+    "attr:Length overall#0": [
+     "54",
+     "64",
+     "78",
+     "88",
+     "96",
+     "112",
+     "132",
+     "148"
+    ]
+   }
+  },
+  "operators_touching": [
+   "op12",
+   "op13",
+   "op14",
+   "op4",
+   "op5",
+   "op6",
+   "op7",
+   "op8",
+   "op9"
+  ]
+ }
+}
