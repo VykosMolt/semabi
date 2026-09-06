@@ -1925,3 +1925,38 @@ modified -- byte-identical to battery #5's (2205e37).  Partial battery #6 pre-re
 met in full: plain-named cellar RULE file = plain-source fit (Wash out 0 rules), the two
 sections-named files = the identity stage's fits (2 rules), every other artefact
 identical.  Committing.
+
+09:25 committed bfd2d0e.  Next two items, in order:
+(1) vet's six 'Reason'-keyed creations: explained_kinds under the RETAINED pinned reading
+(vet_clinic_chain.json:source_choice).  Pre-registered: if the six persist, a header
+word is a key value in vet's retained model -- a label-as-value leak for the open-world
+instruments (v4_open_world judged label/value per collection); if they vanish, they
+belong to the search's own reading only and are noted, not chased.
+(2) the acquisition experiment the version space asks for on the pilot corpus: act on
+the live harbour app at Book pilot states where several outcomes remain admissible
+(v4_acquire, policy uncertain), under the search's settled reading of harbour_pil_dev,
+at a seed the corpora never used; the acquired occasions refit the evidence and the pil
+holdout is re-scored.  Pre-registration to follow once the instrument's inputs are
+settled (it takes a chain and a reading; the pil corpus has a settled reading only).
+
+## P30 pre-registered (09:26): acquisition where the version space is unsure, Book pilot
+acquire_settled.py: harbour_pil_dev's settled reading, fitted on all of dev; the live app
+at 8910 reset to seed 71 (unused by any corpus: 11-13, 31-33, 41-43, 51-53, 61-63); v4_acquire's
+driver at policy `uncertain` (act where >1 outcome is admissible; budget 40, want 12), then
+the matched control `any` at the same seed; each acquired occasion refits Book pilot's
+evidence (refit_with; nothing else changes) and the pil holdout is re-scored.
+Expected: (i) the driver reaches at least one discriminating state; (ii) after the refit
+with every acquired occasion the holdout's Book pilot ledger has no wrong (as now) and
+fewer `several` than 14, because an acquired occasion falsifies at least one coincidental
+vouch (e.g. Flag(owner)==Norway with a named selection); (iii) `any` acquires no fewer
+occasions and shrinks `several` no more than `uncertain` does.  Seed 71's harbour may not
+exercise the same coincidences; if `several` does not fall, that is the result.
+
+09:28 vet under the RETAINED pinned reading (p29_explained_kinds_vet_pinned.json):
+63 explained, 19 fresh-key creations, 44 no creation, 0 correspondence creations.  The
+six 'Reason'-keyed creations are the search's own reading's (vet is selected within an
+indistinguishable class; the search's reading is not the retained one).  Pre-registered
+outcome: noted, not chased.
+
+09:38 full suite on the regenerated tree (2205e37's data, afbcde2's source): 560 passed,
+3 skipped, 1 xfailed, no failures (37 min).

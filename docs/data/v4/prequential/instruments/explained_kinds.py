@@ -17,6 +17,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 def main():
     out, runs = Path(sys.argv[1]), [Path(r) for r in sys.argv[2:]]
+    pinned = os.environ.get("PINNED")          # "<chain>:<reading>" fits the retained reading instead
     from semabi.compiler.abstract import diff
     from semabi.compiler.compile_v4 import build_hypotheses
     from semabi.compiler.evidence import EvidenceLog
@@ -25,9 +26,16 @@ def main():
     rec = {}
     for run in runs:
         log = EvidenceLog(run)
-        H, G = build_hypotheses(run, log)
-        result = s4.search(H, G, log, run_dir=run)
-        A = s4._build(copy.deepcopy(result.hypotheses), G, log)
+        if pinned:
+            from semabi.compiler.v4 import consequence as csq
+            from semabi.eval.v4_consequence_run import _candidates
+            chain, name = pinned.split(":")
+            reading = {c.name: c.reading for c in _candidates(Path(chain))}[name]
+            A = csq.fit(run, reading, split=0.999).abstractor
+        else:
+            H, G = build_hypotheses(run, log)
+            result = s4.search(H, G, log, run_dir=run)
+            A = s4._build(copy.deepcopy(result.hypotheses), G, log)
         score = objective.evaluate(A, log)
         kinds, examples = Counter(), []
         by_episode = {}

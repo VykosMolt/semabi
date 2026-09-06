@@ -1225,8 +1225,10 @@ corresponding object's own button, the call is made by a form button from a sele
 and a view opening is also what a persistence probe certifies as a view control, under
 which a domain change is already a contradiction.  The question stays open with that
 sharper statement.  Vet's six are an object keyed by the word *Reason* -- a header word
-as a key value under the search's own reading -- and are noted for the open-world
-instruments rather than pursued here.
+as a key value under the search's own reading, which on vet is not the retained one;
+under the retained reading (`p29_explained_kinds_vet_pinned.json`) vet has nineteen
+fresh-key creations, forty-four explained steps with no creation, and none of this
+kind.  Noted for the open-world instruments rather than pursued here.
 
 ## What stands, and what is open
 
