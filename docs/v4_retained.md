@@ -1230,6 +1230,35 @@ under the retained reading (`p29_explained_kinds_vet_pinned.json`) vet has ninet
 fresh-key creations, forty-four explained steps with no creation, and none of this
 kind.  Noted for the open-world instruments rather than pursued here.
 
+**P30: the application asked where the version space is unsure.**  The pilot corpus's
+fourteen *several* verdicts are the version space saying the development evidence does
+not decide; the acquisition instrument of `docs/v4_admissibility.md` acts at exactly
+such states on the live application and refits the control's evidence with what comes
+back.  Pre-registered: under the settled reading of the pilot corpus, at a seed no
+corpus had used, the driver reaches a state with more than one admissible outcome; after
+the refit the holdout's booking ledger has no wrong verdict and fewer than fourteen
+*several*; a matched control that acts without consulting the admissible set acquires
+no fewer occasions and narrows *several* no more.  The first run was confounded by the
+refit itself, which rebuilt the control without its field theory -- the scorers' defect
+on one more path, now fixed and tested -- and is kept beside the result
+(`p30_acquire_uncertain_confounded.json`).  Under the fitted language
+(`p30_acquire_uncertain.json`, `p30_acquire_any.json`): the driver reached twenty-two
+states with two admissible outcomes and acquired eight occasions there, five with a
+visible response, all of them the refusal *Call is already alongside; no pilot is
+needed*; after the refit the holdout's booking ledger is four forced right, seventeen
+several, none wrong and none unestablished, where it had been seven and fourteen.  The
+control acquired twelve occasions at states with one admissible outcome, one with a
+response, and changed nothing.  The first and third expectations hold; the second is
+refuted.  What the acquisition did was find a refusal the development corpus had thin
+evidence of, and with three occasions of it the version space admits it at three more
+held-out states; it removed no coincidental vouch, because the seed's calls do not
+repeat the development corpus's flags and a rule like *the owner's flag is Norway* was
+never contradicted.  Less decisive and never wrong, the direction of P28 again: acting
+where the model is unsure finds behaviour it had not established before it narrows
+anything, and the states that would falsify a coincidence are the ones that share its
+value and not its outcome, which no policy that reads only the admissible set's size
+seeks out.
+
 ## What stands, and what is open
 
 The retained state, regenerated once more: harbour's development sidecar is now written by

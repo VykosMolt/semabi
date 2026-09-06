@@ -1972,3 +1972,30 @@ and comparisons again (the same defect class as P28, on the refit path).  `any`'
 equals the old nominal ledger exactly.  Fixed (ordered carried through the refit); the
 pre-registration stands unchanged; both policies re-run at seed 71 (the driver is
 deterministic given the model and the seed).
+
+## P30 re-run, uncertain policy (10:32; acquire_pil_uncertain2.json)
+Same acquisitions as the first run (deterministic): 8 at states with 2 admissible
+outcomes, 5 usable, all "Call <> is already <> ; <> pilot is needed", 3 silent.  With the
+field theory carried through the refit: before 7 forced right / 14 several; after (either
+refit) 4 forced right / 17 several / 0 wrong / 0 unestablished.  Pre-registration (i)
+met (discriminating states reached), (ii) REFUTED: `several` rose from 14 to 17; the
+acquired occasions add a refusal event that is now admissible at more held-out states
+and remove no coincidental vouch (seed 71's calls do not repeat the dev corpus's flags).
+Less decisive, still never wrong.  `any` running.
+
+## P30 judged (10:45; p30_acquire_uncertain.json, p30_acquire_any.json)
+any (matched control, same seed 71, same budget): 12 acquired, every one at a state with
+one admissible outcome, 1 usable ("Nothing chosen"), 0 discriminating; after the refit
+the holdout's Book pilot ledger is unchanged, 7 forced right / 14 several.
+uncertain: 8 acquired at states with two admissible outcomes, 5 usable, all the refusal
+"Call <> is already <> ; <> pilot is needed"; after the refit 4 forced right / 17
+several / 0 wrong / 0 unestablished.
+(i) met, (ii) refuted, (iii) met trivially.  What the acquisition did: it found a
+refusal the dev corpus had thin evidence for, and with three occasions of it the
+version space now admits it at three more held-out states.  It removed no coincidental
+vouch -- seed 71's calls do not repeat the dev corpus's flags, so Flag(owner)==Norway
+was never contradicted.  Less decisive and never wrong, the direction of P28 again:
+acting where the model is unsure finds behaviour it had not established, which widens
+the admissible sets before anything narrows them.  The control policy, acting where
+one outcome was forced, learned nothing.  Retained; the confounded first run is kept
+beside it (p30_acquire_uncertain_confounded.json: the refit without the field theory).
