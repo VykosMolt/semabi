@@ -9,81 +9,76 @@
  "corroborated": true,
  "hypothesis": "rule",
  "against_the_other_class": {
-  "rule: the evidence forces one outcome | list: the evidence forces one outcome": 235,
-  "rule: several outcomes remain admissible | list: several outcomes remain admissible": 126,
+  "rule: several outcomes remain admissible | list: several outcomes remain admissible": 212,
+  "rule: the evidence forces one outcome | list: the evidence forces one outcome": 193,
   "rule: one outcome, because the control has never done anything else | list: one outcome, because the control has never done anything else": 64,
-  "rule: no outcome is established | list: no outcome is established": 46,
-  "rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)": 32
+  "rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)": 19,
+  "rule: no outcome is established | list: no outcome is established": 15
  },
  "actions": 503,
  "what_the_evidence_establishes": {
-  "the evidence forces one outcome": 267,
-  "several outcomes remain admissible": 126,
+  "the evidence forces one outcome": 212,
+  "several outcomes remain admissible": 212,
   "one outcome, because the control has never done anything else": 64,
-  "no outcome is established": 46
+  "no outcome is established": 15
  },
  "admissible_set_size": {
-  "0": 46,
-  "1": 331,
-  "2": 106,
-  "3": 20
+  "0": 15,
+  "1": 276,
+  "2": 109,
+  "3": 65,
+  "4": 38
  },
  "what_happened_was": {
-  "inside the admissible set": 387,
-  "nothing was admissible": 46,
-  "outside it": 70
+  "inside the admissible set": 422,
+  "nothing was admissible": 15,
+  "outside it": 66
  },
  "the_list_where_the_evidence": {
   "no outcome is established": {
-   "no determinate answer": 28,
-   "the event the interface returned": 15,
-   "a different event": 3
+   "the event the interface returned": 15
   },
   "one outcome, because the control has never done anything else": {
    "a different event": 37,
    "the event the interface returned": 27
   },
   "several outcomes remain admissible": {
-   "the event the interface returned": 86,
-   "a different event": 29,
-   "no determinate answer": 11
+   "the event the interface returned": 197,
+   "a different event": 15
   },
   "the evidence forces one outcome": {
-   "the event the interface returned": 169,
-   "a different event": 91,
-   "no determinate answer": 7
+   "the event the interface returned": 204,
+   "a different event": 8
   }
  },
  "policy_forced_then_list": {
-  "one outcome was admissible and it happened": 235,
-  "deferred to the list: the event the interface returned": 86,
-  "refused: nothing established": 46,
+  "deferred to the list: the event the interface returned": 197,
+  "one outcome was admissible and it happened": 193,
   "the only outcome ever seen on this control, and something else happened": 37,
-  "one outcome was admissible and a different one happened": 32,
-  "deferred to the list: a different event": 29,
   "the only outcome ever seen on this control, and it happened": 27,
-  "deferred to the list: no determinate answer": 11
+  "one outcome was admissible and a different one happened": 19,
+  "refused: nothing established": 15,
+  "deferred to the list: a different event": 15
  },
- "distinct_events_forced": 8,
+ "distinct_events_forced": 9,
  "events_forced": {
-  "Drew <> from <> into <> .": 89,
-  "Returned <> to <> from <> .": 82,
-  "<> <> .": 39,
+  "Returned <> to <> from <> .": 75,
+  "Drew <> from <> into <> .": 60,
+  "<> <> .": 42,
   "Opened <> .": 36,
   "Disgorged <> .": 28,
-  "<> is <> .": 28,
-  "<> is already <> .": 17,
-  "<> holds <> ; cannot draw <> .": 12
+  "<> is <> ; disgorge it before returning a draw .": 16,
+  "<> holds <> ; cannot draw <> .": 12,
+  "<> is already <> .": 6
  },
  "per_control": {
   "button:Record draw": {
-   "the evidence forces one outcome": 146,
-   "several outcomes remain admissible": 115
+   "several outcomes remain admissible": 182,
+   "the evidence forces one outcome": 79
   },
   "button:Return ticket _ gal from _ out of _": {
-   "the evidence forces one outcome": 82,
-   "no outcome is established": 28,
-   "several outcomes remain admissible": 11
+   "the evidence forces one outcome": 91,
+   "several outcomes remain admissible": 30
   },
   "button#cell/button": {
    "one outcome, because the control has never done anything else": 36
@@ -96,8 +91,8 @@
    "one outcome, because the control has never done anything else": 28
   },
   "button:Bottle _": {
-   "no outcome is established": 13,
-   "the evidence forces one outcome": 11
+   "the evidence forces one outcome": 14,
+   "no outcome is established": 10
   }
  },
  "per_control_verdicts": {
@@ -106,9 +101,9 @@
    "the only outcome ever seen on this control, and something else happened": 13
   },
   "button:Bottle _": {
-   "no outcome is established for this state": 13,
+   "no outcome is established for this state": 10,
    "one outcome was admissible and a different one happened": 8,
-   "one outcome was admissible and it happened": 3
+   "one outcome was admissible and it happened": 6
   },
   "button:Close _": {
    "one outcome was admissible and it happened": 23,
@@ -120,15 +115,14 @@
    "the only outcome ever seen on this control, and it happened": 4
   },
   "button:Record draw": {
-   "one outcome was admissible and it happened": 137,
-   "several outcomes remained admissible; the one that happened was among them": 115,
-   "one outcome was admissible and a different one happened": 9
+   "several outcomes remained admissible; the one that happened was among them": 174,
+   "one outcome was admissible and it happened": 79,
+   "several outcomes remained admissible and none of them happened": 8
   },
   "button:Return ticket _ gal from _ out of _": {
-   "one outcome was admissible and it happened": 72,
-   "no outcome is established for this state": 28,
-   "several outcomes remained admissible; the one that happened was among them": 11,
-   "one outcome was admissible and a different one happened": 10
+   "one outcome was admissible and it happened": 85,
+   "several outcomes remained admissible; the one that happened was among them": 30,
+   "one outcome was admissible and a different one happened": 6
   }
  },
  "controls": {
@@ -193,23 +187,103 @@
    "why": "Returned <> to <> from <> . <- attr:State#0(property['attr:Style#0', 'Single varietal']:1) == 'In cask'  [96 occasions]"
   },
   {
-   "step": 28,
-   "control": "button:Record draw",
+   "step": 88,
+   "control": "button:Close _",
    "admissible": [
-    "Drew <> from <> into <> ."
+    "<> <> ."
    ],
    "hypothesis": "rule",
    "unordered": [
-    "Drew <> from <> into <> ."
+    "<> <> ."
    ],
-   "observed": "The book already holds 12 records ; return a draw first .",
-   "returned": "The book already holds 12 records; return a draw first.",
+   "observed": "<> is already <> .",
+   "returned": "Chapel Row is already closed.",
    "verdict": "one outcome was admissible and a different one happened",
    "level": "the event alone",
-   "why": "Drew <> from <> into <> . <- attr:Gallons left#0(selection['combobox#0']:0) == '1' & attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:State#0(selection['combobox#1']:1) == 'In cask'  [72 occasions]"
+   "why": "<> <> . <- attr:Gallons left#0(owner) >= '5'  [14 occasions]"
   },
   {
-   "step": 41,
+   "step": 106,
+   "control": "button:Close _",
+   "admissible": [
+    "<> <> ."
+   ],
+   "hypothesis": "rule",
+   "unordered": [
+    "<> <> ."
+   ],
+   "observed": "<> is already <> .",
+   "returned": "North Wall is already closed.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "the event alone",
+   "why": "<> <> . <- attr:Gallons left#0(owner) >= '5'  [14 occasions]"
+  },
+  {
+   "step": 113,
+   "control": "button:Close _",
+   "admissible": [
+    "<> <> ."
+   ],
+   "hypothesis": "rule",
+   "unordered": [
+    "<> <> ."
+   ],
+   "observed": "<> is already <> .",
+   "returned": "North Wall is already closed.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "the event alone",
+   "why": "<> <> . <- attr:Gallons left#0(owner) >= '5'  [14 occasions]"
+  },
+  {
+   "step": 183,
+   "control": "button:Bottle _",
+   "admissible": [
+    "<> <> ."
+   ],
+   "hypothesis": "rule",
+   "unordered": [
+    "<> <> ."
+   ],
+   "observed": "<> has <> committed ; need at least <> to bottle .",
+   "returned": "Festival White has 0 gal committed; need at least 2 to bottle.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "the event alone",
+   "why": "<> <> . <- attr:Year#0(owner) == '2020'  [4 occasions]"
+  },
+  {
+   "step": 190,
+   "control": "button:Close _",
+   "admissible": [
+    "<> <> ."
+   ],
+   "hypothesis": "rule",
+   "unordered": [
+    "<> <> ."
+   ],
+   "observed": "<> is already <> .",
+   "returned": "Creek Bed is already closed.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "the event alone",
+   "why": "<> <> . <- attr:Gallons left#0(owner) < '3'  [6 occasions]"
+  },
+  {
+   "step": 203,
+   "control": "button:Bottle _",
+   "admissible": [
+    "<> <> ."
+   ],
+   "hypothesis": "rule",
+   "unordered": [
+    "<> <> ."
+   ],
+   "observed": "<> has <> committed ; need at least <> to bottle .",
+   "returned": "Festival White has 0 gal committed; need at least 2 to bottle.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "the event alone",
+   "why": "<> <> . <- attr:Year#0(owner) == '2020'  [4 occasions]"
+  },
+  {
+   "step": 326,
    "control": "button:Return ticket _ gal from _ out of _",
    "admissible": [
     "Returned <> to <> from <> ."
@@ -219,96 +293,10 @@
     "Returned <> to <> from <> ."
    ],
    "observed": "<> is <> ; disgorge it before returning a draw .",
-   "returned": "Festival White is bottled; disgorge it before returning a draw.",
+   "returned": "Fair Day is bottled; disgorge it before returning a draw.",
    "verdict": "one outcome was admissible and a different one happened",
    "level": "the event alone",
-   "why": "Returned <> to <> from <> . <- attr:Committed gal#0(property['attr:Style#0', 'Single varietal']:1) == '5'  [34 occasions]"
-  },
-  {
-   "step": 56,
-   "control": "button:Return ticket _ gal from _ out of _",
-   "admissible": [
-    "Returned <> to <> from <> ."
-   ],
-   "hypothesis": "rule",
-   "unordered": [
-    "Returned <> to <> from <> ."
-   ],
-   "observed": "Returned <> to <> from <> .",
-   "returned": "Returned 1 gal to Orchard from Picnic.",
-   "verdict": "one outcome was admissible and a different one happened",
-   "level": "with its arguments",
-   "arguments": {
-    "2": [
-     "Festival White",
-     "Picnic"
-    ]
-   },
-   "why": "Returned <> to <> from <> . <- attr:Committed gal#0(property['attr:Style#0', 'Single varietal']:1) == '5'  [34 occasions]"
-  },
-  {
-   "step": 59,
-   "control": "button:Return ticket _ gal from _ out of _",
-   "admissible": [
-    "Returned <> to <> from <> ."
-   ],
-   "hypothesis": "rule",
-   "unordered": [
-    "Returned <> to <> from <> ."
-   ],
-   "observed": "<> is <> ; disgorge it before returning a draw .",
-   "returned": "Festival White is bottled; disgorge it before returning a draw.",
-   "verdict": "one outcome was admissible and a different one happened",
-   "level": "the event alone",
-   "why": "Returned <> to <> from <> . <- attr:Committed gal#0(property['attr:Style#0', 'Single varietal']:1) == '5'  [34 occasions]"
-  },
-  {
-   "step": 62,
-   "control": "button:Return ticket _ gal from _ out of _",
-   "admissible": [
-    "Returned <> to <> from <> ."
-   ],
-   "hypothesis": "rule",
-   "unordered": [
-    "Returned <> to <> from <> ."
-   ],
-   "observed": "<> is <> ; disgorge it before returning a draw .",
-   "returned": "Festival White is bottled; disgorge it before returning a draw.",
-   "verdict": "one outcome was admissible and a different one happened",
-   "level": "the event alone",
-   "why": "Returned <> to <> from <> . <- attr:Committed gal#0(property['attr:Style#0', 'Single varietal']:1) == '5'  [34 occasions]"
-  },
-  {
-   "step": 65,
-   "control": "button:Return ticket _ gal from _ out of _",
-   "admissible": [
-    "Returned <> to <> from <> ."
-   ],
-   "hypothesis": "rule",
-   "unordered": [
-    "Returned <> to <> from <> ."
-   ],
-   "observed": "<> is <> ; disgorge it before returning a draw .",
-   "returned": "Festival White is bottled; disgorge it before returning a draw.",
-   "verdict": "one outcome was admissible and a different one happened",
-   "level": "the event alone",
-   "why": "Returned <> to <> from <> . <- attr:Committed gal#0(property['attr:Style#0', 'Single varietal']:1) == '5'  [34 occasions]"
-  },
-  {
-   "step": 71,
-   "control": "button:Return ticket _ gal from _ out of _",
-   "admissible": [
-    "Returned <> to <> from <> ."
-   ],
-   "hypothesis": "rule",
-   "unordered": [
-    "Returned <> to <> from <> ."
-   ],
-   "observed": "<> is <> ; disgorge it before returning a draw .",
-   "returned": "Festival White is bottled; disgorge it before returning a draw.",
-   "verdict": "one outcome was admissible and a different one happened",
-   "level": "the event alone",
-   "why": "Returned <> to <> from <> . <- attr:Committed gal#0(property['attr:Style#0', 'Single varietal']:1) == '5'  [34 occasions]"
+   "why": "Returned <> to <> from <> . <- attr:State#0(property['attr:Style#0', 'Single varietal']:1) == 'In cask'  [96 occasions]"
   }
  ]
 }

@@ -54,6 +54,23 @@ committed gallons still read 3 (three such steps), exactly as the equality rule 
 the refusal at 0 and 1 stays unestablished because `already bottled` refusals share those
 values.  Nothing was generalised to joins or totals; those forms have no such evidence.
 
+**Correction (2026-09-06).**  The identity of the nominal and ordered version spaces on
+every suffix, explained above by the fitting range, was guaranteed by the scorer: since
+this part was written, `score_step` and `score_step_admissible` built the held-out query
+without the ordered vocabulary the fitting rows and the live answer carry, so no threshold
+or comparison could hold at a held-out state and the two spaces were asked the same
+nominal question.  The 5 / 6 / 9 / 0 rows above were produced with the vocabulary
+(`tests/test_v4_fields.py` builds it the same way) and stand.  The scorer now asks in the
+language the evidence was fitted in; what moved when it did is Part XVIII of
+`docs/v4_retained.md`.  The size of it on blend, whose guards are thresholds: the
+decision list's own held-out ledger for `Record draw` goes from 67 right and 56 wrong to
+119 right and 4 wrong on the transfer suffix at 0.5, from 34 and 40 to 74 and 0 at 0.7,
+and from 149 and 112 to 248 and 13 across traces on the holdout, with the fitted lists
+byte-identical; every list-level blend number retained since this part was written was
+the scorer's, not the learner's.  The version space moves less, because it could vouch
+by nominal coincidences either way: 164 forced, 36 several and 17 unestablished on the
+suffix become 141, 62 and 14, with the same 31 outside the admissible set.
+
 ## Part II — which ties an experiment can decide
 
 `semabi.eval.v4_identity_ties` starts from the open questions the search records on a

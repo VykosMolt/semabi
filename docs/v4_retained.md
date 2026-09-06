@@ -1066,6 +1066,146 @@ on all four applications, is the attack that decides whether it is retained.  Th
 identity search's silent choice between the panel-as-widget and the panel-as-view worlds
 is the next open question, and aggregation remains behind it.
 
+## Part XVIII -- a rival the search rejected, and a scorer that asked in the wrong language
+
+Part XVII left two questions open in the same breath: whether the identity search ever
+poses the tie between the call sheet as a widget and the call sheet as a view of its
+vessel, and why the version space admits *nothing chosen* at two held-out bookings where
+every role binds.  Both were answered by reading what the instruments actually do, and
+the second answer reaches further than the question.
+
+**The rival was tried, and lost on evidence.**  The search's candidate readings for the
+sheet family are three -- no identity, the sheet keyed by its `Vessel` row, and the sheet
+keyed by its heading, which is the call reference -- and the vessel key is the first
+identity candidate, tried in round zero against no identity and again in round one
+against the heading once the heading had been adopted.  Scored against the settled base
+(`identity_rivals.py`, `rivals_harbour_pil_dev.json`, `rivals_harbour_join_dev.json`),
+the vessel-keyed sheet loses on explanation alone, by eight steps on the pilot corpus and
+three on the berth corpus, and the steps are all of one kind: a click on a call button
+that opens its sheet is *explained* under the call key, where a sheet object appears,
+and *silent* under the vessel key, where the vessel was already on the page and nothing
+the reading tracks has changed.  Every other term is equal.  The tie was never unposed;
+it was decided, by the objective's own terms, and what was missing was the record: the
+search wrote its accepted moves and its kept ties and nothing about a rival it beat, so
+a decision by evidence was indistinguishable from a candidate never tried.  A rejected
+rival is now a move of its own, `rejected`, carrying the reading, the incumbent and the
+terms that decided it (`search.py`; `tests/test_v4_search_revisits.py`).  The moves are
+diagnostics: the authenticated manifests carry the final score, the family sizes and the
+open questions, and no hash moved.  Whether opening a detail view ought to count as an
+explanation -- whether the objective should credit a reading for positing an object that
+a click brings into view -- is a question about the objective, and it is parked here
+with the numbers rather than answered.
+
+**The scorer asked in a vocabulary the evidence was not fitted in.**  Reading the
+version space for the second question found the cause one layer down.  Since the field
+theory was introduced (Part I of `docs/v4_ties.md`), the fitting rows of every control
+and the live answer have carried the ordered vocabulary -- `x >= v` and `x < v` against
+the thresholds the history rendered, and since Part XVI the comparison `p.a >= q.b` over
+two bound roles -- while the two held-out scorers, `score_step` and
+`score_step_admissible`, built the query state from the same builder *without* it, as did
+the inadequacy and acquisition instruments.  The consequence is exact.  A vouch is the
+conjunction a query state shares with two witnesses, so a literal absent from the query
+can never be kept; no threshold and no comparison could hold at any held-out state, no
+ordered rule was ever exercisable there, and the version space vouched by whatever
+nominal literals the witnesses happened to share.  That is the "long pure condition" of
+Part XVII by another name, and it is also why the ties document could report the nominal
+and ordered version spaces identical on every suffix: they were being asked the same
+nominal question.  The rows there at committed 5, 6, 9 and 0 were produced with the
+vocabulary and stand; the explanation given for the identity does not, and a dated
+correction now sits beside it.  One builder, `query_literals`, serves the fitting, the
+answer, the scorers and the instruments (`tests/test_v4_fields.py`: a held-out state at
+a value the history never showed is answered only in the fitted language).
+
+**P28, pre-registered before any regenerated number was read.**  On the pilot-booking
+holdout, step 502 -- a ticket to 130 m against a 132 m vessel -- stops being wrong,
+because the comparison is now in the query; 493 becomes several or stays wrong; no
+forced-right verdict becomes wrong; the wrong count falls from two to at most one.  On
+the retained battery, blend's outcome and admissible ledgers may move, since blend is the
+one retained history whose lists carry ordered literals; harbour's, cellar's and vet's
+stay unchanged; frontiers and invariants stay unchanged, because the frontier scores
+operators and not the outcome layer.  Anything else is a finding.
+
+**What the fix did on the pilot corpus** (`p28_vs_diag_p26.json`, both vocabularies
+side by side on the same fitted model).  Book pilot, twenty-one held-out clicks: twelve
+forced right, six several, one unestablished and two wrong under the nominal query;
+seven forced right, fourteen several, none unestablished and none wrong under the fitted
+language.  Every pre-registered expectation is met: 502 and 493 are both *several*, with
+the booking, the too-short refusal and *nothing chosen* admissible; no forced right
+became wrong; the wrong count is zero.  Two things were not pre-registered.  Five forced
+rights became several -- 328, 470, 480, 486 and 509 -- and the unestablished 513 became
+several, and the vouches say why: with thresholds in the query, a *pair* of thresholds is
+as pure on the fitting evidence as the comparison.  At 502 the booking is vouched by
+`Duty(pilot) = on & Ticket to(pilot) >= 100 & Length overall(owner) < 148 &
+ref_null(pilot)` and the refusal by the join literal, and nothing in the development
+corpus separates the two forms; the version space says so.  And the forced right at 463
+was right for the wrong reason: under the nominal query its too-short vouch was
+`Duty = on & Flag(owner) = Malta & ref_null`, three occasions, a flag standing in for a
+comparison the vocabulary had hidden; under the fitted language it is the join itself,
+covering all six.  The nominal coincidences remain admissible beside the ordered vouches
+-- *nothing chosen* at 493, 502 and 513 is vouched by `Flag(owner) = Norway`, four
+occasions, because the six unnamed-select occasions of the development corpus all fell
+on Norwegian calls -- which is the version space doing exactly what it is defined to do
+on that evidence; only an occasion with a Norwegian flag and a named selection removes
+the rule, and 502 is one.  Less decisive and never wrong is the direction
+`docs/v4_admissibility.md` measured for removing hypotheses, run backwards: the
+language got richer and the confident claims got fewer.
+
+**Its measured scope, on one model at a time.**  Comparing a regenerated ledger with a
+retained one compares two models when the code between them moved the identity layer,
+and the berth corpus's retained score predates the view-keying rules of Part XVII.  So
+each holdout was scored under both vocabularies on a single fitted model
+(`vs_two.py`, `p28_vs_two_ref.json`, `p28_vs_two_pil.json`).  On the berth corpus, 334
+held-out clicks over ten controls, not one verdict moves: the too-long refusals were
+already forced right by nominal literals, and the join adds a second vouch for the same
+event.  On the pilot corpus, 313 clicks, eight move and all eight are the booking
+control's, all toward *several*: five forced rights, the two forced wrongs, and the one
+unestablished.  A richer query can only make a witness set's shared conjunction more
+specific, so exact admissibility is monotone in it, and it was: no state went from
+established to unestablished.  The fix reaches a verdict only where an ordered rule is
+the discriminating one and no nominal coincidence already decides, which on harbour is
+eight states of 647 and one control.  Two more things were checked on the way.  The
+corroborated rule class seeds from a witness pair and completes by greedy
+generalisation, which the code admits is incomplete and had measured complete under the
+nominal query; under the fitted vocabulary an exact triple enumeration (`vs_exact.py`,
+`p28_vs_exact_ref.json`, `p28_vs_exact_pil.json`) agrees with it at every one of the 647
+states, so a triple-seeded search drafted against the hypothesis was never applied and
+is kept as `rejected_triple_seed.py`.  And the berth corpus's booking control -- seven
+held-out clicks, few fitting occasions -- stands at one forced right, five unestablished
+and one wrong under the current model where the retained score had five forced right:
+that is the view-keying rules' doing, not the vocabulary's, and it is recorded here
+rather than chased, since the pilot corpus is the one built for that control.
+
+**The retained state, regenerated under the fix** (battery #5, afbcde2, 12 cores,
+05:27 to the admissible stage; `battery_run5.log`).  Frontiers: identification, holdout
+outcome, selected reading and survivor classes identical on harbour, vet and blend.
+Invariants: all sixteen at zero.  Harbour's, cellar's and vet's ledgers of every kind --
+outcome, admissible, inadequacy, claim substance, bundle, creation -- byte-identical in
+their counts.  Blend moved, and by more than the pre-registration's "may": the decision
+list's own ledger for `Record draw`, whose guards are thresholds over committed and
+remaining gallons, goes from 67 right and 56 wrong to 119 right and 4 wrong on the
+transfer suffix at 0.5, from 34 and 40 to 74 and none at 0.7, from 12 and 5 to 17 and
+none prequentially, and from 149 right and 112 wrong to 248 and 13 across traces on the
+holdout, with the fitted lists byte-identical between the two batteries.  A list that
+could not evaluate its own guards fell through to its default at every refusal and was
+called wrong there, and every list-level blend number retained since the field theory
+was introduced was that.  The version space moved less, because it could vouch by
+nominal coincidences either way: on the suffix 164 forced, 36 several and 17
+unestablished become 141, 62 and 14, with the same 31 outside the admissible set; on
+the holdout 267, 126 and 46 become 212, 212 and 15, with 66 outside where there were
+70, and the inadequacy instrument's *inseparable* cases there fall from 16 to 4.  One
+change was not pre-registered and is not the fix's: cellar's `Wash out` control shows
+two rules in the identity stage's rule-class file where the committed file had none.
+The identity batch fits cellar under the sections manifest and the admissible batch,
+which runs later, under the plain one, and both write the same default file name; the
+retained rule-class file has always been the later plain-source fit and the list-class
+file the sections fit, consistently across batteries, and the same PYTHONHASHSEED test
+that V2 runs (`fit_seed.py`, three seeds) fits every cellar control identically.  The
+admissible stage then wrote the plain-source fit over it again, as that explanation
+predicts, and the identity batch's cellar outputs are named by their manifest from the
+next battery on.  In blend's bundle ledger the claims a shown bundle accounts for rise
+from 247 to 249 and the frame-and-delta combinations never observed together fall from
+96 to 94; the retained-state tests pass on the regenerated artefacts.
+
 ## What stands, and what is open
 
 The retained state, regenerated once more: harbour's development sidecar is now written by
@@ -1115,8 +1255,15 @@ interface state; five transposed rules make the view a view of the things it nam
 on corpora with the refusals in them the learner states harbour's two joins -- a berth's
 capacity against a vessel's length, a pilot's ticket against a vessel's length -- with
 their fields adopted, and carries them to histories it never saw.  A view's identity is
-now confirmed on a held-out history by correspondence.  What the campaign leaves open is
-recorded beside it: the search does not pose the tie between a panel as a widget and a
-panel as a view; the version space still admits a spurious outcome through a long pure
-condition; the pilot-booking control's cross-trace ledger got worse before its corpus got
-better.  Aggregate remains unearned behind all of it.
+now confirmed on a held-out history by correspondence.  The tie between a panel as a
+widget and a panel as a view was decided by the search all along, on explanation, and the
+search now records the rivals it rejects.  The held-out scorers had been asking the
+version space in a vocabulary without the thresholds and comparisons its evidence was
+fitted in; asked in the fitted language, blend's decision lists are right where they were
+called wrong, the version space is less decisive and never more wrong, and the "spurious
+outcome through a long pure condition" was a comparison the query could not hold beside
+coincidences the evidence does not exclude -- which only more evidence removes.  What the
+campaign leaves open is recorded beside it: the objective credits a reading for positing
+an object a click brings into view; the pilot-booking control's cross-trace ledger got
+worse before its corpus got better; the pilot corpus does not separate a comparison from
+a pair of thresholds.  Aggregate remains unearned behind all of it.

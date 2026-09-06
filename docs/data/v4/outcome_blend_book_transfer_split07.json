@@ -68,21 +68,20 @@
   "rules": 13,
   "held_out_clicks": 74,
   "ledger": {
-   "a different event": 40,
-   "the event the interface returned": 34
+   "the event the interface returned": 74
   },
-  "accuracy_where_it_answered": 0.459,
-  "distinct_events_asserted": 3,
+  "accuracy_where_it_answered": 1.0,
+  "distinct_events_asserted": 4,
   "answers_naming_an_event": 74,
-  "accuracy_where_it_named_an_event": 0.459,
+  "accuracy_where_it_named_an_event": 1.0,
   "by_level": {
-   "a different event / the event alone": 40,
-   "the event the interface returned / with its arguments": 34
+   "the event the interface returned / with its arguments": 74
   },
   "events_asserted": {
-   "The book already holds 12 records ; return a draw first .": 40,
+   "Drew <> from <> into <> .": 34,
    "<> is already <> .": 20,
-   "<> is <> .": 14
+   "<> is <> .": 14,
+   "<> holds <> ; cannot draw <> .": 6
   },
   "majority_frame_control_where_it_answered": {
    "right": 34,
@@ -95,84 +94,10 @@
     "fitted": 150,
     "rules": 7,
     "events_fitted": 6,
-    "a different event": 40,
-    "the event the interface returned": 34
+    "the event the interface returned": 74
    }
   },
-  "wrong": [
-   {
-    "step": 587,
-    "control": "button:Record draw",
-    "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "Drew <> from <> into <> .",
-    "returned": "Drew 1 gal from Block 12 into Festival White.",
-    "verdict": "a different event",
-    "level": "the event alone"
-   },
-   {
-    "step": 590,
-    "control": "button:Record draw",
-    "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "Drew <> from <> into <> .",
-    "returned": "Drew 1 gal from Block 12 into Festival White.",
-    "verdict": "a different event",
-    "level": "the event alone"
-   },
-   {
-    "step": 593,
-    "control": "button:Record draw",
-    "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "Drew <> from <> into <> .",
-    "returned": "Drew 1 gal from Block 12 into Festival White.",
-    "verdict": "a different event",
-    "level": "the event alone"
-   },
-   {
-    "step": 596,
-    "control": "button:Record draw",
-    "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "Drew <> from <> into <> .",
-    "returned": "Drew 1 gal from Block 12 into Festival White.",
-    "verdict": "a different event",
-    "level": "the event alone"
-   },
-   {
-    "step": 599,
-    "control": "button:Record draw",
-    "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "Drew <> from <> into <> .",
-    "returned": "Drew 1 gal from Block 12 into Festival White.",
-    "verdict": "a different event",
-    "level": "the event alone"
-   },
-   {
-    "step": 677,
-    "control": "button:Record draw",
-    "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "Drew <> from <> into <> .",
-    "returned": "Drew 1 gal from Block 12 into Picnic.",
-    "verdict": "a different event",
-    "level": "the event alone"
-   },
-   {
-    "step": 701,
-    "control": "button:Record draw",
-    "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "Drew <> from <> into <> .",
-    "returned": "Drew 1 gal from Low Barn into Fair Day.",
-    "verdict": "a different event",
-    "level": "the event alone"
-   },
-   {
-    "step": 704,
-    "control": "button:Record draw",
-    "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "Drew <> from <> into <> .",
-    "returned": "Drew 1 gal from Low Barn into Fair Day.",
-    "verdict": "a different event",
-    "level": "the event alone"
-   }
-  ],
+  "wrong": [],
   "lists": {
    "button#cell/button": "button#cell/button: 15 fitted occasions, 1 distinct events\n    otherwise  ->  Opened <> .   [15]\n    otherwise -> Opened <> .\n    'Opened <> .' arguments: 0=owner",
    "button:Bottle _": "button:Bottle _: 7 fitted occasions, 2 distinct events\n    attr:Committed gal#0(owner) >= '2'  ->  <> <> .   [6]\n    otherwise -> <> has <> committed ; need at least <> to bottle .\n    '<> <> .' arguments: 1=owner\n    '<> has <> committed ; need at least <> to bottle .' arguments: 0=owner",

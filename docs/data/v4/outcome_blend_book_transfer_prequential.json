@@ -8,15 +8,13 @@
  "stride": 8,
  "actions_scored": 17,
  "ledger": {
-  "the event the interface returned": 12,
-  "a different event": 5
+  "the event the interface returned": 17
  },
  "by_level": {
-  "the event the interface returned / with its arguments": 12,
-  "a different event / the event alone": 5
+  "the event the interface returned / with its arguments": 17
  },
- "accuracy_where_it_answered": 0.706,
- "distinct_events_asserted": 5,
+ "accuracy_where_it_answered": 1.0,
+ "distinct_events_asserted": 4,
  "rows": [
   {
    "step": 430,
@@ -33,11 +31,15 @@
   {
    "step": 456,
    "control": "button:Record draw",
-   "predicted": "The book already holds 12 records ; return a draw first .",
+   "predicted": "Drew <> from <> into <> .",
    "observed": "Drew <> from <> into <> .",
    "returned": "Drew 1 gal from West Ridge into Festival White.",
-   "verdict": "a different event",
-   "level": "the event alone"
+   "verdict": "the event the interface returned",
+   "level": "with its arguments",
+   "arguments": {
+    "1": "West Ridge",
+    "2": "Festival White"
+   }
   },
   {
    "step": 473,
@@ -78,20 +80,28 @@
   {
    "step": 578,
    "control": "button:Record draw",
-   "predicted": "The book already holds 12 records ; return a draw first .",
+   "predicted": "Drew <> from <> into <> .",
    "observed": "Drew <> from <> into <> .",
    "returned": "Drew 1 gal from Block 12 into Festival White.",
-   "verdict": "a different event",
-   "level": "the event alone"
+   "verdict": "the event the interface returned",
+   "level": "with its arguments",
+   "arguments": {
+    "1": "Block 12",
+    "2": "Festival White"
+   }
   },
   {
    "step": 593,
    "control": "button:Record draw",
-   "predicted": "The book already holds 12 records ; return a draw first .",
+   "predicted": "Drew <> from <> into <> .",
    "observed": "Drew <> from <> into <> .",
    "returned": "Drew 1 gal from Block 12 into Festival White.",
-   "verdict": "a different event",
-   "level": "the event alone"
+   "verdict": "the event the interface returned",
+   "level": "with its arguments",
+   "arguments": {
+    "1": "Block 12",
+    "2": "Festival White"
+   }
   },
   {
    "step": 616,
@@ -144,11 +154,14 @@
   {
    "step": 733,
    "control": "button:Record draw",
-   "predicted": "The book already holds 12 records ; return a draw first .",
+   "predicted": "<> holds <> ; cannot draw <> .",
    "observed": "<> holds <> ; cannot draw <> .",
    "returned": "Low Barn holds 0 gal; cannot draw 1.",
-   "verdict": "a different event",
-   "level": "the event alone"
+   "verdict": "the event the interface returned",
+   "level": "with its arguments",
+   "arguments": {
+    "0": "Low Barn"
+   }
   },
   {
    "step": 749,
@@ -203,11 +216,15 @@
   {
    "step": 837,
    "control": "button:Record draw",
-   "predicted": "The book already holds 12 records ; return a draw first .",
+   "predicted": "Drew <> from <> into <> .",
    "observed": "Drew <> from <> into <> .",
    "returned": "Drew 1 gal from Low Barn into Fair Day.",
-   "verdict": "a different event",
-   "level": "the event alone"
+   "verdict": "the event the interface returned",
+   "level": "with its arguments",
+   "arguments": {
+    "1": "Low Barn",
+    "2": "Fair Day"
+   }
   }
  ]
 }

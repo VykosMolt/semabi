@@ -1676,3 +1676,190 @@ Pre-registration (P28), written before reading vs_diag_p26's ledger:
   gallons ORDERED by corroboration); harbour_transfer, cellar and vet ledgers unchanged
   (no field adopted on those histories); frontiers and invariants unchanged (the frontier
   scores operators, not the outcome layer).  Anything else is a finding.
+
+## P28 on the P26 holdout (05:41, vs_diag_p26.json; fix committed as afbcde2)
+Book pilot, 21 held-out clicks, dev-fitted model, RULE class, corroborated:
+  as scored (nominal query)   12 forced right / 6 several / 1 unestablished / 2 wrong
+  with the ordered vocabulary  7 forced right / 14 several / 0 unestablished / 0 wrong
+Pre-registered and met: 502 (Ruth 130 vs 132) stops being wrong -> several {booked, too
+short, Nothing chosen}; 493 -> several; no forced-right became wrong; wrong 2 -> 0.
+Not pre-registered: five forced-rights become several (328, 470, 480, 486, 509) and the
+unestablished 513 becomes several.  Cause, read off the vouches: with thresholds in the
+query a PAIR of thresholds is as pure on the dev evidence as the comparison -- at 502
+"booked" is vouched by Duty==on & Ticket to >= 100 & Length overall(owner) < 148 &
+ref_null, "too short" by the join literal; the dev corpus does not separate the two
+forms, so the version space says so.  At 463 the too-short vouch is now the join itself
+(Duty==on & Length overall(vessel) >= Ticket to(pilot) & ref_null, cover 6) where the
+nominal query had Duty==on & Flag(owner)==Malta & ref_null (cover 3): the earlier forced
+right was right by a coincidence the vocabulary forced it into.  The nominal coincidences
+remain admissible beside the ordered vouches -- "Nothing chosen" at 493/502/513 by
+Flag(owner)==Norway [4] -- which is the version space doing what it is defined to do on
+six unnamed-select occasions that all fell on Norwegian calls; only an occasion with
+Flag==Norway and a named selection removes it, and 502 is one.  Less decisive, never
+wrong: the same direction v4_admissibility measured for removing hypotheses, run
+backwards.
+
+05:42 re-scoring P25 and P26 through the committed scorer (join_score.py, search
+reading), pre-registered before reading: P26 Book pilot must reproduce vs_diag's
+7 / 14 / 0 / 0 exactly (same code path, no monkeypatch).  P25 Allocate berth (as scored
+21 forced right / 3 several / 3 unestablished / 0 wrong; whole holdout 194 / 99 / 27 /
+7 / 4 / 3): the join literal now holds at held-out states, so forced rights may become
+several where a threshold pair is as pure as the comparison; no Allocate click becomes
+wrong; the whole-holdout "admissible and a different one happened" count 4 does not rise.
+
+05:46 full suite on fbbc125's tree (started 05:07, 37 min): 557 passed, 3 skipped, 1
+xfailed, 1 FAILED -- test_retained_reports_bind_the_manifest_bytes_they_replay, a sha256
+mismatch between a frontier report and its manifest.  Battery #5's regen stage (started
+05:27) was rewriting docs/data/v4/manifests and frontier_*.json under the running suite
+(19 modified files at 05:50), so the report and the manifest were read from different
+moments.  Not a code failure; the test passed alone after battery #4 and is re-run on the
+regenerated state once battery #5 ends.  The afbcde2 suite running now is exposed to the
+same race.
+
+06:00 battery #5 (afbcde2, CPUQuota=1200%): regen 05:27 -> 05:59 rc=0.  Frontiers
+identical to afbcde2's committed ones on all three applications (identification,
+holdout outcome, selected reading, survivor classes) -- as pre-registered.  test_v4_
+retained_frontier passes on the regenerated manifests (3 passed).  open_world running.
+
+## P28 re-scores through the committed scorer (06:07, p28_score_p25/p26.json)
+P26 Book pilot: 7 forced right / 14 several -- reproduces vs_diag exactly, as
+pre-registered.  Whole pil holdout 165/89/41/6/7/5 -> 160/89/49/5/7/3 (forced right /
+sole right / several / unestablished / sole wrong / forced wrong).
+P25 Allocate berth: 21/3/3/0 -> 18/6/3/0 (forced right / several / unestablished /
+wrong): three forced rights became several, none wrong -- as pre-registered.  Whole ref
+holdout 194/99/27/7/4/3 -> 175/99/41/7/4/8: forced wrong stays 4 (pre-registered), but
+unestablished 3 -> 8, NOT pre-registered.  Per control: Book pilot 5 forced right / 1
+several / 1 wrong -> 1 forced right / 5 unestablished / 1 wrong; Close 25/9 -> 19/15;
+Schedule call 29/12/3 -> 23/18/3.  A richer query can only enlarge a pair's shared
+conjunction, and the corroborated rule class completes a pair's seed by GREEDY
+generalisation (bit order), so a larger seed can settle on a minimal pure condition of
+cover 2 where the smaller seed's settled on one of cover >= 3 -- and the class then says
+nothing.  The docstring admits the incompleteness and cites a triple enumeration that
+missed none -- measured under the nominal query.
+Pre-registered before reading vs_exact_{ref,pil}.json: the exact triple check (a pure
+conjunction covering three occasions exists iff some triple's shared conjunction with the
+query is pure) admits a superset of the greedy answer at every state; on the ref holdout
+the five unestablished Book pilot states are exact-admissible (established), and no
+state's exact set is smaller than its greedy set.  If so the corroborated rule class
+enumerates triples, as the list class already does.
+
+06:08 full suite on afbcde2: 560 passed, 3 skipped, 1 xfailed, no failures (40 min at
+nice 15 beside the battery).  The retained-frontier test was not caught by the regen
+race this time.
+
+06:34 vs_exact (p28_vs_exact_ref/pil.json): the exact triple enumeration agrees with the
+greedy pair-seeded answer at EVERY held-out state -- ref 334 states over ten controls,
+pil 273 -- so the greedy-incompleteness hypothesis is refuted; the triple-seed patch was
+never applied and is kept as rejected_triple_seed.py.  Then the flaw in my P25 reading:
+p25_score_new_search.json was computed under 109f5ae's identity code, and the search
+reading (readings_for's correspondence filter, 26f3f76) may differ, so "5 forced right
+-> 5 unestablished" on the ref holdout's Book pilot compares two models, not two
+vocabularies.  Exact admissibility is monotone in the query (a richer query only makes
+a triple's conjunction more specific), so on ONE model the fitted vocabulary cannot
+un-establish a state the nominal one established.  Pre-registered for vs_two (one fitted
+model per corpus, both vocabularies): no state goes from established to unestablished;
+forced -> several and unestablished -> established are the only transitions besides
+wrong -> several/right; the ref Book pilot shift is the model's, not the vocabulary's.
+
+06:56 vs_two (p28_vs_two_ref/pil.json; one fitted model per corpus, both vocabularies):
+  ref, 334 states: the two ledgers are IDENTICAL -- not one verdict moves.  Allocate
+  berth's too-long refusals were already forced right by nominal literals; the join
+  literal adds a vouch for the same event.  So the whole of "21/3/3 -> 18/6/3" and
+  "Book pilot 5 forced right -> 5 unestablished" on the ref holdout is the model change
+  between 1b95e31 and afbcde2 (30150dd's view keying), not the vocabulary; my earlier
+  attribution of the ref changes to P28 is withdrawn.  The ref corpus's Book pilot
+  (seven held-out clicks, few dev occasions) now stands at 1 forced right / 5
+  unestablished / 1 wrong under the current model -- recorded, not chased: pil is the
+  corpus built for that control.
+  pil, 313 states: 8 move, all on Book pilot, all toward several -- forced right 5,
+  forced wrong 2, unestablished 1 -- exactly vs_diag's; every other control identical.
+  Monotonicity pre-registration met: no state goes from established to unestablished.
+P28's measured scope: the fitted vocabulary changes a verdict only where an ordered rule
+is the discriminating one and no nominal coincidence already decides -- 8 of 647 harbour
+holdout states, all on the one control whose rule is a comparison -- and the greedy
+corroborated search is exact at all 647 (vs_exact).  Blend, whose Bottle and Record draw
+lists are threshold rules, is where the battery will show it.
+
+07:29 battery #5: open_world 05:59 -> 07:29 rc=0; all sixteen invariants at zero
+(columns frozen x3, renaming fresh/permute x4, reversal x4) -- as pre-registered.
+identity running; outcome (where blend's ledgers are expected to move) after it.
+
+## Battery #5 identity stage (07:39; 07:29 -> 07:37 rc=0), judged against P28
+blend moved, as pre-registered: frozen prefix (RULE) unestablished 17 -> 14, forced 196
+-> 173, several 36 -> 62; on the blend holdout unestablished 46 -> 15, forced 331 -> 276,
+several 106 -> 212 (set sizes 3 and 4 appear), forced wrong 32 -> 19; inadequacy on the
+holdout: inseparable 16 -> 4.  harbour and vet: every admissible/inadequacy/claim/bundle
+file identical.  cellar: NOT pre-registered -- admissible_opus_02_cellar_dev_frozen_
+prefix.json has button:Wash out with 2 rules and a default where afbcde2's had 0 rules
+and undetermined.  But afbcde2's own LIST-class file for the same model (written by the
+second process of the same battery #4 stage) already had the 2 rules, and the cellar
+source manifest's readings are fingerprint-identical.  So the SAME history under the
+SAME reading fits differently in two processes: the outcome learner is not deterministic
+across processes (hash-seed order of a literal set, presumably in _best_rule's
+tie-breaks).  v2_determinism.py checks V2 for this; nothing checks V4.
+Pre-registered before reading fit_seed_cellar_{0,1,2}.json: at least two of the three
+seeds give different Wash out rules; the fix is a canonical order in the learner
+(sorted literal iteration, canonical tie-breaks); after it, every seed gives the same
+rules on cellar, and the retained ledgers of the other three applications are unchanged
+by the fix except where the same tie was hidden (measured by the same seed test on all
+four).  No source edit until battery #5 ends.
+
+07:39 blend's exact counters (RULE class, corroborated; the LIST files agree):
+  transfer suffix, 249 actions: forced 164 -> 141, several 36 -> 62, sole 32 -> 32,
+  unestablished 17 -> 14; what happened was inside 201 -> 204, outside 31 -> 31,
+  nothing admissible 17 -> 14.
+  blend holdout, 503 actions: forced 267 -> 212, several 126 -> 212, sole 64 -> 64,
+  unestablished 46 -> 15; inside 387 -> 422, outside 70 -> 66, nothing 46 -> 15.
+So v4_ties Part I's "identical to the nominal model's at every count" is false under
+the fitted vocabulary: fewer forced, more several, fewer unestablished, errors equal on
+the suffix and four fewer on the holdout.
+
+07:41 seed test REFUTES the hash-seed hypothesis: under PYTHONHASHSEED 0/1/2 every
+cellar control fits identically (Wash out: Holds#4(selection) == None -> already washed
+[5]; unnamed(selection) -> Nothing chosen [2]; default: cannot be washed out while lot
+is in it).  And git says the RULE file was last changed at c022930 (09-02) while the
+LIST file at 7bacb76 (08-30): batteries #3 and #4 rewrote both with the same content
+each time -- 0 rules under the RULE run, 2 under the LIST run -- so the difference is
+systematic between the two invocations of v4_admissible, not random.  Reading the
+instrument next.
+
+07:42 RESOLVED as a provenance defect of the batch scripts, not the learner: cellar has
+two manifests, opus_02_cellar_dev_source.json (source_choice fingerprint a615480a...) and
+opus_02_cellar_dev_source_sections.json (0b8a73e4...).  v4_identity_batch fits cellar
+under the SECTIONS manifest and lets v4_admissible write its default output name,
+admissible_opus_02_cellar_dev_frozen_prefix.json (and _list.json); v4_admissible_batch,
+which runs LATER in the battery, fits cellar under the PLAIN manifest and writes the
+same RULE name.  So the retained RULE file is always the plain-source fit (last writer;
+Wash out 0 rules, default undetermined) and the LIST file always the sections fit (2
+rules) -- consistent across batteries #3/#4/#5, and the only reason battery #5's
+identity stage "changed" it is that its admissible stage has not yet overwritten it.
+The outcome batch also fits cellar under the plain manifest.  Not a P28 effect.
+Plan (script edits only after battery #5 ends; battery #6 confirms): the identity
+batch's cellar outputs are named by their manifest -- admissible_opus_02_cellar_dev_
+sections_frozen_prefix.json and _list.json -- so both fits are retained under
+unambiguous names; nothing else changes.  Pre-registered for battery #6: the plain-named
+RULE file equals c022930's content (0 Wash out rules); the two sections-named files
+equal battery #5's identity-stage output; every other artefact identical to battery #5.
+
+## Battery #5 outcome stage (08:51; 07:37 -> 08:50 rc=0): blend's decision lists
+The list-level ledgers (score_step -> predict, now in the fitted vocabulary):
+  blend transfer split 0.5   67 right / 56 wrong  ->  119 right / 4 wrong   (0.545 -> 0.967)
+  blend transfer split 0.7   34 / 40              ->   74 / 0              (0.459 -> 1.000)
+  blend cross-trace holdout 149 / 112             ->  248 / 13             (0.571 -> 0.950)
+  blend subject-restricted   67 / 56              ->  119 / 4
+  blend permuted             73 no answer / 1 wrong -> same
+  harbour (three files), cellar, vet: identical.  creation_* identical.
+Pre-registered "blend may move": met, and the size of it is the finding -- the lists'
+guards on blend are thresholds (Committed gal >= 2 -> bottled; Committed gal < 5 ->
+drew; Gallons left < 2 -> holds ...), none of which could fire at a held-out state
+since 154a867, so the list fell through to its default and was wrong at every
+refusal.  Every retained blend list-ledger since 2026-08-30 was depressed by the
+scorer, not by the learner.
+
+## Battery #5 admissible stage (09:00; 08:50 -> 08:59 rc=0); BATTERY_DONE 08:59:40
+blend's admissible RULE/LIST/holdout files as the identity stage wrote them; bundle_blend
+changed (its outcome-layer parts); harbour, cellar, vet admissible and bundle files
+identical.  cellar's admissible_..._frozen_prefix.json reverted to the plain-source fit
+(Wash out 0 rules, undetermined) exactly as the provenance explanation predicts.
+test_v4_retained_frontier + test_v4_transfer: 53 passed.  Committing the regenerated
+state with Part XVIII; full suite on the regenerated tree running beside it.

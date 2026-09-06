@@ -44,22 +44,22 @@
   "rules": 14,
   "held_out_clicks": 261,
   "ledger": {
-   "the event the interface returned": 149,
-   "a different event": 112
+   "the event the interface returned": 248,
+   "a different event": 13
   },
-  "accuracy_where_it_answered": 0.571,
+  "accuracy_where_it_answered": 0.95,
   "distinct_events_asserted": 4,
   "answers_naming_an_event": 261,
-  "accuracy_where_it_named_an_event": 0.571,
+  "accuracy_where_it_named_an_event": 0.95,
   "by_level": {
-   "the event the interface returned / with its arguments": 149,
-   "a different event / the event alone": 112
+   "the event the interface returned / with its arguments": 248,
+   "a different event / the event alone": 13
   },
   "events_asserted": {
-   "The book already holds 12 records ; return a draw first .": 100,
+   "Drew <> from <> into <> .": 112,
    "<> is already <> .": 96,
    "<> is <> .": 35,
-   "Drew <> from <> into <> .": 30
+   "<> holds <> ; cannot draw <> .": 18
   },
   "majority_frame_control_where_it_answered": {
    "right": 34,
@@ -72,80 +72,80 @@
     "fitted": 209,
     "rules": 8,
     "events_fitted": 6,
-    "the event the interface returned": 149,
-    "a different event": 112
+    "the event the interface returned": 248,
+    "a different event": 13
    }
   },
   "wrong": [
    {
-    "step": 1,
+    "step": 28,
     "control": "button:Record draw",
-    "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "Drew <> from <> into <> .",
-    "returned": "Drew 1 gal from West Ridge into Festival White.",
+    "predicted": "Drew <> from <> into <> .",
+    "observed": "The book already holds 12 records ; return a draw first .",
+    "returned": "The book already holds 12 records; return a draw first.",
     "verdict": "a different event",
     "level": "the event alone"
    },
    {
-    "step": 8,
+    "step": 87,
     "control": "button:Record draw",
-    "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "Drew <> from <> into <> .",
-    "returned": "Drew 1 gal from Orchard into Festival White.",
+    "predicted": "Drew <> from <> into <> .",
+    "observed": "The book already holds 12 records ; return a draw first .",
+    "returned": "The book already holds 12 records; return a draw first.",
     "verdict": "a different event",
     "level": "the event alone"
    },
    {
-    "step": 11,
+    "step": 91,
     "control": "button:Record draw",
-    "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "Drew <> from <> into <> .",
-    "returned": "Drew 1 gal from Orchard into Festival White.",
+    "predicted": "Drew <> from <> into <> .",
+    "observed": "The book already holds 12 records ; return a draw first .",
+    "returned": "The book already holds 12 records; return a draw first.",
     "verdict": "a different event",
     "level": "the event alone"
    },
    {
-    "step": 14,
+    "step": 94,
     "control": "button:Record draw",
-    "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "Drew <> from <> into <> .",
-    "returned": "Drew 1 gal from Orchard into Festival White.",
+    "predicted": "Drew <> from <> into <> .",
+    "observed": "The book already holds 12 records ; return a draw first .",
+    "returned": "The book already holds 12 records; return a draw first.",
     "verdict": "a different event",
     "level": "the event alone"
    },
    {
-    "step": 17,
+    "step": 97,
     "control": "button:Record draw",
-    "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "Drew <> from <> into <> .",
-    "returned": "Drew 1 gal from Orchard into Festival White.",
+    "predicted": "Drew <> from <> into <> .",
+    "observed": "The book already holds 12 records ; return a draw first .",
+    "returned": "The book already holds 12 records; return a draw first.",
     "verdict": "a different event",
     "level": "the event alone"
    },
    {
-    "step": 20,
+    "step": 111,
     "control": "button:Record draw",
-    "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "Drew <> from <> into <> .",
-    "returned": "Drew 1 gal from Orchard into Festival White.",
+    "predicted": "Drew <> from <> into <> .",
+    "observed": "The book already holds 12 records ; return a draw first .",
+    "returned": "The book already holds 12 records; return a draw first.",
     "verdict": "a different event",
     "level": "the event alone"
    },
    {
-    "step": 22,
+    "step": 114,
     "control": "button:Record draw",
-    "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "Drew <> from <> into <> .",
-    "returned": "Drew 1 gal from Orchard into Picnic.",
+    "predicted": "Drew <> from <> into <> .",
+    "observed": "The book already holds 12 records ; return a draw first .",
+    "returned": "The book already holds 12 records; return a draw first.",
     "verdict": "a different event",
     "level": "the event alone"
    },
    {
-    "step": 25,
+    "step": 116,
     "control": "button:Record draw",
-    "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "Drew <> from <> into <> .",
-    "returned": "Drew 1 gal from Orchard into Festival White.",
+    "predicted": "Drew <> from <> into <> .",
+    "observed": "The book already holds 12 records ; return a draw first .",
+    "returned": "The book already holds 12 records; return a draw first.",
     "verdict": "a different event",
     "level": "the event alone"
    }

@@ -1,0 +1,2064 @@
+{
+ "control": "button:Book pilot",
+ "rules": [
+  "('unnamed', \"selection['combobox#1']:1\")  ->  Nothing chosen in the pilot list .   [6]",
+  "attr:Duty#0(selection['combobox#1']:1) == 'off'  ->  <> is not <> .   [4]",
+  "attr:Length overall#0(owner) < '88'  ->  <> booked for call <> .   [3]",
+  "attr:Ticket to#0(selection['combobox#1']:1) < '150' & ('ref_set', \"selection['combobox#1']:1\", 'rel:3')  ->  <> is already booked for call <> .   [3]",
+  "attr:Ticket to#0(selection['combobox#1']:1) < attr:Length overall#0(relation['backward', 'rel:3']:2<owner)  ->  <> holds a <> ; <> is <> overall .   [6]",
+  "('ref_null', \"selection['combobox#1']:1\", 'rel:3')  ->  <> booked for call <> .   [2]"
+ ],
+ "default": "Call <> is already <> ; <> pilot is needed .",
+ "occasions": {
+  "Nothing chosen in the pilot list .": 6,
+  "<> booked for call <> .": 5,
+  "Call <> is already <> ; <> pilot is needed .": 1,
+  "<> is not <> .": 4,
+  "<> holds a <> ; <> is <> overall .": 6,
+  "<> is already booked for call <> .": 3
+ },
+ "steps": [
+  {
+   "step": 463,
+   "status": {
+    "owner": "named",
+    "selection['combobox#1']:1": "named",
+    "relation['backward', 'rel:3']:2<owner": "named"
+   },
+   "literals": [
+    "('named', \"relation['backward', 'rel:3']:2<owner\")",
+    "('named', \"selection['combobox#1']:1\")",
+    "('named', 'owner')",
+    "('ref_null', \"selection['combobox#1']:1\", 'rel:3')",
+    "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+    "('ref_set', 'owner', 'rel:0')",
+    "('ref_set', 'owner', 'rel:1')",
+    "('ref_set', 'owner', 'rel:2')",
+    "attr:Bring#0(owner) == 'alongside'",
+    "attr:Calls logged#0(relation['backward', 'rel:3']:2<owner) == '1'",
+    "attr:Cargo#0(owner) == 'naphtha'",
+    "attr:Cargo#0(relation['backward', 'rel:3']:2<owner) == 'naphtha'",
+    "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+    "attr:Flag#0(owner) == 'Malta'",
+    "attr:Flag#0(relation['backward', 'rel:3']:2<owner) == 'Malta'",
+    "attr:Hazardous cargo#0(owner) == 'yes'",
+    "attr:Hazardous cargo#0(relation['backward', 'rel:3']:2<owner) == 'yes'",
+    "attr:Length overall#0(owner) == '148'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) == '148'",
+    "attr:Length overall#1(owner) == 'm'",
+    "attr:Status#0(owner) == 'expected'",
+    "attr:Ticket to#0(selection['combobox#1']:1) == '100'",
+    "id(owner) == 'C-101'",
+    "id(relation['backward', 'rel:3']:2<owner) == 'Petrel Star'",
+    "id(selection['combobox#1']:1) == 'Tom Dorley'",
+    "no_children(selection['combobox#1']:1)",
+    "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+    "rel:0(owner) != selection['combobox#1']:1",
+    "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+    "rel:1(owner) != selection['combobox#1']:1",
+    "rel:2(owner) != selection['combobox#1']:1",
+    "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+    "rel:3(relation['backward', 'rel:3']:2<owner) != selection['combobox#1']:1",
+    "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+    "rel:3(selection['combobox#1']:1) != owner",
+    "rel:3(selection['combobox#1']:1) != relation['backward', 'rel:3']:2<owner"
+   ],
+   "ordered_only": [
+    "attr:Length overall#0(owner) >= '112'",
+    "attr:Length overall#0(owner) >= '132'",
+    "attr:Length overall#0(owner) >= '148'",
+    "attr:Length overall#0(owner) >= '54'",
+    "attr:Length overall#0(owner) >= '64'",
+    "attr:Length overall#0(owner) >= '78'",
+    "attr:Length overall#0(owner) >= '88'",
+    "attr:Length overall#0(owner) >= '96'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '112'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '132'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '148'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '54'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '64'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '78'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '88'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '96'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= attr:Ticket to#0(selection['combobox#1']:1)",
+    "attr:Ticket to#0(selection['combobox#1']:1) < '130'",
+    "attr:Ticket to#0(selection['combobox#1']:1) < '150'",
+    "attr:Ticket to#0(selection['combobox#1']:1) < attr:Length overall#0(relation['backward', 'rel:3']:2<owner)",
+    "attr:Ticket to#0(selection['combobox#1']:1) >= '100'",
+    "attr:Ticket to#0(selection['combobox#1']:1) >= '80'"
+   ],
+   "events": {
+    "Nothing chosen in the pilot list .": {
+     "n": 6,
+     "pairs_fire": 0,
+     "pairs_pure": 0,
+     "impure_examples": [
+      {
+       "shared": [
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Length overall#1(owner) == 'm'",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> booked for call <> .",
+        "<> holds a <> ; <> is <> overall .",
+        "<> is already booked for call <> .",
+        "<> is not <> .",
+        "Call <> is already <> ; <> pilot is needed ."
+       ]
+      },
+      {
+       "shared": [
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Length overall#1(owner) == 'm'",
+        "attr:Status#0(owner) == 'expected'",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> booked for call <> .",
+        "<> holds a <> ; <> is <> overall .",
+        "<> is already booked for call <> .",
+        "<> is not <> ."
+       ]
+      }
+     ],
+     "list_triples": {
+      "fire_here": 0,
+      "pure_unprotected": 0,
+      "pure_protected": 0
+     },
+     "guard_not_here": [
+      "attr:Hazardous cargo#0(relation['backward', 'rel:3']:2<owner) == 'no'",
+      "attr:Hazardous cargo#0(owner) == 'no'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '54'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '64'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '78'",
+      "attr:Length overall#0(owner) >= '54'",
+      "attr:Length overall#0(owner) >= '64'",
+      "attr:Length overall#0(owner) >= '78'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) < '148'",
+      "attr:Length overall#0(owner) < '148'",
+      "('unnamed', \"selection['combobox#1']:1\")"
+     ]
+    },
+    "<> booked for call <> .": {
+     "n": 5,
+     "pairs_fire": 0,
+     "pairs_pure": 1,
+     "impure_examples": [
+      {
+       "shared": [
+        "attr:Hazardous cargo#0(relation['backward', 'rel:3']:2<owner) == 'yes'",
+        "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Hazardous cargo#0(owner) == 'yes'",
+        "attr:Length overall#1(owner) == 'm'",
+        "attr:Status#0(owner) == 'expected'",
+        "no_children(selection['combobox#1']:1)",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', \"selection['combobox#1']:1\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:3(relation['backward', 'rel:3']:2<owner) != selection['combobox#1']:1",
+        "rel:3(selection['combobox#1']:1) != relation['backward', 'rel:3']:2<owner",
+        "rel:3(selection['combobox#1']:1) != owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != selection['combobox#1']:1",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != selection['combobox#1']:1",
+        "rel:2(owner) != selection['combobox#1']:1",
+        "('ref_null', \"selection['combobox#1']:1\", 'rel:3')",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> holds a <> ; <> is <> overall ."
+       ]
+      },
+      {
+       "shared": [
+        "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Length overall#1(owner) == 'm'",
+        "attr:Status#0(owner) == 'expected'",
+        "no_children(selection['combobox#1']:1)",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', \"selection['combobox#1']:1\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:3(relation['backward', 'rel:3']:2<owner) != selection['combobox#1']:1",
+        "rel:3(selection['combobox#1']:1) != relation['backward', 'rel:3']:2<owner",
+        "rel:3(selection['combobox#1']:1) != owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != selection['combobox#1']:1",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != selection['combobox#1']:1",
+        "rel:2(owner) != selection['combobox#1']:1",
+        "('ref_null', \"selection['combobox#1']:1\", 'rel:3')",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> holds a <> ; <> is <> overall ."
+       ]
+      }
+     ],
+     "list_triples": {
+      "fire_here": 0,
+      "pure_unprotected": 0,
+      "pure_protected": 0
+     },
+     "guard_not_here": [
+      "attr:Ticket to#0(selection['combobox#1']:1) >= attr:Length overall#0(relation['backward', 'rel:3']:2<owner)",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) < attr:Ticket to#0(selection['combobox#1']:1)",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '54'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '64'",
+      "attr:Ticket to#0(selection['combobox#1']:1) >= '80'",
+      "attr:Length overall#0(owner) >= '54'",
+      "attr:Length overall#0(owner) >= '64'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) < '132'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) < '148'",
+      "attr:Length overall#0(owner) < '132'",
+      "attr:Length overall#0(owner) < '148'"
+     ]
+    },
+    "Call <> is already <> ; <> pilot is needed .": {
+     "n": 1,
+     "pairs_fire": 0,
+     "pairs_pure": 0,
+     "impure_examples": [],
+     "list_triples": {
+      "fire_here": 0,
+      "pure_unprotected": 0,
+      "pure_protected": 0
+     }
+    },
+    "<> is not <> .": {
+     "n": 4,
+     "pairs_fire": 0,
+     "pairs_pure": 0,
+     "impure_examples": [
+      {
+       "shared": [
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Length overall#1(owner) == 'm'",
+        "attr:Status#0(owner) == 'expected'",
+        "no_children(selection['combobox#1']:1)",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', \"selection['combobox#1']:1\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:3(relation['backward', 'rel:3']:2<owner) != selection['combobox#1']:1",
+        "rel:3(selection['combobox#1']:1) != relation['backward', 'rel:3']:2<owner",
+        "rel:3(selection['combobox#1']:1) != owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != selection['combobox#1']:1",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != selection['combobox#1']:1",
+        "rel:2(owner) != selection['combobox#1']:1",
+        "('ref_null', \"selection['combobox#1']:1\", 'rel:3')",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> booked for call <> .",
+        "<> holds a <> ; <> is <> overall ."
+       ]
+      },
+      {
+       "shared": [
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Length overall#1(owner) == 'm'",
+        "attr:Status#0(owner) == 'expected'",
+        "no_children(selection['combobox#1']:1)",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', \"selection['combobox#1']:1\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:3(relation['backward', 'rel:3']:2<owner) != selection['combobox#1']:1",
+        "rel:3(selection['combobox#1']:1) != relation['backward', 'rel:3']:2<owner",
+        "rel:3(selection['combobox#1']:1) != owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != selection['combobox#1']:1",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != selection['combobox#1']:1",
+        "rel:2(owner) != selection['combobox#1']:1",
+        "('ref_null', \"selection['combobox#1']:1\", 'rel:3')",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> booked for call <> .",
+        "<> holds a <> ; <> is <> overall ."
+       ]
+      }
+     ],
+     "list_triples": {
+      "fire_here": 0,
+      "pure_unprotected": 0,
+      "pure_protected": 0
+     },
+     "guard_not_here": [
+      "attr:Duty#0(selection['combobox#1']:1) == 'off'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '54'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '64'",
+      "attr:Ticket to#0(selection['combobox#1']:1) >= '100'",
+      "attr:Ticket to#0(selection['combobox#1']:1) >= '130'",
+      "attr:Ticket to#0(selection['combobox#1']:1) >= '80'",
+      "attr:Length overall#0(owner) >= '54'",
+      "attr:Length overall#0(owner) >= '64'"
+     ]
+    },
+    "<> holds a <> ; <> is <> overall .": {
+     "n": 6,
+     "pairs_fire": 0,
+     "pairs_pure": 3,
+     "impure_examples": [
+      {
+       "shared": [
+        "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Length overall#1(owner) == 'm'",
+        "attr:Status#0(owner) == 'expected'",
+        "no_children(selection['combobox#1']:1)",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', \"selection['combobox#1']:1\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:3(relation['backward', 'rel:3']:2<owner) != selection['combobox#1']:1",
+        "rel:3(selection['combobox#1']:1) != relation['backward', 'rel:3']:2<owner",
+        "rel:3(selection['combobox#1']:1) != owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != selection['combobox#1']:1",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != selection['combobox#1']:1",
+        "rel:2(owner) != selection['combobox#1']:1",
+        "('ref_null', \"selection['combobox#1']:1\", 'rel:3')",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> booked for call <> ."
+       ]
+      },
+      {
+       "shared": [
+        "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Length overall#1(owner) == 'm'",
+        "attr:Status#0(owner) == 'expected'",
+        "no_children(selection['combobox#1']:1)",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', \"selection['combobox#1']:1\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:3(relation['backward', 'rel:3']:2<owner) != selection['combobox#1']:1",
+        "rel:3(selection['combobox#1']:1) != relation['backward', 'rel:3']:2<owner",
+        "rel:3(selection['combobox#1']:1) != owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != selection['combobox#1']:1",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != selection['combobox#1']:1",
+        "rel:2(owner) != selection['combobox#1']:1",
+        "('ref_null', \"selection['combobox#1']:1\", 'rel:3')",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> booked for call <> ."
+       ]
+      }
+     ],
+     "list_triples": {
+      "fire_here": 0,
+      "pure_unprotected": 0,
+      "pure_protected": 0
+     },
+     "guard_not_here": [
+      "attr:Ticket to#0(selection['combobox#1']:1) == '80'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= attr:Ticket to#0(selection['combobox#1']:1)",
+      "attr:Ticket to#0(selection['combobox#1']:1) < attr:Length overall#0(relation['backward', 'rel:3']:2<owner)",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '54'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '64'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '78'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '88'",
+      "attr:Ticket to#0(selection['combobox#1']:1) >= '80'",
+      "attr:Length overall#0(owner) >= '54'",
+      "attr:Length overall#0(owner) >= '64'",
+      "attr:Length overall#0(owner) >= '78'",
+      "attr:Length overall#0(owner) >= '88'"
+     ]
+    },
+    "<> is already booked for call <> .": {
+     "n": 3,
+     "pairs_fire": 0,
+     "pairs_pure": 0,
+     "impure_examples": [
+      {
+       "shared": [
+        "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Length overall#1(owner) == 'm'",
+        "attr:Status#0(owner) == 'expected'",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', \"selection['combobox#1']:1\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:3(relation['backward', 'rel:3']:2<owner) != selection['combobox#1']:1",
+        "rel:3(selection['combobox#1']:1) != relation['backward', 'rel:3']:2<owner",
+        "rel:3(selection['combobox#1']:1) != owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != selection['combobox#1']:1",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != selection['combobox#1']:1",
+        "rel:2(owner) != selection['combobox#1']:1",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> booked for call <> .",
+        "<> holds a <> ; <> is <> overall ."
+       ]
+      },
+      {
+       "shared": [
+        "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Length overall#1(owner) == 'm'",
+        "attr:Status#0(owner) == 'expected'",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', \"selection['combobox#1']:1\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:3(relation['backward', 'rel:3']:2<owner) != selection['combobox#1']:1",
+        "rel:3(selection['combobox#1']:1) != relation['backward', 'rel:3']:2<owner",
+        "rel:3(selection['combobox#1']:1) != owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != selection['combobox#1']:1",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != selection['combobox#1']:1",
+        "rel:2(owner) != selection['combobox#1']:1",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> booked for call <> .",
+        "<> holds a <> ; <> is <> overall ."
+       ]
+      }
+     ],
+     "list_triples": {
+      "fire_here": 0,
+      "pure_unprotected": 0,
+      "pure_protected": 0
+     },
+     "guard_not_here": [
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= attr:Ticket to#0(selection['combobox#1']:1)",
+      "attr:Ticket to#0(selection['combobox#1']:1) < attr:Length overall#0(relation['backward', 'rel:3']:2<owner)",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '112'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '54'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '64'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '78'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '88'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '96'",
+      "attr:Ticket to#0(selection['combobox#1']:1) >= '80'",
+      "attr:Length overall#0(owner) >= '112'",
+      "attr:Length overall#0(owner) >= '54'",
+      "attr:Length overall#0(owner) >= '64'"
+     ]
+    }
+   },
+   "rule": {
+    "<> holds a <> ; <> is <> overall .": {
+     "condition": [
+      "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+      "attr:Flag#0(owner) == 'Malta'",
+      "('ref_null', \"selection['combobox#1']:1\", 'rel:3')"
+     ],
+     "covers": 3,
+     "witnesses": [
+      "<> holds a <> ; <> is <> overall .",
+      "<> holds a <> ; <> is <> overall ."
+     ],
+     "preceded_by": []
+    }
+   },
+   "rule+ordered": {
+    "<> holds a <> ; <> is <> overall .": {
+     "condition": [
+      "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= attr:Ticket to#0(selection['combobox#1']:1)",
+      "('ref_null', \"selection['combobox#1']:1\", 'rel:3')"
+     ],
+     "covers": 6,
+     "witnesses": [
+      "<> holds a <> ; <> is <> overall .",
+      "<> holds a <> ; <> is <> overall ."
+     ],
+     "preceded_by": []
+    }
+   },
+   "list": {
+    "<> holds a <> ; <> is <> overall .": {
+     "condition": [
+      "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+      "attr:Flag#0(owner) == 'Malta'",
+      "('ref_null', \"selection['combobox#1']:1\", 'rel:3')"
+     ],
+     "covers": 3,
+     "witnesses": [
+      "<> holds a <> ; <> is <> overall .",
+      "<> holds a <> ; <> is <> overall ."
+     ],
+     "preceded_by": []
+    }
+   },
+   "list+ordered": {
+    "<> holds a <> ; <> is <> overall .": {
+     "condition": [
+      "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= attr:Ticket to#0(selection['combobox#1']:1)",
+      "('ref_null', \"selection['combobox#1']:1\", 'rel:3')"
+     ],
+     "covers": 6,
+     "witnesses": [
+      "<> holds a <> ; <> is <> overall .",
+      "<> holds a <> ; <> is <> overall ."
+     ],
+     "preceded_by": []
+    }
+   }
+  },
+  {
+   "step": 493,
+   "status": {
+    "owner": "named",
+    "selection['combobox#1']:1": "named",
+    "relation['backward', 'rel:3']:2<owner": "named"
+   },
+   "literals": [
+    "('named', \"relation['backward', 'rel:3']:2<owner\")",
+    "('named', \"selection['combobox#1']:1\")",
+    "('named', 'owner')",
+    "('ref_null', \"selection['combobox#1']:1\", 'rel:3')",
+    "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+    "('ref_set', 'owner', 'rel:0')",
+    "('ref_set', 'owner', 'rel:1')",
+    "('ref_set', 'owner', 'rel:2')",
+    "attr:Bring#0(owner) == 'alongside'",
+    "attr:Calls logged#0(relation['backward', 'rel:3']:2<owner) == '1'",
+    "attr:Cargo#0(owner) == 'sawn timber'",
+    "attr:Cargo#0(relation['backward', 'rel:3']:2<owner) == 'sawn timber'",
+    "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+    "attr:Flag#0(owner) == 'Norway'",
+    "attr:Flag#0(relation['backward', 'rel:3']:2<owner) == 'Norway'",
+    "attr:Hazardous cargo#0(owner) == 'no'",
+    "attr:Hazardous cargo#0(relation['backward', 'rel:3']:2<owner) == 'no'",
+    "attr:Length overall#0(owner) == '78'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) == '78'",
+    "attr:Length overall#1(owner) == 'm'",
+    "attr:Status#0(owner) == 'expected'",
+    "attr:Ticket to#0(selection['combobox#1']:1) == '100'",
+    "id(owner) == 'C-103'",
+    "id(relation['backward', 'rel:3']:2<owner) == 'Kittiwake'",
+    "id(selection['combobox#1']:1) == 'Tom Dorley'",
+    "no_children(selection['combobox#1']:1)",
+    "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+    "rel:0(owner) != selection['combobox#1']:1",
+    "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+    "rel:1(owner) != selection['combobox#1']:1",
+    "rel:2(owner) != selection['combobox#1']:1",
+    "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+    "rel:3(relation['backward', 'rel:3']:2<owner) != selection['combobox#1']:1",
+    "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+    "rel:3(selection['combobox#1']:1) != owner",
+    "rel:3(selection['combobox#1']:1) != relation['backward', 'rel:3']:2<owner"
+   ],
+   "ordered_only": [
+    "attr:Length overall#0(owner) < '112'",
+    "attr:Length overall#0(owner) < '132'",
+    "attr:Length overall#0(owner) < '148'",
+    "attr:Length overall#0(owner) < '88'",
+    "attr:Length overall#0(owner) < '96'",
+    "attr:Length overall#0(owner) >= '54'",
+    "attr:Length overall#0(owner) >= '64'",
+    "attr:Length overall#0(owner) >= '78'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) < '112'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) < '132'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) < '148'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) < '88'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) < '96'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) < attr:Ticket to#0(selection['combobox#1']:1)",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '54'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '64'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '78'",
+    "attr:Ticket to#0(selection['combobox#1']:1) < '130'",
+    "attr:Ticket to#0(selection['combobox#1']:1) < '150'",
+    "attr:Ticket to#0(selection['combobox#1']:1) >= '100'",
+    "attr:Ticket to#0(selection['combobox#1']:1) >= '80'",
+    "attr:Ticket to#0(selection['combobox#1']:1) >= attr:Length overall#0(relation['backward', 'rel:3']:2<owner)"
+   ],
+   "events": {
+    "Nothing chosen in the pilot list .": {
+     "n": 6,
+     "pairs_fire": 0,
+     "pairs_pure": 6,
+     "impure_examples": [
+      {
+       "shared": [
+        "attr:Hazardous cargo#0(relation['backward', 'rel:3']:2<owner) == 'no'",
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Hazardous cargo#0(owner) == 'no'",
+        "attr:Length overall#1(owner) == 'm'",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> booked for call <> .",
+        "<> holds a <> ; <> is <> overall .",
+        "<> is already booked for call <> .",
+        "<> is not <> .",
+        "Call <> is already <> ; <> pilot is needed ."
+       ]
+      },
+      {
+       "shared": [
+        "attr:Hazardous cargo#0(relation['backward', 'rel:3']:2<owner) == 'no'",
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Hazardous cargo#0(owner) == 'no'",
+        "attr:Length overall#1(owner) == 'm'",
+        "attr:Status#0(owner) == 'expected'",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> booked for call <> .",
+        "<> holds a <> ; <> is <> overall .",
+        "<> is already booked for call <> .",
+        "<> is not <> ."
+       ]
+      }
+     ],
+     "list_triples": {
+      "fire_here": 0,
+      "pure_unprotected": 0,
+      "pure_protected": 0
+     },
+     "guard_not_here": [
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '54'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '64'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '78'",
+      "attr:Length overall#0(owner) >= '54'",
+      "attr:Length overall#0(owner) >= '64'",
+      "attr:Length overall#0(owner) >= '78'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) < '148'",
+      "attr:Length overall#0(owner) < '148'",
+      "('unnamed', \"selection['combobox#1']:1\")"
+     ]
+    },
+    "<> booked for call <> .": {
+     "n": 5,
+     "pairs_fire": 0,
+     "pairs_pure": 1,
+     "impure_examples": [
+      {
+       "shared": [
+        "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Length overall#1(owner) == 'm'",
+        "attr:Status#0(owner) == 'expected'",
+        "no_children(selection['combobox#1']:1)",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', \"selection['combobox#1']:1\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:3(relation['backward', 'rel:3']:2<owner) != selection['combobox#1']:1",
+        "rel:3(selection['combobox#1']:1) != relation['backward', 'rel:3']:2<owner",
+        "rel:3(selection['combobox#1']:1) != owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != selection['combobox#1']:1",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != selection['combobox#1']:1",
+        "rel:2(owner) != selection['combobox#1']:1",
+        "('ref_null', \"selection['combobox#1']:1\", 'rel:3')",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> holds a <> ; <> is <> overall ."
+       ]
+      },
+      {
+       "shared": [
+        "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Length overall#1(owner) == 'm'",
+        "attr:Status#0(owner) == 'expected'",
+        "no_children(selection['combobox#1']:1)",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', \"selection['combobox#1']:1\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:3(relation['backward', 'rel:3']:2<owner) != selection['combobox#1']:1",
+        "rel:3(selection['combobox#1']:1) != relation['backward', 'rel:3']:2<owner",
+        "rel:3(selection['combobox#1']:1) != owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != selection['combobox#1']:1",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != selection['combobox#1']:1",
+        "rel:2(owner) != selection['combobox#1']:1",
+        "('ref_null', \"selection['combobox#1']:1\", 'rel:3')",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> holds a <> ; <> is <> overall ."
+       ]
+      }
+     ],
+     "list_triples": {
+      "fire_here": 0,
+      "pure_unprotected": 0,
+      "pure_protected": 0
+     },
+     "guard_not_here": [
+      "attr:Ticket to#0(selection['combobox#1']:1) >= attr:Length overall#0(relation['backward', 'rel:3']:2<owner)",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) < attr:Ticket to#0(selection['combobox#1']:1)",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '54'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '64'",
+      "attr:Ticket to#0(selection['combobox#1']:1) >= '80'",
+      "attr:Length overall#0(owner) >= '54'",
+      "attr:Length overall#0(owner) >= '64'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) < '132'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) < '148'",
+      "attr:Length overall#0(owner) < '132'",
+      "attr:Length overall#0(owner) < '148'"
+     ]
+    },
+    "Call <> is already <> ; <> pilot is needed .": {
+     "n": 1,
+     "pairs_fire": 0,
+     "pairs_pure": 0,
+     "impure_examples": [],
+     "list_triples": {
+      "fire_here": 0,
+      "pure_unprotected": 0,
+      "pure_protected": 0
+     }
+    },
+    "<> is not <> .": {
+     "n": 4,
+     "pairs_fire": 0,
+     "pairs_pure": 0,
+     "impure_examples": [
+      {
+       "shared": [
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Length overall#1(owner) == 'm'",
+        "attr:Status#0(owner) == 'expected'",
+        "no_children(selection['combobox#1']:1)",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', \"selection['combobox#1']:1\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:3(relation['backward', 'rel:3']:2<owner) != selection['combobox#1']:1",
+        "rel:3(selection['combobox#1']:1) != relation['backward', 'rel:3']:2<owner",
+        "rel:3(selection['combobox#1']:1) != owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != selection['combobox#1']:1",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != selection['combobox#1']:1",
+        "rel:2(owner) != selection['combobox#1']:1",
+        "('ref_null', \"selection['combobox#1']:1\", 'rel:3')",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> booked for call <> .",
+        "<> holds a <> ; <> is <> overall ."
+       ]
+      },
+      {
+       "shared": [
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Length overall#1(owner) == 'm'",
+        "attr:Status#0(owner) == 'expected'",
+        "no_children(selection['combobox#1']:1)",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', \"selection['combobox#1']:1\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:3(relation['backward', 'rel:3']:2<owner) != selection['combobox#1']:1",
+        "rel:3(selection['combobox#1']:1) != relation['backward', 'rel:3']:2<owner",
+        "rel:3(selection['combobox#1']:1) != owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != selection['combobox#1']:1",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != selection['combobox#1']:1",
+        "rel:2(owner) != selection['combobox#1']:1",
+        "('ref_null', \"selection['combobox#1']:1\", 'rel:3')",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> booked for call <> .",
+        "<> holds a <> ; <> is <> overall ."
+       ]
+      }
+     ],
+     "list_triples": {
+      "fire_here": 0,
+      "pure_unprotected": 0,
+      "pure_protected": 0
+     },
+     "guard_not_here": [
+      "attr:Duty#0(selection['combobox#1']:1) == 'off'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '54'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '64'",
+      "attr:Ticket to#0(selection['combobox#1']:1) >= '100'",
+      "attr:Ticket to#0(selection['combobox#1']:1) >= '130'",
+      "attr:Ticket to#0(selection['combobox#1']:1) >= '80'",
+      "attr:Length overall#0(owner) >= '54'",
+      "attr:Length overall#0(owner) >= '64'"
+     ]
+    },
+    "<> holds a <> ; <> is <> overall .": {
+     "n": 6,
+     "pairs_fire": 0,
+     "pairs_pure": 0,
+     "impure_examples": [
+      {
+       "shared": [
+        "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Length overall#1(owner) == 'm'",
+        "attr:Status#0(owner) == 'expected'",
+        "no_children(selection['combobox#1']:1)",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', \"selection['combobox#1']:1\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:3(relation['backward', 'rel:3']:2<owner) != selection['combobox#1']:1",
+        "rel:3(selection['combobox#1']:1) != relation['backward', 'rel:3']:2<owner",
+        "rel:3(selection['combobox#1']:1) != owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != selection['combobox#1']:1",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != selection['combobox#1']:1",
+        "rel:2(owner) != selection['combobox#1']:1",
+        "('ref_null', \"selection['combobox#1']:1\", 'rel:3')",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> booked for call <> ."
+       ]
+      },
+      {
+       "shared": [
+        "attr:Hazardous cargo#0(relation['backward', 'rel:3']:2<owner) == 'no'",
+        "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Hazardous cargo#0(owner) == 'no'",
+        "attr:Length overall#1(owner) == 'm'",
+        "attr:Status#0(owner) == 'expected'",
+        "no_children(selection['combobox#1']:1)",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', \"selection['combobox#1']:1\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:3(relation['backward', 'rel:3']:2<owner) != selection['combobox#1']:1",
+        "rel:3(selection['combobox#1']:1) != relation['backward', 'rel:3']:2<owner",
+        "rel:3(selection['combobox#1']:1) != owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != selection['combobox#1']:1",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != selection['combobox#1']:1",
+        "rel:2(owner) != selection['combobox#1']:1",
+        "('ref_null', \"selection['combobox#1']:1\", 'rel:3')",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> booked for call <> ."
+       ]
+      }
+     ],
+     "list_triples": {
+      "fire_here": 0,
+      "pure_unprotected": 0,
+      "pure_protected": 0
+     },
+     "guard_not_here": [
+      "attr:Ticket to#0(selection['combobox#1']:1) == '80'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= attr:Ticket to#0(selection['combobox#1']:1)",
+      "attr:Ticket to#0(selection['combobox#1']:1) < attr:Length overall#0(relation['backward', 'rel:3']:2<owner)",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '54'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '64'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '78'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '88'",
+      "attr:Ticket to#0(selection['combobox#1']:1) >= '80'",
+      "attr:Length overall#0(owner) >= '54'",
+      "attr:Length overall#0(owner) >= '64'",
+      "attr:Length overall#0(owner) >= '78'",
+      "attr:Length overall#0(owner) >= '88'"
+     ]
+    },
+    "<> is already booked for call <> .": {
+     "n": 3,
+     "pairs_fire": 0,
+     "pairs_pure": 0,
+     "impure_examples": [
+      {
+       "shared": [
+        "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Length overall#1(owner) == 'm'",
+        "attr:Status#0(owner) == 'expected'",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', \"selection['combobox#1']:1\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:3(relation['backward', 'rel:3']:2<owner) != selection['combobox#1']:1",
+        "rel:3(selection['combobox#1']:1) != relation['backward', 'rel:3']:2<owner",
+        "rel:3(selection['combobox#1']:1) != owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != selection['combobox#1']:1",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != selection['combobox#1']:1",
+        "rel:2(owner) != selection['combobox#1']:1",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> booked for call <> .",
+        "<> holds a <> ; <> is <> overall ."
+       ]
+      },
+      {
+       "shared": [
+        "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Length overall#1(owner) == 'm'",
+        "attr:Status#0(owner) == 'expected'",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', \"selection['combobox#1']:1\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:3(relation['backward', 'rel:3']:2<owner) != selection['combobox#1']:1",
+        "rel:3(selection['combobox#1']:1) != relation['backward', 'rel:3']:2<owner",
+        "rel:3(selection['combobox#1']:1) != owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != selection['combobox#1']:1",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != selection['combobox#1']:1",
+        "rel:2(owner) != selection['combobox#1']:1",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> booked for call <> .",
+        "<> holds a <> ; <> is <> overall ."
+       ]
+      }
+     ],
+     "list_triples": {
+      "fire_here": 0,
+      "pure_unprotected": 0,
+      "pure_protected": 0
+     },
+     "guard_not_here": [
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= attr:Ticket to#0(selection['combobox#1']:1)",
+      "attr:Ticket to#0(selection['combobox#1']:1) < attr:Length overall#0(relation['backward', 'rel:3']:2<owner)",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '112'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '54'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '64'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '78'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '88'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '96'",
+      "attr:Ticket to#0(selection['combobox#1']:1) >= '80'",
+      "attr:Length overall#0(owner) >= '112'",
+      "attr:Length overall#0(owner) >= '54'",
+      "attr:Length overall#0(owner) >= '64'"
+     ]
+    }
+   },
+   "rule": {
+    "Nothing chosen in the pilot list .": {
+     "condition": [
+      "attr:Flag#0(owner) == 'Norway'"
+     ],
+     "covers": 4,
+     "witnesses": [
+      "Nothing chosen in the pilot list .",
+      "Nothing chosen in the pilot list ."
+     ],
+     "preceded_by": []
+    }
+   },
+   "rule+ordered": {
+    "Nothing chosen in the pilot list .": {
+     "condition": [
+      "attr:Flag#0(owner) == 'Norway'"
+     ],
+     "covers": 4,
+     "witnesses": [
+      "Nothing chosen in the pilot list .",
+      "Nothing chosen in the pilot list ."
+     ],
+     "preceded_by": []
+    },
+    "<> booked for call <> .": {
+     "condition": [
+      "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+      "attr:Ticket to#0(selection['combobox#1']:1) >= attr:Length overall#0(relation['backward', 'rel:3']:2<owner)",
+      "('ref_null', \"selection['combobox#1']:1\", 'rel:3')"
+     ],
+     "covers": 5,
+     "witnesses": [
+      "<> booked for call <> .",
+      "<> booked for call <> ."
+     ],
+     "preceded_by": []
+    },
+    "<> holds a <> ; <> is <> overall .": {
+     "condition": [
+      "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '78'",
+      "attr:Ticket to#0(selection['combobox#1']:1) < '130'",
+      "('ref_null', \"selection['combobox#1']:1\", 'rel:3')"
+     ],
+     "covers": 5,
+     "witnesses": [
+      "<> holds a <> ; <> is <> overall .",
+      "<> holds a <> ; <> is <> overall ."
+     ],
+     "preceded_by": []
+    }
+   },
+   "list": {
+    "Nothing chosen in the pilot list .": {
+     "condition": [
+      "attr:Flag#0(owner) == 'Norway'"
+     ],
+     "covers": 4,
+     "witnesses": [
+      "Nothing chosen in the pilot list .",
+      "Nothing chosen in the pilot list ."
+     ],
+     "preceded_by": []
+    }
+   },
+   "list+ordered": {
+    "Nothing chosen in the pilot list .": {
+     "condition": [
+      "attr:Flag#0(owner) == 'Norway'"
+     ],
+     "covers": 4,
+     "witnesses": [
+      "Nothing chosen in the pilot list .",
+      "Nothing chosen in the pilot list ."
+     ],
+     "preceded_by": []
+    },
+    "<> booked for call <> .": {
+     "condition": [
+      "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+      "attr:Ticket to#0(selection['combobox#1']:1) >= attr:Length overall#0(relation['backward', 'rel:3']:2<owner)",
+      "('ref_null', \"selection['combobox#1']:1\", 'rel:3')"
+     ],
+     "covers": 5,
+     "witnesses": [
+      "<> booked for call <> .",
+      "<> booked for call <> ."
+     ],
+     "preceded_by": []
+    },
+    "<> holds a <> ; <> is <> overall .": {
+     "condition": [
+      "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '78'",
+      "attr:Ticket to#0(selection['combobox#1']:1) < '130'",
+      "('ref_null', \"selection['combobox#1']:1\", 'rel:3')"
+     ],
+     "covers": 5,
+     "witnesses": [
+      "<> holds a <> ; <> is <> overall .",
+      "<> holds a <> ; <> is <> overall ."
+     ],
+     "preceded_by": []
+    }
+   }
+  },
+  {
+   "step": 502,
+   "status": {
+    "owner": "named",
+    "selection['combobox#1']:1": "named",
+    "relation['backward', 'rel:3']:2<owner": "named"
+   },
+   "literals": [
+    "('named', \"relation['backward', 'rel:3']:2<owner\")",
+    "('named', \"selection['combobox#1']:1\")",
+    "('named', 'owner')",
+    "('ref_null', \"selection['combobox#1']:1\", 'rel:3')",
+    "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+    "('ref_set', 'owner', 'rel:0')",
+    "('ref_set', 'owner', 'rel:1')",
+    "('ref_set', 'owner', 'rel:2')",
+    "attr:Bring#0(owner) == 'alongside'",
+    "attr:Calls logged#0(relation['backward', 'rel:3']:2<owner) == '4'",
+    "attr:Cargo#0(owner) == 'bagged fertiliser'",
+    "attr:Cargo#0(relation['backward', 'rel:3']:2<owner) == 'bagged fertiliser'",
+    "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+    "attr:Flag#0(owner) == 'Norway'",
+    "attr:Flag#0(relation['backward', 'rel:3']:2<owner) == 'Norway'",
+    "attr:Hazardous cargo#0(owner) == 'no'",
+    "attr:Hazardous cargo#0(relation['backward', 'rel:3']:2<owner) == 'no'",
+    "attr:Length overall#0(owner) == '132'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) == '132'",
+    "attr:Length overall#1(owner) == 'm'",
+    "attr:Status#0(owner) == 'expected'",
+    "attr:Ticket to#0(selection['combobox#1']:1) == '130'",
+    "id(owner) == 'C-104'",
+    "id(relation['backward', 'rel:3']:2<owner) == 'Nordkapp'",
+    "id(selection['combobox#1']:1) == 'Ruth Kealy'",
+    "no_children(selection['combobox#1']:1)",
+    "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+    "rel:0(owner) != selection['combobox#1']:1",
+    "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+    "rel:1(owner) != selection['combobox#1']:1",
+    "rel:2(owner) != selection['combobox#1']:1",
+    "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+    "rel:3(relation['backward', 'rel:3']:2<owner) != selection['combobox#1']:1",
+    "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+    "rel:3(selection['combobox#1']:1) != owner",
+    "rel:3(selection['combobox#1']:1) != relation['backward', 'rel:3']:2<owner"
+   ],
+   "ordered_only": [
+    "attr:Length overall#0(owner) < '148'",
+    "attr:Length overall#0(owner) >= '112'",
+    "attr:Length overall#0(owner) >= '132'",
+    "attr:Length overall#0(owner) >= '54'",
+    "attr:Length overall#0(owner) >= '64'",
+    "attr:Length overall#0(owner) >= '78'",
+    "attr:Length overall#0(owner) >= '88'",
+    "attr:Length overall#0(owner) >= '96'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) < '148'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '112'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '132'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '54'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '64'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '78'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '88'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '96'",
+    "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= attr:Ticket to#0(selection['combobox#1']:1)",
+    "attr:Ticket to#0(selection['combobox#1']:1) < '150'",
+    "attr:Ticket to#0(selection['combobox#1']:1) < attr:Length overall#0(relation['backward', 'rel:3']:2<owner)",
+    "attr:Ticket to#0(selection['combobox#1']:1) >= '100'",
+    "attr:Ticket to#0(selection['combobox#1']:1) >= '130'",
+    "attr:Ticket to#0(selection['combobox#1']:1) >= '80'"
+   ],
+   "events": {
+    "Nothing chosen in the pilot list .": {
+     "n": 6,
+     "pairs_fire": 0,
+     "pairs_pure": 6,
+     "impure_examples": [
+      {
+       "shared": [
+        "attr:Hazardous cargo#0(relation['backward', 'rel:3']:2<owner) == 'no'",
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Hazardous cargo#0(owner) == 'no'",
+        "attr:Length overall#1(owner) == 'm'",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> booked for call <> .",
+        "<> holds a <> ; <> is <> overall .",
+        "<> is already booked for call <> .",
+        "<> is not <> .",
+        "Call <> is already <> ; <> pilot is needed ."
+       ]
+      },
+      {
+       "shared": [
+        "attr:Hazardous cargo#0(relation['backward', 'rel:3']:2<owner) == 'no'",
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Hazardous cargo#0(owner) == 'no'",
+        "attr:Length overall#1(owner) == 'm'",
+        "attr:Status#0(owner) == 'expected'",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> booked for call <> .",
+        "<> holds a <> ; <> is <> overall .",
+        "<> is already booked for call <> .",
+        "<> is not <> ."
+       ]
+      }
+     ],
+     "list_triples": {
+      "fire_here": 0,
+      "pure_unprotected": 0,
+      "pure_protected": 0
+     },
+     "guard_not_here": [
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '54'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '64'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '78'",
+      "attr:Length overall#0(owner) >= '54'",
+      "attr:Length overall#0(owner) >= '64'",
+      "attr:Length overall#0(owner) >= '78'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) < '148'",
+      "attr:Length overall#0(owner) < '148'",
+      "('unnamed', \"selection['combobox#1']:1\")"
+     ]
+    },
+    "<> booked for call <> .": {
+     "n": 5,
+     "pairs_fire": 0,
+     "pairs_pure": 0,
+     "impure_examples": [
+      {
+       "shared": [
+        "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Length overall#1(owner) == 'm'",
+        "attr:Status#0(owner) == 'expected'",
+        "no_children(selection['combobox#1']:1)",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', \"selection['combobox#1']:1\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:3(relation['backward', 'rel:3']:2<owner) != selection['combobox#1']:1",
+        "rel:3(selection['combobox#1']:1) != relation['backward', 'rel:3']:2<owner",
+        "rel:3(selection['combobox#1']:1) != owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != selection['combobox#1']:1",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != selection['combobox#1']:1",
+        "rel:2(owner) != selection['combobox#1']:1",
+        "('ref_null', \"selection['combobox#1']:1\", 'rel:3')",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> holds a <> ; <> is <> overall ."
+       ]
+      },
+      {
+       "shared": [
+        "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Length overall#1(owner) == 'm'",
+        "attr:Status#0(owner) == 'expected'",
+        "no_children(selection['combobox#1']:1)",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', \"selection['combobox#1']:1\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:3(relation['backward', 'rel:3']:2<owner) != selection['combobox#1']:1",
+        "rel:3(selection['combobox#1']:1) != relation['backward', 'rel:3']:2<owner",
+        "rel:3(selection['combobox#1']:1) != owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != selection['combobox#1']:1",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != selection['combobox#1']:1",
+        "rel:2(owner) != selection['combobox#1']:1",
+        "('ref_null', \"selection['combobox#1']:1\", 'rel:3')",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> holds a <> ; <> is <> overall ."
+       ]
+      }
+     ],
+     "list_triples": {
+      "fire_here": 0,
+      "pure_unprotected": 0,
+      "pure_protected": 0
+     },
+     "guard_not_here": [
+      "attr:Ticket to#0(selection['combobox#1']:1) >= attr:Length overall#0(relation['backward', 'rel:3']:2<owner)",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) < attr:Ticket to#0(selection['combobox#1']:1)",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '54'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '64'",
+      "attr:Ticket to#0(selection['combobox#1']:1) >= '80'",
+      "attr:Length overall#0(owner) >= '54'",
+      "attr:Length overall#0(owner) >= '64'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) < '132'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) < '148'",
+      "attr:Length overall#0(owner) < '132'",
+      "attr:Length overall#0(owner) < '148'"
+     ]
+    },
+    "Call <> is already <> ; <> pilot is needed .": {
+     "n": 1,
+     "pairs_fire": 0,
+     "pairs_pure": 0,
+     "impure_examples": [],
+     "list_triples": {
+      "fire_here": 0,
+      "pure_unprotected": 0,
+      "pure_protected": 0
+     }
+    },
+    "<> is not <> .": {
+     "n": 4,
+     "pairs_fire": 0,
+     "pairs_pure": 0,
+     "impure_examples": [
+      {
+       "shared": [
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Length overall#1(owner) == 'm'",
+        "attr:Status#0(owner) == 'expected'",
+        "no_children(selection['combobox#1']:1)",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', \"selection['combobox#1']:1\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:3(relation['backward', 'rel:3']:2<owner) != selection['combobox#1']:1",
+        "rel:3(selection['combobox#1']:1) != relation['backward', 'rel:3']:2<owner",
+        "rel:3(selection['combobox#1']:1) != owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != selection['combobox#1']:1",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != selection['combobox#1']:1",
+        "rel:2(owner) != selection['combobox#1']:1",
+        "('ref_null', \"selection['combobox#1']:1\", 'rel:3')",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> booked for call <> .",
+        "<> holds a <> ; <> is <> overall ."
+       ]
+      },
+      {
+       "shared": [
+        "attr:Ticket to#0(selection['combobox#1']:1) == '130'",
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Length overall#1(owner) == 'm'",
+        "attr:Status#0(owner) == 'expected'",
+        "no_children(selection['combobox#1']:1)",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', \"selection['combobox#1']:1\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:3(relation['backward', 'rel:3']:2<owner) != selection['combobox#1']:1",
+        "rel:3(selection['combobox#1']:1) != relation['backward', 'rel:3']:2<owner",
+        "rel:3(selection['combobox#1']:1) != owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != selection['combobox#1']:1",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != selection['combobox#1']:1",
+        "rel:2(owner) != selection['combobox#1']:1",
+        "('ref_null', \"selection['combobox#1']:1\", 'rel:3')",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> booked for call <> .",
+        "<> holds a <> ; <> is <> overall ."
+       ]
+      }
+     ],
+     "list_triples": {
+      "fire_here": 0,
+      "pure_unprotected": 0,
+      "pure_protected": 0
+     },
+     "guard_not_here": [
+      "attr:Duty#0(selection['combobox#1']:1) == 'off'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '54'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '64'",
+      "attr:Ticket to#0(selection['combobox#1']:1) >= '100'",
+      "attr:Ticket to#0(selection['combobox#1']:1) >= '130'",
+      "attr:Ticket to#0(selection['combobox#1']:1) >= '80'",
+      "attr:Length overall#0(owner) >= '54'",
+      "attr:Length overall#0(owner) >= '64'"
+     ]
+    },
+    "<> holds a <> ; <> is <> overall .": {
+     "n": 6,
+     "pairs_fire": 0,
+     "pairs_pure": 0,
+     "impure_examples": [
+      {
+       "shared": [
+        "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Length overall#1(owner) == 'm'",
+        "attr:Status#0(owner) == 'expected'",
+        "no_children(selection['combobox#1']:1)",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', \"selection['combobox#1']:1\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:3(relation['backward', 'rel:3']:2<owner) != selection['combobox#1']:1",
+        "rel:3(selection['combobox#1']:1) != relation['backward', 'rel:3']:2<owner",
+        "rel:3(selection['combobox#1']:1) != owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != selection['combobox#1']:1",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != selection['combobox#1']:1",
+        "rel:2(owner) != selection['combobox#1']:1",
+        "('ref_null', \"selection['combobox#1']:1\", 'rel:3')",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> booked for call <> ."
+       ]
+      },
+      {
+       "shared": [
+        "attr:Hazardous cargo#0(relation['backward', 'rel:3']:2<owner) == 'no'",
+        "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Hazardous cargo#0(owner) == 'no'",
+        "attr:Length overall#1(owner) == 'm'",
+        "attr:Status#0(owner) == 'expected'",
+        "no_children(selection['combobox#1']:1)",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', \"selection['combobox#1']:1\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:3(relation['backward', 'rel:3']:2<owner) != selection['combobox#1']:1",
+        "rel:3(selection['combobox#1']:1) != relation['backward', 'rel:3']:2<owner",
+        "rel:3(selection['combobox#1']:1) != owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != selection['combobox#1']:1",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != selection['combobox#1']:1",
+        "rel:2(owner) != selection['combobox#1']:1",
+        "('ref_null', \"selection['combobox#1']:1\", 'rel:3')",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> booked for call <> ."
+       ]
+      }
+     ],
+     "list_triples": {
+      "fire_here": 0,
+      "pure_unprotected": 0,
+      "pure_protected": 0
+     },
+     "guard_not_here": [
+      "attr:Ticket to#0(selection['combobox#1']:1) == '80'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= attr:Ticket to#0(selection['combobox#1']:1)",
+      "attr:Ticket to#0(selection['combobox#1']:1) < attr:Length overall#0(relation['backward', 'rel:3']:2<owner)",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '54'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '64'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '78'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '88'",
+      "attr:Ticket to#0(selection['combobox#1']:1) >= '80'",
+      "attr:Length overall#0(owner) >= '54'",
+      "attr:Length overall#0(owner) >= '64'",
+      "attr:Length overall#0(owner) >= '78'",
+      "attr:Length overall#0(owner) >= '88'"
+     ]
+    },
+    "<> is already booked for call <> .": {
+     "n": 3,
+     "pairs_fire": 0,
+     "pairs_pure": 0,
+     "impure_examples": [
+      {
+       "shared": [
+        "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Length overall#1(owner) == 'm'",
+        "attr:Status#0(owner) == 'expected'",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', \"selection['combobox#1']:1\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:3(relation['backward', 'rel:3']:2<owner) != selection['combobox#1']:1",
+        "rel:3(selection['combobox#1']:1) != relation['backward', 'rel:3']:2<owner",
+        "rel:3(selection['combobox#1']:1) != owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != selection['combobox#1']:1",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != selection['combobox#1']:1",
+        "rel:2(owner) != selection['combobox#1']:1",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> booked for call <> .",
+        "<> holds a <> ; <> is <> overall ."
+       ]
+      },
+      {
+       "shared": [
+        "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+        "attr:Bring#0(owner) == 'alongside'",
+        "attr:Length overall#1(owner) == 'm'",
+        "attr:Status#0(owner) == 'expected'",
+        "('named', \"relation['backward', 'rel:3']:2<owner\")",
+        "('named', \"selection['combobox#1']:1\")",
+        "('named', 'owner')",
+        "rel:3(relation['backward', 'rel:3']:2<owner) == owner",
+        "rel:2(owner) == relation['backward', 'rel:3']:2<owner",
+        "rel:3(relation['backward', 'rel:3']:2<owner) != selection['combobox#1']:1",
+        "rel:3(selection['combobox#1']:1) != relation['backward', 'rel:3']:2<owner",
+        "rel:3(selection['combobox#1']:1) != owner",
+        "rel:0(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:0(owner) != selection['combobox#1']:1",
+        "rel:1(owner) != relation['backward', 'rel:3']:2<owner",
+        "rel:1(owner) != selection['combobox#1']:1",
+        "rel:2(owner) != selection['combobox#1']:1",
+        "('ref_set', \"relation['backward', 'rel:3']:2<owner\", 'rel:3')",
+        "('ref_set', 'owner', 'rel:0')",
+        "('ref_set', 'owner', 'rel:1')",
+        "('ref_set', 'owner', 'rel:2')"
+       ],
+       "reached": [
+        "<> booked for call <> .",
+        "<> holds a <> ; <> is <> overall ."
+       ]
+      }
+     ],
+     "list_triples": {
+      "fire_here": 0,
+      "pure_unprotected": 0,
+      "pure_protected": 0
+     },
+     "guard_not_here": [
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= attr:Ticket to#0(selection['combobox#1']:1)",
+      "attr:Ticket to#0(selection['combobox#1']:1) < attr:Length overall#0(relation['backward', 'rel:3']:2<owner)",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '112'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '54'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '64'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '78'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '88'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= '96'",
+      "attr:Ticket to#0(selection['combobox#1']:1) >= '80'",
+      "attr:Length overall#0(owner) >= '112'",
+      "attr:Length overall#0(owner) >= '54'",
+      "attr:Length overall#0(owner) >= '64'"
+     ]
+    }
+   },
+   "rule": {
+    "Nothing chosen in the pilot list .": {
+     "condition": [
+      "attr:Flag#0(owner) == 'Norway'"
+     ],
+     "covers": 4,
+     "witnesses": [
+      "Nothing chosen in the pilot list .",
+      "Nothing chosen in the pilot list ."
+     ],
+     "preceded_by": []
+    }
+   },
+   "rule+ordered": {
+    "Nothing chosen in the pilot list .": {
+     "condition": [
+      "attr:Flag#0(owner) == 'Norway'"
+     ],
+     "covers": 4,
+     "witnesses": [
+      "Nothing chosen in the pilot list .",
+      "Nothing chosen in the pilot list ."
+     ],
+     "preceded_by": []
+    },
+    "<> booked for call <> .": {
+     "condition": [
+      "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+      "attr:Ticket to#0(selection['combobox#1']:1) >= '100'",
+      "attr:Length overall#0(owner) < '148'",
+      "('ref_null', \"selection['combobox#1']:1\", 'rel:3')"
+     ],
+     "covers": 3,
+     "witnesses": [
+      "<> booked for call <> .",
+      "<> booked for call <> ."
+     ],
+     "preceded_by": []
+    },
+    "<> holds a <> ; <> is <> overall .": {
+     "condition": [
+      "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= attr:Ticket to#0(selection['combobox#1']:1)",
+      "('ref_null', \"selection['combobox#1']:1\", 'rel:3')"
+     ],
+     "covers": 6,
+     "witnesses": [
+      "<> holds a <> ; <> is <> overall .",
+      "<> holds a <> ; <> is <> overall ."
+     ],
+     "preceded_by": []
+    }
+   },
+   "list": {
+    "Nothing chosen in the pilot list .": {
+     "condition": [
+      "attr:Flag#0(owner) == 'Norway'"
+     ],
+     "covers": 4,
+     "witnesses": [
+      "Nothing chosen in the pilot list .",
+      "Nothing chosen in the pilot list ."
+     ],
+     "preceded_by": []
+    }
+   },
+   "list+ordered": {
+    "Nothing chosen in the pilot list .": {
+     "condition": [
+      "attr:Flag#0(owner) == 'Norway'"
+     ],
+     "covers": 4,
+     "witnesses": [
+      "Nothing chosen in the pilot list .",
+      "Nothing chosen in the pilot list ."
+     ],
+     "preceded_by": []
+    },
+    "<> booked for call <> .": {
+     "condition": [
+      "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+      "attr:Ticket to#0(selection['combobox#1']:1) >= '100'",
+      "attr:Length overall#0(owner) < '148'",
+      "('ref_null', \"selection['combobox#1']:1\", 'rel:3')"
+     ],
+     "covers": 3,
+     "witnesses": [
+      "<> booked for call <> .",
+      "<> booked for call <> ."
+     ],
+     "preceded_by": []
+    },
+    "<> holds a <> ; <> is <> overall .": {
+     "condition": [
+      "attr:Duty#0(selection['combobox#1']:1) == 'on'",
+      "attr:Length overall#0(relation['backward', 'rel:3']:2<owner) >= attr:Ticket to#0(selection['combobox#1']:1)",
+      "('ref_null', \"selection['combobox#1']:1\", 'rel:3')"
+     ],
+     "covers": 6,
+     "witnesses": [
+      "<> holds a <> ; <> is <> overall .",
+      "<> holds a <> ; <> is <> overall ."
+     ],
+     "preceded_by": []
+    }
+   }
+  }
+ ],
+ "ledger": {
+  "as_scored": {
+   "65": [
+    "one outcome was admissible and it happened",
+    [
+     "Nothing chosen in the pilot list ."
+    ]
+   ],
+   "159": [
+    "one outcome was admissible and it happened",
+    [
+     "Nothing chosen in the pilot list ."
+    ]
+   ],
+   "185": [
+    "one outcome was admissible and it happened",
+    [
+     "Nothing chosen in the pilot list ."
+    ]
+   ],
+   "328": [
+    "one outcome was admissible and it happened",
+    [
+     "<> is already booked for call <> ."
+    ]
+   ],
+   "356": [
+    "one outcome was admissible and it happened",
+    [
+     "Nothing chosen in the pilot list ."
+    ]
+   ],
+   "463": [
+    "one outcome was admissible and it happened",
+    [
+     "<> holds a <> ; <> is <> overall ."
+    ]
+   ],
+   "467": [
+    "one outcome was admissible and it happened",
+    [
+     "<> is not <> ."
+    ]
+   ],
+   "470": [
+    "one outcome was admissible and it happened",
+    [
+     "<> is not <> ."
+    ]
+   ],
+   "474": [
+    "one outcome was admissible and it happened",
+    [
+     "<> booked for call <> ."
+    ]
+   ],
+   "477": [
+    "several outcomes remained admissible; the one that happened was among them",
+    [
+     "<> holds a <> ; <> is <> overall .",
+     "<> is already booked for call <> ."
+    ]
+   ],
+   "480": [
+    "one outcome was admissible and it happened",
+    [
+     "<> is already booked for call <> ."
+    ]
+   ],
+   "486": [
+    "one outcome was admissible and it happened",
+    [
+     "<> is not <> ."
+    ]
+   ],
+   "489": [
+    "several outcomes remained admissible; the one that happened was among them",
+    [
+     "<> is not <> .",
+     "Nothing chosen in the pilot list ."
+    ]
+   ],
+   "493": [
+    "one outcome was admissible and a different one happened",
+    [
+     "Nothing chosen in the pilot list ."
+    ]
+   ],
+   "496": [
+    "several outcomes remained admissible; the one that happened was among them",
+    [
+     "<> booked for call <> .",
+     "<> is already booked for call <> ."
+    ]
+   ],
+   "502": [
+    "one outcome was admissible and a different one happened",
+    [
+     "Nothing chosen in the pilot list ."
+    ]
+   ],
+   "506": [
+    "several outcomes remained admissible; the one that happened was among them",
+    [
+     "<> is not <> .",
+     "Nothing chosen in the pilot list ."
+    ]
+   ],
+   "509": [
+    "one outcome was admissible and it happened",
+    [
+     "<> is not <> ."
+    ]
+   ],
+   "513": [
+    "no outcome is established for this state",
+    []
+   ],
+   "516": [
+    "several outcomes remained admissible; the one that happened was among them",
+    [
+     "<> is already booked for call <> .",
+     "Nothing chosen in the pilot list ."
+    ]
+   ],
+   "519": [
+    "several outcomes remained admissible; the one that happened was among them",
+    [
+     "<> is already booked for call <> .",
+     "Nothing chosen in the pilot list ."
+    ]
+   ]
+  },
+  "with_ordered": {
+   "65": [
+    "one outcome was admissible and it happened",
+    [
+     "Nothing chosen in the pilot list ."
+    ]
+   ],
+   "159": [
+    "one outcome was admissible and it happened",
+    [
+     "Nothing chosen in the pilot list ."
+    ]
+   ],
+   "185": [
+    "one outcome was admissible and it happened",
+    [
+     "Nothing chosen in the pilot list ."
+    ]
+   ],
+   "328": [
+    "several outcomes remained admissible; the one that happened was among them",
+    [
+     "<> booked for call <> .",
+     "<> is already booked for call <> ."
+    ]
+   ],
+   "356": [
+    "one outcome was admissible and it happened",
+    [
+     "Nothing chosen in the pilot list ."
+    ]
+   ],
+   "463": [
+    "one outcome was admissible and it happened",
+    [
+     "<> holds a <> ; <> is <> overall ."
+    ]
+   ],
+   "467": [
+    "one outcome was admissible and it happened",
+    [
+     "<> is not <> ."
+    ]
+   ],
+   "470": [
+    "several outcomes remained admissible; the one that happened was among them",
+    [
+     "<> holds a <> ; <> is <> overall .",
+     "<> is not <> ."
+    ]
+   ],
+   "474": [
+    "one outcome was admissible and it happened",
+    [
+     "<> booked for call <> ."
+    ]
+   ],
+   "477": [
+    "several outcomes remained admissible; the one that happened was among them",
+    [
+     "<> holds a <> ; <> is <> overall .",
+     "<> is already booked for call <> ."
+    ]
+   ],
+   "480": [
+    "several outcomes remained admissible; the one that happened was among them",
+    [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "<> is already booked for call <> ."
+    ]
+   ],
+   "486": [
+    "several outcomes remained admissible; the one that happened was among them",
+    [
+     "<> booked for call <> .",
+     "<> is not <> ."
+    ]
+   ],
+   "489": [
+    "several outcomes remained admissible; the one that happened was among them",
+    [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "<> is not <> .",
+     "Nothing chosen in the pilot list ."
+    ]
+   ],
+   "493": [
+    "several outcomes remained admissible; the one that happened was among them",
+    [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "Nothing chosen in the pilot list ."
+    ]
+   ],
+   "496": [
+    "several outcomes remained admissible; the one that happened was among them",
+    [
+     "<> booked for call <> .",
+     "<> is already booked for call <> ."
+    ]
+   ],
+   "502": [
+    "several outcomes remained admissible; the one that happened was among them",
+    [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "Nothing chosen in the pilot list ."
+    ]
+   ],
+   "506": [
+    "several outcomes remained admissible; the one that happened was among them",
+    [
+     "<> booked for call <> .",
+     "<> is not <> .",
+     "Nothing chosen in the pilot list ."
+    ]
+   ],
+   "509": [
+    "several outcomes remained admissible; the one that happened was among them",
+    [
+     "<> is not <> .",
+     "Nothing chosen in the pilot list ."
+    ]
+   ],
+   "513": [
+    "several outcomes remained admissible; the one that happened was among them",
+    [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "Nothing chosen in the pilot list ."
+    ]
+   ],
+   "516": [
+    "several outcomes remained admissible; the one that happened was among them",
+    [
+     "<> booked for call <> .",
+     "<> is already booked for call <> .",
+     "Nothing chosen in the pilot list ."
+    ]
+   ],
+   "519": [
+    "several outcomes remained admissible; the one that happened was among them",
+    [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "<> is already booked for call <> .",
+     "Nothing chosen in the pilot list ."
+    ]
+   ]
+  }
+ }
+}

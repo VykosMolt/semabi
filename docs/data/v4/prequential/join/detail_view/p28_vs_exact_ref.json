@@ -1,0 +1,5753 @@
+{
+ "dev": "/home/moloch/semabi-scratch/preq/harbour_ref_dev",
+ "hold": "/home/moloch/semabi-scratch/preq/harbour_ref_hold",
+ "ledger": {
+  "button:Reopen": {
+   "same": 41
+  },
+  "button:Sign off": {
+   "same": 31
+  },
+  "button:Sign on": {
+   "same": 34
+  },
+  "button:Close": {
+   "same": 34
+  },
+  "button#cell@Call/button": {
+   "same": 99
+  },
+  "button:Schedule call": {
+   "same": 44
+  },
+  "button:Allocate berth": {
+   "same": 27
+  },
+  "button:Book pilot": {
+   "same": 7
+  },
+  "button:Record departure": {
+   "same": 7
+  },
+  "button:Bring _": {
+   "same": 10
+  }
+ },
+ "rows": [
+  {
+   "step": 2,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 4,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is already signed off ."
+   ],
+   "exact": [
+    "<> is already signed off ."
+   ],
+   "exact_conditions": {
+    "<> is already signed off .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ]
+   },
+   "observed": "<> is already signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 6,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is signed on ."
+   ],
+   "exact": [
+    "<> is signed on ."
+   ],
+   "exact_conditions": {
+    "<> is signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ]
+   },
+   "observed": "<> is signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 8,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'closed')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 10,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 12,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is signed off ."
+   ],
+   "exact": [
+    "<> is signed off ."
+   ],
+   "exact_conditions": {
+    "<> is signed off .": [
+     "('attr', 'owner', 'attr:Ticket to#0', '150')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> is signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 14,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 16,
+   "control": "button:Schedule call",
+   "greedy": [
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "Call <> opened for <> .": [
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "Call <> opened for <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 18,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is already signed on ."
+   ],
+   "exact": [
+    "<> is already signed on ."
+   ],
+   "exact_conditions": {
+    "<> is already signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')"
+    ]
+   },
+   "observed": "<> is already signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 20,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 22,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'closed')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 24,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is already signed on ."
+   ],
+   "exact": [
+    "<> is already signed on ."
+   ],
+   "exact_conditions": {
+    "<> is already signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')"
+    ]
+   },
+   "observed": "<> is already signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 26,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 28,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 29,
+   "control": "button:Schedule call",
+   "greedy": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "<> already has call <> on the board .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ],
+    "Call <> opened for <> .": [
+     "('attr', 'owner', 'attr:Length overall#0', '132')",
+     "('empty', 'owner')"
+    ]
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 31,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 33,
+   "control": "button:Schedule call",
+   "greedy": [
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "Call <> opened for <> .": [
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "Call <> opened for <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 35,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 37,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 39,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 41,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> cannot be <> while call <> holds it .",
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> cannot be <> while call <> holds it .",
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')",
+     "('empty', 'owner')"
+    ],
+    "<> <> cannot be <> while call <> holds it .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> <> cannot be <> while call <> holds it .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 42,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> <> cannot be <> while call <> holds it .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 44,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 47,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'closed')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 49,
+   "control": "button:Schedule call",
+   "greedy": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "<> already has call <> on the board .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ],
+    "Call <> opened for <> .": [
+     "('attr', 'owner', 'attr:Length overall#0', '132')",
+     "('empty', 'owner')"
+    ]
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 50,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> cannot be <> while call <> holds it .",
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> cannot be <> while call <> holds it .",
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')",
+     "('empty', 'owner')"
+    ],
+    "<> <> cannot be <> while call <> holds it .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> <> cannot be <> while call <> holds it .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 51,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> <> cannot be <> while call <> holds it .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 53,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is already signed off .",
+    "<> is signed off ."
+   ],
+   "exact": [
+    "<> is already signed off .",
+    "<> is signed off ."
+   ],
+   "exact_conditions": {
+    "<> is already signed off .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ],
+    "<> is signed off .": [
+     "('attr', 'owner', 'attr:Ticket to#0', '150')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> is already signed off .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 55,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 57,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is already signed on ."
+   ],
+   "exact": [
+    "<> is already signed on ."
+   ],
+   "exact_conditions": {
+    "<> is already signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')"
+    ]
+   },
+   "observed": "<> is already signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 58,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> is already signed on .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 59,
+   "control": "button:Allocate berth",
+   "greedy": [
+    "Nothing chosen in the berth list ."
+   ],
+   "exact": [
+    "Nothing chosen in the berth list ."
+   ],
+   "exact_conditions": {
+    "Nothing chosen in the berth list .": [
+     "('unnamed', \"selection['combobox#0']:0\")"
+    ]
+   },
+   "observed": "Nothing chosen in the berth list .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 61,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 62,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is signed on ."
+   ],
+   "exact": [
+    "<> is signed on ."
+   ],
+   "exact_conditions": {
+    "<> is signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ]
+   },
+   "observed": "<> is signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 63,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> is signed on .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 64,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is signed off ."
+   ],
+   "exact": [
+    "<> is signed off ."
+   ],
+   "exact_conditions": {
+    "<> is signed off .": [
+     "('attr', 'owner', 'attr:Ticket to#0', '150')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> is signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 65,
+   "control": "button:Book pilot",
+   "greedy": [
+    "Nothing chosen in the pilot list ."
+   ],
+   "exact": [
+    "Nothing chosen in the pilot list ."
+   ],
+   "exact_conditions": {
+    "Nothing chosen in the pilot list .": [
+     "('attr', 'owner', 'attr:Flag#0', 'Norway')"
+    ]
+   },
+   "observed": "Nothing chosen in the pilot list .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 67,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> cannot be <> while call <> holds it .",
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> cannot be <> while call <> holds it .",
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')",
+     "('empty', 'owner')"
+    ],
+    "<> <> cannot be <> while call <> holds it .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> <> cannot be <> while call <> holds it .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 68,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is signed off ."
+   ],
+   "exact": [
+    "<> is signed off ."
+   ],
+   "exact_conditions": {
+    "<> is signed off .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> is signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 69,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> is signed off .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 72,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'closed')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 73,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is signed on ."
+   ],
+   "exact": [
+    "<> is signed on ."
+   ],
+   "exact_conditions": {
+    "<> is signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ]
+   },
+   "observed": "<> is signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 74,
+   "control": "button:Schedule call",
+   "greedy": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "<> already has call <> on the board .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ],
+    "Call <> opened for <> .": [
+     "('attr', 'owner', 'attr:Calls logged#0', '2')",
+     "('attr', 'owner', 'attr:Hazardous cargo#0', 'no')",
+     "('empty', 'owner')"
+    ]
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 75,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 76,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 77,
+   "control": "button:Schedule call",
+   "greedy": [
+    "<> already has call <> on the board ."
+   ],
+   "exact": [
+    "<> already has call <> on the board ."
+   ],
+   "exact_conditions": {
+    "<> already has call <> on the board .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 78,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 79,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is signed on ."
+   ],
+   "exact": [
+    "<> is signed on ."
+   ],
+   "exact_conditions": {
+    "<> is signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ]
+   },
+   "observed": "<> is signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 80,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> is signed on .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 83,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 86,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 87,
+   "control": "button:Record departure",
+   "greedy": [
+    "<> has sailed on call <> ; berth <> is clear ."
+   ],
+   "exact": [
+    "<> has sailed on call <> ; berth <> is clear ."
+   ],
+   "exact_conditions": {
+    "<> has sailed on call <> ; berth <> is clear .": []
+   },
+   "observed": "Call <> is not <> , so nothing has sailed .",
+   "verdict": "the only outcome ever seen on this control, and something else happened"
+  },
+  {
+   "step": 89,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 90,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 95,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 96,
+   "control": "button:Schedule call",
+   "greedy": [
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "Call <> opened for <> .": [
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "Call <> opened for <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 97,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> is already <> .",
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is already <> .",
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Takes up to#0', '90')",
+     "('ref_null', 'owner', 'rel:3')"
+    ],
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'closed')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 98,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'closed')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 99,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 104,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is signed off ."
+   ],
+   "exact": [
+    "<> is signed off ."
+   ],
+   "exact_conditions": {
+    "<> is signed off .": [
+     "('attr', 'owner', 'attr:Ticket to#0', '150')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> is signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 105,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'closed')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 106,
+   "control": "button:Schedule call",
+   "greedy": [
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "Call <> opened for <> .": [
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "Call <> opened for <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 107,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Call <> opened for <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 110,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is already signed on ."
+   ],
+   "exact": [
+    "<> is already signed on ."
+   ],
+   "exact_conditions": {
+    "<> is already signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')"
+    ]
+   },
+   "observed": "<> is already signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 111,
+   "control": "button:Schedule call",
+   "greedy": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "<> already has call <> on the board .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ],
+    "Call <> opened for <> .": [
+     "('attr', 'owner', 'attr:Calls logged#0', '2')",
+     "('attr', 'owner', 'attr:Hazardous cargo#0', 'no')",
+     "('empty', 'owner')"
+    ]
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 112,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 113,
+   "control": "button:Bring _",
+   "greedy": [
+    "Call <> has <> berth allocated ."
+   ],
+   "exact": [
+    "Call <> has <> berth allocated ."
+   ],
+   "exact_conditions": {
+    "Call <> has <> berth allocated .": [
+     "('attr', 'owner', 'attr:Status#0', 'expected')",
+     "('unnamed', \"relation['backward', 'rel:3']:1<owner\")"
+    ]
+   },
+   "observed": "Call <> has <> berth allocated .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 115,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> cannot be <> while call <> holds it .",
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> cannot be <> while call <> holds it .",
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')",
+     "('empty', 'owner')"
+    ],
+    "<> <> cannot be <> while call <> holds it .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> <> cannot be <> while call <> holds it .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 116,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is signed on ."
+   ],
+   "exact": [
+    "<> is signed on ."
+   ],
+   "exact_conditions": {
+    "<> is signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ]
+   },
+   "observed": "<> is signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 117,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is signed off ."
+   ],
+   "exact": [
+    "<> is signed off ."
+   ],
+   "exact_conditions": {
+    "<> is signed off .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> is signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 118,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> is signed off .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 121,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is already signed off ."
+   ],
+   "exact": [
+    "<> is already signed off ."
+   ],
+   "exact_conditions": {
+    "<> is already signed off .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ]
+   },
+   "observed": "<> is already signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 122,
+   "control": "button:Schedule call",
+   "greedy": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "<> already has call <> on the board .": [
+     "('attr', 'owner', 'attr:Calls logged#0', '0')",
+     "('attr', 'owner', 'attr:Hazardous cargo#0', 'yes')"
+    ],
+    "Call <> opened for <> .": [
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "Call <> opened for <> .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 123,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Call <> opened for <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 125,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 128,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 130,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'closed')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 131,
+   "control": "button:Schedule call",
+   "greedy": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "<> already has call <> on the board .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ],
+    "Call <> opened for <> .": [
+     "('attr', 'owner', 'attr:Calls logged#0', '2')",
+     "('attr', 'owner', 'attr:Hazardous cargo#0', 'no')",
+     "('empty', 'owner')"
+    ]
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 132,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 133,
+   "control": "button:Bring _",
+   "greedy": [
+    "Call <> has <> berth allocated ."
+   ],
+   "exact": [
+    "Call <> has <> berth allocated ."
+   ],
+   "exact_conditions": {
+    "Call <> has <> berth allocated .": [
+     "('attr', 'owner', 'attr:Status#0', 'expected')",
+     "('unnamed', \"relation['backward', 'rel:3']:1<owner\")"
+    ]
+   },
+   "observed": "Call <> has <> berth allocated .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 135,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is already signed off ."
+   ],
+   "exact": [
+    "<> is already signed off ."
+   ],
+   "exact_conditions": {
+    "<> is already signed off .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ]
+   },
+   "observed": "<> is already signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 136,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> is already signed off .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 139,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 140,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is signed off ."
+   ],
+   "exact": [
+    "<> is signed off ."
+   ],
+   "exact_conditions": {
+    "<> is signed off .": [
+     "('attr', 'owner', 'attr:Ticket to#0', '150')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> is signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 141,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is already signed off ."
+   ],
+   "exact": [
+    "<> is already signed off ."
+   ],
+   "exact_conditions": {
+    "<> is already signed off .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ]
+   },
+   "observed": "<> is already signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 142,
+   "control": "button:Schedule call",
+   "greedy": [
+    "<> already has call <> on the board ."
+   ],
+   "exact": [
+    "<> already has call <> on the board ."
+   ],
+   "exact_conditions": {
+    "<> already has call <> on the board .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 143,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is signed on ."
+   ],
+   "exact": [
+    "<> is signed on ."
+   ],
+   "exact_conditions": {
+    "<> is signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ]
+   },
+   "observed": "<> is signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 144,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> is signed on .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 147,
+   "control": "button:Schedule call",
+   "greedy": [
+    "<> already has call <> on the board ."
+   ],
+   "exact": [
+    "<> already has call <> on the board ."
+   ],
+   "exact_conditions": {
+    "<> already has call <> on the board .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 148,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> is already <> .",
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is already <> .",
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Takes up to#0', '90')",
+     "('ref_null', 'owner', 'rel:3')"
+    ],
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'closed')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 149,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 152,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 155,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 158,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 159,
+   "control": "button:Book pilot",
+   "greedy": [],
+   "exact": [],
+   "exact_conditions": {},
+   "observed": "Nothing chosen in the pilot list .",
+   "verdict": "no outcome is established for this state"
+  },
+  {
+   "step": 161,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is already signed on ."
+   ],
+   "exact": [
+    "<> is already signed on ."
+   ],
+   "exact_conditions": {
+    "<> is already signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')"
+    ]
+   },
+   "observed": "<> is already signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 162,
+   "control": "button:Schedule call",
+   "greedy": [
+    "<> already has call <> on the board ."
+   ],
+   "exact": [
+    "<> already has call <> on the board ."
+   ],
+   "exact_conditions": {
+    "<> already has call <> on the board .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 163,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 164,
+   "control": "button:Allocate berth",
+   "greedy": [
+    "Nothing chosen in the berth list ."
+   ],
+   "exact": [
+    "Nothing chosen in the berth list ."
+   ],
+   "exact_conditions": {
+    "Nothing chosen in the berth list .": [
+     "('unnamed', \"selection['combobox#0']:0\")"
+    ]
+   },
+   "observed": "Nothing chosen in the berth list .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 166,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 169,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 170,
+   "control": "button:Record departure",
+   "greedy": [
+    "<> has sailed on call <> ; berth <> is clear ."
+   ],
+   "exact": [
+    "<> has sailed on call <> ; berth <> is clear ."
+   ],
+   "exact_conditions": {
+    "<> has sailed on call <> ; berth <> is clear .": []
+   },
+   "observed": "Call <> is not <> , so nothing has sailed .",
+   "verdict": "the only outcome ever seen on this control, and something else happened"
+  },
+  {
+   "step": 174,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 177,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 178,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> cannot be <> while call <> holds it .",
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> cannot be <> while call <> holds it .",
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')",
+     "('empty', 'owner')"
+    ],
+    "<> <> cannot be <> while call <> holds it .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> <> cannot be <> while call <> holds it .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 179,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is already signed on ."
+   ],
+   "exact": [
+    "<> is already signed on ."
+   ],
+   "exact_conditions": {
+    "<> is already signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')"
+    ]
+   },
+   "observed": "<> is already signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 180,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 181,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is signed off ."
+   ],
+   "exact": [
+    "<> is signed off ."
+   ],
+   "exact_conditions": {
+    "<> is signed off .": [
+     "('attr', 'owner', 'attr:Ticket to#0', '150')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> is signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 182,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> cannot be <> while call <> holds it .",
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> cannot be <> while call <> holds it .",
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')",
+     "('empty', 'owner')"
+    ],
+    "<> <> cannot be <> while call <> holds it .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> <> cannot be <> while call <> holds it .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 183,
+   "control": "button:Schedule call",
+   "greedy": [
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "Call <> opened for <> .": [
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "Call <> opened for <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 184,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Call <> opened for <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 185,
+   "control": "button:Book pilot",
+   "greedy": [],
+   "exact": [],
+   "exact_conditions": {},
+   "observed": "Nothing chosen in the pilot list .",
+   "verdict": "no outcome is established for this state"
+  },
+  {
+   "step": 187,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 188,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is already signed on ."
+   ],
+   "exact": [
+    "<> is already signed on ."
+   ],
+   "exact_conditions": {
+    "<> is already signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')"
+    ]
+   },
+   "observed": "<> is already signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 189,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is signed on ."
+   ],
+   "exact": [
+    "<> is signed on ."
+   ],
+   "exact_conditions": {
+    "<> is signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ]
+   },
+   "observed": "<> is signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 190,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> cannot be <> while call <> holds it .",
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> cannot be <> while call <> holds it .",
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')",
+     "('empty', 'owner')"
+    ],
+    "<> <> cannot be <> while call <> holds it .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> <> cannot be <> while call <> holds it .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 191,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 192,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> cannot be <> while call <> holds it .",
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> cannot be <> while call <> holds it .",
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')",
+     "('empty', 'owner')"
+    ],
+    "<> <> cannot be <> while call <> holds it .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> <> cannot be <> while call <> holds it .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 193,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> <> cannot be <> while call <> holds it .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 194,
+   "control": "button:Allocate berth",
+   "greedy": [
+    "Nothing chosen in the berth list ."
+   ],
+   "exact": [
+    "Nothing chosen in the berth list ."
+   ],
+   "exact_conditions": {
+    "Nothing chosen in the berth list .": [
+     "('unnamed', \"selection['combobox#0']:0\")"
+    ]
+   },
+   "observed": "Nothing chosen in the berth list .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 196,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 197,
+   "control": "button:Schedule call",
+   "greedy": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "<> already has call <> on the board .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ],
+    "Call <> opened for <> .": [
+     "('attr', 'owner', 'attr:Calls logged#0', '2')",
+     "('attr', 'owner', 'attr:Hazardous cargo#0', 'no')",
+     "('empty', 'owner')"
+    ]
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 198,
+   "control": "button:Schedule call",
+   "greedy": [
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "Call <> opened for <> .": [
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "Call <> opened for <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 199,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'closed')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 200,
+   "control": "button:Schedule call",
+   "greedy": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "<> already has call <> on the board .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ],
+    "Call <> opened for <> .": [
+     "('attr', 'owner', 'attr:Calls logged#0', '4')"
+    ]
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 201,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 202,
+   "control": "button:Bring _",
+   "greedy": [
+    "Call <> has <> berth allocated ."
+   ],
+   "exact": [
+    "Call <> has <> berth allocated ."
+   ],
+   "exact_conditions": {
+    "Call <> has <> berth allocated .": [
+     "('attr', 'owner', 'attr:Status#0', 'expected')",
+     "('unnamed', \"relation['backward', 'rel:3']:1<owner\")"
+    ]
+   },
+   "observed": "Call <> has <> berth allocated .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 204,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is already signed on ."
+   ],
+   "exact": [
+    "<> is already signed on ."
+   ],
+   "exact_conditions": {
+    "<> is already signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')"
+    ]
+   },
+   "observed": "<> is already signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 205,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 206,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 209,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 210,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is signed off ."
+   ],
+   "exact": [
+    "<> is signed off ."
+   ],
+   "exact_conditions": {
+    "<> is signed off .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> is signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 211,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> is signed off .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 212,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> cannot be <> while call <> holds it .",
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> cannot be <> while call <> holds it .",
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')",
+     "('empty', 'owner')"
+    ],
+    "<> <> cannot be <> while call <> holds it .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> <> cannot be <> while call <> holds it .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 215,
+   "control": "button:Schedule call",
+   "greedy": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "<> already has call <> on the board .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ],
+    "Call <> opened for <> .": [
+     "('attr', 'owner', 'attr:Calls logged#0', '2')",
+     "('attr', 'owner', 'attr:Hazardous cargo#0', 'no')",
+     "('empty', 'owner')"
+    ]
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 216,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is already signed off ."
+   ],
+   "exact": [
+    "<> is already signed off ."
+   ],
+   "exact_conditions": {
+    "<> is already signed off .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ]
+   },
+   "observed": "<> is already signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 217,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is signed on ."
+   ],
+   "exact": [
+    "<> is signed on ."
+   ],
+   "exact_conditions": {
+    "<> is signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ]
+   },
+   "observed": "<> is signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 218,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> is signed on .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 219,
+   "control": "button:Bring _",
+   "greedy": [
+    "Call <> has <> berth allocated ."
+   ],
+   "exact": [
+    "Call <> has <> berth allocated ."
+   ],
+   "exact_conditions": {
+    "Call <> has <> berth allocated .": [
+     "('attr', 'owner', 'attr:Status#0', 'expected')",
+     "('unnamed', \"relation['backward', 'rel:3']:1<owner\")"
+    ]
+   },
+   "observed": "Call <> has <> berth allocated .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 220,
+   "control": "button:Record departure",
+   "greedy": [
+    "<> has sailed on call <> ; berth <> is clear ."
+   ],
+   "exact": [
+    "<> has sailed on call <> ; berth <> is clear ."
+   ],
+   "exact_conditions": {
+    "<> has sailed on call <> ; berth <> is clear .": []
+   },
+   "observed": "Call <> is not <> , so nothing has sailed .",
+   "verdict": "the only outcome ever seen on this control, and something else happened"
+  },
+  {
+   "step": 222,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 223,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 226,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is already signed on ."
+   ],
+   "exact": [
+    "<> is already signed on ."
+   ],
+   "exact_conditions": {
+    "<> is already signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')"
+    ]
+   },
+   "observed": "<> is already signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 227,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> is already signed on .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 230,
+   "control": "button:Schedule call",
+   "greedy": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "<> already has call <> on the board .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ],
+    "Call <> opened for <> .": [
+     "('attr', 'owner', 'attr:Calls logged#0', '4')"
+    ]
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 231,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 234,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 235,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is signed off ."
+   ],
+   "exact": [
+    "<> is signed off ."
+   ],
+   "exact_conditions": {
+    "<> is signed off .": [
+     "('attr', 'owner', 'attr:Ticket to#0', '150')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> is signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 236,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 237,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 238,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 239,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'closed')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 240,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 243,
+   "control": "button:Schedule call",
+   "greedy": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "<> already has call <> on the board .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ],
+    "Call <> opened for <> .": [
+     "('attr', 'owner', 'attr:Calls logged#0', '4')"
+    ]
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 247,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is already signed on ."
+   ],
+   "exact": [
+    "<> is already signed on ."
+   ],
+   "exact_conditions": {
+    "<> is already signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')"
+    ]
+   },
+   "observed": "<> is already signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 248,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is signed on ."
+   ],
+   "exact": [
+    "<> is signed on ."
+   ],
+   "exact_conditions": {
+    "<> is signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ]
+   },
+   "observed": "<> is signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 249,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is signed off ."
+   ],
+   "exact": [
+    "<> is signed off ."
+   ],
+   "exact_conditions": {
+    "<> is signed off .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> is signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 250,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 251,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 254,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 257,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is already signed off ."
+   ],
+   "exact": [
+    "<> is already signed off ."
+   ],
+   "exact_conditions": {
+    "<> is already signed off .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ]
+   },
+   "observed": "<> is already signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 260,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is already signed off ."
+   ],
+   "exact": [
+    "<> is already signed off ."
+   ],
+   "exact_conditions": {
+    "<> is already signed off .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ]
+   },
+   "observed": "<> is already signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 261,
+   "control": "button:Schedule call",
+   "greedy": [
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "Call <> opened for <> .": [
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "Call <> opened for <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 262,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> is already <> .",
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is already <> .",
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Takes up to#0', '90')",
+     "('ref_null', 'owner', 'rel:3')"
+    ],
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'closed')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 263,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is already signed on ."
+   ],
+   "exact": [
+    "<> is already signed on ."
+   ],
+   "exact_conditions": {
+    "<> is already signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')"
+    ]
+   },
+   "observed": "<> is already signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 264,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is already signed off ."
+   ],
+   "exact": [
+    "<> is already signed off ."
+   ],
+   "exact_conditions": {
+    "<> is already signed off .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ]
+   },
+   "observed": "<> is already signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 265,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is signed off ."
+   ],
+   "exact": [
+    "<> is signed off ."
+   ],
+   "exact_conditions": {
+    "<> is signed off .": [
+     "('attr', 'owner', 'attr:Ticket to#0', '150')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> is signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 266,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> is already <> .",
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is already <> .",
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Takes up to#0', '90')",
+     "('ref_null', 'owner', 'rel:3')"
+    ],
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'closed')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 267,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is already signed on ."
+   ],
+   "exact": [
+    "<> is already signed on ."
+   ],
+   "exact_conditions": {
+    "<> is already signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')"
+    ]
+   },
+   "observed": "<> is already signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 269,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is already signed off ."
+   ],
+   "exact": [
+    "<> is already signed off ."
+   ],
+   "exact_conditions": {
+    "<> is already signed off .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ]
+   },
+   "observed": "<> is already signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 270,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'closed')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 271,
+   "control": "button:Schedule call",
+   "greedy": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "<> already has call <> on the board .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ],
+    "Call <> opened for <> .": [
+     "('attr', 'owner', 'attr:Calls logged#0', '4')"
+    ]
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 272,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is signed off ."
+   ],
+   "exact": [
+    "<> is signed off ."
+   ],
+   "exact_conditions": {
+    "<> is signed off .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> is signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 273,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> is already <> .",
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is already <> .",
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Takes up to#0', '90')",
+     "('ref_null', 'owner', 'rel:3')"
+    ],
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'closed')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 274,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is signed on ."
+   ],
+   "exact": [
+    "<> is signed on ."
+   ],
+   "exact_conditions": {
+    "<> is signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ]
+   },
+   "observed": "<> is signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 275,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is signed off ."
+   ],
+   "exact": [
+    "<> is signed off ."
+   ],
+   "exact_conditions": {
+    "<> is signed off .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> is signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 276,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 278,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 279,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is signed on ."
+   ],
+   "exact": [
+    "<> is signed on ."
+   ],
+   "exact_conditions": {
+    "<> is signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ]
+   },
+   "observed": "<> is signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 280,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 281,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'closed')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 282,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 283,
+   "control": "button:Record departure",
+   "greedy": [
+    "<> has sailed on call <> ; berth <> is clear ."
+   ],
+   "exact": [
+    "<> has sailed on call <> ; berth <> is clear ."
+   ],
+   "exact_conditions": {
+    "<> has sailed on call <> ; berth <> is clear .": []
+   },
+   "observed": "Call <> is not <> , so nothing has sailed .",
+   "verdict": "the only outcome ever seen on this control, and something else happened"
+  },
+  {
+   "step": 286,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 287,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is already signed off ."
+   ],
+   "exact": [
+    "<> is already signed off ."
+   ],
+   "exact_conditions": {
+    "<> is already signed off .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ]
+   },
+   "observed": "<> is already signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 288,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> is already signed off .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 291,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is already signed on ."
+   ],
+   "exact": [
+    "<> is already signed on ."
+   ],
+   "exact_conditions": {
+    "<> is already signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')"
+    ]
+   },
+   "observed": "<> is already signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 292,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'closed')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 294,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 295,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'closed')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 296,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 297,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'closed')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 298,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'closed')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 299,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 300,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is signed on ."
+   ],
+   "exact": [
+    "<> is signed on ."
+   ],
+   "exact_conditions": {
+    "<> is signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ]
+   },
+   "observed": "<> is signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 301,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is already signed off .",
+    "<> is signed off ."
+   ],
+   "exact": [
+    "<> is already signed off .",
+    "<> is signed off ."
+   ],
+   "exact_conditions": {
+    "<> is already signed off .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ],
+    "<> is signed off .": [
+     "('attr', 'owner', 'attr:Ticket to#0', '150')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> is already signed off .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 302,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> is already signed off .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 305,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 307,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is already signed on ."
+   ],
+   "exact": [
+    "<> is already signed on ."
+   ],
+   "exact_conditions": {
+    "<> is already signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')"
+    ]
+   },
+   "observed": "<> is already signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 308,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'closed')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 309,
+   "control": "button:Schedule call",
+   "greedy": [
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "Call <> opened for <> .": [
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "Call <> opened for <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 310,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Call <> opened for <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 315,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is signed on ."
+   ],
+   "exact": [
+    "<> is signed on ."
+   ],
+   "exact_conditions": {
+    "<> is signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ]
+   },
+   "observed": "<> is signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 316,
+   "control": "button:Schedule call",
+   "greedy": [
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "Call <> opened for <> .": [
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "Call <> opened for <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 317,
+   "control": "button:Schedule call",
+   "greedy": [
+    "<> already has call <> on the board ."
+   ],
+   "exact": [
+    "<> already has call <> on the board ."
+   ],
+   "exact_conditions": {
+    "<> already has call <> on the board .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 318,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 319,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is signed off ."
+   ],
+   "exact": [
+    "<> is signed off ."
+   ],
+   "exact_conditions": {
+    "<> is signed off .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> is signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 320,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> is signed off .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 323,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'closed')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 324,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is already signed on ."
+   ],
+   "exact": [
+    "<> is already signed on ."
+   ],
+   "exact_conditions": {
+    "<> is already signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')"
+    ]
+   },
+   "observed": "<> is already signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 325,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> is already signed on .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 328,
+   "control": "button:Book pilot",
+   "greedy": [],
+   "exact": [],
+   "exact_conditions": {},
+   "observed": "<> is already booked for call <> .",
+   "verdict": "no outcome is established for this state"
+  },
+  {
+   "step": 331,
+   "control": "button:Schedule call",
+   "greedy": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "<> already has call <> on the board .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ],
+    "Call <> opened for <> .": [
+     "('attr', 'owner', 'attr:Calls logged#0', '4')"
+    ]
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 332,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 335,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 339,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 340,
+   "control": "button:Allocate berth",
+   "greedy": [
+    "Nothing chosen in the berth list ."
+   ],
+   "exact": [
+    "Nothing chosen in the berth list ."
+   ],
+   "exact_conditions": {
+    "Nothing chosen in the berth list .": [
+     "('unnamed', \"selection['combobox#0']:0\")"
+    ]
+   },
+   "observed": "Nothing chosen in the berth list .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 343,
+   "control": "button:Schedule call",
+   "greedy": [
+    "<> already has call <> on the board ."
+   ],
+   "exact": [
+    "<> already has call <> on the board ."
+   ],
+   "exact_conditions": {
+    "<> already has call <> on the board .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 344,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 345,
+   "control": "button:Bring _",
+   "greedy": [
+    "Call <> has <> berth allocated ."
+   ],
+   "exact": [
+    "Call <> has <> berth allocated ."
+   ],
+   "exact_conditions": {
+    "Call <> has <> berth allocated .": [
+     "('attr', 'owner', 'attr:Status#0', 'expected')",
+     "('unnamed', \"relation['backward', 'rel:3']:1<owner\")"
+    ]
+   },
+   "observed": "Call <> has <> berth allocated .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 349,
+   "control": "button:Schedule call",
+   "greedy": [
+    "<> already has call <> on the board ."
+   ],
+   "exact": [
+    "<> already has call <> on the board ."
+   ],
+   "exact_conditions": {
+    "<> already has call <> on the board .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 350,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 351,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 352,
+   "control": "button:Bring _",
+   "greedy": [
+    "Call <> has <> berth allocated ."
+   ],
+   "exact": [
+    "Call <> has <> berth allocated ."
+   ],
+   "exact_conditions": {
+    "Call <> has <> berth allocated .": [
+     "('attr', 'owner', 'attr:Status#0', 'expected')",
+     "('unnamed', \"relation['backward', 'rel:3']:1<owner\")"
+    ]
+   },
+   "observed": "Call <> has <> berth allocated .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 355,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 356,
+   "control": "button:Book pilot",
+   "greedy": [],
+   "exact": [],
+   "exact_conditions": {},
+   "observed": "Nothing chosen in the pilot list .",
+   "verdict": "no outcome is established for this state"
+  },
+  {
+   "step": 357,
+   "control": "button:Allocate berth",
+   "greedy": [
+    "Nothing chosen in the berth list ."
+   ],
+   "exact": [
+    "Nothing chosen in the berth list ."
+   ],
+   "exact_conditions": {
+    "Nothing chosen in the berth list .": [
+     "('unnamed', \"selection['combobox#0']:0\")"
+    ]
+   },
+   "observed": "Nothing chosen in the berth list .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 361,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 365,
+   "control": "button:Schedule call",
+   "greedy": [
+    "<> already has call <> on the board ."
+   ],
+   "exact": [
+    "<> already has call <> on the board ."
+   ],
+   "exact_conditions": {
+    "<> already has call <> on the board .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 366,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 367,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> cannot be <> while call <> holds it .",
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> cannot be <> while call <> holds it .",
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')",
+     "('empty', 'owner')"
+    ],
+    "<> <> cannot be <> while call <> holds it .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> <> cannot be <> while call <> holds it .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 368,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> <> cannot be <> while call <> holds it .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 370,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is already signed on ."
+   ],
+   "exact": [
+    "<> is already signed on ."
+   ],
+   "exact_conditions": {
+    "<> is already signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')"
+    ]
+   },
+   "observed": "<> is already signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 373,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is signed off ."
+   ],
+   "exact": [
+    "<> is signed off ."
+   ],
+   "exact_conditions": {
+    "<> is signed off .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> is signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 374,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 375,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is signed on ."
+   ],
+   "exact": [
+    "<> is signed on ."
+   ],
+   "exact_conditions": {
+    "<> is signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ]
+   },
+   "observed": "<> is signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 376,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is already signed on ."
+   ],
+   "exact": [
+    "<> is already signed on ."
+   ],
+   "exact_conditions": {
+    "<> is already signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')"
+    ]
+   },
+   "observed": "<> is already signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 377,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> is already signed on .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 379,
+   "control": "button:Record departure",
+   "greedy": [
+    "<> has sailed on call <> ; berth <> is clear ."
+   ],
+   "exact": [
+    "<> has sailed on call <> ; berth <> is clear ."
+   ],
+   "exact_conditions": {
+    "<> has sailed on call <> ; berth <> is clear .": []
+   },
+   "observed": "Call <> is not <> , so nothing has sailed .",
+   "verdict": "the only outcome ever seen on this control, and something else happened"
+  },
+  {
+   "step": 382,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 386,
+   "control": "button:Schedule call",
+   "greedy": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "<> already has call <> on the board .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ],
+    "Call <> opened for <> .": [
+     "('attr', 'owner', 'attr:Calls logged#0', '4')"
+    ]
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 389,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 392,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'closed')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 393,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is signed on ."
+   ],
+   "exact": [
+    "<> is signed on ."
+   ],
+   "exact_conditions": {
+    "<> is signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ]
+   },
+   "observed": "<> is signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 394,
+   "control": "button:Schedule call",
+   "greedy": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "<> already has call <> on the board .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ],
+    "Call <> opened for <> .": [
+     "('attr', 'owner', 'attr:Calls logged#0', '2')",
+     "('attr', 'owner', 'attr:Hazardous cargo#0', 'no')",
+     "('empty', 'owner')"
+    ]
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 395,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 396,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is already <> ."
+   ],
+   "exact": [
+    "<> <> is already <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is already <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')"
+    ]
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 397,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> <> is already <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 400,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 404,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> cannot sign off while booked for call <> ."
+   ],
+   "exact": [
+    "<> cannot sign off while booked for call <> ."
+   ],
+   "exact_conditions": {
+    "<> cannot sign off while booked for call <> .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> cannot sign off while booked for call <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 406,
+   "control": "button:Schedule call",
+   "greedy": [
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "Call <> opened for <> .": [
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "Call <> opened for <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 407,
+   "control": "button:Schedule call",
+   "greedy": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "<> already has call <> on the board .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ],
+    "Call <> opened for <> .": [
+     "('attr', 'owner', 'attr:Calls logged#0', '2')",
+     "('attr', 'owner', 'attr:Hazardous cargo#0', 'no')",
+     "('empty', 'owner')"
+    ]
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 408,
+   "control": "button:Schedule call",
+   "greedy": [
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "Call <> opened for <> .": [
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "Call <> opened for <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 409,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Call <> opened for <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 412,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is already signed on ."
+   ],
+   "exact": [
+    "<> is already signed on ."
+   ],
+   "exact_conditions": {
+    "<> is already signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')"
+    ]
+   },
+   "observed": "<> is already signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 413,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> is already signed on .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 417,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is signed off ."
+   ],
+   "exact": [
+    "<> is signed off ."
+   ],
+   "exact_conditions": {
+    "<> is signed off .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> is signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 419,
+   "control": "button:Sign on",
+   "greedy": [
+    "<> is signed on ."
+   ],
+   "exact": [
+    "<> is signed on ."
+   ],
+   "exact_conditions": {
+    "<> is signed on .": [
+     "('attr', 'owner', 'attr:Duty#0', 'off')"
+    ]
+   },
+   "observed": "<> is signed on .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 420,
+   "control": "button:Schedule call",
+   "greedy": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "<> already has call <> on the board .": [
+     "('ref_set', 'owner', 'rel:3')"
+    ],
+    "Call <> opened for <> .": [
+     "('attr', 'owner', 'attr:Calls logged#0', '2')",
+     "('attr', 'owner', 'attr:Hazardous cargo#0', 'no')",
+     "('empty', 'owner')"
+    ]
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 421,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> already has call <> on the board .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 422,
+   "control": "button:Bring _",
+   "greedy": [
+    "Call <> has <> berth allocated ."
+   ],
+   "exact": [
+    "Call <> has <> berth allocated ."
+   ],
+   "exact_conditions": {
+    "Call <> has <> berth allocated .": [
+     "('attr', 'owner', 'attr:Status#0', 'expected')",
+     "('unnamed', \"relation['backward', 'rel:3']:1<owner\")"
+    ]
+   },
+   "observed": "Call <> has <> berth allocated .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 427,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 428,
+   "control": "button:Record departure",
+   "greedy": [
+    "<> has sailed on call <> ; berth <> is clear ."
+   ],
+   "exact": [
+    "<> has sailed on call <> ; berth <> is clear ."
+   ],
+   "exact_conditions": {
+    "<> has sailed on call <> ; berth <> is clear .": []
+   },
+   "observed": "Call <> is not <> , so nothing has sailed .",
+   "verdict": "the only outcome ever seen on this control, and something else happened"
+  },
+  {
+   "step": 431,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is signed off ."
+   ],
+   "exact": [
+    "<> is signed off ."
+   ],
+   "exact_conditions": {
+    "<> is signed off .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> is signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 436,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 439,
+   "control": "button:Sign off",
+   "greedy": [
+    "<> is signed off ."
+   ],
+   "exact": [
+    "<> is signed off ."
+   ],
+   "exact_conditions": {
+    "<> is signed off .": [
+     "('attr', 'owner', 'attr:Duty#0', 'on')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> is signed off .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 442,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 444,
+   "control": "button:Bring _",
+   "greedy": [
+    "Call <> has <> berth allocated ."
+   ],
+   "exact": [
+    "Call <> has <> berth allocated ."
+   ],
+   "exact_conditions": {
+    "Call <> has <> berth allocated .": [
+     "('attr', 'owner', 'attr:Status#0', 'expected')",
+     "('unnamed', \"relation['backward', 'rel:3']:1<owner\")"
+    ]
+   },
+   "observed": "Call <> has <> berth allocated .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 447,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Ready .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 453,
+   "control": "button:Record departure",
+   "greedy": [
+    "<> has sailed on call <> ; berth <> is clear ."
+   ],
+   "exact": [
+    "<> has sailed on call <> ; berth <> is clear ."
+   ],
+   "exact_conditions": {
+    "<> has sailed on call <> ; berth <> is clear .": []
+   },
+   "observed": "Call <> is not <> , so nothing has sailed .",
+   "verdict": "the only outcome ever seen on this control, and something else happened"
+  },
+  {
+   "step": 459,
+   "control": "button:Schedule call",
+   "greedy": [
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "Call <> opened for <> .": [
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "Call <> opened for <> .",
+   "verdict": "one outcome was admissible and a different one happened"
+  },
+  {
+   "step": 460,
+   "control": "button:Schedule call",
+   "greedy": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "<> already has call <> on the board .",
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "<> already has call <> on the board .": [
+     "('attr', 'owner', 'attr:Calls logged#0', '0')",
+     "('attr', 'owner', 'attr:Hazardous cargo#0', 'yes')"
+    ],
+    "Call <> opened for <> .": [
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "Call <> opened for <> .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 461,
+   "control": "button:Schedule call",
+   "greedy": [
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "Call <> opened for <> .": [
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "Call <> opened for <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 462,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Call <> opened for <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 464,
+   "control": "button:Allocate berth",
+   "greedy": [
+    "<> <> is <> .",
+    "<> is <> overall ; berth <> <> ."
+   ],
+   "exact": [
+    "<> <> is <> .",
+    "<> is <> overall ; berth <> <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is <> .": [
+     "('attr', \"selection['combobox#0']:0\", 'attr:Condition#0', 'closed')",
+     "('attr', 'owner', 'attr:Status#0', 'expected')"
+    ],
+    "<> is <> overall ; berth <> <> .": [
+     "('attr', 'owner', 'attr:Cargo#0', 'bagged fertiliser')",
+     "('ref_null', \"selection['combobox#0']:0\", 'rel:3')"
+    ]
+   },
+   "observed": "<> <> is <> .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 465,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> <> is <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 467,
+   "control": "button:Allocate berth",
+   "greedy": [
+    "<> <> is <> ."
+   ],
+   "exact": [
+    "<> <> is <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is <> .": [
+     "('attr', \"selection['combobox#0']:0\", 'attr:Condition#0', 'closed')",
+     "('attr', 'owner', 'attr:Status#0', 'expected')"
+    ]
+   },
+   "observed": "<> <> is <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 468,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'closed')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 469,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 471,
+   "control": "button:Allocate berth",
+   "greedy": [
+    "<> <> allocated to call <> .",
+    "<> is <> overall ; berth <> <> ."
+   ],
+   "exact": [
+    "<> <> allocated to call <> .",
+    "<> is <> overall ; berth <> <> ."
+   ],
+   "exact_conditions": {
+    "<> is <> overall ; berth <> <> .": [
+     "('attr', 'owner', 'attr:Cargo#0', 'bagged fertiliser')",
+     "('ref_null', \"selection['combobox#0']:0\", 'rel:3')"
+    ],
+    "<> <> allocated to call <> .": [
+     "('attr', \"selection['combobox#0']:0\", 'attr:Condition#0', 'open')",
+     "('attr', \"selection['combobox#0']:0\", 'attr:Takes up to#0', '160')",
+     "('empty', \"selection['combobox#0']:0\")"
+    ]
+   },
+   "observed": "<> <> allocated to call <> .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 472,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> <> allocated to call <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 474,
+   "control": "button:Allocate berth",
+   "greedy": [
+    "<> is <> overall ; berth <> <> ."
+   ],
+   "exact": [
+    "<> is <> overall ; berth <> <> ."
+   ],
+   "exact_conditions": {
+    "<> is <> overall ; berth <> <> .": [
+     "('attr', \"selection['combobox#0']:0\", 'attr:Certified for hazardous cargo#0', 'no')",
+     "('attr', 'owner', 'attr:Cargo#0', 'bagged fertiliser')"
+    ]
+   },
+   "observed": "<> is <> overall ; berth <> <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 475,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> is <> overall ; berth <> <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 477,
+   "control": "button:Allocate berth",
+   "greedy": [],
+   "exact": [],
+   "exact_conditions": {},
+   "observed": "<> is <> overall ; berth <> <> .",
+   "verdict": "no outcome is established for this state"
+  },
+  {
+   "step": 478,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> is <> overall ; berth <> <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 480,
+   "control": "button:Book pilot",
+   "greedy": [
+    "Nothing chosen in the pilot list ."
+   ],
+   "exact": [
+    "Nothing chosen in the pilot list ."
+   ],
+   "exact_conditions": {
+    "Nothing chosen in the pilot list .": [
+     "('attr', 'owner', 'attr:Flag#0', 'Norway')"
+    ]
+   },
+   "observed": "<> booked for call <> .",
+   "verdict": "one outcome was admissible and a different one happened"
+  },
+  {
+   "step": 481,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> booked for call <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 482,
+   "control": "button:Bring _",
+   "greedy": [
+    "<> is <> at berth <> ; <> is released ."
+   ],
+   "exact": [
+    "<> is <> at berth <> ; <> is released ."
+   ],
+   "exact_conditions": {
+    "<> is <> at berth <> ; <> is released .": [
+     "('named', \"relation['backward', 'rel:3']:1<owner\")"
+    ]
+   },
+   "observed": "<> is <> at berth <> ; <> is released .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 483,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> is <> at berth <> ; <> is released .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 485,
+   "control": "button:Allocate berth",
+   "greedy": [
+    "<> is <> overall ; berth <> <> .",
+    "Call <> is already <> ; her berth cannot be changed ."
+   ],
+   "exact": [
+    "<> is <> overall ; berth <> <> .",
+    "Call <> is already <> ; her berth cannot be changed ."
+   ],
+   "exact_conditions": {
+    "<> is <> overall ; berth <> <> .": [
+     "('attr', \"selection['combobox#0']:0\", 'attr:Certified for hazardous cargo#0', 'no')",
+     "('attr', 'owner', 'attr:Cargo#0', 'bagged fertiliser')"
+    ],
+    "Call <> is already <> ; her berth cannot be changed .": [
+     "('attr', 'owner', 'attr:Status#0', 'alongside')",
+     "('empty', \"selection['combobox#0']:0\")"
+    ]
+   },
+   "observed": "Call <> is already <> ; her berth cannot be changed .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 487,
+   "control": "button:Schedule call",
+   "greedy": [
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "Call <> opened for <> .": [
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "Call <> opened for <> .",
+   "verdict": "one outcome was admissible and a different one happened"
+  },
+  {
+   "step": 488,
+   "control": "button:Schedule call",
+   "greedy": [
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "Call <> opened for <> .": [
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "Call <> opened for <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 489,
+   "control": "button:Close",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'open')",
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 490,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 492,
+   "control": "button:Allocate berth",
+   "greedy": [
+    "<> <> is <> ."
+   ],
+   "exact": [
+    "<> <> is <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is <> .": [
+     "('attr', \"selection['combobox#0']:0\", 'attr:Condition#0', 'closed')",
+     "('attr', 'owner', 'attr:Status#0', 'expected')"
+    ]
+   },
+   "observed": "<> <> is <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 493,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> <> is <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 495,
+   "control": "button:Allocate berth",
+   "greedy": [
+    "<> <> is <> ."
+   ],
+   "exact": [
+    "<> <> is <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is <> .": [
+     "('attr', \"selection['combobox#0']:0\", 'attr:Condition#0', 'closed')",
+     "('attr', 'owner', 'attr:Status#0', 'expected')"
+    ]
+   },
+   "observed": "<> <> is <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 496,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'closed')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 497,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 499,
+   "control": "button:Allocate berth",
+   "greedy": [
+    "<> is <> overall ; berth <> <> ."
+   ],
+   "exact": [
+    "<> is <> overall ; berth <> <> ."
+   ],
+   "exact_conditions": {
+    "<> is <> overall ; berth <> <> .": [
+     "('attr', \"selection['combobox#0']:0\", 'attr:Condition#0', 'open')",
+     "('attr', \"selection['combobox#0']:0\", 'attr:Takes up to#0', '70')"
+    ]
+   },
+   "observed": "<> is <> overall ; berth <> <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 500,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> is <> overall ; berth <> <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 502,
+   "control": "button:Allocate berth",
+   "greedy": [],
+   "exact": [],
+   "exact_conditions": {},
+   "observed": "<> is <> overall ; berth <> <> .",
+   "verdict": "no outcome is established for this state"
+  },
+  {
+   "step": 504,
+   "control": "button:Schedule call",
+   "greedy": [
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "Call <> opened for <> .": [
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "Call <> opened for <> .",
+   "verdict": "one outcome was admissible and a different one happened"
+  },
+  {
+   "step": 505,
+   "control": "button:Schedule call",
+   "greedy": [
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "Call <> opened for <> .": [
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "Call <> opened for <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 506,
+   "control": "button:Schedule call",
+   "greedy": [
+    "Call <> opened for <> ."
+   ],
+   "exact": [
+    "Call <> opened for <> ."
+   ],
+   "exact_conditions": {
+    "Call <> opened for <> .": [
+     "('ref_null', 'owner', 'rel:3')"
+    ]
+   },
+   "observed": "Call <> opened for <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 507,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "Call <> opened for <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 509,
+   "control": "button:Allocate berth",
+   "greedy": [],
+   "exact": [],
+   "exact_conditions": {},
+   "observed": "<> <> allocated to call <> .",
+   "verdict": "no outcome is established for this state"
+  },
+  {
+   "step": 510,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> <> allocated to call <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 512,
+   "control": "button:Allocate berth",
+   "greedy": [
+    "<> <> is held by call <> ."
+   ],
+   "exact": [
+    "<> <> is held by call <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is held by call <> .": [
+     "('attr', 'owner', 'attr:Status#0', 'expected')",
+     "('ref_set', \"selection['combobox#0']:0\", 'rel:3')"
+    ]
+   },
+   "observed": "<> <> is held by call <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 513,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> <> is held by call <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 515,
+   "control": "button:Allocate berth",
+   "greedy": [
+    "<> <> is held by call <> ."
+   ],
+   "exact": [
+    "<> <> is held by call <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is held by call <> .": [
+     "('attr', 'owner', 'attr:Status#0', 'expected')",
+     "('ref_set', \"selection['combobox#0']:0\", 'rel:3')"
+    ]
+   },
+   "observed": "<> <> is held by call <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 516,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> <> is held by call <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 518,
+   "control": "button:Allocate berth",
+   "greedy": [
+    "<> <> is <> ."
+   ],
+   "exact": [
+    "<> <> is <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is <> .": [
+     "('attr', \"selection['combobox#0']:0\", 'attr:Condition#0', 'closed')",
+     "('attr', 'owner', 'attr:Status#0', 'expected')"
+    ]
+   },
+   "observed": "<> <> is <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 519,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> <> is <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 521,
+   "control": "button:Allocate berth",
+   "greedy": [
+    "<> <> is <> ."
+   ],
+   "exact": [
+    "<> <> is <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is <> .": [
+     "('attr', \"selection['combobox#0']:0\", 'attr:Condition#0', 'closed')",
+     "('attr', 'owner', 'attr:Status#0', 'expected')"
+    ]
+   },
+   "observed": "<> <> is <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 522,
+   "control": "button:Reopen",
+   "greedy": [
+    "<> <> is now <> ."
+   ],
+   "exact": [
+    "<> <> is now <> ."
+   ],
+   "exact_conditions": {
+    "<> <> is now <> .": [
+     "('attr', 'owner', 'attr:Condition#0', 'closed')"
+    ]
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 523,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> <> is now <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 525,
+   "control": "button:Allocate berth",
+   "greedy": [
+    "<> <> allocated to call <> ."
+   ],
+   "exact": [
+    "<> <> allocated to call <> ."
+   ],
+   "exact_conditions": {
+    "<> <> allocated to call <> .": [
+     "('attr', \"selection['combobox#0']:0\", 'attr:Condition#0', 'open')",
+     "('attr', \"selection['combobox#0']:0\", 'attr:Takes up to#0', '160')",
+     "('empty', \"selection['combobox#0']:0\")"
+    ]
+   },
+   "observed": "<> <> allocated to call <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 526,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> <> allocated to call <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 528,
+   "control": "button:Allocate berth",
+   "greedy": [
+    "<> <> allocated to call <> .",
+    "<> <> is held by call <> ."
+   ],
+   "exact": [
+    "<> <> allocated to call <> .",
+    "<> <> is held by call <> ."
+   ],
+   "exact_conditions": {
+    "<> <> allocated to call <> .": [
+     "('attr', \"selection['combobox#0']:0\", 'attr:Condition#0', 'open')",
+     "('attr', \"selection['combobox#0']:0\", 'attr:Takes up to#0', '160')",
+     "('empty', \"selection['combobox#0']:0\")"
+    ],
+    "<> <> is held by call <> .": [
+     "('attr', 'owner', 'attr:Status#0', 'expected')",
+     "('ref_set', \"selection['combobox#0']:0\", 'rel:3')"
+    ]
+   },
+   "observed": "<> <> is held by call <> .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 529,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> <> is held by call <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 531,
+   "control": "button:Allocate berth",
+   "greedy": [
+    "<> <> allocated to call <> .",
+    "<> <> is held by call <> ."
+   ],
+   "exact": [
+    "<> <> allocated to call <> .",
+    "<> <> is held by call <> ."
+   ],
+   "exact_conditions": {
+    "<> <> allocated to call <> .": [
+     "('attr', \"selection['combobox#0']:0\", 'attr:Condition#0', 'open')",
+     "('attr', \"selection['combobox#0']:0\", 'attr:Takes up to#0', '160')",
+     "('empty', \"selection['combobox#0']:0\")"
+    ],
+    "<> <> is held by call <> .": [
+     "('attr', 'owner', 'attr:Status#0', 'expected')",
+     "('ref_set', \"selection['combobox#0']:0\", 'rel:3')"
+    ]
+   },
+   "observed": "<> <> is held by call <> .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  },
+  {
+   "step": 532,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> <> is held by call <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 534,
+   "control": "button:Allocate berth",
+   "greedy": [
+    "<> is <> overall ; berth <> <> ."
+   ],
+   "exact": [
+    "<> is <> overall ; berth <> <> ."
+   ],
+   "exact_conditions": {
+    "<> is <> overall ; berth <> <> .": [
+     "('attr', \"selection['combobox#0']:0\", 'attr:Condition#0', 'open')",
+     "('attr', \"selection['combobox#0']:0\", 'attr:Takes up to#0', '70')"
+    ]
+   },
+   "observed": "<> is <> overall ; berth <> <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 535,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> is <> overall ; berth <> <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 537,
+   "control": "button:Allocate berth",
+   "greedy": [
+    "<> is <> overall ; berth <> <> ."
+   ],
+   "exact": [
+    "<> is <> overall ; berth <> <> ."
+   ],
+   "exact_conditions": {
+    "<> is <> overall ; berth <> <> .": [
+     "('attr', \"selection['combobox#0']:0\", 'attr:Condition#0', 'open')",
+     "('attr', \"selection['combobox#0']:0\", 'attr:Takes up to#0', '70')"
+    ]
+   },
+   "observed": "<> is <> overall ; berth <> <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 538,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> is <> overall ; berth <> <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 540,
+   "control": "button:Allocate berth",
+   "greedy": [
+    "<> is <> overall ; berth <> <> ."
+   ],
+   "exact": [
+    "<> is <> overall ; berth <> <> ."
+   ],
+   "exact_conditions": {
+    "<> is <> overall ; berth <> <> .": [
+     "('attr', \"selection['combobox#0']:0\", 'attr:Condition#0', 'open')",
+     "('attr', \"selection['combobox#0']:0\", 'attr:Takes up to#0', '70')"
+    ]
+   },
+   "observed": "<> is <> overall ; berth <> <> .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 541,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> is <> overall ; berth <> <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 543,
+   "control": "button:Book pilot",
+   "greedy": [],
+   "exact": [],
+   "exact_conditions": {},
+   "observed": "<> booked for call <> .",
+   "verdict": "no outcome is established for this state"
+  },
+  {
+   "step": 544,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> booked for call <> .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 545,
+   "control": "button:Bring _",
+   "greedy": [
+    "<> is <> at berth <> ; <> is released ."
+   ],
+   "exact": [
+    "<> is <> at berth <> ; <> is released ."
+   ],
+   "exact_conditions": {
+    "<> is <> at berth <> ; <> is released .": [
+     "('named', \"relation['backward', 'rel:3']:1<owner\")"
+    ]
+   },
+   "observed": "<> is <> at berth <> ; <> is released .",
+   "verdict": "one outcome was admissible and it happened"
+  },
+  {
+   "step": 546,
+   "control": "button#cell@Call/button",
+   "greedy": [
+    "\u0000SILENT"
+   ],
+   "exact": [
+    "\u0000SILENT"
+   ],
+   "exact_conditions": {
+    "\u0000SILENT": []
+   },
+   "observed": "<> is <> at berth <> ; <> is released .",
+   "verdict": "the only outcome ever seen on this control, and it happened"
+  },
+  {
+   "step": 548,
+   "control": "button:Allocate berth",
+   "greedy": [
+    "<> <> allocated to call <> .",
+    "Call <> is already <> ; her berth cannot be changed ."
+   ],
+   "exact": [
+    "<> <> allocated to call <> .",
+    "Call <> is already <> ; her berth cannot be changed ."
+   ],
+   "exact_conditions": {
+    "Call <> is already <> ; her berth cannot be changed .": [
+     "('attr', 'owner', 'attr:Status#0', 'alongside')",
+     "('empty', \"selection['combobox#0']:0\")"
+    ],
+    "<> <> allocated to call <> .": [
+     "('attr', \"selection['combobox#0']:0\", 'attr:Condition#0', 'open')",
+     "('attr', \"selection['combobox#0']:0\", 'attr:Takes up to#0', '160')",
+     "('empty', \"selection['combobox#0']:0\")"
+    ]
+   },
+   "observed": "Call <> is already <> ; her berth cannot be changed .",
+   "verdict": "several outcomes remained admissible; the one that happened was among them"
+  }
+ ]
+}

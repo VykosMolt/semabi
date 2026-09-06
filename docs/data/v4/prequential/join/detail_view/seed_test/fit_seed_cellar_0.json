@@ -1,0 +1,74 @@
+{
+ "seed": "0",
+ "controls": {
+  "button:Blend": {
+   "rules": [],
+   "default": "Nothing chosen in the lot list .",
+   "fitted": 1,
+   "ordered": {}
+  },
+  "button:Bottle": {
+   "rules": [],
+   "default": "\u0000UNDETERMINED",
+   "fitted": 1,
+   "ordered": {}
+  },
+  "button:Cellar": {
+   "rules": [],
+   "default": "\u0000SILENT",
+   "fitted": 7,
+   "ordered": {}
+  },
+  "button:Finish fermentation": {
+   "rules": [],
+   "default": "\u0000UNDETERMINED",
+   "fitted": 1,
+   "ordered": {}
+  },
+  "button:Intake": {
+   "rules": [],
+   "default": "\u0000SILENT",
+   "fitted": 9,
+   "ordered": {}
+  },
+  "button:Lots": {
+   "rules": [],
+   "default": "\u0000SILENT",
+   "fitted": 9,
+   "ordered": {}
+  },
+  "button:Move vessel": {
+   "rules": [],
+   "default": "\u0000UNDETERMINED",
+   "fitted": 5,
+   "ordered": {}
+  },
+  "button:Rack": {
+   "rules": [],
+   "default": "\u0000UNDETERMINED",
+   "fitted": 1,
+   "ordered": {}
+  },
+  "button:Receive fruit": {
+   "rules": [],
+   "default": "\u0000UNDETERMINED",
+   "fitted": 3,
+   "ordered": {}
+  },
+  "button:Split": {
+   "rules": [],
+   "default": "Nothing chosen in the lot list .",
+   "fitted": 1,
+   "ordered": {}
+  },
+  "button:Wash out": {
+   "rules": [
+    "attr:cell@Holds#4(selection['combobox#2']:0) == None  ->  <> is already <> .   [5]",
+    "('unnamed', \"selection['combobox#2']:0\")  ->  Nothing chosen in the vessel list .   [2]"
+   ],
+   "default": "<> cannot be washed out while lot <> is in it .",
+   "fitted": 8,
+   "ordered": {}
+  }
+ }
+}

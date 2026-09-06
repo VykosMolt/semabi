@@ -32,7 +32,7 @@
     "<> <> ."
    ],
    "actual": "<> is already <> .",
-   "why": "<> <> . <- attr:Committed gal#0(owner) == '4'  [3 occasions]",
+   "why": "<> <> . <- attr:Committed gal#0(owner) >= '2'  [5 occasions]",
    "kind": "unseen: the control never returned this event while fitting",
    "seen": 0,
    "raw_difference": [],
@@ -58,7 +58,7 @@
     "Drew <> from <> into <> ."
    ],
    "actual": "<> is single-varietal ( <> ) ; <> is <> .",
-   "why": "Drew <> from <> into <> . <- attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:Varietal#0(selection['combobox#0']:0) == 'Syrah' & attr:Committed gal#0(selection['combobox#1']:1) == '4'  [10 occasions]",
+   "why": "Drew <> from <> into <> . <- attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:Year#0(selection['combobox#1']:1) == '2020' & attr:Committed gal#0(selection['combobox#1']:1) < '5'  [15 occasions]",
    "kind": "unseen: the control never returned this event while fitting",
    "seen": 0,
    "raw_difference": [],
@@ -71,7 +71,7 @@
     "Drew <> from <> into <> ."
    ],
    "actual": "<> is single-varietal ( <> ) ; <> is <> .",
-   "why": "Drew <> from <> into <> . <- attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:Varietal#0(selection['combobox#0']:0) == 'Syrah' & attr:Committed gal#0(selection['combobox#1']:1) == '4'  [10 occasions]",
+   "why": "Drew <> from <> into <> . <- attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:Year#0(selection['combobox#1']:1) == '2020' & attr:Committed gal#0(selection['combobox#1']:1) < '5'  [15 occasions]",
    "kind": "unseen: the control never returned this event while fitting",
    "seen": 0,
    "raw_difference": [],
@@ -84,7 +84,7 @@
     "Drew <> from <> into <> ."
    ],
    "actual": "<> is single-varietal ( <> ) ; <> is <> .",
-   "why": "Drew <> from <> into <> . <- attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:Committed gal#0(selection['combobox#1']:1) == '3'  [28 occasions]",
+   "why": "Drew <> from <> into <> . <- attr:Gate#0(selection['combobox#0']:0) == 'Open' & attr:Committed gal#0(selection['combobox#1']:1) < '4'  [36 occasions]",
    "kind": "unseen: the control never returned this event while fitting",
    "seen": 0,
    "raw_difference": [],

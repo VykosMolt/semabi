@@ -74,19 +74,19 @@
   "rules": 11,
   "held_out_clicks": 123,
   "ledger": {
-   "the event the interface returned": 67,
-   "a different event": 56
+   "the event the interface returned": 119,
+   "a different event": 4
   },
-  "accuracy_where_it_answered": 0.545,
+  "accuracy_where_it_answered": 0.967,
   "distinct_events_asserted": 4,
   "answers_naming_an_event": 123,
-  "accuracy_where_it_named_an_event": 0.545,
+  "accuracy_where_it_named_an_event": 0.967,
   "by_level": {
-   "the event the interface returned / with its arguments": 67,
-   "a different event / the event alone": 56
+   "the event the interface returned / with its arguments": 119,
+   "a different event / the event alone": 4
   },
   "events_asserted": {
-   "The book already holds 12 records ; return a draw first .": 56,
+   "Drew <> from <> into <> .": 56,
    "<> is already <> .": 41,
    "<> is <> .": 19,
    "<> holds <> ; cannot draw <> .": 7
@@ -102,80 +102,44 @@
     "fitted": 112,
     "rules": 5,
     "events_fitted": 5,
-    "the event the interface returned": 67,
-    "a different event": 56
+    "the event the interface returned": 119,
+    "a different event": 4
    }
   },
   "wrong": [
    {
-    "step": 421,
+    "step": 541,
     "control": "button:Record draw",
-    "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "Drew <> from <> into <> .",
-    "returned": "Drew 1 gal from North Wall into Cloister.",
+    "predicted": "Drew <> from <> into <> .",
+    "observed": "<> is single-varietal ( <> ) ; <> is <> .",
+    "returned": "Festival White is single-varietal (Pinot); Orchard is Syrah.",
     "verdict": "a different event",
     "level": "the event alone"
    },
    {
-    "step": 427,
+    "step": 546,
     "control": "button:Record draw",
-    "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "Drew <> from <> into <> .",
-    "returned": "Drew 1 gal from North Wall into Cloister.",
+    "predicted": "Drew <> from <> into <> .",
+    "observed": "<> is single-varietal ( <> ) ; <> is <> .",
+    "returned": "Festival White is single-varietal (Pinot); Orchard is Syrah.",
     "verdict": "a different event",
     "level": "the event alone"
    },
    {
-    "step": 433,
+    "step": 548,
     "control": "button:Record draw",
-    "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "Drew <> from <> into <> .",
-    "returned": "Drew 1 gal from North Wall into Cloister.",
+    "predicted": "Drew <> from <> into <> .",
+    "observed": "<> is single-varietal ( <> ) ; <> is <> .",
+    "returned": "Festival White is single-varietal (Pinot); Orchard is Syrah.",
     "verdict": "a different event",
     "level": "the event alone"
    },
    {
-    "step": 437,
+    "step": 556,
     "control": "button:Record draw",
-    "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "Drew <> from <> into <> .",
-    "returned": "Drew 1 gal from North Wall into Cloister.",
-    "verdict": "a different event",
-    "level": "the event alone"
-   },
-   {
-    "step": 440,
-    "control": "button:Record draw",
-    "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "Drew <> from <> into <> .",
-    "returned": "Drew 1 gal from North Wall into Cloister.",
-    "verdict": "a different event",
-    "level": "the event alone"
-   },
-   {
-    "step": 443,
-    "control": "button:Record draw",
-    "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "Drew <> from <> into <> .",
-    "returned": "Drew 1 gal from North Wall into Cloister.",
-    "verdict": "a different event",
-    "level": "the event alone"
-   },
-   {
-    "step": 446,
-    "control": "button:Record draw",
-    "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "Drew <> from <> into <> .",
-    "returned": "Drew 1 gal from North Wall into Cloister.",
-    "verdict": "a different event",
-    "level": "the event alone"
-   },
-   {
-    "step": 449,
-    "control": "button:Record draw",
-    "predicted": "The book already holds 12 records ; return a draw first .",
-    "observed": "Drew <> from <> into <> .",
-    "returned": "Drew 1 gal from North Wall into Cloister.",
+    "predicted": "Drew <> from <> into <> .",
+    "observed": "<> is single-varietal ( <> ) ; <> is <> .",
+    "returned": "Festival White is single-varietal (Pinot); Orchard is Syrah.",
     "verdict": "a different event",
     "level": "the event alone"
    }
