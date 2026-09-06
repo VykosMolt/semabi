@@ -64,3 +64,24 @@ def test_what_the_interface_names_breaks_a_tie_before_length():
     unkeyed = Behaviour(explained=151, named=10, delta_atoms=379, complexity=30)
     assert keyed.better_than(unkeyed)
     assert not unkeyed.better_than(keyed)
+
+
+def test_a_thing_that_appears_when_its_own_button_is_clicked_was_shown_not_made():
+    # harbour's call sheet, keyed by the call reference, opens on the button named by it;
+    # a call named after a vessel appears when a form button is pressed, and is made
+    from types import SimpleNamespace
+    from semabi.compiler.v4.objective import brought_into_view
+    sheet = SimpleNamespace(key="C-103", attrs={"Vessel": "Bregagh"})
+    call = SimpleNamespace(key="Nordkapp", attrs={"Status": "expected", "Berth": None})
+    assert brought_into_view(sheet, "click", "C-103")
+    assert brought_into_view(sheet, "click", " C-103 ")
+    # the same sheet keyed by its vessel still renders the call's reference, as an
+    # attribute or as a reference to the call
+    assert brought_into_view(SimpleNamespace(key="Bregagh", attrs={"heading": "C-103"}), "click", "C-103")
+    assert brought_into_view(SimpleNamespace(key="Bregagh", attrs={}, refs={"rel:0": (0, "C-103")}), "click", "C-103")
+    # a call made by a form button refers to its vessel and renders nothing called Schedule call
+    assert not brought_into_view(SimpleNamespace(key="C-107", attrs={}, refs={"rel:1": (1, "Nordkapp")}), "click", "Schedule call")
+    assert not brought_into_view(call, "click", "Schedule call")
+    assert not brought_into_view(call, "click", "Nordkapp's berth")
+    assert not brought_into_view(sheet, "select", "C-103")
+    assert not brought_into_view(SimpleNamespace(key=None, attrs={}), "click", "None")

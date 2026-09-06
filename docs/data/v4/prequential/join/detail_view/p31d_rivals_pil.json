@@ -1,0 +1,2245 @@
+{
+ "run": "/home/moloch/semabi-scratch/preq/harbour_pil_dev",
+ "family": "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))",
+ "settled": {
+  "template": "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))",
+  "key_slot": "table/rowgroup/row/cell@Vessel#0",
+  "status": "UNSUPPORTED",
+  "why": "the family never rendered two instances at once, so nothing shows this value distinguishes instances",
+  "evidence": {
+   "copresent_pairs": 0,
+   "separated_pairs": 0,
+   "discrimination": null,
+   "coverage": 1.0,
+   "distinct_values": 8,
+   "constant_share": 0.23,
+   "reload_stability": null,
+   "cross_view_values": 0,
+   "numeric_share": 0.0,
+   "spoken": 1.0,
+   "shared": 1.0
+  }
+ },
+ "settled_score": {
+  "contradictions": 0,
+  "churn": 0,
+  "visibility": 0,
+  "conflicts": 0,
+  "named": 312,
+  "positional": 0,
+  "unexplained": 61,
+  "spurious": 0,
+  "explained": 74,
+  "delta_atoms": 101,
+  "complexity": 40,
+  "steps": 451,
+  "churn_steps": [],
+  "contradiction_steps": [],
+  "visibility_steps": []
+ },
+ "moves": [
+  {
+   "move": "rejected",
+   "round": 0,
+   "family": "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))",
+   "key_slot": null,
+   "status": "NO_IDENTITY",
+   "against": "table/rowgroup/row/cell@Vessel#0",
+   "decided_by": {
+    "named": 6
+   },
+   "score": {
+    "contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "conflicts": 0,
+    "named": 306,
+    "positional": 0,
+    "unexplained": 0,
+    "spurious": 0,
+    "explained": 74,
+    "delta_atoms": 123,
+    "complexity": 46,
+    "steps": 451,
+    "churn_steps": [],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   }
+  },
+  {
+   "move": "rejected",
+   "round": 0,
+   "family": "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))",
+   "key_slot": "heading#0",
+   "status": "UNSUPPORTED",
+   "against": "table/rowgroup/row/cell@Vessel#0",
+   "decided_by": {
+    "named": 25
+   },
+   "score": {
+    "contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "conflicts": 0,
+    "named": 287,
+    "positional": 0,
+    "unexplained": 61,
+    "spurious": 0,
+    "explained": 74,
+    "delta_atoms": 128,
+    "complexity": 62,
+    "steps": 451,
+    "churn_steps": [],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   }
+  },
+  {
+   "move": "rejected",
+   "round": 0,
+   "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+   "key_slot": "cell@Certified for hazardous cargo#0",
+   "status": "SUPPORTED",
+   "against": "cell@Berth#0",
+   "decided_by": {
+    "positional": 360
+   },
+   "score": {
+    "contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "conflicts": 0,
+    "named": 312,
+    "positional": 360,
+    "unexplained": 61,
+    "spurious": 0,
+    "explained": 74,
+    "delta_atoms": 125,
+    "complexity": 51,
+    "steps": 451,
+    "churn_steps": [],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   }
+  },
+  {
+   "move": "rejected",
+   "round": 0,
+   "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+   "key_slot": "cell@Quay#0",
+   "status": "SUPPORTED",
+   "against": "cell@Berth#0",
+   "decided_by": {
+    "positional": 360
+   },
+   "score": {
+    "contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "conflicts": 0,
+    "named": 312,
+    "positional": 360,
+    "unexplained": 61,
+    "spurious": 0,
+    "explained": 74,
+    "delta_atoms": 125,
+    "complexity": 51,
+    "steps": 451,
+    "churn_steps": [],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   }
+  },
+  {
+   "move": "rejected",
+   "round": 0,
+   "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+   "key_slot": "cell@Condition#0",
+   "status": "SUPPORTED",
+   "against": "cell@Berth#0",
+   "decided_by": {
+    "churn": 14,
+    "positional": 448,
+    "explained": 14
+   },
+   "score": {
+    "contradictions": 0,
+    "churn": 14,
+    "visibility": 0,
+    "conflicts": 0,
+    "named": 312,
+    "positional": 448,
+    "unexplained": 61,
+    "spurious": 0,
+    "explained": 60,
+    "delta_atoms": 111,
+    "complexity": 51,
+    "steps": 451,
+    "churn_steps": [
+     11,
+     38,
+     57,
+     110,
+     154,
+     158,
+     189,
+     215,
+     228,
+     309,
+     331,
+     340,
+     343,
+     347
+    ],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   }
+  },
+  {
+   "move": "rejected",
+   "round": 0,
+   "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+   "key_slot": null,
+   "status": "NO_IDENTITY",
+   "against": "cell@Berth#0",
+   "decided_by": {
+    "explained": 21,
+    "named": 96
+   },
+   "score": {
+    "contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "conflicts": 0,
+    "named": 216,
+    "positional": 0,
+    "unexplained": 61,
+    "spurious": 0,
+    "explained": 53,
+    "delta_atoms": 101,
+    "complexity": 41,
+    "steps": 451,
+    "churn_steps": [],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   }
+  },
+  {
+   "move": "rejected",
+   "round": 0,
+   "family": "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+   "key_slot": "cell@Duty#0",
+   "status": "SUPPORTED",
+   "against": "cell@Pilot#0",
+   "decided_by": {
+    "churn": 21,
+    "positional": 327,
+    "explained": 21
+   },
+   "score": {
+    "contradictions": 0,
+    "churn": 21,
+    "visibility": 0,
+    "conflicts": 0,
+    "named": 312,
+    "positional": 327,
+    "unexplained": 61,
+    "spurious": 0,
+    "explained": 53,
+    "delta_atoms": 99,
+    "complexity": 51,
+    "steps": 451,
+    "churn_steps": [
+     10,
+     13,
+     39,
+     48,
+     60,
+     174,
+     191,
+     194,
+     195,
+     196,
+     232,
+     239,
+     240,
+     243,
+     252,
+     324,
+     345,
+     410,
+     417,
+     433,
+     440
+    ],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   }
+  },
+  {
+   "move": "rejected",
+   "round": 0,
+   "family": "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+   "key_slot": null,
+   "status": "NO_IDENTITY",
+   "against": "cell@Pilot#0",
+   "decided_by": {
+    "explained": 29,
+    "named": 57
+   },
+   "score": {
+    "contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "conflicts": 0,
+    "named": 255,
+    "positional": 0,
+    "unexplained": 61,
+    "spurious": 0,
+    "explained": 45,
+    "delta_atoms": 86,
+    "complexity": 43,
+    "steps": 451,
+    "churn_steps": [],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   }
+  },
+  {
+   "move": "rejected",
+   "round": 0,
+   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "key_slot": "cell@Calls logged#0",
+   "status": "SUPPORTED",
+   "against": "cell@Vessel#0",
+   "decided_by": {
+    "churn": 3,
+    "positional": 14,
+    "explained": 3,
+    "named": 6
+   },
+   "score": {
+    "contradictions": 0,
+    "churn": 3,
+    "visibility": 0,
+    "conflicts": 0,
+    "named": 306,
+    "positional": 14,
+    "unexplained": 61,
+    "spurious": 0,
+    "explained": 71,
+    "delta_atoms": 108,
+    "complexity": 51,
+    "steps": 451,
+    "churn_steps": [
+     32,
+     107,
+     285
+    ],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   }
+  },
+  {
+   "move": "rejected",
+   "round": 0,
+   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "key_slot": "cell@Flag#0",
+   "status": "SUPPORTED",
+   "against": "cell@Vessel#0",
+   "decided_by": {
+    "positional": 56,
+    "named": 6
+   },
+   "score": {
+    "contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "conflicts": 0,
+    "named": 306,
+    "positional": 56,
+    "unexplained": 61,
+    "spurious": 0,
+    "explained": 74,
+    "delta_atoms": 123,
+    "complexity": 51,
+    "steps": 451,
+    "churn_steps": [],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   }
+  },
+  {
+   "move": "rejected",
+   "round": 0,
+   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "key_slot": "cell@Current call#0",
+   "status": "SUPPORTED",
+   "against": "cell@Vessel#0",
+   "decided_by": {
+    "named": 6
+   },
+   "score": {
+    "contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "conflicts": 0,
+    "named": 306,
+    "positional": 0,
+    "unexplained": 61,
+    "spurious": 0,
+    "explained": 74,
+    "delta_atoms": 120,
+    "complexity": 52,
+    "steps": 451,
+    "churn_steps": [],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   }
+  },
+  {
+   "move": "rejected",
+   "round": 1,
+   "family": "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))",
+   "key_slot": null,
+   "status": "NO_IDENTITY",
+   "against": "table/rowgroup/row/cell@Vessel#0",
+   "decided_by": {
+    "named": 15
+   },
+   "score": {
+    "contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "conflicts": 0,
+    "named": 297,
+    "positional": 0,
+    "unexplained": 0,
+    "spurious": 0,
+    "explained": 74,
+    "delta_atoms": 99,
+    "complexity": 35,
+    "steps": 451,
+    "churn_steps": [],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   }
+  },
+  {
+   "move": "rejected",
+   "round": 1,
+   "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+   "key_slot": "cell@Certified for hazardous cargo#0",
+   "status": "SUPPORTED",
+   "against": "cell@Berth#0",
+   "decided_by": {
+    "positional": 360
+   },
+   "score": {
+    "contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "conflicts": 0,
+    "named": 312,
+    "positional": 360,
+    "unexplained": 61,
+    "spurious": 0,
+    "explained": 74,
+    "delta_atoms": 101,
+    "complexity": 40,
+    "steps": 451,
+    "churn_steps": [],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   }
+  },
+  {
+   "move": "rejected",
+   "round": 1,
+   "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+   "key_slot": "cell@Quay#0",
+   "status": "SUPPORTED",
+   "against": "cell@Berth#0",
+   "decided_by": {
+    "positional": 360
+   },
+   "score": {
+    "contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "conflicts": 0,
+    "named": 312,
+    "positional": 360,
+    "unexplained": 61,
+    "spurious": 0,
+    "explained": 74,
+    "delta_atoms": 101,
+    "complexity": 40,
+    "steps": 451,
+    "churn_steps": [],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   }
+  },
+  {
+   "move": "rejected",
+   "round": 1,
+   "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+   "key_slot": "cell@Condition#0",
+   "status": "SUPPORTED",
+   "against": "cell@Berth#0",
+   "decided_by": {
+    "churn": 14,
+    "positional": 448,
+    "explained": 14
+   },
+   "score": {
+    "contradictions": 0,
+    "churn": 14,
+    "visibility": 0,
+    "conflicts": 0,
+    "named": 312,
+    "positional": 448,
+    "unexplained": 61,
+    "spurious": 0,
+    "explained": 60,
+    "delta_atoms": 87,
+    "complexity": 40,
+    "steps": 451,
+    "churn_steps": [
+     11,
+     38,
+     57,
+     110,
+     154,
+     158,
+     189,
+     215,
+     228,
+     309,
+     331,
+     340,
+     343,
+     347
+    ],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   }
+  },
+  {
+   "move": "rejected",
+   "round": 1,
+   "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+   "key_slot": null,
+   "status": "NO_IDENTITY",
+   "against": "cell@Berth#0",
+   "decided_by": {
+    "explained": 21,
+    "named": 102
+   },
+   "score": {
+    "contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "conflicts": 0,
+    "named": 210,
+    "positional": 0,
+    "unexplained": 61,
+    "spurious": 0,
+    "explained": 53,
+    "delta_atoms": 77,
+    "complexity": 30,
+    "steps": 451,
+    "churn_steps": [],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   }
+  },
+  {
+   "move": "rejected",
+   "round": 1,
+   "family": "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+   "key_slot": "cell@Duty#0",
+   "status": "SUPPORTED",
+   "against": "cell@Pilot#0",
+   "decided_by": {
+    "churn": 21,
+    "positional": 327,
+    "explained": 21
+   },
+   "score": {
+    "contradictions": 0,
+    "churn": 21,
+    "visibility": 0,
+    "conflicts": 0,
+    "named": 312,
+    "positional": 327,
+    "unexplained": 61,
+    "spurious": 0,
+    "explained": 53,
+    "delta_atoms": 80,
+    "complexity": 40,
+    "steps": 451,
+    "churn_steps": [
+     10,
+     13,
+     39,
+     48,
+     60,
+     174,
+     191,
+     194,
+     195,
+     196,
+     232,
+     239,
+     240,
+     243,
+     252,
+     324,
+     345,
+     410,
+     417,
+     433,
+     440
+    ],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   }
+  },
+  {
+   "move": "rejected",
+   "round": 1,
+   "family": "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+   "key_slot": null,
+   "status": "NO_IDENTITY",
+   "against": "cell@Pilot#0",
+   "decided_by": {
+    "explained": 29,
+    "named": 68
+   },
+   "score": {
+    "contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "conflicts": 0,
+    "named": 244,
+    "positional": 0,
+    "unexplained": 61,
+    "spurious": 0,
+    "explained": 45,
+    "delta_atoms": 67,
+    "complexity": 32,
+    "steps": 451,
+    "churn_steps": [],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   }
+  },
+  {
+   "move": "rejected",
+   "round": 1,
+   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "key_slot": "cell@Calls logged#0",
+   "status": "SUPPORTED",
+   "against": "cell@Vessel#0",
+   "decided_by": {
+    "churn": 3,
+    "positional": 14,
+    "explained": 3,
+    "named": 24
+   },
+   "score": {
+    "contradictions": 0,
+    "churn": 3,
+    "visibility": 0,
+    "conflicts": 0,
+    "named": 288,
+    "positional": 14,
+    "unexplained": 61,
+    "spurious": 0,
+    "explained": 71,
+    "delta_atoms": 92,
+    "complexity": 50,
+    "steps": 451,
+    "churn_steps": [
+     32,
+     107,
+     285
+    ],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   }
+  },
+  {
+   "move": "rejected",
+   "round": 1,
+   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "key_slot": "cell@Flag#0",
+   "status": "SUPPORTED",
+   "against": "cell@Vessel#0",
+   "decided_by": {
+    "positional": 56,
+    "named": 24
+   },
+   "score": {
+    "contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "conflicts": 0,
+    "named": 288,
+    "positional": 56,
+    "unexplained": 61,
+    "spurious": 0,
+    "explained": 74,
+    "delta_atoms": 104,
+    "complexity": 50,
+    "steps": 451,
+    "churn_steps": [],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   }
+  },
+  {
+   "move": "rejected",
+   "round": 1,
+   "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+   "key_slot": "cell@Current call#0",
+   "status": "SUPPORTED",
+   "against": "cell@Vessel#0",
+   "decided_by": {
+    "named": 24
+   },
+   "score": {
+    "contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "conflicts": 0,
+    "named": 288,
+    "positional": 0,
+    "unexplained": 61,
+    "spurious": 0,
+    "explained": 74,
+    "delta_atoms": 101,
+    "complexity": 51,
+    "steps": 451,
+    "churn_steps": [],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   }
+  }
+ ],
+ "open_questions": [
+  {
+   "template": "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))",
+   "left": {
+    "template": "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))",
+    "key_slot": "table/rowgroup/row/cell@Vessel#0",
+    "status": "UNSUPPORTED",
+    "why": "the family never rendered two instances at once, so nothing shows this value distinguishes instances",
+    "evidence": {
+     "copresent_pairs": 0,
+     "separated_pairs": 0,
+     "discrimination": null,
+     "coverage": 1.0,
+     "distinct_values": 8,
+     "constant_share": 0.23,
+     "reload_stability": null,
+     "cross_view_values": 0,
+     "numeric_share": 0.0,
+     "spoken": 1.0,
+     "shared": 1.0
+    }
+   },
+   "right": {
+    "template": "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))",
+    "key_slot": "heading#0",
+    "status": "UNSUPPORTED",
+    "why": "the family never rendered two instances at once, so nothing shows this value distinguishes instances",
+    "evidence": {
+     "copresent_pairs": 0,
+     "separated_pairs": 0,
+     "discrimination": null,
+     "coverage": 1.0,
+     "distinct_values": 4,
+     "constant_share": 0.403,
+     "reload_stability": null,
+     "cross_view_values": 0,
+     "numeric_share": 0.0,
+     "spoken": 1.0,
+     "shared": 1.0
+    }
+   },
+   "reason": "the trace so far scores both readings identically"
+  }
+ ],
+ "rivals": [
+  {
+   "reading": {
+    "template": "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))",
+    "key_slot": null,
+    "status": "NO_IDENTITY",
+    "why": "no identity-bearing observation claimed",
+    "evidence": {
+     "copresent_pairs": 0,
+     "separated_pairs": 0,
+     "discrimination": null,
+     "coverage": 0.0,
+     "distinct_values": 0,
+     "constant_share": 0.0,
+     "reload_stability": null,
+     "cross_view_values": 0,
+     "numeric_share": 0.0,
+     "spoken": 0.0,
+     "shared": 0.0
+    }
+   },
+   "score": {
+    "contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "conflicts": 0,
+    "named": 297,
+    "positional": 0,
+    "unexplained": 0,
+    "spurious": 0,
+    "explained": 74,
+    "delta_atoms": 99,
+    "complexity": 35,
+    "steps": 451,
+    "churn_steps": [],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   },
+   "verdict": "settled better",
+   "evidence_tie": false,
+   "decided_by": {
+    "named": -15
+   },
+   "differing_steps": 69,
+   "steps": [
+    {
+     "step": 8,
+     "action": "click",
+     "target": "C-102",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 21,
+     "action": "click",
+     "target": "C-102",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 25,
+     "action": "click",
+     "target": "C-101",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 32,
+     "action": "click",
+     "target": "Record departure",
+     "settled": "EXPLAINED",
+     "rival": "EXPLAINED",
+     "settled_delta": [
+      0,
+      1,
+      0,
+      [],
+      2
+     ],
+     "rival_delta": [
+      0,
+      1,
+      0,
+      [
+       [
+        [
+         "attr:Calls logged#0",
+         "'0'",
+         "'1'"
+        ],
+        1
+       ]
+      ],
+      2
+     ]
+    },
+    {
+     "step": 44,
+     "action": "click",
+     "target": "C-103",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 59,
+     "action": "click",
+     "target": "C-102",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 64,
+     "action": "click",
+     "target": "C-101",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 70,
+     "action": "click",
+     "target": "C-101",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 74,
+     "action": "click",
+     "target": "C-101",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 82,
+     "action": "click",
+     "target": "C-102",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 86,
+     "action": "click",
+     "target": "C-103",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 94,
+     "action": "click",
+     "target": "C-103",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 96,
+     "action": "click",
+     "target": "C-103",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 102,
+     "action": "click",
+     "target": "C-101",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 107,
+     "action": "click",
+     "target": "Record departure",
+     "settled": "EXPLAINED",
+     "rival": "EXPLAINED",
+     "settled_delta": [
+      0,
+      1,
+      0,
+      [],
+      2
+     ],
+     "rival_delta": [
+      0,
+      1,
+      0,
+      [
+       [
+        [
+         "attr:Calls logged#0",
+         "'1'",
+         "'2'"
+        ],
+        1
+       ]
+      ],
+      2
+     ]
+    },
+    {
+     "step": 118,
+     "action": "click",
+     "target": "C-102",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 126,
+     "action": "click",
+     "target": "C-101",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 140,
+     "action": "click",
+     "target": "C-101",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 159,
+     "action": "click",
+     "target": "C-102",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 175,
+     "action": "click",
+     "target": "C-103",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 184,
+     "action": "click",
+     "target": "C-102",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 199,
+     "action": "click",
+     "target": "C-101",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 202,
+     "action": "click",
+     "target": "Book pilot",
+     "settled": "EXPLAINED",
+     "rival": "EXPLAINED",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      2
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      1
+     ]
+    },
+    {
+     "step": 206,
+     "action": "click",
+     "target": "C-101",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 209,
+     "action": "click",
+     "target": "C-102",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 221,
+     "action": "click",
+     "target": "C-101",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 223,
+     "action": "click",
+     "target": "C-103",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 233,
+     "action": "click",
+     "target": "C-102",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 237,
+     "action": "click",
+     "target": "C-102",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 245,
+     "action": "click",
+     "target": "C-102",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 254,
+     "action": "click",
+     "target": "C-103",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 262,
+     "action": "click",
+     "target": "C-101",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 270,
+     "action": "click",
+     "target": "C-102",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 274,
+     "action": "click",
+     "target": "C-101",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 276,
+     "action": "click",
+     "target": "C-101",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 280,
+     "action": "click",
+     "target": "C-103",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 284,
+     "action": "click",
+     "target": "C-101",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 285,
+     "action": "click",
+     "target": "Record departure",
+     "settled": "EXPLAINED",
+     "rival": "EXPLAINED",
+     "settled_delta": [
+      0,
+      1,
+      0,
+      [],
+      2
+     ],
+     "rival_delta": [
+      0,
+      1,
+      0,
+      [
+       [
+        [
+         "attr:Calls logged#0",
+         "'4'",
+         "'5'"
+        ],
+        1
+       ]
+      ],
+      2
+     ]
+    },
+    {
+     "step": 286,
+     "action": "click",
+     "target": "C-103",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 299,
+     "action": "click",
+     "target": "C-102",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 303,
+     "action": "click",
+     "target": "C-103",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 320,
+     "action": "click",
+     "target": "C-102",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 332,
+     "action": "click",
+     "target": "C-102",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 350,
+     "action": "click",
+     "target": "C-102",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 360,
+     "action": "click",
+     "target": "C-101",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 363,
+     "action": "click",
+     "target": "C-101",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 370,
+     "action": "click",
+     "target": "C-103",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 376,
+     "action": "click",
+     "target": "C-102",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 379,
+     "action": "click",
+     "target": "C-103",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 382,
+     "action": "click",
+     "target": "C-104",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 386,
+     "action": "click",
+     "target": "C-101",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 389,
+     "action": "click",
+     "target": "C-102",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 393,
+     "action": "click",
+     "target": "C-101",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 395,
+     "action": "click",
+     "target": "Book pilot",
+     "settled": "EXPLAINED",
+     "rival": "EXPLAINED",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      2
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      1
+     ]
+    },
+    {
+     "step": 396,
+     "action": "click",
+     "target": "C-102",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 398,
+     "action": "click",
+     "target": "Book pilot",
+     "settled": "EXPLAINED",
+     "rival": "EXPLAINED",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      2
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      1
+     ]
+    },
+    {
+     "step": 402,
+     "action": "click",
+     "target": "C-103",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 407,
+     "action": "click",
+     "target": "C-102",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 414,
+     "action": "click",
+     "target": "C-103",
+     "settled": "SILENT",
+     "rival": "NOTHING",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      0
+     ]
+    },
+    {
+     "step": 420,
+     "action": "click",
+     "target": "Book pilot",
+     "settled": "EXPLAINED",
+     "rival": "EXPLAINED",
+     "settled_delta": [
+      0,
+      0,
+      0,
+      [],
+      2
+     ],
+     "rival_delta": [
+      0,
+      0,
+      0,
+      [],
+      1
+     ]
+    }
+   ]
+  },
+  {
+   "reading": {
+    "template": "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))",
+    "key_slot": "heading#0",
+    "status": "UNSUPPORTED",
+    "why": "the family never rendered two instances at once, so nothing shows this value distinguishes instances",
+    "evidence": {
+     "copresent_pairs": 0,
+     "separated_pairs": 0,
+     "discrimination": null,
+     "coverage": 1.0,
+     "distinct_values": 4,
+     "constant_share": 0.403,
+     "reload_stability": null,
+     "cross_view_values": 0,
+     "numeric_share": 0.0,
+     "spoken": 1.0,
+     "shared": 1.0
+    }
+   },
+   "score": {
+    "contradictions": 0,
+    "churn": 0,
+    "visibility": 0,
+    "conflicts": 0,
+    "named": 312,
+    "positional": 0,
+    "unexplained": 61,
+    "spurious": 0,
+    "explained": 74,
+    "delta_atoms": 104,
+    "complexity": 51,
+    "steps": 451,
+    "churn_steps": [],
+    "contradiction_steps": [],
+    "visibility_steps": []
+   },
+   "verdict": "settled better",
+   "evidence_tie": true,
+   "decided_by": {},
+   "differing_steps": 3,
+   "steps": [
+    {
+     "step": 32,
+     "action": "click",
+     "target": "Record departure",
+     "settled": "EXPLAINED",
+     "rival": "EXPLAINED",
+     "settled_delta": [
+      0,
+      1,
+      0,
+      [],
+      2
+     ],
+     "rival_delta": [
+      0,
+      1,
+      0,
+      [
+       [
+        [
+         "attr:Calls logged#0",
+         "'0'",
+         "'1'"
+        ],
+        1
+       ]
+      ],
+      2
+     ]
+    },
+    {
+     "step": 107,
+     "action": "click",
+     "target": "Record departure",
+     "settled": "EXPLAINED",
+     "rival": "EXPLAINED",
+     "settled_delta": [
+      0,
+      1,
+      0,
+      [],
+      2
+     ],
+     "rival_delta": [
+      0,
+      1,
+      0,
+      [
+       [
+        [
+         "attr:Calls logged#0",
+         "'1'",
+         "'2'"
+        ],
+        1
+       ]
+      ],
+      2
+     ]
+    },
+    {
+     "step": 285,
+     "action": "click",
+     "target": "Record departure",
+     "settled": "EXPLAINED",
+     "rival": "EXPLAINED",
+     "settled_delta": [
+      0,
+      1,
+      0,
+      [],
+      2
+     ],
+     "rival_delta": [
+      0,
+      1,
+      0,
+      [
+       [
+        [
+         "attr:Calls logged#0",
+         "'4'",
+         "'5'"
+        ],
+        1
+       ]
+      ],
+      2
+     ]
+    }
+   ]
+  }
+ ]
+}

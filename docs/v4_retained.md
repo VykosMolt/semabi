@@ -1259,6 +1259,33 @@ anything, and the states that would falsify a coincidence are the ones that shar
 value and not its outcome, which no policy that reads only the admissible set's size
 seeks out.
 
+**P31: a thing brought into view by clicking on it is not created.**  The user's
+reading of the measured negative above was the specification: state-only semantics were
+insufficient, and the action carries the difference -- if the clicked control is the
+corresponding object's own button, the object was observed, not made -- to be
+pre-registered against the twelve call creations so that the term cannot win by
+suppressing creation everywhere.  The criterion, in `objective.evaluate`: at a click, an
+added object that renders the clicked control's name leaves the delta the way a
+discovered object does, and the step is judged on what else changed.  It took three
+statements to hold.  Name equality with the *key* was defeated in one search: with the
+call key no longer credited, the search withheld the union between the sheet family and
+the vessels table and keyed the sheet by its vessel, so the same opening became the
+creation of a thing named *Bregagh* and heading lost by eight again (`p31_rivals_pil.json`).
+A key is the reading's choice; the button is the mention's.  Name among the key and the
+attributes did not fire either, because the model reads the sheet's heading as a
+reference to the call, not an attribute (`p31c_rivals_pil.json`).  Name among the key,
+the attributes and the keys of the things the object refers to is the statement that
+stands (`tests/test_v4_objective.py`).  Measured (`p31d_kinds_*.json`,
+`p31d_rivals_pil.json`): the pilot corpus explains 74 steps where it explained 82, the
+eight sheet openings; the berth corpus 63 where it explained 66; harbour's retained
+history 74 as before with its twelve *Schedule call* creations kept, which is the test
+the term had to pass; blend 271 and vet 63 unchanged.  On the pilot corpus the search
+withholds no union, rejects the call key in round zero on what the interface names
+alone, and once the other families have settled the two keys score identically --
+explanation 74, named 312, three steps differing in delta signature only -- and it
+poses the question: the sheet keyed by its vessel or by its call is an open question
+for the probe, which is what Part XVII asked for.
+
 ## What stands, and what is open
 
 The retained state, regenerated once more: harbour's development sidecar is now written by

@@ -1999,3 +1999,79 @@ acting where the model is unsure finds behaviour it had not established, which w
 the admissible sets before anything narrows them.  The control policy, acting where
 one outcome was forced, learned nothing.  Retained; the confounded first run is kept
 beside it (p30_acquire_uncertain_confounded.json: the refit without the field theory).
+
+## P31 pre-registered (10:52): a thing brought into view by clicking on it is not created
+User's nuance adopted: state-only semantics were shown insufficient (the key-discount
+term would have taken twelve genuine call creations); the action carries the difference.
+Criterion: at a click, an added object whose key is the clicked control's own name is a
+rendering the click brought into view, not a creation -- it leaves the delta the way a
+discovered object does (objective.evaluate), and the step is judged on what else changed.
+No correspondence condition: the sheet on harbour_transfer is keyed by a call ref no other
+family carries, and the button that opens it is named by that ref all the same.
+Expected, each measured before the battery:
+  harbour_pil_dev / harbour_join_dev (settled reading): explained falls by exactly the
+    8 / 3 sheet-opening steps and no other verdict moves; the vessel-keyed sheet then
+    ties the call-keyed one on explanation and errors -- an open question in the search
+    (or, if `named` separates them, a decision by `named`, reported as such).
+  harbour_transfer (retained reading): explained stays 74; the twelve Schedule-call
+    creations (target 'Schedule call', key a vessel's name) stay explained.  This is
+    the test the term must pass: it may not win by suppressing creation.
+  blend_book_transfer, vet_clinic_transfer: no verdict moves.
+  battery: frontiers, invariants and every ledger unchanged on all four applications;
+    any change is a finding.
+A unit test fixes the two cases: a click named by the object that appears (not a
+creation), and a form button that creates an object named after another (a creation).
+
+## P31 as written: refuted by a re-route (11:02; p31_rivals_pil.json, p31_kinds_*.json)
+Round 0 went as pre-registered: heading#0 and no-identity lose to the inherited Vessel
+key on `named` alone (explained tied at 74 -- the eight openings no longer explained
+under the call key).  Then the search found another route to the same eight: a
+withhold_union move separating the sheet family from the vessels table gained explained
++8 -- the Vessel-keyed sheet, no longer one entity with the vessel, is its own type
+whose object keyed 'Bregagh' appears when 'C-103' is clicked; the key is not the
+control's name, so the criterion did not fire.  Round 1 then rejects heading#0 by
+explained -8.  Elsewhere: harbour_transfer 74 explained with its twelve creations kept
+(pinned reading), blend 271, vet 63 -- totals unchanged.
+Diagnosis: name-equality with the KEY is a property of the reading, which the search
+can choose; the user's "the corresponding object's own button" is a property of the
+mention.  Revision (P31b, pre-registered): an added object that RENDERS the clicked
+control's name -- as its key or as any attribute value -- was brought into view by it.
+The sheet renders 'Call sheet C-103' whatever it is keyed by; a call made by 'Schedule
+call' renders no such thing.  Expected: harbour_pil_dev / join_dev explained 74 / 63
+under either sheet key, no withhold_union move for the sheet family, its key decided by
+`named` (Vessel over heading) or tied and posed; harbour_transfer 74 with the twelve
+creations kept; blend 271 and vet 63 unchanged; then the battery.
+
+11:04 P31b slip, recorded: the first patch script failed on its docstring assertion
+after the notes were written, so nothing was applied and the first "P31b" measurements
+ran the old criterion; killed.  The kill by `ps | grep pattern | xargs kill` matched my
+own shell because the relaunch text in the same command contained the pattern (exit
+144 again).  The function was then rewritten wholesale; a keyless object no longer
+renders the word "None"; 27 focused tests pass; the measurements run under the
+rendered-name criterion now (p31c_*).
+
+11:12 P31b measured (p31c_*): IDENTICAL to P31 -- pil 82 explained with the eight
+openings credited, the search withholds the sheet/vessels union and keys the sheet by
+Vessel, heading rejected by explained -8.  The rendered-name criterion did not fire
+because the sheet's heading is not an attribute of the sheet: the model reads "Call
+sheet C-103" as a REFERENCE to the call (rel slot -> (tid, 'C-103')), and the criterion
+looked at key and attributes only.  P31c: the keys of the things an object refers to
+count among what it renders (AbsObj.refs holds (tid, key)); the test covers a sheet
+whose reference carries the call's ref and a call made by 'Schedule call' referring to
+its vessel.  Same expectations as P31b.  Measurements relaunched (p31d_*).
+
+## P31c judged (11:20; p31d_*.json): every pre-registered expectation met
+  harbour_pil_dev   explained 82 -> 74, no correspondence creation left (the eight)
+  harbour_join_dev  explained 66 -> 63 (the three)
+  harbour_transfer  explained 74 -> 74, the twelve Schedule-call creations kept
+  blend 271 -> 271, vet 63 -> 63
+Search on harbour_pil_dev: no withhold_union move for the sheet family; round 0 rejects
+heading#0 against the inherited Vessel key by `named` alone (explanation tied at 74);
+after the other families settle the two score identically -- explained 74, named 312,
+three steps differing in delta signature only -- and the search POSES the question:
+open_questions = [(cell@Vessel#0, heading#0, "the trace so far scores both readings
+identically")].  The panel-as-view vs panel-as-widget tie is now a question for the
+probe, which is what Part XVII asked for.  Committing; battery #7 under the criterion,
+pre-registered: frontiers, invariants and every ledger unchanged on all four
+applications (harbour's retained reading has no step the criterion touches: 74 both
+ways); the source diagnostics' open questions may gain the sheet tie on harbour.

@@ -186,6 +186,29 @@ class Behaviour:
                 f"atoms {self.delta_atoms}, complexity {self.complexity}")
 
 
+def brought_into_view(obj, action_kind: str, control_name: str | None) -> bool:
+    """An object that appears when a control bearing its own name is clicked was shown, not
+    made.
+
+    Harbour's call sheet opens on the call's button and renders the call's reference; under
+    a reading that keys the sheet by that reference the click looked like a creation, and
+    under one that keys it by the vessel it looked like nothing, so the objective decided
+    between them by crediting the creation.  What separates a thing brought into view from a
+    thing made is the action: a form button makes a call named after a vessel that is already
+    on the page, and that stays a creation, because the call renders nothing called *Schedule
+    call*.  The name is looked for among everything the object renders -- its key, its
+    attributes, and the keys of the things it refers to -- and not its key alone: a key is
+    the reading's choice, and a reading that keyed the sheet by its vessel and withheld the
+    union made the same opening the creation of a thing named *Bregagh*, whose heading the
+    model reads as a reference to the call.
+    """
+    if action_kind != "click" or not control_name:
+        return False
+    rendered = [obj.key, *getattr(obj, "attrs", {}).values()]
+    rendered += [ref[1] for ref in getattr(obj, "refs", {}).values() if ref]
+    return str(control_name).strip() in {str(v) for v in rendered if v is not None}
+
+
 def _named_arguments(A, log, step, before_state, after_state) -> int:
     """How many arguments of the interface's response to this step are values of objects
     the reading posits -- a key, or an attribute -- in the state before or after it."""
@@ -230,9 +253,10 @@ def evaluate(A: V2Abstractor, log: EvidenceLog, max_steps: int | None = None) ->
                 prev = state
                 continue
             delta = diff(prev, state)
-            delta.added = [o for o in delta.added if o.id not in discovered]
-            changed_domain = delta.domain_changed
             name = (step.action.target_desc or {}).get("name") if step.action.target_desc else None
+            delta.added = [o for o in delta.added
+                           if o.id not in discovered and not brought_into_view(o, step.action.kind, name)]
+            changed_domain = delta.domain_changed
             sensing = step.action.kind in SENSING_KINDS or (
                 step.action.kind == "click" and name in A.verified_view_controls)
             # a click a probe certified as persisting is a domain action whatever it did to
