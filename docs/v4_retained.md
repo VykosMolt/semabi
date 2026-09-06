@@ -1286,6 +1286,32 @@ explanation 74, named 312, three steps differing in delta signature only -- and 
 poses the question: the sheet keyed by its vessel or by its call is an open question
 for the probe, which is what Part XVII asked for.
 
+**Battery #7, under the criterion** (8936ffb; `battery_run7.log`).  Pre-registered:
+frontiers, invariants and every ledger unchanged on all four applications, any change a
+finding.  Frontiers identical on harbour, vet and blend; all sixteen invariants zero;
+every admissible, inadequacy, claim-substance, bundle, creation and outcome ledger
+identical; the retained-state tests pass.  The finding is on harbour's retained history,
+and it is the criterion working as the doctrine says it should: with the two sheet
+openings in that history no longer credited, the search's local explanation falls from
+60 to 58, the sheet family -- keyed by the call's reference under P27 -- scores
+identically keyed by its vessel, and the search keeps the incumbent vessel key and
+poses the question, together with two more it had not posed before: the board's calls
+keyed by their vessel against no identity, and against their length.  Every candidate in
+`harbour_source_candidates.json` carries the sheet keyed by its vessel now, the frontier's
+selected reading keeps its name and its verdicts, and the sheet's holdout correspondence
+is 167 of 167 under the vessel key as it was under the call's.  Two records follow the
+retained key and are recorded as its consequences.  The state-fidelity audit of harbour
+finds 34 attribute values of 6472 not rendered under their object where it found none:
+one vessel object with two renderings, the table row and the open sheet, whose node is
+the sheet's while the sheet is open, so the table's *calls logged* is not under it.
+And the subject-restricted outcome record, its ledger unchanged at 124 right and 2
+wrong, moves two right answers from *with its arguments* to *the event alone* and
+seventeen operator-output claims from not applicable to unknown, while the unrestricted
+records do not move.  Both are what carrying the incumbent looks like while a question
+is open; the probe that decides whether the sheet is the vessel's view or the call's
+record decides them, and P27's sentence that the sheet is retained as a record of the
+call now reads as the state of the question, not its answer.
+
 ## What stands, and what is open
 
 The retained state, regenerated once more: harbour's development sidecar is now written by

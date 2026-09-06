@@ -72,3 +72,25 @@ harbour_transfer  'source_choice'  FROZEN_PREFIX  cut=229  control=None  corrobo
     button:Bring _             fitted=   4 events= 1 rules= 1 forced-wrong=  0  {'one outcome, because the control has never done anything else': 4}
 
 wrote docs/data/v4/admissible_harbour_transfer_frozen_prefix_list.json
+
+harbour_transfer  'source_choice'  cut=229  forced under the rule class
+  forced and wrong on the frame: 1
+       1  unseen: the control never returned this event while fitting
+    button:Sign off: {'unseen: the control never returned this event while fitting': 1}
+
+wrote docs/data/v4/inadequacy_harbour_transfer.json
+
+harbour_transfer  'source_choice'  FROZEN_PREFIX  cut=229  15 operators
+  67 held-out actions, 1.0 rules offered and 0.27 claims applicable per action
+  12 distinct claims across all its decided predictions
+    a named constant          67 claims,    18 decided, supported  94%   2 distinct
+                           ['attr:Condition#0 = closed', 'attr:Condition#0 = open']
+    an interface response    185 claims,    82 decided, supported  98%   9 distinct
+                           ['<> <> cannot be <> while call <> holds it . = <> <> cannot be <> while call <> holds it .', '<> <> is already <> . = <> <> is already <> .', '<> <> is now <> . = <> <> is now <> .', '<> already has call <> on the board . = <> already has call <> on the board .', '<> is already signed off . = <> is already signed off .', '<> is already signed on . = <> is already signed on .']
+    an object brought into being    17 claims,     5 decided, supported 100%   1 distinct
+                           ['id = new']
+       49 ( 73%)  no rule applied
+       17 ( 25%)  every applicable rule was right
+        1 (  1%)  every applicable rule was contradicted
+
+wrote docs/data/v4/claim_substance_harbour_transfer_frozen_prefix.json

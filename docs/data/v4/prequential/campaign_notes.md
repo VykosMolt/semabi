@@ -2161,3 +2161,31 @@ occasion the pil holdout's Book pilot ledger has no wrong verdict and fewer `sev
 than 14 (P30's `uncertain` gave 17, `any` 14); (iii) at least one vouch present before is
 absent after -- named in the result.  If `several` does not fall, seed 71's states did
 not carry the coincidences' supporting values, and that is the result.
+
+13:36 battery #7 identity stage 13:28 -> 13:36 rc=0: all twenty-one admissible /
+inadequacy / claim-substance files identical to 8936ffb's, harbour's included -- the
+sheet's retained key moving to its vessel leaves the outcome layer's ledgers untouched.
+outcome stage running.
+
+14:51 battery #7 outcome stage 13:36 -> 14:50 rc=0: all eleven outcome ledgers and the
+four creation files identical to 8936ffb's.  admissible stage running.  P32: dev seeds
+81/82/83/85 collected; holdout 93/95/99 next.  Merging the dev part now and inspecting
+Book pilot on it (search reading) ahead of the holdout.
+
+## Battery #7 done (15:00; admissible 14:50 -> 14:59 rc=0; BATTERY_DONE 14:59:35)
+Against 8936ffb: frontiers identical; sixteen invariants zero; every admissible,
+inadequacy, claim-substance, bundle, creation and outcome LEDGER identical; retained-
+state tests 53 passed.  Two harbour files changed beyond the manifests, both
+consequences of the sheet's retained key moving to its vessel (one entity, two
+renderings):
+  state_fidelity_harbour_transfer_source_choice_tracked.json: attribute values not
+    rendered under their object 0 -> 34 of 6472 (rate 0 -> 0.0053), all T3.attr:Calls
+    logged#0 -- the vessel object's node is the sheet's when the sheet is open, and the
+    vessels-table column is not under it; slot T4.attr:Call#col -> T0.attr:Call#col
+    (type renumbering).
+  outcome_harbour_subject_restricted.json: ledger 124/2 unchanged, but by_level
+    "with its arguments" 87 -> 85 and "the event alone" 7 -> 9; the operator-output
+    section NOT_APPLICABLE 98 -> 81, UNKNOWN 5 -> 22, distinct decided claims 32 -> 33.
+    The unrestricted split05 and cross-trace records are unchanged.
+Both are the incumbent Vessel reading being carried while the sheet question is open;
+the probe that decides the tie decides them.  Recorded; retaining.
