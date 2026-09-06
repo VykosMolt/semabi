@@ -82,7 +82,7 @@ def test_a_family_is_judged_again_after_a_later_family_moves(monkeypatch):
     result = v4_search.search(H, None, SimpleNamespace(steps=[]), refuted={})
     assert result.hypotheses.units["b[_]"].key_slot is None
     assert result.hypotheses.units["a[_]"].key_slot == "r"
-    assert [m["round"] for m in result.moves] == [0, 1]
+    assert [m["round"] for m in result.moves if m["move"] == "identity"] == [0, 1]
 
 
 def test_an_identity_that_ties_no_identity_exactly_is_unearned(monkeypatch):
@@ -144,3 +144,18 @@ def test_a_shorter_spelling_does_not_earn_an_identity_either(monkeypatch):
     assert result.hypotheses.units["a[_]"].key_slot is None
     assert result.chosen["a[_]"].key_slot is None
     assert [(q.left.key_slot, q.right.key_slot) for q in result.open_questions] == [(None, "p")]
+
+
+def test_a_rival_the_evidence_rejects_is_recorded_with_what_decided_it(monkeypatch):
+    # family a's "r" explains two steps fewer than "p": it loses on evidence, and the
+    # moves say so.  A rival the search never records could not be told from one it
+    # never tried (harbour's call sheet: keyed by the call or by the vessel).
+    H = _H({"a[_]": "p", "b[_]": None})
+    scores = {("p", None): (12, 0), ("r", None): (10, 0), (None, None): (5, 0)}
+    _install(monkeypatch, {"a[_]": ["p", "r", None], "b[_]": [None]}, scores)
+    result = v4_search.search(H, None, SimpleNamespace(steps=[]), refuted={})
+    assert result.hypotheses.units["a[_]"].key_slot == "p"
+    rejected = [m for m in result.moves if m["move"] == "rejected"]
+    assert [(m["key_slot"], m["against"], m["decided_by"]) for m in rejected] == \
+        [("r", "p", {"explained": 2}), (None, "p", {"explained": 7})]
+    assert result.open_questions == []

@@ -434,6 +434,15 @@ def search(H: Hypotheses, G: ObsGraph, log: EvidenceLog, max_steps: int | None =
                     # explains more while the other errs less.  Both are undecided, and an
                     # undecided reading is a question for the application, not a tie to break.
                     equal.append((reading, trial_score))
+                else:
+                    # the incumbent explains more, errs less, or names more of what the
+                    # interface said: a decision by evidence, recorded so that what decided a
+                    # family can be read from the moves rather than inferred from its silence
+                    result.moves.append({"move": "rejected", "round": round_no, "family": name,
+                                         "key_slot": reading.key_slot, "status": reading.status,
+                                         "against": here.key_slot,
+                                         "decided_by": _decided_by(trial_score, score),
+                                         "score": trial_score.to_json()})
             for reading, trial_score in equal[:2]:
                 if (trial_score.explained, trial_score.errors) == (score.explained, score.errors):
                     why = "the trace so far scores both readings identically"

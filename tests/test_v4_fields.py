@@ -169,3 +169,23 @@ def test_the_binding_evaluates_a_comparison_and_declines_an_unbound_one():
     assert binding.holds(("attr_ge", "berth", "takes", "90"), {"vessel": v}, None) is None
     assert binding.holds(ge, {"?v": v, "?b": Obj(2, "b", {})}, None) is None
     assert _lit_str(ge) == "length(?v) >= takes(?b)"
+
+
+def test_a_held_out_state_is_asked_in_the_language_the_evidence_was_fitted_in():
+    # the scorers built the query without the ordered vocabulary, so a threshold or a
+    # comparison the fitting justified could never fire at a held-out state
+    from types import SimpleNamespace
+    rows = [((78, 140), "berthed"), ((96, 120), "berthed"), ((100, 160), "berthed"),
+            ((64, 70), "berthed"), ((140, 160), "berthed"),
+            ((132, 90), "refused"), ((150, 120), "refused"), ((148, 100), "refused")]
+    model = _allocate(rows)
+    state = _berthing([((200, 160), "refused")])[0][0]
+    bound, status = model.bind(state, None)
+    fit = SimpleNamespace(inducer=FakeInducer())
+    query = oc.query_literals(fit, model, state, bound, status)
+    nominal = oc._literals(fit.inducer, state, bound, status, model.defaults)
+    assert any(fields.ordered_fields(l) for l in query)
+    assert not any(fields.ordered_fields(l) for l in nominal)
+    assert model.predict(query) == "refused"
+    assert "refused" in model.admissible(query, corroborated=True)
+    assert "refused" not in model.admissible(nominal, corroborated=True)

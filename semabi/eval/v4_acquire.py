@@ -158,9 +158,9 @@ def acquire(model, control_key: str, button: str, base: str, *, seed: int,
                 o_ = _owner_object(A, po, state, cand)
                 b_, s_ = got.bind(state, o_)
                 opts_ = got.admissible(
-                    oc._literals(model.inducer, state, b_, s_, got.defaults), corroborated=True)
+                    oc.query_literals(model, got, state, b_, s_), corroborated=True)
                 if policy == "corroborate":
-                    here_ = frozenset(oc._literals(model.inducer, state, b_, s_, got.defaults))
+                    here_ = frozenset(oc.query_literals(model, got, state, b_, s_))
                     ev_ = got.evidence
                     want_here = any(set(ev_._condition(ev_.masks[i])) <= here_
                                     for e_, idxs_ in ev_.by_event.items()
@@ -183,8 +183,7 @@ def acquire(model, control_key: str, button: str, base: str, *, seed: int,
                 # `ONCE` case of `v4_inadequacy` -- and the model can see that from the
                 # inside.  A state that satisfies everything the single occasion did is where
                 # a second occasion of the event would make a pure pair; act there.
-                here = frozenset(oc._literals(model.inducer, state, bound, status,
-                                              got.defaults))
+                here = frozenset(oc.query_literals(model, got, state, bound, status))
                 ev = got.evidence
                 lone = [i for e, idxs in ev.by_event.items() if len(idxs) < oc.MIN_COVER
                         for i in idxs]
@@ -197,7 +196,7 @@ def acquire(model, control_key: str, button: str, base: str, *, seed: int,
             # never explores -- which is what it did on cellar, pressing `Move vessel` with
             # nothing selected twenty times and learning only that nothing was selected.
             fresh = frozenset(
-                oc._literals(model.inducer, state, bound, status, got.defaults)) not in asked
+                oc.query_literals(model, got, state, bound, status)) not in asked
             if (discriminating and fresh if policy in ("uncertain", "unestablished", "corroborate")
                     else True) or (
                     turn % 3 == 2 and len(acquired) < want):
@@ -216,7 +215,7 @@ def acquire(model, control_key: str, button: str, base: str, *, seed: int,
                     "state": state, "owner": owner,
                     "before_text": before})
                 asked.add(frozenset(
-                    oc._literals(model.inducer, state, bound, status, got.defaults)))
+                    oc.query_literals(model, got, state, bound, status)))
                 log(f"  {'*' if discriminating else ' '} acted where {len(options)} "
                     f"outcome(s) were admissible -> {acquired[-1]['frame']!r}")
                 turn += 1
@@ -286,7 +285,7 @@ def refit_with(model, control_key: str, acquired: list[dict],
         if row["frame"] is None or (only_discriminating and not row["discriminating"]):
             continue
         bound, status = got.bind(row["state"], row["owner"])
-        extra.append((oc._literals(model.inducer, row["state"], bound, status, got.defaults),
+        extra.append((oc.query_literals(model, got, row["state"], bound, status),
                       row["frame"], frozenset(bound) | {oc.OWNER}))
     fresh = oc.ControlOutcome(got.control, got.roles, list(got.rules), got.default,
                               got.fitted + len(extra), dict(got.events), got.arg_roles,

@@ -1639,3 +1639,40 @@ first accepted identity move, rivals of equal correspondence are never tried
 campaign's own doctrine is "the search keeps the question"; implement: try
 the rivals, pose ties.  Then the version space's spurious admissibility
 through long pure conditions (blend's measurement; P26's two wrongs).
+
+## The held-out scorer asks in a vocabulary the evidence was not fitted in (05:24)
+Rivals audit first: on harbour_pil_dev and harbour_join_dev the search DOES try the
+vessel-keyed sheet (first identity candidate, tried in round 0 against no identity and in
+round 1 against heading#0) and it loses on `explained` alone (-8 / -3): every click that
+opens a sheet is EXPLAINED under the call-keyed reading (a sheet object appears) and
+SILENT under the vessel-keyed one (the vessel is already there).  Decided, not unposed --
+my 02:07 note was wrong in kind; what was missing was the record.  search.py now writes
+`move: rejected` with `decided_by` for every rival the incumbent beats (moves are
+diagnostics only; manifests carry local_final/families/open_questions).  Whether opening
+a detail view ought to count as explanation is an objective question, parked with the
+finding (rivals_harbour_*.json).
+
+Then, reading the scorer for the version-space item: `score_step` (outcome.py:1527) and
+`score_step_admissible` (:1579) call `_literals(..., got.defaults)` WITHOUT `got.ordered`,
+and so do v4_inadequacy:183 and v4_acquire:161/163/186.  The fitting rows (:1077, :1280)
+and the live `answer` path (`_pending_literals`) pass `ordered`.  Since 154a867 every
+held-out verdict has been asked in a vocabulary without the threshold and comparison
+literals the fitted occasions carry: `here & ma & mb` can never keep an ordered literal,
+so no ordered rule is exercisable at a held-out state, and vouches fall to whatever
+nominal literals the witnesses share -- the "long pure condition" of P26's two wrongs.
+v4_ties Part I's "every version space is identical nominal and ordered on every suffix"
+is guaranteed by this, not by the range explanation given there; its 5/6/9 table came
+from a vocabulary built with `ordered` (as tests/test_v4_fields.py does), not from the
+scorer.
+
+Pre-registration (P28), written before reading vs_diag_p26's ledger:
+  Fix: one `query_literals(model, got, state, bound, status)` used by both scorers and
+  both instruments = the same builder the fitting and the ABI use, with `got.ordered`.
+  Expected on P26 (21 Book pilot holdout clicks; as scored 12/6/1/2 right/several/
+  unestablished/wrong): 502 (Ruth 130 vs Hafnarfjord 132, too short) stops being wrong
+  because `Ticket to(pilot) < Length overall(vessel)` is now in the query; 493 becomes
+  several or stays wrong; no forced-right verdict becomes wrong; wrong count 2 -> <= 1.
+  Expected on the retained battery: blend's outcome/admissible ledgers may move (committed
+  gallons ORDERED by corroboration); harbour_transfer, cellar and vet ledgers unchanged
+  (no field adopted on those histories); frontiers and invariants unchanged (the frontier
+  scores operators, not the outcome layer).  Anything else is a finding.

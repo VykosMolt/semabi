@@ -1496,6 +1496,17 @@ def _argument_disagreements(model, step, got, event, args: dict, observed) -> di
     return out
 
 
+def query_literals(model, got: ControlOutcome, state, bound: dict, status: dict) -> set:
+    """A held-out state in the language the control's evidence was fitted in.
+
+    The fitting rows and the live `answer` carry the ordered vocabulary -- thresholds and
+    comparisons over the fields the model adopted.  The scorers built the query without it,
+    so no ordered rule could fire at a held-out state and the version space vouched by
+    whatever nominal literals the witnesses shared (harbour's pilot bookings, blend's
+    bottling; `docs/v4_retained.md`)."""
+    return _literals(model.inducer, state, bound, status, got.defaults, got.ordered)
+
+
 def score_step(model, step, *, with_arguments: bool = True) -> dict:
     """Run the outcome model at one held-out click and check it against the raw page.
 
@@ -1524,7 +1535,7 @@ def score_step(model, step, *, with_arguments: bool = True) -> dict:
     state = A.abstract(pre)
     owner = _owner_object(A, A.parsed(pre), state, step.action.target)
     bound, status = got.bind(state, owner)
-    predicted = got.predict(_literals(model.inducer, state, bound, status, got.defaults))
+    predicted = got.predict(query_literals(model, got, state, bound, status))
     out["predicted"] = predicted
     out["observed"] = None if observed is None else observed.frame
     out["returned"] = after_text
@@ -1576,7 +1587,7 @@ def score_step_admissible(model, step, *, corroborated: bool = False,
     state = A.abstract(pre)
     owner = _owner_object(A, A.parsed(pre), state, step.action.target)
     bound, status = got.bind(state, owner)
-    options = got.admissible(_literals(model.inducer, state, bound, status, got.defaults),
+    options = got.admissible(query_literals(model, got, state, bound, status),
                              corroborated=corroborated, hypothesis=hypothesis)
     out["admissible"] = sorted(options)
     out["hypothesis"] = hypothesis
