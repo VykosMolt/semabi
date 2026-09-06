@@ -1029,6 +1029,32 @@ blend's permuted-label control finds fewer rules on shuffled labels.  The first 
 thin-corpus shape of P24 on a second control, and the next extension (P26) is aimed at
 it; it is retained as a regression, not explained away.
 
+**P26: the second join, and P27: a view's identity on the holdout.**  The pilot-booking
+control had the same wall in a thinner corpus: its rule is a pilot's ticket against the
+vessel's length, and the regeneration had just recorded it learning constants.  A
+second planner manufactured its refusals -- a free pilot whose ticket is too short, a
+pilot signed off and asked for twice, a booked pilot asked for by another call -- on
+three development and three holdout seeds.  Fitted on the merged development corpus,
+under either reading, the control's list is the untouched select, the pilot's duty, the
+booked pilot by its reference, and the join `Ticket to(pilot, by selection) < Length
+overall(vessel, reached backward from the owner as the vessel whose current call this
+is)` for the too-short refusal, with both fields adopted; the bookings themselves still
+carry a threshold artefact from four occasions.  On the holdout it is right on eighteen
+of twenty-one clicks and wrong on two, and the two are not the join's: every role binds
+there and the select names its pilot, but the version space admits *nothing chosen*
+through a pure condition the six unnamed-select occasions share on the owner's literals
+alone -- purity over a longer literal list, easier to reach and meaning less, the failure
+already measured on blend.  And the holdout's identity verdict: a family that never
+renders two instances at once produces no co-present pairs, so its separation record was
+untested by construction and the whole harbour holdout was called inconclusive.  Such a
+family's key claims something else -- that its value names an object the page shows --
+and that is tested by correspondence, each held-out instance's value being a key of
+another applied family on the same page.  The record now carries both counts.  Harbour's
+holdout, under the final code, is CONFIRMED: every one of the sheet's 167 held-out
+instances names a call the page shows, applicability is complete and nothing is
+refuted, where the original verdict had been confirmed only where applicable with partial
+coverage.
+
 **What this settles, and what it does not.**  The first competence wall has fallen at the
 layer it stood on.  JOIN was never a grammar problem in the end: the comparison was a
 morning's work and invariant everywhere; the wall was the observation model reading a
@@ -1083,7 +1109,14 @@ the wrong yardstick for it; the scoreboard over the shared surface is a first on
 reproduces the frontier's judgments on harbour and blend without counting claims, and
 declines to judge vet.  The schedule family behind the closure is checked by exhaustion at
 the two boundaries where it was doubted.  ORDERED stands where the intervention put it.  JOIN was
-attacked on its own: the comparison is expressible and disciplined, the corpus has
-positives, and the eighth finding locates the wall at the context object -- a detail
-view the reading does not identify and the referring language cannot name from the page.
-Aggregate remains unearned behind it.
+attacked on its own and has fallen: the comparison is expressible and disciplined; the
+eighth finding located the wall at the observation model, which read a detail view as
+interface state; five transposed rules make the view a view of the things it names; and
+on corpora with the refusals in them the learner states harbour's two joins -- a berth's
+capacity against a vessel's length, a pilot's ticket against a vessel's length -- with
+their fields adopted, and carries them to histories it never saw.  A view's identity is
+now confirmed on a held-out history by correspondence.  What the campaign leaves open is
+recorded beside it: the search does not pose the tie between a panel as a widget and a
+panel as a view; the version space still admits a spurious outcome through a long pure
+condition; the pilot-booking control's cross-trace ledger got worse before its corpus got
+better.  Aggregate remains unearned behind all of it.

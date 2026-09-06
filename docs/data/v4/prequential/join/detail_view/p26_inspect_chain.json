@@ -1,0 +1,5269 @@
+{
+ "run": "/home/moloch/semabi-scratch/preq/harbour_pil_dev",
+ "control": "button:Book pilot",
+ "split": 0.999,
+ "families": null,
+ "roles": {
+  "owner": {
+   "kind": "action",
+   "form": [],
+   "tid": 3,
+   "anchor": null
+  },
+  "selection['combobox#1']:1": {
+   "kind": "selection",
+   "form": [
+    "combobox#1"
+   ],
+   "tid": 1,
+   "anchor": null
+  },
+  "relation['backward', 'rel:3']:2<owner": {
+   "kind": "relation",
+   "form": [
+    "backward",
+    "rel:3"
+   ],
+   "tid": 2,
+   "anchor": "owner"
+  }
+ },
+ "rules": [
+  "('unnamed', \"selection['combobox#1']:1\")  ->  Nothing chosen in the pilot list .   [6]",
+  "attr:Duty#0(selection['combobox#1']:1) == 'off'  ->  <> is not <> .   [4]",
+  "attr:Length overall#0(owner) < '88'  ->  <> booked for call <> .   [3]",
+  "attr:Ticket to#0(selection['combobox#1']:1) < '150' & ('ref_set', \"selection['combobox#1']:1\", 'rel:3')  ->  <> is already booked for call <> .   [3]",
+  "attr:Ticket to#0(selection['combobox#1']:1) < attr:Length overall#0(relation['backward', 'rel:3']:2<owner)  ->  <> holds a <> ; <> is <> overall .   [6]",
+  "('ref_null', \"selection['combobox#1']:1\", 'rel:3')  ->  <> booked for call <> .   [2]"
+ ],
+ "default": "Call <> is already <> ; <> pilot is needed .",
+ "events": {
+  "Nothing chosen in the pilot list .": 6,
+  "<> holds a <> ; <> is <> overall .": 6,
+  "<> booked for call <> .": 5,
+  "<> is not <> .": 4,
+  "<> is already booked for call <> .": 3,
+  "Call <> is already <> ; <> pilot is needed .": 1
+ },
+ "ordered": {
+  "3": {
+   "attr:Length overall#0": [
+    "54",
+    "64",
+    "78",
+    "88",
+    "96",
+    "112",
+    "132",
+    "148"
+   ]
+  },
+  "1": {
+   "attr:Ticket to#0": [
+    "80",
+    "100",
+    "130",
+    "150"
+   ]
+  },
+  "2": {
+   "attr:Length overall#0": [
+    "54",
+    "64",
+    "78",
+    "88",
+    "96",
+    "112",
+    "132",
+    "148"
+   ]
+  }
+ },
+ "field_theory": {
+  "candidates": {
+   "0": {
+    "attr:Takes up to#0": [
+     "70",
+     "90",
+     "120",
+     "140",
+     "160"
+    ]
+   },
+   "1": {
+    "attr:Ticket to#0": [
+     "80",
+     "100",
+     "130",
+     "150"
+    ]
+   },
+   "2": {
+    "attr:Calls logged#0": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5"
+    ],
+    "attr:Length overall#0": [
+     "54",
+     "64",
+     "78",
+     "88",
+     "96",
+     "112",
+     "132",
+     "148"
+    ]
+   },
+   "3": {
+    "attr:Length overall#0": [
+     "54",
+     "64",
+     "78",
+     "88",
+     "96",
+     "112",
+     "132",
+     "148"
+    ]
+   }
+  },
+  "adopted": {
+   "3": {
+    "attr:Length overall#0": [
+     "54",
+     "64",
+     "78",
+     "88",
+     "96",
+     "112",
+     "132",
+     "148"
+    ]
+   },
+   "1": {
+    "attr:Ticket to#0": [
+     "80",
+     "100",
+     "130",
+     "150"
+    ]
+   },
+   "2": {
+    "attr:Length overall#0": [
+     "54",
+     "64",
+     "78",
+     "88",
+     "96",
+     "112",
+     "132",
+     "148"
+    ]
+   }
+  },
+  "corroborated": []
+ },
+ "occasions": [
+  {
+   "event": "Nothing chosen in the pilot list .",
+   "ordered": [
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ]
+   ],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Panama"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Calls logged#0",
+     "2"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "containers"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ]
+   ]
+  },
+  {
+   "event": "Nothing chosen in the pilot list .",
+   "ordered": [
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ]
+   ],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Cargo#0",
+     "sawn timber"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "sawn timber"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Calls logged#0",
+     "0"
+    ]
+   ]
+  },
+  {
+   "event": "Nothing chosen in the pilot list .",
+   "ordered": [
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ]
+   ],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Calls logged#0",
+     "4"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Cargo#0",
+     "bagged fertiliser"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "bagged fertiliser"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ]
+   ]
+  },
+  {
+   "event": "Nothing chosen in the pilot list .",
+   "ordered": [
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ]
+   ],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Calls logged#0",
+     "2"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Cargo#0",
+     "bagged fertiliser"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "bagged fertiliser"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ]
+   ]
+  },
+  {
+   "event": "Nothing chosen in the pilot list .",
+   "ordered": [
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ]
+   ],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Calls logged#0",
+     "2"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Flag#0",
+     "Norway"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Cargo#0",
+     "bagged fertiliser"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "bagged fertiliser"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ]
+   ]
+  },
+  {
+   "event": "Nothing chosen in the pilot list .",
+   "ordered": [
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ]
+   ],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Cargo#0",
+     "frozen fish"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Calls logged#0",
+     "1"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Flag#0",
+     "Iceland"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "frozen fish"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Iceland"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ]
+   ]
+  },
+  {
+   "event": "<> booked for call <> .",
+   "ordered": [
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_cmp_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "80"
+    ],
+    [
+     "attr_cmp_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "100"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "150"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "130"
+    ]
+   ],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "selection['combobox#1']:1",
+     "attr:Duty#0",
+     "on"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Calls logged#0",
+     "3"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Flag#0",
+     "United Kingdom"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "United Kingdom"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Cargo#0",
+     "drummed solvents"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "event": "Call <> is already <> ; <> pilot is needed .",
+   "ordered": [
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_cmp_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "80"
+    ],
+    [
+     "attr_cmp_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "100"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "130"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "150"
+    ]
+   ],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Calls logged#0",
+     "4"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Cargo#0",
+     "frozen fish"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Flag#0",
+     "Iceland"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "frozen fish"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Iceland"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ]
+   ]
+  },
+  {
+   "event": "<> is not <> .",
+   "ordered": [
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_cmp_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "80"
+    ],
+    [
+     "attr_cmp_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "100"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "150"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "130"
+    ]
+   ],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Calls logged#0",
+     "3"
+    ],
+    [
+     "attr",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "130"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Flag#0",
+     "Ireland"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "milling grain"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Ireland"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ]
+   ]
+  },
+  {
+   "event": "<> holds a <> ; <> is <> overall .",
+   "ordered": [
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "80"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "150"
+    ],
+    [
+     "attr_cmp_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "100"
+    ],
+    [
+     "attr_cmp_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "130"
+    ]
+   ],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Cargo#0",
+     "frozen fish"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Flag#0",
+     "Iceland"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "frozen fish"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Iceland"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr",
+     "selection['combobox#1']:1",
+     "attr:Duty#0",
+     "on"
+    ]
+   ]
+  },
+  {
+   "event": "<> holds a <> ; <> is <> overall .",
+   "ordered": [
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "80"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "150"
+    ],
+    [
+     "attr_cmp_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "100"
+    ],
+    [
+     "attr_cmp_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "130"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ]
+   ],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Calls logged#0",
+     "0"
+    ],
+    [
+     "attr",
+     "selection['combobox#1']:1",
+     "attr:Duty#0",
+     "on"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "80"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Flag#0",
+     "Malta"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Cargo#0",
+     "naphtha"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Malta"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ]
+   ]
+  },
+  {
+   "event": "<> holds a <> ; <> is <> overall .",
+   "ordered": [
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "80"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "150"
+    ],
+    [
+     "attr_cmp_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "100"
+    ],
+    [
+     "attr_cmp_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "130"
+    ]
+   ],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Calls logged#0",
+     "2"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "selection['combobox#1']:1",
+     "attr:Duty#0",
+     "on"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Flag#0",
+     "Ireland"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "milling grain"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Ireland"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ]
+   ]
+  },
+  {
+   "event": "<> is not <> .",
+   "ordered": [
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_cmp_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "80"
+    ],
+    [
+     "attr_cmp_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "100"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "130"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "150"
+    ]
+   ],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Calls logged#0",
+     "1"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Flag#0",
+     "United Kingdom"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "United Kingdom"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Cargo#0",
+     "drummed solvents"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "drummed solvents"
+    ]
+   ]
+  },
+  {
+   "event": "<> booked for call <> .",
+   "ordered": [
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_cmp_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "80"
+    ],
+    [
+     "attr_cmp_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "150"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "100"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "130"
+    ]
+   ],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Calls logged#0",
+     "1"
+    ],
+    [
+     "attr",
+     "selection['combobox#1']:1",
+     "attr:Duty#0",
+     "on"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Flag#0",
+     "United Kingdom"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "United Kingdom"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Cargo#0",
+     "drummed solvents"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "event": "<> booked for call <> .",
+   "ordered": [
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_cmp_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "80"
+    ],
+    [
+     "attr_cmp_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "100"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "130"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "150"
+    ]
+   ],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Cargo#0",
+     "frozen fish"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Flag#0",
+     "Iceland"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "frozen fish"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Iceland"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr",
+     "selection['combobox#1']:1",
+     "attr:Duty#0",
+     "on"
+    ]
+   ]
+  },
+  {
+   "event": "<> is already booked for call <> .",
+   "ordered": [
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "80"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "150"
+    ],
+    [
+     "attr_cmp_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "100"
+    ],
+    [
+     "attr_cmp_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "130"
+    ]
+   ],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Cargo#0",
+     "frozen fish"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Flag#0",
+     "Iceland"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "frozen fish"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Iceland"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr",
+     "selection['combobox#1']:1",
+     "attr:Duty#0",
+     "on"
+    ]
+   ]
+  },
+  {
+   "event": "<> holds a <> ; <> is <> overall .",
+   "ordered": [
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "80"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "100"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "150"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "130"
+    ],
+    [
+     "attr_cmp_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0"
+    ],
+    [
+     "attr_cmp_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ]
+   ],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Calls logged#0",
+     "4"
+    ],
+    [
+     "attr",
+     "selection['combobox#1']:1",
+     "attr:Duty#0",
+     "on"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "130"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Flag#0",
+     "Malta"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Cargo#0",
+     "naphtha"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Malta"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ]
+   ]
+  },
+  {
+   "event": "<> is not <> .",
+   "ordered": [
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "80"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "100"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "150"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "130"
+    ],
+    [
+     "attr_cmp_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0"
+    ],
+    [
+     "attr_cmp_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ]
+   ],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Calls logged#0",
+     "4"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "130"
+    ],
+    [
+     "attr",
+     "selection['combobox#1']:1",
+     "attr:Duty#0",
+     "off"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Flag#0",
+     "Malta"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Cargo#0",
+     "naphtha"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Malta"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ]
+   ]
+  },
+  {
+   "event": "<> booked for call <> .",
+   "ordered": [
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_cmp_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "80"
+    ],
+    [
+     "attr_cmp_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "100"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "150"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "130"
+    ]
+   ],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Calls logged#0",
+     "1"
+    ],
+    [
+     "attr",
+     "selection['combobox#1']:1",
+     "attr:Duty#0",
+     "on"
+    ],
+    [
+     "attr",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "130"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Flag#0",
+     "Ireland"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "milling grain"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Ireland"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ]
+   ]
+  },
+  {
+   "event": "<> is already booked for call <> .",
+   "ordered": [
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "80"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "100"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "150"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "130"
+    ],
+    [
+     "attr_cmp_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0"
+    ],
+    [
+     "attr_cmp_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ]
+   ],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Calls logged#0",
+     "4"
+    ],
+    [
+     "attr",
+     "selection['combobox#1']:1",
+     "attr:Duty#0",
+     "on"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "130"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Flag#0",
+     "Malta"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Cargo#0",
+     "naphtha"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Malta"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ]
+   ]
+  },
+  {
+   "event": "<> holds a <> ; <> is <> overall .",
+   "ordered": [
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "80"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "150"
+    ],
+    [
+     "attr_cmp_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "100"
+    ],
+    [
+     "attr_cmp_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "130"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ]
+   ],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "selection['combobox#1']:1",
+     "attr:Duty#0",
+     "on"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Calls logged#0",
+     "3"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "80"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Flag#0",
+     "Malta"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Cargo#0",
+     "naphtha"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Malta"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ]
+   ]
+  },
+  {
+   "event": "<> holds a <> ; <> is <> overall .",
+   "ordered": [
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "80"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "150"
+    ],
+    [
+     "attr_cmp_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "100"
+    ],
+    [
+     "attr_cmp_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "130"
+    ]
+   ],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Calls logged#0",
+     "0"
+    ],
+    [
+     "attr",
+     "selection['combobox#1']:1",
+     "attr:Duty#0",
+     "on"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Flag#0",
+     "Ireland"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Cargo#0",
+     "milling grain"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Ireland"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ]
+   ]
+  },
+  {
+   "event": "<> is not <> .",
+   "ordered": [
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "80"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "150"
+    ],
+    [
+     "attr_cmp_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "100"
+    ],
+    [
+     "attr_cmp_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "130"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ]
+   ],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Calls logged#0",
+     "3"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "selection['combobox#1']:1",
+     "attr:Duty#0",
+     "off"
+    ],
+    [
+     "attr",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "80"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Flag#0",
+     "Malta"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Cargo#0",
+     "naphtha"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Malta"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ]
+   ]
+  },
+  {
+   "event": "<> booked for call <> .",
+   "ordered": [
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_cmp_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "80"
+    ],
+    [
+     "attr_cmp_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "150"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "100"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "130"
+    ],
+    [
+     "attr_lt",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_lt",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ]
+   ],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Calls logged#0",
+     "2"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Hazardous cargo#0",
+     "no"
+    ],
+    [
+     "attr",
+     "selection['combobox#1']:1",
+     "attr:Duty#0",
+     "on"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Flag#0",
+     "United Kingdom"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "United Kingdom"
+    ],
+    [
+     "attr",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "80"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#0",
+     "54"
+    ]
+   ]
+  },
+  {
+   "event": "<> is already booked for call <> .",
+   "ordered": [
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "96"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "64"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "54"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "88"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "78"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "132"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "112"
+    ],
+    [
+     "attr_ge",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "80"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "150"
+    ],
+    [
+     "attr_cmp_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "100"
+    ],
+    [
+     "attr_cmp_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0"
+    ],
+    [
+     "attr_lt",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "130"
+    ],
+    [
+     "attr_ge",
+     "owner",
+     "attr:Length overall#0",
+     "148"
+    ],
+    [
+     "attr_ge",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ]
+   ],
+   "attrs": [
+    [
+     "attr",
+     "owner",
+     "attr:Status#0",
+     "expected"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Length overall#1",
+     "m"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Bring#0",
+     "alongside"
+    ],
+    [
+     "attr",
+     "selection['combobox#1']:1",
+     "attr:Duty#0",
+     "on"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Calls logged#0",
+     "3"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Hazardous cargo#0",
+     "yes"
+    ],
+    [
+     "attr",
+     "selection['combobox#1']:1",
+     "attr:Ticket to#0",
+     "80"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Flag#0",
+     "Malta"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Cargo#0",
+     "naphtha"
+    ],
+    [
+     "attr",
+     "owner",
+     "attr:Flag#0",
+     "Malta"
+    ],
+    [
+     "attr",
+     "relation['backward', 'rel:3']:2<owner",
+     "attr:Length overall#0",
+     "148"
+    ]
+   ]
+  }
+ ]
+}

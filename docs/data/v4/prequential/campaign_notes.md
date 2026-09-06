@@ -1545,3 +1545,97 @@ blend permuted control: Record draw rules 3 -> 1, 67/6/1 -> 73/1/0 (fewer
 spurious rules on shuffled labels; real ledgers unchanged).  cellar, vet
 unchanged.  Committed with the regenerated state; Part XVII gains the
 regeneration paragraph.
+
+## Design (d): a view's identity on a held-out history (01:20)
+pinned.separation builds one record per keyed family from the co-present pairs
+of its instances on the holdout (CONFIRMED / PARTIAL / REFUTED / UNTESTED when
+there are none).  A family keyed by correspondence never has co-present pairs,
+so it is UNTESTED by construction and the classifier calls the whole holdout
+INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE.  The claim such a key makes is
+different: "this value names an object the page shows".  On the holdout it is
+tested by correspondence -- for each instance, whether its key value is a key
+of some other keyed family on the same page.  Record: a separate
+`correspondence` count beside the pair counts (instances, corresponding);
+status CONFIRMED when every instance corresponds and there are no co-present
+pairs, PARTIAL when some, REFUTED when none; the validator's exact-field
+contract extended in transfer.py and the classifier unchanged (a CONFIRMED
+correspondence is a confirmed separation for its purposes).  Pre-registered
+P27: harbour's holdout returns to CONFIRMED_WHERE_APPLICABLE or CONFIRMED with
+the sheet's record CONFIRMED by correspondence; vet's edit row (unkeyed now)
+unaffected; blend unchanged.  Touches pinned.py / transfer.py (frozen?) ->
+regen.  Implement after P26's fits are launched.
+
+01:22 (d) implemented: pinned.Separation gains instances/corresponding; a
+family with no co-present pairs is tested by correspondence (each instance's
+key value is a key of another applied family on the same page); status
+CONFIRMED/PARTIAL/REFUTED from those counts, UNTESTED only when nothing was
+tried; transfer._validate_separation_records extended (exact fields +
+correspondence-derived status); tests: _sep/_separation helpers carry the
+fields, new test for a view confirmed by correspondence and for a
+misreported status.  test_v4_retained_frontier fails until the frontiers are
+regenerated with the new fields (the retained artefacts predate the contract)
+-- expected, resolved by the regen.
+
+## P27 HOLDS (01:57): battery #4 regen stage (26f3f76)
+harbour holdout CONFIRMED (was CONFIRMED_WHERE_APPLICABLE_PARTIAL_COVERAGE at
+b3c9d11 and INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE under 30150dd): the sheet's
+record heading#0 CONFIRMED by correspondence 167/167 -- every held-out sheet
+names a call the page shows.  vet INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE as
+before the campaign (its partial evidence lies elsewhere); blend CONFIRMED.
+Battery #4 continues (open_world, identity, outcome, admissible) under
+CPUQuota=800% beside the P26 chains.
+
+02:07 search moves on harbour_dev, sheet family: one identity move, heading#0
+UNSUPPORTED, decided_by explained +2 (named -19) -- earned by evidence, not
+spelling; no move for the Vessel candidate was tried after it, so heading-vs-
+Vessel is unposed rather than decided.  Audit item for the identity campaign:
+after a family's first accepted move, rivals of equal correspondence should be
+tried and tied ones posed.  P26: pil51/61/62 landed; battery #4 in open_world.
+
+## P26 corpus landed (03:32); fits launched
+Dev seeds 51/52/53 (on harbour_dev): ticket too short x6 (Silas 80 m vs
+112/148/88/148/88; Ruth 130 vs 148), off duty x3, bookings x4, already booked
+x3.  Holdout 61/62/63 (on harbour_transfer): too short x2 (Tom 100 vs 148,
+Ruth 130 vs 132), off duty x3, bookings x3, already booked x3.  Merged
+harbour_pil_dev (451 steps), harbour_pil_hold (521).  join_fits_p26.sh:
+inspect + score under search and pinned readings, Book pilot.  Battery #4
+in open_world's tail.
+
+## P26 HOLDS (03:52): the pilot join, both readings identical
+Book pilot on harbour_pil_dev: roles owner / selection[combobox#1] (the pilot)
+/ relation[backward rel:3]<owner (the vessel whose current call is the owner);
+rules: unnamed(pilot) -> Nothing chosen [6]; Duty(pilot) == off -> not on duty
+[4]; Length overall(owner) < 88 -> booked [3] (a threshold artefact);
+Ticket to(pilot) < 150 & ref_set(pilot, rel:3) -> already booked [3];
+Ticket to(pilot) < Length overall(vessel) -> holds a ticket to ...; ... is ...
+overall [6]  (THE JOIN); ref_null(pilot, rel:3) -> booked [2].  Adopted:
+Ticket to [80..150] on the pilot type, Length overall on the vessel types.
+Holdout (harbour_pil_hold, 21 Book pilot clicks): 12 forced right, 6 several,
+1 unestablished, 2 wrong -- steps 493 and 502 predicted "Nothing chosen" where
+a pilot was chosen (the selection role named nothing); diagnosing.  Whole
+holdout: 165 forced right / 89 sole right / 41 several / 6 unestablished /
+7 sole wrong / 5 forced wrong.
+
+04:12 P26's two wrong answers diagnosed (p26_diag.log): at 493 and 502 every
+role is named (owner C-103/C-104, the pilot by the select, the vessel by the
+backward relation) and the select's value names the pilot; the forced
+"Nothing chosen" comes from the version space, not the list -- the six
+unnamed-select occasions share a pure condition on owner literals alone that
+also holds here, while no pure condition vouches for the booking (the dev
+bookings' shared literals are thinner).  Same class as blend's page-read
+roles: purity over a longer literal list is easier to reach and means less.
+Not the join's error; recorded as the residual.
+
+## Battery #4 (26f3f76) judged and retained (05:08)
+01:23 -> 05:05 at 8 cores.  Against 109f5ae the only change is harbour's
+holdout INCONCLUSIVE_PARTIAL_IDENTITY_EVIDENCE -> CONFIRMED (P27); all
+sixteen invariants zero; every outcome ledger unchanged; test_v4_retained_
+frontier passes against the regenerated artefacts.  Committed with Part
+XVII's P26/P27 paragraphs and the amended closing section.
+Next (autonomous, per the user's "determine the next steps"): the search
+does not pose the panel-as-widget vs panel-as-view tie -- after a family's
+first accepted identity move, rivals of equal correspondence are never tried
+(moves log: one move, heading#0, decided_by explained +2).  The identity
+campaign's own doctrine is "the search keeps the question"; implement: try
+the rivals, pose ties.  Then the version space's spurious admissibility
+through long pure conditions (blend's measurement; P26's two wrongs).

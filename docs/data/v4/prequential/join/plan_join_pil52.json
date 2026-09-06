@@ -1,0 +1,157 @@
+{
+ "name": "harbour: pilot bookings and refusals, seed 52",
+ "run": "runs/v4/harbour_dev",
+ "base": "http://127.0.0.1:8910",
+ "seed": 52,
+ "tie": {
+  "family": "join",
+  "left": null,
+  "right": null
+ },
+ "readings": {
+  "A": {},
+  "B": {}
+ },
+ "actions": [
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Schedule call",
+    "nth": 2
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-102"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 1
+   },
+   "text": "Ruth Kealy - ticket to 130 m - on duty"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Book pilot"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Sign off",
+    "nth": 0
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-102"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 1
+   },
+   "text": "Ruth Kealy - ticket to 130 m - off duty"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Book pilot"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-103"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 1
+   },
+   "text": "Ruth Kealy - ticket to 130 m - off duty"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Book pilot"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Sign on",
+    "nth": 0
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-103"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 1
+   },
+   "text": "Ruth Kealy - ticket to 130 m - on duty"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Book pilot"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-102"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 1
+   },
+   "text": "Ruth Kealy - ticket to 130 m - on duty"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Book pilot"
+   }
+  }
+ ],
+ "test": "mutation",
+ "predictions": {
+  "A": "n/a",
+  "B": "n/a"
+ },
+ "note": "scheduled C-103 for Bregagh (88 m); ticket too short: C-102 (148 m) <- Ruth Kealy (ticket 130 m); signed off Ruth Kealy; off duty: C-102 (148 m) <- Ruth Kealy (ticket 130 m); off duty: C-103 (88 m) <- Ruth Kealy (ticket 130 m); signed on Ruth Kealy; ok: C-103 (88 m) <- Ruth Kealy (ticket 130 m); already booked: C-102 (148 m) <- Ruth Kealy (ticket 130 m)"
+}
