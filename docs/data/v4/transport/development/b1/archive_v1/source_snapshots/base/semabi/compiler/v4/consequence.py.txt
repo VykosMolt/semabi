@@ -1044,20 +1044,6 @@ def _aggregate(base: ScopedPrediction, parts: list[ScopedPrediction], bound
     base.identity = _aggregate_identity(base, parts, bound)
     base.binding_evidence = ("/".join(sorted({p.binding_evidence for p in parts}))
                             if parts else "")
-    if bound.truncated:
-        # Deduplicating assignments can leave one representative consequence, but it
-        # cannot make an incomplete binding search exhaustive in either direction.
-        counts = Counter(p.verdict for p in parts)
-        observed = ", ".join(f"{verdict}={counts[verdict]}" for verdict in
-                             (SUPPORTED, REFUTED, POSSIBLE, UNKNOWN, NOT_APPLICABLE))
-        base.binding_truncated = True
-        base.verdict = POSSIBLE if decided else UNKNOWN
-        base.detail = (f"the binding search is incomplete: {len(bound.admissible)} assignments "
-                       f"retained; {len(parts)} representative consequences evaluated; "
-                       f"observed consequence verdicts: {observed}")
-        if parts:
-            base.detail += f"; representative evidence: {winner.detail}"
-        return base
     if not decided:
         base.verdict = parts[0].verdict if parts else NOT_APPLICABLE
         base.detail = (parts[0].detail if parts else "no assignment binds this effect")

@@ -1,0 +1,1329 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="32" skipped="0" tests="54" time="0.511" timestamp="2026-09-07T21:01:32.850782+02:00" hostname="arch-legion"><testcase classname="tests.test_v4_binding" name="test_a_partial_singleton_does_not_establish_uniqueness[answers]" time="0.001"><failure message="AssertionError: assert ('UNIQUE' == 'UNSETTLED'&#10;  &#10;  - UNSETTLED&#10;  + UNIQUE)">budget = {'limit': 1}
+
+    @pytest.mark.parametrize("budget", [{"limit": 1}, {"nodes": 2}], ids=["answers", "nodes"])
+    def test_a_partial_singleton_does_not_establish_uniqueness(budget):
+        a, b = obj("A"), obj("B")
+        op, world = rule({"?z": BERTH}), state(a, b)
+        complete = binding.solve(op, (), world, {})
+        partial = binding.solve(op, (), world, {}, **budget)
+    
+        assert complete.status == binding.AMBIGUOUS and not complete.truncated
+        assert len(complete.admissible) == 2
+        assert complete.effect_target(["?z"]) == (binding.UNDERDETERMINED, 2)
+&gt;       assert partial.status == binding.UNSETTLED and partial.truncated
+E       AssertionError: assert ('UNIQUE' == 'UNSETTLED'
+E         
+E         - UNSETTLED
+E         + UNIQUE)
+
+tests/test_v4_binding.py:72: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_a_partial_singleton_does_not_establish_uniqueness[nodes]" time="0.000"><failure message="AssertionError: assert ('UNIQUE' == 'UNSETTLED'&#10;  &#10;  - UNSETTLED&#10;  + UNIQUE)">budget = {'nodes': 2}
+
+    @pytest.mark.parametrize("budget", [{"limit": 1}, {"nodes": 2}], ids=["answers", "nodes"])
+    def test_a_partial_singleton_does_not_establish_uniqueness(budget):
+        a, b = obj("A"), obj("B")
+        op, world = rule({"?z": BERTH}), state(a, b)
+        complete = binding.solve(op, (), world, {})
+        partial = binding.solve(op, (), world, {}, **budget)
+    
+        assert complete.status == binding.AMBIGUOUS and not complete.truncated
+        assert len(complete.admissible) == 2
+        assert complete.effect_target(["?z"]) == (binding.UNDERDETERMINED, 2)
+&gt;       assert partial.status == binding.UNSETTLED and partial.truncated
+E       AssertionError: assert ('UNIQUE' == 'UNSETTLED'
+E         
+E         - UNSETTLED
+E         + UNIQUE)
+
+tests/test_v4_binding.py:72: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_a_complete_singleton_at_its_bounds_remains_unique[one-candidate-answers]" time="0.000" /><testcase classname="tests.test_v4_binding" name="test_a_complete_singleton_at_its_bounds_remains_unique[one-candidate-nodes]" time="0.000" /><testcase classname="tests.test_v4_binding" name="test_a_complete_singleton_at_its_bounds_remains_unique[one-candidate-both]" time="0.000" /><testcase classname="tests.test_v4_binding" name="test_a_complete_singleton_at_its_bounds_remains_unique[pruned-tail-answers]" time="0.000" /><testcase classname="tests.test_v4_binding" name="test_a_complete_singleton_at_its_bounds_remains_unique[pruned-tail-nodes]" time="0.000" /><testcase classname="tests.test_v4_binding" name="test_a_complete_singleton_at_its_bounds_remains_unique[pruned-tail-both]" time="0.000" /><testcase classname="tests.test_v4_binding" name="test_incomplete_aggregation_preserves_only_observed_evidence[verdicts0-NOT_APPLICABLE-counts0]" time="0.040"><failure message="AssertionError: assert 'NOT_APPLICABLE' == 'UNKNOWN'&#10;  &#10;  - UNKNOWN&#10;  + NOT_APPLICABLE">verdicts = (), complete_verdict = 'NOT_APPLICABLE', counts = (0, 0, 0, 0, 0)
+
+    @pytest.mark.parametrize("verdicts, complete_verdict, counts", [
+        ((), "NOT_APPLICABLE", (0, 0, 0, 0, 0)),
+        (("SUPPORTED",), "SUPPORTED", (1, 0, 0, 0, 0)),
+        (("REFUTED",), "REFUTED", (0, 1, 0, 0, 0)),
+        (("POSSIBLE",), "POSSIBLE", (0, 0, 1, 0, 0)),
+        (("UNKNOWN",), "UNKNOWN", (0, 0, 0, 1, 0)),
+        (("NOT_APPLICABLE",), "NOT_APPLICABLE", (0, 0, 0, 0, 1)),
+        (("SUPPORTED", "SUPPORTED"), "SUPPORTED", (2, 0, 0, 0, 0)),
+        (("REFUTED", "REFUTED"), "REFUTED", (0, 2, 0, 0, 0)),
+        (("UNKNOWN", "UNKNOWN"), "UNKNOWN", (0, 0, 0, 2, 0)),
+        (("NOT_APPLICABLE", "NOT_APPLICABLE"), "NOT_APPLICABLE", (0, 0, 0, 0, 2)),
+        (("SUPPORTED", "REFUTED"), "POSSIBLE", (1, 1, 0, 0, 0)),
+        (("NOT_APPLICABLE", "REFUTED"), "POSSIBLE", (0, 1, 0, 0, 1)),
+        (("UNKNOWN", "SUPPORTED"), "POSSIBLE", (1, 0, 0, 1, 0)),
+        (("UNKNOWN", "NOT_APPLICABLE"), "UNKNOWN", (0, 0, 0, 1, 1)),
+        (("NOT_APPLICABLE", "UNKNOWN"), "NOT_APPLICABLE", (0, 0, 0, 1, 1)),
+        (("POSSIBLE", "NOT_APPLICABLE"), "POSSIBLE", (0, 0, 1, 0, 1)),
+    ])
+    def test_incomplete_aggregation_preserves_only_observed_evidence(verdicts, complete_verdict,
+                                                                   counts):
+        from copy import deepcopy
+        from semabi.compiler.v4 import consequence as csq
+    
+        op, world = rule({"?z": BERTH}), state(obj("A"), obj("B"), obj("C"))
+        complete = binding.solve(op, (), world, {})
+        partial = binding.solve(op, (), world, {}, limit=2)
+        parts = [_part(v) for v in verdicts]
+        for i, part in enumerate(parts):
+            part.detail = f"observed representative {i}: {part.verdict}"
+            part.expected, part.observed = f"expected {i}", (f"observed {i}",)
+            part.context, part.feature_node = (("representative", i),), i
+        untouched_parts, untouched_binding = deepcopy(parts), partial.to_json()
+    
+        control = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, complete)
+        got = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, partial)
+        assert control.verdict == complete_verdict and not control.binding_truncated
+&gt;       assert got.verdict == (csq.POSSIBLE if sum(counts[:3]) else csq.UNKNOWN)
+E       AssertionError: assert 'NOT_APPLICABLE' == 'UNKNOWN'
+E         
+E         - UNKNOWN
+E         + NOT_APPLICABLE
+
+tests/test_v4_binding.py:433: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_incomplete_aggregation_preserves_only_observed_evidence[verdicts1-SUPPORTED-counts1]" time="0.000"><failure message="AssertionError: assert 'SUPPORTED' == 'POSSIBLE'&#10;  &#10;  - POSSIBLE&#10;  + SUPPORTED">verdicts = ('SUPPORTED',), complete_verdict = 'SUPPORTED'
+counts = (1, 0, 0, 0, 0)
+
+    @pytest.mark.parametrize("verdicts, complete_verdict, counts", [
+        ((), "NOT_APPLICABLE", (0, 0, 0, 0, 0)),
+        (("SUPPORTED",), "SUPPORTED", (1, 0, 0, 0, 0)),
+        (("REFUTED",), "REFUTED", (0, 1, 0, 0, 0)),
+        (("POSSIBLE",), "POSSIBLE", (0, 0, 1, 0, 0)),
+        (("UNKNOWN",), "UNKNOWN", (0, 0, 0, 1, 0)),
+        (("NOT_APPLICABLE",), "NOT_APPLICABLE", (0, 0, 0, 0, 1)),
+        (("SUPPORTED", "SUPPORTED"), "SUPPORTED", (2, 0, 0, 0, 0)),
+        (("REFUTED", "REFUTED"), "REFUTED", (0, 2, 0, 0, 0)),
+        (("UNKNOWN", "UNKNOWN"), "UNKNOWN", (0, 0, 0, 2, 0)),
+        (("NOT_APPLICABLE", "NOT_APPLICABLE"), "NOT_APPLICABLE", (0, 0, 0, 0, 2)),
+        (("SUPPORTED", "REFUTED"), "POSSIBLE", (1, 1, 0, 0, 0)),
+        (("NOT_APPLICABLE", "REFUTED"), "POSSIBLE", (0, 1, 0, 0, 1)),
+        (("UNKNOWN", "SUPPORTED"), "POSSIBLE", (1, 0, 0, 1, 0)),
+        (("UNKNOWN", "NOT_APPLICABLE"), "UNKNOWN", (0, 0, 0, 1, 1)),
+        (("NOT_APPLICABLE", "UNKNOWN"), "NOT_APPLICABLE", (0, 0, 0, 1, 1)),
+        (("POSSIBLE", "NOT_APPLICABLE"), "POSSIBLE", (0, 0, 1, 0, 1)),
+    ])
+    def test_incomplete_aggregation_preserves_only_observed_evidence(verdicts, complete_verdict,
+                                                                   counts):
+        from copy import deepcopy
+        from semabi.compiler.v4 import consequence as csq
+    
+        op, world = rule({"?z": BERTH}), state(obj("A"), obj("B"), obj("C"))
+        complete = binding.solve(op, (), world, {})
+        partial = binding.solve(op, (), world, {}, limit=2)
+        parts = [_part(v) for v in verdicts]
+        for i, part in enumerate(parts):
+            part.detail = f"observed representative {i}: {part.verdict}"
+            part.expected, part.observed = f"expected {i}", (f"observed {i}",)
+            part.context, part.feature_node = (("representative", i),), i
+        untouched_parts, untouched_binding = deepcopy(parts), partial.to_json()
+    
+        control = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, complete)
+        got = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, partial)
+        assert control.verdict == complete_verdict and not control.binding_truncated
+&gt;       assert got.verdict == (csq.POSSIBLE if sum(counts[:3]) else csq.UNKNOWN)
+E       AssertionError: assert 'SUPPORTED' == 'POSSIBLE'
+E         
+E         - POSSIBLE
+E         + SUPPORTED
+
+tests/test_v4_binding.py:433: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_incomplete_aggregation_preserves_only_observed_evidence[verdicts2-REFUTED-counts2]" time="0.000"><failure message="AssertionError: assert 'REFUTED' == 'POSSIBLE'&#10;  &#10;  - POSSIBLE&#10;  + REFUTED">verdicts = ('REFUTED',), complete_verdict = 'REFUTED', counts = (0, 1, 0, 0, 0)
+
+    @pytest.mark.parametrize("verdicts, complete_verdict, counts", [
+        ((), "NOT_APPLICABLE", (0, 0, 0, 0, 0)),
+        (("SUPPORTED",), "SUPPORTED", (1, 0, 0, 0, 0)),
+        (("REFUTED",), "REFUTED", (0, 1, 0, 0, 0)),
+        (("POSSIBLE",), "POSSIBLE", (0, 0, 1, 0, 0)),
+        (("UNKNOWN",), "UNKNOWN", (0, 0, 0, 1, 0)),
+        (("NOT_APPLICABLE",), "NOT_APPLICABLE", (0, 0, 0, 0, 1)),
+        (("SUPPORTED", "SUPPORTED"), "SUPPORTED", (2, 0, 0, 0, 0)),
+        (("REFUTED", "REFUTED"), "REFUTED", (0, 2, 0, 0, 0)),
+        (("UNKNOWN", "UNKNOWN"), "UNKNOWN", (0, 0, 0, 2, 0)),
+        (("NOT_APPLICABLE", "NOT_APPLICABLE"), "NOT_APPLICABLE", (0, 0, 0, 0, 2)),
+        (("SUPPORTED", "REFUTED"), "POSSIBLE", (1, 1, 0, 0, 0)),
+        (("NOT_APPLICABLE", "REFUTED"), "POSSIBLE", (0, 1, 0, 0, 1)),
+        (("UNKNOWN", "SUPPORTED"), "POSSIBLE", (1, 0, 0, 1, 0)),
+        (("UNKNOWN", "NOT_APPLICABLE"), "UNKNOWN", (0, 0, 0, 1, 1)),
+        (("NOT_APPLICABLE", "UNKNOWN"), "NOT_APPLICABLE", (0, 0, 0, 1, 1)),
+        (("POSSIBLE", "NOT_APPLICABLE"), "POSSIBLE", (0, 0, 1, 0, 1)),
+    ])
+    def test_incomplete_aggregation_preserves_only_observed_evidence(verdicts, complete_verdict,
+                                                                   counts):
+        from copy import deepcopy
+        from semabi.compiler.v4 import consequence as csq
+    
+        op, world = rule({"?z": BERTH}), state(obj("A"), obj("B"), obj("C"))
+        complete = binding.solve(op, (), world, {})
+        partial = binding.solve(op, (), world, {}, limit=2)
+        parts = [_part(v) for v in verdicts]
+        for i, part in enumerate(parts):
+            part.detail = f"observed representative {i}: {part.verdict}"
+            part.expected, part.observed = f"expected {i}", (f"observed {i}",)
+            part.context, part.feature_node = (("representative", i),), i
+        untouched_parts, untouched_binding = deepcopy(parts), partial.to_json()
+    
+        control = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, complete)
+        got = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, partial)
+        assert control.verdict == complete_verdict and not control.binding_truncated
+&gt;       assert got.verdict == (csq.POSSIBLE if sum(counts[:3]) else csq.UNKNOWN)
+E       AssertionError: assert 'REFUTED' == 'POSSIBLE'
+E         
+E         - POSSIBLE
+E         + REFUTED
+
+tests/test_v4_binding.py:433: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_incomplete_aggregation_preserves_only_observed_evidence[verdicts3-POSSIBLE-counts3]" time="0.000"><failure message="AssertionError: assert False&#10; +  where False = ScopedPrediction(step=0, control='c', operator='op0', kind='VALUE', support=1, slot='s', predicted='v', expected='expe...OSSIBLE', detail='observed representative 0: POSSIBLE', layers=(), action_local=None, context=(('representative', 0),)).binding_truncated">verdicts = ('POSSIBLE',), complete_verdict = 'POSSIBLE'
+counts = (0, 0, 1, 0, 0)
+
+    @pytest.mark.parametrize("verdicts, complete_verdict, counts", [
+        ((), "NOT_APPLICABLE", (0, 0, 0, 0, 0)),
+        (("SUPPORTED",), "SUPPORTED", (1, 0, 0, 0, 0)),
+        (("REFUTED",), "REFUTED", (0, 1, 0, 0, 0)),
+        (("POSSIBLE",), "POSSIBLE", (0, 0, 1, 0, 0)),
+        (("UNKNOWN",), "UNKNOWN", (0, 0, 0, 1, 0)),
+        (("NOT_APPLICABLE",), "NOT_APPLICABLE", (0, 0, 0, 0, 1)),
+        (("SUPPORTED", "SUPPORTED"), "SUPPORTED", (2, 0, 0, 0, 0)),
+        (("REFUTED", "REFUTED"), "REFUTED", (0, 2, 0, 0, 0)),
+        (("UNKNOWN", "UNKNOWN"), "UNKNOWN", (0, 0, 0, 2, 0)),
+        (("NOT_APPLICABLE", "NOT_APPLICABLE"), "NOT_APPLICABLE", (0, 0, 0, 0, 2)),
+        (("SUPPORTED", "REFUTED"), "POSSIBLE", (1, 1, 0, 0, 0)),
+        (("NOT_APPLICABLE", "REFUTED"), "POSSIBLE", (0, 1, 0, 0, 1)),
+        (("UNKNOWN", "SUPPORTED"), "POSSIBLE", (1, 0, 0, 1, 0)),
+        (("UNKNOWN", "NOT_APPLICABLE"), "UNKNOWN", (0, 0, 0, 1, 1)),
+        (("NOT_APPLICABLE", "UNKNOWN"), "NOT_APPLICABLE", (0, 0, 0, 1, 1)),
+        (("POSSIBLE", "NOT_APPLICABLE"), "POSSIBLE", (0, 0, 1, 0, 1)),
+    ])
+    def test_incomplete_aggregation_preserves_only_observed_evidence(verdicts, complete_verdict,
+                                                                   counts):
+        from copy import deepcopy
+        from semabi.compiler.v4 import consequence as csq
+    
+        op, world = rule({"?z": BERTH}), state(obj("A"), obj("B"), obj("C"))
+        complete = binding.solve(op, (), world, {})
+        partial = binding.solve(op, (), world, {}, limit=2)
+        parts = [_part(v) for v in verdicts]
+        for i, part in enumerate(parts):
+            part.detail = f"observed representative {i}: {part.verdict}"
+            part.expected, part.observed = f"expected {i}", (f"observed {i}",)
+            part.context, part.feature_node = (("representative", i),), i
+        untouched_parts, untouched_binding = deepcopy(parts), partial.to_json()
+    
+        control = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, complete)
+        got = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, partial)
+        assert control.verdict == complete_verdict and not control.binding_truncated
+        assert got.verdict == (csq.POSSIBLE if sum(counts[:3]) else csq.UNKNOWN)
+&gt;       assert got.binding_truncated
+E       AssertionError: assert False
+E        +  where False = ScopedPrediction(step=0, control='c', operator='op0', kind='VALUE', support=1, slot='s', predicted='v', expected='expe...OSSIBLE', detail='observed representative 0: POSSIBLE', layers=(), action_local=None, context=(('representative', 0),)).binding_truncated
+
+tests/test_v4_binding.py:434: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_incomplete_aggregation_preserves_only_observed_evidence[verdicts4-UNKNOWN-counts4]" time="0.000"><failure message="AssertionError: assert False&#10; +  where False = ScopedPrediction(step=0, control='c', operator='op0', kind='VALUE', support=1, slot='s', predicted='v', expected='expe...'UNKNOWN', detail='observed representative 0: UNKNOWN', layers=(), action_local=None, context=(('representative', 0),)).binding_truncated">verdicts = ('UNKNOWN',), complete_verdict = 'UNKNOWN', counts = (0, 0, 0, 1, 0)
+
+    @pytest.mark.parametrize("verdicts, complete_verdict, counts", [
+        ((), "NOT_APPLICABLE", (0, 0, 0, 0, 0)),
+        (("SUPPORTED",), "SUPPORTED", (1, 0, 0, 0, 0)),
+        (("REFUTED",), "REFUTED", (0, 1, 0, 0, 0)),
+        (("POSSIBLE",), "POSSIBLE", (0, 0, 1, 0, 0)),
+        (("UNKNOWN",), "UNKNOWN", (0, 0, 0, 1, 0)),
+        (("NOT_APPLICABLE",), "NOT_APPLICABLE", (0, 0, 0, 0, 1)),
+        (("SUPPORTED", "SUPPORTED"), "SUPPORTED", (2, 0, 0, 0, 0)),
+        (("REFUTED", "REFUTED"), "REFUTED", (0, 2, 0, 0, 0)),
+        (("UNKNOWN", "UNKNOWN"), "UNKNOWN", (0, 0, 0, 2, 0)),
+        (("NOT_APPLICABLE", "NOT_APPLICABLE"), "NOT_APPLICABLE", (0, 0, 0, 0, 2)),
+        (("SUPPORTED", "REFUTED"), "POSSIBLE", (1, 1, 0, 0, 0)),
+        (("NOT_APPLICABLE", "REFUTED"), "POSSIBLE", (0, 1, 0, 0, 1)),
+        (("UNKNOWN", "SUPPORTED"), "POSSIBLE", (1, 0, 0, 1, 0)),
+        (("UNKNOWN", "NOT_APPLICABLE"), "UNKNOWN", (0, 0, 0, 1, 1)),
+        (("NOT_APPLICABLE", "UNKNOWN"), "NOT_APPLICABLE", (0, 0, 0, 1, 1)),
+        (("POSSIBLE", "NOT_APPLICABLE"), "POSSIBLE", (0, 0, 1, 0, 1)),
+    ])
+    def test_incomplete_aggregation_preserves_only_observed_evidence(verdicts, complete_verdict,
+                                                                   counts):
+        from copy import deepcopy
+        from semabi.compiler.v4 import consequence as csq
+    
+        op, world = rule({"?z": BERTH}), state(obj("A"), obj("B"), obj("C"))
+        complete = binding.solve(op, (), world, {})
+        partial = binding.solve(op, (), world, {}, limit=2)
+        parts = [_part(v) for v in verdicts]
+        for i, part in enumerate(parts):
+            part.detail = f"observed representative {i}: {part.verdict}"
+            part.expected, part.observed = f"expected {i}", (f"observed {i}",)
+            part.context, part.feature_node = (("representative", i),), i
+        untouched_parts, untouched_binding = deepcopy(parts), partial.to_json()
+    
+        control = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, complete)
+        got = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, partial)
+        assert control.verdict == complete_verdict and not control.binding_truncated
+        assert got.verdict == (csq.POSSIBLE if sum(counts[:3]) else csq.UNKNOWN)
+&gt;       assert got.binding_truncated
+E       AssertionError: assert False
+E        +  where False = ScopedPrediction(step=0, control='c', operator='op0', kind='VALUE', support=1, slot='s', predicted='v', expected='expe...'UNKNOWN', detail='observed representative 0: UNKNOWN', layers=(), action_local=None, context=(('representative', 0),)).binding_truncated
+
+tests/test_v4_binding.py:434: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_incomplete_aggregation_preserves_only_observed_evidence[verdicts5-NOT_APPLICABLE-counts5]" time="0.000"><failure message="AssertionError: assert 'NOT_APPLICABLE' == 'UNKNOWN'&#10;  &#10;  - UNKNOWN&#10;  + NOT_APPLICABLE">verdicts = ('NOT_APPLICABLE',), complete_verdict = 'NOT_APPLICABLE'
+counts = (0, 0, 0, 0, 1)
+
+    @pytest.mark.parametrize("verdicts, complete_verdict, counts", [
+        ((), "NOT_APPLICABLE", (0, 0, 0, 0, 0)),
+        (("SUPPORTED",), "SUPPORTED", (1, 0, 0, 0, 0)),
+        (("REFUTED",), "REFUTED", (0, 1, 0, 0, 0)),
+        (("POSSIBLE",), "POSSIBLE", (0, 0, 1, 0, 0)),
+        (("UNKNOWN",), "UNKNOWN", (0, 0, 0, 1, 0)),
+        (("NOT_APPLICABLE",), "NOT_APPLICABLE", (0, 0, 0, 0, 1)),
+        (("SUPPORTED", "SUPPORTED"), "SUPPORTED", (2, 0, 0, 0, 0)),
+        (("REFUTED", "REFUTED"), "REFUTED", (0, 2, 0, 0, 0)),
+        (("UNKNOWN", "UNKNOWN"), "UNKNOWN", (0, 0, 0, 2, 0)),
+        (("NOT_APPLICABLE", "NOT_APPLICABLE"), "NOT_APPLICABLE", (0, 0, 0, 0, 2)),
+        (("SUPPORTED", "REFUTED"), "POSSIBLE", (1, 1, 0, 0, 0)),
+        (("NOT_APPLICABLE", "REFUTED"), "POSSIBLE", (0, 1, 0, 0, 1)),
+        (("UNKNOWN", "SUPPORTED"), "POSSIBLE", (1, 0, 0, 1, 0)),
+        (("UNKNOWN", "NOT_APPLICABLE"), "UNKNOWN", (0, 0, 0, 1, 1)),
+        (("NOT_APPLICABLE", "UNKNOWN"), "NOT_APPLICABLE", (0, 0, 0, 1, 1)),
+        (("POSSIBLE", "NOT_APPLICABLE"), "POSSIBLE", (0, 0, 1, 0, 1)),
+    ])
+    def test_incomplete_aggregation_preserves_only_observed_evidence(verdicts, complete_verdict,
+                                                                   counts):
+        from copy import deepcopy
+        from semabi.compiler.v4 import consequence as csq
+    
+        op, world = rule({"?z": BERTH}), state(obj("A"), obj("B"), obj("C"))
+        complete = binding.solve(op, (), world, {})
+        partial = binding.solve(op, (), world, {}, limit=2)
+        parts = [_part(v) for v in verdicts]
+        for i, part in enumerate(parts):
+            part.detail = f"observed representative {i}: {part.verdict}"
+            part.expected, part.observed = f"expected {i}", (f"observed {i}",)
+            part.context, part.feature_node = (("representative", i),), i
+        untouched_parts, untouched_binding = deepcopy(parts), partial.to_json()
+    
+        control = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, complete)
+        got = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, partial)
+        assert control.verdict == complete_verdict and not control.binding_truncated
+&gt;       assert got.verdict == (csq.POSSIBLE if sum(counts[:3]) else csq.UNKNOWN)
+E       AssertionError: assert 'NOT_APPLICABLE' == 'UNKNOWN'
+E         
+E         - UNKNOWN
+E         + NOT_APPLICABLE
+
+tests/test_v4_binding.py:433: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_incomplete_aggregation_preserves_only_observed_evidence[verdicts6-SUPPORTED-counts6]" time="0.000"><failure message="AssertionError: assert 'SUPPORTED' == 'POSSIBLE'&#10;  &#10;  - POSSIBLE&#10;  + SUPPORTED">verdicts = ('SUPPORTED', 'SUPPORTED'), complete_verdict = 'SUPPORTED'
+counts = (2, 0, 0, 0, 0)
+
+    @pytest.mark.parametrize("verdicts, complete_verdict, counts", [
+        ((), "NOT_APPLICABLE", (0, 0, 0, 0, 0)),
+        (("SUPPORTED",), "SUPPORTED", (1, 0, 0, 0, 0)),
+        (("REFUTED",), "REFUTED", (0, 1, 0, 0, 0)),
+        (("POSSIBLE",), "POSSIBLE", (0, 0, 1, 0, 0)),
+        (("UNKNOWN",), "UNKNOWN", (0, 0, 0, 1, 0)),
+        (("NOT_APPLICABLE",), "NOT_APPLICABLE", (0, 0, 0, 0, 1)),
+        (("SUPPORTED", "SUPPORTED"), "SUPPORTED", (2, 0, 0, 0, 0)),
+        (("REFUTED", "REFUTED"), "REFUTED", (0, 2, 0, 0, 0)),
+        (("UNKNOWN", "UNKNOWN"), "UNKNOWN", (0, 0, 0, 2, 0)),
+        (("NOT_APPLICABLE", "NOT_APPLICABLE"), "NOT_APPLICABLE", (0, 0, 0, 0, 2)),
+        (("SUPPORTED", "REFUTED"), "POSSIBLE", (1, 1, 0, 0, 0)),
+        (("NOT_APPLICABLE", "REFUTED"), "POSSIBLE", (0, 1, 0, 0, 1)),
+        (("UNKNOWN", "SUPPORTED"), "POSSIBLE", (1, 0, 0, 1, 0)),
+        (("UNKNOWN", "NOT_APPLICABLE"), "UNKNOWN", (0, 0, 0, 1, 1)),
+        (("NOT_APPLICABLE", "UNKNOWN"), "NOT_APPLICABLE", (0, 0, 0, 1, 1)),
+        (("POSSIBLE", "NOT_APPLICABLE"), "POSSIBLE", (0, 0, 1, 0, 1)),
+    ])
+    def test_incomplete_aggregation_preserves_only_observed_evidence(verdicts, complete_verdict,
+                                                                   counts):
+        from copy import deepcopy
+        from semabi.compiler.v4 import consequence as csq
+    
+        op, world = rule({"?z": BERTH}), state(obj("A"), obj("B"), obj("C"))
+        complete = binding.solve(op, (), world, {})
+        partial = binding.solve(op, (), world, {}, limit=2)
+        parts = [_part(v) for v in verdicts]
+        for i, part in enumerate(parts):
+            part.detail = f"observed representative {i}: {part.verdict}"
+            part.expected, part.observed = f"expected {i}", (f"observed {i}",)
+            part.context, part.feature_node = (("representative", i),), i
+        untouched_parts, untouched_binding = deepcopy(parts), partial.to_json()
+    
+        control = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, complete)
+        got = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, partial)
+        assert control.verdict == complete_verdict and not control.binding_truncated
+&gt;       assert got.verdict == (csq.POSSIBLE if sum(counts[:3]) else csq.UNKNOWN)
+E       AssertionError: assert 'SUPPORTED' == 'POSSIBLE'
+E         
+E         - POSSIBLE
+E         + SUPPORTED
+
+tests/test_v4_binding.py:433: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_incomplete_aggregation_preserves_only_observed_evidence[verdicts7-REFUTED-counts7]" time="0.000"><failure message="AssertionError: assert False&#10; +  where False = ScopedPrediction(step=0, control='c', operator='op0', kind='VALUE', support=1, slot='s', predicted='v', expected='expe... open disagree, so this step does not settle the rule', layers=(), action_local=None, context=(('representative', 0),)).binding_truncated">verdicts = ('REFUTED', 'REFUTED'), complete_verdict = 'REFUTED'
+counts = (0, 2, 0, 0, 0)
+
+    @pytest.mark.parametrize("verdicts, complete_verdict, counts", [
+        ((), "NOT_APPLICABLE", (0, 0, 0, 0, 0)),
+        (("SUPPORTED",), "SUPPORTED", (1, 0, 0, 0, 0)),
+        (("REFUTED",), "REFUTED", (0, 1, 0, 0, 0)),
+        (("POSSIBLE",), "POSSIBLE", (0, 0, 1, 0, 0)),
+        (("UNKNOWN",), "UNKNOWN", (0, 0, 0, 1, 0)),
+        (("NOT_APPLICABLE",), "NOT_APPLICABLE", (0, 0, 0, 0, 1)),
+        (("SUPPORTED", "SUPPORTED"), "SUPPORTED", (2, 0, 0, 0, 0)),
+        (("REFUTED", "REFUTED"), "REFUTED", (0, 2, 0, 0, 0)),
+        (("UNKNOWN", "UNKNOWN"), "UNKNOWN", (0, 0, 0, 2, 0)),
+        (("NOT_APPLICABLE", "NOT_APPLICABLE"), "NOT_APPLICABLE", (0, 0, 0, 0, 2)),
+        (("SUPPORTED", "REFUTED"), "POSSIBLE", (1, 1, 0, 0, 0)),
+        (("NOT_APPLICABLE", "REFUTED"), "POSSIBLE", (0, 1, 0, 0, 1)),
+        (("UNKNOWN", "SUPPORTED"), "POSSIBLE", (1, 0, 0, 1, 0)),
+        (("UNKNOWN", "NOT_APPLICABLE"), "UNKNOWN", (0, 0, 0, 1, 1)),
+        (("NOT_APPLICABLE", "UNKNOWN"), "NOT_APPLICABLE", (0, 0, 0, 1, 1)),
+        (("POSSIBLE", "NOT_APPLICABLE"), "POSSIBLE", (0, 0, 1, 0, 1)),
+    ])
+    def test_incomplete_aggregation_preserves_only_observed_evidence(verdicts, complete_verdict,
+                                                                   counts):
+        from copy import deepcopy
+        from semabi.compiler.v4 import consequence as csq
+    
+        op, world = rule({"?z": BERTH}), state(obj("A"), obj("B"), obj("C"))
+        complete = binding.solve(op, (), world, {})
+        partial = binding.solve(op, (), world, {}, limit=2)
+        parts = [_part(v) for v in verdicts]
+        for i, part in enumerate(parts):
+            part.detail = f"observed representative {i}: {part.verdict}"
+            part.expected, part.observed = f"expected {i}", (f"observed {i}",)
+            part.context, part.feature_node = (("representative", i),), i
+        untouched_parts, untouched_binding = deepcopy(parts), partial.to_json()
+    
+        control = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, complete)
+        got = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, partial)
+        assert control.verdict == complete_verdict and not control.binding_truncated
+        assert got.verdict == (csq.POSSIBLE if sum(counts[:3]) else csq.UNKNOWN)
+&gt;       assert got.binding_truncated
+E       AssertionError: assert False
+E        +  where False = ScopedPrediction(step=0, control='c', operator='op0', kind='VALUE', support=1, slot='s', predicted='v', expected='expe... open disagree, so this step does not settle the rule', layers=(), action_local=None, context=(('representative', 0),)).binding_truncated
+
+tests/test_v4_binding.py:434: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_incomplete_aggregation_preserves_only_observed_evidence[verdicts8-UNKNOWN-counts8]" time="0.000"><failure message="AssertionError: assert False&#10; +  where False = ScopedPrediction(step=0, control='c', operator='op0', kind='VALUE', support=1, slot='s', predicted='v', expected='expe...'UNKNOWN', detail='observed representative 0: UNKNOWN', layers=(), action_local=None, context=(('representative', 0),)).binding_truncated">verdicts = ('UNKNOWN', 'UNKNOWN'), complete_verdict = 'UNKNOWN'
+counts = (0, 0, 0, 2, 0)
+
+    @pytest.mark.parametrize("verdicts, complete_verdict, counts", [
+        ((), "NOT_APPLICABLE", (0, 0, 0, 0, 0)),
+        (("SUPPORTED",), "SUPPORTED", (1, 0, 0, 0, 0)),
+        (("REFUTED",), "REFUTED", (0, 1, 0, 0, 0)),
+        (("POSSIBLE",), "POSSIBLE", (0, 0, 1, 0, 0)),
+        (("UNKNOWN",), "UNKNOWN", (0, 0, 0, 1, 0)),
+        (("NOT_APPLICABLE",), "NOT_APPLICABLE", (0, 0, 0, 0, 1)),
+        (("SUPPORTED", "SUPPORTED"), "SUPPORTED", (2, 0, 0, 0, 0)),
+        (("REFUTED", "REFUTED"), "REFUTED", (0, 2, 0, 0, 0)),
+        (("UNKNOWN", "UNKNOWN"), "UNKNOWN", (0, 0, 0, 2, 0)),
+        (("NOT_APPLICABLE", "NOT_APPLICABLE"), "NOT_APPLICABLE", (0, 0, 0, 0, 2)),
+        (("SUPPORTED", "REFUTED"), "POSSIBLE", (1, 1, 0, 0, 0)),
+        (("NOT_APPLICABLE", "REFUTED"), "POSSIBLE", (0, 1, 0, 0, 1)),
+        (("UNKNOWN", "SUPPORTED"), "POSSIBLE", (1, 0, 0, 1, 0)),
+        (("UNKNOWN", "NOT_APPLICABLE"), "UNKNOWN", (0, 0, 0, 1, 1)),
+        (("NOT_APPLICABLE", "UNKNOWN"), "NOT_APPLICABLE", (0, 0, 0, 1, 1)),
+        (("POSSIBLE", "NOT_APPLICABLE"), "POSSIBLE", (0, 0, 1, 0, 1)),
+    ])
+    def test_incomplete_aggregation_preserves_only_observed_evidence(verdicts, complete_verdict,
+                                                                   counts):
+        from copy import deepcopy
+        from semabi.compiler.v4 import consequence as csq
+    
+        op, world = rule({"?z": BERTH}), state(obj("A"), obj("B"), obj("C"))
+        complete = binding.solve(op, (), world, {})
+        partial = binding.solve(op, (), world, {}, limit=2)
+        parts = [_part(v) for v in verdicts]
+        for i, part in enumerate(parts):
+            part.detail = f"observed representative {i}: {part.verdict}"
+            part.expected, part.observed = f"expected {i}", (f"observed {i}",)
+            part.context, part.feature_node = (("representative", i),), i
+        untouched_parts, untouched_binding = deepcopy(parts), partial.to_json()
+    
+        control = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, complete)
+        got = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, partial)
+        assert control.verdict == complete_verdict and not control.binding_truncated
+        assert got.verdict == (csq.POSSIBLE if sum(counts[:3]) else csq.UNKNOWN)
+&gt;       assert got.binding_truncated
+E       AssertionError: assert False
+E        +  where False = ScopedPrediction(step=0, control='c', operator='op0', kind='VALUE', support=1, slot='s', predicted='v', expected='expe...'UNKNOWN', detail='observed representative 0: UNKNOWN', layers=(), action_local=None, context=(('representative', 0),)).binding_truncated
+
+tests/test_v4_binding.py:434: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_incomplete_aggregation_preserves_only_observed_evidence[verdicts9-NOT_APPLICABLE-counts9]" time="0.000"><failure message="AssertionError: assert 'NOT_APPLICABLE' == 'UNKNOWN'&#10;  &#10;  - UNKNOWN&#10;  + NOT_APPLICABLE">verdicts = ('NOT_APPLICABLE', 'NOT_APPLICABLE')
+complete_verdict = 'NOT_APPLICABLE', counts = (0, 0, 0, 0, 2)
+
+    @pytest.mark.parametrize("verdicts, complete_verdict, counts", [
+        ((), "NOT_APPLICABLE", (0, 0, 0, 0, 0)),
+        (("SUPPORTED",), "SUPPORTED", (1, 0, 0, 0, 0)),
+        (("REFUTED",), "REFUTED", (0, 1, 0, 0, 0)),
+        (("POSSIBLE",), "POSSIBLE", (0, 0, 1, 0, 0)),
+        (("UNKNOWN",), "UNKNOWN", (0, 0, 0, 1, 0)),
+        (("NOT_APPLICABLE",), "NOT_APPLICABLE", (0, 0, 0, 0, 1)),
+        (("SUPPORTED", "SUPPORTED"), "SUPPORTED", (2, 0, 0, 0, 0)),
+        (("REFUTED", "REFUTED"), "REFUTED", (0, 2, 0, 0, 0)),
+        (("UNKNOWN", "UNKNOWN"), "UNKNOWN", (0, 0, 0, 2, 0)),
+        (("NOT_APPLICABLE", "NOT_APPLICABLE"), "NOT_APPLICABLE", (0, 0, 0, 0, 2)),
+        (("SUPPORTED", "REFUTED"), "POSSIBLE", (1, 1, 0, 0, 0)),
+        (("NOT_APPLICABLE", "REFUTED"), "POSSIBLE", (0, 1, 0, 0, 1)),
+        (("UNKNOWN", "SUPPORTED"), "POSSIBLE", (1, 0, 0, 1, 0)),
+        (("UNKNOWN", "NOT_APPLICABLE"), "UNKNOWN", (0, 0, 0, 1, 1)),
+        (("NOT_APPLICABLE", "UNKNOWN"), "NOT_APPLICABLE", (0, 0, 0, 1, 1)),
+        (("POSSIBLE", "NOT_APPLICABLE"), "POSSIBLE", (0, 0, 1, 0, 1)),
+    ])
+    def test_incomplete_aggregation_preserves_only_observed_evidence(verdicts, complete_verdict,
+                                                                   counts):
+        from copy import deepcopy
+        from semabi.compiler.v4 import consequence as csq
+    
+        op, world = rule({"?z": BERTH}), state(obj("A"), obj("B"), obj("C"))
+        complete = binding.solve(op, (), world, {})
+        partial = binding.solve(op, (), world, {}, limit=2)
+        parts = [_part(v) for v in verdicts]
+        for i, part in enumerate(parts):
+            part.detail = f"observed representative {i}: {part.verdict}"
+            part.expected, part.observed = f"expected {i}", (f"observed {i}",)
+            part.context, part.feature_node = (("representative", i),), i
+        untouched_parts, untouched_binding = deepcopy(parts), partial.to_json()
+    
+        control = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, complete)
+        got = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, partial)
+        assert control.verdict == complete_verdict and not control.binding_truncated
+&gt;       assert got.verdict == (csq.POSSIBLE if sum(counts[:3]) else csq.UNKNOWN)
+E       AssertionError: assert 'NOT_APPLICABLE' == 'UNKNOWN'
+E         
+E         - UNKNOWN
+E         + NOT_APPLICABLE
+
+tests/test_v4_binding.py:433: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_incomplete_aggregation_preserves_only_observed_evidence[verdicts10-POSSIBLE-counts10]" time="0.000"><failure message="AssertionError: assert False&#10; +  where False = ScopedPrediction(step=0, control='c', operator='op0', kind='VALUE', support=1, slot='s', predicted='v', expected='expe...this and the evidence does not say which one happened', layers=(), action_local=None, context=(('representative', 0),)).binding_truncated">verdicts = ('SUPPORTED', 'REFUTED'), complete_verdict = 'POSSIBLE'
+counts = (1, 1, 0, 0, 0)
+
+    @pytest.mark.parametrize("verdicts, complete_verdict, counts", [
+        ((), "NOT_APPLICABLE", (0, 0, 0, 0, 0)),
+        (("SUPPORTED",), "SUPPORTED", (1, 0, 0, 0, 0)),
+        (("REFUTED",), "REFUTED", (0, 1, 0, 0, 0)),
+        (("POSSIBLE",), "POSSIBLE", (0, 0, 1, 0, 0)),
+        (("UNKNOWN",), "UNKNOWN", (0, 0, 0, 1, 0)),
+        (("NOT_APPLICABLE",), "NOT_APPLICABLE", (0, 0, 0, 0, 1)),
+        (("SUPPORTED", "SUPPORTED"), "SUPPORTED", (2, 0, 0, 0, 0)),
+        (("REFUTED", "REFUTED"), "REFUTED", (0, 2, 0, 0, 0)),
+        (("UNKNOWN", "UNKNOWN"), "UNKNOWN", (0, 0, 0, 2, 0)),
+        (("NOT_APPLICABLE", "NOT_APPLICABLE"), "NOT_APPLICABLE", (0, 0, 0, 0, 2)),
+        (("SUPPORTED", "REFUTED"), "POSSIBLE", (1, 1, 0, 0, 0)),
+        (("NOT_APPLICABLE", "REFUTED"), "POSSIBLE", (0, 1, 0, 0, 1)),
+        (("UNKNOWN", "SUPPORTED"), "POSSIBLE", (1, 0, 0, 1, 0)),
+        (("UNKNOWN", "NOT_APPLICABLE"), "UNKNOWN", (0, 0, 0, 1, 1)),
+        (("NOT_APPLICABLE", "UNKNOWN"), "NOT_APPLICABLE", (0, 0, 0, 1, 1)),
+        (("POSSIBLE", "NOT_APPLICABLE"), "POSSIBLE", (0, 0, 1, 0, 1)),
+    ])
+    def test_incomplete_aggregation_preserves_only_observed_evidence(verdicts, complete_verdict,
+                                                                   counts):
+        from copy import deepcopy
+        from semabi.compiler.v4 import consequence as csq
+    
+        op, world = rule({"?z": BERTH}), state(obj("A"), obj("B"), obj("C"))
+        complete = binding.solve(op, (), world, {})
+        partial = binding.solve(op, (), world, {}, limit=2)
+        parts = [_part(v) for v in verdicts]
+        for i, part in enumerate(parts):
+            part.detail = f"observed representative {i}: {part.verdict}"
+            part.expected, part.observed = f"expected {i}", (f"observed {i}",)
+            part.context, part.feature_node = (("representative", i),), i
+        untouched_parts, untouched_binding = deepcopy(parts), partial.to_json()
+    
+        control = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, complete)
+        got = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, partial)
+        assert control.verdict == complete_verdict and not control.binding_truncated
+        assert got.verdict == (csq.POSSIBLE if sum(counts[:3]) else csq.UNKNOWN)
+&gt;       assert got.binding_truncated
+E       AssertionError: assert False
+E        +  where False = ScopedPrediction(step=0, control='c', operator='op0', kind='VALUE', support=1, slot='s', predicted='v', expected='expe...this and the evidence does not say which one happened', layers=(), action_local=None, context=(('representative', 0),)).binding_truncated
+
+tests/test_v4_binding.py:434: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_incomplete_aggregation_preserves_only_observed_evidence[verdicts11-POSSIBLE-counts11]" time="0.000"><failure message="AssertionError: assert False&#10; +  where False = ScopedPrediction(step=0, control='c', operator='op0', kind='VALUE', support=1, slot='s', predicted='v', expected='expe... open disagree, so this step does not settle the rule', layers=(), action_local=None, context=(('representative', 1),)).binding_truncated">verdicts = ('NOT_APPLICABLE', 'REFUTED'), complete_verdict = 'POSSIBLE'
+counts = (0, 1, 0, 0, 1)
+
+    @pytest.mark.parametrize("verdicts, complete_verdict, counts", [
+        ((), "NOT_APPLICABLE", (0, 0, 0, 0, 0)),
+        (("SUPPORTED",), "SUPPORTED", (1, 0, 0, 0, 0)),
+        (("REFUTED",), "REFUTED", (0, 1, 0, 0, 0)),
+        (("POSSIBLE",), "POSSIBLE", (0, 0, 1, 0, 0)),
+        (("UNKNOWN",), "UNKNOWN", (0, 0, 0, 1, 0)),
+        (("NOT_APPLICABLE",), "NOT_APPLICABLE", (0, 0, 0, 0, 1)),
+        (("SUPPORTED", "SUPPORTED"), "SUPPORTED", (2, 0, 0, 0, 0)),
+        (("REFUTED", "REFUTED"), "REFUTED", (0, 2, 0, 0, 0)),
+        (("UNKNOWN", "UNKNOWN"), "UNKNOWN", (0, 0, 0, 2, 0)),
+        (("NOT_APPLICABLE", "NOT_APPLICABLE"), "NOT_APPLICABLE", (0, 0, 0, 0, 2)),
+        (("SUPPORTED", "REFUTED"), "POSSIBLE", (1, 1, 0, 0, 0)),
+        (("NOT_APPLICABLE", "REFUTED"), "POSSIBLE", (0, 1, 0, 0, 1)),
+        (("UNKNOWN", "SUPPORTED"), "POSSIBLE", (1, 0, 0, 1, 0)),
+        (("UNKNOWN", "NOT_APPLICABLE"), "UNKNOWN", (0, 0, 0, 1, 1)),
+        (("NOT_APPLICABLE", "UNKNOWN"), "NOT_APPLICABLE", (0, 0, 0, 1, 1)),
+        (("POSSIBLE", "NOT_APPLICABLE"), "POSSIBLE", (0, 0, 1, 0, 1)),
+    ])
+    def test_incomplete_aggregation_preserves_only_observed_evidence(verdicts, complete_verdict,
+                                                                   counts):
+        from copy import deepcopy
+        from semabi.compiler.v4 import consequence as csq
+    
+        op, world = rule({"?z": BERTH}), state(obj("A"), obj("B"), obj("C"))
+        complete = binding.solve(op, (), world, {})
+        partial = binding.solve(op, (), world, {}, limit=2)
+        parts = [_part(v) for v in verdicts]
+        for i, part in enumerate(parts):
+            part.detail = f"observed representative {i}: {part.verdict}"
+            part.expected, part.observed = f"expected {i}", (f"observed {i}",)
+            part.context, part.feature_node = (("representative", i),), i
+        untouched_parts, untouched_binding = deepcopy(parts), partial.to_json()
+    
+        control = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, complete)
+        got = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, partial)
+        assert control.verdict == complete_verdict and not control.binding_truncated
+        assert got.verdict == (csq.POSSIBLE if sum(counts[:3]) else csq.UNKNOWN)
+&gt;       assert got.binding_truncated
+E       AssertionError: assert False
+E        +  where False = ScopedPrediction(step=0, control='c', operator='op0', kind='VALUE', support=1, slot='s', predicted='v', expected='expe... open disagree, so this step does not settle the rule', layers=(), action_local=None, context=(('representative', 1),)).binding_truncated
+
+tests/test_v4_binding.py:434: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_incomplete_aggregation_preserves_only_observed_evidence[verdicts12-POSSIBLE-counts12]" time="0.000"><failure message="AssertionError: assert False&#10; +  where False = ScopedPrediction(step=0, control='c', operator='op0', kind='VALUE', support=1, slot='s', predicted='v', expected='expe...this and the evidence does not say which one happened', layers=(), action_local=None, context=(('representative', 1),)).binding_truncated">verdicts = ('UNKNOWN', 'SUPPORTED'), complete_verdict = 'POSSIBLE'
+counts = (1, 0, 0, 1, 0)
+
+    @pytest.mark.parametrize("verdicts, complete_verdict, counts", [
+        ((), "NOT_APPLICABLE", (0, 0, 0, 0, 0)),
+        (("SUPPORTED",), "SUPPORTED", (1, 0, 0, 0, 0)),
+        (("REFUTED",), "REFUTED", (0, 1, 0, 0, 0)),
+        (("POSSIBLE",), "POSSIBLE", (0, 0, 1, 0, 0)),
+        (("UNKNOWN",), "UNKNOWN", (0, 0, 0, 1, 0)),
+        (("NOT_APPLICABLE",), "NOT_APPLICABLE", (0, 0, 0, 0, 1)),
+        (("SUPPORTED", "SUPPORTED"), "SUPPORTED", (2, 0, 0, 0, 0)),
+        (("REFUTED", "REFUTED"), "REFUTED", (0, 2, 0, 0, 0)),
+        (("UNKNOWN", "UNKNOWN"), "UNKNOWN", (0, 0, 0, 2, 0)),
+        (("NOT_APPLICABLE", "NOT_APPLICABLE"), "NOT_APPLICABLE", (0, 0, 0, 0, 2)),
+        (("SUPPORTED", "REFUTED"), "POSSIBLE", (1, 1, 0, 0, 0)),
+        (("NOT_APPLICABLE", "REFUTED"), "POSSIBLE", (0, 1, 0, 0, 1)),
+        (("UNKNOWN", "SUPPORTED"), "POSSIBLE", (1, 0, 0, 1, 0)),
+        (("UNKNOWN", "NOT_APPLICABLE"), "UNKNOWN", (0, 0, 0, 1, 1)),
+        (("NOT_APPLICABLE", "UNKNOWN"), "NOT_APPLICABLE", (0, 0, 0, 1, 1)),
+        (("POSSIBLE", "NOT_APPLICABLE"), "POSSIBLE", (0, 0, 1, 0, 1)),
+    ])
+    def test_incomplete_aggregation_preserves_only_observed_evidence(verdicts, complete_verdict,
+                                                                   counts):
+        from copy import deepcopy
+        from semabi.compiler.v4 import consequence as csq
+    
+        op, world = rule({"?z": BERTH}), state(obj("A"), obj("B"), obj("C"))
+        complete = binding.solve(op, (), world, {})
+        partial = binding.solve(op, (), world, {}, limit=2)
+        parts = [_part(v) for v in verdicts]
+        for i, part in enumerate(parts):
+            part.detail = f"observed representative {i}: {part.verdict}"
+            part.expected, part.observed = f"expected {i}", (f"observed {i}",)
+            part.context, part.feature_node = (("representative", i),), i
+        untouched_parts, untouched_binding = deepcopy(parts), partial.to_json()
+    
+        control = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, complete)
+        got = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, partial)
+        assert control.verdict == complete_verdict and not control.binding_truncated
+        assert got.verdict == (csq.POSSIBLE if sum(counts[:3]) else csq.UNKNOWN)
+&gt;       assert got.binding_truncated
+E       AssertionError: assert False
+E        +  where False = ScopedPrediction(step=0, control='c', operator='op0', kind='VALUE', support=1, slot='s', predicted='v', expected='expe...this and the evidence does not say which one happened', layers=(), action_local=None, context=(('representative', 1),)).binding_truncated
+
+tests/test_v4_binding.py:434: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_incomplete_aggregation_preserves_only_observed_evidence[verdicts13-UNKNOWN-counts13]" time="0.000"><failure message="AssertionError: assert False&#10; +  where False = ScopedPrediction(step=0, control='c', operator='op0', kind='VALUE', support=1, slot='s', predicted='v', expected='expe...'UNKNOWN', detail='observed representative 0: UNKNOWN', layers=(), action_local=None, context=(('representative', 0),)).binding_truncated">verdicts = ('UNKNOWN', 'NOT_APPLICABLE'), complete_verdict = 'UNKNOWN'
+counts = (0, 0, 0, 1, 1)
+
+    @pytest.mark.parametrize("verdicts, complete_verdict, counts", [
+        ((), "NOT_APPLICABLE", (0, 0, 0, 0, 0)),
+        (("SUPPORTED",), "SUPPORTED", (1, 0, 0, 0, 0)),
+        (("REFUTED",), "REFUTED", (0, 1, 0, 0, 0)),
+        (("POSSIBLE",), "POSSIBLE", (0, 0, 1, 0, 0)),
+        (("UNKNOWN",), "UNKNOWN", (0, 0, 0, 1, 0)),
+        (("NOT_APPLICABLE",), "NOT_APPLICABLE", (0, 0, 0, 0, 1)),
+        (("SUPPORTED", "SUPPORTED"), "SUPPORTED", (2, 0, 0, 0, 0)),
+        (("REFUTED", "REFUTED"), "REFUTED", (0, 2, 0, 0, 0)),
+        (("UNKNOWN", "UNKNOWN"), "UNKNOWN", (0, 0, 0, 2, 0)),
+        (("NOT_APPLICABLE", "NOT_APPLICABLE"), "NOT_APPLICABLE", (0, 0, 0, 0, 2)),
+        (("SUPPORTED", "REFUTED"), "POSSIBLE", (1, 1, 0, 0, 0)),
+        (("NOT_APPLICABLE", "REFUTED"), "POSSIBLE", (0, 1, 0, 0, 1)),
+        (("UNKNOWN", "SUPPORTED"), "POSSIBLE", (1, 0, 0, 1, 0)),
+        (("UNKNOWN", "NOT_APPLICABLE"), "UNKNOWN", (0, 0, 0, 1, 1)),
+        (("NOT_APPLICABLE", "UNKNOWN"), "NOT_APPLICABLE", (0, 0, 0, 1, 1)),
+        (("POSSIBLE", "NOT_APPLICABLE"), "POSSIBLE", (0, 0, 1, 0, 1)),
+    ])
+    def test_incomplete_aggregation_preserves_only_observed_evidence(verdicts, complete_verdict,
+                                                                   counts):
+        from copy import deepcopy
+        from semabi.compiler.v4 import consequence as csq
+    
+        op, world = rule({"?z": BERTH}), state(obj("A"), obj("B"), obj("C"))
+        complete = binding.solve(op, (), world, {})
+        partial = binding.solve(op, (), world, {}, limit=2)
+        parts = [_part(v) for v in verdicts]
+        for i, part in enumerate(parts):
+            part.detail = f"observed representative {i}: {part.verdict}"
+            part.expected, part.observed = f"expected {i}", (f"observed {i}",)
+            part.context, part.feature_node = (("representative", i),), i
+        untouched_parts, untouched_binding = deepcopy(parts), partial.to_json()
+    
+        control = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, complete)
+        got = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, partial)
+        assert control.verdict == complete_verdict and not control.binding_truncated
+        assert got.verdict == (csq.POSSIBLE if sum(counts[:3]) else csq.UNKNOWN)
+&gt;       assert got.binding_truncated
+E       AssertionError: assert False
+E        +  where False = ScopedPrediction(step=0, control='c', operator='op0', kind='VALUE', support=1, slot='s', predicted='v', expected='expe...'UNKNOWN', detail='observed representative 0: UNKNOWN', layers=(), action_local=None, context=(('representative', 0),)).binding_truncated
+
+tests/test_v4_binding.py:434: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_incomplete_aggregation_preserves_only_observed_evidence[verdicts14-NOT_APPLICABLE-counts14]" time="0.000"><failure message="AssertionError: assert 'NOT_APPLICABLE' == 'UNKNOWN'&#10;  &#10;  - UNKNOWN&#10;  + NOT_APPLICABLE">verdicts = ('NOT_APPLICABLE', 'UNKNOWN'), complete_verdict = 'NOT_APPLICABLE'
+counts = (0, 0, 0, 1, 1)
+
+    @pytest.mark.parametrize("verdicts, complete_verdict, counts", [
+        ((), "NOT_APPLICABLE", (0, 0, 0, 0, 0)),
+        (("SUPPORTED",), "SUPPORTED", (1, 0, 0, 0, 0)),
+        (("REFUTED",), "REFUTED", (0, 1, 0, 0, 0)),
+        (("POSSIBLE",), "POSSIBLE", (0, 0, 1, 0, 0)),
+        (("UNKNOWN",), "UNKNOWN", (0, 0, 0, 1, 0)),
+        (("NOT_APPLICABLE",), "NOT_APPLICABLE", (0, 0, 0, 0, 1)),
+        (("SUPPORTED", "SUPPORTED"), "SUPPORTED", (2, 0, 0, 0, 0)),
+        (("REFUTED", "REFUTED"), "REFUTED", (0, 2, 0, 0, 0)),
+        (("UNKNOWN", "UNKNOWN"), "UNKNOWN", (0, 0, 0, 2, 0)),
+        (("NOT_APPLICABLE", "NOT_APPLICABLE"), "NOT_APPLICABLE", (0, 0, 0, 0, 2)),
+        (("SUPPORTED", "REFUTED"), "POSSIBLE", (1, 1, 0, 0, 0)),
+        (("NOT_APPLICABLE", "REFUTED"), "POSSIBLE", (0, 1, 0, 0, 1)),
+        (("UNKNOWN", "SUPPORTED"), "POSSIBLE", (1, 0, 0, 1, 0)),
+        (("UNKNOWN", "NOT_APPLICABLE"), "UNKNOWN", (0, 0, 0, 1, 1)),
+        (("NOT_APPLICABLE", "UNKNOWN"), "NOT_APPLICABLE", (0, 0, 0, 1, 1)),
+        (("POSSIBLE", "NOT_APPLICABLE"), "POSSIBLE", (0, 0, 1, 0, 1)),
+    ])
+    def test_incomplete_aggregation_preserves_only_observed_evidence(verdicts, complete_verdict,
+                                                                   counts):
+        from copy import deepcopy
+        from semabi.compiler.v4 import consequence as csq
+    
+        op, world = rule({"?z": BERTH}), state(obj("A"), obj("B"), obj("C"))
+        complete = binding.solve(op, (), world, {})
+        partial = binding.solve(op, (), world, {}, limit=2)
+        parts = [_part(v) for v in verdicts]
+        for i, part in enumerate(parts):
+            part.detail = f"observed representative {i}: {part.verdict}"
+            part.expected, part.observed = f"expected {i}", (f"observed {i}",)
+            part.context, part.feature_node = (("representative", i),), i
+        untouched_parts, untouched_binding = deepcopy(parts), partial.to_json()
+    
+        control = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, complete)
+        got = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, partial)
+        assert control.verdict == complete_verdict and not control.binding_truncated
+&gt;       assert got.verdict == (csq.POSSIBLE if sum(counts[:3]) else csq.UNKNOWN)
+E       AssertionError: assert 'NOT_APPLICABLE' == 'UNKNOWN'
+E         
+E         - UNKNOWN
+E         + NOT_APPLICABLE
+
+tests/test_v4_binding.py:433: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_incomplete_aggregation_preserves_only_observed_evidence[verdicts15-POSSIBLE-counts15]" time="0.000"><failure message="AssertionError: assert False&#10; +  where False = ScopedPrediction(step=0, control='c', operator='op0', kind='VALUE', support=1, slot='s', predicted='v', expected='expe... open disagree, so this step does not settle the rule', layers=(), action_local=None, context=(('representative', 0),)).binding_truncated">verdicts = ('POSSIBLE', 'NOT_APPLICABLE'), complete_verdict = 'POSSIBLE'
+counts = (0, 0, 1, 0, 1)
+
+    @pytest.mark.parametrize("verdicts, complete_verdict, counts", [
+        ((), "NOT_APPLICABLE", (0, 0, 0, 0, 0)),
+        (("SUPPORTED",), "SUPPORTED", (1, 0, 0, 0, 0)),
+        (("REFUTED",), "REFUTED", (0, 1, 0, 0, 0)),
+        (("POSSIBLE",), "POSSIBLE", (0, 0, 1, 0, 0)),
+        (("UNKNOWN",), "UNKNOWN", (0, 0, 0, 1, 0)),
+        (("NOT_APPLICABLE",), "NOT_APPLICABLE", (0, 0, 0, 0, 1)),
+        (("SUPPORTED", "SUPPORTED"), "SUPPORTED", (2, 0, 0, 0, 0)),
+        (("REFUTED", "REFUTED"), "REFUTED", (0, 2, 0, 0, 0)),
+        (("UNKNOWN", "UNKNOWN"), "UNKNOWN", (0, 0, 0, 2, 0)),
+        (("NOT_APPLICABLE", "NOT_APPLICABLE"), "NOT_APPLICABLE", (0, 0, 0, 0, 2)),
+        (("SUPPORTED", "REFUTED"), "POSSIBLE", (1, 1, 0, 0, 0)),
+        (("NOT_APPLICABLE", "REFUTED"), "POSSIBLE", (0, 1, 0, 0, 1)),
+        (("UNKNOWN", "SUPPORTED"), "POSSIBLE", (1, 0, 0, 1, 0)),
+        (("UNKNOWN", "NOT_APPLICABLE"), "UNKNOWN", (0, 0, 0, 1, 1)),
+        (("NOT_APPLICABLE", "UNKNOWN"), "NOT_APPLICABLE", (0, 0, 0, 1, 1)),
+        (("POSSIBLE", "NOT_APPLICABLE"), "POSSIBLE", (0, 0, 1, 0, 1)),
+    ])
+    def test_incomplete_aggregation_preserves_only_observed_evidence(verdicts, complete_verdict,
+                                                                   counts):
+        from copy import deepcopy
+        from semabi.compiler.v4 import consequence as csq
+    
+        op, world = rule({"?z": BERTH}), state(obj("A"), obj("B"), obj("C"))
+        complete = binding.solve(op, (), world, {})
+        partial = binding.solve(op, (), world, {}, limit=2)
+        parts = [_part(v) for v in verdicts]
+        for i, part in enumerate(parts):
+            part.detail = f"observed representative {i}: {part.verdict}"
+            part.expected, part.observed = f"expected {i}", (f"observed {i}",)
+            part.context, part.feature_node = (("representative", i),), i
+        untouched_parts, untouched_binding = deepcopy(parts), partial.to_json()
+    
+        control = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, complete)
+        got = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, partial)
+        assert control.verdict == complete_verdict and not control.binding_truncated
+        assert got.verdict == (csq.POSSIBLE if sum(counts[:3]) else csq.UNKNOWN)
+&gt;       assert got.binding_truncated
+E       AssertionError: assert False
+E        +  where False = ScopedPrediction(step=0, control='c', operator='op0', kind='VALUE', support=1, slot='s', predicted='v', expected='expe... open disagree, so this step does not settle the rule', layers=(), action_local=None, context=(('representative', 0),)).binding_truncated
+
+tests/test_v4_binding.py:434: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_incomplete_aggregation_reaches_recursive_identity[SUPPORTED]" time="0.000"><failure message="AssertionError: assert ('SUPPORTED' == 'POSSIBLE'&#10;  &#10;  - POSSIBLE&#10;  + SUPPORTED)">verdict = 'SUPPORTED'
+
+    @pytest.mark.parametrize("verdict", ["SUPPORTED", "REFUTED", "POSSIBLE", "UNKNOWN",
+                                         "NOT_APPLICABLE"])
+    def test_incomplete_aggregation_reaches_recursive_identity(verdict):
+        from copy import deepcopy
+        from semabi.compiler.v4 import consequence as csq
+    
+        op, world = rule({"?z": BERTH}), state(obj("A"), obj("B"), obj("C"))
+        complete = binding.solve(op, (), world, {})
+        partial = binding.solve(op, (), world, {}, limit=2)
+        part = _part(csq.SUPPORTED)
+        part.identity = _part(verdict)
+        part.identity.kind = csq.IDENTITY
+        part.identity.detail = f"identity evidence: {verdict}"
+        part.identity.observed = ("the observed identity",)
+        original = deepcopy(part)
+    
+        control = csq._aggregate(_part(csq.NOT_APPLICABLE), [part], complete)
+        got = csq._aggregate(_part(csq.NOT_APPLICABLE), [part], partial)
+        assert control.verdict == csq.SUPPORTED and control.identity.verdict == verdict
+        assert not control.binding_truncated and not control.identity.binding_truncated
+&gt;       assert got.verdict == csq.POSSIBLE and got.binding_truncated
+E       AssertionError: assert ('SUPPORTED' == 'POSSIBLE'
+E         
+E         - POSSIBLE
+E         + SUPPORTED)
+
+tests/test_v4_binding.py:473: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_incomplete_aggregation_reaches_recursive_identity[REFUTED]" time="0.000"><failure message="AssertionError: assert ('SUPPORTED' == 'POSSIBLE'&#10;  &#10;  - POSSIBLE&#10;  + SUPPORTED)">verdict = 'REFUTED'
+
+    @pytest.mark.parametrize("verdict", ["SUPPORTED", "REFUTED", "POSSIBLE", "UNKNOWN",
+                                         "NOT_APPLICABLE"])
+    def test_incomplete_aggregation_reaches_recursive_identity(verdict):
+        from copy import deepcopy
+        from semabi.compiler.v4 import consequence as csq
+    
+        op, world = rule({"?z": BERTH}), state(obj("A"), obj("B"), obj("C"))
+        complete = binding.solve(op, (), world, {})
+        partial = binding.solve(op, (), world, {}, limit=2)
+        part = _part(csq.SUPPORTED)
+        part.identity = _part(verdict)
+        part.identity.kind = csq.IDENTITY
+        part.identity.detail = f"identity evidence: {verdict}"
+        part.identity.observed = ("the observed identity",)
+        original = deepcopy(part)
+    
+        control = csq._aggregate(_part(csq.NOT_APPLICABLE), [part], complete)
+        got = csq._aggregate(_part(csq.NOT_APPLICABLE), [part], partial)
+        assert control.verdict == csq.SUPPORTED and control.identity.verdict == verdict
+        assert not control.binding_truncated and not control.identity.binding_truncated
+&gt;       assert got.verdict == csq.POSSIBLE and got.binding_truncated
+E       AssertionError: assert ('SUPPORTED' == 'POSSIBLE'
+E         
+E         - POSSIBLE
+E         + SUPPORTED)
+
+tests/test_v4_binding.py:473: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_incomplete_aggregation_reaches_recursive_identity[POSSIBLE]" time="0.000"><failure message="AssertionError: assert ('SUPPORTED' == 'POSSIBLE'&#10;  &#10;  - POSSIBLE&#10;  + SUPPORTED)">verdict = 'POSSIBLE'
+
+    @pytest.mark.parametrize("verdict", ["SUPPORTED", "REFUTED", "POSSIBLE", "UNKNOWN",
+                                         "NOT_APPLICABLE"])
+    def test_incomplete_aggregation_reaches_recursive_identity(verdict):
+        from copy import deepcopy
+        from semabi.compiler.v4 import consequence as csq
+    
+        op, world = rule({"?z": BERTH}), state(obj("A"), obj("B"), obj("C"))
+        complete = binding.solve(op, (), world, {})
+        partial = binding.solve(op, (), world, {}, limit=2)
+        part = _part(csq.SUPPORTED)
+        part.identity = _part(verdict)
+        part.identity.kind = csq.IDENTITY
+        part.identity.detail = f"identity evidence: {verdict}"
+        part.identity.observed = ("the observed identity",)
+        original = deepcopy(part)
+    
+        control = csq._aggregate(_part(csq.NOT_APPLICABLE), [part], complete)
+        got = csq._aggregate(_part(csq.NOT_APPLICABLE), [part], partial)
+        assert control.verdict == csq.SUPPORTED and control.identity.verdict == verdict
+        assert not control.binding_truncated and not control.identity.binding_truncated
+&gt;       assert got.verdict == csq.POSSIBLE and got.binding_truncated
+E       AssertionError: assert ('SUPPORTED' == 'POSSIBLE'
+E         
+E         - POSSIBLE
+E         + SUPPORTED)
+
+tests/test_v4_binding.py:473: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_incomplete_aggregation_reaches_recursive_identity[UNKNOWN]" time="0.000"><failure message="AssertionError: assert ('SUPPORTED' == 'POSSIBLE'&#10;  &#10;  - POSSIBLE&#10;  + SUPPORTED)">verdict = 'UNKNOWN'
+
+    @pytest.mark.parametrize("verdict", ["SUPPORTED", "REFUTED", "POSSIBLE", "UNKNOWN",
+                                         "NOT_APPLICABLE"])
+    def test_incomplete_aggregation_reaches_recursive_identity(verdict):
+        from copy import deepcopy
+        from semabi.compiler.v4 import consequence as csq
+    
+        op, world = rule({"?z": BERTH}), state(obj("A"), obj("B"), obj("C"))
+        complete = binding.solve(op, (), world, {})
+        partial = binding.solve(op, (), world, {}, limit=2)
+        part = _part(csq.SUPPORTED)
+        part.identity = _part(verdict)
+        part.identity.kind = csq.IDENTITY
+        part.identity.detail = f"identity evidence: {verdict}"
+        part.identity.observed = ("the observed identity",)
+        original = deepcopy(part)
+    
+        control = csq._aggregate(_part(csq.NOT_APPLICABLE), [part], complete)
+        got = csq._aggregate(_part(csq.NOT_APPLICABLE), [part], partial)
+        assert control.verdict == csq.SUPPORTED and control.identity.verdict == verdict
+        assert not control.binding_truncated and not control.identity.binding_truncated
+&gt;       assert got.verdict == csq.POSSIBLE and got.binding_truncated
+E       AssertionError: assert ('SUPPORTED' == 'POSSIBLE'
+E         
+E         - POSSIBLE
+E         + SUPPORTED)
+
+tests/test_v4_binding.py:473: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_incomplete_aggregation_reaches_recursive_identity[NOT_APPLICABLE]" time="0.000"><failure message="AssertionError: assert ('SUPPORTED' == 'POSSIBLE'&#10;  &#10;  - POSSIBLE&#10;  + SUPPORTED)">verdict = 'NOT_APPLICABLE'
+
+    @pytest.mark.parametrize("verdict", ["SUPPORTED", "REFUTED", "POSSIBLE", "UNKNOWN",
+                                         "NOT_APPLICABLE"])
+    def test_incomplete_aggregation_reaches_recursive_identity(verdict):
+        from copy import deepcopy
+        from semabi.compiler.v4 import consequence as csq
+    
+        op, world = rule({"?z": BERTH}), state(obj("A"), obj("B"), obj("C"))
+        complete = binding.solve(op, (), world, {})
+        partial = binding.solve(op, (), world, {}, limit=2)
+        part = _part(csq.SUPPORTED)
+        part.identity = _part(verdict)
+        part.identity.kind = csq.IDENTITY
+        part.identity.detail = f"identity evidence: {verdict}"
+        part.identity.observed = ("the observed identity",)
+        original = deepcopy(part)
+    
+        control = csq._aggregate(_part(csq.NOT_APPLICABLE), [part], complete)
+        got = csq._aggregate(_part(csq.NOT_APPLICABLE), [part], partial)
+        assert control.verdict == csq.SUPPORTED and control.identity.verdict == verdict
+        assert not control.binding_truncated and not control.identity.binding_truncated
+&gt;       assert got.verdict == csq.POSSIBLE and got.binding_truncated
+E       AssertionError: assert ('SUPPORTED' == 'POSSIBLE'
+E         
+E         - POSSIBLE
+E         + SUPPORTED)
+
+tests/test_v4_binding.py:473: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_creation_deduplication_does_not_complete_a_partial_search[neither-complete]" time="0.000" /><testcase classname="tests.test_v4_binding" name="test_creation_deduplication_does_not_complete_a_partial_search[neither-answers]" time="0.000"><failure message="AssertionError: assert 'REFUTED' == 'POSSIBLE'&#10;  &#10;  - POSSIBLE&#10;  + REFUTED">budget = {'limit': 2}, gained = (), complete_verdict = 'REFUTED'
+
+    @pytest.mark.parametrize("budget", [{}, {"limit": 2}, {"nodes": 4}],
+                             ids=["complete", "answers", "nodes"])
+    @pytest.mark.parametrize("gained, complete_verdict", [
+        ((), "REFUTED"), (("Alpha",), "POSSIBLE"), (("Beta",), "POSSIBLE"),
+        (("Alpha", "Beta"), "SUPPORTED"),
+    ], ids=["neither", "alpha-only", "beta-only", "both"])
+    def test_creation_deduplication_does_not_complete_a_partial_search(budget, gained,
+                                                                    complete_verdict):
+        from copy import deepcopy
+        from semabi.compiler.observation import Node, Observation
+        from semabi.compiler.v4 import consequence as csq
+    
+        op = rule({"?z": BERTH, "?w": CALL, "?new0": 3})
+        world = state(obj("Alpha"), obj("Beta"), obj("w0", tid=CALL), obj("w1", tid=CALL))
+        eff = SimpleNamespace(kind="add", obj="?new0", attrs=(("value", "?z"),), refs=())
+        bound = binding.solve(op, (), world, {}, **budget)
+        representatives = csq._distinct_by(bound.admissible,
+                                           lambda assignment: csq._creation_values(eff, assignment))
+        expected_keys = ["Alpha"] if budget else ["Alpha", "Beta"]
+        assert [a.get("?z").key for a in representatives] == expected_keys
+        assert len(bound.admissible) == (2 if budget else 4)
+        assert bound.truncated == bool(budget)
+        assert bound.effect_target(["?z"]) == ((binding.UNDETERMINED_INCOMPLETE, 1) if budget
+                                               else (binding.UNDERDETERMINED, 2))
+        before = Observation([Node(0, -1, "document", "")])
+        after = Observation([Node(0, -1, "document", "")] +
+                            [Node(i, 0, "text", value) for i, value in enumerate(gained, 1)])
+        base = _part(csq.NOT_APPLICABLE)
+        base.kind = csq.CREATION
+        base.bindings, base.binding_status = len(bound.admissible), bound.status
+        base.binding_truncated = bound.truncated
+        parts = [csq._under_one_binding(base, None, {}, before, after, None, op, eff,
+                                        assignment, None, None, {}, "new")
+                 for assignment in representatives]
+        assert [p.verdict for p in parts] == [csq.SUPPORTED if key in gained else csq.REFUTED
+                                             for key in expected_keys]
+        assert [p.expected for p in parts] == expected_keys
+        assert [p.observed for p in parts] == [(f"{int(key in gained)} after",)
+                                              for key in expected_keys]
+        original_parts, original_binding = deepcopy(parts), bound.to_json()
+        got = csq._aggregate(base, parts, bound)
+&gt;       assert got.verdict == (csq.POSSIBLE if budget else complete_verdict)
+E       AssertionError: assert 'REFUTED' == 'POSSIBLE'
+E         
+E         - POSSIBLE
+E         + REFUTED
+
+tests/test_v4_binding.py:525: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_creation_deduplication_does_not_complete_a_partial_search[neither-nodes]" time="0.000"><failure message="AssertionError: assert 'REFUTED' == 'POSSIBLE'&#10;  &#10;  - POSSIBLE&#10;  + REFUTED">budget = {'nodes': 4}, gained = (), complete_verdict = 'REFUTED'
+
+    @pytest.mark.parametrize("budget", [{}, {"limit": 2}, {"nodes": 4}],
+                             ids=["complete", "answers", "nodes"])
+    @pytest.mark.parametrize("gained, complete_verdict", [
+        ((), "REFUTED"), (("Alpha",), "POSSIBLE"), (("Beta",), "POSSIBLE"),
+        (("Alpha", "Beta"), "SUPPORTED"),
+    ], ids=["neither", "alpha-only", "beta-only", "both"])
+    def test_creation_deduplication_does_not_complete_a_partial_search(budget, gained,
+                                                                    complete_verdict):
+        from copy import deepcopy
+        from semabi.compiler.observation import Node, Observation
+        from semabi.compiler.v4 import consequence as csq
+    
+        op = rule({"?z": BERTH, "?w": CALL, "?new0": 3})
+        world = state(obj("Alpha"), obj("Beta"), obj("w0", tid=CALL), obj("w1", tid=CALL))
+        eff = SimpleNamespace(kind="add", obj="?new0", attrs=(("value", "?z"),), refs=())
+        bound = binding.solve(op, (), world, {}, **budget)
+        representatives = csq._distinct_by(bound.admissible,
+                                           lambda assignment: csq._creation_values(eff, assignment))
+        expected_keys = ["Alpha"] if budget else ["Alpha", "Beta"]
+        assert [a.get("?z").key for a in representatives] == expected_keys
+        assert len(bound.admissible) == (2 if budget else 4)
+        assert bound.truncated == bool(budget)
+        assert bound.effect_target(["?z"]) == ((binding.UNDETERMINED_INCOMPLETE, 1) if budget
+                                               else (binding.UNDERDETERMINED, 2))
+        before = Observation([Node(0, -1, "document", "")])
+        after = Observation([Node(0, -1, "document", "")] +
+                            [Node(i, 0, "text", value) for i, value in enumerate(gained, 1)])
+        base = _part(csq.NOT_APPLICABLE)
+        base.kind = csq.CREATION
+        base.bindings, base.binding_status = len(bound.admissible), bound.status
+        base.binding_truncated = bound.truncated
+        parts = [csq._under_one_binding(base, None, {}, before, after, None, op, eff,
+                                        assignment, None, None, {}, "new")
+                 for assignment in representatives]
+        assert [p.verdict for p in parts] == [csq.SUPPORTED if key in gained else csq.REFUTED
+                                             for key in expected_keys]
+        assert [p.expected for p in parts] == expected_keys
+        assert [p.observed for p in parts] == [(f"{int(key in gained)} after",)
+                                              for key in expected_keys]
+        original_parts, original_binding = deepcopy(parts), bound.to_json()
+        got = csq._aggregate(base, parts, bound)
+&gt;       assert got.verdict == (csq.POSSIBLE if budget else complete_verdict)
+E       AssertionError: assert 'REFUTED' == 'POSSIBLE'
+E         
+E         - POSSIBLE
+E         + REFUTED
+
+tests/test_v4_binding.py:525: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_creation_deduplication_does_not_complete_a_partial_search[alpha-only-complete]" time="0.000" /><testcase classname="tests.test_v4_binding" name="test_creation_deduplication_does_not_complete_a_partial_search[alpha-only-answers]" time="0.000"><failure message="AssertionError: assert 'SUPPORTED' == 'POSSIBLE'&#10;  &#10;  - POSSIBLE&#10;  + SUPPORTED">budget = {'limit': 2}, gained = ('Alpha',), complete_verdict = 'POSSIBLE'
+
+    @pytest.mark.parametrize("budget", [{}, {"limit": 2}, {"nodes": 4}],
+                             ids=["complete", "answers", "nodes"])
+    @pytest.mark.parametrize("gained, complete_verdict", [
+        ((), "REFUTED"), (("Alpha",), "POSSIBLE"), (("Beta",), "POSSIBLE"),
+        (("Alpha", "Beta"), "SUPPORTED"),
+    ], ids=["neither", "alpha-only", "beta-only", "both"])
+    def test_creation_deduplication_does_not_complete_a_partial_search(budget, gained,
+                                                                    complete_verdict):
+        from copy import deepcopy
+        from semabi.compiler.observation import Node, Observation
+        from semabi.compiler.v4 import consequence as csq
+    
+        op = rule({"?z": BERTH, "?w": CALL, "?new0": 3})
+        world = state(obj("Alpha"), obj("Beta"), obj("w0", tid=CALL), obj("w1", tid=CALL))
+        eff = SimpleNamespace(kind="add", obj="?new0", attrs=(("value", "?z"),), refs=())
+        bound = binding.solve(op, (), world, {}, **budget)
+        representatives = csq._distinct_by(bound.admissible,
+                                           lambda assignment: csq._creation_values(eff, assignment))
+        expected_keys = ["Alpha"] if budget else ["Alpha", "Beta"]
+        assert [a.get("?z").key for a in representatives] == expected_keys
+        assert len(bound.admissible) == (2 if budget else 4)
+        assert bound.truncated == bool(budget)
+        assert bound.effect_target(["?z"]) == ((binding.UNDETERMINED_INCOMPLETE, 1) if budget
+                                               else (binding.UNDERDETERMINED, 2))
+        before = Observation([Node(0, -1, "document", "")])
+        after = Observation([Node(0, -1, "document", "")] +
+                            [Node(i, 0, "text", value) for i, value in enumerate(gained, 1)])
+        base = _part(csq.NOT_APPLICABLE)
+        base.kind = csq.CREATION
+        base.bindings, base.binding_status = len(bound.admissible), bound.status
+        base.binding_truncated = bound.truncated
+        parts = [csq._under_one_binding(base, None, {}, before, after, None, op, eff,
+                                        assignment, None, None, {}, "new")
+                 for assignment in representatives]
+        assert [p.verdict for p in parts] == [csq.SUPPORTED if key in gained else csq.REFUTED
+                                             for key in expected_keys]
+        assert [p.expected for p in parts] == expected_keys
+        assert [p.observed for p in parts] == [(f"{int(key in gained)} after",)
+                                              for key in expected_keys]
+        original_parts, original_binding = deepcopy(parts), bound.to_json()
+        got = csq._aggregate(base, parts, bound)
+&gt;       assert got.verdict == (csq.POSSIBLE if budget else complete_verdict)
+E       AssertionError: assert 'SUPPORTED' == 'POSSIBLE'
+E         
+E         - POSSIBLE
+E         + SUPPORTED
+
+tests/test_v4_binding.py:525: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_creation_deduplication_does_not_complete_a_partial_search[alpha-only-nodes]" time="0.000"><failure message="AssertionError: assert 'SUPPORTED' == 'POSSIBLE'&#10;  &#10;  - POSSIBLE&#10;  + SUPPORTED">budget = {'nodes': 4}, gained = ('Alpha',), complete_verdict = 'POSSIBLE'
+
+    @pytest.mark.parametrize("budget", [{}, {"limit": 2}, {"nodes": 4}],
+                             ids=["complete", "answers", "nodes"])
+    @pytest.mark.parametrize("gained, complete_verdict", [
+        ((), "REFUTED"), (("Alpha",), "POSSIBLE"), (("Beta",), "POSSIBLE"),
+        (("Alpha", "Beta"), "SUPPORTED"),
+    ], ids=["neither", "alpha-only", "beta-only", "both"])
+    def test_creation_deduplication_does_not_complete_a_partial_search(budget, gained,
+                                                                    complete_verdict):
+        from copy import deepcopy
+        from semabi.compiler.observation import Node, Observation
+        from semabi.compiler.v4 import consequence as csq
+    
+        op = rule({"?z": BERTH, "?w": CALL, "?new0": 3})
+        world = state(obj("Alpha"), obj("Beta"), obj("w0", tid=CALL), obj("w1", tid=CALL))
+        eff = SimpleNamespace(kind="add", obj="?new0", attrs=(("value", "?z"),), refs=())
+        bound = binding.solve(op, (), world, {}, **budget)
+        representatives = csq._distinct_by(bound.admissible,
+                                           lambda assignment: csq._creation_values(eff, assignment))
+        expected_keys = ["Alpha"] if budget else ["Alpha", "Beta"]
+        assert [a.get("?z").key for a in representatives] == expected_keys
+        assert len(bound.admissible) == (2 if budget else 4)
+        assert bound.truncated == bool(budget)
+        assert bound.effect_target(["?z"]) == ((binding.UNDETERMINED_INCOMPLETE, 1) if budget
+                                               else (binding.UNDERDETERMINED, 2))
+        before = Observation([Node(0, -1, "document", "")])
+        after = Observation([Node(0, -1, "document", "")] +
+                            [Node(i, 0, "text", value) for i, value in enumerate(gained, 1)])
+        base = _part(csq.NOT_APPLICABLE)
+        base.kind = csq.CREATION
+        base.bindings, base.binding_status = len(bound.admissible), bound.status
+        base.binding_truncated = bound.truncated
+        parts = [csq._under_one_binding(base, None, {}, before, after, None, op, eff,
+                                        assignment, None, None, {}, "new")
+                 for assignment in representatives]
+        assert [p.verdict for p in parts] == [csq.SUPPORTED if key in gained else csq.REFUTED
+                                             for key in expected_keys]
+        assert [p.expected for p in parts] == expected_keys
+        assert [p.observed for p in parts] == [(f"{int(key in gained)} after",)
+                                              for key in expected_keys]
+        original_parts, original_binding = deepcopy(parts), bound.to_json()
+        got = csq._aggregate(base, parts, bound)
+&gt;       assert got.verdict == (csq.POSSIBLE if budget else complete_verdict)
+E       AssertionError: assert 'SUPPORTED' == 'POSSIBLE'
+E         
+E         - POSSIBLE
+E         + SUPPORTED
+
+tests/test_v4_binding.py:525: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_creation_deduplication_does_not_complete_a_partial_search[beta-only-complete]" time="0.000" /><testcase classname="tests.test_v4_binding" name="test_creation_deduplication_does_not_complete_a_partial_search[beta-only-answers]" time="0.000"><failure message="AssertionError: assert 'REFUTED' == 'POSSIBLE'&#10;  &#10;  - POSSIBLE&#10;  + REFUTED">budget = {'limit': 2}, gained = ('Beta',), complete_verdict = 'POSSIBLE'
+
+    @pytest.mark.parametrize("budget", [{}, {"limit": 2}, {"nodes": 4}],
+                             ids=["complete", "answers", "nodes"])
+    @pytest.mark.parametrize("gained, complete_verdict", [
+        ((), "REFUTED"), (("Alpha",), "POSSIBLE"), (("Beta",), "POSSIBLE"),
+        (("Alpha", "Beta"), "SUPPORTED"),
+    ], ids=["neither", "alpha-only", "beta-only", "both"])
+    def test_creation_deduplication_does_not_complete_a_partial_search(budget, gained,
+                                                                    complete_verdict):
+        from copy import deepcopy
+        from semabi.compiler.observation import Node, Observation
+        from semabi.compiler.v4 import consequence as csq
+    
+        op = rule({"?z": BERTH, "?w": CALL, "?new0": 3})
+        world = state(obj("Alpha"), obj("Beta"), obj("w0", tid=CALL), obj("w1", tid=CALL))
+        eff = SimpleNamespace(kind="add", obj="?new0", attrs=(("value", "?z"),), refs=())
+        bound = binding.solve(op, (), world, {}, **budget)
+        representatives = csq._distinct_by(bound.admissible,
+                                           lambda assignment: csq._creation_values(eff, assignment))
+        expected_keys = ["Alpha"] if budget else ["Alpha", "Beta"]
+        assert [a.get("?z").key for a in representatives] == expected_keys
+        assert len(bound.admissible) == (2 if budget else 4)
+        assert bound.truncated == bool(budget)
+        assert bound.effect_target(["?z"]) == ((binding.UNDETERMINED_INCOMPLETE, 1) if budget
+                                               else (binding.UNDERDETERMINED, 2))
+        before = Observation([Node(0, -1, "document", "")])
+        after = Observation([Node(0, -1, "document", "")] +
+                            [Node(i, 0, "text", value) for i, value in enumerate(gained, 1)])
+        base = _part(csq.NOT_APPLICABLE)
+        base.kind = csq.CREATION
+        base.bindings, base.binding_status = len(bound.admissible), bound.status
+        base.binding_truncated = bound.truncated
+        parts = [csq._under_one_binding(base, None, {}, before, after, None, op, eff,
+                                        assignment, None, None, {}, "new")
+                 for assignment in representatives]
+        assert [p.verdict for p in parts] == [csq.SUPPORTED if key in gained else csq.REFUTED
+                                             for key in expected_keys]
+        assert [p.expected for p in parts] == expected_keys
+        assert [p.observed for p in parts] == [(f"{int(key in gained)} after",)
+                                              for key in expected_keys]
+        original_parts, original_binding = deepcopy(parts), bound.to_json()
+        got = csq._aggregate(base, parts, bound)
+&gt;       assert got.verdict == (csq.POSSIBLE if budget else complete_verdict)
+E       AssertionError: assert 'REFUTED' == 'POSSIBLE'
+E         
+E         - POSSIBLE
+E         + REFUTED
+
+tests/test_v4_binding.py:525: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_creation_deduplication_does_not_complete_a_partial_search[beta-only-nodes]" time="0.000"><failure message="AssertionError: assert 'REFUTED' == 'POSSIBLE'&#10;  &#10;  - POSSIBLE&#10;  + REFUTED">budget = {'nodes': 4}, gained = ('Beta',), complete_verdict = 'POSSIBLE'
+
+    @pytest.mark.parametrize("budget", [{}, {"limit": 2}, {"nodes": 4}],
+                             ids=["complete", "answers", "nodes"])
+    @pytest.mark.parametrize("gained, complete_verdict", [
+        ((), "REFUTED"), (("Alpha",), "POSSIBLE"), (("Beta",), "POSSIBLE"),
+        (("Alpha", "Beta"), "SUPPORTED"),
+    ], ids=["neither", "alpha-only", "beta-only", "both"])
+    def test_creation_deduplication_does_not_complete_a_partial_search(budget, gained,
+                                                                    complete_verdict):
+        from copy import deepcopy
+        from semabi.compiler.observation import Node, Observation
+        from semabi.compiler.v4 import consequence as csq
+    
+        op = rule({"?z": BERTH, "?w": CALL, "?new0": 3})
+        world = state(obj("Alpha"), obj("Beta"), obj("w0", tid=CALL), obj("w1", tid=CALL))
+        eff = SimpleNamespace(kind="add", obj="?new0", attrs=(("value", "?z"),), refs=())
+        bound = binding.solve(op, (), world, {}, **budget)
+        representatives = csq._distinct_by(bound.admissible,
+                                           lambda assignment: csq._creation_values(eff, assignment))
+        expected_keys = ["Alpha"] if budget else ["Alpha", "Beta"]
+        assert [a.get("?z").key for a in representatives] == expected_keys
+        assert len(bound.admissible) == (2 if budget else 4)
+        assert bound.truncated == bool(budget)
+        assert bound.effect_target(["?z"]) == ((binding.UNDETERMINED_INCOMPLETE, 1) if budget
+                                               else (binding.UNDERDETERMINED, 2))
+        before = Observation([Node(0, -1, "document", "")])
+        after = Observation([Node(0, -1, "document", "")] +
+                            [Node(i, 0, "text", value) for i, value in enumerate(gained, 1)])
+        base = _part(csq.NOT_APPLICABLE)
+        base.kind = csq.CREATION
+        base.bindings, base.binding_status = len(bound.admissible), bound.status
+        base.binding_truncated = bound.truncated
+        parts = [csq._under_one_binding(base, None, {}, before, after, None, op, eff,
+                                        assignment, None, None, {}, "new")
+                 for assignment in representatives]
+        assert [p.verdict for p in parts] == [csq.SUPPORTED if key in gained else csq.REFUTED
+                                             for key in expected_keys]
+        assert [p.expected for p in parts] == expected_keys
+        assert [p.observed for p in parts] == [(f"{int(key in gained)} after",)
+                                              for key in expected_keys]
+        original_parts, original_binding = deepcopy(parts), bound.to_json()
+        got = csq._aggregate(base, parts, bound)
+&gt;       assert got.verdict == (csq.POSSIBLE if budget else complete_verdict)
+E       AssertionError: assert 'REFUTED' == 'POSSIBLE'
+E         
+E         - POSSIBLE
+E         + REFUTED
+
+tests/test_v4_binding.py:525: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_creation_deduplication_does_not_complete_a_partial_search[both-complete]" time="0.000" /><testcase classname="tests.test_v4_binding" name="test_creation_deduplication_does_not_complete_a_partial_search[both-answers]" time="0.000"><failure message="AssertionError: assert 'SUPPORTED' == 'POSSIBLE'&#10;  &#10;  - POSSIBLE&#10;  + SUPPORTED">budget = {'limit': 2}, gained = ('Alpha', 'Beta')
+complete_verdict = 'SUPPORTED'
+
+    @pytest.mark.parametrize("budget", [{}, {"limit": 2}, {"nodes": 4}],
+                             ids=["complete", "answers", "nodes"])
+    @pytest.mark.parametrize("gained, complete_verdict", [
+        ((), "REFUTED"), (("Alpha",), "POSSIBLE"), (("Beta",), "POSSIBLE"),
+        (("Alpha", "Beta"), "SUPPORTED"),
+    ], ids=["neither", "alpha-only", "beta-only", "both"])
+    def test_creation_deduplication_does_not_complete_a_partial_search(budget, gained,
+                                                                    complete_verdict):
+        from copy import deepcopy
+        from semabi.compiler.observation import Node, Observation
+        from semabi.compiler.v4 import consequence as csq
+    
+        op = rule({"?z": BERTH, "?w": CALL, "?new0": 3})
+        world = state(obj("Alpha"), obj("Beta"), obj("w0", tid=CALL), obj("w1", tid=CALL))
+        eff = SimpleNamespace(kind="add", obj="?new0", attrs=(("value", "?z"),), refs=())
+        bound = binding.solve(op, (), world, {}, **budget)
+        representatives = csq._distinct_by(bound.admissible,
+                                           lambda assignment: csq._creation_values(eff, assignment))
+        expected_keys = ["Alpha"] if budget else ["Alpha", "Beta"]
+        assert [a.get("?z").key for a in representatives] == expected_keys
+        assert len(bound.admissible) == (2 if budget else 4)
+        assert bound.truncated == bool(budget)
+        assert bound.effect_target(["?z"]) == ((binding.UNDETERMINED_INCOMPLETE, 1) if budget
+                                               else (binding.UNDERDETERMINED, 2))
+        before = Observation([Node(0, -1, "document", "")])
+        after = Observation([Node(0, -1, "document", "")] +
+                            [Node(i, 0, "text", value) for i, value in enumerate(gained, 1)])
+        base = _part(csq.NOT_APPLICABLE)
+        base.kind = csq.CREATION
+        base.bindings, base.binding_status = len(bound.admissible), bound.status
+        base.binding_truncated = bound.truncated
+        parts = [csq._under_one_binding(base, None, {}, before, after, None, op, eff,
+                                        assignment, None, None, {}, "new")
+                 for assignment in representatives]
+        assert [p.verdict for p in parts] == [csq.SUPPORTED if key in gained else csq.REFUTED
+                                             for key in expected_keys]
+        assert [p.expected for p in parts] == expected_keys
+        assert [p.observed for p in parts] == [(f"{int(key in gained)} after",)
+                                              for key in expected_keys]
+        original_parts, original_binding = deepcopy(parts), bound.to_json()
+        got = csq._aggregate(base, parts, bound)
+&gt;       assert got.verdict == (csq.POSSIBLE if budget else complete_verdict)
+E       AssertionError: assert 'SUPPORTED' == 'POSSIBLE'
+E         
+E         - POSSIBLE
+E         + SUPPORTED
+
+tests/test_v4_binding.py:525: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_creation_deduplication_does_not_complete_a_partial_search[both-nodes]" time="0.000"><failure message="AssertionError: assert 'SUPPORTED' == 'POSSIBLE'&#10;  &#10;  - POSSIBLE&#10;  + SUPPORTED">budget = {'nodes': 4}, gained = ('Alpha', 'Beta')
+complete_verdict = 'SUPPORTED'
+
+    @pytest.mark.parametrize("budget", [{}, {"limit": 2}, {"nodes": 4}],
+                             ids=["complete", "answers", "nodes"])
+    @pytest.mark.parametrize("gained, complete_verdict", [
+        ((), "REFUTED"), (("Alpha",), "POSSIBLE"), (("Beta",), "POSSIBLE"),
+        (("Alpha", "Beta"), "SUPPORTED"),
+    ], ids=["neither", "alpha-only", "beta-only", "both"])
+    def test_creation_deduplication_does_not_complete_a_partial_search(budget, gained,
+                                                                    complete_verdict):
+        from copy import deepcopy
+        from semabi.compiler.observation import Node, Observation
+        from semabi.compiler.v4 import consequence as csq
+    
+        op = rule({"?z": BERTH, "?w": CALL, "?new0": 3})
+        world = state(obj("Alpha"), obj("Beta"), obj("w0", tid=CALL), obj("w1", tid=CALL))
+        eff = SimpleNamespace(kind="add", obj="?new0", attrs=(("value", "?z"),), refs=())
+        bound = binding.solve(op, (), world, {}, **budget)
+        representatives = csq._distinct_by(bound.admissible,
+                                           lambda assignment: csq._creation_values(eff, assignment))
+        expected_keys = ["Alpha"] if budget else ["Alpha", "Beta"]
+        assert [a.get("?z").key for a in representatives] == expected_keys
+        assert len(bound.admissible) == (2 if budget else 4)
+        assert bound.truncated == bool(budget)
+        assert bound.effect_target(["?z"]) == ((binding.UNDETERMINED_INCOMPLETE, 1) if budget
+                                               else (binding.UNDERDETERMINED, 2))
+        before = Observation([Node(0, -1, "document", "")])
+        after = Observation([Node(0, -1, "document", "")] +
+                            [Node(i, 0, "text", value) for i, value in enumerate(gained, 1)])
+        base = _part(csq.NOT_APPLICABLE)
+        base.kind = csq.CREATION
+        base.bindings, base.binding_status = len(bound.admissible), bound.status
+        base.binding_truncated = bound.truncated
+        parts = [csq._under_one_binding(base, None, {}, before, after, None, op, eff,
+                                        assignment, None, None, {}, "new")
+                 for assignment in representatives]
+        assert [p.verdict for p in parts] == [csq.SUPPORTED if key in gained else csq.REFUTED
+                                             for key in expected_keys]
+        assert [p.expected for p in parts] == expected_keys
+        assert [p.observed for p in parts] == [(f"{int(key in gained)} after",)
+                                              for key in expected_keys]
+        original_parts, original_binding = deepcopy(parts), bound.to_json()
+        got = csq._aggregate(base, parts, bound)
+&gt;       assert got.verdict == (csq.POSSIBLE if budget else complete_verdict)
+E       AssertionError: assert 'SUPPORTED' == 'POSSIBLE'
+E         
+E         - POSSIBLE
+E         + SUPPORTED
+
+tests/test_v4_binding.py:525: AssertionError</failure></testcase><testcase classname="tests.test_v4_binding" name="test_score_abstains_on_a_partial_singleton" time="0.003"><failure message="Failed: an incomplete singleton must abstain before evaluating its consequence">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f096bb873e0&gt;
+
+    def test_score_abstains_on_a_partial_singleton(monkeypatch):
+        from semabi.compiler.v4 import consequence as csq
+    
+        world = state(obj("A"), obj("B"))
+        op = rule({"?z": BERTH})
+        op.name, op.positives, op.unexplained_negatives = "partial", (), 0
+        op.effs = [SimpleNamespace(kind="set", obj="?z", slot="attr:state", new="closed")]
+        op.core = lambda: (SimpleNamespace(kind="click", owner=None,
+                                           loc=SimpleNamespace(slot="button:Act", owner_tid=None)),)
+        observations = {"before": object(), "after": object()}
+        step = SimpleNamespace(step=0, before="before", after="after",
+                               action=SimpleNamespace(kind="click", target=0))
+        abstractor = SimpleNamespace(types=world.types, abstract=lambda obs: world,
+                                     parsed=lambda obs: None,
+                                     control_family=lambda obs: {0: "button:Act"})
+        model = SimpleNamespace(abstractor=abstractor, operators=[op], cut=0, split=0.0,
+                                reading=SimpleNamespace(name="synthetic"), regime=csq.FROZEN_PREFIX,
+                                queries={}, log=SimpleNamespace(steps=[step],
+                                                                obs=observations.__getitem__))
+        native_solve, retained = binding.solve, []
+    
+        def limited_solve(*args, **kwargs):
+            bound = native_solve(*args, **kwargs, limit=1)
+            retained.append(bound)
+            return bound
+    
+        def unexpected_consequence(*args, **kwargs):
+            pytest.fail("an incomplete singleton must abstain before evaluating its consequence")
+    
+        monkeypatch.setattr(binding, "solve", limited_solve)
+        monkeypatch.setattr(csq, "slot_nodes", lambda *args: {})
+        monkeypatch.setattr(csq, "_under_one_binding", unexpected_consequence)
+&gt;       result = csq.score(model)
+                 ^^^^^^^^^^^^^^^^
+
+tests/test_v4_binding.py:569: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+semabi/compiler/v4/consequence.py:883: in score
+    parts = [_under_one_binding(base, A, bridge, pre, post, step, op, eff,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (ScopedPrediction(step=0, control='button:Act', operator='partial', kind='VALUE', support=0, slot='attr:state', predic...t at 0x7f096cb7a480&gt;, namespace(step=0, before='before', after='after', action=namespace(kind='click', target=0)), ...)
+kwargs = {}
+
+    def unexpected_consequence(*args, **kwargs):
+&gt;       pytest.fail("an incomplete singleton must abstain before evaluating its consequence")
+E       Failed: an incomplete singleton must abstain before evaluating its consequence
+
+tests/test_v4_binding.py:564: Failed</failure></testcase><testcase classname="tests.test_v4_binding" name="test_two_observed_targets_remain_underdetermined_when_search_is_incomplete[answers]" time="0.000" /><testcase classname="tests.test_v4_binding" name="test_two_observed_targets_remain_underdetermined_when_search_is_incomplete[nodes]" time="0.000" /><testcase classname="tests.test_v4_binding" name="test_many_witnesses_one_target_is_not_ambiguity" time="0.000" /><testcase classname="tests.test_v4_binding" name="test_two_assignments_disagreeing_about_the_target_is_ambiguity" time="0.000" /><testcase classname="tests.test_v4_binding" name="test_agreement_among_the_assignments_reached_is_not_determinacy" time="0.000" /><testcase classname="tests.test_v4_binding" name="test_a_search_that_cannot_finish_says_so_instead_of_running" time="0.001" /><testcase classname="tests.test_v4_binding" name="test_a_truncated_enumeration_pins_nothing" time="0.000" /><testcase classname="tests.test_v4_binding" name="test_an_enumeration_that_stopped_early_can_never_refute" time="0.000" /><testcase classname="tests.test_v4_binding" name="test_one_assignment_that_works_stops_a_refutation" time="0.000" /><testcase classname="tests.test_v4_binding" name="test_an_assignment_that_could_not_be_tested_counts_against_refuting" time="0.000" /><testcase classname="tests.test_v4_binding" name="test_a_contradicted_precondition_leaves_no_assignment" time="0.000" /><testcase classname="tests.test_v4_binding" name="test_a_type_that_is_not_rendered_here_is_ignorance_not_non_applicability" time="0.000" /></testsuite></testsuites>

@@ -59,49 +59,6 @@ def test_a_relational_precondition_can_determine_an_object_the_action_never_supp
     assert found.unique.provenance["?o0"] == binding.ACTION
 
 
-@pytest.mark.parametrize("budget", [{"limit": 1}, {"nodes": 2}], ids=["answers", "nodes"])
-def test_a_partial_singleton_does_not_establish_uniqueness(budget):
-    a, b = obj("A"), obj("B")
-    op, world = rule({"?z": BERTH}), state(a, b)
-    complete = binding.solve(op, (), world, {})
-    partial = binding.solve(op, (), world, {}, **budget)
-
-    assert complete.status == binding.AMBIGUOUS and not complete.truncated
-    assert len(complete.admissible) == 2
-    assert complete.effect_target(["?z"]) == (binding.UNDERDETERMINED, 2)
-    assert partial.status == binding.UNSETTLED and partial.truncated
-    assert partial and partial.unique is None
-    assert partial.admissible == complete.admissible[:1]
-    assert partial.admissible[0].get("?z") is a
-    assert partial.admissible[0].provenance == {"?z": binding.DERIVED}
-    assert partial.admissible[0].evidence == binding.SUPPORTED
-    assert partial.pinned() == frozenset()
-    assert partial.effect_target(["?z"]) == (binding.UNDETERMINED_INCOMPLETE, 1)
-    assert partial.detail == (
-        "the search stopped after 2 steps with one admissible assignment; "
-        "the enumeration is incomplete, so uniqueness is not established")
-    assert partial.to_json() == {
-        "status": binding.UNSETTLED, "truncated": True, "count": 1,
-        "detail": partial.detail, "admissible": [complete.admissible[0].to_json()]}
-
-
-@pytest.mark.parametrize("budget", [{"limit": 1}, {"nodes": 2}, {"limit": 1, "nodes": 2}],
-                         ids=["answers", "nodes", "both"])
-@pytest.mark.parametrize("pruned_tail", [False, True], ids=["one-candidate", "pruned-tail"])
-def test_a_complete_singleton_at_its_bounds_remains_unique(budget, pruned_tail):
-    a = obj("A", state="open")
-    world = state(a, obj("B", state="closed")) if pruned_tail else state(a)
-    op = rule({"?z": BERTH}, [("attr", "?z", "state", "open")])
-    found = binding.solve(op, op.pre, world, {}, **budget)
-
-    # Reaching a numeric bound is not truncation when no further extension is needed.
-    assert found.status == binding.UNIQUE and not found.truncated
-    assert len(found.admissible) == 1 and found.unique.get("?z") is a
-    assert found.pinned() == frozenset({"?z"})
-    assert found.effect_target(["?z"]) == (binding.DETERMINED, 1)
-    assert found.detail == "one assignment satisfies the rule's preconditions"
-
-
 def test_a_rule_that_constrains_nothing_admits_every_object_of_the_type():
     """Establishes that weak preconditions produce ambiguity rather than a guess.
 
@@ -394,189 +351,6 @@ def test_an_enumeration_that_stopped_early_can_never_refute():
     assert _fold([csq.REFUTED, csq.REFUTED], truncated=True).verdict == csq.POSSIBLE
 
 
-@pytest.mark.parametrize("verdicts, complete_verdict, counts", [
-    ((), "NOT_APPLICABLE", (0, 0, 0, 0, 0)),
-    (("SUPPORTED",), "SUPPORTED", (1, 0, 0, 0, 0)),
-    (("REFUTED",), "REFUTED", (0, 1, 0, 0, 0)),
-    (("POSSIBLE",), "POSSIBLE", (0, 0, 1, 0, 0)),
-    (("UNKNOWN",), "UNKNOWN", (0, 0, 0, 1, 0)),
-    (("NOT_APPLICABLE",), "NOT_APPLICABLE", (0, 0, 0, 0, 1)),
-    (("SUPPORTED", "SUPPORTED"), "SUPPORTED", (2, 0, 0, 0, 0)),
-    (("REFUTED", "REFUTED"), "REFUTED", (0, 2, 0, 0, 0)),
-    (("UNKNOWN", "UNKNOWN"), "UNKNOWN", (0, 0, 0, 2, 0)),
-    (("NOT_APPLICABLE", "NOT_APPLICABLE"), "NOT_APPLICABLE", (0, 0, 0, 0, 2)),
-    (("SUPPORTED", "REFUTED"), "POSSIBLE", (1, 1, 0, 0, 0)),
-    (("NOT_APPLICABLE", "REFUTED"), "POSSIBLE", (0, 1, 0, 0, 1)),
-    (("UNKNOWN", "SUPPORTED"), "POSSIBLE", (1, 0, 0, 1, 0)),
-    (("UNKNOWN", "NOT_APPLICABLE"), "UNKNOWN", (0, 0, 0, 1, 1)),
-    (("NOT_APPLICABLE", "UNKNOWN"), "NOT_APPLICABLE", (0, 0, 0, 1, 1)),
-    (("POSSIBLE", "NOT_APPLICABLE"), "POSSIBLE", (0, 0, 1, 0, 1)),
-])
-def test_incomplete_aggregation_preserves_only_observed_evidence(verdicts, complete_verdict,
-                                                               counts):
-    from copy import deepcopy
-    from semabi.compiler.v4 import consequence as csq
-
-    op, world = rule({"?z": BERTH}), state(obj("A"), obj("B"), obj("C"))
-    complete = binding.solve(op, (), world, {})
-    partial = binding.solve(op, (), world, {}, limit=2)
-    parts = [_part(v) for v in verdicts]
-    for i, part in enumerate(parts):
-        part.detail = f"observed representative {i}: {part.verdict}"
-        part.expected, part.observed = f"expected {i}", (f"observed {i}",)
-        part.context, part.feature_node = (("representative", i),), i
-    untouched_parts, untouched_binding = deepcopy(parts), partial.to_json()
-
-    control = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, complete)
-    got = csq._aggregate(_part(csq.NOT_APPLICABLE), parts, partial)
-    assert control.verdict == complete_verdict and not control.binding_truncated
-    assert got.verdict == (csq.POSSIBLE if sum(counts[:3]) else csq.UNKNOWN)
-    assert got.binding_truncated
-    for name in ("subject", "context", "held_before", "feature_node", "action_local",
-                 "correspondence", "admissible", "layers", "observed", "expected",
-                 "binding_evidence"):
-        assert getattr(got, name) == getattr(control, name)
-    labels = (csq.SUPPORTED, csq.REFUTED, csq.POSSIBLE, csq.UNKNOWN, csq.NOT_APPLICABLE)
-    expected_counts = ", ".join(f"{label}={count}" for label, count in zip(labels, counts))
-    expected_detail = (f"the binding search is incomplete: 2 assignments retained; "
-                       f"{len(parts)} representative consequences evaluated; "
-                       f"observed consequence verdicts: {expected_counts}")
-    if parts:
-        representative = next(p for p in parts if p.context == control.context)
-        expected_detail += f"; representative evidence: {representative.detail}"
-    assert got.detail == expected_detail
-    # Every synthetic assignment was admissible, even when no consequence was supported.
-    assert got.binding_evidence == (binding.SUPPORTED if parts else "")
-    assert parts == untouched_parts and partial.to_json() == untouched_binding
-
-
-@pytest.mark.parametrize("verdict", ["SUPPORTED", "REFUTED", "POSSIBLE", "UNKNOWN",
-                                     "NOT_APPLICABLE"])
-def test_incomplete_aggregation_reaches_recursive_identity(verdict):
-    from copy import deepcopy
-    from semabi.compiler.v4 import consequence as csq
-
-    op, world = rule({"?z": BERTH}), state(obj("A"), obj("B"), obj("C"))
-    complete = binding.solve(op, (), world, {})
-    partial = binding.solve(op, (), world, {}, limit=2)
-    part = _part(csq.SUPPORTED)
-    part.identity = _part(verdict)
-    part.identity.kind = csq.IDENTITY
-    part.identity.detail = f"identity evidence: {verdict}"
-    part.identity.observed = ("the observed identity",)
-    original = deepcopy(part)
-
-    control = csq._aggregate(_part(csq.NOT_APPLICABLE), [part], complete)
-    got = csq._aggregate(_part(csq.NOT_APPLICABLE), [part], partial)
-    assert control.verdict == csq.SUPPORTED and control.identity.verdict == verdict
-    assert not control.binding_truncated and not control.identity.binding_truncated
-    assert got.verdict == csq.POSSIBLE and got.binding_truncated
-    assert got.identity.verdict == (csq.POSSIBLE if verdict in
-                                    (csq.SUPPORTED, csq.REFUTED, csq.POSSIBLE) else csq.UNKNOWN)
-    assert got.identity.binding_truncated
-    assert got.identity.observed == part.identity.observed
-    assert f"representative evidence: {part.identity.detail}" in got.identity.detail
-    assert f"SUPPORTED={int(verdict == csq.SUPPORTED)}" in got.identity.detail
-    assert "2 assignments retained; 1 representative consequences evaluated" in got.identity.detail
-    assert part == original
-
-
-@pytest.mark.parametrize("budget", [{}, {"limit": 2}, {"nodes": 4}],
-                         ids=["complete", "answers", "nodes"])
-@pytest.mark.parametrize("gained, complete_verdict", [
-    ((), "REFUTED"), (("Alpha",), "POSSIBLE"), (("Beta",), "POSSIBLE"),
-    (("Alpha", "Beta"), "SUPPORTED"),
-], ids=["neither", "alpha-only", "beta-only", "both"])
-def test_creation_deduplication_does_not_complete_a_partial_search(budget, gained,
-                                                                complete_verdict):
-    from copy import deepcopy
-    from semabi.compiler.observation import Node, Observation
-    from semabi.compiler.v4 import consequence as csq
-
-    op = rule({"?z": BERTH, "?w": CALL, "?new0": 3})
-    world = state(obj("Alpha"), obj("Beta"), obj("w0", tid=CALL), obj("w1", tid=CALL))
-    eff = SimpleNamespace(kind="add", obj="?new0", attrs=(("value", "?z"),), refs=())
-    bound = binding.solve(op, (), world, {}, **budget)
-    representatives = csq._distinct_by(bound.admissible,
-                                       lambda assignment: csq._creation_values(eff, assignment))
-    expected_keys = ["Alpha"] if budget else ["Alpha", "Beta"]
-    assert [a.get("?z").key for a in representatives] == expected_keys
-    assert len(bound.admissible) == (2 if budget else 4)
-    assert bound.truncated == bool(budget)
-    assert bound.effect_target(["?z"]) == ((binding.UNDETERMINED_INCOMPLETE, 1) if budget
-                                           else (binding.UNDERDETERMINED, 2))
-    before = Observation([Node(0, -1, "document", "")])
-    after = Observation([Node(0, -1, "document", "")] +
-                        [Node(i, 0, "text", value) for i, value in enumerate(gained, 1)])
-    base = _part(csq.NOT_APPLICABLE)
-    base.kind = csq.CREATION
-    base.bindings, base.binding_status = len(bound.admissible), bound.status
-    base.binding_truncated = bound.truncated
-    parts = [csq._under_one_binding(base, None, {}, before, after, None, op, eff,
-                                    assignment, None, None, {}, "new")
-             for assignment in representatives]
-    assert [p.verdict for p in parts] == [csq.SUPPORTED if key in gained else csq.REFUTED
-                                         for key in expected_keys]
-    assert [p.expected for p in parts] == expected_keys
-    assert [p.observed for p in parts] == [(f"{int(key in gained)} after",)
-                                          for key in expected_keys]
-    original_parts, original_binding = deepcopy(parts), bound.to_json()
-    got = csq._aggregate(base, parts, bound)
-    assert got.verdict == (csq.POSSIBLE if budget else complete_verdict)
-    assert got.binding_truncated == bool(budget)
-    assert got.expected == "Alpha" and got.observed == parts[0].observed
-    assert got.held_before == "0 structures carried these values before"
-    if budget:
-        assert "2 assignments retained; 1 representative consequences evaluated" in got.detail
-        assert f"SUPPORTED={int('Alpha' in gained)}" in got.detail
-        assert f"REFUTED={int('Alpha' not in gained)}" in got.detail
-        assert f"representative evidence: {parts[0].detail}" in got.detail
-    assert parts == original_parts and bound.to_json() == original_binding
-
-
-def test_score_abstains_on_a_partial_singleton(monkeypatch):
-    from semabi.compiler.v4 import consequence as csq
-
-    world = state(obj("A"), obj("B"))
-    op = rule({"?z": BERTH})
-    op.name, op.positives, op.unexplained_negatives = "partial", (), 0
-    op.effs = [SimpleNamespace(kind="set", obj="?z", slot="attr:state", new="closed")]
-    op.core = lambda: (SimpleNamespace(kind="click", owner=None,
-                                       loc=SimpleNamespace(slot="button:Act", owner_tid=None)),)
-    observations = {"before": object(), "after": object()}
-    step = SimpleNamespace(step=0, before="before", after="after",
-                           action=SimpleNamespace(kind="click", target=0))
-    abstractor = SimpleNamespace(types=world.types, abstract=lambda obs: world,
-                                 parsed=lambda obs: None,
-                                 control_family=lambda obs: {0: "button:Act"})
-    model = SimpleNamespace(abstractor=abstractor, operators=[op], cut=0, split=0.0,
-                            reading=SimpleNamespace(name="synthetic"), regime=csq.FROZEN_PREFIX,
-                            queries={}, log=SimpleNamespace(steps=[step],
-                                                            obs=observations.__getitem__))
-    native_solve, retained = binding.solve, []
-
-    def limited_solve(*args, **kwargs):
-        bound = native_solve(*args, **kwargs, limit=1)
-        retained.append(bound)
-        return bound
-
-    def unexpected_consequence(*args, **kwargs):
-        pytest.fail("an incomplete singleton must abstain before evaluating its consequence")
-
-    monkeypatch.setattr(binding, "solve", limited_solve)
-    monkeypatch.setattr(csq, "slot_nodes", lambda *args: {})
-    monkeypatch.setattr(csq, "_under_one_binding", unexpected_consequence)
-    result = csq.score(model)
-    assert len(retained) == 1 and retained[0].status == binding.UNSETTLED
-    assert len(result.predictions) == 1
-    prediction = result.predictions[0]
-    assert prediction.verdict == csq.UNKNOWN and prediction.binding_truncated
-    assert prediction.bindings == 1 and prediction.binding_status == binding.UNSETTLED
-    assert prediction.detail == retained[0].detail
-    assert prediction.identity is None and prediction.context == ()
-    assert result.binding_summary()["hit_the_enumeration_bound"] == 1
-
-
 # ------------------------------------------------------- schemas that name a definite object
 
 def test_an_ambiguous_set_can_still_pin_some_of_its_parameters():
@@ -760,7 +534,6 @@ def test_many_witnesses_one_target_is_not_ambiguity():
     target.attrs["slot"] = "act on me"
     bound = binding.solve(op, op.pre, st, {})
     assert bound.status == binding.AMBIGUOUS
-    assert not bound.truncated and bound.pinned() == frozenset({"?z"})
     assert len(bound.admissible) == 7                     # one per witness
     assert bound.effect_target(["?z"]) == (binding.DETERMINED, 1)
     assert bound.effect_target(["?z", "?y"])[0] == binding.UNDERDETERMINED
@@ -774,16 +547,6 @@ def test_two_assignments_disagreeing_about_the_target_is_ambiguity():
     op = rule({"?z": BERTH}, [("attr", "?z", "slot", "either of us")])
     bound = binding.solve(op, op.pre, state(a, b), {})
     assert len(bound.admissible) == 2
-    assert bound.effect_target(["?z"]) == (binding.UNDERDETERMINED, 2)
-
-
-@pytest.mark.parametrize("budget", [{"limit": 2}, {"nodes": 3}], ids=["answers", "nodes"])
-def test_two_observed_targets_remain_underdetermined_when_search_is_incomplete(budget):
-    op = rule({"?z": BERTH})
-    bound = binding.solve(op, (), state(obj("A"), obj("B"), obj("C")), {}, **budget)
-    assert bound.status == binding.AMBIGUOUS and bound.truncated
-    assert len(bound.admissible) == 2
-    assert bound.pinned() == frozenset()
     assert bound.effect_target(["?z"]) == (binding.UNDERDETERMINED, 2)
 
 

@@ -1,0 +1,84 @@
+{
+  "candidate_patch_sha256": "b30e5ce17c311bd354116f762c4cd0b17831e901362b8384a8db0ebbb2794126",
+  "candidate_source_unchanged": true,
+  "failure_groups": {
+    "test_a_partial_singleton_does_not_establish_uniqueness": {
+      "AssertionError: assert ('UNIQUE' == 'UNSETTLED'\n  \n  - UNSETTLED\n  + UNIQUE)": 2
+    },
+    "test_creation_deduplication_does_not_complete_a_partial_search": {
+      "AssertionError: assert 'REFUTED' == 'POSSIBLE'\n  \n  - POSSIBLE\n  + REFUTED": 4,
+      "AssertionError: assert 'SUPPORTED' == 'POSSIBLE'\n  \n  - POSSIBLE\n  + SUPPORTED": 4
+    },
+    "test_incomplete_aggregation_preserves_only_observed_evidence": {
+      "AssertionError: assert 'NOT_APPLICABLE' == 'UNKNOWN'\n  \n  - UNKNOWN\n  + NOT_APPLICABLE": 4,
+      "AssertionError: assert 'REFUTED' == 'POSSIBLE'\n  \n  - POSSIBLE\n  + REFUTED": 1,
+      "AssertionError: assert 'SUPPORTED' == 'POSSIBLE'\n  \n  - POSSIBLE\n  + SUPPORTED": 2,
+      "AssertionError: assert False\n +  where False = ScopedPrediction(step=0, control='c', operator='op0', kind='VALUE', support=1, slot='s', predicted='v', expected='expe... open disagree, so this step does not settle the rule', layers=(), action_local=None, context=(('representative', 0),)).binding_truncated": 2,
+      "AssertionError: assert False\n +  where False = ScopedPrediction(step=0, control='c', operator='op0', kind='VALUE', support=1, slot='s', predicted='v', expected='expe... open disagree, so this step does not settle the rule', layers=(), action_local=None, context=(('representative', 1),)).binding_truncated": 1,
+      "AssertionError: assert False\n +  where False = ScopedPrediction(step=0, control='c', operator='op0', kind='VALUE', support=1, slot='s', predicted='v', expected='expe...'UNKNOWN', detail='observed representative 0: UNKNOWN', layers=(), action_local=None, context=(('representative', 0),)).binding_truncated": 3,
+      "AssertionError: assert False\n +  where False = ScopedPrediction(step=0, control='c', operator='op0', kind='VALUE', support=1, slot='s', predicted='v', expected='expe...OSSIBLE', detail='observed representative 0: POSSIBLE', layers=(), action_local=None, context=(('representative', 0),)).binding_truncated": 1,
+      "AssertionError: assert False\n +  where False = ScopedPrediction(step=0, control='c', operator='op0', kind='VALUE', support=1, slot='s', predicted='v', expected='expe...this and the evidence does not say which one happened', layers=(), action_local=None, context=(('representative', 0),)).binding_truncated": 1,
+      "AssertionError: assert False\n +  where False = ScopedPrediction(step=0, control='c', operator='op0', kind='VALUE', support=1, slot='s', predicted='v', expected='expe...this and the evidence does not say which one happened', layers=(), action_local=None, context=(('representative', 1),)).binding_truncated": 1
+    },
+    "test_incomplete_aggregation_reaches_recursive_identity": {
+      "AssertionError: assert ('SUPPORTED' == 'POSSIBLE'\n  \n  - POSSIBLE\n  + SUPPORTED)": 5
+    },
+    "test_score_abstains_on_a_partial_singleton": {
+      "Failed: an incomplete singleton must abstain before evaluating its consequence": 1
+    }
+  },
+  "runs": {
+    "after": {
+      "artifacts_sha256": {
+        "affinity.txt": "c0070c0a074b07c7b95eeaceb22d6b69816e210bc14fc80d0986951cbf245523",
+        "exit_code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "finished_at_utc.txt": "478f0dd860f460fc0cb1bb877452676b63d0d0bded3157bfc3a6cb170079264d",
+        "io_priority.txt": "514ee2d3370fe0a6aa64c9c049fe9fccff5da08f5c6a215e26f379d3ca2a6b27",
+        "junit.xml": "e20928176da588f46d2ad5dbb7a4e219ee9fc8950e2647204d2b0ad8b1727272",
+        "process.txt": "620c8743750450ab205c4ab2569a896086c15768fc1c050487c215428b18bc87",
+        "pytest.log": "1573ed2f1cbc52c9f7b40cefa1c02b00c6892e539301bbcb07d5f09af6af04eb",
+        "python_version.txt": "55ae85cf4bdb38743edbcd53ea68ff36511997ec6c21b1e83d8bebc939bf056b",
+        "selected_tests.txt": "3bc7c767ee7099188715e4e171557138fa71ae22885e3d305ffda5229d9b2cdb",
+        "source_checks.txt": "233b50079e6e03c72157c51892cee2a7c654f686c23ca5558b3c69c950b82f1e",
+        "source_directory.txt": "16df0406055f4902d24df45f9bbbe4099357732b0f04fb7982cee9898e41bca8",
+        "started_at_utc.txt": "93996a8d5e708586f6f287e9cafdbdbeb737fe37c7012d52f1fa06e3cacab367"
+      },
+      "cases": 54,
+      "errors": 0,
+      "exit_code": 0,
+      "failed": 0,
+      "finished_at_utc": "2026-09-07T19:01:44Z",
+      "passed": 54,
+      "skipped": 0,
+      "source_directory": "/home/moloch/semabi/runs/.b1_worktree",
+      "started_at_utc": "2026-09-07T19:01:43Z"
+    },
+    "before": {
+      "artifacts_sha256": {
+        "affinity.txt": "c0070c0a074b07c7b95eeaceb22d6b69816e210bc14fc80d0986951cbf245523",
+        "exit_code.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+        "finished_at_utc.txt": "11c2abbd66e6a92d9d226038a0944c92522e15f8e7340b36ab5baf633e337368",
+        "io_priority.txt": "514ee2d3370fe0a6aa64c9c049fe9fccff5da08f5c6a215e26f379d3ca2a6b27",
+        "junit.xml": "fb25736f149b7b816ea277f1cff98d07e6d1d37a4f7492a7d6f736f334000755",
+        "process.txt": "0198959a342a7deb66857d18fbb17a5a166cea36df9a8dd8a9e56a5f915048f7",
+        "pytest.log": "0d42007d147a73b93107053ccff08a8ee09311c86b390ac06f6ecbd62bb23edd",
+        "python_version.txt": "55ae85cf4bdb38743edbcd53ea68ff36511997ec6c21b1e83d8bebc939bf056b",
+        "selected_tests.txt": "3bc7c767ee7099188715e4e171557138fa71ae22885e3d305ffda5229d9b2cdb",
+        "source_checks.txt": "233b50079e6e03c72157c51892cee2a7c654f686c23ca5558b3c69c950b82f1e",
+        "source_directory.txt": "6595c0ba133e3a556a0faf0e83593d912648282148d3814b894d295f7369bd16",
+        "started_at_utc.txt": "0655061fe68da04ad61ea0cf547410e6635e409a2c83fc56b7456668f4ed5a8b"
+      },
+      "cases": 54,
+      "errors": 0,
+      "exit_code": 1,
+      "failed": 32,
+      "finished_at_utc": "2026-09-07T19:01:33Z",
+      "passed": 22,
+      "skipped": 0,
+      "source_directory": "/tmp/semabi-b1-before-v1.36HGoJ",
+      "started_at_utc": "2026-09-07T19:01:32Z"
+    }
+  },
+  "schema": "b1-focused-validation-v1",
+  "worker_lease_released": true
+}

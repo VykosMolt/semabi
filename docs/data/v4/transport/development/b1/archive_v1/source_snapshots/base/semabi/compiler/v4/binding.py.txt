@@ -325,12 +325,6 @@ def solve(op, literals: Iterable[tuple], state, action_binding: Mapping[str, Any
         return Bindings(NONE, (), f"the rendered state contradicts every assignment "
                                   f"({contradicted} tried)")
     if len(out) == 1:
-        if truncated:
-            return Bindings(
-                UNSETTLED, tuple(out),
-                f"the search stopped after {visited} steps with one admissible assignment; "
-                "the enumeration is incomplete, so uniqueness is not established",
-                truncated=True)
         return Bindings(UNIQUE, tuple(out), "one assignment satisfies the rule's preconditions")
     return Bindings(AMBIGUOUS, tuple(out),
                     f"{len(out)}{'+' if truncated else ''} assignments satisfy the rule's "
