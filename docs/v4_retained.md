@@ -1443,6 +1443,41 @@ driver that reads the coincidence's condition -- *the vessel's flag is Norway* -
 states the holdout leaves open and steers the world into one that satisfies it with the
 selection named; that is a planner over the vouch, and it is the next version.
 
+**P37: which ordered fields are clocks, measured before any discipline.**  The
+coincidence P32b could not exclude sat on *calls logged*, so the fact was measured first:
+for every ordered candidate on each history, over the fitted model's own tracked states,
+how often a value on one object rises, falls or stays -- within an episode, since a
+history that resets at every seed would count each reset as a fall, which the first,
+one-tracker run did and is kept as the confounded measurement it was
+(`field_monotone.py`, `p37_monotone_per_episode.json`).  Pre-registered and met on every
+line: on the separating corpus *calls logged* rises three times and never falls, and is
+adopted; on harbour's retained history it never moves within an episode and is not
+adopted; blend's committed gallons rise 115 times and fall 98, its gallons left the
+reverse -- a draw moves them one way and a return the other -- so neither is a clock,
+and the one field an intervention corroborated is untouched by the rule that follows;
+lengths, tickets, capacities and years never move.
+
+**P38: a clock is not a size.**  A candidate field that rises on some object at least
+twice and never falls on any, within any episode of the fitting history, is a clock: its
+order is an order over time, and the history alone does not adopt it -- a retained
+intervention still can, the route blend's committed gallons took (`fields.clocks`,
+`fields.adopted`; `tests/test_v4_fields.py`).  Pre-registered and measured
+(`p38_sep2_inspect.json`, `p38_sep2_score.json`, `p38_pil_score.json`): on the separating
+corpus *calls logged* is the one clock, the adopted fields are the pilot's ticket and the
+vessel's length and the adopted pair is theirs alone; the holdout's booking clicks go
+from twelve forced right and eighteen several to fifteen and fifteen with none wrong,
+two more of the divergent states forced by the comparison, and the decision list is
+unchanged at twenty-six right, three abstentions and one wrong.  What still stands beside
+the comparison at the last two is nominal: literals of the pilot's booked-call relation
+at one, and at the other an *equality* on the clock -- *calls logged is 4*, an instant --
+which the nominal language allows of any attribute, the same class as *the flag is
+Norway*.  On the pilot corpus the holdout goes from five forced right and sixteen
+several to seven and fourteen, none wrong, which is the call key's figure exactly: the
+two extra *several* the vessel key had carried were the clock's order, and that item
+closes.  Not pre-registered and recorded: the pilot corpus's decision list is eighteen
+right and three wrong of twenty-one at the list level, the point hypothesis's own
+coincidental guards.
+
 ## What stands, and what is open
 
 The retained state, regenerated once more: harbour's development sidecar is now written by
@@ -1510,8 +1545,10 @@ built to separate the comparison from a pair of thresholds separates them: the l
 identifies the comparison and is right where a threshold theory fails, and the version
 space's remaining doubt is a coincidence on a counter.  Acting where a guard is contested
 surfaced unestablished behaviour before it falsified anything.  What the campaign leaves
-open is recorded beside it: a discipline for counter-like fields; an acquisition that
-seeks a coincidence's supporting value; the pilot holdout's two extra *several* under the
-vessel key.  The pilot-booking control's cross-trace ledger, which had got worse before
-its corpus got better, is closed by the same repair: six right and one wrong where it
-had been one and six.  Aggregate remains unearned behind all of it.
+open is recorded beside it: an acquisition that seeks a coincidence's supporting
+value; the nominal equalities on any attribute -- a flag, an instant of a clock -- that
+the version space cannot exclude without occasions that contradict them.  A clock's order
+is no longer adopted from a history alone, which closed the vessel key's two extra
+*several*; the pilot-booking control's cross-trace ledger, which had got worse before its
+corpus got better, is closed by the roles repair: six right and one wrong where it had
+been one and six.  Aggregate remains unearned behind all of it.

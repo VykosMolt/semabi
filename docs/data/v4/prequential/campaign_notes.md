@@ -2571,3 +2571,56 @@ list answering without its roles.
 05:22 full suite alone on the 5c6d02b tree with battery #8's state: 566 passed, 3
 skipped, 1 xfailed, no failures (37 min).  Committing battery #8, P32b, P33 and the
 Part XVIII paragraphs.
+
+## P37 first measurement (05:34; p37_monotone.txt) -- confounded by episodes
+One tracker across the whole history counted every seed's reset as a fall: harbour's
+Calls logged rises 19 / falls 25 on harbour_sep2_dev, blend's Committed gal 117 / 102,
+Year 4 / 3.  The objective tracks per episode; the instrument must too.  Rerunning with
+the tracker reset at each episode and rises/falls counted within an episode only.  The
+static fields behave as expected (Takes up to, Ticket to, Length overall, Capacity never
+move).  Pre-registration unchanged.
+
+## P37 measured per episode (06:20; p37_monotone_per_episode.json)
+  harbour_sep2_dev: Calls logged rises 3 / falls 0 within episodes -- a CLOCK -- and it
+    is adopted; Ticket to, Length overall, Takes up to never move.
+  harbour_transfer: Calls logged never moves within an episode (0/0); nothing adopted.
+  blend: Gallons left 98 / 115, Committed gal 115 / 98 -- both ways, NOT clocks; Year static.
+  cellar: Capacity static.
+Pre-registration met on every line.  The first, one-tracker run is kept beside it as
+the confounded measurement it was.
+## P38 pre-registered: a clock is not a size
+A candidate field that rises on some object at least twice and never falls on any,
+within any episode of the fitting history, is a clock: its order is an order over time,
+and the history alone does not adopt it -- a retained intervention still can, the route
+blend's committed gallons took.  Implementation: fields.clocks over the transitions'
+pre-states in step order per episode; fields.adopted skips a clock unless corroborated.
+Expected: harbour_sep2_dev and harbour_pil_dev adopt Ticket to and Length overall only;
+the version space at 464, 504 and 521 loses the calls-logged vouches and the separating
+holdout's Book pilot `several` falls (<= 15 of 30, no wrong), the list unchanged (26 / 3 /
+1); the pilot holdout's `several` <= 16, no wrong; battery #9: harbour_transfer, blend,
+cellar, vet unchanged (no clock is adopted on any retained history) -- any change a
+finding.
+
+06:21 P38 implemented: fields.clocks over per-episode state sequences (the transitions'
+pre-states in step order; a rise needs two witnesses, a fall anywhere disqualifies);
+fields.adopted skips a clock unless corroborated; adopted_pairs restricted to adopted
+fields; the theory record carries `clocks`.  Tests: rises-only is a clock, one fall or one
+rise is not; a clock is adopted only with corroboration.  Focused tests 40 passed.
+Measurement launched on harbour_sep2_dev and harbour_pil_dev.
+
+## P38 judged (06:57; p38_sep2_inspect/score.json, p38_pil_score.json)
+harbour_sep2_dev: clocks = [Calls logged]; adopted Ticket to and Length overall only;
+the pair (Ticket to, Length overall).  Separating holdout Book pilot 15 forced right / 15
+several / 0 wrong (was 12/18); 492 and 521 forced right by the comparison, 464 and 504
+still several -- at 464 the rivals stand on no_children/named literals of the pilot's
+booked-call relation, at 504 "too short" is vouched by Calls logged == '4' & Length >=
+96 & Ticket < 130: an EQUALITY on the clock, which the nominal language allows for any
+attribute (the discipline removes the order, not the field) -- the same class as Flag ==
+Norway.  The list unchanged, 26 / 3 / 1.  Pre-registration met (several <= 15, no wrong,
+list unchanged).
+harbour_pil_dev: pil holdout 7 forced right / 14 several / 0 wrong (was 5/16) -- equal
+to the call key's 7/14: the "two extra several under the vessel key" were the clock's
+order, and that item is CLOSED.  Not pre-registered: the pil list is 18 right / 3 wrong
+of 21 at the list level (the point hypothesis's own coincidental guards).
+Committing; battery #9 at 800% (shared machine), pre-registered: harbour_transfer, blend,
+cellar, vet unchanged -- no clock is adopted on any retained history.

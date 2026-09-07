@@ -61,6 +61,31 @@ def candidates(states, types) -> dict[int, dict[str, list[str]]]:
     return dict(out)
 
 
+def clocks(sequences, candidates_: dict[int, dict[str, list[str]]]) -> set[tuple[int, str]]:
+    """The candidate fields that rise on some object and never fall on any, within any
+    episode of the history: a value that only ever rises is a clock, and an order over it
+    is an order over time.  Harbour's *calls logged* separated bookings from refusals on
+    the corpus that was built to separate a comparison from a pair of thresholds, by the
+    accident of when each was asked; the history alone does not adopt such an order, a
+    retained intervention still can.  ``sequences`` are the states of each episode in step
+    order; a rise needs two witnesses, as a rule does."""
+    rises: dict[tuple[int, str], int] = defaultdict(int)
+    falls: dict[tuple[int, str], int] = defaultdict(int)
+    for states in sequences:
+        last: dict[tuple, float] = {}
+        for state in states:
+            for o in state.objs.values():
+                for slot in candidates_.get(o.tid, {}):
+                    x = numeric(o.attrs.get(slot))
+                    if x is None:
+                        continue
+                    key = (o.tid, o.key, slot)
+                    if key in last and x != last[key]:
+                        (rises if x > last[key] else falls)[(o.tid, slot)] += 1
+                    last[key] = x
+    return {field for field, n in rises.items() if n >= 2 and not falls[field]}
+
+
 def literals(role: str, obj, ordered: dict[int, dict[str, list[str]]]) -> set[tuple]:
     """The ordered literals true of one bound object under the fields' theories."""
     out: set[tuple] = set()
@@ -146,12 +171,12 @@ def corroborated(run_dir, candidates_) -> set[tuple[int, str]]:
 
 
 def adopted(models: dict, candidates_: dict[int, dict[str, list[str]]],
-            corroborated_: set | None = None) -> dict[int, dict[str, list[str]]]:
+            corroborated_: set | None = None, clocks_: set | None = None) -> dict[int, dict[str, list[str]]]:
     """The candidate fields some control's fitted rule orders *and* is justified in ordering,
     or that a retained intervention corroborated (`corroborated`).
 
-    Two things must hold of the rule's ordered literal ``x >= v`` (or ``x < v``) on the
-    control's fitting occasions.  It covers occasions with at least two distinct values of
+    A clock (`clocks`) is not adopted from the history alone.  Two things must hold of the
+    rule's ordered literal ``x >= v`` (or ``x < v``) on the control's fitting occasions.  It covers occasions with at least two distinct values of
     the field -- what an equality could not have said.  And its threshold is witnessed on
     *both* sides: occasions of the rule's event on the side it names, and occasions of some
     other event on the other side.  Blend's `committed >= 2 -> bottled` has refusals at 0
@@ -166,15 +191,21 @@ def adopted(models: dict, candidates_: dict[int, dict[str, list[str]]],
         if slot in candidates_.get(tid, {}):
             out[tid][slot] = candidates_[tid][slot]
     for _lit, fields_ in _justified(models, candidates_):
+        if any((t, slot_t) in (clocks_ or ()) and (t, slot_t) not in (corroborated_ or ())
+               for t, slot_t in fields_):
+            continue
         for t, slot_t in fields_:
             out[t][slot_t] = candidates_[t][slot_t]
     return dict(out)
 
 
-def adopted_pairs(models: dict, candidates_: dict[int, dict[str, list[str]]]) -> frozenset:
-    """The comparisons some fitted rule justified, as unordered pairs of (type, field)."""
+def adopted_pairs(models: dict, candidates_: dict[int, dict[str, list[str]]],
+                  adopted_: dict | None = None) -> frozenset:
+    """The comparisons some fitted rule justified, as unordered pairs of (type, field),
+    over the adopted fields."""
     return frozenset(frozenset(fields_) for lit, fields_ in _justified(models, candidates_)
-                     if lit[0] in (CMP_GE, CMP_LT))
+                     if lit[0] in (CMP_GE, CMP_LT)
+                     and (adopted_ is None or all(slot in adopted_.get(t, {}) for t, slot in fields_)))
 
 
 def _justified(models: dict, candidates_: dict[int, dict[str, list[str]]]):

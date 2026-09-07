@@ -280,3 +280,23 @@ def test_a_comparison_is_in_the_language_only_where_a_rule_justified_that_pair()
     state = _berthing([((200, 160), "refused")])[0][0]
     bound, status = refit.bind(state, None)
     assert any(len(l) == 5 for l in oc.query_literals(fit, refit, state, bound, status))
+
+
+def test_a_field_that_only_ever_rises_is_a_clock_and_not_ordered_by_the_history_alone():
+    # the vessel's calls logged rises on every departure and never falls: a threshold over
+    # it separates events by when they were asked, and the history alone does not adopt
+    # it -- an intervention still can
+    def seq(values):
+        return [State({(1, "v"): Obj(1, "v", {"length": "132", "calls": str(c)}), (2, "b"): Obj(2, "b", {"takes": "90"})})
+                for c in values]
+    cands = {1: {"length": ["64", "132"], "calls": ["0", "1", "2", "3"]}, 2: {"takes": ["70", "90"]}}
+    assert fields.clocks([seq([0, 1, 2]), seq([0, 1])], cands) == {(1, "calls")}
+    assert fields.clocks([seq([0, 1, 0])], cands) == set()          # it fell once
+    assert fields.clocks([seq([0, 1])], cands) == set()             # one rise is that instance
+    rows = [((78, 140), "berthed"), ((96, 120), "berthed"), ((100, 160), "berthed"),
+            ((64, 70), "berthed"), ((140, 160), "berthed"),
+            ((132, 90), "refused"), ((150, 120), "refused"), ((148, 100), "refused")]
+    model = _allocate(rows)
+    assert fields.adopted({"Allocate": model}, BERTH_FIELDS, clocks_={(1, "length")}) == {}
+    assert fields.adopted({"Allocate": model}, BERTH_FIELDS, {(1, "length")}, clocks_={(1, "length")}) == BERTH_FIELDS
+    assert fields.adopted({"Allocate": model}, BERTH_FIELDS, clocks_=set()) == BERTH_FIELDS

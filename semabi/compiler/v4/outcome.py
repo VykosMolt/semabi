@@ -1213,13 +1213,20 @@ def learn(inducer, *, permute: int | None = None, subject_restricted: bool = Fal
     # what a retained intervention already corroborated, beside the history: a candidate
     # field is named by its attribute, as the sidecar names it
     corroborated = field_theory.corroborated(getattr(log, "dir", None) or "", proposed) if proposed else set()
+    # the states of each episode in step order, for the fields that only ever rise
+    episode_of = {s.step: s.episode for s in log.steps}
+    sequences: dict = {}
+    for tr in sorted((t for t in list(inducer.transitions) + list(inducer.noops) if t.steps),
+                     key=lambda t: t.steps[0]):
+        sequences.setdefault(episode_of.get(tr.steps[0]), []).append(tr.before)
+    clocks = field_theory.clocks(list(sequences.values()), proposed) if proposed else set()
     theory = {"candidates": proposed, "adopted": {}, "adopted_pairs": [],
-              "corroborated": sorted(corroborated)}
+              "corroborated": sorted(corroborated), "clocks": sorted(clocks)}
     pairs = None
     for ordered_pass in ([proposed, None] if proposed else [{}]):
         if ordered_pass is None:
-            adopted = field_theory.adopted(out, proposed, corroborated)
-            pairs = field_theory.adopted_pairs(out, proposed)
+            adopted = field_theory.adopted(out, proposed, corroborated, clocks)
+            pairs = field_theory.adopted_pairs(out, proposed, adopted)
             theory["adopted"] = adopted
             theory["adopted_pairs"] = sorted(sorted(map(list, pair)) for pair in pairs)
             ordered_pass = adopted
