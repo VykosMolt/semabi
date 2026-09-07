@@ -145,7 +145,6 @@ def compile_v4(run_dir: Path, min_support: int = 1, conservative_belief: bool = 
                 notes.append(f"v4 promote {candidate}: rejected ({trial.final})")
         result.promoted = sorted(promoted)   # type: ignore[attr-defined]
         H = result.hypotheses          # the readings are already applied and materialised
-        G = H.G                       # search copies hypotheses together with their graph
         if write_diagnostics:
             (run_dir / READINGS_FILE).write_text(json.dumps(result.to_json(), indent=1))
             (run_dir / "search_v4.log").write_text("\n".join(notes) + "\n")

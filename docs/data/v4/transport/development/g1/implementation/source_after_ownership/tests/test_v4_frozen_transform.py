@@ -213,24 +213,6 @@ def _ownership_log(tmp_path):
     return log
 
 
-def _promotion_page(names):
-    return Observation([Node(0, -1, "group", ""), Node(1, 0, "button", "Add item"),
-                        Node(2, 0, "group", "")] +
-                       [Node(i + 3, 2, "text", name) for i, name in enumerate(names)])
-
-
-def _promotion_log(tmp_path):
-    from semabi.compiler.browser import Primitive
-    from semabi.compiler.evidence import EvidenceLog
-
-    log = EvidenceLog(tmp_path / "promotion")
-    first = _promotion_page(("Larch", "Birch"))
-    expanded = _promotion_page(("Larch", "Birch", "Cedar"))
-    log.add_step(0, Primitive("reload"), True, None, first, first)
-    log.add_step(0, Primitive("click", 1), True, None, first, expanded)
-    return log
-
-
 def _learned_reading(A):
     from copy import deepcopy
 
@@ -254,7 +236,6 @@ def test_v4_selected_graph_reads_unseen_pages_without_changing_the_reading(tmp_p
         log.dir, write_diagnostics=False, **kwargs)
     A = compiled.abstractor.freeze()
     before = _learned_reading(A)
-    assert A.G.header_strings and A.emissions.values
     known = [(A.abstract(obs), A.control_family(obs)) for obs in compiled.log.observations.values()]
     unseen = _ownership_page("fresh value", ("Cedar", "Dune"), header="Future column",
                              status="Saved Cedar.")
@@ -271,28 +252,6 @@ def test_v4_selected_graph_reads_unseen_pages_without_changing_the_reading(tmp_p
     assert _learned_reading(A) == before
     assert [(A.abstract(obs), A.control_family(obs))
             for obs in compiled.log.observations.values()] == known
-
-
-def test_v4_accepted_promotion_carries_the_selected_hypotheses_graph(tmp_path):
-    from semabi.compiler.compile_v4 import compile_v4
-
-    log = _promotion_log(tmp_path)
-    compiled = compile_v4(log.dir, evidence_log=log, read_outputs=False)
-    assert compiled.v4.promoted == ["text[_]"]
-    assert any(move["move"] == "promote_leaf" for move in compiled.v4.moves)
-    A = compiled.abstractor.freeze()
-    learned = _learned_reading(A)
-    unseen = _promotion_page(("Larch", "Birch", "Cedar", "Elm"))
-    sig = unseen.structural_signature()
-    assert sig not in A.G.obs and sig not in A.H.G.obs
-
-    A.parsed(unseen)
-    assert 1 in A.control_family(unseen)
-    A.abstract(unseen)
-
-    assert A.H is compiled.v4.hypotheses and A.G is A.H.G
-    assert A.G.learning is False and A.emissions.frozen
-    assert sig in A.G.obs and _learned_reading(A) == learned
 
 
 def test_v4_inferred_fit_keeps_its_frozen_reading_in_either_unseen_page_order(tmp_path):

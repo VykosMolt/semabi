@@ -255,7 +255,7 @@ def _template_pairs(grouped: dict[str, list], fa: str, fb: str) -> set[frozenset
 
 def _build(Hx: Hypotheses, G: ObsGraph, log: EvidenceLog) -> V4Abstractor:
     Hx._build_entity_types()
-    A = V4Abstractor(Hx.G, Hx)
+    A = V4Abstractor(G, Hx)
     A.fit_view_controls(log)
     return A
 

@@ -1,0 +1,138 @@
+F..FF                                                                    [100%]
+=================================== FAILURES ===================================
+_ test_v4_selected_graph_reads_unseen_pages_without_changing_the_reading[inferred] _
+
+tmp_path = PosixPath('/home/moloch/semabi/docs/data/v4/transport/development/g1/implementation/pytest_before/test_v4_selected_graph_reads_u0')
+branch = 'inferred'
+
+    @pytest.mark.parametrize("branch", ["inferred", "pinned", "legacy"])
+    def test_v4_selected_graph_reads_unseen_pages_without_changing_the_reading(tmp_path, branch):
+        from semabi.compiler.compile_v4 import compile_v4
+        from semabi.compiler.v4.pinned import from_search
+    
+        log = _ownership_log(tmp_path)
+        source = compile_v4(log.dir, write_diagnostics=False)
+        assert source.v4.promoted == []
+        kwargs = {}
+        if branch == "pinned":
+            kwargs["pinned"] = from_search(source.v4, log.dir)
+        elif branch == "legacy":
+            kwargs["identity"] = {t: u.key_slot for t, u in source.hypotheses.units.items()}
+        compiled = source if branch == "inferred" else compile_v4(
+            log.dir, write_diagnostics=False, **kwargs)
+        A = compiled.abstractor.freeze()
+        before = _learned_reading(A)
+        known = [(A.abstract(obs), A.control_family(obs)) for obs in compiled.log.observations.values()]
+        unseen = _ownership_page("fresh value", ("Cedar", "Dune"), header="Future column",
+                                 status="Saved Cedar.")
+        sig = unseen.structural_signature()
+        assert sig not in A.G.obs and sig not in A.H.G.obs
+    
+>       A.parsed(unseen)                    # historically raised KeyError in H.parse_units
+        ^^^^^^^^^^^^^^^^
+
+tests/test_v4_frozen_transform.py:245: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+semabi/compiler/v2/abstractor.py:270: in parsed
+    self._cache[sig] = self._parse(obs, sig)
+                       ^^^^^^^^^^^^^^^^^^^^^
+semabi/compiler/v2/abstractor.py:402: in _parse
+    uis = H.parse_units(sig)
+          ^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <semabi.compiler.v2.hypotheses.Hypotheses object at 0x7fcb0fed3bc0>
+sig = 'e4d7c1965ef691bf'
+
+    def parse_units(self, sig: str) -> list[UnitInstance]:
+        """Unit instances of one observation (all recurring templates; nested allowed)."""
+>       obs = self.G.obs[sig]
+              ^^^^^^^^^^^^^^^
+E       KeyError: 'e4d7c1965ef691bf'
+
+semabi/compiler/v2/hypotheses.py:154: KeyError
+__ test_v4_inferred_fit_keeps_its_frozen_reading_in_either_unseen_page_order ___
+
+tmp_path = PosixPath('/home/moloch/semabi/docs/data/v4/transport/development/g1/implementation/pytest_before/test_v4_inferred_fit_keeps_its0')
+
+    def test_v4_inferred_fit_keeps_its_frozen_reading_in_either_unseen_page_order(tmp_path):
+        from semabi.compiler.v4 import consequence as csq
+    
+        log = _ownership_log(tmp_path)
+        forward = csq.fit(log.dir, None, at=len(log.steps), min_support=1).abstractor
+        backward = csq.fit(log.dir, None, at=len(log.steps), min_support=1).abstractor
+        learned = _learned_reading(forward)
+        assert _learned_reading(backward) == learned
+        pages = [_ownership_page("fresh value", ("Cedar", "Dune")),
+                 _ownership_page("another value", ("Elm", "Fir"), header="Future column")]
+        readings = []
+        for A, order in ((forward, pages), (backward, list(reversed(pages)))):
+            for obs in order:
+>               A.parsed(obs)
+
+tests/test_v4_frozen_transform.py:270: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+semabi/compiler/v2/abstractor.py:270: in parsed
+    self._cache[sig] = self._parse(obs, sig)
+                       ^^^^^^^^^^^^^^^^^^^^^
+semabi/compiler/v2/abstractor.py:402: in _parse
+    uis = H.parse_units(sig)
+          ^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <semabi.compiler.v2.hypotheses.Hypotheses object at 0x7fcb0fc965d0>
+sig = '2b89644c589e1502'
+
+    def parse_units(self, sig: str) -> list[UnitInstance]:
+        """Unit instances of one observation (all recurring templates; nested allowed)."""
+>       obs = self.G.obs[sig]
+              ^^^^^^^^^^^^^^^
+E       KeyError: '2b89644c589e1502'
+
+semabi/compiler/v2/hypotheses.py:154: KeyError
+______________ test_v4_search_candidate_reads_only_its_own_graph _______________
+
+tmp_path = PosixPath('/home/moloch/semabi/docs/data/v4/transport/development/g1/implementation/pytest_before/test_v4_search_candidate_reads0')
+
+    def test_v4_search_candidate_reads_only_its_own_graph(tmp_path):
+        from copy import deepcopy
+    
+        from semabi.compiler.compile_v4 import build_hypotheses
+        from semabi.compiler.v4.search import _build
+    
+        log = _ownership_log(tmp_path)
+        source, G = build_hypotheses(log.dir, log)
+        candidate, sibling = deepcopy(source), deepcopy(source)
+        source_observations, sibling_observations = set(G.obs), set(sibling.G.obs)
+        source_vocabulary, sibling_vocabulary = vocabulary(G), vocabulary(sibling.G)
+        A = _build(candidate, G, log).freeze()
+        unseen = _ownership_page("candidate value", ("Cedar", "Dune"))
+        sig = unseen.structural_signature()
+    
+>       A.parsed(unseen)
+
+tests/test_v4_frozen_transform.py:294: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+semabi/compiler/v2/abstractor.py:270: in parsed
+    self._cache[sig] = self._parse(obs, sig)
+                       ^^^^^^^^^^^^^^^^^^^^^
+semabi/compiler/v2/abstractor.py:402: in _parse
+    uis = H.parse_units(sig)
+          ^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <semabi.compiler.v2.hypotheses.Hypotheses object at 0x7fcb0fc00320>
+sig = '3df270477dfe7b3b'
+
+    def parse_units(self, sig: str) -> list[UnitInstance]:
+        """Unit instances of one observation (all recurring templates; nested allowed)."""
+>       obs = self.G.obs[sig]
+              ^^^^^^^^^^^^^^^
+E       KeyError: '3df270477dfe7b3b'
+
+semabi/compiler/v2/hypotheses.py:154: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_v4_frozen_transform.py::test_v4_selected_graph_reads_unseen_pages_without_changing_the_reading[inferred]
+FAILED tests/test_v4_frozen_transform.py::test_v4_inferred_fit_keeps_its_frozen_reading_in_either_unseen_page_order
+FAILED tests/test_v4_frozen_transform.py::test_v4_search_candidate_reads_only_its_own_graph
+3 failed, 2 passed, 14 deselected in 0.23s
