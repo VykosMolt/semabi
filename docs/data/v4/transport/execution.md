@@ -243,3 +243,20 @@ real unseen-observation parsing, frozen learned statistics, candidate isolation,
 retained/dedicated corpus checks and full validation. Subsequent work will
 separately investigate the missing task representation and chronology boundary,
 then assess reserved transfer under a new freeze and proceed toward JOIN.
+
+## Analysis preservation correction (2026-09-07 17:09 UTC)
+
+The final review narrowed its field-adoption statement to available pinned
+models after `analysis_manifest_v1.json` had hashed an earlier review. That
+17-byte scope clarification landed before commit `0a021bf`, leaving one of its
+51 analysis entries inconsistent. The other 50 entries and all 127 first-pass
+artifacts are unchanged. No observation, score, control or phase verdict changed.
+
+`analysis_manifest_v2.json` corrects this metadata after G1 source edits began;
+it does not claim another pre-repair freeze. It preserves the invalid v1 manifest
+and exact earlier review bytes at
+`analysis_revisions/review_before_final_scope_clarification.md`. The corrected
+manifest binds 54 files, SHA-256
+`719171dd271900891027a33dd09a666d804e409431d5686b76d87f2e3346bc26`.
+An independent check verifies every entry and the exact reconstruction. Future
+closeout must wait for the writer's final digest before sealing its file.
