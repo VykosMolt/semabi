@@ -1,0 +1,206 @@
+--- docs/data/v4/transport/reserved_v1/instrument_revisions/preserve_first_pass.py.before_resource_restore.txt
++++ docs/data/v4/transport/reserved_v1/preserve_first_pass.py
+@@ -201,7 +201,8 @@
+             and campaign["files"] == {**implementation["files"], **additions},
+             "Campaign must add exactly the initial raw inputs and candidates")
+     required = [Path(__file__).resolve(), HERE / "summarize.py", HERE / "custody_plan_v1.md",
+-                HERE / "custody_review_v1.md", HERE / "freeze.py", HELPER, RUNNER,
++                HERE / "custody_review_v1.md", HERE / "resource_review_v1.md",
++                TRANSPORT / "development/g2/resource_override_v3.json", HERE / "freeze.py", HELPER, RUNNER,
+                 HERE / "evaluator_audit/public_binding_adapter.py",
+                 TRANSPORT / "controls/binding_fidelity.py"]
+     require({relative(p) for p in required} <= set(campaign["verification_files"]),
+@@ -314,8 +315,6 @@
+             "Fixture service did not cover the complete browser collection")
+     scores = sorted((records["score_" + stage] for stage in STAGES), key=lambda row: time(row["start_utc"]))
+     require(time(service["end_utc"]) <= time(scores[0]["start_utc"]), "Scoring began before service reaping")
+-    for left, right in zip(scores, scores[1:]):
+-        require(time(left["end_utc"]) <= time(right["start_utc"]), "Score jobs overlapped")
+     return records
+ 
+ 
+--- docs/data/v4/transport/reserved_v1/instrument_revisions/preserve_first_pass.py.before_all_24_cpus.txt
++++ docs/data/v4/transport/reserved_v1/preserve_first_pass.py
+@@ -202,7 +202,7 @@
+             "Campaign must add exactly the initial raw inputs and candidates")
+     required = [Path(__file__).resolve(), HERE / "summarize.py", HERE / "custody_plan_v1.md",
+                 HERE / "custody_review_v1.md", HERE / "resource_review_v1.md",
+-                TRANSPORT / "development/g2/resource_override_v2.json", HERE / "freeze.py", HELPER, RUNNER,
++                TRANSPORT / "development/g2/resource_override_v3.json", HERE / "freeze.py", HELPER, RUNNER,
+                 HERE / "evaluator_audit/public_binding_adapter.py",
+                 TRANSPORT / "controls/binding_fidelity.py"]
+     require({relative(p) for p in required} <= set(campaign["verification_files"]),
+--- docs/data/v4/transport/reserved_v1/instrument_revisions/freeze.py.before_resource_restore.txt
++++ docs/data/v4/transport/reserved_v1/freeze.py
+@@ -126,11 +126,13 @@
+     verification_paths = [HERE / name for name in (
+         "protocol_v1.md", "freeze.py", "public_review_v1.md",
+         "preserve_first_pass.py", "summarize.py", "custody_plan_v1.md", "custody_review_v1.md",
++        "resource_review_v1.md",
+         "evaluator_audit/public_envelope.md", "evaluator_audit/public_binding_adapter.py",
+         "evaluator_audit/sealed_files_manifest_v1.json")]
+     verification_paths += [TRANSPORT / "run_job.py", TRANSPORT / "controls/binding_fidelity.py",
+                            TRANSPORT / "acquisition_summary.py",
+                            result_path, prior_path, ROOT / "pyproject.toml", ROOT / "pytest.ini"]
++    verification_paths.append(TRANSPORT / "development/g2/resource_override_v3.json")
+     verification = {relative(p): sha(p) for p in verification_paths}
+     head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+     parent_path = HERE / "implementation_freeze_v1.json"
+@@ -178,7 +180,7 @@
+         "g2_results": {"path": relative(result_path), "sha256": sha(result_path)},
+         "evaluator_inventory": {"path": relative(inventory_path), "sha256": sha(inventory_path)},
+         "resource": {"affinity": sorted(os.sched_getaffinity(0)), "nice": os.getpriority(os.PRIO_PROCESS, 0),
+-                     "heavy_workers": 1, "numerical_threads": 1, "python_hash_seed": "0"},
++                     "heavy_workers": 24, "numerical_threads": 1, "python_hash_seed": "0"},
+         "boundary": "Only files is a learner/runtime input inventory. This evaluator-owned "
+                     "process hashes sealed bytes; collection, acquisition and preparation never do.",
+         "exposure": "Root has disclosed T1 development evidence and generic R1 instruments; "
+--- docs/data/v4/transport/reserved_v1/instrument_revisions/freeze.py.before_all_24_cpus.txt
++++ docs/data/v4/transport/reserved_v1/freeze.py
+@@ -132,7 +132,7 @@
+     verification_paths += [TRANSPORT / "run_job.py", TRANSPORT / "controls/binding_fidelity.py",
+                            TRANSPORT / "acquisition_summary.py",
+                            result_path, prior_path, ROOT / "pyproject.toml", ROOT / "pytest.ini"]
+-    verification_paths.append(TRANSPORT / "development/g2/resource_override_v2.json")
++    verification_paths.append(TRANSPORT / "development/g2/resource_override_v3.json")
+     verification = {relative(p): sha(p) for p in verification_paths}
+     head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+     parent_path = HERE / "implementation_freeze_v1.json"
+@@ -180,7 +180,7 @@
+         "g2_results": {"path": relative(result_path), "sha256": sha(result_path)},
+         "evaluator_inventory": {"path": relative(inventory_path), "sha256": sha(inventory_path)},
+         "resource": {"affinity": sorted(os.sched_getaffinity(0)), "nice": os.getpriority(os.PRIO_PROCESS, 0),
+-                     "heavy_workers": 12, "numerical_threads": 1, "python_hash_seed": "0"},
++                     "heavy_workers": 24, "numerical_threads": 1, "python_hash_seed": "0"},
+         "boundary": "Only files is a learner/runtime input inventory. This evaluator-owned "
+                     "process hashes sealed bytes; collection, acquisition and preparation never do.",
+         "exposure": "Root has disclosed T1 development evidence and generic R1 instruments; "
+--- docs/data/v4/transport/reserved_v1/instrument_revisions/protocol_v1.md.before_resource_restore
++++ docs/data/v4/transport/reserved_v1/protocol_v1.md
+@@ -144,13 +144,18 @@
+ 
+ ## Resource and process ownership
+ 
+-Root coordinates one low-priority logical CPU worker for all heavy campaign
+-work. Launch each job with `taskset -c 23 nice -n 19 ionice -c 3` around the
+-existing `run_job.py`; retain its exact inner command. Numerical libraries use
+-one thread and `PYTHONHASHSEED=0`. All fits, tests and browser sessions run
+-sequentially; any local fixture service inherits the same affinity and priority.
+-This implements the user's later resource instruction and supersedes T1's former
+-12-core allowance. No GPU or paid compute is used.
++The user lifted the temporary single-core restriction at 20:01 UTC, before any
++R1 freeze or collection, then explicitly requested all 24 CPUs at 20:08 UTC.
++Root coordinates up to 24 logical CPU workers, using CPUs 0–23 at normal
++priority for new jobs. Launch jobs with `taskset`
++around the existing `run_job.py`; retain their exact inner commands. Numerical
++libraries still use one thread and `PYTHONHASHSEED=0`. Shared fixture sessions
++and acquisition arms remain sequential in the declared order. After the common
++evaluation and service reaping, the five independent score jobs may run in
++parallel, within available memory. All must finish before preservation.
++The resource change is recorded in `../development/g2/resource_override_v3.json`;
++the prior protocol is retained under `instrument_revisions`. No GPU or paid
++compute is used.
+ 
+ Each job records source hashes, working directory, times, explicit ownership,
+ command and termination. The runner reaps its child; the owning agent reaps the
+--- docs/data/v4/transport/reserved_v1/instrument_revisions/protocol_v1.md.before_all_24_cpus
++++ docs/data/v4/transport/reserved_v1/protocol_v1.md
+@@ -145,14 +145,15 @@
+ ## Resource and process ownership
+ 
+ The user lifted the temporary single-core restriction at 20:01 UTC, before any
+-R1 freeze or collection. Root again coordinates up to 12 logical CPU workers,
+-using CPUs 12–23 at normal priority for new jobs. Launch jobs with `taskset`
++R1 freeze or collection, then explicitly requested all 24 CPUs at 20:08 UTC.
++Root coordinates up to 24 logical CPU workers, using CPUs 0–23 at normal
++priority for new jobs. Launch jobs with `taskset`
+ around the existing `run_job.py`; retain their exact inner commands. Numerical
+ libraries still use one thread and `PYTHONHASHSEED=0`. Shared fixture sessions
+ and acquisition arms remain sequential in the declared order. After the common
+ evaluation and service reaping, the five independent score jobs may run in
+ parallel, within available memory. All must finish before preservation.
+-The resource change is recorded in `../development/g2/resource_override_v2.json`;
++The resource change is recorded in `../development/g2/resource_override_v3.json`;
+ the prior protocol is retained under `instrument_revisions`. No GPU or paid
+ compute is used.
+ 
+--- docs/data/v4/transport/reserved_v1/instrument_revisions/custody_plan_v1.md.before_resource_restore
++++ docs/data/v4/transport/reserved_v1/custody_plan_v1.md
+@@ -32,16 +32,20 @@
+ job directories. Additional jobs, top-level files, symlinks and special entries
+ are rejected. This membership snapshot is rechecked before manifest writing.
+ 
+-Root launches each runner under `taskset -c 23 nice -n 19 ionice -c 3`, with
+-one numerical thread and `PYTHONHASHSEED=0`. The process record authenticates
++The user's resource instructions at 20:01 and 20:08 UTC lift the temporary cap
++and explicitly authorize all 24 CPUs before any R1 execution. Root launches new
++workers under `taskset` within CPUs 0–23 at normal priority, with one numerical
++thread and `PYTHONHASHSEED=0`.
++The process record authenticates
+ the thread environment; the outer CPU/priority launch and runner reaping remain
+ root's process-ownership responsibility because the retained runner does not
+ record its outer affinity or priority. The service lifetime covers all browser
+ collection. Root interrupts and reaps it after evaluation, before scoring;
+ its required terminal record is `INTERRUPTED`, return code `-15`,
+ `child_terminated: true`. Every other fixed job must be `FINISHED`, return code
+-zero and child-terminated. Scores may run in any sequential order after the
+-service is reaped. Initial collection, candidate preparation, the declared arms
++zero and child-terminated. The five independent scores may run concurrently
++after the service is reaped, within available memory. Initial collection,
++candidate preparation, the declared arms
+ and evaluation must occur sequentially in their declared order.
+ 
+ ## Preservation checks
+@@ -125,16 +129,25 @@
+ ## Review and execution boundary
+ 
+ Author checks are limited to small standard-library AST/syntax and synthetic
+-adapter/custody checks on CPU 23 at nice 19 and idle I/O. They must not read
++adapter/custody checks within the current resource allowance. They must not read
+ actual R1 records, run native fits, launch browsers or execute controls.
+ Root independently reviews and commits these instruments before producing the
+ implementation freeze. Any rejected draft must be retained before revision.
+ Real preservation waits for the complete fixed pass. Summary and sealed
+ diagnostic controls wait for the resulting first-pass manifest. Later diagnosis
+ or repair cannot overwrite that manifest or any first-pass input.
+-Root invokes preservation directly under CPU 23, nice 19 and idle I/O after
++Root invokes preservation directly on one CPU within the current allowance after
+ all 13 owned jobs are reaped; preservation must not create another job directory
+ under the fixed `jobs/` root. The rejected pre-review instrument and plan are
+ retained byte-for-byte under `instrument_revisions/` with the
+ `before_job_inventory` suffix. The independent job-inventory reproducer and its
+ before/after results remain under `review_evidence/`.
++
++The accepted pre-resource-change protocol, plan, preserver and freezer remain
++under `instrument_revisions` with `before_resource_restore` in their names.
++The brief 12-core scheduling revision is separately retained with
++`before_all_24_cpus` in its filenames; it was never used for an R1 freeze or run.
++`resource_review_v1.md` separately reviews the scheduling and dependency changes;
++it and the resource override enter both phase freezes. The historical custody
++review remains unchanged. Removing the score-overlap restriction does not relax
++job membership, provenance, raw accounting, failure preservation or completion.
+--- docs/data/v4/transport/reserved_v1/instrument_revisions/custody_plan_v1.md.before_all_24_cpus
++++ docs/data/v4/transport/reserved_v1/custody_plan_v1.md
+@@ -32,9 +32,10 @@
+ job directories. Additional jobs, top-level files, symlinks and special entries
+ are rejected. This membership snapshot is rechecked before manifest writing.
+ 
+-The user's 20:01 UTC resource instruction restores the prior 12-core allowance
+-before any R1 execution. Root launches new workers under `taskset` within CPUs
+-12–23 at normal priority, with one numerical thread and `PYTHONHASHSEED=0`.
++The user's resource instructions at 20:01 and 20:08 UTC lift the temporary cap
++and explicitly authorize all 24 CPUs before any R1 execution. Root launches new
++workers under `taskset` within CPUs 0–23 at normal priority, with one numerical
++thread and `PYTHONHASHSEED=0`.
+ The process record authenticates
+ the thread environment; the outer CPU/priority launch and runner reaping remain
+ root's process-ownership responsibility because the retained runner does not
+@@ -144,6 +145,8 @@
+ 
+ The accepted pre-resource-change protocol, plan, preserver and freezer remain
+ under `instrument_revisions` with `before_resource_restore` in their names.
++The brief 12-core scheduling revision is separately retained with
++`before_all_24_cpus` in its filenames; it was never used for an R1 freeze or run.
+ `resource_review_v1.md` separately reviews the scheduling and dependency changes;
+ it and the resource override enter both phase freezes. The historical custody
+ review remains unchanged. Removing the score-overlap restriction does not relax

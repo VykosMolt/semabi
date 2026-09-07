@@ -1,0 +1,669 @@
+{
+  "authority": "Evaluator-only visible-state specification derived from the unchanged frozen author materials before any R1 learner output was read. Existing fixture-only audit evidence corroborated the raw mapping. No outcome labels or hidden rule selectors are supplied.",
+  "exposure": {
+    "eligible_for_subsequent_blind_repair_design": false,
+    "evaluator": "/root/reserved_audit",
+    "learner_outputs_read": false,
+    "reserved_contract_and_shared_fixture_sources_read": true
+  },
+  "fixture_freeze": {
+    "path": "experiments/transport_v1/manifest_frozen.json",
+    "revision": "v2",
+    "sha256": "272e8ab1a95b65bcb381b27d2977f6b59bdeedacfe05153c102fd48917264dec"
+  },
+  "fixtures": {
+    "reservoir": {
+      "cases": [
+        {
+          "capacity": 12,
+          "case": "reservoir_01",
+          "family": "cross_object_order",
+          "job": "Orchard watering",
+          "operation": "attempt",
+          "quantity": 8,
+          "resource": "Slate cistern",
+          "review_limit": 14,
+          "review_load": 18,
+          "script": [
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Continue to water sources",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Use Slate cistern",
+              "role": "radio"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Review watering request",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Schedule watering",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            }
+          ],
+          "target_action_index": 3
+        },
+        {
+          "capacity": 7,
+          "case": "reservoir_02",
+          "family": "cross_object_order",
+          "job": "Orchard watering",
+          "operation": "attempt",
+          "quantity": 8,
+          "resource": "Slate cistern",
+          "review_limit": 14,
+          "review_load": 18,
+          "script": [
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Continue to water sources",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Use Slate cistern",
+              "role": "radio"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Review watering request",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Schedule watering",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            }
+          ],
+          "target_action_index": 3
+        },
+        {
+          "capacity": 28,
+          "case": "reservoir_03",
+          "family": "cross_object_order",
+          "job": "Orchard watering",
+          "operation": "attempt",
+          "quantity": 24,
+          "resource": "Slate cistern",
+          "review_limit": 14,
+          "review_load": 18,
+          "script": [
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Continue to water sources",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Use Slate cistern",
+              "role": "radio"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Review watering request",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Schedule watering",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            }
+          ],
+          "target_action_index": 3
+        },
+        {
+          "capacity": 21,
+          "case": "reservoir_04",
+          "family": "cross_object_order",
+          "job": "Orchard watering",
+          "operation": "attempt",
+          "quantity": 24,
+          "resource": "Slate cistern",
+          "review_limit": 14,
+          "review_load": 18,
+          "script": [
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Continue to water sources",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Use Slate cistern",
+              "role": "radio"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Review watering request",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Schedule watering",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            }
+          ],
+          "target_action_index": 3
+        },
+        {
+          "capacity": 12,
+          "case": "reservoir_05",
+          "family": "relevant_quantity_monotonicity",
+          "job": "Orchard watering",
+          "operation": "attempt",
+          "quantity": 10,
+          "resource": "Slate cistern",
+          "review_limit": 14,
+          "review_load": 18,
+          "script": [
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Continue to water sources",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Use Slate cistern",
+              "role": "radio"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Review watering request",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Schedule watering",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            }
+          ],
+          "target_action_index": 3
+        },
+        {
+          "capacity": 12,
+          "case": "reservoir_06",
+          "family": "relevant_quantity_monotonicity",
+          "job": "Orchard watering",
+          "operation": "attempt",
+          "quantity": 12,
+          "resource": "Slate cistern",
+          "review_limit": 14,
+          "review_load": 18,
+          "script": [
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Continue to water sources",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Use Slate cistern",
+              "role": "radio"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Review watering request",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Schedule watering",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            }
+          ],
+          "target_action_index": 3
+        },
+        {
+          "capacity": 12,
+          "case": "reservoir_07",
+          "family": "relevant_quantity_monotonicity",
+          "job": "Orchard watering",
+          "operation": "attempt",
+          "quantity": 12.5,
+          "resource": "Slate cistern",
+          "review_limit": 14,
+          "review_load": 18,
+          "script": [
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Continue to water sources",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Use Slate cistern",
+              "role": "radio"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Review watering request",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Schedule watering",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            }
+          ],
+          "target_action_index": 3
+        },
+        {
+          "capacity": 9,
+          "case": "reservoir_08",
+          "family": "relevant_quantity_monotonicity",
+          "job": "Orchard watering",
+          "operation": "attempt",
+          "quantity": 10,
+          "resource": "Slate cistern",
+          "review_limit": 14,
+          "review_load": 18,
+          "script": [
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Continue to water sources",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Use Slate cistern",
+              "role": "radio"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Review watering request",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Schedule watering",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            }
+          ],
+          "target_action_index": 3
+        },
+        {
+          "capacity": 17,
+          "case": "reservoir_opaque_01",
+          "family": "restricted_observability_ambiguity",
+          "job": "Orchard watering",
+          "operation": "review",
+          "quantity": 9,
+          "resource": "Slate cistern",
+          "review_limit": 14,
+          "review_load": 18,
+          "script": [
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Continue to water sources",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Use Slate cistern",
+              "role": "radio"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Review watering request",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Review water access",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            }
+          ],
+          "target_action_index": 3
+        },
+        {
+          "capacity": 17,
+          "case": "reservoir_opaque_02",
+          "family": "restricted_observability_ambiguity",
+          "job": "Orchard watering",
+          "operation": "review",
+          "quantity": 9,
+          "resource": "Slate cistern",
+          "review_limit": 14,
+          "review_load": 18,
+          "script": [
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Continue to water sources",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Use Slate cistern",
+              "role": "radio"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Review watering request",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            },
+            {
+              "exact": true,
+              "kind": "click",
+              "name": "Review water access",
+              "role": "button"
+            },
+            {
+              "kind": "snapshot"
+            }
+          ],
+          "target_action_index": 3
+        }
+      ],
+      "entity_anchors": {
+        "job": "job_name",
+        "resource": "resource_name"
+      },
+      "jobs": [
+        "Orchard watering"
+      ],
+      "operations": {
+        "attempt": {
+          "bind": [
+            "job",
+            "resource"
+          ],
+          "comparisons": [
+            [
+              "quantity",
+              "capacity"
+            ]
+          ],
+          "fields": {
+            "capacity": {
+              "allow_trajectory_alignment": true,
+              "entity": "resource",
+              "label": "Water available",
+              "raw": "capacity"
+            },
+            "quantity": {
+              "allow_trajectory_alignment": true,
+              "entity": "job",
+              "label": "Water requested",
+              "raw": "quantity"
+            }
+          },
+          "owner": "job",
+          "references": [
+            [
+              "job",
+              "resource"
+            ]
+          ]
+        },
+        "review": {
+          "bind": [
+            "resource"
+          ],
+          "fields": {
+            "review_limit": {
+              "entity": "resource",
+              "label": "Access allowance",
+              "raw": "review_limit"
+            },
+            "review_load": {
+              "entity": "resource",
+              "label": "Recorded draw",
+              "raw": "review_load"
+            }
+          },
+          "owner": "resource"
+        }
+      },
+      "raw_fields": {
+        "capacity": {
+          "label": "Water available",
+          "mode": "definition"
+        },
+        "job_name": {
+          "expected_key": "job",
+          "mode": "heading",
+          "required_visible": false
+        },
+        "quantity": {
+          "label": "Water requested",
+          "mode": "definition"
+        },
+        "resource_name": {
+          "expected_key": "resource",
+          "label": "Water source",
+          "mode": "definition"
+        },
+        "review_limit": {
+          "label": "Access allowance",
+          "mode": "definition"
+        },
+        "review_load": {
+          "label": "Recorded draw",
+          "mode": "definition"
+        }
+      },
+      "resources": [
+        "Copper cistern",
+        "Slate cistern",
+        "Stone cistern"
+      ],
+      "scope": [
+        "Evaluator-supplied visible-state diagnosis after the first reserved assessment is preserved. No outcome labels or hidden rule selectors enter this control.",
+        "Raw script node targets and literal primitive arguments are checked against the original frozen action payloads. Raw pre-state fields are assessed separately from emitted-response accuracy.",
+        "The request identity is absent from the terminal visible page. Its raw name anchor is optional for aggregate visible-state fidelity and remains unavailable for exact-name owner, entity and dependent field corroboration. The control must not invent a terminal identity anchor or interpret this limitation alone as learner failure.",
+        "The final action has no literal scalar argument. All evaluation scripted primitives are clicks: argument matches certify primitive custody and absence of stray text; they do not establish learned typed-argument semantics. Earlier type effects in the published initial trace were audited separately using preserved fixture-only evidence.",
+        "Visible entity names are exact and case-sensitive; no context, token, spelling or key normalization is applied. Entity membership requires a uniquely named nonpositional object and a raw descendant source anchor.",
+        "Numeric whole fields allow an exact unit suffix for value fidelity. A unit-bearing text field does not establish availability as a scalar numeric operand.",
+        "Optional trajectory alignment uses at least two distinct oracle pre-state values with no present-value disagreements, after preservation, without outcomes. It is supplied diagnostic correspondence, not inferred field semantics. Missing rows remain unavailable.",
+        "Constant review fields cannot qualify by numerical coincidence. Field-source node provenance is absent from saved scorer attribute records; missing explicit labels or unique alignment remain unavailable.",
+        "The review operands belong to the selected resource. Both reviewed worlds have the same observable results, so this control makes no claim to identify the hidden review mechanism.",
+        "The retained exact-name and explicit-reference utilities define a limited diagnostic surface. Alternate unnamed, containment-based or view-based representations can remain unavailable without being disproved.",
+        "No new application cases, collector behavior, learner representation, parser, fit, score, model output or first reserved result was inspected or modified to prepare this specification."
+      ],
+      "unit": "L"
+    }
+  },
+  "schema": "semabi.transport.configured_binding_control.v1",
+  "source_inputs": {
+    "docs/data/v4/transport/controls/binding_fidelity.py": "c5f630e0005ccc43244a4b126a16434dc0b95f033d78d83535313ecdaf7dd2f8",
+    "docs/data/v4/transport/controls/oracle_control_v1.json": "8a453a4929e15f65f9745cbce57fb63be55329f628a7a528648e9c073e951d32",
+    "experiments/transport_v1/fixtures/app.js": "003fcfbe987cfb7d1e8a2e37df0cd86f6b417c4366f1347ecb0539ece0c98a80",
+    "experiments/transport_v1/fixtures/model.py": "d577378fc9bfef8f66673a539b7c95f460f0614a3759d506fcd288303cd96b6f",
+    "experiments/transport_v1/manifest_frozen.json": "272e8ab1a95b65bcb381b27d2977f6b59bdeedacfe05153c102fd48917264dec",
+    "experiments/transport_v1/oracle/cases.json": "53fcfffc6f6dc040eb5a11f4d46ae4de0eee7a62a2ba9f98faebbc2138a9ccad",
+    "experiments/transport_v1/oracle/evaluation_scripts.json": "2a804806bd8b7ef508e8642e6faea52e1de3ebfcf4c344170f96135f62b65b41",
+    "experiments/transport_v1/oracle/reserved_contract.json": "6db62960de2075fb33488c33f4c1df5556e99f94de6b36eb7ac18a91fe8d7728",
+    "experiments/transport_v1/oracle/specification.json": "6f0ae2f1b6cfd55e8878d86039e821d3823a00ad2478a829671c7252c9ed3a3e"
+  }
+}

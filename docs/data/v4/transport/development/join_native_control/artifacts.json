@@ -1,0 +1,754 @@
+{
+  "audit_source_files": {
+    "semabi/compiler/v4/binding.py": {
+      "bytes": 17235,
+      "sha256": "8088fdbfa8e55fefe3318293da4b350794e307a4f581e6c03422e7020b892c68",
+      "snapshot": "source/semabi/compiler/v4/binding.py.txt"
+    },
+    "semabi/compiler/v4/conditional.py": {
+      "bytes": 11133,
+      "sha256": "9aa1db4e6a113d3f71f99d8b389a318749fb33affb1166bd6dbd9b29fbc41226",
+      "snapshot": "source/semabi/compiler/v4/conditional.py.txt"
+    },
+    "semabi/compiler/v4/consequence.py": {
+      "bytes": 78744,
+      "sha256": "158551f35160a79d9c165c767486b63579564dccc3e99febf45d4d714ef0791b",
+      "snapshot": "source/semabi/compiler/v4/consequence.py.txt"
+    },
+    "semabi/compiler/v4/prequential.py": {
+      "bytes": 10136,
+      "sha256": "d3246ff8f2ae45e61d48b97879a219a2cace87abaed2a19bb7f58f76b49e679e",
+      "snapshot": "source/semabi/compiler/v4/prequential.py.txt"
+    },
+    "semabi/eval/v4_status.py": {
+      "bytes": 19711,
+      "sha256": "75d0d9cbfa24518a22567581ff110f3b0afb6c700e2d92acf062df5dd54da34e",
+      "snapshot": "audit_source/semabi/eval/v4_status.py.txt"
+    },
+    "tests/test_v4_binding.py": {
+      "bytes": 46589,
+      "sha256": "a0ae52245c50e0d4d76dfc264f192cfb82165aab940a27e28c6e01935498fb42",
+      "snapshot": "audit_source/tests/test_v4_binding.py.txt"
+    }
+  },
+  "current_generalized_contract": "binding_truncation_design_v2.md",
+  "executions": [
+    {
+      "before_after_source_identical": true,
+      "child_terminated": true,
+      "freeze": "freeze.json",
+      "freeze_sha256": "b5667cfe6b000472a61a47a4a70413890f21e2241c600d16838cf2d43b720422",
+      "frozen_files_verified": 71,
+      "process": "jobs/v1/process.json",
+      "process_sha256": "2dbe42b69030bca6ea10cd0875dd489b3d18f56d92cd8243333b10c23f9d9b1a",
+      "result": "run_v1/result.json",
+      "result_sha256": "bcecfef87f737c8c57dd93f5871e8f43a6c89db5b3b3457d7c036c492e86b51e",
+      "returncode": 0,
+      "source_head": "5ac0e11852dde513f4beb4e4ab1fbec0bc2318aa",
+      "source_snapshots_verified": "source",
+      "status": "FINISHED"
+    },
+    {
+      "before_after_source_identical": true,
+      "child_terminated": true,
+      "freeze": "aggregation_freeze_v1.json",
+      "freeze_sha256": "48775306a938772933142345daa6201e73e77f342ba6666cc39ae3fa9e6641aa",
+      "frozen_files_verified": 74,
+      "process": "jobs/aggregation_v1/process.json",
+      "process_sha256": "82b37903054fe439b3c5df469912dadec95bd76b2fbf99667bcc019788a7d2e1",
+      "result": "aggregation_run_v1/result.json",
+      "result_sha256": "e48f67f36e81431a9773c5fe0fa8ccac9a60057b27efaf43fdcf583545a7f99b",
+      "returncode": 0,
+      "source_head": "5ac0e11852dde513f4beb4e4ab1fbec0bc2318aa",
+      "source_snapshots_verified": "aggregation_source_v1",
+      "status": "FINISHED"
+    }
+  ],
+  "files": {
+    "aggregation_contract_v1.md": {
+      "bytes": 4106,
+      "sha256": "772d0930d28f0c32e6e48a0ef14aa08b89575b5d8ff0119213249a98ad9e6ba3"
+    },
+    "aggregation_control_v1.py": {
+      "bytes": 9128,
+      "sha256": "714b62c29f9b6b6e9be9348ddc88d43f82c2dc297511c19035955cd077904465"
+    },
+    "aggregation_freeze_v1.json": {
+      "bytes": 8897,
+      "sha256": "48775306a938772933142345daa6201e73e77f342ba6666cc39ae3fa9e6641aa"
+    },
+    "aggregation_report_v1.md": {
+      "bytes": 6776,
+      "sha256": "5151e0511cbce57cfd9289d0dcdefd65347b9dcd28e998b8240f5b96293c1c85"
+    },
+    "aggregation_run_v1/result.json": {
+      "bytes": 158739,
+      "sha256": "e48f67f36e81431a9773c5fe0fa8ccac9a60057b27efaf43fdcf583545a7f99b"
+    },
+    "aggregation_source_v1/docs/data/v4/transport/development/join_design_v1.md.txt": {
+      "bytes": 25047,
+      "sha256": "580cfeda393b3ec00204faa1d3c08b3f861a8c214e7e2a7721bdc44acdc7e665"
+    },
+    "aggregation_source_v1/docs/data/v4/transport/development/join_native_control/aggregation_contract_v1.md.txt": {
+      "bytes": 4106,
+      "sha256": "772d0930d28f0c32e6e48a0ef14aa08b89575b5d8ff0119213249a98ad9e6ba3"
+    },
+    "aggregation_source_v1/docs/data/v4/transport/development/join_native_control/aggregation_control_v1.py.txt": {
+      "bytes": 9128,
+      "sha256": "714b62c29f9b6b6e9be9348ddc88d43f82c2dc297511c19035955cd077904465"
+    },
+    "aggregation_source_v1/docs/data/v4/transport/development/join_native_control/contract.json.txt": {
+      "bytes": 1049,
+      "sha256": "34bb76367df972786ec866ae071b8029535af5c395cdc2b3aa58dc77daad5946"
+    },
+    "aggregation_source_v1/docs/data/v4/transport/development/join_native_control/contract.md.txt": {
+      "bytes": 4542,
+      "sha256": "70eab6d5a379128404afc6079d81d05103d1612c1151243969f20fb282ef0a01"
+    },
+    "aggregation_source_v1/docs/data/v4/transport/development/join_native_control/control.py.txt": {
+      "bytes": 12924,
+      "sha256": "2d302aae080caafb9f84e6be1b2490081f8048211b3b4e32bc51777bae8d862a"
+    },
+    "aggregation_source_v1/docs/data/v4/transport/development/join_native_control/freeze.json.txt": {
+      "bytes": 8329,
+      "sha256": "b5667cfe6b000472a61a47a4a70413890f21e2241c600d16838cf2d43b720422"
+    },
+    "aggregation_source_v1/docs/data/v4/transport/development/join_native_control/source_review.md.txt": {
+      "bytes": 8497,
+      "sha256": "922b4cca504a97a750ba0014b414e58f8b8bb589fc87dac735a4ae3601782623"
+    },
+    "aggregation_source_v1/docs/data/v4/transport/run_job.py.txt": {
+      "bytes": 3276,
+      "sha256": "3c91a704135db5cfa553c7bdc9a5a55fffa999f73e2e9aebd9f7f2a3534525d7"
+    },
+    "aggregation_source_v1/semabi/__init__.py.txt": {
+      "bytes": 479,
+      "sha256": "0a6e61cf4d9d8dc368fef7bc2053e6db686e3fb70272d7f9e9f1e5b3f79f95e8"
+    },
+    "aggregation_source_v1/semabi/compiler/__init__.py.txt": {
+      "bytes": 82,
+      "sha256": "5249623658aef7d2b87bd34d06fab3f181b1ef5bbb9dd70b827592bb01b02893"
+    },
+    "aggregation_source_v1/semabi/compiler/abstract.py.txt": {
+      "bytes": 27682,
+      "sha256": "a8a2efeebbab13c27efd1a093ff9696cda06e7d1148abe5ec41a840cbdba6056"
+    },
+    "aggregation_source_v1/semabi/compiler/active.py.txt": {
+      "bytes": 26511,
+      "sha256": "e3572ead5849a7c2d61897eb4498971374797681b8157f8af4af78e7eef64a4a"
+    },
+    "aggregation_source_v1/semabi/compiler/belief.py.txt": {
+      "bytes": 6469,
+      "sha256": "10996cf9f5f2264ecbe8e28235718e81fc606ed249d8c2708f50541a73a8aa5c"
+    },
+    "aggregation_source_v1/semabi/compiler/browser.py.txt": {
+      "bytes": 14196,
+      "sha256": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792"
+    },
+    "aggregation_source_v1/semabi/compiler/compile.py.txt": {
+      "bytes": 1809,
+      "sha256": "fa0e4b4237658dc2e5d41cf715fe8ca884b0b2ec9b714cde4f1917318c9f920f"
+    },
+    "aggregation_source_v1/semabi/compiler/compile_v1.py.txt": {
+      "bytes": 2451,
+      "sha256": "200ccf04a38b69f04655a3bd72c9e0edb5a436eea64dadab6c4f55a3e4377d6c"
+    },
+    "aggregation_source_v1/semabi/compiler/compile_v2.py.txt": {
+      "bytes": 4205,
+      "sha256": "4c548ab43776c854da23c0a9b85ede95fb18e43d8bfffa4e0ada800b2a0d2d87"
+    },
+    "aggregation_source_v1/semabi/compiler/compile_v4.py.txt": {
+      "bytes": 11019,
+      "sha256": "20f559193b1a5c18c9d6ad3236b6e35ae9047bebdf6f4154ef319fcc83a0e07b"
+    },
+    "aggregation_source_v1/semabi/compiler/evidence.py.txt": {
+      "bytes": 7215,
+      "sha256": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2"
+    },
+    "aggregation_source_v1/semabi/compiler/explorer.py.txt": {
+      "bytes": 5969,
+      "sha256": "16827d3735c9eab4d51a60c585790226be3e692bb63b01794df29a9ba8c8c807"
+    },
+    "aggregation_source_v1/semabi/compiler/ground.py.txt": {
+      "bytes": 10587,
+      "sha256": "5c94dc46bb5dab3702f77c777e934c14db72183636139441e02fa8410e0f420e"
+    },
+    "aggregation_source_v1/semabi/compiler/grounder.py.txt": {
+      "bytes": 26834,
+      "sha256": "d272260d2bacd64dcd7fc88f2094c2f84b989736c89924460cc0053b8e97ac06"
+    },
+    "aggregation_source_v1/semabi/compiler/induce.py.txt": {
+      "bytes": 84383,
+      "sha256": "c726cb2f40c78cc946d8a998e94e056f300e0591fc4d74f73cd8504222954fb8"
+    },
+    "aggregation_source_v1/semabi/compiler/mentions.py.txt": {
+      "bytes": 17757,
+      "sha256": "800fa94e2e4f76bfc503c7557ec775f6d83a612f6634123a62f78a16de2b781c"
+    },
+    "aggregation_source_v1/semabi/compiler/model.py.txt": {
+      "bytes": 12637,
+      "sha256": "5175ff650a75fdb39da8f943d5193c99a533f069929af158f0facfc963c9bf31"
+    },
+    "aggregation_source_v1/semabi/compiler/observation.py.txt": {
+      "bytes": 3966,
+      "sha256": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+    },
+    "aggregation_source_v1/semabi/compiler/parse.py.txt": {
+      "bytes": 15863,
+      "sha256": "f98bac399682bbd2d583e29183e3663872294a4ee9e5542c7d86371e148b2eb9"
+    },
+    "aggregation_source_v1/semabi/compiler/planner.py.txt": {
+      "bytes": 6639,
+      "sha256": "0c56abb0518fcfb78e917f54ac21890cda10fe4b458133a3a1fdd0038841d887"
+    },
+    "aggregation_source_v1/semabi/compiler/schema_llm.py.txt": {
+      "bytes": 9456,
+      "sha256": "f05e458184188ff78113df6c8b872e50174b5232c5b0781e73251e97b1199d4d"
+    },
+    "aggregation_source_v1/semabi/compiler/v2/__init__.py.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "aggregation_source_v1/semabi/compiler/v2/abstractor.py.txt": {
+      "bytes": 52053,
+      "sha256": "0d9b484e558df2844ce8c21dd5b15d16d894a823ae9cd7152a1421a351dd61d5"
+    },
+    "aggregation_source_v1/semabi/compiler/v2/association.py.txt": {
+      "bytes": 7671,
+      "sha256": "f34e19ff719b2b63475099d36701e9785da6a77b45509861621c7fd20bddba00"
+    },
+    "aggregation_source_v1/semabi/compiler/v2/controls.py.txt": {
+      "bytes": 16828,
+      "sha256": "e578b9735de3c817b16d742c5c86eefe3ea2ac75ae810cb2cf9aed31aa45687c"
+    },
+    "aggregation_source_v1/semabi/compiler/v2/counterexamples.py.txt": {
+      "bytes": 19618,
+      "sha256": "3ca77e39f57b99b42a0a923840b3bdd193c86dd6e1cc035772d9c0eca8be60df"
+    },
+    "aggregation_source_v1/semabi/compiler/v2/differential.py.txt": {
+      "bytes": 11981,
+      "sha256": "a6e7f005f4ff4ab4a0e43802164a7fc41c6f7118daa54d9bd3b888e8bd0933f0"
+    },
+    "aggregation_source_v1/semabi/compiler/v2/explore.py.txt": {
+      "bytes": 12066,
+      "sha256": "f420a6cabbf8dc8746a3fc0938009b7800554b20bb549b126a187172cb9daac2"
+    },
+    "aggregation_source_v1/semabi/compiler/v2/graph.py.txt": {
+      "bytes": 34943,
+      "sha256": "f601fb6bd56d8728a01fdc404c6a0d80636cb2ccba98dab09cd26abf5c425b2a"
+    },
+    "aggregation_source_v1/semabi/compiler/v2/hypotheses.py.txt": {
+      "bytes": 59900,
+      "sha256": "6cc8812664f474bfeafc7bd7f62a43faf0a78f252269077749e062c3a0981b03"
+    },
+    "aggregation_source_v1/semabi/compiler/v2/llm_propose.py.txt": {
+      "bytes": 5759,
+      "sha256": "fa0951ce5fbdc2e90fd76b184d8f44b39a752585017d7c89d74306e08c68b94e"
+    },
+    "aggregation_source_v1/semabi/compiler/v2/refinement.py.txt": {
+      "bytes": 58083,
+      "sha256": "79f69756fc146f2f783bc19571bffb7efb42a2a92edbd39ed33c91b83d7645e3"
+    },
+    "aggregation_source_v1/semabi/compiler/v2/score.py.txt": {
+      "bytes": 9700,
+      "sha256": "aaff604a4c91e8034fdb113c8b76e5e9415eb50bbc91d5ad25755492ae47524b"
+    },
+    "aggregation_source_v1/semabi/compiler/v2/sections.py.txt": {
+      "bytes": 6266,
+      "sha256": "4bd39bf7e067a94ec19f6ad6c23c098d13ac01efdabafe2f6e15eb213003ba02"
+    },
+    "aggregation_source_v1/semabi/compiler/v2/units.py.txt": {
+      "bytes": 4462,
+      "sha256": "72ccac1c76e4ca2ab20390098faa8e9be0f5c700ccb3382735a689391f2a3c5f"
+    },
+    "aggregation_source_v1/semabi/compiler/v2/validation.py.txt": {
+      "bytes": 89501,
+      "sha256": "fc9b6c38def59c4fbcc3b306bb36f6c3eee9aee553ea1edf2fb884741d9f6f34"
+    },
+    "aggregation_source_v1/semabi/compiler/v2/validation_probe.py.txt": {
+      "bytes": 10647,
+      "sha256": "244cca6a0b735fc67364335e793c0e8848f3a2b4bebf32db1997014ebefbf8ac"
+    },
+    "aggregation_source_v1/semabi/compiler/v4/__init__.py.txt": {
+      "bytes": 672,
+      "sha256": "c41acb8afd5f3306718e6b5bb242db1dae876bf512bcec1d6c49108e8fbcc38c"
+    },
+    "aggregation_source_v1/semabi/compiler/v4/abstractor.py.txt": {
+      "bytes": 7634,
+      "sha256": "4e772cf28d002461de3449e4a939ced2b39a672e629b916612c83bb6ad0625f1"
+    },
+    "aggregation_source_v1/semabi/compiler/v4/binding.py.txt": {
+      "bytes": 17235,
+      "sha256": "8088fdbfa8e55fefe3318293da4b350794e307a4f581e6c03422e7020b892c68"
+    },
+    "aggregation_source_v1/semabi/compiler/v4/conditional.py.txt": {
+      "bytes": 11133,
+      "sha256": "9aa1db4e6a113d3f71f99d8b389a318749fb33affb1166bd6dbd9b29fbc41226"
+    },
+    "aggregation_source_v1/semabi/compiler/v4/consequence.py.txt": {
+      "bytes": 78744,
+      "sha256": "158551f35160a79d9c165c767486b63579564dccc3e99febf45d4d714ef0791b"
+    },
+    "aggregation_source_v1/semabi/compiler/v4/correspondence.py.txt": {
+      "bytes": 16040,
+      "sha256": "dd4659f74a4eb1ca8d3656ad278cd15290de2c08318b964e1a85c127fdd1be8c"
+    },
+    "aggregation_source_v1/semabi/compiler/v4/custody.py.txt": {
+      "bytes": 29324,
+      "sha256": "8f2aa81f444843459ef553c07639afa9ffcc3f342276fde1da5a152da715fb29"
+    },
+    "aggregation_source_v1/semabi/compiler/v4/emission.py.txt": {
+      "bytes": 10504,
+      "sha256": "5068810fe1d35b988649eb8ff8aecf6bd49dee5344cbdf72e94b156f6ec6cbbe"
+    },
+    "aggregation_source_v1/semabi/compiler/v4/fields.py.txt": {
+      "bytes": 13661,
+      "sha256": "b5b794432a504b7d30f6574dc1e0d3ff34b44536967ab50ae9a5a0c04ffc9967"
+    },
+    "aggregation_source_v1/semabi/compiler/v4/frozen_evidence.py.txt": {
+      "bytes": 6048,
+      "sha256": "cb3f7980fd9d24e888f45267ce5f7e597576ea2d2db63783988455bc340f3a65"
+    },
+    "aggregation_source_v1/semabi/compiler/v4/identity.py.txt": {
+      "bytes": 19056,
+      "sha256": "06792b4a7ebd478fb46edeb7a37c5dce3b7eec02d561994f3560fad2ef01d6a7"
+    },
+    "aggregation_source_v1/semabi/compiler/v4/manifests.py.txt": {
+      "bytes": 74126,
+      "sha256": "086e3c03591d0a21cfe0fe4717c184f1013fbd1becb86c42d376d98cbcf90b1f"
+    },
+    "aggregation_source_v1/semabi/compiler/v4/objective.py.txt": {
+      "bytes": 17768,
+      "sha256": "a62d6907b0aa1f643a2e2cb96038cbedab8ac40b55c0e95e67d5f2452f1bdfef"
+    },
+    "aggregation_source_v1/semabi/compiler/v4/outcome.py.txt": {
+      "bytes": 89513,
+      "sha256": "552b87472577a6f409069fdf459cd64d209a699b48737df57a56a3949813d736"
+    },
+    "aggregation_source_v1/semabi/compiler/v4/pinned.py.txt": {
+      "bytes": 21561,
+      "sha256": "f3be252e1f021424565aaa20baf846b6b0d1522d9a7678e7770a4b6e006e2c8b"
+    },
+    "aggregation_source_v1/semabi/compiler/v4/prequential.py.txt": {
+      "bytes": 10136,
+      "sha256": "d3246ff8f2ae45e61d48b97879a219a2cace87abaed2a19bb7f58f76b49e679e"
+    },
+    "aggregation_source_v1/semabi/compiler/v4/probe.py.txt": {
+      "bytes": 8926,
+      "sha256": "e43d12bae3f22e524ef2548ee1b6a32c0c0e3f248e047e2de41da4bde6f9d6f7"
+    },
+    "aggregation_source_v1/semabi/compiler/v4/promote.py.txt": {
+      "bytes": 2486,
+      "sha256": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65"
+    },
+    "aggregation_source_v1/semabi/compiler/v4/prospective.py.txt": {
+      "bytes": 23440,
+      "sha256": "591deb563820612e1f138660b2b2d83f9da51fcdb386b12c88ce19d0e074511b"
+    },
+    "aggregation_source_v1/semabi/compiler/v4/referring.py.txt": {
+      "bytes": 24813,
+      "sha256": "c0e2abbee5dd724f193bc61a5264268e853837c4282cbe2d372b2ec2489e5b1f"
+    },
+    "aggregation_source_v1/semabi/compiler/v4/search.py.txt": {
+      "bytes": 26937,
+      "sha256": "c87e3633207dfaa1483574cad2335b23222bec6fa51fe35526adf8dd9576f72c"
+    },
+    "aggregation_source_v1/semabi/compiler/v4/source_candidates.py.txt": {
+      "bytes": 9302,
+      "sha256": "ff27669ba080d3ce8294bbb43cdc68e77409dd431dba390035aa88f85e8e08fd"
+    },
+    "aggregation_source_v1/semabi/compiler/v4/sufficiency.py.txt": {
+      "bytes": 4427,
+      "sha256": "48a82b21eff70caa24e04b541d522466f25547cec300694557f67a3e5a74d3a2"
+    },
+    "aggregation_source_v1/semabi/compiler/v4/transfer.py.txt": {
+      "bytes": 50190,
+      "sha256": "19b138c05c712a8187a7db1ee2eef33b93c9eec83b422a175bbc64d195e49938"
+    },
+    "aggregation_source_v1/semabi/eval/__init__.py.txt": {
+      "bytes": 97,
+      "sha256": "53610478d943c7266e4d7815f53fee5eecfad410f8971716b828f763a54128c5"
+    },
+    "aggregation_source_v1/semabi/eval/v4_acquire.py.txt": {
+      "bytes": 21227,
+      "sha256": "1e6e18be600a483a3bf5e66c32b915a964be1b57ebb220b6ec01fdb230cc5b2d"
+    },
+    "aggregation_source_v1/semabi/eval/v4_identity_scoreboard.py.txt": {
+      "bytes": 6052,
+      "sha256": "dc8a5c5a1385108bd2c63a13c3fc5092e06d9c14d0d3ae9da42e73957fe4a983"
+    },
+    "aggregation_source_v1/semabi/relmodel.py.txt": {
+      "bytes": 20463,
+      "sha256": "2034f3a5dd7019c5333c8fb4e0283cf349e29905cfa5d0933e453180fa3a4827"
+    },
+    "audit_source/semabi/eval/v4_status.py.txt": {
+      "bytes": 19711,
+      "sha256": "75d0d9cbfa24518a22567581ff110f3b0afb6c700e2d92acf062df5dd54da34e"
+    },
+    "audit_source/tests/test_v4_binding.py.txt": {
+      "bytes": 46589,
+      "sha256": "a0ae52245c50e0d4d76dfc264f192cfb82165aab940a27e28c6e01935498fb42"
+    },
+    "audit_versions/singleton_v1/artifacts.json": {
+      "bytes": 15211,
+      "sha256": "07cae1742b3a5cc29120dca2a99e716261bd7ce324c9a98c1473c70974dceb91"
+    },
+    "audit_versions/singleton_v1/binding_truncation_design.md": {
+      "bytes": 12571,
+      "sha256": "a15e2959de89523e7f72d1080745a20da0b84d6b1ef675e837286f88f7270653"
+    },
+    "audit_versions/singleton_v1/preservation.json": {
+      "bytes": 795,
+      "sha256": "d109a9f40408300761cd88d4c74959cbb83f26f6d6004c092f425396469e429e"
+    },
+    "audit_versions/singleton_v1/report.md": {
+      "bytes": 6363,
+      "sha256": "09b4ce76e03abfbd9b5c1c7983ae9a9da75e08027f2506b650d76ccf831dd503"
+    },
+    "binding_truncation_design.md": {
+      "bytes": 12571,
+      "sha256": "a15e2959de89523e7f72d1080745a20da0b84d6b1ef675e837286f88f7270653"
+    },
+    "binding_truncation_design_v2.md": {
+      "bytes": 12102,
+      "sha256": "e105dac41e1b60f28764d3d62fffbbfa46fe86d2f2919764793f71b3b0a8552b"
+    },
+    "contract.json": {
+      "bytes": 1049,
+      "sha256": "34bb76367df972786ec866ae071b8029535af5c395cdc2b3aa58dc77daad5946"
+    },
+    "contract.md": {
+      "bytes": 4542,
+      "sha256": "70eab6d5a379128404afc6079d81d05103d1612c1151243969f20fb282ef0a01"
+    },
+    "control.py": {
+      "bytes": 12924,
+      "sha256": "2d302aae080caafb9f84e6be1b2490081f8048211b3b4e32bc51777bae8d862a"
+    },
+    "freeze.json": {
+      "bytes": 8329,
+      "sha256": "b5667cfe6b000472a61a47a4a70413890f21e2241c600d16838cf2d43b720422"
+    },
+    "jobs/aggregation_v1/output.log": {
+      "bytes": 373,
+      "sha256": "d2e7f573addc206fb6735cada02c3092cdc50365712027bc58d798fe6a8ba04f"
+    },
+    "jobs/aggregation_v1/process.json": {
+      "bytes": 17551,
+      "sha256": "82b37903054fe439b3c5df469912dadec95bd76b2fbf99667bcc019788a7d2e1"
+    },
+    "jobs/v1/output.log": {
+      "bytes": 289,
+      "sha256": "627111333c10c1b93d6fc5c68d5f58a5ae8f894ebb107361626bafd946197a17"
+    },
+    "jobs/v1/process.json": {
+      "bytes": 17524,
+      "sha256": "2dbe42b69030bca6ea10cd0875dd489b3d18f56d92cd8243333b10c23f9d9b1a"
+    },
+    "report.md": {
+      "bytes": 6363,
+      "sha256": "09b4ce76e03abfbd9b5c1c7983ae9a9da75e08027f2506b650d76ccf831dd503"
+    },
+    "run_v1/result.json": {
+      "bytes": 89405,
+      "sha256": "bcecfef87f737c8c57dd93f5871e8f43a6c89db5b3b3457d7c036c492e86b51e"
+    },
+    "source/docs/data/v4/transport/development/join_design_v1.md.txt": {
+      "bytes": 25047,
+      "sha256": "580cfeda393b3ec00204faa1d3c08b3f861a8c214e7e2a7721bdc44acdc7e665"
+    },
+    "source/docs/data/v4/transport/development/join_native_control/contract.json.txt": {
+      "bytes": 1049,
+      "sha256": "34bb76367df972786ec866ae071b8029535af5c395cdc2b3aa58dc77daad5946"
+    },
+    "source/docs/data/v4/transport/development/join_native_control/contract.md.txt": {
+      "bytes": 4542,
+      "sha256": "70eab6d5a379128404afc6079d81d05103d1612c1151243969f20fb282ef0a01"
+    },
+    "source/docs/data/v4/transport/development/join_native_control/control.py.txt": {
+      "bytes": 12924,
+      "sha256": "2d302aae080caafb9f84e6be1b2490081f8048211b3b4e32bc51777bae8d862a"
+    },
+    "source/docs/data/v4/transport/development/join_native_control/source_review.md.txt": {
+      "bytes": 8497,
+      "sha256": "922b4cca504a97a750ba0014b414e58f8b8bb589fc87dac735a4ae3601782623"
+    },
+    "source/docs/data/v4/transport/run_job.py.txt": {
+      "bytes": 3276,
+      "sha256": "3c91a704135db5cfa553c7bdc9a5a55fffa999f73e2e9aebd9f7f2a3534525d7"
+    },
+    "source/semabi/__init__.py.txt": {
+      "bytes": 479,
+      "sha256": "0a6e61cf4d9d8dc368fef7bc2053e6db686e3fb70272d7f9e9f1e5b3f79f95e8"
+    },
+    "source/semabi/compiler/__init__.py.txt": {
+      "bytes": 82,
+      "sha256": "5249623658aef7d2b87bd34d06fab3f181b1ef5bbb9dd70b827592bb01b02893"
+    },
+    "source/semabi/compiler/abstract.py.txt": {
+      "bytes": 27682,
+      "sha256": "a8a2efeebbab13c27efd1a093ff9696cda06e7d1148abe5ec41a840cbdba6056"
+    },
+    "source/semabi/compiler/active.py.txt": {
+      "bytes": 26511,
+      "sha256": "e3572ead5849a7c2d61897eb4498971374797681b8157f8af4af78e7eef64a4a"
+    },
+    "source/semabi/compiler/belief.py.txt": {
+      "bytes": 6469,
+      "sha256": "10996cf9f5f2264ecbe8e28235718e81fc606ed249d8c2708f50541a73a8aa5c"
+    },
+    "source/semabi/compiler/browser.py.txt": {
+      "bytes": 14196,
+      "sha256": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792"
+    },
+    "source/semabi/compiler/compile.py.txt": {
+      "bytes": 1809,
+      "sha256": "fa0e4b4237658dc2e5d41cf715fe8ca884b0b2ec9b714cde4f1917318c9f920f"
+    },
+    "source/semabi/compiler/compile_v1.py.txt": {
+      "bytes": 2451,
+      "sha256": "200ccf04a38b69f04655a3bd72c9e0edb5a436eea64dadab6c4f55a3e4377d6c"
+    },
+    "source/semabi/compiler/compile_v2.py.txt": {
+      "bytes": 4205,
+      "sha256": "4c548ab43776c854da23c0a9b85ede95fb18e43d8bfffa4e0ada800b2a0d2d87"
+    },
+    "source/semabi/compiler/compile_v4.py.txt": {
+      "bytes": 11019,
+      "sha256": "20f559193b1a5c18c9d6ad3236b6e35ae9047bebdf6f4154ef319fcc83a0e07b"
+    },
+    "source/semabi/compiler/evidence.py.txt": {
+      "bytes": 7215,
+      "sha256": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2"
+    },
+    "source/semabi/compiler/explorer.py.txt": {
+      "bytes": 5969,
+      "sha256": "16827d3735c9eab4d51a60c585790226be3e692bb63b01794df29a9ba8c8c807"
+    },
+    "source/semabi/compiler/ground.py.txt": {
+      "bytes": 10587,
+      "sha256": "5c94dc46bb5dab3702f77c777e934c14db72183636139441e02fa8410e0f420e"
+    },
+    "source/semabi/compiler/grounder.py.txt": {
+      "bytes": 26834,
+      "sha256": "d272260d2bacd64dcd7fc88f2094c2f84b989736c89924460cc0053b8e97ac06"
+    },
+    "source/semabi/compiler/induce.py.txt": {
+      "bytes": 84383,
+      "sha256": "c726cb2f40c78cc946d8a998e94e056f300e0591fc4d74f73cd8504222954fb8"
+    },
+    "source/semabi/compiler/mentions.py.txt": {
+      "bytes": 17757,
+      "sha256": "800fa94e2e4f76bfc503c7557ec775f6d83a612f6634123a62f78a16de2b781c"
+    },
+    "source/semabi/compiler/model.py.txt": {
+      "bytes": 12637,
+      "sha256": "5175ff650a75fdb39da8f943d5193c99a533f069929af158f0facfc963c9bf31"
+    },
+    "source/semabi/compiler/observation.py.txt": {
+      "bytes": 3966,
+      "sha256": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+    },
+    "source/semabi/compiler/parse.py.txt": {
+      "bytes": 15863,
+      "sha256": "f98bac399682bbd2d583e29183e3663872294a4ee9e5542c7d86371e148b2eb9"
+    },
+    "source/semabi/compiler/planner.py.txt": {
+      "bytes": 6639,
+      "sha256": "0c56abb0518fcfb78e917f54ac21890cda10fe4b458133a3a1fdd0038841d887"
+    },
+    "source/semabi/compiler/schema_llm.py.txt": {
+      "bytes": 9456,
+      "sha256": "f05e458184188ff78113df6c8b872e50174b5232c5b0781e73251e97b1199d4d"
+    },
+    "source/semabi/compiler/v2/__init__.py.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "source/semabi/compiler/v2/abstractor.py.txt": {
+      "bytes": 52053,
+      "sha256": "0d9b484e558df2844ce8c21dd5b15d16d894a823ae9cd7152a1421a351dd61d5"
+    },
+    "source/semabi/compiler/v2/association.py.txt": {
+      "bytes": 7671,
+      "sha256": "f34e19ff719b2b63475099d36701e9785da6a77b45509861621c7fd20bddba00"
+    },
+    "source/semabi/compiler/v2/controls.py.txt": {
+      "bytes": 16828,
+      "sha256": "e578b9735de3c817b16d742c5c86eefe3ea2ac75ae810cb2cf9aed31aa45687c"
+    },
+    "source/semabi/compiler/v2/counterexamples.py.txt": {
+      "bytes": 19618,
+      "sha256": "3ca77e39f57b99b42a0a923840b3bdd193c86dd6e1cc035772d9c0eca8be60df"
+    },
+    "source/semabi/compiler/v2/differential.py.txt": {
+      "bytes": 11981,
+      "sha256": "a6e7f005f4ff4ab4a0e43802164a7fc41c6f7118daa54d9bd3b888e8bd0933f0"
+    },
+    "source/semabi/compiler/v2/explore.py.txt": {
+      "bytes": 12066,
+      "sha256": "f420a6cabbf8dc8746a3fc0938009b7800554b20bb549b126a187172cb9daac2"
+    },
+    "source/semabi/compiler/v2/graph.py.txt": {
+      "bytes": 34943,
+      "sha256": "f601fb6bd56d8728a01fdc404c6a0d80636cb2ccba98dab09cd26abf5c425b2a"
+    },
+    "source/semabi/compiler/v2/hypotheses.py.txt": {
+      "bytes": 59900,
+      "sha256": "6cc8812664f474bfeafc7bd7f62a43faf0a78f252269077749e062c3a0981b03"
+    },
+    "source/semabi/compiler/v2/llm_propose.py.txt": {
+      "bytes": 5759,
+      "sha256": "fa0951ce5fbdc2e90fd76b184d8f44b39a752585017d7c89d74306e08c68b94e"
+    },
+    "source/semabi/compiler/v2/refinement.py.txt": {
+      "bytes": 58083,
+      "sha256": "79f69756fc146f2f783bc19571bffb7efb42a2a92edbd39ed33c91b83d7645e3"
+    },
+    "source/semabi/compiler/v2/score.py.txt": {
+      "bytes": 9700,
+      "sha256": "aaff604a4c91e8034fdb113c8b76e5e9415eb50bbc91d5ad25755492ae47524b"
+    },
+    "source/semabi/compiler/v2/sections.py.txt": {
+      "bytes": 6266,
+      "sha256": "4bd39bf7e067a94ec19f6ad6c23c098d13ac01efdabafe2f6e15eb213003ba02"
+    },
+    "source/semabi/compiler/v2/units.py.txt": {
+      "bytes": 4462,
+      "sha256": "72ccac1c76e4ca2ab20390098faa8e9be0f5c700ccb3382735a689391f2a3c5f"
+    },
+    "source/semabi/compiler/v2/validation.py.txt": {
+      "bytes": 89501,
+      "sha256": "fc9b6c38def59c4fbcc3b306bb36f6c3eee9aee553ea1edf2fb884741d9f6f34"
+    },
+    "source/semabi/compiler/v2/validation_probe.py.txt": {
+      "bytes": 10647,
+      "sha256": "244cca6a0b735fc67364335e793c0e8848f3a2b4bebf32db1997014ebefbf8ac"
+    },
+    "source/semabi/compiler/v4/__init__.py.txt": {
+      "bytes": 672,
+      "sha256": "c41acb8afd5f3306718e6b5bb242db1dae876bf512bcec1d6c49108e8fbcc38c"
+    },
+    "source/semabi/compiler/v4/abstractor.py.txt": {
+      "bytes": 7634,
+      "sha256": "4e772cf28d002461de3449e4a939ced2b39a672e629b916612c83bb6ad0625f1"
+    },
+    "source/semabi/compiler/v4/binding.py.txt": {
+      "bytes": 17235,
+      "sha256": "8088fdbfa8e55fefe3318293da4b350794e307a4f581e6c03422e7020b892c68"
+    },
+    "source/semabi/compiler/v4/conditional.py.txt": {
+      "bytes": 11133,
+      "sha256": "9aa1db4e6a113d3f71f99d8b389a318749fb33affb1166bd6dbd9b29fbc41226"
+    },
+    "source/semabi/compiler/v4/consequence.py.txt": {
+      "bytes": 78744,
+      "sha256": "158551f35160a79d9c165c767486b63579564dccc3e99febf45d4d714ef0791b"
+    },
+    "source/semabi/compiler/v4/correspondence.py.txt": {
+      "bytes": 16040,
+      "sha256": "dd4659f74a4eb1ca8d3656ad278cd15290de2c08318b964e1a85c127fdd1be8c"
+    },
+    "source/semabi/compiler/v4/custody.py.txt": {
+      "bytes": 29324,
+      "sha256": "8f2aa81f444843459ef553c07639afa9ffcc3f342276fde1da5a152da715fb29"
+    },
+    "source/semabi/compiler/v4/emission.py.txt": {
+      "bytes": 10504,
+      "sha256": "5068810fe1d35b988649eb8ff8aecf6bd49dee5344cbdf72e94b156f6ec6cbbe"
+    },
+    "source/semabi/compiler/v4/fields.py.txt": {
+      "bytes": 13661,
+      "sha256": "b5b794432a504b7d30f6574dc1e0d3ff34b44536967ab50ae9a5a0c04ffc9967"
+    },
+    "source/semabi/compiler/v4/frozen_evidence.py.txt": {
+      "bytes": 6048,
+      "sha256": "cb3f7980fd9d24e888f45267ce5f7e597576ea2d2db63783988455bc340f3a65"
+    },
+    "source/semabi/compiler/v4/identity.py.txt": {
+      "bytes": 19056,
+      "sha256": "06792b4a7ebd478fb46edeb7a37c5dce3b7eec02d561994f3560fad2ef01d6a7"
+    },
+    "source/semabi/compiler/v4/manifests.py.txt": {
+      "bytes": 74126,
+      "sha256": "086e3c03591d0a21cfe0fe4717c184f1013fbd1becb86c42d376d98cbcf90b1f"
+    },
+    "source/semabi/compiler/v4/objective.py.txt": {
+      "bytes": 17768,
+      "sha256": "a62d6907b0aa1f643a2e2cb96038cbedab8ac40b55c0e95e67d5f2452f1bdfef"
+    },
+    "source/semabi/compiler/v4/outcome.py.txt": {
+      "bytes": 89513,
+      "sha256": "552b87472577a6f409069fdf459cd64d209a699b48737df57a56a3949813d736"
+    },
+    "source/semabi/compiler/v4/pinned.py.txt": {
+      "bytes": 21561,
+      "sha256": "f3be252e1f021424565aaa20baf846b6b0d1522d9a7678e7770a4b6e006e2c8b"
+    },
+    "source/semabi/compiler/v4/prequential.py.txt": {
+      "bytes": 10136,
+      "sha256": "d3246ff8f2ae45e61d48b97879a219a2cace87abaed2a19bb7f58f76b49e679e"
+    },
+    "source/semabi/compiler/v4/probe.py.txt": {
+      "bytes": 8926,
+      "sha256": "e43d12bae3f22e524ef2548ee1b6a32c0c0e3f248e047e2de41da4bde6f9d6f7"
+    },
+    "source/semabi/compiler/v4/promote.py.txt": {
+      "bytes": 2486,
+      "sha256": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65"
+    },
+    "source/semabi/compiler/v4/prospective.py.txt": {
+      "bytes": 23440,
+      "sha256": "591deb563820612e1f138660b2b2d83f9da51fcdb386b12c88ce19d0e074511b"
+    },
+    "source/semabi/compiler/v4/referring.py.txt": {
+      "bytes": 24813,
+      "sha256": "c0e2abbee5dd724f193bc61a5264268e853837c4282cbe2d372b2ec2489e5b1f"
+    },
+    "source/semabi/compiler/v4/search.py.txt": {
+      "bytes": 26937,
+      "sha256": "c87e3633207dfaa1483574cad2335b23222bec6fa51fe35526adf8dd9576f72c"
+    },
+    "source/semabi/compiler/v4/source_candidates.py.txt": {
+      "bytes": 9302,
+      "sha256": "ff27669ba080d3ce8294bbb43cdc68e77409dd431dba390035aa88f85e8e08fd"
+    },
+    "source/semabi/compiler/v4/sufficiency.py.txt": {
+      "bytes": 4427,
+      "sha256": "48a82b21eff70caa24e04b541d522466f25547cec300694557f67a3e5a74d3a2"
+    },
+    "source/semabi/compiler/v4/transfer.py.txt": {
+      "bytes": 50190,
+      "sha256": "19b138c05c712a8187a7db1ee2eef33b93c9eec83b422a175bbc64d195e49938"
+    },
+    "source/semabi/eval/__init__.py.txt": {
+      "bytes": 97,
+      "sha256": "53610478d943c7266e4d7815f53fee5eecfad410f8971716b828f763a54128c5"
+    },
+    "source/semabi/eval/v4_acquire.py.txt": {
+      "bytes": 21227,
+      "sha256": "1e6e18be600a483a3bf5e66c32b915a964be1b57ebb220b6ec01fdb230cc5b2d"
+    },
+    "source/semabi/eval/v4_identity_scoreboard.py.txt": {
+      "bytes": 6052,
+      "sha256": "dc8a5c5a1385108bd2c63a13c3fc5092e06d9c14d0d3ae9da42e73957fe4a983"
+    },
+    "source/semabi/relmodel.py.txt": {
+      "bytes": 20463,
+      "sha256": "2034f3a5dd7019c5333c8fb4e0283cf349e29905cfa5d0933e453180fa3a4827"
+    },
+    "source_review.md": {
+      "bytes": 8497,
+      "sha256": "922b4cca504a97a750ba0014b414e58f8b8bb589fc87dac735a4ae3601782623"
+    }
+  },
+  "manifest_excludes_itself": true,
+  "original_join_report_preserved": true,
+  "prior_manifest": {
+    "path": "audit_versions/singleton_v1/artifacts.json",
+    "sha256": "07cae1742b3a5cc29120dca2a99e716261bd7ce324c9a98c1473c70974dceb91"
+  },
+  "repair_status": "proposed-not-implemented",
+  "schema": "join-native-control-artifacts-v2",
+  "scope": "Two preserved supplied-state native diagnostics: JOIN formula/unique-chain and incomplete consequence aggregation. No learner repair, fitting, or observational-learning claim."
+}

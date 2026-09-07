@@ -1,0 +1,147 @@
+{
+  "checks": [
+    {
+      "case": "stable_directory_membership",
+      "error": null,
+      "expected": "ACCEPTED",
+      "matches_expected": true,
+      "observed": "ACCEPTED"
+    },
+    {
+      "case": "late_extra_empty_job",
+      "error": "ValueError: Job-root membership differs from the fixed first pass",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "late_missing_job",
+      "error": "ValueError: Job-root membership differs from the fixed first pass",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "late_top_file",
+      "error": "ValueError: Job root contains a non-directory or redirected entry",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "late_top_symlink",
+      "error": "ValueError: Job root contains a non-directory or redirected entry",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "late_top_fifo",
+      "error": "ValueError: Job root contains a non-directory or redirected entry",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "summary_authenticated_preimport_prefix",
+      "error": null,
+      "expected": "ACCEPTED",
+      "matches_expected": true,
+      "observed": "ACCEPTED"
+    },
+    {
+      "case": "summary_unpreserved_dependency",
+      "error": "ValueError: Input absent from first-pass preservation: semabi/invented.py",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "summary_changed_dependency",
+      "error": "ValueError: Preserved input changed: semabi/invented.py",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "summary_foreign_phase_source",
+      "error": "ValueError: Preservation/freeze source association differs",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "summary_helper_missing_prefreeze_commitment",
+      "error": "ValueError: Summary dependency was not committed before R1",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "summary_changed_raw",
+      "error": "ValueError: Preserved input changed: raw/r1_initial_v1/steps.jsonl",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "all_22_exact_aliases",
+      "error": null,
+      "expected": "ACCEPTED",
+      "matches_expected": true,
+      "observed": "ACCEPTED"
+    },
+    {
+      "case": "unsupported_alias:dispatch/initial_v2/run.json",
+      "error": "ValueError: Unsupported R1 logical input: dispatch/initial_v2/run.json",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "unsupported_alias:reservoir/../initial_v2/run.json",
+      "error": "ValueError: Unsupported R1 logical input: reservoir/../initial_v2/run.json",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "unsupported_alias:reservoir/r1_initial_v1/run.json",
+      "error": "ValueError: Unsupported R1 logical input: reservoir/r1_initial_v1/run.json",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "unsupported_alias:reservoir/scores/evaluation_v2.json",
+      "error": "ValueError: Unsupported R1 logical input: reservoir/scores/evaluation_v2.json",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "summary_changed_consumed_bytes",
+      "error": "ValueError: Preserved input changed: raw/r1_initial_v1/run.json",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "summary_changed_manifest",
+      "error": "ValueError: Preservation manifest changed during summary",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    }
+  ],
+  "matched": 19,
+  "schema": "semabi.transport.r1_custody_final_checks.v1",
+  "scope": "Invented filesystem checks of final membership recheck, exact summary aliases and unchanged summarize() prefix before any repository import. No actual R1 records, native imports, fits, browser or full-summary/full-preserver execution.",
+  "script_sha256": "bae50aa04f08bf1e069ff48ce8df1ecdfd8cf78096b6d3f89f551d5904b719d2",
+  "sources": {
+    "/home/moloch/semabi/docs/data/v4/transport/reserved_v1/preserve_first_pass.py": "a5de3dea796601fa522c8ae95a57399849866d191b9e96836c62f9ec874a5845",
+    "/home/moloch/semabi/docs/data/v4/transport/reserved_v1/summarize.py": "6a13a4cabc0f9c583e340e50faa46b9b82aa30b193e0f915ce07684b17697c4c"
+  },
+  "temporary_root": "/tmp/semabi-r1-final-custody-review-d0vzbgq7",
+  "total": 19
+}

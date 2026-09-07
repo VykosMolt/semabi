@@ -1,6 +1,63 @@
 # Fresh-interface campaign execution record
 
-## Current question and boundary
+## Active checkpoint (2026-09-07 20:47 UTC)
+
+The original T1 first pass, analysis and original-source regressions are
+preserved. G1 graph ownership is integrated and reviewed; G2 section chronology
+is integrated at main `4440a4f`, with 577 passing tests, 3 skips and 1 expected
+failure. All five dedicated corpus jobs and their comparator have finished and
+been reaped. The complete six-component G1/G2 semantic payloads match exactly
+under the same hash seed, including retained residual errors and ambiguity.
+The final independent G2 review is accepted and the one-shot sealer completed:
+`development/g2/results_manifest_v1.json` binds 135 files and all nine jobs,
+SHA-256 `481f879db351618431127a8f7a99db1a35ed06975c7f1f325347c9953a80d67e`.
+Root independently rehashed the final inventory. The report states that summed
+corpus rows include reused separating holdout inputs. This coherent checkpoint
+is ready for its local commit, followed by the actual R1 implementation freeze.
+
+At 20:01 UTC the user lifted the temporary one-core restriction, then explicitly
+requested **all 24 logical CPUs (0–23)** at 20:08 UTC. Use normal priority for
+new jobs and numerical threads 1.
+Independent reviewed work may run in parallel within available memory. Shared
+fixture state and authentication/cache mutations remain serialized. The last
+G2 fit retained its single-threaded launch settings through completion. The versioned resource
+override is `development/g2/resource_override_v3.json`; prior limits below are
+historical. No GPU or paid compute is used.
+
+The isolated B1 soundness candidate is preserved at `96b2d1f`; its 54 focused
+cases pass, but it is excluded from R1 and has no integrated regression claim.
+A clean detached `runs/.b1_validation_worktree` at that commit now allows its
+full and dedicated regressions to proceed alongside frozen main work. The
+baseline-verification agent owns and reaps the six frozen validation jobs.
+Four corpus jobs are complete. The full suite is reaped with 621 passes,
+3 skips and 1 expected failure; all 1,930 frozen files remain unchanged. The
+extended corpus remains live.
+The approved B1/G2 comparator waits for the complete B1 results and the actual
+preserved G2 digest. B1 remains excluded from main and R1.
+R1 is prepared for the actual G2 source: unchanged collector/scorer, one reserved
+interface and four matched 60-action arms. Its custody review caught and is
+closed an omission of extra job directories before any R1 execution. A bounded
+independently reviewed resource addendum permits its five independent scores to
+overlap after service reaping; acquisition retains its declared sequential order. No R1
+collection, candidates, fit, score or actual phase freeze exists yet.
+
+J1's generated bridge fixture is independently prepared (24 training, 24 held-out,
+24 separate invariance attempts). Root has read public counts/operational
+requirements only; R1 and J1 held-out semantics remain sealed. A generic scoped
+collector has passed its source review and invented-data checks. Its real
+browser totals remain unmeasured. The observer's first disclosed T1 native
+baseline/profiled pair completed its fits and matched exactly, but both
+projections were INCOMPLETE because the copier omitted the native parser's
+dynamic `_member_positioned_cache` field. All three validation jobs, including
+the exception control, are reaped and preserved. A bounded optional-stored-field
+instrument correction is in progress; equal incomplete projections are not a
+transparency pass. The separate resident prediction/actor contract is under
+independent source review before implementation. A report or commit is a checkpoint;
+continue with reserved transport, B1 integration and the real JOIN learner trace.
+
+The following dated sections retain the campaign history and original decisions.
+
+## Original question and boundary
 
 Can the algorithm at `9bc371c` recover representations and bindings on new
 interface structures, preserve genuine ambiguity, and acquire discriminating
@@ -335,3 +392,103 @@ semantic comparison. After G1 preservation, integrate G2 and freeze its actual
 source before the full suite and five dedicated regressions. A new reserved
 transport freeze and an independently constructed JOIN learner trace remain
 next. Shared fixture source and reserved contents are still unopened by root.
+
+## Integrated G2 and user resource limit (2026-09-07 18:24 UTC)
+
+G1's reviewed result is sealed by `development/g1/results_manifest_v1.json`,
+SHA-256 `7d5aa8f4c2fa17fd1c4f2d3bed954cca79eab139ff0724185b4f79cf623d2cf5`,
+binding 178 files and 22 completed job records. Local checkpoint `1ddc463`
+preserves G1 and the completed section control. The G2 candidate is integrated
+at `be2afa4`; its reviewed validation instruments are committed at `4440a4f`.
+
+`development/g2/freeze_v1.json` binds that exact source and one changed compiler
+file relative to G1; SHA-256
+`3f88423e84622313263c097a289fb4c8fddb2a0d8d2d56176186229759848df6`.
+The full suite is active at `development/g2/jobs/full_pytest_v1`, root-owned
+session 32695, runner 399524 and child 399526. Do not change main source, tests,
+instruments or HEAD while provenance-sensitive jobs are active.
+
+The user requested lower CPU use for concurrent ML or gaming. This supersedes
+the earlier parallel-batch allowance: **one low-priority CPU worker for the
+campaign; all heavy fits/tests run sequentially**. Root applied CPU affinity 23,
+nice 19 and idle I/O priority to the running full-suite runner, child and all
+their current threads. The numerical thread limit remains one. The verified
+OS settings and timing are retained in `development/g2/resource_override_v1.json`.
+Future launches inherit the same settings through `taskset -c 23`, `nice -n 19`
+and `ionice -c 3` around the existing job launcher; preserve its exact inner
+command for result association. No corpus fit starts until the sole worker is
+free. Small read-only audits continue, and no GPU work is planned.
+
+The generalized native aggregation diagnostic also completed before integration:
+12 native creation cases and 30 direct supplied-verdict controls, no fit/browser.
+Both an answer limit and a search-node limit reproduce false exhaustive support
+and refutation after creation-value deduplication. That result is distinct from
+the original 12 supplied JOIN conjunction cases, all of which passed. Native
+diagnostic reports and a reviewed bounded soundness contract are finalized in
+`development/join_native_control`; preservation and a separate implementation
+worktree follow while G2 source stays frozen.
+
+## G2 full verification and queued development (2026-09-07 18:52 UTC)
+
+The G2 full job finished at 18:51:25 UTC and root reaped session 32695:
+577 passed, 3 skipped, 1 expected failure in 1747.71 seconds. Its child is
+terminated, the log hash matches the completed process record, and every runtime
+and verification file still matches the G2 freeze at source `4440a4f`.
+The five dedicated corpus measurements and same-seed comparison are next; keep
+main source and HEAD fixed until those jobs complete.
+
+Root granted the sole low-priority CPU worker briefly to B1's isolated before/
+after focused regressions. B1 changes only partial-singleton binding status and
+the central incomplete-enumeration consequence verdict. Independent source
+review is in progress; no integration is authorized by these preparation notes.
+The actual patch, snapshots and deferred commands are in `runs/.b1_worktree`.
+All 169 native JOIN diagnostic artifacts were independently rehashed by root
+against manifest `4d2644f0db35a060f9d5a7dd9c25973efcb3436e00e0955a7a5aae8d037d2ec0`.
+Those manifest paths are relative to the diagnostic directory, not the repo root.
+
+The new `reserved_v1/protocol_v1.md` and phase-freeze helper are awaiting public
+review. R1 will use actual G2 source, unchanged collector/scorer, one reserved
+interface, four 60-primitive arms across seeds 1701/1702, and a separately sealed
+evaluator control. Its implementation freeze requires preserved G2 results.
+No R1 browser action, candidate preparation, fit or evaluation has run. Root has
+read only the generic adapter source and metadata; all reserved semantics remain
+sealed, and the B1 candidate is excluded from the R1 implementation.
+
+## Sequential regressions and B1 candidate preservation (2026-09-07 19:31 UTC)
+
+G2 allocation-positive finished/reaped at 19:11:39 UTC (session 71567), followed
+by allocation-refusals at 19:28:00 UTC (session 74292). Both returned zero and
+retain their known outcome limitations. Root now owns session 81771 for
+`jobs/corpus_pilot`; separating and separating-extended remain queued, then the
+same-seed comparison. Main source/HEAD remains `4440a4f`. The pilot's actual OS
+settings were checked at 19:30:18 UTC: one thread, CPU affinity 23, nice 19,
+idle I/O; the versioned record is in its job directory. No other heavy job runs.
+
+B1's exact before/after focused commands completed and were reaped. Original
+source with the new regressions: 32 failed, 22 passed. The unchanged reviewed
+candidate: 54 passed. Independent source/runtime reviews verify the case sets,
+failure causes and source/artifact hashes. Root verified the `.py.txt` export
+and preserved only the three source/test changes plus its 48-file archive in
+isolated commit `96b2d1f0efa573e675739f2d230b1e2245c088d5`. Main has not adopted B1.
+The original diagnostic's false-certainty evidence remains unchanged; B1 has
+no integrated/full or dedicated-corpus pass claim yet.
+
+The corrected G2 sealer was independently reviewed at source
+`82ad9a7977fc360ddfca9246b95d092fc79afc6c8967178d2270feba628214b2`.
+Its rejected initial comparison-custody gate and reproducer are preserved.
+Both actual phase inputs and the completed comparator receipt must be bound;
+nonzero semantic differences are explicitly acceptable and retained. Real
+integration results still require final review before preservation.
+
+R1's public protocol, generic evaluator and prerequisite gate passed review.
+Its new preserver/summarizer and dependency extension are being prepared and
+will be reviewed before the actual implementation freeze; earlier source and
+review versions remain unchanged. No R1 raw collection or fit has occurred.
+The evaluator's final public envelope is `c983eecf222c57cd4d2a78485d7fcc6518fc3849f67e76cb40d5c231909a129c`;
+the sealed 26-entry inventory is `d73d9fd7846c1495fe56310adbbd6e95a39912eef21a7e069f23667be8fe2113`.
+
+That evaluator now independently constructs the separate raw J1 bridge fixture
+under `experiments/join_v1`, with held-out payloads still sealed from root. Its
+work is limited to file construction and tiny fixture-only checks. A public
+source audit is finding a read-only way to retain actual lifting/grounding
+provenance during a future normal fit. No J1 browser or learner run has occurred.

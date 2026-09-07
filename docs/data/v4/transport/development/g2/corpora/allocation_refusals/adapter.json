@@ -1,0 +1,26 @@
+{
+  "actual_command": [
+    "/home/moloch/semabi/.venv/bin/python",
+    "/home/moloch/semabi/docs/data/v4/transport/development/g2/run_corpus.py",
+    "allocation_refusals",
+    "docs/data/v4/transport/development/g2/corpora/allocation_refusals",
+    "docs/data/v4/transport/development/g2/freeze_v1.json"
+  ],
+  "source_snapshot": "/home/moloch/semabi/docs/data/v4/transport/development/g2/freeze_v1.json",
+  "instrument": "/home/moloch/semabi/docs/data/v4/transport/baseline/check_corpora.py",
+  "instrument_sha256": "ecfb411df3cc80c00642b6166874a705f4135f8bbf6224d71c45234ee7c0ce0d",
+  "adapter_sha256": "e2c8b75cd7003855aceceddb322b2cd9e7f2302bf8c734acde50bc26152cbd87",
+  "owner": "/root",
+  "inherited_provenance": "The unchanged instrument retains nominal baseline owner/command labels; this adapter and outer job identify this invocation.",
+  "corpus_root": "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1",
+  "input_manifest_sha256": "0a2fc2a9833f290fb23d9300e0547b53b83af2ec93ab3a92cde63b1f0ddc1dc1",
+  "required_environment": {
+    "PYTHONHASHSEED": "0",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1"
+  },
+  "override": "Only module.OUT and SEMABI_BASELINE_CORPORA choose phase outputs and authenticated inputs. Measurement and fits are unchanged.",
+  "scope": "G2 integrated chronology regression; prior baseline and G1 are immutable."
+}

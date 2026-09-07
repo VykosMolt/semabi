@@ -1,0 +1,174 @@
+{
+  "checks": [
+    {
+      "case": "complete_all_fit_failures_and_unreachable",
+      "expected": "ACCEPTED",
+      "matches_expected": true,
+      "matrix": {
+        "r1_contested_1701": {
+          "clicks_per_model": 12,
+          "models": 2,
+          "score_sha256": "1f06e1244030338ca63d9be8349cf6108b28c250d065c88865d3fc6bdbf9331f",
+          "task_targets_per_model": 10
+        },
+        "r1_contested_1702": {
+          "clicks_per_model": 12,
+          "models": 2,
+          "score_sha256": "de27abacef6c59f5559ea915c23955c84f9cb93282a35562d8b6c9f724f7cc0b",
+          "task_targets_per_model": 10
+        },
+        "r1_initial_v1": {
+          "clicks_per_model": 12,
+          "models": 2,
+          "score_sha256": "adb0519df1dccf70e7863abcdb244f33ce80f19cca222e02510df8b0129ec27a",
+          "task_targets_per_model": 10
+        },
+        "r1_untargeted_1701": {
+          "clicks_per_model": 12,
+          "models": 2,
+          "score_sha256": "b0671f1c522faad4b39ae69b99c6d8afbef1b7a4a114748de7a95e9bd24f3ee3",
+          "task_targets_per_model": 10
+        },
+        "r1_untargeted_1702": {
+          "clicks_per_model": 12,
+          "models": 2,
+          "score_sha256": "3a4cbd77bc6bf16ef0503c9a988c620142edd46406c12d1febb1dbdde96b0ad0",
+          "task_targets_per_model": 10
+        }
+      },
+      "observed": "ACCEPTED"
+    },
+    {
+      "case": "missing_task",
+      "error": "ValueError: Fixed evaluation task denominator differs",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "missing_candidate_model",
+      "error": "ValueError: Score is incomplete or its model denominator differs",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "missing_current_inferred",
+      "error": "ValueError: Score is incomplete or its model denominator differs",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "pending_model",
+      "error": "ValueError: Score is incomplete or its model denominator differs",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "foreign_source",
+      "error": "ValueError: Score input/source/candidate/freeze associations differ",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "foreign_train",
+      "error": "ValueError: Score input/source/candidate/freeze associations differ",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "foreign_evaluation",
+      "error": "ValueError: Score input/source/candidate/freeze associations differ",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "foreign_candidate_hash",
+      "error": "ValueError: Score input/source/candidate/freeze associations differ",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "foreign_freeze",
+      "error": "ValueError: Score input/source/candidate/freeze associations differ",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "different_pinned_reading",
+      "error": "ValueError: Score model is associated with a different frozen reading",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "lost_failed_primitive_count",
+      "error": "ValueError: Score model lost an evaluation opportunity",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "lost_query",
+      "error": "ValueError: Score model lost an evaluation opportunity",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "lost_emission_click",
+      "error": "ValueError: Emission ledger lost or duplicated a click",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "changed_failed_action",
+      "error": "ValueError: Emission row differs from the common raw evaluation",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "changed_emission_summary",
+      "error": "ValueError: Retained outcome accounting differs",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "lost_state_failure",
+      "error": "ValueError: State ledger lost or duplicated a click opportunity",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    },
+    {
+      "case": "duplicate_state_opportunity",
+      "error": "ValueError: State ledger lost or duplicated a click opportunity",
+      "expected": "REJECTED",
+      "matches_expected": true,
+      "observed": "REJECTED"
+    }
+  ],
+  "matched": 18,
+  "retained_helper_files": {
+    "docs/data/v4/transport/acquisition_summary.py": "8e8f242cc68e7259e0049dc5e7f2282dba52a83f8d93aa0d5c734141ccd23234",
+    "scripts/transport_score.py": "9a4cd7cadc8646e031e54368de6a32b4f9628698de3b8c321a39219b19dee7cc",
+    "semabi/compiler/v4/outcome.py": "552b87472577a6f409069fdf459cd64d209a699b48737df57a56a3949813d736"
+  },
+  "schema": "semabi.transport.r1_score_scope_review.v1",
+  "scope": "Unchanged build() AST from initial/evaluation assignment through score matrix loop only; invented coherent inputs; no full preserver claim, native imports, actual R1 data, fit or subprocess.",
+  "script_sha256": "208d750f7898c63537531e3d434c77eefc52cd60d69fa36d904d77027361119f",
+  "source_path": "/home/moloch/semabi/docs/data/v4/transport/reserved_v1/preserve_first_pass.py",
+  "source_sha256": "a5de3dea796601fa522c8ae95a57399849866d191b9e96836c62f9ec874a5845",
+  "temporary_root": "/tmp/semabi-r1-score-scope-review-5cidz4ow",
+  "total": 18
+}

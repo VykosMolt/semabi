@@ -1,0 +1,212 @@
+{
+  "actual_freeze_build_or_preservation_executed": false,
+  "assertion_classes": 17,
+  "assertions": 75,
+  "checks": {
+    "24-CPU source differs from unexecuted draft only as declared": 2,
+    "both phase dependency commitments identical": 1,
+    "both phases emit the common verification inventory": 1,
+    "freezer has only approved dependencies and worker-ceiling edits": 1,
+    "freezer records ceiling 24 and unchanged numerical settings": 1,
+    "late hidden job fails final inventory recheck": 1,
+    "new review and v3 record in each phase verification list": 2,
+    "no native SemABI import": 1,
+    "overlapped-score inventory initially complete": 1,
+    "preserver has only approved dependency and score-overlap edits": 1,
+    "preserver requires both new verification dependencies": 1,
+    "public resource v3 matches all-24 instruction": 1,
+    "resource scheduling case meets frozen expectation": 23,
+    "retained synthetic helpers found": 3,
+    "review input postcheck fingerprint": 17,
+    "review input precheck fingerprint": 17,
+    "verification inventory constructed before phase branch": 1
+  },
+  "cpu_affinity": [
+    0
+  ],
+  "dependency_construction": {
+    "executed_scope": "unchanged unconditional AST dependency-list statements only; invented path strings and hashes; no freezer build",
+    "phase_verification_entries": 19,
+    "required_new_paths": [
+      "docs/data/v4/transport/development/g2/resource_override_v3.json",
+      "docs/data/v4/transport/reserved_v1/resource_review_v1.md"
+    ]
+  },
+  "execution_scope": "public stdlib instrument source, unchanged synthetic helper functions, invented temporary job records and AST dependency-list construction only",
+  "job_case_count": 24,
+  "job_cases": [
+    {
+      "case": "sequential_fixed_13",
+      "expected_accepted": true,
+      "jobs": 13,
+      "observed_accepted": true,
+      "source_version": "current_24"
+    },
+    {
+      "case": "all_five_scores_overlap_after_service",
+      "expected_accepted": true,
+      "jobs": 13,
+      "observed_accepted": true,
+      "source_version": "current_24"
+    },
+    {
+      "case": "score_starts_at_service_end",
+      "expected_accepted": true,
+      "jobs": 13,
+      "observed_accepted": true,
+      "source_version": "current_24"
+    },
+    {
+      "case": "score_before_service_reaping",
+      "error": "Scoring began before service reaping",
+      "expected_accepted": false,
+      "observed_accepted": false,
+      "source_version": "current_24"
+    },
+    {
+      "case": "service_ends_after_scoring",
+      "error": "Scoring began before service reaping",
+      "expected_accepted": false,
+      "observed_accepted": false,
+      "source_version": "current_24"
+    },
+    {
+      "case": "service_ends_before_evaluation",
+      "error": "Fixture service did not cover the complete browser collection",
+      "expected_accepted": false,
+      "observed_accepted": false,
+      "source_version": "current_24"
+    },
+    {
+      "case": "overlapping_acquisition_arms",
+      "error": "Declared first-pass collection order or sequential ownership differs",
+      "expected_accepted": false,
+      "observed_accepted": false,
+      "source_version": "current_24"
+    },
+    {
+      "case": "overlapping_initial_preparation",
+      "error": "Declared first-pass collection order or sequential ownership differs",
+      "expected_accepted": false,
+      "observed_accepted": false,
+      "source_version": "current_24"
+    },
+    {
+      "case": "overlapping_evaluation",
+      "error": "Declared first-pass collection order or sequential ownership differs",
+      "expected_accepted": false,
+      "observed_accepted": false,
+      "source_version": "current_24"
+    },
+    {
+      "case": "hidden_running_job",
+      "error": "Job-root membership differs from the fixed first pass",
+      "expected_accepted": false,
+      "observed_accepted": false,
+      "source_version": "current_24"
+    },
+    {
+      "case": "extra_running_job",
+      "error": "Job-root membership differs from the fixed first pass",
+      "expected_accepted": false,
+      "observed_accepted": false,
+      "source_version": "current_24"
+    },
+    {
+      "case": "running_expected_score",
+      "error": "Owned job is incomplete or unreaped: score_r1_initial_v1",
+      "expected_accepted": false,
+      "observed_accepted": false,
+      "source_version": "current_24"
+    },
+    {
+      "case": "unreaped_expected_score",
+      "error": "Owned job is incomplete or unreaped: score_r1_initial_v1",
+      "expected_accepted": false,
+      "observed_accepted": false,
+      "source_version": "current_24"
+    },
+    {
+      "case": "failed_expected_score",
+      "error": "Owned job is incomplete or unreaped: score_r1_initial_v1",
+      "expected_accepted": false,
+      "observed_accepted": false,
+      "source_version": "current_24"
+    },
+    {
+      "case": "wrong_score_source",
+      "error": "Owned job provenance differs: score_r1_initial_v1",
+      "expected_accepted": false,
+      "observed_accepted": false,
+      "source_version": "current_24"
+    },
+    {
+      "case": "changed_score_log",
+      "error": "Owned job log changed",
+      "expected_accepted": false,
+      "observed_accepted": false,
+      "source_version": "current_24"
+    },
+    {
+      "case": "extra_top_file",
+      "error": "Job root contains a non-directory or redirected entry",
+      "expected_accepted": false,
+      "observed_accepted": false,
+      "source_version": "current_24"
+    },
+    {
+      "case": "extra_top_symlink",
+      "error": "Job root contains a non-directory or redirected entry",
+      "expected_accepted": false,
+      "observed_accepted": false,
+      "source_version": "current_24"
+    },
+    {
+      "case": "expected_directory_symlink",
+      "error": "Job root contains a non-directory or redirected entry",
+      "expected_accepted": false,
+      "observed_accepted": false,
+      "source_version": "current_24"
+    },
+    {
+      "case": "late_hidden_job",
+      "error": "Job-root membership differs from the fixed first pass",
+      "expected_accepted": false,
+      "observed_accepted": false,
+      "source_version": "current_24"
+    },
+    {
+      "case": "sequential_fixed_13",
+      "expected_accepted": true,
+      "jobs": 13,
+      "observed_accepted": true,
+      "source_version": "archived_one"
+    },
+    {
+      "case": "all_five_scores_overlap_after_service",
+      "error": "Score jobs overlapped",
+      "expected_accepted": false,
+      "observed_accepted": false,
+      "source_version": "archived_one"
+    },
+    {
+      "case": "sequential_fixed_13",
+      "expected_accepted": true,
+      "jobs": 13,
+      "observed_accepted": true,
+      "source_version": "archived_twelve"
+    },
+    {
+      "case": "all_five_scores_overlap_after_service",
+      "expected_accepted": true,
+      "jobs": 13,
+      "observed_accepted": true,
+      "source_version": "archived_twelve"
+    }
+  ],
+  "native_imports_browser_server_fits_actual_r1_records": false,
+  "nice": 0,
+  "schema": "semabi.r1.resource_review_checks.v1",
+  "source_manifest_sha256": "9a96ce69019c2f0dc5e259155938a28ca66a07b79be3844e170781278a96596c",
+  "status": "PASS"
+}

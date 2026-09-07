@@ -1,0 +1,32 @@
+{
+  "recorded_utc": "2026-09-07T18:24:10.600716+00:00",
+  "reason": "User requested lower CPU usage for concurrent ML or gaming.",
+  "policy": "At most one low-priority CPU worker for the campaign; numerical threads1; heavy jobs sequential.",
+  "cpu_affinity": [
+    23
+  ],
+  "nice": 19,
+  "io_class": "idle",
+  "job": "docs/data/v4/transport/development/g2/jobs/full_pytest_v1/process.json",
+  "owned_processes": [
+    {
+      "pid": 399524,
+      "threads": 1,
+      "nice": 19,
+      "cpus": [
+        23
+      ],
+      "io_priority": "idle"
+    },
+    {
+      "pid": 399526,
+      "threads": 1,
+      "nice": 19,
+      "cpus": [
+        23
+      ],
+      "io_priority": "idle"
+    }
+  ],
+  "source_and_measurement_unchanged": true
+}

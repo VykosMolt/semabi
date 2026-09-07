@@ -1,0 +1,17 @@
+{
+  "schema": "semabi.transport.resource_override.v3",
+  "recorded_utc": "2026-09-07T20:08:04+00:00",
+  "reason": "The user explicitly requested all 24 logical CPUs to finish as soon as possible.",
+  "supersedes": "docs/data/v4/transport/development/g2/resource_override_v2.json",
+  "maximum_logical_cpus": 24,
+  "worker_cpu_pool": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+  "new_worker_nice": 0,
+  "numerical_threads_per_worker": 1,
+  "python_hash_seed": "0",
+  "current_job": "docs/data/v4/transport/development/g2/jobs/corpus_separating_extended",
+  "current_job_handling": "The already running single-threaded fit keeps its numerical and measurement parameters. Independent work uses other CPUs; no completed or running result is relabeled.",
+  "scheduling": "Use all 24 CPUs for useful independent reviewed work within available memory. Shared fixture sessions and authentication or cache mutations remain serialized.",
+  "r1_effect": "Acquisition retains the fixed order on its single fixture service. All five independent scores may run concurrently after service reaping and must finish before preservation.",
+  "b1_effect": "A clean isolated checkout of reviewed B1 commit 96b2d1f is prepared for full and dedicated regressions in parallel with frozen main work. Main remains unchanged until its first-pass source phase is preserved.",
+  "source_and_data": "No learner, collector, scorer, fixture, frozen input or completed result is changed by this resource instruction. R1 scheduling changes are reviewed before any real R1 freeze or execution."
+}

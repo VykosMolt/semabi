@@ -1,0 +1,28 @@
+{
+  "processes": [
+    {
+      "command": [
+        ".venv/bin/python",
+        "-B",
+        "docs/data/v4/transport/development/g2/run_corpus.py",
+        "pilot",
+        "docs/data/v4/transport/development/g2/corpora/pilot",
+        "docs/data/v4/transport/development/g2/freeze_v1.json"
+      ],
+      "io_priority": "idle",
+      "pid": 524730,
+      "resident_memory": "639764 kB",
+      "threads": [
+        {
+          "affinity": [
+            23
+          ],
+          "nice": 19,
+          "tid": 524730
+        }
+      ]
+    }
+  ],
+  "scope": "Read-only OS resource check of exact active G2 pilot command",
+  "utc": "2026-09-07T19:30:18.355914+00:00"
+}

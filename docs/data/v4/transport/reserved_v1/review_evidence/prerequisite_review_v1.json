@@ -1,0 +1,112 @@
+{
+  "checks": [
+    {
+      "case": "prior accepts foreign phase and unrelated artifact only",
+      "verdict": "defect reproduced"
+    },
+    {
+      "case": "prior rejects structured result metadata",
+      "reason": "Frozen bytes changed: unrelated.txt",
+      "verdict": "defect reproduced"
+    },
+    {
+      "case": "complete synthetic G2 with structured file metadata",
+      "verdict": "accepted"
+    },
+    {
+      "case": "reject wrong schema",
+      "reason": "Preserved G2 results must bind the authenticated G2 source and freeze",
+      "verdict": "rejected"
+    },
+    {
+      "case": "reject wrong status",
+      "reason": "Preserved G2 results must bind the authenticated G2 source and freeze",
+      "verdict": "rejected"
+    },
+    {
+      "case": "reject wrong source_head",
+      "reason": "Preserved G2 results must bind the authenticated G2 source and freeze",
+      "verdict": "rejected"
+    },
+    {
+      "case": "reject wrong freeze_sha256",
+      "reason": "Preserved G2 results must bind the authenticated G2 source and freeze",
+      "verdict": "rejected"
+    },
+    {
+      "case": "reject wrong all_owned_jobs_terminated",
+      "reason": "Preserved G2 results must bind the authenticated G2 source and freeze",
+      "verdict": "rejected"
+    },
+    {
+      "case": "reject omitted required review",
+      "reason": "G2 result inventory omits required validation or review artifacts",
+      "verdict": "rejected"
+    },
+    {
+      "case": "reject incorrect byte count",
+      "reason": "Invalid preserved file metadata: docs/data/v4/transport/development/g2/freeze_v1.json",
+      "verdict": "rejected"
+    },
+    {
+      "case": "reject stale job summary digest",
+      "reason": "Required G2 validation job is not preserved as completed: full_pytest_v1",
+      "verdict": "rejected"
+    },
+    {
+      "case": "reject missing required job summary",
+      "reason": "Required G2 validation job is not preserved as completed: full_pytest_v1",
+      "verdict": "rejected"
+    },
+    {
+      "case": "reject actual failed job despite successful summary",
+      "reason": "Required G2 validation job is not preserved as completed: full_pytest_v1",
+      "verdict": "rejected"
+    },
+    {
+      "case": "reject unreaped actual child",
+      "reason": "Required G2 validation job is not preserved as completed: full_pytest_v1",
+      "verdict": "rejected"
+    },
+    {
+      "case": "reject job source mismatch",
+      "reason": "G2 validation job source differs: full_pytest_v1:semabi/compiler/example.py",
+      "verdict": "rejected"
+    },
+    {
+      "case": "reject changed log despite refreshed outer inventory",
+      "reason": "Required G2 validation job is not preserved as completed: full_pytest_v1",
+      "verdict": "rejected"
+    },
+    {
+      "case": "reject additional compiler file",
+      "reason": "The G2 compiler file inventory changed",
+      "verdict": "rejected"
+    },
+    {
+      "case": "reject changed runtime source",
+      "reason": "Frozen bytes changed: semabi/compiler/example.py",
+      "verdict": "rejected"
+    },
+    {
+      "case": "reject overwrite of implementation freeze",
+      "verdict": "rejected"
+    },
+    {
+      "case": "reject candidate from another implementation freeze",
+      "verdict": "rejected"
+    },
+    {
+      "case": "campaign adds exactly two raw inputs and candidates while preserving commitments",
+      "verdict": "accepted"
+    }
+  ],
+  "invented_filesystem_only": true,
+  "learner_browser_or_fixture_imported": false,
+  "passed": true,
+  "prior_source_sha256": "38936883bfb7c8733e9c7e678b7b5573fb4fd8ae937377b941b072a55a2d14d6",
+  "real_freeze_written": false,
+  "review_script_sha256": "b2b004d7a7f5fd93f7824aa5e910948fc338317d0c8a936a720c8d835aa04e5f",
+  "revised_source_sha256": "fab0bb563a2d3b2cc6ea46790e1417bc6d0197436b9ab64a7739d29c5bfb8fe7",
+  "schema": "semabi.transport.reserved_public_freeze_review.v1"
+}

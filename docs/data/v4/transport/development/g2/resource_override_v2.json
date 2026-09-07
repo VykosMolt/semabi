@@ -1,0 +1,16 @@
+{
+  "schema": "semabi.transport.resource_override.v2",
+  "recorded_utc": "2026-09-07T20:01:40+00:00",
+  "reason": "The user lifted the temporary CPU restriction and authorized full use again.",
+  "supersedes": "docs/data/v4/transport/development/g2/resource_override_v1.json",
+  "maximum_logical_cpus": 12,
+  "worker_cpu_pool": [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+  "new_worker_nice": 0,
+  "numerical_threads_per_worker": 1,
+  "python_hash_seed": "0",
+  "current_job": "docs/data/v4/transport/development/g2/jobs/corpus_separating_extended",
+  "current_job_handling": "The already running single-threaded fit keeps its recorded launch settings. Independent work may use the remaining CPU pool; no numerical or measurement parameter is changed.",
+  "scheduling": "Parallelize independent reviewed jobs within the CPU and available-memory limits. Serialize shared fixture sessions and authentication or cache mutations.",
+  "r1_effect": "Acquisition remains in its declared order on the single fixture service. The five independent score jobs may overlap after the service has been stopped and reaped; all must finish before preservation.",
+  "source_and_data": "No learner, collector, scorer, fixture, frozen input or completed result is changed. R1 resource-only protocol and custody revisions are reviewed before its first implementation freeze."
+}

@@ -1,0 +1,150 @@
+# R1 first-pass preservation and descriptive summary
+
+This plan adds evaluator custody instruments only. `preserve_first_pass.py`,
+`summarize.py`, this plan, the independent custody review and the unchanged
+`../acquisition_summary.py` must appear in the implementation freeze's
+`verification_files`. Their identical entries remain in the campaign freeze.
+No collector, scorer, learner, fixture, oracle or retained measurement helper is
+changed. Authoring and review use public code and metadata, without reading R1
+raw evidence or the sealed specification, report or application semantics.
+
+## Fixed first pass
+
+The raw root is `../first_pass/reservoir`. Initial collection is
+`r1_initial_v1`; candidate preparation writes
+`r1_candidates_v1/candidates.json`. The four acquisition directories, in order,
+are `r1_contested_1701`, `r1_untargeted_1701`, `r1_contested_1702` and
+`r1_untargeted_1702`. Common evaluation is `r1_evaluation_v1`. Each of the five
+training stages has `scores/<actual-stage>.json` under this directory.
+
+The fixed jobs under `jobs/` are `r1_fixture_service_v1`, the initial stage,
+`r1_candidates_v1`, the four arms, the evaluation stage and
+`score_<actual-training-stage>` for all five trainings. All use the existing
+`../run_job.py` record schema. The exact service command is
+`.venv/bin/python experiments/transport_v1/server.py --port 8767`.
+Collection commands follow the public envelope, with every option explicit;
+acquisition includes `--initial`, `--policy`, `--budget 60` and its seed.
+Preparation uses `--train`, `--out-dir` and the implementation freeze. Scoring
+uses `--train`, `--eval`, `--candidates`, `--out` and the campaign freeze.
+The instrument accepts relative or absolute repository file arguments and
+arbitrary option order, but rejects missing, repeated or additional options.
+The job root must be an actual directory containing exactly the 13 declared
+job directories. Additional jobs, top-level files, symlinks and special entries
+are rejected. This membership snapshot is rechecked before manifest writing.
+
+The user's 20:01 UTC resource instruction restores the prior 12-core allowance
+before any R1 execution. Root launches new workers under `taskset` within CPUs
+12–23 at normal priority, with one numerical thread and `PYTHONHASHSEED=0`.
+The process record authenticates
+the thread environment; the outer CPU/priority launch and runner reaping remain
+root's process-ownership responsibility because the retained runner does not
+record its outer affinity or priority. The service lifetime covers all browser
+collection. Root interrupts and reaps it after evaluation, before scoring;
+its required terminal record is `INTERRUPTED`, return code `-15`,
+`child_terminated: true`. Every other fixed job must be `FINISHED`, return code
+zero and child-terminated. The five independent scores may run concurrently
+after the service is reaped, within available memory. Initial collection,
+candidate preparation, the declared arms
+and evaluation must occur sequentially in their declared order.
+
+## Preservation checks
+
+The preserver uses the standard library and reads no sealed JSON semantics. It
+authenticates both freeze phases, actual HEAD, the exact parent association and
+all runtime, sealed and verification inventories. The campaign must add exactly
+the initial observations, initial steps and candidate file to its parent's
+runtime inventory. Sealed inventory entries must agree with the freeze. Both
+opaque scripted inputs and the service source must be sealed commitments.
+
+Each raw directory is inventoried completely. Charged decisions must be
+consecutive; the single unpaired reset and observed reload must be retained;
+paired decisions must match their raw steps field-for-field, and observations
+must cover every referenced signature. Public predicted denominators are
+checked against the records: initial 37 attempts/36 paired steps, evaluation
+51/50 with ten distinct designated click targets, and each arm 60/59.
+Each arm must preserve the exact initial raw byte prefixes and the refit
+opportunities at charged counts 0, 15, 30 and 45. Recognized learned input
+sidecars must be absent. All collected ledgers are bound to their owned child,
+recorded arguments, timestamps, source and proper phase freeze.
+
+The preserver executes unchanged `require`/`accounting` function AST nodes from
+the authenticated retained summary, using only their original `Counter` and
+budget globals. It executes the unchanged scorer `outcome_summary` function
+with authenticated literal constants from `outcome.py`. This reuses the
+retained accounting semantics without importing learner or native modules.
+No AST body, condition or returned measurement is rewritten.
+
+Candidate source, initial input version, freeze and candidate digest/count/
+omission order must agree. Every score must retain the exact frozen candidate
+IDs plus `current_inferred`, bind the correct candidate reading, and use the
+same source, phase freeze and common evaluation version. All optional input
+sidecar names and byte lengths are included in version checks. Every click
+must remain in all three emission channels, query records and state opportunity
+ledgers, including failed and unreachable attempts. Emission summaries are
+recomputed with the unchanged retained function; category totals must cover
+every click. No accuracy, binding quality, successful fit, target action
+success, recognition success or hypothesis acceptance is a preservation gate.
+Script `complete: false` is retained because the collector uses that field for
+action success; full ledgers and completed jobs establish collection completion.
+
+All fixed job source inventories, exact child commands and log hashes are
+checked. All SemABI Python sources, frozen instruments, raw outputs, candidates,
+scores, fixed job outputs and opaque sealed/control/adapter/helper bytes enter
+the manifest. File hashes and output directory membership are checked again
+before writing. The fixed output `first_pass_manifest_v1.json` is created
+exclusively, never overwritten, with `status: PRESERVED` and a repository-relative
+`files` map whose values are SHA-256 strings. This is the generic binding
+adapter's required format. Stdout contains only output path, hash, status and
+file count. Preservation does not infer scientific success.
+
+## Summary adapter
+
+Only after preservation, `summarize.py` calls the unchanged retained helper's
+`summarize_fixture(inputs, "reservoir")`. Its exact read-only aliases map
+`initial_v2` to `r1_initial_v1`, `evaluation_v2` to `r1_evaluation_v1`,
+`candidates_v2/candidates.json` to `r1_candidates_v1/candidates.json`, and each
+legacy arm name to the corresponding `r1_` arm. Logical score names map to
+this directory's actual `scores/<r1-stage>.json` paths. Every other logical
+input is rejected. No T1 fallback exists.
+
+The adapter authenticates each consumed byte against the preservation manifest
+before JSON parsing, and authenticates the repository code dependency inventory
+before importing the retained helper. Initial and acquired raw input bytes are
+also rechecked. It validates the actual R1 source/freeze associations and
+rechecks all authenticated bytes before writing. Imports disable bytecode
+writes; no fit, browser action, application module or evaluator control is
+invoked. Normal Python dependency imports are the same as the retained helper.
+
+Returned stage and support-reference names retain the helper's legacy logical
+labels. The result explicitly includes stage aliases, every logical-to-actual
+path, actual R1 source and freeze associations, the preservation digest,
+dependency hashes and consumed input hashes. Fixed task targets, support,
+observed vocabulary, identity comparisons and paired-seed comparisons all use
+the original helper functions without semantic changes. A saved vouch remains
+a representative support example, not an enumeration of supporting conjunctions.
+The default exclusive output is `acquisition_summary_v1.json`; `--out` can name
+another new JSON file directly in this directory. Only metadata is printed.
+
+## Review and execution boundary
+
+Author checks are limited to small standard-library AST/syntax and synthetic
+adapter/custody checks within the current resource allowance. They must not read
+actual R1 records, run native fits, launch browsers or execute controls.
+Root independently reviews and commits these instruments before producing the
+implementation freeze. Any rejected draft must be retained before revision.
+Real preservation waits for the complete fixed pass. Summary and sealed
+diagnostic controls wait for the resulting first-pass manifest. Later diagnosis
+or repair cannot overwrite that manifest or any first-pass input.
+Root invokes preservation directly on one CPU within the current allowance after
+all 13 owned jobs are reaped; preservation must not create another job directory
+under the fixed `jobs/` root. The rejected pre-review instrument and plan are
+retained byte-for-byte under `instrument_revisions/` with the
+`before_job_inventory` suffix. The independent job-inventory reproducer and its
+before/after results remain under `review_evidence/`.
+
+The accepted pre-resource-change protocol, plan, preserver and freezer remain
+under `instrument_revisions` with `before_resource_restore` in their names.
+`resource_review_v1.md` separately reviews the scheduling and dependency changes;
+it and the resource override enter both phase freezes. The historical custody
+review remains unchanged. Removing the score-overlap restriction does not relax
+job membership, provenance, raw accounting, failure preservation or completion.

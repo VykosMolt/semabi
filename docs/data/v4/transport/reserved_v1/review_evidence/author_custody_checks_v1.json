@@ -1,0 +1,26 @@
+{
+  "schema": "semabi.transport.r1_author_custody_checks.v1",
+  "evidence_status": "RETROSPECTIVELY_RETAINED_ORIGINAL_EXECUTION",
+  "original_execution_date_utc": "2026-09-07",
+  "original_execution_command": "taskset -c 23 nice -n 19 ionice -c 3 python3 - <<'PY'\n<exact body retained as author_custody_checks_v1.py>\nPY",
+  "original_working_directory": "/home/moloch/semabi",
+  "exit_code": 0,
+  "stdout_file": "author_custody_checks_v1.stdout.txt",
+  "script_file": "author_custody_checks_v1.py",
+  "retention_note": "The original script ran from a shell heredoc and synthetic records lived in a TemporaryDirectory that was deleted on exit. This file, the exact heredoc body and original stdout were retained afterward at independent review request. No rerun is claimed by this evidence retention.",
+  "source_sha256_at_execution": {
+    "docs/data/v4/transport/reserved_v1/preserve_first_pass.py": "e55110bf343e75ecd4448e3fb4699d9771d8ecb19c26aa88dae4811bd313e025",
+    "docs/data/v4/transport/reserved_v1/summarize.py": "6a13a4cabc0f9c583e340e50faa46b9b82aa30b193e0f915ce07684b17697c4c",
+    "docs/data/v4/transport/reserved_v1/custody_plan_v1.md": "4ba04929af013b8a77b8a6e740b5cede7dc0582cbabe52a229f650cdb2bd79a9"
+  },
+  "checks": [
+    "A finished 37-attempt scripted collection with one failed action and complete=false is accepted and preserves the failure count.",
+    "A raw step changed to contradict its decision is rejected even when the run raw hash is updated.",
+    "All 22 fixed logical aliases resolve to the expected R1 paths and authenticate.",
+    "A dispatch/T1 logical alias is rejected.",
+    "A path-traversal logical alias is rejected.",
+    "A direct actual-stage-name alias bypass is rejected.",
+    "Mutation of a consumed file is rejected by the final unchanged-input check."
+  ],
+  "scope": "Tiny standard-library synthetic checks only; no actual R1 raw records, learner imports, fits, native work, browser actions or controls."
+}

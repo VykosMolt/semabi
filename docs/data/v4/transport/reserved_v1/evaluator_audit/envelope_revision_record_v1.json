@@ -1,0 +1,19 @@
+{
+  "collector_inner_command_tokens_unchanged": true,
+  "final": {
+    "path": "docs/data/v4/transport/reserved_v1/evaluator_audit/public_envelope.md",
+    "sha256": "c983eecf222c57cd4d2a78485d7fcc6518fc3849f67e76cb40d5c231909a129c"
+  },
+  "inventory_bytes_changed": false,
+  "prior": {
+    "path": "docs/data/v4/transport/reserved_v1/evaluator_audit/revisions/public_envelope_v1_before_job_wrapper.md",
+    "sha256": "b8b6aa1fa963c5a576e5bd7299de9fdd3a636de2e54427e05b0e46d0e2c79550"
+  },
+  "reason": "Public review required idle I/O and the existing owned-job wrapper around prepared commands. Inner collector commands remain byte-equivalent as shell token sequences; scorer/service launch requirements are explicit.",
+  "runtime_execution": false,
+  "schema": "semabi.transport.public_envelope_revision.v1",
+  "unique_planned_job_paths": [
+    "docs/data/v4/transport/reserved_v1/jobs/r1_initial_v1",
+    "docs/data/v4/transport/reserved_v1/jobs/r1_evaluation_v1"
+  ]
+}

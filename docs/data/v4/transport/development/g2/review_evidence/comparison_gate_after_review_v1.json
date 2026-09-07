@@ -1,0 +1,91 @@
+{
+  "checked_subsection": "comparison_path assignment through corpus loop; before required_reports",
+  "checks": [
+    {
+      "case": "coherent fabricated G1/G2 custody",
+      "verdict": "accepted"
+    },
+    {
+      "case": "missing G2 freeze",
+      "reason": "'docs/data/v4/transport/development/g2/freeze_v1.json'",
+      "verdict": "rejected"
+    },
+    {
+      "case": "missing G1 freeze",
+      "reason": "'docs/data/v4/transport/development/g1/freeze_v1.json'",
+      "verdict": "rejected"
+    },
+    {
+      "case": "missing G1 manifest",
+      "reason": "'docs/data/v4/transport/development/g1/results_manifest_v1.json'",
+      "verdict": "rejected"
+    },
+    {
+      "case": "missing corpus manifest",
+      "reason": "'invented_input_manifest.json'",
+      "verdict": "rejected"
+    },
+    {
+      "case": "missing G1 case result",
+      "reason": "'docs/data/v4/transport/development/g1/corpora/allocation_positive/allocation_positive.json'",
+      "verdict": "rejected"
+    },
+    {
+      "case": "missing G1 case process",
+      "reason": "'docs/data/v4/transport/development/g1/corpora/allocation_positive/allocation_positive_process.json'",
+      "verdict": "rejected"
+    },
+    {
+      "case": "missing G1 case snapshot",
+      "reason": "'docs/data/v4/transport/development/g1/corpora/allocation_positive/source_snapshot.json'",
+      "verdict": "rejected"
+    },
+    {
+      "case": "missing G1 case job",
+      "reason": "'docs/data/v4/transport/development/g1/jobs/corpus_allocation_positive/process.json'",
+      "verdict": "rejected"
+    },
+    {
+      "case": "changed G1 artifact despite refreshed comparison hashes",
+      "reason": "docs/data/v4/transport/development/g1/corpora/allocation_positive/allocation_positive.json",
+      "verdict": "rejected"
+    },
+    {
+      "case": "uncompleted independently authenticated G1 process",
+      "reason": "allocation_positive",
+      "verdict": "rejected"
+    },
+    {
+      "case": "wrong independently authenticated G1 job hash seed",
+      "reason": "allocation_positive",
+      "verdict": "rejected"
+    },
+    {
+      "case": "different coherent G1/G2 consumed-input maps",
+      "reason": "allocation_positive",
+      "verdict": "rejected"
+    },
+    {
+      "case": "post-job comparison replacement",
+      "reason": "",
+      "verdict": "rejected"
+    },
+    {
+      "case": "receipt difference count disagrees with saved record",
+      "reason": "",
+      "verdict": "rejected"
+    },
+    {
+      "case": "nonzero differences are allowed with matching custody and receipt",
+      "verdict": "accepted"
+    }
+  ],
+  "invented_filesystem_only": true,
+  "learner_imported": false,
+  "passed": true,
+  "real_preservation_manifest_written": false,
+  "real_sealer_executed": false,
+  "review_script_sha256": "99d8b72e1b2aaf3219e0e5a0c99df28a69a0c76f6370e5a9ea94276a74e5b37f",
+  "revised_source_sha256": "82ad9a7977fc360ddfca9246b95d092fc79afc6c8967178d2270feba628214b2",
+  "schema": "semabi.g2.comparison_gate_review.v1"
+}

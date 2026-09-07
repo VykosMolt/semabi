@@ -1,0 +1,16 @@
+{
+  "consumed_by_freeze_before_revision": false,
+  "final": {
+    "file_entries": 26,
+    "path": "docs/data/v4/transport/reserved_v1/evaluator_audit/sealed_files_manifest_v1.json",
+    "sha256": "d73d9fd7846c1495fe56310adbbd6e95a39912eef21a7e069f23667be8fe2113"
+  },
+  "prior": {
+    "file_entries": 22,
+    "path": "docs/data/v4/transport/reserved_v1/evaluator_audit/revisions/sealed_files_manifest_v1_announced.json",
+    "sha256": "a372bfaa85ea6730b5ed4861d6cf6f6e739c0126a880d77785515fe250a39afe"
+  },
+  "prior_announced_bytes_retained": true,
+  "reason": "Added the four already-listed public evaluator dependency files to the primary files map so the freezer binds their digests through its existing interface. No prior entry or digest changed.",
+  "schema": "semabi.transport.evaluator_inventory_revision.v1"
+}

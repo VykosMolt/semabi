@@ -1,0 +1,32 @@
+{
+  "schema": "semabi.transport.g2_independent_review_execution.v1",
+  "scope": "Reviewer audit development and successful read-only artifact check; no production test, fit or sealer execution.",
+  "command": ["taskset", "-c", "16", "env", "PYTHONHASHSEED=0", "OMP_NUM_THREADS=1", "OPENBLAS_NUM_THREADS=1", "MKL_NUM_THREADS=1", "NUMEXPR_NUM_THREADS=1", "python", "-B", "docs/data/v4/transport/development/g2/review_evidence/integrated_checks_v1.py"],
+  "attempts": [
+    {
+      "ordinal": 1,
+      "returncode": 1,
+      "cause": "The reviewer's opaque-path guard rejected disclosed run_job.py because it is listed in both the verification and opaque inventories, before reading that file.",
+      "correction": "Assert the overlap is exactly run_job.py, verify it as disclosed, and leave all 57 opaque-only paths prohibited. No frozen inventory or expected data digest changed."
+    },
+    {
+      "ordinal": 2,
+      "returncode": 1,
+      "cause": "The reviewer's raw-node check assumed every visible value was node.name; the retained selector is a combobox whose chosen value is node.value.",
+      "correction": "Check selector value and sibling role/parent, and cell names for vessel and length. Also check saved bound identities/scalars. No retained rows, ledgers or expected totals changed."
+    },
+    {
+      "ordinal": 3,
+      "returncode": 0,
+      "status": "PASS",
+      "started_utc": "2026-09-07T20:47:25.454862+00:00",
+      "finished_utc": "2026-09-07T20:47:26.602500+00:00",
+      "completed_session_reaped": true,
+      "script_sha256": "c9ba6bf589a7ebf545cab75c601531df36d9dc6c6f0d43345e12e68e5d1a5f1e",
+      "result_sha256": "7a7a850ecd2876c4ba2dfe95f7229e404b9143846ae43efc015dd535eb8872c9",
+      "review_input_files": 421,
+      "corpora": 5,
+      "jobs": 9
+    }
+  ]
+}

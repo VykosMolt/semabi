@@ -1,0 +1,205 @@
+"""Evaluator/orchestrator freeze for R1; never an acquisition-process helper.
+
+Hashing a sealed file here records its bytes without returning its contents.
+The unchanged collector and scorer open only the resulting runtime `files` map.
+"""
+from __future__ import annotations
+
+import argparse
+from datetime import datetime, timezone
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+
+ROOT = Path(__file__).resolve().parents[5]
+HERE = Path(__file__).resolve().parent
+TRANSPORT = HERE.parent
+G2 = TRANSPORT / "development/g2"
+RAW = TRANSPORT / "first_pass/reservoir"
+G2_FREEZE_SHA = "3f88423e84622313263c097a289fb4c8fddb2a0d8d2d56176186229759848df6"
+SCHEMA = "semabi.transport.reserved_freeze.v1"
+CASES = ("allocation_positive", "allocation_refusals", "pilot", "separating", "separating_extended")
+
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def relative(path):
+    return path.resolve(strict=True).relative_to(ROOT).as_posix()
+
+
+def checked_path(name):
+    if not isinstance(name, str) or not name or Path(name).is_absolute():
+        raise ValueError("Manifest paths must be relative strings")
+    if any(part in ("", ".", "..") for part in name.split("/")):
+        raise ValueError("Noncanonical manifest path")
+    path = ROOT / name
+    if relative(path) != name or not path.is_file():
+        raise ValueError("Manifest path must name its actual repository file")
+    return path
+
+
+def verify_files(files):
+    if not isinstance(files, dict) or not files:
+        raise ValueError("Expected a nonempty file inventory")
+    for name, entry in files.items():
+        path = checked_path(name)
+        expected = entry
+        if isinstance(entry, dict):
+            if set(entry) != {"sha256", "bytes"} or path.stat().st_size != entry["bytes"]:
+                raise ValueError("Invalid preserved file metadata: " + name)
+            expected = entry["sha256"]
+        if not isinstance(expected, str) or sha(path) != expected:
+            raise ValueError("Frozen bytes changed: " + name)
+
+
+def public_inputs():
+    prior_path = G2 / "freeze_v1.json"
+    if sha(prior_path) != G2_FREEZE_SHA:
+        raise ValueError("The authenticated G2 phase freeze changed")
+    prior = json.loads(prior_path.read_text())
+    files = {name: digest for name, digest in prior["files"].items()
+             if not name.startswith("docs/data/v4/transport/first_pass/")}
+    verify_files(files)
+    frozen_compiler = {name for name in files if name.startswith("semabi/compiler/")}
+    actual_compiler = {relative(p) for p in (ROOT / "semabi/compiler").rglob("*.py")}
+    if actual_compiler != frozen_compiler:
+        raise ValueError("The G2 compiler file inventory changed")
+    # The independent G2 result, not a borrowed G1 result, is required first.
+    result_path = G2 / "results_manifest_v1.json"
+    result = json.loads(result_path.read_text())
+    if (result.get("schema") != "semabi.transport.g2_results.v1" or
+            result.get("status") != "PRESERVED" or
+            result.get("source_head") != prior["source_head"] or
+            result.get("freeze_sha256") != G2_FREEZE_SHA or
+            result.get("all_owned_jobs_terminated") is not True):
+        raise ValueError("Preserved G2 results must bind the authenticated G2 source and freeze")
+    verify_files(result["files"])
+    required = {relative(G2 / name) for name in (
+        "freeze_v1.json", "corpus_comparison_v1.json", "integrated_report_v1.md",
+        "integrated_review_v1.md", "preserve_results.py")}
+    for case in CASES:
+        required.update(relative(G2 / "corpora" / case / name) for name in (
+            f"{case}.json", f"{case}_process.json", "source_snapshot.json", "adapter.json"))
+    names = {"full_pytest_v1", "compare_corpora_v1", *("corpus_" + case for case in CASES)}
+    for name in names:
+        path = G2 / "jobs" / name / "process.json"
+        relative_path = relative(path)
+        required.update((relative_path, relative(path.parent / "output.log")))
+        job = json.loads(path.read_text())
+        summary = result.get("jobs", {}).get(name, {})
+        if (summary.get("path") != relative_path or summary.get("sha256") != sha(path) or
+                any(summary.get(key) != value for key, value in (
+                    ("status", "FINISHED"), ("returncode", 0), ("child_terminated", True))) or
+                any(job.get(key) != value for key, value in (
+                    ("status", "FINISHED"), ("returncode", 0), ("child_terminated", True))) or
+                job.get("source_head") != prior["source_head"] or
+                job.get("log_sha256") != sha(path.parent / "output.log")):
+            raise ValueError("Required G2 validation job is not preserved as completed: " + name)
+        for source_name, expected in files.items():
+            if source_name.startswith("semabi/") and job.get("source_hashes", {}).get(source_name) != expected:
+                raise ValueError("G2 validation job source differs: " + name + ":" + source_name)
+    if not required <= set(result["files"]):
+        raise ValueError("G2 result inventory omits required validation or review artifacts")
+    return files, prior, prior_path, result_path
+
+
+def build(stage):
+    output = HERE / ("implementation_freeze_v1.json" if stage == "implementation"
+                     else "campaign_freeze_v1.json")
+    if output.exists():
+        raise FileExistsError("Freeze identities are immutable: " + str(output))
+    files, prior, prior_path, result_path = public_inputs()
+    inventory_path = HERE / "evaluator_audit/sealed_files_manifest_v1.json"
+    inventory = json.loads(inventory_path.read_text())
+    sealed = dict(inventory["files"])
+    # Original generated fixtures remain byte-identical to the reserved T1 set.
+    for name, expected in prior["sealed_evaluator_files"].items():
+        if name.startswith("experiments/transport_v1/"):
+            if name in sealed and sealed[name] != expected:
+                raise ValueError("Evaluator inventory changed a reserved fixture: " + name)
+            sealed[name] = expected
+    verify_files(sealed)
+    verification_paths = [HERE / name for name in (
+        "protocol_v1.md", "freeze.py", "public_review_v1.md",
+        "preserve_first_pass.py", "summarize.py", "custody_plan_v1.md", "custody_review_v1.md",
+        "resource_review_v1.md",
+        "evaluator_audit/public_envelope.md", "evaluator_audit/public_binding_adapter.py",
+        "evaluator_audit/sealed_files_manifest_v1.json")]
+    verification_paths += [TRANSPORT / "run_job.py", TRANSPORT / "controls/binding_fidelity.py",
+                           TRANSPORT / "acquisition_summary.py",
+                           result_path, prior_path, ROOT / "pyproject.toml", ROOT / "pytest.ini"]
+    verification_paths.append(TRANSPORT / "development/g2/resource_override_v2.json")
+    verification = {relative(p): sha(p) for p in verification_paths}
+    head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+    parent_path = HERE / "implementation_freeze_v1.json"
+    parent = None
+    if stage == "campaign":
+        parent_record = json.loads(parent_path.read_text())
+        if (parent_record.get("schema") != SCHEMA or
+                parent_record.get("stage") != "implementation" or
+                parent_record.get("source_head") != head):
+            raise ValueError("Expected this source's R1 implementation freeze")
+        for key, current in (("files", files), ("sealed_evaluator_files", sealed),
+                             ("verification_files", verification)):
+            if parent_record[key] != current:
+                raise ValueError("Implementation commitment changed: " + key)
+        initial_path = RAW / "r1_initial_v1"
+        candidates_path = RAW / "r1_candidates_v1/candidates.json"
+        candidates = json.loads(candidates_path.read_text())
+        if (candidates.get("schema") != "semabi.transport.measurement.v2" or
+                candidates.get("phase") != "initial_candidates" or
+                candidates.get("source", {}).get("git_head") != head or
+                candidates.get("freeze", {}).get("sha256") != sha(parent_path) or
+                candidates.get("train", {}).get("path") != str(initial_path.resolve())):
+            raise ValueError("Candidate preparation does not belong to this R1 initial phase")
+        recognized = candidates["train"]["files"]
+        for name, expected in recognized.items():
+            path = initial_path / name
+            if (expected is None and path.exists()) or (
+                    expected is not None and (not path.is_file() or sha(path) != expected)):
+                raise ValueError("Initial preparation input changed: " + name)
+            if expected is not None and name not in ("steps.jsonl", "observations.jsonl"):
+                raise ValueError("R1 initial evidence must have no learned sidecar: " + name)
+        for name in ("steps.jsonl", "observations.jsonl"):
+            path = initial_path / name
+            if recognized.get(name) != sha(path):
+                raise ValueError("Candidate preparation omitted a raw initial input")
+            files[relative(path)] = sha(path)
+        files[relative(candidates_path)] = sha(candidates_path)
+        parent = {"path": relative(parent_path), "sha256": sha(parent_path)}
+    record = {
+        "schema": SCHEMA, "stage": stage, "created_utc": datetime.now(timezone.utc).isoformat(),
+        "owner": "/root", "working_directory": str(ROOT), "pid": os.getpid(),
+        "source_head": head, "files": files, "sealed_evaluator_files": sealed,
+        "verification_files": verification, "parent": parent,
+        "g2_source": {"path": relative(prior_path), "sha256": sha(prior_path)},
+        "g2_results": {"path": relative(result_path), "sha256": sha(result_path)},
+        "evaluator_inventory": {"path": relative(inventory_path), "sha256": sha(inventory_path)},
+        "resource": {"affinity": sorted(os.sched_getaffinity(0)), "nice": os.getpriority(os.PRIO_PROCESS, 0),
+                     "heavy_workers": 12, "numerical_threads": 1, "python_hash_seed": "0"},
+        "boundary": "Only files is a learner/runtime input inventory. This evaluator-owned "
+                    "process hashes sealed bytes; collection, acquisition and preparation never do.",
+        "exposure": "Root has disclosed T1 development evidence and generic R1 instruments; "
+                    "reserved semantic specifications and evaluation outcomes remain sealed. "
+                    "Initial raw evidence is permitted after the implementation freeze. B1 is excluded.",
+    }
+    with output.open("x") as stream:
+        json.dump(record, stream, indent=2, sort_keys=True)
+        stream.write("\n")
+    print(json.dumps({"path": relative(output), "sha256": sha(output), "stage": stage,
+                      "runtime_files": len(files), "sealed_files": len(sealed)}))
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("stage", choices=("implementation", "campaign"))
+    args = parser.parse_args()
+    build(args.stage)
+
+
+if __name__ == "__main__":
+    main()

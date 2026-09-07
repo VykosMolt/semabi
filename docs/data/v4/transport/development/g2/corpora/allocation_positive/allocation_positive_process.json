@@ -1,0 +1,36 @@
+{
+  "case": "allocation_positive",
+  "owner": "/root/baseline_verification",
+  "pid": 4,
+  "started_utc": "2026-09-07T19:02:43.061744+00:00",
+  "state": "completed",
+  "dev": "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_join_dev",
+  "hold": "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_join_hold",
+  "control": "button:Allocate berth",
+  "command": [
+    "/home/moloch/semabi/.venv/bin/python",
+    "/home/moloch/semabi/docs/data/v4/transport/baseline/check_corpora.py",
+    "allocation_positive"
+  ],
+  "working_directory": "/home/moloch/semabi",
+  "instrument_sha256": "ecfb411df3cc80c00642b6166874a705f4135f8bbf6224d71c45234ee7c0ce0d",
+  "source_snapshot_sha256": "3f88423e84622313263c097a289fb4c8fddb2a0d8d2d56176186229759848df6",
+  "scope": "disclosed retained development regression; no fresh-generalization claim",
+  "fit_boundary": "existing instrument: search on all dev; outcome split 0.999; hold scoring only",
+  "input_files": {
+    "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_join_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+    "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_join_dev/join_merge.json": "e7146eb8fb3c55bca70c480124b44da47bc4e40bd94c1330dc3b56b383ccac76",
+    "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_join_dev/observations.jsonl": "ab978dcd67159af104d82446aafe9219b1519bde0fdbe41499cf0911d32b346c",
+    "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_join_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+    "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_join_dev/steps.jsonl": "1a348f54285fab112a72b8f3b10fb65df20b9f5148951990e54116f1786ad775",
+    "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_join_hold/join_merge.json": "7adb00c840fc06b1a9207001492a07cc4fc4602215236cd87d9bd137b81176fd",
+    "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_join_hold/observations.jsonl": "a6982f61271359ca23e6d29b89732e9e8e538759f86e6149fed44682c3d2672e",
+    "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_join_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+    "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_join_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+    "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_join_hold/steps.jsonl": "f86c6bab02a4dd7c4a2d1470eb1b0e36f95de1698abaad70483b3f79c916aa0d"
+  },
+  "ended_utc": "2026-09-07T19:11:39.107374+00:00",
+  "elapsed_seconds": 536.0411425519997,
+  "result_sha256": "429cb5c1da0735a3440281d20972069f82ebb77591e63a5a661c531d78064a98",
+  "changed_inputs": []
+}
