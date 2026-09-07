@@ -1,0 +1,62 @@
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_future_outcome_cannot_change_the_section_representation_of_a_prefix[FROZEN_PREFIX] _
+
+tmp_path = PosixPath('/home/moloch/semabi/runs/.g2_worktree/docs/data/v4/transport/development/g2/pytest_before/test_future_outcome_cannot_cha0')
+regime = 'FROZEN_PREFIX'
+
+    @pytest.mark.parametrize("regime", ["FROZEN_PREFIX", "CAUSAL_PREQUENTIAL"])
+    def test_future_outcome_cannot_change_the_section_representation_of_a_prefix(tmp_path, regime):
+        from semabi.compiler.v4 import consequence as csq
+    
+        raw = [_section_chronology_log(tmp_path, changed) for changed in (False, True)]
+        assert _section_payload(raw[0].through(1)) == _section_payload(raw[1].through(1))
+        assert _section_payload(raw[0].before_action(1)) == _section_payload(raw[1].before_action(1))
+        models = [csq.fit(log.dir, None, at=1, regime=regime, min_support=1, read_outputs=False)
+                  for log in raw]
+        for model, original in zip(models, raw):
+            assert model.cut == 1
+            _assert_section_coordinates(model.log, original)
+            _assert_section_coordinates(model.evidence, original)
+>       assert _section_payload(models[0].evidence) == _section_payload(models[1].evidence)
+E       AssertionError: assert {'observation...: True, ...}]} == {'observation...: True, ...}]}
+E         
+E         Differing items:
+E         {'observations': {'449a49ca0ec5f6c7': {'url': '', 'nodes': [{'i': 0, 'parent': -1, 'role': 'group', 'name': '', ...}, ...rent': 0, 'role': 'heading', 'name': 'Beta Gamma', ...}, {'i': 4, 'parent': 0, 'role': 'button', 'name': 'Go', ...}]}}} != {'observations': {'547fdeee25e0bb29': {'url': '', 'nodes': [{'i': 0, 'parent': -1, 'role': 'group', 'name': '', ...}, ... 4, 'parent': 6, 'role': 'button', 'name': 'Go', ...}, {'i': 5, 'parent': 0, 'role': 'group', 'name': '', ...}, ...]}}}
+E         {'steps': [{'step': 0, 'episode': 0, 'action': {'kind': 'click', 'target': 2...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show
+
+tests/test_v4_frozen_transform.py:429: AssertionError
+_ test_future_outcome_cannot_change_the_section_representation_of_a_prefix[CAUSAL_PREQUENTIAL] _
+
+tmp_path = PosixPath('/home/moloch/semabi/runs/.g2_worktree/docs/data/v4/transport/development/g2/pytest_before/test_future_outcome_cannot_cha1')
+regime = 'CAUSAL_PREQUENTIAL'
+
+    @pytest.mark.parametrize("regime", ["FROZEN_PREFIX", "CAUSAL_PREQUENTIAL"])
+    def test_future_outcome_cannot_change_the_section_representation_of_a_prefix(tmp_path, regime):
+        from semabi.compiler.v4 import consequence as csq
+    
+        raw = [_section_chronology_log(tmp_path, changed) for changed in (False, True)]
+        assert _section_payload(raw[0].through(1)) == _section_payload(raw[1].through(1))
+        assert _section_payload(raw[0].before_action(1)) == _section_payload(raw[1].before_action(1))
+        models = [csq.fit(log.dir, None, at=1, regime=regime, min_support=1, read_outputs=False)
+                  for log in raw]
+        for model, original in zip(models, raw):
+            assert model.cut == 1
+            _assert_section_coordinates(model.log, original)
+            _assert_section_coordinates(model.evidence, original)
+>       assert _section_payload(models[0].evidence) == _section_payload(models[1].evidence)
+E       AssertionError: assert {'observation...: True, ...}]} == {'observation...: True, ...}]}
+E         
+E         Differing items:
+E         {'observations': {'449a49ca0ec5f6c7': {'url': '', 'nodes': [{'i': 0, 'parent': -1, 'role': 'group', 'name': '', ...}, ...rent': 0, 'role': 'heading', 'name': 'Beta Gamma', ...}, {'i': 4, 'parent': 0, 'role': 'button', 'name': 'Go', ...}]}}} != {'observations': {'547fdeee25e0bb29': {'url': '', 'nodes': [{'i': 0, 'parent': -1, 'role': 'group', 'name': '', ...}, ... 4, 'parent': 6, 'role': 'button', 'name': 'Go', ...}, {'i': 5, 'parent': 0, 'role': 'group', 'name': '', ...}, ...]}}}
+E         {'steps': [{'step': 0, 'episode': 0, 'action': {'kind': 'click', 'target': 2...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show
+
+tests/test_v4_frozen_transform.py:429: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_v4_frozen_transform.py::test_future_outcome_cannot_change_the_section_representation_of_a_prefix[FROZEN_PREFIX]
+FAILED tests/test_v4_frozen_transform.py::test_future_outcome_cannot_change_the_section_representation_of_a_prefix[CAUSAL_PREQUENTIAL]
+2 failed, 2 passed in 0.25s

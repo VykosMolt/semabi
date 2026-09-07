@@ -1,0 +1,108 @@
+diff --git a/semabi/compiler/compile_v4.py b/semabi/compiler/compile_v4.py
+index ae8910a..56e8782 100644
+--- a/semabi/compiler/compile_v4.py
++++ b/semabi/compiler/compile_v4.py
+@@ -45,6 +45,7 @@ def _normalise_sections(log: EvidenceLog, stats_from: EvidenceLog | None = None)
+     probe = ObsGraph()
+     for sig, obs in source.observations.items():
+         probe.add(sig, obs)
++    probe.learning = False
+     for sig, obs in log.observations.items():
+         if sig not in probe.obs:
+             probe.add(sig, obs)      # readable, but contributing no statistics
+diff --git a/tests/test_v4_frozen_transform.py b/tests/test_v4_frozen_transform.py
+index ef4be64..528255c 100644
+--- a/tests/test_v4_frozen_transform.py
++++ b/tests/test_v4_frozen_transform.py
+@@ -375,6 +375,91 @@ def test_fitting_a_reading_leaves_a_model_that_no_longer_learns():
+ 
+ # ------------------------------------------------------------------ the causal frontier
+ 
++def _section_chronology_log(tmp_path, changed_future):
++    from semabi.compiler.browser import Primitive
++    from semabi.compiler.evidence import EvidenceLog
++
++    def section_page(first, second):
++        return Observation([Node(0, -1, "group", ""), Node(1, 0, "heading", first),
++                            Node(2, 0, "button", "Go"), Node(3, 0, "heading", second),
++                            Node(4, 0, "button", "Go")])
++
++    before = section_page("Alpha", "Beta Gamma")
++    future = section_page("Delta", "Epsilon Zeta") if changed_future else before
++    log = EvidenceLog(tmp_path / str(changed_future))
++    action = Primitive("click", 2, target_desc={"role": "button", "name": "Go"})
++    log.add_step(0, action, True, None, before, before)
++    log.add_step(0, action, True, None, before, future)
++    return log
++
++
++def _section_payload(log):
++    return {"observations": {sig: obs.to_json() for sig, obs in log.observations.items()},
++            "steps": [step.to_json() for step in log.steps]}
++
++
++def _assert_section_coordinates(log, raw):
++    for sig, obs in log.observations.items():
++        assert sig == obs.structural_signature()
++    for step in log.steps:
++        original = raw.steps[step.step]
++        assert step.action.to_json() == original.action.to_json()
++        assert step.action.target == 2
++        for side in ("before", "after"):
++            obs = log.obs(getattr(step, side))       # every remapped reference must resolve
++            raw_obs = raw.obs(getattr(original, side))
++            assert [(node.i, node.key()) for node in obs.nodes[:5]] == [
++                (node.i, node.key()) for node in raw_obs.nodes]
++        assert log.obs(step.before).node(2).key() == raw.obs(original.before).node(2).key()
++
++
++@pytest.mark.parametrize("regime", ["FROZEN_PREFIX", "CAUSAL_PREQUENTIAL"])
++def test_future_outcome_cannot_change_the_section_representation_of_a_prefix(tmp_path, regime):
++    from semabi.compiler.v4 import consequence as csq
++
++    raw = [_section_chronology_log(tmp_path, changed) for changed in (False, True)]
++    assert _section_payload(raw[0].through(1)) == _section_payload(raw[1].through(1))
++    assert _section_payload(raw[0].before_action(1)) == _section_payload(raw[1].before_action(1))
++    models = [csq.fit(log.dir, None, at=1, regime=regime, min_support=1, read_outputs=False)
++              for log in raw]
++    for model, original in zip(models, raw):
++        assert model.cut == 1
++        _assert_section_coordinates(model.log, original)
++        _assert_section_coordinates(model.evidence, original)
++    assert _section_payload(models[0].evidence) == _section_payload(models[1].evidence)
++    assert _section_payload(models[0].evidence) == _section_payload(raw[0].through(1))
++    assert _learned_reading(models[0].abstractor) == _learned_reading(models[1].abstractor)
++
++
++@pytest.mark.parametrize("changed_future", [False, True])
++def test_section_normalization_with_all_evidence_preserves_its_exact_output(tmp_path, changed_future):
++    from dataclasses import replace
++
++    from semabi.compiler.compile_v4 import _normalise_sections
++    from semabi.compiler.evidence import EvidenceLog
++
++    raw = _section_chronology_log(tmp_path, changed_future)
++    log = EvidenceLog(raw.dir)
++    # With both pages allowed, the two heading/button spans are established sections.
++    expected_pages = {}
++    for sig, obs in raw.observations.items():
++        nodes = [replace(node, parent=parent) for node, parent in
++                 zip(obs.nodes, [-1, 5, 5, 6, 6])] + [Node(5, 0, "group", ""),
++                                                   Node(6, 0, "group", "")]
++        expected_pages[sig] = Observation(nodes) if changed_future else obs
++    expected = _section_payload(raw)
++    expected["observations"] = {obs.structural_signature(): obs.to_json()
++                                for obs in expected_pages.values()}
++    for step in expected["steps"]:
++        for side in ("before", "after"):
++            step[side] = expected_pages[step[side]].structural_signature()
++
++    _normalise_sections(log, stats_from=None)
++
++    assert _section_payload(log) == expected
++    _assert_section_coordinates(log, raw)
++
++
+ def _run(tmp_path, rows, name="run"):
+     """A run directory with ``rows`` continuous steps, each a distinct observation."""
+     import json

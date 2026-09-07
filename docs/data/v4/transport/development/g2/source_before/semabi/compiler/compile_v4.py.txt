@@ -45,7 +45,6 @@ def _normalise_sections(log: EvidenceLog, stats_from: EvidenceLog | None = None)
     probe = ObsGraph()
     for sig, obs in source.observations.items():
         probe.add(sig, obs)
-    probe.learning = False
     for sig, obs in log.observations.items():
         if sig not in probe.obs:
             probe.add(sig, obs)      # readable, but contributing no statistics
