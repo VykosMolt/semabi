@@ -1,0 +1,350 @@
+{
+  "dispatch": [
+    {
+      "case": "dispatch_01",
+      "family": "cross_object_order",
+      "quantities": {
+        "Cedar run": 6
+      },
+      "capacities": {
+        "Panel van": 9
+      },
+      "clearance": true,
+      "operation": "attempt"
+    },
+    {
+      "case": "dispatch_02",
+      "family": "cross_object_order",
+      "quantities": {
+        "Cedar run": 6
+      },
+      "capacities": {
+        "Panel van": 5
+      },
+      "clearance": true,
+      "operation": "attempt"
+    },
+    {
+      "case": "dispatch_03",
+      "family": "cross_object_order",
+      "quantities": {
+        "Cedar run": 16
+      },
+      "capacities": {
+        "Panel van": 19
+      },
+      "clearance": true,
+      "operation": "attempt"
+    },
+    {
+      "case": "dispatch_04",
+      "family": "cross_object_order",
+      "quantities": {
+        "Cedar run": 16
+      },
+      "capacities": {
+        "Panel van": 12
+      },
+      "clearance": true,
+      "operation": "attempt"
+    },
+    {
+      "case": "dispatch_05",
+      "family": "relevant_quantity_monotonicity",
+      "quantities": {
+        "Cedar run": 8
+      },
+      "capacities": {
+        "Panel van": 9
+      },
+      "clearance": true,
+      "operation": "attempt"
+    },
+    {
+      "case": "dispatch_06",
+      "family": "relevant_quantity_monotonicity",
+      "quantities": {
+        "Cedar run": 19
+      },
+      "capacities": {
+        "Panel van": 19
+      },
+      "clearance": true,
+      "operation": "attempt"
+    },
+    {
+      "case": "dispatch_07",
+      "family": "relevant_quantity_monotonicity",
+      "quantities": {
+        "Cedar run": 19.5
+      },
+      "capacities": {
+        "Panel van": 19
+      },
+      "clearance": true,
+      "operation": "attempt"
+    },
+    {
+      "case": "dispatch_08",
+      "family": "relevant_quantity_monotonicity",
+      "quantities": {
+        "Cedar run": 8
+      },
+      "capacities": {
+        "Panel van": 7
+      },
+      "clearance": true,
+      "operation": "attempt"
+    },
+    {
+      "case": "dispatch_opaque_01",
+      "family": "restricted_observability_ambiguity",
+      "quantities": {
+        "Cedar run": 9
+      },
+      "capacities": {
+        "Panel van": 17
+      },
+      "clearance": false,
+      "operation": "review",
+      "indistinguishable_pair": "dispatch_opaque"
+    },
+    {
+      "case": "dispatch_opaque_02",
+      "family": "restricted_observability_ambiguity",
+      "quantities": {
+        "Cedar run": 9
+      },
+      "capacities": {
+        "Panel van": 17
+      },
+      "clearance": true,
+      "operation": "review",
+      "indistinguishable_pair": "dispatch_opaque"
+    }
+  ],
+  "workshop": [
+    {
+      "case": "workshop_01",
+      "family": "cross_object_order",
+      "quantities": {
+        "Reed frame": 7
+      },
+      "capacities": {
+        "Standard station": 11
+      },
+      "clearance": true,
+      "operation": "attempt"
+    },
+    {
+      "case": "workshop_02",
+      "family": "cross_object_order",
+      "quantities": {
+        "Reed frame": 7
+      },
+      "capacities": {
+        "Standard station": 6
+      },
+      "clearance": true,
+      "operation": "attempt"
+    },
+    {
+      "case": "workshop_03",
+      "family": "cross_object_order",
+      "quantities": {
+        "Reed frame": 22
+      },
+      "capacities": {
+        "Standard station": 25
+      },
+      "clearance": true,
+      "operation": "attempt"
+    },
+    {
+      "case": "workshop_04",
+      "family": "cross_object_order",
+      "quantities": {
+        "Reed frame": 22
+      },
+      "capacities": {
+        "Standard station": 19
+      },
+      "clearance": true,
+      "operation": "attempt"
+    },
+    {
+      "case": "workshop_05",
+      "family": "relevant_quantity_monotonicity",
+      "quantities": {
+        "Reed frame": 11
+      },
+      "capacities": {
+        "Standard station": 11
+      },
+      "clearance": true,
+      "operation": "attempt"
+    },
+    {
+      "case": "workshop_06",
+      "family": "relevant_quantity_monotonicity",
+      "quantities": {
+        "Reed frame": 11.5
+      },
+      "capacities": {
+        "Standard station": 11
+      },
+      "clearance": true,
+      "operation": "attempt"
+    },
+    {
+      "case": "workshop_opaque_01",
+      "family": "restricted_observability_ambiguity",
+      "quantities": {
+        "Reed frame": 9
+      },
+      "capacities": {
+        "Standard station": 17
+      },
+      "clearance": false,
+      "operation": "review",
+      "indistinguishable_pair": "workshop_opaque"
+    },
+    {
+      "case": "workshop_opaque_02",
+      "family": "restricted_observability_ambiguity",
+      "quantities": {
+        "Reed frame": 9
+      },
+      "capacities": {
+        "Standard station": 17
+      },
+      "clearance": true,
+      "operation": "review",
+      "indistinguishable_pair": "workshop_opaque"
+    }
+  ],
+  "reservoir": [
+    {
+      "case": "reservoir_01",
+      "family": "cross_object_order",
+      "quantities": {
+        "Orchard watering": 8
+      },
+      "capacities": {
+        "Slate cistern": 12
+      },
+      "clearance": true,
+      "operation": "attempt"
+    },
+    {
+      "case": "reservoir_02",
+      "family": "cross_object_order",
+      "quantities": {
+        "Orchard watering": 8
+      },
+      "capacities": {
+        "Slate cistern": 7
+      },
+      "clearance": true,
+      "operation": "attempt"
+    },
+    {
+      "case": "reservoir_03",
+      "family": "cross_object_order",
+      "quantities": {
+        "Orchard watering": 24
+      },
+      "capacities": {
+        "Slate cistern": 28
+      },
+      "clearance": true,
+      "operation": "attempt"
+    },
+    {
+      "case": "reservoir_04",
+      "family": "cross_object_order",
+      "quantities": {
+        "Orchard watering": 24
+      },
+      "capacities": {
+        "Slate cistern": 21
+      },
+      "clearance": true,
+      "operation": "attempt"
+    },
+    {
+      "case": "reservoir_05",
+      "family": "relevant_quantity_monotonicity",
+      "quantities": {
+        "Orchard watering": 10
+      },
+      "capacities": {
+        "Slate cistern": 12
+      },
+      "clearance": true,
+      "operation": "attempt"
+    },
+    {
+      "case": "reservoir_06",
+      "family": "relevant_quantity_monotonicity",
+      "quantities": {
+        "Orchard watering": 12
+      },
+      "capacities": {
+        "Slate cistern": 12
+      },
+      "clearance": true,
+      "operation": "attempt"
+    },
+    {
+      "case": "reservoir_07",
+      "family": "relevant_quantity_monotonicity",
+      "quantities": {
+        "Orchard watering": 12.5
+      },
+      "capacities": {
+        "Slate cistern": 12
+      },
+      "clearance": true,
+      "operation": "attempt"
+    },
+    {
+      "case": "reservoir_08",
+      "family": "relevant_quantity_monotonicity",
+      "quantities": {
+        "Orchard watering": 10
+      },
+      "capacities": {
+        "Slate cistern": 9
+      },
+      "clearance": true,
+      "operation": "attempt"
+    },
+    {
+      "case": "reservoir_opaque_01",
+      "family": "restricted_observability_ambiguity",
+      "quantities": {
+        "Orchard watering": 9
+      },
+      "capacities": {
+        "Slate cistern": 17
+      },
+      "clearance": false,
+      "operation": "review",
+      "indistinguishable_pair": "reservoir_opaque"
+    },
+    {
+      "case": "reservoir_opaque_02",
+      "family": "restricted_observability_ambiguity",
+      "quantities": {
+        "Orchard watering": 9
+      },
+      "capacities": {
+        "Slate cistern": 17
+      },
+      "clearance": true,
+      "operation": "review",
+      "indistinguishable_pair": "reservoir_opaque"
+    }
+  ]
+}

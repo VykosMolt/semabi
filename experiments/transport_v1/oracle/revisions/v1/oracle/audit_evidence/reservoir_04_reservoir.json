@@ -1,0 +1,1439 @@
+[
+  {
+    "action": {
+      "kind": "click",
+      "role": "button",
+      "name": "Continue to water sources",
+      "exact": true
+    },
+    "before": {
+      "url": "http://127.0.0.1:36223/reservoir",
+      "nodes": [
+        {
+          "i": 0,
+          "parent": -1,
+          "role": "group",
+          "name": "",
+          "bbox": [
+            0,
+            0,
+            1400,
+            353
+          ]
+        },
+        {
+          "i": 1,
+          "parent": 0,
+          "role": "group",
+          "name": "",
+          "bbox": [
+            164,
+            0,
+            1072,
+            353
+          ]
+        },
+        {
+          "i": 2,
+          "parent": 1,
+          "role": "text",
+          "name": "Watering request \u00b7 Step 1 of 3",
+          "bbox": [
+            200,
+            51,
+            1000,
+            20
+          ]
+        },
+        {
+          "i": 3,
+          "parent": 1,
+          "role": "heading",
+          "name": "Orchard watering",
+          "bbox": [
+            200,
+            94,
+            1000,
+            46
+          ]
+        },
+        {
+          "i": 4,
+          "parent": 1,
+          "role": "text",
+          "name": "West orchard",
+          "bbox": [
+            200,
+            163,
+            1000,
+            23
+          ]
+        },
+        {
+          "i": 5,
+          "parent": 1,
+          "role": "text",
+          "name": "Water requested (L)",
+          "bbox": [
+            200,
+            203,
+            1000,
+            59
+          ]
+        },
+        {
+          "i": 6,
+          "parent": 5,
+          "role": "textbox",
+          "name": "Water requested (L)",
+          "value": "24",
+          "bbox": [
+            365,
+            211,
+            268,
+            43
+          ]
+        },
+        {
+          "i": 7,
+          "parent": 1,
+          "role": "button",
+          "name": "Continue to water sources",
+          "bbox": [
+            200,
+            268,
+            240,
+            43
+          ]
+        }
+      ]
+    },
+    "after": {
+      "url": "http://127.0.0.1:36223/reservoir",
+      "nodes": [
+        {
+          "i": 0,
+          "parent": -1,
+          "role": "group",
+          "name": "",
+          "bbox": [
+            0,
+            0,
+            1400,
+            421
+          ]
+        },
+        {
+          "i": 1,
+          "parent": 0,
+          "role": "group",
+          "name": "",
+          "bbox": [
+            164,
+            0,
+            1072,
+            421
+          ]
+        },
+        {
+          "i": 2,
+          "parent": 1,
+          "role": "text",
+          "name": "Watering request \u00b7 Step 2 of 3",
+          "bbox": [
+            200,
+            51,
+            1000,
+            20
+          ]
+        },
+        {
+          "i": 3,
+          "parent": 1,
+          "role": "heading",
+          "name": "Choose a water source",
+          "bbox": [
+            200,
+            94,
+            1000,
+            46
+          ]
+        },
+        {
+          "i": 4,
+          "parent": 1,
+          "role": "group",
+          "name": "",
+          "bbox": [
+            200,
+            163,
+            1000,
+            151
+          ]
+        },
+        {
+          "i": 5,
+          "parent": 4,
+          "role": "group",
+          "name": "Stored water",
+          "bbox": [
+            221,
+            163,
+            107,
+            23
+          ]
+        },
+        {
+          "i": 6,
+          "parent": 4,
+          "role": "text",
+          "name": "Copper cistern \u2014 Water available: 11 L",
+          "bbox": [
+            221,
+            206,
+            958,
+            29
+          ]
+        },
+        {
+          "i": 7,
+          "parent": 6,
+          "role": "radio",
+          "name": "Use Copper cistern",
+          "checked": false,
+          "bbox": [
+            229,
+            214,
+            13,
+            13
+          ]
+        },
+        {
+          "i": 8,
+          "parent": 4,
+          "role": "text",
+          "name": "Slate cistern \u2014 Water available: 21 L",
+          "bbox": [
+            221,
+            235,
+            958,
+            29
+          ]
+        },
+        {
+          "i": 9,
+          "parent": 8,
+          "role": "radio",
+          "name": "Use Slate cistern",
+          "checked": false,
+          "bbox": [
+            229,
+            243,
+            13,
+            13
+          ]
+        },
+        {
+          "i": 10,
+          "parent": 4,
+          "role": "text",
+          "name": "Stone cistern \u2014 Water available: 31 L",
+          "bbox": [
+            221,
+            264,
+            958,
+            29
+          ]
+        },
+        {
+          "i": 11,
+          "parent": 10,
+          "role": "radio",
+          "name": "Use Stone cistern",
+          "checked": false,
+          "bbox": [
+            229,
+            272,
+            13,
+            13
+          ]
+        },
+        {
+          "i": 12,
+          "parent": 1,
+          "role": "button",
+          "name": "Review watering request",
+          "bbox": [
+            200,
+            336,
+            226,
+            43
+          ]
+        }
+      ]
+    },
+    "oracle_expected": null,
+    "native_role_translation": false
+  },
+  {
+    "action": {
+      "kind": "click",
+      "role": "radio",
+      "name": "Use Slate cistern",
+      "exact": true
+    },
+    "before": {
+      "url": "http://127.0.0.1:36223/reservoir",
+      "nodes": [
+        {
+          "i": 0,
+          "parent": -1,
+          "role": "group",
+          "name": "",
+          "bbox": [
+            0,
+            0,
+            1400,
+            421
+          ]
+        },
+        {
+          "i": 1,
+          "parent": 0,
+          "role": "group",
+          "name": "",
+          "bbox": [
+            164,
+            0,
+            1072,
+            421
+          ]
+        },
+        {
+          "i": 2,
+          "parent": 1,
+          "role": "text",
+          "name": "Watering request \u00b7 Step 2 of 3",
+          "bbox": [
+            200,
+            51,
+            1000,
+            20
+          ]
+        },
+        {
+          "i": 3,
+          "parent": 1,
+          "role": "heading",
+          "name": "Choose a water source",
+          "bbox": [
+            200,
+            94,
+            1000,
+            46
+          ]
+        },
+        {
+          "i": 4,
+          "parent": 1,
+          "role": "group",
+          "name": "",
+          "bbox": [
+            200,
+            163,
+            1000,
+            151
+          ]
+        },
+        {
+          "i": 5,
+          "parent": 4,
+          "role": "group",
+          "name": "Stored water",
+          "bbox": [
+            221,
+            163,
+            107,
+            23
+          ]
+        },
+        {
+          "i": 6,
+          "parent": 4,
+          "role": "text",
+          "name": "Copper cistern \u2014 Water available: 11 L",
+          "bbox": [
+            221,
+            206,
+            958,
+            29
+          ]
+        },
+        {
+          "i": 7,
+          "parent": 6,
+          "role": "radio",
+          "name": "Use Copper cistern",
+          "checked": false,
+          "bbox": [
+            229,
+            214,
+            13,
+            13
+          ]
+        },
+        {
+          "i": 8,
+          "parent": 4,
+          "role": "text",
+          "name": "Slate cistern \u2014 Water available: 21 L",
+          "bbox": [
+            221,
+            235,
+            958,
+            29
+          ]
+        },
+        {
+          "i": 9,
+          "parent": 8,
+          "role": "radio",
+          "name": "Use Slate cistern",
+          "checked": false,
+          "bbox": [
+            229,
+            243,
+            13,
+            13
+          ]
+        },
+        {
+          "i": 10,
+          "parent": 4,
+          "role": "text",
+          "name": "Stone cistern \u2014 Water available: 31 L",
+          "bbox": [
+            221,
+            264,
+            958,
+            29
+          ]
+        },
+        {
+          "i": 11,
+          "parent": 10,
+          "role": "radio",
+          "name": "Use Stone cistern",
+          "checked": false,
+          "bbox": [
+            229,
+            272,
+            13,
+            13
+          ]
+        },
+        {
+          "i": 12,
+          "parent": 1,
+          "role": "button",
+          "name": "Review watering request",
+          "bbox": [
+            200,
+            336,
+            226,
+            43
+          ]
+        }
+      ]
+    },
+    "after": {
+      "url": "http://127.0.0.1:36223/reservoir",
+      "nodes": [
+        {
+          "i": 0,
+          "parent": -1,
+          "role": "group",
+          "name": "",
+          "bbox": [
+            0,
+            0,
+            1400,
+            421
+          ]
+        },
+        {
+          "i": 1,
+          "parent": 0,
+          "role": "group",
+          "name": "",
+          "bbox": [
+            164,
+            0,
+            1072,
+            421
+          ]
+        },
+        {
+          "i": 2,
+          "parent": 1,
+          "role": "text",
+          "name": "Watering request \u00b7 Step 2 of 3",
+          "bbox": [
+            200,
+            51,
+            1000,
+            20
+          ]
+        },
+        {
+          "i": 3,
+          "parent": 1,
+          "role": "heading",
+          "name": "Choose a water source",
+          "bbox": [
+            200,
+            94,
+            1000,
+            46
+          ]
+        },
+        {
+          "i": 4,
+          "parent": 1,
+          "role": "group",
+          "name": "",
+          "bbox": [
+            200,
+            163,
+            1000,
+            151
+          ]
+        },
+        {
+          "i": 5,
+          "parent": 4,
+          "role": "group",
+          "name": "Stored water",
+          "bbox": [
+            221,
+            163,
+            107,
+            23
+          ]
+        },
+        {
+          "i": 6,
+          "parent": 4,
+          "role": "text",
+          "name": "Copper cistern \u2014 Water available: 11 L",
+          "bbox": [
+            221,
+            206,
+            958,
+            29
+          ]
+        },
+        {
+          "i": 7,
+          "parent": 6,
+          "role": "radio",
+          "name": "Use Copper cistern",
+          "checked": false,
+          "bbox": [
+            229,
+            214,
+            13,
+            13
+          ]
+        },
+        {
+          "i": 8,
+          "parent": 4,
+          "role": "text",
+          "name": "Slate cistern \u2014 Water available: 21 L",
+          "bbox": [
+            221,
+            235,
+            958,
+            29
+          ]
+        },
+        {
+          "i": 9,
+          "parent": 8,
+          "role": "radio",
+          "name": "Use Slate cistern",
+          "checked": true,
+          "bbox": [
+            229,
+            243,
+            13,
+            13
+          ]
+        },
+        {
+          "i": 10,
+          "parent": 4,
+          "role": "text",
+          "name": "Stone cistern \u2014 Water available: 31 L",
+          "bbox": [
+            221,
+            264,
+            958,
+            29
+          ]
+        },
+        {
+          "i": 11,
+          "parent": 10,
+          "role": "radio",
+          "name": "Use Stone cistern",
+          "checked": false,
+          "bbox": [
+            229,
+            272,
+            13,
+            13
+          ]
+        },
+        {
+          "i": 12,
+          "parent": 1,
+          "role": "button",
+          "name": "Review watering request",
+          "bbox": [
+            200,
+            336,
+            226,
+            43
+          ]
+        }
+      ]
+    },
+    "oracle_expected": null,
+    "native_role_translation": false
+  },
+  {
+    "action": {
+      "kind": "click",
+      "role": "button",
+      "name": "Review watering request",
+      "exact": true
+    },
+    "before": {
+      "url": "http://127.0.0.1:36223/reservoir",
+      "nodes": [
+        {
+          "i": 0,
+          "parent": -1,
+          "role": "group",
+          "name": "",
+          "bbox": [
+            0,
+            0,
+            1400,
+            421
+          ]
+        },
+        {
+          "i": 1,
+          "parent": 0,
+          "role": "group",
+          "name": "",
+          "bbox": [
+            164,
+            0,
+            1072,
+            421
+          ]
+        },
+        {
+          "i": 2,
+          "parent": 1,
+          "role": "text",
+          "name": "Watering request \u00b7 Step 2 of 3",
+          "bbox": [
+            200,
+            51,
+            1000,
+            20
+          ]
+        },
+        {
+          "i": 3,
+          "parent": 1,
+          "role": "heading",
+          "name": "Choose a water source",
+          "bbox": [
+            200,
+            94,
+            1000,
+            46
+          ]
+        },
+        {
+          "i": 4,
+          "parent": 1,
+          "role": "group",
+          "name": "",
+          "bbox": [
+            200,
+            163,
+            1000,
+            151
+          ]
+        },
+        {
+          "i": 5,
+          "parent": 4,
+          "role": "group",
+          "name": "Stored water",
+          "bbox": [
+            221,
+            163,
+            107,
+            23
+          ]
+        },
+        {
+          "i": 6,
+          "parent": 4,
+          "role": "text",
+          "name": "Copper cistern \u2014 Water available: 11 L",
+          "bbox": [
+            221,
+            206,
+            958,
+            29
+          ]
+        },
+        {
+          "i": 7,
+          "parent": 6,
+          "role": "radio",
+          "name": "Use Copper cistern",
+          "checked": false,
+          "bbox": [
+            229,
+            214,
+            13,
+            13
+          ]
+        },
+        {
+          "i": 8,
+          "parent": 4,
+          "role": "text",
+          "name": "Slate cistern \u2014 Water available: 21 L",
+          "bbox": [
+            221,
+            235,
+            958,
+            29
+          ]
+        },
+        {
+          "i": 9,
+          "parent": 8,
+          "role": "radio",
+          "name": "Use Slate cistern",
+          "checked": true,
+          "bbox": [
+            229,
+            243,
+            13,
+            13
+          ]
+        },
+        {
+          "i": 10,
+          "parent": 4,
+          "role": "text",
+          "name": "Stone cistern \u2014 Water available: 31 L",
+          "bbox": [
+            221,
+            264,
+            958,
+            29
+          ]
+        },
+        {
+          "i": 11,
+          "parent": 10,
+          "role": "radio",
+          "name": "Use Stone cistern",
+          "checked": false,
+          "bbox": [
+            229,
+            272,
+            13,
+            13
+          ]
+        },
+        {
+          "i": 12,
+          "parent": 1,
+          "role": "button",
+          "name": "Review watering request",
+          "bbox": [
+            200,
+            336,
+            226,
+            43
+          ]
+        }
+      ]
+    },
+    "after": {
+      "url": "http://127.0.0.1:36223/reservoir",
+      "nodes": [
+        {
+          "i": 0,
+          "parent": -1,
+          "role": "group",
+          "name": "",
+          "bbox": [
+            0,
+            0,
+            1400,
+            554
+          ]
+        },
+        {
+          "i": 1,
+          "parent": 0,
+          "role": "group",
+          "name": "",
+          "bbox": [
+            164,
+            0,
+            1072,
+            554
+          ]
+        },
+        {
+          "i": 2,
+          "parent": 1,
+          "role": "text",
+          "name": "Watering request \u00b7 Step 3 of 3",
+          "bbox": [
+            200,
+            51,
+            1000,
+            20
+          ]
+        },
+        {
+          "i": 3,
+          "parent": 1,
+          "role": "heading",
+          "name": "Review watering request",
+          "bbox": [
+            200,
+            94,
+            1000,
+            46
+          ]
+        },
+        {
+          "i": 4,
+          "parent": 1,
+          "role": "group",
+          "name": "",
+          "bbox": [
+            200,
+            163,
+            1000,
+            89
+          ]
+        },
+        {
+          "i": 5,
+          "parent": 4,
+          "role": "group",
+          "name": "Water requested",
+          "bbox": [
+            200,
+            163,
+            160,
+            23
+          ]
+        },
+        {
+          "i": 6,
+          "parent": 4,
+          "role": "group",
+          "name": "24 L",
+          "bbox": [
+            370,
+            163,
+            830,
+            23
+          ]
+        },
+        {
+          "i": 7,
+          "parent": 4,
+          "role": "group",
+          "name": "Water source",
+          "bbox": [
+            200,
+            196,
+            160,
+            23
+          ]
+        },
+        {
+          "i": 8,
+          "parent": 4,
+          "role": "group",
+          "name": "Slate cistern",
+          "bbox": [
+            370,
+            196,
+            830,
+            23
+          ]
+        },
+        {
+          "i": 9,
+          "parent": 4,
+          "role": "group",
+          "name": "Water available",
+          "bbox": [
+            200,
+            229,
+            160,
+            23
+          ]
+        },
+        {
+          "i": 10,
+          "parent": 4,
+          "role": "group",
+          "name": "21 L",
+          "bbox": [
+            370,
+            229,
+            830,
+            23
+          ]
+        },
+        {
+          "i": 11,
+          "parent": 1,
+          "role": "button",
+          "name": "Edit watering request",
+          "bbox": [
+            200,
+            275,
+            201,
+            43
+          ]
+        },
+        {
+          "i": 12,
+          "parent": 1,
+          "role": "button",
+          "name": "Schedule watering",
+          "bbox": [
+            409,
+            275,
+            178,
+            43
+          ]
+        },
+        {
+          "i": 13,
+          "parent": 1,
+          "role": "group",
+          "name": "",
+          "bbox": [
+            200,
+            348,
+            1000,
+            146
+          ]
+        },
+        {
+          "i": 14,
+          "parent": 13,
+          "role": "heading",
+          "name": "Water access review",
+          "bbox": [
+            220,
+            348,
+            980,
+            32
+          ]
+        },
+        {
+          "i": 15,
+          "parent": 13,
+          "role": "text",
+          "name": "Access records are unavailable in this workspace.",
+          "bbox": [
+            220,
+            399,
+            980,
+            23
+          ]
+        },
+        {
+          "i": 16,
+          "parent": 13,
+          "role": "button",
+          "name": "Review water access",
+          "bbox": [
+            220,
+            445,
+            192,
+            43
+          ]
+        }
+      ]
+    },
+    "oracle_expected": null,
+    "native_role_translation": false
+  },
+  {
+    "action": {
+      "kind": "click",
+      "role": "button",
+      "name": "Schedule watering",
+      "exact": true
+    },
+    "before": {
+      "url": "http://127.0.0.1:36223/reservoir",
+      "nodes": [
+        {
+          "i": 0,
+          "parent": -1,
+          "role": "group",
+          "name": "",
+          "bbox": [
+            0,
+            0,
+            1400,
+            554
+          ]
+        },
+        {
+          "i": 1,
+          "parent": 0,
+          "role": "group",
+          "name": "",
+          "bbox": [
+            164,
+            0,
+            1072,
+            554
+          ]
+        },
+        {
+          "i": 2,
+          "parent": 1,
+          "role": "text",
+          "name": "Watering request \u00b7 Step 3 of 3",
+          "bbox": [
+            200,
+            51,
+            1000,
+            20
+          ]
+        },
+        {
+          "i": 3,
+          "parent": 1,
+          "role": "heading",
+          "name": "Review watering request",
+          "bbox": [
+            200,
+            94,
+            1000,
+            46
+          ]
+        },
+        {
+          "i": 4,
+          "parent": 1,
+          "role": "group",
+          "name": "",
+          "bbox": [
+            200,
+            163,
+            1000,
+            89
+          ]
+        },
+        {
+          "i": 5,
+          "parent": 4,
+          "role": "group",
+          "name": "Water requested",
+          "bbox": [
+            200,
+            163,
+            160,
+            23
+          ]
+        },
+        {
+          "i": 6,
+          "parent": 4,
+          "role": "group",
+          "name": "24 L",
+          "bbox": [
+            370,
+            163,
+            830,
+            23
+          ]
+        },
+        {
+          "i": 7,
+          "parent": 4,
+          "role": "group",
+          "name": "Water source",
+          "bbox": [
+            200,
+            196,
+            160,
+            23
+          ]
+        },
+        {
+          "i": 8,
+          "parent": 4,
+          "role": "group",
+          "name": "Slate cistern",
+          "bbox": [
+            370,
+            196,
+            830,
+            23
+          ]
+        },
+        {
+          "i": 9,
+          "parent": 4,
+          "role": "group",
+          "name": "Water available",
+          "bbox": [
+            200,
+            229,
+            160,
+            23
+          ]
+        },
+        {
+          "i": 10,
+          "parent": 4,
+          "role": "group",
+          "name": "21 L",
+          "bbox": [
+            370,
+            229,
+            830,
+            23
+          ]
+        },
+        {
+          "i": 11,
+          "parent": 1,
+          "role": "button",
+          "name": "Edit watering request",
+          "bbox": [
+            200,
+            275,
+            201,
+            43
+          ]
+        },
+        {
+          "i": 12,
+          "parent": 1,
+          "role": "button",
+          "name": "Schedule watering",
+          "bbox": [
+            409,
+            275,
+            178,
+            43
+          ]
+        },
+        {
+          "i": 13,
+          "parent": 1,
+          "role": "group",
+          "name": "",
+          "bbox": [
+            200,
+            348,
+            1000,
+            146
+          ]
+        },
+        {
+          "i": 14,
+          "parent": 13,
+          "role": "heading",
+          "name": "Water access review",
+          "bbox": [
+            220,
+            348,
+            980,
+            32
+          ]
+        },
+        {
+          "i": 15,
+          "parent": 13,
+          "role": "text",
+          "name": "Access records are unavailable in this workspace.",
+          "bbox": [
+            220,
+            399,
+            980,
+            23
+          ]
+        },
+        {
+          "i": 16,
+          "parent": 13,
+          "role": "button",
+          "name": "Review water access",
+          "bbox": [
+            220,
+            445,
+            192,
+            43
+          ]
+        }
+      ]
+    },
+    "after": {
+      "url": "http://127.0.0.1:36223/reservoir",
+      "nodes": [
+        {
+          "i": 0,
+          "parent": -1,
+          "role": "group",
+          "name": "",
+          "bbox": [
+            0,
+            0,
+            1400,
+            618
+          ]
+        },
+        {
+          "i": 1,
+          "parent": 0,
+          "role": "group",
+          "name": "",
+          "bbox": [
+            164,
+            0,
+            1072,
+            618
+          ]
+        },
+        {
+          "i": 2,
+          "parent": 1,
+          "role": "text",
+          "name": "Watering request \u00b7 Step 3 of 3",
+          "bbox": [
+            200,
+            51,
+            1000,
+            20
+          ]
+        },
+        {
+          "i": 3,
+          "parent": 1,
+          "role": "heading",
+          "name": "Review watering request",
+          "bbox": [
+            200,
+            94,
+            1000,
+            46
+          ]
+        },
+        {
+          "i": 4,
+          "parent": 1,
+          "role": "group",
+          "name": "",
+          "bbox": [
+            200,
+            163,
+            1000,
+            89
+          ]
+        },
+        {
+          "i": 5,
+          "parent": 4,
+          "role": "group",
+          "name": "Water requested",
+          "bbox": [
+            200,
+            163,
+            160,
+            23
+          ]
+        },
+        {
+          "i": 6,
+          "parent": 4,
+          "role": "group",
+          "name": "24 L",
+          "bbox": [
+            370,
+            163,
+            830,
+            23
+          ]
+        },
+        {
+          "i": 7,
+          "parent": 4,
+          "role": "group",
+          "name": "Water source",
+          "bbox": [
+            200,
+            196,
+            160,
+            23
+          ]
+        },
+        {
+          "i": 8,
+          "parent": 4,
+          "role": "group",
+          "name": "Slate cistern",
+          "bbox": [
+            370,
+            196,
+            830,
+            23
+          ]
+        },
+        {
+          "i": 9,
+          "parent": 4,
+          "role": "group",
+          "name": "Water available",
+          "bbox": [
+            200,
+            229,
+            160,
+            23
+          ]
+        },
+        {
+          "i": 10,
+          "parent": 4,
+          "role": "group",
+          "name": "21 L",
+          "bbox": [
+            370,
+            229,
+            830,
+            23
+          ]
+        },
+        {
+          "i": 11,
+          "parent": 1,
+          "role": "button",
+          "name": "Edit watering request",
+          "bbox": [
+            200,
+            275,
+            201,
+            43
+          ]
+        },
+        {
+          "i": 12,
+          "parent": 1,
+          "role": "button",
+          "name": "Schedule watering",
+          "bbox": [
+            409,
+            275,
+            178,
+            43
+          ]
+        },
+        {
+          "i": 13,
+          "parent": 1,
+          "role": "status",
+          "name": "Watering cannot start",
+          "bbox": [
+            200,
+            341,
+            1000,
+            47
+          ]
+        },
+        {
+          "i": 14,
+          "parent": 1,
+          "role": "group",
+          "name": "",
+          "bbox": [
+            200,
+            412,
+            1000,
+            146
+          ]
+        },
+        {
+          "i": 15,
+          "parent": 14,
+          "role": "heading",
+          "name": "Water access review",
+          "bbox": [
+            220,
+            412,
+            980,
+            32
+          ]
+        },
+        {
+          "i": 16,
+          "parent": 14,
+          "role": "text",
+          "name": "Access records are unavailable in this workspace.",
+          "bbox": [
+            220,
+            463,
+            980,
+            23
+          ]
+        },
+        {
+          "i": 17,
+          "parent": 14,
+          "role": "button",
+          "name": "Review water access",
+          "bbox": [
+            220,
+            509,
+            192,
+            43
+          ]
+        }
+      ]
+    },
+    "oracle_expected": "Watering cannot start",
+    "native_role_translation": false
+  }
+]

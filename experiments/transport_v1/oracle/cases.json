@@ -1,0 +1,350 @@
+{
+  "dispatch": [
+    {
+      "case": "dispatch_01",
+      "family": "cross_object_order",
+      "quantities": {
+        "Cedar run": 6
+      },
+      "capacities": {
+        "Panel van": 9
+      },
+      "operation": "attempt",
+      "review_rule": "relation"
+    },
+    {
+      "case": "dispatch_02",
+      "family": "cross_object_order",
+      "quantities": {
+        "Cedar run": 6
+      },
+      "capacities": {
+        "Panel van": 5
+      },
+      "operation": "attempt",
+      "review_rule": "relation"
+    },
+    {
+      "case": "dispatch_03",
+      "family": "cross_object_order",
+      "quantities": {
+        "Cedar run": 16
+      },
+      "capacities": {
+        "Panel van": 19
+      },
+      "operation": "attempt",
+      "review_rule": "relation"
+    },
+    {
+      "case": "dispatch_04",
+      "family": "cross_object_order",
+      "quantities": {
+        "Cedar run": 16
+      },
+      "capacities": {
+        "Panel van": 12
+      },
+      "operation": "attempt",
+      "review_rule": "relation"
+    },
+    {
+      "case": "dispatch_05",
+      "family": "relevant_quantity_monotonicity",
+      "quantities": {
+        "Cedar run": 8
+      },
+      "capacities": {
+        "Panel van": 9
+      },
+      "operation": "attempt",
+      "review_rule": "relation"
+    },
+    {
+      "case": "dispatch_06",
+      "family": "relevant_quantity_monotonicity",
+      "quantities": {
+        "Cedar run": 19
+      },
+      "capacities": {
+        "Panel van": 19
+      },
+      "operation": "attempt",
+      "review_rule": "relation"
+    },
+    {
+      "case": "dispatch_07",
+      "family": "relevant_quantity_monotonicity",
+      "quantities": {
+        "Cedar run": 19.5
+      },
+      "capacities": {
+        "Panel van": 19
+      },
+      "operation": "attempt",
+      "review_rule": "relation"
+    },
+    {
+      "case": "dispatch_08",
+      "family": "relevant_quantity_monotonicity",
+      "quantities": {
+        "Cedar run": 8
+      },
+      "capacities": {
+        "Panel van": 7
+      },
+      "operation": "attempt",
+      "review_rule": "relation"
+    },
+    {
+      "case": "dispatch_opaque_01",
+      "family": "restricted_observability_ambiguity",
+      "quantities": {
+        "Cedar run": 9
+      },
+      "capacities": {
+        "Panel van": 17
+      },
+      "operation": "review",
+      "indistinguishable_pair": "dispatch_opaque",
+      "review_rule": "relation"
+    },
+    {
+      "case": "dispatch_opaque_02",
+      "family": "restricted_observability_ambiguity",
+      "quantities": {
+        "Cedar run": 9
+      },
+      "capacities": {
+        "Panel van": 17
+      },
+      "operation": "review",
+      "indistinguishable_pair": "dispatch_opaque",
+      "review_rule": "conjunction"
+    }
+  ],
+  "workshop": [
+    {
+      "case": "workshop_01",
+      "family": "cross_object_order",
+      "quantities": {
+        "Reed frame": 7
+      },
+      "capacities": {
+        "Standard station": 11
+      },
+      "operation": "attempt",
+      "review_rule": "relation"
+    },
+    {
+      "case": "workshop_02",
+      "family": "cross_object_order",
+      "quantities": {
+        "Reed frame": 7
+      },
+      "capacities": {
+        "Standard station": 6
+      },
+      "operation": "attempt",
+      "review_rule": "relation"
+    },
+    {
+      "case": "workshop_03",
+      "family": "cross_object_order",
+      "quantities": {
+        "Reed frame": 22
+      },
+      "capacities": {
+        "Standard station": 25
+      },
+      "operation": "attempt",
+      "review_rule": "relation"
+    },
+    {
+      "case": "workshop_04",
+      "family": "cross_object_order",
+      "quantities": {
+        "Reed frame": 22
+      },
+      "capacities": {
+        "Standard station": 19
+      },
+      "operation": "attempt",
+      "review_rule": "relation"
+    },
+    {
+      "case": "workshop_05",
+      "family": "relevant_quantity_monotonicity",
+      "quantities": {
+        "Reed frame": 11
+      },
+      "capacities": {
+        "Standard station": 11
+      },
+      "operation": "attempt",
+      "review_rule": "relation"
+    },
+    {
+      "case": "workshop_06",
+      "family": "relevant_quantity_monotonicity",
+      "quantities": {
+        "Reed frame": 11.5
+      },
+      "capacities": {
+        "Standard station": 11
+      },
+      "operation": "attempt",
+      "review_rule": "relation"
+    },
+    {
+      "case": "workshop_opaque_01",
+      "family": "restricted_observability_ambiguity",
+      "quantities": {
+        "Reed frame": 9
+      },
+      "capacities": {
+        "Standard station": 17
+      },
+      "operation": "review",
+      "indistinguishable_pair": "workshop_opaque",
+      "review_rule": "relation"
+    },
+    {
+      "case": "workshop_opaque_02",
+      "family": "restricted_observability_ambiguity",
+      "quantities": {
+        "Reed frame": 9
+      },
+      "capacities": {
+        "Standard station": 17
+      },
+      "operation": "review",
+      "indistinguishable_pair": "workshop_opaque",
+      "review_rule": "conjunction"
+    }
+  ],
+  "reservoir": [
+    {
+      "case": "reservoir_01",
+      "family": "cross_object_order",
+      "quantities": {
+        "Orchard watering": 8
+      },
+      "capacities": {
+        "Slate cistern": 12
+      },
+      "operation": "attempt",
+      "review_rule": "relation"
+    },
+    {
+      "case": "reservoir_02",
+      "family": "cross_object_order",
+      "quantities": {
+        "Orchard watering": 8
+      },
+      "capacities": {
+        "Slate cistern": 7
+      },
+      "operation": "attempt",
+      "review_rule": "relation"
+    },
+    {
+      "case": "reservoir_03",
+      "family": "cross_object_order",
+      "quantities": {
+        "Orchard watering": 24
+      },
+      "capacities": {
+        "Slate cistern": 28
+      },
+      "operation": "attempt",
+      "review_rule": "relation"
+    },
+    {
+      "case": "reservoir_04",
+      "family": "cross_object_order",
+      "quantities": {
+        "Orchard watering": 24
+      },
+      "capacities": {
+        "Slate cistern": 21
+      },
+      "operation": "attempt",
+      "review_rule": "relation"
+    },
+    {
+      "case": "reservoir_05",
+      "family": "relevant_quantity_monotonicity",
+      "quantities": {
+        "Orchard watering": 10
+      },
+      "capacities": {
+        "Slate cistern": 12
+      },
+      "operation": "attempt",
+      "review_rule": "relation"
+    },
+    {
+      "case": "reservoir_06",
+      "family": "relevant_quantity_monotonicity",
+      "quantities": {
+        "Orchard watering": 12
+      },
+      "capacities": {
+        "Slate cistern": 12
+      },
+      "operation": "attempt",
+      "review_rule": "relation"
+    },
+    {
+      "case": "reservoir_07",
+      "family": "relevant_quantity_monotonicity",
+      "quantities": {
+        "Orchard watering": 12.5
+      },
+      "capacities": {
+        "Slate cistern": 12
+      },
+      "operation": "attempt",
+      "review_rule": "relation"
+    },
+    {
+      "case": "reservoir_08",
+      "family": "relevant_quantity_monotonicity",
+      "quantities": {
+        "Orchard watering": 10
+      },
+      "capacities": {
+        "Slate cistern": 9
+      },
+      "operation": "attempt",
+      "review_rule": "relation"
+    },
+    {
+      "case": "reservoir_opaque_01",
+      "family": "restricted_observability_ambiguity",
+      "quantities": {
+        "Orchard watering": 9
+      },
+      "capacities": {
+        "Slate cistern": 17
+      },
+      "operation": "review",
+      "indistinguishable_pair": "reservoir_opaque",
+      "review_rule": "relation"
+    },
+    {
+      "case": "reservoir_opaque_02",
+      "family": "restricted_observability_ambiguity",
+      "quantities": {
+        "Orchard watering": 9
+      },
+      "capacities": {
+        "Slate cistern": 17
+      },
+      "operation": "review",
+      "indistinguishable_pair": "reservoir_opaque",
+      "review_rule": "conjunction"
+    }
+  ]
+}

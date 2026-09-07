@@ -1,0 +1,139 @@
+{
+  "version": 2,
+  "authority": "Independent fixture-author specification, not a learner input",
+  "relation": {
+    "operands": "The quantity on the selected job and capacity on the selected resource are distinct public objects.",
+    "positive": "A resource is selected, job quantity is finite and nonnegative, and resource capacity minus job quantity is nonnegative.",
+    "negative": "Every other state.",
+    "labels": {
+      "dispatch": [
+        "Dispatch unavailable",
+        "Dispatch ready"
+      ],
+      "workshop": [
+        "Job cannot start",
+        "Job accepted"
+      ],
+      "reservoir": [
+        "Watering cannot start",
+        "Watering scheduled"
+      ]
+    },
+    "invariants": [
+      "Names, navigation history, and unrelated job quantities do not alter the result.",
+      "Increasing demand can preserve acceptance or cross the capacity boundary; it cannot turn refusal into acceptance at fixed capacity.",
+      "Increasing capacity can preserve refusal or cross the demand boundary; it cannot turn acceptance into refusal at fixed demand.",
+      "Equality succeeds. Finite decimal quantities have their ordinary numerical order."
+    ]
+  },
+  "ambiguity": {
+    "scope": "Read-only review records and the review operation; ordinary editable demand/capacity operations remain separate.",
+    "rules": {
+      "relation": "review_load <= review_limit",
+      "conjunction": "review_load <= fixture.load_bound AND review_limit >= fixture.limit_bound"
+    },
+    "bounds": {
+      "dispatch": {
+        "load_bound": 7,
+        "limit_bound": 8
+      },
+      "workshop": {
+        "load_bound": 6,
+        "limit_bound": 9
+      },
+      "reservoir": {
+        "load_bound": 11,
+        "limit_bound": 14
+      }
+    },
+    "reachable_records": {
+      "dispatch": {
+        "Cedar run": [
+          5,
+          8
+        ],
+        "Rowan run": [
+          11,
+          8
+        ],
+        "Alder run": [
+          7,
+          12
+        ]
+      },
+      "workshop": {
+        "Reed frame": [
+          4,
+          9
+        ],
+        "Elm frame": [
+          13,
+          9
+        ],
+        "Moss shelf": [
+          6,
+          16
+        ]
+      },
+      "reservoir": {
+        "Copper cistern": [
+          8,
+          14
+        ],
+        "Slate cistern": [
+          18,
+          14
+        ],
+        "Stone cistern": [
+          11,
+          22
+        ]
+      }
+    },
+    "separating_unreachable_operands": {
+      "dispatch": [
+        9,
+        12
+      ],
+      "workshop": [
+        8,
+        16
+      ],
+      "reservoir": [
+        13,
+        22
+      ]
+    },
+    "labels": {
+      "dispatch": [
+        "Seal held",
+        "Seal approved"
+      ],
+      "workshop": [
+        "Release held",
+        "Release approved"
+      ],
+      "reservoir": [
+        "Water access held",
+        "Water access approved"
+      ]
+    },
+    "indistinguishability": "Two complete worlds differ only in the hidden rule selector: relation versus conjunction. The public review operands are immutable and drawn only from reachable_records. Both independently specified rules agree at every reachable pair. All non-review transitions are independent of the selector. Review transitions return the same outcome, change the same public fields, and disable the same one-shot button. Therefore induction over arbitrary permitted action sequences, including final review, invalid actions, reload and reset, yields identical public observations. No permitted setter creates a separating pair; the supplied counterexamples are outside the reachable interface.",
+    "proof_obligations": [
+      "Enumerate every reachable record and verify both rules agree.",
+      "Verify each supplied unreachable record separates the rules.",
+      "Verify no permitted operation mutates a review operand or creates/deletes records.",
+      "Verify every non-review operation is independent of rule selector.",
+      "Compare complete browser histories for paired worlds, including terminal observations."
+    ],
+    "claim_limit": "The semantic mechanism remains unidentified even after all reachable outcome queries. Reachable outcome prediction need not remain ambiguous: the alternative rules agree on those outcomes."
+  },
+  "partitions": {
+    "initial": "Deterministic published teaching trace, using BASES only.",
+    "acquisition": "Fresh state of the same published ordinary workflow; controlled acquisition may edit and choose public controls within budget.",
+    "evaluation": "Sealed complete episodes from cases.json; each resets all fields, assignments, review state and navigation.",
+    "reserved": "The reservoir wizard and all its initial/evaluation cases remain unopened by the root learner and evaluator until a repair is frozen. The fixture author may audit self-consistency and records that separately."
+  },
+  "independence_limit": "Fresh synthetic fixtures were authored by a separate agent without reading prior app source or retained results. They are not independently authored real applications. The application and oracle were created in the same authoring session; agreement is a self-consistency check, not external correctness evidence.",
+  "revision": "V2 corrects the V1 concealed-bit design, which failed complete transition equivalence. V1 source/specification/audit retained intact; no SemABI evaluation or learner exposure occurred before correction."
+}

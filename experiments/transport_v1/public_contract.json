@@ -1,0 +1,703 @@
+{
+  "schema_version": 1,
+  "suite": "transport_v1",
+  "startup": {
+    "command": "python experiments/transport_v1/server.py --port 8767",
+    "base_url": "http://127.0.0.1:8767",
+    "health_path": "/health"
+  },
+  "observation_policy": {
+    "learner_inputs": [
+      "accessibility snapshots",
+      "ordered public action and observation history"
+    ],
+    "prohibited_learner_inputs": [
+      "HTML or DOM source",
+      "JavaScript or server source",
+      "oracle files",
+      "setup state",
+      "withheld cases or outcomes"
+    ],
+    "snapshot_counts_as_primitive": false,
+    "charged_primitives": [
+      "reset",
+      "reload",
+      "type",
+      "select",
+      "click",
+      "press"
+    ],
+    "max_acquisition_primitives": 60
+  },
+  "action_schema": {
+    "kind": [
+      "click",
+      "type",
+      "snapshot"
+    ],
+    "target_fields": [
+      "role",
+      "name",
+      "exact"
+    ],
+    "text_input_field": "value",
+    "type_semantics": "replace full value of field addressed by accessible role/name; dispatch input and change events",
+    "exact_default": true
+  },
+  "fixtures": {
+    "dispatch": {
+      "label": "Packing desk",
+      "route": "/dispatch",
+      "reset_url": "/reset?fixture=dispatch&partition=initial",
+      "acquisition_reset_url": "/reset?fixture=dispatch&partition=acquisition",
+      "reset_method": "POST",
+      "task_family_tags": [
+        "cross_object_order",
+        "relevant_quantity_monotonicity",
+        "restricted_observability_ambiguity"
+      ],
+      "workflow": "Open a run card, set packed weight, choose a carrier, and check dispatch. Runs can also be submitted for a seal review.",
+      "initial_script": [
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Open Cedar run",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Choose carrier",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Select Swift van",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Check dispatch",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "type",
+          "role": "spinbutton",
+          "name": "Packed weight (kg)",
+          "value": "10",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Check dispatch",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Choose carrier",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Select Panel van",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Check dispatch",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "type",
+          "role": "spinbutton",
+          "name": "Packed weight (kg)",
+          "value": "17",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Check dispatch",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Choose carrier",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Select Box van",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Check dispatch",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "type",
+          "role": "spinbutton",
+          "name": "Packed weight (kg)",
+          "value": "24",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Check dispatch",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Back to dispatch board",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Open Rowan run",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Choose carrier",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Select Swift van",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Check dispatch",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Choose carrier",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Select Panel van",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Check dispatch",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "type",
+          "role": "spinbutton",
+          "name": "Packed weight (kg)",
+          "value": "15",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Check dispatch",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Choose carrier",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Select Box van",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Check dispatch",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "type",
+          "role": "spinbutton",
+          "name": "Packed weight (kg)",
+          "value": "23",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Check dispatch",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        }
+      ],
+      "initial_primitive_count": 31
+    },
+    "workshop": {
+      "label": "Workshop registry",
+      "route": "/workshop",
+      "reset_url": "/reset?fixture=workshop&partition=initial",
+      "acquisition_reset_url": "/reset?fixture=workshop&partition=acquisition",
+      "reset_method": "POST",
+      "task_family_tags": [
+        "cross_object_order",
+        "relevant_quantity_monotonicity",
+        "restricted_observability_ambiguity"
+      ],
+      "workflow": "Expand a job category, open a job, set its required span, browse and attach a station, then start the job. Jobs can also be submitted for a release review.",
+      "initial_script": [
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Expand Frames",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Open Reed frame",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Browse stations",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "radio",
+          "name": "Select Compact station",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Attach station",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Start job",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Browse stations",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "radio",
+          "name": "Select Standard station",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Attach station",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Start job",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "type",
+          "role": "spinbutton",
+          "name": "Required span (cm)",
+          "value": "21",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Start job",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Browse stations",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "radio",
+          "name": "Select Extended station",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Attach station",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Start job",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "type",
+          "role": "spinbutton",
+          "name": "Required span (cm)",
+          "value": "29",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Start job",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Browse stations",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "radio",
+          "name": "Select Compact station",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Attach station",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "type",
+          "role": "spinbutton",
+          "name": "Required span (cm)",
+          "value": "9",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Start job",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Return to registry",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Expand Shelves",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Open Moss shelf",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Browse stations",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "radio",
+          "name": "Select Standard station",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Attach station",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Start job",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "type",
+          "role": "spinbutton",
+          "name": "Required span (cm)",
+          "value": "19",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Start job",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Browse stations",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "radio",
+          "name": "Select Extended station",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Attach station",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Start job",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        }
+      ],
+      "initial_primitive_count": 36
+    }
+  },
+  "reserved_validation": {
+    "available": true,
+    "interface_release": "after initial evaluation and any repair are frozen; reserved route, scripts and cases stay outside this contract"
+  }
+}

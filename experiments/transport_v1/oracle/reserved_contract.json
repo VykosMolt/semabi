@@ -1,0 +1,345 @@
+{
+  "schema_version": 1,
+  "fixtures": {
+    "reservoir": {
+      "label": "Watering console",
+      "route": "/reservoir",
+      "reset_url": "/reset?fixture=reservoir&partition=initial",
+      "acquisition_reset_url": "/reset?fixture=reservoir&partition=acquisition",
+      "reset_method": "POST",
+      "task_family_tags": [
+        "cross_object_order",
+        "relevant_quantity_monotonicity",
+        "restricted_observability_ambiguity"
+      ],
+      "workflow": "Set a watering amount, continue to a water source, review the request and schedule it. Water access review is also available.",
+      "initial_script": [
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "type",
+          "role": "spinbutton",
+          "name": "Water requested (L)",
+          "value": "13",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Continue to water sources",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "radio",
+          "name": "Use Copper cistern",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Review watering request",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Schedule watering",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Edit watering request",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "type",
+          "role": "spinbutton",
+          "name": "Water requested (L)",
+          "value": "13",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Continue to water sources",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "radio",
+          "name": "Use Slate cistern",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Review watering request",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Schedule watering",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Edit watering request",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "type",
+          "role": "spinbutton",
+          "name": "Water requested (L)",
+          "value": "23",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Continue to water sources",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "radio",
+          "name": "Use Slate cistern",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Review watering request",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Schedule watering",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Edit watering request",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "type",
+          "role": "spinbutton",
+          "name": "Water requested (L)",
+          "value": "23",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Continue to water sources",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "radio",
+          "name": "Use Stone cistern",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Review watering request",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Schedule watering",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Edit watering request",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "type",
+          "role": "spinbutton",
+          "name": "Water requested (L)",
+          "value": "33",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Continue to water sources",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "radio",
+          "name": "Use Stone cistern",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Review watering request",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Schedule watering",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Edit watering request",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "type",
+          "role": "spinbutton",
+          "name": "Water requested (L)",
+          "value": "9",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Continue to water sources",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "radio",
+          "name": "Use Copper cistern",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Review watering request",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        },
+        {
+          "kind": "click",
+          "role": "button",
+          "name": "Schedule watering",
+          "exact": true
+        },
+        {
+          "kind": "snapshot"
+        }
+      ],
+      "initial_primitive_count": 35
+    }
+  }
+}

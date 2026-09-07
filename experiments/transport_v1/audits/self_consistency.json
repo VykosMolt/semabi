@@ -1,0 +1,74 @@
+{
+  "kind": "fixture_self_consistency_only",
+  "semabi_evaluation": false,
+  "learner_fit": false,
+  "started_utc": "2026-09-07T15:11:14.115180+00:00",
+  "source_manifest_sha256": "1453405e9261bfcfbb5a624af04da088fb568bba3618bf7166b4b42451884ef6",
+  "model_checks": 210,
+  "browser": {
+    "dispatch": {
+      "scripts": 11,
+      "actions": 78,
+      "snapshots": 156,
+      "role_aliases": 5,
+      "outcome_checks": 21,
+      "failures": 0,
+      "raw_quantity_trends": [
+        {
+          "rises": 3,
+          "falls": 0,
+          "equal": 0
+        },
+        {
+          "rises": 2,
+          "falls": 0,
+          "equal": 0
+        }
+      ],
+      "raw_jobs_with_at_least_two_rises_and_no_falls": 2,
+      "clock_attack_claim": "Requires separate confirmation that the learner recovered and classified the relevant tracked quantity."
+    },
+    "workshop": {
+      "scripts": 9,
+      "actions": 87,
+      "snapshots": 174,
+      "role_aliases": 4,
+      "outcome_checks": 17,
+      "failures": 0,
+      "raw_quantity_trends": [
+        {
+          "rises": 2,
+          "falls": 1,
+          "equal": 0
+        },
+        {
+          "rises": 1,
+          "falls": 0,
+          "equal": 0
+        }
+      ],
+      "raw_jobs_with_at_least_two_rises_and_no_falls": 0,
+      "clock_attack_claim": "Requires separate confirmation that the learner recovered and classified the relevant tracked quantity."
+    },
+    "reserved_fixture": {
+      "scripts": 11,
+      "actions": 86,
+      "snapshots": 172,
+      "role_aliases": 6,
+      "outcome_checks": 16,
+      "failures": 0,
+      "raw_quantity_trends": [
+        {
+          "rises": 2,
+          "falls": 1,
+          "equal": 3
+        }
+      ],
+      "raw_jobs_with_at_least_two_rises_and_no_falls": 0,
+      "clock_attack_claim": "Requires separate confirmation that the learner recovered and classified the relevant tracked quantity."
+    }
+  },
+  "indistinguishable_browser_pairs": 3,
+  "passed": true,
+  "finished_utc": "2026-09-07T15:15:11.880408+00:00"
+}

@@ -1,0 +1,27 @@
+Traceback (most recent call last):
+  File "/home/moloch/semabi/scripts/transport_score.py", line 497, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/moloch/semabi/scripts/transport_score.py", line 488, in main
+    payload = prepare(args.train, args.out_dir, freeze=args.freeze)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/moloch/semabi/scripts/transport_score.py", line 162, in prepare
+    result, all_candidates, notes, _H, _G = source_candidates.source_candidates(
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/moloch/semabi/semabi/compiler/v4/source_candidates.py", line 92, in _source_candidates
+    H, G = build_hypotheses(source, log)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/moloch/semabi/semabi/compiler/compile_v4.py", line 75, in build_hypotheses
+    H.fit(step_sigs=[s.after for s in log.steps],
+  File "/home/moloch/semabi/semabi/compiler/v2/hypotheses.py", line 357, in fit
+    self._fit_once()
+  File "/home/moloch/semabi/semabi/compiler/v2/hypotheses.py", line 574, in _fit_once
+    for ui in self.parse_units(sig):
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/moloch/semabi/semabi/compiler/v2/hypotheses.py", line 163, in parse_units
+    n = obs.node(i)
+        ^^^^^^^^^^^
+  File "/home/moloch/semabi/semabi/compiler/observation.py", line 57, in node
+    return self.nodes[i]
+           ~~~~~~~~~~^^^
+IndexError: list index out of range

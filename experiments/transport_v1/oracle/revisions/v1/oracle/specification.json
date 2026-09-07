@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "authority": "Independent fixture-author specification, not a learner input",
+  "relation": {
+    "operands": "The quantity on the selected job and capacity on the selected resource are distinct public objects.",
+    "positive": "A resource is selected, job quantity is finite and nonnegative, and resource capacity minus job quantity is nonnegative.",
+    "negative": "Every other state.",
+    "labels": {
+      "dispatch": ["Dispatch unavailable", "Dispatch ready"],
+      "workshop": ["Job cannot start", "Job accepted"],
+      "reservoir": ["Watering cannot start", "Watering scheduled"]
+    },
+    "invariants": [
+      "Names, navigation history, and unrelated job quantities do not alter the result.",
+      "Increasing demand can preserve acceptance or cross the capacity boundary; it cannot turn refusal into acceptance at fixed capacity.",
+      "Increasing capacity can preserve refusal or cross the demand boundary; it cannot turn acceptance into refusal at fixed demand.",
+      "Equality succeeds. Finite decimal quantities have their ordinary numerical order."
+    ]
+  },
+  "ambiguity": {
+    "positive": "The concealed clearance bit is true.",
+    "negative": "The concealed clearance bit is false.",
+    "labels": {
+      "dispatch": ["Seal held", "Seal approved"],
+      "workshop": ["Release held", "Release approved"],
+      "reservoir": ["Water access held", "Water access approved"]
+    },
+    "scope": "The one-shot review operation, not the ordinary quantity/capacity operation.",
+    "indistinguishability": "Paired episodes have identical complete public state and all accessible non-review action transitions. Only clearance differs, is absent from public state and DOM, and affects only the terminal review response. No permitted pre-review action sequence distinguishes the pair. Reload preserves the episode. Reset is evaluator control and cannot request or expose a clearance value.",
+    "claim_limit": "The UI cannot identify the episode-specific review outcome before consuming the one-shot review. A learner may identify that this outcome is unresolvable."
+  },
+  "partitions": {
+    "initial": "Deterministic published teaching trace, using BASES only.",
+    "acquisition": "Fresh state of the same published ordinary workflow; controlled acquisition may edit and choose public controls within budget.",
+    "evaluation": "Sealed complete episodes from cases.json; each resets all fields, assignments, review state and navigation.",
+    "reserved": "The reservoir wizard and all its initial/evaluation cases remain unopened by the root learner and evaluator until a repair is frozen. Fixture self-consistency auditing is permitted and recorded separately."
+  },
+  "independence_limit": "Fresh synthetic fixtures were authored by a separate agent without reading prior app source or retained results. They are not independently authored real applications. The application and oracle were created in the same authoring session; agreement is a self-consistency check, not external correctness evidence."
+}
