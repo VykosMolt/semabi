@@ -1,0 +1,75 @@
+{
+  "accounting": {
+    "bootstrap_goto": 0,
+    "budget": 60,
+    "charged_attempts": 60,
+    "complete": true,
+    "failed_attempts": 14,
+    "fit_runtime_failures": 0,
+    "initial_steps": 36,
+    "navigation_waits": 0,
+    "paired_steps_recorded": 59,
+    "policy": "contested",
+    "primitive_counts": {
+      "click": 44,
+      "press": 6,
+      "reload": 1,
+      "reset": 1,
+      "type": 8
+    },
+    "recognition_runtime_failures": 0,
+    "refit_opportunities": [
+      {
+        "after_charged_attempts": 0,
+        "status": "FITTED",
+        "training_steps": 36
+      },
+      {
+        "after_charged_attempts": 15,
+        "status": "FITTED",
+        "training_steps": 50
+      },
+      {
+        "after_charged_attempts": 30,
+        "status": "FITTED",
+        "training_steps": 65
+      },
+      {
+        "after_charged_attempts": 45,
+        "status": "FITTED",
+        "training_steps": 80
+      }
+    ],
+    "seed": 1701,
+    "settle_timeouts": 0,
+    "snapshot_calls": 60,
+    "status": "FINISHED",
+    "unpaired_attempts": 1
+  },
+  "campaign_freeze_sha256": "4f032527aff2dc40744ba70e1a1d73bbbd6f0eb3189635bce91c1f65a53c5559",
+  "child_terminated": true,
+  "created_utc": "2026-09-07T21:11:44.335310+00:00",
+  "delegated_session_owner": "/root/reserved_audit",
+  "job": "r1_contested_1701",
+  "log_sha256": "12fcc9dbcb5ead6a8e36cdbce3fcd44fb09b5790e03e8f68968bb986a049279e",
+  "observer_source_sha256": "a9abd22243c2b6bdabed7039876bd03b31d4e5fbbe2c03858323147343290913",
+  "process_record_sha256": "e5fb656e2db150ebf18f4819a49749f12905fa0d519c35f9b9a2cc36c2e50c5d",
+  "raw_hashes": {
+    "decisions.jsonl": "9d5c21ab7403f7c4c4afd84f6dffb6f1d6a9c02d3193577878ce6f7cdf34dcca",
+    "observations.jsonl": "24011b441a4af8e560ad69c410c4933bab923417ef5ea08c283edadd1b88f7ca",
+    "steps.jsonl": "784a88ee3c2733e42b2e4a7518e24b9f762e5a2ad5b086a333f5426d3dcc4b97"
+  },
+  "returncode": 0,
+  "root_coordinator": "/root",
+  "run_record_sha256": "bbeeb194429673cbb04b1b0cacfe6457a2489311d3d655c589f81736d797a4a1",
+  "schema": "semabi.transport.r1_job_completion_receipt.v1",
+  "scope": "Process completion and accounting only. The caller reaped the session before invoking this receipt writer; no semantic diagnosis or control is executed.",
+  "session_id": 21044,
+  "session_reaped": true,
+  "source_and_freeze_revalidation": {
+    "all_match": true,
+    "runtime_files": 70,
+    "verification_files": 19
+  },
+  "source_head": "38f1f08a99d57c2787de02fd8906ff5762a26b88"
+}

@@ -1,59 +1,82 @@
 # Fresh-interface campaign execution record
 
-## Active checkpoint (2026-09-07 20:47 UTC)
+## Active checkpoint (2026-09-07 21:35 UTC)
 
-The original T1 first pass, analysis and original-source regressions are
-preserved. G1 graph ownership is integrated and reviewed; G2 section chronology
-is integrated at main `4440a4f`, with 577 passing tests, 3 skips and 1 expected
-failure. All five dedicated corpus jobs and their comparator have finished and
-been reaped. The complete six-component G1/G2 semantic payloads match exactly
-under the same hash seed, including retained residual errors and ambiguity.
-The final independent G2 review is accepted and the one-shot sealer completed:
-`development/g2/results_manifest_v1.json` binds 135 files and all nine jobs,
+T1, G1 and G2 are preserved and locally committed. Main `38f1f08` contains
+G2 and its reviewed evidence: 577 passing tests, 3 skips, 1 expected failure,
+and exact six-component agreement with G1 across all five dedicated corpora,
+including retained residual errors. G2's manifest binds 135 files and nine jobs,
 SHA-256 `481f879db351618431127a8f7a99db1a35ed06975c7f1f325347c9953a80d67e`.
-Root independently rehashed the final inventory. The report states that summed
-corpus rows include reused separating holdout inputs. This coherent checkpoint
-is ready for its local commit, followed by the actual R1 implementation freeze.
+The summed corpus counts include reused separating holdout evidence.
+
+R1 completed on `38f1f08`, before B1 adoption. Root executed its reviewed
+one-shot preserver and independently rehashed all 295 files in
+`reserved_v1/first_pass_manifest_v1.json`, SHA-256
+`2dd83ed7914798f13e6c7a0cd1b5ccbd718bab7182df12e08a854223cf423678`.
+All 13 jobs are terminated and reaped; the service stopped before scoring.
+The complete new collection has 328 charged attempts, 322 paired steps,
+6 unpaired resets and 56 retained failures. The four matched acquisition arms
+spent 60 attempts apiece. Each seed produced byte-identical raw evidence under
+contested and untargeted policies; the contested policy selected zero targets.
+There were no fit or recognition runtime failures.
+
+Post-preservation summary `reserved_v1/acquisition_summary_v1.json` binds the
+first pass (SHA-256 `cafca902d51e72c75ed3415df7eb2cc47667dc3dafe447561d54e3aa28a567e2`).
+All five model readings have the same ten-target emissions in each stage.
+The eight ordinary targets remain undetermined throughout. The two review
+predictions are wrong after seed 1701 and correct after seed 1702 in both arms;
+RULE and LIST leave all ten targets unestablished. Initial review targets have
+no model. Both the shared and union identity-scoreboard surfaces are empty in
+every stage. None of these observations establishes semantic identification.
+The five separate oracle binding controls have completed and been reaped;
+independent analysis of raw fidelity, binding and representation is in progress.
+Root opened the reserved semantic report and saved learner results only after
+first-pass preservation. R1 is now disclosed development evidence. J1 fixture
+source, case contents and held-out outcomes remain unopened by root.
+
+The isolated B1 repair preserves uncertainty when binding search truncates.
+Candidate `96b2d1f` passed 54 focused checks; its clean validation worktree
+passed 621 full-suite tests, with 3 skips and 1 expected failure, and exactly
+matches all six G2 corpus components on all five corpora. No residual expectation
+was changed. The reviewed validation manifest binds 83 files and seven jobs,
+SHA-256 `af3c7131375798bbf0cc0f4050617cc8ebea901a6313d7be7879f23409597e8d`.
+All jobs are reaped. Candidate and validation are locally committed separately
+at `96b2d1f` and `b6f8c99`; main adoption follows this preserved R1 checkpoint.
+Verify adopted bytes against that tested worktree rather than repeat unchanged
+full/corpus runs. R1 results retain their G2 source association.
+
+J1's independently authored generated bridge fixture has 24 training, 24 held-out
+and 24 separate invariance targets. Its scoped collector passed source review and
+236 invented assertions; real browser accounting remains unmeasured. The failed
+first T1 trace-validation run is retained with its incomplete projections and
+original source. After the exact optional parser-cache correction, the second
+native validation passed all eight criteria: COMPLETE baseline/profiled model
+projections match, trace is COMPLETE, actual lifting/grounding and later mutation
+are covered, and exception cleanup restores the profiler. Its three jobs are
+reaped; comparison SHA-256
+`70cce8f326f71e22973ad03ddbd7c37b9cefbe79b65ff544e3f869e2f5ebb212`.
+The live request/ledger helper passes 97 independent checks after a retained
+receipt-index type defect was corrected. The actor is under independent execution
+review; the separate resident predictor/model monitor is being implemented.
+Their native disclosed-data pilot, scoring/preservation review and actual J1
+freeze/collection remain ahead. The existing supplied-formula control does not
+establish that the normal learner learned JOIN.
 
 At 20:01 UTC the user lifted the temporary one-core restriction, then explicitly
 requested **all 24 logical CPUs (0–23)** at 20:08 UTC. Use normal priority for
-new jobs and numerical threads 1.
-Independent reviewed work may run in parallel within available memory. Shared
-fixture state and authentication/cache mutations remain serialized. The last
-G2 fit retained its single-threaded launch settings through completion. The versioned resource
-override is `development/g2/resource_override_v3.json`; prior limits below are
-historical. No GPU or paid compute is used.
+new jobs, numerical threads 1 and hash seed zero. Independent work may overlap
+within available memory; shared fixture and cache mutations remain serialized.
+The last G2 fit retained its original single-core/low-priority settings through
+completion. Versioned resource override: `development/g2/resource_override_v3.json`.
+No GPU, paid compute, external deployment or push is authorized.
 
-The isolated B1 soundness candidate is preserved at `96b2d1f`; its 54 focused
-cases pass, but it is excluded from R1 and has no integrated regression claim.
-A clean detached `runs/.b1_validation_worktree` at that commit now allows its
-full and dedicated regressions to proceed alongside frozen main work. The
-baseline-verification agent owns and reaps the six frozen validation jobs.
-Four corpus jobs are complete. The full suite is reaped with 621 passes,
-3 skips and 1 expected failure; all 1,930 frozen files remain unchanged. The
-extended corpus remains live.
-The approved B1/G2 comparator waits for the complete B1 results and the actual
-preserved G2 digest. B1 remains excluded from main and R1.
-R1 is prepared for the actual G2 source: unchanged collector/scorer, one reserved
-interface and four matched 60-action arms. Its custody review caught and is
-closed an omission of extra job directories before any R1 execution. A bounded
-independently reviewed resource addendum permits its five independent scores to
-overlap after service reaping; acquisition retains its declared sequential order. No R1
-collection, candidates, fit, score or actual phase freeze exists yet.
-
-J1's generated bridge fixture is independently prepared (24 training, 24 held-out,
-24 separate invariance attempts). Root has read public counts/operational
-requirements only; R1 and J1 held-out semantics remain sealed. A generic scoped
-collector has passed its source review and invented-data checks. Its real
-browser totals remain unmeasured. The observer's first disclosed T1 native
-baseline/profiled pair completed its fits and matched exactly, but both
-projections were INCOMPLETE because the copier omitted the native parser's
-dynamic `_member_positioned_cache` field. All three validation jobs, including
-the exception control, are reaped and preserved. A bounded optional-stored-field
-instrument correction is in progress; equal incomplete projections are not a
-transparency pass. The separate resident prediction/actor contract is under
-independent source review before implementation. A report or commit is a checkpoint;
-continue with reserved transport, B1 integration and the real JOIN learner trace.
+Current ownership: root owns coordination, source adoption, actor and J1 scoring;
+`reserved_audit` owns R1 controls/independent diagnosis;
+`baseline_verification` owns actor verification;
+`acquisition_audit/binding_contract_review` owns predictor/monitor implementation.
+No heavy native job or fixture service remains live at this checkpoint.
+A report or commit is a checkpoint; continue through B1 adoption, reviewed J1
+execution and the next evidence-justified development milestone.
 
 The following dated sections retain the campaign history and original decisions.
 

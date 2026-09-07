@@ -1,0 +1,32 @@
+{
+  "created_utc": "2026-09-07T21:09:09.801496+00:00",
+  "job": "r1_contested_1701",
+  "observed": {
+    "child_pid": {
+      "pid": 750636,
+      "state": "process already ended before metadata observation"
+    },
+    "runner_pid": {
+      "pid": 750634,
+      "state": "process already ended before metadata observation"
+    }
+  },
+  "observer_source_sha256": "d80069df4dd9118d519656ed1272b2be7552899bd2aea2a5e129351dc74ae1e4",
+  "pid_scope": "Host processes of the escalated browser/service launch; observer runs in the same host namespace.",
+  "process": {
+    "child_pid": 750636,
+    "child_terminated": true,
+    "cwd": "/home/moloch/semabi",
+    "end_utc": "2026-09-07T21:08:52.706883+00:00",
+    "owned_process_group": 750636,
+    "owner": "/root",
+    "returncode": 0,
+    "runner_pid": 750634,
+    "source_head": "38f1f08a99d57c2787de02fd8906ff5762a26b88",
+    "start_utc": "2026-09-07T21:08:04.092817+00:00",
+    "status": "FINISHED"
+  },
+  "process_record_sha256_at_observation": "e5fb656e2db150ebf18f4819a49749f12905fa0d519c35f9b9a2cc36c2e50c5d",
+  "schema": "semabi.transport.r1_session_observed.v1",
+  "session_id": 21044
+}

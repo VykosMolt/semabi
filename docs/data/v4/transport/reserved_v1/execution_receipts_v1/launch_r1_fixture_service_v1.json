@@ -1,0 +1,49 @@
+{
+  "cpu": 22,
+  "created_utc": "2026-09-07T20:57:37.306363+00:00",
+  "delegated_session_owner": "/root/reserved_audit",
+  "implementation_freeze_sha256": "310c6d65cdd6e55baa61bf5408e6fd807abac7f91e53c5b3bfdf92e075e6c280",
+  "inner_command": [
+    ".venv/bin/python",
+    "experiments/transport_v1/server.py",
+    "--port",
+    "8767"
+  ],
+  "job": "r1_fixture_service_v1",
+  "nice": 0,
+  "numerical_thread_environment": {
+    "BLIS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "outer_command": [
+    "taskset",
+    "-c",
+    "22",
+    "env",
+    "PYTHONHASHSEED=0",
+    "OMP_NUM_THREADS=1",
+    "OPENBLAS_NUM_THREADS=1",
+    "MKL_NUM_THREADS=1",
+    "NUMEXPR_NUM_THREADS=1",
+    "VECLIB_MAXIMUM_THREADS=1",
+    "BLIS_NUM_THREADS=1",
+    ".venv/bin/python",
+    "docs/data/v4/transport/run_job.py",
+    "docs/data/v4/transport/reserved_v1/jobs/r1_fixture_service_v1",
+    "--",
+    ".venv/bin/python",
+    "experiments/transport_v1/server.py",
+    "--port",
+    "8767"
+  ],
+  "python_hash_seed": "0",
+  "root_coordinator": "/root",
+  "sandbox": "require_escalated for authorized local fixture listener",
+  "schema": "semabi.transport.r1_launch_intent.v1",
+  "source_head": "38f1f08a99d57c2787de02fd8906ff5762a26b88",
+  "state": "LAUNCH_REQUESTED"
+}

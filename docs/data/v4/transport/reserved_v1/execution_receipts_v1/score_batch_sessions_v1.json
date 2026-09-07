@@ -1,0 +1,111 @@
+{
+  "created_utc": "2026-09-07T21:21:33.900993+00:00",
+  "delegated_session_owner": "/root/reserved_audit",
+  "jobs": [
+    {
+      "cpu": 17,
+      "job": "score_r1_initial_v1",
+      "launch_receipt_sha256": "0b3fe28df9c99a0b7755887a71ddd4cde5fc3772e3e6b00114b787d1667f366e",
+      "nice": 0,
+      "process": {
+        "child_pid": 4,
+        "child_terminated": true,
+        "end_utc": "2026-09-07T21:20:51.868277+00:00",
+        "owned_process_group": 4,
+        "returncode": 0,
+        "runner_pid": 2,
+        "source_head": "38f1f08a99d57c2787de02fd8906ff5762a26b88",
+        "start_utc": "2026-09-07T21:20:44.571485+00:00",
+        "status": "FINISHED"
+      },
+      "process_record_sha256_at_observation": "1b7f1656983e5b486afbd5feace00fa5235cc81b8b45a507ae5dd68faeedb440",
+      "session_id": 60547,
+      "stage": "r1_initial_v1"
+    },
+    {
+      "cpu": 18,
+      "job": "score_r1_contested_1701",
+      "launch_receipt_sha256": "6c8eed5799c4475cae38b18eb075afcc62d12cb8cb6ed9e56ae774aab9b97698",
+      "nice": 0,
+      "process": {
+        "child_pid": 4,
+        "child_terminated": true,
+        "end_utc": "2026-09-07T21:21:09.484505+00:00",
+        "owned_process_group": 4,
+        "returncode": 0,
+        "runner_pid": 2,
+        "source_head": "38f1f08a99d57c2787de02fd8906ff5762a26b88",
+        "start_utc": "2026-09-07T21:20:44.580868+00:00",
+        "status": "FINISHED"
+      },
+      "process_record_sha256_at_observation": "c9b99d03f23a3ff10814a42016061a3dfb1c39cbc2591b64b550630839646804",
+      "session_id": 82518,
+      "stage": "r1_contested_1701"
+    },
+    {
+      "cpu": 19,
+      "job": "score_r1_untargeted_1701",
+      "launch_receipt_sha256": "af6f11f14abd231149f5788329c0f554632f1b8cce50186ce2d0cbd1fbb6d031",
+      "nice": 0,
+      "process": {
+        "child_pid": 4,
+        "child_terminated": true,
+        "end_utc": "2026-09-07T21:21:09.858933+00:00",
+        "owned_process_group": 4,
+        "returncode": 0,
+        "runner_pid": 2,
+        "source_head": "38f1f08a99d57c2787de02fd8906ff5762a26b88",
+        "start_utc": "2026-09-07T21:20:44.599593+00:00",
+        "status": "FINISHED"
+      },
+      "process_record_sha256_at_observation": "abbe912366bcd8a4261e5a3e89028d4d6bc974e938b01fdb6558f8ce0b17f9ef",
+      "session_id": 11283,
+      "stage": "r1_untargeted_1701"
+    },
+    {
+      "cpu": 20,
+      "job": "score_r1_contested_1702",
+      "launch_receipt_sha256": "3abf7ab3fc9d1bff3dd85c18063c0b6f5142915fb28f5115a7b2bcbedf41b810",
+      "nice": 0,
+      "process": {
+        "child_pid": 4,
+        "child_terminated": true,
+        "end_utc": "2026-09-07T21:21:09.087450+00:00",
+        "owned_process_group": 4,
+        "returncode": 0,
+        "runner_pid": 2,
+        "source_head": "38f1f08a99d57c2787de02fd8906ff5762a26b88",
+        "start_utc": "2026-09-07T21:20:44.607890+00:00",
+        "status": "FINISHED"
+      },
+      "process_record_sha256_at_observation": "aa4a06a16f2759f78bf2ee9395fe18832a3703b839ce4153cfd8f2b9e4345b6b",
+      "session_id": 65448,
+      "stage": "r1_contested_1702"
+    },
+    {
+      "cpu": 21,
+      "job": "score_r1_untargeted_1702",
+      "launch_receipt_sha256": "85f46da39a3206b83a886aba7e6ea0cb11d35d2335db021dc6e4ee69b8ef6e3d",
+      "nice": 0,
+      "process": {
+        "child_pid": 4,
+        "child_terminated": true,
+        "end_utc": "2026-09-07T21:21:09.153461+00:00",
+        "owned_process_group": 4,
+        "returncode": 0,
+        "runner_pid": 2,
+        "source_head": "38f1f08a99d57c2787de02fd8906ff5762a26b88",
+        "start_utc": "2026-09-07T21:20:44.592828+00:00",
+        "status": "FINISHED"
+      },
+      "process_record_sha256_at_observation": "c6e86b0290c4f9740d1e2da7944bd32de387fd4c437734433056e42bd6130044",
+      "session_id": 82943,
+      "stage": "r1_untargeted_1702"
+    }
+  ],
+  "pid_scope": "Each default-sandbox launcher has its own PID namespace; raw PID values across these jobs are not global process identities. The distinct owning tool sessions are recorded here.",
+  "resources": "Exact outer taskset/env commands are retained in launch receipts; four numerical thread variables and hash seed are authenticated in each stock runner record. Host /proc probes are not applied to sandbox-local PIDs.",
+  "root_coordinator": "/root",
+  "schema": "semabi.transport.r1_score_batch_sessions.v1",
+  "service_reaped_before_launch": true
+}

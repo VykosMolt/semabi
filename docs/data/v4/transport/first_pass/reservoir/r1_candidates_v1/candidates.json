@@ -1,0 +1,986 @@
+{
+ "candidate_set_sha256": "d7a981467d8c3ea1628be76ac2f6cd087ff399d9115a97be417523164bcd6bf3",
+ "candidates": [
+  {
+   "fingerprint": "a6cedccb5d91963b",
+   "id": "candidate_00",
+   "name": "source_choice",
+   "reading": {
+    "families": {
+     "group[_](group[_])": {
+      "discrimination": 1.0,
+      "family": "group[_](group[_])",
+      "key_slot": "group#0",
+      "status": "SUPPORTED"
+     },
+     "radio[_]": {
+      "discrimination": 0.0,
+      "family": "radio[_]",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     }
+    },
+    "name": "source_choice",
+    "promoted_families": [],
+    "provenance": {
+     "role": "SOURCE",
+     "source_run": "docs/data/v4/transport/first_pass/reservoir/r1_initial_v1"
+    },
+    "refuted": {},
+    "version": 1
+   }
+  },
+  {
+   "fingerprint": "3611c112edd6a785",
+   "id": "candidate_01",
+   "name": "promote group[_]=group#0",
+   "reading": {
+    "families": {
+     "group[_]": {
+      "discrimination": 1.0,
+      "family": "group[_]",
+      "key_slot": "group#0",
+      "status": "SUPPORTED"
+     },
+     "group[_](group[_])": {
+      "discrimination": 1.0,
+      "family": "group[_](group[_])",
+      "key_slot": "group#0",
+      "status": "SUPPORTED"
+     },
+     "radio[_]": {
+      "discrimination": 0.0,
+      "family": "radio[_]",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     }
+    },
+    "name": "promote group[_]=group#0",
+    "promoted_families": [
+     "group[_]"
+    ],
+    "provenance": {
+     "role": "SOURCE",
+     "source_run": "docs/data/v4/transport/first_pass/reservoir/r1_initial_v1"
+    },
+    "refuted": {},
+    "version": 1
+   }
+  },
+  {
+   "fingerprint": "4af073547d6793b4",
+   "id": "candidate_02",
+   "name": "group[_](group[_])=group#0@4",
+   "reading": {
+    "families": {
+     "group[_](group[_])": {
+      "discrimination": 1.0,
+      "family": "group[_](group[_])",
+      "key_slot": "group#0@4",
+      "status": "SUPPORTED"
+     },
+     "radio[_]": {
+      "discrimination": 0.0,
+      "family": "radio[_]",
+      "key_slot": null,
+      "status": "NO_IDENTITY"
+     }
+    },
+    "name": "group[_](group[_])=group#0@4",
+    "promoted_families": [],
+    "provenance": {
+     "role": "SOURCE",
+     "source_run": "docs/data/v4/transport/first_pass/reservoir/r1_initial_v1"
+    },
+    "refuted": {},
+    "version": 1
+   }
+  },
+  {
+   "fingerprint": "0a9b21ac00c434aa",
+   "id": "candidate_03",
+   "name": "radio[_]=radio#0",
+   "reading": {
+    "families": {
+     "group[_](group[_])": {
+      "discrimination": 1.0,
+      "family": "group[_](group[_])",
+      "key_slot": "group#0",
+      "status": "SUPPORTED"
+     },
+     "radio[_]": {
+      "discrimination": 1.0,
+      "family": "radio[_]",
+      "key_slot": "radio#0",
+      "status": "SUPPORTED"
+     }
+    },
+    "name": "radio[_]=radio#0",
+    "promoted_families": [],
+    "provenance": {
+     "role": "SOURCE",
+     "source_run": "docs/data/v4/transport/first_pass/reservoir/r1_initial_v1"
+    },
+    "refuted": {},
+    "version": 1
+   }
+  }
+ ],
+ "cap": 8,
+ "exposure": "Only initial training evidence was supplied; no evaluation path accepted.",
+ "freeze": {
+  "checked_files": 67,
+  "path": "/home/moloch/semabi/docs/data/v4/transport/reserved_v1/implementation_freeze_v1.json",
+  "sha256": "310c6d65cdd6e55baa61bf5408e6fd807abac7f91e53c5b3bfdf92e075e6c280",
+  "status": "VERIFIED"
+ },
+ "generated_in_existing_neighborhood": 4,
+ "generator_notes": [
+  {
+   "candidate": "promote group[_]=group#0",
+   "discrimination": 1.0,
+   "family": "group[_]",
+   "promotion": "group#0",
+   "status": "SUPPORTED"
+  },
+  {
+   "alternative": "group#0@4",
+   "candidate": "group[_](group[_])=group#0@4",
+   "discrimination": 1.0,
+   "family": "group[_](group[_])",
+   "status": "SUPPORTED"
+  },
+  {
+   "alternative": "radio#0",
+   "candidate": "radio[_]=radio#0",
+   "discrimination": 1.0,
+   "family": "radio[_]",
+   "status": "SUPPORTED"
+  }
+ ],
+ "omitted_due_to_cap": [],
+ "phase": "initial_candidates",
+ "retained_count": 4,
+ "schema": "semabi.transport.measurement.v2",
+ "scope": "Existing generator: incumbent, supported leaf promotions, joint improved discrimination candidate, and at most one ordinary alternative per family. Not an exhaustive space of identities, unions or link interpretations.",
+ "search": {
+  "chosen": {
+   "group[](group[_ draw],group[_ L],group[_ allowance],group[_ L])": {
+    "evidence": {
+     "constant_share": 0.5,
+     "copresent_pairs": 12,
+     "coverage": 1.0,
+     "cross_view_values": 0,
+     "discrimination": 1.0,
+     "distinct_values": 5,
+     "numeric_share": 0.8,
+     "reload_stability": null,
+     "separated_pairs": 12,
+     "shared": 0.0,
+     "spoken": 0.0
+    },
+    "key_slot": "group#0",
+    "status": "SUPPORTED",
+    "template": "group[_](group[_])",
+    "why": "separates 12/12 co-present pairs, 5 values, coverage 1.00"
+   },
+   "group[](group[_ requested],group[_ L],group[_ source],group[_ cistern],group[_ available],group[_ L])": {
+    "evidence": {
+     "constant_share": 0.5,
+     "copresent_pairs": 12,
+     "coverage": 1.0,
+     "cross_view_values": 0,
+     "discrimination": 1.0,
+     "distinct_values": 5,
+     "numeric_share": 0.8,
+     "reload_stability": null,
+     "separated_pairs": 12,
+     "shared": 0.0,
+     "spoken": 0.0
+    },
+    "key_slot": "group#0",
+    "status": "SUPPORTED",
+    "template": "group[_](group[_])",
+    "why": "separates 12/12 co-present pairs, 5 values, coverage 1.00"
+   },
+   "radio[Use _ cistern]": {
+    "evidence": {
+     "constant_share": 0.0,
+     "copresent_pairs": 12,
+     "coverage": 0.0,
+     "cross_view_values": 0,
+     "discrimination": 0.0,
+     "distinct_values": 0,
+     "numeric_share": 0.0,
+     "reload_stability": null,
+     "separated_pairs": 0,
+     "shared": 0.0,
+     "spoken": 0.0
+    },
+    "key_slot": null,
+    "status": "NO_IDENTITY",
+    "template": "radio[_]",
+    "why": "no identity-bearing observation claimed"
+   }
+  },
+  "families": {
+   "group[_](group[_])": [
+    "group[](group[_ draw],group[_ L],group[_ allowance],group[_ L])",
+    "group[](group[_ requested],group[_ L],group[_ source],group[_ cistern],group[_ available],group[_ L])"
+   ],
+   "radio[_]": [
+    "radio[Use _ cistern]"
+   ]
+  },
+  "final": {
+   "churn": 0,
+   "churn_steps": [],
+   "complexity": 16,
+   "conflicts": 0,
+   "contradiction_steps": [],
+   "contradictions": 0,
+   "delta_atoms": 6,
+   "explained": 3,
+   "named": 0,
+   "positional": 0,
+   "spurious": 0,
+   "steps": 36,
+   "unexplained": 8,
+   "visibility": 0,
+   "visibility_steps": []
+  },
+  "initial": {
+   "churn": 0,
+   "churn_steps": [],
+   "complexity": 16,
+   "conflicts": 0,
+   "contradiction_steps": [],
+   "contradictions": 0,
+   "delta_atoms": 0,
+   "explained": 0,
+   "named": 0,
+   "positional": 0,
+   "spurious": 0,
+   "steps": 36,
+   "unexplained": 11,
+   "visibility": 0,
+   "visibility_steps": []
+  },
+  "moves": [
+   {
+    "move": "evidence_prior",
+    "score": {
+     "churn": 0,
+     "churn_steps": [],
+     "complexity": 16,
+     "conflicts": 0,
+     "contradiction_steps": [],
+     "contradictions": 0,
+     "delta_atoms": 2,
+     "explained": 2,
+     "named": 0,
+     "positional": 0,
+     "spurious": 0,
+     "steps": 36,
+     "unexplained": 9,
+     "visibility": 0,
+     "visibility_steps": []
+    }
+   },
+   {
+    "decided_by": {
+     "explained": 1
+    },
+    "family": "group[_](group[_])",
+    "key_slot": "group#0",
+    "move": "identity",
+    "round": 0,
+    "score": {
+     "churn": 0,
+     "churn_steps": [],
+     "complexity": 21,
+     "conflicts": 0,
+     "contradiction_steps": [],
+     "contradictions": 0,
+     "delta_atoms": 6,
+     "explained": 3,
+     "named": 0,
+     "positional": 0,
+     "spurious": 0,
+     "steps": 36,
+     "unexplained": 8,
+     "visibility": 0,
+     "visibility_steps": []
+    },
+    "status": "SUPPORTED",
+    "templates": 2
+   },
+   {
+    "against": "group#0",
+    "decided_by": {
+     "explained": 3
+    },
+    "family": "group[_](group[_])",
+    "key_slot": "group#0@2",
+    "move": "rejected",
+    "round": 0,
+    "score": {
+     "churn": 0,
+     "churn_steps": [],
+     "complexity": 13,
+     "conflicts": 0,
+     "contradiction_steps": [],
+     "contradictions": 0,
+     "delta_atoms": 0,
+     "explained": 0,
+     "named": 0,
+     "positional": 0,
+     "spurious": 0,
+     "steps": 36,
+     "unexplained": 11,
+     "visibility": 0,
+     "visibility_steps": []
+    },
+    "status": "SUPPORTED"
+   },
+   {
+    "against": "group#0",
+    "decided_by": {
+     "explained": 3
+    },
+    "family": "group[_](group[_])",
+    "key_slot": null,
+    "move": "rejected",
+    "round": 0,
+    "score": {
+     "churn": 0,
+     "churn_steps": [],
+     "complexity": 5,
+     "conflicts": 0,
+     "contradiction_steps": [],
+     "contradictions": 0,
+     "delta_atoms": 0,
+     "explained": 0,
+     "named": 0,
+     "positional": 0,
+     "spurious": 0,
+     "steps": 36,
+     "unexplained": 0,
+     "visibility": 0,
+     "visibility_steps": []
+    },
+    "status": "NO_IDENTITY"
+   },
+   {
+    "decided_by": {
+     "unearned": "radio#0"
+    },
+    "family": "radio[_]",
+    "key_slot": null,
+    "move": "identity",
+    "round": 0,
+    "score": {
+     "churn": 0,
+     "churn_steps": [],
+     "complexity": 16,
+     "conflicts": 0,
+     "contradiction_steps": [],
+     "contradictions": 0,
+     "delta_atoms": 6,
+     "explained": 3,
+     "named": 0,
+     "positional": 0,
+     "spurious": 0,
+     "steps": 36,
+     "unexplained": 8,
+     "visibility": 0,
+     "visibility_steps": []
+    },
+    "status": "NO_IDENTITY",
+    "templates": 1
+   },
+   {
+    "against": "group#0",
+    "decided_by": {
+     "explained": 1
+    },
+    "family": "group[_](group[_])",
+    "key_slot": "group#0@4",
+    "move": "rejected",
+    "round": 1,
+    "score": {
+     "churn": 0,
+     "churn_steps": [],
+     "complexity": 16,
+     "conflicts": 0,
+     "contradiction_steps": [],
+     "contradictions": 0,
+     "delta_atoms": 2,
+     "explained": 2,
+     "named": 0,
+     "positional": 0,
+     "spurious": 0,
+     "steps": 36,
+     "unexplained": 9,
+     "visibility": 0,
+     "visibility_steps": []
+    },
+    "status": "SUPPORTED"
+   },
+   {
+    "against": "group#0",
+    "decided_by": {
+     "explained": 3
+    },
+    "family": "group[_](group[_])",
+    "key_slot": "group#0@2",
+    "move": "rejected",
+    "round": 1,
+    "score": {
+     "churn": 0,
+     "churn_steps": [],
+     "complexity": 8,
+     "conflicts": 0,
+     "contradiction_steps": [],
+     "contradictions": 0,
+     "delta_atoms": 0,
+     "explained": 0,
+     "named": 0,
+     "positional": 0,
+     "spurious": 0,
+     "steps": 36,
+     "unexplained": 11,
+     "visibility": 0,
+     "visibility_steps": []
+    },
+    "status": "SUPPORTED"
+   },
+   {
+    "against": "group#0",
+    "decided_by": {
+     "explained": 3
+    },
+    "family": "group[_](group[_])",
+    "key_slot": null,
+    "move": "rejected",
+    "round": 1,
+    "score": {
+     "churn": 0,
+     "churn_steps": [],
+     "complexity": 0,
+     "conflicts": 0,
+     "contradiction_steps": [],
+     "contradictions": 0,
+     "delta_atoms": 0,
+     "explained": 0,
+     "named": 0,
+     "positional": 0,
+     "spurious": 0,
+     "steps": 36,
+     "unexplained": 0,
+     "visibility": 0,
+     "visibility_steps": []
+    },
+    "status": "NO_IDENTITY"
+   }
+  ],
+  "open_questions": [
+   {
+    "left": {
+     "evidence": {
+      "constant_share": 0.5,
+      "copresent_pairs": 12,
+      "coverage": 1.0,
+      "cross_view_values": 0,
+      "discrimination": 1.0,
+      "distinct_values": 5,
+      "numeric_share": 0.8,
+      "reload_stability": null,
+      "separated_pairs": 12,
+      "shared": 0.0,
+      "spoken": 0.0
+     },
+     "key_slot": "group#0",
+     "status": "SUPPORTED",
+     "template": "group[_](group[_])",
+     "why": "separates 12/12 co-present pairs, 5 values, coverage 1.00"
+    },
+    "reason": "the trace so far scores both readings identically",
+    "right": {
+     "evidence": {
+      "constant_share": 0.5,
+      "copresent_pairs": 12,
+      "coverage": 1.0,
+      "cross_view_values": 0,
+      "discrimination": 1.0,
+      "distinct_values": 2,
+      "numeric_share": 0.0,
+      "reload_stability": null,
+      "separated_pairs": 12,
+      "shared": 0.0,
+      "spoken": 0.0
+     },
+     "key_slot": "group#0@3",
+     "status": "SUPPORTED",
+     "template": "group[_](group[_])",
+     "why": "separates 12/12 co-present pairs, 2 values, coverage 1.00"
+    },
+    "template": "group[_](group[_])"
+   },
+   {
+    "left": {
+     "evidence": {
+      "constant_share": 0.5,
+      "copresent_pairs": 12,
+      "coverage": 1.0,
+      "cross_view_values": 0,
+      "discrimination": 1.0,
+      "distinct_values": 5,
+      "numeric_share": 0.8,
+      "reload_stability": null,
+      "separated_pairs": 12,
+      "shared": 0.0,
+      "spoken": 0.0
+     },
+     "key_slot": "group#0",
+     "status": "SUPPORTED",
+     "template": "group[_](group[_])",
+     "why": "separates 12/12 co-present pairs, 5 values, coverage 1.00"
+    },
+    "reason": "the trace so far scores both readings identically",
+    "right": {
+     "evidence": {
+      "constant_share": 0.333,
+      "copresent_pairs": 12,
+      "coverage": 0.5,
+      "cross_view_values": 0,
+      "discrimination": 0.0,
+      "distinct_values": 3,
+      "numeric_share": 1.0,
+      "reload_stability": null,
+      "separated_pairs": 0,
+      "shared": 0.0,
+      "spoken": 0.0
+     },
+     "key_slot": "group#0@6",
+     "status": "CONTRADICTED",
+     "template": "group[_](group[_])",
+     "why": "separates none of the 12 co-present pairs"
+    },
+    "template": "group[_](group[_])"
+   },
+   {
+    "left": {
+     "evidence": {
+      "constant_share": 0.0,
+      "copresent_pairs": 12,
+      "coverage": 0.0,
+      "cross_view_values": 0,
+      "discrimination": 0.0,
+      "distinct_values": 0,
+      "numeric_share": 0.0,
+      "reload_stability": null,
+      "separated_pairs": 0,
+      "shared": 0.0,
+      "spoken": 0.0
+     },
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "template": "radio[_]",
+     "why": "no identity-bearing observation claimed"
+    },
+    "reason": "the trace so far scores both readings identically",
+    "right": {
+     "evidence": {
+      "constant_share": 0.333,
+      "copresent_pairs": 12,
+      "coverage": 1.0,
+      "cross_view_values": 0,
+      "discrimination": 1.0,
+      "distinct_values": 3,
+      "numeric_share": 0.0,
+      "reload_stability": null,
+      "separated_pairs": 12,
+      "shared": 1.0,
+      "spoken": 0.0
+     },
+     "key_slot": "radio#0",
+     "status": "SUPPORTED",
+     "template": "radio[_]",
+     "why": "separates 12/12 co-present pairs, 3 values, coverage 1.00"
+    },
+    "template": "radio[_]"
+   }
+  ],
+  "promoted_leaves": [],
+  "readings": {
+   "group[](group[_ draw],group[_ L],group[_ allowance],group[_ L])": [
+    {
+     "evidence": {
+      "constant_share": 0.333,
+      "copresent_pairs": 12,
+      "coverage": 1.0,
+      "cross_view_values": 0,
+      "discrimination": 1.0,
+      "distinct_values": 5,
+      "numeric_share": 0.4,
+      "reload_stability": null,
+      "separated_pairs": 12,
+      "shared": 0.5,
+      "spoken": 0.0
+     },
+     "key_slot": "group#0@4",
+     "status": "SUPPORTED",
+     "template": "group[_](group[_])",
+     "why": "separates 12/12 co-present pairs, 5 values, coverage 1.00"
+    },
+    {
+     "evidence": {
+      "constant_share": 0.5,
+      "copresent_pairs": 12,
+      "coverage": 1.0,
+      "cross_view_values": 0,
+      "discrimination": 1.0,
+      "distinct_values": 5,
+      "numeric_share": 0.8,
+      "reload_stability": null,
+      "separated_pairs": 12,
+      "shared": 0.0,
+      "spoken": 0.0
+     },
+     "key_slot": "group#0",
+     "status": "SUPPORTED",
+     "template": "group[_](group[_])",
+     "why": "separates 12/12 co-present pairs, 5 values, coverage 1.00"
+    },
+    {
+     "evidence": {
+      "constant_share": 0.5,
+      "copresent_pairs": 12,
+      "coverage": 1.0,
+      "cross_view_values": 0,
+      "discrimination": 1.0,
+      "distinct_values": 2,
+      "numeric_share": 0.0,
+      "reload_stability": null,
+      "separated_pairs": 12,
+      "shared": 0.0,
+      "spoken": 0.0
+     },
+     "key_slot": "group#0@3",
+     "status": "SUPPORTED",
+     "template": "group[_](group[_])",
+     "why": "separates 12/12 co-present pairs, 2 values, coverage 1.00"
+    },
+    {
+     "evidence": {
+      "constant_share": 0.333,
+      "copresent_pairs": 12,
+      "coverage": 0.5,
+      "cross_view_values": 0,
+      "discrimination": 1.0,
+      "distinct_values": 3,
+      "numeric_share": 1.0,
+      "reload_stability": null,
+      "separated_pairs": 12,
+      "shared": 0.0,
+      "spoken": 0.0
+     },
+     "key_slot": "group#0@2",
+     "status": "SUPPORTED",
+     "template": "group[_](group[_])",
+     "why": "separates 12/12 co-present pairs, 3 values, coverage 0.50"
+    },
+    {
+     "evidence": {
+      "constant_share": 0.0,
+      "copresent_pairs": 12,
+      "coverage": 0.0,
+      "cross_view_values": 0,
+      "discrimination": 0.0,
+      "distinct_values": 0,
+      "numeric_share": 0.0,
+      "reload_stability": null,
+      "separated_pairs": 0,
+      "shared": 0.0,
+      "spoken": 0.0
+     },
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "template": "group[_](group[_])",
+     "why": "no identity-bearing observation claimed"
+    },
+    {
+     "evidence": {
+      "constant_share": 0.333,
+      "copresent_pairs": 12,
+      "coverage": 0.5,
+      "cross_view_values": 0,
+      "discrimination": 0.0,
+      "distinct_values": 3,
+      "numeric_share": 1.0,
+      "reload_stability": null,
+      "separated_pairs": 0,
+      "shared": 0.0,
+      "spoken": 0.0
+     },
+     "key_slot": "group#0@6",
+     "status": "CONTRADICTED",
+     "template": "group[_](group[_])",
+     "why": "separates none of the 12 co-present pairs"
+    }
+   ],
+   "group[](group[_ requested],group[_ L],group[_ source],group[_ cistern],group[_ available],group[_ L])": [
+    {
+     "evidence": {
+      "constant_share": 0.333,
+      "copresent_pairs": 12,
+      "coverage": 1.0,
+      "cross_view_values": 0,
+      "discrimination": 1.0,
+      "distinct_values": 5,
+      "numeric_share": 0.4,
+      "reload_stability": null,
+      "separated_pairs": 12,
+      "shared": 0.5,
+      "spoken": 0.0
+     },
+     "key_slot": "group#0@4",
+     "status": "SUPPORTED",
+     "template": "group[_](group[_])",
+     "why": "separates 12/12 co-present pairs, 5 values, coverage 1.00"
+    },
+    {
+     "evidence": {
+      "constant_share": 0.5,
+      "copresent_pairs": 12,
+      "coverage": 1.0,
+      "cross_view_values": 0,
+      "discrimination": 1.0,
+      "distinct_values": 5,
+      "numeric_share": 0.8,
+      "reload_stability": null,
+      "separated_pairs": 12,
+      "shared": 0.0,
+      "spoken": 0.0
+     },
+     "key_slot": "group#0",
+     "status": "SUPPORTED",
+     "template": "group[_](group[_])",
+     "why": "separates 12/12 co-present pairs, 5 values, coverage 1.00"
+    },
+    {
+     "evidence": {
+      "constant_share": 0.5,
+      "copresent_pairs": 12,
+      "coverage": 1.0,
+      "cross_view_values": 0,
+      "discrimination": 1.0,
+      "distinct_values": 2,
+      "numeric_share": 0.0,
+      "reload_stability": null,
+      "separated_pairs": 12,
+      "shared": 0.0,
+      "spoken": 0.0
+     },
+     "key_slot": "group#0@3",
+     "status": "SUPPORTED",
+     "template": "group[_](group[_])",
+     "why": "separates 12/12 co-present pairs, 2 values, coverage 1.00"
+    },
+    {
+     "evidence": {
+      "constant_share": 0.333,
+      "copresent_pairs": 12,
+      "coverage": 0.5,
+      "cross_view_values": 0,
+      "discrimination": 1.0,
+      "distinct_values": 3,
+      "numeric_share": 1.0,
+      "reload_stability": null,
+      "separated_pairs": 12,
+      "shared": 0.0,
+      "spoken": 0.0
+     },
+     "key_slot": "group#0@2",
+     "status": "SUPPORTED",
+     "template": "group[_](group[_])",
+     "why": "separates 12/12 co-present pairs, 3 values, coverage 0.50"
+    },
+    {
+     "evidence": {
+      "constant_share": 0.0,
+      "copresent_pairs": 12,
+      "coverage": 0.0,
+      "cross_view_values": 0,
+      "discrimination": 0.0,
+      "distinct_values": 0,
+      "numeric_share": 0.0,
+      "reload_stability": null,
+      "separated_pairs": 0,
+      "shared": 0.0,
+      "spoken": 0.0
+     },
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "template": "group[_](group[_])",
+     "why": "no identity-bearing observation claimed"
+    },
+    {
+     "evidence": {
+      "constant_share": 0.333,
+      "copresent_pairs": 12,
+      "coverage": 0.5,
+      "cross_view_values": 0,
+      "discrimination": 0.0,
+      "distinct_values": 3,
+      "numeric_share": 1.0,
+      "reload_stability": null,
+      "separated_pairs": 0,
+      "shared": 0.0,
+      "spoken": 0.0
+     },
+     "key_slot": "group#0@6",
+     "status": "CONTRADICTED",
+     "template": "group[_](group[_])",
+     "why": "separates none of the 12 co-present pairs"
+    }
+   ],
+   "radio[Use _ cistern]": [
+    {
+     "evidence": {
+      "constant_share": 0.333,
+      "copresent_pairs": 12,
+      "coverage": 1.0,
+      "cross_view_values": 0,
+      "discrimination": 1.0,
+      "distinct_values": 3,
+      "numeric_share": 0.0,
+      "reload_stability": null,
+      "separated_pairs": 12,
+      "shared": 1.0,
+      "spoken": 0.0
+     },
+     "key_slot": "radio#0",
+     "status": "SUPPORTED",
+     "template": "radio[_]",
+     "why": "separates 12/12 co-present pairs, 3 values, coverage 1.00"
+    },
+    {
+     "evidence": {
+      "constant_share": 0.0,
+      "copresent_pairs": 12,
+      "coverage": 0.0,
+      "cross_view_values": 0,
+      "discrimination": 0.0,
+      "distinct_values": 0,
+      "numeric_share": 0.0,
+      "reload_stability": null,
+      "separated_pairs": 0,
+      "shared": 0.0,
+      "spoken": 0.0
+     },
+     "key_slot": null,
+     "status": "NO_IDENTITY",
+     "template": "radio[_]",
+     "why": "no identity-bearing observation claimed"
+    }
+   ]
+  },
+  "stale_refutations": [],
+  "withheld_unions": []
+ },
+ "source": {
+  "git_head": "38f1f08a99d57c2787de02fd8906ff5762a26b88",
+  "implementation_files": {
+   "scripts/transport_score.py": "9a4cd7cadc8646e031e54368de6a32b4f9628698de3b8c321a39219b19dee7cc",
+   "semabi/__init__.py": "0a6e61cf4d9d8dc368fef7bc2053e6db686e3fb70272d7f9e9f1e5b3f79f95e8",
+   "semabi/compiler/__init__.py": "5249623658aef7d2b87bd34d06fab3f181b1ef5bbb9dd70b827592bb01b02893",
+   "semabi/compiler/abstract.py": "a8a2efeebbab13c27efd1a093ff9696cda06e7d1148abe5ec41a840cbdba6056",
+   "semabi/compiler/active.py": "e3572ead5849a7c2d61897eb4498971374797681b8157f8af4af78e7eef64a4a",
+   "semabi/compiler/belief.py": "10996cf9f5f2264ecbe8e28235718e81fc606ed249d8c2708f50541a73a8aa5c",
+   "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+   "semabi/compiler/compile.py": "fa0e4b4237658dc2e5d41cf715fe8ca884b0b2ec9b714cde4f1917318c9f920f",
+   "semabi/compiler/compile_v1.py": "200ccf04a38b69f04655a3bd72c9e0edb5a436eea64dadab6c4f55a3e4377d6c",
+   "semabi/compiler/compile_v2.py": "4c548ab43776c854da23c0a9b85ede95fb18e43d8bfffa4e0ada800b2a0d2d87",
+   "semabi/compiler/compile_v4.py": "8ac23e907a19b790e78fadf6d7d0c22f8176620dd93844b7f21f32551e5193ad",
+   "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+   "semabi/compiler/explorer.py": "16827d3735c9eab4d51a60c585790226be3e692bb63b01794df29a9ba8c8c807",
+   "semabi/compiler/ground.py": "5c94dc46bb5dab3702f77c777e934c14db72183636139441e02fa8410e0f420e",
+   "semabi/compiler/grounder.py": "d272260d2bacd64dcd7fc88f2094c2f84b989736c89924460cc0053b8e97ac06",
+   "semabi/compiler/induce.py": "c726cb2f40c78cc946d8a998e94e056f300e0591fc4d74f73cd8504222954fb8",
+   "semabi/compiler/mentions.py": "800fa94e2e4f76bfc503c7557ec775f6d83a612f6634123a62f78a16de2b781c",
+   "semabi/compiler/model.py": "5175ff650a75fdb39da8f943d5193c99a533f069929af158f0facfc963c9bf31",
+   "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+   "semabi/compiler/parse.py": "f98bac399682bbd2d583e29183e3663872294a4ee9e5542c7d86371e148b2eb9",
+   "semabi/compiler/planner.py": "0c56abb0518fcfb78e917f54ac21890cda10fe4b458133a3a1fdd0038841d887",
+   "semabi/compiler/schema_llm.py": "f05e458184188ff78113df6c8b872e50174b5232c5b0781e73251e97b1199d4d",
+   "semabi/compiler/v2/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "semabi/compiler/v2/abstractor.py": "0d9b484e558df2844ce8c21dd5b15d16d894a823ae9cd7152a1421a351dd61d5",
+   "semabi/compiler/v2/association.py": "f34e19ff719b2b63475099d36701e9785da6a77b45509861621c7fd20bddba00",
+   "semabi/compiler/v2/controls.py": "e578b9735de3c817b16d742c5c86eefe3ea2ac75ae810cb2cf9aed31aa45687c",
+   "semabi/compiler/v2/counterexamples.py": "3ca77e39f57b99b42a0a923840b3bdd193c86dd6e1cc035772d9c0eca8be60df",
+   "semabi/compiler/v2/differential.py": "a6e7f005f4ff4ab4a0e43802164a7fc41c6f7118daa54d9bd3b888e8bd0933f0",
+   "semabi/compiler/v2/explore.py": "f420a6cabbf8dc8746a3fc0938009b7800554b20bb549b126a187172cb9daac2",
+   "semabi/compiler/v2/graph.py": "f601fb6bd56d8728a01fdc404c6a0d80636cb2ccba98dab09cd26abf5c425b2a",
+   "semabi/compiler/v2/hypotheses.py": "6cc8812664f474bfeafc7bd7f62a43faf0a78f252269077749e062c3a0981b03",
+   "semabi/compiler/v2/llm_propose.py": "fa0951ce5fbdc2e90fd76b184d8f44b39a752585017d7c89d74306e08c68b94e",
+   "semabi/compiler/v2/refinement.py": "79f69756fc146f2f783bc19571bffb7efb42a2a92edbd39ed33c91b83d7645e3",
+   "semabi/compiler/v2/score.py": "aaff604a4c91e8034fdb113c8b76e5e9415eb50bbc91d5ad25755492ae47524b",
+   "semabi/compiler/v2/sections.py": "4bd39bf7e067a94ec19f6ad6c23c098d13ac01efdabafe2f6e15eb213003ba02",
+   "semabi/compiler/v2/units.py": "72ccac1c76e4ca2ab20390098faa8e9be0f5c700ccb3382735a689391f2a3c5f",
+   "semabi/compiler/v2/validation.py": "fc9b6c38def59c4fbcc3b306bb36f6c3eee9aee553ea1edf2fb884741d9f6f34",
+   "semabi/compiler/v2/validation_probe.py": "244cca6a0b735fc67364335e793c0e8848f3a2b4bebf32db1997014ebefbf8ac",
+   "semabi/compiler/v4/__init__.py": "c41acb8afd5f3306718e6b5bb242db1dae876bf512bcec1d6c49108e8fbcc38c",
+   "semabi/compiler/v4/abstractor.py": "4e772cf28d002461de3449e4a939ced2b39a672e629b916612c83bb6ad0625f1",
+   "semabi/compiler/v4/binding.py": "8088fdbfa8e55fefe3318293da4b350794e307a4f581e6c03422e7020b892c68",
+   "semabi/compiler/v4/conditional.py": "9aa1db4e6a113d3f71f99d8b389a318749fb33affb1166bd6dbd9b29fbc41226",
+   "semabi/compiler/v4/consequence.py": "158551f35160a79d9c165c767486b63579564dccc3e99febf45d4d714ef0791b",
+   "semabi/compiler/v4/correspondence.py": "dd4659f74a4eb1ca8d3656ad278cd15290de2c08318b964e1a85c127fdd1be8c",
+   "semabi/compiler/v4/custody.py": "8f2aa81f444843459ef553c07639afa9ffcc3f342276fde1da5a152da715fb29",
+   "semabi/compiler/v4/emission.py": "5068810fe1d35b988649eb8ff8aecf6bd49dee5344cbdf72e94b156f6ec6cbbe",
+   "semabi/compiler/v4/fields.py": "b5b794432a504b7d30f6574dc1e0d3ff34b44536967ab50ae9a5a0c04ffc9967",
+   "semabi/compiler/v4/frozen_evidence.py": "cb3f7980fd9d24e888f45267ce5f7e597576ea2d2db63783988455bc340f3a65",
+   "semabi/compiler/v4/identity.py": "06792b4a7ebd478fb46edeb7a37c5dce3b7eec02d561994f3560fad2ef01d6a7",
+   "semabi/compiler/v4/manifests.py": "086e3c03591d0a21cfe0fe4717c184f1013fbd1becb86c42d376d98cbcf90b1f",
+   "semabi/compiler/v4/objective.py": "a62d6907b0aa1f643a2e2cb96038cbedab8ac40b55c0e95e67d5f2452f1bdfef",
+   "semabi/compiler/v4/outcome.py": "552b87472577a6f409069fdf459cd64d209a699b48737df57a56a3949813d736",
+   "semabi/compiler/v4/pinned.py": "f3be252e1f021424565aaa20baf846b6b0d1522d9a7678e7770a4b6e006e2c8b",
+   "semabi/compiler/v4/prequential.py": "d3246ff8f2ae45e61d48b97879a219a2cace87abaed2a19bb7f58f76b49e679e",
+   "semabi/compiler/v4/probe.py": "e43d12bae3f22e524ef2548ee1b6a32c0c0e3f248e047e2de41da4bde6f9d6f7",
+   "semabi/compiler/v4/promote.py": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65",
+   "semabi/compiler/v4/prospective.py": "591deb563820612e1f138660b2b2d83f9da51fcdb386b12c88ce19d0e074511b",
+   "semabi/compiler/v4/referring.py": "c0e2abbee5dd724f193bc61a5264268e853837c4282cbe2d372b2ec2489e5b1f",
+   "semabi/compiler/v4/search.py": "c87e3633207dfaa1483574cad2335b23222bec6fa51fe35526adf8dd9576f72c",
+   "semabi/compiler/v4/source_candidates.py": "ff27669ba080d3ce8294bbb43cdc68e77409dd431dba390035aa88f85e8e08fd",
+   "semabi/compiler/v4/sufficiency.py": "48a82b21eff70caa24e04b541d522466f25547cec300694557f67a3e5a74d3a2",
+   "semabi/compiler/v4/transfer.py": "19b138c05c712a8187a7db1ee2eef33b93c9eec83b422a175bbc64d195e49938",
+   "semabi/eval/__init__.py": "53610478d943c7266e4d7815f53fee5eecfad410f8971716b828f763a54128c5",
+   "semabi/eval/v4_acquire.py": "1e6e18be600a483a3bf5e66c32b915a964be1b57ebb220b6ec01fdb230cc5b2d",
+   "semabi/eval/v4_identity_scoreboard.py": "dc8a5c5a1385108bd2c63a13c3fc5092e06d9c14d0d3ae9da42e73957fe4a983",
+   "semabi/relmodel.py": "2034f3a5dd7019c5333c8fb4e0283cf349e29905cfa5d0933e453180fa3a4827"
+  },
+  "sha256": "f0f8d87c85a4d13944ed2814ab9d8a343cd1d7b2fbf56182401d9955fd9a0180"
+ },
+ "train": {
+  "byte_lengths": {
+   "field_theories_v4.json": null,
+   "identity_refutations_v4.json": null,
+   "observations.jsonl": 36127,
+   "probes.acquired.jsonl": null,
+   "probes.jsonl": null,
+   "steps.jsonl": 9836
+  },
+  "files": {
+   "field_theories_v4.json": null,
+   "identity_refutations_v4.json": null,
+   "observations.jsonl": "e95b03f3c0fe843a2c4e79129a7fc7657489a36aec86d4231d40cf9c7fccf061",
+   "probes.acquired.jsonl": null,
+   "probes.jsonl": null,
+   "steps.jsonl": "e4441d474e2d500e6675c73ea5553aac83d2f4658e328e7422a68ac7b9ec7f43"
+  },
+  "path": "/home/moloch/semabi/docs/data/v4/transport/first_pass/reservoir/r1_initial_v1",
+  "sha256": "3f54eb5fc5c4e4830c300d7f8113f1f9d481c9b0aecb0069994aa84915943275"
+ },
+ "training_steps": 36
+}

@@ -1,0 +1,56 @@
+{
+  "created_utc": "2026-09-07T21:17:06.028792+00:00",
+  "job": "r1_evaluation_v1",
+  "observed": {
+    "child_pid": {
+      "affinity": [
+        17
+      ],
+      "environment": {
+        "BLIS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "PYTHONHASHSEED": "0",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "nice": 0,
+      "pid": 783792
+    },
+    "runner_pid": {
+      "affinity": [
+        17
+      ],
+      "environment": {
+        "BLIS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "PYTHONHASHSEED": "0",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "nice": 0,
+      "pid": 783790
+    }
+  },
+  "observer_source_sha256": "d80069df4dd9118d519656ed1272b2be7552899bd2aea2a5e129351dc74ae1e4",
+  "pid_scope": "Host processes of the escalated browser/service launch; observer runs in the same host namespace.",
+  "process": {
+    "child_pid": 783792,
+    "child_terminated": null,
+    "cwd": "/home/moloch/semabi",
+    "end_utc": null,
+    "owned_process_group": 783792,
+    "owner": "/root",
+    "returncode": null,
+    "runner_pid": 783790,
+    "source_head": "38f1f08a99d57c2787de02fd8906ff5762a26b88",
+    "start_utc": "2026-09-07T21:17:01.762319+00:00",
+    "status": "RUNNING"
+  },
+  "process_record_sha256_at_observation": "812091aab6151ef2da2f4726d4b3c860d20f02811aec4904bece50da317bcd07",
+  "schema": "semabi.transport.r1_session_observed.v1",
+  "session_id": 20270
+}

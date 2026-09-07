@@ -1,0 +1,60 @@
+{
+  "authorization": "SERVICE, INITIAL and PREPARE only; pause for root campaign freeze before acquisition.",
+  "declared_job_count": 13,
+  "declared_jobs": [
+    "r1_fixture_service_v1",
+    "r1_initial_v1",
+    "r1_candidates_v1",
+    "r1_contested_1701",
+    "r1_untargeted_1701",
+    "r1_contested_1702",
+    "r1_untargeted_1702",
+    "r1_evaluation_v1",
+    "score_r1_initial_v1",
+    "score_r1_contested_1701",
+    "score_r1_untargeted_1701",
+    "score_r1_contested_1702",
+    "score_r1_untargeted_1702"
+  ],
+  "delegated_session_owner": "/root/reserved_audit",
+  "fixture_service_cpu": 22,
+  "identity_policy": "Exclusive run_job directories; retain every attempt; never reuse an output identity; execution receipts outside fixed jobs root.",
+  "implementation_freeze": {
+    "path": "docs/data/v4/transport/reserved_v1/implementation_freeze_v1.json",
+    "sha256": "310c6d65cdd6e55baa61bf5408e6fd807abac7f91e53c5b3bfdf92e075e6c280"
+  },
+  "initial_prepare_and_collection_cpu": 17,
+  "initial_validation": {
+    "all_match": true,
+    "g2_results_sha256": "481f879db351618431127a8f7a99db1a35ed06975c7f1f325347c9953a80d67e",
+    "runtime_files": 67,
+    "sealed_inventory_entries": 58,
+    "sealed_payloads_reopened_or_rehashed_by_this_check": false,
+    "verification_files": 19
+  },
+  "nice": 0,
+  "numerical_thread_environment": {
+    "BLIS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "python_hash_seed": "0",
+  "recorded_utc": "2026-09-07T20:57:37.306107+00:00",
+  "root_coordinator": "/root",
+  "runner_record_owner": "/root",
+  "schema": "semabi.transport.r1_delegated_execution.v1",
+  "scope": "Launch and custody/accounting metadata only until complete first-pass preservation; no control or semantic diagnosis.",
+  "score_cpus_planned": [
+    17,
+    18,
+    19,
+    20,
+    21
+  ],
+  "score_launch_requires_root_resource_confirmation": true,
+  "source_head": "38f1f08a99d57c2787de02fd8906ff5762a26b88",
+  "working_directory": "/home/moloch/semabi"
+}

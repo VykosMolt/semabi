@@ -1,0 +1,75 @@
+{
+  "bootstrap_goto": 0,
+  "case_count": 1,
+  "charged_attempts": 37,
+  "complete": true,
+  "end": {
+    "argv": [
+      "scripts/transport_collect.py",
+      "script",
+      "--url",
+      "http://127.0.0.1:8767/reservoir",
+      "--reset-url",
+      "http://127.0.0.1:8767/reset?fixture=reservoir&partition=initial",
+      "--script",
+      "experiments/transport_v1/oracle/reserved_contract.json",
+      "--fixture",
+      "reservoir",
+      "--seed",
+      "1701",
+      "--freeze",
+      "docs/data/v4/transport/reserved_v1/implementation_freeze_v1.json",
+      "--out",
+      "docs/data/v4/transport/first_pass/reservoir/r1_initial_v1"
+    ],
+    "cwd": "/home/moloch/semabi",
+    "git_head": "38f1f08a99d57c2787de02fd8906ff5762a26b88",
+    "pid": 733990,
+    "utc": "2026-09-07T21:00:34.988549+00:00"
+  },
+  "failed_attempts": 0,
+  "freeze_sha256": "310c6d65cdd6e55baa61bf5408e6fd807abac7f91e53c5b3bfdf92e075e6c280",
+  "navigation_waits": 0,
+  "paired_steps_recorded": 36,
+  "primitive_counts": {
+    "click": 29,
+    "reload": 1,
+    "reset": 1,
+    "type": 6
+  },
+  "raw_hashes": {
+    "decisions.jsonl": "3c5db914ffdf9fcb8e642ce907d7045bad7b93cce0771d3fb19a1cb2566eb6b6",
+    "observations.jsonl": "e95b03f3c0fe843a2c4e79129a7fc7657489a36aec86d4231d40cf9c7fccf061",
+    "steps.jsonl": "e4441d474e2d500e6675c73ea5553aac83d2f4658e328e7422a68ac7b9ec7f43"
+  },
+  "script_file": "experiments/transport_v1/oracle/reserved_contract.json",
+  "script_sha256": "6db62960de2075fb33488c33f4c1df5556e99f94de6b36eb7ac18a91fe8d7728",
+  "settle_timeouts": 0,
+  "snapshot_calls": 73,
+  "start": {
+    "argv": [
+      "scripts/transport_collect.py",
+      "script",
+      "--url",
+      "http://127.0.0.1:8767/reservoir",
+      "--reset-url",
+      "http://127.0.0.1:8767/reset?fixture=reservoir&partition=initial",
+      "--script",
+      "experiments/transport_v1/oracle/reserved_contract.json",
+      "--fixture",
+      "reservoir",
+      "--seed",
+      "1701",
+      "--freeze",
+      "docs/data/v4/transport/reserved_v1/implementation_freeze_v1.json",
+      "--out",
+      "docs/data/v4/transport/first_pass/reservoir/r1_initial_v1"
+    ],
+    "cwd": "/home/moloch/semabi",
+    "git_head": "38f1f08a99d57c2787de02fd8906ff5762a26b88",
+    "pid": 733990,
+    "utc": "2026-09-07T21:00:06.900496+00:00"
+  },
+  "status": "FINISHED",
+  "unpaired_attempts": 1
+}

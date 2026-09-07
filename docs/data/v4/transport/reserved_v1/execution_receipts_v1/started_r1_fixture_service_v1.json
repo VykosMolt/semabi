@@ -1,0 +1,54 @@
+{
+  "created_utc": "2026-09-07T20:59:49.001137+00:00",
+  "job": "r1_fixture_service_v1",
+  "observed": {
+    "child_pid": {
+      "affinity": [
+        22
+      ],
+      "cmdline": ".venv/bin/python experiments/transport_v1/server.py --port 8767",
+      "environment": {
+        "BLIS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "PYTHONHASHSEED": "0",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "nice": 0,
+      "pid": 729444
+    },
+    "runner_pid": {
+      "affinity": [
+        22
+      ],
+      "cmdline": ".venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/reserved_v1/jobs/r1_fixture_service_v1 -- .venv/bin/python experiments/transport_v1/server.py --port 8767",
+      "environment": {
+        "BLIS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "PYTHONHASHSEED": "0",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "nice": 0,
+      "pid": 729442
+    }
+  },
+  "owned_listener": [
+    {
+      "address": "0100007F:223F",
+      "inode": "2741163",
+      "state": "LISTEN",
+      "table": "/proc/net/tcp"
+    }
+  ],
+  "process_record_sha256_at_observation": "814e758b22f2ce97f81ccd68bb474ef588596ede5ffe53bd77b3bc7d79046259",
+  "readiness_scope": "Owned listener socket confirmed through process descriptors; no HTTP request, browser observation or fixture action performed.",
+  "schema": "semabi.transport.r1_launch_observed.v1",
+  "session_id": 47717,
+  "source_head": "38f1f08a99d57c2787de02fd8906ff5762a26b88",
+  "state": "RUNNING"
+}
