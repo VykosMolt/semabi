@@ -1,0 +1,647 @@
+{
+  "schema": "semabi.v4.battery-closeout.v1",
+  "battery": 9,
+  "reviewed_at_utc": "2026-09-07T09:22:20.887907+00:00",
+  "checkout_commit": "0add9d9e0ad909bb55851914bb9626b9909521a6",
+  "comparison_commits": {
+    "b95dccb": "b95dccb863e03b0f17e583dfb60d7faa86234cd9",
+    "4fe56e1": "4fe56e1b847a87b4ff70253c192d97af711ee683"
+  },
+  "scope": "Review of retained development artifacts; no experiments rerun and no new execution attestation.",
+  "basis": "Stage logs, emitted artifact hashes, parsed JSON equality to committed baselines, and artifact modification times.",
+  "limitations": "Modification times and historical logs are local bookkeeping, not proof of prospective collection chronology. Existing report authority and information boundaries still apply. Zero differences do not imply nonzero exposure; inspect each report for its tested surface.",
+  "battery_log": {
+    "path": "docs/data/v4/prequential/battery_run9.log",
+    "sha256": "f398babe3a8b397d7a301a7cef2aa6976f25a1d651fd5e69b637bcd5e9ed2af1"
+  },
+  "stages": {
+    "outcome": {
+      "expected_outputs": 20,
+      "observed_outputs": 20,
+      "log": {
+        "path": "docs/data/v4/prequential/battery_run9_outcome.txt",
+        "sha256": "573d464baee173fb31886d87d1179ba91406e8d1045546c1f1a0b553666f2bb8"
+      },
+      "result": "ALL_EXPECTED_OUTPUTS_PRESENT_AND_JSON_IDENTICAL_TO_BOTH_BASELINES",
+      "artifacts": [
+        {
+          "path": "docs/data/v4/outcome_blend_book_transfer_split05.json",
+          "sha256": "a278a307fd763daaf647b92bc46f77715226b7973ea89ea8e85e46231ebb4143",
+          "modified_at_utc": "2026-09-07T07:19:56.970355+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "a278a307fd763daaf647b92bc46f77715226b7973ea89ea8e85e46231ebb4143",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "a278a307fd763daaf647b92bc46f77715226b7973ea89ea8e85e46231ebb4143",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        },
+        {
+          "path": "docs/data/v4/outcome_blend_book_transfer_split07.json",
+          "sha256": "778517c36aedc0064476f29f4d1863ddb72ff3c4464de397f47b593361df6e19",
+          "modified_at_utc": "2026-09-07T07:22:45.858556+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "778517c36aedc0064476f29f4d1863ddb72ff3c4464de397f47b593361df6e19",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "778517c36aedc0064476f29f4d1863ddb72ff3c4464de397f47b593361df6e19",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        },
+        {
+          "path": "docs/data/v4/outcome_blend_book_transfer_permuted.json",
+          "sha256": "35ec9034b250b1f9889d65f9bb90addd17e44eda7ef1dd489c7390c285fa1b7d",
+          "modified_at_utc": "2026-09-07T07:24:11.933017+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "35ec9034b250b1f9889d65f9bb90addd17e44eda7ef1dd489c7390c285fa1b7d",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "35ec9034b250b1f9889d65f9bb90addd17e44eda7ef1dd489c7390c285fa1b7d",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        },
+        {
+          "path": "docs/data/v4/outcome_blend_book_cross_trace.json",
+          "sha256": "fadd747a2530e32b11a75bed4b4a02390ceaec5fe8a38944057d14c14faa4c02",
+          "modified_at_utc": "2026-09-07T07:26:12.885114+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "fadd747a2530e32b11a75bed4b4a02390ceaec5fe8a38944057d14c14faa4c02",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "fadd747a2530e32b11a75bed4b4a02390ceaec5fe8a38944057d14c14faa4c02",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        },
+        {
+          "path": "docs/data/v4/outcome_harbour_transfer_split05.json",
+          "sha256": "8a05667eb8bf4e5b11e2bc65da12dc63d738132c60afd8d803668e8918dd951f",
+          "modified_at_utc": "2026-09-07T07:28:25.727745+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "8a05667eb8bf4e5b11e2bc65da12dc63d738132c60afd8d803668e8918dd951f",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "8a05667eb8bf4e5b11e2bc65da12dc63d738132c60afd8d803668e8918dd951f",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        },
+        {
+          "path": "docs/data/v4/outcome_harbour_cross_trace.json",
+          "sha256": "13d93bcd51b5b71ed4b8cbdfb5f94c6d1828fbd50d6b4824ce2c8f6f439917a4",
+          "modified_at_utc": "2026-09-07T07:32:43.870830+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "13d93bcd51b5b71ed4b8cbdfb5f94c6d1828fbd50d6b4824ce2c8f6f439917a4",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "13d93bcd51b5b71ed4b8cbdfb5f94c6d1828fbd50d6b4824ce2c8f6f439917a4",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        },
+        {
+          "path": "docs/data/v4/outcome_opus_02_cellar_dev_split05.json",
+          "sha256": "c000d298d6c1140f2a185c3285bfab89c4a721df290b29adde1e583cc75365aa",
+          "modified_at_utc": "2026-09-07T07:36:43.179193+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "c000d298d6c1140f2a185c3285bfab89c4a721df290b29adde1e583cc75365aa",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "c000d298d6c1140f2a185c3285bfab89c4a721df290b29adde1e583cc75365aa",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        },
+        {
+          "path": "docs/data/v4/outcome_vet_clinic_transfer_split05.json",
+          "sha256": "282174da6fbf191adfcc985b8100db51dd66c29def17d9dde54fb31ece0171d6",
+          "modified_at_utc": "2026-09-07T07:37:29.981987+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "282174da6fbf191adfcc985b8100db51dd66c29def17d9dde54fb31ece0171d6",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "282174da6fbf191adfcc985b8100db51dd66c29def17d9dde54fb31ece0171d6",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        },
+        {
+          "path": "docs/data/v4/creation_blend_book_transfer_source_choice.json",
+          "sha256": "17c01e93a89a7904dcbd88f19972f2c27b01e45904d2eb75578ffa492c75a065",
+          "modified_at_utc": "2026-09-07T07:38:54.896030+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "17c01e93a89a7904dcbd88f19972f2c27b01e45904d2eb75578ffa492c75a065",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "17c01e93a89a7904dcbd88f19972f2c27b01e45904d2eb75578ffa492c75a065",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        },
+        {
+          "path": "docs/data/v4/creation_vet_clinic_transfer_source_choice.json",
+          "sha256": "06c4ec701395669e81bca07f1107405cf1ca59e052f9583b99f1b80a64b637db",
+          "modified_at_utc": "2026-09-07T07:39:19.807633+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "06c4ec701395669e81bca07f1107405cf1ca59e052f9583b99f1b80a64b637db",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "06c4ec701395669e81bca07f1107405cf1ca59e052f9583b99f1b80a64b637db",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        },
+        {
+          "path": "docs/data/v4/outcome_blend_book_subject_restricted.json",
+          "sha256": "5ba68cfe536f9cf93d8024f2f05a50495379c6999a599b60bd5d4d779ec4a78a",
+          "modified_at_utc": "2026-09-07T07:40:11.027701+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "5ba68cfe536f9cf93d8024f2f05a50495379c6999a599b60bd5d4d779ec4a78a",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "5ba68cfe536f9cf93d8024f2f05a50495379c6999a599b60bd5d4d779ec4a78a",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        },
+        {
+          "path": "docs/data/v4/outcome_harbour_subject_restricted.json",
+          "sha256": "d169955a17df53095badd269036b717e1bf48a0a0da5a973d02ede7128b973b2",
+          "modified_at_utc": "2026-09-07T07:41:19.155009+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "d169955a17df53095badd269036b717e1bf48a0a0da5a973d02ede7128b973b2",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "d169955a17df53095badd269036b717e1bf48a0a0da5a973d02ede7128b973b2",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        },
+        {
+          "path": "docs/data/v4/claim_substance_blend_book_transfer_frozen_prefix.json",
+          "sha256": "c29eb268b9bee733d22c30d5bcbc7c842ddaa642bade5265cfd3ebc177376d19",
+          "modified_at_utc": "2026-09-07T07:42:09.587505+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "c29eb268b9bee733d22c30d5bcbc7c842ddaa642bade5265cfd3ebc177376d19",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "c29eb268b9bee733d22c30d5bcbc7c842ddaa642bade5265cfd3ebc177376d19",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        },
+        {
+          "path": "docs/data/v4/claim_substance_harbour_transfer_frozen_prefix.json",
+          "sha256": "1782f063b7e1af0141bf8e9378b10ba2b65de40c84561c0bdca59f8a7805e40c",
+          "modified_at_utc": "2026-09-07T07:43:15.950573+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "1782f063b7e1af0141bf8e9378b10ba2b65de40c84561c0bdca59f8a7805e40c",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "1782f063b7e1af0141bf8e9378b10ba2b65de40c84561c0bdca59f8a7805e40c",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        },
+        {
+          "path": "docs/data/v4/claim_substance_vet_clinic_transfer_frozen_prefix.json",
+          "sha256": "970d74c89426388fa98e37034ca7a91c1588d8995968cfb39e41a55fea4180cf",
+          "modified_at_utc": "2026-09-07T07:44:25.724768+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "970d74c89426388fa98e37034ca7a91c1588d8995968cfb39e41a55fea4180cf",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "970d74c89426388fa98e37034ca7a91c1588d8995968cfb39e41a55fea4180cf",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        },
+        {
+          "path": "docs/data/v4/state_fidelity_blend_book_transfer_source_choice_tracked.json",
+          "sha256": "487e07f225145fce57ac7ed6ec7183f1311103ece724fc689a3ea25b3678e5b3",
+          "modified_at_utc": "2026-09-07T07:45:49.112829+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "487e07f225145fce57ac7ed6ec7183f1311103ece724fc689a3ea25b3678e5b3",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "487e07f225145fce57ac7ed6ec7183f1311103ece724fc689a3ea25b3678e5b3",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        },
+        {
+          "path": "docs/data/v4/state_fidelity_harbour_transfer_source_choice_tracked.json",
+          "sha256": "776c24ff9751f821f32121d57f1754b61a208ff63009d9f938b636859e94657d",
+          "modified_at_utc": "2026-09-07T07:46:54.510467+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "776c24ff9751f821f32121d57f1754b61a208ff63009d9f938b636859e94657d",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "776c24ff9751f821f32121d57f1754b61a208ff63009d9f938b636859e94657d",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        },
+        {
+          "path": "docs/data/v4/state_fidelity_opus_02_cellar_dev_source_choice_tracked.json",
+          "sha256": "a5b839a3b2c7ade73e3a5d62d1bf8620a7069d2700994aaf80ef34f152d23f08",
+          "modified_at_utc": "2026-09-07T07:48:54.996519+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "a5b839a3b2c7ade73e3a5d62d1bf8620a7069d2700994aaf80ef34f152d23f08",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "a5b839a3b2c7ade73e3a5d62d1bf8620a7069d2700994aaf80ef34f152d23f08",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        },
+        {
+          "path": "docs/data/v4/state_fidelity_vet_clinic_transfer_source_choice_tracked.json",
+          "sha256": "417b1ffac2a4567071f85283311a60ab9901f02e3326fa601d9c296dd6c7cf12",
+          "modified_at_utc": "2026-09-07T07:49:19.029628+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "417b1ffac2a4567071f85283311a60ab9901f02e3326fa601d9c296dd6c7cf12",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "417b1ffac2a4567071f85283311a60ab9901f02e3326fa601d9c296dd6c7cf12",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        },
+        {
+          "path": "docs/data/v4/outcome_blend_book_transfer_prequential.json",
+          "sha256": "afd6bc2a6b213a5cc10b39de19128f4adef146abcbcdd71408ae7879d25d5cff",
+          "modified_at_utc": "2026-09-07T08:32:21.713933+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "afd6bc2a6b213a5cc10b39de19128f4adef146abcbcdd71408ae7879d25d5cff",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "afd6bc2a6b213a5cc10b39de19128f4adef146abcbcdd71408ae7879d25d5cff",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        }
+      ]
+    },
+    "admissible": {
+      "expected_outputs": 8,
+      "observed_outputs": 8,
+      "log": {
+        "path": "docs/data/v4/prequential/battery_run9_admissible.txt",
+        "sha256": "23677e26d5cd8eeae07002dd596168826a54297a96db731e0c25abf5f521b9f4"
+      },
+      "result": "ALL_EXPECTED_OUTPUTS_PRESENT_AND_JSON_IDENTICAL_TO_BOTH_BASELINES",
+      "artifacts": [
+        {
+          "path": "docs/data/v4/admissible_blend_book_transfer_frozen_prefix.json",
+          "sha256": "15d53067c951756d398eecf2d40cf5945fe5403a3255c97db4d6a056e5fa0ff5",
+          "modified_at_utc": "2026-09-07T08:33:12.380097+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "15d53067c951756d398eecf2d40cf5945fe5403a3255c97db4d6a056e5fa0ff5",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "15d53067c951756d398eecf2d40cf5945fe5403a3255c97db4d6a056e5fa0ff5",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        },
+        {
+          "path": "docs/data/v4/bundle_blend_book_transfer_frozen_prefix.json",
+          "sha256": "59253b48558974d711a9f1b1eb194957bcf8027dd45d682a2bec80a78975c10d",
+          "modified_at_utc": "2026-09-07T08:34:03.238333+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "59253b48558974d711a9f1b1eb194957bcf8027dd45d682a2bec80a78975c10d",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "59253b48558974d711a9f1b1eb194957bcf8027dd45d682a2bec80a78975c10d",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        },
+        {
+          "path": "docs/data/v4/admissible_harbour_transfer_frozen_prefix.json",
+          "sha256": "9a0f0356a99319f385f45cb2ca49faa5d637ec9c63755972ce12d6cf4a288ded",
+          "modified_at_utc": "2026-09-07T08:35:11.074653+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "9a0f0356a99319f385f45cb2ca49faa5d637ec9c63755972ce12d6cf4a288ded",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "9a0f0356a99319f385f45cb2ca49faa5d637ec9c63755972ce12d6cf4a288ded",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        },
+        {
+          "path": "docs/data/v4/bundle_harbour_transfer_frozen_prefix.json",
+          "sha256": "eb0ccfa2812a0601e74646f0d63aee28db93eb8aad33da3fd7a2cb14f2bfa59b",
+          "modified_at_utc": "2026-09-07T08:36:18.628247+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "eb0ccfa2812a0601e74646f0d63aee28db93eb8aad33da3fd7a2cb14f2bfa59b",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "eb0ccfa2812a0601e74646f0d63aee28db93eb8aad33da3fd7a2cb14f2bfa59b",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        },
+        {
+          "path": "docs/data/v4/admissible_opus_02_cellar_dev_frozen_prefix.json",
+          "sha256": "e25be1af98e23d12da507fec9507cb94db9b79abdfe47edef8eb9427548054cb",
+          "modified_at_utc": "2026-09-07T08:38:17.458696+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "e25be1af98e23d12da507fec9507cb94db9b79abdfe47edef8eb9427548054cb",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "e25be1af98e23d12da507fec9507cb94db9b79abdfe47edef8eb9427548054cb",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        },
+        {
+          "path": "docs/data/v4/bundle_opus_02_cellar_dev_frozen_prefix.json",
+          "sha256": "26ab7614ed723b93bf7d033efef82c6b02912c517a824c8100ae2dd732b7c61f",
+          "modified_at_utc": "2026-09-07T08:40:16.991411+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "26ab7614ed723b93bf7d033efef82c6b02912c517a824c8100ae2dd732b7c61f",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "26ab7614ed723b93bf7d033efef82c6b02912c517a824c8100ae2dd732b7c61f",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        },
+        {
+          "path": "docs/data/v4/admissible_vet_clinic_transfer_frozen_prefix.json",
+          "sha256": "b6e9ba246e14a1437045c699146ec6eec2bed992f6437edeb0a5b94330b8717d",
+          "modified_at_utc": "2026-09-07T08:40:41.231997+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "b6e9ba246e14a1437045c699146ec6eec2bed992f6437edeb0a5b94330b8717d",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "b6e9ba246e14a1437045c699146ec6eec2bed992f6437edeb0a5b94330b8717d",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        },
+        {
+          "path": "docs/data/v4/bundle_vet_clinic_transfer_frozen_prefix.json",
+          "sha256": "859b5eb7cc3b083d2445d920ed3bfdcdd889acdcac11fed046e9039cdb35636b",
+          "modified_at_utc": "2026-09-07T08:41:05.637960+00:00",
+          "baselines": {
+            "b95dccb": {
+              "sha256": "859b5eb7cc3b083d2445d920ed3bfdcdd889acdcac11fed046e9039cdb35636b",
+              "json_equal": true,
+              "bytes_equal": true
+            },
+            "4fe56e1": {
+              "sha256": "859b5eb7cc3b083d2445d920ed3bfdcdd889acdcac11fed046e9039cdb35636b",
+              "json_equal": true,
+              "bytes_equal": true
+            }
+          }
+        }
+      ]
+    }
+  },
+  "invariants": [
+    {
+      "path": "docs/data/v4/reversal_blend_book.json",
+      "sha256": "d9a53d9e31d6a5c01ca3b013622bd20dfc4f3723201465a703843a697b107bfe",
+      "differences": {
+        "n_differences": 0
+      }
+    },
+    {
+      "path": "docs/data/v4/reversal_cellar.json",
+      "sha256": "58bb9d6e01d34d1af668cc27e694a34e100ff280af03fcf73cde71e8da55b194",
+      "differences": {
+        "n_differences": 0
+      }
+    },
+    {
+      "path": "docs/data/v4/reversal_harbour.json",
+      "sha256": "c482545bdcd5a9f2db5013689c1b22bb088adb0a2a71ff4c385c799938f9bf01",
+      "differences": {
+        "n_differences": 0
+      }
+    },
+    {
+      "path": "docs/data/v4/reversal_vet_clinic.json",
+      "sha256": "e006cb36587fd48c7224de5c53dc0b11af2a71d7bde50a6980b0c35d7ac0ec3e",
+      "differences": {
+        "n_differences": 0
+      }
+    },
+    {
+      "path": "docs/data/v4/renaming_blend_book_fresh.json",
+      "sha256": "8acc5fa97619a5b7d8ee24c9689a6b238f3e8e504cb217f693d4a390d2584d32",
+      "differences": {
+        "n_differences": 0,
+        "n_ledger_differences": 0
+      }
+    },
+    {
+      "path": "docs/data/v4/renaming_blend_book_permute.json",
+      "sha256": "d760229dee7cf78dce31aac2e8ff07a2f8ca163a2fc7cb48f69518e6b1978d26",
+      "differences": {
+        "n_differences": 0,
+        "n_ledger_differences": 0
+      }
+    },
+    {
+      "path": "docs/data/v4/renaming_cellar_fresh.json",
+      "sha256": "5ce4b8a08afc072c3d3e76da536ba301b626c054f47ddb7622dc716876771ae6",
+      "differences": {
+        "n_differences": 0,
+        "n_ledger_differences": 0
+      }
+    },
+    {
+      "path": "docs/data/v4/renaming_cellar_permute.json",
+      "sha256": "52443b2c0633ad8205fc72b23b1ad10def856ed35199f9085ce71c32d9ca6d1a",
+      "differences": {
+        "n_differences": 0,
+        "n_ledger_differences": 0
+      }
+    },
+    {
+      "path": "docs/data/v4/renaming_harbour_fresh.json",
+      "sha256": "8d9ea919115463ed3031522d1436141037b6089f0f17360e781294f4737ca1a5",
+      "differences": {
+        "n_differences": 0,
+        "n_ledger_differences": 0
+      }
+    },
+    {
+      "path": "docs/data/v4/renaming_harbour_permute.json",
+      "sha256": "b8e655fbff4b1f2eccfbe5634aac24ee348e39f76b7c69769e75efd826e085da",
+      "differences": {
+        "n_differences": 0,
+        "n_ledger_differences": 0
+      }
+    },
+    {
+      "path": "docs/data/v4/renaming_vet_clinic_fresh.json",
+      "sha256": "b30c85aacba379d4c29f8e097bd3c6652095b1bd562da584281c33addb024cb9",
+      "differences": {
+        "n_differences": 0,
+        "n_ledger_differences": 0
+      }
+    },
+    {
+      "path": "docs/data/v4/renaming_vet_clinic_permute.json",
+      "sha256": "4f27998e7d6beaafacf01c31d651d225e03adb90a0c0fc700f938e253ec609b0",
+      "differences": {
+        "n_differences": 0,
+        "n_ledger_differences": 0
+      }
+    },
+    {
+      "path": "docs/data/v4/columns_frozen_blend_book.json",
+      "sha256": "eddae73b3a3dc330a469ce23a7adf26bc5e3d1afd969205443ef971951613353",
+      "differences": {
+        "n_differences": 0,
+        "n_ledger_differences": 0
+      }
+    },
+    {
+      "path": "docs/data/v4/columns_frozen_harbour.json",
+      "sha256": "e7da63091f5c37f260073d61f371021bebe1cd4cd2fe754418b7dbf5dcd0fd6a",
+      "differences": {
+        "n_differences": 0,
+        "n_ledger_differences": 0
+      }
+    },
+    {
+      "path": "docs/data/v4/columns_frozen_vet_clinic.json",
+      "sha256": "5ebc5359b034efbc78c73537e360c6da4c47af56b87ae16a70b59419ca8c6754",
+      "differences": {
+        "n_differences": 0,
+        "n_ledger_differences": 0
+      }
+    },
+    {
+      "path": "docs/data/v4/columns_refit_vet_clinic.json",
+      "sha256": "f9cec971e6046cb60143be5a373eee18e664801ca5447539d8bd12a2cf576305",
+      "differences": {
+        "n_families_differing": 0
+      }
+    }
+  ],
+  "closeout_tests": {
+    "command": ".venv/bin/python -m pytest -q tests/test_v4_fields.py tests/test_v4_retained_frontier.py",
+    "passed": 18,
+    "seconds": 5.67
+  }
+}

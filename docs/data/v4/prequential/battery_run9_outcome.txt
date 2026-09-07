@@ -1,0 +1,430 @@
+
+blend_book_transfer  'source_choice'  FROZEN_PREFIX  cut=419  control='Record draw'
+  13 operators, 13 of them predicting an interface response
+  output: 615 claims over 123 actions, 15 distinct decided claims (5 distinct events)
+    verdicts {'NOT_APPLICABLE': 349, 'REFUTED': 147, 'SUPPORTED': 119}
+      119  applicable rules disagreed
+        4  every applicable rule was contradicted
+    frame only (arguments ignored): {'among': 119, 'wrong': 4}
+      119  undetermined, the right event among them
+        4  undetermined, and not among them
+    distinct events predicted per action: {"2": 103, "3": 20}
+    majority-frame control: {'right': 52, 'wrong': 71, 'control_unseen_on_prefix': 0, 'accuracy': 0.423}
+    ... on the actions the model decided: {'right': 0, 'wrong': 0, 'control_unseen_on_prefix': 0, 'accuracy': None}  (0 distinct events asserted there)
+    observed events: {"Drew <> from <> into <> .": 52, "<> is already <> .": 41, "<> is <> .": 19, "<> holds <> ; cannot draw <> .": 7, "<> is single-varietal ( <> ) ; <> is <> .": 4}
+  outcome model: 6 controls, 11 guarded rules, 123 held-out clicks
+      119  the event the interface returned
+        4  a different event
+      119  the event the interface returned / with its arguments
+        4  a different event / the event alone
+    accuracy where it answered: 0.967  (4 distinct events asserted)
+    of those, 123 named an event: accuracy 0.967
+    majority-frame control on those same actions: {'right': 52, 'wrong': 71, 'control_unseen_on_prefix': 0, 'accuracy': 0.423}
+    button:Record draw                 fitted= 112 events=  5 rules=  5  right=119 wrong=  4 abstained=  0
+  state verdicts {'NOT_APPLICABLE': 134, 'REFUTED': 8, 'SUPPORTED': 104}
+       67  no rule applied
+       52  every applicable rule was right
+        4  every applicable rule was contradicted
+  ablation, live region unread: 6 operators, state {'NOT_APPLICABLE': 134, 'REFUTED': 8, 'SUPPORTED': 104}
+       67  no rule applied
+       52  every applicable rule was right
+        4  every applicable rule was contradicted
+
+wrote docs/data/v4/outcome_blend_book_transfer_split05.json
+
+blend_book_transfer  'source_choice'  FROZEN_PREFIX  cut=587  control='Record draw'
+  14 operators, 14 of them predicting an interface response
+  output: 444 claims over 74 actions, 10 distinct decided claims (5 distinct events)
+    verdicts {'NOT_APPLICABLE': 290, 'REFUTED': 80, 'SUPPORTED': 74}
+       74  applicable rules disagreed
+    frame only (arguments ignored): {'among': 74}
+       74  undetermined, the right event among them
+    distinct events predicted per action: {"2": 68, "3": 6}
+    majority-frame control: {'right': 34, 'wrong': 40, 'control_unseen_on_prefix': 0, 'accuracy': 0.459}
+    ... on the actions the model decided: {'right': 0, 'wrong': 0, 'control_unseen_on_prefix': 0, 'accuracy': None}  (0 distinct events asserted there)
+    observed events: {"Drew <> from <> into <> .": 34, "<> is already <> .": 20, "<> is <> .": 14, "<> holds <> ; cannot draw <> .": 6}
+  outcome model: 6 controls, 13 guarded rules, 74 held-out clicks
+       74  the event the interface returned
+       74  the event the interface returned / with its arguments
+    accuracy where it answered: 1.0  (4 distinct events asserted)
+    of those, 74 named an event: accuracy 1.0
+    majority-frame control on those same actions: {'right': 34, 'wrong': 40, 'control_unseen_on_prefix': 0, 'accuracy': 0.459}
+    button:Record draw                 fitted= 150 events=  6 rules=  7  right= 74 wrong=  0 abstained=  0
+  state verdicts {'NOT_APPLICABLE': 80, 'SUPPORTED': 68}
+       40  no rule applied
+       34  every applicable rule was right
+  ablation, live region unread: 6 operators, state {'NOT_APPLICABLE': 80, 'SUPPORTED': 68}
+       40  no rule applied
+       34  every applicable rule was right
+
+wrote docs/data/v4/outcome_blend_book_transfer_split07.json
+
+blend_book_transfer  'source_choice'  FROZEN_PREFIX  cut=587  control='Record draw'
+  14 operators, 14 of them predicting an interface response
+  output: 444 claims over 74 actions, 10 distinct decided claims (5 distinct events)
+    verdicts {'NOT_APPLICABLE': 290, 'REFUTED': 80, 'SUPPORTED': 74}
+       74  applicable rules disagreed
+    frame only (arguments ignored): {'among': 74}
+       74  undetermined, the right event among them
+    distinct events predicted per action: {"2": 68, "3": 6}
+    majority-frame control: {'right': 34, 'wrong': 40, 'control_unseen_on_prefix': 0, 'accuracy': 0.459}
+    ... on the actions the model decided: {'right': 0, 'wrong': 0, 'control_unseen_on_prefix': 0, 'accuracy': None}  (0 distinct events asserted there)
+    observed events: {"Drew <> from <> into <> .": 34, "<> is already <> .": 20, "<> is <> .": 14, "<> holds <> ; cannot draw <> .": 6}
+  outcome model: 6 controls, 12 guarded rules, 74 held-out clicks
+       73  no determinate answer
+        1  a different event
+        1  a different event / the event alone
+    accuracy where it answered: 0.0  (1 distinct events asserted)
+    of those, 1 named an event: accuracy 0.0
+    majority-frame control on those same actions: {'right': 0, 'wrong': 1, 'control_unseen_on_prefix': 0, 'accuracy': 0.0}
+    button:Record draw                 fitted= 150 events=  6 rules=  1  right=  0 wrong=  1 abstained= 73
+  state verdicts {'NOT_APPLICABLE': 80, 'SUPPORTED': 68}
+       40  no rule applied
+       34  every applicable rule was right
+
+wrote docs/data/v4/outcome_blend_book_transfer_permuted.json
+
+blend_book_transfer  'source_choice'  FROZEN_PREFIX  cut=839  control='Record draw'
+  14 operators, 14 of them predicting an interface response
+  output: 0 claims over 0 actions, 0 distinct decided claims (0 distinct events)
+    verdicts {}
+    frame only (arguments ignored): {}
+    distinct events predicted per action: {}
+    majority-frame control: {'right': 0, 'wrong': 0, 'control_unseen_on_prefix': 0, 'accuracy': None}
+    ... on the actions the model decided: {'right': 0, 'wrong': 0, 'control_unseen_on_prefix': 0, 'accuracy': None}  (0 distinct events asserted there)
+    observed events: {}
+  outcome model: 6 controls, 14 guarded rules, 261 held-out clicks
+      248  the event the interface returned
+       13  a different event
+      248  the event the interface returned / with its arguments
+       13  a different event / the event alone
+    accuracy where it answered: 0.95  (4 distinct events asserted)
+    of those, 261 named an event: accuracy 0.95
+    majority-frame control on those same actions: {'right': 34, 'wrong': 227, 'control_unseen_on_prefix': 0, 'accuracy': 0.13}
+    button:Record draw                 fitted= 209 events=  6 rules=  8  right=248 wrong= 13 abstained=  0
+  state verdicts {}
+
+wrote docs/data/v4/outcome_blend_book_cross_trace.json
+
+harbour_transfer  'source_choice'  FROZEN_PREFIX  cut=229  control=None
+  15 operators, 15 of them predicting an interface response
+  output: 185 claims over 88 actions, 33 distinct decided claims (9 distinct events)
+    verdicts {'NOT_APPLICABLE': 81, 'REFUTED': 2, 'SUPPORTED': 80, 'UNKNOWN': 22}
+       79  every applicable rule was right
+        5  the rules could not say which object they were about
+        2  no rule applied
+        1  applicable rules disagreed
+        1  every applicable rule was contradicted
+    frame only (arguments ignored): {'among': 1, 'right': 79, 'wrong': 1}
+       79  determinate and right
+        7  no branch applied
+        1  undetermined, the right event among them
+        1  determinate and wrong
+    distinct events predicted per action: {"0": 7, "1": 80, "2": 1}
+    majority-frame control: {'right': 47, 'wrong': 41, 'control_unseen_on_prefix': 0, 'accuracy': 0.534}
+    ... on the actions the model decided: {'right': 0, 'wrong': 0, 'control_unseen_on_prefix': 0, 'accuracy': None}  (0 distinct events asserted there)
+    observed events: {"<> <> is now <> .": 17, "<> <> is already <> .": 15, "<> already has call <> on the board .": 12, "<> is signed off .": 10, "<> is already signed on .": 9, "<> is signed on .": 8, "<> is already signed off .": 6, "Call <> opened for <> .": 5}
+  outcome model: 10 controls, 15 guarded rules, 126 held-out clicks
+      124  the event the interface returned
+        2  a different event
+       87  the event the interface returned / with its arguments
+       30  the event the interface returned / the control returns nothing
+        7  the event the interface returned / the event alone
+        2  a different event / the event alone
+    accuracy where it answered: 0.984  (14 distinct events asserted)
+    of those, 96 named an event: accuracy 0.979
+    majority-frame control on those same actions: {'right': 66, 'wrong': 60, 'control_unseen_on_prefix': 0, 'accuracy': 0.524}
+    button#cell@Call/button            fitted=  43 events=  1 rules=  0  right= 30 wrong=  0 abstained=  0
+    button:Reopen                      fitted=  18 events=  2 rules=  2  right= 20 wrong=  0 abstained=  0
+    button:Schedule call               fitted=  19 events=  2 rules=  2  right= 17 wrong=  0 abstained=  0
+    button:Sign off                    fitted=  14 events=  2 rules=  2  right= 16 wrong=  1 abstained=  0
+    button:Sign on                     fitted=  17 events=  2 rules=  2  right= 17 wrong=  0 abstained=  0
+    button:Close                       fitted=  20 events=  3 rules=  3  right= 13 wrong=  0 abstained=  0
+    button:Record departure            fitted=   3 events=  1 rules=  1  right=  4 wrong=  0 abstained=  0
+    button:Bring _                     fitted=   4 events=  1 rules=  1  right=  4 wrong=  0 abstained=  0
+  state verdicts {'NOT_APPLICABLE': 49, 'REFUTED': 1, 'SUPPORTED': 17}
+       49  no rule applied
+       17  every applicable rule was right
+        1  every applicable rule was contradicted
+  ablation, live region unread: 5 operators, state {'NOT_APPLICABLE': 49, 'REFUTED': 1, 'SUPPORTED': 17}
+       49  no rule applied
+       17  every applicable rule was right
+        1  every applicable rule was contradicted
+
+wrote docs/data/v4/outcome_harbour_transfer_split05.json
+
+harbour_transfer  'source_choice'  FROZEN_PREFIX  cut=459  control=None
+  17 operators, 17 of them predicting an interface response
+  output: 0 claims over 0 actions, 0 distinct decided claims (0 distinct events)
+    verdicts {}
+    frame only (arguments ignored): {}
+    distinct events predicted per action: {}
+    majority-frame control: {'right': 0, 'wrong': 0, 'control_unseen_on_prefix': 0, 'accuracy': None}
+    ... on the actions the model decided: {'right': 0, 'wrong': 0, 'control_unseen_on_prefix': 0, 'accuracy': None}  (0 distinct events asserted there)
+    observed events: {}
+  outcome model: 10 controls, 15 guarded rules, 270 held-out clicks
+      265  the event the interface returned
+        5  a different event
+      176  the event the interface returned / with its arguments
+       79  the event the interface returned / the control returns nothing
+       10  the event the interface returned / the event alone
+        5  a different event / the event alone
+    accuracy where it answered: 0.981  (16 distinct events asserted)
+    of those, 191 named an event: accuracy 0.974
+    majority-frame control on those same actions: {'right': 42, 'wrong': 228, 'control_unseen_on_prefix': 0, 'accuracy': 0.156}
+    button#cell@Call/button            fitted=  73 events=  1 rules=  0  right= 79 wrong=  0 abstained=  0
+    button:Reopen                      fitted=  38 events=  2 rules=  2  right= 37 wrong=  0 abstained=  0
+    button:Schedule call               fitted=  36 events=  2 rules=  2  right= 36 wrong=  0 abstained=  0
+    button:Sign off                    fitted=  30 events=  3 rules=  2  right= 33 wrong=  0 abstained=  0
+    button:Sign on                     fitted=  34 events=  2 rules=  2  right= 32 wrong=  0 abstained=  0
+    button:Close                       fitted=  33 events=  3 rules=  3  right= 29 wrong=  0 abstained=  0
+    button:Book pilot                  fitted=   5 events=  2 rules=  1  right=  6 wrong=  1 abstained=  0
+    button:Record departure            fitted=   3 events=  1 rules=  1  right=  4 wrong=  2 abstained=  0
+  state verdicts {}
+
+wrote docs/data/v4/outcome_harbour_cross_trace.json
+
+opus_02_cellar_dev  'source_choice'  FROZEN_PREFIX  cut=195  control=None
+  12 operators, 12 of them predicting an interface response
+  output: 37 claims over 14 actions, 9 distinct decided claims (9 distinct events)
+    verdicts {'REFUTED': 26, 'SUPPORTED': 11}
+        7  applicable rules disagreed
+        4  every applicable rule was right
+        3  every applicable rule was contradicted
+    frame only (arguments ignored): {'among': 8, 'right': 4, 'wrong': 2}
+        8  undetermined, the right event among them
+        4  determinate and right
+        2  determinate and wrong
+    distinct events predicted per action: {"1": 6, "2": 1, "3": 3, "5": 4}
+    majority-frame control: {'right': 5, 'wrong': 9, 'control_unseen_on_prefix': 0, 'accuracy': 0.357}
+    ... on the actions the model decided: {'right': 0, 'wrong': 0, 'control_unseen_on_prefix': 0, 'accuracy': None}  (0 distinct events asserted there)
+    observed events: {"Nothing chosen in the vessel list .": 6, "Nothing chosen in the lot list .": 4, "Enter a whole number of litres .": 2, "Nothing chosen in the block list .": 1, "<> moved from <> to <> .": 1}
+  outcome model: 11 controls, 0 guarded rules, 40 held-out clicks
+       23  no determinate answer
+       15  the event the interface returned
+        2  a different event
+       11  the event the interface returned / the control returns nothing
+        4  the event the interface returned / the event alone
+        2  a different event / the event alone
+    accuracy where it answered: 0.882  (2 distinct events asserted)
+    of those, 6 named an event: accuracy 0.667
+    majority-frame control on those same actions: {'right': 10, 'wrong': 7, 'control_unseen_on_prefix': 0, 'accuracy': 0.588}
+    button:Lots                        fitted=   9 events=  1 rules=  0  right=  5 wrong=  0 abstained=  0
+    button:Bottle                      fitted=   1 events=  1 rules=  0  right=  0 wrong=  0 abstained=  5
+    button:Finish fermentation         fitted=   1 events=  1 rules=  0  right=  0 wrong=  0 abstained=  5
+    button:Rack                        fitted=   1 events=  1 rules=  0  right=  0 wrong=  0 abstained=  5
+    button:Cellar                      fitted=   7 events=  1 rules=  0  right=  4 wrong=  0 abstained=  0
+    button:Move vessel                 fitted=   5 events=  5 rules=  0  right=  0 wrong=  0 abstained=  4
+    button:Wash out                    fitted=   8 events=  3 rules=  0  right=  0 wrong=  0 abstained=  3
+    button:Split                       fitted=   1 events=  1 rules=  0  right=  1 wrong=  2 abstained=  0
+  state verdicts {}
+  ablation, live region unread: 0 operators, state {}
+
+wrote docs/data/v4/outcome_opus_02_cellar_dev_split05.json
+
+vet_clinic_transfer  'source_choice'  FROZEN_PREFIX  cut=448  control=None
+  10 operators, 0 of them predicting an interface response
+  output: 0 claims over 0 actions, 0 distinct decided claims (0 distinct events)
+    verdicts {}
+    frame only (arguments ignored): {}
+    distinct events predicted per action: {}
+    majority-frame control: {'right': 0, 'wrong': 0, 'control_unseen_on_prefix': 0, 'accuracy': None}
+    ... on the actions the model decided: {'right': 0, 'wrong': 0, 'control_unseen_on_prefix': 0, 'accuracy': None}  (0 distinct events asserted there)
+    observed events: {}
+  outcome model: 10 controls, 0 guarded rules, 257 held-out clicks
+      257  this application has no live region, so there is nothing to predict
+    accuracy where it answered: None  (0 distinct events asserted)
+    of those, 0 named an event: accuracy None
+    majority-frame control on those same actions: {'right': 0, 'wrong': 0, 'control_unseen_on_prefix': 0, 'accuracy': None}
+    button:Clients                     fitted=  77 events=  1 rules=  0  right=  0 wrong=  0 abstained=  0
+    button:Vets                        fitted=  76 events=  1 rules=  0  right=  0 wrong=  0 abstained=  0
+    button:Appointments                fitted=  77 events=  1 rules=  0  right=  0 wrong=  0 abstained=  0
+    button:Schedule                    fitted=   7 events=  1 rules=  0  right=  0 wrong=  0 abstained=  0
+    button:Check in                    fitted=   7 events=  1 rules=  0  right=  0 wrong=  0 abstained=  0
+    button:Assign vet                  fitted=   7 events=  1 rules=  0  right=  0 wrong=  0 abstained=  0
+    button:Cancel                      fitted=   9 events=  1 rules=  0  right=  0 wrong=  0 abstained=  0
+    button:Start exam                  fitted=   1 events=  1 rules=  0  right=  0 wrong=  0 abstained=  0
+  state verdicts {'NOT_APPLICABLE': 10, 'REFUTED': 13, 'SUPPORTED': 21, 'UNKNOWN': 27}
+       18  every applicable rule was right
+        9  the rules could not say which object they were about
+        7  no rule applied
+        5  every applicable rule was contradicted
+  ablation, live region unread: 10 operators, state {'NOT_APPLICABLE': 10, 'REFUTED': 13, 'SUPPORTED': 21, 'UNKNOWN': 27}
+       18  every applicable rule was right
+        9  the rules could not say which object they were about
+        7  no rule applied
+        5  every applicable rule was contradicted
+
+wrote docs/data/v4/outcome_vet_clinic_transfer_split05.json
+
+blend_book_transfer  'source_choice'  FROZEN_PREFIX  cut=587
+  0 operators say they create something; 0 claims, 0 distinct
+  verdicts {}   supported share None
+  mean per-click exposure of the same claims: None
+wrote docs/data/v4/creation_blend_book_transfer_source_choice.json
+
+vet_clinic_transfer  'source_choice'  FROZEN_PREFIX  cut=448
+  4 operators say they create something; 17 claims, 2 distinct
+  verdicts {'NOT_APPLICABLE': 3, 'SUPPORTED': 14}   supported share 1.0
+  mean per-click exposure of the same claims: 0.084
+    cancelled                                                    would hold at 1/24 sampled clicks
+    completed + Dr                                               would hold at 3/24 sampled clicks
+wrote docs/data/v4/creation_vet_clinic_transfer_source_choice.json
+
+blend_book_transfer  'source_choice'  FROZEN_PREFIX  cut=419  control='Record draw'
+  13 operators, 13 of them predicting an interface response
+  output: 615 claims over 123 actions, 15 distinct decided claims (5 distinct events)
+    verdicts {'NOT_APPLICABLE': 349, 'REFUTED': 147, 'SUPPORTED': 119}
+      119  applicable rules disagreed
+        4  every applicable rule was contradicted
+    frame only (arguments ignored): {'among': 119, 'wrong': 4}
+      119  undetermined, the right event among them
+        4  undetermined, and not among them
+    distinct events predicted per action: {"2": 103, "3": 20}
+    majority-frame control: {'right': 52, 'wrong': 71, 'control_unseen_on_prefix': 0, 'accuracy': 0.423}
+    ... on the actions the model decided: {'right': 0, 'wrong': 0, 'control_unseen_on_prefix': 0, 'accuracy': None}  (0 distinct events asserted there)
+    observed events: {"Drew <> from <> into <> .": 52, "<> is already <> .": 41, "<> is <> .": 19, "<> holds <> ; cannot draw <> .": 7, "<> is single-varietal ( <> ) ; <> is <> .": 4}
+  outcome model: 6 controls, 11 guarded rules, 123 held-out clicks
+      119  the event the interface returned
+        4  a different event
+      119  the event the interface returned / with its arguments
+        4  a different event / the event alone
+    accuracy where it answered: 0.967  (4 distinct events asserted)
+    of those, 123 named an event: accuracy 0.967
+    majority-frame control on those same actions: {'right': 52, 'wrong': 71, 'control_unseen_on_prefix': 0, 'accuracy': 0.423}
+    button:Record draw                 fitted= 112 events=  5 rules=  5  right=119 wrong=  4 abstained=  0
+  state verdicts {'NOT_APPLICABLE': 134, 'REFUTED': 8, 'SUPPORTED': 104}
+       67  no rule applied
+       52  every applicable rule was right
+        4  every applicable rule was contradicted
+
+wrote docs/data/v4/outcome_blend_book_subject_restricted.json
+
+harbour_transfer  'source_choice'  FROZEN_PREFIX  cut=229  control=None
+  15 operators, 15 of them predicting an interface response
+  output: 185 claims over 88 actions, 33 distinct decided claims (9 distinct events)
+    verdicts {'NOT_APPLICABLE': 81, 'REFUTED': 2, 'SUPPORTED': 80, 'UNKNOWN': 22}
+       79  every applicable rule was right
+        5  the rules could not say which object they were about
+        2  no rule applied
+        1  applicable rules disagreed
+        1  every applicable rule was contradicted
+    frame only (arguments ignored): {'among': 1, 'right': 79, 'wrong': 1}
+       79  determinate and right
+        7  no branch applied
+        1  undetermined, the right event among them
+        1  determinate and wrong
+    distinct events predicted per action: {"0": 7, "1": 80, "2": 1}
+    majority-frame control: {'right': 47, 'wrong': 41, 'control_unseen_on_prefix': 0, 'accuracy': 0.534}
+    ... on the actions the model decided: {'right': 0, 'wrong': 0, 'control_unseen_on_prefix': 0, 'accuracy': None}  (0 distinct events asserted there)
+    observed events: {"<> <> is now <> .": 17, "<> <> is already <> .": 15, "<> already has call <> on the board .": 12, "<> is signed off .": 10, "<> is already signed on .": 9, "<> is signed on .": 8, "<> is already signed off .": 6, "Call <> opened for <> .": 5}
+  outcome model: 10 controls, 15 guarded rules, 126 held-out clicks
+      124  the event the interface returned
+        2  a different event
+       87  the event the interface returned / with its arguments
+       30  the event the interface returned / the control returns nothing
+        7  the event the interface returned / the event alone
+        2  a different event / the event alone
+    accuracy where it answered: 0.984  (14 distinct events asserted)
+    of those, 96 named an event: accuracy 0.979
+    majority-frame control on those same actions: {'right': 66, 'wrong': 60, 'control_unseen_on_prefix': 0, 'accuracy': 0.524}
+    button#cell@Call/button            fitted=  43 events=  1 rules=  0  right= 30 wrong=  0 abstained=  0
+    button:Reopen                      fitted=  18 events=  2 rules=  2  right= 20 wrong=  0 abstained=  0
+    button:Schedule call               fitted=  19 events=  2 rules=  2  right= 17 wrong=  0 abstained=  0
+    button:Sign off                    fitted=  14 events=  2 rules=  2  right= 16 wrong=  1 abstained=  0
+    button:Sign on                     fitted=  17 events=  2 rules=  2  right= 17 wrong=  0 abstained=  0
+    button:Close                       fitted=  20 events=  3 rules=  3  right= 13 wrong=  0 abstained=  0
+    button:Record departure            fitted=   3 events=  1 rules=  1  right=  4 wrong=  0 abstained=  0
+    button:Bring _                     fitted=   4 events=  1 rules=  1  right=  4 wrong=  0 abstained=  0
+  state verdicts {'NOT_APPLICABLE': 49, 'REFUTED': 1, 'SUPPORTED': 17}
+       49  no rule applied
+       17  every applicable rule was right
+        1  every applicable rule was contradicted
+
+wrote docs/data/v4/outcome_harbour_subject_restricted.json
+
+blend_book_transfer  'source_choice'  FROZEN_PREFIX  cut=419  13 operators
+  249 held-out actions, 1.0 rules offered and 1.21 claims applicable per action
+  17 distinct claims across all its decided predictions
+    a named constant          62 claims,    62 decided, supported  82%   4 distinct
+                           ['attr:Gate#0 = Closed', 'attr:Gate#0 = Open', 'attr:State#0 = Bottled', 'attr:State#0 = In cask']
+    an interface response    835 claims,   384 decided, supported  43%   11 distinct
+                           ['<> <> . = <> <> .', '<> has <> committed ; need at least <> to bottle . = <> has <> committed ; need at least <> to bottle .', '<> holds <> ; cannot draw <> . = <> holds <> ; cannot draw <> .', '<> is <> . = <> is <> .', '<> is <> ; disgorge it before returning a draw . = <> is <> ; disgorge it before returning a draw .', '<> is already <> . = <> is already <> .']
+    changes, unspecified     374 claims,   148 decided, supported  70%   2 distinct
+                           ['attr:Committed gal#0 = changes', 'attr:Gallons left#0 = changes']
+      103 ( 41%)  every applicable rule was right
+       67 ( 27%)  no rule applied
+       46 ( 18%)  only undecidable claims survived
+       33 ( 13%)  every applicable rule was contradicted
+
+wrote docs/data/v4/claim_substance_blend_book_transfer_frozen_prefix.json
+
+harbour_transfer  'source_choice'  FROZEN_PREFIX  cut=229  15 operators
+  67 held-out actions, 1.0 rules offered and 0.27 claims applicable per action
+  12 distinct claims across all its decided predictions
+    a named constant          67 claims,    18 decided, supported  94%   2 distinct
+                           ['attr:Condition#0 = closed', 'attr:Condition#0 = open']
+    an interface response    185 claims,    82 decided, supported  98%   9 distinct
+                           ['<> <> cannot be <> while call <> holds it . = <> <> cannot be <> while call <> holds it .', '<> <> is already <> . = <> <> is already <> .', '<> <> is now <> . = <> <> is now <> .', '<> already has call <> on the board . = <> already has call <> on the board .', '<> is already signed off . = <> is already signed off .', '<> is already signed on . = <> is already signed on .']
+    an object brought into being    17 claims,     5 decided, supported 100%   1 distinct
+                           ['id = new']
+       49 ( 73%)  no rule applied
+       17 ( 25%)  every applicable rule was right
+        1 (  1%)  every applicable rule was contradicted
+
+wrote docs/data/v4/claim_substance_harbour_transfer_frozen_prefix.json
+
+vet_clinic_transfer  'source_choice'  FROZEN_PREFIX  cut=448  10 operators
+  39 held-out actions, 1.49 rules offered and 0.87 claims applicable per action
+  3 distinct claims across all its decided predictions
+    a named constant          14 claims,     7 decided, supported 100%   1 distinct
+                           ['attr:Status#0 = checked_in']
+    an object brought into being    17 claims,    14 decided, supported 100%   1 distinct
+                           ['id = new']
+    removal                   57 claims,    27 decided, supported  52%   1 distinct
+                           ['id = gone']
+    removal exposure: this reading 0.519, unconditional base rate 0.637, per-click control 0.239 (margin +0.28)
+                           steps by fraction gone {"all went (>90%)": 45, "none went (<10%)": 16, "some went": 22}
+       18 ( 46%)  every applicable rule was right
+        9 ( 23%)  the rules could not say which object they were about
+        7 ( 18%)  no rule applied
+        5 ( 13%)  every applicable rule was contradicted
+
+wrote docs/data/v4/claim_substance_vet_clinic_transfer_frozen_prefix.json
+
+blend_book_transfer  'source_choice'  FROZEN_PREFIX
+  6672 attribute values on objects rendered in the observation they were read from
+  0 of them (0.0) are not rendered anywhere under that object
+  by slot: {}
+  slots never read from the rendering (not staleness): {}
+wrote docs/data/v4/state_fidelity_blend_book_transfer_source_choice_tracked.json
+
+harbour_transfer  'source_choice'  FROZEN_PREFIX
+  6472 attribute values on objects rendered in the observation they were read from
+  34 of them (0.0053) are not rendered anywhere under that object
+  by slot: {"T3.attr:Calls logged#0": 34}
+  slots never read from the rendering (not staleness): {"T0.attr:Call#col": 468}
+    T3:Nordkapp attr:Calls logged#0 = '4'; the page renders ['-', '100', '120', '132', '132 m', '150', '160', '90']
+    T3:Kittiwake attr:Calls logged#0 = '0'; the page renders ['-', '100', '120', '150', '160', '78', '78 m', '90']
+wrote docs/data/v4/state_fidelity_harbour_transfer_source_choice_tracked.json
+
+opus_02_cellar_dev  'source_choice'  FROZEN_PREFIX
+  0 attribute values on objects rendered in the observation they were read from
+  0 of them (None) are not rendered anywhere under that object
+  by slot: {}
+  slots never read from the rendering (not staleness): {}
+wrote docs/data/v4/state_fidelity_opus_02_cellar_dev_source_choice_tracked.json
+
+vet_clinic_transfer  'source_choice'  FROZEN_PREFIX
+  3439 attribute values on objects rendered in the observation they were read from
+  0 of them (0.0) are not rendered anywhere under that object
+  by slot: {}
+  slots never read from the rendering (not staleness): {}
+wrote docs/data/v4/state_fidelity_vet_clinic_transfer_source_choice_tracked.json
+
+blend_book_transfer  'source_choice'  CAUSAL_PREQUENTIAL  cut=419  stride=8  control='Record draw'
+       17  the event the interface returned
+       17  the event the interface returned / with its arguments
+    accuracy where it answered: 1.0  (4 distinct events asserted)
+
+wrote docs/data/v4/outcome_blend_book_transfer_prequential.json

@@ -1523,9 +1523,11 @@ established, one coincidence died, and the holdout went to eight forced and thir
 several with nothing widened anywhere.  It is the first acquisition of the campaign that
 narrowed without widening, and its yield is bounded by two things it cannot change: the
 world must offer a substitute that differs in the one factor and nothing else, and what
-remains beside the comparison at the rest is the rule class's inability to order the
-already-booked guard before the join, which no occasion settles.  The factor changed
-must be minimal, or the coincidence retreats onto the difference.
+remains beside the comparison at the rest was provisionally attributed to the rule
+class's inability to order the already-booked guard before the join.  P41 below
+withdraws that attribution: those rivals are further pure conjunctions that the
+evidence does not contradict.  The factor changed must be minimal, or the coincidence
+retreats onto the difference.
 
 **P41: the order reading, measured and withdrawn.**  Nine of the separating holdout's
 undecided states were read above as order -- the pilot already booked and the rule
@@ -1544,6 +1546,31 @@ that conjunction with the other outcome: P40's replay at such a state with a sub
 booked elsewhere, which one of them was, and which left *booked* admissible there
 through yet another conjunction.
 
+## Part XIX -- battery #9 closed (2026-09-07)
+
+The battery launched at 06:57 under the clock repair completed at 10:41, after the
+last committed experiment.  Its final two stages were left awaiting review.  They
+are now judged: all twenty outcome outputs and all eight admissible/bundle outputs
+were emitted within their stage intervals, parse, and have complete JSON identical
+to both the battery #8 checkpoint (`b95dccb`) and the clock-change checkpoint
+(`4fe56e1`).  All sixteen metamorphic reports still have zero differences over their
+reported surfaces.  The logs, per-artifact hashes and baseline comparisons are
+retained in `docs/data/v4/prequential/battery_run9*`; the campaign notes carry the
+stage-by-stage closeout.  No new regression appears in the completed battery.
+
+The current field-theory and retained-frontier checks pass (18 tests).  The last
+recorded full suite is 566 passed, 3 skipped and 1 xfailed, on `5c6d02b` with battery
+#8's state; the subsequent clock change had 40 focused tests pass.  The full suite
+was not rerun during this closeout, and the audit is not a new execution attestation.
+
+P41 is the final scientific verdict of this campaign.  P40b's minimal substitute
+removed one coincidence without widening any state; LIST removed none of the
+remaining rivals, withdrawing their explanation as an ordering problem.  The
+remaining question is how to acquire an occasion that contradicts the whole shared
+conjunction supporting a rival.  These acquisitions were designed from the pilot
+holdout's states and seeds, so their improvement is development evidence about
+identifiability, not an untouched transfer test or fresh generalization.
+
 ## What stands, and what is open
 
 The retained state, regenerated once more: harbour's development sidecar is now written by
@@ -1554,8 +1581,8 @@ Under it the authenticated manifests, the three transfer frontiers and the metam
 battery were regenerated: harbour behaviourally distinguished with the holdout confirmed
 where applicable, vet and blend as they stood, and every invariant -- member reversal,
 declared-column reversal, renaming fresh and permuted -- at zero on every application, no
-exception recorded anywhere.  The full suite passes (542, no failures, the browser-driven
-tests included once Chromium was reinstalled), and the campaign's evidence is retained
+exception recorded anywhere.  The latest validation and its exact code scope are
+recorded in Part XIX, and the campaign's evidence is retained
 beside its conclusions under `docs/data/v4/prequential/`: fourteen prefix closures and
 their cells, twelve schedule attacks, the tournament fleet, the twin-ledger corpora and
 searches, both comparators' harbour runs -- including the rejected one's -- and the
@@ -1610,10 +1637,12 @@ the join against the vessel directly and transfer it with no wrong verdict.  A c
 built to separate the comparison from a pair of thresholds separates them: the learner
 identifies the comparison and is right where a threshold theory fails, and the version
 space's remaining doubt is a coincidence on a counter.  Acting where a guard is contested
-surfaced unestablished behaviour before it falsified anything.  What the campaign leaves
-open is recorded beside it: an acquisition that seeks a coincidence's supporting
-value; the nominal equalities on any attribute -- a flag, an instant of a clock -- that
-the version space cannot exclude without occasions that contradict them.  A clock's order
+surfaced unestablished behaviour before it falsified anything.  Value-seeking acquisition
+then refuted a simple condition without narrowing the version space, because longer
+conjunctions survived; replay with a minimal substitute narrowed one state without
+widening any.  P41 withdrew the ordering explanation for the remaining alternatives.
+What stays open is acquisition that contradicts those whole shared conjunctions,
+including nominal equalities on a flag or an instant of a clock.  A clock's order
 is no longer adopted from a history alone, which closed the vessel key's two extra
 *several*; the pilot-booking control's cross-trace ledger, which had got worse before its
 corpus got better, is closed by the roles repair: six right and one wrong where it had

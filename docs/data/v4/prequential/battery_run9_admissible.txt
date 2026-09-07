@@ -1,0 +1,177 @@
+
+blend_book_transfer  'source_choice'  FROZEN_PREFIX  cut=419  control=None  corroborated=True  hypothesis=rule
+  249 held-out actions
+      141  the evidence forces one outcome
+       62  several outcomes remain admissible
+       32  one outcome, because the control has never done anything else
+       14  no outcome is established
+  against the other hypothesis class:
+      130  rule: the evidence forces one outcome | list: the evidence forces one outcome
+       62  rule: several outcomes remain admissible | list: several outcomes remain admissible
+       32  rule: one outcome, because the control has never done anything else | list: one outcome, because the control has never done anything else
+       14  rule: no outcome is established | list: no outcome is established
+       11  rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)
+  admissible-set size {"0": 14, "1": 173, "2": 62}; what happened was {'inside the admissible set': 204, 'outside it': 31, 'nothing was admissible': 14}
+  8 distinct events ever forced
+  where no outcome is established, the chosen list:
+       14  the event the interface returned
+  where one outcome, because the control has never done anything else, the chosen list:
+       21  a different event
+       11  the event the interface returned
+  where several outcomes remain admissible, the chosen list:
+       62  the event the interface returned
+  where the evidence forces one outcome, the chosen list:
+      133  the event the interface returned
+        8  a different event
+  forced where forced, list elsewhere:
+      130  one outcome was admissible and it happened
+       62  deferred to the list: the event the interface returned
+       20  the only outcome ever seen on this control, and something else happened
+       14  refused: nothing established
+       12  the only outcome ever seen on this control, and it happened
+       11  one outcome was admissible and a different one happened
+    button:Record draw         fitted= 112 events= 5 rules= 5 forced-wrong=  3  {'the evidence forces one outcome': 72, 'several outcomes remain admissible': 51}
+    button:Return ticket _ gal fitted=  59 events= 2 rules= 2 forced-wrong=  3  {'the evidence forces one outcome': 53, 'several outcomes remain admissible': 11}
+    button#cell/button         fitted=  12 events= 1 rules= 1 forced-wrong=  0  {'one outcome, because the control has never done anything else': 23}
+    button:Close _             fitted=  16 events= 2 rules= 1 forced-wrong=  4  {'the evidence forces one outcome': 13, 'no outcome is established': 3}
+    button:Bottle _            fitted=   6 events= 2 rules= 1 forced-wrong=  1  {'no outcome is established': 11, 'the evidence forces one outcome': 3}
+    button:Disgorge _          fitted=   4 events= 1 rules= 1 forced-wrong=  0  {'one outcome, because the control has never done anything else': 9}
+
+wrote docs/data/v4/admissible_blend_book_transfer_frozen_prefix.json
+
+blend_book_transfer  'source_choice'  FROZEN_PREFIX  cut=419
+  in the fitting evidence:
+    button#cell/button             12 occasions,  1 frames, 0 of them with more than one delta shape
+    button:Bottle _                 6 occasions,  2 frames, 0 of them with more than one delta shape
+    button:Close _                 16 occasions,  2 frames, 0 of them with more than one delta shape
+    button:Disgorge _               4 occasions,  1 frames, 0 of them with more than one delta shape
+    button:Record draw            112 occasions,  5 frames, 0 of them with more than one delta shape
+    button:Return ticket _ gal f   59 occasions,  2 frames, 0 of them with more than one delta shape
+  what the model claims at held-out actions:
+      249  a bundle the evidence has shown
+       94  a combination of frame and delta never observed together
+  and what durably changed, scored against the page:
+    the branch's own delta           {'right': 222, 'wrong': 27}
+    the union of firing operators    {'right': 187, 'wrong': 62}
+    hybrid at step 421: 'Drew <> from <> into <> .' with []; that frame has only [[['set', 'attr:Committed gal#0'], ['set', 'attr:Gallons left#0']]]
+    hybrid at step 427: 'Drew <> from <> into <> .' with []; that frame has only [[['set', 'attr:Committed gal#0'], ['set', 'attr:Gallons left#0']]]
+    hybrid at step 433: 'Drew <> from <> into <> .' with []; that frame has only [[['set', 'attr:Committed gal#0'], ['set', 'attr:Gallons left#0']]]
+    hybrid at step 437: 'Drew <> from <> into <> .' with []; that frame has only [[['set', 'attr:Committed gal#0'], ['set', 'attr:Gallons left#0']]]
+
+wrote docs/data/v4/bundle_blend_book_transfer_frozen_prefix.json
+
+harbour_transfer  'source_choice'  FROZEN_PREFIX  cut=229  control=None  corroborated=True  hypothesis=rule
+  126 held-out actions
+       83  the evidence forces one outcome
+       42  one outcome, because the control has never done anything else
+        1  several outcomes remain admissible
+  against the other hypothesis class:
+       82  rule: the evidence forces one outcome | list: the evidence forces one outcome
+       42  rule: one outcome, because the control has never done anything else | list: one outcome, because the control has never done anything else
+        1  rule: several outcomes remain admissible | list: several outcomes remain admissible
+        1  rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)
+  admissible-set size {"1": 125, "2": 1}; what happened was {'inside the admissible set': 94, 'outside it': 32}
+  13 distinct events ever forced
+  where one outcome, because the control has never done anything else, the chosen list:
+       41  the event the interface returned
+        1  a different event
+  where several outcomes remain admissible, the chosen list:
+        1  the event the interface returned
+  where the evidence forces one outcome, the chosen list:
+       82  the event the interface returned
+        1  a different event
+  forced where forced, list elsewhere:
+       82  one outcome was admissible and it happened
+       41  the only outcome ever seen on this control, and it happened
+        1  the only outcome ever seen on this control, and something else happened
+        1  deferred to the list: the event the interface returned
+        1  one outcome was admissible and a different one happened
+    button#cell@Call/button    fitted=  43 events= 1 rules= 0 forced-wrong=  0  {'one outcome, because the control has never done anything else': 30}
+    button:Reopen              fitted=  18 events= 2 rules= 2 forced-wrong=  0  {'the evidence forces one outcome': 20}
+    button:Schedule call       fitted=  19 events= 2 rules= 2 forced-wrong=  0  {'the evidence forces one outcome': 17}
+    button:Sign off            fitted=  14 events= 2 rules= 2 forced-wrong=  1  {'the evidence forces one outcome': 17}
+    button:Sign on             fitted=  17 events= 2 rules= 2 forced-wrong=  0  {'the evidence forces one outcome': 17}
+    button:Close               fitted=  20 events= 3 rules= 3 forced-wrong=  0  {'the evidence forces one outcome': 12, 'several outcomes remain admissible': 1}
+    button:Record departure    fitted=   3 events= 1 rules= 1 forced-wrong=  0  {'one outcome, because the control has never done anything else': 4}
+    button:Bring _             fitted=   4 events= 1 rules= 1 forced-wrong=  0  {'one outcome, because the control has never done anything else': 4}
+
+wrote docs/data/v4/admissible_harbour_transfer_frozen_prefix.json
+
+harbour_transfer  'source_choice'  FROZEN_PREFIX  cut=229
+  in the fitting evidence:
+    button:Allocate berth           3 occasions,  1 frames, 0 of them with more than one delta shape
+    button:Book pilot               3 occasions,  1 frames, 0 of them with more than one delta shape
+    button:Bring _                  4 occasions,  1 frames, 0 of them with more than one delta shape
+    button:Close                   20 occasions,  3 frames, 0 of them with more than one delta shape
+    button:Record departure         3 occasions,  1 frames, 0 of them with more than one delta shape
+    button:Reopen                  18 occasions,  2 frames, 0 of them with more than one delta shape
+  what the model claims at held-out actions:
+       96  a bundle the evidence has shown
+        1  a combination of frame and delta never observed together
+  and what durably changed, scored against the page:
+    the branch's own delta           {'right': 95, 'wrong': 1}
+    the union of firing operators    {'right': 94, 'wrong': 2}
+    hybrid at step 367: '<> <> cannot be <> while call <> holds it .' with [['set', 'attr:Condition#0']]; that frame has only [[]]
+
+wrote docs/data/v4/bundle_harbour_transfer_frozen_prefix.json
+
+opus_02_cellar_dev  'source_choice'  FROZEN_PREFIX  cut=195  control=None  corroborated=True  hypothesis=rule
+  40 held-out actions
+       29  no outcome is established
+       11  one outcome, because the control has never done anything else
+  against the other hypothesis class:
+       29  rule: no outcome is established | list: no outcome is established
+       11  rule: one outcome, because the control has never done anything else | list: one outcome, because the control has never done anything else
+  admissible-set size {"0": 29, "1": 11}; what happened was {'outside it': 11, 'nothing was admissible': 29}
+  1 distinct events ever forced
+  where no outcome is established, the chosen list:
+       23  no determinate answer
+        4  the event the interface returned
+        2  a different event
+  where one outcome, because the control has never done anything else, the chosen list:
+       11  the event the interface returned
+  forced where forced, list elsewhere:
+       29  refused: nothing established
+       11  the only outcome ever seen on this control, and it happened
+    button:Lots                fitted=   9 events= 1 rules= 0 forced-wrong=  0  {'one outcome, because the control has never done anything else': 5}
+    button:Bottle              fitted=   1 events= 1 rules= 0 forced-wrong=  0  {'no outcome is established': 5}
+    button:Finish fermentation fitted=   1 events= 1 rules= 0 forced-wrong=  0  {'no outcome is established': 5}
+    button:Rack                fitted=   1 events= 1 rules= 0 forced-wrong=  0  {'no outcome is established': 5}
+    button:Cellar              fitted=   7 events= 1 rules= 0 forced-wrong=  0  {'one outcome, because the control has never done anything else': 4}
+    button:Move vessel         fitted=   5 events= 5 rules= 0 forced-wrong=  0  {'no outcome is established': 4}
+    button:Wash out            fitted=   8 events= 3 rules= 0 forced-wrong=  0  {'no outcome is established': 3}
+    button:Split               fitted=   1 events= 1 rules= 0 forced-wrong=  0  {'no outcome is established': 3}
+
+wrote docs/data/v4/admissible_opus_02_cellar_dev_frozen_prefix.json
+
+opus_02_cellar_dev  'source_choice'  FROZEN_PREFIX  cut=195
+  in the fitting evidence:
+    button:Blend                    1 occasions,  1 frames, 0 of them with more than one delta shape
+    button:Move vessel              5 occasions,  5 frames, 0 of them with more than one delta shape
+    button:Receive fruit            3 occasions,  2 frames, 0 of them with more than one delta shape
+    button:Split                    1 occasions,  1 frames, 0 of them with more than one delta shape
+    button:Wash out                 8 occasions,  3 frames, 0 of them with more than one delta shape
+  what the model claims at held-out actions:
+        8  the outcome layer did not name an event
+        6  a bundle the evidence has shown
+  and what durably changed, scored against the page:
+    the branch's own delta           {'right': 6}
+    the union of firing operators    {'right': 6}
+
+wrote docs/data/v4/bundle_opus_02_cellar_dev_frozen_prefix.json
+
+vet_clinic_transfer  'source_choice'  FROZEN_PREFIX  cut=448  control=None  corroborated=True  hypothesis=rule
+  0 held-out actions
+  against the other hypothesis class:
+  admissible-set size {}; what happened was {}
+  0 distinct events ever forced
+  forced where forced, list elsewhere:
+
+wrote docs/data/v4/admissible_vet_clinic_transfer_frozen_prefix.json
+
+vet_clinic_transfer  'source_choice'  FROZEN_PREFIX  cut=448
+  in the fitting evidence:
+  what the model claims at held-out actions:
+  and what durably changed, scored against the page:
+
+wrote docs/data/v4/bundle_vet_clinic_transfer_frozen_prefix.json

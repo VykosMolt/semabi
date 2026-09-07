@@ -1,5 +1,13 @@
 # Handoff: SemABI V4, authenticated cross-trace frontier
 
+**Current continuation (2026-09-07):** this file preserves the earlier custody and
+protocol record.  The latest state is in [v4_retained.md](v4_retained.md), Parts XVIII
+and XIX, and [the campaign notes](data/v4/prequential/campaign_notes.md), ending with
+the battery #9 closeout.  P41 withdrew the ordering explanation for the remaining
+outcome ambiguity; all final battery outputs have been reviewed and retained.
+Use those records for current results and open work; historical status statements
+below are superseded where they differ.
+
 Written for whoever continues this work. The filesystem and retained machine artifacts are
 authoritative; verify them rather than trusting this summary.
 

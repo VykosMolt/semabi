@@ -2744,3 +2744,48 @@ Corrected in the notes and the doc.  What removes it is an occasion sharing that
 conjunction with the outcome "already booked" -- P40's replay at such a state with a
 substitute who is booked elsewhere, which 519 was, and which left "booked" admissible
 there through yet another conjunction.  Recorded.
+
+## Battery #9 closeout (2026-09-07)
+
+The continuation in `/home/moloch/semabi-scratch/preq/NOTES.md` outlived the last
+commit.  It records open_world complete at 09:10 with all sixteen invariants zero,
+and identity complete at 09:18 with every admissible, inadequacy and claim-substance
+count unchanged.  The two differing leaves it recorded were equivalent spellings of
+one blend vouch (`Gallons left < 3` versus `< 4`, covering the same six occasions),
+not changed verdicts.  It ends at 10:32 with the outcome stage complete and
+"judged below", with no judgement following.
+
+The detached battery finished admissible at 10:41:05.  All five stages report rc=0;
+the completion log is now retained as `battery_run9.log`.  The unfinished review is
+closed against the actual outputs, not the completion marker alone:
+
+* Outcome emitted all 20 expected JSON reports, with modification times inside its
+  stage interval (09:18:17--10:32:22).
+* Admissible emitted all 8 expected JSON reports, with modification times inside its
+  stage interval (10:32:22--10:41:05).
+* All 28 parse and their complete JSON equals both `b95dccb` (battery #8's retained
+  state) and `4fe56e1` (the clock change).  No final-stage verdict or payload changed.
+* All sixteen metamorphic reports have zero differences, including durable-ledger
+  differences where reported and the column-refit family comparison.  This is
+  agreement over each instrument's reported exposure, not a new coverage claim.
+* The current checkout passes the focused closeout checks:
+  `.venv/bin/python -m pytest -q tests/test_v4_fields.py tests/test_v4_retained_frontier.py`
+  -- 18 passed in 5.67s.  The last full-suite result remains 566 passed, 3 skipped,
+  1 xfailed at 05:22 on `5c6d02b` with battery #8's state; it predates the clock
+  change, whose original focused run reported 40 passed.  No full suite was rerun.
+
+`battery_run9_outcome.txt` and `battery_run9_admissible.txt` retain the write
+confirmations.  `battery_run9_review.json` records every output's hash and baseline
+comparison, the invariant hashes and the closeout test result.  This is an audit of
+existing development results, not a new execution attestation or evidence of
+prospective collection chronology.  The harbour prequential log that finished at
+09:10 is retained too; its JSON already matched the committed result.
+
+The campaign ends with P41's correction: the remaining rivals are pure conjunctions
+the evidence does not contradict, not an ordering ambiguity that LIST removes.
+P40b narrowed one pilot-holdout state without widening any, but it used that
+holdout's states and seeds to design its acquisitions; the result addresses
+identifiability on this development corpus, not fresh transfer generalization.
+Further acquisition must contradict the rival's whole shared conjunction while
+preserving the relevant context; the existing instruments and skipped replay
+targets are retained, and no next experiment is claimed to have run.
