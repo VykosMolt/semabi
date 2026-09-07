@@ -1,0 +1,244 @@
+{
+  "all_consumed_preserved_inputs_rehashed": {
+    "docs/data/v4/transport/controls/binding_fidelity.py": "c5f630e0005ccc43244a4b126a16434dc0b95f033d78d83535313ecdaf7dd2f8",
+    "docs/data/v4/transport/first_pass/reservoir/r1_evaluation_v1/decisions.jsonl": "479ebbd2052248e1f6820e5b1c02aae037c1bc5fa4ad421ec26b9be5a5c9fcfb",
+    "docs/data/v4/transport/first_pass/reservoir/r1_evaluation_v1/observations.jsonl": "3baa8ee5dc2aeb10b4c9a36901a7c51ed0d0699d4563e1053cb01d582327626a",
+    "docs/data/v4/transport/first_pass/reservoir/r1_evaluation_v1/steps.jsonl": "4232f5442912db5e22bb2d51871e42760693da2a81fce528bbe5eddd57cdb540",
+    "docs/data/v4/transport/reserved_v1/evaluator_audit/public_binding_adapter.py": "3d7910523baa0c3278df18fd792b3b6df420e3e3a42087c5520e945c7ca66dd1",
+    "docs/data/v4/transport/reserved_v1/evaluator_audit/sealed_control_v1.json": "f93f411031c3eab16464a52295069f4df87e71415c9015dc37a7310a15c2fbe6",
+    "docs/data/v4/transport/reserved_v1/evaluator_audit/sealed_report.md": "e03f5f28ac0dae55bea1bd53221c4361708abf293075232c28c3f499d3acafa9",
+    "docs/data/v4/transport/reserved_v1/scores/r1_contested_1701.json": "ff31e6c3c2211a7d8ea98940e04c2b6e9ae52900544f405328a74e55ecfb9305",
+    "docs/data/v4/transport/reserved_v1/scores/r1_contested_1702.json": "1099385aec344a8021a234c70612f0d1cf1cfdd40a2517acbd60097504f64a35",
+    "docs/data/v4/transport/reserved_v1/scores/r1_initial_v1.json": "0f1e4ba105b22de0d05d903582050f043c634ae8d8141c2064b70b213e3a6ba2",
+    "docs/data/v4/transport/reserved_v1/scores/r1_untargeted_1701.json": "644aeb8d1cfa259f9037674c5e61425132ca5d1fd6b54dee2258be4fc72c9428",
+    "docs/data/v4/transport/reserved_v1/scores/r1_untargeted_1702.json": "7d0292547b64c5939e97303edf6ef21b125adda89280434aa6376b77628357eb",
+    "docs/data/v4/transport/run_job.py": "3c91a704135db5cfa553c7bdc9a5a55fffa999f73e2e9aebd9f7f2a3534525d7"
+  },
+  "all_control_children_terminated_and_direct_tool_calls_reaped": true,
+  "created_utc": "2026-09-07T21:44:30.962203+00:00",
+  "current_working_source_not_used_to_reconstruct_measurements": true,
+  "execution_plan": {
+    "path": "docs/data/v4/transport/reserved_v1/controls/execution_plan_v1.json",
+    "sha256": "18591b3c6915b2a4c90c219b8725bd1cd1cdadb37786cae41352928f5de7e388"
+  },
+  "jobs": [
+    {
+      "child_pid": 4,
+      "child_terminated": true,
+      "cpu_launch_affinity": [
+        17
+      ],
+      "end_utc": "2026-09-07T21:34:01.868913+00:00",
+      "job": "docs/data/v4/transport/reserved_v1/controls/jobs/binding_r1_initial_v1",
+      "log_sha256": "2c39a89fadd7a8c49955467dfc8459d58d7f6a88ac4083923e65778bdcac9f12",
+      "nice_launch": 0,
+      "outer_thread_limits": {
+        "BLIS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "output": "docs/data/v4/transport/reserved_v1/controls/binding_r1_initial_v1.json",
+      "output_sha256": "ffe849336b85ec36b4b844d502ac9e6b8fe5096c79a70dc3cca40280ea81a1be",
+      "pid_namespace": "isolated default-sandbox namespace per tool call; equal numeric PIDs are not shared live ownership",
+      "process_sha256": "74e94ff6d6022762868d7feb83d10db32b30da10aa4130168894f588157d5c22",
+      "reaped": "operator observed each exec_command return exit_code 0 directly; no session was yielded",
+      "returncode": 0,
+      "runner_pid": 2,
+      "session_id": null,
+      "stage": "r1_initial_v1",
+      "start_utc": "2026-09-07T21:34:01.791091+00:00",
+      "status": "FINISHED",
+      "thread_limits_recorded": {
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      }
+    },
+    {
+      "child_pid": 4,
+      "child_terminated": true,
+      "cpu_launch_affinity": [
+        18
+      ],
+      "end_utc": "2026-09-07T21:34:01.908170+00:00",
+      "job": "docs/data/v4/transport/reserved_v1/controls/jobs/binding_r1_contested_1701",
+      "log_sha256": "dbfa389515b13d5b8adabb0e8b9786164cf6cded68c15499121804abe0264666",
+      "nice_launch": 0,
+      "outer_thread_limits": {
+        "BLIS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "output": "docs/data/v4/transport/reserved_v1/controls/binding_r1_contested_1701.json",
+      "output_sha256": "5c0800f6ec6978df6c1a37ad085efbc232c6cf7f9e96da98d9c7c98fcb1331a5",
+      "pid_namespace": "isolated default-sandbox namespace per tool call; equal numeric PIDs are not shared live ownership",
+      "process_sha256": "d3f271d5db379d2171bfb38f06ee3cb3e2ef968173bd9c57bab1a4fc4b76c21d",
+      "reaped": "operator observed each exec_command return exit_code 0 directly; no session was yielded",
+      "returncode": 0,
+      "runner_pid": 2,
+      "session_id": null,
+      "stage": "r1_contested_1701",
+      "start_utc": "2026-09-07T21:34:01.833624+00:00",
+      "status": "FINISHED",
+      "thread_limits_recorded": {
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      }
+    },
+    {
+      "child_pid": 4,
+      "child_terminated": true,
+      "cpu_launch_affinity": [
+        19
+      ],
+      "end_utc": "2026-09-07T21:34:01.894336+00:00",
+      "job": "docs/data/v4/transport/reserved_v1/controls/jobs/binding_r1_untargeted_1701",
+      "log_sha256": "5b78c13a1afc8ae2a56109b5719b172f6d9880478f01e6ebd2fe56947ba422a7",
+      "nice_launch": 0,
+      "outer_thread_limits": {
+        "BLIS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "output": "docs/data/v4/transport/reserved_v1/controls/binding_r1_untargeted_1701.json",
+      "output_sha256": "efc3daecf54cbcda750006e57750fb5cdd65eb9736b5665e01852a460094b3da",
+      "pid_namespace": "isolated default-sandbox namespace per tool call; equal numeric PIDs are not shared live ownership",
+      "process_sha256": "f82cedee9c9982b2de0e5a7dcfac62be996b64d0b7a59f6a470bbcc5c990feef",
+      "reaped": "operator observed each exec_command return exit_code 0 directly; no session was yielded",
+      "returncode": 0,
+      "runner_pid": 2,
+      "session_id": null,
+      "stage": "r1_untargeted_1701",
+      "start_utc": "2026-09-07T21:34:01.816378+00:00",
+      "status": "FINISHED",
+      "thread_limits_recorded": {
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      }
+    },
+    {
+      "child_pid": 4,
+      "child_terminated": true,
+      "cpu_launch_affinity": [
+        20
+      ],
+      "end_utc": "2026-09-07T21:34:01.882418+00:00",
+      "job": "docs/data/v4/transport/reserved_v1/controls/jobs/binding_r1_contested_1702",
+      "log_sha256": "656d7b981ee44b53f7a8eec3978ca1d1c3302bce848f9fd34d92069970a98cac",
+      "nice_launch": 0,
+      "outer_thread_limits": {
+        "BLIS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "output": "docs/data/v4/transport/reserved_v1/controls/binding_r1_contested_1702.json",
+      "output_sha256": "11b3e69e28f5ab14459e7549bbbb318f6d9d57b14024c200f188f1dffdbb8b7f",
+      "pid_namespace": "isolated default-sandbox namespace per tool call; equal numeric PIDs are not shared live ownership",
+      "process_sha256": "fa019c55cacf41fa3c80dc9d31bb6a6cc2c96bb37298012eed9fb39e31121c17",
+      "reaped": "operator observed each exec_command return exit_code 0 directly; no session was yielded",
+      "returncode": 0,
+      "runner_pid": 2,
+      "session_id": null,
+      "stage": "r1_contested_1702",
+      "start_utc": "2026-09-07T21:34:01.806459+00:00",
+      "status": "FINISHED",
+      "thread_limits_recorded": {
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      }
+    },
+    {
+      "child_pid": 4,
+      "child_terminated": true,
+      "cpu_launch_affinity": [
+        21
+      ],
+      "end_utc": "2026-09-07T21:34:01.901335+00:00",
+      "job": "docs/data/v4/transport/reserved_v1/controls/jobs/binding_r1_untargeted_1702",
+      "log_sha256": "b5e46722f72983982349c96a83786ed1b1f823e5d3d1f533770d3e2f3b60f5b6",
+      "nice_launch": 0,
+      "outer_thread_limits": {
+        "BLIS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "output": "docs/data/v4/transport/reserved_v1/controls/binding_r1_untargeted_1702.json",
+      "output_sha256": "f4c1111aecdc168dc008efee66510a4a5bf83b951d55660b20ffe6637cff1d6f",
+      "pid_namespace": "isolated default-sandbox namespace per tool call; equal numeric PIDs are not shared live ownership",
+      "process_sha256": "685aa231bee5a7638b8abf3df8998bc6eefa92e64caa2fce39af4bba527e03ef",
+      "reaped": "operator observed each exec_command return exit_code 0 directly; no session was yielded",
+      "returncode": 0,
+      "runner_pid": 2,
+      "session_id": null,
+      "stage": "r1_untargeted_1702",
+      "start_utc": "2026-09-07T21:34:01.826095+00:00",
+      "status": "FINISHED",
+      "thread_limits_recorded": {
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      }
+    }
+  ],
+  "original_job_root_exact_13_and_process_log_digests_unchanged": {
+    "docs/data/v4/transport/reserved_v1/jobs/r1_candidates_v1/output.log": "7b444332093cc6fce7d8819f74ae38086feee0e78a86636f3073470d6fa1acf6",
+    "docs/data/v4/transport/reserved_v1/jobs/r1_candidates_v1/process.json": "2b75d867828166cbed4e1738f78d1f2048de54550c6c66ca208fb6c58df878a6",
+    "docs/data/v4/transport/reserved_v1/jobs/r1_contested_1701/output.log": "12fcc9dbcb5ead6a8e36cdbce3fcd44fb09b5790e03e8f68968bb986a049279e",
+    "docs/data/v4/transport/reserved_v1/jobs/r1_contested_1701/process.json": "e5fb656e2db150ebf18f4819a49749f12905fa0d519c35f9b9a2cc36c2e50c5d",
+    "docs/data/v4/transport/reserved_v1/jobs/r1_contested_1702/output.log": "a25ca75b8d6fe7ad49636f99a1c5fc2bc9148a63de3c582a0f79da7d0e1c2136",
+    "docs/data/v4/transport/reserved_v1/jobs/r1_contested_1702/process.json": "7c05b8f2fd6985f977085661f8c79289f30785386d1f87478d07b54928e39a8c",
+    "docs/data/v4/transport/reserved_v1/jobs/r1_evaluation_v1/output.log": "786a41608b86ece314b52193fdac660d335e408bf75e0f22b14abd1296f61569",
+    "docs/data/v4/transport/reserved_v1/jobs/r1_evaluation_v1/process.json": "58ab326b36890538f74ba33e2654fd5c6a2f33d70ce68025750e17a0c5975292",
+    "docs/data/v4/transport/reserved_v1/jobs/r1_fixture_service_v1/output.log": "849e21d833eaeb0002076c119d7ce8e5b640add4d43d70b30f6b59e817685c3d",
+    "docs/data/v4/transport/reserved_v1/jobs/r1_fixture_service_v1/process.json": "60865ddfe247c7869f3b9ca9efc8312fbf70563c95b937c3173c1f7ae5983cfd",
+    "docs/data/v4/transport/reserved_v1/jobs/r1_initial_v1/output.log": "88b1210909c5d90abf49ba2dadf154c9e7adb403004dcc861d2e0cb51e33d6bc",
+    "docs/data/v4/transport/reserved_v1/jobs/r1_initial_v1/process.json": "f8802d9016aa4e05553493945e81ed2f43742228df20ab48bbba9be02d699528",
+    "docs/data/v4/transport/reserved_v1/jobs/r1_untargeted_1701/output.log": "0f49a7ddd5c3ff4980b76e53302adb3d1b047ad7840e62b0e155d62f7107ca28",
+    "docs/data/v4/transport/reserved_v1/jobs/r1_untargeted_1701/process.json": "bb4a0d40850fc17fe40f37e08b9fa47618409e54bb170fc9bdc16ffd2893dec1",
+    "docs/data/v4/transport/reserved_v1/jobs/r1_untargeted_1702/output.log": "9eef1bdd6f6d0712e23a09227afd0218595e589615544924924afa00d7d5cd48",
+    "docs/data/v4/transport/reserved_v1/jobs/r1_untargeted_1702/process.json": "f1306e23953e248d855c3479ae352cbb3a3ab1b95f51af0713dd60e6f0a3d5fe",
+    "docs/data/v4/transport/reserved_v1/jobs/score_r1_contested_1701/output.log": "ae92be1560c718f8138932c8d1f4ed2783d762472e60ddb9dabfdd8087057bf9",
+    "docs/data/v4/transport/reserved_v1/jobs/score_r1_contested_1701/process.json": "c9b99d03f23a3ff10814a42016061a3dfb1c39cbc2591b64b550630839646804",
+    "docs/data/v4/transport/reserved_v1/jobs/score_r1_contested_1702/output.log": "0738f784f4bd96c65e8cf150e404b9fd3d3be00c43e7a4e95e79a6c2d2f1dad5",
+    "docs/data/v4/transport/reserved_v1/jobs/score_r1_contested_1702/process.json": "aa4a06a16f2759f78bf2ee9395fe18832a3703b839ce4153cfd8f2b9e4345b6b",
+    "docs/data/v4/transport/reserved_v1/jobs/score_r1_initial_v1/output.log": "9327a23957ade6af181bf91778f67616cb02b59b3f51b23328ba363d838ffbce",
+    "docs/data/v4/transport/reserved_v1/jobs/score_r1_initial_v1/process.json": "1b7f1656983e5b486afbd5feace00fa5235cc81b8b45a507ae5dd68faeedb440",
+    "docs/data/v4/transport/reserved_v1/jobs/score_r1_untargeted_1701/output.log": "1536e603006a87455badbdc149c1792b060bb18137e4e1686c52406d17610ef7",
+    "docs/data/v4/transport/reserved_v1/jobs/score_r1_untargeted_1701/process.json": "abbe912366bcd8a4261e5a3e89028d4d6bc974e938b01fdb6558f8ce0b17f9ef",
+    "docs/data/v4/transport/reserved_v1/jobs/score_r1_untargeted_1702/output.log": "467a8ae3d467bb70889d44cd9c65ca0e98fcf38c83309a324790fc82b966a161",
+    "docs/data/v4/transport/reserved_v1/jobs/score_r1_untargeted_1702/process.json": "c6e86b0290c4f9740d1e2da7944bd32de387fd4c437734433056e42bd6130044"
+  },
+  "owner": "/root/reserved_audit",
+  "preservation": {
+    "path": "docs/data/v4/transport/reserved_v1/first_pass_manifest_v1.json",
+    "sha256": "2dd83ed7914798f13e6c7a0cd1b5ccbd718bab7182df12e08a854223cf423678"
+  },
+  "root_coordinator": "/root",
+  "schema": "semabi.transport.r1_post_preservation_controls_completion.v1",
+  "scope": "Five unchanged retained oracle controls over saved scores only; no model fit, fixture service, score rerun, or mutation of preserved data.",
+  "source_hashes_equal_preserved_initial_score_job": true,
+  "source_head_at_execution": "38f1f08a99d57c2787de02fd8906ff5762a26b88"
+}

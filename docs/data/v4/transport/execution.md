@@ -1,6 +1,6 @@
 # Fresh-interface campaign execution record
 
-## Active checkpoint (2026-09-07 21:35 UTC)
+## Active checkpoint (2026-09-07 21:58 UTC)
 
 T1, G1 and G2 are preserved and locally committed. Main `38f1f08` contains
 G2 and its reviewed evidence: 577 passing tests, 3 skips, 1 expected failure,
@@ -28,8 +28,17 @@ predictions are wrong after seed 1701 and correct after seed 1702 in both arms;
 RULE and LIST leave all ten targets unestablished. Initial review targets have
 no model. Both the shared and union identity-scoreboard surfaces are empty in
 every stage. None of these observations establishes semantic identification.
-The five separate oracle binding controls have completed and been reaped;
-independent analysis of raw fidelity, binding and representation is in progress.
+The five separate oracle binding controls have completed and been reaped.
+The accepted independent analysis corroborates raw targets/arguments/visible
+fields, but owner, operand, reference and comparison checks remain unavailable.
+Abstract objects exist; they do not provide usable task bindings or literals.
+H1/H2/H3 are not met. The evaluator establishes H4's restricted-interface
+equivalence, while learner recognition of those semantic rivals is unestablished.
+The additive analysis manifest binds 23 files, SHA-256
+`ea297ccc676116d86721511803846ddf6df4eb8aa8f25ea67e9b025e2c7f4e54`.
+Root read the full report, independently reproduced key results and rehashed
+that inventory. The initial extractor's omission of raw review text is retained
+and corrected in V2 without changing any original score or control.
 Root opened the reserved semantic report and saved learner results only after
 first-pass preservation. R1 is now disclosed development evidence. J1 fixture
 source, case contents and held-out outcomes remain unopened by root.
@@ -40,10 +49,13 @@ passed 621 full-suite tests, with 3 skips and 1 expected failure, and exactly
 matches all six G2 corpus components on all five corpora. No residual expectation
 was changed. The reviewed validation manifest binds 83 files and seven jobs,
 SHA-256 `af3c7131375798bbf0cc0f4050617cc8ebea901a6313d7be7879f23409597e8d`.
-All jobs are reaped. Candidate and validation are locally committed separately
-at `96b2d1f` and `b6f8c99`; main adoption follows this preserved R1 checkpoint.
-Verify adopted bytes against that tested worktree rather than repeat unchanged
-full/corpus runs. R1 results retain their G2 source association.
+All jobs are reaped. Candidate and validation were locally committed separately
+at `96b2d1f` and `b6f8c99`, then adopted on main as `c9dd06d` and `d72335b`
+after the R1 checkpoint `9a141f0`. Root compared 226 source/test files and all
+83 validation artifacts with the tested worktree, plus complete native/test/
+script inventories and relevant committed configurations. Adoption record SHA-256
+`4b0f9b9809cb20a2b71de0c171400ef324d6b7de0fd6d1c8b5370b533d30ddf4`.
+No unchanged full/corpus tests were repeated. R1 retains its G2 source association.
 
 J1's independently authored generated bridge fixture has 24 training, 24 held-out
 and 24 separate invariance targets. Its scoped collector passed source review and
@@ -56,8 +68,11 @@ are covered, and exception cleanup restores the profiler. Its three jobs are
 reaped; comparison SHA-256
 `70cce8f326f71e22973ad03ddbd7c37b9cefbe79b65ff544e3f869e2f5ebb212`.
 The live request/ledger helper passes 97 independent checks after a retained
-receipt-index type defect was corrected. The actor is under independent execution
-review; the separate resident predictor/model monitor is being implemented.
+receipt-index type defect was corrected. The actor passes 62 independent controls
+after preserving and correcting eleven reconciliation/restoration failures.
+The resident predictor/model monitor candidate passes 29 authored controls;
+its prior failed controls are retained and source review is pending. The first
+J1 protocol and frame/argument scorer are undergoing independent review.
 Their native disclosed-data pilot, scoring/preservation review and actual J1
 freeze/collection remain ahead. The existing supplied-formula control does not
 establish that the normal learner learned JOIN.
@@ -71,11 +86,11 @@ completion. Versioned resource override: `development/g2/resource_override_v3.js
 No GPU, paid compute, external deployment or push is authorized.
 
 Current ownership: root owns coordination, source adoption, actor and J1 scoring;
-`reserved_audit` owns R1 controls/independent diagnosis;
-`baseline_verification` owns actor verification;
+`reserved_audit` owns J1 training-plan preparation after sealing R1 analysis;
+`baseline_verification` owns scorer/protocol review after actor verification;
 `acquisition_audit/binding_contract_review` owns predictor/monitor implementation.
 No heavy native job or fixture service remains live at this checkpoint.
-A report or commit is a checkpoint; continue through B1 adoption, reviewed J1
+A report or commit is a checkpoint; continue through reviewed J1
 execution and the next evidence-justified development milestone.
 
 The following dated sections retain the campaign history and original decisions.
