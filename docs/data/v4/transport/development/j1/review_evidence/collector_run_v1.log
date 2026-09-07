@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/home/moloch/semabi/docs/data/v4/transport/development/j1/review_evidence/collector_checks_v1.py", line 477, in <module>
+    main()
+    ~~~~^^
+  File "/home/moloch/semabi/docs/data/v4/transport/development/j1/review_evidence/collector_checks_v1.py", line 440, in main
+    check_resolver(adapter, retained)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/moloch/semabi/docs/data/v4/transport/development/j1/review_evidence/collector_checks_v1.py", line 111, in check_resolver
+    primitive, error = attempt(action)
+                       ~~~~~~~^^^^^^^^
+  File "/home/moloch/semabi/docs/data/v4/transport/development/j1/review_evidence/collector_checks_v1.py", line 94, in attempt
+    require("scope" not in encoded and "Panel" not in encoded
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            and "invented_case_tag" not in encoded and "oracle_token" not in encoded,
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            "evaluator scope and tags absent from Primitive and error")
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/moloch/semabi/docs/data/v4/transport/development/j1/review_evidence/collector_checks_v1.py", line 33, in require
+    raise AssertionError(name)
+AssertionError: evaluator scope and tags absent from Primitive and error

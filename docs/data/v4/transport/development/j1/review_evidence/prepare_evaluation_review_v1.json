@@ -1,0 +1,130 @@
+{
+  "schema": "semabi.j1.preparation_creator_review.v1",
+  "status": "ACCEPTED_FOR_PREPARATION_LOGIC_REVIEW",
+  "reviewer": "/root/acquisition_audit/binding_contract_review",
+  "recorded_utc": "2026-09-07T23:05:06Z",
+  "report": "docs/data/v4/transport/development/j1/review_evidence/prepare_evaluation_review_v1.md",
+  "scope": "Read-only creator review followed by two authorized report writes; final evaluator/preserver admission and concrete generated manifests are outside this acceptance.",
+  "creator": {
+    "fully_reviewed_original": {
+      "path": "docs/data/v4/transport/development/j1/instrument_revisions/prepare_evaluation_before_comment_fix_v1.py.txt",
+      "sha256": "e7ee3ba1d38ccde09721ac8da6662e9fd06db1813cbed2f32d07c3e3c2a01e77"
+    },
+    "current": {
+      "path": "docs/data/v4/transport/development/j1/prepare_evaluation_v1.py",
+      "sha256": "a4f32d36d4dc4112ad7a38b229c345b2b0c1d028df8329dde0edcb4b6952b474"
+    },
+    "followup_diff": {
+      "method": "Direct complete file diff and SHA-256 hashing of both files",
+      "comment_only": true,
+      "executable_code_unchanged": true,
+      "original_comment": "All fallible data/source preparation above precedes exclusive writes.",
+      "replacement_comment": "Begin exclusive writes. Later reference or runtime-gate failures leave partial manifests under their original identities for diagnosis."
+    }
+  },
+  "reviewed_support_source_sha256": {
+    "docs/data/v4/transport/development/j1/predictor.py": "c0d05260b4668db3e885e6691d7b9cd61096c8db6547ae56dd1358348ef48e51",
+    "docs/data/v4/transport/development/j1/evaluate.py": "5adfda0a68b75c9473113a8ce3d76f1740f6e0cd537719a486d8487451f88d65",
+    "docs/data/v4/transport/development/j1/act.py": "26a91ec96deb9c381dcc28c4e0277c6a349c0d940f7693e7bb9e6d3e55b267b7",
+    "docs/data/v4/transport/development/j1/collect.py": "53d1bcb26ef3069a23404cd3872713b840ced39215e34d8022f9c2c94fd0492d",
+    "docs/data/v4/transport/development/j1/custody.py": "001d6b1ecc7ddf8611cab651b413adcdab45f32d3f388e1dadfe40da86d46aed",
+    "docs/data/v4/transport/development/j1/live_io.py": "2cf44787526076337b53d8a67ef12796c7460d2dcb64cfbbbec7093c946a5327",
+    "docs/data/v4/transport/development/j1/live_model.py": "6e34f1422ee8905abf84e0699bdf5361c6c88822c950d96b5169e60414ae3ff7",
+    "docs/data/v4/transport/development/j1/trace.py": "25c1624ce8bffbb0bda98f478fc64c73a54d492f3c02c37e81dce44d04892249"
+  },
+  "support_source_hashes_are_review_observations_not_final_gate_admission": true,
+  "reviewed_metadata_references": {
+    "execution_plan": {
+      "path": "docs/data/v4/transport/development/j1/evaluation_execution_v1/plan_v1.json",
+      "sha256": "3031881656d4b7e05f6ae7134bd8315135e619d8e8bb12a334a95a5ff588079a"
+    },
+    "training_preservation": {
+      "path": "docs/data/v4/transport/development/j1/training_preservation_v1.json",
+      "sha256": "06cf6e5ed9031de829639dc5df04df613abbfc008435c3e08dd0bee680db0e29"
+    },
+    "training_freeze": {
+      "path": "docs/data/v4/transport/development/j1/training_freeze_v1.json",
+      "sha256": "816c4da2922aab7f7948328fa2864032bac2f26a7f4ae8d8954215a52a45e2ed"
+    },
+    "accepted_pilot_predictor_freeze": {
+      "path": "docs/data/v4/transport/development/j1/review_evidence/resident_native_dispatch_v1/predictor_freeze.json",
+      "sha256": "2ab55a60085653f3fb95cfbe525f4b04d502490e7521e861bff7683a98e7d6ad"
+    },
+    "trace_validation_plan": {
+      "path": "docs/data/v4/transport/development/j1/review_evidence/trace_native_dispatch_v2/plan.json",
+      "sha256": "9bdca6f7097dc573bd004d9b8545e7674cdbe3f07bd3b1e36b2c77bd88d81f62"
+    }
+  },
+  "checks": {
+    "predictor_schema_and_dynamic_cut_code_review": {
+      "passed": true,
+      "pilot_steps": 32,
+      "required_j1_steps": 312,
+      "mechanism": "Accepted training_records derives actual_steps from validated raw steps; creator requires 312 and constructs the exact predictor_freeze.v1 schema."
+    },
+    "training_plan_preservation_metadata_crossbinding": {
+      "passed": true,
+      "actual_paired_steps": 312,
+      "charged_attempts": 313,
+      "designated_targets": 24,
+      "observations_sha256": "c271d8d73229326d558a3790365cd5743d227da5e0ebd93e66b1928848d9c4b9",
+      "steps_sha256": "53ac19a56ed58a852f1bd84468f3b7907f0765252b8501e8a990176325b15452",
+      "actual_raw_contents_read": false
+    },
+    "current_native_inventory_equals_accepted_pilot": {"passed": true, "file_count": 156},
+    "collector_maps_covered_by_training_preservation": {
+      "files": true,
+      "verification_files": true,
+      "sealed_evaluator_files": true,
+      "public_runtime_source_hashes_unchanged": true,
+      "sealed_payloads_read": false
+    },
+    "eight_commands_match_expected_commands": {
+      "passed": true,
+      "count": 8,
+      "unresolved_placeholders": 0,
+      "method": "Standard-library metadata comparison against only the isolated pure expected_commands function extracted from evaluate.py through its AST; no repository module import."
+    },
+    "resource_assignment_metadata": {"predictor": 13, "service": 22, "actor": 17, "control": 18},
+    "plan_output_identities_absent_at_review_check": true,
+    "global_reference_construction_code_review": {
+      "passed": true,
+      "native_source_files": 156,
+      "evaluation_instruments": 18,
+      "fixed_inputs_include": ["training preservation files", "admission files and admission document", "training preservation document", "creator", "execution plan", "collector freeze", "predictor freeze", "actor freeze", "trace comparison", "trace plan", "three trace outputs", "seven trace dependencies"],
+      "future_admission_and_generated_manifests_concretely_verified": false
+    },
+    "preparation_import_and_call_paths_code_review": {
+      "standard_library_only": true,
+      "native_fit_called": false,
+      "fixture_payloads_transferred_to_predictor": false
+    }
+  },
+  "native_trace_differences": [
+    {
+      "path": "semabi/compiler/v4/binding.py",
+      "validated_sha256": "8088fdbfa8e55fefe3318293da4b350794e307a4f581e6c03422e7020b892c68",
+      "runtime_sha256": "0f905cae535aa975dffe517f1107884f37524fdc3cbcc781ec7f645cd0f9b0dc"
+    },
+    {
+      "path": "semabi/compiler/v4/consequence.py",
+      "validated_sha256": "158551f35160a79d9c165c767486b63579564dccc3e99febf45d4d714ef0791b",
+      "runtime_sha256": "c95bd040c8b066aaaac5bb5653b2ff20824ed3f2b59aba81c42b8a579ca8445e"
+    }
+  ],
+  "nonblocking_finding": {
+    "status": "COMMENT_CORRECTED_BEHAVIOR_UNCHANGED",
+    "mechanism": "Collector and predictor exclusive writes precede later actor references, global assembly and final runtime gates. A later failure can leave partial manifests under their original identities."
+  },
+  "review_execution": {
+    "creator_executed": false,
+    "native_fits": 0,
+    "native_imports": 0,
+    "repository_module_imports": 0,
+    "j1_raw_history_contents_opened": false,
+    "oracle_or_fixture_payloads_opened": false,
+    "application_requests": 0,
+    "unchanged_deep_checks_repeated_for_report": false,
+    "followup_work": "Confirmed the requested creator comment-only diff and both source hashes; wrote only the two authorized review reports."
+  }
+}

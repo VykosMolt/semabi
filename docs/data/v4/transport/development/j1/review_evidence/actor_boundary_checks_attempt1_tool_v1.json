@@ -1,0 +1,14 @@
+{
+  "schema": "semabi.j1.independent_check_tool_receipt.v1",
+  "owner": "/root/baseline_verification",
+  "completed_in_launch": true,
+  "tool_session_id": null,
+  "command": "taskset -c 8 .venv/bin/python -B docs/data/v4/transport/development/j1/review_evidence/actor_boundary_checks_v1.py --actor-sha 1667b413165bdbf782fc1f4d964d86d43831a19726d5a6581a6b8fc2730114ae --output docs/data/v4/transport/development/j1/review_evidence/actor_boundary_checks_attempt1_v1.json",
+  "result": {
+    "chunk_id": "536580",
+    "wall_time_seconds": 0.000002442,
+    "exit_code": 1,
+    "original_token_count": 524,
+    "output": "{\"start\": {\"utc\": \"2026-09-07T21:50:14.342560+00:00\", \"pid\": 860763, \"cwd\": \"/home/moloch/semabi\", \"argv\": [\"/home/moloch/semabi/docs/data/v4/transport/development/j1/collect.py\", \"script\", \"--freeze\", \"/tmp/j1ab_zmn065l3/integration/public_source_copy/docs/data/v4/transport/development/j1/invented_collection.json\", \"--out\", \"/tmp/j1ab_zmn065l3/integration/run\", \"--script\", \"/tmp/j1ab_zmn065l3/integration/invented_script.json\", \"--url\", \"http://127.0.0.1/invented\", \"--reset-url\", \"/invented-reset\"], \"git_head\": \"d72335b08cfe6171476842551036f528666e0c35\"}, \"freeze_sha256\": \"232068c685212474e008cc057287d29e0577a2bf360095e112a546b0ee864d95\", \"status\": \"FINISHED\", \"charged_attempts\": 4, \"failed_attempts\": 1, \"paired_steps_recorded\": 3, \"unpaired_attempts\": 1, \"primitive_counts\": {\"reset\": 1, \"reload\": 1, \"click\": 2}, \"snapshot_calls\": 4, \"bootstrap_goto\": 0, \"settle_timeouts\": 0, \"navigation_waits\": 0, \"script_sha256\": \"1856c0c027cf944f8b413b207703647eab3d80446f4a14641b1eed97d380bf53\", \"script_file\": \"/tmp/j1ab_zmn065l3/integration/invented_script.json\", \"case_count\": 1, \"complete\": false, \"end\": {\"utc\": \"2026-09-07T21:50:14.344899+00:00\", \"pid\": 860763, \"cwd\": \"/home/moloch/semabi\", \"argv\": [\"/home/moloch/semabi/docs/data/v4/transport/development/j1/collect.py\", \"script\", \"--freeze\", \"/tmp/j1ab_zmn065l3/integration/public_source_copy/docs/data/v4/transport/development/j1/invented_collection.json\", \"--out\", \"/tmp/j1ab_zmn065l3/integration/run\", \"--script\", \"/tmp/j1ab_zmn065l3/integration/invented_script.json\", \"--url\", \"http://127.0.0.1/invented\", \"--reset-url\", \"/invented-reset\"], \"git_head\": \"d72335b08cfe6171476842551036f528666e0c35\"}, \"raw_hashes\": {\"decisions.jsonl\": \"025f56e3e0d47f48d2426c52e9cc026df3c093fb78d69a1bcc61996165919ed1\"}}\n{\"path\": \"docs/data/v4/transport/development/j1/review_evidence/actor_boundary_checks_attempt1_v1.json\", \"sha256\": \"617a9524508ec672f8296c46adbb4b2ee4ad1fe14fd6458d3549b4ea568e4522\", \"counts\": {\"PASS\": 32, \"FAIL\": 3}, \"failed\": [\"repeated_instrumentation_restores_original\", \"coherent_step_raw_before\", \"coherent_step_raw_after\"]}\n"
+  }
+}

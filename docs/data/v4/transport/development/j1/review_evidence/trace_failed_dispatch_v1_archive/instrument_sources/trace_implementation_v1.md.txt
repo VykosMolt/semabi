@@ -1,0 +1,250 @@
+# J1 observer implementation and admission proposal
+
+Status: source implementation with invented checks and native-import schema
+preflight. No native fit, J1 evidence read, browser action, evaluator control or
+transparency validation has occurred during authoring. Root must review the
+concrete plan before the proposed native runs.
+
+## Contract and source association
+
+The implementation follows `trace_contract_v1.md` and the public source audit.
+The raw-record paragraph was added before implementation in response to the
+author's source finding: `_normalise_sections` rewrites loaded observation
+signatures and step endpoints in place, and `Fit` retains normalized logs.
+No hash of the earlier unclarified contract was computed or frozen; none is
+claimed here. The clarified contract was initially read at SHA-256
+`c2369b965149be387d524a1c6a5519318e6214c1b116c7400c4499efdc2610bc`.
+The later caller/view/identity corrections were incorporated before proposed
+native execution. The native-import preflight records contract SHA-256
+`09363e5d53101239114e046ecd6b556e2c807c33fd54419ada0a135f8648466b`.
+Each eventual plan binds the exact current contract and instrument bytes again.
+
+The source scope is the actual modules named by `native_bindings`, including
+induction, compilation, consequence, referring, outcomes, observation, parsing,
+evidence, abstractors, hypotheses, units, controls, emissions and pinned
+readings. The preflight retains the actual main HEAD, all SemABI Python source
+hashes and the three public instrument/document hashes. It successfully checks
+34 exact native dataclass field inventories and ten exact code objects.
+No learner call is needed for that schema check.
+
+The retained scorer's `model_record` is unsuitable unchanged: it invokes
+`Observation.structural_signature`, renders values and sorts model maps. The
+new copier instead reads the explicit stored fields without invoking those
+operations. The initial observer draft before the later contract corrections
+is retained at `review_evidence/trace_before_contract_corrections_v1.py.txt`,
+SHA-256 `27c6401cc0d4d104757ae55aeac6208685f027f3795b1548eddfb126475ba81c`.
+
+## Reusable API
+
+Importing `trace.py` itself loads only standard-library modules. A caller may
+construct `bindings = native_bindings()` before starting the fit. This imports
+the public native modules and validates the explicit data schemas; it does not
+fit anything. The observer API is:
+
+```python
+with FitObserver(raw_records=raw, primary_steps=selected, bindings=bindings) as observer:
+    fitted = csq.fit(training_directory, None, at=cut, regime=csq.FROZEN_PREFIX)
+record = observer.export(fitted)
+```
+
+The caller owns exactly one native fit invocation. `raw` is plain JSON data
+with exactly `steps` and `observations` lists, captured from the permitted raw
+input before the fit. The observer makes its own copy before installing the
+hook. `primary_steps` is a reporting selector and is never supplied to the
+learner. The same final projection is available without profiling:
+
+```python
+projection = project_fit(fitted, raw_records=raw, primary_steps=selected, bindings=bindings)
+```
+
+The API returns ordinary JSON-compatible data. It does not create a file, open
+training/evaluator inputs, invoke another fit or launch a browser. Admission,
+input hashes, output identity and process ownership belong to the runner.
+
+## Observation and identity
+
+The hook accepts only the exact fit/run/lift/ground/control-pass/roles code
+objects and ignores other Python and C events. A selected `Inducer.run` must
+occur inside the one observed fit and have the actual `compile_v4` code object
+as its immediate caller. Other observed `Inducer.run` calls retain their actual
+caller metadata under `omitted_inducer_run_calls`; they are never labelled as
+search trials. The source audit found that native V4 search does not normally
+call `Inducer.run`, so zero omitted run calls is a valid result.
+
+Each selected lift return has an immediately copied transition, actual caller,
+per-transition lift ordinal and explicit first-lift/view-cluster flags. Optional
+local object/string/view/rename maps carry separate presence flags. A later
+`_cluster_view_ops` lift cannot replace the first recorded lift.
+
+Grounding entry records contain the actual operator and its ordered positive
+and negative transition identities/snapshots, ordered state/binding evidence,
+action-bound and enabling sets and collection types. Attribution requires the
+actual selected inducer in the native `Inducer.learn_queries` or consequence
+`_learn_queries` caller. Return records include the actual `Grounding` fields
+and distinguish a missing local `wanted` from an empty one. The refusal
+predicate argument is never executed by the observer.
+
+Every `_learn_controls` call retains its actual ordered row groups, including
+missing events; the supplied operator dictionary and each row control's
+resolution to an empty or nonempty operator list; first view; ordered fields;
+pairs; all option flags; and the output dictionary before and after the call.
+`roles_of` returns retain the actual operator list and structured roles, linked
+to their active control-pass identity and control local. The final adopted
+dictionary is matched to `Fit.outcomes` by object identity.
+
+Strong references retain every identity-linked transition, operator and output
+dictionary, including temporary objects no longer in final model lists. Final
+membership distinguishes transition, no-op, view-transition, operator-positive
+and operator-negative positions. An operator's final-list positions are
+retained separately. View operators themselves are copied from stored data;
+no semantic matching is invented between a view operator and a transition.
+
+Trace identity labels follow observation order. The common final projection
+uses its own labels assigned from final structural list order, so a profiled
+run's earlier temporary objects cannot change its comparison IDs. Native
+process addresses are never part of the comparison projection.
+
+## Copying, coverage and explicit limits
+
+The typed copier accepts exact known dataclass types and exact built-in
+containers, plus `Counter`/`defaultdict` entries and the named `VARIES` sentinel.
+It reads instance dictionaries, never properties or native rendering/query
+methods. List and tuple identity is preserved in the serialization. Mapping
+entries retain insertion order and key types; non-string keys cannot collide
+with rendered strings. Only copied set members are sorted. Large integers use
+decimal strings in an explicit integer envelope to preserve evidence masks.
+States and observations are content-addressed after copying, and every
+referenced snapshot remains in the result.
+
+Direct native-list traversal checks the actual list type first. Iterators are
+not consumed to fill unsupported fields. Unsupported values, unexpected stored
+dataclass fields, cycles and callback exceptions produce explicit incomplete
+records. Missing optional locals or an optional not-yet-assigned field theory
+are distinguished from empty values. Computational refusal handles, graph and
+parser execution handles, hypothesis graph/memo caches and EvidenceLog paths
+are declared non-data exclusions. Their omission is explicit; all required
+stored masks/events/index, subjects/about data, representation metadata and
+raw provenance remain within the projection.
+
+The projection includes actual fit settings, complete normalized full and
+permitted logs, raw input records, step/signature associations, all tracked
+states and delayed/unattributed changes, stored type/slot/collection metadata,
+operators with their full stored bodies and positive/negative identities,
+queries, outcome roles/rules/arguments, field theory and evidence. Raw mapping
+uses step ID, episode and primitive correspondence, then the actual raw and
+normalized endpoint signatures. A missing page, mismatched step, inconsistent
+mapping or raw observation with no step association makes coverage incomplete;
+the instrument does not reconstruct missing original signatures.
+
+All final fitting transition associations are retained. A primary step with no
+association is an explicit result, including an action outside the permitted
+fitting steps. The source and copied raw/normalized observations retain action
+node indices, parsed instances, slot maps and node ownership. No matching is
+based only on a repeated page or matching step number between different native
+objects.
+
+The hook distinguishes ordinary Python returns from exception unwinding using
+the actual return instruction position. Callback exceptions never enter the
+running learner. The context refuses an already active profiler, restores its
+predecessor on exit, propagates the native fit's own exception and retains the
+partial trace as invalid. Exactly one observed fit, one final selected run and
+identity agreement with the actual returned fit are required for completeness.
+
+The observer does not record every search proposal, refusal reason or binding
+call. It supplies no parameter, operator, formula, representation or query.
+Source inspection and invented controls do not establish native transparency.
+
+## Checks retained so far
+
+`review_evidence/trace_invented_checks_v1.py` creates only invented Python
+classes and calls. The first retained execution passed 13 controls against
+observer SHA-256
+`f625fa6a3fdef9f8982632d4fa7147a2e7467c9adfd118fcb5c12aef4af90339`.
+Its record is `trace_invented_checks_attempt1_v1.json`. It checks complete
+matched invented projections, exact caller selection, repeated view lifts,
+mutation isolation, repeated control-pass identity, unassociated primary steps,
+container order/key types/large integers, cycles, refusal to render unsupported
+objects, strong identity ownership, prior-profiler refusal, restoration after
+a propagated exception, callback containment and incomplete raw mappings.
+
+`trace_schema_preflight_attempt1_v1.json` records the authorized native-import
+schema check, with no raw evidence read and no fit. Later source changes add
+explicit sequence guards and empty operator-resolution records. The second
+invented execution passes 15 controls, adding iterator non-consumption and
+rejection of a changed field in an otherwise complete common projection,
+against observer SHA-256
+`bee4f97ea44fe70efb818871579bc6ced08811152da1d88d44e8a58feda94a28`.
+Its source and `trace_invented_checks_attempt2_v1.json` result are explicit
+dependencies of the proposed native plan. These are invented controls, not
+native-fit claims. Failed or insufficient checks and superseded instrument
+drafts remain preserved.
+
+## Concrete disclosed-data native proposal
+
+The source for the proposed runner is
+`review_evidence/trace_native_validation_v1.py`. It accepts only the previously
+disclosed T1 `dispatch/initial_v2` and `workshop/initial_v2` histories. Its
+`prepare` mode uses only the standard library, hashes all SemABI source and
+the concrete instruments/documents/runner, binds the raw files and checks the
+actual denominator and absent recognized sidecars. It creates a new immutable
+plan with exact commands and output identities. It is preparation for root
+review, not permission to execute a fit.
+
+The first proposed pair uses all **32** dispatch initial steps. The author's
+earlier proposed cut 36 was corrected before any plan or fit after root checked
+the real denominator (dispatch 32; workshop 37). A cut above the actual count
+is rejected. No cut or input is silently substituted.
+
+```sh
+taskset -c 12 .venv/bin/python docs/data/v4/transport/development/j1/review_evidence/trace_native_validation_v1.py prepare --fixture dispatch --cut 32 --baseline-cpu 13 --profiled-cpu 14 --exception-cpu 15 --out-dir docs/data/v4/transport/development/j1/review_evidence/trace_native_dispatch_v1
+```
+
+After review of that exact plan, run each of its recorded baseline, profiled
+and exception commands in separate owned `run_job.py` processes, on explicitly
+declared CPUs 13, 14 and 15 respectively. These independent processes may run
+concurrently. The wrapper requires `OMP_NUM_THREADS=1`,
+`OPENBLAS_NUM_THREADS=1`, `MKL_NUM_THREADS=1`, `NUMEXPR_NUM_THREADS=1`,
+`PYTHONHASHSEED=0` and `PYTHONDONTWRITEBYTECODE=1`. The user's latest aggregate
+resource limit is 24 logical CPUs at normal priority; root coordinates other
+independent work on the remaining cores. Source, raw inputs, cut, seed and
+numerical-thread limits are identical; the differing CPU affinities are an
+explicit scheduling difference. Each run records its actual inner command,
+working directory, PID, affinity and thread environment. The runner rejects
+arguments differing from the plan. The reviewed unexecuted runner before this
+scheduling change is retained at
+`review_evidence/trace_native_validation_before_scheduling_v1.py.txt`, SHA-256
+`2354b5ce59bbb421f3f3a8856befc990cc4e0cd8a6bdd24d3562c3669e0ea3f1`.
+
+For example, the plan's baseline inner command is:
+
+```sh
+.venv/bin/python docs/data/v4/transport/development/j1/review_evidence/trace_native_validation_v1.py run --plan docs/data/v4/transport/development/j1/review_evidence/trace_native_dispatch_v1/plan.json --mode baseline
+```
+
+Use the corresponding planned commands with `--mode profiled` and `--mode
+exception` under their distinct CPU/job/output identities. The exception control invokes one
+`csq.fit` with an explicitly invalid regime. It verifies native error propagation
+and profiler restoration without replacing a learner method; it cannot claim
+to exercise a failure after final induction, which the invented control covers.
+
+The common projection comparison is standard-library-only:
+
+```sh
+taskset -c 12 .venv/bin/python docs/data/v4/transport/development/j1/review_evidence/trace_native_validation_v1.py compare --plan docs/data/v4/transport/development/j1/review_evidence/trace_native_dispatch_v1/plan.json
+```
+
+Acceptance requires both normal process results and both common projections to
+be complete, exact full common-projection equality, a complete trace, an actual
+nonempty lift and grounding call, a native mutation retained after first lift,
+and the exception restoration control. The projection itself is compared
+without removing measurement fields; timestamps and in-flight-only records
+are already outside that common object. Repeated outcome passes and omitted
+inducer calls are reported as actually observed, including zero omitted calls.
+
+If the first history lacks a required native phenomenon, preserve the result as
+`FAIL_OR_INSUFFICIENT` and review a separate workshop plan with cut 37 and a new
+output identity. If copying encounters an unsupported actual field, preserve
+the invalid result and review the bounded copier extension before retrying.
+No J1 fixture, case, answer, evaluator mapping or R1 sealed input may fill a
+validation gap. No native validation command above has been executed by this
+implementation task at the time this note was written.

@@ -1,0 +1,70 @@
+{
+  "base_right_endpoints": [
+    0,
+    1,
+    0,
+    1,
+    2,
+    3,
+    2,
+    3
+  ],
+  "cell_patterns": {
+    "D": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "G": [
+      0,
+      1,
+      0,
+      1
+    ],
+    "N": [
+      1,
+      1,
+      0,
+      0
+    ]
+  },
+  "competitors": [
+    "source has any bridge",
+    "target has any bridge",
+    "exactly one matching bridge",
+    "fixed endpoint-pair lookup",
+    "unchanged unary projection or spelling rule"
+  ],
+  "degree_scope": "Every primary pre-state has source and target degree two. Sequential public endpoint edits can transiently change target degrees; all such setup graphs are retained in the planned exposure ledger and must be observed in collection.",
+  "effects": "Success changes only the selected target's received flag and emits a delivered message with source and target arguments. Refusal changes no target flag and emits the blocked frame with the same two arguments. Neither event names or changes a bridge.",
+  "endpoint_fields": {
+    "left": "transmitter",
+    "right": "receiver"
+  },
+  "event_frames": {
+    "negative": "Transmission blocked: {source} \u2192 {target}.",
+    "positive": "Transmission delivered: {source} \u2192 {target}."
+  },
+  "independence_limit": "One separately tasked agent authored this generated application and reference. It had prior R1 fixture exposure and read the public JOIN design. No J1 or other learner outputs were read, and no learner was run or tuned. Agreement is fixture self-consistency, not external correctness or learned relational competence.",
+  "left_endpoints": [
+    0,
+    0,
+    1,
+    1,
+    2,
+    2,
+    3,
+    3
+  ],
+  "object_counts": {
+    "bridges": 8,
+    "sources": 4,
+    "targets": 4
+  },
+  "reset": "One fixed graph, all received flags false, no selected receiver and no message; no case or state override is accepted. The visible reset button uses the same endpoint.",
+  "schema": "semabi.join.generated_specification.v1",
+  "setup": "Eight public receiver-endpoint selections, target radio choice, explicit receipt clear, explicit message clear, then one source-owned transmit click. The left endpoints are fixed by the same public reset and remain publicly editable; the allocation never rewires them.",
+  "truth": "Accept iff one and the same visible bridge has the acted source as transmitter and the pre-state selected target as receiver.",
+  "unary_projection": "At each matched source/target contrast, names, member order, object counts, scalar flags, selection, left endpoints, endpoint-set facts and endpoint degrees are equal. Only right endpoint references differ. No graph-state or witness-count label is rendered."
+}

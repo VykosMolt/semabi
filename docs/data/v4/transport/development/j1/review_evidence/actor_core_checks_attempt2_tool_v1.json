@@ -1,0 +1,14 @@
+{
+  "schema": "semabi.j1.independent_check_tool_receipt.v1",
+  "owner": "/root/baseline_verification",
+  "completed_in_launch": true,
+  "tool_session_id": null,
+  "command": "taskset -c 8 .venv/bin/python -B docs/data/v4/transport/development/j1/review_evidence/actor_core_checks_v1.py --actor-sha 26a91ec96deb9c381dcc28c4e0277c6a349c0d940f7693e7bb9e6d3e55b267b7 --output docs/data/v4/transport/development/j1/review_evidence/actor_core_checks_attempt2_v1.json",
+  "result": {
+    "chunk_id": "d0f462",
+    "wall_time_seconds": 0.108373091,
+    "exit_code": 0,
+    "original_token_count": 55,
+    "output": "{\"path\": \"docs/data/v4/transport/development/j1/review_evidence/actor_core_checks_attempt2_v1.json\", \"sha256\": \"11136ee80a4657fbf1cabe387c408dca4d5e5e816392d7c77c5c0d3134cd2623\", \"counts\": {\"PASS\": 27}, \"failed\": []}\n"
+  }
+}

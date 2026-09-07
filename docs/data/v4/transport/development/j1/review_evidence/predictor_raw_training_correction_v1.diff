@@ -1,0 +1,99 @@
+--- predictor_attempt5/predictor.py
++++ predictor.py
+@@ -45,6 +45,16 @@
+ 
+ 
+ io = _module("_j1_predictor_io", HERE / "live_io.py")
++_model = None
++
++
++def public_model():
++    # This module and its trace copier import only the standard library. Native
++    # bindings are loaded explicitly by run, after all startup gates pass.
++    global _model
++    if _model is None:
++        _model = _module("_j1_live_model", HERE / "live_model.py")
++    return _model
+ 
+ 
+ def sha(path):
+@@ -70,6 +80,46 @@
+ 
+ def native_inventory():
+     return {relative(path) for path in (ROOT / "semabi").rglob("*.py")}
++
++
++def public_scalar(value):
++    return value is None or type(value) in (str, bool) or io._real(value)
++
++
++def validate_training_step(row, index, observations):
++    io.require(type(row) is dict and set(row) == {
++        "step", "episode", "action", "ok", "error", "before", "after", "typed_tokens"},
++        "Raw training Step schema differs")
++    io.require(type(row["step"]) is int and row["step"] == index
++               and type(row["episode"]) is int and row["episode"] >= 0
++               and type(row["ok"]) is bool
++               and (row["error"] is None or type(row["error"]) is str), "Raw training Step values differ")
++    io.require(type(row["before"]) is str and type(row["after"]) is str
++               and row["before"] in observations and row["after"] in observations,
++               "Raw training Step signatures differ")
++    io.require(type(row["typed_tokens"]) is list and all(public_scalar(value) for value in row["typed_tokens"]),
++               "Raw training typed_tokens must retain JSON scalars")
++    primitive = row["action"]
++    io.require(type(primitive) is dict and {"kind"} <= set(primitive) <= io.PRIMITIVE_KEYS
++               and type(primitive["kind"]) is str and primitive["kind"] in io.KINDS,
++               "Raw training Primitive schema differs")
++    io.require(public_scalar(primitive.get("text")), "Raw attempted text must be a JSON scalar")
++    target = primitive.get("target")
++    descriptor = primitive.get("target_desc")
++    if target is None:
++        # The retained resolver records its ordinary failed role/name attempt;
++        # no evaluator scope, script identifier or supplied argument is accepted.
++        io.require(descriptor is None or (type(descriptor) is dict and set(descriptor) == {"role", "name"}
++                   and all(type(value) is str for value in descriptor.values())),
++                   "Raw failed-resolution descriptor differs")
++        return
++    nodes = observations[row["before"]]["nodes"]
++    io.require(type(target) is int and 0 <= target < len(nodes), "Raw target index differs")
++    io.require(type(descriptor) is dict and set(descriptor) == {"role", "name", "placeholder"}
++               and type(descriptor["role"]) is str and type(descriptor["name"]) is str
++               and (descriptor["placeholder"] is None or type(descriptor["placeholder"]) is str)
++               and io.json_bytes(descriptor) == io.json_bytes(io.public_descriptor(nodes[target])),
++               "Raw resolved descriptor differs from its public observation")
+ 
+ 
+ def training_records(directory):
+@@ -87,16 +137,17 @@
+         raw = path.read_bytes()
+         records[name] = [io.parse_json(line) for line in raw.splitlines() if line.strip()]
+         files[path.name] = hashlib.sha256(raw).hexdigest()
+-    io.require(records["steps"] and all(type(row) is dict and type(row.get("step")) is int and row["step"] == index
+-               for index, row in enumerate(records["steps"])), "Training must have ordered raw step IDs")
++    io.require(records["steps"], "Training must have raw steps")
+     io.require(all(type(row) is dict and set(row) == {"sig", "obs"} and type(row["sig"]) is str
+                    for row in records["observations"]), "Raw training observation envelope differs")
+-    signatures = {row["sig"] for row in records["observations"]}
+-    io.require(len(signatures) == len(records["observations"])
+-               and all(row.get("before") in signatures and row.get("after") in signatures for row in records["steps"]),
+-               "Training endpoints or observation identities differ")
++    observations = {row["sig"]: row["obs"] for row in records["observations"]}
++    io.require(len(observations) == len(records["observations"]), "Training observation identities differ")
+     for row in records["observations"]:
+         io.validate_observation(row["obs"])
++        io.require(row["obs"] is not None and row["sig"] == public_model().public_signature(row["obs"]),
++                   "Raw observation signature differs from public data")
++    for index, row in enumerate(records["steps"]):
++        validate_training_step(row, index, observations)
+     return records, {"directory": relative(directory), "actual_steps": len(records["steps"]), "files": files}
+ 
+ 
+@@ -330,7 +381,7 @@
+     ledger, server, socket_identity, original_error = None, None, None, None
+     try:
+         sys.path.insert(0, str(ROOT))
+-        model = _module("_j1_live_model", HERE / "live_model.py")
++        model = public_model()
+         bindings = model.native_bindings()
+         from semabi.compiler.v4 import consequence, outcome
+         from semabi.compiler.observation import Observation

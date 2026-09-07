@@ -1,0 +1,67 @@
+{
+ "actual_inner_command": [
+  "/home/moloch/semabi/.venv/bin/python",
+  "docs/data/v4/transport/development/j1/review_evidence/trace_native_validation_v1.py",
+  "run",
+  "--plan",
+  "docs/data/v4/transport/development/j1/review_evidence/trace_native_dispatch_v2/plan.json",
+  "--mode",
+  "exception"
+ ],
+ "affinity": [
+  15
+ ],
+ "cut": 32,
+ "cwd": "/home/moloch/semabi",
+ "end_utc": "2026-09-07T21:29:44.495866+00:00",
+ "error": "unknown information regime 'TRACE_EXCEPTION_CONTROL_INVALID_REGIME'",
+ "error_type": "ValueError",
+ "input_files": {
+  "observations.jsonl": "c7e22d0f668505c6b50e33da1f2c86d2255c89b79ea1c0ef55b798e99eeb7d69",
+  "steps.jsonl": "c9af9c0e426338516397a2a139469909b653c55b7113fc0d784c504b0199b464"
+ },
+ "mode": "exception",
+ "pid": 812795,
+ "plan_sha256": "9bdca6f7097dc573bd004d9b8545e7674cdbe3f07bd3b1e36b2c77bd88d81f62",
+ "python_hash_seed": "0",
+ "schema": "semabi.transport.j1_trace_validation_run.v1",
+ "source_head": "38f1f08a99d57c2787de02fd8906ff5762a26b88",
+ "start_utc": "2026-09-07T21:29:44.486687+00:00",
+ "status": "EXPECTED_EXCEPTION_RESTORED",
+ "thread_limits": {
+  "MKL_NUM_THREADS": "1",
+  "NUMEXPR_NUM_THREADS": "1",
+  "OMP_NUM_THREADS": "1",
+  "OPENBLAS_NUM_THREADS": "1"
+ },
+ "trace": {
+  "events": [],
+  "fit_calls": 1,
+  "incomplete_reasons": [
+   {
+    "path": "context",
+    "reason": "native_fit_raised:ValueError"
+   },
+   {
+    "path": "context",
+    "reason": "expected_exactly_one_fit_and_final_inducer_run"
+   },
+   {
+    "path": "export",
+    "reason": "fit_did_not_return_native_result"
+   }
+  ],
+  "observed_operator_membership": [],
+  "observed_transition_membership": [],
+  "omitted_inducer_run_calls": [],
+  "outcome_pass_adoption": [],
+  "profiler_restored": true,
+  "projection": null,
+  "schema": "semabi.transport.j1_normal_fit_trace.v1",
+  "scope": "Natural calls of the final compile_v4 inducer only; no injected parameter, formula, query, fit or refusal-predicate call",
+  "selected_final_run_calls": 0,
+  "snapshots": {},
+  "status": "INCOMPLETE",
+  "unobserved": "Search-trial internals, rejected candidate proposals and individual bind calls are outside this trace; their omission is not negative evidence"
+ }
+}

@@ -1,0 +1,35 @@
+{
+  "actual_training_steps": 32,
+  "driver_sha256": "53a8bbc90cdd992232a0c67fceb375d4daab758c4f438104f4c18bc93e72a355",
+  "native_fits_launched": 0,
+  "native_modules_imported": false,
+  "plan_sha256": "2fb61a715b2698b2f8fadddab7d8e41e246cdd3b09244d636f8f5fb01044a6ef",
+  "predictor_freeze": {
+    "path": "docs/data/v4/transport/development/j1/review_evidence/resident_native_dispatch_v1/predictor_freeze.json",
+    "sha256": "2ab55a60085653f3fb95cfbe525f4b04d502490e7521e861bff7683a98e7d6ad"
+  },
+  "preparation_exit_code": 0,
+  "requests": 7,
+  "schema": "semabi.j1.resident_pilot_preparation_validation.v1",
+  "scope": "Preparation and exact inventory/request validation only. No predictor/driver run, native fit, browser or service launch.",
+  "source_head": "592590560008632076469ae51beb160d23817b86",
+  "status": "VALIDATED_PREPARATION",
+  "validation_command": [
+    "env",
+    "OMP_NUM_THREADS=1",
+    "OPENBLAS_NUM_THREADS=1",
+    "MKL_NUM_THREADS=1",
+    "NUMEXPR_NUM_THREADS=1",
+    "PYTHONHASHSEED=0",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "taskset",
+    "-c",
+    "12",
+    ".venv/bin/python",
+    "docs/data/v4/transport/development/j1/review_evidence/resident_native_validation_v1.py",
+    "validate",
+    "--plan",
+    "docs/data/v4/transport/development/j1/review_evidence/resident_native_dispatch_v1/plan.json"
+  ],
+  "validation_exit_code": 0
+}

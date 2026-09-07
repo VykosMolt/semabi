@@ -1,0 +1,121 @@
+# Resident predictor candidate v1
+
+This implements the finalized public live contract SHA-256
+`f9642c36b3581323eaa8206d5117dd7831c2d57cf6142b39877fd0e2fbc17d90`.
+The external instrument consists of `predictor.py` and `live_model.py`; the
+root-owned `live_io.py` provides the strict request/ledger/receipt boundary.
+No native SemABI, collector, fixture, script or oracle source was changed.
+
+## Source and input boundary
+
+The standard-library-only `prepare` command produces an exclusive public
+`semabi.j1.predictor_freeze.v1` record. Its exact inventories contain native
+`semabi/**/*.py` bytes, the five public predictor instruments/contract, two raw
+training files, resource commitments and the disclosed trace-validation chain.
+Native source files are hashed as provenance; unused evaluator/hidden modules
+are not imported. Runtime inventory names are checked before their files are
+opened. No evaluator manifest or J1 evaluation payload is followed.
+
+The validation chain authenticates the complete dispatch v2 comparison
+`70cce8f326f71e22973ad03ddbd7c37b9cefbe79b65ff544e3f869e2f5ebb212`,
+its plan, three outputs and exact trace dependencies. This trace ran at HEAD
+`38f1f08a99d57c2787de02fd8906ff5762a26b88`. The later reviewed B1 integration
+is explicit: the candidate freeze lists every native source hash difference
+from that validation plan. Root must review this list against the adopted B1
+guards before launching a resident pilot. The current implementation baseline
+is `d72335b08cfe6171476842551036f528666e0c35`; no resident freeze or native
+pilot has been created for this candidate yet.
+
+`run --training DIR --freeze FILE --out-dir NEW_DIR --socket NEW_SOCKET`
+checks the frozen HEAD, inventories, raw step count, absence of learned
+sidecars (including dangling symlinks), normal priority, declared CPU,
+one numerical thread and hash seed zero before native imports. Its only fit is
+`consequence.fit(training, None, at=actual_training_steps)` inside the validated
+observer with an empty `primary_steps` selector. Fit/trace/projection failures
+are retained and stop startup. The returned Fit stays resident.
+
+## Forecast and receipt payload
+
+`semabi.j1.forecast.v1` retains UNREACHABLE, NO_PRESTATE, NON_CLICK, NO_MODEL,
+FORECAST and native ERROR separately. Before prediction the server validates
+the exact request and duplicate ID. For an available click the only prediction
+path is native clicked-control, abstract/parsed state, owner, bind, literals,
+decision-list predict, corroborated RULE and LIST admissibility, then native
+arguments over their ordered event union. No future Step, log append,
+retrospective scoring or additional fit is performed.
+
+`values` is the trace copier's typed ordered mapping. It holds control, state,
+parsed state, owner, bound roles, binding status, literals, stored roles and
+argument-role maps, decision-list event, full RULE/LIST Vouches, and each
+event's returned arguments. Missing argument positions remain absent while
+the stored role map retains them. Vouch witnesses, condition, coverage mask,
+sole and preceded-by fields are copied exactly; its computed property is never
+called. Unsupported types/iterators make the forecast INCOMPLETE. Native
+prediction exceptions save the partial known values and a COMPLETE/ERROR.
+
+The ledger fsync precedes every acknowledgement. The actor then independently
+verifies and persists that receipt before acting. One request uses one local
+connection, so successive actors share the same monotonic ledger and Fit.
+Checkpoint and shutdown use the same durable receipt mechanism. Protocol,
+write, send and incomplete-instrument failures stop the service and retain
+request-failure evidence. Cleanup independently attempts ledger close, server
+close, removal of the same owned socket inode, and the exclusive terminal
+record, preserving the original failure alongside cleanup errors.
+
+## Complete checkpoint monitor
+
+`checkpoint_0000.json` is the startup `semabi.j1.live_checkpoint.v1` record.
+It contains the complete common trace projection and the live extension;
+later numbered checkpoints retain the same copies after evaluation and at
+shutdown. The frozen vocabulary is at
+`projection.common.emission_vocabulary`; complete stored outcome maps are at
+`projection.common.fit.outcomes`. The ready record's stable provenance binds
+the startup checkpoint path/hash, trace hash, learned commitment hash, UUID
+fit ID, PID, source and raw training commitments.
+
+The live extension rejects unknown stored fields on Fit, Inducer, Abstractor,
+Hypotheses, Vocabulary, EvidenceLog and ObsGraph. Its exact exclusions cover
+the checked ownership handles, parser/cat handle and log filesystem paths.
+Strong references and relationship checks attest the same resident Fit,
+inducer, abstractor, hypotheses, graph, vocabulary, logs and operators. Frozen
+graph statistics and exact TextTemplate fields, including stored `_vary`,
+are copied together with class/instance collection policy. No property is used
+to complete missing state.
+
+The learned view resolves copied snapshot references before excluding only
+the named interpretation caches. It compares canonical typed JSON, preserving
+integer/float/boolean distinctions and evidence order. Complete projections
+retain all cache contents; their changes are reported separately. H.memo and
+graph lookup comparisons use both startup and the immediately preceding
+checkpoint, so an entry newly added during one profile becomes an immutable
+old entry at the next. New memo/node keys must belong to cumulatively submitted
+interpreted observations. The observation signature is copied from the public
+Node-key hashing algorithm without invoking native display or export methods.
+Any failed checkpoint remains failed on later calls, even after a reversion.
+
+This is a checkpoint monitor, not an access sandbox or a guarantee against an
+arbitrary transient mutation. The source review and single-fit implementation
+establish the intended path; the disclosed native resident pilot remains a
+separate required validation.
+
+## Invented validation retained
+
+`review_evidence/predictor_invented_checks_attempt5_v1.json` records 29 passing
+checks. They cover complete unchanged projections, exact numeric types,
+evidence order, old and newly added cache-entry mutation/removal, unknown
+fields, resident identity, snapshot resolution, full forecast call order and
+Vouches/arguments, native errors, unknown copier values/iterators, separate
+opportunity categories, actual local IPC, durable-before-receipt ordering,
+duplicate IDs, incomplete forecasts, fsync failure, independent cleanup,
+terminal write failures, forbidden inventory paths and dangling sidecars.
+They use invented Python objects and owned local sockets, with no native fit
+or fixture input.
+
+Attempt1 exposed seven monitor defects and four invented Node-schema setup
+errors. The entire result and exact sources are archived under
+`instrument_revisions/predictor_attempt1`. Attempt2 failed during source
+loading because of a parenthesis typo and is retained separately. Corrected
+attempt3 passed the original 17 checks and its exact sources are archived
+before the IPC/cleanup coverage expansion. Attempt4 passed all 29 checks and
+is archived before the final addition retaining fit identity in later terminal
+failure records. No failed attempt is reclassified.

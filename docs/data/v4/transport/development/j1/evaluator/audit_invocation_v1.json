@@ -1,0 +1,12 @@
+{
+  "schema": "semabi.join.fixture_audit_invocation.v1",
+  "cwd": "/home/moloch/semabi",
+  "command": "taskset -c 23 nice -n 19 ionice -c 3 python experiments/join_v1/oracle/audit_fixture.py",
+  "cpu": [23],
+  "nice": 19,
+  "io_class": "idle",
+  "permitted_scope": "bounded new-fixture standard-library model checks only",
+  "server_browser_semabi_learner_execution": false,
+  "inputs": "manifest_pre_audit.json",
+  "outputs_exclusive": ["sealed_model_audit_v1.json", "public_audit_summary_v1.json"]
+}

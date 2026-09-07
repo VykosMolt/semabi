@@ -1,0 +1,162 @@
+{"detail": {"files": 69, "jobs": 8}, "expectation": "accept_with_assertions", "name": "complete_preservation", "status": "PASS"}
+{"detail": {"defects": 0, "missing": 1}, "expectation": "accept_with_assertions", "name": "partial_missing_step_file", "status": "PASS"}
+{"detail": {"defects": 1, "missing": 1}, "expectation": "accept_with_assertions", "name": "partial_missing_process", "status": "PASS"}
+{"detail": {"defects": 1, "missing": 0}, "expectation": "accept_with_assertions", "name": "partial_malformed_process", "status": "PASS"}
+{"detail": {"defects": 1, "missing": 0}, "expectation": "accept_with_assertions", "name": "partial_malformed_startup", "status": "PASS"}
+{"detail": {"defects": 1, "missing": 0}, "expectation": "accept_with_assertions", "name": "partial_malformed_ready", "status": "PASS"}
+{"expectation": "reject", "name": "preserve_rejects_live_owned_job", "rejection_detail": "Cannot seal while an owned job PID is present", "rejection_type": "ProtocolError", "status": "PASS"}
+{"detail": {"checkpoints": 4, "jobs": 8, "ledger_records": 629}, "expectation": "accept_with_assertions", "name": "audit_complete_run", "status": "PASS"}
+{"detail": {"charges_per_phase": 313, "status": "VALID_SAVED_FORECAST_MEASUREMENT", "targets_per_phase": 24}, "expectation": "accept_with_assertions", "name": "main_complete_run", "status": "PASS"}
+{"detail": {"charges_per_phase": 313, "error": {"detail": "Resident fit did not finish and release its owned process/socket", "type": "ProtocolError"}, "targets_per_phase": 24}, "expectation": "accept_with_assertions", "name": "main_custody_failure_retains_denominators", "status": "PASS"}
+{"detail": {"charges_per_phase": 313, "error": {"detail": "Saved forecast envelope differs", "type": "ProtocolError"}, "targets_per_phase": 24}, "expectation": "accept_with_assertions", "name": "main_late_score_failure_discards_partial_admission", "status": "PASS"}
+{"detail": {"rejected_before_write": true}, "expectation": "accept_with_assertions", "name": "score_output_must_stay_outside_sealed_roots", "status": "PASS"}
+{"detail": {"rejected_before_write": true}, "expectation": "accept_with_assertions", "name": "preservation_output_must_stay_outside_sealed_roots", "status": "PASS"}
+{"detail": null, "expectation": "accept_with_assertions", "name": "partial_process_json_nonobject", "status": "PASS"}
+{"detail": null, "expectation": "accept_with_assertions", "name": "partial_process_json_duplicate_keys", "status": "PASS"}
+{"detail": {"binding_failures": [{"actual": "ac28fdeb7e02ca8364d8b331db5af932d26ab02c579c11029a00b2a925dc2a63", "expected": "126b295a628f531f14643b4cd3c2c3502dced91803a0db0650f93ce1e5a625d7", "path": "semabi/invented_forbidden.py", "section": "source_files"}]}, "expectation": "accept_with_assertions", "name": "partial_changed_source_bytes", "status": "PASS"}
+{"detail": {"binding_failures": [{"actual": null, "expected": "817bba24e7a4051d6a519fd7393412ee0005944cff52f8874600a0e65c11d7e6", "path": "docs/data/v4/transport/development/j1/trace.py", "section": "source_files"}]}, "expectation": "accept_with_assertions", "name": "partial_missing_source_file", "status": "PASS"}
+{"detail": {"binding_failures": [{"actual": "3949d0dec5709dd05897335829f791eb945e5ef61371a358f0d04138e0324d36", "expected": "016079c3891aeeb3912979a60ca7eb75e5c16d46a6451cca205c1e5b66b634c5", "path": "docs/data/v4/transport/invented_first_pass/inputs/actor_freeze.json", "section": "fixed_inputs"}]}, "expectation": "accept_with_assertions", "name": "partial_changed_fixed_input", "status": "PASS"}
+{"detail": {"binding_failures": [{"added": ["semabi/invented_added.py"], "missing": [], "section": "native_inventory"}]}, "expectation": "accept_with_assertions", "name": "partial_added_native_source", "status": "PASS"}
+{"detail": {"binding_failures": [{"actual": null, "expected": "126b295a628f531f14643b4cd3c2c3502dced91803a0db0650f93ce1e5a625d7", "path": "semabi/invented_forbidden.py", "section": "source_files"}, {"added": [], "missing": ["semabi/invented_forbidden.py"], "section": "native_inventory"}]}, "expectation": "accept_with_assertions", "name": "partial_missing_native_source", "status": "PASS"}
+{"detail": null, "expectation": "accept_with_assertions", "name": "partial_changed_head", "status": "PASS"}
+{"detail": null, "expectation": "accept_with_assertions", "name": "preservation_includes_unexpected_failure_output", "status": "PASS"}
+{"detail": {"native_helper_calls": 0, "rejection": "Frozen input changed: semabi/invented_forbidden.py"}, "expectation": "accept_with_assertions", "name": "pre_native_gate_source_bytes", "status": "PASS"}
+{"detail": {"native_helper_calls": 0, "rejection": "Frozen input changed: docs/data/v4/transport/invented_first_pass/inputs/actor_freeze.json"}, "expectation": "accept_with_assertions", "name": "pre_native_gate_fixed_input_bytes", "status": "PASS"}
+{"detail": {"native_helper_calls": 0, "rejection": "Evaluation source inventory differs"}, "expectation": "accept_with_assertions", "name": "pre_native_gate_native_inventory_addition", "status": "PASS"}
+{"detail": {"native_helper_calls": 0, "rejection": "Evaluation source HEAD changed"}, "expectation": "accept_with_assertions", "name": "pre_native_gate_source_head", "status": "PASS"}
+{"detail": {"native_helper_calls": 0, "rejection": "Preserved artifact changed: docs/data/v4/transport/invented_first_pass/primary/steps.jsonl"}, "expectation": "accept_with_assertions", "name": "pre_native_gate_preserved_output_bytes", "status": "PASS"}
+{"detail": {"native_helper_calls": 0, "rejection": "First-pass artifact inventory changed"}, "expectation": "accept_with_assertions", "name": "pre_native_gate_preserved_output_addition", "status": "PASS"}
+{"detail": {"native_helper_calls": 0, "rejection": "First-pass artifact inventory changed"}, "expectation": "accept_with_assertions", "name": "pre_native_gate_preserved_output_removal", "status": "PASS"}
+{"detail": {"native_helper_calls": 0, "rejection": "Preserved missing-output inventory differs"}, "expectation": "accept_with_assertions", "name": "pre_native_gate_manifest_missing_inventory", "status": "PASS"}
+{"detail": {"native_helper_calls": 0, "rejection": "First-pass preservation is not authenticated"}, "expectation": "accept_with_assertions", "name": "pre_native_gate_manifest_binding_failure", "status": "PASS"}
+{"detail": {"native_helper_calls": 0, "rejection": "Owned job role inventory differs"}, "expectation": "accept_with_assertions", "name": "pre_native_gate_job_missing_role", "status": "PASS"}
+{"detail": {"native_helper_calls": 0, "rejection": "Owned job role inventory differs"}, "expectation": "accept_with_assertions", "name": "pre_native_gate_job_duplicate_role", "status": "PASS"}
+{"detail": {"native_helper_calls": 0, "rejection": "Owned job role inventory differs"}, "expectation": "accept_with_assertions", "name": "pre_native_gate_job_extra_role", "status": "PASS"}
+{"detail": {"native_helper_calls": 0, "rejection": "Fixed phase/control order differs"}, "expectation": "accept_with_assertions", "name": "pre_native_gate_phase_order", "status": "PASS"}
+{"detail": {"native_helper_calls": 0, "rejection": "Fixed phase/control order differs"}, "expectation": "accept_with_assertions", "name": "pre_native_gate_control_order", "status": "PASS"}
+{"detail": {"native_helper_calls": 0, "rejection": "Fixed fixture profile, routing or seed differs"}, "expectation": "accept_with_assertions", "name": "pre_native_gate_phase_profile", "status": "PASS"}
+{"detail": {"native_helper_calls": 0, "rejection": "Fixed fixture profile, routing or seed differs"}, "expectation": "accept_with_assertions", "name": "pre_native_gate_phase_fixture", "status": "PASS"}
+{"detail": {"native_helper_calls": 0, "rejection": "Fixed fixture profile, routing or seed differs"}, "expectation": "accept_with_assertions", "name": "pre_native_gate_phase_seed_boolean", "status": "PASS"}
+{"detail": {"native_helper_calls": 0, "rejection": "Fixed fixture profile, routing or seed differs"}, "expectation": "accept_with_assertions", "name": "pre_native_gate_phase_route", "status": "PASS"}
+{"detail": {"native_helper_calls": 0, "rejection": "Frozen retained collector arguments differ"}, "expectation": "accept_with_assertions", "name": "pre_native_gate_retained_argv", "status": "PASS"}
+{"detail": {"native_helper_calls": 0, "rejection": "J1 fixed allocation commitment differs"}, "expectation": "accept_with_assertions", "name": "pre_native_gate_fixed_counts", "status": "PASS"}
+{"detail": {"native_helper_calls": 0, "rejection": "J1 fixed allocation commitment differs"}, "expectation": "accept_with_assertions", "name": "pre_native_gate_fixed_counts_boolean", "status": "PASS"}
+{"detail": {"native_helper_calls": 0, "rejection": "Expected canonical repository-relative path"}, "expectation": "accept_with_assertions", "name": "pre_native_gate_noncanonical_input_path", "status": "PASS"}
+{"detail": {"native_helper_calls": 0, "rejection": "Owned predictor socket routing differs"}, "expectation": "accept_with_assertions", "name": "pre_native_gate_socket_outside_tmp", "status": "PASS"}
+{"detail": {"native_helper_calls": 0, "rejection": "Fixed J1 allocation counts differ"}, "expectation": "accept_with_assertions", "name": "pre_native_gate_allocation_charge_count", "status": "PASS"}
+{"detail": {"native_helper_calls": 0, "rejection": "Fixed J1 allocation counts differ"}, "expectation": "accept_with_assertions", "name": "pre_native_gate_allocation_target_count", "status": "PASS"}
+{"detail": {"native_helper_calls": 0, "rejection": "Fixed J1 allocation counts differ"}, "expectation": "accept_with_assertions", "name": "pre_native_gate_allocation_case_count", "status": "PASS"}
+{"detail": {"native_helper_calls": 0, "rejection": "Fixed J1 allocation counts differ"}, "expectation": "accept_with_assertions", "name": "pre_native_gate_allocation_snapshot_count", "status": "PASS"}
+{"detail": {"native_helper_calls": 0}, "expectation": "accept_with_assertions", "name": "pre_native_gate_script_reference_outside_commitment", "status": "PASS"}
+{"expectation": "reject", "name": "job_command_binding_invariance_actor", "rejection_detail": "Owned job source, command, completion or log differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "job_command_binding_invariance_checkpoint", "rejection_detail": "Owned job source, command, completion or log differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "job_command_binding_invariance_service", "rejection_detail": "Owned job source, command, completion or log differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "job_command_binding_predictor", "rejection_detail": "Owned job source, command, completion or log differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "job_command_binding_primary_actor", "rejection_detail": "Owned job source, command, completion or log differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "job_command_binding_primary_checkpoint", "rejection_detail": "Owned job source, command, completion or log differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "job_command_binding_primary_service", "rejection_detail": "Owned job source, command, completion or log differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "job_command_binding_shutdown", "rejection_detail": "Owned job source, command, completion or log differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "job_source_head", "rejection_detail": "Owned job source, command, completion or log differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "job_cwd", "rejection_detail": "Owned job source, command, completion or log differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "job_owner", "rejection_detail": "Owned job source, command, completion or log differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "job_child_not_terminated", "rejection_detail": "Owned job source, command, completion or log differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "job_end_timestamp_missing", "rejection_detail": "Owned job source, command, completion or log differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "job_log_digest", "rejection_detail": "Owned job source, command, completion or log differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "job_native_source_hashes", "rejection_detail": "Job native source commitment differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "job_instrument_hashes", "rejection_detail": "Job retained instrument commitment differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "job_hash_seed", "rejection_detail": "Job numerical thread or hash-seed commitment differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "job_thread_limits", "rejection_detail": "Job numerical thread or hash-seed commitment differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "job_finite_failed", "rejection_detail": "Finite owned job did not finish successfully", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "job_returncode_boolean", "rejection_detail": "Finite owned job did not finish successfully", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "job_runner_pid_boolean", "rejection_detail": "Job process identity differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "job_child_pid_zero", "rejection_detail": "Job process identity differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "job_child_pid_live", "rejection_detail": "Owned job process is still present", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "service_not_interrupted", "rejection_detail": "Owned service did not end by the planned wrapper termination", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "service_signal_not_sigterm", "rejection_detail": "Owned service did not end by the planned wrapper termination", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "job_frozen_role_command_route", "rejection_detail": "Owned job is routed to different phase inputs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "ready_process_child_link", "rejection_detail": "Saved resident ready or training provenance differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "ready_provenance_pid", "rejection_detail": "Saved resident ready or training provenance differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "ready_source_head", "rejection_detail": "Saved resident ready or training provenance differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "ready_freeze_sha", "rejection_detail": "Saved resident ready or training provenance differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "ready_training", "rejection_detail": "Saved resident ready or training provenance differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "ready_ledger_path", "rejection_detail": "Saved resident ready or training provenance differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "ready_socket", "rejection_detail": "Saved resident ready or training provenance differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "ready_status", "rejection_detail": "Saved resident ready or training provenance differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "ready_pid_boolean", "rejection_detail": "Saved resident ready or training provenance differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "fit_id_uuid", "rejection_detail": "Request ID must be opaque UUID4", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "trace_source_binding", "rejection_detail": "Resident fit trace source or bytes differ", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "trace_byte_binding", "rejection_detail": "Resident fit trace source or bytes differ", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "trace_fit_count_two", "rejection_detail": "A complete single native fit and unchanged startup projection are not established", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "trace_fit_count_boolean", "rejection_detail": "A complete single native fit and unchanged startup projection are not established", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "trace_selected_run_count_two", "rejection_detail": "A complete single native fit and unchanged startup projection are not established", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "trace_selected_run_count_boolean", "rejection_detail": "A complete single native fit and unchanged startup projection are not established", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "trace_profiler_not_restored", "rejection_detail": "A complete single native fit and unchanged startup projection are not established", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "trace_incomplete_status", "rejection_detail": "A complete single native fit and unchanged startup projection are not established", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "trace_incomplete_reasons", "rejection_detail": "A complete single native fit and unchanged startup projection are not established", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "trace_common_projection_differs", "rejection_detail": "A complete single native fit and unchanged startup projection are not established", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "checkpoint_learned_recomputed_0", "rejection_detail": "Initial learned projection differs from its commitment", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "checkpoint_learned_recomputed_1", "rejection_detail": "Checkpoint copied content differs from learned commitment", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "checkpoint_learned_recomputed_2", "rejection_detail": "Checkpoint copied content differs from learned commitment", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "checkpoint_learned_recomputed_3", "rejection_detail": "Shutdown copied content differs from learned commitment", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "initial_full_common_matches_trace", "rejection_detail": "A complete single native fit and unchanged startup projection are not established", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "startup_provenance_pid", "rejection_detail": "Resident run provenance differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "startup_provenance_source_head", "rejection_detail": "Resident run provenance differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "startup_provenance_runtime_freeze_sha256", "rejection_detail": "Resident run provenance differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "startup_provenance_training", "rejection_detail": "Resident run provenance differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "startup_provenance_output_directory", "rejection_detail": "Resident run provenance differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "startup_provenance_socket_path", "rejection_detail": "Resident run provenance differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "startup_provenance_command", "rejection_detail": "Resident run provenance differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "termination_provenance_pid", "rejection_detail": "Resident run provenance differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "termination_provenance_source_head", "rejection_detail": "Resident run provenance differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "termination_provenance_runtime_freeze_sha256", "rejection_detail": "Resident run provenance differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "termination_provenance_training", "rejection_detail": "Resident run provenance differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "termination_provenance_output_directory", "rejection_detail": "Resident run provenance differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "termination_provenance_socket_path", "rejection_detail": "Resident run provenance differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "termination_provenance_command", "rejection_detail": "Resident run provenance differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "termination_status", "rejection_detail": "Resident fit did not finish and release its owned process/socket", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "termination_fit_id", "rejection_detail": "Resident fit did not finish and release its owned process/socket", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "termination_fit_calls_two", "rejection_detail": "Resident fit did not finish and release its owned process/socket", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "termination_fit_calls_boolean", "rejection_detail": "Resident fit did not finish and release its owned process/socket", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "termination_trace_sha", "rejection_detail": "Resident fit did not finish and release its owned process/socket", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "termination_initial_checkpoint", "rejection_detail": "Resident fit did not finish and release its owned process/socket", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "termination_checkpoint_count", "rejection_detail": "Resident fit did not finish and release its owned process/socket", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "termination_cleanup_errors", "rejection_detail": "Resident fit did not finish and release its owned process/socket", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "termination_socket_not_removed", "rejection_detail": "Resident fit did not finish and release its owned process/socket", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "primary_actor_script_sha", "rejection_detail": "Native script/source routing differs from the frozen invocation", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "primary_actor_script_file", "rejection_detail": "Native script/source routing differs from the frozen invocation", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "primary_actor_start_pid", "rejection_detail": "Native script/source routing differs from the frozen invocation", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "primary_actor_end_pid", "rejection_detail": "Native script/source routing differs from the frozen invocation", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "primary_actor_argv", "rejection_detail": "Native script/source routing differs from the frozen invocation", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "primary_actor_end_argv", "rejection_detail": "Native script/source routing differs from the frozen invocation", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "invariance_actor_script_sha", "rejection_detail": "Native script/source routing differs from the frozen invocation", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "invariance_actor_script_file", "rejection_detail": "Native script/source routing differs from the frozen invocation", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "invariance_actor_start_pid", "rejection_detail": "Native script/source routing differs from the frozen invocation", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "invariance_actor_end_pid", "rejection_detail": "Native script/source routing differs from the frozen invocation", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "invariance_actor_argv", "rejection_detail": "Native script/source routing differs from the frozen invocation", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "invariance_actor_end_argv", "rejection_detail": "Native script/source routing differs from the frozen invocation", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "ledger_missing_phase_checkpoint", "rejection_detail": "'record'", "rejection_type": "KeyError", "status": "PASS"}
+{"expectation": "reject", "name": "ledger_missing_shutdown", "rejection_detail": "list index out of range", "rejection_type": "IndexError", "status": "PASS"}
+{"expectation": "reject", "name": "ledger_orphan_after_shutdown", "rejection_detail": "Orphan ledger record or final durable receipt differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "ledger_phase_block_order", "rejection_detail": "Invented custody reader rejected caller phase ledger slice", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "ledger_checkpoint_control_order", "rejection_detail": "Phase checkpoint/shutdown control lacks its exact durable ledger record", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "terminal_final_receipt_receipt_index", "rejection_detail": "Orphan ledger record or final durable receipt differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "terminal_final_receipt_ledger_sha256", "rejection_detail": "Orphan ledger record or final durable receipt differs", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "control_0_status", "rejection_detail": "Phase checkpoint/shutdown control lacks its exact durable ledger record", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "control_0_before", "rejection_detail": "Phase checkpoint/shutdown control lacks its exact durable ledger record", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "control_0_after", "rejection_detail": "Phase checkpoint/shutdown control lacks its exact durable ledger record", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "control_0_provenance", "rejection_detail": "Phase checkpoint/shutdown control lacks its exact durable ledger record", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "control_0_ready", "rejection_detail": "Phase checkpoint/shutdown control lacks its exact durable ledger record", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "control_0_ledger_path", "rejection_detail": "Phase checkpoint/shutdown control lacks its exact durable ledger record", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "control_1_status", "rejection_detail": "Phase checkpoint/shutdown control lacks its exact durable ledger record", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "control_1_before", "rejection_detail": "Phase checkpoint/shutdown control lacks its exact durable ledger record", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "control_1_after", "rejection_detail": "Phase checkpoint/shutdown control lacks its exact durable ledger record", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "control_1_provenance", "rejection_detail": "Phase checkpoint/shutdown control lacks its exact durable ledger record", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "control_1_ready", "rejection_detail": "Phase checkpoint/shutdown control lacks its exact durable ledger record", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "control_1_ledger_path", "rejection_detail": "Phase checkpoint/shutdown control lacks its exact durable ledger record", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "control_2_status", "rejection_detail": "Phase checkpoint/shutdown control lacks its exact durable ledger record", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "control_2_before", "rejection_detail": "Phase checkpoint/shutdown control lacks its exact durable ledger record", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "control_2_after", "rejection_detail": "Phase checkpoint/shutdown control lacks its exact durable ledger record", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "control_2_provenance", "rejection_detail": "Phase checkpoint/shutdown control lacks its exact durable ledger record", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "control_2_ready", "rejection_detail": "Phase checkpoint/shutdown control lacks its exact durable ledger record", "rejection_type": "ProtocolError", "status": "PASS"}
+{"expectation": "reject", "name": "control_2_ledger_path", "rejection_detail": "Phase checkpoint/shutdown control lacks its exact durable ledger record", "rejection_type": "ProtocolError", "status": "PASS"}
+{"failed": 0, "harness_sha256": "e7b7adf30461016c893aca4016986568a81a8f434b48003dd54467c092ff62ab", "passed": 161}

@@ -1,0 +1,3759 @@
+{
+  "authority": "sealed author allocation",
+  "evaluation": [
+    {
+      "case": "probe_01",
+      "cell": 0,
+      "contrast": "N",
+      "edges": [
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "matching_bridges": [
+        0,
+        1
+      ],
+      "partition": "probe",
+      "source": 0,
+      "target": 3
+    },
+    {
+      "case": "probe_02",
+      "cell": 1,
+      "contrast": "G",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "matching_bridges": [
+        4
+      ],
+      "partition": "probe",
+      "source": 2,
+      "target": 0
+    },
+    {
+      "case": "probe_03",
+      "cell": 1,
+      "contrast": "D",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": false,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "matching_bridges": [],
+      "partition": "probe",
+      "source": 2,
+      "target": 1
+    },
+    {
+      "case": "probe_04",
+      "cell": 0,
+      "contrast": "G",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "matching_bridges": [
+        2
+      ],
+      "partition": "probe",
+      "source": 1,
+      "target": 2
+    },
+    {
+      "case": "probe_05",
+      "cell": 0,
+      "contrast": "N",
+      "edges": [
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "expected_delivered": false,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "matching_bridges": [],
+      "partition": "probe",
+      "source": 1,
+      "target": 3
+    },
+    {
+      "case": "probe_06",
+      "cell": 1,
+      "contrast": "G",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        true,
+        false,
+        false
+      ],
+      "matching_bridges": [
+        5
+      ],
+      "partition": "probe",
+      "source": 2,
+      "target": 1
+    },
+    {
+      "case": "probe_07",
+      "cell": 1,
+      "contrast": "D",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": false,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "matching_bridges": [],
+      "partition": "probe",
+      "source": 3,
+      "target": 0
+    },
+    {
+      "case": "probe_08",
+      "cell": 0,
+      "contrast": "D",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "matching_bridges": [
+        0,
+        1
+      ],
+      "partition": "probe",
+      "source": 0,
+      "target": 2
+    },
+    {
+      "case": "probe_09",
+      "cell": 0,
+      "contrast": "D",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": false,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "matching_bridges": [],
+      "partition": "probe",
+      "source": 0,
+      "target": 3
+    },
+    {
+      "case": "probe_10",
+      "cell": 1,
+      "contrast": "D",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "matching_bridges": [
+        4,
+        5
+      ],
+      "partition": "probe",
+      "source": 2,
+      "target": 0
+    },
+    {
+      "case": "probe_11",
+      "cell": 0,
+      "contrast": "N",
+      "edges": [
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "expected_delivered": false,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "matching_bridges": [],
+      "partition": "probe",
+      "source": 0,
+      "target": 2
+    },
+    {
+      "case": "probe_12",
+      "cell": 0,
+      "contrast": "G",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "matching_bridges": [
+        1
+      ],
+      "partition": "probe",
+      "source": 0,
+      "target": 3
+    },
+    {
+      "case": "probe_13",
+      "cell": 1,
+      "contrast": "N",
+      "edges": [
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "expected_delivered": false,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "matching_bridges": [],
+      "partition": "probe",
+      "source": 3,
+      "target": 1
+    },
+    {
+      "case": "probe_14",
+      "cell": 1,
+      "contrast": "G",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        true,
+        false,
+        false
+      ],
+      "matching_bridges": [
+        7
+      ],
+      "partition": "probe",
+      "source": 3,
+      "target": 1
+    },
+    {
+      "case": "probe_15",
+      "cell": 1,
+      "contrast": "G",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "matching_bridges": [
+        6
+      ],
+      "partition": "probe",
+      "source": 3,
+      "target": 0
+    },
+    {
+      "case": "probe_16",
+      "cell": 1,
+      "contrast": "N",
+      "edges": [
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        true,
+        false,
+        false
+      ],
+      "matching_bridges": [
+        4,
+        5
+      ],
+      "partition": "probe",
+      "source": 2,
+      "target": 1
+    },
+    {
+      "case": "probe_17",
+      "cell": 1,
+      "contrast": "D",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        true,
+        false,
+        false
+      ],
+      "matching_bridges": [
+        6,
+        7
+      ],
+      "partition": "probe",
+      "source": 3,
+      "target": 1
+    },
+    {
+      "case": "probe_18",
+      "cell": 1,
+      "contrast": "N",
+      "edges": [
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "matching_bridges": [
+        6,
+        7
+      ],
+      "partition": "probe",
+      "source": 3,
+      "target": 0
+    },
+    {
+      "case": "probe_19",
+      "cell": 0,
+      "contrast": "G",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "matching_bridges": [
+        0
+      ],
+      "partition": "probe",
+      "source": 0,
+      "target": 2
+    },
+    {
+      "case": "probe_20",
+      "cell": 0,
+      "contrast": "D",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": false,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "matching_bridges": [],
+      "partition": "probe",
+      "source": 1,
+      "target": 2
+    },
+    {
+      "case": "probe_21",
+      "cell": 0,
+      "contrast": "D",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "matching_bridges": [
+        2,
+        3
+      ],
+      "partition": "probe",
+      "source": 1,
+      "target": 3
+    },
+    {
+      "case": "probe_22",
+      "cell": 0,
+      "contrast": "G",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "matching_bridges": [
+        3
+      ],
+      "partition": "probe",
+      "source": 1,
+      "target": 3
+    },
+    {
+      "case": "probe_23",
+      "cell": 0,
+      "contrast": "N",
+      "edges": [
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "matching_bridges": [
+        2,
+        3
+      ],
+      "partition": "probe",
+      "source": 1,
+      "target": 2
+    },
+    {
+      "case": "probe_24",
+      "cell": 1,
+      "contrast": "N",
+      "edges": [
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "expected_delivered": false,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "matching_bridges": [],
+      "partition": "probe",
+      "source": 2,
+      "target": 0
+    }
+  ],
+  "invariance": [
+    {
+      "case": "mirror_01",
+      "cell": 0,
+      "contrast": "N",
+      "edges": [
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "isomorphic_to": "probe_01",
+      "matching_bridges": [
+        0,
+        1
+      ],
+      "partition": "mirror",
+      "source": 0,
+      "target": 3
+    },
+    {
+      "case": "mirror_02",
+      "cell": 1,
+      "contrast": "G",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "isomorphic_to": "probe_02",
+      "matching_bridges": [
+        4
+      ],
+      "partition": "mirror",
+      "source": 2,
+      "target": 0
+    },
+    {
+      "case": "mirror_03",
+      "cell": 1,
+      "contrast": "D",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": false,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "isomorphic_to": "probe_03",
+      "matching_bridges": [],
+      "partition": "mirror",
+      "source": 2,
+      "target": 1
+    },
+    {
+      "case": "mirror_04",
+      "cell": 0,
+      "contrast": "G",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "isomorphic_to": "probe_04",
+      "matching_bridges": [
+        2
+      ],
+      "partition": "mirror",
+      "source": 1,
+      "target": 2
+    },
+    {
+      "case": "mirror_05",
+      "cell": 0,
+      "contrast": "N",
+      "edges": [
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "expected_delivered": false,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "isomorphic_to": "probe_05",
+      "matching_bridges": [],
+      "partition": "mirror",
+      "source": 1,
+      "target": 3
+    },
+    {
+      "case": "mirror_06",
+      "cell": 1,
+      "contrast": "G",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        true,
+        false,
+        false
+      ],
+      "isomorphic_to": "probe_06",
+      "matching_bridges": [
+        5
+      ],
+      "partition": "mirror",
+      "source": 2,
+      "target": 1
+    },
+    {
+      "case": "mirror_07",
+      "cell": 1,
+      "contrast": "D",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": false,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "isomorphic_to": "probe_07",
+      "matching_bridges": [],
+      "partition": "mirror",
+      "source": 3,
+      "target": 0
+    },
+    {
+      "case": "mirror_08",
+      "cell": 0,
+      "contrast": "D",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "isomorphic_to": "probe_08",
+      "matching_bridges": [
+        0,
+        1
+      ],
+      "partition": "mirror",
+      "source": 0,
+      "target": 2
+    },
+    {
+      "case": "mirror_09",
+      "cell": 0,
+      "contrast": "D",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": false,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "isomorphic_to": "probe_09",
+      "matching_bridges": [],
+      "partition": "mirror",
+      "source": 0,
+      "target": 3
+    },
+    {
+      "case": "mirror_10",
+      "cell": 1,
+      "contrast": "D",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "isomorphic_to": "probe_10",
+      "matching_bridges": [
+        4,
+        5
+      ],
+      "partition": "mirror",
+      "source": 2,
+      "target": 0
+    },
+    {
+      "case": "mirror_11",
+      "cell": 0,
+      "contrast": "N",
+      "edges": [
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "expected_delivered": false,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "isomorphic_to": "probe_11",
+      "matching_bridges": [],
+      "partition": "mirror",
+      "source": 0,
+      "target": 2
+    },
+    {
+      "case": "mirror_12",
+      "cell": 0,
+      "contrast": "G",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "isomorphic_to": "probe_12",
+      "matching_bridges": [
+        1
+      ],
+      "partition": "mirror",
+      "source": 0,
+      "target": 3
+    },
+    {
+      "case": "mirror_13",
+      "cell": 1,
+      "contrast": "N",
+      "edges": [
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "expected_delivered": false,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "isomorphic_to": "probe_13",
+      "matching_bridges": [],
+      "partition": "mirror",
+      "source": 3,
+      "target": 1
+    },
+    {
+      "case": "mirror_14",
+      "cell": 1,
+      "contrast": "G",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        true,
+        false,
+        false
+      ],
+      "isomorphic_to": "probe_14",
+      "matching_bridges": [
+        7
+      ],
+      "partition": "mirror",
+      "source": 3,
+      "target": 1
+    },
+    {
+      "case": "mirror_15",
+      "cell": 1,
+      "contrast": "G",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "isomorphic_to": "probe_15",
+      "matching_bridges": [
+        6
+      ],
+      "partition": "mirror",
+      "source": 3,
+      "target": 0
+    },
+    {
+      "case": "mirror_16",
+      "cell": 1,
+      "contrast": "N",
+      "edges": [
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        true,
+        false,
+        false
+      ],
+      "isomorphic_to": "probe_16",
+      "matching_bridges": [
+        4,
+        5
+      ],
+      "partition": "mirror",
+      "source": 2,
+      "target": 1
+    },
+    {
+      "case": "mirror_17",
+      "cell": 1,
+      "contrast": "D",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        true,
+        false,
+        false
+      ],
+      "isomorphic_to": "probe_17",
+      "matching_bridges": [
+        6,
+        7
+      ],
+      "partition": "mirror",
+      "source": 3,
+      "target": 1
+    },
+    {
+      "case": "mirror_18",
+      "cell": 1,
+      "contrast": "N",
+      "edges": [
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "isomorphic_to": "probe_18",
+      "matching_bridges": [
+        6,
+        7
+      ],
+      "partition": "mirror",
+      "source": 3,
+      "target": 0
+    },
+    {
+      "case": "mirror_19",
+      "cell": 0,
+      "contrast": "G",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "isomorphic_to": "probe_19",
+      "matching_bridges": [
+        0
+      ],
+      "partition": "mirror",
+      "source": 0,
+      "target": 2
+    },
+    {
+      "case": "mirror_20",
+      "cell": 0,
+      "contrast": "D",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": false,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "isomorphic_to": "probe_20",
+      "matching_bridges": [],
+      "partition": "mirror",
+      "source": 1,
+      "target": 2
+    },
+    {
+      "case": "mirror_21",
+      "cell": 0,
+      "contrast": "D",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "isomorphic_to": "probe_21",
+      "matching_bridges": [
+        2,
+        3
+      ],
+      "partition": "mirror",
+      "source": 1,
+      "target": 3
+    },
+    {
+      "case": "mirror_22",
+      "cell": 0,
+      "contrast": "G",
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "isomorphic_to": "probe_22",
+      "matching_bridges": [
+        3
+      ],
+      "partition": "mirror",
+      "source": 1,
+      "target": 3
+    },
+    {
+      "case": "mirror_23",
+      "cell": 0,
+      "contrast": "N",
+      "edges": [
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "isomorphic_to": "probe_23",
+      "matching_bridges": [
+        2,
+        3
+      ],
+      "partition": "mirror",
+      "source": 1,
+      "target": 2
+    },
+    {
+      "case": "mirror_24",
+      "cell": 1,
+      "contrast": "N",
+      "edges": [
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "expected_delivered": false,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "isomorphic_to": "probe_24",
+      "matching_bridges": [],
+      "partition": "mirror",
+      "source": 2,
+      "target": 0
+    }
+  ],
+  "invariance_order": "Same semantic episode order as evaluation; only names and member order differ",
+  "order_seeds": {
+    "evaluation": 62873,
+    "training": 17419
+  },
+  "schema": "semabi.join.generated_cases.v1",
+  "training": [
+    {
+      "case": "teach_01",
+      "cell": 1,
+      "contrast": "N",
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "expected_delivered": false,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "matching_bridges": [],
+      "partition": "teach",
+      "source": 3,
+      "target": 3
+    },
+    {
+      "case": "teach_02",
+      "cell": 1,
+      "contrast": "D",
+      "edges": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "matching_bridges": [
+        4,
+        5
+      ],
+      "partition": "teach",
+      "source": 2,
+      "target": 2
+    },
+    {
+      "case": "teach_03",
+      "cell": 0,
+      "contrast": "G",
+      "edges": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "matching_bridges": [
+        0
+      ],
+      "partition": "teach",
+      "source": 0,
+      "target": 0
+    },
+    {
+      "case": "teach_04",
+      "cell": 1,
+      "contrast": "N",
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "matching_bridges": [
+        6,
+        7
+      ],
+      "partition": "teach",
+      "source": 3,
+      "target": 2
+    },
+    {
+      "case": "teach_05",
+      "cell": 1,
+      "contrast": "D",
+      "edges": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "expected_delivered": false,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "matching_bridges": [],
+      "partition": "teach",
+      "source": 2,
+      "target": 3
+    },
+    {
+      "case": "teach_06",
+      "cell": 0,
+      "contrast": "G",
+      "edges": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        true,
+        false,
+        false
+      ],
+      "matching_bridges": [
+        3
+      ],
+      "partition": "teach",
+      "source": 1,
+      "target": 1
+    },
+    {
+      "case": "teach_07",
+      "cell": 0,
+      "contrast": "G",
+      "edges": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "matching_bridges": [
+        2
+      ],
+      "partition": "teach",
+      "source": 1,
+      "target": 0
+    },
+    {
+      "case": "teach_08",
+      "cell": 1,
+      "contrast": "G",
+      "edges": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "matching_bridges": [
+        5
+      ],
+      "partition": "teach",
+      "source": 2,
+      "target": 3
+    },
+    {
+      "case": "teach_09",
+      "cell": 1,
+      "contrast": "N",
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "matching_bridges": [
+        4,
+        5
+      ],
+      "partition": "teach",
+      "source": 2,
+      "target": 3
+    },
+    {
+      "case": "teach_10",
+      "cell": 0,
+      "contrast": "D",
+      "edges": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        true,
+        false,
+        false
+      ],
+      "matching_bridges": [
+        2,
+        3
+      ],
+      "partition": "teach",
+      "source": 1,
+      "target": 1
+    },
+    {
+      "case": "teach_11",
+      "cell": 1,
+      "contrast": "D",
+      "edges": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "expected_delivered": false,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "matching_bridges": [],
+      "partition": "teach",
+      "source": 3,
+      "target": 2
+    },
+    {
+      "case": "teach_12",
+      "cell": 1,
+      "contrast": "G",
+      "edges": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "matching_bridges": [
+        4
+      ],
+      "partition": "teach",
+      "source": 2,
+      "target": 2
+    },
+    {
+      "case": "teach_13",
+      "cell": 0,
+      "contrast": "N",
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        true,
+        false,
+        false
+      ],
+      "matching_bridges": [
+        0,
+        1
+      ],
+      "partition": "teach",
+      "source": 0,
+      "target": 1
+    },
+    {
+      "case": "teach_14",
+      "cell": 1,
+      "contrast": "D",
+      "edges": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "matching_bridges": [
+        6,
+        7
+      ],
+      "partition": "teach",
+      "source": 3,
+      "target": 3
+    },
+    {
+      "case": "teach_15",
+      "cell": 0,
+      "contrast": "N",
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "expected_delivered": false,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "matching_bridges": [],
+      "partition": "teach",
+      "source": 0,
+      "target": 0
+    },
+    {
+      "case": "teach_16",
+      "cell": 1,
+      "contrast": "G",
+      "edges": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "matching_bridges": [
+        7
+      ],
+      "partition": "teach",
+      "source": 3,
+      "target": 3
+    },
+    {
+      "case": "teach_17",
+      "cell": 0,
+      "contrast": "D",
+      "edges": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "expected_delivered": false,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "matching_bridges": [],
+      "partition": "teach",
+      "source": 0,
+      "target": 1
+    },
+    {
+      "case": "teach_18",
+      "cell": 0,
+      "contrast": "D",
+      "edges": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "matching_bridges": [
+        0,
+        1
+      ],
+      "partition": "teach",
+      "source": 0,
+      "target": 0
+    },
+    {
+      "case": "teach_19",
+      "cell": 0,
+      "contrast": "N",
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "matching_bridges": [
+        2,
+        3
+      ],
+      "partition": "teach",
+      "source": 1,
+      "target": 0
+    },
+    {
+      "case": "teach_20",
+      "cell": 0,
+      "contrast": "G",
+      "edges": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        true,
+        false,
+        false
+      ],
+      "matching_bridges": [
+        1
+      ],
+      "partition": "teach",
+      "source": 0,
+      "target": 1
+    },
+    {
+      "case": "teach_21",
+      "cell": 0,
+      "contrast": "D",
+      "edges": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "expected_delivered": false,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "matching_bridges": [],
+      "partition": "teach",
+      "source": 1,
+      "target": 0
+    },
+    {
+      "case": "teach_22",
+      "cell": 1,
+      "contrast": "N",
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "expected_delivered": false,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "matching_bridges": [],
+      "partition": "teach",
+      "source": 2,
+      "target": 2
+    },
+    {
+      "case": "teach_23",
+      "cell": 0,
+      "contrast": "N",
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "expected_delivered": false,
+      "expected_received_after": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "matching_bridges": [],
+      "partition": "teach",
+      "source": 1,
+      "target": 1
+    },
+    {
+      "case": "teach_24",
+      "cell": 1,
+      "contrast": "G",
+      "edges": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "expected_delivered": true,
+      "expected_received_after": [
+        false,
+        false,
+        true,
+        false
+      ],
+      "matching_bridges": [
+        6
+      ],
+      "partition": "teach",
+      "source": 3,
+      "target": 2
+    }
+  ]
+}

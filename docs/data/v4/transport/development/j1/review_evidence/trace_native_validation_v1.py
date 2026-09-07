@@ -1,0 +1,257 @@
+"""Proposed disclosed-data trace validation; prepare is stdlib-only, run fits once.
+
+Do not run native modes until root admits the prepared source/input/command plan.
+Only the two previously disclosed T1 initial histories are accepted here.
+"""
+from __future__ import annotations
+
+import argparse
+from datetime import datetime, timezone
+import hashlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+
+ROOT = Path(__file__).resolve().parents[7]
+HERE = Path(__file__).resolve().parents[1]
+SCRIPT = Path(__file__).resolve()
+THREADS = ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS", "NUMEXPR_NUM_THREADS")
+SIDECARS = ("probes.jsonl", "probes.acquired.jsonl", "identity_refutations_v4.json", "field_theories_v4.json")
+
+
+def require(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def relative(path):
+    require(path.resolve(strict=True) == path and path.is_file(), "Expected an actual repository file")
+    return path.relative_to(ROOT).as_posix()
+
+
+def write_once(path, value):
+    with path.open("x", encoding="utf-8") as stream:
+        json.dump(value, stream, indent=1, sort_keys=True, ensure_ascii=False, allow_nan=False)
+        stream.write("\n")
+
+
+def head():
+    return subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+
+
+def raw_records(directory):
+    return {key: [json.loads(line) for line in (directory / name).read_bytes().splitlines() if line.strip()]
+            for key, name in (("steps", "steps.jsonl"), ("observations", "observations.jsonl"))}
+
+
+def prepare(args):
+    directory = ROOT / "docs/data/v4/transport/first_pass" / args.fixture / "initial_v2"
+    raw = raw_records(directory)
+    require(0 < args.cut <= len(raw["steps"]), "Declared cut exceeds the real initial-history denominator")
+    require(not any((directory / name).exists() or (directory / name).is_symlink() for name in SIDECARS),
+            "This validation admits raw-only initial histories")
+    output = args.out_dir.absolute()
+    require(output.parent.resolve(strict=True) == HERE / "review_evidence"
+            and output.name.startswith("trace_") and not output.exists(), "Choose a new trace review directory")
+    paths = set((ROOT / "semabi").rglob("*.py"))
+    paths.update((SCRIPT, HERE / "trace.py", HERE / "trace_contract_v1.md", HERE / "trace_implementation_v1.md",
+                  HERE / "public_trace_audit.md", ROOT / "docs/data/v4/transport/run_job.py",
+                  SCRIPT.parent / "trace_invented_checks_v1.py", SCRIPT.parent / "trace_invented_checks_attempt3_v1.json",
+                  directory / "steps.jsonl", directory / "observations.jsonl"))
+    invented = json.loads((SCRIPT.parent / "trace_invented_checks_attempt3_v1.json").read_bytes())
+    invented_result = json.loads(invented["stdout"])
+    require(invented["exit_code"] == 0 and invented_result["status"] == "PASS"
+            and invented["source_sha256"] == sha(SCRIPT.parent / "trace_invented_checks_v1.py")
+            and invented_result["trace_sha256"] == sha(HERE / "trace.py"), "Invented check evidence does not bind this observer")
+    files = {relative(path): sha(path) for path in sorted(paths)}
+    plan_path = output / "plan.json"
+    modes = ("baseline", "profiled", "exception")
+    commands = {mode: [".venv/bin/python", relative(SCRIPT), "run", "--plan",
+                       plan_path.relative_to(ROOT).as_posix(), "--mode", mode]
+                for mode in modes}
+    cpus = {"baseline": args.baseline_cpu, "profiled": args.profiled_cpu, "exception": args.exception_cpu}
+    plan = {"schema": "semabi.transport.j1_trace_validation_plan.v1", "status": "PREPARED",
+        "created_utc": datetime.now(timezone.utc).isoformat(), "source_head": head(),
+        "fixture": args.fixture, "input_directory": directory.relative_to(ROOT).as_posix(),
+        "cut": args.cut, "actual_raw_steps": len(raw["steps"]), "primary_steps": [row["step"] for row in raw["steps"]],
+        "files": files, "cpus": cpus, "thread_limits": {name: "1" for name in THREADS},
+        "python_hash_seed": "0", "commands": commands,
+        "outputs": {mode: (output / (mode + ".json")).relative_to(ROOT).as_posix() for mode in modes},
+        "invented_controls": {"script": relative(SCRIPT.parent / "trace_invented_checks_v1.py"),
+                              "result": relative(SCRIPT.parent / "trace_invented_checks_attempt3_v1.json"),
+                              "checks": invented_result["checks"], "scope": "Invented Python controls; not native-fit evidence"},
+        "comparison_output": (output / "comparison.json").relative_to(ROOT).as_posix(),
+        "launch_prefixes": {mode: ["env", *[name + "=1" for name in THREADS], "PYTHONHASHSEED=0", "PYTHONDONTWRITEBYTECODE=1",
+                                   "taskset", "-c", format(cpus[mode], "d")] for mode in modes},
+        "matched_process_scope": "Source, raw inputs, cut, seed and numerical-thread limits are identical; per-mode CPU affinity differs explicitly so independent processes can overlap.",
+        "scope": "One unchanged native fit per separate process on disclosed T1 initial raw evidence; no J1/evaluator/oracle input",
+        "admission": "PREPARED is a reviewable commitment, not an execution authorization. Root independently reviews before run."}
+    output.mkdir()
+    write_once(plan_path, plan)
+    print(json.dumps({"path": relative(plan_path), "sha256": sha(plan_path), "status": "PREPARED",
+                      "raw_steps": len(raw["steps"]), "cut": args.cut}))
+
+
+def verify(plan):
+    require(plan["schema"] == "semabi.transport.j1_trace_validation_plan.v1" and plan["status"] == "PREPARED",
+            "Expected the reviewed validation plan")
+    require(plan["source_head"] == head(), "HEAD changed after validation planning")
+    for name, expected in plan["files"].items():
+        path = ROOT / name
+        require(relative(path) == name and sha(path) == expected, "Frozen validation input changed: " + name)
+    actual_source = {relative(path) for path in (ROOT / "semabi").rglob("*.py")}
+    require(actual_source == {name for name in plan["files"] if name.startswith("semabi/")},
+            "Native source inventory changed")
+    directory = ROOT / plan["input_directory"]
+    require(directory == ROOT / "docs/data/v4/transport/first_pass" / plan["fixture"] / "initial_v2"
+            and plan["fixture"] in ("dispatch", "workshop"), "Validation input is outside disclosed initial evidence")
+    required = (SCRIPT, HERE / "trace.py", HERE / "trace_contract_v1.md", HERE / "trace_implementation_v1.md",
+                HERE / "public_trace_audit.md", ROOT / "docs/data/v4/transport/run_job.py",
+                SCRIPT.parent / "trace_invented_checks_v1.py", SCRIPT.parent / "trace_invented_checks_attempt3_v1.json",
+                directory / "steps.jsonl", directory / "observations.jsonl")
+    require({relative(path) for path in required} <= set(plan["files"]), "Validation plan omits required dependencies")
+    require(not any((directory / name).exists() or (directory / name).is_symlink() for name in SIDECARS),
+            "Unexpected recognized input sidecar")
+
+
+def load_trace():
+    sys.dont_write_bytecode = True
+    sys.path.insert(0, str(ROOT))
+    spec = importlib.util.spec_from_file_location("j1_admitted_trace", HERE / "trace.py")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+def plan_bytes(path):
+    relative(path)
+    require(path.name == "plan.json" and path.parent.parent == HERE / "review_evidence"
+            and path.parent.name.startswith("trace_"), "Expected a prepared trace validation plan")
+    return path.read_bytes()
+
+
+def run(args):
+    plan_path = args.plan.absolute()
+    frozen_plan_bytes = plan_bytes(plan_path)
+    plan = json.loads(frozen_plan_bytes)
+    verify(plan)
+    require(sys.argv[1:] == plan["commands"][args.mode][2:], "Validation invocation differs from its frozen inner command")
+    require(all(os.environ.get(name) == value for name, value in plan["thread_limits"].items())
+            and os.environ.get("PYTHONHASHSEED") == "0" and sorted(os.sched_getaffinity(0)) == [plan["cpus"][args.mode]]
+            and Path.cwd() == ROOT,
+            "Validation process does not match the frozen resource environment")
+    output = ROOT / plan["outputs"][args.mode]
+    require(output.parent.resolve(strict=True) == plan_path.parent and not output.exists() and not output.is_symlink(),
+            "Validation output must be a new identity beside its plan")
+    directory = ROOT / plan["input_directory"]
+    raw = raw_records(directory)  # Owned plain data captured before the one native fit.
+    require(len(raw["steps"]) == plan["actual_raw_steps"] and 0 < plan["cut"] <= len(raw["steps"]),
+            "Raw denominator changed")
+    trace = load_trace()
+    bindings = trace.native_bindings()
+    from semabi.compiler.v4 import consequence as csq
+    record = {"schema": "semabi.transport.j1_trace_validation_run.v1", "mode": args.mode,
+        "plan_sha256": hashlib.sha256(frozen_plan_bytes).hexdigest(), "source_head": plan["source_head"],
+        "start_utc": datetime.now(timezone.utc).isoformat(), "cut": plan["cut"],
+        "actual_inner_command": [sys.executable, *sys.argv], "cwd": str(Path.cwd()), "pid": os.getpid(),
+        "affinity": sorted(os.sched_getaffinity(0)), "thread_limits": {name: os.environ.get(name) for name in THREADS},
+        "python_hash_seed": os.environ.get("PYTHONHASHSEED"),
+        "input_files": {name: plan["files"][relative(directory / name)] for name in ("steps.jsonl", "observations.jsonl")}}
+    observer = None
+    try:
+        if args.mode == "baseline":
+            fitted = csq.fit(directory, None, at=plan["cut"], regime=csq.FROZEN_PREFIX)
+            record["projection"] = trace.project_fit(fitted, raw_records=raw, primary_steps=plan["primary_steps"], bindings=bindings)
+            record["status"] = "FINISHED" if record["projection"]["status"] == "COMPLETE" else "INCOMPLETE"
+        else:
+            with trace.FitObserver(raw_records=raw, primary_steps=plan["primary_steps"], bindings=bindings) as observer:
+                csq.fit(directory, None, at=plan["cut"], regime=(csq.FROZEN_PREFIX if args.mode == "profiled" else
+                                                               "TRACE_EXCEPTION_CONTROL_INVALID_REGIME"))
+            record["trace"] = observer.export()
+            record["projection"] = record["trace"]["projection"]
+            record["status"] = "FINISHED" if record["trace"]["status"] == "COMPLETE" else "INCOMPLETE"
+            if args.mode == "exception":
+                record["status"] = "ERROR_EXPECTED_EXCEPTION_NOT_RAISED"
+    except BaseException as error:
+        record.update(status="ERROR", error_type=type(error).__name__, error=str(error))
+        if observer is not None and observer.closed:
+            record["trace"] = observer.export()
+        if (args.mode == "exception" and type(error) is ValueError and
+                "TRACE_EXCEPTION_CONTROL_INVALID_REGIME" in str(error) and observer is not None
+                and observer.closed and observer.restored and sys.getprofile() is None):
+            record["status"] = "EXPECTED_EXCEPTION_RESTORED"
+    record["end_utc"] = datetime.now(timezone.utc).isoformat()
+    verify(plan)
+    require(plan_path.read_bytes() == frozen_plan_bytes, "Validation plan changed while executing")
+    write_once(output, record)
+    print(json.dumps({"path": relative(output), "sha256": sha(output), "status": record["status"]}))
+    return 0 if record["status"] in ("FINISHED", "EXPECTED_EXCEPTION_RESTORED") else 2
+
+
+def compare(args):
+    plan_path = args.plan.absolute()
+    plan = json.loads(plan_bytes(plan_path))
+    verify(plan)
+    runs = {mode: json.loads((ROOT / name).read_bytes()) for mode, name in plan["outputs"].items()}
+    require(all(row["plan_sha256"] == sha(plan_path) for row in runs.values()), "Validation runs use different plans")
+    baseline, profiled, exception = runs["baseline"], runs["profiled"], runs["exception"]
+    record = profiled.get("trace", {})
+    lifts = [row for row in record.get("events", []) if row["kind"] == "lift_return"]
+    grounds = [row for row in record.get("events", []) if row["kind"] == "ground"]
+    current = {row["identity"]: row for row in record.get("observed_transition_membership", [])}
+    changed = [row["transition"]["identity"] for row in lifts if row["first_observed_lift"]
+               and row["transition"]["identity"] in current
+               and row["transition"]["snapshot"] != current[row["transition"]["identity"]]["current_snapshot"]]
+    checks = {
+        "both_processes_finished": baseline["status"] == profiled["status"] == "FINISHED",
+        "both_common_projections_complete": baseline.get("projection", {}).get("status") == profiled.get("projection", {}).get("status") == "COMPLETE",
+        "common_projection_identical": baseline.get("projection") == profiled.get("projection") and baseline.get("projection") is not None,
+        "trace_complete": record.get("status") == "COMPLETE",
+        "nonempty_real_lift": bool(lifts),
+        "nonempty_real_grounding": any(row["entry"]["evidence"] and row["entry"]["operator"]["positives"] for row in grounds),
+        "native_mutation_after_first_lift_retained": bool(changed),
+        "native_exception_restores_profiler": exception["status"] == "EXPECTED_EXCEPTION_RESTORED",
+    }
+    result = {"schema": "semabi.transport.j1_trace_validation_comparison.v1", "status": "PASS" if all(checks.values()) else "FAIL_OR_INSUFFICIENT",
+        "plan_sha256": sha(plan_path), "checks": checks,
+        "outputs": {mode: {"path": name, "sha256": sha(ROOT / name)} for mode, name in plan["outputs"].items()},
+        "first_lift_identities_changed_later": changed,
+        "outcome_pass_count": len(record.get("outcome_pass_adoption", [])),
+        "omitted_inducer_run_calls": record.get("omitted_inducer_run_calls", []),
+        "scope": "Full common projection equality is admissible only when both projections and the trace are complete. Missing required native phenomena are preserved as insufficient coverage."}
+    output = ROOT / plan["comparison_output"]
+    require(output.parent.resolve(strict=True) == plan_path.parent, "Comparison output escapes the plan directory")
+    write_once(output, result)
+    print(json.dumps({"path": relative(output), "sha256": sha(output), "status": result["status"], "checks": checks}))
+    return 0 if result["status"] == "PASS" else 2
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    modes = parser.add_subparsers(dest="action", required=True)
+    prepare_parser = modes.add_parser("prepare")
+    prepare_parser.add_argument("--fixture", choices=("dispatch", "workshop"), required=True)
+    prepare_parser.add_argument("--cut", type=int, required=True)
+    prepare_parser.add_argument("--baseline-cpu", type=int, choices=range(24), default=13)
+    prepare_parser.add_argument("--profiled-cpu", type=int, choices=range(24), default=14)
+    prepare_parser.add_argument("--exception-cpu", type=int, choices=range(24), default=15)
+    prepare_parser.add_argument("--out-dir", type=Path, required=True)
+    run_parser = modes.add_parser("run")
+    run_parser.add_argument("--plan", type=Path, required=True)
+    run_parser.add_argument("--mode", choices=("baseline", "profiled", "exception"), required=True)
+    compare_parser = modes.add_parser("compare")
+    compare_parser.add_argument("--plan", type=Path, required=True)
+    args = parser.parse_args()
+    return {"prepare": prepare, "run": run, "compare": compare}[args.action](args)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

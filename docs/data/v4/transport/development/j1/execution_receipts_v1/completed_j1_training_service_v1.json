@@ -1,0 +1,33 @@
+{
+  "actual_stock_record": {
+    "child_pid": 893910,
+    "child_terminated": true,
+    "end_utc": "2026-09-07T22:17:12.846746+00:00",
+    "owned_process_group": 893910,
+    "returncode": -15,
+    "runner_pid": 893908,
+    "source_head": "592590560008632076469ae51beb160d23817b86",
+    "start_utc": "2026-09-07T22:10:47.290873+00:00",
+    "status": "INTERRUPTED"
+  },
+  "job": "j1_training_service_v1",
+  "listener_8771_absent": true,
+  "log_sha256": "bea203790174a473d14dc626ac0ea5d39eeac5dba8531da254a90b79316c8a12",
+  "no_live_owned_process_remains": true,
+  "owned_service_and_collector_pids_absent": [
+    893908,
+    893910,
+    894834,
+    894836
+  ],
+  "owner": "/root/reserved_audit",
+  "pid_scope": "Escalated host namespace used by the owned fixture and Chromium collector.",
+  "planned_interruption": true,
+  "process_sha256": "af31ad1fb316286bb882ce9d7f906e72034f25850c847147e290aa556922f372",
+  "recorded_utc": "2026-09-07T22:18:03.369885+00:00",
+  "schema": "semabi.j1.owned_service_completed.v1",
+  "session_id": 7636,
+  "stop_mechanism": "Ctrl-C to owned wrapper PTY; unchanged wrapper caught KeyboardInterrupt, sent SIGTERM to owned child group, waited, and recorded INTERRUPTED/-15. Actual wrapper tool exit was1.",
+  "tool_returncode": 1,
+  "tool_session_reaped": true
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "semabi.j1.resident_pilot_launch_receipts.v1",
+  "plan_sha256": "2fb61a715b2698b2f8fadddab7d8e41e246cdd3b09244d636f8f5fb01044a6ef",
+  "modes": {
+    "predictor": {
+      "command": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 taskset -c 13 .venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/development/j1/review_evidence/resident_native_dispatch_v1/jobs/predictor_v1 -- .venv/bin/python docs/data/v4/transport/development/j1/predictor.py run --training docs/data/v4/transport/first_pass/dispatch/initial_v2 --freeze docs/data/v4/transport/development/j1/review_evidence/resident_native_dispatch_v1/predictor_freeze.json --out-dir docs/data/v4/transport/development/j1/review_evidence/resident_native_dispatch_v1/predictor --socket /tmp/semabi_j1_resident_dispatch_4e0c7214c651.sock",
+      "tool_receipt": {
+        "chunk_id": "33c3a1",
+        "wall_time_seconds": 1.001099257,
+        "session_id": 42456,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    "driver": {
+      "command": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 taskset -c 18 .venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/development/j1/review_evidence/resident_native_dispatch_v1/jobs/driver_v1 -- .venv/bin/python docs/data/v4/transport/development/j1/review_evidence/resident_native_validation_v1.py run --plan docs/data/v4/transport/development/j1/review_evidence/resident_native_dispatch_v1/plan.json",
+      "tool_receipt": {
+        "chunk_id": "813409",
+        "wall_time_seconds": 1.001226907,
+        "session_id": 58086,
+        "original_token_count": 0,
+        "output": ""
+      }
+    }
+  }
+}

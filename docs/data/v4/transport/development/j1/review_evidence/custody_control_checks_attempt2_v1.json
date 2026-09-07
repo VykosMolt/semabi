@@ -1,0 +1,1851 @@
+{
+  "affinity": [
+    8
+  ],
+  "checks": [
+    {
+      "expected": "accept",
+      "name": "complete_native_actor_failed_unresolved_phase",
+      "result": {
+        "accounting": {
+          "bootstrap_goto": 0,
+          "case_count": 2,
+          "charged_attempts": 7,
+          "complete": false,
+          "designated_targets": 2,
+          "failed_attempts": 2,
+          "paired_steps_recorded": 6,
+          "primitive_counts": {
+            "click": 2,
+            "reload": 1,
+            "reset": 2,
+            "select": 1,
+            "type": 1
+          },
+          "snapshot_calls": 8,
+          "unpaired_attempts": 1,
+          "unresolved_attempts": 1
+        },
+        "raw_representative_equalities": [
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "global_ledger_indices_distinct_from_phase_charges",
+      "result": {
+        "charged_attempts": 7,
+        "preceding_control_left_to_global_caller": true,
+        "receipt_indices": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "full_24_target_313_charged_allocation",
+      "result": {
+        "charged_attempts": 313,
+        "snapshot_requests": 1,
+        "target_charges": [
+          14,
+          27,
+          40,
+          53,
+          66,
+          79,
+          92,
+          105,
+          118,
+          131,
+          144,
+          157,
+          170,
+          183,
+          196,
+          209,
+          222,
+          235,
+          248,
+          261,
+          274,
+          287,
+          300,
+          313
+        ],
+        "targets": 24
+      },
+      "status": "PASS"
+    },
+    {
+      "detail": "Fixed case identity differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "allocation_duplicate_case",
+      "status": "PASS"
+    },
+    {
+      "detail": "Fixed target index differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "allocation_boolean_target",
+      "status": "PASS"
+    },
+    {
+      "detail": "Fixed target index differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "allocation_negative_target",
+      "status": "PASS"
+    },
+    {
+      "detail": "Fixed case has no designated target",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "allocation_absent_target",
+      "status": "PASS"
+    },
+    {
+      "detail": "Charged/forecast/receipt/fixed-allocation denominator differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_missing_decision",
+      "status": "PASS"
+    },
+    {
+      "detail": "Charged/forecast/receipt/fixed-allocation denominator differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_extra_decision",
+      "status": "PASS"
+    },
+    {
+      "detail": "Native decision counters or outcome differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_duplicate_decision",
+      "status": "PASS"
+    },
+    {
+      "detail": "Charged/forecast/receipt/fixed-allocation denominator differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_missing_receipt",
+      "status": "PASS"
+    },
+    {
+      "detail": "Charged/forecast/receipt/fixed-allocation denominator differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_extra_receipt",
+      "status": "PASS"
+    },
+    {
+      "detail": "Charged/forecast/receipt/fixed-allocation denominator differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_missing_reconciliation",
+      "status": "PASS"
+    },
+    {
+      "detail": "Native Step ordering differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_missing_step",
+      "status": "PASS"
+    },
+    {
+      "detail": "Unmatched native Step remains",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_extra_step",
+      "status": "PASS"
+    },
+    {
+      "detail": "Raw training Step values differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_duplicate_step",
+      "status": "PASS"
+    },
+    {
+      "detail": "Raw observation identity inventory differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_duplicate_observation",
+      "status": "PASS"
+    },
+    {
+      "detail": "Charged/forecast/receipt/fixed-allocation denominator differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_missing_ledger_forecast",
+      "status": "PASS"
+    },
+    {
+      "detail": "Ledger record schema, index or canonical bytes differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_extra_ledger_forecast",
+      "status": "PASS"
+    },
+    {
+      "detail": "Ledger duplicates a request or changes fitted provenance",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_duplicate_ledger_id",
+      "status": "PASS"
+    },
+    {
+      "detail": "Ledger record schema, index or canonical bytes differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_ledger_bool_index",
+      "status": "PASS"
+    },
+    {
+      "detail": "Ledger record schema, index or canonical bytes differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_ledger_float_index",
+      "status": "PASS"
+    },
+    {
+      "detail": "Ledger duplicates a request or changes fitted provenance",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_ledger_wrong_provenance",
+      "status": "PASS"
+    },
+    {
+      "detail": "A charged action lacks a complete pre-action forecast instrument",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_ledger_incomplete",
+      "status": "PASS"
+    },
+    {
+      "detail": "A charged action lacks a complete pre-action forecast instrument",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_ledger_control_in_action_position",
+      "status": "PASS"
+    },
+    {
+      "detail": "Native decision counters or outcome differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_decision_bool_charge",
+      "status": "PASS"
+    },
+    {
+      "detail": "Native decision counters or outcome differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_decision_float_charge",
+      "status": "PASS"
+    },
+    {
+      "detail": "Native decision counters or outcome differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_decision_bool_episode",
+      "status": "PASS"
+    },
+    {
+      "detail": "Actor intent is unmatched or differs from native evidence",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_decision_float_step",
+      "status": "PASS"
+    },
+    {
+      "detail": "Native decision counters or outcome differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_decision_bool_ok",
+      "status": "PASS"
+    },
+    {
+      "detail": "Raw training Step values differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_raw_step_bool_index",
+      "status": "PASS"
+    },
+    {
+      "detail": "Raw training Step values differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_raw_step_float_episode",
+      "status": "PASS"
+    },
+    {
+      "detail": "Raw training Step schema differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_raw_step_forecast_metadata",
+      "status": "PASS"
+    },
+    {
+      "detail": "Native action or evaluator allocation annotation differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_unknown_native_decision_key",
+      "status": "PASS"
+    },
+    {
+      "detail": "Native action or evaluator allocation annotation differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_wrong_case_metadata",
+      "status": "PASS"
+    },
+    {
+      "detail": "Native action or evaluator allocation annotation differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_wrong_target_metadata",
+      "status": "PASS"
+    },
+    {
+      "detail": "Forecast primitive differs from fixed public resolution",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_changed_fixed_scope",
+      "status": "PASS"
+    },
+    {
+      "detail": "Forecast prestate differs from native decision",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_hidden_public_key_drift",
+      "status": "PASS"
+    },
+    {
+      "detail": "Primitive descriptor must match the public target",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_conflicting_resolved_descriptor",
+      "status": "PASS"
+    },
+    {
+      "detail": "Forecast primitive differs from fixed public resolution",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_changed_forecast_argument",
+      "status": "PASS"
+    },
+    {
+      "detail": "Durable actor receipt differs from its full ledger slice",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_receipt_bool_charge",
+      "status": "PASS"
+    },
+    {
+      "detail": "Durable actor receipt differs from its full ledger slice",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_receipt_wrong_ledger",
+      "status": "PASS"
+    },
+    {
+      "detail": "Durable actor receipt differs from its full ledger slice",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_receipt_wrong_ack_offset",
+      "status": "PASS"
+    },
+    {
+      "detail": "Actor initialization or intent inventory differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_intent_missing",
+      "status": "PASS"
+    },
+    {
+      "detail": "Actor intent is unmatched or differs from native evidence",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_intent_unmatched",
+      "status": "PASS"
+    },
+    {
+      "detail": "Actor intent is unmatched or differs from native evidence",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_intent_bool_receipt_index",
+      "status": "PASS"
+    },
+    {
+      "detail": "Actor intent is unmatched or differs from native evidence",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_intent_float_episode",
+      "status": "PASS"
+    },
+    {
+      "detail": "Actor intent is unmatched or differs from native evidence",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_intent_wrong_expected_action",
+      "status": "PASS"
+    },
+    {
+      "detail": "Durable native reconciliation differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_reconciliation_bool_charge",
+      "status": "PASS"
+    },
+    {
+      "detail": "Durable native reconciliation differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_reconciliation_float_receipt_index",
+      "status": "PASS"
+    },
+    {
+      "detail": "Durable native reconciliation differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_reconciliation_wrong_outcome",
+      "status": "PASS"
+    },
+    {
+      "detail": "Native poststate is absent",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_missing_poststate",
+      "status": "PASS"
+    },
+    {
+      "detail": "Actor intent is unmatched or differs from native evidence",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_unpaired_reset_as_step",
+      "status": "PASS"
+    },
+    {
+      "detail": "Unresolved action lost its native failure or changed state",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_unresolved_failure_erased",
+      "status": "PASS"
+    },
+    {
+      "detail": "Unresolved action lost its native failure or changed state",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_unresolved_diagnostic_changed",
+      "status": "PASS"
+    },
+    {
+      "detail": "Native collector did not finish on the frozen source",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_native_not_finished",
+      "status": "PASS"
+    },
+    {
+      "detail": "Native collector did not finish on the frozen source",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_native_wrong_head",
+      "status": "PASS"
+    },
+    {
+      "detail": "Native collector freeze differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_native_wrong_freeze",
+      "status": "PASS"
+    },
+    {
+      "detail": "Native summary differs from actual fixed accounting",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_native_wrong_complete",
+      "status": "PASS"
+    },
+    {
+      "detail": "Native summary differs from actual fixed accounting",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_native_bool_count",
+      "status": "PASS"
+    },
+    {
+      "detail": "Native summary differs from actual fixed accounting",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_native_wrong_snapshot_count",
+      "status": "PASS"
+    },
+    {
+      "detail": "Native raw evidence hashes differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_native_wrong_raw_hash",
+      "status": "PASS"
+    },
+    {
+      "detail": "Independent instrument completion differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_collector_not_pass",
+      "status": "PASS"
+    },
+    {
+      "detail": "Independent instrument completion differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_collector_changed_verification",
+      "status": "PASS"
+    },
+    {
+      "detail": "Independent instrument completion differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_actor_not_pass",
+      "status": "PASS"
+    },
+    {
+      "detail": "Actor resident provenance or cleanup differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_actor_wrong_ready",
+      "status": "PASS"
+    },
+    {
+      "detail": "Actor resident provenance or cleanup differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_actor_bool_pid",
+      "status": "PASS"
+    },
+    {
+      "detail": "Actor resident provenance or cleanup differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_actor_cleanup_error",
+      "status": "PASS"
+    },
+    {
+      "detail": "Actor resident provenance or cleanup differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_actor_extra_recorder",
+      "status": "PASS"
+    },
+    {
+      "detail": "Actor initialization or intent inventory differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_actor_initialization_error",
+      "status": "PASS"
+    },
+    {
+      "detail": "Actor counters differ from native accounting",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_actor_wrong_count",
+      "status": "PASS"
+    },
+    {
+      "detail": "Actor durable sidecar commitment differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "phase_actor_sidecar_hash",
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "native_representative_url_geometry_inequality_allowed",
+      "result": {
+        "accounting": {
+          "bootstrap_goto": 0,
+          "case_count": 2,
+          "charged_attempts": 7,
+          "complete": false,
+          "designated_targets": 2,
+          "failed_attempts": 2,
+          "paired_steps_recorded": 6,
+          "primitive_counts": {
+            "click": 2,
+            "reload": 1,
+            "reset": 2,
+            "select": 1,
+            "type": 1
+          },
+          "snapshot_calls": 8,
+          "unpaired_attempts": 1,
+          "unresolved_attempts": 1
+        },
+        "raw_representative_equalities": [
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "detail": "Truncated JSONL artifact",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "truncated_decisions.jsonl",
+      "status": "PASS"
+    },
+    {
+      "detail": "Truncated JSONL artifact",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "truncated_observations.jsonl",
+      "status": "PASS"
+    },
+    {
+      "detail": "Truncated JSONL artifact",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "truncated_steps.jsonl",
+      "status": "PASS"
+    },
+    {
+      "detail": "Truncated JSONL artifact",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "truncated_forecast_receipts.jsonl",
+      "status": "PASS"
+    },
+    {
+      "detail": "Truncated JSONL artifact",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "truncated_forecast_reconciliation.jsonl",
+      "status": "PASS"
+    },
+    {
+      "detail": "Ledger record schema, index or canonical bytes differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "ledger_noncanonical",
+      "status": "PASS"
+    },
+    {
+      "detail": "Truncated prediction ledger",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "ledger_truncated",
+      "status": "PASS"
+    },
+    {
+      "detail": "Expecting value: line 2 column 1 (char 1)",
+      "exception": "JSONDecodeError",
+      "expected": "reject",
+      "name": "ledger_blank_line",
+      "status": "PASS"
+    },
+    {
+      "detail": "Ledger path differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "ledger_symlink_rejected",
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "raw_schema_gate_unknown_observation",
+      "result": {
+        "error": "ProtocolError",
+        "rejected_before_native": true
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "raw_schema_gate_unknown_node",
+      "result": {
+        "error": "ProtocolError",
+        "rejected_before_native": true
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "raw_schema_gate_boolean_node_index",
+      "result": {
+        "error": "ProtocolError",
+        "rejected_before_native": true
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "raw_schema_gate_cyclic_parent",
+      "result": {
+        "error": "ProtocolError",
+        "rejected_before_native": true
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "startup_checkpoint_raw_cut_native_objects",
+      "result": {
+        "checks": [
+          "complete_projection",
+          "learned_commitment_unchanged",
+          "new_graph_header_entries_belong_to_interpreted_observations",
+          "new_graph_nodes_entries_belong_to_interpreted_observations",
+          "new_graph_obs_entries_belong_to_interpreted_observations",
+          "new_graph_position_of_entries_belong_to_interpreted_observations",
+          "new_graph_variation_key_entries_belong_to_interpreted_observations",
+          "new_memo_entries_belong_to_interpreted_observations",
+          "no_prior_checkpoint_failure",
+          "old_graph_header_entries_unchanged_since_previous_checkpoint",
+          "old_graph_header_entries_unchanged_since_startup",
+          "old_graph_nodes_entries_unchanged_since_previous_checkpoint",
+          "old_graph_nodes_entries_unchanged_since_startup",
+          "old_graph_obs_entries_unchanged_since_previous_checkpoint",
+          "old_graph_obs_entries_unchanged_since_startup",
+          "old_graph_position_of_entries_unchanged_since_previous_checkpoint",
+          "old_graph_position_of_entries_unchanged_since_startup",
+          "old_graph_variation_key_entries_unchanged_since_previous_checkpoint",
+          "old_graph_variation_key_entries_unchanged_since_startup",
+          "old_memo_entries_unchanged_since_previous_checkpoint",
+          "old_memo_entries_unchanged_since_startup"
+        ],
+        "cut": 6,
+        "objects": {
+          "abstractor": 1002,
+          "evidence": 1007,
+          "fit": 1000,
+          "graph": 1004,
+          "hypotheses": 1003,
+          "inducer": 1001,
+          "log": 1006,
+          "vocabulary": 1005
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "later_checkpoint_same_native_fit",
+      "result": {
+        "checks": [
+          "complete_projection",
+          "learned_commitment_unchanged",
+          "new_graph_header_entries_belong_to_interpreted_observations",
+          "new_graph_nodes_entries_belong_to_interpreted_observations",
+          "new_graph_obs_entries_belong_to_interpreted_observations",
+          "new_graph_position_of_entries_belong_to_interpreted_observations",
+          "new_graph_variation_key_entries_belong_to_interpreted_observations",
+          "new_memo_entries_belong_to_interpreted_observations",
+          "no_prior_checkpoint_failure",
+          "old_graph_header_entries_unchanged_since_previous_checkpoint",
+          "old_graph_header_entries_unchanged_since_startup",
+          "old_graph_nodes_entries_unchanged_since_previous_checkpoint",
+          "old_graph_nodes_entries_unchanged_since_startup",
+          "old_graph_obs_entries_unchanged_since_previous_checkpoint",
+          "old_graph_obs_entries_unchanged_since_startup",
+          "old_graph_position_of_entries_unchanged_since_previous_checkpoint",
+          "old_graph_position_of_entries_unchanged_since_startup",
+          "old_graph_variation_key_entries_unchanged_since_previous_checkpoint",
+          "old_graph_variation_key_entries_unchanged_since_startup",
+          "old_memo_entries_unchanged_since_previous_checkpoint",
+          "old_memo_entries_unchanged_since_startup"
+        ],
+        "learned_commitment_sha256": "e4834ec72444d7ca752b2fc660106e1017d869734bbe9a6ea7b8b2ee5aa3c463",
+        "ownership": [
+          "abstractor_hypotheses",
+          "abstractor_vocabulary",
+          "emission_frozen",
+          "fit_abstractor",
+          "fit_evidence",
+          "fit_inducer",
+          "fit_log",
+          "fit_operators",
+          "graph_frozen",
+          "inducer_abstractor",
+          "inducer_evidence",
+          "parser_is_none",
+          "same_pid",
+          "shared_graph"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint receipt differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_receipt_bool_index",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint receipt differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_receipt_wrong_hash",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint checks are incomplete",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_saved_bool_index",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint checks are incomplete",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_saved_incomplete",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint checks are incomplete",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_failed_check",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint checks are incomplete",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_integer_check_alias",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint checks are incomplete",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_missing_required_check",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint checks are incomplete",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_extra_check",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint projection or ownership is incomplete",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_failed_ownership",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint projection or ownership is incomplete",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_missing_required_ownership",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint projection or ownership is incomplete",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_extra_ownership",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint projection or ownership is incomplete",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_projection_incomplete",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint projection or ownership is incomplete",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_common_incomplete",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint projection or ownership is incomplete",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_copy_failure",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint resident process differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_wrong_pid",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint resident process differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_bool_pid",
+      "status": "PASS"
+    },
+    {
+      "detail": "Resident learned content or native identity changed",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_different_native_object",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint native object identity inventory differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_missing_native_object",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint native object identity inventory differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_bool_native_object_id",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint stored object inventory differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_missing_stored_object_inventory",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint stored object inventory differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_different_stored_keys",
+      "status": "PASS"
+    },
+    {
+      "detail": "Learned commitment hash differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_wrong_learned_hash",
+      "status": "PASS"
+    },
+    {
+      "detail": "Learned commitment hash differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_changed_learned_value",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint training evidence changed",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_changed_raw_training",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint training evidence changed",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_wrong_raw_training_hash",
+      "status": "PASS"
+    },
+    {
+      "detail": "Evaluator task selectors entered the learner",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_task_labels_enter_learner",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint evidence cutoff differs from frozen raw training",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_bool_training_cut",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint evidence cutoff differs from frozen raw training",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_different_training_cut",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint evidence cutoff differs from frozen raw training",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "checkpoint_different_permitted_steps",
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "projection_to_learned_view_is_explicit_caller_gate",
+      "result": {
+        "caller_must_recompute_learned_view": true,
+        "core_verifies_saved_commitment": true,
+        "scope": "Explicit root-assigned caller obligation; the evaluate CLI is not executed or accepted here"
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "control_valid_checkpoint",
+      "result": {
+        "error": null,
+        "ledger_records": 1,
+        "request_count": 1,
+        "saved": {
+          "acknowledgement": {
+            "instrument_status": "COMPLETE",
+            "length": 742,
+            "offset": 0,
+            "receipt_index": 1,
+            "record_sha256": "23a10035997ad9d01e071d10dae3bdb90e5a29e0f89280039dc9aad8156cff38",
+            "request_id": "082de4ba-643d-4fdf-8028-56929eda4019",
+            "schema": "semabi.j1.live_ack.v1"
+          },
+          "after": {
+            "collector_freeze": {
+              "path": "docs/data/v4/transport/development/j1/invented_collection.json",
+              "sha256": "3bd628f8149807394256504e4a8c0e3021c3bb117bce770b194886bba2ba0121"
+            },
+            "manifest_sha256": "ea70fbc15757d7ce53f7457a38219f780dd665edb13f215f2221e671fc3ce44b",
+            "predictor_freeze": {
+              "path": "docs/data/v4/transport/development/j1/invented_predictor.json",
+              "sha256": "795ad0eb92220e2726d80f04c0ccf72c717e14f83519cf9d3dddb7d5c84b4064"
+            },
+            "source_head": "invented-head",
+            "verification_files": {
+              "docs/data/v4/transport/development/j1/act.py": "26a91ec96deb9c381dcc28c4e0277c6a349c0d940f7693e7bb9e6d3e55b267b7",
+              "docs/data/v4/transport/development/j1/collect.py": "53d1bcb26ef3069a23404cd3872713b840ced39215e34d8022f9c2c94fd0492d",
+              "docs/data/v4/transport/development/j1/live_io.py": "2cf44787526076337b53d8a67ef12796c7460d2dcb64cfbbbec7093c946a5327",
+              "scripts/transport_collect.py": "022f80109a55b0ff86c06fa72ca3654a3b15ab3a66c187cace15b00b828fcc14",
+              "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+              "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+              "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+            }
+          },
+          "before": {
+            "collector_freeze": {
+              "path": "docs/data/v4/transport/development/j1/invented_collection.json",
+              "sha256": "3bd628f8149807394256504e4a8c0e3021c3bb117bce770b194886bba2ba0121"
+            },
+            "manifest_sha256": "ea70fbc15757d7ce53f7457a38219f780dd665edb13f215f2221e671fc3ce44b",
+            "predictor_freeze": {
+              "path": "docs/data/v4/transport/development/j1/invented_predictor.json",
+              "sha256": "795ad0eb92220e2726d80f04c0ccf72c717e14f83519cf9d3dddb7d5c84b4064"
+            },
+            "source_head": "invented-head",
+            "verification_files": {
+              "docs/data/v4/transport/development/j1/act.py": "26a91ec96deb9c381dcc28c4e0277c6a349c0d940f7693e7bb9e6d3e55b267b7",
+              "docs/data/v4/transport/development/j1/collect.py": "53d1bcb26ef3069a23404cd3872713b840ced39215e34d8022f9c2c94fd0492d",
+              "docs/data/v4/transport/development/j1/live_io.py": "2cf44787526076337b53d8a67ef12796c7460d2dcb64cfbbbec7093c946a5327",
+              "scripts/transport_collect.py": "022f80109a55b0ff86c06fa72ca3654a3b15ab3a66c187cace15b00b828fcc14",
+              "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+              "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+              "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+            }
+          },
+          "finished_utc": "2026-09-07T22:43:19.912335+00:00",
+          "ledger_path": "/tmp/j1cc_e4ny939_/c_checkpoint/predictor/forecasts.jsonl",
+          "provenance": {
+            "fit": "same-invented-fit",
+            "pid": 731,
+            "runtime_freeze_sha256": "795ad0eb92220e2726d80f04c0ccf72c717e14f83519cf9d3dddb7d5c84b4064",
+            "source_head": "invented-head"
+          },
+          "ready": {
+            "path": "/tmp/j1cc_e4ny939_/c_checkpoint/predictor/ready.json",
+            "sha256": "6fb5b70173a8475941354e3e7450e127e6e5a15ea226e07c77721ade050d0599"
+          },
+          "record": {
+            "provenance": {
+              "fit": "same-invented-fit",
+              "pid": 731,
+              "runtime_freeze_sha256": "795ad0eb92220e2726d80f04c0ccf72c717e14f83519cf9d3dddb7d5c84b4064",
+              "source_head": "invented-head"
+            },
+            "receipt_index": 1,
+            "recorded_utc": "2026-09-07T22:43:19.911748+00:00",
+            "request": {
+              "op": "checkpoint",
+              "request_id": "082de4ba-643d-4fdf-8028-56929eda4019",
+              "schema": "semabi.j1.live_request.v1"
+            },
+            "response": {
+              "checkpoint_index": 1,
+              "instrument_status": "COMPLETE",
+              "learned_commitment_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "path": "/tmp/j1cc_e4ny939_/c_checkpoint/invented-checkpoint.json",
+              "schema": "semabi.j1.checkpoint_receipt.v1",
+              "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "schema": "semabi.j1.live_record.v1"
+          },
+          "request": {
+            "op": "checkpoint",
+            "request_id": "082de4ba-643d-4fdf-8028-56929eda4019",
+            "schema": "semabi.j1.live_request.v1"
+          },
+          "schema": "semabi.j1.control_verification.v1",
+          "started_utc": "2026-09-07T22:43:19.911718+00:00",
+          "status": "PASS"
+        },
+        "stdout": "{\"path\":\"/tmp/j1cc_e4ny939_/c_checkpoint/control.json\",\"sha256\":\"e7ece653017c6ca49ae288655e0fe3dee69b34cf81a7c386bbff1a92cfd49ace\",\"status\":\"PASS\"}\n"
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "control_valid_shutdown",
+      "result": {
+        "error": null,
+        "ledger_records": 1,
+        "request_count": 1,
+        "saved": {
+          "acknowledgement": {
+            "instrument_status": "COMPLETE",
+            "length": 738,
+            "offset": 0,
+            "receipt_index": 1,
+            "record_sha256": "d11c46895d942762a59a2f256a04f0f7230af99ffec644fbc4760553a89df0ca",
+            "request_id": "f9a89f27-48ce-44e8-aff0-982524e9207c",
+            "schema": "semabi.j1.live_ack.v1"
+          },
+          "after": {
+            "collector_freeze": {
+              "path": "docs/data/v4/transport/development/j1/invented_collection.json",
+              "sha256": "3bd628f8149807394256504e4a8c0e3021c3bb117bce770b194886bba2ba0121"
+            },
+            "manifest_sha256": "ea70fbc15757d7ce53f7457a38219f780dd665edb13f215f2221e671fc3ce44b",
+            "predictor_freeze": {
+              "path": "docs/data/v4/transport/development/j1/invented_predictor.json",
+              "sha256": "795ad0eb92220e2726d80f04c0ccf72c717e14f83519cf9d3dddb7d5c84b4064"
+            },
+            "source_head": "invented-head",
+            "verification_files": {
+              "docs/data/v4/transport/development/j1/act.py": "26a91ec96deb9c381dcc28c4e0277c6a349c0d940f7693e7bb9e6d3e55b267b7",
+              "docs/data/v4/transport/development/j1/collect.py": "53d1bcb26ef3069a23404cd3872713b840ced39215e34d8022f9c2c94fd0492d",
+              "docs/data/v4/transport/development/j1/live_io.py": "2cf44787526076337b53d8a67ef12796c7460d2dcb64cfbbbec7093c946a5327",
+              "scripts/transport_collect.py": "022f80109a55b0ff86c06fa72ca3654a3b15ab3a66c187cace15b00b828fcc14",
+              "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+              "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+              "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+            }
+          },
+          "before": {
+            "collector_freeze": {
+              "path": "docs/data/v4/transport/development/j1/invented_collection.json",
+              "sha256": "3bd628f8149807394256504e4a8c0e3021c3bb117bce770b194886bba2ba0121"
+            },
+            "manifest_sha256": "ea70fbc15757d7ce53f7457a38219f780dd665edb13f215f2221e671fc3ce44b",
+            "predictor_freeze": {
+              "path": "docs/data/v4/transport/development/j1/invented_predictor.json",
+              "sha256": "795ad0eb92220e2726d80f04c0ccf72c717e14f83519cf9d3dddb7d5c84b4064"
+            },
+            "source_head": "invented-head",
+            "verification_files": {
+              "docs/data/v4/transport/development/j1/act.py": "26a91ec96deb9c381dcc28c4e0277c6a349c0d940f7693e7bb9e6d3e55b267b7",
+              "docs/data/v4/transport/development/j1/collect.py": "53d1bcb26ef3069a23404cd3872713b840ced39215e34d8022f9c2c94fd0492d",
+              "docs/data/v4/transport/development/j1/live_io.py": "2cf44787526076337b53d8a67ef12796c7460d2dcb64cfbbbec7093c946a5327",
+              "scripts/transport_collect.py": "022f80109a55b0ff86c06fa72ca3654a3b15ab3a66c187cace15b00b828fcc14",
+              "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+              "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+              "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+            }
+          },
+          "finished_utc": "2026-09-07T22:43:19.914363+00:00",
+          "ledger_path": "/tmp/j1cc_e4ny939_/c_shutdown/predictor/forecasts.jsonl",
+          "provenance": {
+            "fit": "same-invented-fit",
+            "pid": 731,
+            "runtime_freeze_sha256": "795ad0eb92220e2726d80f04c0ccf72c717e14f83519cf9d3dddb7d5c84b4064",
+            "source_head": "invented-head"
+          },
+          "ready": {
+            "path": "/tmp/j1cc_e4ny939_/c_shutdown/predictor/ready.json",
+            "sha256": "ea6a1a5f51ca4e858bfd99f22dd02c15f5595004cf0e537752985b671c6fe590"
+          },
+          "record": {
+            "provenance": {
+              "fit": "same-invented-fit",
+              "pid": 731,
+              "runtime_freeze_sha256": "795ad0eb92220e2726d80f04c0ccf72c717e14f83519cf9d3dddb7d5c84b4064",
+              "source_head": "invented-head"
+            },
+            "receipt_index": 1,
+            "recorded_utc": "2026-09-07T22:43:19.913809+00:00",
+            "request": {
+              "op": "shutdown",
+              "request_id": "f9a89f27-48ce-44e8-aff0-982524e9207c",
+              "schema": "semabi.j1.live_request.v1"
+            },
+            "response": {
+              "checkpoint_index": 1,
+              "instrument_status": "COMPLETE",
+              "learned_commitment_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "path": "/tmp/j1cc_e4ny939_/c_shutdown/invented-checkpoint.json",
+              "schema": "semabi.j1.checkpoint_receipt.v1",
+              "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "schema": "semabi.j1.live_record.v1"
+          },
+          "request": {
+            "op": "shutdown",
+            "request_id": "f9a89f27-48ce-44e8-aff0-982524e9207c",
+            "schema": "semabi.j1.live_request.v1"
+          },
+          "schema": "semabi.j1.control_verification.v1",
+          "started_utc": "2026-09-07T22:43:19.913786+00:00",
+          "status": "PASS"
+        },
+        "stdout": "{\"path\":\"/tmp/j1cc_e4ny939_/c_shutdown/control.json\",\"sha256\":\"f6fc2abeccad42b2488e684dffb4e20fd1881ff3b356283fc4405243bca631fa\",\"status\":\"PASS\"}\n"
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "control_exists",
+      "result": {
+        "error": {
+          "detail": "Control receipt identity already exists",
+          "type": "ProtocolError"
+        },
+        "ledger_records": 0,
+        "request_count": 0,
+        "stdout": ""
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "control_source_before",
+      "result": {
+        "error": {
+          "detail": "Actor source changed: scripts/transport_collect.py",
+          "type": "ProtocolError"
+        },
+        "ledger_records": 0,
+        "request_count": 0,
+        "stdout": ""
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "control_ready_before",
+      "result": {
+        "error": {
+          "detail": "Predictor is not ready",
+          "type": "ProtocolError"
+        },
+        "ledger_records": 0,
+        "request_count": 0,
+        "stdout": ""
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "control_request_error",
+      "result": {
+        "error": {
+          "detail": "invented request error",
+          "type": "ProtocolError"
+        },
+        "ledger_records": 0,
+        "request_count": 1,
+        "saved": {
+          "before": {
+            "collector_freeze": {
+              "path": "docs/data/v4/transport/development/j1/invented_collection.json",
+              "sha256": "3bd628f8149807394256504e4a8c0e3021c3bb117bce770b194886bba2ba0121"
+            },
+            "manifest_sha256": "ea70fbc15757d7ce53f7457a38219f780dd665edb13f215f2221e671fc3ce44b",
+            "predictor_freeze": {
+              "path": "docs/data/v4/transport/development/j1/invented_predictor.json",
+              "sha256": "795ad0eb92220e2726d80f04c0ccf72c717e14f83519cf9d3dddb7d5c84b4064"
+            },
+            "source_head": "invented-head",
+            "verification_files": {
+              "docs/data/v4/transport/development/j1/act.py": "26a91ec96deb9c381dcc28c4e0277c6a349c0d940f7693e7bb9e6d3e55b267b7",
+              "docs/data/v4/transport/development/j1/collect.py": "53d1bcb26ef3069a23404cd3872713b840ced39215e34d8022f9c2c94fd0492d",
+              "docs/data/v4/transport/development/j1/live_io.py": "2cf44787526076337b53d8a67ef12796c7460d2dcb64cfbbbec7093c946a5327",
+              "scripts/transport_collect.py": "022f80109a55b0ff86c06fa72ca3654a3b15ab3a66c187cace15b00b828fcc14",
+              "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+              "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+              "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+            }
+          },
+          "error": {
+            "detail": "invented request error",
+            "type": "ProtocolError"
+          },
+          "finished_utc": "2026-09-07T22:43:19.918593+00:00",
+          "ledger_path": "/tmp/j1cc_e4ny939_/c_request_error/predictor/forecasts.jsonl",
+          "provenance": {
+            "fit": "same-invented-fit",
+            "pid": 731,
+            "runtime_freeze_sha256": "795ad0eb92220e2726d80f04c0ccf72c717e14f83519cf9d3dddb7d5c84b4064",
+            "source_head": "invented-head"
+          },
+          "ready": {
+            "path": "/tmp/j1cc_e4ny939_/c_request_error/predictor/ready.json",
+            "sha256": "8c094bab44d20c935510807ddef5b867f4ffd78ae137d510850341f05fc81274"
+          },
+          "request": {
+            "op": "checkpoint",
+            "request_id": "85b107b4-469d-4410-a178-b29026682171",
+            "schema": "semabi.j1.live_request.v1"
+          },
+          "schema": "semabi.j1.control_verification.v1",
+          "started_utc": "2026-09-07T22:43:19.918577+00:00",
+          "status": "ERROR"
+        },
+        "stdout": "{\"path\":\"/tmp/j1cc_e4ny939_/c_request_error/control.json\",\"sha256\":\"2eca4af9ecb76ae9eb3ee085f0eca15eddf3f7c74e518f694b68cdbc953724b2\",\"status\":\"ERROR\"}\n"
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "control_lost_ack",
+      "result": {
+        "error": {
+          "detail": "invented lost acknowledgement",
+          "type": "ProtocolError"
+        },
+        "ledger_records": 1,
+        "request_count": 1,
+        "saved": {
+          "before": {
+            "collector_freeze": {
+              "path": "docs/data/v4/transport/development/j1/invented_collection.json",
+              "sha256": "3bd628f8149807394256504e4a8c0e3021c3bb117bce770b194886bba2ba0121"
+            },
+            "manifest_sha256": "ea70fbc15757d7ce53f7457a38219f780dd665edb13f215f2221e671fc3ce44b",
+            "predictor_freeze": {
+              "path": "docs/data/v4/transport/development/j1/invented_predictor.json",
+              "sha256": "795ad0eb92220e2726d80f04c0ccf72c717e14f83519cf9d3dddb7d5c84b4064"
+            },
+            "source_head": "invented-head",
+            "verification_files": {
+              "docs/data/v4/transport/development/j1/act.py": "26a91ec96deb9c381dcc28c4e0277c6a349c0d940f7693e7bb9e6d3e55b267b7",
+              "docs/data/v4/transport/development/j1/collect.py": "53d1bcb26ef3069a23404cd3872713b840ced39215e34d8022f9c2c94fd0492d",
+              "docs/data/v4/transport/development/j1/live_io.py": "2cf44787526076337b53d8a67ef12796c7460d2dcb64cfbbbec7093c946a5327",
+              "scripts/transport_collect.py": "022f80109a55b0ff86c06fa72ca3654a3b15ab3a66c187cace15b00b828fcc14",
+              "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+              "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+              "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+            }
+          },
+          "error": {
+            "detail": "invented lost acknowledgement",
+            "type": "ProtocolError"
+          },
+          "finished_utc": "2026-09-07T22:43:19.920056+00:00",
+          "ledger_path": "/tmp/j1cc_e4ny939_/c_lost_ack/predictor/forecasts.jsonl",
+          "provenance": {
+            "fit": "same-invented-fit",
+            "pid": 731,
+            "runtime_freeze_sha256": "795ad0eb92220e2726d80f04c0ccf72c717e14f83519cf9d3dddb7d5c84b4064",
+            "source_head": "invented-head"
+          },
+          "ready": {
+            "path": "/tmp/j1cc_e4ny939_/c_lost_ack/predictor/ready.json",
+            "sha256": "a7fff2cee64a3e3647c80e2165b44da28addac7c8e8dfdc892cd30cbd193943d"
+          },
+          "request": {
+            "op": "checkpoint",
+            "request_id": "c5538dee-4ee0-46cc-a5b9-7089c0bb16ea",
+            "schema": "semabi.j1.live_request.v1"
+          },
+          "schema": "semabi.j1.control_verification.v1",
+          "started_utc": "2026-09-07T22:43:19.920012+00:00",
+          "status": "ERROR"
+        },
+        "stdout": "{\"path\":\"/tmp/j1cc_e4ny939_/c_lost_ack/control.json\",\"sha256\":\"4291d1881ac756d130c0edafdeceab34b9f78c20d90e961a7514aedcb327df8b\",\"status\":\"ERROR\"}\n"
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "control_wrong_provenance",
+      "result": {
+        "error": {
+          "detail": "Control receipt belongs to another resident Fit",
+          "type": "ProtocolError"
+        },
+        "ledger_records": 1,
+        "request_count": 1,
+        "saved": {
+          "acknowledgement": {
+            "instrument_status": "COMPLETE",
+            "length": 615,
+            "offset": 0,
+            "receipt_index": 1,
+            "record_sha256": "8522f13da8b1f0a1e526b69e587cfbd6aa9b8307a7701159596577793ef927e2",
+            "request_id": "09790dd8-c53c-4a56-ac1c-74afbcdcc5f6",
+            "schema": "semabi.j1.live_ack.v1"
+          },
+          "before": {
+            "collector_freeze": {
+              "path": "docs/data/v4/transport/development/j1/invented_collection.json",
+              "sha256": "3bd628f8149807394256504e4a8c0e3021c3bb117bce770b194886bba2ba0121"
+            },
+            "manifest_sha256": "ea70fbc15757d7ce53f7457a38219f780dd665edb13f215f2221e671fc3ce44b",
+            "predictor_freeze": {
+              "path": "docs/data/v4/transport/development/j1/invented_predictor.json",
+              "sha256": "795ad0eb92220e2726d80f04c0ccf72c717e14f83519cf9d3dddb7d5c84b4064"
+            },
+            "source_head": "invented-head",
+            "verification_files": {
+              "docs/data/v4/transport/development/j1/act.py": "26a91ec96deb9c381dcc28c4e0277c6a349c0d940f7693e7bb9e6d3e55b267b7",
+              "docs/data/v4/transport/development/j1/collect.py": "53d1bcb26ef3069a23404cd3872713b840ced39215e34d8022f9c2c94fd0492d",
+              "docs/data/v4/transport/development/j1/live_io.py": "2cf44787526076337b53d8a67ef12796c7460d2dcb64cfbbbec7093c946a5327",
+              "scripts/transport_collect.py": "022f80109a55b0ff86c06fa72ca3654a3b15ab3a66c187cace15b00b828fcc14",
+              "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+              "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+              "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+            }
+          },
+          "error": {
+            "detail": "Control receipt belongs to another resident Fit",
+            "type": "ProtocolError"
+          },
+          "finished_utc": "2026-09-07T22:43:19.921500+00:00",
+          "ledger_path": "/tmp/j1cc_e4ny939_/c_wrong_provenance/predictor/forecasts.jsonl",
+          "provenance": {
+            "fit": "same-invented-fit",
+            "pid": 731,
+            "runtime_freeze_sha256": "795ad0eb92220e2726d80f04c0ccf72c717e14f83519cf9d3dddb7d5c84b4064",
+            "source_head": "invented-head"
+          },
+          "ready": {
+            "path": "/tmp/j1cc_e4ny939_/c_wrong_provenance/predictor/ready.json",
+            "sha256": "d3c4ed4abd774453590fd23d18672736a86e01aa0587e163ddd42bd98c6a50c9"
+          },
+          "record": {
+            "provenance": {
+              "wrong": "different-fit"
+            },
+            "receipt_index": 1,
+            "recorded_utc": "2026-09-07T22:43:19.921418+00:00",
+            "request": {
+              "op": "checkpoint",
+              "request_id": "09790dd8-c53c-4a56-ac1c-74afbcdcc5f6",
+              "schema": "semabi.j1.live_request.v1"
+            },
+            "response": {
+              "checkpoint_index": 1,
+              "instrument_status": "COMPLETE",
+              "learned_commitment_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "path": "/tmp/j1cc_e4ny939_/c_wrong_provenance/invented-checkpoint.json",
+              "schema": "semabi.j1.checkpoint_receipt.v1",
+              "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "schema": "semabi.j1.live_record.v1"
+          },
+          "request": {
+            "op": "checkpoint",
+            "request_id": "09790dd8-c53c-4a56-ac1c-74afbcdcc5f6",
+            "schema": "semabi.j1.live_request.v1"
+          },
+          "schema": "semabi.j1.control_verification.v1",
+          "started_utc": "2026-09-07T22:43:19.921396+00:00",
+          "status": "ERROR"
+        },
+        "stdout": "{\"path\":\"/tmp/j1cc_e4ny939_/c_wrong_provenance/control.json\",\"sha256\":\"54112d38ed1146085e8a762f70c28eb351ab0451fc40add699a0829caa83bdc8\",\"status\":\"ERROR\"}\n"
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "control_incomplete",
+      "result": {
+        "error": {
+          "detail": "Resident checkpoint is incomplete",
+          "type": "ProtocolError"
+        },
+        "ledger_records": 1,
+        "request_count": 1,
+        "saved": {
+          "acknowledgement": {
+            "instrument_status": "INCOMPLETE",
+            "length": 744,
+            "offset": 0,
+            "receipt_index": 1,
+            "record_sha256": "c2383e794ef62d6d3383a1eb6d4112adbe95d050d87bfa15fb337768faa650bf",
+            "request_id": "dc1c197b-ac0a-4980-986d-41309276c35d",
+            "schema": "semabi.j1.live_ack.v1"
+          },
+          "before": {
+            "collector_freeze": {
+              "path": "docs/data/v4/transport/development/j1/invented_collection.json",
+              "sha256": "3bd628f8149807394256504e4a8c0e3021c3bb117bce770b194886bba2ba0121"
+            },
+            "manifest_sha256": "ea70fbc15757d7ce53f7457a38219f780dd665edb13f215f2221e671fc3ce44b",
+            "predictor_freeze": {
+              "path": "docs/data/v4/transport/development/j1/invented_predictor.json",
+              "sha256": "795ad0eb92220e2726d80f04c0ccf72c717e14f83519cf9d3dddb7d5c84b4064"
+            },
+            "source_head": "invented-head",
+            "verification_files": {
+              "docs/data/v4/transport/development/j1/act.py": "26a91ec96deb9c381dcc28c4e0277c6a349c0d940f7693e7bb9e6d3e55b267b7",
+              "docs/data/v4/transport/development/j1/collect.py": "53d1bcb26ef3069a23404cd3872713b840ced39215e34d8022f9c2c94fd0492d",
+              "docs/data/v4/transport/development/j1/live_io.py": "2cf44787526076337b53d8a67ef12796c7460d2dcb64cfbbbec7093c946a5327",
+              "scripts/transport_collect.py": "022f80109a55b0ff86c06fa72ca3654a3b15ab3a66c187cace15b00b828fcc14",
+              "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+              "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+              "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+            }
+          },
+          "error": {
+            "detail": "Resident checkpoint is incomplete",
+            "type": "ProtocolError"
+          },
+          "finished_utc": "2026-09-07T22:43:19.922939+00:00",
+          "ledger_path": "/tmp/j1cc_e4ny939_/c_incomplete/predictor/forecasts.jsonl",
+          "provenance": {
+            "fit": "same-invented-fit",
+            "pid": 731,
+            "runtime_freeze_sha256": "795ad0eb92220e2726d80f04c0ccf72c717e14f83519cf9d3dddb7d5c84b4064",
+            "source_head": "invented-head"
+          },
+          "ready": {
+            "path": "/tmp/j1cc_e4ny939_/c_incomplete/predictor/ready.json",
+            "sha256": "51c76eec665d4609097720a1891562d386a417c6f4bec2b287a6a56641881d1f"
+          },
+          "record": {
+            "provenance": {
+              "fit": "same-invented-fit",
+              "pid": 731,
+              "runtime_freeze_sha256": "795ad0eb92220e2726d80f04c0ccf72c717e14f83519cf9d3dddb7d5c84b4064",
+              "source_head": "invented-head"
+            },
+            "receipt_index": 1,
+            "recorded_utc": "2026-09-07T22:43:19.922856+00:00",
+            "request": {
+              "op": "checkpoint",
+              "request_id": "dc1c197b-ac0a-4980-986d-41309276c35d",
+              "schema": "semabi.j1.live_request.v1"
+            },
+            "response": {
+              "checkpoint_index": 1,
+              "instrument_status": "INCOMPLETE",
+              "learned_commitment_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "path": "/tmp/j1cc_e4ny939_/c_incomplete/invented-checkpoint.json",
+              "schema": "semabi.j1.checkpoint_receipt.v1",
+              "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "schema": "semabi.j1.live_record.v1"
+          },
+          "request": {
+            "op": "checkpoint",
+            "request_id": "dc1c197b-ac0a-4980-986d-41309276c35d",
+            "schema": "semabi.j1.live_request.v1"
+          },
+          "schema": "semabi.j1.control_verification.v1",
+          "started_utc": "2026-09-07T22:43:19.922836+00:00",
+          "status": "ERROR"
+        },
+        "stdout": "{\"path\":\"/tmp/j1cc_e4ny939_/c_incomplete/control.json\",\"sha256\":\"6e6f529b1a7cdba846e9eb89cd827ba9e796154a91112dff26e89925a8d3ff8d\",\"status\":\"ERROR\"}\n"
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "control_source_after",
+      "result": {
+        "error": {
+          "detail": "Actor source changed: scripts/transport_collect.py",
+          "type": "ProtocolError"
+        },
+        "ledger_records": 1,
+        "request_count": 1,
+        "saved": {
+          "acknowledgement": {
+            "instrument_status": "COMPLETE",
+            "length": 744,
+            "offset": 0,
+            "receipt_index": 1,
+            "record_sha256": "d5f939743ff0d2cb0cb788ed2e8659a7182b387904dc90cd2975d46df2a76016",
+            "request_id": "4f25d789-31f0-43ab-a301-83ec0b0f336f",
+            "schema": "semabi.j1.live_ack.v1"
+          },
+          "before": {
+            "collector_freeze": {
+              "path": "docs/data/v4/transport/development/j1/invented_collection.json",
+              "sha256": "3bd628f8149807394256504e4a8c0e3021c3bb117bce770b194886bba2ba0121"
+            },
+            "manifest_sha256": "ea70fbc15757d7ce53f7457a38219f780dd665edb13f215f2221e671fc3ce44b",
+            "predictor_freeze": {
+              "path": "docs/data/v4/transport/development/j1/invented_predictor.json",
+              "sha256": "795ad0eb92220e2726d80f04c0ccf72c717e14f83519cf9d3dddb7d5c84b4064"
+            },
+            "source_head": "invented-head",
+            "verification_files": {
+              "docs/data/v4/transport/development/j1/act.py": "26a91ec96deb9c381dcc28c4e0277c6a349c0d940f7693e7bb9e6d3e55b267b7",
+              "docs/data/v4/transport/development/j1/collect.py": "53d1bcb26ef3069a23404cd3872713b840ced39215e34d8022f9c2c94fd0492d",
+              "docs/data/v4/transport/development/j1/live_io.py": "2cf44787526076337b53d8a67ef12796c7460d2dcb64cfbbbec7093c946a5327",
+              "scripts/transport_collect.py": "022f80109a55b0ff86c06fa72ca3654a3b15ab3a66c187cace15b00b828fcc14",
+              "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+              "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+              "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+            }
+          },
+          "error": {
+            "detail": "Actor source changed: scripts/transport_collect.py",
+            "type": "ProtocolError"
+          },
+          "finished_utc": "2026-09-07T22:43:19.924570+00:00",
+          "ledger_path": "/tmp/j1cc_e4ny939_/c_source_after/predictor/forecasts.jsonl",
+          "provenance": {
+            "fit": "same-invented-fit",
+            "pid": 731,
+            "runtime_freeze_sha256": "795ad0eb92220e2726d80f04c0ccf72c717e14f83519cf9d3dddb7d5c84b4064",
+            "source_head": "invented-head"
+          },
+          "ready": {
+            "path": "/tmp/j1cc_e4ny939_/c_source_after/predictor/ready.json",
+            "sha256": "956a72619e1e2d73e9783c3ee9e5768d6ef470e9ec4cbc86d46adcb37126250a"
+          },
+          "record": {
+            "provenance": {
+              "fit": "same-invented-fit",
+              "pid": 731,
+              "runtime_freeze_sha256": "795ad0eb92220e2726d80f04c0ccf72c717e14f83519cf9d3dddb7d5c84b4064",
+              "source_head": "invented-head"
+            },
+            "receipt_index": 1,
+            "recorded_utc": "2026-09-07T22:43:19.924288+00:00",
+            "request": {
+              "op": "checkpoint",
+              "request_id": "4f25d789-31f0-43ab-a301-83ec0b0f336f",
+              "schema": "semabi.j1.live_request.v1"
+            },
+            "response": {
+              "checkpoint_index": 1,
+              "instrument_status": "COMPLETE",
+              "learned_commitment_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "path": "/tmp/j1cc_e4ny939_/c_source_after/invented-checkpoint.json",
+              "schema": "semabi.j1.checkpoint_receipt.v1",
+              "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "schema": "semabi.j1.live_record.v1"
+          },
+          "request": {
+            "op": "checkpoint",
+            "request_id": "4f25d789-31f0-43ab-a301-83ec0b0f336f",
+            "schema": "semabi.j1.live_request.v1"
+          },
+          "schema": "semabi.j1.control_verification.v1",
+          "started_utc": "2026-09-07T22:43:19.924267+00:00",
+          "status": "ERROR"
+        },
+        "stdout": "{\"path\":\"/tmp/j1cc_e4ny939_/c_source_after/control.json\",\"sha256\":\"96ee46c5bea7d9ad2b7470a2d9332d4cce8d1447fc98699fb2d3297b025e7b70\",\"status\":\"ERROR\"}\n"
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "control_ready_after",
+      "result": {
+        "error": {
+          "detail": "Control source or resident ready commitment changed",
+          "type": "ProtocolError"
+        },
+        "ledger_records": 1,
+        "request_count": 1,
+        "saved": {
+          "acknowledgement": {
+            "instrument_status": "COMPLETE",
+            "length": 743,
+            "offset": 0,
+            "receipt_index": 1,
+            "record_sha256": "c642836b1727bfecb62fb7d864a9b7d2b73846f8e87775c869ea0cd08f7d28cc",
+            "request_id": "e2c33af5-e28c-4fb0-9f4b-972b7aa0d9bd",
+            "schema": "semabi.j1.live_ack.v1"
+          },
+          "before": {
+            "collector_freeze": {
+              "path": "docs/data/v4/transport/development/j1/invented_collection.json",
+              "sha256": "3bd628f8149807394256504e4a8c0e3021c3bb117bce770b194886bba2ba0121"
+            },
+            "manifest_sha256": "ea70fbc15757d7ce53f7457a38219f780dd665edb13f215f2221e671fc3ce44b",
+            "predictor_freeze": {
+              "path": "docs/data/v4/transport/development/j1/invented_predictor.json",
+              "sha256": "795ad0eb92220e2726d80f04c0ccf72c717e14f83519cf9d3dddb7d5c84b4064"
+            },
+            "source_head": "invented-head",
+            "verification_files": {
+              "docs/data/v4/transport/development/j1/act.py": "26a91ec96deb9c381dcc28c4e0277c6a349c0d940f7693e7bb9e6d3e55b267b7",
+              "docs/data/v4/transport/development/j1/collect.py": "53d1bcb26ef3069a23404cd3872713b840ced39215e34d8022f9c2c94fd0492d",
+              "docs/data/v4/transport/development/j1/live_io.py": "2cf44787526076337b53d8a67ef12796c7460d2dcb64cfbbbec7093c946a5327",
+              "scripts/transport_collect.py": "022f80109a55b0ff86c06fa72ca3654a3b15ab3a66c187cace15b00b828fcc14",
+              "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+              "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+              "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+            }
+          },
+          "error": {
+            "detail": "Control source or resident ready commitment changed",
+            "type": "ProtocolError"
+          },
+          "finished_utc": "2026-09-07T22:43:19.926518+00:00",
+          "ledger_path": "/tmp/j1cc_e4ny939_/c_ready_after/predictor/forecasts.jsonl",
+          "provenance": {
+            "fit": "same-invented-fit",
+            "pid": 731,
+            "runtime_freeze_sha256": "795ad0eb92220e2726d80f04c0ccf72c717e14f83519cf9d3dddb7d5c84b4064",
+            "source_head": "invented-head"
+          },
+          "ready": {
+            "path": "/tmp/j1cc_e4ny939_/c_ready_after/predictor/ready.json",
+            "sha256": "afe99a2236561aee5d439366be6fb9ba5f71cb2827c3c6442cf39993917d2720"
+          },
+          "record": {
+            "provenance": {
+              "fit": "same-invented-fit",
+              "pid": 731,
+              "runtime_freeze_sha256": "795ad0eb92220e2726d80f04c0ccf72c717e14f83519cf9d3dddb7d5c84b4064",
+              "source_head": "invented-head"
+            },
+            "receipt_index": 1,
+            "recorded_utc": "2026-09-07T22:43:19.925914+00:00",
+            "request": {
+              "op": "checkpoint",
+              "request_id": "e2c33af5-e28c-4fb0-9f4b-972b7aa0d9bd",
+              "schema": "semabi.j1.live_request.v1"
+            },
+            "response": {
+              "checkpoint_index": 1,
+              "instrument_status": "COMPLETE",
+              "learned_commitment_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "path": "/tmp/j1cc_e4ny939_/c_ready_after/invented-checkpoint.json",
+              "schema": "semabi.j1.checkpoint_receipt.v1",
+              "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            "schema": "semabi.j1.live_record.v1"
+          },
+          "request": {
+            "op": "checkpoint",
+            "request_id": "e2c33af5-e28c-4fb0-9f4b-972b7aa0d9bd",
+            "schema": "semabi.j1.live_request.v1"
+          },
+          "schema": "semabi.j1.control_verification.v1",
+          "started_utc": "2026-09-07T22:43:19.925894+00:00",
+          "status": "ERROR"
+        },
+        "stdout": "{\"path\":\"/tmp/j1cc_e4ny939_/c_ready_after/control.json\",\"sha256\":\"3a26b17d7fe8d44b44417bc82ee83c29dbee8c93eb02503324818d36020078f6\",\"status\":\"ERROR\"}\n"
+      },
+      "status": "PASS"
+    }
+  ],
+  "counts": {
+    "PASS": 129
+  },
+  "pid": 916979,
+  "schema": "semabi.j1.custody_control_independent_checks.v1",
+  "scope": "Invented records only; actual native public data and EvidenceLog, retained collect_script/Recorder/resolver AST, accepted actor and real ledger. Fake Browser, in-process invented predictor, bound temporary local Unix sockets for actual control ready gates. No fit, prediction, browser service, J1/R1 payload or evaluate/preserve CLI.",
+  "sources": {
+    "docs/data/v4/transport/development/j1/act.py": "26a91ec96deb9c381dcc28c4e0277c6a349c0d940f7693e7bb9e6d3e55b267b7",
+    "docs/data/v4/transport/development/j1/collect.py": "53d1bcb26ef3069a23404cd3872713b840ced39215e34d8022f9c2c94fd0492d",
+    "docs/data/v4/transport/development/j1/control.py": "877c823a78d9629d0e493d8b3da32317b7ac3bb762a58a66192fae34265b95c5",
+    "docs/data/v4/transport/development/j1/custody.py": "001d6b1ecc7ddf8611cab651b413adcdab45f32d3f388e1dadfe40da86d46aed",
+    "docs/data/v4/transport/development/j1/live_contract_v1.md": "f9642c36b3581323eaa8206d5117dd7831c2d57cf6142b39877fd0e2fbc17d90",
+    "docs/data/v4/transport/development/j1/live_io.py": "2cf44787526076337b53d8a67ef12796c7460d2dcb64cfbbbec7093c946a5327",
+    "docs/data/v4/transport/development/j1/live_model.py": "6e34f1422ee8905abf84e0699bdf5361c6c88822c950d96b5169e60414ae3ff7",
+    "docs/data/v4/transport/development/j1/predictor.py": "c0d05260b4668db3e885e6691d7b9cd61096c8db6547ae56dd1358348ef48e51",
+    "docs/data/v4/transport/development/j1/protocol_v1.md": "897b89e75ecba96555bda621523f1af07fbc5904fd2a9c6220f2d1bbe0a51433",
+    "docs/data/v4/transport/development/j1/review_evidence/actor_boundary_checks_v1.py": "cdbaf36f6c605c8f529586a1e2ed5a562898af217a020af1e78930b3bfa2e925",
+    "docs/data/v4/transport/development/j1/review_evidence/custody_control_checks_v1.py": "8d22a5d1af9d3d63f8038e0de27d724399521ed71b45f663b50d495273e9e98a",
+    "docs/data/v4/transport/development/j1/trace.py": "25c1624ce8bffbb0bda98f478fc64c73a54d492f3c02c37e81dce44d04892249",
+    "scripts/transport_collect.py": "022f80109a55b0ff86c06fa72ca3654a3b15ab3a66c187cace15b00b828fcc14",
+    "semabi/__init__.py": "0a6e61cf4d9d8dc368fef7bc2053e6db686e3fb70272d7f9e9f1e5b3f79f95e8",
+    "semabi/compiler/__init__.py": "5249623658aef7d2b87bd34d06fab3f181b1ef5bbb9dd70b827592bb01b02893",
+    "semabi/compiler/abstract.py": "a8a2efeebbab13c27efd1a093ff9696cda06e7d1148abe5ec41a840cbdba6056",
+    "semabi/compiler/active.py": "e3572ead5849a7c2d61897eb4498971374797681b8157f8af4af78e7eef64a4a",
+    "semabi/compiler/belief.py": "10996cf9f5f2264ecbe8e28235718e81fc606ed249d8c2708f50541a73a8aa5c",
+    "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+    "semabi/compiler/compile.py": "fa0e4b4237658dc2e5d41cf715fe8ca884b0b2ec9b714cde4f1917318c9f920f",
+    "semabi/compiler/compile_v1.py": "200ccf04a38b69f04655a3bd72c9e0edb5a436eea64dadab6c4f55a3e4377d6c",
+    "semabi/compiler/compile_v2.py": "4c548ab43776c854da23c0a9b85ede95fb18e43d8bfffa4e0ada800b2a0d2d87",
+    "semabi/compiler/compile_v4.py": "8ac23e907a19b790e78fadf6d7d0c22f8176620dd93844b7f21f32551e5193ad",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/explorer.py": "16827d3735c9eab4d51a60c585790226be3e692bb63b01794df29a9ba8c8c807",
+    "semabi/compiler/ground.py": "5c94dc46bb5dab3702f77c777e934c14db72183636139441e02fa8410e0f420e",
+    "semabi/compiler/grounder.py": "d272260d2bacd64dcd7fc88f2094c2f84b989736c89924460cc0053b8e97ac06",
+    "semabi/compiler/induce.py": "c726cb2f40c78cc946d8a998e94e056f300e0591fc4d74f73cd8504222954fb8",
+    "semabi/compiler/mentions.py": "800fa94e2e4f76bfc503c7557ec775f6d83a612f6634123a62f78a16de2b781c",
+    "semabi/compiler/model.py": "5175ff650a75fdb39da8f943d5193c99a533f069929af158f0facfc963c9bf31",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/parse.py": "f98bac399682bbd2d583e29183e3663872294a4ee9e5542c7d86371e148b2eb9",
+    "semabi/compiler/planner.py": "0c56abb0518fcfb78e917f54ac21890cda10fe4b458133a3a1fdd0038841d887",
+    "semabi/compiler/schema_llm.py": "f05e458184188ff78113df6c8b872e50174b5232c5b0781e73251e97b1199d4d",
+    "semabi/compiler/v2/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "semabi/compiler/v2/abstractor.py": "0d9b484e558df2844ce8c21dd5b15d16d894a823ae9cd7152a1421a351dd61d5",
+    "semabi/compiler/v2/association.py": "f34e19ff719b2b63475099d36701e9785da6a77b45509861621c7fd20bddba00",
+    "semabi/compiler/v2/controls.py": "e578b9735de3c817b16d742c5c86eefe3ea2ac75ae810cb2cf9aed31aa45687c",
+    "semabi/compiler/v2/counterexamples.py": "3ca77e39f57b99b42a0a923840b3bdd193c86dd6e1cc035772d9c0eca8be60df",
+    "semabi/compiler/v2/differential.py": "a6e7f005f4ff4ab4a0e43802164a7fc41c6f7118daa54d9bd3b888e8bd0933f0",
+    "semabi/compiler/v2/explore.py": "f420a6cabbf8dc8746a3fc0938009b7800554b20bb549b126a187172cb9daac2",
+    "semabi/compiler/v2/graph.py": "f601fb6bd56d8728a01fdc404c6a0d80636cb2ccba98dab09cd26abf5c425b2a",
+    "semabi/compiler/v2/hypotheses.py": "6cc8812664f474bfeafc7bd7f62a43faf0a78f252269077749e062c3a0981b03",
+    "semabi/compiler/v2/llm_propose.py": "fa0951ce5fbdc2e90fd76b184d8f44b39a752585017d7c89d74306e08c68b94e",
+    "semabi/compiler/v2/refinement.py": "79f69756fc146f2f783bc19571bffb7efb42a2a92edbd39ed33c91b83d7645e3",
+    "semabi/compiler/v2/score.py": "aaff604a4c91e8034fdb113c8b76e5e9415eb50bbc91d5ad25755492ae47524b",
+    "semabi/compiler/v2/sections.py": "4bd39bf7e067a94ec19f6ad6c23c098d13ac01efdabafe2f6e15eb213003ba02",
+    "semabi/compiler/v2/units.py": "72ccac1c76e4ca2ab20390098faa8e9be0f5c700ccb3382735a689391f2a3c5f",
+    "semabi/compiler/v2/validation.py": "fc9b6c38def59c4fbcc3b306bb36f6c3eee9aee553ea1edf2fb884741d9f6f34",
+    "semabi/compiler/v2/validation_probe.py": "244cca6a0b735fc67364335e793c0e8848f3a2b4bebf32db1997014ebefbf8ac",
+    "semabi/compiler/v4/__init__.py": "c41acb8afd5f3306718e6b5bb242db1dae876bf512bcec1d6c49108e8fbcc38c",
+    "semabi/compiler/v4/abstractor.py": "4e772cf28d002461de3449e4a939ced2b39a672e629b916612c83bb6ad0625f1",
+    "semabi/compiler/v4/binding.py": "0f905cae535aa975dffe517f1107884f37524fdc3cbcc781ec7f645cd0f9b0dc",
+    "semabi/compiler/v4/conditional.py": "9aa1db4e6a113d3f71f99d8b389a318749fb33affb1166bd6dbd9b29fbc41226",
+    "semabi/compiler/v4/consequence.py": "c95bd040c8b066aaaac5bb5653b2ff20824ed3f2b59aba81c42b8a579ca8445e",
+    "semabi/compiler/v4/correspondence.py": "dd4659f74a4eb1ca8d3656ad278cd15290de2c08318b964e1a85c127fdd1be8c",
+    "semabi/compiler/v4/custody.py": "8f2aa81f444843459ef553c07639afa9ffcc3f342276fde1da5a152da715fb29",
+    "semabi/compiler/v4/emission.py": "5068810fe1d35b988649eb8ff8aecf6bd49dee5344cbdf72e94b156f6ec6cbbe",
+    "semabi/compiler/v4/fields.py": "b5b794432a504b7d30f6574dc1e0d3ff34b44536967ab50ae9a5a0c04ffc9967",
+    "semabi/compiler/v4/frozen_evidence.py": "cb3f7980fd9d24e888f45267ce5f7e597576ea2d2db63783988455bc340f3a65",
+    "semabi/compiler/v4/identity.py": "06792b4a7ebd478fb46edeb7a37c5dce3b7eec02d561994f3560fad2ef01d6a7",
+    "semabi/compiler/v4/manifests.py": "086e3c03591d0a21cfe0fe4717c184f1013fbd1becb86c42d376d98cbcf90b1f",
+    "semabi/compiler/v4/objective.py": "a62d6907b0aa1f643a2e2cb96038cbedab8ac40b55c0e95e67d5f2452f1bdfef",
+    "semabi/compiler/v4/outcome.py": "552b87472577a6f409069fdf459cd64d209a699b48737df57a56a3949813d736",
+    "semabi/compiler/v4/pinned.py": "f3be252e1f021424565aaa20baf846b6b0d1522d9a7678e7770a4b6e006e2c8b",
+    "semabi/compiler/v4/prequential.py": "d3246ff8f2ae45e61d48b97879a219a2cace87abaed2a19bb7f58f76b49e679e",
+    "semabi/compiler/v4/probe.py": "e43d12bae3f22e524ef2548ee1b6a32c0c0e3f248e047e2de41da4bde6f9d6f7",
+    "semabi/compiler/v4/promote.py": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65",
+    "semabi/compiler/v4/prospective.py": "591deb563820612e1f138660b2b2d83f9da51fcdb386b12c88ce19d0e074511b",
+    "semabi/compiler/v4/referring.py": "c0e2abbee5dd724f193bc61a5264268e853837c4282cbe2d372b2ec2489e5b1f",
+    "semabi/compiler/v4/search.py": "c87e3633207dfaa1483574cad2335b23222bec6fa51fe35526adf8dd9576f72c",
+    "semabi/compiler/v4/source_candidates.py": "ff27669ba080d3ce8294bbb43cdc68e77409dd431dba390035aa88f85e8e08fd",
+    "semabi/compiler/v4/sufficiency.py": "48a82b21eff70caa24e04b541d522466f25547cec300694557f67a3e5a74d3a2",
+    "semabi/compiler/v4/transfer.py": "19b138c05c712a8187a7db1ee2eef33b93c9eec83b422a175bbc64d195e49938",
+    "semabi/relmodel.py": "2034f3a5dd7019c5333c8fb4e0283cf349e29905cfa5d0933e453180fa3a4827"
+  },
+  "status": "PASS"
+}

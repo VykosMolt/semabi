@@ -1,0 +1,14 @@
+{
+  "schema": "semabi.j1.independent_check_tool_receipt.v1",
+  "owner": "/root/baseline_verification",
+  "completed_in_launch": true,
+  "tool_session_id": null,
+  "command": "taskset -c 8 env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 PYTHONHASHSEED=0 .venv/bin/python -B docs/data/v4/transport/development/j1/review_evidence/custody_control_checks_v1.py --custody-sha b246684473153d64d885b1f9de1c5e6feac66b1b250e8f0c2effb81a761385e7 --control-sha 877c823a78d9629d0e493d8b3da32317b7ac3bb762a58a66192fae34265b95c5 --output docs/data/v4/transport/development/j1/review_evidence/custody_control_checks_attempt1_v1.json",
+  "result": {
+    "chunk_id": "28566d",
+    "wall_time_seconds": 0.153416049,
+    "exit_code": 1,
+    "original_token_count": 110,
+    "output": "{\"path\": \"docs/data/v4/transport/development/j1/review_evidence/custody_control_checks_attempt1_v1.json\", \"sha256\": \"d2c8880f75f6dd6a1b6fc97de57925521e48f2f12839cf54eb2b253893c2afe3\", \"counts\": {\"PASS\": 123, \"FAIL\": 6}, \"failed\": [\"checkpoint_missing_required_check\", \"checkpoint_extra_check\", \"checkpoint_missing_required_ownership\", \"checkpoint_extra_ownership\", \"checkpoint_missing_native_object\", \"checkpoint_bool_native_object_id\"]}\n"
+  }
+}

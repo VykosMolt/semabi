@@ -1,0 +1,14 @@
+{
+  "schema": "semabi.j1.independent_check_tool_receipt.v1",
+  "owner": "/root/baseline_verification",
+  "completed_in_launch": true,
+  "tool_session_id": null,
+  "command": "taskset -c 8 env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 PYTHONHASHSEED=0 .venv/bin/python -B docs/data/v4/transport/development/j1/review_evidence/custody_control_checks_v1.py --custody-sha 001d6b1ecc7ddf8611cab651b413adcdab45f32d3f388e1dadfe40da86d46aed --control-sha 877c823a78d9629d0e493d8b3da32317b7ac3bb762a58a66192fae34265b95c5 --output docs/data/v4/transport/development/j1/review_evidence/custody_control_checks_attempt2_v1.json",
+  "result": {
+    "chunk_id": "a299e4",
+    "wall_time_seconds": 0.1551282,
+    "exit_code": 0,
+    "original_token_count": 56,
+    "output": "{\"path\": \"docs/data/v4/transport/development/j1/review_evidence/custody_control_checks_attempt2_v1.json\", \"sha256\": \"e776534660428bf674113479c8ec2cdf724ed814935ad28e0a46d9203e4dbbc9\", \"counts\": {\"PASS\": 129}, \"failed\": []}\n"
+  }
+}

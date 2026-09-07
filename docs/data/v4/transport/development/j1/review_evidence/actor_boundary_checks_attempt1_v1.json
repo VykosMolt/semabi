@@ -1,0 +1,719 @@
+{
+  "checks": [
+    {
+      "expected": "accept",
+      "name": "constructor_receipt_collision",
+      "result": {
+        "browser_closed": true,
+        "cleanup_errors": [],
+        "initialization_error": "FileExistsError: [Errno 17] File exists: '/tmp/j1ab_zmn065l3/construct1/forecast_receipts.jsonl'"
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "constructor_reconciliation_collision",
+      "result": {
+        "browser_closed": true,
+        "cleanup_errors": [],
+        "initialization_error": "FileExistsError: [Errno 17] File exists: '/tmp/j1ab_zmn065l3/construct2/forecast_reconciliation.jsonl'"
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "constructor_close_error_preserves_original",
+      "result": {
+        "browser_closed": true,
+        "cleanup_errors": [
+          "OSError: invented browser close failure"
+        ],
+        "initialization_error": "FileExistsError: [Errno 17] File exists: '/tmp/j1ab_zmn065l3/construct3/forecast_reconciliation.jsonl'"
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "close_failure_restores_all",
+      "result": {
+        "cleanup_errors": [
+          "OSError: invented stream close failure"
+        ],
+        "events": [
+          "first",
+          "second"
+        ],
+        "original_class_restored": true
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "loader_close_failure_restores_all",
+      "result": {
+        "cleanup_errors": [
+          "OSError: invented stream close failure"
+        ],
+        "events": [
+          "first",
+          "second"
+        ],
+        "original_class_restored": true
+      },
+      "status": "PASS"
+    },
+    {
+      "detail": "Repeated instrumentation left wrapper installed",
+      "exception": "AssertionError",
+      "expected": "accept",
+      "name": "repeated_instrumentation_restores_original",
+      "status": "FAIL"
+    },
+    {
+      "detail": "Coherent Step/decision corruption accepted as MATCHED",
+      "exception": "AssertionError",
+      "expected": "accept",
+      "name": "coherent_step_raw_before",
+      "status": "FAIL"
+    },
+    {
+      "detail": "Coherent Step/decision corruption accepted as MATCHED",
+      "exception": "AssertionError",
+      "expected": "accept",
+      "name": "coherent_step_raw_after",
+      "status": "FAIL"
+    },
+    {
+      "expected": "accept",
+      "name": "manifest_valid",
+      "result": {
+        "collector_freeze": {
+          "path": "docs/data/v4/transport/development/j1/invented_collection.json",
+          "sha256": "3bd628f8149807394256504e4a8c0e3021c3bb117bce770b194886bba2ba0121"
+        },
+        "manifest_sha256": "07264fbdf16154050f92ad7326fa1455fd573b2a5c9f8e2c148a06d36d271ab8",
+        "predictor_freeze": {
+          "path": "docs/data/v4/transport/development/j1/invented_predictor.json",
+          "sha256": "795ad0eb92220e2726d80f04c0ccf72c717e14f83519cf9d3dddb7d5c84b4064"
+        },
+        "source_head": "invented-head",
+        "verification_files": {
+          "docs/data/v4/transport/development/j1/act.py": "1667b413165bdbf782fc1f4d964d86d43831a19726d5a6581a6b8fc2730114ae",
+          "docs/data/v4/transport/development/j1/collect.py": "53d1bcb26ef3069a23404cd3872713b840ced39215e34d8022f9c2c94fd0492d",
+          "docs/data/v4/transport/development/j1/live_io.py": "2cf44787526076337b53d8a67ef12796c7460d2dcb64cfbbbec7093c946a5327",
+          "scripts/transport_collect.py": "022f80109a55b0ff86c06fa72ca3654a3b15ab3a66c187cace15b00b828fcc14",
+          "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+          "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+          "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "detail": "Actor source inventory differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "manifest_missing_inventory",
+      "status": "PASS"
+    },
+    {
+      "detail": "Actor source inventory differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "manifest_extra_inventory",
+      "status": "PASS"
+    },
+    {
+      "detail": "Actor source changed: scripts/transport_collect.py",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "manifest_wrong_source_hash",
+      "status": "PASS"
+    },
+    {
+      "detail": "Actor source HEAD changed",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "manifest_wrong_head",
+      "status": "PASS"
+    },
+    {
+      "detail": "Expected repository-relative frozen path",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "manifest_absolute_reference",
+      "status": "PASS"
+    },
+    {
+      "detail": "Frozen path is noncanonical",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "manifest_traversal_reference",
+      "status": "PASS"
+    },
+    {
+      "detail": "Expected a public J1 instrument manifest",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "manifest_foreign_reference",
+      "status": "PASS"
+    },
+    {
+      "detail": "Expected a public J1 instrument manifest",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "manifest_evaluator_reference",
+      "status": "PASS"
+    },
+    {
+      "detail": "Frozen path must name an actual file",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "manifest_symlink_source",
+      "status": "PASS"
+    },
+    {
+      "detail": "Frozen path must name an actual file",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "manifest_symlink_reference",
+      "status": "PASS"
+    },
+    {
+      "detail": "Referenced manifest changed",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "manifest_wrong_reference_hash",
+      "status": "PASS"
+    },
+    {
+      "detail": "Actor and collector freeze routing differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "manifest_collector_routing",
+      "status": "PASS"
+    },
+    {
+      "detail": "Collector runtime inventory is absent",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "manifest_empty_runtime",
+      "status": "PASS"
+    },
+    {
+      "detail": "[Errno 2] No such file or directory: '/tmp/j1ab_zmn065l3/m_missing_runtime/semabi/compiler/missing.py'",
+      "exception": "FileNotFoundError",
+      "expected": "reject",
+      "name": "manifest_missing_runtime",
+      "status": "PASS"
+    },
+    {
+      "detail": "Predictor phase belongs to another source",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "manifest_predictor_wrong_head",
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "ready_valid",
+      "result": {
+        "ready_bound": true
+      },
+      "status": "PASS"
+    },
+    {
+      "detail": "Predictor is not ready",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "ready_pid_bool",
+      "status": "PASS"
+    },
+    {
+      "detail": "Predictor is not ready",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "ready_pid_zero",
+      "status": "PASS"
+    },
+    {
+      "detail": "Predictor is not ready",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "ready_wrong_status",
+      "status": "PASS"
+    },
+    {
+      "detail": "Predictor ledger routing differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "ready_wrong_ledger",
+      "status": "PASS"
+    },
+    {
+      "detail": "Predictor ledger routing differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "ready_symlink_ledger",
+      "status": "PASS"
+    },
+    {
+      "detail": "[Errno 2] No such file or directory: '/tmp/j1ab_zmn065l3/r6/owned.sock'",
+      "exception": "FileNotFoundError",
+      "expected": "reject",
+      "name": "ready_missing_socket",
+      "status": "PASS"
+    },
+    {
+      "detail": "Owned predictor socket is absent",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "ready_regular_socket",
+      "status": "PASS"
+    },
+    {
+      "detail": "Predictor source commitment differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "ready_wrong_head",
+      "status": "PASS"
+    },
+    {
+      "detail": "Predictor source commitment differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "ready_wrong_freeze",
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "actual_actor_scoped_native_main_failed_script_retained",
+      "result": {
+        "actor_status": "PASS",
+        "browser_closed": true,
+        "collector_status": "PASS",
+        "hooks_restored": true,
+        "native_run": {
+          "charged_attempts": 4,
+          "complete": false,
+          "failed_attempts": 1,
+          "paired_steps_recorded": 3,
+          "status": "FINISHED"
+        },
+        "raw_decisions": [
+          {
+            "action": {
+              "kind": "reset",
+              "text": "1701"
+            },
+            "after": "d4def70cb90faf8b",
+            "before": null,
+            "case": "invented-evaluator-case",
+            "charged_attempt": 1,
+            "episode": 1,
+            "error": null,
+            "forecast_receipt": {
+              "acknowledgement": {
+                "instrument_status": "COMPLETE",
+                "length": 604,
+                "offset": 0,
+                "receipt_index": 1,
+                "record_sha256": "4afb284f1fd2929891cffc583644578b62df7360bc83f12999dcf6dd7350397f",
+                "request_id": "fa27dad1-a956-494f-b91d-405e21c85f2e",
+                "schema": "semabi.j1.live_ack.v1"
+              },
+              "charged_attempt": 1,
+              "ledger_path": "/tmp/j1ab_zmn065l3/integration/resident/forecasts.jsonl",
+              "request_id": "fa27dad1-a956-494f-b91d-405e21c85f2e",
+              "verified_utc": "2026-09-07T21:50:14.343642+00:00"
+            },
+            "ok": true,
+            "pre_state_unobserved": true,
+            "reason": "script_setup_reset",
+            "reset_url": "http://127.0.0.1/invented-reset",
+            "step": null
+          },
+          {
+            "action": {
+              "kind": "reload"
+            },
+            "after": "d4def70cb90faf8b",
+            "before": "d4def70cb90faf8b",
+            "case": "invented-evaluator-case",
+            "charged_attempt": 2,
+            "episode": 1,
+            "error": null,
+            "forecast_receipt": {
+              "acknowledgement": {
+                "instrument_status": "COMPLETE",
+                "length": 969,
+                "offset": 604,
+                "receipt_index": 2,
+                "record_sha256": "db9b9cc7c8bff981d74853f9654f2ee5a90f0b037b7b1e9a32d0eb39f97b867f",
+                "request_id": "d37842be-b1b9-47ba-93c7-bf0f47c07e73",
+                "schema": "semabi.j1.live_ack.v1"
+              },
+              "charged_attempt": 2,
+              "ledger_path": "/tmp/j1ab_zmn065l3/integration/resident/forecasts.jsonl",
+              "request_id": "d37842be-b1b9-47ba-93c7-bf0f47c07e73",
+              "verified_utc": "2026-09-07T21:50:14.343991+00:00"
+            },
+            "ok": true,
+            "reason": "observed_session_boundary",
+            "step": 0
+          },
+          {
+            "action": {
+              "kind": "click",
+              "target": 1,
+              "target_desc": {
+                "name": "Apply",
+                "placeholder": null,
+                "role": "button"
+              }
+            },
+            "after": "d4def70cb90faf8b",
+            "before": "d4def70cb90faf8b",
+            "case": "invented-evaluator-case",
+            "charged_attempt": 3,
+            "episode": 1,
+            "error": null,
+            "forecast_receipt": {
+              "acknowledgement": {
+                "instrument_status": "COMPLETE",
+                "length": 1012,
+                "offset": 1573,
+                "receipt_index": 3,
+                "record_sha256": "bc17a9dc23faf35da0e4013ddc7b504acea120d07c7d8ea361ed0c142017b9f8",
+                "request_id": "68bf1610-e8c3-4ac8-8993-957498d55e2b",
+                "schema": "semabi.j1.live_ack.v1"
+              },
+              "charged_attempt": 3,
+              "ledger_path": "/tmp/j1ab_zmn065l3/integration/resident/forecasts.jsonl",
+              "request_id": "68bf1610-e8c3-4ac8-8993-957498d55e2b",
+              "verified_utc": "2026-09-07T21:50:14.344333+00:00"
+            },
+            "ok": true,
+            "reason": "script",
+            "requested": {
+              "exact": true,
+              "kind": "click",
+              "name": "Apply",
+              "role": "button",
+              "scope": {
+                "exact": true,
+                "name": "Panel",
+                "role": "group"
+              },
+              "scope_resolution": {
+                "group_node": 0,
+                "status": "resolved",
+                "target_node": 1
+              }
+            },
+            "script_index": 1,
+            "step": 1,
+            "task_family": "invented-evaluator-family",
+            "task_target": true
+          },
+          {
+            "action": {
+              "kind": "click",
+              "target_desc": {
+                "name": "Missing",
+                "role": "button"
+              }
+            },
+            "after": "d4def70cb90faf8b",
+            "before": "d4def70cb90faf8b",
+            "case": "invented-evaluator-case",
+            "charged_attempt": 4,
+            "episode": 1,
+            "error": "Script target is unavailable or ambiguous",
+            "forecast_receipt": {
+              "acknowledgement": {
+                "instrument_status": "COMPLETE",
+                "length": 911,
+                "offset": 2585,
+                "receipt_index": 4,
+                "record_sha256": "f116ebf14b09c1f84f67cc687f8e30ce9a8cf0042bc76038a3b88a93dcac4346",
+                "request_id": "f65e4df8-3071-4c57-a4ea-0feba59a9df4",
+                "schema": "semabi.j1.live_ack.v1"
+              },
+              "charged_attempt": 4,
+              "ledger_path": "/tmp/j1ab_zmn065l3/integration/resident/forecasts.jsonl",
+              "request_id": "f65e4df8-3071-4c57-a4ea-0feba59a9df4",
+              "verified_utc": "2026-09-07T21:50:14.344648+00:00"
+            },
+            "ok": false,
+            "reason": "script",
+            "requested": {
+              "exact": true,
+              "kind": "click",
+              "name": "Missing",
+              "role": "button",
+              "scope": {
+                "exact": true,
+                "name": "Panel",
+                "role": "group"
+              },
+              "scope_resolution": {
+                "matches": 0,
+                "reason": "nonunique_descendant",
+                "status": "failed"
+              }
+            },
+            "script_index": 2,
+            "step": 2,
+            "task_family": "invented-evaluator-family",
+            "task_target": false
+          }
+        ],
+        "request_count": 4,
+        "requests": [
+          {
+            "observation": null,
+            "op": "forecast",
+            "primitive": {
+              "kind": "reset",
+              "target": null,
+              "target_desc": null,
+              "text": "1701"
+            },
+            "request_id": "fa27dad1-a956-494f-b91d-405e21c85f2e",
+            "schema": "semabi.j1.live_request.v1"
+          },
+          {
+            "observation": {
+              "nodes": [
+                {
+                  "bbox": [
+                    0,
+                    0,
+                    80,
+                    60
+                  ],
+                  "i": 0,
+                  "name": "Panel",
+                  "parent": -1,
+                  "role": "group"
+                },
+                {
+                  "bbox": [
+                    1,
+                    1,
+                    20,
+                    10
+                  ],
+                  "i": 1,
+                  "name": "Apply",
+                  "parent": 0,
+                  "role": "button"
+                },
+                {
+                  "bbox": [
+                    1,
+                    15,
+                    20,
+                    10
+                  ],
+                  "i": 2,
+                  "name": "Entry",
+                  "parent": 0,
+                  "role": "textbox",
+                  "value": ""
+                },
+                {
+                  "bbox": [
+                    1,
+                    30,
+                    20,
+                    10
+                  ],
+                  "i": 3,
+                  "name": "Choice",
+                  "options": [
+                    "A",
+                    "B"
+                  ],
+                  "parent": 0,
+                  "role": "combobox",
+                  "value": "A"
+                }
+              ],
+              "url": "http://127.0.0.1/invented"
+            },
+            "op": "forecast",
+            "primitive": {
+              "kind": "reload",
+              "target": null,
+              "target_desc": null,
+              "text": null
+            },
+            "request_id": "d37842be-b1b9-47ba-93c7-bf0f47c07e73",
+            "schema": "semabi.j1.live_request.v1"
+          },
+          {
+            "observation": {
+              "nodes": [
+                {
+                  "bbox": [
+                    0,
+                    0,
+                    80,
+                    60
+                  ],
+                  "i": 0,
+                  "name": "Panel",
+                  "parent": -1,
+                  "role": "group"
+                },
+                {
+                  "bbox": [
+                    1,
+                    1,
+                    20,
+                    10
+                  ],
+                  "i": 1,
+                  "name": "Apply",
+                  "parent": 0,
+                  "role": "button"
+                },
+                {
+                  "bbox": [
+                    1,
+                    15,
+                    20,
+                    10
+                  ],
+                  "i": 2,
+                  "name": "Entry",
+                  "parent": 0,
+                  "role": "textbox",
+                  "value": ""
+                },
+                {
+                  "bbox": [
+                    1,
+                    30,
+                    20,
+                    10
+                  ],
+                  "i": 3,
+                  "name": "Choice",
+                  "options": [
+                    "A",
+                    "B"
+                  ],
+                  "parent": 0,
+                  "role": "combobox",
+                  "value": "A"
+                }
+              ],
+              "url": "http://127.0.0.1/invented"
+            },
+            "op": "forecast",
+            "primitive": {
+              "kind": "click",
+              "target": 1,
+              "target_desc": {
+                "name": "Apply",
+                "placeholder": null,
+                "role": "button"
+              },
+              "text": null
+            },
+            "request_id": "68bf1610-e8c3-4ac8-8993-957498d55e2b",
+            "schema": "semabi.j1.live_request.v1"
+          },
+          {
+            "observation": {
+              "nodes": [
+                {
+                  "bbox": [
+                    0,
+                    0,
+                    80,
+                    60
+                  ],
+                  "i": 0,
+                  "name": "Panel",
+                  "parent": -1,
+                  "role": "group"
+                },
+                {
+                  "bbox": [
+                    1,
+                    1,
+                    20,
+                    10
+                  ],
+                  "i": 1,
+                  "name": "Apply",
+                  "parent": 0,
+                  "role": "button"
+                },
+                {
+                  "bbox": [
+                    1,
+                    15,
+                    20,
+                    10
+                  ],
+                  "i": 2,
+                  "name": "Entry",
+                  "parent": 0,
+                  "role": "textbox",
+                  "value": ""
+                },
+                {
+                  "bbox": [
+                    1,
+                    30,
+                    20,
+                    10
+                  ],
+                  "i": 3,
+                  "name": "Choice",
+                  "options": [
+                    "A",
+                    "B"
+                  ],
+                  "parent": 0,
+                  "role": "combobox",
+                  "value": "A"
+                }
+              ],
+              "url": "http://127.0.0.1/invented"
+            },
+            "op": "forecast",
+            "primitive": null,
+            "request_id": "f65e4df8-3071-4c57-a4ea-0feba59a9df4",
+            "schema": "semabi.j1.live_request.v1"
+          }
+        ]
+      },
+      "status": "PASS"
+    }
+  ],
+  "counts": {
+    "FAIL": 3,
+    "PASS": 32
+  },
+  "schema": "semabi.j1.actor_boundary_independent_checks.v1",
+  "scope": "Invented data only. Actual actor/scoped main and exact retained function AST; fake Browser/EvidenceLog, copied public source routing, real ledger/receipt writes, bound local Unix socket and in-process invented predictor. No native import, fit, real browser, real fixture or sealed payload.",
+  "sources": {
+    "docs/data/v4/transport/development/j1/act.py": "1667b413165bdbf782fc1f4d964d86d43831a19726d5a6581a6b8fc2730114ae",
+    "docs/data/v4/transport/development/j1/collect.py": "53d1bcb26ef3069a23404cd3872713b840ced39215e34d8022f9c2c94fd0492d",
+    "docs/data/v4/transport/development/j1/live_contract_v1.md": "f9642c36b3581323eaa8206d5117dd7831c2d57cf6142b39877fd0e2fbc17d90",
+    "docs/data/v4/transport/development/j1/live_io.py": "2cf44787526076337b53d8a67ef12796c7460d2dcb64cfbbbec7093c946a5327",
+    "docs/data/v4/transport/development/j1/review_evidence/actor_boundary_checks_v1.py": "cdbaf36f6c605c8f529586a1e2ed5a562898af217a020af1e78930b3bfa2e925",
+    "docs/data/v4/transport/development/j1/review_evidence/actor_core_checks_v1.py": "f14ba9073873c99ff24b889e89805fda0b862cb87e11124e0047cf71c0330006",
+    "scripts/transport_collect.py": "022f80109a55b0ff86c06fa72ca3654a3b15ab3a66c187cace15b00b828fcc14",
+    "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+  },
+  "status": "FAIL"
+}

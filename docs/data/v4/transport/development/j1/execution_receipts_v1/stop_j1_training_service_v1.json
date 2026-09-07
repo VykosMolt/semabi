@@ -1,0 +1,16 @@
+{
+  "collector_completion_receipt": {
+    "path": "docs/data/v4/transport/development/j1/execution_receipts_v1/completed_j1_training_collect_v1.json",
+    "sha256": "39d0cc72699783a9a92f4ec5fc6b770f73a63caf4a889e31afa5f249eab4b65b"
+  },
+  "job": "j1_training_service_v1",
+  "operation": "Send Ctrl-C to only the recorded owned runner PTY; unchanged wrapper terminates and reaps its child group.",
+  "owned_child_pid": 893910,
+  "owned_process_group": 893910,
+  "owned_runner_pid": 893908,
+  "owner": "/root/reserved_audit",
+  "reason": "Fixed training collection finished and collector tool session reaped; service is not retained for evaluation.",
+  "recorded_utc": "2026-09-07T22:16:58.644078+00:00",
+  "schema": "semabi.j1.owned_stop_intent.v1",
+  "session_id": 7636
+}

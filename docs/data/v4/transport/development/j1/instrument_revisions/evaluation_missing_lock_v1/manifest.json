@@ -1,0 +1,10 @@
+{
+  "correction": "Remove the nonexistent uv.lock from the evaluator instrument set; retain real pyproject.toml and every native/instrument source. No learner, scoring or custody behavior changes.",
+  "finding": "Evaluation INSTRUMENTS mistakenly required uv.lock, which this repository does not contain. Invented caller checks supplied declared files and therefore did not establish actual input existence. Root admission assembly rejected before any output.",
+  "original_source_sha256": "eaeea4c443d8e34c8448f61bcf6652a1ceb039f0a2c51a767b39bbdb8a983b3a",
+  "prior_passing_review": "docs/data/v4/transport/development/j1/review_evidence/evaluation_preservation_v1/attempt2/bundle_manifest.json",
+  "prior_passing_review_sha256": "6cfa33c91151270ff409617e1e4db0c0e08cec1326bcf6d1ab4f6a7ee944f6b0",
+  "schema": "semabi.j1.instrument_input_inventory_correction.v1",
+  "source_snapshot": "docs/data/v4/transport/development/j1/instrument_revisions/evaluation_missing_lock_v1/evaluate.py.txt",
+  "status": "PREPARATION_BLOCKED_BEFORE_ANY_MANIFEST_OR_NATIVE_EXECUTION"
+}

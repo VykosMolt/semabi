@@ -1,8 +1,8 @@
 # Fresh-interface campaign execution record
 
-## Active checkpoint (2026-09-07 21:58 UTC)
+## Active checkpoint (2026-09-07 23:19 UTC)
 
-T1, G1 and G2 are preserved and locally committed. Main `38f1f08` contains
+T1, G1 and G2 are preserved and locally committed. G2 checkpoint `38f1f08` contains
 G2 and its reviewed evidence: 577 passing tests, 3 skips, 1 expected failure,
 and exact six-component agreement with G1 across all five dedicated corpora,
 including retained residual errors. G2's manifest binds 135 files and nine jobs,
@@ -57,9 +57,22 @@ script inventories and relevant committed configurations. Adoption record SHA-25
 `4b0f9b9809cb20a2b71de0c171400ef324d6b7de0fd6d1c8b5370b533d30ddf4`.
 No unchanged full/corpus tests were repeated. R1 retains its G2 source association.
 
-J1's independently authored generated bridge fixture has 24 training, 24 held-out
-and 24 separate invariance targets. Its scoped collector passed source review and
-236 invented assertions; real browser accounting remains unmeasured. The failed
+The pre-J1 main checkpoint is `5925905`, including B1 adoption verification and
+the accepted R1 analysis. J1's independently authored generated bridge fixture has 24 training,
+24 held-out and 24 separate invariance targets. Its scoped collector passed
+source review and 236 invented assertions. The fixed training collection then
+completed 313 charged attempts, 312 paired Steps, one unpaired reset, 24 targets
+and zero failures. It made 625 Browser observations and retained 45 distinct
+native observation signatures; 96 clicks, 192 selects, 24 resets and one reload
+exhaust the allocation. Both training jobs are reaped, and port 8771 is released.
+Root independently rehashed 211 source/input/raw/job/receipt files and preserved
+`development/j1/training_preservation_v1.json`, SHA-256
+`06cf6e5ed9031de829639dc5df04df613abbfc008435c3e08dd0bee680db0e29`.
+The collection freeze was written and checked before any training action,
+SHA-256 `816c4da2922aab7f7948328fa2864032bac2f26a7f4ae8d8954215a52a45e2ed`.
+Root has still seen only J1 public envelope, metadata and opaque hashes.
+
+The failed
 first T1 trace-validation run is retained with its incomplete projections and
 original source. After the exact optional parser-cache correction, the second
 native validation passed all eight criteria: COMPLETE baseline/profiled model
@@ -70,11 +83,44 @@ reaped; comparison SHA-256
 The live request/ledger helper passes 97 independent checks after a retained
 receipt-index type defect was corrected. The actor passes 62 independent controls
 after preserving and correcting eleven reconciliation/restoration failures.
-The resident predictor/model monitor candidate passes 29 authored controls;
-its prior failed controls are retained and source review is pending. The first
-J1 protocol and frame/argument scorer are undergoing independent review.
-Their native disclosed-data pilot, scoring/preservation review and actual J1
-freeze/collection remain ahead. The existing supplied-formula control does not
+The resident predictor/model monitor candidate passes 41 authored controls,
+including raw Step and observation-signature gates; root has reviewed its final
+source and retained corrections. The first J1 protocol and frame/argument scorer
+passed 80 independent controls without changing their candidates. Root read both
+actor and scorer reviews and rehashed their 32 direct evidence bindings.
+
+The disclosed T1 native pilot passed all 19 criteria on the 32-Step training
+history and predetermined training/unseen/repeat clicks. One native Fit served
+seven requests; all three forecasts reached the complete prediction path. The
+unseen page added one graph observation and 20 hypothesis-memo entries. All five
+checkpoints retained the same learned content and object identities. Root
+independently checked the exact receipts, rehashed 211 evidence bindings,
+recomputed every checkpoint's learned view, compared the startup projection with
+the fit trace, and verified job reaping. Pilot comparison SHA-256
+`ecda58be0b767bb32c3087f7860ce91e49836cc276671e4327c5f82b33d7c76d`;
+root review SHA-256
+`3641a13c5efe1f97027bc59f90e882714f77b24b1198524239adaaff3b1528f0`.
+The custody/control core passes 150 independent checks after preserving and
+correcting six checkpoint false accepts. Root read its review and rehashed
+24 direct bindings. The evaluator/preservation review ran 161 invented checks;
+154 passed and seven failures exposed two mechanisms: malformed process metadata
+prevented partial preservation, and result output could change a sealed inventory.
+Root preserved and rehashed the original 21-file review bundle before correcting
+both mechanisms. Unreadable metadata now retains raw bytes and explicit unknown
+liveness; a positively identified live owned PID still prevents sealing. Both
+CLIs reject output destinations overlapping their evidence or input identities
+before any write or native import. All 161 unchanged checks and 149 focused
+controls passed. Root's concrete input assembly then caught a mistaken declaration
+of nonexistent `uv.lock`; no admission, phase freeze or native job had been created.
+That declaration and diagnosis are preserved. Removing only that nonexistent
+entry leaves 156 native files and 17 real instruments; the same 310 checks pass
+on the corrected declaration. The phase-preparation source passed independent review; its only
+correction clarifies that a late failure can leave partial exclusive manifests.
+The prepared J1 evaluation plan has eight jobs, one
+resident Fit, 626 forecasts across two profiles, three ordered control requests
+and four model checkpoints including startup. Final phase freezes and execution
+wait for the remaining instrument acceptance; no J1 fit or evaluation has
+started. The existing supplied-formula control does not
 establish that the normal learner learned JOIN.
 
 At 20:01 UTC the user lifted the temporary one-core restriction, then explicitly
@@ -85,10 +131,13 @@ The last G2 fit retained its original single-core/low-priority settings through
 completion. Versioned resource override: `development/g2/resource_override_v3.json`.
 No GPU, paid compute, external deployment or push is authorized.
 
-Current ownership: root owns coordination, source adoption, actor and J1 scoring;
-`reserved_audit` owns J1 training-plan preparation after sealing R1 analysis;
-`baseline_verification` owns scorer/protocol review after actor verification;
-`acquisition_audit/binding_contract_review` owns predictor/monitor implementation.
+Current ownership: root owns coordination, phase freezes and J1 scoring/custody;
+`reserved_audit` owns evaluation CLI/preservation review after sealing training
+and preparing the evaluation schedule; `baseline_verification` now prepares
+separate evaluator diagnostics using the frozen fixture specification, with no
+actual J1 learner results and no semantic disclosure to root;
+`acquisition_audit/binding_contract_review` reviews phase-freeze preparation after
+completing the disclosed native pilot.
 No heavy native job or fixture service remains live at this checkpoint.
 A report or commit is a checkpoint; continue through reviewed J1
 execution and the next evidence-justified development milestone.

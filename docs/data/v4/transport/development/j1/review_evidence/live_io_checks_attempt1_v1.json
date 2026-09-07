@@ -1,0 +1,804 @@
+{
+  "checks": [
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "public_descriptor_matches_browser",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "request_copy_does_not_mutate_inputs",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "kind_click",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "kind_noop",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "kind_press",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "kind_reload",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "kind_reset",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "kind_select",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "kind_type",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "attempted_text_None",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "attempted_text_''",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "attempted_text_'visible value'",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "attempted_text_True",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "attempted_text_False",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "attempted_text_0",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "attempted_text_7",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "attempted_text_-2",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "attempted_text_1.25",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "unresolved_target",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "initial_unobserved_reset",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "null_prestate_null_primitive",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "checkpoint",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "shutdown",
+      "status": "PASS"
+    },
+    {
+      "detail": "Request fields differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "forbidden_case",
+      "status": "PASS"
+    },
+    {
+      "detail": "Request fields differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "forbidden_profile",
+      "status": "PASS"
+    },
+    {
+      "detail": "Observation schema differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "forbidden_observation_key",
+      "status": "PASS"
+    },
+    {
+      "detail": "Node schema differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "forbidden_node_key",
+      "status": "PASS"
+    },
+    {
+      "detail": "Primitive schema differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "forbidden_primitive_key",
+      "status": "PASS"
+    },
+    {
+      "detail": "Request operation differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "unknown_operation",
+      "status": "PASS"
+    },
+    {
+      "detail": "Request ID must be opaque UUID4",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "uuid_not_opaque",
+      "status": "PASS"
+    },
+    {
+      "detail": "Request ID must be opaque UUID4",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "uuid_wrong_version",
+      "status": "PASS"
+    },
+    {
+      "detail": "Primitive target differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "negative_target",
+      "status": "PASS"
+    },
+    {
+      "detail": "Primitive target differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "bool_target",
+      "status": "PASS"
+    },
+    {
+      "detail": "Primitive target differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "float_target",
+      "status": "PASS"
+    },
+    {
+      "detail": "Primitive target differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "target_out_of_range",
+      "status": "PASS"
+    },
+    {
+      "detail": "Node indices differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "node_index_mismatch",
+      "status": "PASS"
+    },
+    {
+      "detail": "Node indices differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "bool_node_index",
+      "status": "PASS"
+    },
+    {
+      "detail": "Node indices differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "invalid_parent",
+      "status": "PASS"
+    },
+    {
+      "detail": "Node indices differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "negative_parent",
+      "status": "PASS"
+    },
+    {
+      "detail": "Node indices differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "bool_parent",
+      "status": "PASS"
+    },
+    {
+      "detail": "Cyclic public ancestry",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "self_parent_cycle",
+      "status": "PASS"
+    },
+    {
+      "detail": "Cyclic public ancestry",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "two_node_cycle",
+      "status": "PASS"
+    },
+    {
+      "detail": "Node bounds differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "bool_bbox",
+      "status": "PASS"
+    },
+    {
+      "detail": "Node bounds differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "short_bbox",
+      "status": "PASS"
+    },
+    {
+      "detail": "Node bounds differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "nonfinite_bbox",
+      "status": "PASS"
+    },
+    {
+      "detail": "Node options differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "nested_options",
+      "status": "PASS"
+    },
+    {
+      "detail": "Node state value differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "nonboolean_checked",
+      "status": "PASS"
+    },
+    {
+      "detail": "Node labels differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "nontext_node",
+      "status": "PASS"
+    },
+    {
+      "detail": "Primitive descriptor must match the public target",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "descriptor_disagrees",
+      "status": "PASS"
+    },
+    {
+      "detail": "Primitive descriptor must match the public target",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "descriptor_extra_key",
+      "status": "PASS"
+    },
+    {
+      "detail": "Primitive text must be a public JSON scalar",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "nonscalar_text",
+      "status": "PASS"
+    },
+    {
+      "detail": "Primitive text must be a public JSON scalar",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "nonfinite_text",
+      "status": "PASS"
+    },
+    {
+      "detail": "Primitive target differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "target_without_observation",
+      "status": "PASS"
+    },
+    {
+      "detail": "Unresolved descriptor is forbidden",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "unresolved_descriptor_not_forwarded",
+      "status": "PASS"
+    },
+    {
+      "detail": "Conflicting supplied public descriptor",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "conflicting_descriptor_not_overwritten",
+      "status": "PASS"
+    },
+    {
+      "detail": "Targeted primitive must resolve or use the null primitive",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "targeted_null_index_requires_null_primitive",
+      "status": "PASS"
+    },
+    {
+      "detail": "Duplicate JSON key",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "duplicate_top_key",
+      "status": "PASS"
+    },
+    {
+      "detail": "Duplicate JSON key",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "duplicate_nested_key",
+      "status": "PASS"
+    },
+    {
+      "detail": "Nonfinite JSON number",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "nan_literal",
+      "status": "PASS"
+    },
+    {
+      "detail": "Nonfinite JSON number",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "infinity_literal",
+      "status": "PASS"
+    },
+    {
+      "detail": "Extra data: line 1 column 3 (char 2)",
+      "exception": "JSONDecodeError",
+      "expected": "reject",
+      "name": "trailing_json",
+      "status": "PASS"
+    },
+    {
+      "detail": "Node bounds differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "overflow_number_rejected_by_schema",
+      "status": "PASS"
+    },
+    {
+      "detail": "Request fields differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "control_message_cannot_carry_semantics",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "ledger_flush_fsync_before_ack",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "receipt_roundtrip",
+      "status": "PASS"
+    },
+    {
+      "detail": "Duplicate request ID",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "duplicate_append_rejected_without_write",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "duplicate_did_not_append",
+      "status": "PASS"
+    },
+    {
+      "detail": "Duplicate request ID",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "caller_validate_next_rejects_duplicate_before_callback",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "duplicate_callback_count_zero",
+      "status": "PASS"
+    },
+    {
+      "detail": "Acknowledgement identity or position differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "ack_wrong_id",
+      "status": "PASS"
+    },
+    {
+      "detail": "Acknowledgement identity or position differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "ack_bool_index",
+      "status": "PASS"
+    },
+    {
+      "detail": "Acknowledgement identity or position differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "ack_zero_index",
+      "status": "PASS"
+    },
+    {
+      "detail": "Ledger request, index or canonical bytes differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "ack_wrong_index",
+      "status": "PASS"
+    },
+    {
+      "detail": "Durable ledger bytes differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "ack_wrong_offset",
+      "status": "PASS"
+    },
+    {
+      "detail": "Durable ledger bytes differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "ack_short_length",
+      "status": "PASS"
+    },
+    {
+      "detail": "Durable ledger bytes differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "ack_large_length",
+      "status": "PASS"
+    },
+    {
+      "detail": "Durable ledger bytes differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "ack_bad_hash",
+      "status": "PASS"
+    },
+    {
+      "detail": "Ledger instrument status differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "ack_bad_status",
+      "status": "PASS"
+    },
+    {
+      "detail": "Acknowledgement schema differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "ack_extra_key",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "provenance": {
+          "source": "5a82fc3f27d81ea1a9a7e59f0e8b3c59477a4a762d4372adb299a74935b261ab",
+          "training": "invented-only"
+        },
+        "receipt_index": true,
+        "recorded_utc": "2026-09-07T21:20:31.421914+00:00",
+        "request": {
+          "observation": {
+            "nodes": [
+              {
+                "bbox": [
+                  0,
+                  0,
+                  80,
+                  60
+                ],
+                "i": 0,
+                "name": "Panel",
+                "parent": -1,
+                "role": "group"
+              },
+              {
+                "bbox": [
+                  1,
+                  1,
+                  20,
+                  10
+                ],
+                "i": 1,
+                "name": "Apply",
+                "parent": 0,
+                "placeholder": null,
+                "role": "button"
+              }
+            ],
+            "url": "http://127.0.0.1/invented"
+          },
+          "op": "forecast",
+          "primitive": {
+            "kind": "click",
+            "target": 1,
+            "target_desc": {
+              "name": "Apply",
+              "placeholder": null,
+              "role": "button"
+            },
+            "text": null
+          },
+          "request_id": "f989e4e4-1049-4f68-9d95-cd5fd57ae3bb",
+          "schema": "semabi.j1.live_request.v1"
+        },
+        "response": {
+          "category": "INVENTED_FORECAST",
+          "instrument_status": "COMPLETE",
+          "value": [
+            "unused"
+          ]
+        },
+        "schema": "semabi.j1.live_record.v1"
+      },
+      "expected": "reject",
+      "name": "record_bool_index_must_reject",
+      "status": "FAIL"
+    },
+    {
+      "detail": {
+        "provenance": {
+          "source": "5a82fc3f27d81ea1a9a7e59f0e8b3c59477a4a762d4372adb299a74935b261ab",
+          "training": "invented-only"
+        },
+        "receipt_index": 1.0,
+        "recorded_utc": "2026-09-07T21:20:31.421914+00:00",
+        "request": {
+          "observation": {
+            "nodes": [
+              {
+                "bbox": [
+                  0,
+                  0,
+                  80,
+                  60
+                ],
+                "i": 0,
+                "name": "Panel",
+                "parent": -1,
+                "role": "group"
+              },
+              {
+                "bbox": [
+                  1,
+                  1,
+                  20,
+                  10
+                ],
+                "i": 1,
+                "name": "Apply",
+                "parent": 0,
+                "placeholder": null,
+                "role": "button"
+              }
+            ],
+            "url": "http://127.0.0.1/invented"
+          },
+          "op": "forecast",
+          "primitive": {
+            "kind": "click",
+            "target": 1,
+            "target_desc": {
+              "name": "Apply",
+              "placeholder": null,
+              "role": "button"
+            },
+            "text": null
+          },
+          "request_id": "f989e4e4-1049-4f68-9d95-cd5fd57ae3bb",
+          "schema": "semabi.j1.live_request.v1"
+        },
+        "response": {
+          "category": "INVENTED_FORECAST",
+          "instrument_status": "COMPLETE",
+          "value": [
+            "unused"
+          ]
+        },
+        "schema": "semabi.j1.live_record.v1"
+      },
+      "expected": "reject",
+      "name": "record_float_index_must_reject",
+      "status": "FAIL"
+    },
+    {
+      "detail": "Ledger request, index or canonical bytes differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "record_wrong_integer_index",
+      "status": "PASS"
+    },
+    {
+      "detail": "Ledger request, index or canonical bytes differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "partial_record",
+      "status": "PASS"
+    },
+    {
+      "detail": "Ledger request, index or canonical bytes differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "noncanonical_record",
+      "status": "PASS"
+    },
+    {
+      "detail": "Ledger request, index or canonical bytes differ",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "ack_cannot_authenticate_other_request",
+      "status": "PASS"
+    },
+    {
+      "detail": "Incomplete ledger write",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "partial_write_prevents_ack",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "partial_write_breaks_ledger",
+      "status": "PASS"
+    },
+    {
+      "detail": "Ledger failed previously",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "partial_write_prevents_next_callback_obligation",
+      "status": "PASS"
+    },
+    {
+      "detail": "invented flush failure",
+      "exception": "OSError",
+      "expected": "reject",
+      "name": "flush_prevents_ack",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "flush_breaks_ledger",
+      "status": "PASS"
+    },
+    {
+      "detail": "Ledger failed previously",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "flush_prevents_next_callback_obligation",
+      "status": "PASS"
+    },
+    {
+      "detail": "invented fsync failure",
+      "exception": "OSError",
+      "expected": "reject",
+      "name": "fsync_prevents_ack",
+      "status": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "accept",
+      "name": "fsync_breaks_ledger",
+      "status": "PASS"
+    },
+    {
+      "detail": "Ledger failed previously",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "fsync_prevents_next_callback_obligation",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "chronology": [
+          "validated_before_callback",
+          "durable_append_returned",
+          "ack_sent"
+        ],
+        "client_error": null,
+        "durable_records": 1
+      },
+      "expected": "accept",
+      "name": "actual_local_unix_ipc",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "chronology": [
+          "validated_before_callback",
+          "durable_append_returned"
+        ],
+        "client_error": "ProtocolError: Acknowledgement ended without a complete record",
+        "durable_records": 1
+      },
+      "expected": "accept",
+      "name": "lost_ack_preserves_opportunity_without_client_success",
+      "status": "PASS"
+    },
+    {
+      "detail": {
+        "attempted_text": true,
+        "charged_attempt": 1,
+        "error": "TypeError: invented browser requires text",
+        "ok": false
+      },
+      "expected": "accept",
+      "name": "unchanged_native_recorder_preserves_browser_scalar_rejection",
+      "status": "PASS"
+    }
+  ],
+  "counts": {
+    "FAIL": 2,
+    "PASS": 95
+  },
+  "schema": "semabi.j1.live_io_independent_checks.v1",
+  "scope": "Invented plain JSON, temporary local files, fake native Browser/Recorder AST and two owned local Unix socket exchanges only. No fit, browser, fixture or sealed payload.",
+  "source_sha256": "5a82fc3f27d81ea1a9a7e59f0e8b3c59477a4a762d4372adb299a74935b261ab",
+  "sources": {
+    "docs/data/v4/transport/development/j1/live_contract_v1.md": "f9642c36b3581323eaa8206d5117dd7831c2d57cf6142b39877fd0e2fbc17d90",
+    "docs/data/v4/transport/development/j1/live_io.py": "5a82fc3f27d81ea1a9a7e59f0e8b3c59477a4a762d4372adb299a74935b261ab",
+    "docs/data/v4/transport/development/j1/review_evidence/live_io_checks_v1.py": "8fe3274f62c0fe5d12273613f24636c2f4944794c1d6706fe84a5e2c31cb0916",
+    "scripts/transport_collect.py": "022f80109a55b0ff86c06fa72ca3654a3b15ab3a66c187cace15b00b828fcc14",
+    "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+  },
+  "status": "FAIL"
+}

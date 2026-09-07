@@ -1,0 +1,14 @@
+{
+  "schema": "semabi.j1.independent_check_tool_receipt.v1",
+  "owner": "/root/baseline_verification",
+  "completed_in_launch": true,
+  "tool_session_id": null,
+  "command": "taskset -c 8 .venv/bin/python -B docs/data/v4/transport/development/j1/review_evidence/actor_boundary_checks_v1.py --actor-sha 26a91ec96deb9c381dcc28c4e0277c6a349c0d940f7693e7bb9e6d3e55b267b7 --output docs/data/v4/transport/development/j1/review_evidence/actor_boundary_checks_attempt2_v1.json",
+  "result": {
+    "chunk_id": "4f57c0",
+    "wall_time_seconds": 0.000002087,
+    "exit_code": 0,
+    "original_token_count": 497,
+    "output": "{\"start\": {\"utc\": \"2026-09-07T21:54:39.557455+00:00\", \"pid\": 871831, \"cwd\": \"/home/moloch/semabi\", \"argv\": [\"/home/moloch/semabi/docs/data/v4/transport/development/j1/collect.py\", \"script\", \"--freeze\", \"/tmp/j1ab_nrz34xmy/integration/public_source_copy/docs/data/v4/transport/development/j1/invented_collection.json\", \"--out\", \"/tmp/j1ab_nrz34xmy/integration/run\", \"--script\", \"/tmp/j1ab_nrz34xmy/integration/invented_script.json\", \"--url\", \"http://127.0.0.1/invented\", \"--reset-url\", \"/invented-reset\"], \"git_head\": \"d72335b08cfe6171476842551036f528666e0c35\"}, \"freeze_sha256\": \"232068c685212474e008cc057287d29e0577a2bf360095e112a546b0ee864d95\", \"status\": \"FINISHED\", \"charged_attempts\": 4, \"failed_attempts\": 1, \"paired_steps_recorded\": 3, \"unpaired_attempts\": 1, \"primitive_counts\": {\"reset\": 1, \"reload\": 1, \"click\": 2}, \"snapshot_calls\": 4, \"bootstrap_goto\": 0, \"settle_timeouts\": 0, \"navigation_waits\": 0, \"script_sha256\": \"1856c0c027cf944f8b413b207703647eab3d80446f4a14641b1eed97d380bf53\", \"script_file\": \"/tmp/j1ab_nrz34xmy/integration/invented_script.json\", \"case_count\": 1, \"complete\": false, \"end\": {\"utc\": \"2026-09-07T21:54:39.559873+00:00\", \"pid\": 871831, \"cwd\": \"/home/moloch/semabi\", \"argv\": [\"/home/moloch/semabi/docs/data/v4/transport/development/j1/collect.py\", \"script\", \"--freeze\", \"/tmp/j1ab_nrz34xmy/integration/public_source_copy/docs/data/v4/transport/development/j1/invented_collection.json\", \"--out\", \"/tmp/j1ab_nrz34xmy/integration/run\", \"--script\", \"/tmp/j1ab_nrz34xmy/integration/invented_script.json\", \"--url\", \"http://127.0.0.1/invented\", \"--reset-url\", \"/invented-reset\"], \"git_head\": \"d72335b08cfe6171476842551036f528666e0c35\"}, \"raw_hashes\": {\"decisions.jsonl\": \"648df11902a636aa9cc5a8572b4d77fcbee3e350887a2b6b1f88a198a2380262\"}}\n{\"path\": \"docs/data/v4/transport/development/j1/review_evidence/actor_boundary_checks_attempt2_v1.json\", \"sha256\": \"02fc10d53100b3bce74dea34cc6d0931150ba1fa146fdd0ce63ea10a100b8582\", \"counts\": {\"PASS\": 35}, \"failed\": []}\n"
+  }
+}

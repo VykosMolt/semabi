@@ -1,0 +1,47 @@
+{
+  "schema": "semabi.transport.j1_trace_launch_receipts.v1",
+  "owner": "/root/acquisition_audit/binding_contract_review",
+  "plan_sha256": "7a96d966ef39f7844c46e81f5c1c2e24f28db6575617a06afd7f8efe5577a82a",
+  "launches": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "mode": "baseline",
+        "cpu": 13,
+        "command": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 taskset -c 13 .venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/development/j1/review_evidence/trace_native_dispatch_v1/jobs/baseline_v1 -- .venv/bin/python docs/data/v4/transport/development/j1/review_evidence/trace_native_validation_v1.py run --plan docs/data/v4/transport/development/j1/review_evidence/trace_native_dispatch_v1/plan.json --mode baseline",
+        "chunk_id": "0aabb9",
+        "wall_time_seconds": 1.001241435,
+        "session_id": 38284,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "mode": "profiled",
+        "cpu": 14,
+        "command": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 taskset -c 14 .venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/development/j1/review_evidence/trace_native_dispatch_v1/jobs/profiled_v1 -- .venv/bin/python docs/data/v4/transport/development/j1/review_evidence/trace_native_validation_v1.py run --plan docs/data/v4/transport/development/j1/review_evidence/trace_native_dispatch_v1/plan.json --mode profiled",
+        "chunk_id": "338671",
+        "wall_time_seconds": 1.000507017,
+        "session_id": 58518,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "mode": "exception",
+        "cpu": 15,
+        "command": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 taskset -c 15 .venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/development/j1/review_evidence/trace_native_dispatch_v1/jobs/exception_v1 -- .venv/bin/python docs/data/v4/transport/development/j1/review_evidence/trace_native_validation_v1.py run --plan docs/data/v4/transport/development/j1/review_evidence/trace_native_dispatch_v1/plan.json --mode exception",
+        "chunk_id": "2006f6",
+        "wall_time_seconds": 0.143271611,
+        "exit_code": 0,
+        "original_token_count": 34,
+        "output": "{\"status\": \"FINISHED\", \"returncode\": 0, \"child_pid\": 651133, \"child_terminated\": true, \"end_utc\": \"2026-09-07T20:34:08.704623+00:00\"}\n"
+      }
+    }
+  ],
+  "scope": "Initial launch receipts; the completed exception command was reaped immediately, and the two retained sessions are owned until final reaping."
+}

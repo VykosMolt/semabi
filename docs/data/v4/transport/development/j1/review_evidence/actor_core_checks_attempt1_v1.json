@@ -1,0 +1,1083 @@
+{
+  "checks": [
+    {
+      "expected": "accept",
+      "name": "complete_native_sequence",
+      "result": {
+        "charged_attempts": 7,
+        "events": [
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync",
+          "native_act",
+          "actor_reconciliation_fsync",
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync",
+          "native_act",
+          "actor_reconciliation_fsync",
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync",
+          "native_act",
+          "actor_reconciliation_fsync",
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync",
+          "native_act",
+          "actor_reconciliation_fsync",
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync",
+          "actor_reconciliation_fsync",
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync",
+          "native_act",
+          "actor_reconciliation_fsync",
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync",
+          "native_act",
+          "actor_reconciliation_fsync"
+        ],
+        "failures": 3,
+        "intents": [
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 449,
+              "offset": 0,
+              "receipt_index": 1,
+              "record_sha256": "3a8f92804d035ada610f96c03a7228d7a330f6ff7e9ec25b3be6824c2eac7c05",
+              "request_id": "a6ea8077-baec-47bd-81ba-f121c4726090",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 1,
+            "episode": 1,
+            "receipt_index": 1,
+            "request_id": "a6ea8077-baec-47bd-81ba-f121c4726090",
+            "requested_utc": "2026-09-07T21:42:04.811062+00:00",
+            "state": "MATCHED",
+            "step": null
+          },
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 817,
+              "offset": 449,
+              "receipt_index": 2,
+              "record_sha256": "70eff6294fbbbaf026d87812411fca211703a71c73ec199c0551a7a80ca898ad",
+              "request_id": "a7c47ce2-b5ba-4c64-9b9b-cf4b11a2539c",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 2,
+            "episode": 1,
+            "receipt_index": 2,
+            "request_id": "a7c47ce2-b5ba-4c64-9b9b-cf4b11a2539c",
+            "requested_utc": "2026-09-07T21:42:04.811495+00:00",
+            "state": "MATCHED",
+            "step": 0
+          },
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 860,
+              "offset": 1266,
+              "receipt_index": 3,
+              "record_sha256": "484b582a9f120530be06dc8d17d7b7bc9126fa779e0646f0b6eafb4941de57eb",
+              "request_id": "c05f29e6-f279-479c-abb8-93c9ab30a7d5",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 3,
+            "episode": 1,
+            "receipt_index": 3,
+            "request_id": "c05f29e6-f279-479c-abb8-93c9ab30a7d5",
+            "requested_utc": "2026-09-07T21:42:04.811881+00:00",
+            "state": "MATCHED",
+            "step": 1
+          },
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 863,
+              "offset": 2126,
+              "receipt_index": 4,
+              "record_sha256": "3e43faaafb8b2110eec83baf44bbb3f4cf5286c838518d880f83c35a4a080655",
+              "request_id": "97d34b1e-5277-446c-882e-c85f9dedaf90",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 4,
+            "episode": 1,
+            "receipt_index": 4,
+            "request_id": "97d34b1e-5277-446c-882e-c85f9dedaf90",
+            "requested_utc": "2026-09-07T21:42:04.812243+00:00",
+            "state": "MATCHED",
+            "step": 2
+          },
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 759,
+              "offset": 2989,
+              "receipt_index": 5,
+              "record_sha256": "3e9bfc7d382bfc540ceb6882e8d4300d61ed66d01f20ea5a9b854acf7cde0c9f",
+              "request_id": "9a19735a-47a6-485f-939a-0f7bd1ee80a0",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 5,
+            "episode": 1,
+            "receipt_index": 5,
+            "request_id": "9a19735a-47a6-485f-939a-0f7bd1ee80a0",
+            "requested_utc": "2026-09-07T21:42:04.812578+00:00",
+            "state": "MATCHED",
+            "step": 3
+          },
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 860,
+              "offset": 3748,
+              "receipt_index": 6,
+              "record_sha256": "530120f2e5341698fa3ebd4af6f21a7fee04de27128c6b31b520b82b393212bc",
+              "request_id": "b74bfdea-830a-4885-ac99-bdd05f8cfa17",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 6,
+            "episode": 1,
+            "receipt_index": 6,
+            "request_id": "b74bfdea-830a-4885-ac99-bdd05f8cfa17",
+            "requested_utc": "2026-09-07T21:42:04.812891+00:00",
+            "state": "MATCHED",
+            "step": 4
+          },
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 860,
+              "offset": 4608,
+              "receipt_index": 7,
+              "record_sha256": "248fb980401b1187df0d6294f0618876ece26870cc042791f3da789fe78b8018",
+              "request_id": "15d029f8-3c8a-4019-b8c6-1f8dfa4b3116",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 7,
+            "episode": 1,
+            "receipt_index": 7,
+            "request_id": "15d029f8-3c8a-4019-b8c6-1f8dfa4b3116",
+            "requested_utc": "2026-09-07T21:42:04.813236+00:00",
+            "state": "MATCHED",
+            "step": 5
+          }
+        ],
+        "paired_steps": 6
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "unpaired_reset",
+      "result": {
+        "charged_attempts": 1,
+        "events": [
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync",
+          "native_act",
+          "actor_reconciliation_fsync"
+        ],
+        "intents": [
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 449,
+              "offset": 0,
+              "receipt_index": 1,
+              "record_sha256": "2c35eb2829de7ed6f7a572116046ffb170359f6c8bdbd878f091395260a3c619",
+              "request_id": "d1c3a243-1c38-41fb-bdc0-4031d0f67335",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 1,
+            "episode": 1,
+            "receipt_index": 1,
+            "request_id": "d1c3a243-1c38-41fb-bdc0-4031d0f67335",
+            "requested_utc": "2026-09-07T21:42:04.822040+00:00",
+            "state": "MATCHED",
+            "step": null
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "before",
+      "name": "lost_ack_before_act",
+      "result": {
+        "charged_attempts": 0,
+        "detail": "invented lost acknowledgement",
+        "events": [
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return"
+        ],
+        "exception": "ProtocolError",
+        "intents": [
+          {
+            "charged_attempt": 1,
+            "request_id": "9669fa28-577b-490e-bc23-d3a4a18c66e8",
+            "requested_utc": "2026-09-07T21:42:04.830285+00:00",
+            "state": "REQUESTED"
+          }
+        ],
+        "native_calls": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "before",
+      "name": "incomplete_before_act",
+      "result": {
+        "charged_attempts": 0,
+        "detail": "Forecast instrument is incomplete",
+        "events": [
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return"
+        ],
+        "exception": "ProtocolError",
+        "intents": [
+          {
+            "acknowledgement": {
+              "instrument_status": "INCOMPLETE",
+              "length": 862,
+              "offset": 0,
+              "receipt_index": 1,
+              "record_sha256": "17623242eaf4fc7c8ea83c56fc30c1555be22c6f78a3101879ec365e5a4a82ac",
+              "request_id": "5c145df1-6abb-40c2-a21c-ab599b3182a6",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 1,
+            "request_id": "5c145df1-6abb-40c2-a21c-ab599b3182a6",
+            "requested_utc": "2026-09-07T21:42:04.837475+00:00",
+            "state": "RECEIVED"
+          }
+        ],
+        "native_calls": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "before",
+      "name": "wrong_fit_before_act",
+      "result": {
+        "charged_attempts": 0,
+        "detail": "Forecast belongs to another resident fit",
+        "events": [
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return"
+        ],
+        "exception": "ProtocolError",
+        "intents": [
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 820,
+              "offset": 0,
+              "receipt_index": 1,
+              "record_sha256": "6134e8dbdcbe6342aa71b717d9857fa9e8512b898452b07e3b2452c6a38af456",
+              "request_id": "5a605752-6516-4e7b-ab49-345fec28e08e",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 1,
+            "request_id": "5a605752-6516-4e7b-ab49-345fec28e08e",
+            "requested_utc": "2026-09-07T21:42:04.844684+00:00",
+            "state": "RECEIVED"
+          }
+        ],
+        "native_calls": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "before",
+      "name": "predictor_fsync_before_act",
+      "result": {
+        "charged_attempts": 0,
+        "detail": "invented predictor_fsync failure",
+        "events": [
+          "validated_request",
+          "predictor_fsync"
+        ],
+        "exception": "OSError",
+        "intents": [
+          {
+            "charged_attempt": 1,
+            "request_id": "dac89ca9-c6d5-461a-88cb-d0f4cd19417f",
+            "requested_utc": "2026-09-07T21:42:04.851851+00:00",
+            "state": "REQUESTED"
+          }
+        ],
+        "native_calls": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "before",
+      "name": "actor_fsync_before_act",
+      "result": {
+        "charged_attempts": 0,
+        "detail": "invented actor_receipt_fsync failure",
+        "events": [
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync"
+        ],
+        "exception": "OSError",
+        "intents": [
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 860,
+              "offset": 0,
+              "receipt_index": 1,
+              "record_sha256": "471e93a3be3a665c1b236482d45acb7799925453cb6227c8e7c2499a5d92aa14",
+              "request_id": "7e65468f-6184-49c7-97e6-74a617a16578",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 1,
+            "request_id": "7e65468f-6184-49c7-97e6-74a617a16578",
+            "requested_utc": "2026-09-07T21:42:04.858959+00:00",
+            "state": "RECEIVED"
+          }
+        ],
+        "native_calls": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "after",
+      "name": "reconciliation_fsync_orphan",
+      "result": {
+        "charged_attempts": 1,
+        "detail": "invented actor_reconciliation_fsync failure",
+        "events": [
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync",
+          "native_act",
+          "actor_reconciliation_fsync"
+        ],
+        "exception": "OSError",
+        "intents": [
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 860,
+              "offset": 0,
+              "receipt_index": 1,
+              "record_sha256": "98322fddd6734da212bcf5ca0cf8344f34413f39a4f44fb4310b0536a1c726d0",
+              "request_id": "e6d4bfd7-0f34-47ac-8520-ea772eb32d1b",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 1,
+            "receipt_index": 1,
+            "request_id": "e6d4bfd7-0f34-47ac-8520-ea772eb32d1b",
+            "requested_utc": "2026-09-07T21:42:04.866145+00:00",
+            "state": "ACKNOWLEDGED"
+          }
+        ],
+        "native_calls": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "after",
+      "name": "native_observe_error_orphan",
+      "result": {
+        "charged_attempts": 1,
+        "detail": "invented observation failure after action",
+        "events": [
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync",
+          "native_act"
+        ],
+        "exception": "OSError",
+        "intents": [
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 860,
+              "offset": 0,
+              "receipt_index": 1,
+              "record_sha256": "8c260671727cd2278b3f9779325edbed47f590b6b6a7024f26069b994f90560d",
+              "request_id": "cbcb0ce4-6f7c-451c-84e2-780723387c49",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 1,
+            "receipt_index": 1,
+            "request_id": "cbcb0ce4-6f7c-451c-84e2-780723387c49",
+            "requested_utc": "2026-09-07T21:42:04.873468+00:00",
+            "state": "ACKNOWLEDGED"
+          }
+        ],
+        "native_calls": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "before",
+      "name": "bool_counter_before_act",
+      "result": {
+        "charged_attempts": true,
+        "detail": "Native charged counter is not an integer",
+        "events": [],
+        "exception": "ProtocolError",
+        "intents": [],
+        "native_calls": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "before",
+      "name": "negative_counter_before_act",
+      "result": {
+        "charged_attempts": 0,
+        "events": [
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync",
+          "native_act",
+          "actor_reconciliation_fsync"
+        ],
+        "intents": [
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 860,
+              "offset": 0,
+              "receipt_index": 1,
+              "record_sha256": "e216fe5883345ff12a0d86229a03ea32b2bd46d043cd0911b469b96a73f640a4",
+              "request_id": "669479eb-a043-4200-ac35-02eb68cb10f6",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 0,
+            "episode": 0,
+            "receipt_index": 1,
+            "request_id": "669479eb-a043-4200-ac35-02eb68cb10f6",
+            "requested_utc": "2026-09-07T21:42:04.887652+00:00",
+            "state": "MATCHED",
+            "step": 0
+          }
+        ]
+      },
+      "status": "FAIL"
+    },
+    {
+      "expected": "after",
+      "name": "row_bool_charge",
+      "result": {
+        "charged_attempts": 1,
+        "detail": "Native decision/receipt link differs",
+        "events": [
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync",
+          "native_act"
+        ],
+        "exception": "ProtocolError",
+        "intents": [
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 860,
+              "offset": 0,
+              "receipt_index": 1,
+              "record_sha256": "140aa2bd23ed02819389c5c7ffe998885187a3b2e89b78ef46d6f80d0afa6d3c",
+              "request_id": "e964a8cc-e94d-40cd-a07b-7bb8ca21ff8c",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 1,
+            "receipt_index": 1,
+            "request_id": "e964a8cc-e94d-40cd-a07b-7bb8ca21ff8c",
+            "requested_utc": "2026-09-07T21:42:04.895040+00:00",
+            "state": "ACKNOWLEDGED"
+          }
+        ],
+        "native_calls": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "after",
+      "name": "row_bool_episode",
+      "result": {
+        "charged_attempts": 1,
+        "detail": "Native decision/receipt link differs",
+        "events": [
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync",
+          "native_act"
+        ],
+        "exception": "ProtocolError",
+        "intents": [
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 860,
+              "offset": 0,
+              "receipt_index": 1,
+              "record_sha256": "42ad6103e10a5b51f55f0841c1a35ce925fea0c5e1c45b2b0975e1e5cbe208b2",
+              "request_id": "b6b11e04-a2df-45f6-976e-17b90cc1d1d2",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 1,
+            "receipt_index": 1,
+            "request_id": "b6b11e04-a2df-45f6-976e-17b90cc1d1d2",
+            "requested_utc": "2026-09-07T21:42:04.902382+00:00",
+            "state": "ACKNOWLEDGED"
+          }
+        ],
+        "native_calls": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "after",
+      "name": "row_float_step",
+      "result": {
+        "charged_attempts": 1,
+        "detail": "Native Step/decision link differs",
+        "events": [
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync",
+          "native_act"
+        ],
+        "exception": "ProtocolError",
+        "intents": [
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 860,
+              "offset": 0,
+              "receipt_index": 1,
+              "record_sha256": "a122eb28dea1561f4259ee3ffaf6642d84a32e7303d9070783c483b6cf0935d6",
+              "request_id": "3769a676-a429-4af9-8530-e9b8abaaf13e",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 1,
+            "receipt_index": 1,
+            "request_id": "3769a676-a429-4af9-8530-e9b8abaaf13e",
+            "requested_utc": "2026-09-07T21:42:04.909810+00:00",
+            "state": "ACKNOWLEDGED"
+          }
+        ],
+        "native_calls": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "after",
+      "name": "step_bool_index",
+      "result": {
+        "charged_attempts": 1,
+        "detail": "Native Step/decision link differs",
+        "events": [
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync",
+          "native_act"
+        ],
+        "exception": "ProtocolError",
+        "intents": [
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 860,
+              "offset": 0,
+              "receipt_index": 1,
+              "record_sha256": "faa53ae9b338cedbba018f20f8c5c16a13356cd418fb87dad2b90d762a7cc00e",
+              "request_id": "52b195d3-321a-42a2-b64a-5d58c9e9eb0b",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 1,
+            "receipt_index": 1,
+            "request_id": "52b195d3-321a-42a2-b64a-5d58c9e9eb0b",
+            "requested_utc": "2026-09-07T21:42:04.917240+00:00",
+            "state": "ACKNOWLEDGED"
+          }
+        ],
+        "native_calls": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "after",
+      "name": "step_float_episode",
+      "result": {
+        "charged_attempts": 1,
+        "detail": "Native Step/decision link differs",
+        "events": [
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync",
+          "native_act"
+        ],
+        "exception": "ProtocolError",
+        "intents": [
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 860,
+              "offset": 0,
+              "receipt_index": 1,
+              "record_sha256": "b537179e62de530e82c6747347eb1bea4c9ae9befdeafb9bac5a371297948dce",
+              "request_id": "b947d6f4-a34a-451e-896b-be92bb2b8661",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 1,
+            "receipt_index": 1,
+            "request_id": "b947d6f4-a34a-451e-896b-be92bb2b8661",
+            "requested_utc": "2026-09-07T21:42:04.924646+00:00",
+            "state": "ACKNOWLEDGED"
+          }
+        ],
+        "native_calls": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "after",
+      "name": "row_wrong_receipt",
+      "result": {
+        "charged_attempts": 1,
+        "detail": "Native decision/receipt link differs",
+        "events": [
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync",
+          "native_act"
+        ],
+        "exception": "ProtocolError",
+        "intents": [
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 860,
+              "offset": 0,
+              "receipt_index": 1,
+              "record_sha256": "f3b769ef59494a2f764f738c15285c695a047004f44c2559d7665807287dbc9c",
+              "request_id": "275258be-8da0-475a-8ddc-e7bf3b3475db",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 1,
+            "receipt_index": 1,
+            "request_id": "275258be-8da0-475a-8ddc-e7bf3b3475db",
+            "requested_utc": "2026-09-07T21:42:04.932161+00:00",
+            "state": "ACKNOWLEDGED"
+          }
+        ],
+        "native_calls": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "after",
+      "name": "row_wrong_action",
+      "result": {
+        "charged_attempts": 1,
+        "detail": "Native decision/receipt link differs",
+        "events": [
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync",
+          "native_act"
+        ],
+        "exception": "ProtocolError",
+        "intents": [
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 860,
+              "offset": 0,
+              "receipt_index": 1,
+              "record_sha256": "29f96902a008019d6c8b24c111ef15752a441b69f689f0f0379bad9dc536c960",
+              "request_id": "ae446e3a-d6eb-411e-b297-376e8c656013",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 1,
+            "receipt_index": 1,
+            "request_id": "ae446e3a-d6eb-411e-b297-376e8c656013",
+            "requested_utc": "2026-09-07T21:42:04.939587+00:00",
+            "state": "ACKNOWLEDGED"
+          }
+        ],
+        "native_calls": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "after",
+      "name": "row_wrong_before",
+      "result": {
+        "charged_attempts": 1,
+        "detail": "Native Step/decision link differs",
+        "events": [
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync",
+          "native_act"
+        ],
+        "exception": "ProtocolError",
+        "intents": [
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 860,
+              "offset": 0,
+              "receipt_index": 1,
+              "record_sha256": "0a38784800fe831afcc8497a321aac8bbfbacc09e613d41d68503907c5730eb3",
+              "request_id": "c9a18bfc-b773-4021-90da-174cb15afd40",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 1,
+            "receipt_index": 1,
+            "request_id": "c9a18bfc-b773-4021-90da-174cb15afd40",
+            "requested_utc": "2026-09-07T21:42:04.947114+00:00",
+            "state": "ACKNOWLEDGED"
+          }
+        ],
+        "native_calls": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "after",
+      "name": "row_wrong_after",
+      "result": {
+        "charged_attempts": 1,
+        "detail": "Native Step/decision link differs",
+        "events": [
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync",
+          "native_act"
+        ],
+        "exception": "ProtocolError",
+        "intents": [
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 860,
+              "offset": 0,
+              "receipt_index": 1,
+              "record_sha256": "031cf1d28daef18c0abe4acd5deb2c173d2b3313455df6269c94f84aa06aea24",
+              "request_id": "dc60c77e-126c-4a58-82ac-f5f3806f800a",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 1,
+            "receipt_index": 1,
+            "request_id": "dc60c77e-126c-4a58-82ac-f5f3806f800a",
+            "requested_utc": "2026-09-07T21:42:04.954579+00:00",
+            "state": "ACKNOWLEDGED"
+          }
+        ],
+        "native_calls": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "after",
+      "name": "row_wrong_ok",
+      "result": {
+        "charged_attempts": 1,
+        "events": [
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync",
+          "native_act",
+          "actor_reconciliation_fsync"
+        ],
+        "intents": [
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 860,
+              "offset": 0,
+              "receipt_index": 1,
+              "record_sha256": "85a3876916d0fbd6585f93e3fa332dc563697c9fe0d5b93a9bfe154d92ee09f7",
+              "request_id": "5fa27c16-b97a-4f53-8b72-e975b2961364",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 1,
+            "episode": 0,
+            "receipt_index": 1,
+            "request_id": "5fa27c16-b97a-4f53-8b72-e975b2961364",
+            "requested_utc": "2026-09-07T21:42:04.962023+00:00",
+            "state": "MATCHED",
+            "step": 0
+          }
+        ]
+      },
+      "status": "FAIL"
+    },
+    {
+      "expected": "after",
+      "name": "row_integer_ok",
+      "result": {
+        "charged_attempts": 1,
+        "events": [
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync",
+          "native_act",
+          "actor_reconciliation_fsync"
+        ],
+        "intents": [
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 860,
+              "offset": 0,
+              "receipt_index": 1,
+              "record_sha256": "d18549b09e2db29bb2639e33a17b13fb12f1d982ba8f69c9e038a10c33a83c48",
+              "request_id": "7b2579e3-bf70-41e2-8a62-0f0aa3e6b8a5",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 1,
+            "episode": 0,
+            "receipt_index": 1,
+            "request_id": "7b2579e3-bf70-41e2-8a62-0f0aa3e6b8a5",
+            "requested_utc": "2026-09-07T21:42:04.971757+00:00",
+            "state": "MATCHED",
+            "step": 0
+          }
+        ]
+      },
+      "status": "FAIL"
+    },
+    {
+      "expected": "after",
+      "name": "row_wrong_error",
+      "result": {
+        "charged_attempts": 1,
+        "events": [
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync",
+          "native_act",
+          "actor_reconciliation_fsync"
+        ],
+        "intents": [
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 860,
+              "offset": 0,
+              "receipt_index": 1,
+              "record_sha256": "14a63961c858b3f667cdc77123589650c05511d6234f57ab031bafeddd02bbc8",
+              "request_id": "60eb4681-20b0-4b5c-8521-d9b9a0b29836",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 1,
+            "episode": 0,
+            "receipt_index": 1,
+            "request_id": "60eb4681-20b0-4b5c-8521-d9b9a0b29836",
+            "requested_utc": "2026-09-07T21:42:04.979181+00:00",
+            "state": "MATCHED",
+            "step": 0
+          }
+        ]
+      },
+      "status": "FAIL"
+    },
+    {
+      "expected": "after",
+      "name": "step_wrong_ok",
+      "result": {
+        "charged_attempts": 1,
+        "events": [
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync",
+          "native_act",
+          "actor_reconciliation_fsync"
+        ],
+        "intents": [
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 860,
+              "offset": 0,
+              "receipt_index": 1,
+              "record_sha256": "0e6473453688445193f3fd7e07ba24cf8c675886f095a98dff322c1263f9fa31",
+              "request_id": "69413192-f6f0-494c-8c30-dd4da1287a88",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 1,
+            "episode": 0,
+            "receipt_index": 1,
+            "request_id": "69413192-f6f0-494c-8c30-dd4da1287a88",
+            "requested_utc": "2026-09-07T21:42:04.986726+00:00",
+            "state": "MATCHED",
+            "step": 0
+          }
+        ]
+      },
+      "status": "FAIL"
+    },
+    {
+      "expected": "after",
+      "name": "step_wrong_error",
+      "result": {
+        "charged_attempts": 1,
+        "events": [
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync",
+          "native_act",
+          "actor_reconciliation_fsync"
+        ],
+        "intents": [
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 860,
+              "offset": 0,
+              "receipt_index": 1,
+              "record_sha256": "24d3abd7399854d6dc5584192098b42a92481d1ffca7cb36187df9761e606075",
+              "request_id": "0de05fce-23d2-491b-a90e-0709bfb1e0ed",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 1,
+            "episode": 0,
+            "receipt_index": 1,
+            "request_id": "0de05fce-23d2-491b-a90e-0709bfb1e0ed",
+            "requested_utc": "2026-09-07T21:42:04.994128+00:00",
+            "state": "MATCHED",
+            "step": 0
+          }
+        ]
+      },
+      "status": "FAIL"
+    },
+    {
+      "expected": "after",
+      "name": "post_action_primitive_mutation",
+      "result": {
+        "charged_attempts": 1,
+        "events": [
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync",
+          "native_act",
+          "actor_reconciliation_fsync"
+        ],
+        "intents": [
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 860,
+              "offset": 0,
+              "receipt_index": 1,
+              "record_sha256": "093d2c5e6d486be690f8b2e50082d2e6f76ff5fb525aa98c5c7b5c0bcbf5fe8e",
+              "request_id": "4cbe0ae7-f963-4492-ae96-50a860d76af8",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 1,
+            "episode": 0,
+            "receipt_index": 1,
+            "request_id": "4cbe0ae7-f963-4492-ae96-50a860d76af8",
+            "requested_utc": "2026-09-07T21:42:05.001578+00:00",
+            "state": "MATCHED",
+            "step": 0
+          }
+        ]
+      },
+      "status": "FAIL"
+    },
+    {
+      "expected": "after",
+      "name": "unpaired_wrong_after",
+      "result": {
+        "charged_attempts": 1,
+        "events": [
+          "validated_request",
+          "predictor_fsync",
+          "durable_predictor_return",
+          "actor_receipt_fsync",
+          "native_act",
+          "actor_reconciliation_fsync"
+        ],
+        "intents": [
+          {
+            "acknowledgement": {
+              "instrument_status": "COMPLETE",
+              "length": 449,
+              "offset": 0,
+              "receipt_index": 1,
+              "record_sha256": "a82d65368b036f1b122ffe5cd0d35ef2dd2d54af038b9d24e46dc238bf28929e",
+              "request_id": "c471d3ba-8ee0-4c13-b169-efdf3df53fd9",
+              "schema": "semabi.j1.live_ack.v1"
+            },
+            "charged_attempt": 1,
+            "episode": 1,
+            "receipt_index": 1,
+            "request_id": "c471d3ba-8ee0-4c13-b169-efdf3df53fd9",
+            "requested_utc": "2026-09-07T21:42:05.009063+00:00",
+            "state": "MATCHED",
+            "step": null
+          }
+        ]
+      },
+      "status": "FAIL"
+    }
+  ],
+  "counts": {
+    "FAIL": 8,
+    "PASS": 19
+  },
+  "schema": "semabi.j1.actor_core_independent_checks.v1",
+  "scope": "Invented data, real live_io ledger and receipts, exact native class/method AST with fake Browser/EvidenceLog and explicit serializer/log corruption. No fit, browser launch, fixture or sealed payload.",
+  "sources": {
+    "docs/data/v4/transport/development/j1/act.py": "1667b413165bdbf782fc1f4d964d86d43831a19726d5a6581a6b8fc2730114ae",
+    "docs/data/v4/transport/development/j1/live_contract_v1.md": "f9642c36b3581323eaa8206d5117dd7831c2d57cf6142b39877fd0e2fbc17d90",
+    "docs/data/v4/transport/development/j1/live_io.py": "2cf44787526076337b53d8a67ef12796c7460d2dcb64cfbbbec7093c946a5327",
+    "docs/data/v4/transport/development/j1/review_evidence/actor_core_checks_v1.py": "f14ba9073873c99ff24b889e89805fda0b862cb87e11124e0047cf71c0330006",
+    "scripts/transport_collect.py": "022f80109a55b0ff86c06fa72ca3654a3b15ab3a66c187cace15b00b828fcc14",
+    "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+  },
+  "status": "FAIL"
+}

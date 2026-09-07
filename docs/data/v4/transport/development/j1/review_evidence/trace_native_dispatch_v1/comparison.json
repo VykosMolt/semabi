@@ -1,0 +1,49 @@
+{
+ "checks": {
+  "both_common_projections_complete": false,
+  "both_processes_finished": false,
+  "common_projection_identical": true,
+  "native_exception_restores_profiler": true,
+  "native_mutation_after_first_lift_retained": true,
+  "nonempty_real_grounding": true,
+  "nonempty_real_lift": true,
+  "trace_complete": false
+ },
+ "first_lift_identities_changed_later": [
+  "transition_000002",
+  "transition_000005",
+  "transition_000008",
+  "transition_000009",
+  "transition_000010",
+  "transition_000011",
+  "transition_000012",
+  "transition_000015",
+  "transition_000019",
+  "transition_000020",
+  "transition_000022",
+  "transition_000024",
+  "transition_000026",
+  "transition_000027",
+  "transition_000029"
+ ],
+ "omitted_inducer_run_calls": [],
+ "outcome_pass_count": 2,
+ "outputs": {
+  "baseline": {
+   "path": "docs/data/v4/transport/development/j1/review_evidence/trace_native_dispatch_v1/baseline.json",
+   "sha256": "df3fe514f8406e0232b0964d07be2569ec6013c763646e1d227266dad79ab7ed"
+  },
+  "exception": {
+   "path": "docs/data/v4/transport/development/j1/review_evidence/trace_native_dispatch_v1/exception.json",
+   "sha256": "68c360cd8c43eb7f881155c236b3722726b192cfd9896119f96f36a247c8b5fe"
+  },
+  "profiled": {
+   "path": "docs/data/v4/transport/development/j1/review_evidence/trace_native_dispatch_v1/profiled.json",
+   "sha256": "7222a1653bc5a67738e8dbcd8fe55a050ab7cd381c3f236138943269d494c040"
+  }
+ },
+ "plan_sha256": "7a96d966ef39f7844c46e81f5c1c2e24f28db6575617a06afd7f8efe5577a82a",
+ "schema": "semabi.transport.j1_trace_validation_comparison.v1",
+ "scope": "Full common projection equality is admissible only when both projections and the trace are complete. Missing required native phenomena are preserved as insufficient coverage.",
+ "status": "FAIL_OR_INSUFFICIENT"
+}

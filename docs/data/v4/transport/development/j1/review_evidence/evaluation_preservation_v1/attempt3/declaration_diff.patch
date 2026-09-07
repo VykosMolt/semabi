@@ -1,0 +1,11 @@
+--- accepted_attempt2/evaluate.py
++++ final_attempt3/evaluate.py
+@@ -16,7 +16,7 @@
+     "live_model.py", "predictor.py", "preserve.py", "score.py", "trace.py",
+     "live_contract_v1.md", "protocol_v1.md")}
+ INSTRUMENTS |= {"scripts/transport_collect.py", "scripts/transport_score.py",
+-                "docs/data/v4/transport/run_job.py", "pyproject.toml", "uv.lock"}
++                "docs/data/v4/transport/run_job.py", "pyproject.toml"}
+ FREEZE_KEYS = {"schema", "source_head", "source_files", "fixed_inputs", "predictor_freeze",
+               "actor_freeze", "collector_freeze", "predictor_directory", "predictor_socket", "script", "phases",
+               "controls", "jobs", "execution_receipts_directory", "expected_accounting"}

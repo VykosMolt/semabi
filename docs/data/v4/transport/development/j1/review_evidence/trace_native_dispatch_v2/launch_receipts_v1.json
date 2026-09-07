@@ -1,0 +1,48 @@
+{
+  "schema": "semabi.j1.trace_validation_launch_receipts.v1",
+  "plan_sha256": "9bdca6f7097dc573bd004d9b8545e7674cdbe3f07bd3b1e36b2c77bd88d81f62",
+  "launches": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "mode": "baseline",
+        "cmd": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 taskset -c 13 .venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/development/j1/review_evidence/trace_native_dispatch_v2/jobs/baseline_v1 -- .venv/bin/python docs/data/v4/transport/development/j1/review_evidence/trace_native_validation_v1.py run --plan docs/data/v4/transport/development/j1/review_evidence/trace_native_dispatch_v2/plan.json --mode baseline",
+        "receipt": {
+          "chunk_id": "c00421",
+          "wall_time_seconds": 1.00078868,
+          "session_id": 22869,
+          "original_token_count": 0,
+          "output": ""
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "mode": "profiled",
+        "cmd": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 taskset -c 14 .venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/development/j1/review_evidence/trace_native_dispatch_v2/jobs/profiled_v1 -- .venv/bin/python docs/data/v4/transport/development/j1/review_evidence/trace_native_validation_v1.py run --plan docs/data/v4/transport/development/j1/review_evidence/trace_native_dispatch_v2/plan.json --mode profiled",
+        "receipt": {
+          "chunk_id": "4d00a1",
+          "wall_time_seconds": 1.000660392,
+          "session_id": 89665,
+          "original_token_count": 0,
+          "output": ""
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "mode": "exception",
+        "cmd": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 taskset -c 15 .venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/development/j1/review_evidence/trace_native_dispatch_v2/jobs/exception_v1 -- .venv/bin/python docs/data/v4/transport/development/j1/review_evidence/trace_native_validation_v1.py run --plan docs/data/v4/transport/development/j1/review_evidence/trace_native_dispatch_v2/plan.json --mode exception",
+        "receipt": {
+          "chunk_id": "12f804",
+          "wall_time_seconds": 0.039120403,
+          "exit_code": 0,
+          "original_token_count": 34,
+          "output": "{\"status\": \"FINISHED\", \"returncode\": 0, \"child_pid\": 812795, \"child_terminated\": true, \"end_utc\": \"2026-09-07T21:29:44.527795+00:00\"}\n"
+        }
+      }
+    }
+  ]
+}

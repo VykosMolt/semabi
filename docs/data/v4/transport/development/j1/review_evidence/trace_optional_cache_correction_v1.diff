@@ -1,0 +1,14 @@
+--- trace.py before optional cache
++++ trace.py after optional cache
+@@ -126,8 +126,9 @@
+             names = tuple(text.split())
+             if set(vars(cls)["__dataclass_fields__"]) != set(names):
+                 raise ValueError("Native dataclass schema differs: " + module_name + "." + name)
+-            records[cls] = RecordSpec("semabi.compiler." + module_name + "." + name, names,
+-                                      ("field_theory",) if name == "ControlOutcome" else ())
++            optional = {"ControlOutcome": ("field_theory",),
++                        "ParsedObs": ("_member_positioned_cache",)}.get(name, ())
++            records[cls] = RecordSpec("semabi.compiler." + module_name + "." + name, names, optional)
+     inducer = modules["induce"].Inducer
+     consequence = modules["v4.consequence"]
+     outcome = modules["v4.outcome"]

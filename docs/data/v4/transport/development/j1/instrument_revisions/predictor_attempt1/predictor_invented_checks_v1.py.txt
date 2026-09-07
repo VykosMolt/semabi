@@ -1,0 +1,296 @@
+"""Bounded invented monitor and forecast checks; no native import, fit or fixture."""
+from __future__ import annotations
+
+import argparse
+from contextlib import redirect_stdout
+from dataclasses import make_dataclass
+import hashlib
+import importlib.util
+import io as stdio
+import json
+from pathlib import Path
+import runpy
+import sys
+from types import SimpleNamespace
+
+HERE = Path(__file__).resolve().parents[1]
+
+
+def module(name, path):
+    spec = importlib.util.spec_from_file_location(name, path)
+    value = importlib.util.module_from_spec(spec)
+    sys.modules[name] = value
+    spec.loader.exec_module(value)
+    return value
+
+
+p = module("_invented_predictor", HERE / "predictor.py")
+m = module("_invented_live_model", HERE / "live_model.py")
+# Reuse the already disclosed invented trace fixture. Its checks are in memory
+# and emit only their own result; it imports no native learner or fixture.
+with redirect_stdout(stdio.StringIO()):
+    invented = runpy.run_path(str(HERE / "review_evidence/trace_invented_checks_v1.py"))
+
+
+class Graph:
+    judge_by_collection = True
+
+
+def fixture():
+    fit = invented["fit_once"]()
+    del fit.inducer.transition
+    graph = Graph()
+    for name in m.GRAPH_FROZEN + m.GRAPH_LOOKUPS + m.GRAPH_MEMOS:
+        setattr(graph, name, {})
+    for name in ("_in_nonwidget", "_whole", "_listed_only", "_declared_headers", "_seen", "header", "_data", "_value_paths"):
+        setattr(graph, name, set())
+    graph.learning = False
+    graph.obs = dict(fit.log.observations)
+    fit.abstractor.G = fit.abstractor.H.G = graph
+    fit.abstractor.parser = None
+    fit.abstractor.H.memo = {}
+    fit.log.dir = Path("/tmp/invented_training")
+    fit.log.obs_path = fit.log.steps_path = None
+    original = invented["bindings"]
+    bindings = m.trace.Bindings(original.codes, original.records, {**original.types, "graph": Graph}, original.sentinels)
+    monitor = m.LiveMonitor(fit, invented["raw"], bindings)
+    return fit, graph, monitor
+
+
+def complete(record):
+    assert record["instrument_status"] == "COMPLETE", record.get("projection", {}).get("incomplete_reasons", record)
+
+
+def incomplete(record):
+    assert record["instrument_status"] == "INCOMPLETE", "Mutation was accepted"
+
+
+PUBLIC = {"url": "http://public.invalid/", "nodes": [{"i": 0, "parent": -1, "role": "button", "name": "Run"}]}
+
+
+def new_cache(fit, graph, monitor):
+    monitor.note_observation(PUBLIC)
+    signature = m.public_signature(PUBLIC)
+    fit.abstractor.H.memo[(signature, 0)] = "template"
+    graph.nodes[(signature, 0)] = {"stored": 1}
+    return signature
+
+
+def baseline():
+    fit, graph, monitor = fixture()
+    complete(monitor.checkpoint())
+    complete(monitor.checkpoint())
+    assert monitor.fit is fit and monitor.graph is graph
+
+
+def learned_alias(value):
+    fit, graph, monitor = fixture()
+    fit.abstractor.data = {"typed": 1}
+    complete(monitor.checkpoint())
+    fit.abstractor.data["typed"] = value
+    incomplete(monitor.checkpoint())
+
+
+def evolving_cache(kind, mutation):
+    fit, graph, monitor = fixture()
+    complete(monitor.checkpoint())
+    signature = new_cache(fit, graph, monitor)
+    complete(monitor.checkpoint())
+    values = fit.abstractor.H.memo if kind == "memo" else graph.nodes
+    if mutation == "remove":
+        del values[(signature, 0)]
+    else:
+        values[(signature, 0)] = "changed" if kind == "memo" else {"stored": 2}
+    incomplete(monitor.checkpoint())
+
+
+def old_memo_alias():
+    fit, graph, monitor = fixture()
+    fit.abstractor.H.memo[("page", 0)] = 1
+    complete(monitor.checkpoint())
+    fit.abstractor.H.memo[("page", 0)] = True
+    incomplete(monitor.checkpoint())
+
+
+def unknown_field():
+    fit, graph, monitor = fixture()
+    complete(monitor.checkpoint())
+    fit.inducer.unknown_runtime_data = 1
+    incomplete(monitor.checkpoint())
+
+
+def identity_change():
+    fit, graph, monitor = fixture()
+    complete(monitor.checkpoint())
+    replacement = type(fit.abstractor)()
+    replacement.__dict__.update(fit.abstractor.__dict__)
+    fit.abstractor = replacement
+    incomplete(monitor.checkpoint())
+
+
+def memo_foreign_observation():
+    fit, graph, monitor = fixture()
+    complete(monitor.checkpoint())
+    fit.abstractor.H.memo[("not_interpreted", 0)] = "template"
+    incomplete(monitor.checkpoint())
+
+
+def ordered_learned_data():
+    fit, graph, monitor = fixture()
+    fit.abstractor.data = {"first": 1, "second": 2}
+    complete(monitor.checkpoint())
+    fit.abstractor.data = {"second": 2, "first": 1}
+    incomplete(monitor.checkpoint())
+
+
+def snapshot_cache_resolution():
+    before = {"$record": "semabi.compiler.observation.Observation", "fields": {"nodes": [], "_children": {"a": []}}}
+    after = {"$record": before["$record"], "fields": {"nodes": [], "_children": {"a": [1]}}}
+    left, right = m.trace.sha(before), m.trace.sha(after)
+    assert left != right
+    snapshots = {left: before, right: after}
+    assert m.trace.canonical(m.resolve({"$snapshot": left}, snapshots, omit_typed_caches=True)) == m.trace.canonical(m.resolve({"$snapshot": right}, snapshots, omit_typed_caches=True))
+    assert m.resolve({"$snapshot": left}, snapshots) != m.resolve({"$snapshot": right}, snapshots)
+
+
+def forecast_fixture():
+    calls = []
+    State, Parsed = invented["State"], invented["ParsedObs"]
+    Vouch = make_dataclass("Vouch", [(name, object) for name in "event witnesses condition covers sole preceded_by".split()])
+    Vouch.ordered = property(lambda _: (_ for _ in ()).throw(AssertionError("Vouch property called")))
+    vouch = Vouch("event", (3, 1), (("literal", 1),), 2 ** 80, False, ("previous",))
+    original = invented["bindings"]
+    bindings = m.trace.Bindings(original.codes, {**original.records,
+        Vouch: m.trace.RecordSpec("semabi.compiler.v4.outcome.Vouch", tuple(Vouch.__dataclass_fields__))}, original.types, original.sentinels)
+    class Observation:
+        @classmethod
+        def from_json(cls, value):
+            calls.append("construct_observation")
+            return value
+    class Abstractor:
+        def abstract(self, obs):
+            calls.append("abstract")
+            return State({"item": 1})
+        def parsed(self, obs):
+            calls.append("parsed")
+            return Parsed({})
+    class Got:
+        def __init__(self):
+            self.roles = {}
+            self.arg_roles = {"decision": {0: "created:T1"}, "rule_event": {1: "missing_role"}}
+        def bind(self, state, owner):
+            calls.append("bind")
+            return {"owner": state}, {"owner": "named"}
+        def predict(self, literals):
+            calls.append("predict")
+            return "decision"
+        def admissible(self, literals, *, corroborated, hypothesis):
+            assert corroborated is True
+            calls.append(hypothesis)
+            return {"rule_event" if hypothesis == "RULE" else "list_event": vouch}
+        def arguments(self, event, bound):
+            calls.append("arguments:" + event)
+            return {0: "FRESH"} if event == "decision" else {}
+    got = Got()
+    fit = SimpleNamespace(abstractor=Abstractor(), outcomes={"control": got})
+    native = SimpleNamespace(Observation=Observation, Primitive=invented["Primitive"],
+        consequence=SimpleNamespace(clicked_control=lambda *args: calls.append("clicked_control") or "control",
+                                    _owner_object=lambda *args: calls.append("owner") or None),
+        outcome=SimpleNamespace(RULE="RULE", LIST="LIST", query_literals=lambda *args: calls.append("query_literals") or {("literal", 1)}))
+    monitor = SimpleNamespace(note_observation=lambda obs: calls.append("note_observation"))
+    forecaster = p.Forecaster(fit, monitor, m, bindings, native)
+    request = p.io.forecast_request(PUBLIC, {"kind": "click", "target": 0, "text": None, "target_desc": None})
+    return forecaster, request, calls, got
+
+
+def forecast_path():
+    forecaster, request, calls, got = forecast_fixture()
+    result = forecaster.forecast(request)
+    complete(result)
+    assert result["status"] == "FORECAST"
+    assert calls == ["construct_observation", "note_observation", "clicked_control", "abstract", "parsed", "owner", "bind", "query_literals", "predict", "RULE", "LIST", "arguments:decision", "arguments:rule_event", "arguments:list_event"]
+    values = dict(result["values"]["items"])
+    assert values["rule"]["items"][0][1]["fields"]["witnesses"] == {"$tuple": [3, 1]}
+    assert values["rule"]["items"][0][1]["fields"]["covers"] == {"$integer_decimal": str(2 ** 80)}
+    assert dict(values["arguments"]["items"])["rule_event"]["items"] == []
+    assert dict(values["arg_roles"]["items"])["rule_event"]["items"] == [[1, "missing_role"]]
+
+
+def forecast_copy_gap():
+    forecaster, request, calls, got = forecast_fixture()
+    class Unknown:
+        def __str__(self):
+            raise AssertionError("Unknown rendered")
+    got.roles["unknown"] = Unknown()
+    incomplete(forecaster.forecast(request))
+
+
+def native_error_saved():
+    forecaster, request, calls, got = forecast_fixture()
+    def fail(_):
+        raise ValueError("invented native failure")
+    got.predict = fail
+    result = forecaster.forecast(request)
+    complete(result)
+    assert result["status"] == "ERROR" and result["error"]["type"] == "ValueError"
+    assert "RULE" not in calls and "LIST" not in calls
+    assert "literals" in dict(result["values"]["items"])
+
+
+def opportunity_categories():
+    forecaster, request, calls, got = forecast_fixture()
+    result = forecaster.forecast({**request, "primitive": None})
+    assert result["status"] == "UNREACHABLE" and calls == []
+    result = forecaster.forecast({**request, "observation": None})
+    assert result["status"] == "NO_PRESTATE" and calls == []
+    result = forecaster.forecast({**request, "primitive": {**request["primitive"], "kind": "type"}})
+    assert result["status"] == "NON_CLICK" and calls == []
+    forecaster.fit.outcomes.clear()
+    result = forecaster.forecast(request)
+    assert result["status"] == "NO_MODEL" and calls == ["construct_observation", "note_observation", "clicked_control"]
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--result", type=Path, required=True)
+    args = parser.parse_args()
+    cases = {
+        "unchanged_complete_projection_and_resident_identity": baseline,
+        "learned_int_to_bool_rejected": lambda: learned_alias(True),
+        "learned_int_to_float_rejected": lambda: learned_alias(1.0),
+        "new_memo_later_mutation_rejected": lambda: evolving_cache("memo", "change"),
+        "new_memo_later_removal_rejected": lambda: evolving_cache("memo", "remove"),
+        "new_graph_lookup_later_mutation_rejected": lambda: evolving_cache("graph", "change"),
+        "new_graph_lookup_later_removal_rejected": lambda: evolving_cache("graph", "remove"),
+        "old_memo_int_to_bool_rejected": old_memo_alias,
+        "unknown_stored_key_rejected": unknown_field,
+        "equal_replacement_abstractor_rejected_by_identity": identity_change,
+        "new_memo_foreign_observation_rejected": memo_foreign_observation,
+        "learned_mapping_evidence_order_preserved": ordered_learned_data,
+        "snapshot_addresses_resolved_before_typed_cache_exclusion": snapshot_cache_resolution,
+        "forecast_native_call_path_and_complete_vouches_arguments": forecast_path,
+        "forecast_copy_gap_is_incomplete": forecast_copy_gap,
+        "native_forecast_exception_is_saved_complete_error": native_error_saved,
+        "nonqueried_opportunities_remain_distinct": opportunity_categories,
+    }
+    results = []
+    for name, function in cases.items():
+        try:
+            function()
+        except Exception as error:
+            results.append({"name": name, "status": "FAIL", "error_type": type(error).__name__, "detail": str(error)})
+        else:
+            results.append({"name": name, "status": "PASS"})
+    assert not any(name == "semabi" or name.startswith("semabi.") for name in sys.modules)
+    result = {"schema": "semabi.j1.predictor_invented_checks.v1",
+              "status": "PASS" if all(row["status"] == "PASS" for row in results) else "FAIL",
+              "sources": {name: hashlib.sha256((HERE / name).read_bytes()).hexdigest()
+                          for name in ("predictor.py", "live_model.py", "live_io.py", "trace.py", "review_evidence/predictor_invented_checks_v1.py")},
+              "checks": results, "scope": "Invented Python state and calls only; no native fit, IPC pilot, or fixture evidence"}
+    p.io.write_json_exclusive(args.result, result)
+    print(json.dumps({"status": result["status"], "result": str(args.result), "failed": [row["name"] for row in results if row["status"] != "PASS"]}))
+    return 0 if result["status"] == "PASS" else 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

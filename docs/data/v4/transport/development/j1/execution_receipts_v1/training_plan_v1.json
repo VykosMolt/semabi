@@ -1,0 +1,231 @@
+{
+  "created_utc": "2026-09-07T22:01:00.889340+00:00",
+  "expected_accounting": {
+    "actual_snapshot_calls": "Read actual Recorder count separately; explicit script snapshots do not equal total Browser observations.",
+    "allowed_extra_calibration_or_exploration_actions": 0,
+    "case_resets": 24,
+    "charged_attempts": 313,
+    "designated_training_targets": 24,
+    "failed_setup_and_missing_targets": "Retain all fixed allocation positions and charged failures; do not replace or add actions.",
+    "native_complete": "The native complete field means zero action failures; report it separately from fixed allocation completion and accounting.",
+    "observed_reload_boundaries": 1,
+    "paired_steps": 312,
+    "script_snapshot_requests": 312,
+    "scripted_primitives": 288,
+    "status": "PUBLIC_FROZEN_REQUIREMENT_NOT_YET_MEASURED",
+    "unpaired_resets": 1
+  },
+  "exposure": {
+    "frozen_evaluator_payloads_hashed_without_semantic_display": true,
+    "j1_case_names_actions_answers_or_layout_read": false,
+    "j1_semantic_payload_to_root": false,
+    "prior_r1_fixture_exposure": true,
+    "public_protocol_and_operating_envelope_read": true,
+    "script_metadata_read": "Top-level and fixture routing keys only"
+  },
+  "fixture_inputs": {
+    "all26_inventory_entries_opaquely_rehashed": true,
+    "primary_service": {
+      "path": "experiments/join_v1/server.py",
+      "sha256": "ecbb723d4095ddca9b0d89176e7a9e92421babde0015a118a36fc42453772acb"
+    },
+    "public_inventory": {
+      "path": "docs/data/v4/transport/development/j1/evaluator/public_inventory_sha256.json",
+      "sha256": "93bba30bf1c3ba1a95c4bad63e6ae55f96066471e1efef4b024a0dfb27c6b10d"
+    },
+    "script": {
+      "fixture_routing_selector": "primary_training",
+      "inspection_scope": "Only top-level keys and fixture routing keys were displayed; no names, cases, actions, parameters or answers were displayed.",
+      "path": "experiments/join_v1/oracle/scripts_v1.json",
+      "sha256": "d44719acaa5ae83757829fd652796804abd230a213c5401d5228851ff8ab8b39"
+    }
+  },
+  "jobs": [
+    {
+      "cpu": 22,
+      "expected_completion": "Planned operator interruption after training; wrapper sends SIGTERM to its owned child group and waits, falling back to SIGKILL after 15 seconds if needed. Preserve actual wrapper exit and stock INTERRUPTED/child return code.",
+      "inner_command": [
+        ".venv/bin/python",
+        "experiments/join_v1/server.py",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8771",
+        "--profile",
+        "primary"
+      ],
+      "job": "j1_training_service_v1",
+      "outer_command": [
+        "taskset",
+        "-c",
+        "22",
+        "env",
+        "PYTHONHASHSEED=0",
+        "BLIS_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "NUMEXPR_NUM_THREADS=1",
+        "OMP_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "VECLIB_MAXIMUM_THREADS=1",
+        ".venv/bin/python",
+        "docs/data/v4/transport/run_job.py",
+        "docs/data/v4/transport/development/j1/jobs/j1_training_service_v1",
+        "--",
+        ".venv/bin/python",
+        "experiments/join_v1/server.py",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8771",
+        "--profile",
+        "primary"
+      ],
+      "path": "docs/data/v4/transport/development/j1/jobs/j1_training_service_v1",
+      "profile": "primary",
+      "tool_launch": {
+        "reason": "Owned loopback service must share the host network namespace with the authorized browser collector",
+        "sandbox_permissions": "require_escalated",
+        "tty": true
+      }
+    },
+    {
+      "cpu": 17,
+      "expected_completion": "FINISHED/0 plus retained run status and separate collector_verification PASS; actual failures remain retained.",
+      "inner_command": [
+        ".venv/bin/python",
+        "docs/data/v4/transport/development/j1/collect.py",
+        "script",
+        "--url",
+        "http://127.0.0.1:8771/join",
+        "--reset-url",
+        "http://127.0.0.1:8771/reset",
+        "--script",
+        "experiments/join_v1/oracle/scripts_v1.json",
+        "--fixture",
+        "primary_training",
+        "--seed",
+        "0",
+        "--freeze",
+        "docs/data/v4/transport/development/j1/training_freeze_v1.json",
+        "--out",
+        "docs/data/v4/transport/first_pass/join/j1_training_v1"
+      ],
+      "job": "j1_training_collect_v1",
+      "outer_command": [
+        "taskset",
+        "-c",
+        "17",
+        "env",
+        "PYTHONHASHSEED=0",
+        "BLIS_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "NUMEXPR_NUM_THREADS=1",
+        "OMP_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "VECLIB_MAXIMUM_THREADS=1",
+        ".venv/bin/python",
+        "docs/data/v4/transport/run_job.py",
+        "docs/data/v4/transport/development/j1/jobs/j1_training_collect_v1",
+        "--",
+        ".venv/bin/python",
+        "docs/data/v4/transport/development/j1/collect.py",
+        "script",
+        "--url",
+        "http://127.0.0.1:8771/join",
+        "--reset-url",
+        "http://127.0.0.1:8771/reset",
+        "--script",
+        "experiments/join_v1/oracle/scripts_v1.json",
+        "--fixture",
+        "primary_training",
+        "--seed",
+        "0",
+        "--freeze",
+        "docs/data/v4/transport/development/j1/training_freeze_v1.json",
+        "--out",
+        "docs/data/v4/transport/first_pass/join/j1_training_v1"
+      ],
+      "path": "docs/data/v4/transport/development/j1/jobs/j1_training_collect_v1",
+      "raw_output": "docs/data/v4/transport/first_pass/join/j1_training_v1",
+      "tool_launch": {
+        "reason": "Authorized Chromium and localhost browser collection in the same host namespace as the fixture service",
+        "sandbox_permissions": "require_escalated",
+        "tty": true
+      }
+    }
+  ],
+  "lifecycle": [
+    "WAIT: root reviews this exact plan and supplies the source/collector freeze path, hash, actual source HEAD and explicit GO. Do not launch from this prepared plan alone.",
+    "Preflight: authenticate the root freeze, exact 5 adapter verification files, runtime allowlist/source hashes, unchanged runner, exact public fixture hash inventory, and absent exclusive output identities. Record root delegation and actual command/time before launch. Do not import or fit a learner during preflight.",
+    "Launch primary service through the stock runner with a retained PTY tool session. Record returned session ID and owned runner/child PID+PGID, command, cwd, profile and timestamps. Verify live affinity/nice/thread environment from owned process metadata.",
+    "Verify readiness by matching the listening 8771 socket to the owned service process using host /proc metadata. Do not make an unlogged HTTP/browser/application probe.",
+    "Launch exactly the training collector command once. Record its session and owned process identifiers. Read only status/accounting metadata while it runs; retain full logs and raw evidence without semantic disclosure to root. Poll and communicate at intervals no longer than 60 seconds.",
+    "On normal completion, obtain actual collector return code and reap its tool session. Authenticate FINISHED source/command/log records; require both retained run and adapter verification. Check 313 charged decisions, 312 paired Steps, 24 flagged targets, 24 resets, 1 reload, 1 unpaired reset, exact raw hashes and all actual failures against the fixed allocation. Do not infer correctness or inspect task names/answers in the parent handoff.",
+    "On collector infrastructure failure, retain partial raw files, records and logs under their original identity. Do not rerun, add calibration or reuse the output identity. Complete cleanup and notify root with filtered accounting/error metadata.",
+    "After training terminates, interrupt only the owned service runner via its recorded PTY tool session. Let the unchanged runner terminate and reap its child group; retain the actual expected INTERRUPTED record, child code and wrapper tool exit. Confirm owned runner/child no longer exist and the owned 8771 listener is absent.",
+    "Write additive completion/reap and raw-input digest receipts, authenticate the source+collector freeze again, and hand metadata/counts/hashes to root for training preservation. No live service remains. Primary evaluation requires a separately reviewed/frozen predictor+actor+scorer and a separately owned service start."
+  ],
+  "native_working_tree_matches_b1_baseline_at_plan_time": true,
+  "no_service_or_browser_launched": true,
+  "observed_documentation_head": "d72335b08cfe6171476842551036f528666e0c35",
+  "outputs_exclusive_and_absent_at_plan_time": [
+    "docs/data/v4/transport/first_pass/join/j1_training_v1",
+    "docs/data/v4/transport/development/j1/jobs/j1_training_service_v1",
+    "docs/data/v4/transport/development/j1/jobs/j1_training_collect_v1"
+  ],
+  "owner": "/root/reserved_audit",
+  "prohibited_in_this_phase": [
+    "learner fit",
+    "training action forecasts",
+    "primary evaluation",
+    "invariance evaluation",
+    "extra calibration or exploratory actions",
+    "original fixture/collector/native-source edits"
+  ],
+  "public_operating_inputs": {
+    "docs/data/v4/transport/development/j1/evaluator/collector_requirements.md": "d17c3f6ae208e32a1d9a2348970c18576f633a2eab9db03651c1b362bf6f3477",
+    "docs/data/v4/transport/development/j1/evaluator/public_envelope.md": "72c6f6b1f11afc4c2330b911e8f668bb12c208c068f728f613655f1585c289ca",
+    "docs/data/v4/transport/development/j1/evaluator/public_inventory_sha256.json": "93bba30bf1c3ba1a95c4bad63e6ae55f96066471e1efef4b024a0dfb27c6b10d",
+    "docs/data/v4/transport/development/j1/protocol_v1.md": "897b89e75ecba96555bda621523f1af07fbc5904fd2a9c6220f2d1bbe0a51433"
+  },
+  "resources": {
+    "collector_cpu": 17,
+    "collector_reset_seed": 0,
+    "historical_cpu23_nice19_ionice3_requirements_superseded": "Explicit current root assignment applying the user all 24 CPU/normal priority override",
+    "nice": 0,
+    "numerical_threads": {
+      "BLIS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "VECLIB_MAXIMUM_THREADS": "1"
+    },
+    "python_hash_seed": "0",
+    "service_cpu": 22
+  },
+  "root_coordinator": "/root",
+  "runner": {
+    "owner_recorded_by_unchanged_runner": "/root",
+    "path": "docs/data/v4/transport/run_job.py",
+    "sha256": "3c91a704135db5cfa553c7bdc9a5a55fffa999f73e2e9aebd9f7f2a3534525d7"
+  },
+  "schema": "semabi.j1.training_collection_execution_plan.v1",
+  "source_baseline": "d72335b08cfe6171476842551036f528666e0c35",
+  "status": "PREPARED_NOT_AUTHORIZED_TO_LAUNCH",
+  "training_freeze": {
+    "documentation_head_may_advance_before_freeze": true,
+    "path": "docs/data/v4/transport/development/j1/training_freeze_v1.json",
+    "required_before_launch": true,
+    "runtime_section": "Retained collector files allowlist only; no evaluator fixture payloads enter runtime verification. No future raw training files are required before they exist.",
+    "sha256": null,
+    "status": "ROOT_OWNED_PENDING_SOURCE_COLLECTOR_REVIEW_AND_FREEZE",
+    "verification_files_exact_current_commitment": {
+      "docs/data/v4/transport/development/j1/collect.py": "53d1bcb26ef3069a23404cd3872713b840ced39215e34d8022f9c2c94fd0492d",
+      "scripts/transport_collect.py": "022f80109a55b0ff86c06fa72ca3654a3b15ab3a66c187cace15b00b828fcc14",
+      "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+      "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+      "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+    }
+  }
+}

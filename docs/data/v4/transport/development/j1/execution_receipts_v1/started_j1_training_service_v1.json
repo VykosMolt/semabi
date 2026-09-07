@@ -1,0 +1,87 @@
+{
+  "created_utc": "2026-09-07T22:11:41.893396+00:00",
+  "job": "j1_training_service_v1",
+  "listener_readiness": [
+    {
+      "inode": "3295241",
+      "local_address": "0100007F:2243",
+      "owner_child_pid": 893910,
+      "table": "tcp"
+    }
+  ],
+  "observed_processes": {
+    "child_pid": {
+      "affinity": [
+        22
+      ],
+      "command": [
+        ".venv/bin/python",
+        "experiments/join_v1/server.py",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8771",
+        "--profile",
+        "primary"
+      ],
+      "environment": {
+        "BLIS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "PYTHONHASHSEED": "0",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "nice": 0,
+      "pgid": 893910,
+      "pid": 893910
+    },
+    "runner_pid": {
+      "affinity": [
+        22
+      ],
+      "command": [
+        ".venv/bin/python",
+        "docs/data/v4/transport/run_job.py",
+        "docs/data/v4/transport/development/j1/jobs/j1_training_service_v1",
+        "--",
+        ".venv/bin/python",
+        "experiments/join_v1/server.py",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8771",
+        "--profile",
+        "primary"
+      ],
+      "environment": {
+        "BLIS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "PYTHONHASHSEED": "0",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "nice": 0,
+      "pgid": 893908,
+      "pid": 893908
+    }
+  },
+  "pid_scope": "Escalated host namespace shared with the service launch",
+  "process_metadata": {
+    "child_pid": 893910,
+    "cwd": "/home/moloch/semabi",
+    "owned_process_group": 893910,
+    "owner": "/root",
+    "runner_pid": 893908,
+    "source_head": "592590560008632076469ae51beb160d23817b86",
+    "start_utc": "2026-09-07T22:10:47.290873+00:00",
+    "status": "RUNNING"
+  },
+  "process_record_sha256_at_observation": "a821e6d5f20737da16610034dfc8060ef5d38e8946390529c6db937a78301b2e",
+  "readiness_method": "Read owned process socket descriptors and host /proc/net/tcp metadata; no HTTP, browser or application action performed.",
+  "schema": "semabi.j1.owned_session_start.v1",
+  "session_id": 7636
+}

@@ -1,0 +1,391 @@
+"""One frozen native Fit serving pre-action requests on an owned local socket.
+
+Only public instrument/source provenance and the named raw training history are
+opened during startup. Evaluation scripts and task metadata belong to act.py.
+"""
+from __future__ import annotations
+
+import argparse
+import hashlib
+import importlib.util
+import os
+from pathlib import Path
+import socket
+import subprocess
+import sys
+import time
+from types import SimpleNamespace
+import uuid
+
+ROOT = Path(__file__).resolve().parents[6]
+HERE = Path(__file__).resolve().parent
+THREADS = ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS", "NUMEXPR_NUM_THREADS")
+SIDECARS = ("probes.jsonl", "probes.acquired.jsonl", "identity_refutations_v4.json", "field_theories_v4.json")
+INSTRUMENT_FILES = {
+    str((HERE / name).relative_to(ROOT))
+    for name in ("predictor.py", "live_model.py", "trace.py", "live_io.py", "live_contract_v1.md")}
+VALIDATION_DIRECTORY = HERE / "review_evidence/trace_native_dispatch_v2"
+VALIDATION_DEPENDENCIES = {
+    str((HERE / name).relative_to(ROOT)) for name in (
+        "trace.py", "trace_contract_v1.md", "trace_implementation_v1.md", "public_trace_audit.md",
+        "review_evidence/trace_native_validation_v1.py", "review_evidence/trace_invented_checks_v1.py",
+        "review_evidence/trace_invented_checks_attempt3_v1.json")}
+VALIDATION_CHECKS = {
+    "both_processes_finished", "both_common_projections_complete", "common_projection_identical",
+    "trace_complete", "nonempty_real_lift", "nonempty_real_grounding",
+    "native_mutation_after_first_lift_retained", "native_exception_restores_profiler"}
+
+
+def _module(name, path):
+    spec = importlib.util.spec_from_file_location(name, path)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+io = _module("_j1_predictor_io", HERE / "live_io.py")
+
+
+def sha(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def relative(path):
+    return str(Path(path).relative_to(ROOT))
+
+
+def checked_path(name):
+    io.require(type(name) is str and name and not Path(name).is_absolute()
+               and all(part not in {"", ".", ".."} for part in name.split("/")),
+               "Expected a canonical repository-relative path")
+    path = ROOT / name
+    io.require(path.resolve(strict=True) == path and path.is_file(), "Frozen path is not an actual canonical file")
+    return path
+
+
+def source_head():
+    return subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+
+
+def native_inventory():
+    return {relative(path) for path in (ROOT / "semabi").rglob("*.py")}
+
+
+def training_records(directory):
+    directory = Path(directory).absolute()
+    io.require(directory.resolve(strict=True) == directory and directory.is_dir()
+               and directory.is_relative_to(ROOT / "docs/data/v4/transport")
+               and not {"evaluator", "oracle", "hidden", "experiments", "heldout", "held_out", "invariance", "scripts", "cases"} & set(directory.parts),
+               "Training directory is outside the public raw-training boundary")
+    io.require(not any((directory / name).exists() or (directory / name).is_symlink() for name in SIDECARS),
+               "Training sidecars are not permitted")
+    records = {}
+    files = {}
+    for name in ("observations", "steps"):
+        path = checked_path(relative(directory / (name + ".jsonl")))
+        raw = path.read_bytes()
+        records[name] = [io.parse_json(line) for line in raw.splitlines() if line.strip()]
+        files[path.name] = hashlib.sha256(raw).hexdigest()
+    io.require(records["steps"] and all(type(row) is dict and type(row.get("step")) is int and row["step"] == index
+               for index, row in enumerate(records["steps"])), "Training must have ordered raw step IDs")
+    io.require(all(type(row) is dict and set(row) == {"sig", "obs"} and type(row["sig"]) is str
+                   for row in records["observations"]), "Raw training observation envelope differs")
+    signatures = {row["sig"] for row in records["observations"]}
+    io.require(len(signatures) == len(records["observations"])
+               and all(row.get("before") in signatures and row.get("after") in signatures for row in records["steps"]),
+               "Training endpoints or observation identities differ")
+    for row in records["observations"]:
+        io.validate_observation(row["obs"])
+    return records, {"directory": relative(directory), "actual_steps": len(records["steps"]), "files": files}
+
+
+def validation_reference():
+    """Exact disclosed trace evidence; this never follows a fixture manifest."""
+    comparison_path = VALIDATION_DIRECTORY / "comparison.json"
+    plan_path = VALIDATION_DIRECTORY / "plan.json"
+    comparison = io.parse_json(checked_path(relative(comparison_path)).read_bytes())
+    plan = io.parse_json(checked_path(relative(plan_path)).read_bytes())
+    io.require(comparison.get("schema") == "semabi.transport.j1_trace_validation_comparison.v1"
+               and comparison.get("status") == "PASS" and set(comparison.get("checks", {})) == VALIDATION_CHECKS
+               and all(value is True for value in comparison["checks"].values()), "Trace transparency is not complete")
+    io.require(comparison.get("plan_sha256") == sha(plan_path)
+               and plan.get("schema") == "semabi.transport.j1_trace_validation_plan.v1", "Trace plan commitment differs")
+    io.require(set(comparison.get("outputs", {})) == {"baseline", "profiled", "exception"}, "Trace outputs differ")
+    outputs = {}
+    for mode, reference in comparison["outputs"].items():
+        name = relative(VALIDATION_DIRECTORY / (mode + ".json"))
+        io.require(type(reference) is dict and set(reference) == {"path", "sha256"}
+                   and reference["path"] == name and plan["outputs"][mode] == name, "Trace output path differs")
+        io.require(sha(checked_path(name)) == reference["sha256"], "Trace output bytes changed")
+        outputs[mode] = dict(reference)
+    dependencies = {}
+    for name in sorted(VALIDATION_DEPENDENCIES):
+        expected = plan["files"][name]
+        io.require(sha(checked_path(name)) == expected, "Validated trace dependency changed: " + name)
+        dependencies[name] = expected
+    current = native_inventory()
+    validation_native = {name: value for name, value in plan["files"].items() if name.startswith("semabi/") and name.endswith(".py")}
+    differences = [{"path": name, "validated_sha256": validation_native.get(name),
+                    "runtime_sha256": sha(checked_path(name)) if name in current else None}
+                   for name in sorted(current | set(validation_native))
+                   if name not in current or sha(checked_path(name)) != validation_native.get(name)]
+    return {"comparison": {"path": relative(comparison_path), "sha256": sha(comparison_path)},
+            "plan": {"path": relative(plan_path), "sha256": sha(plan_path)}, "outputs": outputs,
+            "dependencies": dependencies, "native_source_differences": differences}
+
+
+def prepare(args):
+    _records, training = training_records(args.training)
+    io.require(type(args.cpu) is int and 0 <= args.cpu < 24, "Expected an assigned local CPU")
+    freeze = {"schema": "semabi.j1.predictor_freeze.v1", "source_head": source_head(),
+              "native_files": {name: sha(checked_path(name)) for name in sorted(native_inventory())},
+              "instrument_files": {name: sha(checked_path(name)) for name in sorted(INSTRUMENT_FILES)},
+              "training": training, "trace_validation": validation_reference(), "cpu": args.cpu,
+              "thread_limits": {name: "1" for name in THREADS}, "python_hash_seed": "0"}
+    digest = io.write_json_exclusive(args.freeze, freeze)
+    print(io.json_bytes({"status": "PREPARED", "path": str(args.freeze), "sha256": digest,
+                         "scope": "Reviewable source/input commitment; native run requires independent review"}).decode(), end="")
+    return 0
+
+
+def verify(args, *, environment=True):
+    path = Path(args.freeze).absolute()
+    io.require(path.resolve(strict=True) == path and path.is_file() and path.is_relative_to(HERE)
+               and not {"evaluator", "oracle", "hidden"} & set(path.parts), "Expected a public predictor freeze")
+    raw = path.read_bytes()
+    freeze = io.parse_json(raw)
+    io.require(type(freeze) is dict and set(freeze) == {
+        "schema", "source_head", "native_files", "instrument_files", "training", "trace_validation",
+        "cpu", "thread_limits", "python_hash_seed"} and freeze["schema"] == "semabi.j1.predictor_freeze.v1",
+        "Predictor freeze schema differs")
+    io.require(freeze["source_head"] == source_head(), "Native source HEAD changed")
+    for label, allowed in (("native_files", native_inventory()), ("instrument_files", INSTRUMENT_FILES)):
+        entries = freeze[label]
+        io.require(type(entries) is dict and set(entries) == allowed, "Predictor " + label + " inventory differs")
+        for name, expected in entries.items():
+            io.require(sha(checked_path(name)) == expected, "Predictor source changed: " + name)
+    records, training = training_records(args.training)
+    io.require(io.json_bytes(training) == io.json_bytes(freeze["training"]), "Training commitment changed")
+    io.require(io.json_bytes(validation_reference()) == io.json_bytes(freeze["trace_validation"]), "Trace validation commitment changed")
+    io.require(type(freeze["cpu"]) is int and 0 <= freeze["cpu"] < 24
+               and freeze["thread_limits"] == {name: "1" for name in THREADS}
+               and freeze["python_hash_seed"] == "0", "Resource commitment differs")
+    if environment:
+        io.require(Path.cwd() == ROOT and os.sched_getaffinity(0) == {freeze["cpu"]}
+                   and os.getpriority(os.PRIO_PROCESS, 0) == 0, "Predictor cwd, CPU or priority differs")
+        io.require(all(os.environ.get(name) == "1" for name in THREADS)
+                   and os.environ.get("PYTHONHASHSEED") == "0", "Predictor numerical threads or hash seed differ")
+    return freeze, records, hashlib.sha256(raw).hexdigest()
+
+
+class Forecaster:
+    def __init__(self, fit, monitor, model, bindings, native):
+        self.fit, self.monitor, self.model, self.bindings, self.native = fit, monitor, model, bindings, native
+
+    def forecast(self, request):
+        # The server validates the entire request and duplicate ID before this.
+        primitive, public = request["primitive"], request["observation"]
+        response = {"schema": "semabi.j1.forecast.v1", "instrument_status": "COMPLETE"}
+        if primitive is None:
+            return {**response, "status": "UNREACHABLE"}
+        if public is None:
+            return {**response, "status": "NO_PRESTATE"}
+        if primitive["kind"] != "click" or primitive["target"] is None:
+            return {**response, "status": "NON_CLICK"}
+        copier = self.model.trace.Copier(self.bindings)
+        values = {}
+        started = time.monotonic_ns()
+        try:
+            obs = self.native.Observation.from_json(public)
+            action = self.native.Primitive(**primitive)
+            self.monitor.note_observation(public)
+            A = self.fit.abstractor
+            control = self.native.consequence.clicked_control(A, obs, SimpleNamespace(action=action))
+            values["control"] = control
+            got = self.fit.outcomes.get(control)
+            if got is None:
+                response["status"] = "NO_MODEL"
+            else:
+                state = values["state"] = A.abstract(obs)
+                parsed = values["parsed"] = A.parsed(obs)
+                owner = values["owner"] = self.native.consequence._owner_object(A, parsed, state, action.target)
+                bound, status = got.bind(state, owner)
+                values.update(bound=bound, binding_status=status)
+                self.model.trace.mapping(bound)
+                self.model.trace.mapping(status)
+                literals = self.native.outcome.query_literals(self.fit, got, state, bound, status)
+                values.update(literals=literals, roles=self.model.trace.stored(got)["roles"],
+                              arg_roles=self.model.trace.stored(got)["arg_roles"])
+                if type(literals) is not set:
+                    copier.unknown("unexpected_native_literal_collection", "forecast.literals")
+                    raise TypeError("Native literal result is not a stored set")
+                predicted = got.predict(literals)
+                values["decision_list"] = predicted
+                if type(predicted) is not str:
+                    copier.unknown("unexpected_native_event", "forecast.decision_list")
+                    raise TypeError("Native prediction is not an event string")
+                rule = got.admissible(literals, corroborated=True, hypothesis=self.native.outcome.RULE)
+                values["rule"] = rule
+                self.model.trace.mapping(rule)
+                listed = got.admissible(literals, corroborated=True, hypothesis=self.native.outcome.LIST)
+                values["list"] = listed
+                self.model.trace.mapping(listed)
+                events = dict.fromkeys([predicted, *rule, *listed])
+                values["arguments"] = {}
+                for event in events:
+                    values["arguments"][event] = got.arguments(event, bound)
+                response["status"] = "FORECAST"
+        except Exception as error:
+            response.update(status="ERROR", error={"type": type(error).__name__, "scope": "Native pre-action forecast raised"})
+        response["native_duration_ns"] = time.monotonic_ns() - started
+        response["values"] = copier.copy(values, "forecast")
+        response["snapshots"] = copier.snapshots
+        response["incomplete_reasons"] = copier.errors
+        if copier.errors:
+            response["instrument_status"] = "INCOMPLETE"
+        return response
+
+
+def serve(server, ledger, forecaster, checkpoint, provenance, output):
+    """One request per connection; later actors may use the same resident Fit."""
+    while True:
+        with server.accept()[0] as connection:
+            connection.settimeout(120)
+            with connection.makefile("rb") as stream:
+                raw = stream.readline()
+            io.require(raw.endswith(b"\n"), "Request ended without a complete record")
+            request = io.parse_json(raw)
+            ledger.validate_next(request)
+            if request["op"] == "forecast":
+                response = forecaster.forecast(request)
+            else:
+                response = checkpoint()
+            acknowledgement = ledger.append(request, response, provenance)
+            connection.sendall(io.json_bytes(acknowledgement))
+            if response["instrument_status"] != "COMPLETE":
+                raise RuntimeError("Incomplete forecast or model checkpoint; dependent action must stop")
+            if request["op"] == "shutdown":
+                return {"receipt_index": acknowledgement["receipt_index"], "ledger_sha256": sha(output / "forecasts.jsonl")}
+
+
+def run(args):
+    freeze, raw_records, freeze_sha = verify(args)
+    output = Path(args.out_dir).absolute()
+    io.require(not output.exists() and output.parent.resolve(strict=True) == output.parent,
+               "Output must be a new directory under a canonical parent")
+    socket_path = Path(args.socket).absolute()
+    io.require(not socket_path.exists() and not socket_path.is_symlink()
+               and socket_path.parent.resolve(strict=True) == socket_path.parent, "Socket must have a new owned path")
+    output.mkdir()
+    os.chmod(output, 0o700)
+    status = {"schema": "semabi.j1.predictor_run.v1", "status": "STARTING", "pid": os.getpid(),
+              "start_utc": io.now(), "command": list(sys.argv), "source_head": freeze["source_head"],
+              "runtime_freeze_sha256": freeze_sha, "cpu_affinity": sorted(os.sched_getaffinity(0)),
+              "training": freeze["training"], "socket_path": str(socket_path), "output_directory": str(output)}
+    io.write_json_exclusive(output / "startup.json", status)
+    ledger, server, socket_identity, original_error = None, None, None, None
+    try:
+        sys.path.insert(0, str(ROOT))
+        model = _module("_j1_live_model", HERE / "live_model.py")
+        bindings = model.native_bindings()
+        from semabi.compiler.v4 import consequence, outcome
+        from semabi.compiler.observation import Observation
+        from semabi.compiler.browser import Primitive
+        observer = model.trace.FitObserver(raw_records=raw_records, primary_steps=[], bindings=bindings)
+        fit = None
+        try:
+            with observer:
+                fit = consequence.fit(Path(args.training), None, at=freeze["training"]["actual_steps"])
+        finally:
+            trace_record = observer.export(fit)
+            trace_sha = io.write_json_exclusive(output / "fit_trace.json", trace_record)
+        io.require(trace_record["status"] == "COMPLETE", "Resident fit trace is incomplete")
+        verify(args)
+        monitor = model.LiveMonitor(fit, raw_records, bindings)
+        checkpoint_index = 0
+        def checkpoint():
+            nonlocal checkpoint_index
+            verified, _raw, current_sha = verify(args)
+            io.require(current_sha == freeze_sha and verified == freeze, "Resident source or training changed")
+            record = monitor.checkpoint()
+            record.update(checkpoint_index=checkpoint_index, recorded_utc=io.now())
+            path = output / ("checkpoint_" + format(checkpoint_index, "04d") + ".json")
+            digest = io.write_json_exclusive(path, record)
+            checkpoint_index += 1
+            return {"schema": "semabi.j1.checkpoint_receipt.v1", "instrument_status": record["instrument_status"],
+                    "checkpoint_index": record["checkpoint_index"], "path": str(path), "sha256": digest,
+                    "learned_commitment_sha256": record.get("learned_commitment_sha256")}
+        initial = checkpoint()
+        io.require(initial["instrument_status"] == "COMPLETE", "Initial resident model projection is incomplete")
+        provenance = {"source_head": freeze["source_head"], "runtime_freeze_sha256": freeze_sha,
+                      "training": freeze["training"], "fit_id": str(uuid.uuid4()), "pid": os.getpid(),
+                      "trace_source_sha256": freeze["instrument_files"][relative(HERE / "trace.py")],
+                      "fit_trace_sha256": trace_sha, "initial_checkpoint": initial,
+                      "initial_learned_commitment_sha256": initial["learned_commitment_sha256"]}
+        ledger = io.Ledger(output / "forecasts.jsonl")
+        server = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        server.bind(str(socket_path))
+        socket_stat = socket_path.lstat()
+        socket_identity = (socket_stat.st_dev, socket_stat.st_ino)
+        os.chmod(socket_path, 0o600)
+        server.listen(1)
+        ready = {"schema": "semabi.j1.predictor_ready.v1", "status": "READY", "pid": os.getpid(),
+                 "socket_path": str(socket_path), "ledger_path": str(output / "forecasts.jsonl"), "provenance": provenance}
+        io.write_json_exclusive(output / "ready.json", ready)
+        native = SimpleNamespace(consequence=consequence, outcome=outcome, Observation=Observation, Primitive=Primitive)
+        result = serve(server, ledger, Forecaster(fit, monitor, model, bindings, native), checkpoint, provenance, output)
+        status.update(status="FINISHED", final_receipt=result, checkpoint_count=checkpoint_index,
+                      fit_id=provenance["fit_id"], native_fit_calls=observer.fit_calls)
+    except BaseException as error:
+        original_error = error
+        status.update(status="FAILED", error={"type": type(error).__name__, "detail": str(error)})
+        raise
+    finally:
+        cleanup_errors = []
+        for name, resource in (("ledger", ledger), ("server", server)):
+            if resource is not None:
+                try:
+                    resource.close()
+                except BaseException as error:
+                    cleanup_errors.append({"resource": name, "type": type(error).__name__, "detail": str(error)})
+        if socket_identity is not None:
+            try:
+                current = socket_path.lstat()
+                io.require((current.st_dev, current.st_ino) == socket_identity, "Owned socket path was replaced")
+                socket_path.unlink()
+            except BaseException as error:
+                cleanup_errors.append({"resource": "socket_path", "type": type(error).__name__, "detail": str(error)})
+        if cleanup_errors:
+            status.update(status="FAILED", cleanup_errors=cleanup_errors)
+        status["end_utc"] = io.now()
+        try:
+            io.write_json_exclusive(output / "termination.json", status)
+        except BaseException as error:
+            cleanup_errors.append({"resource": "termination_record", "type": type(error).__name__, "detail": str(error)})
+            status["status"] = "FAILED"
+        print(io.json_bytes({"status": status["status"], "pid": status["pid"], "output": str(output),
+                             "cleanup_errors": cleanup_errors}).decode(), end="", flush=True)
+        if cleanup_errors and original_error is None:
+            raise RuntimeError("Resident cleanup or terminal persistence failed")
+    return 0
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    sub = parser.add_subparsers(dest="operation", required=True)
+    preparation = sub.add_parser("prepare")
+    preparation.add_argument("--training", type=Path, required=True)
+    preparation.add_argument("--freeze", type=Path, required=True)
+    preparation.add_argument("--cpu", type=int, required=True)
+    execution = sub.add_parser("run")
+    execution.add_argument("--training", type=Path, required=True)
+    execution.add_argument("--freeze", type=Path, required=True)
+    execution.add_argument("--out-dir", type=Path, required=True)
+    execution.add_argument("--socket", type=Path, required=True)
+    args = parser.parse_args()
+    return {"prepare": prepare, "run": run}[args.operation](args)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -1,0 +1,25 @@
+:root { font-family: ui-sans-serif, system-ui, sans-serif; color: #18312d; background: #edf3ef; }
+body { margin: 0; }
+main { max-width: 1240px; margin: 0 auto; padding: 22px 28px; }
+header { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+h1 { font-size: 25px; margin: 0 0 5px; }
+header p { margin: 0; color: #48635b; }
+h2 { font-size: 16px; margin: 19px 0 8px; }
+h3 { font-size: 16px; margin: 0 0 8px; }
+.members { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.member { padding: 11px 13px; border: 1px solid #bad0c3; border-radius: 7px; background: #fff; }
+.transmitters .member { display: flex; align-items: center; justify-content: space-between; }
+.transmitters h3 { margin: 0; }
+button, select { font: inherit; font-size: 13px; border: 1px solid #809e8e; border-radius: 4px; background: #f7faf8; color: inherit; }
+button { padding: 7px 10px; cursor: pointer; }
+button:disabled { cursor: default; opacity: .6; }
+button:hover:enabled { background: #e5f0e8; }
+button:focus-visible, select:focus-visible, input:focus-visible { outline: 3px solid #297d91; outline-offset: 2px; }
+.toolbar { display: flex; gap: 8px; }
+.receivers label { font-size: 13px; display: inline-flex; align-items: center; gap: 5px; }
+.receipt { margin: 8px 0; font-size: 13px; }
+.endpoints { display: flex; gap: 10px; }
+.endpoints label { display: flex; flex: 1; min-width: 0; flex-direction: column; gap: 5px; font-size: 12px; }
+select { min-width: 0; width: 100%; padding: 5px; }
+.message { padding: 11px 13px; margin: 16px 0 0; border-left: 4px solid #568b73; background: #fff; }
+@media (max-width: 720px) { main { padding: 16px; } header { align-items: flex-start; flex-direction: column; gap: 12px; } .members { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

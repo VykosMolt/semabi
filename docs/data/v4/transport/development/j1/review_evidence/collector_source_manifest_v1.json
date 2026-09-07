@@ -1,0 +1,16 @@
+{
+  "command": "taskset -c 12 env PYTHONHASHSEED=0 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 NUMEXPR_NUM_THREADS=1 python -B docs/data/v4/transport/development/j1/review_evidence/collector_checks_v1.py",
+  "created_at_utc": "2026-09-07T20:06:29.172998+00:00",
+  "native_browser_or_learner_execution": false,
+  "schema": "semabi.j1.collector_synthetic_source_manifest.v1",
+  "sha256": {
+    "docs/data/v4/transport/development/j1/collect.py": "53d1bcb26ef3069a23404cd3872713b840ced39215e34d8022f9c2c94fd0492d",
+    "docs/data/v4/transport/development/j1/collector_plan_v1.md": "835887c7e88a52d0f75103250730e70b44c1ef526d588668290c62400d2b9453",
+    "docs/data/v4/transport/development/j1/review_evidence/collector_checks_v1.py": "0d32a018117bf5f1c8c3fa7629d38e94ebf91309b6fcb333618562b78981717c",
+    "scripts/transport_collect.py": "022f80109a55b0ff86c06fa72ca3654a3b15ab3a66c187cace15b00b828fcc14",
+    "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c"
+  },
+  "stage": "before first invented-data execution"
+}

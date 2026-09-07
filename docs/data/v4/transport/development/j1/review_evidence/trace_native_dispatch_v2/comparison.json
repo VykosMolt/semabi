@@ -1,0 +1,65 @@
+{
+ "checks": {
+  "both_common_projections_complete": true,
+  "both_processes_finished": true,
+  "common_projection_identical": true,
+  "native_exception_restores_profiler": true,
+  "native_mutation_after_first_lift_retained": true,
+  "nonempty_real_grounding": true,
+  "nonempty_real_lift": true,
+  "trace_complete": true
+ },
+ "first_lift_identities_changed_later": [
+  "transition_000000",
+  "transition_000001",
+  "transition_000002",
+  "transition_000003",
+  "transition_000004",
+  "transition_000005",
+  "transition_000006",
+  "transition_000007",
+  "transition_000008",
+  "transition_000009",
+  "transition_000010",
+  "transition_000011",
+  "transition_000012",
+  "transition_000013",
+  "transition_000014",
+  "transition_000015",
+  "transition_000016",
+  "transition_000017",
+  "transition_000018",
+  "transition_000019",
+  "transition_000020",
+  "transition_000021",
+  "transition_000022",
+  "transition_000023",
+  "transition_000024",
+  "transition_000025",
+  "transition_000026",
+  "transition_000027",
+  "transition_000028",
+  "transition_000029",
+  "transition_000030"
+ ],
+ "omitted_inducer_run_calls": [],
+ "outcome_pass_count": 2,
+ "outputs": {
+  "baseline": {
+   "path": "docs/data/v4/transport/development/j1/review_evidence/trace_native_dispatch_v2/baseline.json",
+   "sha256": "602a889104a0b2009ec9c6819407cc20b825d47c98240ecacb9162e5ecbd79cd"
+  },
+  "exception": {
+   "path": "docs/data/v4/transport/development/j1/review_evidence/trace_native_dispatch_v2/exception.json",
+   "sha256": "4e4e64d855ac56678e4237368fed1f34ccc6eed69971baaaea8f14b6c11043f5"
+  },
+  "profiled": {
+   "path": "docs/data/v4/transport/development/j1/review_evidence/trace_native_dispatch_v2/profiled.json",
+   "sha256": "f70d1bd7be8abc476c3d5463e76f2a87ea5b253c03f4e3f852585599ebeb5746"
+  }
+ },
+ "plan_sha256": "9bdca6f7097dc573bd004d9b8545e7674cdbe3f07bd3b1e36b2c77bd88d81f62",
+ "schema": "semabi.transport.j1_trace_validation_comparison.v1",
+ "scope": "Full common projection equality is admissible only when both projections and the trace are complete. Missing required native phenomena are preserved as insufficient coverage.",
+ "status": "PASS"
+}

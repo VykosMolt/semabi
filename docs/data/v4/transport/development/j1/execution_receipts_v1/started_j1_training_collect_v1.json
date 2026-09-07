@@ -1,0 +1,58 @@
+{
+  "created_utc": "2026-09-07T22:12:31.070782+00:00",
+  "job": "j1_training_collect_v1",
+  "observed_processes": {
+    "child_pid": {
+      "affinity": [
+        17
+      ],
+      "environment": {
+        "BLIS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "PYTHONHASHSEED": "0",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "nice": 0,
+      "pgid": 894836,
+      "pid": 894836
+    },
+    "runner_pid": {
+      "affinity": [
+        17
+      ],
+      "environment": {
+        "BLIS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "PYTHONHASHSEED": "0",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "nice": 0,
+      "pgid": 894834,
+      "pid": 894834
+    }
+  },
+  "pid_scope": "Escalated host namespace shared with browser/service launches",
+  "process_metadata": {
+    "child_pid": 894836,
+    "child_terminated": null,
+    "cwd": "/home/moloch/semabi",
+    "end_utc": null,
+    "owned_process_group": 894836,
+    "owner": "/root",
+    "returncode": null,
+    "runner_pid": 894834,
+    "source_head": "592590560008632076469ae51beb160d23817b86",
+    "start_utc": "2026-09-07T22:12:02.950273+00:00",
+    "status": "RUNNING"
+  },
+  "process_record_sha256_at_observation": "e9972da5f233eddb0c3d94b16574dc1c3de43d02173c005d7a7d263c27a006ad",
+  "schema": "semabi.j1.owned_session_start.v1",
+  "semantic_output_opened": false,
+  "session_id": 79724
+}

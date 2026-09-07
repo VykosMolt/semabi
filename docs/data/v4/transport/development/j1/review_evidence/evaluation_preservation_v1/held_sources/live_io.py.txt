@@ -1,0 +1,293 @@
+"""Plain JSON custody for J1's separate evaluator actor and resident predictor.
+
+This module imports no learner or fixture. Public input validation happens
+before native object construction. A receipt authenticates durable ledger bytes;
+it does not score a prediction or choose the actor's next action.
+"""
+from __future__ import annotations
+
+from datetime import datetime, timezone
+import hashlib
+import json
+import math
+from pathlib import Path
+import os
+import socket
+import uuid
+
+REQUEST_SCHEMA = "semabi.j1.live_request.v1"
+RECORD_SCHEMA = "semabi.j1.live_record.v1"
+ACK_SCHEMA = "semabi.j1.live_ack.v1"
+PRIMITIVE_KEYS = {"kind", "target", "text", "target_desc"}
+KINDS = {"click", "type", "select", "press", "reset", "reload", "noop"}
+ACK_KEYS = {"schema", "request_id", "receipt_index", "offset", "length",
+            "record_sha256", "instrument_status"}
+
+
+class ProtocolError(ValueError):
+    pass
+
+
+def require(condition, detail):
+    if not condition:
+        raise ProtocolError(detail)
+
+
+def now():
+    return datetime.now(timezone.utc).isoformat()
+
+
+def json_bytes(value):
+    return (json.dumps(value, sort_keys=True, ensure_ascii=False, allow_nan=False,
+                       separators=(",", ":")) + "\n").encode("utf-8")
+
+
+def digest(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def parse_json(raw):
+    def pairs(items):
+        result = {}
+        for key, value in items:
+            require(key not in result, "Duplicate JSON key")
+            result[key] = value
+        return result
+
+    def invalid_constant(_value):
+        raise ProtocolError("Nonfinite JSON number")
+
+    return json.loads(raw, object_pairs_hook=pairs, parse_constant=invalid_constant)
+
+
+def write_json_exclusive(path, value):
+    raw = json_bytes(value)
+    with Path(path).open("xb") as stream:
+        require(stream.write(raw) == len(raw), "Incomplete metadata write")
+        stream.flush()
+        os.fsync(stream.fileno())
+    return digest(raw)
+
+
+def _integer(value, minimum=0):
+    return type(value) is int and value >= minimum
+
+
+def _real(value):
+    return type(value) in (int, float) and (type(value) is int or math.isfinite(value))
+
+
+def validate_observation(observation):
+    if observation is None:
+        return
+    require(type(observation) is dict and set(observation) == {"url", "nodes"},
+            "Observation schema differs")
+    require(type(observation["url"]) is str and type(observation["nodes"]) is list,
+            "Observation values differ")
+    nodes = observation["nodes"]
+    required = {"i", "parent", "role", "name", "bbox"}
+    optional = {"value", "checked", "options", "placeholder", "current"}
+    parents = []
+    for index, node in enumerate(nodes):
+        require(type(node) is dict and required <= set(node) <= required | optional,
+                "Node schema differs")
+        require(type(node["i"]) is int and node["i"] == index
+                and type(node["parent"]) is int and -1 <= node["parent"] < len(nodes),
+                "Node indices differ")
+        require(type(node["role"]) is str and type(node["name"]) is str,
+                "Node labels differ")
+        for field in ("value", "placeholder"):
+            require(node.get(field) is None or type(node[field]) is str,
+                    "Node text value differs")
+        for field in ("checked", "current"):
+            require(node.get(field) is None or type(node[field]) is bool,
+                    "Node state value differs")
+        options = node.get("options")
+        require(options is None or (type(options) is list
+                                    and all(type(option) is str for option in options)),
+                "Node options differ")
+        require(type(node["bbox"]) is list and len(node["bbox"]) == 4
+                and all(_real(value) for value in node["bbox"]), "Node bounds differ")
+        parents.append(node["parent"])
+    completed = set()
+    for index in range(len(nodes)):
+        cursor, active = index, set()
+        while cursor != -1 and cursor not in completed:
+            require(cursor not in active, "Cyclic public ancestry")
+            active.add(cursor)
+            cursor = parents[cursor]
+        completed.update(active)
+
+
+def public_descriptor(node):
+    return {"role": node["role"], "name": node["name"],
+            "placeholder": node.get("placeholder")}
+
+
+def validate_primitive(primitive, observation):
+    if primitive is None:
+        return
+    require(type(primitive) is dict and set(primitive) == PRIMITIVE_KEYS,
+            "Primitive schema differs")
+    require(type(primitive["kind"]) is str and primitive["kind"] in KINDS,
+            "Primitive kind differs")
+    text = primitive["text"]
+    # The retained Recorder preserves attempted scalar arguments even if Browser
+    # later rejects one. Do not erase a charged native failure by coercing text.
+    require(text is None or type(text) in (str, bool) or _real(text),
+            "Primitive text must be a public JSON scalar")
+    target = primitive["target"]
+    if target is None:
+        require(primitive["target_desc"] is None, "Unresolved descriptor is forbidden")
+        require(primitive["kind"] not in {"click", "type", "select"},
+                "Targeted primitive must resolve or use the null primitive")
+        return
+    require(observation is not None and _integer(target)
+            and target < len(observation["nodes"]), "Primitive target differs")
+    require(primitive["target_desc"] == public_descriptor(observation["nodes"][target])
+            and type(primitive["target_desc"]) is dict
+            and set(primitive["target_desc"]) == {"role", "name", "placeholder"},
+            "Primitive descriptor must match the public target")
+
+
+def validate_request(request):
+    require(type(request) is dict and request.get("schema") == REQUEST_SCHEMA,
+            "Request schema differs")
+    operation = request.get("op")
+    require(type(operation) is str and operation in {"forecast", "checkpoint", "shutdown"},
+            "Request operation differs")
+    fields = {"schema", "op", "request_id"}
+    if operation == "forecast":
+        fields |= {"observation", "primitive"}
+    require(set(request) == fields, "Request fields differ")
+    identity = request["request_id"]
+    require(type(identity) is str, "Request ID must be opaque UUID4")
+    try:
+        parsed = uuid.UUID(identity)
+    except (ValueError, AttributeError) as error:
+        raise ProtocolError("Request ID must be opaque UUID4") from error
+    require(str(parsed) == identity and parsed.version == 4, "Request ID must be opaque UUID4")
+    if operation == "forecast":
+        validate_observation(request["observation"])
+        validate_primitive(request["primitive"], request["observation"])
+
+
+def forecast_request(observation, primitive, *, request_id=None):
+    """Copy public input; derive only Browser's ordinary public descriptor."""
+    observation = parse_json(json_bytes(observation))
+    primitive = parse_json(json_bytes(primitive))
+    validate_observation(observation)
+    if primitive is not None:
+        require(type(primitive) is dict and set(primitive) == PRIMITIVE_KEYS,
+                "Primitive schema differs")
+        target = primitive["target"]
+        if target is not None:
+            require(observation is not None and _integer(target)
+                    and target < len(observation["nodes"]), "Primitive target differs")
+            descriptor = public_descriptor(observation["nodes"][target])
+            require(primitive["target_desc"] is None or primitive["target_desc"] == descriptor,
+                    "Conflicting supplied public descriptor")
+            primitive["target_desc"] = descriptor
+    request = {"schema": REQUEST_SCHEMA, "op": "forecast",
+               "request_id": str(uuid.uuid4()) if request_id is None else request_id,
+               "observation": observation, "primitive": primitive}
+    validate_request(request)
+    return request
+
+
+def control_request(operation):
+    request = {"schema": REQUEST_SCHEMA, "op": operation, "request_id": str(uuid.uuid4())}
+    validate_request(request)
+    return request
+
+
+class Ledger:
+    """One owned append-only file, with acknowledgement only after fsync."""
+    def __init__(self, path):
+        self.path = Path(path)
+        self.stream = self.path.open("xb")
+        self.index = 0
+        self.seen = set()
+        self.broken = False
+
+    def validate_next(self, request):
+        require(not self.broken, "Ledger failed previously")
+        validate_request(request)
+        require(request["request_id"] not in self.seen, "Duplicate request ID")
+
+    def append(self, request, response, provenance):
+        self.validate_next(request)
+        require(type(response) is dict and response.get("instrument_status") in {"COMPLETE", "INCOMPLETE"},
+                "Response must declare instrument completeness")
+        record = {"schema": RECORD_SCHEMA, "receipt_index": self.index + 1,
+                  "recorded_utc": now(), "request": request, "response": response,
+                  "provenance": provenance}
+        raw = json_bytes(record)
+        offset = self.stream.tell()
+        try:
+            require(self.stream.write(raw) == len(raw), "Incomplete ledger write")
+            self.stream.flush()
+            os.fsync(self.stream.fileno())
+        except BaseException:
+            self.broken = True
+            raise
+        self.index += 1
+        self.seen.add(request["request_id"])
+        return {"schema": ACK_SCHEMA, "request_id": request["request_id"],
+                "receipt_index": self.index, "offset": offset, "length": len(raw),
+                "record_sha256": digest(raw), "instrument_status": response["instrument_status"]}
+
+    def close(self):
+        self.stream.close()
+
+
+def verify_receipt(ledger_path, acknowledgement, request):
+    validate_request(request)
+    ack = acknowledgement
+    require(type(ack) is dict and set(ack) == ACK_KEYS and ack["schema"] == ACK_SCHEMA,
+            "Acknowledgement schema differs")
+    require(ack["request_id"] == request["request_id"]
+            and _integer(ack["receipt_index"], 1) and _integer(ack["offset"])
+            and _integer(ack["length"], 1), "Acknowledgement identity or position differs")
+    expected = ack["record_sha256"]
+    require(type(expected) is str and len(expected) == 64
+            and all(char in "0123456789abcdef" for char in expected), "Acknowledgement hash differs")
+    path = Path(ledger_path).absolute()
+    require(path.resolve(strict=True) == path and path.is_file(), "Ledger path is noncanonical")
+    with path.open("rb") as stream:
+        stream.seek(ack["offset"])
+        raw = stream.read(ack["length"])
+    require(len(raw) == ack["length"] and digest(raw) == expected, "Durable ledger bytes differ")
+    record = parse_json(raw)
+    require(type(record) is dict and set(record) == {
+        "schema", "receipt_index", "recorded_utc", "request", "response", "provenance"},
+        "Ledger record schema differs")
+    require(record["schema"] == RECORD_SCHEMA and _integer(record["receipt_index"], 1)
+            and record["receipt_index"] == ack["receipt_index"]
+            and json_bytes(record["request"]) == json_bytes(request)
+            and json_bytes(record) == raw, "Ledger request, index or canonical bytes differ")
+    require(type(record["response"]) is dict
+            and record["response"].get("instrument_status") == ack["instrument_status"]
+            and ack["instrument_status"] in {"COMPLETE", "INCOMPLETE"},
+            "Ledger instrument status differs")
+    return record
+
+
+class Client:
+    def __init__(self, socket_path, ledger_path, *, timeout=120.0):
+        self.socket_path = str(socket_path)
+        self.ledger_path = Path(ledger_path)
+        self.timeout = timeout
+
+    def request(self, request):
+        validate_request(request)
+        with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as connection:
+            connection.settimeout(self.timeout)
+            connection.connect(self.socket_path)
+            connection.sendall(json_bytes(request))
+            with connection.makefile("rb") as stream:
+                raw = stream.readline()
+        require(raw.endswith(b"\n"), "Acknowledgement ended without a complete record")
+        acknowledgement = parse_json(raw)
+        record = verify_receipt(self.ledger_path, acknowledgement, request)
+        return acknowledgement, record

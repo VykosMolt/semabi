@@ -1,0 +1,14 @@
+{
+  "schema": "semabi.j1.resident_pilot_comparison_receipt.v1",
+  "plan_sha256": "2fb61a715b2698b2f8fadddab7d8e41e246cdd3b09244d636f8f5fb01044a6ef",
+  "comparison_sha256": "ecda58be0b767bb32c3087f7860ce91e49836cc276671e4327c5f82b33d7c76d",
+  "session_id": 24950,
+  "command": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 taskset -c 12 .venv/bin/python docs/data/v4/transport/development/j1/review_evidence/resident_native_validation_v1.py compare --plan docs/data/v4/transport/development/j1/review_evidence/resident_native_dispatch_v1/plan.json",
+  "tool_receipt": {
+    "chunk_id": "f95792",
+    "wall_time_seconds": 0.000002074,
+    "exit_code": 0,
+    "original_token_count": 256,
+    "output": "{\"checks\":{\"all_forecasts_and_controls_instrument_complete\":true,\"both_launch_receipts_retained\":true,\"both_launcher_sessions_reaped\":true,\"both_owned_jobs_finished\":true,\"both_run_records_finished\":true,\"complete_native_prediction_path_exercised\":true,\"core_object_identities_identical\":true,\"driver_imported_no_native_modules\":true,\"five_complete_checkpoint_files\":true,\"learned_commitments_identical\":true,\"native_fit_trace_complete\":true,\"one_native_fit_same_process\":true,\"owned_socket_removed\":true,\"receipts_verify_same_resident_provenance\":true,\"repeat_known_forecast_identical_after_typed_cache_exclusions\":true,\"seven_exact_durable_receipts\":true,\"unseen_observation_added_to_native_graph\":true,\"unseen_observation_added_to_parse_cache\":true,\"unseen_observation_exercises_hypothesis_memo_growth\":true},\"errors\":[],\"path\":\"docs/data/v4/transport/development/j1/review_evidence/resident_native_dispatch_v1/comparison.json\",\"sha256\":\"ecda58be0b767bb32c3087f7860ce91e49836cc276671e4327c5f82b33d7c76d\",\"status\":\"PASS\"}\n"
+  }
+}

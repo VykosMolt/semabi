@@ -1,0 +1,14 @@
+{
+  "schema": "semabi.j1.independent_check_tool_receipt.v1",
+  "owner": "/root/baseline_verification",
+  "completed_in_launch": true,
+  "tool_session_id": null,
+  "command": "taskset -c 8 env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 PYTHONHASHSEED=0 .venv/bin/python -B docs/data/v4/transport/development/j1/review_evidence/score_checks_v1.py --score-sha 28f2887e0ff9e59ed183173024d76cee04f29325828a7116328bbf6ecb07025d --protocol-sha 897b89e75ecba96555bda621523f1af07fbc5904fd2a9c6220f2d1bbe0a51433 --output docs/data/v4/transport/development/j1/review_evidence/score_checks_attempt1_v1.json",
+  "result": {
+    "chunk_id": "457abc",
+    "wall_time_seconds": 0.000002514,
+    "exit_code": 0,
+    "original_token_count": 53,
+    "output": "{\"path\": \"docs/data/v4/transport/development/j1/review_evidence/score_checks_attempt1_v1.json\", \"sha256\": \"791e3c1c3d79ea4b797660411e9d6d10ea6d511980655c8e8241e840e2c79bc3\", \"counts\": {\"PASS\": 80}, \"failed\": []}\n"
+  }
+}

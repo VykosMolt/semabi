@@ -1,0 +1,75 @@
+{
+  "bootstrap_goto": 0,
+  "case_count": 24,
+  "charged_attempts": 313,
+  "complete": true,
+  "end": {
+    "argv": [
+      "/home/moloch/semabi/docs/data/v4/transport/development/j1/collect.py",
+      "script",
+      "--url",
+      "http://127.0.0.1:8771/join",
+      "--reset-url",
+      "http://127.0.0.1:8771/reset",
+      "--script",
+      "experiments/join_v1/oracle/scripts_v1.json",
+      "--fixture",
+      "primary_training",
+      "--seed",
+      "0",
+      "--freeze",
+      "docs/data/v4/transport/development/j1/training_freeze_v1.json",
+      "--out",
+      "docs/data/v4/transport/first_pass/join/j1_training_v1"
+    ],
+    "cwd": "/home/moloch/semabi",
+    "git_head": "592590560008632076469ae51beb160d23817b86",
+    "pid": 894836,
+    "utc": "2026-09-07T22:15:46.892238+00:00"
+  },
+  "failed_attempts": 0,
+  "freeze_sha256": "816c4da2922aab7f7948328fa2864032bac2f26a7f4ae8d8954215a52a45e2ed",
+  "navigation_waits": 0,
+  "paired_steps_recorded": 312,
+  "primitive_counts": {
+    "click": 96,
+    "reload": 1,
+    "reset": 24,
+    "select": 192
+  },
+  "raw_hashes": {
+    "decisions.jsonl": "2e875c9bce55b0df68ae3b46cab843f48123761e71edef61253180fdb575aa8a",
+    "observations.jsonl": "c271d8d73229326d558a3790365cd5743d227da5e0ebd93e66b1928848d9c4b9",
+    "steps.jsonl": "53ac19a56ed58a852f1bd84468f3b7907f0765252b8501e8a990176325b15452"
+  },
+  "script_file": "experiments/join_v1/oracle/scripts_v1.json",
+  "script_sha256": "d44719acaa5ae83757829fd652796804abd230a213c5401d5228851ff8ab8b39",
+  "settle_timeouts": 0,
+  "snapshot_calls": 625,
+  "start": {
+    "argv": [
+      "/home/moloch/semabi/docs/data/v4/transport/development/j1/collect.py",
+      "script",
+      "--url",
+      "http://127.0.0.1:8771/join",
+      "--reset-url",
+      "http://127.0.0.1:8771/reset",
+      "--script",
+      "experiments/join_v1/oracle/scripts_v1.json",
+      "--fixture",
+      "primary_training",
+      "--seed",
+      "0",
+      "--freeze",
+      "docs/data/v4/transport/development/j1/training_freeze_v1.json",
+      "--out",
+      "docs/data/v4/transport/first_pass/join/j1_training_v1"
+    ],
+    "cwd": "/home/moloch/semabi",
+    "git_head": "592590560008632076469ae51beb160d23817b86",
+    "pid": 894836,
+    "utc": "2026-09-07T22:12:03.047009+00:00"
+  },
+  "status": "FINISHED",
+  "unpaired_attempts": 1
+}

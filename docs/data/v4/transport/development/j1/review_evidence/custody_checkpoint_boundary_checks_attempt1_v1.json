@@ -1,0 +1,283 @@
+{
+  "checks": [
+    {
+      "expected": "accept",
+      "name": "declared_cat_with_both_native_relationships",
+      "result": {
+        "objects": {
+          "abstractor": 1002,
+          "evidence": 1007,
+          "fit": 1000,
+          "graph": 1004,
+          "hypotheses": 1003,
+          "inducer": 1001,
+          "log": 1006,
+          "vocabulary": 1005
+        },
+        "ownership": {
+          "abstractor_hypotheses": true,
+          "abstractor_vocabulary": true,
+          "cat_has_no_instance_fields": true,
+          "cat_view_controls": true,
+          "emission_frozen": true,
+          "fit_abstractor": true,
+          "fit_evidence": true,
+          "fit_inducer": true,
+          "fit_log": true,
+          "fit_operators": true,
+          "graph_frozen": true,
+          "inducer_abstractor": true,
+          "inducer_evidence": true,
+          "parser_is_none": true,
+          "same_pid": true,
+          "shared_graph": true
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "expected": "accept",
+      "name": "same_cat_handle_and_native_objects_later",
+      "result": {
+        "objects": {
+          "abstractor": 1002,
+          "evidence": 1007,
+          "fit": 1000,
+          "graph": 1004,
+          "hypotheses": 1003,
+          "inducer": 1001,
+          "log": 1006,
+          "vocabulary": 1005
+        },
+        "ownership": {
+          "abstractor_hypotheses": true,
+          "abstractor_vocabulary": true,
+          "cat_has_no_instance_fields": true,
+          "cat_view_controls": true,
+          "emission_frozen": true,
+          "fit_abstractor": true,
+          "fit_evidence": true,
+          "fit_inducer": true,
+          "fit_log": true,
+          "fit_operators": true,
+          "graph_frozen": true,
+          "inducer_abstractor": true,
+          "inducer_evidence": true,
+          "parser_is_none": true,
+          "same_pid": true,
+          "shared_graph": true
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint projection or ownership is incomplete",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "cat_missing_one_relationship",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint projection or ownership is incomplete",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "cat_false_relationship",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint projection or ownership is incomplete",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "cat_extra_relationship",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint derived view-control handle differs from stored inventory",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "cat_declared_but_handle_absent",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint derived view-control handle differs from stored inventory",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "cat_absent_but_handle_declared",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint projection or ownership is incomplete",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "cat_absent_but_relationships_present",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint derived view-control handle differs from stored inventory",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "parser_handle_not_none",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint native object identity inventory differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "object_id_float_alias",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint native object identity inventory differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "object_id_zero",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint native object identity inventory differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "object_id_negative",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint resident process differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "caller_pid_bool_alias",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint resident process differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "caller_pid_float_alias",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint resident process differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "caller_pid_zero",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint resident process differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "caller_pid_negative",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint stored object inventory differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "stored_field_duplicate",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint stored object inventory differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "stored_fields_unsorted",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint stored object inventory differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "stored_field_nonstring",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint native object identity inventory differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "extra_attested_native_object",
+      "status": "PASS"
+    },
+    {
+      "detail": "Checkpoint stored object inventory differs",
+      "exception": "ProtocolError",
+      "expected": "reject",
+      "name": "missing_stored_inventory_with_rebound_hash",
+      "status": "PASS"
+    }
+  ],
+  "counts": {
+    "PASS": 21
+  },
+  "schema": "semabi.j1.custody_checkpoint_boundary_checks.v1",
+  "scope": "Invented native public raw training objects and checkpoint data only. Every mutated checkpoint commitment/hash is coherently rebound before its rejection check. No fit, prediction, browser, socket service, evaluator payload or custody CLI.",
+  "sources": {
+    "docs/data/v4/transport/development/j1/custody.py": "001d6b1ecc7ddf8611cab651b413adcdab45f32d3f388e1dadfe40da86d46aed",
+    "docs/data/v4/transport/development/j1/live_io.py": "2cf44787526076337b53d8a67ef12796c7460d2dcb64cfbbbec7093c946a5327",
+    "docs/data/v4/transport/development/j1/live_model.py": "6e34f1422ee8905abf84e0699bdf5361c6c88822c950d96b5169e60414ae3ff7",
+    "docs/data/v4/transport/development/j1/review_evidence/custody_checkpoint_boundary_checks_v1.py": "40770968261b064cba9d953f01991e991a23dfff82cfedc87380906b48d6558d",
+    "docs/data/v4/transport/development/j1/review_evidence/custody_control_checks_v1.py": "8d22a5d1af9d3d63f8038e0de27d724399521ed71b45f663b50d495273e9e98a",
+    "docs/data/v4/transport/development/j1/trace.py": "25c1624ce8bffbb0bda98f478fc64c73a54d492f3c02c37e81dce44d04892249",
+    "semabi/__init__.py": "0a6e61cf4d9d8dc368fef7bc2053e6db686e3fb70272d7f9e9f1e5b3f79f95e8",
+    "semabi/compiler/__init__.py": "5249623658aef7d2b87bd34d06fab3f181b1ef5bbb9dd70b827592bb01b02893",
+    "semabi/compiler/abstract.py": "a8a2efeebbab13c27efd1a093ff9696cda06e7d1148abe5ec41a840cbdba6056",
+    "semabi/compiler/active.py": "e3572ead5849a7c2d61897eb4498971374797681b8157f8af4af78e7eef64a4a",
+    "semabi/compiler/belief.py": "10996cf9f5f2264ecbe8e28235718e81fc606ed249d8c2708f50541a73a8aa5c",
+    "semabi/compiler/browser.py": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+    "semabi/compiler/compile.py": "fa0e4b4237658dc2e5d41cf715fe8ca884b0b2ec9b714cde4f1917318c9f920f",
+    "semabi/compiler/compile_v1.py": "200ccf04a38b69f04655a3bd72c9e0edb5a436eea64dadab6c4f55a3e4377d6c",
+    "semabi/compiler/compile_v2.py": "4c548ab43776c854da23c0a9b85ede95fb18e43d8bfffa4e0ada800b2a0d2d87",
+    "semabi/compiler/compile_v4.py": "8ac23e907a19b790e78fadf6d7d0c22f8176620dd93844b7f21f32551e5193ad",
+    "semabi/compiler/evidence.py": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+    "semabi/compiler/explorer.py": "16827d3735c9eab4d51a60c585790226be3e692bb63b01794df29a9ba8c8c807",
+    "semabi/compiler/ground.py": "5c94dc46bb5dab3702f77c777e934c14db72183636139441e02fa8410e0f420e",
+    "semabi/compiler/grounder.py": "d272260d2bacd64dcd7fc88f2094c2f84b989736c89924460cc0053b8e97ac06",
+    "semabi/compiler/induce.py": "c726cb2f40c78cc946d8a998e94e056f300e0591fc4d74f73cd8504222954fb8",
+    "semabi/compiler/mentions.py": "800fa94e2e4f76bfc503c7557ec775f6d83a612f6634123a62f78a16de2b781c",
+    "semabi/compiler/model.py": "5175ff650a75fdb39da8f943d5193c99a533f069929af158f0facfc963c9bf31",
+    "semabi/compiler/observation.py": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+    "semabi/compiler/parse.py": "f98bac399682bbd2d583e29183e3663872294a4ee9e5542c7d86371e148b2eb9",
+    "semabi/compiler/planner.py": "0c56abb0518fcfb78e917f54ac21890cda10fe4b458133a3a1fdd0038841d887",
+    "semabi/compiler/schema_llm.py": "f05e458184188ff78113df6c8b872e50174b5232c5b0781e73251e97b1199d4d",
+    "semabi/compiler/v2/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "semabi/compiler/v2/abstractor.py": "0d9b484e558df2844ce8c21dd5b15d16d894a823ae9cd7152a1421a351dd61d5",
+    "semabi/compiler/v2/association.py": "f34e19ff719b2b63475099d36701e9785da6a77b45509861621c7fd20bddba00",
+    "semabi/compiler/v2/controls.py": "e578b9735de3c817b16d742c5c86eefe3ea2ac75ae810cb2cf9aed31aa45687c",
+    "semabi/compiler/v2/counterexamples.py": "3ca77e39f57b99b42a0a923840b3bdd193c86dd6e1cc035772d9c0eca8be60df",
+    "semabi/compiler/v2/differential.py": "a6e7f005f4ff4ab4a0e43802164a7fc41c6f7118daa54d9bd3b888e8bd0933f0",
+    "semabi/compiler/v2/explore.py": "f420a6cabbf8dc8746a3fc0938009b7800554b20bb549b126a187172cb9daac2",
+    "semabi/compiler/v2/graph.py": "f601fb6bd56d8728a01fdc404c6a0d80636cb2ccba98dab09cd26abf5c425b2a",
+    "semabi/compiler/v2/hypotheses.py": "6cc8812664f474bfeafc7bd7f62a43faf0a78f252269077749e062c3a0981b03",
+    "semabi/compiler/v2/llm_propose.py": "fa0951ce5fbdc2e90fd76b184d8f44b39a752585017d7c89d74306e08c68b94e",
+    "semabi/compiler/v2/refinement.py": "79f69756fc146f2f783bc19571bffb7efb42a2a92edbd39ed33c91b83d7645e3",
+    "semabi/compiler/v2/score.py": "aaff604a4c91e8034fdb113c8b76e5e9415eb50bbc91d5ad25755492ae47524b",
+    "semabi/compiler/v2/sections.py": "4bd39bf7e067a94ec19f6ad6c23c098d13ac01efdabafe2f6e15eb213003ba02",
+    "semabi/compiler/v2/units.py": "72ccac1c76e4ca2ab20390098faa8e9be0f5c700ccb3382735a689391f2a3c5f",
+    "semabi/compiler/v2/validation.py": "fc9b6c38def59c4fbcc3b306bb36f6c3eee9aee553ea1edf2fb884741d9f6f34",
+    "semabi/compiler/v2/validation_probe.py": "244cca6a0b735fc67364335e793c0e8848f3a2b4bebf32db1997014ebefbf8ac",
+    "semabi/compiler/v4/__init__.py": "c41acb8afd5f3306718e6b5bb242db1dae876bf512bcec1d6c49108e8fbcc38c",
+    "semabi/compiler/v4/abstractor.py": "4e772cf28d002461de3449e4a939ced2b39a672e629b916612c83bb6ad0625f1",
+    "semabi/compiler/v4/binding.py": "0f905cae535aa975dffe517f1107884f37524fdc3cbcc781ec7f645cd0f9b0dc",
+    "semabi/compiler/v4/conditional.py": "9aa1db4e6a113d3f71f99d8b389a318749fb33affb1166bd6dbd9b29fbc41226",
+    "semabi/compiler/v4/consequence.py": "c95bd040c8b066aaaac5bb5653b2ff20824ed3f2b59aba81c42b8a579ca8445e",
+    "semabi/compiler/v4/correspondence.py": "dd4659f74a4eb1ca8d3656ad278cd15290de2c08318b964e1a85c127fdd1be8c",
+    "semabi/compiler/v4/custody.py": "8f2aa81f444843459ef553c07639afa9ffcc3f342276fde1da5a152da715fb29",
+    "semabi/compiler/v4/emission.py": "5068810fe1d35b988649eb8ff8aecf6bd49dee5344cbdf72e94b156f6ec6cbbe",
+    "semabi/compiler/v4/fields.py": "b5b794432a504b7d30f6574dc1e0d3ff34b44536967ab50ae9a5a0c04ffc9967",
+    "semabi/compiler/v4/frozen_evidence.py": "cb3f7980fd9d24e888f45267ce5f7e597576ea2d2db63783988455bc340f3a65",
+    "semabi/compiler/v4/identity.py": "06792b4a7ebd478fb46edeb7a37c5dce3b7eec02d561994f3560fad2ef01d6a7",
+    "semabi/compiler/v4/manifests.py": "086e3c03591d0a21cfe0fe4717c184f1013fbd1becb86c42d376d98cbcf90b1f",
+    "semabi/compiler/v4/objective.py": "a62d6907b0aa1f643a2e2cb96038cbedab8ac40b55c0e95e67d5f2452f1bdfef",
+    "semabi/compiler/v4/outcome.py": "552b87472577a6f409069fdf459cd64d209a699b48737df57a56a3949813d736",
+    "semabi/compiler/v4/pinned.py": "f3be252e1f021424565aaa20baf846b6b0d1522d9a7678e7770a4b6e006e2c8b",
+    "semabi/compiler/v4/prequential.py": "d3246ff8f2ae45e61d48b97879a219a2cace87abaed2a19bb7f58f76b49e679e",
+    "semabi/compiler/v4/probe.py": "e43d12bae3f22e524ef2548ee1b6a32c0c0e3f248e047e2de41da4bde6f9d6f7",
+    "semabi/compiler/v4/promote.py": "a19ea7bcada01ed2ae72ad7da227d8fa242999cc779cac2988e3a4809bc2db65",
+    "semabi/compiler/v4/prospective.py": "591deb563820612e1f138660b2b2d83f9da51fcdb386b12c88ce19d0e074511b",
+    "semabi/compiler/v4/referring.py": "c0e2abbee5dd724f193bc61a5264268e853837c4282cbe2d372b2ec2489e5b1f",
+    "semabi/compiler/v4/search.py": "c87e3633207dfaa1483574cad2335b23222bec6fa51fe35526adf8dd9576f72c",
+    "semabi/compiler/v4/source_candidates.py": "ff27669ba080d3ce8294bbb43cdc68e77409dd431dba390035aa88f85e8e08fd",
+    "semabi/compiler/v4/sufficiency.py": "48a82b21eff70caa24e04b541d522466f25547cec300694557f67a3e5a74d3a2",
+    "semabi/compiler/v4/transfer.py": "19b138c05c712a8187a7db1ee2eef33b93c9eec83b422a175bbc64d195e49938",
+    "semabi/relmodel.py": "2034f3a5dd7019c5333c8fb4e0283cf349e29905cfa5d0933e453180fa3a4827"
+  },
+  "status": "PASS"
+}

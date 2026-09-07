@@ -1,0 +1,114 @@
+{
+  "all_owned_tool_sessions_reaped": true,
+  "collection": {
+    "bootstrap_goto": 0,
+    "case_count": 24,
+    "charged_attempts": 313,
+    "complete": true,
+    "failed_attempts": 0,
+    "navigation_waits": 0,
+    "paired_steps_recorded": 312,
+    "primitive_counts": {
+      "click": 96,
+      "reload": 1,
+      "reset": 24,
+      "select": 192
+    },
+    "settle_timeouts": 0,
+    "snapshot_calls": 625,
+    "status": "FINISHED",
+    "unpaired_attempts": 1
+  },
+  "collector_verification_status": "PASS",
+  "created_utc": "2026-09-07T22:19:32.601658+00:00",
+  "designated_training_targets": 24,
+  "exact_raw_file_set_verified": true,
+  "executor": "/root/reserved_audit",
+  "extra_browser_or_fixture_actions": 0,
+  "freeze": {
+    "path": "docs/data/v4/transport/development/j1/training_freeze_v1.json",
+    "sha256": "816c4da2922aab7f7948328fa2864032bac2f26a7f4ae8d8954215a52a45e2ed"
+  },
+  "jobs": {
+    "j1_training_collect_v1": {
+      "child_terminated": true,
+      "end_utc": "2026-09-07T22:15:46.923571+00:00",
+      "log_sha256": "3e0e458ccc46634968f5456a9cd55b5812cc497e767c8947370ed4376b75c224",
+      "path": "docs/data/v4/transport/development/j1/jobs/j1_training_collect_v1",
+      "process_sha256": "2be070f39291d9f1c8de552c5957d99a3bd017ff3f083f74b8fc3cfe904d04e4",
+      "returncode": 0,
+      "start_utc": "2026-09-07T22:12:02.950273+00:00",
+      "status": "FINISHED"
+    },
+    "j1_training_service_v1": {
+      "child_terminated": true,
+      "end_utc": "2026-09-07T22:17:12.846746+00:00",
+      "log_sha256": "bea203790174a473d14dc626ac0ea5d39eeac5dba8531da254a90b79316c8a12",
+      "path": "docs/data/v4/transport/development/j1/jobs/j1_training_service_v1",
+      "process_sha256": "af31ad1fb316286bb882ce9d7f906e72034f25850c847147e290aa556922f372",
+      "returncode": -15,
+      "start_utc": "2026-09-07T22:10:47.290873+00:00",
+      "status": "INTERRUPTED"
+    }
+  },
+  "no_fits_forecasts_or_evaluation": true,
+  "owned_host_pids_absent": [
+    893908,
+    893910,
+    894834,
+    894836
+  ],
+  "plan": {
+    "path": "docs/data/v4/transport/development/j1/execution_receipts_v1/training_plan_v1.json",
+    "sha256": "f5b4536b847972ca7014772c4c97d8796f4f048639b1be6cbd48163b471a1db6"
+  },
+  "port8771_listener_absent": true,
+  "preservation_boundary": "Ready for root training preservation. These raw files, jobs and execution receipts are fixed. No semantic diagnosis or model outcome interpretation has occurred. A later evaluation requires separately reviewed and frozen instruments plus new owned service/run identities.",
+  "prior_receipt_sha256": {
+    "docs/data/v4/transport/development/j1/execution_receipts_v1/completed_j1_training_collect_v1.json": "39d0cc72699783a9a92f4ec5fc6b770f73a63caf4a889e31afa5f249eab4b65b",
+    "docs/data/v4/transport/development/j1/execution_receipts_v1/completed_j1_training_service_v1.json": "6f3c68e1f798251bf0c5e52da4213233385dbcd47eac7ec04bf9ab890778ec95",
+    "docs/data/v4/transport/development/j1/execution_receipts_v1/launch_j1_training_collect_v1.json": "db9aa2797d957688004c83e7ebb054660163426a8d8060b792b72b378345b369",
+    "docs/data/v4/transport/development/j1/execution_receipts_v1/launch_j1_training_service_v1.json": "68f73f24408407803428e6719429b7fd122ecb3a11c761935ac55b149bd5085d",
+    "docs/data/v4/transport/development/j1/execution_receipts_v1/started_j1_training_collect_v1.json": "29337b5ac7a0d2203aef1016b3c1ff6495be24fa2ad904f12b83b841e9d701cc",
+    "docs/data/v4/transport/development/j1/execution_receipts_v1/started_j1_training_service_v1.json": "14b30a6fc6dc2cb2c148d69fddc81da89e34446ea8008e31e9578355e78cdcb3",
+    "docs/data/v4/transport/development/j1/execution_receipts_v1/stop_j1_training_service_v1.json": "b67548793e5cc3a6d664b6a2b7fa033749a564d2a4d404fa0a1db288b0eb5ff0",
+    "docs/data/v4/transport/development/j1/execution_receipts_v1/training_go_v1.json": "ac82935df84fd170aa8b35d3ccc8ddaabcaed89d0b8d47307ccaf86cfdd3d330",
+    "docs/data/v4/transport/development/j1/execution_receipts_v1/training_plan_v1.json": "f5b4536b847972ca7014772c4c97d8796f4f048639b1be6cbd48163b471a1db6"
+  },
+  "raw_directory": "docs/data/v4/transport/first_pass/join/j1_training_v1",
+  "raw_files": {
+    "docs/data/v4/transport/first_pass/join/j1_training_v1/collector_verification.json": {
+      "bytes": 1626,
+      "sha256": "506b1a962814c25d04b46bcce9f63ebe04ad44c739f86e37fce1bf75490816b3"
+    },
+    "docs/data/v4/transport/first_pass/join/j1_training_v1/decisions.jsonl": {
+      "bytes": 180430,
+      "sha256": "2e875c9bce55b0df68ae3b46cab843f48123761e71edef61253180fdb575aa8a"
+    },
+    "docs/data/v4/transport/first_pass/join/j1_training_v1/observations.jsonl": {
+      "bytes": 501696,
+      "sha256": "c271d8d73229326d558a3790365cd5743d227da5e0ebd93e66b1928848d9c4b9"
+    },
+    "docs/data/v4/transport/first_pass/join/j1_training_v1/run.json": {
+      "bytes": 2318,
+      "sha256": "afe55a5818ccf4d10b85a22b7c9efb9dbfc665d7db269fabf16f781bbbf6e697"
+    },
+    "docs/data/v4/transport/first_pass/join/j1_training_v1/steps.jsonl": {
+      "bytes": 81025,
+      "sha256": "53ac19a56ed58a852f1bd84468f3b7907f0765252b8501e8a990176325b15452"
+    }
+  },
+  "recorded_observation_signatures": 45,
+  "root_coordinator": "/root",
+  "schema": "semabi.j1.training_execution_handoff.v1",
+  "semantic_payload_disclosed_to_root": false,
+  "source_fixture_or_instrument_mutations": false,
+  "source_head": "592590560008632076469ae51beb160d23817b86",
+  "source_sections_rehashed_after_service_stop": {
+    "custody_instrument_files": 7,
+    "files": 67,
+    "sealed_evaluator_files": 26,
+    "verification_files": 5
+  },
+  "status": "COMPLETE_ACCOUNTING_VERIFIED_AND_ALL_OWNED_PROCESSES_REAPED"
+}

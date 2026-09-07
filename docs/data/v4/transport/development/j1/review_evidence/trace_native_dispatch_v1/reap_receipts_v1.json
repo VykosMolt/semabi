@@ -1,0 +1,37 @@
+{
+  "schema": "semabi.transport.j1_trace_reap_receipts.v1",
+  "owner": "/root/acquisition_audit/binding_contract_review",
+  "plan_sha256": "7a96d966ef39f7844c46e81f5c1c2e24f28db6575617a06afd7f8efe5577a82a",
+  "completed": [
+    {
+      "mode": "baseline",
+      "session_id": 38284,
+      "chunk_id": "852dee",
+      "wall_time_seconds": 0.000002642,
+      "exit_code": 2,
+      "original_token_count": 33,
+      "output": "{\"status\": \"FAILED\", \"returncode\": 2, \"child_pid\": 651132, \"child_terminated\": true, \"end_utc\": \"2026-09-07T20:34:13.847759+00:00\"}\n"
+    },
+    {
+      "mode": "profiled",
+      "session_id": 58518,
+      "chunk_id": "f48fbb",
+      "wall_time_seconds": 0.000001351,
+      "exit_code": 2,
+      "original_token_count": 33,
+      "output": "{\"status\": \"FAILED\", \"returncode\": 2, \"child_pid\": 651131, \"child_terminated\": true, \"end_utc\": \"2026-09-07T20:34:39.768559+00:00\"}\n"
+    },
+    {
+      "mode": "exception",
+      "cpu": 15,
+      "command": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 taskset -c 15 .venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/development/j1/review_evidence/trace_native_dispatch_v1/jobs/exception_v1 -- .venv/bin/python docs/data/v4/transport/development/j1/review_evidence/trace_native_validation_v1.py run --plan docs/data/v4/transport/development/j1/review_evidence/trace_native_dispatch_v1/plan.json --mode exception",
+      "chunk_id": "2006f6",
+      "wall_time_seconds": 0.143271611,
+      "exit_code": 0,
+      "original_token_count": 34,
+      "output": "{\"status\": \"FINISHED\", \"returncode\": 0, \"child_pid\": 651133, \"child_terminated\": true, \"end_utc\": \"2026-09-07T20:34:08.704623+00:00\"}\n"
+    }
+  ],
+  "all_owned_sessions_reaped": true,
+  "bound_inputs_modified": false
+}

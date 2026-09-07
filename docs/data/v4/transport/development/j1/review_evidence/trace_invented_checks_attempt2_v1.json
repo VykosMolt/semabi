@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/usr/bin/python3",
+    "docs/data/v4/transport/development/j1/review_evidence/trace_invented_checks_v1.py"
+  ],
+  "source_sha256": "e42185849485fdb934d87187b2a484153cb24b150df2c054eb29c0f2f1bd3e4a",
+  "exit_code": 0,
+  "stdout": "{\n  \"schema\": \"semabi.transport.j1_invented_trace_checks.v1\",\n  \"status\": \"PASS\",\n  \"trace_sha256\": \"bee4f97ea44fe70efb818871579bc6ced08811152da1d88d44e8a58feda94a28\",\n  \"checks\": [\n    \"invented_complete_baseline_and_profiled_projections_identical\",\n    \"exact_caller_selection_and_unclassified_omitted_run\",\n    \"first_and_repeated_view_lift_are_distinct_and_copies_survive_native_mutation\",\n    \"repeated_control_dictionaries_and_roles_bound_by_identity\",\n    \"reporting_selector_retains_unassociated_nonfitting_step\",\n    \"copied_containers_preserve_key_types_order_and_large_integers\",\n    \"cycles_mark_copy_incomplete\",\n    \"unsupported_native_like_object_not_rendered_or_queried\",\n    \"identity_table_keeps_original_alive\",\n    \"already_active_profiler_refused_without_replacement\",\n    \"native_exception_propagates_with_restored_profiler_and_partial_trace\",\n    \"callback_exception_does_not_enter_running_fit\",\n    \"missing_or_mismatched_raw_mapping_prevents_complete_projection\",\n    \"unsupported_native_iterator_is_rejected_without_consumption\",\n    \"complete_common_projection_comparison_rejects_a_changed_measurement_field\"\n  ],\n  \"scope\": \"Invented Python objects/calls only; no native transparency claim\"\n}\n",
+  "stderr": ""
+}

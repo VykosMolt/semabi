@@ -1,0 +1,65 @@
+{
+  "all_step_endpoints_in_raw_observations": true,
+  "collector_verification_status": "PASS",
+  "designated_target_flags": 24,
+  "executor": "/root/reserved_audit",
+  "freeze_sha256": "816c4da2922aab7f7948328fa2864032bac2f26a7f4ae8d8954215a52a45e2ed",
+  "job": "j1_training_collect_v1",
+  "log_sha256": "3e0e458ccc46634968f5456a9cd55b5812cc497e767c8947370ed4376b75c224",
+  "native_collection_summary": {
+    "bootstrap_goto": 0,
+    "case_count": 24,
+    "charged_attempts": 313,
+    "complete": true,
+    "failed_attempts": 0,
+    "navigation_waits": 0,
+    "paired_steps_recorded": 312,
+    "primitive_counts": {
+      "click": 96,
+      "reload": 1,
+      "reset": 24,
+      "select": 192
+    },
+    "settle_timeouts": 0,
+    "snapshot_calls": 625,
+    "status": "FINISHED",
+    "unpaired_attempts": 1
+  },
+  "observation_records": 45,
+  "paired_decision_step_fields_equal": true,
+  "plan_sha256": "f5b4536b847972ca7014772c4c97d8796f4f048639b1be6cbd48163b471a1db6",
+  "process": {
+    "child_pid": 894836,
+    "child_terminated": true,
+    "end_utc": "2026-09-07T22:15:46.923571+00:00",
+    "owned_process_group": 894836,
+    "returncode": 0,
+    "runner_pid": 894834,
+    "source_head": "592590560008632076469ae51beb160d23817b86",
+    "start_utc": "2026-09-07T22:12:02.950273+00:00",
+    "status": "FINISHED"
+  },
+  "process_record_sha256": "2be070f39291d9f1c8de552c5957d99a3bd017ff3f083f74b8fc3cfe904d04e4",
+  "raw_directory": "docs/data/v4/transport/first_pass/join/j1_training_v1",
+  "raw_file_sha256": {
+    "collector_verification.json": "506b1a962814c25d04b46bcce9f63ebe04ad44c739f86e37fce1bf75490816b3",
+    "decisions.jsonl": "2e875c9bce55b0df68ae3b46cab843f48123761e71edef61253180fdb575aa8a",
+    "observations.jsonl": "c271d8d73229326d558a3790365cd5743d227da5e0ebd93e66b1928848d9c4b9",
+    "run.json": "afe55a5818ccf4d10b85a22b7c9efb9dbfc665d7db269fabf16f781bbbf6e697",
+    "steps.jsonl": "53ac19a56ed58a852f1bd84468f3b7907f0765252b8501e8a990176325b15452"
+  },
+  "raw_hashes_unchanged_during_verification": true,
+  "recorded_utc": "2026-09-07T22:16:58.643440+00:00",
+  "schema": "semabi.j1.training_collection_completed.v1",
+  "scope": "Accounting and byte custody only. No training task identities, parameters, layouts, answers, outcome interpretation, fit or forecast is disclosed.",
+  "session_id": 79724,
+  "session_reaped": true,
+  "source_sections_rehashed": {
+    "custody_instrument_files": 7,
+    "files": 67,
+    "sealed_evaluator_files": 26,
+    "verification_files": 5
+  },
+  "status": "FIXED_ALLOCATION_ACCOUNTING_PASS",
+  "tool_returncode": 0
+}

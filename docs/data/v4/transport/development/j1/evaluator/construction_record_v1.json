@@ -1,0 +1,21 @@
+{
+  "schema": "semabi.join.generated_construction_record.v1",
+  "author_task": "independent J1 fixture construction",
+  "owned_paths": ["experiments/join_v1/", "docs/data/v4/transport/development/j1/evaluator/"],
+  "preaudit_manifest": "manifest_pre_audit.json",
+  "audit_invocation": "audit_invocation_v1.json",
+  "audit_exit_code": 0,
+  "audit_stdout": "audit_run_v1.log",
+  "model_cases_checked": 72,
+  "assertions_passed": 6380,
+  "assertion_classes": 46,
+  "executed_service_processes": 0,
+  "executed_browser_sessions": 0,
+  "semabi_imports_or_learner_runs": 0,
+  "learner_outputs_read": 0,
+  "resource_command": "taskset -c 23 nice -n 19 ionice -c 3 python experiments/join_v1/oracle/audit_fixture.py",
+  "resource_scope": "one short standard-library fixture audit; no worker slot or heavy job was used",
+  "server_process_ownership": "not applicable; prepared launch commands only",
+  "external_independent_fixture_review": "not performed; attempted delegation had no free thread",
+  "status": "GENERATED_FIXTURE_PREPARED_BROWSER_AND_MEASUREMENT_REVIEW_PENDING"
+}

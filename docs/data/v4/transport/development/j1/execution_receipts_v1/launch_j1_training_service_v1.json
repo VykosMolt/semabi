@@ -1,0 +1,58 @@
+{
+  "actual_source_head": "592590560008632076469ae51beb160d23817b86",
+  "freeze_sha256": "816c4da2922aab7f7948328fa2864032bac2f26a7f4ae8d8954215a52a45e2ed",
+  "go_receipt_sha256": "ac82935df84fd170aa8b35d3ccc8ddaabcaed89d0b8d47307ccaf86cfdd3d330",
+  "job": {
+    "cpu": 22,
+    "expected_completion": "Planned operator interruption after training; wrapper sends SIGTERM to its owned child group and waits, falling back to SIGKILL after 15 seconds if needed. Preserve actual wrapper exit and stock INTERRUPTED/child return code.",
+    "inner_command": [
+      ".venv/bin/python",
+      "experiments/join_v1/server.py",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "8771",
+      "--profile",
+      "primary"
+    ],
+    "job": "j1_training_service_v1",
+    "outer_command": [
+      "taskset",
+      "-c",
+      "22",
+      "env",
+      "PYTHONHASHSEED=0",
+      "BLIS_NUM_THREADS=1",
+      "MKL_NUM_THREADS=1",
+      "NUMEXPR_NUM_THREADS=1",
+      "OMP_NUM_THREADS=1",
+      "OPENBLAS_NUM_THREADS=1",
+      "VECLIB_MAXIMUM_THREADS=1",
+      ".venv/bin/python",
+      "docs/data/v4/transport/run_job.py",
+      "docs/data/v4/transport/development/j1/jobs/j1_training_service_v1",
+      "--",
+      ".venv/bin/python",
+      "experiments/join_v1/server.py",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "8771",
+      "--profile",
+      "primary"
+    ],
+    "path": "docs/data/v4/transport/development/j1/jobs/j1_training_service_v1",
+    "profile": "primary",
+    "tool_launch": {
+      "reason": "Owned loopback service must share the host network namespace with the authorized browser collector",
+      "sandbox_permissions": "require_escalated",
+      "tty": true
+    }
+  },
+  "owner": "/root/reserved_audit",
+  "plan_sha256": "f5b4536b847972ca7014772c4c97d8796f4f048639b1be6cbd48163b471a1db6",
+  "recorded_runner_owner": "/root",
+  "recorded_utc": "2026-09-07T22:10:19.971379+00:00",
+  "schema": "semabi.j1.owned_launch_intent.v1",
+  "state": "LAUNCH_REQUESTED"
+}

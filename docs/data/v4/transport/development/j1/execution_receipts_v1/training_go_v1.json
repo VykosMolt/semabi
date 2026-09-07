@@ -1,0 +1,45 @@
+{
+  "actual_source_head": "592590560008632076469ae51beb160d23817b86",
+  "all_exclusive_output_identities_absent": true,
+  "authorization": "GO J1 training collection ONLY under reviewed exact plan; no source/fixture/instrument edits or commits; no fits, forecasts, evaluation, extra actions or reruns. Root holds HEAD/native/C1/collector/protocol while collection runs. Stop and reap service after training and report accounting/hashes only.",
+  "compiler_source_inventory_exact": true,
+  "executor": "/root/reserved_audit",
+  "freeze": {
+    "path": "docs/data/v4/transport/development/j1/training_freeze_v1.json",
+    "sha256": "816c4da2922aab7f7948328fa2864032bac2f26a7f4ae8d8954215a52a45e2ed"
+  },
+  "plan": {
+    "path": "docs/data/v4/transport/development/j1/execution_receipts_v1/training_plan_v1.json",
+    "sha256": "f5b4536b847972ca7014772c4c97d8796f4f048639b1be6cbd48163b471a1db6"
+  },
+  "preflight_sections_rehashed": {
+    "custody_instrument_files": 7,
+    "files": 67,
+    "sealed_evaluator_files": 26,
+    "verification_files": 5
+  },
+  "received_from": "/root",
+  "recorded_utc": "2026-09-07T22:10:19.971212+00:00",
+  "resource_assignment": {
+    "collector_cpu": 17,
+    "collector_reset_seed": 0,
+    "historical_cpu23_nice19_ionice3_requirements_superseded": "Explicit current root assignment applying the user all 24 CPU/normal priority override",
+    "nice": 0,
+    "numerical_threads": {
+      "BLIS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "VECLIB_MAXIMUM_THREADS": "1"
+    },
+    "python_hash_seed": "0",
+    "service_cpu": 22
+  },
+  "root_runtime_section_contains_no_evaluator_payload_paths": true,
+  "schema": "semabi.j1.training_collection_go_receipt.v1",
+  "semantic_payload_disclosed_to_root": false,
+  "source_and_fixture_contents_unchanged": true,
+  "source_head_hold": "Until training collection, service stop, and completion verification finish.",
+  "status": "AUTHORIZED_TRAINING_ONLY_PREFLIGHT_PASS"
+}
