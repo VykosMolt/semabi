@@ -1,0 +1,27 @@
+{
+  "child_pid": 587551,
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests",
+    "--junitxml=docs/data/v4/transport/development/b1_validation/full_pytest_v1.xml"
+  ],
+  "coordinator": "/root/baseline_verification",
+  "cwd": "/home/moloch/semabi/runs/.b1_validation_worktree",
+  "outer_cpu_affinity": "0-7",
+  "outer_environment": {
+    "BLIS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "runner_pid": 587540,
+  "runner_record": "docs/data/v4/transport/development/b1_validation/jobs/full_pytest_v1/process.json",
+  "sandbox": "escalated for local browser/server tests; root approved exact command",
+  "schema": "semabi.transport.b1_validation_launch_receipt.v1",
+  "source_freeze_sha256": "c40e565fb6f6fda6116a442a6291ba987e0d2e445ed8d63ec3f58082743b730d",
+  "source_head": "96b2d1f0efa573e675739f2d230b1e2245c088d5",
+  "start_utc": "2026-09-07T20:18:52.432045+00:00",
+  "tool_chunk_id": "2326ae",
+  "tool_session_id": 29177
+}

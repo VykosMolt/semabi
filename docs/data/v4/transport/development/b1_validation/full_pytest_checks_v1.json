@@ -1,0 +1,63 @@
+{
+  "all_frozen_files_unchanged": true,
+  "child_terminated": true,
+  "files": {
+    "docs/data/v4/transport/development/b1_validation/full_pytest_v1.xml": "93b971c69328f19d4a3f8a936080f551698e8dc19fbb41371509c508265fdbfd",
+    "docs/data/v4/transport/development/b1_validation/jobs/full_pytest_v1/output.log": "0e85d7f8b3fa86165fc5a5377d2ed4a03822f3f5292cdf35e0ea991d77e1fb08",
+    "docs/data/v4/transport/development/b1_validation/jobs/full_pytest_v1/process.json": "80c5cfb342a2be8ecf9c690ccba74cba79c28fee3fef4e59327ae7dfcbb246b2",
+    "docs/data/v4/transport/development/b1_validation/terminal_receipts/full_pytest_v1_v1.json": "6ca9eec81c4e4d5e2a4d907d0bdbd4b49de86b79ce34f2c453e5ed080e47c152"
+  },
+  "job_returncode": 0,
+  "junit_suites": [
+    {
+      "errors": "0",
+      "failures": "0",
+      "hostname": "arch-legion",
+      "name": "pytest",
+      "skipped": "4",
+      "tests": "625",
+      "time": "1681.080",
+      "timestamp": "2026-09-07T22:18:52.525195+02:00"
+    }
+  ],
+  "nonpasses": [
+    {
+      "classname": "tests.test_parse",
+      "detail": null,
+      "message": "minimal synthetic lanes: an empty lane shares too little structure (Jaccard<0.5); real UIs carry more skeleton",
+      "name": "test_empty_lane_still_parses_as_instance",
+      "type": "pytest.xfail"
+    },
+    {
+      "classname": "tests.test_v4_binding",
+      "detail": "/home/moloch/semabi/runs/.b1_validation_worktree/tests/test_v4_prospective.py:176: harbour has no cell[_] leaf under the header-named scheme: the loose reading is not distinct from the incumbent (docs/v4_columns.md)",
+      "message": "harbour has no cell[_] leaf under the header-named scheme: the loose reading is not distinct from the incumbent (docs/v4_columns.md)",
+      "name": "test_on_the_real_trace_one_reading_determines_its_object_and_the_other_does_not",
+      "type": "pytest.skip"
+    },
+    {
+      "classname": "tests.test_v4_binding",
+      "detail": "/home/moloch/semabi/runs/.b1_validation_worktree/tests/test_v4_prospective.py:176: harbour has no cell[_] leaf under the header-named scheme: the loose reading is not distinct from the incumbent (docs/v4_columns.md)",
+      "message": "harbour has no cell[_] leaf under the header-named scheme: the loose reading is not distinct from the incumbent (docs/v4_columns.md)",
+      "name": "test_an_effect_on_an_object_the_state_never_pins_is_not_a_well_formed_schema",
+      "type": "pytest.skip"
+    },
+    {
+      "classname": "tests.test_v4_prospective",
+      "detail": "/home/moloch/semabi/runs/.b1_validation_worktree/tests/test_v4_prospective.py:176: harbour has no cell[_] leaf under the header-named scheme: the loose reading is not distinct from the incumbent (docs/v4_columns.md)",
+      "message": "harbour has no cell[_] leaf under the header-named scheme: the loose reading is not distinct from the incumbent (docs/v4_columns.md)",
+      "name": "test_determinacy_never_compares_one_readings_literals_with_anothers",
+      "type": "pytest.skip"
+    }
+  ],
+  "passed": 621,
+  "schema": "semabi.transport.b1_full_suite_checks.v1",
+  "source_freeze_sha256": "c40e565fb6f6fda6116a442a6291ba987e0d2e445ed8d63ec3f58082743b730d",
+  "source_head": "96b2d1f0efa573e675739f2d230b1e2245c088d5",
+  "source_inventory_unchanged": true,
+  "status": "VERIFIED",
+  "test_inventory_unchanged": true,
+  "testcases": 625,
+  "tracked_inventory_unchanged": true,
+  "unique_frozen_files_verified": 1930
+}

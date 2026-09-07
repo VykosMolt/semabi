@@ -1,0 +1,15 @@
+{
+  "schema": "semabi.transport.b1_comparison_launch.v1",
+  "coordinator": "/root/baseline_verification",
+  "command": "taskset -c 8 env VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 .venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/development/b1_validation/jobs/corpus_comparison_v1 -- .venv/bin/python docs/data/v4/transport/development/b1_validation/compare_corpora.py --g2-manifest-sha 481f879db351618431127a8f7a99db1a35ed06975c7f1f325347c9953a80d67e",
+  "cwd": "/home/moloch/semabi/runs/.b1_validation_worktree",
+  "comparator_sha256": "8031d30ed0c5f6f411133a59da672b88e2ac2ffcbcef15a2a51cd2571ed8e72c",
+  "g2_results_manifest_sha256": "481f879db351618431127a8f7a99db1a35ed06975c7f1f325347c9953a80d67e",
+  "tool_result": {
+    "chunk_id": "7adb60",
+    "wall_time_seconds": 0.159546604,
+    "exit_code": 0,
+    "original_token_count": 33,
+    "output": "{\"status\": \"FINISHED\", \"returncode\": 0, \"child_pid\": 13, \"child_terminated\": true, \"end_utc\": \"2026-09-07T20:53:56.507772+00:00\"}\n"
+  }
+}

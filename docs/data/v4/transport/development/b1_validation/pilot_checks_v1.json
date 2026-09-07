@@ -1,0 +1,73 @@
+{
+  "case": "pilot",
+  "child_terminated": true,
+  "dev_steps": 451,
+  "elapsed_seconds": 1119.4115104569973,
+  "files": {
+    "docs/data/v4/transport/development/b1_validation/corpora/pilot/adapter.json": "04ce75e5f2372595c57e36411f3ecb7395813dffd17503e506a7334a88537dba",
+    "docs/data/v4/transport/development/b1_validation/corpora/pilot/adapter_postflight.json": "13081d2797e2142a21912ec94e0b2b3a8cfcd76b14b620535e04c2bbcbd60e53",
+    "docs/data/v4/transport/development/b1_validation/corpora/pilot/pilot.json": "a9a2b96c111b2ce1b3565ef590947ebded3de0d6ab0d41c46a81733d84368c22",
+    "docs/data/v4/transport/development/b1_validation/corpora/pilot/pilot_fit.json": "f3cd9a422100920f56cfeefb72dee1875deedc33fa696fd28442ebeee146753a",
+    "docs/data/v4/transport/development/b1_validation/corpora/pilot/pilot_partial.json": "b12f1ad00ab6571e669a4e4868737e76b533a4f0e72247e4730d6b0813330b70",
+    "docs/data/v4/transport/development/b1_validation/corpora/pilot/pilot_process.json": "c9a61000db81719d483901b48a752057338cd35e149908bacce612ac27667c31",
+    "docs/data/v4/transport/development/b1_validation/corpora/pilot/source_snapshot.json": "09a2a3babd7b1337cd98affb8d71ea04e43ef48f5118bf5c7e96b62fd593b535",
+    "docs/data/v4/transport/development/b1_validation/jobs/corpus_pilot/output.log": "481b4734b098215c69d6cf513d118870b4f179d249384e781fba98fd4bd23127",
+    "docs/data/v4/transport/development/b1_validation/jobs/corpus_pilot/process.json": "9e270dc8fc82b5af65c187606216555ae431fded26ed33b0d69964195cb6041f"
+  },
+  "fit_role_count": 4,
+  "interpretation": "Retained B1 result; no G2 semantic comparison or scientific pass assigned yet.",
+  "job_returncode": 0,
+  "outcome_cut": 450,
+  "parts": {
+    "development": {
+      "decision_list_ledger": {},
+      "failed_attempts": 0,
+      "recognition_mismatches": 0,
+      "target_clicks": 30,
+      "version_space_ledger": {},
+      "visible_check_ledger": {
+        "match": 90
+      },
+      "visible_check_scope": {
+        "bound vessel length survives representation": {
+          "match": 30
+        },
+        "selected object retained": {
+          "match": 30
+        },
+        "sheet vessel available in action binding": {
+          "match": 30
+        }
+      }
+    },
+    "holdout": {
+      "decision_list_ledger": {
+        "a different event": 3,
+        "the event the interface returned": 18
+      },
+      "failed_attempts": 0,
+      "recognition_mismatches": 0,
+      "target_clicks": 21,
+      "version_space_ledger": {
+        "one outcome was admissible and it happened": 7,
+        "several outcomes remained admissible; the one that happened was among them": 14
+      },
+      "visible_check_ledger": {
+        "match": 63
+      },
+      "visible_check_scope": {
+        "bound vessel length survives representation": {
+          "match": 21
+        },
+        "selected object retained": {
+          "match": 21
+        },
+        "sheet vessel available in action binding": {
+          "match": 21
+        }
+      }
+    }
+  },
+  "source_head": "96b2d1f0efa573e675739f2d230b1e2245c088d5",
+  "status": "RESULT_AND_PROVENANCE_VERIFIED"
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "semabi.transport.b1_corpus_tool_launches.v1",
+  "coordinator": "/root/baseline_verification",
+  "launches": [
+    {
+      "case": "allocation_positive",
+      "cpu": 8,
+      "command": "taskset -c 8 env VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 .venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/development/b1_validation/jobs/corpus_allocation_positive -- .venv/bin/python docs/data/v4/transport/development/b1_validation/run_corpus.py allocation_positive docs/data/v4/transport/development/b1_validation/corpora/allocation_positive docs/data/v4/transport/development/b1_validation/corpus_freeze_v1.json",
+      "chunk_id": "7d0b7c",
+      "wall_time_seconds": 1.000810864,
+      "session_id": 48742,
+      "original_token_count": 0,
+      "output": ""
+    },
+    {
+      "case": "allocation_refusals",
+      "cpu": 9,
+      "command": "taskset -c 9 env VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 .venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/development/b1_validation/jobs/corpus_allocation_refusals -- .venv/bin/python docs/data/v4/transport/development/b1_validation/run_corpus.py allocation_refusals docs/data/v4/transport/development/b1_validation/corpora/allocation_refusals docs/data/v4/transport/development/b1_validation/corpus_freeze_v1.json",
+      "chunk_id": "e9b523",
+      "wall_time_seconds": 1.001156507,
+      "session_id": 4416,
+      "original_token_count": 0,
+      "output": ""
+    },
+    {
+      "case": "pilot",
+      "cpu": 10,
+      "command": "taskset -c 10 env VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 .venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/development/b1_validation/jobs/corpus_pilot -- .venv/bin/python docs/data/v4/transport/development/b1_validation/run_corpus.py pilot docs/data/v4/transport/development/b1_validation/corpora/pilot docs/data/v4/transport/development/b1_validation/corpus_freeze_v1.json",
+      "chunk_id": "bc4ca3",
+      "wall_time_seconds": 1.000632829,
+      "session_id": 75255,
+      "original_token_count": 0,
+      "output": ""
+    },
+    {
+      "case": "separating",
+      "cpu": 11,
+      "command": "taskset -c 11 env VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 .venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/development/b1_validation/jobs/corpus_separating -- .venv/bin/python docs/data/v4/transport/development/b1_validation/run_corpus.py separating docs/data/v4/transport/development/b1_validation/corpora/separating docs/data/v4/transport/development/b1_validation/corpus_freeze_v1.json",
+      "chunk_id": "43fd7d",
+      "wall_time_seconds": 1.001091224,
+      "session_id": 5956,
+      "original_token_count": 0,
+      "output": ""
+    },
+    {
+      "case": "separating_extended",
+      "cpu": 12,
+      "command": "taskset -c 12 env VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 .venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/development/b1_validation/jobs/corpus_separating_extended -- .venv/bin/python docs/data/v4/transport/development/b1_validation/run_corpus.py separating_extended docs/data/v4/transport/development/b1_validation/corpora/separating_extended docs/data/v4/transport/development/b1_validation/corpus_freeze_v1.json",
+      "chunk_id": "30fc00",
+      "wall_time_seconds": 1.001681235,
+      "session_id": 26078,
+      "original_token_count": 0,
+      "output": ""
+    }
+  ]
+}

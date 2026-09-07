@@ -1,0 +1,73 @@
+{
+  "case": "allocation_refusals",
+  "child_terminated": true,
+  "dev_steps": 468,
+  "elapsed_seconds": 1219.266211860002,
+  "files": {
+    "docs/data/v4/transport/development/b1_validation/corpora/allocation_refusals/adapter.json": "bdcb8eba3b8507e71ab08a6e691ca4699f1bf8a6def7b99d4798fe13cb170eb2",
+    "docs/data/v4/transport/development/b1_validation/corpora/allocation_refusals/adapter_postflight.json": "e0e195b77585dfd1908f2139309bf20ee363a0932631fb129d8aa901c2fc8c68",
+    "docs/data/v4/transport/development/b1_validation/corpora/allocation_refusals/allocation_refusals.json": "b31c7b0c7342eca80fad435f9d4629bc091b7672bca9d87da8cc23b258f6c9d9",
+    "docs/data/v4/transport/development/b1_validation/corpora/allocation_refusals/allocation_refusals_fit.json": "02d04998375f7d473331aaae5b829c76377194d7391d114a0a78d5b24a95fa47",
+    "docs/data/v4/transport/development/b1_validation/corpora/allocation_refusals/allocation_refusals_partial.json": "41cf40928e3e69f1e088d78aa99a71527cb1934be5d992ac7f3c11a2bdcc3bd8",
+    "docs/data/v4/transport/development/b1_validation/corpora/allocation_refusals/allocation_refusals_process.json": "a7d2bb5225fad17809925ca6f5431e68686fcaf097b9ac5133e217e3f014bf78",
+    "docs/data/v4/transport/development/b1_validation/corpora/allocation_refusals/source_snapshot.json": "09a2a3babd7b1337cd98affb8d71ea04e43ef48f5118bf5c7e96b62fd593b535",
+    "docs/data/v4/transport/development/b1_validation/jobs/corpus_allocation_refusals/output.log": "a7d7befefca290a9429f6c370753ca0a684781e2ea86571784101c104b9990f5",
+    "docs/data/v4/transport/development/b1_validation/jobs/corpus_allocation_refusals/process.json": "37833894ea2163bc2927c330aaf25035f4ef78937120eb37d08a37a712218a28"
+  },
+  "fit_role_count": 4,
+  "interpretation": "Retained B1 result; no G2 semantic comparison or scientific pass assigned yet.",
+  "job_returncode": 0,
+  "outcome_cut": 467,
+  "parts": {
+    "development": {
+      "decision_list_ledger": {},
+      "failed_attempts": 0,
+      "recognition_mismatches": 0,
+      "target_clicks": 32,
+      "version_space_ledger": {},
+      "visible_check_ledger": {
+        "match": 96
+      },
+      "visible_check_scope": {
+        "bound vessel length survives representation": {
+          "match": 32
+        },
+        "selected object retained": {
+          "match": 32
+        },
+        "sheet vessel available in action binding": {
+          "match": 32
+        }
+      }
+    },
+    "holdout": {
+      "decision_list_ledger": {
+        "a different event": 3,
+        "the event the interface returned": 24
+      },
+      "failed_attempts": 0,
+      "recognition_mismatches": 0,
+      "target_clicks": 27,
+      "version_space_ledger": {
+        "one outcome was admissible and it happened": 16,
+        "several outcomes remained admissible; the one that happened was among them": 11
+      },
+      "visible_check_ledger": {
+        "match": 81
+      },
+      "visible_check_scope": {
+        "bound vessel length survives representation": {
+          "match": 27
+        },
+        "selected object retained": {
+          "match": 27
+        },
+        "sheet vessel available in action binding": {
+          "match": 27
+        }
+      }
+    }
+  },
+  "source_head": "96b2d1f0efa573e675739f2d230b1e2245c088d5",
+  "status": "RESULT_AND_PROVENANCE_VERIFIED"
+}

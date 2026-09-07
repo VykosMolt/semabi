@@ -1,0 +1,114 @@
+{
+  "coordinator": "/root/baseline_verification",
+  "corpus_freeze_sha256": "09a2a3babd7b1337cd98affb8d71ea04e43ef48f5118bf5c7e96b62fd593b535",
+  "jobs": [
+    {
+      "adapter_sha256": "de0a8157ad89183237cb7e123e518759fbf539f28787b0cf2574c54bc6b93c79",
+      "case": "allocation_positive",
+      "child_pid": 13,
+      "cpu": 8,
+      "cwd": "/home/moloch/semabi/runs/.b1_validation_worktree",
+      "inner_command": [
+        ".venv/bin/python",
+        "docs/data/v4/transport/development/b1_validation/run_corpus.py",
+        "allocation_positive",
+        "docs/data/v4/transport/development/b1_validation/corpora/allocation_positive",
+        "docs/data/v4/transport/development/b1_validation/corpus_freeze_v1.json"
+      ],
+      "outer_command": "taskset -c 8 env VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 .venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/development/b1_validation/jobs/corpus_allocation_positive -- .venv/bin/python docs/data/v4/transport/development/b1_validation/run_corpus.py allocation_positive docs/data/v4/transport/development/b1_validation/corpora/allocation_positive docs/data/v4/transport/development/b1_validation/corpus_freeze_v1.json",
+      "runner_path": "docs/data/v4/transport/development/b1_validation/jobs/corpus_allocation_positive/process.json",
+      "runner_pid": 2,
+      "source_head": "96b2d1f0efa573e675739f2d230b1e2245c088d5",
+      "start_utc": "2026-09-07T20:23:56.876083+00:00",
+      "tool_chunk_id": "7d0b7c",
+      "tool_session_id": 48742
+    },
+    {
+      "adapter_sha256": "bdcb8eba3b8507e71ab08a6e691ca4699f1bf8a6def7b99d4798fe13cb170eb2",
+      "case": "allocation_refusals",
+      "child_pid": 13,
+      "cpu": 9,
+      "cwd": "/home/moloch/semabi/runs/.b1_validation_worktree",
+      "inner_command": [
+        ".venv/bin/python",
+        "docs/data/v4/transport/development/b1_validation/run_corpus.py",
+        "allocation_refusals",
+        "docs/data/v4/transport/development/b1_validation/corpora/allocation_refusals",
+        "docs/data/v4/transport/development/b1_validation/corpus_freeze_v1.json"
+      ],
+      "outer_command": "taskset -c 9 env VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 .venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/development/b1_validation/jobs/corpus_allocation_refusals -- .venv/bin/python docs/data/v4/transport/development/b1_validation/run_corpus.py allocation_refusals docs/data/v4/transport/development/b1_validation/corpora/allocation_refusals docs/data/v4/transport/development/b1_validation/corpus_freeze_v1.json",
+      "runner_path": "docs/data/v4/transport/development/b1_validation/jobs/corpus_allocation_refusals/process.json",
+      "runner_pid": 2,
+      "source_head": "96b2d1f0efa573e675739f2d230b1e2245c088d5",
+      "start_utc": "2026-09-07T20:23:56.911527+00:00",
+      "tool_chunk_id": "e9b523",
+      "tool_session_id": 4416
+    },
+    {
+      "adapter_sha256": "04ce75e5f2372595c57e36411f3ecb7395813dffd17503e506a7334a88537dba",
+      "case": "pilot",
+      "child_pid": 13,
+      "cpu": 10,
+      "cwd": "/home/moloch/semabi/runs/.b1_validation_worktree",
+      "inner_command": [
+        ".venv/bin/python",
+        "docs/data/v4/transport/development/b1_validation/run_corpus.py",
+        "pilot",
+        "docs/data/v4/transport/development/b1_validation/corpora/pilot",
+        "docs/data/v4/transport/development/b1_validation/corpus_freeze_v1.json"
+      ],
+      "outer_command": "taskset -c 10 env VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 .venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/development/b1_validation/jobs/corpus_pilot -- .venv/bin/python docs/data/v4/transport/development/b1_validation/run_corpus.py pilot docs/data/v4/transport/development/b1_validation/corpora/pilot docs/data/v4/transport/development/b1_validation/corpus_freeze_v1.json",
+      "runner_path": "docs/data/v4/transport/development/b1_validation/jobs/corpus_pilot/process.json",
+      "runner_pid": 2,
+      "source_head": "96b2d1f0efa573e675739f2d230b1e2245c088d5",
+      "start_utc": "2026-09-07T20:23:56.927887+00:00",
+      "tool_chunk_id": "bc4ca3",
+      "tool_session_id": 75255
+    },
+    {
+      "adapter_sha256": "672a7b5753da71badb671d7c6d1a0210ba8e3528cc1233fd9591d750b7f01177",
+      "case": "separating",
+      "child_pid": 13,
+      "cpu": 11,
+      "cwd": "/home/moloch/semabi/runs/.b1_validation_worktree",
+      "inner_command": [
+        ".venv/bin/python",
+        "docs/data/v4/transport/development/b1_validation/run_corpus.py",
+        "separating",
+        "docs/data/v4/transport/development/b1_validation/corpora/separating",
+        "docs/data/v4/transport/development/b1_validation/corpus_freeze_v1.json"
+      ],
+      "outer_command": "taskset -c 11 env VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 .venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/development/b1_validation/jobs/corpus_separating -- .venv/bin/python docs/data/v4/transport/development/b1_validation/run_corpus.py separating docs/data/v4/transport/development/b1_validation/corpora/separating docs/data/v4/transport/development/b1_validation/corpus_freeze_v1.json",
+      "runner_path": "docs/data/v4/transport/development/b1_validation/jobs/corpus_separating/process.json",
+      "runner_pid": 2,
+      "source_head": "96b2d1f0efa573e675739f2d230b1e2245c088d5",
+      "start_utc": "2026-09-07T20:23:56.893107+00:00",
+      "tool_chunk_id": "43fd7d",
+      "tool_session_id": 5956
+    },
+    {
+      "adapter_sha256": "84b2a90e67fa754434a18375e8b93e6bee32ba8ea21e36c51e67f18a17c330aa",
+      "case": "separating_extended",
+      "child_pid": 13,
+      "cpu": 12,
+      "cwd": "/home/moloch/semabi/runs/.b1_validation_worktree",
+      "inner_command": [
+        ".venv/bin/python",
+        "docs/data/v4/transport/development/b1_validation/run_corpus.py",
+        "separating_extended",
+        "docs/data/v4/transport/development/b1_validation/corpora/separating_extended",
+        "docs/data/v4/transport/development/b1_validation/corpus_freeze_v1.json"
+      ],
+      "outer_command": "taskset -c 12 env VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 .venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/development/b1_validation/jobs/corpus_separating_extended -- .venv/bin/python docs/data/v4/transport/development/b1_validation/run_corpus.py separating_extended docs/data/v4/transport/development/b1_validation/corpora/separating_extended docs/data/v4/transport/development/b1_validation/corpus_freeze_v1.json",
+      "runner_path": "docs/data/v4/transport/development/b1_validation/jobs/corpus_separating_extended/process.json",
+      "runner_pid": 2,
+      "source_head": "96b2d1f0efa573e675739f2d230b1e2245c088d5",
+      "start_utc": "2026-09-07T20:23:56.860985+00:00",
+      "tool_chunk_id": "30fc00",
+      "tool_session_id": 26078
+    }
+  ],
+  "schema": "semabi.transport.b1_corpus_launch_receipts.v1",
+  "source_freeze_sha256": "c40e565fb6f6fda6116a442a6291ba987e0d2e445ed8d63ec3f58082743b730d",
+  "tool_launch_record_sha256": "d82429ce65fa0556b03e5454246d16ff9b8a7124ee70c42958ed6fe54cf33d2f"
+}
