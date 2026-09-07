@@ -2719,3 +2719,28 @@ remain at 506, 516 and 519, which are the rule class's and not a coincidence.  (
 where replayed, (ii) refuted in size (one state, not three).  Retained; P40 stands as
 the acquisition doctrine's answer to coincidence: the state itself, one factor changed,
 minimally.
+
+## P41 pre-registered (08:17): the order rivals under the list class
+Nine of the separating holdout's `several` and several of the pilot holdout's are ORDER
+cases: the pilot is already booked and the RULE class cannot say the already-booked guard
+precedes the join.  The LIST class (Evidence._admissible_in_lists) exists for exactly
+this.  Measurement: score_override with hypothesis LIST on harbour_sep2_dev/sep_hold and
+harbour_pil_dev/pil_hold (settled reading, P38 model).  Expected: on the separating
+holdout the order cases become forced right and `several` falls from 15 to at most 8 of
+30 with no wrong; on the pilot holdout `several` falls below 13 with no wrong; the
+decision lists unchanged.  A wrong that appears under LIST and not under RULE is a
+finding about the list class.
+
+## P41 judged (08:53; p41_sep_list.json, p41_pil_list.json): the list class changes nothing
+Under LIST the ledgers are identical to RULE's: separating holdout 15 / 15, pilot holdout
+7 / 14, no wrong, lists unchanged.  Expectation (ii) refuted.  By construction: the list
+class takes the rule class's admissible events first and can only ADD events a guard
+pure after other guards could answer; it never removes a globally pure rival.  So my
+P32 reading of the nine "order cases" was wrong: at an already-booked state "booked"
+stays admissible because the dev evidence holds a pure conjunction for bookings that
+omits ref_null (the already-booked occasions are excluded by some other literal), which
+is a pure-conjunction ambiguity like every other, not an ordering the class could fix.
+Corrected in the notes and the doc.  What removes it is an occasion sharing that
+conjunction with the outcome "already booked" -- P40's replay at such a state with a
+substitute who is booked elsewhere, which 519 was, and which left "booked" admissible
+there through yet another conjunction.  Recorded.

@@ -1527,6 +1527,23 @@ remains beside the comparison at the rest is the rule class's inability to order
 already-booked guard before the join, which no occasion settles.  The factor changed
 must be minimal, or the coincidence retreats onto the difference.
 
+**P41: the order reading, measured and withdrawn.**  Nine of the separating holdout's
+undecided states were read above as order -- the pilot already booked and the rule
+class unable to say that guard precedes the join -- and the list class exists for that.
+Pre-registered: under the list class those states become forced and *several* falls to
+eight or fewer of thirty.  Measured (`p41_sep_list.json`, `p41_pil_list.json`): the
+ledgers under the list class are identical to the rule class's on both holdouts, fifteen
+and fifteen, seven and fourteen, none wrong.  By construction: the list class takes the
+rule class's admissible events first and can only add an event a guard pure after
+other guards could answer; it never removes a globally pure rival.  So the reading was
+wrong.  At an already-booked state *booked* stays admissible because the development
+evidence holds a pure conjunction for bookings that omits the booking relation -- the
+already-booked occasions are excluded by some other literal -- which is a
+pure-conjunction ambiguity like every other, and what removes it is an occasion sharing
+that conjunction with the other outcome: P40's replay at such a state with a substitute
+booked elsewhere, which one of them was, and which left *booked* admissible there
+through yet another conjunction.
+
 ## What stands, and what is open
 
 The retained state, regenerated once more: harbour's development sidecar is now written by
