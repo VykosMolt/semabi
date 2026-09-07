@@ -1,0 +1,29 @@
+{
+  "owner": "/root/baseline_verification",
+  "working_directory": "/home/moloch/semabi",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q"
+  ],
+  "source_commit": "9bc371ce9af65241426b77585aa79352bdd7f123",
+  "source_snapshot_sha256": "e6b17d1cc9de1fd8f5db0ff92f8d850ed9ac086025a160e565b712f195d283ee",
+  "started_utc": "2026-09-07T14:48:51.524775+00:00",
+  "runner_pid": 2,
+  "state": "terminated",
+  "thread_environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1"
+  },
+  "pytest_pid": 3,
+  "returncode": 1,
+  "ended_utc": "2026-09-07T15:14:12.012147+00:00",
+  "elapsed_seconds": 1520.4873779079999,
+  "process_reaped": true,
+  "source_changes_during_run": [],
+  "log_sha256": "736db65e38e2a3ff08c71a007cc01ddf00ca34936bb583c994a9d181fbbf64bc",
+  "result_tail": "pe, proto, fileno)\nE       PermissionError: [Errno 1] Operation not permitted\n\n../.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError\n_________ test_fetch_then_navigate_action_yields_the_settled_new_page __________\n\n    @pytest.mark.slow\n    def test_fetch_then_navigate_action_yields_the_settled_new_page():\n        _Handler.n = 0\n>       srv = _serve()\n              ^^^^^^^^\n\ntests/test_v4_navigation_settling.py:75: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \ntests/test_v4_navigation_settling.py:60: in _serve\n    srv = ThreadingHTTPServer((\"127.0.0.1\", 0), _Handler)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n../.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__\n    self.socket = socket.socket(self.address_family,\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <socket.socket fd=-1, family=0, type=0, proto=0>\nfamily = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>\nproto = 0, fileno = None\n\n    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):\n        # For user code address family and type values are IntEnum members, but\n        # for the underlying _socket.socket they're just integers. The\n        # constructor of _socket.socket converts the given argument to an\n        # integer automatically.\n        if fileno is None:\n            if family == -1:\n                family = AF_INET\n            if type == -1:\n                type = SOCK_STREAM\n            if proto == -1:\n                proto = 0\n>       _socket.socket.__init__(self, family, type, proto, fileno)\nE       PermissionError: [Errno 1] Operation not permitted\n\n../.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError\n__________ test_a_permanent_browser_failure_is_raised_not_waited_out ___________\n\n    @pytest.mark.slow\n    def test_a_permanent_browser_failure_is_raised_not_waited_out():\n        _Handler.n = 0\n>       srv = _serve()\n              ^^^^^^^^\n\ntests/test_v4_navigation_settling.py:111: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \ntests/test_v4_navigation_settling.py:60: in _serve\n    srv = ThreadingHTTPServer((\"127.0.0.1\", 0), _Handler)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n../.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__\n    self.socket = socket.socket(self.address_family,\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <socket.socket fd=-1, family=0, type=0, proto=0>\nfamily = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>\nproto = 0, fileno = None\n\n    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):\n        # For user code address family and type values are IntEnum members, but\n        # for the underlying _socket.socket they're just integers. The\n        # constructor of _socket.socket converts the given argument to an\n        # integer automatically.\n        if fileno is None:\n            if family == -1:\n                family = AF_INET\n            if type == -1:\n                type = SOCK_STREAM\n            if proto == -1:\n                proto = 0\n>       _socket.socket.__init__(self, family, type, proto, fileno)\nE       PermissionError: [Errno 1] Operation not permitted\n\n../.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError\n=========================== short test summary info ============================\nFAILED tests/test_pipeline_smoke.py::test_kanban_random_phase_recovers_types\nFAILED tests/test_v4_navigation_settling.py::test_fetch_then_navigate_action_yields_the_settled_new_page\nFAILED tests/test_v4_navigation_settling.py::test_a_permanent_browser_failure_is_raised_not_waited_out\n3 failed, 564 passed, 3 skipped, 1 xfailed in 1519.83s (0:25:19)\n"
+}

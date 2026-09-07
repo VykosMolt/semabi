@@ -1,0 +1,39 @@
+{
+  "case": "allocation_positive",
+  "owner": "/root/baseline_verification",
+  "pid": 3,
+  "started_utc": "2026-09-07T15:04:17.371124+00:00",
+  "state": "terminated",
+  "dev": "/tmp/semabi-transport-baseline-20260907-rebuilt-v1/harbour_join_dev",
+  "hold": "/tmp/semabi-transport-baseline-20260907-rebuilt-v1/harbour_join_hold",
+  "control": "button:Allocate berth",
+  "command": [
+    "/home/moloch/semabi/.venv/bin/python",
+    "/home/moloch/semabi/docs/data/v4/transport/baseline/check_corpora.py",
+    "allocation_positive"
+  ],
+  "working_directory": "/home/moloch/semabi",
+  "instrument_sha256": "b87d053f88556ec9f21d4f4ff1795755197e83490c22a3b71fe2d11bfc792292",
+  "source_snapshot_sha256": "e6b17d1cc9de1fd8f5db0ff92f8d850ed9ac086025a160e565b712f195d283ee",
+  "scope": "disclosed retained development regression; no fresh-generalization claim",
+  "fit_boundary": "existing instrument: search on all dev; outcome split 0.999; hold scoring only",
+  "input_files": {
+    "/tmp/semabi-transport-baseline-20260907-rebuilt-v1/harbour_join_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+    "/tmp/semabi-transport-baseline-20260907-rebuilt-v1/harbour_join_dev/join_merge.json": "94d5f528c15a62de2412e60dc1aa17b5858e7484552d984aef6e370ea9a84179",
+    "/tmp/semabi-transport-baseline-20260907-rebuilt-v1/harbour_join_dev/observations.jsonl": "ab978dcd67159af104d82446aafe9219b1519bde0fdbe41499cf0911d32b346c",
+    "/tmp/semabi-transport-baseline-20260907-rebuilt-v1/harbour_join_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+    "/tmp/semabi-transport-baseline-20260907-rebuilt-v1/harbour_join_dev/steps.jsonl": "1a348f54285fab112a72b8f3b10fb65df20b9f5148951990e54116f1786ad775",
+    "/tmp/semabi-transport-baseline-20260907-rebuilt-v1/harbour_join_hold/join_merge.json": "732c02e89e9d335762dbfcd98b476e5f3d685ad9164711f39ae003d3a488db84",
+    "/tmp/semabi-transport-baseline-20260907-rebuilt-v1/harbour_join_hold/observations.jsonl": "a6982f61271359ca23e6d29b89732e9e8e538759f86e6149fed44682c3d2672e",
+    "/tmp/semabi-transport-baseline-20260907-rebuilt-v1/harbour_join_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+    "/tmp/semabi-transport-baseline-20260907-rebuilt-v1/harbour_join_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+    "/tmp/semabi-transport-baseline-20260907-rebuilt-v1/harbour_join_hold/steps.jsonl": "f86c6bab02a4dd7c4a2d1470eb1b0e36f95de1698abaad70483b3f79c916aa0d"
+  },
+  "ended_utc": "2026-09-07T15:15:29.860086+00:00",
+  "elapsed_seconds": 672.4803419029995,
+  "result_sha256": "e54f647eb733abeed698c8634fe16febe1303543307dcd5f77515ca2c99fc11d",
+  "changed_inputs": [],
+  "returncode": 0,
+  "process_reaped": true,
+  "lifecycle_verification": "The owning tool session returned exit_code=0 and was closed after measurement completion."
+}

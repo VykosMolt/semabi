@@ -1,0 +1,32 @@
+{
+  "recorded_utc": "2026-09-07T15:09:08.369546+00:00",
+  "reported_by": "/root/acquisition_audit",
+  "outcome_exposure_at_correction": "No dedicated fit had reached scoring or produced a result. All live logs still reported search/fitting. No fresh fixture results have been seen by this agent.",
+  "defects": [
+    {
+      "cause": "measurement role handling",
+      "finding": "visible_check accessed .kind on oc.Alias, whose selection expressions live in .parts; independently reproduced AttributeError",
+      "correction": "Recursive Alias.parts inspection while retaining one semantic role binding."
+    },
+    {
+      "cause": "measurement scope",
+      "finding": "Visible sheet-vessel owner equality assumed a vessel-keyed interpretation; a valid call owner may reach its vessel through a relation.",
+      "correction": "Measure raw sheet vessel and its length among every bound role; report no uniqueness or identity verdict."
+    }
+  ],
+  "versions": {
+    "check_corpora.v1.py": "a630bac56426b2f386fb2d48b40d0b5401a75416f04ed14ed1a181d4e46c05c4",
+    "check_corpora.v2.py": "b87d053f88556ec9f21d4f4ff1795755197e83490c22a3b71fe2d11bfc792292",
+    "check_corpora.py": "ecfb411df3cc80c00642b6166874a705f4135f8bbf6224d71c45234ee7c0ce0d"
+  },
+  "v1_to_v2": "Adds only SEMABI_BASELINE_CORPORA root override; original cases use scratch and latter cases use byte-identical reconstructed learner files.",
+  "retention": "Original running jobs and their output paths are unchanged. A successful original fit/prediction ledger remains valid; raw binding checks can be remeasured offline. A role-handling crash is retained as an invalid diagnostic run and rerun separately.",
+  "independent_validation": {
+    "reviewer": "/root/acquisition_audit",
+    "received_utc": "2026-09-07T15:12:01.564174+00:00",
+    "positive_control": "Alias containing selection Role; call-key owner C1; separately bound vessel VesselA length85 => all three checks match.",
+    "negative_control": "Change only bound vessel length to90 => selection/vessel still match; length mismatches.",
+    "limit": "Availability of a matching bound vessel representation, not correct identity uniqueness.",
+    "review_artifact": "docs/data/v4/transport/instrument_review_v1.md"
+  }
+}

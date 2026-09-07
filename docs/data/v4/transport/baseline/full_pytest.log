@@ -1,0 +1,127 @@
+.........xF............................................................. [ 12%]
+........................................................................ [ 25%]
+.............s....s..................................................... [ 37%]
+........................................................................ [ 50%]
+........................................................................ [ 63%]
+...............................................FF....................... [ 75%]
+.........................s.............................................. [ 88%]
+...................................................................      [100%]
+=================================== FAILURES ===================================
+___________________ test_kanban_random_phase_recovers_types ____________________
+
+    @pytest.mark.slow
+    def test_kanban_random_phase_recovers_types():
+        # an ephemeral port: a fixed range collides with a leftover server or with the
+        # instrumented gauntlet-v2 apps on 8800-8807 and fails the run for no reason
+        world = World("standard", 0)
+>       srv = serve(world, 0)
+              ^^^^^^^^^^^^^^^
+
+tests/test_pipeline_smoke.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+semabi/env/server.py:128: in serve
+    srv = ThreadingHTTPServer(("127.0.0.1", port), make_handler(world))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+../.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError
+_________ test_fetch_then_navigate_action_yields_the_settled_new_page __________
+
+    @pytest.mark.slow
+    def test_fetch_then_navigate_action_yields_the_settled_new_page():
+        _Handler.n = 0
+>       srv = _serve()
+              ^^^^^^^^
+
+tests/test_v4_navigation_settling.py:75: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_v4_navigation_settling.py:60: in _serve
+    srv = ThreadingHTTPServer(("127.0.0.1", 0), _Handler)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+../.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError
+__________ test_a_permanent_browser_failure_is_raised_not_waited_out ___________
+
+    @pytest.mark.slow
+    def test_a_permanent_browser_failure_is_raised_not_waited_out():
+        _Handler.n = 0
+>       srv = _serve()
+              ^^^^^^^^
+
+tests/test_v4_navigation_settling.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_v4_navigation_settling.py:60: in _serve
+    srv = ThreadingHTTPServer(("127.0.0.1", 0), _Handler)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
+    self.socket = socket.socket(self.address_family,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <socket.socket fd=-1, family=0, type=0, proto=0>
+family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
+proto = 0, fileno = None
+
+    def __init__(self, family=-1, type=-1, proto=-1, fileno=None):
+        # For user code address family and type values are IntEnum members, but
+        # for the underlying _socket.socket they're just integers. The
+        # constructor of _socket.socket converts the given argument to an
+        # integer automatically.
+        if fileno is None:
+            if family == -1:
+                family = AF_INET
+            if type == -1:
+                type = SOCK_STREAM
+            if proto == -1:
+                proto = 0
+>       _socket.socket.__init__(self, family, type, proto, fileno)
+E       PermissionError: [Errno 1] Operation not permitted
+
+../.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/socket.py:233: PermissionError
+=========================== short test summary info ============================
+FAILED tests/test_pipeline_smoke.py::test_kanban_random_phase_recovers_types
+FAILED tests/test_v4_navigation_settling.py::test_fetch_then_navigate_action_yields_the_settled_new_page
+FAILED tests/test_v4_navigation_settling.py::test_a_permanent_browser_failure_is_raised_not_waited_out
+3 failed, 564 passed, 3 skipped, 1 xfailed in 1519.83s (0:25:19)

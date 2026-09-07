@@ -1,0 +1,165 @@
+{
+  "source": "9bc371ce9af65241426b77585aa79352bdd7f123",
+  "updated_utc": "2026-09-07T15:26:33.649403+00:00",
+  "completed_cases": {
+    "pilot": {
+      "result": "pilot.json",
+      "result_sha256": "e60083a85d85d162ca3d645f6080aefbf5e8c52d816f0d464866389372d3f441",
+      "historical_reference": "docs/data/v4/prequential/join/detail_view/p32/p38_pil_score.json",
+      "historical_reference_sha256": "1381e6eafaa701df963b73141b303c7ed35fc7592b09b775ecc94c26b74db72e",
+      "version_space_ledger_matches": true,
+      "decision_list_ledger_matches": true,
+      "exact_rules_match": true,
+      "ordered_fields_match": true,
+      "target_clicks": {
+        "dev": 30,
+        "hold": 21
+      },
+      "current_heldout_version_space": {
+        "one outcome was admissible and it happened": 7,
+        "several outcomes remained admissible; the one that happened was among them": 14
+      },
+      "current_heldout_decision_list": {
+        "the event the interface returned": 18,
+        "a different event": 3
+      },
+      "corrected_visible_measurement": "pilot_visible_v3.json"
+    },
+    "allocation_positive": {
+      "result": "allocation_positive.json",
+      "result_sha256": "e54f647eb733abeed698c8634fe16febe1303543307dcd5f77515ca2c99fc11d",
+      "target_clicks": {
+        "development": 13,
+        "holdout": 13
+      },
+      "role_count": 4,
+      "current_heldout_version_space": {
+        "one outcome was admissible and it happened": 10,
+        "no outcome is established for this state": 2,
+        "one outcome was admissible and a different one happened": 1
+      },
+      "current_heldout_decision_list": {
+        "the event the interface returned": 5,
+        "no determinate answer": 8
+      },
+      "corrected_visible_measurement": "allocation_positive_visible_v3.json",
+      "corrected_visible_ledger": {
+        "development": {
+          "match": 39
+        },
+        "holdout": {
+          "match": 39
+        }
+      }
+    },
+    "allocation_refusals": {
+      "result": "allocation_refusals.json",
+      "result_sha256": "192da2c94685d3007578c5738b0692f94b70576b44a5e469fa7af17f1954cbab",
+      "target_clicks": {
+        "development": 32,
+        "holdout": 27
+      },
+      "role_count": 4,
+      "current_heldout_version_space": {
+        "one outcome was admissible and it happened": 16,
+        "several outcomes remained admissible; the one that happened was among them": 11
+      },
+      "current_heldout_decision_list": {
+        "the event the interface returned": 24,
+        "a different event": 3
+      },
+      "corrected_visible_measurement": "allocation_refusals_visible_v3.json",
+      "corrected_visible_ledger": {
+        "development": {
+          "match": 96
+        },
+        "holdout": {
+          "match": 81
+        }
+      }
+    },
+    "separating": {
+      "result": "separating.json",
+      "result_sha256": "5477bae347391cd248f0c37ca70cc9cae5e944fbeb8f0c775c290e7076b22f99",
+      "target_clicks": {
+        "development": 37,
+        "holdout": 30
+      },
+      "role_count": 4,
+      "current_heldout_version_space": {
+        "one outcome was admissible and it happened": 15,
+        "several outcomes remained admissible; the one that happened was among them": 15
+      },
+      "current_heldout_decision_list": {
+        "the event the interface returned": 26,
+        "no determinate answer": 2,
+        "a different event": 2
+      },
+      "corrected_visible_measurement": "separating_visible_v3.json",
+      "corrected_visible_ledger": {
+        "development": {
+          "match": 111
+        },
+        "holdout": {
+          "match": 90
+        }
+      }
+    },
+    "separating_extended": {
+      "result": "separating_extended.json",
+      "result_sha256": "09d2afc61d1acf769f08360bc5d9e7b8116df3b7d8bf6fcd79eb34bfd9a98d0a",
+      "target_clicks": {
+        "development": 69,
+        "holdout": 30
+      },
+      "role_count": 5,
+      "current_heldout_version_space": {
+        "one outcome was admissible and it happened": 15,
+        "several outcomes remained admissible; the one that happened was among them": 15
+      },
+      "current_heldout_decision_list": {
+        "the event the interface returned": 26,
+        "no determinate answer": 3,
+        "a different event": 1
+      },
+      "corrected_visible_measurement": "separating_extended_visible_v3.json",
+      "corrected_visible_ledger": {
+        "development": {
+          "match": 207
+        },
+        "holdout": {
+          "match": 90
+        }
+      },
+      "historical_reference": "docs/data/v4/prequential/join/detail_view/p32/p38_sep2_score.json",
+      "historical_reference_sha256": "7bfa4760bf5fa7e6d2a8c6b0cecd22af4a33f95bbe5a7b07d5162ad78b73d6f7",
+      "version_space_ledger_matches": true,
+      "decision_list_ledger_matches": true,
+      "exact_rules_match": true,
+      "ordered_fields_match": true
+    }
+  },
+  "pending_cases": [],
+  "full_suite": {
+    "original_result": "564 passed; 3 skipped; 1 xfailed; 3 socket.socket PermissionError failures",
+    "original_log": "full_pytest.log",
+    "browser_permission_control": "3 passed in 30.60s",
+    "browser_control_log": "browser_pytest.log",
+    "distinct_tests_accounted_for": 571,
+    "combined_distinct_passes": 567,
+    "skipped": 3,
+    "xfailed": 1,
+    "source_changes_during_either_run": [],
+    "claim": "All 567 non-skipped/non-xfailed tests passed on the unchanged tracked 9bc371c source. Three browser tests passed in a separate permission control; the original full execution remains failed and preserved."
+  },
+  "reading_uniqueness": "Not assessed by visible-binding regression; use shared-surface identity scoreboard.",
+  "corpus_overlap": "Corpora share source segments; the two separating cases share the same holdout. Summed target counts are repeated scoring occasions, not independent interactions.",
+  "all_owned_processes_terminated": true,
+  "git_head_at_close": "795d0737a38fee1fbbe35d23d8e873829611abe8",
+  "original_source_files_changed_or_missing": [],
+  "new_tracked_source_or_script_paths_since_start": [
+    "scripts/transport_collect.py",
+    "scripts/transport_score.py"
+  ],
+  "source_scope_note": "Initial learner/source/test files remain byte-identical. New tracked transport-campaign scripts belong to the parent campaign and were not imported by these baseline runs."
+}

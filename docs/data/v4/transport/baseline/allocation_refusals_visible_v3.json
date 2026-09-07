@@ -1,0 +1,2210 @@
+{
+  "case": "allocation_refusals",
+  "recorded_utc": "2026-09-07T15:17:14.118392+00:00",
+  "original_result": "allocation_refusals.json",
+  "original_result_sha256": "192da2c94685d3007578c5738b0692f94b70576b44a5e469fa7af17f1954cbab",
+  "measurement_instrument_sha256": "ecfb411df3cc80c00642b6166874a705f4135f8bbf6224d71c45234ee7c0ce0d",
+  "remeasurement_instrument_sha256": "80e08b60195e96cb2fb39350d1d60da218505904d55ac07de40db4a3a9e56835",
+  "scope": "Existing bound-object rows against raw visible observations only; no learner refit or prediction change.",
+  "development": {
+    "target_clicks": 32,
+    "visible_check_ledger": {
+      "match": 96
+    },
+    "visible_check_scope": {
+      "bound vessel length survives representation": {
+        "match": 32
+      },
+      "selected object retained": {
+        "match": 32
+      },
+      "sheet vessel available in action binding": {
+        "match": 32
+      }
+    },
+    "rows": [
+      {
+        "step": 15,
+        "before": "38d4917adc5dc808",
+        "raw_target": 67,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 66,
+            "visible": "S1 - South Quay - takes 160 m - certified for hazardous cargo - closed",
+            "expected_key": "S1",
+            "bound_selection_keys": [
+              "S1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 42,
+            "visible": "Ardent Rose",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 48,
+            "visible": "96 m",
+            "expected_scalar": "96",
+            "bound_scalars": {
+              "owner": "96"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 49,
+        "before": "615fe1c5243f5465",
+        "raw_target": 67,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 66,
+            "visible": "N2 - North Quay - takes 90 m - no hazardous cargo - open",
+            "expected_key": "N2",
+            "bound_selection_keys": [
+              "N2"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 42,
+            "visible": "Nordkapp",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 48,
+            "visible": "132 m",
+            "expected_scalar": "132",
+            "bound_scalars": {
+              "owner": "132"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 66,
+        "before": "008433cd861d9121",
+        "raw_target": 59,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 58,
+            "visible": "no berth chosen",
+            "expected_key": null,
+            "bound_selection_keys": [],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 34,
+            "visible": "Ardent Rose",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 40,
+            "visible": "96 m",
+            "expected_scalar": "96",
+            "bound_scalars": {
+              "owner": "96"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 76,
+        "before": "06d15b31a039846a",
+        "raw_target": 67,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 66,
+            "visible": "S1 - South Quay - takes 160 m - certified for hazardous cargo - closed",
+            "expected_key": "S1",
+            "bound_selection_keys": [
+              "S1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 42,
+            "visible": "Ardent Rose",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 48,
+            "visible": "96 m",
+            "expected_scalar": "96",
+            "bound_scalars": {
+              "owner": "96"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 97,
+        "before": "a0ccd08ce1032a3e",
+        "raw_target": 75,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 74,
+            "visible": "no berth chosen",
+            "expected_key": null,
+            "bound_selection_keys": [],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Nordkapp",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "132 m",
+            "expected_scalar": "132",
+            "bound_scalars": {
+              "owner": "132"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 98,
+        "before": "436cc93119b1ccda",
+        "raw_target": 75,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 74,
+            "visible": "no berth chosen",
+            "expected_key": null,
+            "bound_selection_keys": [],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Nordkapp",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "132 m",
+            "expected_scalar": "132",
+            "bound_scalars": {
+              "owner": "132"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 106,
+        "before": "b6822f18675ed3da",
+        "raw_target": 75,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 74,
+            "visible": "S1 - South Quay - takes 160 m - certified for hazardous cargo - closed",
+            "expected_key": "S1",
+            "bound_selection_keys": [
+              "S1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Ardent Rose",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "96 m",
+            "expected_scalar": "96",
+            "bound_scalars": {
+              "owner": "96"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 160,
+        "before": "ba9504cfdaaf41fc",
+        "raw_target": 67,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 66,
+            "visible": "no berth chosen",
+            "expected_key": null,
+            "bound_selection_keys": [],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 42,
+            "visible": "Hafnarfjord",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 48,
+            "visible": "112 m",
+            "expected_scalar": "112",
+            "bound_scalars": {
+              "owner": "112"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 365,
+        "before": "95d92148ca365537",
+        "raw_target": 75,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 74,
+            "visible": "no berth chosen",
+            "expected_key": null,
+            "bound_selection_keys": [],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Petrel Star",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "148 m",
+            "expected_scalar": "148",
+            "bound_scalars": {
+              "owner": "148"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 377,
+        "before": "ff56ecf6acb13c42",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "N2 - North Quay - takes 90 m - no hazardous cargo - open",
+            "expected_key": "N2",
+            "bound_selection_keys": [
+              "N2"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Kittiwake",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "78 m",
+            "expected_scalar": "78",
+            "bound_scalars": {
+              "owner": "78"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 380,
+        "before": "1ad76d15c2ea01e4",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "N2 - North Quay - takes 90 m - no hazardous cargo - open",
+            "expected_key": "N2",
+            "bound_selection_keys": [
+              "N2"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Ardent Rose",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "96 m",
+            "expected_scalar": "96",
+            "bound_scalars": {
+              "owner": "96"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 383,
+        "before": "d44b7f31dce45b94",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "N2 - North Quay - takes 90 m - no hazardous cargo - open",
+            "expected_key": "N2",
+            "bound_selection_keys": [
+              "N2"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Nordkapp",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "132 m",
+            "expected_scalar": "132",
+            "bound_scalars": {
+              "owner": "132"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 386,
+        "before": "a8919d9f2087ba35",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "S1 - South Quay - takes 160 m - certified for hazardous cargo - closed",
+            "expected_key": "S1",
+            "bound_selection_keys": [
+              "S1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Kittiwake",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "78 m",
+            "expected_scalar": "78",
+            "bound_scalars": {
+              "owner": "78"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 389,
+        "before": "468f81a37578a304",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "S1 - South Quay - takes 160 m - certified for hazardous cargo - closed",
+            "expected_key": "S1",
+            "bound_selection_keys": [
+              "S1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Ardent Rose",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "96 m",
+            "expected_scalar": "96",
+            "bound_scalars": {
+              "owner": "96"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 393,
+        "before": "21e83c74ddc8abc0",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "S1 - South Quay - takes 160 m - certified for hazardous cargo - open",
+            "expected_key": "S1",
+            "bound_selection_keys": [
+              "S1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Ardent Rose",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "96 m",
+            "expected_scalar": "96",
+            "bound_scalars": {
+              "owner": "96"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 396,
+        "before": "a6887df13f99f3c3",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "S1 - South Quay - takes 160 m - certified for hazardous cargo - open",
+            "expected_key": "S1",
+            "bound_selection_keys": [
+              "S1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Kittiwake",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "78 m",
+            "expected_scalar": "78",
+            "bound_scalars": {
+              "owner": "78"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 399,
+        "before": "f3742b89ab58f6f2",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "S1 - South Quay - takes 160 m - certified for hazardous cargo - open",
+            "expected_key": "S1",
+            "bound_selection_keys": [
+              "S1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Nordkapp",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "132 m",
+            "expected_scalar": "132",
+            "bound_scalars": {
+              "owner": "132"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 404,
+        "before": "06e9158efaa9c317",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "N1 - North Quay - takes 120 m - no hazardous cargo - open",
+            "expected_key": "N1",
+            "bound_selection_keys": [
+              "N1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Kittiwake",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "78 m",
+            "expected_scalar": "78",
+            "bound_scalars": {
+              "owner": "78"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 410,
+        "before": "e0cfad5969557444",
+        "raw_target": 75,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 74,
+            "visible": "S1 - South Quay - takes 160 m - certified for hazardous cargo - open",
+            "expected_key": "S1",
+            "bound_selection_keys": [
+              "S1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Ardent Rose",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "96 m",
+            "expected_scalar": "96",
+            "bound_scalars": {
+              "owner": "96"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 413,
+        "before": "aa12a25bd2240e03",
+        "raw_target": 75,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 74,
+            "visible": "S1 - South Quay - takes 160 m - certified for hazardous cargo - open",
+            "expected_key": "S1",
+            "bound_selection_keys": [
+              "S1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Nordkapp",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "132 m",
+            "expected_scalar": "132",
+            "bound_scalars": {
+              "owner": "132"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 417,
+        "before": "f2ee56253b8c4419",
+        "raw_target": 75,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 74,
+            "visible": "S2 - South Quay - takes 70 m - no hazardous cargo - closed",
+            "expected_key": "S2",
+            "bound_selection_keys": [
+              "S2"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Ardent Rose",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "96 m",
+            "expected_scalar": "96",
+            "bound_scalars": {
+              "owner": "96"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 420,
+        "before": "599f29e8a36a5cc0",
+        "raw_target": 75,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 74,
+            "visible": "S2 - South Quay - takes 70 m - no hazardous cargo - closed",
+            "expected_key": "S2",
+            "bound_selection_keys": [
+              "S2"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Nordkapp",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "132 m",
+            "expected_scalar": "132",
+            "bound_scalars": {
+              "owner": "132"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 424,
+        "before": "c9eb042e39ef1961",
+        "raw_target": 75,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 74,
+            "visible": "S2 - South Quay - takes 70 m - no hazardous cargo - open",
+            "expected_key": "S2",
+            "bound_selection_keys": [
+              "S2"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Ardent Rose",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "96 m",
+            "expected_scalar": "96",
+            "bound_scalars": {
+              "owner": "96"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 427,
+        "before": "1205aeaf2e7be927",
+        "raw_target": 75,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 74,
+            "visible": "S2 - South Quay - takes 70 m - no hazardous cargo - open",
+            "expected_key": "S2",
+            "bound_selection_keys": [
+              "S2"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Nordkapp",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "132 m",
+            "expected_scalar": "132",
+            "bound_scalars": {
+              "owner": "132"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 435,
+        "before": "b415f97d497d2444",
+        "raw_target": 75,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 74,
+            "visible": "N2 - North Quay - takes 90 m - no hazardous cargo - open",
+            "expected_key": "N2",
+            "bound_selection_keys": [
+              "N2"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Ardent Rose",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "96 m",
+            "expected_scalar": "96",
+            "bound_scalars": {
+              "owner": "96"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 442,
+        "before": "eb191bdc15f4b0a9",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "S1 - South Quay - takes 160 m - certified for hazardous cargo - closed",
+            "expected_key": "S1",
+            "bound_selection_keys": [
+              "S1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Ardent Rose",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "96 m",
+            "expected_scalar": "96",
+            "bound_scalars": {
+              "owner": "96"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 445,
+        "before": "241ed033135f27e7",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "S1 - South Quay - takes 160 m - certified for hazardous cargo - closed",
+            "expected_key": "S1",
+            "bound_selection_keys": [
+              "S1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Nordkapp",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "132 m",
+            "expected_scalar": "132",
+            "bound_scalars": {
+              "owner": "132"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 449,
+        "before": "5cfe6d6ec2895c10",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "S1 - South Quay - takes 160 m - certified for hazardous cargo - open",
+            "expected_key": "S1",
+            "bound_selection_keys": [
+              "S1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Ardent Rose",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "96 m",
+            "expected_scalar": "96",
+            "bound_scalars": {
+              "owner": "96"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 452,
+        "before": "13bf5e1c2b6d09cf",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "S2 - South Quay - takes 70 m - no hazardous cargo - open",
+            "expected_key": "S2",
+            "bound_selection_keys": [
+              "S2"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Ardent Rose",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "96 m",
+            "expected_scalar": "96",
+            "bound_scalars": {
+              "owner": "96"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 455,
+        "before": "3e75b43a31d06fc9",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "N2 - North Quay - takes 90 m - no hazardous cargo - open",
+            "expected_key": "N2",
+            "bound_selection_keys": [
+              "N2"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Ardent Rose",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "96 m",
+            "expected_scalar": "96",
+            "bound_scalars": {
+              "owner": "96"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 458,
+        "before": "a44e8d176c4c67ae",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "S2 - South Quay - takes 70 m - no hazardous cargo - open",
+            "expected_key": "S2",
+            "bound_selection_keys": [
+              "S2"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Nordkapp",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "132 m",
+            "expected_scalar": "132",
+            "bound_scalars": {
+              "owner": "132"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 466,
+        "before": "c986aac310fd8503",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "N2 - North Quay - takes 90 m - no hazardous cargo - open",
+            "expected_key": "N2",
+            "bound_selection_keys": [
+              "N2"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Ardent Rose",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "96 m",
+            "expected_scalar": "96",
+            "bound_scalars": {
+              "owner": "96"
+            },
+            "status": "match"
+          }
+        ]
+      }
+    ]
+  },
+  "holdout": {
+    "target_clicks": 27,
+    "visible_check_ledger": {
+      "match": 81
+    },
+    "visible_check_scope": {
+      "bound vessel length survives representation": {
+        "match": 27
+      },
+      "selected object retained": {
+        "match": 27
+      },
+      "sheet vessel available in action binding": {
+        "match": 27
+      }
+    },
+    "rows": [
+      {
+        "step": 59,
+        "before": "bd63b23812ce78a9",
+        "raw_target": 75,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 74,
+            "visible": "no berth chosen",
+            "expected_key": null,
+            "bound_selection_keys": [],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Nordkapp",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "132 m",
+            "expected_scalar": "132",
+            "bound_scalars": {
+              "owner": "132"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 164,
+        "before": "c2bb58bfa730a552",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "no berth chosen",
+            "expected_key": null,
+            "bound_selection_keys": [],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Ardent Rose",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "96 m",
+            "expected_scalar": "96",
+            "bound_scalars": {
+              "owner": "96"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 194,
+        "before": "52006f1969cea55c",
+        "raw_target": 67,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 66,
+            "visible": "no berth chosen",
+            "expected_key": null,
+            "bound_selection_keys": [],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 42,
+            "visible": "Selkie",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 48,
+            "visible": "64 m",
+            "expected_scalar": "64",
+            "bound_scalars": {
+              "owner": "64"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 340,
+        "before": "7a35be77f143c0eb",
+        "raw_target": 75,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 74,
+            "visible": "no berth chosen",
+            "expected_key": null,
+            "bound_selection_keys": [],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Hafnarfjord",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "112 m",
+            "expected_scalar": "112",
+            "bound_scalars": {
+              "owner": "112"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 357,
+        "before": "c8d4adbcda918a65",
+        "raw_target": 75,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 74,
+            "visible": "no berth chosen",
+            "expected_key": null,
+            "bound_selection_keys": [],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Petrel Star",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "148 m",
+            "expected_scalar": "148",
+            "bound_scalars": {
+              "owner": "148"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 464,
+        "before": "6f9677b0c26ab90e",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "S1 - South Quay - takes 160 m - certified for hazardous cargo - closed",
+            "expected_key": "S1",
+            "bound_selection_keys": [
+              "S1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Nordkapp",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "132 m",
+            "expected_scalar": "132",
+            "bound_scalars": {
+              "owner": "132"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 467,
+        "before": "b5571af3a8251019",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "S1 - South Quay - takes 160 m - certified for hazardous cargo - closed",
+            "expected_key": "S1",
+            "bound_selection_keys": [
+              "S1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Selkie",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "64 m",
+            "expected_scalar": "64",
+            "bound_scalars": {
+              "owner": "64"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 471,
+        "before": "d6a2009c772029ab",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "S1 - South Quay - takes 160 m - certified for hazardous cargo - open",
+            "expected_key": "S1",
+            "bound_selection_keys": [
+              "S1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Nordkapp",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "132 m",
+            "expected_scalar": "132",
+            "bound_scalars": {
+              "owner": "132"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 474,
+        "before": "d3ee69d74b48bbc8",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "N2 - North Quay - takes 90 m - no hazardous cargo - open",
+            "expected_key": "N2",
+            "bound_selection_keys": [
+              "N2"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Nordkapp",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "132 m",
+            "expected_scalar": "132",
+            "bound_scalars": {
+              "owner": "132"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 477,
+        "before": "0781b99ebc7d1faa",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "N2 - North Quay - takes 90 m - no hazardous cargo - open",
+            "expected_key": "N2",
+            "bound_selection_keys": [
+              "N2"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Hafnarfjord",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "112 m",
+            "expected_scalar": "112",
+            "bound_scalars": {
+              "owner": "112"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 485,
+        "before": "3e04e2685472697d",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "N1 - North Quay - takes 120 m - no hazardous cargo - open",
+            "expected_key": "N1",
+            "bound_selection_keys": [
+              "N1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Nordkapp",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "132 m",
+            "expected_scalar": "132",
+            "bound_scalars": {
+              "owner": "132"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 492,
+        "before": "b20662ca1361e1f6",
+        "raw_target": 75,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 74,
+            "visible": "S2 - South Quay - takes 70 m - no hazardous cargo - closed",
+            "expected_key": "S2",
+            "bound_selection_keys": [
+              "S2"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Selkie",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "64 m",
+            "expected_scalar": "64",
+            "bound_scalars": {
+              "owner": "64"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 495,
+        "before": "27dde81016e498e5",
+        "raw_target": 75,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 74,
+            "visible": "S2 - South Quay - takes 70 m - no hazardous cargo - closed",
+            "expected_key": "S2",
+            "bound_selection_keys": [
+              "S2"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Hafnarfjord",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "112 m",
+            "expected_scalar": "112",
+            "bound_scalars": {
+              "owner": "112"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 499,
+        "before": "35b25a4d7837e39e",
+        "raw_target": 75,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 74,
+            "visible": "S2 - South Quay - takes 70 m - no hazardous cargo - open",
+            "expected_key": "S2",
+            "bound_selection_keys": [
+              "S2"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Hafnarfjord",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "112 m",
+            "expected_scalar": "112",
+            "bound_scalars": {
+              "owner": "112"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 502,
+        "before": "a58bf4d03374792e",
+        "raw_target": 75,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 74,
+            "visible": "N2 - North Quay - takes 90 m - no hazardous cargo - open",
+            "expected_key": "N2",
+            "bound_selection_keys": [
+              "N2"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 50,
+            "visible": "Hafnarfjord",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 56,
+            "visible": "112 m",
+            "expected_scalar": "112",
+            "bound_scalars": {
+              "owner": "112"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 509,
+        "before": "a35b6f4ca178b7da",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "N2 - North Quay - takes 90 m - no hazardous cargo - open",
+            "expected_key": "N2",
+            "bound_selection_keys": [
+              "N2"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Bregagh",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "88 m",
+            "expected_scalar": "88",
+            "bound_scalars": {
+              "owner": "88"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 512,
+        "before": "98e22b7a0a9e4764",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "N2 - North Quay - takes 90 m - no hazardous cargo - open",
+            "expected_key": "N2",
+            "bound_selection_keys": [
+              "N2"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Selkie",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "64 m",
+            "expected_scalar": "64",
+            "bound_scalars": {
+              "owner": "64"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 515,
+        "before": "a4db06b557a4cc7b",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "N2 - North Quay - takes 90 m - no hazardous cargo - open",
+            "expected_key": "N2",
+            "bound_selection_keys": [
+              "N2"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Hafnarfjord",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "112 m",
+            "expected_scalar": "112",
+            "bound_scalars": {
+              "owner": "112"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 518,
+        "before": "61171c210861ff71",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "S1 - South Quay - takes 160 m - certified for hazardous cargo - closed",
+            "expected_key": "S1",
+            "bound_selection_keys": [
+              "S1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Selkie",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "64 m",
+            "expected_scalar": "64",
+            "bound_scalars": {
+              "owner": "64"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 521,
+        "before": "566044baa7f072c8",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "S1 - South Quay - takes 160 m - certified for hazardous cargo - closed",
+            "expected_key": "S1",
+            "bound_selection_keys": [
+              "S1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Hafnarfjord",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "112 m",
+            "expected_scalar": "112",
+            "bound_scalars": {
+              "owner": "112"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 525,
+        "before": "ee8c1f8bd4db71e6",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "S1 - South Quay - takes 160 m - certified for hazardous cargo - open",
+            "expected_key": "S1",
+            "bound_selection_keys": [
+              "S1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Selkie",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "64 m",
+            "expected_scalar": "64",
+            "bound_scalars": {
+              "owner": "64"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 528,
+        "before": "b41a5abb8487a746",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "S1 - South Quay - takes 160 m - certified for hazardous cargo - open",
+            "expected_key": "S1",
+            "bound_selection_keys": [
+              "S1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Hafnarfjord",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "112 m",
+            "expected_scalar": "112",
+            "bound_scalars": {
+              "owner": "112"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 531,
+        "before": "78f90a2d5ec447e1",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "S1 - South Quay - takes 160 m - certified for hazardous cargo - open",
+            "expected_key": "S1",
+            "bound_selection_keys": [
+              "S1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Petrel Star",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "148 m",
+            "expected_scalar": "148",
+            "bound_scalars": {
+              "owner": "148"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 534,
+        "before": "f0c19642c185882f",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "S2 - South Quay - takes 70 m - no hazardous cargo - open",
+            "expected_key": "S2",
+            "bound_selection_keys": [
+              "S2"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Hafnarfjord",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "112 m",
+            "expected_scalar": "112",
+            "bound_scalars": {
+              "owner": "112"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 537,
+        "before": "d11764b4bec864be",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "S2 - South Quay - takes 70 m - no hazardous cargo - open",
+            "expected_key": "S2",
+            "bound_selection_keys": [
+              "S2"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Petrel Star",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "148 m",
+            "expected_scalar": "148",
+            "bound_scalars": {
+              "owner": "148"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 540,
+        "before": "c8dcda8709a403f3",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "S2 - South Quay - takes 70 m - no hazardous cargo - open",
+            "expected_key": "S2",
+            "bound_selection_keys": [
+              "S2"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Bregagh",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "88 m",
+            "expected_scalar": "88",
+            "bound_scalars": {
+              "owner": "88"
+            },
+            "status": "match"
+          }
+        ]
+      },
+      {
+        "step": 548,
+        "before": "641258cc19d68c80",
+        "raw_target": 83,
+        "visible_checks": [
+          {
+            "question": "selected object retained",
+            "raw_node": 82,
+            "visible": "S1 - South Quay - takes 160 m - certified for hazardous cargo - open",
+            "expected_key": "S1",
+            "bound_selection_keys": [
+              "S1"
+            ],
+            "selection_role_count": 1,
+            "status": "match"
+          },
+          {
+            "question": "sheet vessel available in action binding",
+            "raw_node": 58,
+            "visible": "Bregagh",
+            "bound_vessel_roles": [
+              "owner"
+            ],
+            "status": "match"
+          },
+          {
+            "question": "bound vessel length survives representation",
+            "raw_node": 64,
+            "visible": "88 m",
+            "expected_scalar": "88",
+            "bound_scalars": {
+              "owner": "88"
+            },
+            "status": "match"
+          }
+        ]
+      }
+    ]
+  }
+}

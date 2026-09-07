@@ -1,0 +1,33 @@
+{
+  "owner": "/root/baseline_verification",
+  "working_directory": "/home/moloch/semabi",
+  "label": "browser_pytest",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_pipeline_smoke.py::test_kanban_random_phase_recovers_types",
+    "tests/test_v4_navigation_settling.py::test_fetch_then_navigate_action_yields_the_settled_new_page",
+    "tests/test_v4_navigation_settling.py::test_a_permanent_browser_failure_is_raised_not_waited_out"
+  ],
+  "source_commit": "9bc371ce9af65241426b77585aa79352bdd7f123",
+  "source_snapshot_sha256": "e6b17d1cc9de1fd8f5db0ff92f8d850ed9ac086025a160e565b712f195d283ee",
+  "started_utc": "2026-09-07T15:16:26.532828+00:00",
+  "runner_pid": 197039,
+  "state": "terminated",
+  "thread_environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1"
+  },
+  "pytest_pid": 197040,
+  "returncode": 0,
+  "ended_utc": "2026-09-07T15:16:57.264515+00:00",
+  "elapsed_seconds": 30.731687964999765,
+  "process_reaped": true,
+  "source_changes_during_run": [],
+  "log_sha256": "6d6952c5318fd2318e149c21fab8fc18b8ce086f50ba01676410dd6558124078",
+  "result_tail": "...                                                                      [100%]\n3 passed in 30.60s\n"
+}

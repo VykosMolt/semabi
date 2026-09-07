@@ -1,0 +1,77 @@
+{
+  "owner": "/root/baseline_verification",
+  "updated_utc": "2026-09-07T15:26:33.647483+00:00",
+  "working_directory": "/home/moloch/semabi",
+  "core_reservation": 0,
+  "thread_cap_per_process": 1,
+  "process_id_scope": "OS IDs in tool execution namespaces; tool sessions own lifecycle",
+  "jobs": [
+    {
+      "name": "full_pytest",
+      "session_id": 51166,
+      "state": "terminated",
+      "provenance": "full_pytest.json",
+      "returncode": 1,
+      "process_reaped": true,
+      "diagnosis": "Only three socket.socket PermissionError failures; no changed source files."
+    },
+    {
+      "name": "pilot",
+      "session_id": 27406,
+      "state": "terminated",
+      "provenance": "pilot_process.json",
+      "returncode": 0,
+      "process_reaped": true
+    },
+    {
+      "name": "separating_extended",
+      "session_id": 57606,
+      "state": "terminated",
+      "provenance": "separating_extended_process.json",
+      "returncode": 0,
+      "process_reaped": true
+    },
+    {
+      "name": "allocation_refusals",
+      "session_id": 67587,
+      "state": "terminated",
+      "provenance": "allocation_refusals_process.json",
+      "returncode": 0,
+      "process_reaped": true
+    },
+    {
+      "name": "allocation_positive",
+      "session_id": 55561,
+      "state": "terminated",
+      "provenance": "allocation_positive_process.json",
+      "returncode": 0,
+      "process_reaped": true
+    },
+    {
+      "name": "separating",
+      "session_id": 64826,
+      "state": "terminated",
+      "provenance": "separating_process.json",
+      "returncode": 0,
+      "process_reaped": true
+    },
+    {
+      "name": "browser_pytest",
+      "session_id": 21337,
+      "state": "terminated",
+      "provenance": "browser_pytest.json",
+      "permission": "Automatic review allowed authorized loopback-only browser tests outside sandbox.",
+      "returncode": 0,
+      "process_reaped": true
+    }
+  ],
+  "queued": [],
+  "source": "9bc371ce9af65241426b77585aa79352bdd7f123",
+  "source_changes_authorized": false,
+  "evaluation_exposure": "Only previously disclosed retained development corpus material read; fresh fixture outputs have not been inspected.",
+  "memory_before_last_two_jobs": {
+    "MemAvailable_kB": 24103768,
+    "MemTotal_kB": 32264164
+  },
+  "all_owned_processes_terminated": true
+}
