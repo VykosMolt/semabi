@@ -9,34 +9,26 @@
  "corroborated": true,
  "hypothesis": "rule",
  "against_the_other_class": {
-  "rule: the evidence forces one outcome | list: the evidence forces one outcome": 143,
+  "rule: the evidence forces one outcome | list: the evidence forces one outcome": 149,
   "rule: one outcome, because the control has never done anything else | list: one outcome, because the control has never done anything else": 96,
   "rule: several outcomes remain admissible | list: several outcomes remain admissible": 20,
-  "rule: no outcome is established | list: no outcome is established": 7,
-  "rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)": 4
+  "rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)": 5
  },
  "actions": 270,
  "what_the_evidence_establishes": {
-  "the evidence forces one outcome": 147,
+  "the evidence forces one outcome": 154,
   "one outcome, because the control has never done anything else": 96,
-  "several outcomes remain admissible": 20,
-  "no outcome is established": 7
+  "several outcomes remain admissible": 20
  },
  "admissible_set_size": {
-  "0": 7,
-  "1": 243,
+  "1": 250,
   "2": 20
  },
  "what_happened_was": {
-  "inside the admissible set": 176,
-  "outside it": 87,
-  "nothing was admissible": 7
+  "inside the admissible set": 182,
+  "outside it": 88
  },
  "the_list_where_the_evidence": {
-  "no outcome is established": {
-   "a different event": 6,
-   "the event the interface returned": 1
-  },
   "one outcome, because the control has never done anything else": {
    "the event the interface returned": 92,
    "a different event": 4
@@ -45,18 +37,18 @@
    "the event the interface returned": 20
   },
   "the evidence forces one outcome": {
-   "the event the interface returned": 147
+   "the event the interface returned": 153,
+   "a different event": 1
   }
  },
  "policy_forced_then_list": {
-  "one outcome was admissible and it happened": 143,
+  "one outcome was admissible and it happened": 149,
   "the only outcome ever seen on this control, and it happened": 92,
   "deferred to the list: the event the interface returned": 20,
-  "refused: nothing established": 7,
-  "one outcome was admissible and a different one happened": 4,
+  "one outcome was admissible and a different one happened": 5,
   "the only outcome ever seen on this control, and something else happened": 4
  },
- "distinct_events_forced": 12,
+ "distinct_events_forced": 13,
  "events_forced": {
   "\u0000SILENT": 79,
   "<> <> is already <> .": 35,
@@ -90,7 +82,7 @@
    "several outcomes remain admissible": 10
   },
   "button:Book pilot": {
-   "no outcome is established": 7
+   "the evidence forces one outcome": 7
   },
   "button:Record departure": {
    "one outcome, because the control has never done anything else": 6
@@ -111,7 +103,8 @@
    "the only outcome ever seen on this control, and something else happened": 2
   },
   "button:Book pilot": {
-   "no outcome is established for this state": 7
+   "one outcome was admissible and it happened": 6,
+   "one outcome was admissible and a different one happened": 1
   },
   "button:Bring _": {
    "the only outcome ever seen on this control, and it happened": 5
@@ -156,7 +149,7 @@
   "button:Book pilot": {
    "fitted": 5,
    "events": 2,
-   "rules": 2,
+   "rules": 1,
    "default": "<> is already booked for call <> ."
   },
   "button:Bring _": {
@@ -266,6 +259,22 @@
    "verdict": "one outcome was admissible and a different one happened",
    "level": "the event alone",
    "why": "<> is signed off . <- attr:Duty#0(owner) == 'on' & no_children(owner)  [18 occasions]"
+  },
+  {
+   "step": 444,
+   "control": "button:Book pilot",
+   "admissible": [
+    "Nothing chosen in the pilot list ."
+   ],
+   "hypothesis": "rule",
+   "unordered": [
+    "Nothing chosen in the pilot list ."
+   ],
+   "observed": "<> holds a <> ; <> is <> overall .",
+   "returned": "Silas Nunn holds a ticket to 80 m; Nordkapp is 132 m overall.",
+   "verdict": "one outcome was admissible and a different one happened",
+   "level": "the event alone",
+   "why": "Nothing chosen in the pilot list . <- ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#1']:2\")  [4 occasions]"
   }
  ]
 }

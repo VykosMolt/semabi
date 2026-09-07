@@ -2423,3 +2423,151 @@ changed no verdict here.  Committing P34 + P35 + P36; battery #8 under the commi
 pre-registered as in P34/P35: retained ledgers unchanged except where a comparison
 against the acted-on object is now expressible and adopted (blend is where it could
 be), the frontier and invariants unchanged; anything else a finding.
+
+18:01 battery #8 (5c6d02b, 12 cores) regen 17:28 -> 18:01 rc=0: frontiers identical;
+source candidates fingerprint-identical on harbour, vet and blend; local explanation
+and open questions unchanged (58/3, 40/4, 52/6) -- the three repairs do not touch the
+identity layer, as pre-registered.  open_world running.  P32b: seeds 103, 107 collected;
+113, 119 next.
+
+## PAUSED by the user (18:38): battery #8 frozen in its open_world stage
+`systemctl --user freeze preq-battery8-1788708486.service` (cgroup freezer; the stage's
+processes keep their state).  RESUME with `systemctl --user thaw preq-battery8-1788708486.service`
+when the user says so; the stage log at $P/battery/battery.log continues from 18:01's
+open_world.  The P32b collection (seeds 113, 119, one core plus a browser) was left to
+finish on its own -- it holds the app; nothing else was started.
+Queue on resume, in order: (1) judge battery #8's remaining stages against the P34/P35
+pre-registration (blend is where a comparison against the owner could appear), retained
+tests, full suite, Part XVIII battery sentence, commit; (2) P32b fits on harbour_sep2_dev
+against harbour_sep_hold (score_override with `settled`, and under the call key for
+comparison) -- pre-registered: 464/492/504/521 forced right, `several` <= 13 of 30, no
+wrong; (3) P33 acquisition (policy counterexample, seed 71) once the app is free;
+(4) the pilot holdout's two extra `several` under the vessel key (open, small).
+
+19:43 P32b collection complete: seeds 103/107/113/119 rc=0; harbour_sep2_dev merged, 587
+steps (base + eight extensions).  Nothing launched -- paused per the user.
+
+## RESUMED (2026-09-07 02:15); the machine is shared with two other research instances
+Battery #8 thawed at CPUQuota=800% (the shared-machine cap); my other jobs at most three
+single-threaded processes at nice 10, run in sequence where they can be.  Order: P32b
+fits (harbour_sep2_dev vs harbour_sep_hold, settled reading and the call key), then
+P33's acquisition on the free app, then battery #8's judgement as its stages land.
+
+## P32b measured (02:52; p32b_inspect.json, p32b_score_settled/callkey.json)
+harbour_sep2_dev (587 steps) against harbour_sep_hold, Book pilot, 30 clicks:
+  settled (vessel key, P34-P36):  12 forced right / 18 several / 0 wrong / 0 unestablished
+  call key:                       13 / 17 / 0 / 0
+Of the four divergent states only 492 (Silas 80 vs 96) became forced right; 464 (80 vs
+88), 504 (100 vs 96) and 521 (80 vs 88) stay `several`.  Pre-registration (all four
+forced, several <= 13) NOT met.  The larger dev also made the lists messier: under the
+vessel key "already booked" is guarded by Hazardous cargo(owner) == yes [5] and Length
+overall(owner) == 96 [4]; under the call key the join literal heads an "already booked"
+rule [8] -- the order artefact of a corpus where most bookings are re-asks.  Reading the
+vouches at 464/504/521 and the dev's (ticket, length) occasions before judging.
+
+02:53 P32b vouches at the three remaining `several`: the refuting occasions ARE in dev
+(eight too-short at ticket 80, seven bookings and eight refusals at 100) and they did
+kill the ticket/length boxes -- 492 is forced by the comparison alone.  At 464 and 521
+(80 vs 88) "booked" is now vouched by Calls logged(owner) < 3 & Length overall(owner)
+< 96 & ref_null; at 504 (100 vs 96) "too short" by Calls logged(owner) >= 4 & Length
+>= 96 & Ticket < 130.  The coincidence moved to Calls logged: a per-vessel counter
+that rises over a history, adopted as ORDERED because its threshold happened to be
+two-sided on this corpus, and rich enough in values to carve a pure box around any
+small set of occasions.  The version space is honest about the vocabulary it was given;
+the identifiability question is whether the LEARNER identifies the comparison -- its
+list has the comparison as the too-short rule under both keys -- so the list-level
+ledger at 464/504/521 is the verdict: rerunning with the point hypothesis's answers.
+Counter-like fields are P33's territory (the guard fires against the standing vouch).
+
+03:13 battery #8 open_world 18:01 -> 03:12 rc=0 (frozen 18:40-19:3x, then 8 cores on a
+machine shared with two other research instances): all sixteen invariants zero -- as
+pre-registered.  identity running.
+
+## P33 judged (03:13; p33_acquire_counterexample.json; seed 71, policy counterexample)
+Before (P36 model, vessel key): 5 forced right / 16 several.  The driver found 22 states
+with three admissible outcomes where the list's guard fired against standing vouches
+(booked vs already-booked / not-on-duty / nothing-chosen) and acted at 8 of them; 5
+answered, every one "Call <> is already <> ; <> pilot is needed" -- a FOURTH outcome
+none of the vouches nor the guard predicted (resolved False at all eight).  After the
+refit: 3 forced right / 18 several / 0 wrong; the new refusal, three-plus occasions now,
+is admissible at fourteen more holdout states; no vouch present before is absent after.
+(i) met; (ii) refuted -- several rose, as under P30; (iii) the refutation fell on the
+LIST's guard (Duty on & ref_null -> booked is impure once an alongside call shares it),
+not on a version-space vouch, and refit_with extends the evidence only, so the guard
+stands in the list and the evidence widens.  Same finding as P30 in a sharper form: on
+a fresh seed the first thing an active driver reaches is behaviour the corpus never
+established (calls already alongside), and acting where a guard is contested surfaces
+coverage gaps before it falsifies coincidences.  The user's formulation is stricter than
+what I built: hold the coincidence's SUPPORTING VALUE fixed (Flag == Norway) while the
+factor the application checks differs (a named selection).  That needs a driver that
+reads the vouch conditions at the holdout's several states and steers the world into
+one that satisfies them -- value-seeking, a planner over the vouch -- which is the next
+version, not tonight's.  Retained.
+
+## Battery #8 identity stage (03:21; 03:12 -> 03:20 rc=0), judged against P34/P35
+Changed against 5c6d02b, three files:
+  harbour holdout: Book pilot's seven held-out clicks go from "no outcome is
+    established" (7) to 6 forced right / 1 forced wrong; whole holdout forced 147 -> 154,
+    unestablished 7 -> 0, inside 176 -> 182, outside 87 -> 88, forced wrong 4 -> 5; its
+    inadequacy record gains one "unseen" case.  That is P34 on the retained history: the
+    control's operator is routed through the vessel's current call now and it answers.
+  blend holdout: Record draw one state several -> forced right (174/79 -> 173/80),
+    errors unchanged (19 forced wrong; 66 outside).  A comparison against the acted-on
+    blend, if adopted, is the candidate cause -- the outcome stage's lists will say.
+  everything else identical (blend frozen prefix, cellar, vet, harbour frozen prefix).
+Pre-registered "harbour_transfer no change" is contradicted in the direction P34
+predicts elsewhere; recorded as the finding.  outcome stage running.
+
+03:21 provenance: harbour's seven held-out Book pilot clicks were "no outcome
+established" at afbcde2, 2205e37, 8936ffb and 306a328 alike -- the retained history's
+booking control never had its operator (few occasions, the enabling click's route), so
+this is a gain of P34 on the retained state, not the repair of a P31 regression there.
+
+## P32b, the list's own answers (03:28; p32b_list_settled/callkey.json)
+The decision list -- the point hypothesis -- is RIGHT at all four divergent states
+(464, 492, 504, 521) under both keys; over the thirty holdout clicks it is 26 right / 3
+no answer / 1 wrong under the vessel key and 28 right / 2 wrong under the call key.
+The identifiability verdict, then: on a corpus whose development side holds the
+refuting occasions the LEARNER identifies the comparison and applies it where a
+threshold theory would fail; the version space's `several` at three of the four is its
+honest statement that a conjunction over Calls logged -- a per-vessel counter, ORDERED
+by a two-sided accident of the corpus's chronology -- stays pure on the evidence.  The
+comparison is identified; the coincidence it cannot exclude has moved to a counter.
+Two open items from it: a discipline for counter-like fields (a value that only ever
+rises on an object is a clock, not a size), and value-seeking acquisition (P33's next
+version).  Retained.
+
+## Battery #8 outcome stage (04:35; 03:20 -> 04:34 rc=0)
+harbour cross-trace: 260 right / 10 wrong -> 265 right / 5 wrong (0.963 -> 0.981), rules
+16 -> 15 -- the held-out booking control answers now (P34) and is right five more times;
+harbour split05 and subject-restricted: "with its arguments" 85 -> 87, the two answers
+battery #7 had moved to "the event alone" are grounded again.  blend: every outcome
+record identical, no comparison in any list (the owner comparison was expressible and
+was not adopted on blend); cellar, vet identical.  admissible stage running.
+
+## Battery #8 done (04:44; admissible 04:34 -> 04:43 rc=0; BATTERY_DONE 04:43:26)
+Admissible stage: the two holdout files as the identity stage wrote them; every other
+admissible and bundle file identical.  Invariant files rewritten with zero differences
+each.  Retained-state tests 53 passed.  Full suite launched alone on the tree.
+
+## P37 pre-registered (04:45): counter-like fields, measured before any discipline
+The coincidence P32b could not exclude sat on Calls logged, a per-vessel counter.  Before
+building a discipline the fact is measured: for every ORDERED candidate field on each
+history, over the fitted model's own tracked states, how often the value on one object
+rises, falls or stays -- a field that rises and never falls on an object is a clock
+(field_monotone.py).  Expected: harbour's Calls logged is a clock on the join corpora
+and on the retained history; blend's Committed gal is NOT a clock (bottling resets it),
+so the discipline "a clock is not a size" would not touch the one field an intervention
+corroborated; blend's Gallons left falls (draws) and is not a clock; harbour's Length
+overall and Takes up to never change; a vet count, if any, is reported.  Whatever the
+measurement says, the discipline -- if any -- is proposed afterwards and pre-registered
+on its own.
+
+04:45 the Book pilot cross-trace item is CLOSED by P34: on harbour's holdout the
+control's decision list went from 7 abstain (before the detail-view rules) to 1 right /
+6 wrong (109f5ae through 5c6d02b) to 6 right / 1 wrong now -- the six wrongs were the
+list answering without its roles.
+
+05:22 full suite alone on the 5c6d02b tree with battery #8's state: 566 passed, 3
+skipped, 1 xfailed, no failures (37 min).  Committing battery #8, P32b, P33 and the
+Part XVIII paragraphs.

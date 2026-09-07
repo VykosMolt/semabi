@@ -1,34 +1,29 @@
 
 harbour_transfer  'source_choice'  FROZEN_PREFIX  cut=0  control=None  corroborated=True  hypothesis=rule
   270 held-out actions
-      147  the evidence forces one outcome
+      154  the evidence forces one outcome
        96  one outcome, because the control has never done anything else
        20  several outcomes remain admissible
-        7  no outcome is established
   against the other hypothesis class:
-      143  rule: the evidence forces one outcome | list: the evidence forces one outcome
+      149  rule: the evidence forces one outcome | list: the evidence forces one outcome
        96  rule: one outcome, because the control has never done anything else | list: one outcome, because the control has never done anything else
        20  rule: several outcomes remain admissible | list: several outcomes remain admissible
-        7  rule: no outcome is established | list: no outcome is established
-        4  rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)
-  admissible-set size {"0": 7, "1": 243, "2": 20}; what happened was {'inside the admissible set': 176, 'outside it': 87, 'nothing was admissible': 7}
-  12 distinct events ever forced
-  where no outcome is established, the chosen list:
-        6  a different event
-        1  the event the interface returned
+        5  rule: the evidence forces one outcome (wrong) | list: the evidence forces one outcome (wrong)
+  admissible-set size {"1": 250, "2": 20}; what happened was {'inside the admissible set': 182, 'outside it': 88}
+  13 distinct events ever forced
   where one outcome, because the control has never done anything else, the chosen list:
        92  the event the interface returned
         4  a different event
   where several outcomes remain admissible, the chosen list:
        20  the event the interface returned
   where the evidence forces one outcome, the chosen list:
-      147  the event the interface returned
+      153  the event the interface returned
+        1  a different event
   forced where forced, list elsewhere:
-      143  one outcome was admissible and it happened
+      149  one outcome was admissible and it happened
        92  the only outcome ever seen on this control, and it happened
        20  deferred to the list: the event the interface returned
-        7  refused: nothing established
-        4  one outcome was admissible and a different one happened
+        5  one outcome was admissible and a different one happened
         4  the only outcome ever seen on this control, and something else happened
     button#cell@Call/button    fitted=  73 events= 1 rules= 0 forced-wrong=  0  {'one outcome, because the control has never done anything else': 79}
     button:Reopen              fitted=  38 events= 2 rules= 2 forced-wrong=  0  {'the evidence forces one outcome': 35, 'several outcomes remain admissible': 2}
@@ -36,7 +31,7 @@ harbour_transfer  'source_choice'  FROZEN_PREFIX  cut=0  control=None  corrobora
     button:Sign off            fitted=  30 events= 3 rules= 2 forced-wrong=  4  {'the evidence forces one outcome': 33}
     button:Sign on             fitted=  34 events= 2 rules= 2 forced-wrong=  0  {'the evidence forces one outcome': 32}
     button:Close               fitted=  33 events= 3 rules= 3 forced-wrong=  0  {'the evidence forces one outcome': 19, 'several outcomes remain admissible': 10}
-    button:Book pilot          fitted=   5 events= 2 rules= 2 forced-wrong=  0  {'no outcome is established': 7}
+    button:Book pilot          fitted=   5 events= 2 rules= 1 forced-wrong=  1  {'the evidence forces one outcome': 7}
     button:Record departure    fitted=   3 events= 1 rules= 1 forced-wrong=  0  {'one outcome, because the control has never done anything else': 6}
 
 wrote docs/data/v4/admissible_harbour_transfer_on_harbour_holdout.json

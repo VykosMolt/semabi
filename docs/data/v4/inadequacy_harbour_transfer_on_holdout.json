@@ -4,11 +4,15 @@
  "regime": "FROZEN_PREFIX",
  "hypothesis": "rule",
  "cut": 0,
- "forced_wrong": 4,
+ "forced_wrong": 5,
  "kinds": {
-  "once: seen, but not enough to found a rule": 4
+  "once: seen, but not enough to found a rule": 4,
+  "unseen: the control never returned this event while fitting": 1
  },
  "by_control": {
+  "button:Book pilot": {
+   "unseen: the control never returned this event while fitting": 1
+  },
   "button:Sign off": {
    "once: seen, but not enough to found a rule": 4
   }
@@ -63,6 +67,19 @@
    "why": "<> is signed off . <- attr:Duty#0(owner) == 'on' & no_children(owner)  [18 occasions]",
    "kind": "once: seen, but not enough to found a rule",
    "seen": 1,
+   "raw_difference": [],
+   "erased_by_the_state": []
+  },
+  {
+   "control": "button:Book pilot",
+   "step": 444,
+   "forced": [
+    "Nothing chosen in the pilot list ."
+   ],
+   "actual": "<> holds a <> ; <> is <> overall .",
+   "why": "Nothing chosen in the pilot list . <- ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#1']:2\")  [4 occasions]",
+   "kind": "unseen: the control never returned this event while fitting",
+   "seen": 0,
    "raw_difference": [],
    "erased_by_the_state": []
   }

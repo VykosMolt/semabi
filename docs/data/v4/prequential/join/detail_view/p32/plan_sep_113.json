@@ -1,0 +1,275 @@
+{
+ "name": "harbour: separating pilot bookings, seed 113",
+ "run": "runs/v4/harbour_dev",
+ "base": "http://127.0.0.1:8910",
+ "seed": 113,
+ "tie": {
+  "family": "join",
+  "left": null,
+  "right": null
+ },
+ "readings": {
+  "A": {},
+  "B": {}
+ },
+ "actions": [
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Sign on",
+    "nth": 2
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Schedule call",
+    "nth": 1
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Schedule call",
+    "nth": 2
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Schedule call",
+    "nth": 3
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-101"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 1
+   },
+   "text": "Silas Nunn - ticket to 80 m - on duty"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Book pilot"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-104"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 1
+   },
+   "text": "Silas Nunn - ticket to 80 m - on duty"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Book pilot"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-102"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 1
+   },
+   "text": "Silas Nunn - ticket to 80 m - on duty"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Book pilot"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-102"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 1
+   },
+   "text": "Ruth Kealy - ticket to 130 m - on duty"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Book pilot"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-102"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 1
+   },
+   "text": "Aoife Marr - ticket to 150 m - on duty"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Book pilot"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-104"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 1
+   },
+   "text": "Ruth Kealy - ticket to 130 m - on duty"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Book pilot"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-103"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 1
+   },
+   "text": "Silas Nunn - ticket to 80 m - on duty"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Book pilot"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-101"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 1
+   },
+   "text": "Ruth Kealy - ticket to 130 m - on duty"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Book pilot"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-101"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 1
+   },
+   "text": "Silas Nunn - ticket to 80 m - on duty"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Book pilot"
+   }
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "C-101"
+   }
+  },
+  {
+   "kind": "select",
+   "target": {
+    "role": "combobox",
+    "nth": 1
+   },
+   "text": "Aoife Marr - ticket to 150 m - on duty"
+  },
+  {
+   "kind": "click",
+   "target": {
+    "role": "button",
+    "name": "Book pilot"
+   }
+  }
+ ],
+ "test": "mutation",
+ "predictions": {
+  "A": "n/a",
+  "B": "n/a"
+ },
+ "note": "signed on Aoife Marr; scheduled C-102 for Nordkapp (132 m); scheduled C-103 for Selkie (64 m); scheduled C-104 for Hafnarfjord (112 m); ticket too short: C-101 (96 m) <- Silas Nunn (ticket 80 m); ticket too short: C-104 (112 m) <- Silas Nunn (ticket 80 m); ticket too short: C-102 (132 m) <- Silas Nunn (ticket 80 m); ticket too short: C-102 (132 m) <- Ruth Kealy (ticket 130 m); ok: C-102 (132 m) <- Aoife Marr (ticket 150 m); ok: C-104 (112 m) <- Ruth Kealy (ticket 130 m); ok: C-103 (64 m) <- Silas Nunn (ticket 80 m); already booked: C-101 (96 m) <- Ruth Kealy (ticket 130 m); already booked: C-101 (96 m) <- Silas Nunn (ticket 80 m); already booked: C-101 (96 m) <- Aoife Marr (ticket 150 m)"
+}

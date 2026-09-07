@@ -41,21 +41,21 @@
  },
  "outcome_model": {
   "controls": 10,
-  "rules": 16,
+  "rules": 15,
   "held_out_clicks": 270,
   "ledger": {
-   "the event the interface returned": 260,
-   "a different event": 10
+   "the event the interface returned": 265,
+   "a different event": 5
   },
-  "accuracy_where_it_answered": 0.963,
+  "accuracy_where_it_answered": 0.981,
   "distinct_events_asserted": 16,
   "answers_naming_an_event": 191,
-  "accuracy_where_it_named_an_event": 0.948,
+  "accuracy_where_it_named_an_event": 0.974,
   "by_level": {
-   "the event the interface returned / with its arguments": 172,
+   "the event the interface returned / with its arguments": 176,
    "the event the interface returned / the control returns nothing": 79,
-   "a different event / the event alone": 10,
-   "the event the interface returned / the event alone": 9
+   "the event the interface returned / the event alone": 10,
+   "a different event / the event alone": 5
   },
   "events_asserted": {
    "\u0000SILENT": 79,
@@ -112,10 +112,10 @@
    },
    "button:Book pilot": {
     "fitted": 5,
-    "rules": 2,
+    "rules": 1,
     "events_fitted": 2,
-    "a different event": 6,
-    "the event the interface returned": 1
+    "the event the interface returned": 6,
+    "a different event": 1
    },
    "button:Record departure": {
     "fitted": 3,
@@ -149,56 +149,11 @@
     "level": "the event alone"
    },
    {
-    "step": 158,
-    "control": "button:Book pilot",
-    "predicted": "<> is already booked for call <> .",
-    "observed": "Nothing chosen in the pilot list .",
-    "returned": "Nothing chosen in the pilot list.",
-    "verdict": "a different event",
-    "level": "the event alone"
-   },
-   {
-    "step": 172,
-    "control": "button:Book pilot",
-    "predicted": "<> is already booked for call <> .",
-    "observed": "Nothing chosen in the pilot list .",
-    "returned": "Nothing chosen in the pilot list.",
-    "verdict": "a different event",
-    "level": "the event alone"
-   },
-   {
     "step": 223,
     "control": "button:Record departure",
     "predicted": "Call <> is not <> , so nothing has sailed .",
     "observed": "<> has sailed on call <> ; berth <> is clear .",
     "returned": "Bregagh has sailed on call C-101; berth N2 is clear.",
-    "verdict": "a different event",
-    "level": "the event alone"
-   },
-   {
-    "step": 236,
-    "control": "button:Book pilot",
-    "predicted": "<> is already booked for call <> .",
-    "observed": "Nothing chosen in the pilot list .",
-    "returned": "Nothing chosen in the pilot list.",
-    "verdict": "a different event",
-    "level": "the event alone"
-   },
-   {
-    "step": 260,
-    "control": "button:Book pilot",
-    "predicted": "<> is already booked for call <> .",
-    "observed": "Nothing chosen in the pilot list .",
-    "returned": "Nothing chosen in the pilot list.",
-    "verdict": "a different event",
-    "level": "the event alone"
-   },
-   {
-    "step": 316,
-    "control": "button:Book pilot",
-    "predicted": "<> is already booked for call <> .",
-    "observed": "Nothing chosen in the pilot list .",
-    "returned": "Nothing chosen in the pilot list.",
     "verdict": "a different event",
     "level": "the event alone"
    },
@@ -210,15 +165,33 @@
     "returned": "Berth S1 is held by call C-101.",
     "verdict": "a different event",
     "level": "the event alone"
+   },
+   {
+    "step": 377,
+    "control": "button:Allocate berth",
+    "predicted": "Nothing chosen in the berth list .",
+    "observed": "Call <> is already <> ; her berth cannot be changed .",
+    "returned": "Call C-101 is already alongside; her berth cannot be changed.",
+    "verdict": "a different event",
+    "level": "the event alone"
+   },
+   {
+    "step": 444,
+    "control": "button:Book pilot",
+    "predicted": "<> is already booked for call <> .",
+    "observed": "<> holds a <> ; <> is <> overall .",
+    "returned": "Silas Nunn holds a ticket to 80 m; Nordkapp is 132 m overall.",
+    "verdict": "a different event",
+    "level": "the event alone"
    }
   ],
   "lists": {
    "button#cell@Call/button": "button#cell@Call/button: 73 fitted occasions, 1 distinct events\n    otherwise -> returns nothing",
-   "button:Allocate berth": "button:Allocate berth: 5 fitted occasions, 1 distinct events\n    otherwise  ->  Nothing chosen in the berth list .   [5]\n    otherwise -> Nothing chosen in the berth list .",
-   "button:Book pilot": "button:Book pilot: 5 fitted occasions, 2 distinct events\n    attr:Status#0(owner) == 'alongside'  ->  Nothing chosen in the pilot list .   [2]\n    attr:Hazardous cargo#0(owner) == 'yes'  ->  Nothing chosen in the pilot list .   [2]\n    otherwise -> <> is already booked for call <> .",
+   "button:Allocate berth": "button:Allocate berth: 5 fitted occasions, 1 distinct events\n    role relation['forward', 'rel:0']:0<owner = relation['forward', 'rel:0'] from owner\n    otherwise  ->  Nothing chosen in the berth list .   [5]\n    otherwise -> Nothing chosen in the berth list .",
+   "button:Book pilot": "button:Book pilot: 5 fitted occasions, 2 distinct events\n    role relation['forward', 'rel:0']:0<owner = relation['forward', 'rel:0'] from owner\n    role selection['combobox#1']:2 = selection['combobox#1']\n    role relation['forward', 'rel:0']:0<selection['combobox#1']:2 = relation['forward', 'rel:0'] from selection['combobox#1']:2\n    ('unnamed', \"selection['combobox#1']:2\")  ->  Nothing chosen in the pilot list .   [4]\n    otherwise -> <> is already booked for call <> .\n    '<> is already booked for call <> .' arguments: 0=selection['combobox#1']:2, 1=relation['forward', 'rel:0']:0<selection['combobox#1']:2",
    "button:Bring _": "button:Bring _: 8 fitted occasions, 1 distinct events\n    role relation['forward', 'rel:0']:0<owner = relation['forward', 'rel:0'] from owner\n    otherwise  ->  Call <> has <> berth allocated .   [8]\n    otherwise -> Call <> has <> berth allocated .\n    'Call <> has <> berth allocated .' arguments: 0=relation['forward', 'rel:0']:0<owner",
    "button:Close": "button:Close: 33 fitted occasions, 3 distinct events\n    role relation['forward', 'rel:0']:0<owner = relation['forward', 'rel:0'] from owner\n    ('ref_set', 'owner', 'rel:0')  ->  <> <> cannot be <> while call <> holds it .   [10]\n    attr:Condition#0(owner) == 'open'  ->  <> <> is now <> .   [14]\n    otherwise  ->  <> <> is already <> .   [9]\n    otherwise -> <> <> is already <> .\n    '<> <> cannot be <> while call <> holds it .' arguments: 1=owner, 3=relation['forward', 'rel:0']:0<owner\n    '<> <> is already <> .' arguments: 1=owner\n    '<> <> is now <> .' arguments: 1=owner",
-   "button:Record departure": "button:Record departure: 3 fitted occasions, 1 distinct events\n    otherwise  ->  Call <> is not <> , so nothing has sailed .   [3]\n    otherwise -> Call <> is not <> , so nothing has sailed .",
+   "button:Record departure": "button:Record departure: 3 fitted occasions, 1 distinct events\n    role relation['forward', 'rel:0']:0<owner = relation['forward', 'rel:0'] from owner\n    otherwise  ->  Call <> is not <> , so nothing has sailed .   [3]\n    otherwise -> Call <> is not <> , so nothing has sailed .\n    'Call <> is not <> , so nothing has sailed .' arguments: 0=relation['forward', 'rel:0']:0<owner",
    "button:Reopen": "button:Reopen: 38 fitted occasions, 2 distinct events\n    attr:Condition#0(owner) == 'open'  ->  <> <> is already <> .   [24]\n    otherwise  ->  <> <> is now <> .   [14]\n    otherwise -> <> <> is now <> .\n    '<> <> is already <> .' arguments: 1=owner\n    '<> <> is now <> .' arguments: 1=owner",
    "button:Schedule call": "button:Schedule call: 36 fitted occasions, 2 distinct events\n    role relation['forward', 'rel:0']:0<owner = relation['forward', 'rel:0'] from owner\n    ('ref_set', 'owner', 'rel:0')  ->  <> already has call <> on the board .   [24]\n    otherwise  ->  Call <> opened for <> .   [12]\n    otherwise -> Call <> opened for <> .\n    '<> already has call <> on the board .' arguments: 0=owner, 1=relation['forward', 'rel:0']:0<owner\n    'Call <> opened for <> .' arguments: 0=created:T0, 1=owner",
    "button:Sign off": "button:Sign off: 30 fitted occasions, 3 distinct events\n    role relation['forward', 'rel:0']:0<owner = relation['forward', 'rel:0'] from owner\n    attr:Duty#0(owner) == 'off'  ->  <> is already signed off .   [11]\n    ('unnamed', \"relation['forward', 'rel:0']:0<owner\")  ->  <> is signed off .   [18]\n    otherwise -> <> cannot sign off while booked for call <> .\n    '<> cannot sign off while booked for call <> .' arguments: 0=owner, 1=relation['forward', 'rel:0']:0<owner\n    '<> is already signed off .' arguments: 0=owner\n    '<> is signed off .' arguments: 0=owner",

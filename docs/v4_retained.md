@@ -1312,6 +1312,137 @@ is open; the probe that decides whether the sheet is the vessel's view or the ca
 record decides them, and P27's sentence that the sheet is retained as a record of the
 call now reads as the state of the question, not its answer.
 
+**P32: a corpus that separates the comparison from a pair of thresholds.**  The pilot
+corpus underdetermined the representation: a pair of thresholds was as pure on it as the
+comparison.  That is not a learner failure until the corpus holds cases where the two
+theories diverge, so one was built (`join_plan_separating.py`): at each seed every
+on-duty pilot is asked for every expected call, refusals first while the pilots are
+free, then one booking per pilot; four development seeds on harbour's development
+history and three holdout seeds, chosen for the divergent pairs -- a 100 m ticket
+against 112 and 132 m vessels, a 130 m ticket against 148 -- on its transfer history
+(`p32/plan_sep_*.json`; 473 and 547 steps).  Fitted with the sheet keyed by the call,
+the list learns the join and the holdout's thirty booking clicks are thirteen forced
+right, seventeen several and none wrong (`p32/p32_score_callkey.json`).  The seventeen,
+read from their vouches (`p32_score_callkey_vouches.json`): nine are order -- the pilot
+is already booked and the rule class cannot say that guard precedes the join; five are
+the Norway coincidence of P28 vouching *nothing chosen*; and four are the case the corpus
+was built for.  At three of them an 80 m ticket meets an 88 or 96 m vessel and *booked*
+is vouched by a single threshold on the vessel's length, pure on the development side
+because none of its seeds had an 80 m ticket; at the fourth a 100 m ticket meets a 96 m
+vessel and *too short* is vouched by the pair *length at least 96 and ticket under 130*,
+pure because the development bookings at 100 m were on 64 and 88 m vessels.  The
+holdout separates the theories and the comparison is right at every divergent state; the
+development corpus did not contain the refuting occasions, which my seed survey had not
+checked for.  Seeds whose worlds hold them were found and collected (P32b), and the
+verdict on identifiability waits on them.
+
+**P32b: the refuting occasions added, and the identifiability verdict.**  Seeds whose
+worlds hold an 80 m ticket against an 88 or 96 m vessel and a 100 m ticket against a 96
+or 112 m call were found by survey and collected (`p32/plan_sep_103.json` and 107, 113,
+119), and merged with the first four into a development corpus of 587 steps against
+the same holdout.  Fitted under either key, the list learns the join, and at the four
+divergent states of the holdout the decision list -- the point hypothesis -- is right
+at every one: over the thirty booking clicks it is twenty-six right, three abstentions
+and one wrong under the vessel key, twenty-eight right and two wrong under the call key
+(`p32b_list_settled.json`, `p32b_list_callkey.json`).  The version space answers
+*forced* at 492 and *several* at 464, 504 and 521 -- twelve forced right, eighteen
+several, none wrong -- and its vouches say why: the refuting occasions killed every
+ticket-against-length box, and the coincidence moved to *calls logged*, a per-vessel
+counter that rises over a history, adopted as ordered because its threshold happened
+to be witnessed on both sides, and rich enough in values to carve a pure box around
+any few occasions (`p32b_score_settled.json`).  So the verdict on identifiability: with
+a corpus that contains the cases where the theories diverge, the learner identifies the
+comparison and applies it where a threshold theory fails; the version space cannot
+exclude a coincidence on a third field without occasions that contradict it, and says
+so.  Two things follow and are left open: a discipline for counter-like fields -- a
+value that only ever rises on an object is a clock, not a size, and an order over it
+is an order over time -- and the value-seeking acquisition that P33 asks for.
+
+**What the separating corpus found first: the vessel-keyed sheet had no roles.**  Fitted
+under the search's own reading -- the sheet keyed by its vessel since P31 -- the
+pilot-booking control had no roles at all, one memorised rule and no ordered field, on
+the separating corpus and on the pilot corpus alike (`p32/p31_pil_inspect_roleless.json`);
+P26 no longer reproduced, which battery #7 could not see because no retained ledger
+involves the join corpora.  Forcing the sheet's key back to the call restored the three
+roles and the join (`p31_override_pil.json`), and the operators' cores said why
+(`p31_reach_pil.json`): every booking's core is a click on the call's button and then a
+click on *Book pilot*, and the operator grouping keeps an operator only if every earlier
+click's owner is the acting click's or nothing.  Under the call key the button and the
+sheet share the call's reference and are one object; under the vessel key the button is
+the call and the sheet the vessel, and the operator was dropped as a route the pre-state
+does not have.  The interface's own message names the call, and `named` did not separate
+the readings because the button carries the reference under both.
+
+**P34, P35, P36: the acted-on object's own fields.**  Three repairs, each pre-registered
+and measured on both corpora before being committed together (5c6d02b).  Only the acting
+click's owner is what a prediction has in hand, so the query learners bind that one and
+want an enabling click's owner the way they want an effect object -- named by a
+referring query from the acting object where one exists -- and an operator whose earlier
+owner is so named keeps its roles (`tests/test_v4_binding.py`,
+`tests/test_v4_detail_view.py`).  Measured, the roles return: the owner is the vessel,
+the selection the pilot, the call reached by relation from each (`p34_pil_inspect.json`);
+but the join did not, because a comparison could not be about the owner -- a reviewer's
+fix on ab565f9 whose premise, that the owner is not one of the model's roles, no longer
+held, the owner's thresholds being adopted already -- and the list memorised the ticket
+instead (`p34_pil_score.json`: nine forced right, eleven several, one wrong of
+twenty-one; on the separating holdout ten, thirteen, four wrong and three unestablished
+of thirty).  With comparisons over every bound role the join is stated against the
+vessel directly, *ticket under the owner's length*, with the pilot's ticket and the
+vessel's length adopted, and the holdouts have no wrong verdict: five forced right and
+sixteen several on the pilot holdout, twelve and eighteen on the separating one
+(`p35_*`).  The sixteen against the call key's fourteen suggested the junk comparisons a
+richer owner admits -- a ticket's length against a count of calls -- so adoption now
+records the justified pairs and the second pass and every query use those alone, the
+discipline a field's order already had; measured, exactly the ticket-against-length pair
+is adopted on both corpora and not one verdict moves (`p36_*`), so that hypothesis is
+refuted, the two extra *several* are left open as the small thing they are, and the
+discipline stands on its own ground.
+
+**Battery #8, under the three repairs** (5c6d02b; `battery_run8.log`; run at eight cores
+on a machine shared with two other research instances, and once frozen for an hour at
+the user's request).  Pre-registered: the retained state unchanged except where a
+comparison against the acted-on object is now expressible and adopted, blend being
+where it could be.  Frontiers, source candidates, local explanation and open questions
+identical on all three applications; all sixteen invariants zero; blend's lists carry no
+comparison -- the owner comparison was expressible there and not adopted -- and its
+outcome records are identical, as are cellar's and vet's ledgers.  The change is on
+harbour's retained history and it is P34's: the held-out pilot-booking control, whose
+seven clicks had been *no outcome established* at every earlier commit because its
+operator's enabling click bound the call button, answers now -- six forced right and one
+forced wrong -- so the harbour holdout's version space goes from 147 forced, 20 several
+and 7 unestablished to 154, 20 and none, with the outside count rising from 87 to 88;
+the cross-trace decision list from 260 right and 10 wrong to 265 and 5 -- the booking
+control's own seven going from one right and six wrong, Part XVII's recorded regression,
+to six and one; and the two argument groundings battery #7 had lost return.  Blend's holdout moves one state from
+several to forced with no change in error.  The retained-state tests pass and the full
+suite was run alone on the tree.
+
+**P33: an acquisition that seeks counterexamples.**  P30 acted where the admissible set
+had two members and found new behaviour before it narrowed anything; the user's
+formulation was stricter -- hold a candidate rule's supporting value fixed while some
+other factor changes and the outcome differs -- and the decision list is where the
+other factor is written down.  So the driver gained a policy that acts where a list
+guard fires for one event while a justified rule vouches for another: the answer refutes
+the guard or the vouch and cannot leave both (`v4_acquire.contested`,
+`tests/test_v4_fields.py`).  Pre-registered at P30's seed with P36's model: a contested
+state is reached; the holdout's *several* fall below fourteen with no wrong; a vouch
+present before is absent after.  Measured (`p33_acquire_counterexample.json`): the driver
+found twenty-two states with three admissible outcomes and the guard for a booking
+firing against the already-booked, off-duty and nothing-chosen vouches, and acted at
+eight; the five that answered all said *the call is already alongside; no pilot is
+needed*, a fourth outcome that neither the guard nor any vouch had predicted.  After the
+refit the holdout is three forced right and eighteen several where it was five and
+sixteen, none wrong: the new refusal, with occasions enough to found a rule, is
+admissible at fourteen more states, and no vouch went away.  The first expectation is
+met and the second refuted; the third fell on the list's own guard, which is impure once
+an alongside call shares it, while the refit extends only the evidence.  It is P30's
+finding in a sharper form: on a fresh seed the first thing an active driver reaches is
+behaviour the corpus never established, and acting where a guard is contested surfaces
+coverage before it falsifies coincidence.  What the formulation actually asks for is a
+driver that reads the coincidence's condition -- *the vessel's flag is Norway* -- at the
+states the holdout leaves open and steers the world into one that satisfies it with the
+selection named; that is a planner over the vouch, and it is the next version.
+
 ## What stands, and what is open
 
 The retained state, regenerated once more: harbour's development sidecar is now written by
@@ -1368,8 +1499,19 @@ version space in a vocabulary without the thresholds and comparisons its evidenc
 fitted in; asked in the fitted language, blend's decision lists are right where they were
 called wrong, the version space is less decisive and never more wrong, and the "spurious
 outcome through a long pure condition" was a comparison the query could not hold beside
-coincidences the evidence does not exclude -- which only more evidence removes.  What the
-campaign leaves open is recorded beside it: the objective credits a reading for positing
-an object a click brings into view; the pilot-booking control's cross-trace ledger got
-worse before its corpus got better; the pilot corpus does not separate a comparison from
-a pair of thresholds.  Aggregate remains unearned behind all of it.
+coincidences the evidence does not exclude -- which only more evidence removes.  A thing
+brought into view by clicking on it is no longer credited as made, and the sheet's key,
+its vessel or its call, is posed to the probe on every history rather than decided by the
+credit; under the vessel key the outcome layer had lost the booking's operator and the
+join with it, and three repairs -- an enabling click's owner named by a query, a
+comparison about the acted-on object, and only the comparisons a rule justified -- state
+the join against the vessel directly and transfer it with no wrong verdict.  A corpus
+built to separate the comparison from a pair of thresholds separates them: the learner
+identifies the comparison and is right where a threshold theory fails, and the version
+space's remaining doubt is a coincidence on a counter.  Acting where a guard is contested
+surfaced unestablished behaviour before it falsified anything.  What the campaign leaves
+open is recorded beside it: a discipline for counter-like fields; an acquisition that
+seeks a coincidence's supporting value; the pilot holdout's two extra *several* under the
+vessel key.  The pilot-booking control's cross-trace ledger, which had got worse before
+its corpus got better, is closed by the same repair: six right and one wrong where it
+had been one and six.  Aggregate remains unearned behind all of it.
