@@ -1,0 +1,94 @@
+"""Reuse the reviewed dedicated-corpus measurement under the exact G2 freeze.
+
+The original baseline instrument and G1 adapter are preserved unchanged.
+This phase adapter authenticates its own source, inputs and isolated outputs.
+"""
+import hashlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+
+ROOT = Path(__file__).resolve().parents[6]
+HERE = Path(__file__).resolve().parent
+BASE = ROOT / "docs/data/v4/transport/baseline"
+sys.path.insert(0, str(ROOT))
+
+from scripts.transport_score import verify_freeze
+
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def main():
+    case, destination, snapshot = sys.argv[1:]
+    out = Path(destination).resolve()
+    if not out.is_relative_to(HERE):
+        raise ValueError("G2 output must remain in its development directory")
+    snapshot = Path(snapshot).resolve()
+    if snapshot != HERE / "freeze_v1.json":
+        raise ValueError("Use the bound G2 source and data freeze")
+    verify_freeze(snapshot)
+    source = json.loads(snapshot.read_text())
+    if source.get("schema") != "semabi.transport.g2_development_freeze.v1":
+        raise ValueError("Not the G2 development freeze")
+    head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+    if head != source["source_head"]:
+        raise ValueError("Source HEAD differs from the G2 freeze")
+    for relative in ("docs/data/v4/transport/baseline/check_corpora.py",
+                     "docs/data/v4/prequential/instruments/link_probe.py",
+                     "docs/data/v4/transport/development/g2/run_corpus.py"):
+        if sha(ROOT / relative) != source["verification_files"][relative]:
+            raise ValueError(f"Measurement dependency changed: {relative}")
+    manifest_path = HERE.parent / "g1/rebuild_v1/input_manifest.json"
+    if (source["corpora"]["manifest"] != str(manifest_path.relative_to(ROOT)) or
+            sha(manifest_path) != source["corpora"]["manifest_sha256"]):
+        raise ValueError("Persistent input manifest changed")
+    manifest = json.loads(manifest_path.read_text())
+    expected_root = ROOT / "runs/v4/transport_g1_corpora_v1"
+    corpus_root = (ROOT / manifest["root"]).resolve()
+    if corpus_root != expected_root or source["corpora"]["root"] != manifest["root"]:
+        raise ValueError("Use only the bound persistent reconstruction")
+    for relative, expected in manifest["files"].items():
+        path = corpus_root / relative
+        if path.resolve().relative_to(corpus_root).as_posix() != relative:
+            raise ValueError(f"Noncanonical reconstructed input: {relative}")
+        if sha(path) != expected:
+            raise ValueError(f"Reconstructed input changed: {relative}")
+    actual = {p.relative_to(corpus_root).as_posix() for p in corpus_root.rglob("*") if p.is_file()}
+    if actual != set(manifest["files"]):
+        raise ValueError("Unexpected or missing reconstructed files")
+    os.environ["SEMABI_BASELINE_CORPORA"] = str(corpus_root)
+    spec = importlib.util.spec_from_file_location("baseline_corpus_measurement",
+                                                 BASE / "check_corpora.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    if case not in module.CASES or module.PREQ != corpus_root:
+        raise ValueError("Invalid case or corpus input binding")
+    out.mkdir(parents=True, exist_ok=False)
+    shutil.copyfile(snapshot, out / "source_snapshot.json")
+    (out / "adapter.json").write_text(json.dumps({
+        "actual_command": [sys.executable, str(Path(__file__).resolve()), *sys.argv[1:]],
+        "source_snapshot": str(snapshot),
+        "instrument": str(BASE / "check_corpora.py"),
+        "instrument_sha256": sha(BASE / "check_corpora.py"),
+        "adapter_sha256": sha(Path(__file__)),
+        "owner": "/root",
+        "inherited_provenance": "The unchanged instrument retains nominal baseline "
+                                "owner/command labels; this adapter and outer job identify this invocation.",
+        "corpus_root": str(corpus_root),
+        "input_manifest_sha256": source["corpora"]["manifest_sha256"],
+        "override": "Only module.OUT and SEMABI_BASELINE_CORPORA choose phase outputs "
+                    "and authenticated inputs. Measurement and fits are unchanged.",
+        "scope": "G2 integrated chronology regression; prior baseline and G1 are immutable.",
+    }, indent=2) + "\n")
+    module.OUT = out
+    module.main(case)
+
+
+if __name__ == "__main__":
+    main()
