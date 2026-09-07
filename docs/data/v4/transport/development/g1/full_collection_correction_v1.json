@@ -1,0 +1,16 @@
+{
+  "schema": "semabi.transport.g1.full_collection_correction.v1",
+  "reason": "Default pytest recursively discovered preserved source snapshots, causing six module-name collisions before test execution.",
+  "original_job": "jobs/full_pytest_v1",
+  "original_source_commit": "5ac0e11",
+  "learner_freeze_sha256": "2dc311936c194f850d9e1484c493bfa0a166f9d9577b63a3cb77aee3f3c0d072",
+  "guard_path": "docs/data/v4/transport/development/g1/implementation/conftest.py",
+  "guard_sha256": "a4dd98ca6e59d50d45543b987ac7b2ca060de8a128260659ba80b186e74f2588",
+  "excluded_source_archive_directories": [
+    "source_before",
+    "source_after_ownership",
+    "source_final"
+  ],
+  "boundary": "Only archived duplicate suites are excluded. No live tests, learner source, preserved evidence or original freeze bytes changed. This additional collection-harness file will be retained with G1 results.",
+  "corrected_job": "jobs/full_pytest_v2"
+}

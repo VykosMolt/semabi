@@ -1,0 +1,295 @@
+{
+  "G1_result": {
+    "path": "docs/data/v4/transport/development/g1/corpora/allocation_positive/allocation_positive.json",
+    "sha256": "27dae4fe5a6dd39d0669f701b7f2e832796e05d7480d42162f6f7328f8082e15"
+  },
+  "baseline_result": {
+    "path": "docs/data/v4/transport/baseline/allocation_positive.json",
+    "sha256": "e54f647eb733abeed698c8634fe16febe1303543307dcd5f77515ca2c99fc11d"
+  },
+  "baseline_visible_correction": {
+    "path": "docs/data/v4/transport/baseline/allocation_positive_visible_v3.json",
+    "sha256": "2730893a9aef3909403f801991da855ff9a763edd355405d7dae54ce30ccc184"
+  },
+  "case": "allocation_positive",
+  "comparison_policy": "Baseline visible-check fields use its preserved v3 offline correction, joined on exact step/before/raw-target. Compare all other reading/fit/development/holdout fields exactly. Only top-level execution provenance and reading.provenance.source_run are outside the semantic comparison.",
+  "components_equal": {
+    "dev_steps": true,
+    "development": true,
+    "fit": true,
+    "holdout": false,
+    "outcome_cut": true,
+    "reading": true
+  },
+  "dev_steps": 389,
+  "differences": [
+    {
+      "G1": "<> <> allocated to call <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & no_children(selection['combobox#0']:1) & ('ref_null', \"selection['combobox#0']:1\", 'rel:0')  [3 occasions]",
+      "baseline": "<> <> allocated to call <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & no_children(selection['combobox#0']:1) & ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#0']:1\")  [3 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/5/version_space/why"
+    },
+    {
+      "G1_length": 3,
+      "baseline_length": 2,
+      "kind": "length",
+      "path": "/holdout/rows/5/vouches/<> <> allocated to call <> ./condition/2"
+    },
+    {
+      "G1": "ref_null",
+      "baseline": "unnamed",
+      "kind": "value",
+      "path": "/holdout/rows/5/vouches/<> <> allocated to call <> ./condition/2/0"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "relation['forward', 'rel:0']:0<selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/5/vouches/<> <> allocated to call <> ./condition/2/1"
+    },
+    {
+      "G1": "rel:0",
+      "kind": "added",
+      "path": "/holdout/rows/5/vouches/<> <> allocated to call <> ./condition/2/2"
+    },
+    {
+      "G1": "<> <> allocated to call <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & no_children(selection['combobox#0']:1) & ('ref_null', \"selection['combobox#0']:1\", 'rel:0')  [3 occasions]",
+      "baseline": "<> <> allocated to call <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & no_children(selection['combobox#0']:1) & ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#0']:1\")  [3 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/6/version_space/why"
+    },
+    {
+      "G1_length": 3,
+      "baseline_length": 2,
+      "kind": "length",
+      "path": "/holdout/rows/6/vouches/<> <> allocated to call <> ./condition/2"
+    },
+    {
+      "G1": "ref_null",
+      "baseline": "unnamed",
+      "kind": "value",
+      "path": "/holdout/rows/6/vouches/<> <> allocated to call <> ./condition/2/0"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "relation['forward', 'rel:0']:0<selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/6/vouches/<> <> allocated to call <> ./condition/2/1"
+    },
+    {
+      "G1": "rel:0",
+      "kind": "added",
+      "path": "/holdout/rows/6/vouches/<> <> allocated to call <> ./condition/2/2"
+    },
+    {
+      "G1": "<> <> allocated to call <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & no_children(selection['combobox#0']:1) & ('ref_null', \"selection['combobox#0']:1\", 'rel:0')  [3 occasions]",
+      "baseline": "<> <> allocated to call <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & no_children(selection['combobox#0']:1) & ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#0']:1\")  [3 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/8/version_space/why"
+    },
+    {
+      "G1_length": 3,
+      "baseline_length": 2,
+      "kind": "length",
+      "path": "/holdout/rows/8/vouches/<> <> allocated to call <> ./condition/2"
+    },
+    {
+      "G1": "ref_null",
+      "baseline": "unnamed",
+      "kind": "value",
+      "path": "/holdout/rows/8/vouches/<> <> allocated to call <> ./condition/2/0"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "relation['forward', 'rel:0']:0<selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/8/vouches/<> <> allocated to call <> ./condition/2/1"
+    },
+    {
+      "G1": "rel:0",
+      "kind": "added",
+      "path": "/holdout/rows/8/vouches/<> <> allocated to call <> ./condition/2/2"
+    },
+    {
+      "G1": "<> <> allocated to call <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & no_children(selection['combobox#0']:1) & ('ref_null', \"selection['combobox#0']:1\", 'rel:0')  [3 occasions]",
+      "baseline": "<> <> allocated to call <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & no_children(selection['combobox#0']:1) & ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#0']:1\")  [3 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/9/version_space/why"
+    },
+    {
+      "G1_length": 3,
+      "baseline_length": 2,
+      "kind": "length",
+      "path": "/holdout/rows/9/vouches/<> <> allocated to call <> ./condition/2"
+    },
+    {
+      "G1": "ref_null",
+      "baseline": "unnamed",
+      "kind": "value",
+      "path": "/holdout/rows/9/vouches/<> <> allocated to call <> ./condition/2/0"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "relation['forward', 'rel:0']:0<selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/9/vouches/<> <> allocated to call <> ./condition/2/1"
+    },
+    {
+      "G1": "rel:0",
+      "kind": "added",
+      "path": "/holdout/rows/9/vouches/<> <> allocated to call <> ./condition/2/2"
+    },
+    {
+      "G1": 9,
+      "baseline": 10,
+      "kind": "value",
+      "path": "/holdout/rows/9/vouches/<> <> allocated to call <> ./witnesses/1"
+    },
+    {
+      "G1": "<> <> allocated to call <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & no_children(selection['combobox#0']:1) & ('ref_null', \"selection['combobox#0']:1\", 'rel:0')  [3 occasions]",
+      "baseline": "<> <> allocated to call <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & no_children(selection['combobox#0']:1) & ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#0']:1\")  [3 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/10/version_space/why"
+    },
+    {
+      "G1_length": 3,
+      "baseline_length": 2,
+      "kind": "length",
+      "path": "/holdout/rows/10/vouches/<> <> allocated to call <> ./condition/2"
+    },
+    {
+      "G1": "ref_null",
+      "baseline": "unnamed",
+      "kind": "value",
+      "path": "/holdout/rows/10/vouches/<> <> allocated to call <> ./condition/2/0"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "relation['forward', 'rel:0']:0<selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/10/vouches/<> <> allocated to call <> ./condition/2/1"
+    },
+    {
+      "G1": "rel:0",
+      "kind": "added",
+      "path": "/holdout/rows/10/vouches/<> <> allocated to call <> ./condition/2/2"
+    },
+    {
+      "G1": "<> <> allocated to call <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & no_children(selection['combobox#0']:1) & ('ref_null', \"selection['combobox#0']:1\", 'rel:0')  [3 occasions]",
+      "baseline": "<> <> allocated to call <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & no_children(selection['combobox#0']:1) & ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#0']:1\")  [3 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/11/version_space/why"
+    },
+    {
+      "G1_length": 3,
+      "baseline_length": 2,
+      "kind": "length",
+      "path": "/holdout/rows/11/vouches/<> <> allocated to call <> ./condition/2"
+    },
+    {
+      "G1": "ref_null",
+      "baseline": "unnamed",
+      "kind": "value",
+      "path": "/holdout/rows/11/vouches/<> <> allocated to call <> ./condition/2/0"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "relation['forward', 'rel:0']:0<selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/11/vouches/<> <> allocated to call <> ./condition/2/1"
+    },
+    {
+      "G1": "rel:0",
+      "kind": "added",
+      "path": "/holdout/rows/11/vouches/<> <> allocated to call <> ./condition/2/2"
+    }
+  ],
+  "freeze_sha256": "2dc311936c194f850d9e1484c493bfa0a166f9d9577b63a3cb77aee3f3c0d072",
+  "input_relocation": {
+    "G1_reading_source_run": "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_join_dev",
+    "all_45_input_hashes_unchanged": true,
+    "baseline_reading_source_run": "/tmp/semabi-transport-baseline-20260907-rebuilt-v1/harbour_join_dev",
+    "manifest_sha256": "0a2fc2a9833f290fb23d9300e0547b53b83af2ec93ab3a92cde63b1f0ddc1dc1"
+  },
+  "job": {
+    "child_terminated": true,
+    "end_utc": "2026-09-07T17:52:07.187985+00:00",
+    "measurement_elapsed_seconds": 658.7314930680004,
+    "path": "docs/data/v4/transport/development/g1/jobs/corpus_allocation_positive/process.json",
+    "reaped_by_reviewing_agent": true,
+    "returncode": 0,
+    "session_id": 8699,
+    "sha256": "1623a54adf4fbc6ed2d743436d761d57e2bf49a3a18985a5ca4e14b2d365cce5",
+    "start_utc": "2026-09-07T17:41:07.702197+00:00",
+    "status": "FINISHED"
+  },
+  "outcome_cut": 388,
+  "roles": 4,
+  "schema": "semabi.transport.g1.corpus_comparison.v1",
+  "scope": "Exact comparison of disclosed retained corpus measurements; no refit by this comparison.",
+  "semantic_payloads_equal": false,
+  "semantic_sha256": {
+    "G1": "f3a496a82c0621fa5bedc9b3f40a4679570d592e138bb22948d841d8455f415d",
+    "baseline_with_documented_visibility_correction": "6aedc084efe019273e329b9ecff284ef7b307ffbd0e5345e906f980ee7282335"
+  },
+  "source_head": "5ac0e11852dde513f4beb4e4ab1fbec0bc2318aa",
+  "summary": {
+    "development": {
+      "decision_list_ledger": {},
+      "failed_attempts": 0,
+      "recognition_mismatches": 0,
+      "target_clicks": 13,
+      "version_space_ledger": {},
+      "visible_check_ledger": {
+        "match": 39
+      },
+      "visible_check_scope": {
+        "bound vessel length survives representation": {
+          "match": 13
+        },
+        "selected object retained": {
+          "match": 13
+        },
+        "sheet vessel available in action binding": {
+          "match": 13
+        }
+      }
+    },
+    "holdout": {
+      "decision_list_ledger": {
+        "no determinate answer": 8,
+        "the event the interface returned": 5
+      },
+      "failed_attempts": 0,
+      "recognition_mismatches": 0,
+      "target_clicks": 13,
+      "version_space_ledger": {
+        "no outcome is established for this state": 2,
+        "one outcome was admissible and a different one happened": 1,
+        "one outcome was admissible and it happened": 10
+      },
+      "visible_check_ledger": {
+        "match": 39
+      },
+      "visible_check_scope": {
+        "bound vessel length survives representation": {
+          "match": 13
+        },
+        "selected object retained": {
+          "match": 13
+        },
+        "sheet vessel available in action binding": {
+          "match": 13
+        }
+      }
+    }
+  },
+  "verification": {
+    "copied_freeze_matches": true,
+    "frozen_runtime_files_unchanged": true,
+    "inner_inputs_unchanged": true,
+    "input_manifest_unchanged": true,
+    "instrument_matches_freeze": true,
+    "job_log_hash_matches": true
+  }
+}

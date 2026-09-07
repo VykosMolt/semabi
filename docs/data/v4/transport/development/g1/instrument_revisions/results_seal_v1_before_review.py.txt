@@ -1,0 +1,105 @@
+"""Seal reviewed G1 results after all owned validation jobs have terminated."""
+from datetime import datetime, timezone
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+
+ROOT = Path(__file__).resolve().parents[6]
+HERE = Path(__file__).resolve().parent
+T1 = HERE.parent.parent
+
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def read(path):
+    return json.loads(path.read_text())
+
+
+def main():
+    output = HERE / "results_manifest_v1.json"
+    if output.exists():
+        raise FileExistsError(output)
+    freeze = read(HERE / "freeze_v1.json")
+    head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+    assert head == freeze["source_head"], "G1 source HEAD changed before result preservation"
+    for section in ("files", "verification_files", "sealed_evaluator_files"):
+        for name, expected in freeze[section].items():
+            assert sha(ROOT / name) == expected, (section, name)
+    previous = {}
+    for name in ("baseline/baseline_manifest.json", "first_pass_manifest_v2.json",
+                 "analysis_manifest_v2.json"):
+        path = T1 / name
+        manifest = read(path)
+        base = path.parent if name.startswith("baseline/") else ROOT
+        for relative, entry in manifest["files"].items():
+            expected = entry["sha256"] if isinstance(entry, dict) else entry
+            assert sha(base / relative) == expected, (name, relative)
+        previous[name] = {"sha256": sha(path), "verified_files": len(manifest["files"])}
+    guard = read(HERE / "full_collection_correction_v1.json")
+    assert sha(ROOT / guard["guard_path"]) == guard["guard_sha256"]
+    jobs = {}
+    for path in sorted((HERE / "jobs").glob("*/process.json")):
+        record = read(path)
+        name = path.parent.name
+        assert record["child_terminated"] and record["status"] == "FINISHED", name
+        assert record["returncode"] == (2 if name == "full_pytest_v1" else 0), name
+        assert sha(path.parent / "output.log") == record["log_sha256"], name
+        # Each launcher waits/reaps its own child. Saved numeric PIDs may belong
+        # to different sandbox namespaces, so a later /proc lookup is not an
+        # ownership check and can collide with an unrelated current process.
+        if name.startswith(("score_", "control_", "corpus_", "full_pytest_")) or name == "summarize_v1":
+            assert record["source_head"] == freeze["source_head"], name
+            for relative, expected in record["source_hashes"].items():
+                assert sha(ROOT / relative) == expected, (name, relative)
+        jobs[name] = {"returncode": record["returncode"], "sha256": sha(path)}
+    for fixture in ("dispatch", "workshop"):
+        for stage in ("initial_v2", "contested_1701", "contested_1702"):
+            record = read(HERE / "scores" / fixture / f"{stage}.json")
+            assert record["status"] == "FINISHED" and not record["pending_models"]
+            assert len(record["models"]) == 8
+            assert record["freeze"]["sha256"] == sha(HERE / "freeze_v1.json")
+    for case in ("allocation_positive", "allocation_refusals", "pilot", "separating",
+                 "separating_extended"):
+        directory = HERE / "corpora" / case
+        comparison = read(directory / "comparison.json")
+        assert comparison["case"] == case and comparison["source_head"] == head
+        assert comparison["freeze_sha256"] == sha(HERE / "freeze_v1.json")
+        assert read(directory / "source_snapshot.json") == freeze
+    required_reports = ("report.md", "review.md", "result_review.md", "corpus_review.md")
+    for name in required_reports:
+        assert (HERE / name).is_file(), name
+    inventory = []
+    for path in sorted(HERE.rglob("*")):
+        if "__pycache__" in path.parts or ".pytest_cache" in path.parts or path.is_symlink():
+            continue
+        if path.is_file():
+            inventory.append(path)
+    record = {
+        "schema": "semabi.transport.g1_results.v1",
+        "preserved_utc": datetime.now(timezone.utc).isoformat(),
+        "source_head": head,
+        "freeze_sha256": sha(HERE / "freeze_v1.json"),
+        "verified_prior_manifests": previous,
+        "jobs": jobs,
+        "all_owned_jobs_terminated": True,
+        "preserved_invalid_run": "full_pytest_v1: archived test module collisions before execution",
+        "scope": "Reviewed G1 runtime recovery, disclosed transport remeasurement and retained "
+                 "regressions. No semantic transport recovery or fresh-case claim.",
+        "exposure": freeze["root_exposure"],
+        "archive_aliases": "Pytest current symlinks are excluded; numbered raw directories and "
+                           "their source/provenance records are retained.",
+        "files": {str(p.relative_to(ROOT)): {"sha256": sha(p), "bytes": p.stat().st_size}
+                  for p in inventory},
+    }
+    with output.open("x") as stream:
+        json.dump(record, stream, indent=2, sort_keys=True)
+        stream.write("\n")
+    print(json.dumps({"manifest": str(output.relative_to(ROOT)), "sha256": sha(output),
+                      "files": len(inventory), "jobs": len(jobs)}))
+
+
+if __name__ == "__main__":
+    main()

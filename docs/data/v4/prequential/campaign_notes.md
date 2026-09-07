@@ -2847,3 +2847,44 @@ must establish causes for unrecovered view fields and any normalization boundary
 issue. P15/automatic link-union revision remain open; non-unique relational
 composition with oracle identity versus inferred identity is the next competence
 branch after the demonstrated transport blockers are investigated.
+
+## P43 / G1: graph ownership and retained regression closed (2026-09-07)
+
+The two V4 construction sites now carry the chosen hypothesis's own graph,
+source checkpoint `5ac0e11`. No V2 or structural/field/acquisition policy changes
+belong to G1. Focused integration: 22 passes. One full authorized run: 573 passed,
+3 skipped, 1 expected failure in 1,725.93 seconds. The first invocation's six
+archive module collisions and the separate collection guard are preserved.
+
+Six disclosed T1 histories, eight readings each, reuse the frozen scorer and
+fixed evaluation surfaces. All 48 training models and 42 complete pinned score
+records are unchanged. Current inference has 204 fewer state failures and
+54 fewer task-query failures, reaching zero. RULE/LIST remain all unestablished
+on 10 dispatch/8 workshop targets per reading/history. Numeric singleton
+fragments exist but do not recover the intended task pair or comparison.
+Raw-node and emission identity surfaces are 0/0; the slot-fallback shared surface
+still has zero covered claims and contradictions. No semantic transport or
+acquisition improvement is claimed.
+
+All five dedicated corpora preserve reported outcomes, roles and bindings; all
+906 visible checks on 302 development/holdout targets match. Known wrong and
+abstaining answers remain. The exact comparisons retain 780 recursive differences
+in vouch conditions/explanations and pair display, including 116 changed
+conditions, five witness pairs and a support-count change from 9 to 8. Baseline's
+randomized Python hash seed versus G1's zero is a concrete ordering confound;
+unchanged verdicts do not establish logical equivalence of those vouches.
+
+The report, independent transport review, corpus/full review, source/data freeze
+and all completed/reaped jobs are under `../transport/development/g1/`.
+The exact report revision reviewed for transport is preserved before the final
+corpus addition. Original T1, baseline and corrected analysis manifests stay
+immutable. No reserved interface or shared fixture implementation was opened.
+
+Next: integrate the isolated G2 prefix-statistics freeze and run its own full
+and dedicated regressions. The T1 section control changes no observed page, so
+that live normalization omission does not explain these binding losses. Proceed
+with J1's common-intermediate composition question: the supplied native conjunction
+passes the 12-case micro-control; normal learning and identity remain untested.
+Its separate bounded-search diagnostic reproduces false uniqueness after one
+of two assignments is retained. Review a minimal soundness repair and preserve
+all controls separately from the eventual learned JOIN assessment.

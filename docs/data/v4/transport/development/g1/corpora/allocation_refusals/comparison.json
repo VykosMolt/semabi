@@ -1,0 +1,1258 @@
+{
+  "G1_result": {
+    "path": "docs/data/v4/transport/development/g1/corpora/allocation_refusals/allocation_refusals.json",
+    "sha256": "f5d49432458ff12ea1f58817135e3014cce527cc28de34b527622e1d00c015bc"
+  },
+  "baseline_result": {
+    "path": "docs/data/v4/transport/baseline/allocation_refusals.json",
+    "sha256": "192da2c94685d3007578c5738b0692f94b70576b44a5e469fa7af17f1954cbab"
+  },
+  "baseline_visible_correction": {
+    "path": "docs/data/v4/transport/baseline/allocation_refusals_visible_v3.json",
+    "sha256": "9b4e232555183e9fcd54e5ce83e7ff2ccb39e6922411bc73cf5c1eab44ea552c"
+  },
+  "case": "allocation_refusals",
+  "comparison_policy": "Baseline visible-check fields use its preserved v3 offline correction, joined on exact step/before/raw-target. Compare all other reading/fit/development/holdout fields exactly. Only top-level execution provenance and reading.provenance.source_run are outside the semantic comparison.",
+  "components_equal": {
+    "dev_steps": true,
+    "development": true,
+    "fit": false,
+    "holdout": false,
+    "outcome_cut": true,
+    "reading": true
+  },
+  "dev_steps": 468,
+  "differences": [
+    {
+      "G1": "frozenset({frozenset({(3, 'attr:Length overall#0'), (1, 'attr:Takes up to#0')})})",
+      "baseline": "frozenset({frozenset({(1, 'attr:Takes up to#0'), (3, 'attr:Length overall#0')})})",
+      "kind": "value",
+      "path": "/fit/pairs"
+    },
+    {
+      "G1": "<> is <> overall ; berth <> <> . <- attr:Length overall#0(owner) >= '132' & ('ref_null', \"selection['combobox#0']:1\", 'rel:0')  [3 occasions]",
+      "baseline": "<> is <> overall ; berth <> <> . <- attr:Takes up to#0(selection['combobox#0']:1) >= '70' & attr:Length overall#0(owner) >= '132' & ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#0']:1\")  [3 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/5/version_space/why/1"
+    },
+    {
+      "G1_length": 2,
+      "baseline_length": 3,
+      "kind": "length",
+      "path": "/holdout/rows/5/vouches/<> is <> overall ; berth <> <> ./condition"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/5/vouches/<> is <> overall ; berth <> <> ./condition/0/1"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Takes up to#0",
+      "kind": "value",
+      "path": "/holdout/rows/5/vouches/<> is <> overall ; berth <> <> ./condition/0/2"
+    },
+    {
+      "G1": "132",
+      "baseline": "70",
+      "kind": "value",
+      "path": "/holdout/rows/5/vouches/<> is <> overall ; berth <> <> ./condition/0/3"
+    },
+    {
+      "G1_length": 3,
+      "baseline_length": 4,
+      "kind": "length",
+      "path": "/holdout/rows/5/vouches/<> is <> overall ; berth <> <> ./condition/1"
+    },
+    {
+      "G1": "ref_null",
+      "baseline": "attr_ge",
+      "kind": "value",
+      "path": "/holdout/rows/5/vouches/<> is <> overall ; berth <> <> ./condition/1/0"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/5/vouches/<> is <> overall ; berth <> <> ./condition/1/1"
+    },
+    {
+      "G1": "rel:0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/5/vouches/<> is <> overall ; berth <> <> ./condition/1/2"
+    },
+    {
+      "baseline": "132",
+      "kind": "removed",
+      "path": "/holdout/rows/5/vouches/<> is <> overall ; berth <> <> ./condition/1/3"
+    },
+    {
+      "baseline": [
+        "unnamed",
+        "relation['forward', 'rel:0']:0<selection['combobox#0']:1"
+      ],
+      "kind": "removed",
+      "path": "/holdout/rows/5/vouches/<> is <> overall ; berth <> <> ./condition/2"
+    },
+    {
+      "G1": "<> is <> overall ; berth <> <> . <- attr:Length overall#0(owner) >= '132' & ('ref_null', \"selection['combobox#0']:1\", 'rel:0')  [3 occasions]",
+      "baseline": "<> is <> overall ; berth <> <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Length overall#0(owner) >= '132' & ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#0']:1\")  [3 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/7/version_space/why/0"
+    },
+    {
+      "G1": "<> <> allocated to call <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Length overall#0(owner) < attr:Takes up to#0(selection['combobox#0']:1) & ('ref_null', \"selection['combobox#0']:1\", 'rel:0')  [4 occasions]",
+      "baseline": "<> <> allocated to call <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Takes up to#0(selection['combobox#0']:1) >= attr:Length overall#0(owner) & ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#0']:1\")  [4 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/7/version_space/why/1"
+    },
+    {
+      "G1": "attr_cmp_lt",
+      "baseline": "attr_cmp_ge",
+      "kind": "value",
+      "path": "/holdout/rows/7/vouches/<> <> allocated to call <> ./condition/1/0"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/7/vouches/<> <> allocated to call <> ./condition/1/1"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Takes up to#0",
+      "kind": "value",
+      "path": "/holdout/rows/7/vouches/<> <> allocated to call <> ./condition/1/2"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/7/vouches/<> <> allocated to call <> ./condition/1/3"
+    },
+    {
+      "G1": "attr:Takes up to#0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/7/vouches/<> <> allocated to call <> ./condition/1/4"
+    },
+    {
+      "G1_length": 3,
+      "baseline_length": 2,
+      "kind": "length",
+      "path": "/holdout/rows/7/vouches/<> <> allocated to call <> ./condition/2"
+    },
+    {
+      "G1": "ref_null",
+      "baseline": "unnamed",
+      "kind": "value",
+      "path": "/holdout/rows/7/vouches/<> <> allocated to call <> ./condition/2/0"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "relation['forward', 'rel:0']:0<selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/7/vouches/<> <> allocated to call <> ./condition/2/1"
+    },
+    {
+      "G1": "rel:0",
+      "kind": "added",
+      "path": "/holdout/rows/7/vouches/<> <> allocated to call <> ./condition/2/2"
+    },
+    {
+      "G1_length": 2,
+      "baseline_length": 3,
+      "kind": "length",
+      "path": "/holdout/rows/7/vouches/<> is <> overall ; berth <> <> ./condition"
+    },
+    {
+      "G1": "attr_ge",
+      "baseline": "attr",
+      "kind": "value",
+      "path": "/holdout/rows/7/vouches/<> is <> overall ; berth <> <> ./condition/0/0"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/7/vouches/<> is <> overall ; berth <> <> ./condition/0/1"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Condition#0",
+      "kind": "value",
+      "path": "/holdout/rows/7/vouches/<> is <> overall ; berth <> <> ./condition/0/2"
+    },
+    {
+      "G1": "132",
+      "baseline": "open",
+      "kind": "value",
+      "path": "/holdout/rows/7/vouches/<> is <> overall ; berth <> <> ./condition/0/3"
+    },
+    {
+      "G1_length": 3,
+      "baseline_length": 4,
+      "kind": "length",
+      "path": "/holdout/rows/7/vouches/<> is <> overall ; berth <> <> ./condition/1"
+    },
+    {
+      "G1": "ref_null",
+      "baseline": "attr_ge",
+      "kind": "value",
+      "path": "/holdout/rows/7/vouches/<> is <> overall ; berth <> <> ./condition/1/0"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/7/vouches/<> is <> overall ; berth <> <> ./condition/1/1"
+    },
+    {
+      "G1": "rel:0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/7/vouches/<> is <> overall ; berth <> <> ./condition/1/2"
+    },
+    {
+      "baseline": "132",
+      "kind": "removed",
+      "path": "/holdout/rows/7/vouches/<> is <> overall ; berth <> <> ./condition/1/3"
+    },
+    {
+      "baseline": [
+        "unnamed",
+        "relation['forward', 'rel:0']:0<selection['combobox#0']:1"
+      ],
+      "kind": "removed",
+      "path": "/holdout/rows/7/vouches/<> is <> overall ; berth <> <> ./condition/2"
+    },
+    {
+      "G1": "<> is <> overall ; berth <> <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Status#0(owner) == 'expected' & attr:Takes up to#0(selection['combobox#0']:1) < attr:Length overall#0(owner) & ('ref_null', \"selection['combobox#0']:1\", 'rel:0')  [6 occasions]",
+      "baseline": "<> is <> overall ; berth <> <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Status#0(owner) == 'expected' & attr:Takes up to#0(selection['combobox#0']:1) < attr:Length overall#0(owner) & ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#0']:1\")  [6 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/8/version_space/why"
+    },
+    {
+      "G1_length": 3,
+      "baseline_length": 2,
+      "kind": "length",
+      "path": "/holdout/rows/8/vouches/<> is <> overall ; berth <> <> ./condition/3"
+    },
+    {
+      "G1": "ref_null",
+      "baseline": "unnamed",
+      "kind": "value",
+      "path": "/holdout/rows/8/vouches/<> is <> overall ; berth <> <> ./condition/3/0"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "relation['forward', 'rel:0']:0<selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/8/vouches/<> is <> overall ; berth <> <> ./condition/3/1"
+    },
+    {
+      "G1": "rel:0",
+      "kind": "added",
+      "path": "/holdout/rows/8/vouches/<> is <> overall ; berth <> <> ./condition/3/2"
+    },
+    {
+      "G1": "<> is <> overall ; berth <> <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Status#0(owner) == 'expected' & attr:Takes up to#0(selection['combobox#0']:1) < attr:Length overall#0(owner) & ('ref_null', \"selection['combobox#0']:1\", 'rel:0')  [6 occasions]",
+      "baseline": "<> is <> overall ; berth <> <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Status#0(owner) == 'expected' & attr:Takes up to#0(selection['combobox#0']:1) < attr:Length overall#0(owner) & ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#0']:1\")  [6 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/9/version_space/why"
+    },
+    {
+      "G1_length": 3,
+      "baseline_length": 2,
+      "kind": "length",
+      "path": "/holdout/rows/9/vouches/<> is <> overall ; berth <> <> ./condition/3"
+    },
+    {
+      "G1": "ref_null",
+      "baseline": "unnamed",
+      "kind": "value",
+      "path": "/holdout/rows/9/vouches/<> is <> overall ; berth <> <> ./condition/3/0"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "relation['forward', 'rel:0']:0<selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/9/vouches/<> is <> overall ; berth <> <> ./condition/3/1"
+    },
+    {
+      "G1": "rel:0",
+      "kind": "added",
+      "path": "/holdout/rows/9/vouches/<> is <> overall ; berth <> <> ./condition/3/2"
+    },
+    {
+      "G1": "<> is <> overall ; berth <> <> . <- attr:Length overall#0(owner) >= '132' & attr:Takes up to#0(selection['combobox#0']:1) < '140'  [3 occasions]",
+      "baseline": "<> is <> overall ; berth <> <> . <- attr:Certified for hazardous cargo#0(selection['combobox#0']:1) == 'no' & attr:Length overall#0(owner) >= '132'  [3 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/10/version_space/why/0"
+    },
+    {
+      "G1": "<> <> allocated to call <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Takes up to#0(selection['combobox#0']:1) >= '120' & attr:Length overall#0(owner) >= '88' & no_children(selection['combobox#0']:1)  [3 occasions]",
+      "baseline": "<> <> allocated to call <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Takes up to#0(selection['combobox#0']:1) >= '120' & attr:Length overall#0(owner) >= '96' & no_children(selection['combobox#0']:1)  [3 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/10/version_space/why/2"
+    },
+    {
+      "G1": "88",
+      "baseline": "96",
+      "kind": "value",
+      "path": "/holdout/rows/10/vouches/<> <> allocated to call <> ./condition/2/3"
+    },
+    {
+      "G1": "attr_ge",
+      "baseline": "attr",
+      "kind": "value",
+      "path": "/holdout/rows/10/vouches/<> is <> overall ; berth <> <> ./condition/0/0"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/10/vouches/<> is <> overall ; berth <> <> ./condition/0/1"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Certified for hazardous cargo#0",
+      "kind": "value",
+      "path": "/holdout/rows/10/vouches/<> is <> overall ; berth <> <> ./condition/0/2"
+    },
+    {
+      "G1": "132",
+      "baseline": "no",
+      "kind": "value",
+      "path": "/holdout/rows/10/vouches/<> is <> overall ; berth <> <> ./condition/0/3"
+    },
+    {
+      "G1": "attr_lt",
+      "baseline": "attr_ge",
+      "kind": "value",
+      "path": "/holdout/rows/10/vouches/<> is <> overall ; berth <> <> ./condition/1/0"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/10/vouches/<> is <> overall ; berth <> <> ./condition/1/1"
+    },
+    {
+      "G1": "attr:Takes up to#0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/10/vouches/<> is <> overall ; berth <> <> ./condition/1/2"
+    },
+    {
+      "G1": "140",
+      "baseline": "132",
+      "kind": "value",
+      "path": "/holdout/rows/10/vouches/<> is <> overall ; berth <> <> ./condition/1/3"
+    },
+    {
+      "G1": 5,
+      "baseline": 19,
+      "kind": "value",
+      "path": "/holdout/rows/10/vouches/Call <> is already <> ; her berth cannot be changed ./witnesses/1"
+    },
+    {
+      "G1": "attr_ge",
+      "baseline": "attr",
+      "kind": "value",
+      "path": "/holdout/rows/12/vouches/<> is <> overall ; berth <> <> ./condition/0/0"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/12/vouches/<> is <> overall ; berth <> <> ./condition/0/1"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Certified for hazardous cargo#0",
+      "kind": "value",
+      "path": "/holdout/rows/12/vouches/<> is <> overall ; berth <> <> ./condition/0/2"
+    },
+    {
+      "G1": "112",
+      "baseline": "no",
+      "kind": "value",
+      "path": "/holdout/rows/12/vouches/<> is <> overall ; berth <> <> ./condition/0/3"
+    },
+    {
+      "G1": "attr_lt",
+      "baseline": "attr_ge",
+      "kind": "value",
+      "path": "/holdout/rows/12/vouches/<> is <> overall ; berth <> <> ./condition/1/0"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/12/vouches/<> is <> overall ; berth <> <> ./condition/1/1"
+    },
+    {
+      "G1": "attr:Takes up to#0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/12/vouches/<> is <> overall ; berth <> <> ./condition/1/2"
+    },
+    {
+      "G1": "120",
+      "baseline": "112",
+      "kind": "value",
+      "path": "/holdout/rows/12/vouches/<> is <> overall ; berth <> <> ./condition/1/3"
+    },
+    {
+      "G1": "<> is <> overall ; berth <> <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Status#0(owner) == 'expected' & attr:Takes up to#0(selection['combobox#0']:1) < attr:Length overall#0(owner) & ('ref_null', \"selection['combobox#0']:1\", 'rel:0')  [6 occasions]",
+      "baseline": "<> is <> overall ; berth <> <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Status#0(owner) == 'expected' & attr:Takes up to#0(selection['combobox#0']:1) < attr:Length overall#0(owner) & ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#0']:1\")  [6 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/13/version_space/why"
+    },
+    {
+      "G1_length": 3,
+      "baseline_length": 2,
+      "kind": "length",
+      "path": "/holdout/rows/13/vouches/<> is <> overall ; berth <> <> ./condition/3"
+    },
+    {
+      "G1": "ref_null",
+      "baseline": "unnamed",
+      "kind": "value",
+      "path": "/holdout/rows/13/vouches/<> is <> overall ; berth <> <> ./condition/3/0"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "relation['forward', 'rel:0']:0<selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/13/vouches/<> is <> overall ; berth <> <> ./condition/3/1"
+    },
+    {
+      "G1": "rel:0",
+      "kind": "added",
+      "path": "/holdout/rows/13/vouches/<> is <> overall ; berth <> <> ./condition/3/2"
+    },
+    {
+      "G1": "<> is <> overall ; berth <> <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Status#0(owner) == 'expected' & attr:Takes up to#0(selection['combobox#0']:1) < attr:Length overall#0(owner) & ('ref_null', \"selection['combobox#0']:1\", 'rel:0')  [6 occasions]",
+      "baseline": "<> is <> overall ; berth <> <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Status#0(owner) == 'expected' & attr:Takes up to#0(selection['combobox#0']:1) < attr:Length overall#0(owner) & ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#0']:1\")  [6 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/14/version_space/why"
+    },
+    {
+      "G1_length": 3,
+      "baseline_length": 2,
+      "kind": "length",
+      "path": "/holdout/rows/14/vouches/<> is <> overall ; berth <> <> ./condition/3"
+    },
+    {
+      "G1": "ref_null",
+      "baseline": "unnamed",
+      "kind": "value",
+      "path": "/holdout/rows/14/vouches/<> is <> overall ; berth <> <> ./condition/3/0"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "relation['forward', 'rel:0']:0<selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/14/vouches/<> is <> overall ; berth <> <> ./condition/3/1"
+    },
+    {
+      "G1": "rel:0",
+      "kind": "added",
+      "path": "/holdout/rows/14/vouches/<> is <> overall ; berth <> <> ./condition/3/2"
+    },
+    {
+      "G1": "<> is <> overall ; berth <> <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Status#0(owner) == 'expected' & attr:Length overall#0(owner) >= '88' & attr:Takes up to#0(selection['combobox#0']:1) < '120' & ('ref_null', \"selection['combobox#0']:1\", 'rel:0')  [6 occasions]",
+      "baseline": "<> is <> overall ; berth <> <> . <- attr:Certified for hazardous cargo#0(selection['combobox#0']:1) == 'no' & attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Status#0(owner) == 'expected' & attr:Length overall#0(owner) >= '88' & ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#0']:1\")  [6 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/15/version_space/why/0"
+    },
+    {
+      "G1": "<> <> allocated to call <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Length overall#0(owner) < attr:Takes up to#0(selection['combobox#0']:1) & ('ref_null', \"selection['combobox#0']:1\", 'rel:0')  [4 occasions]",
+      "baseline": "<> <> allocated to call <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Takes up to#0(selection['combobox#0']:1) >= attr:Length overall#0(owner) & ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#0']:1\")  [4 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/15/version_space/why/1"
+    },
+    {
+      "G1": "attr_cmp_lt",
+      "baseline": "attr_cmp_ge",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> <> allocated to call <> ./condition/1/0"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> <> allocated to call <> ./condition/1/1"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Takes up to#0",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> <> allocated to call <> ./condition/1/2"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> <> allocated to call <> ./condition/1/3"
+    },
+    {
+      "G1": "attr:Takes up to#0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> <> allocated to call <> ./condition/1/4"
+    },
+    {
+      "G1_length": 3,
+      "baseline_length": 2,
+      "kind": "length",
+      "path": "/holdout/rows/15/vouches/<> <> allocated to call <> ./condition/2"
+    },
+    {
+      "G1": "ref_null",
+      "baseline": "unnamed",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> <> allocated to call <> ./condition/2/0"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "relation['forward', 'rel:0']:0<selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> <> allocated to call <> ./condition/2/1"
+    },
+    {
+      "G1": "rel:0",
+      "kind": "added",
+      "path": "/holdout/rows/15/vouches/<> <> allocated to call <> ./condition/2/2"
+    },
+    {
+      "G1": "attr:Condition#0",
+      "baseline": "attr:Certified for hazardous cargo#0",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> is <> overall ; berth <> <> ./condition/0/2"
+    },
+    {
+      "G1": "open",
+      "baseline": "no",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> is <> overall ; berth <> <> ./condition/0/3"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> is <> overall ; berth <> <> ./condition/1/1"
+    },
+    {
+      "G1": "attr:Status#0",
+      "baseline": "attr:Condition#0",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> is <> overall ; berth <> <> ./condition/1/2"
+    },
+    {
+      "G1": "expected",
+      "baseline": "open",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> is <> overall ; berth <> <> ./condition/1/3"
+    },
+    {
+      "G1": "attr_ge",
+      "baseline": "attr",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> is <> overall ; berth <> <> ./condition/2/0"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Status#0",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> is <> overall ; berth <> <> ./condition/2/2"
+    },
+    {
+      "G1": "88",
+      "baseline": "expected",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> is <> overall ; berth <> <> ./condition/2/3"
+    },
+    {
+      "G1": "attr_lt",
+      "baseline": "attr_ge",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> is <> overall ; berth <> <> ./condition/3/0"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> is <> overall ; berth <> <> ./condition/3/1"
+    },
+    {
+      "G1": "attr:Takes up to#0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> is <> overall ; berth <> <> ./condition/3/2"
+    },
+    {
+      "G1": "120",
+      "baseline": "88",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> is <> overall ; berth <> <> ./condition/3/3"
+    },
+    {
+      "G1_length": 3,
+      "baseline_length": 2,
+      "kind": "length",
+      "path": "/holdout/rows/15/vouches/<> is <> overall ; berth <> <> ./condition/4"
+    },
+    {
+      "G1": "ref_null",
+      "baseline": "unnamed",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> is <> overall ; berth <> <> ./condition/4/0"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "relation['forward', 'rel:0']:0<selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> is <> overall ; berth <> <> ./condition/4/1"
+    },
+    {
+      "G1": "rel:0",
+      "kind": "added",
+      "path": "/holdout/rows/15/vouches/<> is <> overall ; berth <> <> ./condition/4/2"
+    },
+    {
+      "G1": "<> <> allocated to call <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Status#0(owner) == 'expected' & attr:Length overall#0(owner) < attr:Takes up to#0(selection['combobox#0']:1) & no_children(selection['combobox#0']:1)  [4 occasions]",
+      "baseline": "<> <> allocated to call <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Status#0(owner) == 'expected' & attr:Takes up to#0(selection['combobox#0']:1) >= attr:Length overall#0(owner) & no_children(selection['combobox#0']:1)  [4 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/16/version_space/why/0"
+    },
+    {
+      "G1": "<> <> is held by call <> . <- attr:Status#0(owner) == 'expected' & ('named', \"relation['forward', 'rel:0']:0<selection['combobox#0']:1\")  [3 occasions]",
+      "baseline": "<> <> is held by call <> . <- attr:Status#0(owner) == 'expected' & rel:0(owner) != relation['forward', 'rel:0']:0<selection['combobox#0']:1  [3 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/16/version_space/why/1"
+    },
+    {
+      "G1": "attr_cmp_lt",
+      "baseline": "attr_cmp_ge",
+      "kind": "value",
+      "path": "/holdout/rows/16/vouches/<> <> allocated to call <> ./condition/2/0"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/16/vouches/<> <> allocated to call <> ./condition/2/1"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Takes up to#0",
+      "kind": "value",
+      "path": "/holdout/rows/16/vouches/<> <> allocated to call <> ./condition/2/2"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/16/vouches/<> <> allocated to call <> ./condition/2/3"
+    },
+    {
+      "G1": "attr:Takes up to#0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/16/vouches/<> <> allocated to call <> ./condition/2/4"
+    },
+    {
+      "G1_length": 2,
+      "baseline_length": 4,
+      "kind": "length",
+      "path": "/holdout/rows/16/vouches/<> <> is held by call <> ./condition/1"
+    },
+    {
+      "G1": "named",
+      "baseline": "ref_ne",
+      "kind": "value",
+      "path": "/holdout/rows/16/vouches/<> <> is held by call <> ./condition/1/0"
+    },
+    {
+      "G1": "relation['forward', 'rel:0']:0<selection['combobox#0']:1",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/16/vouches/<> <> is held by call <> ./condition/1/1"
+    },
+    {
+      "baseline": "rel:0",
+      "kind": "removed",
+      "path": "/holdout/rows/16/vouches/<> <> is held by call <> ./condition/1/2"
+    },
+    {
+      "baseline": "relation['forward', 'rel:0']:0<selection['combobox#0']:1",
+      "kind": "removed",
+      "path": "/holdout/rows/16/vouches/<> <> is held by call <> ./condition/1/3"
+    },
+    {
+      "G1_length": 2,
+      "baseline_length": 4,
+      "kind": "length",
+      "path": "/holdout/rows/17/vouches/<> <> is held by call <> ./condition/1"
+    },
+    {
+      "G1": "named",
+      "baseline": "ref_ne",
+      "kind": "value",
+      "path": "/holdout/rows/17/vouches/<> <> is held by call <> ./condition/1/0"
+    },
+    {
+      "G1": "relation['forward', 'rel:0']:0<selection['combobox#0']:1",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/17/vouches/<> <> is held by call <> ./condition/1/1"
+    },
+    {
+      "baseline": "rel:0",
+      "kind": "removed",
+      "path": "/holdout/rows/17/vouches/<> <> is held by call <> ./condition/1/2"
+    },
+    {
+      "baseline": "relation['forward', 'rel:0']:0<selection['combobox#0']:1",
+      "kind": "removed",
+      "path": "/holdout/rows/17/vouches/<> <> is held by call <> ./condition/1/3"
+    },
+    {
+      "G1": "attr_ge",
+      "baseline": "attr",
+      "kind": "value",
+      "path": "/holdout/rows/17/vouches/<> is <> overall ; berth <> <> ./condition/0/0"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/17/vouches/<> is <> overall ; berth <> <> ./condition/0/1"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Certified for hazardous cargo#0",
+      "kind": "value",
+      "path": "/holdout/rows/17/vouches/<> is <> overall ; berth <> <> ./condition/0/2"
+    },
+    {
+      "G1": "112",
+      "baseline": "no",
+      "kind": "value",
+      "path": "/holdout/rows/17/vouches/<> is <> overall ; berth <> <> ./condition/0/3"
+    },
+    {
+      "G1": "attr_lt",
+      "baseline": "attr_ge",
+      "kind": "value",
+      "path": "/holdout/rows/17/vouches/<> is <> overall ; berth <> <> ./condition/1/0"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/17/vouches/<> is <> overall ; berth <> <> ./condition/1/1"
+    },
+    {
+      "G1": "attr:Takes up to#0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/17/vouches/<> is <> overall ; berth <> <> ./condition/1/2"
+    },
+    {
+      "G1": "120",
+      "baseline": "112",
+      "kind": "value",
+      "path": "/holdout/rows/17/vouches/<> is <> overall ; berth <> <> ./condition/1/3"
+    },
+    {
+      "G1_length": 2,
+      "baseline_length": 3,
+      "kind": "length",
+      "path": "/holdout/rows/19/vouches/<> is <> overall ; berth <> <> ./condition"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/19/vouches/<> is <> overall ; berth <> <> ./condition/0/1"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Takes up to#0",
+      "kind": "value",
+      "path": "/holdout/rows/19/vouches/<> is <> overall ; berth <> <> ./condition/0/2"
+    },
+    {
+      "G1": "112",
+      "baseline": "70",
+      "kind": "value",
+      "path": "/holdout/rows/19/vouches/<> is <> overall ; berth <> <> ./condition/0/3"
+    },
+    {
+      "G1_length": 3,
+      "baseline_length": 4,
+      "kind": "length",
+      "path": "/holdout/rows/19/vouches/<> is <> overall ; berth <> <> ./condition/1"
+    },
+    {
+      "G1": "ref_null",
+      "baseline": "attr_ge",
+      "kind": "value",
+      "path": "/holdout/rows/19/vouches/<> is <> overall ; berth <> <> ./condition/1/0"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/19/vouches/<> is <> overall ; berth <> <> ./condition/1/1"
+    },
+    {
+      "G1": "rel:0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/19/vouches/<> is <> overall ; berth <> <> ./condition/1/2"
+    },
+    {
+      "baseline": "112",
+      "kind": "removed",
+      "path": "/holdout/rows/19/vouches/<> is <> overall ; berth <> <> ./condition/1/3"
+    },
+    {
+      "baseline": [
+        "unnamed",
+        "relation['forward', 'rel:0']:0<selection['combobox#0']:1"
+      ],
+      "kind": "removed",
+      "path": "/holdout/rows/19/vouches/<> is <> overall ; berth <> <> ./condition/2"
+    },
+    {
+      "G1": "<> <> allocated to call <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Length overall#0(owner) < attr:Takes up to#0(selection['combobox#0']:1) & ('ref_null', \"selection['combobox#0']:1\", 'rel:0')  [4 occasions]",
+      "baseline": "<> <> allocated to call <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Takes up to#0(selection['combobox#0']:1) >= attr:Length overall#0(owner) & ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#0']:1\")  [4 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/20/version_space/why"
+    },
+    {
+      "G1": "attr_cmp_lt",
+      "baseline": "attr_cmp_ge",
+      "kind": "value",
+      "path": "/holdout/rows/20/vouches/<> <> allocated to call <> ./condition/1/0"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/20/vouches/<> <> allocated to call <> ./condition/1/1"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Takes up to#0",
+      "kind": "value",
+      "path": "/holdout/rows/20/vouches/<> <> allocated to call <> ./condition/1/2"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/20/vouches/<> <> allocated to call <> ./condition/1/3"
+    },
+    {
+      "G1": "attr:Takes up to#0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/20/vouches/<> <> allocated to call <> ./condition/1/4"
+    },
+    {
+      "G1_length": 3,
+      "baseline_length": 2,
+      "kind": "length",
+      "path": "/holdout/rows/20/vouches/<> <> allocated to call <> ./condition/2"
+    },
+    {
+      "G1": "ref_null",
+      "baseline": "unnamed",
+      "kind": "value",
+      "path": "/holdout/rows/20/vouches/<> <> allocated to call <> ./condition/2/0"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "relation['forward', 'rel:0']:0<selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/20/vouches/<> <> allocated to call <> ./condition/2/1"
+    },
+    {
+      "G1": "rel:0",
+      "kind": "added",
+      "path": "/holdout/rows/20/vouches/<> <> allocated to call <> ./condition/2/2"
+    },
+    {
+      "G1": "<> <> allocated to call <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Status#0(owner) == 'expected' & attr:Length overall#0(owner) < attr:Takes up to#0(selection['combobox#0']:1) & no_children(selection['combobox#0']:1)  [4 occasions]",
+      "baseline": "<> <> allocated to call <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Status#0(owner) == 'expected' & attr:Takes up to#0(selection['combobox#0']:1) >= attr:Length overall#0(owner) & no_children(selection['combobox#0']:1)  [4 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/21/version_space/why/0"
+    },
+    {
+      "G1": "<> <> is held by call <> . <- attr:Status#0(owner) == 'expected' & ('named', \"relation['forward', 'rel:0']:0<selection['combobox#0']:1\")  [3 occasions]",
+      "baseline": "<> <> is held by call <> . <- attr:Status#0(owner) == 'expected' & rel:0(owner) != relation['forward', 'rel:0']:0<selection['combobox#0']:1  [3 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/21/version_space/why/1"
+    },
+    {
+      "G1": "attr_cmp_lt",
+      "baseline": "attr_cmp_ge",
+      "kind": "value",
+      "path": "/holdout/rows/21/vouches/<> <> allocated to call <> ./condition/2/0"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/21/vouches/<> <> allocated to call <> ./condition/2/1"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Takes up to#0",
+      "kind": "value",
+      "path": "/holdout/rows/21/vouches/<> <> allocated to call <> ./condition/2/2"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/21/vouches/<> <> allocated to call <> ./condition/2/3"
+    },
+    {
+      "G1": "attr:Takes up to#0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/21/vouches/<> <> allocated to call <> ./condition/2/4"
+    },
+    {
+      "G1_length": 2,
+      "baseline_length": 4,
+      "kind": "length",
+      "path": "/holdout/rows/21/vouches/<> <> is held by call <> ./condition/1"
+    },
+    {
+      "G1": "named",
+      "baseline": "ref_ne",
+      "kind": "value",
+      "path": "/holdout/rows/21/vouches/<> <> is held by call <> ./condition/1/0"
+    },
+    {
+      "G1": "relation['forward', 'rel:0']:0<selection['combobox#0']:1",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/21/vouches/<> <> is held by call <> ./condition/1/1"
+    },
+    {
+      "baseline": "rel:0",
+      "kind": "removed",
+      "path": "/holdout/rows/21/vouches/<> <> is held by call <> ./condition/1/2"
+    },
+    {
+      "baseline": "relation['forward', 'rel:0']:0<selection['combobox#0']:1",
+      "kind": "removed",
+      "path": "/holdout/rows/21/vouches/<> <> is held by call <> ./condition/1/3"
+    },
+    {
+      "G1": "attr_cmp_lt",
+      "baseline": "attr_cmp_ge",
+      "kind": "value",
+      "path": "/holdout/rows/22/vouches/<> <> allocated to call <> ./condition/2/0"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/22/vouches/<> <> allocated to call <> ./condition/2/1"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Takes up to#0",
+      "kind": "value",
+      "path": "/holdout/rows/22/vouches/<> <> allocated to call <> ./condition/2/2"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/22/vouches/<> <> allocated to call <> ./condition/2/3"
+    },
+    {
+      "G1": "attr:Takes up to#0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/22/vouches/<> <> allocated to call <> ./condition/2/4"
+    },
+    {
+      "G1_length": 2,
+      "baseline_length": 4,
+      "kind": "length",
+      "path": "/holdout/rows/22/vouches/<> <> is held by call <> ./condition/1"
+    },
+    {
+      "G1": "named",
+      "baseline": "ref_ne",
+      "kind": "value",
+      "path": "/holdout/rows/22/vouches/<> <> is held by call <> ./condition/1/0"
+    },
+    {
+      "G1": "relation['forward', 'rel:0']:0<selection['combobox#0']:1",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/22/vouches/<> <> is held by call <> ./condition/1/1"
+    },
+    {
+      "baseline": "rel:0",
+      "kind": "removed",
+      "path": "/holdout/rows/22/vouches/<> <> is held by call <> ./condition/1/2"
+    },
+    {
+      "baseline": "relation['forward', 'rel:0']:0<selection['combobox#0']:1",
+      "kind": "removed",
+      "path": "/holdout/rows/22/vouches/<> <> is held by call <> ./condition/1/3"
+    },
+    {
+      "G1": "<> is <> overall ; berth <> <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Status#0(owner) == 'expected' & attr:Takes up to#0(selection['combobox#0']:1) < attr:Length overall#0(owner) & ('ref_null', \"selection['combobox#0']:1\", 'rel:0')  [6 occasions]",
+      "baseline": "<> is <> overall ; berth <> <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Status#0(owner) == 'expected' & attr:Takes up to#0(selection['combobox#0']:1) < attr:Length overall#0(owner) & ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#0']:1\")  [6 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/23/version_space/why"
+    },
+    {
+      "G1_length": 3,
+      "baseline_length": 2,
+      "kind": "length",
+      "path": "/holdout/rows/23/vouches/<> is <> overall ; berth <> <> ./condition/3"
+    },
+    {
+      "G1": "ref_null",
+      "baseline": "unnamed",
+      "kind": "value",
+      "path": "/holdout/rows/23/vouches/<> is <> overall ; berth <> <> ./condition/3/0"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "relation['forward', 'rel:0']:0<selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/23/vouches/<> is <> overall ; berth <> <> ./condition/3/1"
+    },
+    {
+      "G1": "rel:0",
+      "kind": "added",
+      "path": "/holdout/rows/23/vouches/<> is <> overall ; berth <> <> ./condition/3/2"
+    },
+    {
+      "G1": "<> is <> overall ; berth <> <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Status#0(owner) == 'expected' & attr:Takes up to#0(selection['combobox#0']:1) < attr:Length overall#0(owner) & ('ref_null', \"selection['combobox#0']:1\", 'rel:0')  [6 occasions]",
+      "baseline": "<> is <> overall ; berth <> <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Status#0(owner) == 'expected' & attr:Takes up to#0(selection['combobox#0']:1) < attr:Length overall#0(owner) & ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#0']:1\")  [6 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/24/version_space/why"
+    },
+    {
+      "G1_length": 3,
+      "baseline_length": 2,
+      "kind": "length",
+      "path": "/holdout/rows/24/vouches/<> is <> overall ; berth <> <> ./condition/3"
+    },
+    {
+      "G1": "ref_null",
+      "baseline": "unnamed",
+      "kind": "value",
+      "path": "/holdout/rows/24/vouches/<> is <> overall ; berth <> <> ./condition/3/0"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "relation['forward', 'rel:0']:0<selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/24/vouches/<> is <> overall ; berth <> <> ./condition/3/1"
+    },
+    {
+      "G1": "rel:0",
+      "kind": "added",
+      "path": "/holdout/rows/24/vouches/<> is <> overall ; berth <> <> ./condition/3/2"
+    },
+    {
+      "G1": "<> is <> overall ; berth <> <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Status#0(owner) == 'expected' & attr:Takes up to#0(selection['combobox#0']:1) < attr:Length overall#0(owner) & ('ref_null', \"selection['combobox#0']:1\", 'rel:0')  [6 occasions]",
+      "baseline": "<> is <> overall ; berth <> <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Status#0(owner) == 'expected' & attr:Takes up to#0(selection['combobox#0']:1) < attr:Length overall#0(owner) & ('unnamed', \"relation['forward', 'rel:0']:0<selection['combobox#0']:1\")  [6 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/25/version_space/why"
+    },
+    {
+      "G1_length": 3,
+      "baseline_length": 2,
+      "kind": "length",
+      "path": "/holdout/rows/25/vouches/<> is <> overall ; berth <> <> ./condition/3"
+    },
+    {
+      "G1": "ref_null",
+      "baseline": "unnamed",
+      "kind": "value",
+      "path": "/holdout/rows/25/vouches/<> is <> overall ; berth <> <> ./condition/3/0"
+    },
+    {
+      "G1": "selection['combobox#0']:1",
+      "baseline": "relation['forward', 'rel:0']:0<selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/25/vouches/<> is <> overall ; berth <> <> ./condition/3/1"
+    },
+    {
+      "G1": "rel:0",
+      "kind": "added",
+      "path": "/holdout/rows/25/vouches/<> is <> overall ; berth <> <> ./condition/3/2"
+    },
+    {
+      "G1": "<> <> allocated to call <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Takes up to#0(selection['combobox#0']:1) == '160' & attr:Length overall#0(owner) >= '88' & attr:Length overall#0(owner) < '112'  [3 occasions]",
+      "baseline": "<> <> allocated to call <> . <- attr:Condition#0(selection['combobox#0']:1) == 'open' & attr:Takes up to#0(selection['combobox#0']:1) >= '160' & no_children(selection['combobox#0']:1)  [3 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/26/version_space/why/1"
+    },
+    {
+      "G1_length": 4,
+      "baseline_length": 3,
+      "kind": "length",
+      "path": "/holdout/rows/26/vouches/<> <> allocated to call <> ./condition"
+    },
+    {
+      "G1": "attr",
+      "baseline": "attr_ge",
+      "kind": "value",
+      "path": "/holdout/rows/26/vouches/<> <> allocated to call <> ./condition/1/0"
+    },
+    {
+      "G1_length": 4,
+      "baseline_length": 2,
+      "kind": "length",
+      "path": "/holdout/rows/26/vouches/<> <> allocated to call <> ./condition/2"
+    },
+    {
+      "G1": "attr_ge",
+      "baseline": "empty",
+      "kind": "value",
+      "path": "/holdout/rows/26/vouches/<> <> allocated to call <> ./condition/2/0"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#0']:1",
+      "kind": "value",
+      "path": "/holdout/rows/26/vouches/<> <> allocated to call <> ./condition/2/1"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "kind": "added",
+      "path": "/holdout/rows/26/vouches/<> <> allocated to call <> ./condition/2/2"
+    },
+    {
+      "G1": "88",
+      "kind": "added",
+      "path": "/holdout/rows/26/vouches/<> <> allocated to call <> ./condition/2/3"
+    },
+    {
+      "G1": [
+        "attr_lt",
+        "owner",
+        "attr:Length overall#0",
+        "112"
+      ],
+      "kind": "added",
+      "path": "/holdout/rows/26/vouches/<> <> allocated to call <> ./condition/3"
+    },
+    {
+      "G1": 5,
+      "baseline": 19,
+      "kind": "value",
+      "path": "/holdout/rows/26/vouches/Call <> is already <> ; her berth cannot be changed ./witnesses/1"
+    }
+  ],
+  "freeze_sha256": "2dc311936c194f850d9e1484c493bfa0a166f9d9577b63a3cb77aee3f3c0d072",
+  "input_relocation": {
+    "G1_reading_source_run": "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_ref_dev",
+    "all_45_input_hashes_unchanged": true,
+    "baseline_reading_source_run": "/home/moloch/semabi-scratch/preq/harbour_ref_dev",
+    "manifest_sha256": "0a2fc2a9833f290fb23d9300e0547b53b83af2ec93ab3a92cde63b1f0ddc1dc1"
+  },
+  "job": {
+    "child_terminated": true,
+    "end_utc": "2026-09-07T17:41:41.678533+00:00",
+    "measurement_elapsed_seconds": 988.7202359999992,
+    "path": "docs/data/v4/transport/development/g1/jobs/corpus_allocation_refusals/process.json",
+    "reaped_by_reviewing_agent": true,
+    "returncode": 0,
+    "session_id": 14475,
+    "sha256": "b4b67a90e8bdca4e731c57e8aa7e0bf656984c6e78332fb666423353bb817b91",
+    "start_utc": "2026-09-07T17:25:12.131584+00:00",
+    "status": "FINISHED"
+  },
+  "outcome_cut": 467,
+  "roles": 4,
+  "schema": "semabi.transport.g1.corpus_comparison.v1",
+  "scope": "Exact comparison of disclosed retained corpus measurements; no refit by this comparison.",
+  "semantic_payloads_equal": false,
+  "semantic_sha256": {
+    "G1": "1d183210f7931fed33eb9045fc2f7244a7dc2406b0e7286c73f5b22ce52ea512",
+    "baseline_with_documented_visibility_correction": "14ec51846c87b2e8ba789b5d9f78eb46a04b814c709c89332b38d632c7d39332"
+  },
+  "source_head": "5ac0e11852dde513f4beb4e4ab1fbec0bc2318aa",
+  "summary": {
+    "development": {
+      "decision_list_ledger": {},
+      "failed_attempts": 0,
+      "recognition_mismatches": 0,
+      "target_clicks": 32,
+      "version_space_ledger": {},
+      "visible_check_ledger": {
+        "match": 96
+      },
+      "visible_check_scope": {
+        "bound vessel length survives representation": {
+          "match": 32
+        },
+        "selected object retained": {
+          "match": 32
+        },
+        "sheet vessel available in action binding": {
+          "match": 32
+        }
+      }
+    },
+    "holdout": {
+      "decision_list_ledger": {
+        "a different event": 3,
+        "the event the interface returned": 24
+      },
+      "failed_attempts": 0,
+      "recognition_mismatches": 0,
+      "target_clicks": 27,
+      "version_space_ledger": {
+        "one outcome was admissible and it happened": 16,
+        "several outcomes remained admissible; the one that happened was among them": 11
+      },
+      "visible_check_ledger": {
+        "match": 81
+      },
+      "visible_check_scope": {
+        "bound vessel length survives representation": {
+          "match": 27
+        },
+        "selected object retained": {
+          "match": 27
+        },
+        "sheet vessel available in action binding": {
+          "match": 27
+        }
+      }
+    }
+  },
+  "verification": {
+    "copied_freeze_matches": true,
+    "frozen_runtime_files_unchanged": true,
+    "inner_inputs_unchanged": true,
+    "input_manifest_unchanged": true,
+    "instrument_matches_freeze": true,
+    "job_log_hash_matches": true
+  }
+}

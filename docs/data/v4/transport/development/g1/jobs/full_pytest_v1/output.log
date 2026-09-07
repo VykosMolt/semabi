@@ -1,0 +1,53 @@
+
+==================================== ERRORS ====================================
+_ ERROR collecting docs/data/v4/transport/development/g1/implementation/source_before/tests/test_v4_frozen_transform.py _
+import file mismatch:
+imported module 'test_v4_frozen_transform' has this __file__ attribute:
+  /home/moloch/semabi/docs/data/v4/transport/development/g1/implementation/source_after_ownership/tests/test_v4_frozen_transform.py
+which is not the same as the test file we want to collect:
+  /home/moloch/semabi/docs/data/v4/transport/development/g1/implementation/source_before/tests/test_v4_frozen_transform.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules
+_ ERROR collecting docs/data/v4/transport/development/g1/implementation/source_final/tests/test_v4_frozen_transform.py _
+import file mismatch:
+imported module 'test_v4_frozen_transform' has this __file__ attribute:
+  /home/moloch/semabi/docs/data/v4/transport/development/g1/implementation/source_after_ownership/tests/test_v4_frozen_transform.py
+which is not the same as the test file we want to collect:
+  /home/moloch/semabi/docs/data/v4/transport/development/g1/implementation/source_final/tests/test_v4_frozen_transform.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules
+______________ ERROR collecting tests/test_v4_frozen_transform.py ______________
+import file mismatch:
+imported module 'test_v4_frozen_transform' has this __file__ attribute:
+  /home/moloch/semabi/docs/data/v4/transport/development/g1/implementation/source_after_ownership/tests/test_v4_frozen_transform.py
+which is not the same as the test file we want to collect:
+  /home/moloch/semabi/tests/test_v4_frozen_transform.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules
+___________________ ERROR collecting tests/test_v4_pinned.py ___________________
+import file mismatch:
+imported module 'test_v4_pinned' has this __file__ attribute:
+  /home/moloch/semabi/docs/data/v4/transport/development/g1/implementation/source_final/tests/test_v4_pinned.py
+which is not the same as the test file we want to collect:
+  /home/moloch/semabi/tests/test_v4_pinned.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules
+_______________ ERROR collecting tests/test_v4_probe_adapter.py ________________
+import file mismatch:
+imported module 'test_v4_probe_adapter' has this __file__ attribute:
+  /home/moloch/semabi/docs/data/v4/transport/development/g1/implementation/source_final/tests/test_v4_probe_adapter.py
+which is not the same as the test file we want to collect:
+  /home/moloch/semabi/tests/test_v4_probe_adapter.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules
+______________ ERROR collecting tests/test_v4_search_revisits.py _______________
+import file mismatch:
+imported module 'test_v4_search_revisits' has this __file__ attribute:
+  /home/moloch/semabi/docs/data/v4/transport/development/g1/implementation/source_final/tests/test_v4_search_revisits.py
+which is not the same as the test file we want to collect:
+  /home/moloch/semabi/tests/test_v4_search_revisits.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules
+=========================== short test summary info ============================
+ERROR docs/data/v4/transport/development/g1/implementation/source_before/tests/test_v4_frozen_transform.py
+ERROR docs/data/v4/transport/development/g1/implementation/source_final/tests/test_v4_frozen_transform.py
+ERROR tests/test_v4_frozen_transform.py
+ERROR tests/test_v4_pinned.py
+ERROR tests/test_v4_probe_adapter.py
+ERROR tests/test_v4_search_revisits.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 6 errors during collection !!!!!!!!!!!!!!!!!!!!
+6 errors in 0.78s

@@ -260,3 +260,78 @@ manifest binds 54 files, SHA-256
 `719171dd271900891027a33dd09a666d804e409431d5686b76d87f2e3346bc26`.
 An independent check verifies every entry and the exact reconstruction. Future
 closeout must wait for the writer's final digest before sealing its file.
+
+## G1 validation and isolated G2 candidate (2026-09-07 17:41 UTC)
+
+Main source is fixed at `5ac0e11852dde513f4beb4e4ab1fbec0bc2318aa`.
+The two-site graph repair passes 22 focused tests and independent review.
+`development/g1/freeze_v1.json` binds 73 runtime/initial files, SHA-256
+`2dc311936c194f850d9e1484c493bfa0a166f9d9577b63a3cb77aee3f3c0d072`.
+All six distinct disclosed T1 histories have been rescored with eight readings
+each; all six independent binding controls and the summary are complete/reaped.
+Every saved training model matches T1, all 42 pinned score records match, and
+inferred state/query errors fall to zero. No corroborated task binding or
+comparison is recovered. T1 remains development evidence; reserved contents
+and shared fixture source remain unopened by root.
+
+The first full check stopped at collection because pytest found archived source
+snapshots. Its six collection errors are retained as `jobs/full_pytest_v1`.
+The narrowly scoped archive guard and its hash are recorded in
+`full_collection_correction_v1.json`; no live test or learner change is involved.
+The corrected full suite is active at `development/g1/jobs/full_pytest_v2`,
+owned by root (session 10574, runner 316420, child 316422), with local sockets.
+Five dedicated corpus fits are owned by baseline_verification, each under its
+own `development/g1/jobs/corpus_*` and `corpora/*` directory. All use one thread.
+The persistent reconstruction binds 45 files, including all 36 original consumed
+inputs byte-for-byte. Source and main HEAD must remain fixed until these jobs end.
+
+G2 is separately committed as `0afe36c` in `runs/.g2_worktree`, branch
+`g2-frozen-section-prefix`; main source has not adopted it. The one-line section
+statistics freeze has unchanged tests failing 2/passing 2 before and passing all
+4 afterward, with independent review. Its reviewed manifest hashes to
+`33720116127a78b0cfcf87ed3bf515b95e0df237fa5535ac7a493e07e65aae60`.
+Integration and retained/full validation remain pending after G1 closure.
+
+A separate T1 section control changes zero training/evaluation/task pre-states
+on all six histories, so it cannot explain their missing bindings. The general
+live/offline discrepancy remains open. A source audit is defining the next JOIN
+experiment with supplied-identity and inferred conditions separated. No new
+reserved fixture, JOIN experiment or browser acquisition has executed.
+
+## G1 closeout and native JOIN diagnostic (2026-09-07 18:12 UTC)
+
+All G1 jobs have ended with source/HEAD still `5ac0e11`. Full suite: 573 passed,
+3 skipped, 1 expected failure; root reaped session 10574. The five dedicated
+sessions (8699, 14475, 51237, 53357, 32157) were reaped by baseline_verification.
+There are no active G1 fits, tests, scores, controls or fixture services. The
+source/data hashes still match. All six scores/controls and five corpus results
+are retained under `development/g1`; 302 corpus targets and 906 visible checks
+preserve reported behavior, with the known errors and explicit supporting-rule
+residuals. The original baseline's hash seed differs from G1, limiting causal
+attribution of those residuals.
+
+Independent transport review is final at
+`0768334c3ed95a9aed2784f764fc09b0ea589e4031842a684dfe3d3e9814f3c6`;
+its exact report draft is archived at `g1/report_revisions/transport_reviewed.md`.
+Corpus/full review is final at
+`60eebce15e27b3fe9e6ad1340d74ec5e13a70e41a04487799b5c9a2ddb771247`.
+The final report-assertion/sealer review is completing before
+`preserve_results.py` runs and the coherent G1 result is committed locally.
+The sealer's unexecuted proposal that expected FINISHED for the retained failed
+collection is archived; its revised contract accepts exactly FAILED/2 there.
+
+Root reviewed and ran `development/join_native_control` at frozen G1 using its
+recorded runner command. The job finished/reaped at 18:02:43 UTC. All 12 default-
+limit supplied-graph/oracle-formula cases and the separate unique-chain query
+control pass. The source-only `limit=1` diagnostic retains one of two assignments,
+reports `truncated=false`, and falsely claims UNIQUE and DETERMINED. This is a
+separate computational defect, not a failed primary JOIN outcome. The agent is
+preserving its report and auditing the smallest sound repair; main source is
+unchanged. No learner fit, browser action or inferred-identity claim occurred.
+
+G2 remains isolated at `0afe36c`. Its integrated validation instruments are being
+reviewed, including mandatory fixed-seed launch and an exact same-seed G1/G2
+semantic comparison. After G1 preservation, integrate G2 and freeze its actual
+source before the full suite and five dedicated regressions. A new reserved
+transport freeze and an independently constructed JOIN learner trace remain
+next. Shared fixture source and reserved contents are still unopened by root.

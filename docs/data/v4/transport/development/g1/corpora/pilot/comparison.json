@@ -1,0 +1,1056 @@
+{
+  "G1_result": {
+    "path": "docs/data/v4/transport/development/g1/corpora/pilot/pilot.json",
+    "sha256": "3e387a048daf36480e91bada7cb2b29608cb21c2be9dd34bffd789891eda0b36"
+  },
+  "baseline_result": {
+    "path": "docs/data/v4/transport/baseline/pilot.json",
+    "sha256": "e60083a85d85d162ca3d645f6080aefbf5e8c52d816f0d464866389372d3f441"
+  },
+  "baseline_visible_correction": {
+    "path": "docs/data/v4/transport/baseline/pilot_visible_v3.json",
+    "sha256": "15e6255891867877747de785990de7afa40fa6eb058fc835c8da773f1d5f6778"
+  },
+  "case": "pilot",
+  "comparison_policy": "Baseline visible-check fields use its preserved v3 offline correction, joined on exact step/before/raw-target. Compare all other reading/fit/development/holdout fields exactly. Only top-level execution provenance and reading.provenance.source_run are outside the semantic comparison.",
+  "components_equal": {
+    "dev_steps": true,
+    "development": true,
+    "fit": true,
+    "holdout": false,
+    "outcome_cut": true,
+    "reading": true
+  },
+  "dev_steps": 451,
+  "differences": [
+    {
+      "G1": "<> booked for call <> . <- attr:Duty#0(selection['combobox#1']:2) == 'on' & attr:Length overall#0(owner) < attr:Ticket to#0(selection['combobox#1']:2) & attr:Length overall#0(owner) < '96'  [4 occasions]",
+      "baseline": "<> booked for call <> . <- attr:Duty#0(selection['combobox#1']:2) == 'on' & attr:Ticket to#0(selection['combobox#1']:2) >= attr:Length overall#0(owner) & attr:Length overall#0(owner) < '96'  [4 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/3/version_space/why/0"
+    },
+    {
+      "G1": "<> is already booked for call <> . <- attr:Status#0(owner) == 'expected' & rel:2(owner) != relation['forward', 'rel:0']:0<selection['combobox#1']:2  [3 occasions]",
+      "baseline": "<> is already booked for call <> . <- attr:Status#0(owner) == 'expected' & ('ref_set', \"selection['combobox#1']:2\", 'rel:0')  [3 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/3/version_space/why/1"
+    },
+    {
+      "G1": "attr_cmp_lt",
+      "baseline": "attr_cmp_ge",
+      "kind": "value",
+      "path": "/holdout/rows/3/vouches/<> booked for call <> ./condition/1/0"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#1']:2",
+      "kind": "value",
+      "path": "/holdout/rows/3/vouches/<> booked for call <> ./condition/1/1"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Ticket to#0",
+      "kind": "value",
+      "path": "/holdout/rows/3/vouches/<> booked for call <> ./condition/1/2"
+    },
+    {
+      "G1": "selection['combobox#1']:2",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/3/vouches/<> booked for call <> ./condition/1/3"
+    },
+    {
+      "G1": "attr:Ticket to#0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/3/vouches/<> booked for call <> ./condition/1/4"
+    },
+    {
+      "G1_length": 4,
+      "baseline_length": 3,
+      "kind": "length",
+      "path": "/holdout/rows/3/vouches/<> is already booked for call <> ./condition/1"
+    },
+    {
+      "G1": "ref_ne",
+      "baseline": "ref_set",
+      "kind": "value",
+      "path": "/holdout/rows/3/vouches/<> is already booked for call <> ./condition/1/0"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#1']:2",
+      "kind": "value",
+      "path": "/holdout/rows/3/vouches/<> is already booked for call <> ./condition/1/1"
+    },
+    {
+      "G1": "rel:2",
+      "baseline": "rel:0",
+      "kind": "value",
+      "path": "/holdout/rows/3/vouches/<> is already booked for call <> ./condition/1/2"
+    },
+    {
+      "G1": "relation['forward', 'rel:0']:0<selection['combobox#1']:2",
+      "kind": "added",
+      "path": "/holdout/rows/3/vouches/<> is already booked for call <> ./condition/1/3"
+    },
+    {
+      "G1": "<> holds a <> ; <> is <> overall . <- attr:Duty#0(selection['combobox#1']:2) == 'on' & attr:Ticket to#0(selection['combobox#1']:2) < attr:Length overall#0(owner) & ('ref_null', \"selection['combobox#1']:2\", 'rel:0')  [6 occasions]",
+      "baseline": "<> holds a <> ; <> is <> overall . <- attr:Duty#0(selection['combobox#1']:2) == 'on' & attr:Length overall#0(owner) >= attr:Ticket to#0(selection['combobox#1']:2) & no_children(selection['combobox#1']:2)  [6 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/5/version_space/why"
+    },
+    {
+      "G1": "attr_cmp_lt",
+      "baseline": "attr_cmp_ge",
+      "kind": "value",
+      "path": "/holdout/rows/5/vouches/<> holds a <> ; <> is <> overall ./condition/1/0"
+    },
+    {
+      "G1": "selection['combobox#1']:2",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/5/vouches/<> holds a <> ; <> is <> overall ./condition/1/1"
+    },
+    {
+      "G1": "attr:Ticket to#0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/5/vouches/<> holds a <> ; <> is <> overall ./condition/1/2"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#1']:2",
+      "kind": "value",
+      "path": "/holdout/rows/5/vouches/<> holds a <> ; <> is <> overall ./condition/1/3"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Ticket to#0",
+      "kind": "value",
+      "path": "/holdout/rows/5/vouches/<> holds a <> ; <> is <> overall ./condition/1/4"
+    },
+    {
+      "G1_length": 3,
+      "baseline_length": 2,
+      "kind": "length",
+      "path": "/holdout/rows/5/vouches/<> holds a <> ; <> is <> overall ./condition/2"
+    },
+    {
+      "G1": "ref_null",
+      "baseline": "empty",
+      "kind": "value",
+      "path": "/holdout/rows/5/vouches/<> holds a <> ; <> is <> overall ./condition/2/0"
+    },
+    {
+      "G1": "rel:0",
+      "kind": "added",
+      "path": "/holdout/rows/5/vouches/<> holds a <> ; <> is <> overall ./condition/2/2"
+    },
+    {
+      "G1": "attr",
+      "baseline": "attr_ge",
+      "kind": "value",
+      "path": "/holdout/rows/7/vouches/<> holds a <> ; <> is <> overall ./condition/0/0"
+    },
+    {
+      "G1": "attr:Hazardous cargo#0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/7/vouches/<> holds a <> ; <> is <> overall ./condition/0/2"
+    },
+    {
+      "G1": "no",
+      "baseline": "88",
+      "kind": "value",
+      "path": "/holdout/rows/7/vouches/<> holds a <> ; <> is <> overall ./condition/0/3"
+    },
+    {
+      "G1": "attr_ge",
+      "baseline": "attr_lt",
+      "kind": "value",
+      "path": "/holdout/rows/7/vouches/<> holds a <> ; <> is <> overall ./condition/1/0"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#1']:2",
+      "kind": "value",
+      "path": "/holdout/rows/7/vouches/<> holds a <> ; <> is <> overall ./condition/1/1"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Ticket to#0",
+      "kind": "value",
+      "path": "/holdout/rows/7/vouches/<> holds a <> ; <> is <> overall ./condition/1/2"
+    },
+    {
+      "G1": "88",
+      "baseline": "130",
+      "kind": "value",
+      "path": "/holdout/rows/7/vouches/<> holds a <> ; <> is <> overall ./condition/1/3"
+    },
+    {
+      "G1": "selection['combobox#1']:2",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/7/vouches/<> holds a <> ; <> is <> overall ./condition/2/1"
+    },
+    {
+      "G1": "attr:Ticket to#0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/7/vouches/<> holds a <> ; <> is <> overall ./condition/2/2"
+    },
+    {
+      "G1": "130",
+      "baseline": "148",
+      "kind": "value",
+      "path": "/holdout/rows/7/vouches/<> holds a <> ; <> is <> overall ./condition/2/3"
+    },
+    {
+      "G1_length": 3,
+      "baseline_length": 2,
+      "kind": "length",
+      "path": "/holdout/rows/7/vouches/<> holds a <> ; <> is <> overall ./condition/3"
+    },
+    {
+      "G1": "ref_null",
+      "baseline": "empty",
+      "kind": "value",
+      "path": "/holdout/rows/7/vouches/<> holds a <> ; <> is <> overall ./condition/3/0"
+    },
+    {
+      "G1": "rel:0",
+      "kind": "added",
+      "path": "/holdout/rows/7/vouches/<> holds a <> ; <> is <> overall ./condition/3/2"
+    },
+    {
+      "G1": "<> booked for call <> . <- attr:Duty#0(selection['combobox#1']:2) == 'on' & attr:Length overall#0(owner) < attr:Ticket to#0(selection['combobox#1']:2) & ('ref_null', \"selection['combobox#1']:2\", 'rel:0')  [5 occasions]",
+      "baseline": "<> booked for call <> . <- attr:Duty#0(selection['combobox#1']:2) == 'on' & attr:Ticket to#0(selection['combobox#1']:2) >= attr:Length overall#0(owner) & ('ref_null', \"selection['combobox#1']:2\", 'rel:0')  [5 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/8/version_space/why"
+    },
+    {
+      "G1": "attr_cmp_lt",
+      "baseline": "attr_cmp_ge",
+      "kind": "value",
+      "path": "/holdout/rows/8/vouches/<> booked for call <> ./condition/1/0"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#1']:2",
+      "kind": "value",
+      "path": "/holdout/rows/8/vouches/<> booked for call <> ./condition/1/1"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Ticket to#0",
+      "kind": "value",
+      "path": "/holdout/rows/8/vouches/<> booked for call <> ./condition/1/2"
+    },
+    {
+      "G1": "selection['combobox#1']:2",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/8/vouches/<> booked for call <> ./condition/1/3"
+    },
+    {
+      "G1": "attr:Ticket to#0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/8/vouches/<> booked for call <> ./condition/1/4"
+    },
+    {
+      "G1": "<> holds a <> ; <> is <> overall . <- attr:Duty#0(selection['combobox#1']:2) == 'on' & attr:Ticket to#0(selection['combobox#1']:2) < attr:Length overall#0(owner) & no_children(selection['combobox#1']:2)  [6 occasions]",
+      "baseline": "<> holds a <> ; <> is <> overall . <- attr:Duty#0(selection['combobox#1']:2) == 'on' & attr:Length overall#0(owner) >= attr:Ticket to#0(selection['combobox#1']:2) & no_children(selection['combobox#1']:2)  [6 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/9/version_space/why/0"
+    },
+    {
+      "G1": "<> is already booked for call <> . <- attr:Ticket to#0(selection['combobox#1']:2) < attr:Length overall#0(owner) & rel:2(owner) != relation['forward', 'rel:0']:0<selection['combobox#1']:2  [3 occasions]",
+      "baseline": "<> is already booked for call <> . <- attr:Length overall#0(owner) >= attr:Ticket to#0(selection['combobox#1']:2) & ('ref_set', \"selection['combobox#1']:2\", 'rel:0')  [3 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/9/version_space/why/1"
+    },
+    {
+      "G1": "attr_cmp_lt",
+      "baseline": "attr_cmp_ge",
+      "kind": "value",
+      "path": "/holdout/rows/9/vouches/<> holds a <> ; <> is <> overall ./condition/1/0"
+    },
+    {
+      "G1": "selection['combobox#1']:2",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/9/vouches/<> holds a <> ; <> is <> overall ./condition/1/1"
+    },
+    {
+      "G1": "attr:Ticket to#0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/9/vouches/<> holds a <> ; <> is <> overall ./condition/1/2"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#1']:2",
+      "kind": "value",
+      "path": "/holdout/rows/9/vouches/<> holds a <> ; <> is <> overall ./condition/1/3"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Ticket to#0",
+      "kind": "value",
+      "path": "/holdout/rows/9/vouches/<> holds a <> ; <> is <> overall ./condition/1/4"
+    },
+    {
+      "G1": "attr_cmp_lt",
+      "baseline": "attr_cmp_ge",
+      "kind": "value",
+      "path": "/holdout/rows/9/vouches/<> is already booked for call <> ./condition/0/0"
+    },
+    {
+      "G1": "selection['combobox#1']:2",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/9/vouches/<> is already booked for call <> ./condition/0/1"
+    },
+    {
+      "G1": "attr:Ticket to#0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/9/vouches/<> is already booked for call <> ./condition/0/2"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#1']:2",
+      "kind": "value",
+      "path": "/holdout/rows/9/vouches/<> is already booked for call <> ./condition/0/3"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Ticket to#0",
+      "kind": "value",
+      "path": "/holdout/rows/9/vouches/<> is already booked for call <> ./condition/0/4"
+    },
+    {
+      "G1_length": 4,
+      "baseline_length": 3,
+      "kind": "length",
+      "path": "/holdout/rows/9/vouches/<> is already booked for call <> ./condition/1"
+    },
+    {
+      "G1": "ref_ne",
+      "baseline": "ref_set",
+      "kind": "value",
+      "path": "/holdout/rows/9/vouches/<> is already booked for call <> ./condition/1/0"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#1']:2",
+      "kind": "value",
+      "path": "/holdout/rows/9/vouches/<> is already booked for call <> ./condition/1/1"
+    },
+    {
+      "G1": "rel:2",
+      "baseline": "rel:0",
+      "kind": "value",
+      "path": "/holdout/rows/9/vouches/<> is already booked for call <> ./condition/1/2"
+    },
+    {
+      "G1": "relation['forward', 'rel:0']:0<selection['combobox#1']:2",
+      "kind": "added",
+      "path": "/holdout/rows/9/vouches/<> is already booked for call <> ./condition/1/3"
+    },
+    {
+      "G1": "attr_cmp_lt",
+      "baseline": "attr_cmp_ge",
+      "kind": "value",
+      "path": "/holdout/rows/10/vouches/<> booked for call <> ./condition/1/0"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#1']:2",
+      "kind": "value",
+      "path": "/holdout/rows/10/vouches/<> booked for call <> ./condition/1/1"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Ticket to#0",
+      "kind": "value",
+      "path": "/holdout/rows/10/vouches/<> booked for call <> ./condition/1/2"
+    },
+    {
+      "G1": "selection['combobox#1']:2",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/10/vouches/<> booked for call <> ./condition/1/3"
+    },
+    {
+      "G1": "attr:Ticket to#0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/10/vouches/<> booked for call <> ./condition/1/4"
+    },
+    {
+      "G1_length": 4,
+      "baseline_length": 3,
+      "kind": "length",
+      "path": "/holdout/rows/10/vouches/<> is already booked for call <> ./condition/1"
+    },
+    {
+      "G1": "ref_ne",
+      "baseline": "ref_set",
+      "kind": "value",
+      "path": "/holdout/rows/10/vouches/<> is already booked for call <> ./condition/1/0"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#1']:2",
+      "kind": "value",
+      "path": "/holdout/rows/10/vouches/<> is already booked for call <> ./condition/1/1"
+    },
+    {
+      "G1": "rel:2",
+      "baseline": "rel:0",
+      "kind": "value",
+      "path": "/holdout/rows/10/vouches/<> is already booked for call <> ./condition/1/2"
+    },
+    {
+      "G1": "relation['forward', 'rel:0']:0<selection['combobox#1']:2",
+      "kind": "added",
+      "path": "/holdout/rows/10/vouches/<> is already booked for call <> ./condition/1/3"
+    },
+    {
+      "G1": "<> booked for call <> . <- attr:Ticket to#0(selection['combobox#1']:2) < '150' & attr:Length overall#0(owner) < '78'  [3 occasions]",
+      "baseline": "<> booked for call <> . <- attr:Flag#0(owner) == 'United Kingdom' & attr:Ticket to#0(selection['combobox#1']:2) < '150'  [3 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/11/version_space/why/0"
+    },
+    {
+      "G1": "attr_lt",
+      "baseline": "attr",
+      "kind": "value",
+      "path": "/holdout/rows/11/vouches/<> booked for call <> ./condition/0/0"
+    },
+    {
+      "G1": "selection['combobox#1']:2",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/11/vouches/<> booked for call <> ./condition/0/1"
+    },
+    {
+      "G1": "attr:Ticket to#0",
+      "baseline": "attr:Flag#0",
+      "kind": "value",
+      "path": "/holdout/rows/11/vouches/<> booked for call <> ./condition/0/2"
+    },
+    {
+      "G1": "150",
+      "baseline": "United Kingdom",
+      "kind": "value",
+      "path": "/holdout/rows/11/vouches/<> booked for call <> ./condition/0/3"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#1']:2",
+      "kind": "value",
+      "path": "/holdout/rows/11/vouches/<> booked for call <> ./condition/1/1"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Ticket to#0",
+      "kind": "value",
+      "path": "/holdout/rows/11/vouches/<> booked for call <> ./condition/1/2"
+    },
+    {
+      "G1": "78",
+      "baseline": "150",
+      "kind": "value",
+      "path": "/holdout/rows/11/vouches/<> booked for call <> ./condition/1/3"
+    },
+    {
+      "G1": "attr",
+      "baseline": "attr_ge",
+      "kind": "value",
+      "path": "/holdout/rows/12/vouches/<> holds a <> ; <> is <> overall ./condition/0/0"
+    },
+    {
+      "G1": "attr:Hazardous cargo#0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/12/vouches/<> holds a <> ; <> is <> overall ./condition/0/2"
+    },
+    {
+      "G1": "no",
+      "baseline": "78",
+      "kind": "value",
+      "path": "/holdout/rows/12/vouches/<> holds a <> ; <> is <> overall ./condition/0/3"
+    },
+    {
+      "G1": "attr_ge",
+      "baseline": "attr_lt",
+      "kind": "value",
+      "path": "/holdout/rows/12/vouches/<> holds a <> ; <> is <> overall ./condition/1/0"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#1']:2",
+      "kind": "value",
+      "path": "/holdout/rows/12/vouches/<> holds a <> ; <> is <> overall ./condition/1/1"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Ticket to#0",
+      "kind": "value",
+      "path": "/holdout/rows/12/vouches/<> holds a <> ; <> is <> overall ./condition/1/2"
+    },
+    {
+      "G1": "78",
+      "baseline": "130",
+      "kind": "value",
+      "path": "/holdout/rows/12/vouches/<> holds a <> ; <> is <> overall ./condition/1/3"
+    },
+    {
+      "G1": "selection['combobox#1']:2",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/12/vouches/<> holds a <> ; <> is <> overall ./condition/2/1"
+    },
+    {
+      "G1": "attr:Ticket to#0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/12/vouches/<> holds a <> ; <> is <> overall ./condition/2/2"
+    },
+    {
+      "G1": "130",
+      "baseline": "148",
+      "kind": "value",
+      "path": "/holdout/rows/12/vouches/<> holds a <> ; <> is <> overall ./condition/2/3"
+    },
+    {
+      "G1_length": 3,
+      "baseline_length": 2,
+      "kind": "length",
+      "path": "/holdout/rows/12/vouches/<> holds a <> ; <> is <> overall ./condition/3"
+    },
+    {
+      "G1": "ref_null",
+      "baseline": "empty",
+      "kind": "value",
+      "path": "/holdout/rows/12/vouches/<> holds a <> ; <> is <> overall ./condition/3/0"
+    },
+    {
+      "G1": "rel:0",
+      "kind": "added",
+      "path": "/holdout/rows/12/vouches/<> holds a <> ; <> is <> overall ./condition/3/2"
+    },
+    {
+      "G1": "<> booked for call <> . <- attr:Duty#0(selection['combobox#1']:2) == 'on' & attr:Length overall#0(owner) < attr:Ticket to#0(selection['combobox#1']:2) & ('ref_null', \"selection['combobox#1']:2\", 'rel:0')  [5 occasions]",
+      "baseline": "<> booked for call <> . <- attr:Duty#0(selection['combobox#1']:2) == 'on' & attr:Ticket to#0(selection['combobox#1']:2) >= attr:Length overall#0(owner) & ('ref_null', \"selection['combobox#1']:2\", 'rel:0')  [5 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/13/version_space/why/1"
+    },
+    {
+      "G1": "<> holds a <> ; <> is <> overall . <- attr:Duty#0(selection['combobox#1']:2) == 'on' & attr:Length overall#0(owner) >= '78' & attr:Ticket to#0(selection['combobox#1']:2) < '130' & ('ref_null', \"selection['combobox#1']:2\", 'rel:0')  [5 occasions]",
+      "baseline": "<> holds a <> ; <> is <> overall . <- attr:Duty#0(selection['combobox#1']:2) == 'on' & attr:Length overall#0(owner) >= '78' & attr:Ticket to#0(selection['combobox#1']:2) < '130' & no_children(selection['combobox#1']:2)  [5 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/13/version_space/why/2"
+    },
+    {
+      "G1": "attr_cmp_lt",
+      "baseline": "attr_cmp_ge",
+      "kind": "value",
+      "path": "/holdout/rows/13/vouches/<> booked for call <> ./condition/1/0"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#1']:2",
+      "kind": "value",
+      "path": "/holdout/rows/13/vouches/<> booked for call <> ./condition/1/1"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Ticket to#0",
+      "kind": "value",
+      "path": "/holdout/rows/13/vouches/<> booked for call <> ./condition/1/2"
+    },
+    {
+      "G1": "selection['combobox#1']:2",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/13/vouches/<> booked for call <> ./condition/1/3"
+    },
+    {
+      "G1": "attr:Ticket to#0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/13/vouches/<> booked for call <> ./condition/1/4"
+    },
+    {
+      "G1_length": 3,
+      "baseline_length": 2,
+      "kind": "length",
+      "path": "/holdout/rows/13/vouches/<> holds a <> ; <> is <> overall ./condition/3"
+    },
+    {
+      "G1": "ref_null",
+      "baseline": "empty",
+      "kind": "value",
+      "path": "/holdout/rows/13/vouches/<> holds a <> ; <> is <> overall ./condition/3/0"
+    },
+    {
+      "G1": "rel:0",
+      "kind": "added",
+      "path": "/holdout/rows/13/vouches/<> holds a <> ; <> is <> overall ./condition/3/2"
+    },
+    {
+      "G1": "<> booked for call <> . <- attr:Duty#0(selection['combobox#1']:2) == 'on' & attr:Status#0(owner) == 'expected' & attr:Length overall#0(owner) < attr:Ticket to#0(selection['combobox#1']:2)  [5 occasions]",
+      "baseline": "<> booked for call <> . <- attr:Duty#0(selection['combobox#1']:2) == 'on' & attr:Status#0(owner) == 'expected' & attr:Ticket to#0(selection['combobox#1']:2) >= attr:Length overall#0(owner)  [5 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/14/version_space/why/0"
+    },
+    {
+      "G1": "<> is already booked for call <> . <- attr:Ticket to#0(selection['combobox#1']:2) < '150' & rel:2(owner) != relation['forward', 'rel:0']:0<selection['combobox#1']:2  [3 occasions]",
+      "baseline": "<> is already booked for call <> . <- attr:Ticket to#0(selection['combobox#1']:2) < '150' & ('ref_set', \"selection['combobox#1']:2\", 'rel:0')  [3 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/14/version_space/why/1"
+    },
+    {
+      "G1": "attr_cmp_lt",
+      "baseline": "attr_cmp_ge",
+      "kind": "value",
+      "path": "/holdout/rows/14/vouches/<> booked for call <> ./condition/2/0"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#1']:2",
+      "kind": "value",
+      "path": "/holdout/rows/14/vouches/<> booked for call <> ./condition/2/1"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Ticket to#0",
+      "kind": "value",
+      "path": "/holdout/rows/14/vouches/<> booked for call <> ./condition/2/2"
+    },
+    {
+      "G1": "selection['combobox#1']:2",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/14/vouches/<> booked for call <> ./condition/2/3"
+    },
+    {
+      "G1": "attr:Ticket to#0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/14/vouches/<> booked for call <> ./condition/2/4"
+    },
+    {
+      "G1_length": 4,
+      "baseline_length": 3,
+      "kind": "length",
+      "path": "/holdout/rows/14/vouches/<> is already booked for call <> ./condition/1"
+    },
+    {
+      "G1": "ref_ne",
+      "baseline": "ref_set",
+      "kind": "value",
+      "path": "/holdout/rows/14/vouches/<> is already booked for call <> ./condition/1/0"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#1']:2",
+      "kind": "value",
+      "path": "/holdout/rows/14/vouches/<> is already booked for call <> ./condition/1/1"
+    },
+    {
+      "G1": "rel:2",
+      "baseline": "rel:0",
+      "kind": "value",
+      "path": "/holdout/rows/14/vouches/<> is already booked for call <> ./condition/1/2"
+    },
+    {
+      "G1": "relation['forward', 'rel:0']:0<selection['combobox#1']:2",
+      "kind": "added",
+      "path": "/holdout/rows/14/vouches/<> is already booked for call <> ./condition/1/3"
+    },
+    {
+      "G1": "<> booked for call <> . <- attr:Duty#0(selection['combobox#1']:2) == 'on' & attr:Ticket to#0(selection['combobox#1']:2) >= '130' & attr:Length overall#0(owner) < '148' & ('ref_null', \"selection['combobox#1']:2\", 'rel:0')  [3 occasions]",
+      "baseline": "<> booked for call <> . <- attr:Duty#0(selection['combobox#1']:2) == 'on' & attr:Ticket to#0(selection['combobox#1']:2) >= '100' & attr:Length overall#0(owner) < '148' & ('ref_null', \"selection['combobox#1']:2\", 'rel:0')  [3 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/15/version_space/why/1"
+    },
+    {
+      "G1": "<> holds a <> ; <> is <> overall . <- attr:Duty#0(selection['combobox#1']:2) == 'on' & attr:Ticket to#0(selection['combobox#1']:2) < attr:Length overall#0(owner) & ('ref_null', \"selection['combobox#1']:2\", 'rel:0')  [6 occasions]",
+      "baseline": "<> holds a <> ; <> is <> overall . <- attr:Duty#0(selection['combobox#1']:2) == 'on' & attr:Length overall#0(owner) >= attr:Ticket to#0(selection['combobox#1']:2) & no_children(selection['combobox#1']:2)  [6 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/15/version_space/why/2"
+    },
+    {
+      "G1": "130",
+      "baseline": "100",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> booked for call <> ./condition/1/3"
+    },
+    {
+      "G1": "attr_cmp_lt",
+      "baseline": "attr_cmp_ge",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> holds a <> ; <> is <> overall ./condition/1/0"
+    },
+    {
+      "G1": "selection['combobox#1']:2",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> holds a <> ; <> is <> overall ./condition/1/1"
+    },
+    {
+      "G1": "attr:Ticket to#0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> holds a <> ; <> is <> overall ./condition/1/2"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#1']:2",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> holds a <> ; <> is <> overall ./condition/1/3"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Ticket to#0",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> holds a <> ; <> is <> overall ./condition/1/4"
+    },
+    {
+      "G1_length": 3,
+      "baseline_length": 2,
+      "kind": "length",
+      "path": "/holdout/rows/15/vouches/<> holds a <> ; <> is <> overall ./condition/2"
+    },
+    {
+      "G1": "ref_null",
+      "baseline": "empty",
+      "kind": "value",
+      "path": "/holdout/rows/15/vouches/<> holds a <> ; <> is <> overall ./condition/2/0"
+    },
+    {
+      "G1": "rel:0",
+      "kind": "added",
+      "path": "/holdout/rows/15/vouches/<> holds a <> ; <> is <> overall ./condition/2/2"
+    },
+    {
+      "G1": "<> booked for call <> . <- attr:Duty#0(selection['combobox#1']:2) == 'on' & attr:Length overall#0(owner) < attr:Ticket to#0(selection['combobox#1']:2) & ('ref_null', \"selection['combobox#1']:2\", 'rel:0')  [5 occasions]",
+      "baseline": "<> booked for call <> . <- attr:Duty#0(selection['combobox#1']:2) == 'on' & attr:Ticket to#0(selection['combobox#1']:2) >= attr:Length overall#0(owner) & ('ref_null', \"selection['combobox#1']:2\", 'rel:0')  [5 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/18/version_space/why/1"
+    },
+    {
+      "G1": "<> holds a <> ; <> is <> overall . <- attr:Duty#0(selection['combobox#1']:2) == 'on' & attr:Length overall#0(owner) >= '96' & attr:Ticket to#0(selection['combobox#1']:2) < '150' & ('ref_null', \"selection['combobox#1']:2\", 'rel:0')  [4 occasions]",
+      "baseline": "<> holds a <> ; <> is <> overall . <- attr:Duty#0(selection['combobox#1']:2) == 'on' & attr:Length overall#0(owner) >= '96' & attr:Ticket to#0(selection['combobox#1']:2) < '150' & no_children(selection['combobox#1']:2)  [4 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/18/version_space/why/2"
+    },
+    {
+      "G1": "attr_cmp_lt",
+      "baseline": "attr_cmp_ge",
+      "kind": "value",
+      "path": "/holdout/rows/18/vouches/<> booked for call <> ./condition/1/0"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#1']:2",
+      "kind": "value",
+      "path": "/holdout/rows/18/vouches/<> booked for call <> ./condition/1/1"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Ticket to#0",
+      "kind": "value",
+      "path": "/holdout/rows/18/vouches/<> booked for call <> ./condition/1/2"
+    },
+    {
+      "G1": "selection['combobox#1']:2",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/18/vouches/<> booked for call <> ./condition/1/3"
+    },
+    {
+      "G1": "attr:Ticket to#0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/18/vouches/<> booked for call <> ./condition/1/4"
+    },
+    {
+      "G1_length": 3,
+      "baseline_length": 2,
+      "kind": "length",
+      "path": "/holdout/rows/18/vouches/<> holds a <> ; <> is <> overall ./condition/3"
+    },
+    {
+      "G1": "ref_null",
+      "baseline": "empty",
+      "kind": "value",
+      "path": "/holdout/rows/18/vouches/<> holds a <> ; <> is <> overall ./condition/3/0"
+    },
+    {
+      "G1": "rel:0",
+      "kind": "added",
+      "path": "/holdout/rows/18/vouches/<> holds a <> ; <> is <> overall ./condition/3/2"
+    },
+    {
+      "G1": "<> booked for call <> . <- attr:Duty#0(selection['combobox#1']:2) == 'on' & attr:Status#0(owner) == 'expected' & attr:Length overall#0(owner) < attr:Ticket to#0(selection['combobox#1']:2)  [5 occasions]",
+      "baseline": "<> booked for call <> . <- attr:Duty#0(selection['combobox#1']:2) == 'on' & attr:Status#0(owner) == 'expected' & attr:Ticket to#0(selection['combobox#1']:2) >= attr:Length overall#0(owner)  [5 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/19/version_space/why/1"
+    },
+    {
+      "G1": "<> is already booked for call <> . <- attr:Ticket to#0(selection['combobox#1']:2) < '150' & rel:2(owner) != relation['forward', 'rel:0']:0<selection['combobox#1']:2  [3 occasions]",
+      "baseline": "<> is already booked for call <> . <- attr:Ticket to#0(selection['combobox#1']:2) < '150' & ('ref_set', \"selection['combobox#1']:2\", 'rel:0')  [3 occasions]",
+      "kind": "value",
+      "path": "/holdout/rows/19/version_space/why/2"
+    },
+    {
+      "G1": "attr_cmp_lt",
+      "baseline": "attr_cmp_ge",
+      "kind": "value",
+      "path": "/holdout/rows/19/vouches/<> booked for call <> ./condition/2/0"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#1']:2",
+      "kind": "value",
+      "path": "/holdout/rows/19/vouches/<> booked for call <> ./condition/2/1"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Ticket to#0",
+      "kind": "value",
+      "path": "/holdout/rows/19/vouches/<> booked for call <> ./condition/2/2"
+    },
+    {
+      "G1": "selection['combobox#1']:2",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/19/vouches/<> booked for call <> ./condition/2/3"
+    },
+    {
+      "G1": "attr:Ticket to#0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/19/vouches/<> booked for call <> ./condition/2/4"
+    },
+    {
+      "G1_length": 4,
+      "baseline_length": 3,
+      "kind": "length",
+      "path": "/holdout/rows/19/vouches/<> is already booked for call <> ./condition/1"
+    },
+    {
+      "G1": "ref_ne",
+      "baseline": "ref_set",
+      "kind": "value",
+      "path": "/holdout/rows/19/vouches/<> is already booked for call <> ./condition/1/0"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#1']:2",
+      "kind": "value",
+      "path": "/holdout/rows/19/vouches/<> is already booked for call <> ./condition/1/1"
+    },
+    {
+      "G1": "rel:2",
+      "baseline": "rel:0",
+      "kind": "value",
+      "path": "/holdout/rows/19/vouches/<> is already booked for call <> ./condition/1/2"
+    },
+    {
+      "G1": "relation['forward', 'rel:0']:0<selection['combobox#1']:2",
+      "kind": "added",
+      "path": "/holdout/rows/19/vouches/<> is already booked for call <> ./condition/1/3"
+    },
+    {
+      "G1": "130",
+      "baseline": "100",
+      "kind": "value",
+      "path": "/holdout/rows/20/vouches/<> booked for call <> ./condition/2/3"
+    },
+    {
+      "G1": "attr_cmp_lt",
+      "baseline": "attr_cmp_ge",
+      "kind": "value",
+      "path": "/holdout/rows/20/vouches/<> holds a <> ; <> is <> overall ./condition/1/0"
+    },
+    {
+      "G1": "selection['combobox#1']:2",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/20/vouches/<> holds a <> ; <> is <> overall ./condition/1/1"
+    },
+    {
+      "G1": "attr:Ticket to#0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/20/vouches/<> holds a <> ; <> is <> overall ./condition/1/2"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#1']:2",
+      "kind": "value",
+      "path": "/holdout/rows/20/vouches/<> holds a <> ; <> is <> overall ./condition/1/3"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Ticket to#0",
+      "kind": "value",
+      "path": "/holdout/rows/20/vouches/<> holds a <> ; <> is <> overall ./condition/1/4"
+    },
+    {
+      "G1": "attr_cmp_lt",
+      "baseline": "attr_cmp_ge",
+      "kind": "value",
+      "path": "/holdout/rows/20/vouches/<> is already booked for call <> ./condition/0/0"
+    },
+    {
+      "G1": "selection['combobox#1']:2",
+      "baseline": "owner",
+      "kind": "value",
+      "path": "/holdout/rows/20/vouches/<> is already booked for call <> ./condition/0/1"
+    },
+    {
+      "G1": "attr:Ticket to#0",
+      "baseline": "attr:Length overall#0",
+      "kind": "value",
+      "path": "/holdout/rows/20/vouches/<> is already booked for call <> ./condition/0/2"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#1']:2",
+      "kind": "value",
+      "path": "/holdout/rows/20/vouches/<> is already booked for call <> ./condition/0/3"
+    },
+    {
+      "G1": "attr:Length overall#0",
+      "baseline": "attr:Ticket to#0",
+      "kind": "value",
+      "path": "/holdout/rows/20/vouches/<> is already booked for call <> ./condition/0/4"
+    },
+    {
+      "G1_length": 4,
+      "baseline_length": 3,
+      "kind": "length",
+      "path": "/holdout/rows/20/vouches/<> is already booked for call <> ./condition/1"
+    },
+    {
+      "G1": "ref_ne",
+      "baseline": "ref_set",
+      "kind": "value",
+      "path": "/holdout/rows/20/vouches/<> is already booked for call <> ./condition/1/0"
+    },
+    {
+      "G1": "owner",
+      "baseline": "selection['combobox#1']:2",
+      "kind": "value",
+      "path": "/holdout/rows/20/vouches/<> is already booked for call <> ./condition/1/1"
+    },
+    {
+      "G1": "rel:2",
+      "baseline": "rel:0",
+      "kind": "value",
+      "path": "/holdout/rows/20/vouches/<> is already booked for call <> ./condition/1/2"
+    },
+    {
+      "G1": "relation['forward', 'rel:0']:0<selection['combobox#1']:2",
+      "kind": "added",
+      "path": "/holdout/rows/20/vouches/<> is already booked for call <> ./condition/1/3"
+    }
+  ],
+  "freeze_sha256": "2dc311936c194f850d9e1484c493bfa0a166f9d9577b63a3cb77aee3f3c0d072",
+  "input_relocation": {
+    "G1_reading_source_run": "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_pil_dev",
+    "all_45_input_hashes_unchanged": true,
+    "baseline_reading_source_run": "/home/moloch/semabi-scratch/preq/harbour_pil_dev",
+    "manifest_sha256": "0a2fc2a9833f290fb23d9300e0547b53b83af2ec93ab3a92cde63b1f0ddc1dc1"
+  },
+  "job": {
+    "child_terminated": true,
+    "end_utc": "2026-09-07T17:56:24.710404+00:00",
+    "measurement_elapsed_seconds": 915.1608990589993,
+    "path": "docs/data/v4/transport/development/g1/jobs/corpus_pilot/process.json",
+    "reaped_by_reviewing_agent": true,
+    "returncode": 0,
+    "session_id": 51237,
+    "sha256": "287387b570c5dd31802802ad8ae6c1b6fbc290bc48fc3ea35925567734143fe9",
+    "start_utc": "2026-09-07T17:41:08.877452+00:00",
+    "status": "FINISHED"
+  },
+  "outcome_cut": 450,
+  "roles": 4,
+  "schema": "semabi.transport.g1.corpus_comparison.v1",
+  "scope": "Exact comparison of disclosed retained corpus measurements; no refit by this comparison.",
+  "semantic_payloads_equal": false,
+  "semantic_sha256": {
+    "G1": "50b627a9945b85ab15ccefa7d8f0d7d6e7241e7f0b9afb995184e33f62f9bffe",
+    "baseline_with_documented_visibility_correction": "238e89095302650cc98a756cd96d5b1ce83f58d0ded1cc1d984e617f91847ce0"
+  },
+  "source_head": "5ac0e11852dde513f4beb4e4ab1fbec0bc2318aa",
+  "summary": {
+    "development": {
+      "decision_list_ledger": {},
+      "failed_attempts": 0,
+      "recognition_mismatches": 0,
+      "target_clicks": 30,
+      "version_space_ledger": {},
+      "visible_check_ledger": {
+        "match": 90
+      },
+      "visible_check_scope": {
+        "bound vessel length survives representation": {
+          "match": 30
+        },
+        "selected object retained": {
+          "match": 30
+        },
+        "sheet vessel available in action binding": {
+          "match": 30
+        }
+      }
+    },
+    "holdout": {
+      "decision_list_ledger": {
+        "a different event": 3,
+        "the event the interface returned": 18
+      },
+      "failed_attempts": 0,
+      "recognition_mismatches": 0,
+      "target_clicks": 21,
+      "version_space_ledger": {
+        "one outcome was admissible and it happened": 7,
+        "several outcomes remained admissible; the one that happened was among them": 14
+      },
+      "visible_check_ledger": {
+        "match": 63
+      },
+      "visible_check_scope": {
+        "bound vessel length survives representation": {
+          "match": 21
+        },
+        "selected object retained": {
+          "match": 21
+        },
+        "sheet vessel available in action binding": {
+          "match": 21
+        }
+      }
+    }
+  },
+  "verification": {
+    "copied_freeze_matches": true,
+    "frozen_runtime_files_unchanged": true,
+    "inner_inputs_unchanged": true,
+    "input_manifest_unchanged": true,
+    "instrument_matches_freeze": true,
+    "job_log_hash_matches": true
+  }
+}

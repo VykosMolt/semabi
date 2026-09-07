@@ -1,0 +1,203 @@
+{
+  "provenance": {
+    "case": "separating",
+    "owner": "/root/baseline_verification",
+    "pid": 4,
+    "started_utc": "2026-09-07T17:41:10.280811+00:00",
+    "state": "running",
+    "dev": "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_sep_dev",
+    "hold": "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_sep_hold",
+    "control": "button:Book pilot",
+    "command": [
+      "/home/moloch/semabi/.venv/bin/python",
+      "/home/moloch/semabi/docs/data/v4/transport/baseline/check_corpora.py",
+      "separating"
+    ],
+    "working_directory": "/home/moloch/semabi",
+    "instrument_sha256": "ecfb411df3cc80c00642b6166874a705f4135f8bbf6224d71c45234ee7c0ce0d",
+    "source_snapshot_sha256": "2dc311936c194f850d9e1484c493bfa0a166f9d9577b63a3cb77aee3f3c0d072",
+    "scope": "disclosed retained development regression; no fresh-generalization claim",
+    "fit_boundary": "existing instrument: search on all dev; outcome split 0.999; hold scoring only",
+    "input_files": {
+      "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+      "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/join_merge.json": "7d96a0c35d96f5bf9164651df88b1b160ad02629d05d722cbcd3dd56f0d48ed9",
+      "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/observations.jsonl": "9df6c38b77a49c80fbf46f39ae4948aa151784e52b2f32b036d4a92af3b7b8da",
+      "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+      "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_sep_dev/steps.jsonl": "bcdae2015f91cb080c3ba87b9d0ee23a6d8f5f2934ded4ebaea59f7e26c3d9d5",
+      "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/join_merge.json": "edb0ad70f7238051c127c26df1d4da55de9f1b7a2b7093a70d51f2104752b3bd",
+      "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/observations.jsonl": "6fc1e068a017dbd16a27b646fcc53c38529132018ed599189deb71dd37fbd727",
+      "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+      "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+      "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_sep_hold/steps.jsonl": "9793d71f20fb73ec15df1feb7b29eab0b907492ba3beae663d9a3db45f09167f"
+    }
+  },
+  "reading": {
+    "version": 1,
+    "name": "link-probe",
+    "families": {
+      "button[_]": {
+        "family": "button[_]",
+        "key_slot": "button#0",
+        "status": "SUPPORTED",
+        "discrimination": 1.0
+      },
+      "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))": {
+        "family": "group[_](heading[_],table[_](rowgroup[_](row[_](cell[_])),rowgroup[_](row[_](cell@Field[_],cell@Value[_]))),text[_](text[_],combobox[_],button[_]),text[_](button[_]))",
+        "key_slot": "table/rowgroup/row/cell@Vessel#0",
+        "status": "UNSUPPORTED",
+        "discrimination": null
+      },
+      "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])": {
+        "family": "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])",
+        "key_slot": "cell@Berth#0",
+        "status": "SUPPORTED",
+        "discrimination": 1.0
+      },
+      "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])": {
+        "family": "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])",
+        "key_slot": "cell@Pilot#0",
+        "status": "SUPPORTED",
+        "discrimination": 1.0
+      },
+      "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": {
+        "family": "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])",
+        "key_slot": "cell@Vessel#0",
+        "status": "SUPPORTED",
+        "discrimination": 1.0
+      },
+      "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": {
+        "family": "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])",
+        "key_slot": null,
+        "status": "NO_IDENTITY",
+        "discrimination": 0.0
+      }
+    },
+    "promoted_families": [],
+    "refuted": {
+      "button[_]": [
+        null
+      ],
+      "row[_](cell@Actions[_](button[_]),cell@Berth[_],cell@Certified for hazardous cargo[_],cell@Condition[_],cell@Held by call[_],cell@Quay[_],cell@Takes up to[_])": [
+        "cell@Takes up to#0"
+      ],
+      "row[_](cell@Actions[_](button[_]),cell@Booked for call[_],cell@Duty[_],cell@Pilot[_],cell@Ticket to[_])": [
+        "cell@Ticket to#0"
+      ],
+      "row[_](cell@Actions[_](button[_]),cell@Calls logged[_],cell@Cargo[_],cell@Current call[_],cell@Flag[_],cell@Hazardous cargo[_],cell@Length overall[_],cell@Vessel[_])": [
+        null,
+        "cell@Cargo#0",
+        "cell@Length overall#0"
+      ],
+      "row[_](cell@Berth[_],cell@Call[_](button[_]),cell@Length overall[_],cell@Pilot[_],cell@Status[_],cell@Vessel[_])": [
+        "cell@Status#0"
+      ]
+    },
+    "provenance": {
+      "source_run": "/home/moloch/semabi/runs/v4/transport_g1_corpora_v1/harbour_sep_dev",
+      "role": "SOURCE"
+    }
+  },
+  "fit": {
+    "roles": {
+      "relation['forward', 'rel:0']:0<owner": {
+        "name": "relation['forward', 'rel:0']:0<owner",
+        "kind": "relation",
+        "form": [
+          "forward",
+          "rel:0"
+        ],
+        "tid": 0,
+        "anchor": "owner"
+      },
+      "owner": {
+        "name": "owner",
+        "kind": "action",
+        "form": [],
+        "tid": 3,
+        "anchor": null
+      },
+      "selection['combobox#1']:2": {
+        "name": "selection['combobox#1']:2",
+        "kind": "selection",
+        "form": [
+          "combobox#1"
+        ],
+        "tid": 2,
+        "anchor": null
+      },
+      "relation['forward', 'rel:0']:0<selection['combobox#1']:2": {
+        "name": "relation['forward', 'rel:0']:0<selection['combobox#1']:2",
+        "kind": "relation",
+        "form": [
+          "forward",
+          "rel:0"
+        ],
+        "tid": 0,
+        "anchor": "selection['combobox#1']:2"
+      }
+    },
+    "rules": [
+      "attr:Status#0(owner) == 'expected' & ('ref_set', \"selection['combobox#1']:2\", 'rel:0')  ->  <> is already booked for call <> .   [9]",
+      "attr:Ticket to#0(selection['combobox#1']:2) < attr:Length overall#0(owner)  ->  <> holds a <> ; <> is <> overall .   [8]",
+      "('unnamed', \"selection['combobox#1']:2\")  ->  Nothing chosen in the pilot list .   [6]",
+      "attr:Ticket to#0(selection['combobox#1']:2) < '130'  ->  <> booked for call <> .   [4]",
+      "attr:Calls logged#0(owner) == '2'  ->  <> booked for call <> .   [3]",
+      "attr:Calls logged#0(owner) == '1'  ->  <> booked for call <> .   [2]"
+    ],
+    "ordered": {
+      "2": {
+        "attr:Ticket to#0": [
+          "80",
+          "100",
+          "130",
+          "150"
+        ]
+      },
+      "3": {
+        "attr:Length overall#0": [
+          "54",
+          "64",
+          "78",
+          "88",
+          "96",
+          "112",
+          "132",
+          "148"
+        ]
+      }
+    },
+    "pairs": "frozenset({frozenset({(3, 'attr:Length overall#0'), (2, 'attr:Ticket to#0')})})",
+    "events": {
+      "<> booked for call <> .": 12,
+      "<> is already booked for call <> .": 9,
+      "<> holds a <> ; <> is <> overall .": 8,
+      "Nothing chosen in the pilot list .": 6,
+      "Call <> is already <> ; <> pilot is needed .": 1,
+      "<> is not <> .": 1
+    },
+    "default": "\u0000UNDETERMINED",
+    "arg_roles": {
+      "<> booked for call <> .": {
+        "0": "selection['combobox#1']:2",
+        "1": "relation['forward', 'rel:0']:0<owner"
+      },
+      "Call <> is already <> ; <> pilot is needed .": {
+        "0": "relation['forward', 'rel:0']:0<owner"
+      },
+      "<> is not <> .": {
+        "0": "selection['combobox#1']:2"
+      },
+      "<> holds a <> ; <> is <> overall .": {
+        "0": "selection['combobox#1']:2",
+        "2": "owner"
+      },
+      "<> is already booked for call <> .": {
+        "0": "selection['combobox#1']:2",
+        "1": "relation['forward', 'rel:0']:0<selection['combobox#1']:2"
+      }
+    },
+    "fitted": 37
+  },
+  "dev_steps": 473,
+  "outcome_cut": 472
+}

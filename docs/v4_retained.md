@@ -1628,6 +1628,54 @@ P15's conditional base and structural link/union revision remain explicit open
 questions. Relational composition with independent identity controls follows;
 aggregation is separate.
 
+## Part XXI -- graph ownership recovered; chronology and composition next (2026-09-07)
+
+G1 at `5ac0e11` keeps each selected V4 hypothesis with its own observation graph
+at the two construction sites. Real inferred reads, accepted promotion, frozen
+statistics and candidate isolation pass 22 focused checks. The full suite now
+passes in one authorized execution: **573 passed, 3 skipped, 1 expected failure**.
+The archived-source collection error and its narrowly scoped guard remain in
+the [G1 evidence](data/v4/transport/development/g1/report.md).
+
+Rescoring the six distinct disclosed T1 histories removes 204 inferred state
+failures and 54 target-query failures. All 48 training model records and all 42
+complete pinned score records match T1. RULE and LIST still leave all 10 dispatch
+and 8 workshop targets unestablished per reading/history. Some numeric fragments
+are represented, but the intended job-demand/resource-capacity correspondences
+and comparison literals remain unavailable. Shared identity coverage and
+contradictions remain zero; raw-node and emission shared/union surfaces remain
+0/0. Execution recovery is established; semantic transport recovery is not.
+
+All five dedicated corpus fits retain roles, rule literals, adopted fields,
+comparison-pair membership, reported verdicts and action bindings. All 906
+visible checks match on 302 development/holdout targets. The sparse-refusal
+forced error and decision-list residuals remain. Supporting vouches are not
+identical: 116 conditions, five witness pairs and one support count differ,
+within 780 recursive serialization differences. Baseline used a randomized
+Python hash seed and G1 uses zero, so the condition differences have an explicit
+ordering confound and are not attributed to the two-line repair.
+
+The next chronology candidate is independently reproduced and reviewed: future
+observations can change prefix section normalization while the profile is still
+learning; freezing it before future descriptors removes that dependence. It
+awaits integrated verification after G1. A separate section-normalization control
+changes no page on any of the six T1 histories, so that missing live operation
+cannot explain their task-binding losses. The general live/offline normalization
+witness remains a separate branch rather than a prerequisite to JOIN.
+
+[J1's design](data/v4/transport/development/join_design_v1.md) asks about composition
+through a common intermediate with multiple neighbors, separately from the
+retained numeric comparison called JOIN. Its first supplied-graph/oracle-formula
+micro-control passes all 12 rewiring cases and the separate native unique-chain
+grounding control. These are evaluator-assisted semantics, not identity inference
+or learned JOIN competence. A separate limited-search case finds a concrete
+unsoundness: retaining one of two possible assignments loses the truncation flag
+and falsely reports a unique assignment and determined target. Preserve and
+review that bounded repair before interpreting larger JOIN searches. Reserved
+transport, matched inferred/oracle-identity JOIN, P15 and structural revision
+remain open; root has still not opened the shared fixture source or reserved
+interface contents.
+
 ## What stands, and what is open
 
 The retained state, regenerated once more: harbour's development sidecar is now written by
@@ -1639,7 +1687,7 @@ battery were regenerated: harbour behaviourally distinguished with the holdout c
 where applicable, vet and blend as they stood, and every invariant -- member reversal,
 declared-column reversal, renaming fresh and permuted -- at zero on every application, no
 exception recorded anywhere.  The latest validation and its exact code scope are
-recorded in Parts XIX-XX, and the campaign's evidence is retained
+recorded in Parts XIX-XXI, and the campaign's evidence is retained
 beside its conclusions under `docs/data/v4/prequential/`: fourteen prefix closures and
 their cells, twelve schedule attacks, the tournament fleet, the twin-ledger corpora and
 searches, both comparators' harbour runs -- including the rejected one's -- and the
