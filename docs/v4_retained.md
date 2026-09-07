@@ -1571,6 +1571,63 @@ conjunction supporting a rival.  These acquisitions were designed from the pilot
 holdout's states and seeds, so their improvement is development evidence about
 identifiability, not an untouched transfer test or fresh generalization.
 
+## Part XX -- frozen fresh-interface measurement (2026-09-07)
+
+The post-clock full-suite gap is closed on unchanged `9bc371c`: the original
+run has 564 passes, three socket-permission failures, three skips and one xfail;
+the exact three browser tests pass in a separate authorized socket control.
+All 567 ordinary tests therefore passed across those executions, not in one
+successful full run. All five dedicated allocation/pilot/separating fits retain
+their action roles; pilot and extended separating reproduce P38 exactly, and
+the known forced-wrong/list residuals remain. Nine dedicated histories rebuild
+byte-for-byte, including eleven previously scratch-only separating extensions.
+The [baseline evidence](data/v4/transport/baseline/README.md) is committed at
+`0283151`.
+
+T1 then measures the frozen learning algorithm after supplied demonstrations on
+two newly generated workflows: dispatch cards/detail/carrier dialog and workshop
+category/job/radio attachment. Their numeric holdouts separate a comparison from
+a constant or one conjunction of independent thresholds; a separate review task
+has rule alternatives equivalent over its complete reachable interface. These
+are generated workflows sharing backend/detail machinery, not independently
+authored applications or transfer of the old Harbour reading unchanged. The
+protocol, independent fixture audit and exposure limits are in the
+[T1 report](data/v4/transport/report_v1.md).
+
+The result is negative. Four seed pairs spend 60 actions per arm; every matched
+pair has identical action/result/observation histories, with zero policy-targeted
+interventions. Of 480 acquisition actions, 100 fail. The treatment records 296
+failed button-recognition queries. All registered outcomes remain unestablished
+under RULE/LIST: 10 dispatch and 8 workshop targets per reading and stage. The
+seven fixed initial readings per interface have no corroborated job/resource
+bindings or intended comparisons, although independent raw-state and target
+checks pass. Every raw-node identity surface is empty; the slot-fallback shared
+surfaces have zero supported coverage and zero contradictions. No identity is
+established by those survivors. Review-rule observational equivalence is proved
+by the fixture transition argument, not inferred from the learner's failure.
+
+The first pass is preserved before repair at `8dc28ba`; its
+[manifest](data/v4/transport/first_pass_manifest_v2.json) binds all ten scores,
+eight readings per score and their full raw histories/process records. The
+rejected V1 initialization instrument and failure remain at `795d073`. The
+corrected V2 instrument is frozen at `152d875`; SemABI itself remains byte-for-byte
+`9bc371c` throughout. Oracle binding controls were opened only after preservation.
+They are diagnostics, not learner inputs. A third interface remains sealed from
+root repair design.
+
+One cause is concrete: search deepcopies hypotheses and their graph, but two V4
+construction sites pair the selected hypotheses with the earlier graph. A new
+observation reaches `A.G` and is absent from `H.G`, so parsing raises KeyError.
+This prevents every inferred task query in T1; coherent pinned readings also
+expose a separate binding/field-representation limitation. The next bounded
+checkpoint carries the hypothesis-owned graph at both V4 construction sites,
+tests live reading and frozen-statistic/candidate-isolation invariants, then
+checks disclosed development and reserved transport. Runtime recovery alone
+will not establish H1. Remaining view/field losses, whole-rival acquisition,
+P15's conditional base and structural link/union revision remain explicit open
+questions. Relational composition with independent identity controls follows;
+aggregation is separate.
+
 ## What stands, and what is open
 
 The retained state, regenerated once more: harbour's development sidecar is now written by
@@ -1582,7 +1639,7 @@ battery were regenerated: harbour behaviourally distinguished with the holdout c
 where applicable, vet and blend as they stood, and every invariant -- member reversal,
 declared-column reversal, renaming fresh and permuted -- at zero on every application, no
 exception recorded anywhere.  The latest validation and its exact code scope are
-recorded in Part XIX, and the campaign's evidence is retained
+recorded in Parts XIX-XX, and the campaign's evidence is retained
 beside its conclusions under `docs/data/v4/prequential/`: fourteen prefix closures and
 their cells, twelve schedule attacks, the tournament fleet, the twin-ledger corpora and
 searches, both comparators' harbour runs -- including the rejected one's -- and the

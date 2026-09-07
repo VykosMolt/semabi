@@ -212,3 +212,34 @@ immutable checkpoint, then release evaluator-only binding controls and the
 acquisition summary. Review failure attribution before the two-site V4 graph
 ownership repair. Missing live normalization and possible suffix statistics in
 _normalise_sections are separate hypotheses, not yet demonstrated causes.
+
+## First pass preserved and controls released (2026-09-07 16:25 UTC)
+
+Checkpoint `8dc28ba` preserves all raw histories and ten complete scores before
+any learner repair. `first_pass_manifest_v2.json` binds 127 files and continues
+to verify after analysis. All collection, fit and service processes are reaped;
+there are no active world jobs. The source remains byte-identical to `9bc371c`.
+
+Root and the analysis agents may now read the T1-only fixture review and prepared
+oracle binding controls. The shared application implementation and the third,
+reserved interface remain unopened by root; they must stay outside repair design
+and learner input. The fixture reviewer had incidental reserved-source exposure
+and is excluded from blind subsequent repair design. T1 is development evidence
+for all subsequent repairs.
+
+All ten binding controls and the acquisition summary completed. Raw target/state
+checks pass on every task; corroborated task bindings and quantities remain
+unavailable. Current inferred readings fail at all 90 repeatedly scored targets;
+the 630 pinned target queries execute but have no task owner. The four acquisition
+pairs have identical histories and scores, with no targeted action or removed
+rival support. Complete findings and limits are in `report_v1.md`,
+`acquisition_review_v1.md` and `controls/review_v1.md`.
+
+The independent final review (`first_pass_review_v2.md`) accepts phase closure
+after checking preservation, denominators, support and failure attribution.
+The reviewed analysis is sealed before G1 begins. The bounded repair keeps the selected
+hypothesis's own graph at the two V4 construction sites. Acceptance includes
+real unseen-observation parsing, frozen learned statistics, candidate isolation,
+retained/dedicated corpus checks and full validation. Subsequent work will
+separately investigate the missing task representation and chronology boundary,
+then assess reserved transfer under a new freeze and proceed toward JOIN.

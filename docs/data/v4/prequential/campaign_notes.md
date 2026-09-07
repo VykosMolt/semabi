@@ -2789,3 +2789,61 @@ identifiability on this development corpus, not fresh transfer generalization.
 Further acquisition must contradict the rival's whole shared conjunction while
 preserving the relevant context; the existing instruments and skipped replay
 targets are retained, and no next experiment is claimed to have run.
+
+## P42 / T1: frozen fresh-interface first pass preserved (2026-09-07)
+
+The new campaign begins from the exact reviewed `9bc371c`. Baseline validation and
+five dedicated fits are retained at `../transport/baseline/`: 564 full-run passes
+plus three socket-permission-control passes, 3 skipped/1 xfailed of 571; pilot and
+extended separating exactly reproduce P38 and residual failures remain. No learner
+or expectations changed. Baseline checkpoint: `0283151`.
+
+T1 preregistration is `../transport/protocol_v2.md`, with implementation freeze
+374038ab8a2e3ce5046cba31bbd17e95c7c8458e0c8cb380c703e29cd1155a30 and final
+initial-evidence/candidate freeze `54e8d96c27a9d8e4b8b46b04db0eb3a9697cb3d5177d79dfe82260073adf7b23`.
+V1's empty unobserved reset sentinel failed real preparation; its traces and
+source remain at `795d073` before any acquisition/evaluation. V2 adds a genuine
+charged reload and explicit learner-runtime-failure accounting, reviewed/frozen
+at `152d875`. The core remains `9bc371c`.
+
+Four paired comparisons on generated dispatch/workshop interfaces, seeds 1701/1702,
+are complete: all eight arms spend 60 primitives, all 32 scheduled fits complete,
+and no policy-targeted intervention occurs. Action/result/observation histories
+are identical in every pair. World failures: 100/480; treatment recognition errors:
+296 button queries. Both common evaluations complete without action failures,
+with 10/8 task targets. All ten scores, each with eight readings and complete
+denominators, are preserved at `8dc28ba`. The first-pass manifest
+`5f1646f95d52971510cf6f4e5385b678af0d0bb0ea14ddd1c9e78f8f69c90a23` binds 127 files.
+Every owned process has terminated; loopback server shutdown was intentional.
+
+RULE/LIST leave every target unestablished. Current-inferred parsing fails at
+all target states; seven graph-coherent initial readings per fixture still have
+no corroborated task bindings/comparisons. Independent visible-state checks
+pass 18/18 tasks per reading/stage. Node-keyed identity surfaces are empty; common
+slot surfaces have zero supported coverage/contradictions. Greedy lists differ:
+fixed readings guess the two review targets right or wrong by seed while RULE/LIST
+continue to abstain. No whole rival outcome support is removed in paired arms.
+The report `../transport/report_v1.md`, acquisition summary and independent
+controls preserve the exact scopes; repeated model scorings are not independent
+interactions. `../transport/first_pass_review_v2.md` independently accepts phase
+closure with no blocker. The reviewed analysis is sealed before G1 implementation.
+
+The T1-only sealed fixture review/control specification is now disclosed after
+first-pass preservation. Ordinary operand variation and numerical holdout
+separation pass the raw design audit. Review-rule alternatives agree over all
+reachable histories, but unavailable learner predictions do not show that the
+learner represented those alternatives. Evaluation varies quantities/capacities
+on familiar identities; generated workflows share backend/detail machinery.
+The reserved third interface remains sealed from root's repair design; shared source
+is not opened merely to diagnose T1.
+
+The next G1 mechanism is bounded: chosen H carries its own graph through compile_v4
+and search._build. Current code pairs copied H with earlier G, so ensure adds new
+signatures to one graph while parse_units reads the other. No V2/global policy change,
+field prior, normalization repair or frozen result mutation belongs to G1. Verify
+real unseen observation reading, frozen statistics and candidate isolation, then
+retained/dedicated/full checks and a new reserved freeze. Separate later tests
+must establish causes for unrecovered view fields and any normalization boundary
+issue. P15/automatic link-union revision remain open; non-unique relational
+composition with oracle identity versus inferred identity is the next competence
+branch after the demonstrated transport blockers are investigated.

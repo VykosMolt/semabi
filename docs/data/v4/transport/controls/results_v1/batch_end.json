@@ -1,0 +1,270 @@
+{
+  "all_wrappers_reaped": true,
+  "browser_calls": false,
+  "command": [
+    "docs/data/v4/transport/controls/results_v1/run_controls_v2.py"
+  ],
+  "cwd": "/home/moloch/semabi",
+  "ended_utc": "2026-09-07T16:12:23.734222+00:00",
+  "jobs": [
+    {
+      "command": [
+        "/usr/bin/python",
+        "/home/moloch/semabi/docs/data/v4/transport/run_job.py",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/results_v1/jobs/dispatch_initial_v2",
+        "--",
+        "/usr/bin/python",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/binding_fidelity.py",
+        "--score",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/dispatch/scores/initial_v2.json",
+        "--evaluation-dir",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/dispatch/evaluation_v2",
+        "--decisions",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/dispatch/evaluation_v2/decisions.jsonl",
+        "--fixture",
+        "dispatch",
+        "--out",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/results_v1/dispatch_initial_v2.json"
+      ],
+      "fixture": "dispatch",
+      "returncode": 0,
+      "stage": "initial_v2"
+    },
+    {
+      "command": [
+        "/usr/bin/python",
+        "/home/moloch/semabi/docs/data/v4/transport/run_job.py",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/results_v1/jobs/dispatch_contested_1701",
+        "--",
+        "/usr/bin/python",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/binding_fidelity.py",
+        "--score",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/dispatch/scores/contested_1701.json",
+        "--evaluation-dir",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/dispatch/evaluation_v2",
+        "--decisions",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/dispatch/evaluation_v2/decisions.jsonl",
+        "--fixture",
+        "dispatch",
+        "--out",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/results_v1/dispatch_contested_1701.json"
+      ],
+      "fixture": "dispatch",
+      "returncode": 0,
+      "stage": "contested_1701"
+    },
+    {
+      "command": [
+        "/usr/bin/python",
+        "/home/moloch/semabi/docs/data/v4/transport/run_job.py",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/results_v1/jobs/dispatch_untargeted_1701",
+        "--",
+        "/usr/bin/python",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/binding_fidelity.py",
+        "--score",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/dispatch/scores/untargeted_1701.json",
+        "--evaluation-dir",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/dispatch/evaluation_v2",
+        "--decisions",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/dispatch/evaluation_v2/decisions.jsonl",
+        "--fixture",
+        "dispatch",
+        "--out",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/results_v1/dispatch_untargeted_1701.json"
+      ],
+      "fixture": "dispatch",
+      "returncode": 0,
+      "stage": "untargeted_1701"
+    },
+    {
+      "command": [
+        "/usr/bin/python",
+        "/home/moloch/semabi/docs/data/v4/transport/run_job.py",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/results_v1/jobs/dispatch_contested_1702",
+        "--",
+        "/usr/bin/python",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/binding_fidelity.py",
+        "--score",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/dispatch/scores/contested_1702.json",
+        "--evaluation-dir",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/dispatch/evaluation_v2",
+        "--decisions",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/dispatch/evaluation_v2/decisions.jsonl",
+        "--fixture",
+        "dispatch",
+        "--out",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/results_v1/dispatch_contested_1702.json"
+      ],
+      "fixture": "dispatch",
+      "returncode": 0,
+      "stage": "contested_1702"
+    },
+    {
+      "command": [
+        "/usr/bin/python",
+        "/home/moloch/semabi/docs/data/v4/transport/run_job.py",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/results_v1/jobs/dispatch_untargeted_1702",
+        "--",
+        "/usr/bin/python",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/binding_fidelity.py",
+        "--score",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/dispatch/scores/untargeted_1702.json",
+        "--evaluation-dir",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/dispatch/evaluation_v2",
+        "--decisions",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/dispatch/evaluation_v2/decisions.jsonl",
+        "--fixture",
+        "dispatch",
+        "--out",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/results_v1/dispatch_untargeted_1702.json"
+      ],
+      "fixture": "dispatch",
+      "returncode": 0,
+      "stage": "untargeted_1702"
+    },
+    {
+      "command": [
+        "/usr/bin/python",
+        "/home/moloch/semabi/docs/data/v4/transport/run_job.py",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/results_v1/jobs/workshop_initial_v2",
+        "--",
+        "/usr/bin/python",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/binding_fidelity.py",
+        "--score",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/workshop/scores/initial_v2.json",
+        "--evaluation-dir",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/workshop/evaluation_v2",
+        "--decisions",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/workshop/evaluation_v2/decisions.jsonl",
+        "--fixture",
+        "workshop",
+        "--out",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/results_v1/workshop_initial_v2.json"
+      ],
+      "fixture": "workshop",
+      "returncode": 0,
+      "stage": "initial_v2"
+    },
+    {
+      "command": [
+        "/usr/bin/python",
+        "/home/moloch/semabi/docs/data/v4/transport/run_job.py",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/results_v1/jobs/workshop_contested_1701",
+        "--",
+        "/usr/bin/python",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/binding_fidelity.py",
+        "--score",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/workshop/scores/contested_1701.json",
+        "--evaluation-dir",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/workshop/evaluation_v2",
+        "--decisions",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/workshop/evaluation_v2/decisions.jsonl",
+        "--fixture",
+        "workshop",
+        "--out",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/results_v1/workshop_contested_1701.json"
+      ],
+      "fixture": "workshop",
+      "returncode": 0,
+      "stage": "contested_1701"
+    },
+    {
+      "command": [
+        "/usr/bin/python",
+        "/home/moloch/semabi/docs/data/v4/transport/run_job.py",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/results_v1/jobs/workshop_untargeted_1701",
+        "--",
+        "/usr/bin/python",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/binding_fidelity.py",
+        "--score",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/workshop/scores/untargeted_1701.json",
+        "--evaluation-dir",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/workshop/evaluation_v2",
+        "--decisions",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/workshop/evaluation_v2/decisions.jsonl",
+        "--fixture",
+        "workshop",
+        "--out",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/results_v1/workshop_untargeted_1701.json"
+      ],
+      "fixture": "workshop",
+      "returncode": 0,
+      "stage": "untargeted_1701"
+    },
+    {
+      "command": [
+        "/usr/bin/python",
+        "/home/moloch/semabi/docs/data/v4/transport/run_job.py",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/results_v1/jobs/workshop_contested_1702",
+        "--",
+        "/usr/bin/python",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/binding_fidelity.py",
+        "--score",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/workshop/scores/contested_1702.json",
+        "--evaluation-dir",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/workshop/evaluation_v2",
+        "--decisions",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/workshop/evaluation_v2/decisions.jsonl",
+        "--fixture",
+        "workshop",
+        "--out",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/results_v1/workshop_contested_1702.json"
+      ],
+      "fixture": "workshop",
+      "returncode": 0,
+      "stage": "contested_1702"
+    },
+    {
+      "command": [
+        "/usr/bin/python",
+        "/home/moloch/semabi/docs/data/v4/transport/run_job.py",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/results_v1/jobs/workshop_untargeted_1702",
+        "--",
+        "/usr/bin/python",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/binding_fidelity.py",
+        "--score",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/workshop/scores/untargeted_1702.json",
+        "--evaluation-dir",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/workshop/evaluation_v2",
+        "--decisions",
+        "/home/moloch/semabi/docs/data/v4/transport/first_pass/workshop/evaluation_v2/decisions.jsonl",
+        "--fixture",
+        "workshop",
+        "--out",
+        "/home/moloch/semabi/docs/data/v4/transport/controls/results_v1/workshop_untargeted_1702.json"
+      ],
+      "fixture": "workshop",
+      "returncode": 0,
+      "stage": "untargeted_1702"
+    }
+  ],
+  "kind": "ORACLE_SUPPLIED_POST_PRESERVATION_CONTROL",
+  "learner_fit": false,
+  "owner": "/root/fixture_review",
+  "pid": 2,
+  "reserved_source_opened": false,
+  "source_hash": "e0889ec1262a9a6d3f682a4c8a4cab3556fb97f1763d5a3f74ccd61d95205bbc",
+  "source_head": "8dc28bac88779d9698bf7a9837717c2a272b8ec5",
+  "started_utc": "2026-09-07T16:12:22.717659+00:00",
+  "status": "FINISHED",
+  "verified_inputs": {
+    "docs/data/v4/transport/controls/manifest_prepared_v1.json": {
+      "files_verified": 4,
+      "sha256": "96a8a0cf05dab106828f48f66d0ea27e6e8a17f7027a201d29d0cc444ace9347"
+    },
+    "docs/data/v4/transport/first_pass_manifest_v2.json": {
+      "files_verified": 127,
+      "sha256": "5f1646f95d52971510cf6f4e5385b678af0d0bb0ea14ddd1c9e78f8f69c90a23"
+    }
+  },
+  "verified_inputs_after": {
+    "docs/data/v4/transport/controls/manifest_prepared_v1.json": {
+      "files_verified": 4,
+      "sha256": "96a8a0cf05dab106828f48f66d0ea27e6e8a17f7027a201d29d0cc444ace9347"
+    },
+    "docs/data/v4/transport/first_pass_manifest_v2.json": {
+      "files_verified": 127,
+      "sha256": "5f1646f95d52971510cf6f4e5385b678af0d0bb0ea14ddd1c9e78f8f69c90a23"
+    }
+  }
+}
