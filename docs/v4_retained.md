@@ -1478,6 +1478,55 @@ closes.  Not pre-registered and recorded: the pilot corpus's decision list is ei
 right and three wrong of twenty-one at the list level, the point hypothesis's own
 coincidental guards.
 
+**P39: holding a coincidence's value fixed while the factor changes.**  The rival
+vouches were read off the pilot holdout's undecided states -- *the vessel's flag is
+Norway* vouching *nothing chosen* stood at six of them -- and a driver was built to seek
+a state that satisfies such a condition while the list's guard fires for another event,
+reading the board through the model's own state, opening the sheet, selecting the
+pilot, checking the real pre-state and pressing (`acquire_values.py`,
+`p39_acquire_values.json`; seed 143, chosen by survey for a Norwegian vessel with an
+expected call).  It found one: Kittiwake's call with a pilot whose ticket covers her and
+who is off duty, so the guard fired *not on duty*; the application answered so, with the
+flag Norwegian and the selection named, and after the refit the condition *flag is
+Norway* is impure -- the coincidence's supporting value held fixed, the factor changed,
+the outcome different, which is the formulation exactly.  And the holdout did not move:
+seven forced right and fourteen several before and after.  At each of the six states the
+version space now vouches *nothing chosen* by a longer conjunction -- the flag and
+something the acquired occasion lacks, its cargo or its calls logged -- because a vouch
+is any pure conjunction within what the state shares with two witnesses, and one
+occasion makes impure only the conjunctions it satisfies; the literals the
+generalisation had dropped as unneeded are needed now and kept.  Falsifying a
+coincidence one literal at a time cannot narrow the version space at a state.  What
+would is an occasion that satisfies the whole of what that state shares with its
+witnesses: the state itself with one factor changed, which is a counterfactual replay --
+the holdout's own seed, its actions replayed to the step before, a different pilot
+selected, the control pressed.  That is the next version, and the seeds and steps for it
+are in hand.
+
+**P40: the state itself, one factor changed.**  The holdout's own extensions are
+recorded from the application's own seeds, action by action, so a held-out state can be
+reached again on the live application by resetting to its seed and replaying its
+episode to the step before the pilot was chosen; a different pilot is then chosen and
+the control pressed (`acquire_replay.py`).  Pre-registered for the eight undecided
+booking states whose rival is *nothing chosen*: the coincidence's conjunction impure at
+each replayed state, *several* down by three or more, none wrong.  Every replay reached
+its state without divergence.  With any other on-duty pilot as the substitute
+(`p40_replay_any_other_pilot.json`) the coincidence died at two states and survived at
+six on a second difference the substitute had brought -- the original pilot had no
+booking and the substitute had one, and the witnesses, with no pilot chosen at all,
+share the unbooked relation with the original -- while the six *already booked* answers
+vouched their own event at three states that had been forced, so the holdout went from
+seven forced and fourteen several to six and fifteen.  With the substitute required to
+match the original in duty and booking (`p40_replay_minimal_substitute.json`) four
+states had one and four were skipped; the four answers matched events already
+established, one coincidence died, and the holdout went to eight forced and thirteen
+several with nothing widened anywhere.  It is the first acquisition of the campaign that
+narrowed without widening, and its yield is bounded by two things it cannot change: the
+world must offer a substitute that differs in the one factor and nothing else, and what
+remains beside the comparison at the rest is the rule class's inability to order the
+already-booked guard before the join, which no occasion settles.  The factor changed
+must be minimal, or the coincidence retreats onto the difference.
+
 ## What stands, and what is open
 
 The retained state, regenerated once more: harbour's development sidecar is now written by

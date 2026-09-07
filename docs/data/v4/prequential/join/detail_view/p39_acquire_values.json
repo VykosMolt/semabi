@@ -1,0 +1,578 @@
+{
+ "dev": "/home/moloch/semabi-scratch/preq/harbour_pil_dev",
+ "hold": "/home/moloch/semabi-scratch/preq/harbour_pil_hold",
+ "seed": 143,
+ "targets": [
+  [
+   "<> booked for call <> .",
+   [
+    "('attr', \"selection['combobox#1']:2\", 'attr:Duty#0', 'on')",
+    "('attr', 'owner', 'attr:Status#0', 'expected')",
+    "('attr_cmp_lt', 'owner', 'attr:Length overall#0', \"selection['combobox#1']:2\", 'attr:Ticket to#0')"
+   ],
+   2
+  ],
+  [
+   "<> booked for call <> .",
+   [
+    "('attr', \"selection['combobox#1']:2\", 'attr:Duty#0', 'on')",
+    "('attr', 'owner', 'attr:Status#0', 'expected')",
+    "('attr_ge', \"selection['combobox#1']:2\", 'attr:Ticket to#0', '100')",
+    "('attr_lt', 'owner', 'attr:Length overall#0', '148')"
+   ],
+   1
+  ],
+  [
+   "Nothing chosen in the pilot list .",
+   [
+    "('attr', 'owner', 'attr:Flag#0', 'Norway')"
+   ],
+   6
+  ],
+  [
+   "<> holds a <> ; <> is <> overall .",
+   [
+    "('attr', \"selection['combobox#1']:2\", 'attr:Duty#0', 'on')",
+    "('attr_cmp_ge', 'owner', 'attr:Length overall#0', \"selection['combobox#1']:2\", 'attr:Ticket to#0')",
+    "('empty', \"selection['combobox#1']:2\")"
+   ],
+   2
+  ],
+  [
+   "<> holds a <> ; <> is <> overall .",
+   [
+    "('attr', \"selection['combobox#1']:2\", 'attr:Duty#0', 'on')",
+    "('attr_ge', 'owner', 'attr:Length overall#0', '78')",
+    "('attr_lt', \"selection['combobox#1']:2\", 'attr:Ticket to#0', '130')",
+    "('empty', \"selection['combobox#1']:2\")"
+   ],
+   2
+  ],
+  [
+   "Nothing chosen in the pilot list .",
+   [
+    "('attr', 'owner', 'attr:Calls logged#0', '2')",
+    "('attr_ge', 'owner', 'attr:Length overall#0', '96')"
+   ],
+   2
+  ],
+  [
+   "<> booked for call <> .",
+   [
+    "('attr', \"selection['combobox#1']:2\", 'attr:Duty#0', 'on')",
+    "('attr_cmp_lt', 'owner', 'attr:Length overall#0', \"selection['combobox#1']:2\", 'attr:Ticket to#0')",
+    "('attr_lt', 'owner', 'attr:Length overall#0', '96')"
+   ],
+   1
+  ],
+  [
+   "<> booked for call <> .",
+   [
+    "('attr', \"selection['combobox#1']:2\", 'attr:Duty#0', 'on')",
+    "('attr_cmp_lt', 'owner', 'attr:Length overall#0', \"selection['combobox#1']:2\", 'attr:Ticket to#0')",
+    "('attr_lt', \"selection['combobox#1']:2\", 'attr:Ticket to#0', '150')"
+   ],
+   1
+  ],
+  [
+   "<> booked for call <> .",
+   [
+    "('attr', 'owner', 'attr:Flag#0', 'United Kingdom')",
+    "('attr_lt', \"selection['combobox#1']:2\", 'attr:Ticket to#0', '150')"
+   ],
+   1
+  ],
+  [
+   "<> booked for call <> .",
+   [
+    "('attr', \"selection['combobox#1']:2\", 'attr:Duty#0', 'on')",
+    "('attr_ge', \"selection['combobox#1']:2\", 'attr:Ticket to#0', '100')",
+    "('attr_lt', 'owner', 'attr:Length overall#0', '148')",
+    "('ref_null', \"selection['combobox#1']:2\", 'rel:0')"
+   ],
+   1
+  ],
+  [
+   "<> holds a <> ; <> is <> overall .",
+   [
+    "('attr', \"selection['combobox#1']:2\", 'attr:Duty#0', 'on')",
+    "('attr_ge', 'owner', 'attr:Length overall#0', '96')",
+    "('attr_lt', \"selection['combobox#1']:2\", 'attr:Ticket to#0', '150')",
+    "('empty', \"selection['combobox#1']:2\")"
+   ],
+   1
+  ],
+  [
+   "<> holds a <> ; <> is <> overall .",
+   [
+    "('attr_ge', 'owner', 'attr:Length overall#0', '78')",
+    "('attr_lt', \"selection['combobox#1']:2\", 'attr:Ticket to#0', '130')",
+    "('attr_lt', 'owner', 'attr:Length overall#0', '148')",
+    "('empty', \"selection['combobox#1']:2\")"
+   ],
+   2
+  ]
+ ],
+ "acquired": [
+  {
+   "target_event": "Nothing chosen in the pilot list .",
+   "target_condition": [
+    "('attr', 'owner', 'attr:Flag#0', 'Norway')"
+   ],
+   "condition_held": true,
+   "guard_fired": "<> is not <> .",
+   "admissible_before": [
+    "<> is not <> .",
+    "Nothing chosen in the pilot list ."
+   ],
+   "discriminating": true,
+   "returned": "Aoife Marr is not on duty.",
+   "frame": "<> is not <> .",
+   "args": [
+    "Aoife Marr",
+    "on duty"
+   ],
+   "resolved": true,
+   "before_text": "Ready.",
+   "chosen": {
+    "vessel": "Kittiwake",
+    "call": "C-102",
+    "pilot": "Aoife Marr"
+   }
+  },
+  {
+   "target_event": "Nothing chosen in the pilot list .",
+   "target_condition": [
+    "('attr', 'owner', 'attr:Flag#0', 'Norway')"
+   ],
+   "condition_held": true,
+   "guard_fired": "<> is not <> .",
+   "admissible_before": [
+    "<> is not <> .",
+    "Nothing chosen in the pilot list ."
+   ],
+   "discriminating": true,
+   "returned": "Aoife Marr is not on duty.",
+   "frame": null,
+   "args": [],
+   "resolved": false,
+   "before_text": "Aoife Marr is not on duty.",
+   "chosen": {
+    "vessel": "Kittiwake",
+    "call": "C-102",
+    "pilot": "Aoife Marr"
+   }
+  }
+ ],
+ "log": [
+  "turn 0: Kittiwake/C-102 with Aoife Marr: target 'Nothing chosen in th' held=True guard='<> is not <> .' -> '<> is not <> .'",
+  "turn 1: Kittiwake/C-102 with Aoife Marr: target 'Nothing chosen in th' held=True guard='<> is not <> .' -> None",
+  "turn 2: no target satisfiable here"
+ ],
+ "before": {
+  "control": {
+   "one outcome was admissible and it happened": 7,
+   "several outcomes remained admissible; the one that happened was among them": 14
+  },
+  "rows": [
+   {
+    "step": 65,
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "Nothing chosen in the pilot list ."
+   },
+   {
+    "step": 159,
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "Nothing chosen in the pilot list ."
+   },
+   {
+    "step": 185,
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "Nothing chosen in the pilot list ."
+   },
+   {
+    "step": 328,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> is already booked for call <> ."
+    ],
+    "observed": "<> is already booked for call <> ."
+   },
+   {
+    "step": 356,
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "Nothing chosen in the pilot list ."
+   },
+   {
+    "step": 463,
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> holds a <> ; <> is <> overall ."
+    ],
+    "observed": "<> holds a <> ; <> is <> overall ."
+   },
+   {
+    "step": 467,
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> is not <> ."
+    ],
+    "observed": "<> is not <> ."
+   },
+   {
+    "step": 470,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> holds a <> ; <> is <> overall .",
+     "<> is not <> ."
+    ],
+    "observed": "<> is not <> ."
+   },
+   {
+    "step": 474,
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> booked for call <> ."
+    ],
+    "observed": "<> booked for call <> ."
+   },
+   {
+    "step": 477,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> holds a <> ; <> is <> overall .",
+     "<> is already booked for call <> ."
+    ],
+    "observed": "<> is already booked for call <> ."
+   },
+   {
+    "step": 480,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "<> is already booked for call <> ."
+    ],
+    "observed": "<> is already booked for call <> ."
+   },
+   {
+    "step": 486,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> is not <> ."
+    ],
+    "observed": "<> is not <> ."
+   },
+   {
+    "step": 489,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "<> is not <> .",
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "<> is not <> ."
+   },
+   {
+    "step": 493,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "<> booked for call <> ."
+   },
+   {
+    "step": 496,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> is already booked for call <> ."
+    ],
+    "observed": "<> is already booked for call <> ."
+   },
+   {
+    "step": 502,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "<> holds a <> ; <> is <> overall ."
+   },
+   {
+    "step": 506,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> is not <> .",
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "<> is not <> ."
+   },
+   {
+    "step": 509,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> is not <> .",
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "<> is not <> ."
+   },
+   {
+    "step": 513,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "<> booked for call <> ."
+   },
+   {
+    "step": 516,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> is already booked for call <> .",
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "<> is already booked for call <> ."
+   },
+   {
+    "step": 519,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "<> is already booked for call <> .",
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "<> is already booked for call <> ."
+   }
+  ]
+ },
+ "after": {
+  "control": {
+   "one outcome was admissible and it happened": 7,
+   "several outcomes remained admissible; the one that happened was among them": 14
+  },
+  "rows": [
+   {
+    "step": 65,
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "Nothing chosen in the pilot list ."
+   },
+   {
+    "step": 159,
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "Nothing chosen in the pilot list ."
+   },
+   {
+    "step": 185,
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "Nothing chosen in the pilot list ."
+   },
+   {
+    "step": 328,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> is already booked for call <> ."
+    ],
+    "observed": "<> is already booked for call <> ."
+   },
+   {
+    "step": 356,
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "Nothing chosen in the pilot list ."
+   },
+   {
+    "step": 463,
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> holds a <> ; <> is <> overall ."
+    ],
+    "observed": "<> holds a <> ; <> is <> overall ."
+   },
+   {
+    "step": 467,
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> is not <> ."
+    ],
+    "observed": "<> is not <> ."
+   },
+   {
+    "step": 470,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> holds a <> ; <> is <> overall .",
+     "<> is not <> ."
+    ],
+    "observed": "<> is not <> ."
+   },
+   {
+    "step": 474,
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> booked for call <> ."
+    ],
+    "observed": "<> booked for call <> ."
+   },
+   {
+    "step": 477,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> holds a <> ; <> is <> overall .",
+     "<> is already booked for call <> ."
+    ],
+    "observed": "<> is already booked for call <> ."
+   },
+   {
+    "step": 480,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "<> is already booked for call <> ."
+    ],
+    "observed": "<> is already booked for call <> ."
+   },
+   {
+    "step": 486,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> is not <> ."
+    ],
+    "observed": "<> is not <> ."
+   },
+   {
+    "step": 489,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "<> is not <> ."
+    ],
+    "observed": "<> is not <> ."
+   },
+   {
+    "step": 493,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall ."
+    ],
+    "observed": "<> booked for call <> ."
+   },
+   {
+    "step": 496,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> is already booked for call <> ."
+    ],
+    "observed": "<> is already booked for call <> ."
+   },
+   {
+    "step": 502,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "<> holds a <> ; <> is <> overall ."
+   },
+   {
+    "step": 506,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> is not <> ."
+    ],
+    "observed": "<> is not <> ."
+   },
+   {
+    "step": 509,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> is not <> .",
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "<> is not <> ."
+   },
+   {
+    "step": 513,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "<> booked for call <> ."
+   },
+   {
+    "step": 516,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> is already booked for call <> ."
+    ],
+    "observed": "<> is already booked for call <> ."
+   },
+   {
+    "step": 519,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "<> is already booked for call <> .",
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "<> is already booked for call <> ."
+   }
+  ]
+ },
+ "purity": {
+  "<> booked for call < <- ['(\\'attr\\', \"selection[\\'combobox#1\\']:2\", \\'a', \"('attr', 'owner', 'attr:Status#0', 'expe\", \"('attr_cmp_lt', 'owner', 'attr:Length ov\"]": "still pure",
+  "<> booked for call < <- ['(\\'attr\\', \"selection[\\'combobox#1\\']:2\", \\'a', \"('attr', 'owner', 'attr:Status#0', 'expe\", '(\\'attr_ge\\', \"selection[\\'combobox#1\\']:2\",', \"('attr_lt', 'owner', 'attr:Length overal\"]": "still pure",
+  "Nothing chosen in th <- [\"('attr', 'owner', 'attr:Flag#0', 'Norway\"]": "impure now",
+  "<> holds a <> ; <> i <- ['(\\'attr\\', \"selection[\\'combobox#1\\']:2\", \\'a', \"('attr_cmp_ge', 'owner', 'attr:Length ov\", '(\\'empty\\', \"selection[\\'combobox#1\\']:2\")']": "still pure",
+  "<> holds a <> ; <> i <- ['(\\'attr\\', \"selection[\\'combobox#1\\']:2\", \\'a', \"('attr_ge', 'owner', 'attr:Length overal\", '(\\'attr_lt\\', \"selection[\\'combobox#1\\']:2\",', '(\\'empty\\', \"selection[\\'combobox#1\\']:2\")']": "still pure",
+  "Nothing chosen in th <- [\"('attr', 'owner', 'attr:Calls logged#0',\", \"('attr_ge', 'owner', 'attr:Length overal\"]": "still pure",
+  "<> booked for call < <- ['(\\'attr\\', \"selection[\\'combobox#1\\']:2\", \\'a', \"('attr_cmp_lt', 'owner', 'attr:Length ov\", \"('attr_lt', 'owner', 'attr:Length overal\"]": "still pure",
+  "<> booked for call < <- ['(\\'attr\\', \"selection[\\'combobox#1\\']:2\", \\'a', \"('attr_cmp_lt', 'owner', 'attr:Length ov\", '(\\'attr_lt\\', \"selection[\\'combobox#1\\']:2\",']": "still pure"
+ }
+}

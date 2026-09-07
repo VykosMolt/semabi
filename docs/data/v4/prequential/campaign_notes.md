@@ -2624,3 +2624,98 @@ order, and that item is CLOSED.  Not pre-registered: the pil list is 18 right / 
 of 21 at the list level (the point hypothesis's own coincidental guards).
 Committing; battery #9 at 800% (shared machine), pre-registered: harbour_transfer, blend,
 cellar, vet unchanged -- no clock is adopted on any retained history.
+
+## P39 pre-registered (06:58): value-seeking acquisition
+P33 acted where a guard was contested and found unestablished behaviour.  The
+formulation asks for more: hold the coincidence's supporting value fixed while the factor
+the application checks differs.  acquire_values.py: from the pilot holdout's `several`
+states take every rival vouch (event, condition) that is not the observed event -- the
+nominal ones first, e.g. Flag(owner) == Norway -> Nothing chosen; at the live app read the
+board through the model's own state (vessels with their flag and length, pilots with
+their ticket and duty), choose a call whose vessel satisfies the vouch's condition and a
+pilot for whom the list's guard fires for a different event (on duty, unbooked, ticket at
+or above the length -> booked); open the sheet, select the pilot, verify on the real
+pre-state that the vouch's condition holds and the guard fires for another event, act,
+record; refit the evidence and re-score the holdout.  Seed chosen by survey for a
+Norwegian vessel with an expected call and such a pilot.  Expected: at least one target
+vouch is impure after the refit (its condition shared by an occasion of another event);
+the pil holdout's `several` falls below 14 with no wrong, at the states where that vouch
+was the only rival; the matched control is P30's `any` at its own seed (unchanged 7/14).
+
+## P39 judged (07:22; p39_acquire_values.json; seed 143)
+Targets read off the pil holdout's several states: Flag(owner) == Norway -> Nothing
+chosen stood at 6 states (the top nominal one), the rest comparisons/thresholds for
+booked and too short.  The driver chose Kittiwake (Norway) / C-102 with Aoife Marr, whose
+ticket covers it but who is OFF duty at this seed -- the list's guard fired "is not on
+duty", a different event from the target, which my candidate test accepted (any guard
+but the target's).  The real pre-state held Flag == Norway with the selection named; the
+app answered "Aoife Marr is not on duty" (inside the admissible set).  After the refit the
+condition Flag == Norway is IMPURE (expectation (i) met) -- the coincidence's supporting
+value held fixed, the factor changed, the outcome differed, exactly the formulation.
+Yet the pil holdout is unchanged, 7 / 14 (expectation (ii) refuted): at each of those
+six states the version space now vouches "Nothing chosen" by a LONGER pure conjunction
+-- Flag == Norway & something the acquired occasion lacks (its cargo, its calls logged,
+its length) -- because a vouch is any pure conjunction within what the state shares with
+two witnesses, and one occasion makes impure only the conjunctions it satisfies.  The
+generalisation that had dropped those literals as unneeded keeps them now.
+Finding: falsifying a coincidence one literal at a time cannot narrow the version space
+at a state s; the acquired occasion has to satisfy s's whole shared conjunction with the
+witnesses -- be s with one factor changed.  That is counterfactual replay: reset to the
+holdout's own seed, replay its actions to the step before s, change the one factor
+(select a different pilot), act.  P40 if built; recorded now.  The second turn re-pressed
+the same pair and got silence (the known re-emission effect); the other targets were
+not satisfiable in this seed's world.
+
+## P40 pre-registered (07:24): counterfactual replay -- the state itself with one factor changed
+The pil holdout's extension episodes are 8 (steps 459-481, seed 61), 9 (482-497, seed
+62) and 10 (498-520, seed 63); each begins at the app reset to its seed and its actions
+are recorded by node index and text.  For every several state s of Book pilot in those
+episodes whose rivals include "Nothing chosen": reset to the episode's seed, replay the
+recorded actions to the step before the pilot was selected, select a DIFFERENT pilot who
+is on duty (the model's own state says who), verify the pre-state shares s's owner
+literals, press Book pilot, record; refit the evidence with every acquisition and
+re-score the holdout.  A replay whose page diverges from the recording (the target
+node's name differs from the recorded one) is abandoned and reported.
+Expected: at each replayed state the "Nothing chosen" conjunction is impure after the
+refit; the holdout's `several` falls by at least the number of states whose only rival
+was that coincidence (three or more), with no wrong; the matched control is P30's `any`
+(7 / 14).  If the replay diverges, that is the result.
+
+07:30 battery #9 (4fe56e1, 8 cores) regen 06:57 -> 07:30 rc=0: frontiers identical,
+candidates fingerprint-identical on all three -- as pre-registered.  open_world running.
+
+## P40 judged (07:52; p40_replay_any_other_pilot.json)
+The replay reached all eight target states without divergence (seeds 62 and 63 replayed
+by node index and text), selected the other pilot, and pressed: six answers "already
+booked" (the substitute was booked elsewhere), two "booked".  After the refit: 7 / 14 ->
+6 / 15, no wrong.  At 516 and 519 the "Nothing chosen" rival is GONE (519 forced right) --
+where the substitute pilot, like the original, was unbooked, the acquired occasion shared
+everything the state shares with the coincidence's witnesses and the conjunction died.
+At 489, 493, 502, 506, 509 and 513 it survives on `unnamed(relation<selection)`: the
+original pilot had no booked call, the substitute had one, and the witnesses (no pilot
+chosen at all) share the unnamed relation with the original, not with the substitute --
+the changed factor brought a second difference, and the coincidence retreated onto it.
+And the six "already booked" acquisitions vouch their own event at 463, 467 and 474,
+which were forced right and are several now.  (i) met at two of eight; (ii) refuted.
+Lesson, sharper than P39's: the factor changed must be MINIMAL -- the substitute has to
+match the original in every literal the witnesses share with the state; "any other
+on-duty pilot" was too loose.  P40b: rank substitutes by the shared literals they
+preserve (a synthetic binding before selecting), require the relation status to match,
+and skip a state with no such substitute.  If none exists at a state, the only exact
+counterfactual is the state's own action, which is acquiring the held-out occasion
+itself -- legitimate for the identifiability question, not for the transfer claim --
+and is NOT done.
+
+## P40b judged (08:17; p40_replay_minimal_substitute.json)
+With the substitute required to match the original pilot's duty and booking: four of the
+eight states had one (506, 509 -> Aoife, off duty like Ruth was; 516, 519 -> Tom, booked
+elsewhere like Ruth was), four had none and were skipped as designed (489, 493, 502, 513).
+Answers: not on duty x2, booked, already booked.  After the refit 7 / 14 -> 8 / 13, no
+wrong: 509 forced right (its Nothing-chosen rival gone), nothing widened anywhere.  The
+counterfactual replay with a minimal substitute NARROWS and never widens -- the first
+acquisition policy of the campaign that did -- and its yield is bounded by the world's
+offering a minimal substitute and by the order rivals (already booked vs booked) that
+remain at 506, 516 and 519, which are the rule class's and not a coincidence.  (i) met
+where replayed, (ii) refuted in size (one state, not three).  Retained; P40 stands as
+the acquisition doctrine's answer to coincidence: the state itself, one factor changed,
+minimally.

@@ -1,0 +1,636 @@
+{
+ "dev": "/home/moloch/semabi-scratch/preq/harbour_pil_dev",
+ "hold": "/home/moloch/semabi-scratch/preq/harbour_pil_hold",
+ "seeds": {
+  "8": 61,
+  "9": 62,
+  "10": 63
+ },
+ "targets": [
+  489,
+  493,
+  502,
+  506,
+  509,
+  513,
+  516,
+  519
+ ],
+ "acquired": [
+  {
+   "replayed": 489,
+   "episode": 9,
+   "seed": 62,
+   "recorded_pilot": "Tom Dorley - ticket to 100 m - off duty",
+   "chosen_pilot": "Aoife Marr - ticket to 150 m - on duty",
+   "admissible_before": [
+    "<> booked for call <> .",
+    "<> is already booked for call <> .",
+    "Nothing chosen in the pilot list ."
+   ],
+   "discriminating": true,
+   "returned": "Aoife Marr is already booked for call C-102.",
+   "frame": "<> is already booked for call <> .",
+   "args": [
+    "Aoife Marr",
+    "C-102"
+   ],
+   "resolved": true,
+   "before_text": "Tom Dorley is not on duty."
+  },
+  {
+   "replayed": 493,
+   "episode": 9,
+   "seed": 62,
+   "recorded_pilot": "Tom Dorley - ticket to 100 m - on duty",
+   "chosen_pilot": "Aoife Marr - ticket to 150 m - on duty",
+   "admissible_before": [
+    "<> booked for call <> .",
+    "<> is already booked for call <> .",
+    "Nothing chosen in the pilot list ."
+   ],
+   "discriminating": true,
+   "returned": "Aoife Marr is already booked for call C-102.",
+   "frame": "<> is already booked for call <> .",
+   "args": [
+    "Aoife Marr",
+    "C-102"
+   ],
+   "resolved": true,
+   "before_text": "Tom Dorley is signed on."
+  },
+  {
+   "replayed": 502,
+   "episode": 10,
+   "seed": 63,
+   "recorded_pilot": "Ruth Kealy - ticket to 130 m - on duty",
+   "chosen_pilot": "Tom Dorley - ticket to 100 m - on duty",
+   "admissible_before": [
+    "<> booked for call <> .",
+    "<> holds a <> ; <> is <> overall .",
+    "<> is already booked for call <> .",
+    "Nothing chosen in the pilot list ."
+   ],
+   "discriminating": true,
+   "returned": "Tom Dorley is already booked for call C-102.",
+   "frame": "<> is already booked for call <> .",
+   "args": [
+    "Tom Dorley",
+    "C-102"
+   ],
+   "resolved": true,
+   "before_text": "Call C-104 opened for Nordkapp."
+  },
+  {
+   "replayed": 506,
+   "episode": 10,
+   "seed": 63,
+   "recorded_pilot": "Ruth Kealy - ticket to 130 m - off duty",
+   "chosen_pilot": "Tom Dorley - ticket to 100 m - on duty",
+   "admissible_before": [
+    "<> booked for call <> .",
+    "<> is already booked for call <> .",
+    "Nothing chosen in the pilot list ."
+   ],
+   "discriminating": true,
+   "returned": "Tom Dorley booked for call C-102.",
+   "frame": "<> booked for call <> .",
+   "args": [
+    "Tom Dorley",
+    "C-102"
+   ],
+   "resolved": true,
+   "before_text": "Ruth Kealy is signed off."
+  },
+  {
+   "replayed": 509,
+   "episode": 10,
+   "seed": 63,
+   "recorded_pilot": "Ruth Kealy - ticket to 130 m - off duty",
+   "chosen_pilot": "Tom Dorley - ticket to 100 m - on duty",
+   "admissible_before": [
+    "<> booked for call <> .",
+    "<> holds a <> ; <> is <> overall .",
+    "<> is already booked for call <> .",
+    "Nothing chosen in the pilot list ."
+   ],
+   "discriminating": true,
+   "returned": "Tom Dorley is already booked for call C-102.",
+   "frame": "<> is already booked for call <> .",
+   "args": [
+    "Tom Dorley",
+    "C-102"
+   ],
+   "resolved": true,
+   "before_text": "Ruth Kealy is not on duty."
+  },
+  {
+   "replayed": 513,
+   "episode": 10,
+   "seed": 63,
+   "recorded_pilot": "Ruth Kealy - ticket to 130 m - on duty",
+   "chosen_pilot": "Tom Dorley - ticket to 100 m - on duty",
+   "admissible_before": [
+    "<> booked for call <> .",
+    "<> holds a <> ; <> is <> overall .",
+    "<> is already booked for call <> .",
+    "Nothing chosen in the pilot list ."
+   ],
+   "discriminating": true,
+   "returned": "Tom Dorley is already booked for call C-102.",
+   "frame": "<> is already booked for call <> .",
+   "args": [
+    "Tom Dorley",
+    "C-102"
+   ],
+   "resolved": true,
+   "before_text": "Ruth Kealy is signed on."
+  },
+  {
+   "replayed": 516,
+   "episode": 10,
+   "seed": 63,
+   "recorded_pilot": "Ruth Kealy - ticket to 130 m - on duty",
+   "chosen_pilot": "Tom Dorley - ticket to 100 m - on duty",
+   "admissible_before": [
+    "<> booked for call <> .",
+    "<> is already booked for call <> .",
+    "Nothing chosen in the pilot list ."
+   ],
+   "discriminating": true,
+   "returned": "Tom Dorley booked for call C-102.",
+   "frame": "<> booked for call <> .",
+   "args": [
+    "Tom Dorley",
+    "C-102"
+   ],
+   "resolved": true,
+   "before_text": "Ruth Kealy booked for call C-103."
+  },
+  {
+   "replayed": 519,
+   "episode": 10,
+   "seed": 63,
+   "recorded_pilot": "Ruth Kealy - ticket to 130 m - on duty",
+   "chosen_pilot": "Tom Dorley - ticket to 100 m - on duty",
+   "admissible_before": [
+    "<> booked for call <> .",
+    "<> holds a <> ; <> is <> overall .",
+    "<> is already booked for call <> .",
+    "Nothing chosen in the pilot list ."
+   ],
+   "discriminating": true,
+   "returned": "Tom Dorley is already booked for call C-102.",
+   "frame": "<> is already booked for call <> .",
+   "args": [
+    "Tom Dorley",
+    "C-102"
+   ],
+   "resolved": true,
+   "before_text": "Ruth Kealy is already booked for call C-103."
+  }
+ ],
+ "log": [
+  "489: replayed seed 62, 'Tom Dorley - ticket to 1' -> 'Aoife Marr - ticket to 1': '<> is already booked for call <> .'",
+  "493: replayed seed 62, 'Tom Dorley - ticket to 1' -> 'Aoife Marr - ticket to 1': '<> is already booked for call <> .'",
+  "502: replayed seed 63, 'Ruth Kealy - ticket to 1' -> 'Tom Dorley - ticket to 1': '<> is already booked for call <> .'",
+  "506: replayed seed 63, 'Ruth Kealy - ticket to 1' -> 'Tom Dorley - ticket to 1': '<> booked for call <> .'",
+  "509: replayed seed 63, 'Ruth Kealy - ticket to 1' -> 'Tom Dorley - ticket to 1': '<> is already booked for call <> .'",
+  "513: replayed seed 63, 'Ruth Kealy - ticket to 1' -> 'Tom Dorley - ticket to 1': '<> is already booked for call <> .'",
+  "516: replayed seed 63, 'Ruth Kealy - ticket to 1' -> 'Tom Dorley - ticket to 1': '<> booked for call <> .'",
+  "519: replayed seed 63, 'Ruth Kealy - ticket to 1' -> 'Tom Dorley - ticket to 1': '<> is already booked for call <> .'"
+ ],
+ "before": {
+  "control": {
+   "one outcome was admissible and it happened": 7,
+   "several outcomes remained admissible; the one that happened was among them": 14
+  },
+  "rows": [
+   {
+    "step": 65,
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "Nothing chosen in the pilot list ."
+   },
+   {
+    "step": 159,
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "Nothing chosen in the pilot list ."
+   },
+   {
+    "step": 185,
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "Nothing chosen in the pilot list ."
+   },
+   {
+    "step": 328,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> is already booked for call <> ."
+    ],
+    "observed": "<> is already booked for call <> ."
+   },
+   {
+    "step": 356,
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "Nothing chosen in the pilot list ."
+   },
+   {
+    "step": 463,
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> holds a <> ; <> is <> overall ."
+    ],
+    "observed": "<> holds a <> ; <> is <> overall ."
+   },
+   {
+    "step": 467,
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> is not <> ."
+    ],
+    "observed": "<> is not <> ."
+   },
+   {
+    "step": 470,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> holds a <> ; <> is <> overall .",
+     "<> is not <> ."
+    ],
+    "observed": "<> is not <> ."
+   },
+   {
+    "step": 474,
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> booked for call <> ."
+    ],
+    "observed": "<> booked for call <> ."
+   },
+   {
+    "step": 477,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> holds a <> ; <> is <> overall .",
+     "<> is already booked for call <> ."
+    ],
+    "observed": "<> is already booked for call <> ."
+   },
+   {
+    "step": 480,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "<> is already booked for call <> ."
+    ],
+    "observed": "<> is already booked for call <> ."
+   },
+   {
+    "step": 486,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> is not <> ."
+    ],
+    "observed": "<> is not <> ."
+   },
+   {
+    "step": 489,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "<> is not <> .",
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "<> is not <> ."
+   },
+   {
+    "step": 493,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "<> booked for call <> ."
+   },
+   {
+    "step": 496,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> is already booked for call <> ."
+    ],
+    "observed": "<> is already booked for call <> ."
+   },
+   {
+    "step": 502,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "<> holds a <> ; <> is <> overall ."
+   },
+   {
+    "step": 506,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> is not <> .",
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "<> is not <> ."
+   },
+   {
+    "step": 509,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> is not <> .",
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "<> is not <> ."
+   },
+   {
+    "step": 513,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "<> booked for call <> ."
+   },
+   {
+    "step": 516,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> is already booked for call <> .",
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "<> is already booked for call <> ."
+   },
+   {
+    "step": 519,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "<> is already booked for call <> .",
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "<> is already booked for call <> ."
+   }
+  ]
+ },
+ "after": {
+  "control": {
+   "one outcome was admissible and it happened": 6,
+   "several outcomes remained admissible; the one that happened was among them": 15
+  },
+  "rows": [
+   {
+    "step": 65,
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "Nothing chosen in the pilot list ."
+   },
+   {
+    "step": 159,
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "Nothing chosen in the pilot list ."
+   },
+   {
+    "step": 185,
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "Nothing chosen in the pilot list ."
+   },
+   {
+    "step": 328,
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> is already booked for call <> ."
+    ],
+    "observed": "<> is already booked for call <> ."
+   },
+   {
+    "step": 356,
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "Nothing chosen in the pilot list ."
+   },
+   {
+    "step": 463,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> holds a <> ; <> is <> overall .",
+     "<> is already booked for call <> ."
+    ],
+    "observed": "<> holds a <> ; <> is <> overall ."
+   },
+   {
+    "step": 467,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> is already booked for call <> .",
+     "<> is not <> ."
+    ],
+    "observed": "<> is not <> ."
+   },
+   {
+    "step": 470,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "<> is already booked for call <> .",
+     "<> is not <> ."
+    ],
+    "observed": "<> is not <> ."
+   },
+   {
+    "step": 474,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> is already booked for call <> ."
+    ],
+    "observed": "<> booked for call <> ."
+   },
+   {
+    "step": 477,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> holds a <> ; <> is <> overall .",
+     "<> is already booked for call <> ."
+    ],
+    "observed": "<> is already booked for call <> ."
+   },
+   {
+    "step": 480,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> is already booked for call <> ."
+    ],
+    "observed": "<> is already booked for call <> ."
+   },
+   {
+    "step": 486,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> is already booked for call <> .",
+     "<> is not <> ."
+    ],
+    "observed": "<> is not <> ."
+   },
+   {
+    "step": 489,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "<> is already booked for call <> .",
+     "<> is not <> .",
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "<> is not <> ."
+   },
+   {
+    "step": 493,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "<> is already booked for call <> .",
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "<> booked for call <> ."
+   },
+   {
+    "step": 496,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> is already booked for call <> ."
+    ],
+    "observed": "<> is already booked for call <> ."
+   },
+   {
+    "step": 502,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "<> is already booked for call <> .",
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "<> holds a <> ; <> is <> overall ."
+   },
+   {
+    "step": 506,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> is already booked for call <> .",
+     "<> is not <> .",
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "<> is not <> ."
+   },
+   {
+    "step": 509,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> is already booked for call <> .",
+     "<> is not <> .",
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "<> is not <> ."
+   },
+   {
+    "step": 513,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> holds a <> ; <> is <> overall .",
+     "<> is already booked for call <> .",
+     "Nothing chosen in the pilot list ."
+    ],
+    "observed": "<> booked for call <> ."
+   },
+   {
+    "step": 516,
+    "verdict": "several outcomes remained admissible; the one that happened was among them",
+    "admissible": [
+     "<> booked for call <> .",
+     "<> is already booked for call <> ."
+    ],
+    "observed": "<> is already booked for call <> ."
+   },
+   {
+    "step": 519,
+    "verdict": "one outcome was admissible and it happened",
+    "admissible": [
+     "<> is already booked for call <> ."
+    ],
+    "observed": "<> is already booked for call <> ."
+   }
+  ]
+ },
+ "moved": [
+  [
+   328,
+   "several outcomes rem",
+   "one outcome was admi"
+  ],
+  [
+   463,
+   "one outcome was admi",
+   "several outcomes rem"
+  ],
+  [
+   467,
+   "one outcome was admi",
+   "several outcomes rem"
+  ],
+  [
+   474,
+   "one outcome was admi",
+   "several outcomes rem"
+  ],
+  [
+   519,
+   "several outcomes rem",
+   "one outcome was admi"
+  ]
+ ]
+}
