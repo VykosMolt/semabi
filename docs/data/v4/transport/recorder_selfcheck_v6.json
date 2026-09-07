@@ -1,0 +1,66 @@
+{
+  "checks": [
+    "budget includes reset",
+    "failed attempts retained",
+    "initial prefix unchanged",
+    "untargeted selection cannot read model",
+    "15-step refit schedule",
+    "missing targets charged without clicking",
+    "ambiguous targets refused",
+    "no snapshot before reset",
+    "appended episodes unique",
+    "unobserved reset retained outside paired steps",
+    "real reload supplies boundary"
+  ],
+  "passed": true,
+  "provenance": {
+    "argv": [
+      "docs/data/v4/transport/recorder_selfcheck.py",
+      "docs/data/v4/transport/recorder_selfcheck_v6.json"
+    ],
+    "cwd": "/home/moloch/semabi",
+    "git_head": "795d0737a38fee1fbbe35d23d8e873829611abe8",
+    "pid": 2,
+    "utc": "2026-09-07T15:28:24.406989+00:00"
+  },
+  "result": {
+    "bootstrap_goto": 0,
+    "budget": 16,
+    "charged_attempts": 16,
+    "complete": true,
+    "failed_attempts": 8,
+    "initial_sha256": {
+      "observations.jsonl": "d4bf00eadfe989802d90dae97436169c5eb815d990eaa373fb14df06442552de",
+      "steps.jsonl": "da0df5ee64cb3906a928d619413db85ba73ad022205d90faa3af02ad643d8552"
+    },
+    "initial_steps": 1,
+    "navigation_waits": 0,
+    "paired_steps_recorded": 15,
+    "policy": "untargeted",
+    "primitive_counts": {
+      "click": 9,
+      "press": 5,
+      "reload": 1,
+      "reset": 1
+    },
+    "refits": [
+      {
+        "after_charged_attempts": 0,
+        "training_steps": 1
+      },
+      {
+        "after_charged_attempts": 15,
+        "training_steps": 15
+      }
+    ],
+    "seed": 1701,
+    "settle_timeouts": 0,
+    "snapshot_calls": 16,
+    "targeted_attempts": 0,
+    "terminal_refit": "performed by scoring process using all acquired history",
+    "unpaired_attempts": 1
+  },
+  "schema": "transport.recorder.selfcheck.v3",
+  "selfcheck_sha256": "9ed18fad67de50bf2565845dd32b1451b8dd8306b0b37003af8e11664295f7b6",
+  "source_sha256": "d042dcf76bb83495b94ec798d6c0ad0b3c5a9ed5f7910d6b98456c32daf64a10"
+}

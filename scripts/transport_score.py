@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter, defaultdict
+from copy import copy
 from dataclasses import fields as dataclass_fields, is_dataclass, replace
 import hashlib
 import json
@@ -27,7 +28,7 @@ from semabi.compiler.v4 import consequence as csq
 from semabi.compiler.v4 import custody, outcome as oc, pinned, source_candidates
 from semabi.eval.v4_identity_scoreboard import score as identity_score
 
-SCHEMA = "semabi.transport.measurement.v1"
+SCHEMA = "semabi.transport.measurement.v2"
 EXPLICIT_RUNTIME_FILES = {
     "semabi/__init__.py", "semabi/relmodel.py", "semabi/eval/__init__.py",
     "semabi/eval/v4_acquire.py", "semabi/eval/v4_identity_scoreboard.py",
@@ -291,6 +292,8 @@ def outcome_summary(rows: list[dict], *, decision_list: bool = False) -> dict:
             "no_model": raw[oc.NO_MODEL], "no_channel": raw[oc.NO_CHANNEL],
             "unreachable_target": sum(row.get("unestablished_subtype") == "unreachable_target"
                                       for row in rows),
+            "runtime_failure": sum(row.get("unestablished_subtype") == "runtime_failure"
+                                   for row in rows),
             "sole_policy": "A sole previously observed outcome does not establish uniqueness; "
                            "it is included in unestablished and reported separately."}
 
@@ -314,21 +317,44 @@ def _state_surface(predictions) -> tuple[dict, dict]:
     return surface, collisions
 
 
-def score_model(model, evaluation: EvidenceLog) -> tuple[dict, dict]:
+def runtime_error(error):
+    return {"error": f"{type(error).__name__}: {error}", "traceback": traceback.format_exc()}
+
+
+def score_model(model, evaluation: EvidenceLog, *, fit_error=None) -> tuple[dict, dict]:
     """Attach raw evaluation observations to the already-frozen live transformation.
 
     No call to _normalise_sections may pool evaluation text into training statistics.
     This is the same Browser.observe -> A.abstract surface used for live acquisition.
     """
-    fitted = model_record(model)
-    scored = replace(model, log=evaluation, cut=0)
-    state = csq.score(scored)
-    # csq.score's cut describes where scoring begins, so restore the true fit count in
-    # its report instead of misreporting a zero-step model after replacing the log.
-    state.fitted_on_steps = model.cut
-    state_rows = [jsonable(p) for p in state.predictions]
-    surface, collisions = _state_surface(state.predictions)
-    node_surface, _ = _state_surface([p for p in state.predictions if p.feature_node is not None])
+    fitted = None if model is None else model_record(model)
+    scored = None if model is None else replace(model, log=evaluation, cut=0)
+    state_errors, state_by_step, predictions = [], [], []
+    # The scoring unit is one attempted primitive. A learner exception at one
+    # state must not erase successful checks or remove later opportunities.
+    for step in evaluation.steps:
+        if step.action.kind != "click":
+            continue
+        if step.action.target is None:
+            state_errors.append({"step": step.step, "status": "UNREACHABLE_TARGET"})
+            continue
+        if scored is None:
+            state_errors.append({"step": step.step, "status": "FIT_RUNTIME_FAILURE", **fit_error})
+            continue
+        one = copy(evaluation)
+        one.steps = [step]
+        one.obs_path = one.steps_path = None
+        try:
+            state = csq.score(replace(scored, log=one))
+        except Exception as error:
+            state_errors.append({"step": step.step, "status": "RUNTIME_FAILURE", **runtime_error(error)})
+            continue
+        state.fitted_on_steps = model.cut
+        predictions.extend(state.predictions)
+        state_by_step.append({"step": step.step, "summary": state.to_json()})
+    state_rows = [jsonable(p) for p in predictions]
+    surface, collisions = _state_surface(predictions)
+    node_surface, _ = _state_surface([p for p in predictions if p.feature_node is not None])
     ledgers = {"decision_list": [], oc.RULE: [], oc.LIST: []}
     queries = []
     for step in evaluation.steps:
@@ -346,11 +372,27 @@ def score_model(model, evaluation: EvidenceLog) -> tuple[dict, dict]:
                              "unestablished_subtype": "unreachable_target"})
             queries.append({"step": step.step, "status": "UNREACHABLE_TARGET"})
             continue
-        ledgers["decision_list"].append({**common, **oc.score_step(scored, step)})
-        for hypothesis in (oc.RULE, oc.LIST):
-            ledgers[hypothesis].append({**common, **oc.score_step_admissible(
-                scored, step, corroborated=True, hypothesis=hypothesis)})
-        queries.append({"step": step.step, **query_record(scored, step)})
+        for channel, rows in ledgers.items():
+            failure = fit_error
+            if scored is not None:
+                try:
+                    result = (oc.score_step(scored, step) if channel == "decision_list" else
+                              oc.score_step_admissible(scored, step, corroborated=True,
+                                                       hypothesis=channel))
+                except Exception as error:
+                    failure = runtime_error(error)
+            if failure is not None:
+                result = {"step": step.step, "control": None, "verdict": oc.NO_MODEL,
+                          "unestablished_subtype": "runtime_failure", **failure}
+            rows.append({**common, **result})
+        if scored is None:
+            query = {"status": "FIT_RUNTIME_FAILURE", **fit_error}
+        else:
+            try:
+                query = query_record(scored, step)
+            except Exception as error:
+                query = {"status": "RUNTIME_FAILURE", **runtime_error(error)}
+        queries.append({"step": step.step, **query})
     emission = {}
     for row in ledgers[oc.RULE]:
         if row["verdict"] in (oc.FORCED_RIGHT, oc.SOLE_RIGHT):
@@ -358,13 +400,20 @@ def score_model(model, evaluation: EvidenceLog) -> tuple[dict, dict]:
         elif row["verdict"] in (oc.FORCED_WRONG, oc.SOLE_WRONG):
             emission[row["step"]] = "wrong"
     record = {
-        "model": fitted, "evaluation_steps": len(evaluation.steps),
+        "model": fitted, "fit_error": fit_error, "evaluation_steps": len(evaluation.steps),
         "failed_primitives": sum(not step.ok for step in evaluation.steps),
         "primitive_kinds": dict(Counter(step.action.kind for step in evaluation.steps)),
-        "state": {"summary": state.to_json(), "rows": state_rows,
+        "state": {"summary": {"evaluation_click_attempts": len(queries),
+                              "scored_clicks": len(state_by_step),
+                              "runtime_failure_clicks": sum("RUNTIME_FAILURE" in e["status"]
+                                                            for e in state_errors),
+                              "unreachable_target_clicks": sum(e["status"] == "UNREACHABLE_TARGET"
+                                                               for e in state_errors),
+                              "prediction_counts": dict(Counter(p.verdict for p in predictions))},
+                  "per_step": state_by_step, "failures": state_errors, "rows": state_rows,
                   "shared_coordinate_collisions": collisions,
-                  "claims_with_raw_node": sum(p.feature_node is not None for p in state.predictions),
-                  "claims_with_slot_fallback": sum(p.feature_node is None for p in state.predictions)},
+                  "claims_with_raw_node": sum(p.feature_node is not None for p in predictions),
+                  "claims_with_slot_fallback": sum(p.feature_node is None for p in predictions)},
         "emission": {name: {"summary": outcome_summary(rows, decision_list=name == "decision_list"),
                             "rows": rows} for name, rows in ledgers.items()},
         "queries": queries,
@@ -438,16 +487,20 @@ def score(train: Path, evaluation: Path, candidates_path: Path, out: Path, *,
             name = row["id"]
             print(f"fit and score {name}", flush=True)
             reading = pinned.PinnedReading.from_json(row["reading"]) if row["reading"] else None
-            model = fit_train(train, reading)
-            record, surface = score_model(model, _checked_log(evaluation))
+            try:
+                model = fit_train(train, reading)
+                failure = None
+            except Exception as error:
+                model, failure = None, runtime_error(error)
+            record, surface = score_model(model, _checked_log(evaluation), fit_error=failure)
             record["candidate_name"] = row["name"]
             record["pinned_reading"] = row["reading"]
             report["models"][name] = record
             results[name] = surface
             assumptions[name] = {"promoted_families": len(reading.promoted_families) if reading else
-                                 len(getattr(model.abstractor.H, "promoted", set())),
+                                 len(getattr(model.abstractor.H, "promoted", set())) if model else None,
                                  "withheld_unions": len(reading.withheld_unions) if reading else
-                                 len(getattr(model.abstractor.H, "withheld_unions", set())),
+                                 len(getattr(model.abstractor.H, "withheld_unions", set())) if model else None,
                                  "reading_refitted_on_training": reading is None}
             report["pending_models"].remove(name)
             if run_version(train) != train_version or run_version(evaluation) != eval_version:

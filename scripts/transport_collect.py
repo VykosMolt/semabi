@@ -18,6 +18,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
+import traceback
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -25,7 +26,6 @@ sys.path.insert(0, str(ROOT))
 from semabi.compiler.browser import Browser, Primitive
 from semabi.compiler.evidence import EvidenceLog
 from semabi.compiler.explorer import Explorer
-from semabi.compiler.observation import Observation
 from semabi.compiler.v4 import consequence as csq, outcome as oc
 from semabi.eval.v4_acquire import contested
 
@@ -83,6 +83,7 @@ class Recorder:
         self.failures = 0
         self.observations = 0
         self.kinds = Counter()
+        self.paired_steps = 0
 
     def observe(self):
         obs = self.browser.observe()
@@ -101,16 +102,27 @@ class Recorder:
         else:
             ok, after = False, before
         self.failures += not ok
-        step = self.log.add_step(self.browser.episode, primitive, ok, error, before, after)
-        record = {"step": step.step, "charged_attempt": self.attempts,
+        if before is None:
+            # No assertion about an unobserved state is a paired transition.
+            # The reset/result still belongs to the complete charged history.
+            step_index, before_sig = None, None
+            after_sig = self.log.add_observation(after)
+        else:
+            step = self.log.add_step(self.browser.episode, primitive, ok, error, before, after)
+            self.paired_steps += 1
+            step_index, before_sig, after_sig = step.step, step.before, step.after
+        record = {"step": step_index, "episode": self.browser.episode,
+                  "charged_attempt": self.attempts,
                   "action": primitive.to_json(), "ok": ok, "error": error,
-                  "before": step.before, "after": step.after, **decision}
+                  "before": before_sig, "after": after_sig, **decision}
         with self.decisions_path.open("a") as stream:
             stream.write(json.dumps(record, sort_keys=True, default=str) + "\n")
         return after
 
     def summary(self):
         return {"charged_attempts": self.attempts, "failed_attempts": self.failures,
+                "paired_steps_recorded": self.paired_steps,
+                "unpaired_attempts": self.attempts - self.paired_steps,
                 "primitive_counts": dict(self.kinds), "snapshot_calls": self.observations,
                 "bootstrap_goto": 0,
                 "settle_timeouts": self.browser.n_settle_timeouts,
@@ -177,9 +189,8 @@ def collect_script(args):
     log = EvidenceLog(args.out)
     rec = Recorder(browser, log, args.out / "decisions.jsonl")
     try:
-        # No prior server state may become evidence for the next session. The
-        # empty pre-state records that nothing was observed before its first reset.
-        obs = Observation([], args.url)
+        # No prior server state may become evidence for the next session.
+        obs = None
         for case_index, case in enumerate(cases):
             reset_url = case.get("reset_url", args.reset_url)
             if reset_url.startswith("/"):
@@ -190,6 +201,11 @@ def collect_script(args):
             obs = rec.act(obs, Primitive("reset", text=str(args.seed)),
                           {"reason": "script_setup_reset", "pre_state_unobserved": case_index == 0,
                            "case": case.get("case"), "reset_url": reset_url})
+            if case_index == 0:
+                # This genuine observed reload is the schema/inducer boundary;
+                # the unobserved reset cannot safely be encoded as a Step.
+                obs = rec.act(obs, Primitive("reload"),
+                              {"reason": "observed_session_boundary", "case": case.get("case")})
             charged_index = 0
             for index, action in enumerate(case["script"]):
                 if action["kind"] == "snapshot":
@@ -214,7 +230,6 @@ def acquire(args):
         shutil.copyfile(args.initial / name, args.out / name)
     log = EvidenceLog(args.out)
     initial_steps = len(log.steps)
-    model = csq.fit(args.out, None, at=initial_steps)
     browser = Browser(args.url, args.reset_url)
     # Appending a fresh browser session must not merge it with an initial episode;
     # the frozen clock policy deliberately measures rises/falls within episodes.
@@ -222,24 +237,49 @@ def acquire(args):
     explorer = Explorer(browser, log, seed=args.seed)
     rec = Recorder(browser, log, args.out / "decisions.jsonl")
     asked = set()
-    refits = [{"after_charged_attempts": 0, "training_steps": initial_steps}]
+    refits = []
+    def refit():
+        entry = {"after_charged_attempts": rec.attempts, "training_steps": len(log.steps)}
+        try:
+            fitted = csq.fit(args.out, None, at=len(log.steps))
+            entry["status"] = "FITTED"
+        except Exception as error:
+            fitted = None
+            entry.update(status="RUNTIME_FAILURE", error=f"{type(error).__name__}: {error}",
+                         traceback=traceback.format_exc())
+        refits.append(entry)
+        write(args.out / "refits.json", refits)
+        return fitted
+    model = refit()
     targeted = 0
+    recognition_failures = 0
     try:
-        obs = rec.act(Observation([], args.url), Primitive("reset", text=str(args.seed)),
+        obs = rec.act(None, Primitive("reset", text=str(args.seed)),
                       {"reason": "acquisition_setup_reset", "policy": args.policy,
                        "pre_state_unobserved": True})
+        obs = rec.act(obs, Primitive("reload"),
+                      {"reason": "observed_session_boundary", "policy": args.policy})
         while rec.attempts < args.budget:
             if rec.attempts % 15 == 0:
-                model = csq.fit(args.out, None, at=len(log.steps))
-                refits.append({"after_charged_attempts": rec.attempts,
-                               "training_steps": len(log.steps)})
+                model = refit()
             candidates = []
             chosen = None
             if args.policy == "contested":
                 for node in obs.nodes:
                     if node.role != "button":
                         continue
-                    item = context(model, obs, node.i)
+                    if model is None:
+                        item = {"node": node.i, "control": None, "model": False,
+                                "status": "FIT_RUNTIME_FAILURE"}
+                    else:
+                        try:
+                            item = context(model, obs, node.i)
+                        except Exception as error:
+                            recognition_failures += 1
+                            item = {"node": node.i, "control": None, "model": False,
+                                    "status": "RECOGNITION_RUNTIME_FAILURE",
+                                    "error": f"{type(error).__name__}: {error}",
+                                    "traceback": traceback.format_exc()}
                     candidates.append(item)
                     key = (item["control"], repr(item.get("literals")))
                     if (chosen is None and item.get("contested") and key not in asked):
@@ -265,6 +305,8 @@ def acquire(args):
                                    for name in ("observations.jsonl", "steps.jsonl")},
                 "seed": args.seed, "budget": args.budget, "policy": args.policy,
                 "targeted_attempts": targeted, "refits": refits,
+                "recognition_runtime_failures": recognition_failures,
+                "fit_runtime_failures": sum(row["status"] != "FITTED" for row in refits),
                 "terminal_refit": "performed by scoring process using all acquired history",
                 "complete": rec.attempts == args.budget}
     finally:
@@ -291,8 +333,8 @@ def main():
         parser.error("script requires --script")
     if args.mode == "acquire" and (not args.initial or not args.policy or args.script):
         parser.error("acquire requires --initial/--policy and prohibits --script")
-    if args.budget < 1:
-        parser.error("budget must include at least the reset")
+    if args.budget < 2:
+        parser.error("budget must include the reset and observed boundary reload")
     frozen_hash = verify_freeze(args.freeze)
     args.out.mkdir(parents=True)
     record = {"start": stamp(), "freeze_sha256": frozen_hash, "status": "RUNNING"}
@@ -304,7 +346,8 @@ def main():
             raise RuntimeError("Freeze manifest changed during collection")
         record["status"] = "FINISHED"
     except BaseException as error:
-        record.update(status="ERROR", error=f"{type(error).__name__}: {error}")
+        record.update(status="ERROR", error=f"{type(error).__name__}: {error}",
+                      traceback=traceback.format_exc())
         raise
     finally:
         record["end"] = stamp()

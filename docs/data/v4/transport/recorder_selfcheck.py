@@ -60,13 +60,16 @@ def main():
             result = module.acquire(args)
         assert result["charged_attempts"] == 16 and result["failed_attempts"] == 8
         combined = EvidenceLog(out)
-        assert len(combined.steps) == 17 and combined.steps[0].to_json() == log.steps[0].to_json()
+        assert len(combined.steps) == 16 and combined.steps[0].to_json() == log.steps[0].to_json()
+        assert result["paired_steps_recorded"] == 15 and result["unpaired_attempts"] == 1
         assert {step.episode for step in combined.steps[1:]} == {10}
         assert fit.call_count == 2 and result["targeted_attempts"] == 0
         records = [json.loads(line) for line in (out / "decisions.jsonl").read_text().splitlines()]
         assert len(records) == 16 and records[0]["action"]["kind"] == "reset"
         assert records[0]["pre_state_unobserved"]
-        assert combined.obs(combined.steps[1].before).nodes == []
+        assert records[0]["before"] is None and records[0]["step"] is None
+        assert combined.steps[1].action.kind == "reload"
+        assert combined.obs(combined.steps[1].before).nodes == obs.nodes
         assert all(not row.get("candidates") for row in records)
         missing, error = module.resolve(obs, {"kind": "click", "role": "button", "name": "absent"})
         assert missing.target is None and error
@@ -77,13 +80,14 @@ def main():
         missing, error = module.resolve(duplicate, {"kind": "click", "role": "button", "name": "Try"})
         assert missing.target is None and error
         payload = {
-            "schema": "transport.recorder.selfcheck.v2", "provenance": module.stamp(),
+            "schema": "transport.recorder.selfcheck.v3", "provenance": module.stamp(),
             "source_sha256": module.digest(ROOT / "scripts/transport_collect.py"),
             "selfcheck_sha256": module.digest(Path(__file__)), "passed": True,
             "checks": ["budget includes reset", "failed attempts retained", "initial prefix unchanged",
                        "untargeted selection cannot read model", "15-step refit schedule",
                        "missing targets charged without clicking", "ambiguous targets refused",
-                       "no snapshot before reset", "appended episodes unique"],
+                       "no snapshot before reset", "appended episodes unique",
+                       "unobserved reset retained outside paired steps", "real reload supplies boundary"],
             "result": result,
         }
         target = Path(sys.argv[1])

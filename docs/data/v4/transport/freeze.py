@@ -31,20 +31,24 @@ def build(output, initial=False, parent=None):
     if initial:
         for fixture in ("dispatch", "workshop"):
             base = ROOT / "docs/data/v4/transport/first_pass" / fixture
-            runtime.extend([base / "initial" / "steps.jsonl", base / "initial" / "observations.jsonl",
-                            base / "candidates" / "candidates.json"])
+            runtime.extend([base / "initial_v2" / "steps.jsonl", base / "initial_v2" / "observations.jsonl",
+                            base / "candidates_v2" / "candidates.json"])
     sealed = [p for p in (ROOT / "experiments/transport_v1").rglob("*")
               if p.is_file() and not {"__pycache__", "audits", "revisions"} & set(p.parts)
               and p.suffix in {".py", ".json", ".js", ".html", ".css", ".md"}]
     sealed.extend(ROOT / relative for relative in (
-        "docs/data/v4/transport/protocol_v1.md", "docs/data/v4/transport/instrument_review_v1.md",
+        "docs/data/v4/transport/protocol_v2.md", "docs/data/v4/transport/instrument_review_v2.md",
+        "docs/data/v4/transport/fixture_review_v2.md",
         "docs/data/v4/transport/freeze.py", "docs/data/v4/transport/run_job.py",
         "docs/data/v4/transport/recorder_selfcheck.py", "pyproject.toml", "pytest.ini"))
     record = {
-        "schema": "semabi.transport.freeze.v1", "utc": datetime.now(timezone.utc).isoformat(),
+        "schema": "semabi.transport.freeze.v2", "utc": datetime.now(timezone.utc).isoformat(),
         "owner": "/root", "pid": os.getpid(), "working_directory": str(ROOT),
         "source_head": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
         "learner_baseline": "9bc371ce9af65241426b77585aa79352bdd7f123",
+        "supersedes_instrument": {"checkpoint": "795d073",
+                                  "manifest": "docs/data/v4/transport/implementation_freeze_v1.json",
+                                  "reason": "Unobserved reset prestate was encoded as an empty observation"},
         "stage": "initial_evidence_and_candidates_frozen" if initial else "implementation_and_fixtures_frozen",
         "files": {str(p.relative_to(ROOT)): sha(p) for p in sorted(runtime)},
         "sealed_evaluator_files": {str(p.relative_to(ROOT)): sha(p) for p in sorted(sealed)},
