@@ -1,0 +1,320 @@
+{
+  "authority": "Independently prepared evaluator-only visible-state contract derived before first-pass evaluation from frozen fixture specification/cases/scripts; no application or learner imports. No outcome labels or rule selectors are supplied to this control.",
+  "exposure": {
+    "first_pass_raw_or_model_outputs_read": false,
+    "new_source_reads": "Scorer/collector schema and directly serialized evidence, object, role and numeric-field definitions only; no saved first-pass output.",
+    "prior_review": "docs/data/v4/transport/fixture_review_v2.md",
+    "reserved_contract_opened": false,
+    "reserved_material_incidental_to_prior_shared_source_review": true,
+    "reviewer": "/root/fixture_review"
+  },
+  "fixture_freeze": {
+    "path": "experiments/transport_v1/manifest_frozen.json",
+    "revision": "v2",
+    "sha256": "272e8ab1a95b65bcb381b27d2977f6b59bdeedacfe05153c102fd48917264dec"
+  },
+  "fixtures": {
+    "dispatch": {
+      "cases": [
+        {
+          "capacity": 9,
+          "case": "dispatch_01",
+          "family": "cross_object_order",
+          "job": "Cedar run",
+          "operation": "attempt",
+          "quantity": 6,
+          "resource": "Panel van",
+          "review_limit": 8,
+          "review_load": 5,
+          "target_label": "Check dispatch"
+        },
+        {
+          "capacity": 5,
+          "case": "dispatch_02",
+          "family": "cross_object_order",
+          "job": "Cedar run",
+          "operation": "attempt",
+          "quantity": 6,
+          "resource": "Panel van",
+          "review_limit": 8,
+          "review_load": 5,
+          "target_label": "Check dispatch"
+        },
+        {
+          "capacity": 19,
+          "case": "dispatch_03",
+          "family": "cross_object_order",
+          "job": "Cedar run",
+          "operation": "attempt",
+          "quantity": 16,
+          "resource": "Panel van",
+          "review_limit": 8,
+          "review_load": 5,
+          "target_label": "Check dispatch"
+        },
+        {
+          "capacity": 12,
+          "case": "dispatch_04",
+          "family": "cross_object_order",
+          "job": "Cedar run",
+          "operation": "attempt",
+          "quantity": 16,
+          "resource": "Panel van",
+          "review_limit": 8,
+          "review_load": 5,
+          "target_label": "Check dispatch"
+        },
+        {
+          "capacity": 9,
+          "case": "dispatch_05",
+          "family": "relevant_quantity_monotonicity",
+          "job": "Cedar run",
+          "operation": "attempt",
+          "quantity": 8,
+          "resource": "Panel van",
+          "review_limit": 8,
+          "review_load": 5,
+          "target_label": "Check dispatch"
+        },
+        {
+          "capacity": 19,
+          "case": "dispatch_06",
+          "family": "relevant_quantity_monotonicity",
+          "job": "Cedar run",
+          "operation": "attempt",
+          "quantity": 19,
+          "resource": "Panel van",
+          "review_limit": 8,
+          "review_load": 5,
+          "target_label": "Check dispatch"
+        },
+        {
+          "capacity": 19,
+          "case": "dispatch_07",
+          "family": "relevant_quantity_monotonicity",
+          "job": "Cedar run",
+          "operation": "attempt",
+          "quantity": 19.5,
+          "resource": "Panel van",
+          "review_limit": 8,
+          "review_load": 5,
+          "target_label": "Check dispatch"
+        },
+        {
+          "capacity": 7,
+          "case": "dispatch_08",
+          "family": "relevant_quantity_monotonicity",
+          "job": "Cedar run",
+          "operation": "attempt",
+          "quantity": 8,
+          "resource": "Panel van",
+          "review_limit": 8,
+          "review_load": 5,
+          "target_label": "Check dispatch"
+        },
+        {
+          "capacity": null,
+          "case": "dispatch_opaque_01",
+          "family": "restricted_observability_ambiguity",
+          "job": "Cedar run",
+          "operation": "review",
+          "quantity": 9,
+          "resource": null,
+          "review_limit": 8,
+          "review_load": 5,
+          "target_label": "Review seal"
+        },
+        {
+          "capacity": null,
+          "case": "dispatch_opaque_02",
+          "family": "restricted_observability_ambiguity",
+          "job": "Cedar run",
+          "operation": "review",
+          "quantity": 9,
+          "resource": null,
+          "review_limit": 8,
+          "review_load": 5,
+          "target_label": "Review seal"
+        }
+      ],
+      "jobs": [
+        "Cedar run",
+        "Rowan run",
+        "Alder run"
+      ],
+      "labels": {
+        "capacity": "Payload limit",
+        "no_resource": "No carrier selected",
+        "quantity": "Packed weight (kg)",
+        "resource_name": "Carrier",
+        "review_limit": "Seal rating",
+        "review_load": "Recorded seal load"
+      },
+      "raw_design_eligibility": {
+        "at_least_three_initial_distinct_values_per_operand": true,
+        "both_operands_vary_on_both_initial_outcome_sides": true,
+        "cross_object_scalar_comparison_expressible": true,
+        "learner_availability": "Measured separately from raw design; requires named objects, fields, adopted language and query literals.",
+        "ordinary_relation": "selected_resource.capacity >= job.quantity",
+        "raw_monotone_quantity_attack_eligible": true
+      },
+      "resources": [
+        "Swift van",
+        "Panel van",
+        "Box van"
+      ],
+      "scope": [
+        "Oracle-supplied evaluator control. Saved learner outputs are inspected, never refitted or amended.",
+        "Ordinary evaluation preserves one job/resource identity and changes their numeric values; identity generalization is not tested.",
+        "Exact visible-name/source corroboration is a restricted identity control, not proof of a globally correct ontology.",
+        "Per-field correspondence can be unavailable because scorer v2 does not export attribute source nodes.",
+        "Trajectory alignment uses oracle pre-state values after preservation and is diagnostic only; no outcomes enter alignment.",
+        "A missing explicit reference is distinguished from missing correct role bindings; alternate selection/containment strategies remain inspectable.",
+        "A present comparison literal establishes learner-language availability, not learned-law correctness."
+      ],
+      "unit": "kg"
+    },
+    "workshop": {
+      "cases": [
+        {
+          "capacity": 11,
+          "case": "workshop_01",
+          "family": "cross_object_order",
+          "job": "Reed frame",
+          "operation": "attempt",
+          "quantity": 7,
+          "resource": "Standard station",
+          "review_limit": 9,
+          "review_load": 4,
+          "target_label": "Start job"
+        },
+        {
+          "capacity": 6,
+          "case": "workshop_02",
+          "family": "cross_object_order",
+          "job": "Reed frame",
+          "operation": "attempt",
+          "quantity": 7,
+          "resource": "Standard station",
+          "review_limit": 9,
+          "review_load": 4,
+          "target_label": "Start job"
+        },
+        {
+          "capacity": 25,
+          "case": "workshop_03",
+          "family": "cross_object_order",
+          "job": "Reed frame",
+          "operation": "attempt",
+          "quantity": 22,
+          "resource": "Standard station",
+          "review_limit": 9,
+          "review_load": 4,
+          "target_label": "Start job"
+        },
+        {
+          "capacity": 19,
+          "case": "workshop_04",
+          "family": "cross_object_order",
+          "job": "Reed frame",
+          "operation": "attempt",
+          "quantity": 22,
+          "resource": "Standard station",
+          "review_limit": 9,
+          "review_load": 4,
+          "target_label": "Start job"
+        },
+        {
+          "capacity": 11,
+          "case": "workshop_05",
+          "family": "relevant_quantity_monotonicity",
+          "job": "Reed frame",
+          "operation": "attempt",
+          "quantity": 11,
+          "resource": "Standard station",
+          "review_limit": 9,
+          "review_load": 4,
+          "target_label": "Start job"
+        },
+        {
+          "capacity": 11,
+          "case": "workshop_06",
+          "family": "relevant_quantity_monotonicity",
+          "job": "Reed frame",
+          "operation": "attempt",
+          "quantity": 11.5,
+          "resource": "Standard station",
+          "review_limit": 9,
+          "review_load": 4,
+          "target_label": "Start job"
+        },
+        {
+          "capacity": null,
+          "case": "workshop_opaque_01",
+          "family": "restricted_observability_ambiguity",
+          "job": "Reed frame",
+          "operation": "review",
+          "quantity": 9,
+          "resource": null,
+          "review_limit": 9,
+          "review_load": 4,
+          "target_label": "Request release"
+        },
+        {
+          "capacity": null,
+          "case": "workshop_opaque_02",
+          "family": "restricted_observability_ambiguity",
+          "job": "Reed frame",
+          "operation": "review",
+          "quantity": 9,
+          "resource": null,
+          "review_limit": 9,
+          "review_load": 4,
+          "target_label": "Request release"
+        }
+      ],
+      "jobs": [
+        "Reed frame",
+        "Elm frame",
+        "Moss shelf"
+      ],
+      "labels": {
+        "capacity": "Work span",
+        "no_resource": "No station attached",
+        "quantity": "Required span (cm)",
+        "resource_name": "Station",
+        "review_limit": "Release limit",
+        "review_load": "Recorded clearance span"
+      },
+      "raw_design_eligibility": {
+        "at_least_three_initial_distinct_values_per_operand": true,
+        "both_operands_vary_on_both_initial_outcome_sides": true,
+        "cross_object_scalar_comparison_expressible": true,
+        "learner_availability": "Measured separately from raw design; requires named objects, fields, adopted language and query literals.",
+        "ordinary_relation": "selected_resource.capacity >= job.quantity",
+        "raw_monotone_quantity_attack_eligible": false
+      },
+      "resources": [
+        "Compact station",
+        "Standard station",
+        "Extended station"
+      ],
+      "scope": [
+        "Oracle-supplied evaluator control. Saved learner outputs are inspected, never refitted or amended.",
+        "Ordinary evaluation preserves one job/resource identity and changes their numeric values; identity generalization is not tested.",
+        "Exact visible-name/source corroboration is a restricted identity control, not proof of a globally correct ontology.",
+        "Per-field correspondence can be unavailable because scorer v2 does not export attribute source nodes.",
+        "Trajectory alignment uses oracle pre-state values after preservation and is diagnostic only; no outcomes enter alignment.",
+        "A missing explicit reference is distinguished from missing correct role bindings; alternate selection/containment strategies remain inspectable.",
+        "A present comparison literal establishes learner-language availability, not learned-law correctness."
+      ],
+      "unit": "cm"
+    }
+  },
+  "schema": "semabi.transport.oracle_binding_control.v1",
+  "source_inputs": {
+    "experiments/transport_v1/oracle/cases.json": "53fcfffc6f6dc040eb5a11f4d46ae4de0eee7a62a2ba9f98faebbc2138a9ccad",
+    "experiments/transport_v1/oracle/evaluation_scripts.json": "2a804806bd8b7ef508e8642e6faea52e1de3ebfcf4c344170f96135f62b65b41",
+    "experiments/transport_v1/oracle/specification.json": "6f0ae2f1b6cfd55e8878d86039e821d3823a00ad2478a829671c7252c9ed3a3e"
+  }
+}

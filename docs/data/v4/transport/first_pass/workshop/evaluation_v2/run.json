@@ -1,0 +1,70 @@
+{
+  "bootstrap_goto": 0,
+  "case_count": 8,
+  "charged_attempts": 51,
+  "complete": true,
+  "end": {
+    "argv": [
+      "scripts/transport_collect.py",
+      "script",
+      "--url",
+      "http://127.0.0.1:8767/workshop",
+      "--reset-url",
+      "http://127.0.0.1:8767/reset?fixture=workshop&partition=initial",
+      "--script",
+      "experiments/transport_v1/oracle/evaluation_scripts.json",
+      "--fixture",
+      "workshop",
+      "--freeze",
+      "docs/data/v4/transport/campaign_freeze_v2.json",
+      "--out",
+      "docs/data/v4/transport/first_pass/workshop/evaluation_v2"
+    ],
+    "cwd": "/home/moloch/semabi",
+    "git_head": "152d87506cad8cea62ec107c4e5ae735a744329c",
+    "pid": 237415,
+    "utc": "2026-09-07T16:00:52.591335+00:00"
+  },
+  "failed_attempts": 0,
+  "freeze_sha256": "54e8d96c27a9d8e4b8b46b04db0eb3a9697cb3d5177d79dfe82260073adf7b23",
+  "navigation_waits": 0,
+  "paired_steps_recorded": 50,
+  "primitive_counts": {
+    "click": 42,
+    "reload": 1,
+    "reset": 8
+  },
+  "raw_hashes": {
+    "decisions.jsonl": "95bc728ccfb7501012cb8a8df9811b422fe10d4bc47c6b0ff176b29a11d3208f",
+    "observations.jsonl": "f1cb97e2e50397da692aabd6a746204ed1d8e5481af8a195f26a98532948f0c6",
+    "steps.jsonl": "d484c4e6d96dd671f3b70ba6ddbaaaed7a08bd344cd7f03e45e36dae1fe18ff8"
+  },
+  "script_file": "experiments/transport_v1/oracle/evaluation_scripts.json",
+  "script_sha256": "2a804806bd8b7ef508e8642e6faea52e1de3ebfcf4c344170f96135f62b65b41",
+  "settle_timeouts": 0,
+  "snapshot_calls": 101,
+  "start": {
+    "argv": [
+      "scripts/transport_collect.py",
+      "script",
+      "--url",
+      "http://127.0.0.1:8767/workshop",
+      "--reset-url",
+      "http://127.0.0.1:8767/reset?fixture=workshop&partition=initial",
+      "--script",
+      "experiments/transport_v1/oracle/evaluation_scripts.json",
+      "--fixture",
+      "workshop",
+      "--freeze",
+      "docs/data/v4/transport/campaign_freeze_v2.json",
+      "--out",
+      "docs/data/v4/transport/first_pass/workshop/evaluation_v2"
+    ],
+    "cwd": "/home/moloch/semabi",
+    "git_head": "152d87506cad8cea62ec107c4e5ae735a744329c",
+    "pid": 237415,
+    "utc": "2026-09-07T16:00:08.965945+00:00"
+  },
+  "status": "FINISHED",
+  "unpaired_attempts": 1
+}

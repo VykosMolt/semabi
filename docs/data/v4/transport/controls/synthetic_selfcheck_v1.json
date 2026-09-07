@@ -1,0 +1,33 @@
+{
+  "schema": "semabi.transport.oracle_binding_control.v1",
+  "kind": "synthetic_control_selfcheck",
+  "passed": true,
+  "first_pass_inputs_read": false,
+  "checks": [
+    "correct named owner",
+    "wrong named owner",
+    "name without source anchor",
+    "labelled scalar field",
+    "stale mapped field is mismatch",
+    "numeric coincidence is unavailable",
+    "flat mention does not create resource",
+    "missing role retained",
+    "missing target retains all metrics",
+    "unit text is faithful but not scalar",
+    "prose number not parsed",
+    "nonfinite number not parsed",
+    "adapter fixed task denominator",
+    "oracle field alignment and intended comparison",
+    "independent raw fidelity",
+    "explicit selected-resource reference",
+    "trajectory alignment labeled as supplied",
+    "missing query remains in binding denominator",
+    "duplicate target cannot shrink denominator",
+    "false saved comparison detected",
+    "decision raw-step mismatch retained",
+    "pending model retains all tasks",
+    "same named entity key drift is separate",
+    "wrong resource reference is mismatch"
+  ],
+  "contract_structure_validated": true
+}

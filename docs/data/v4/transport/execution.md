@@ -162,3 +162,53 @@ new fits or tests.
   reserved interface contents. Public contract/initial scripts, filenames,
   structural audit scope and synthetic learner failures are disclosed. The
   sealed fixture-review report contains outcomes and remains unopened by root.
+
+## T1 execution started (2026-09-07 15:46 UTC)
+
+V2 source/review checkpoint: `152d875`. Implementation manifest
+`implementation_freeze_v2.json` SHA-256
+`374038ab8a2e3ce5046cba31bbd17e95c7c8458e0c8cb380c703e29cd1155a30`.
+Both corrected initial traces completed without action failures: dispatch 33
+charged / 32 paired / 65 snapshots; workshop 38 / 37 / 75. Real preparation
+retained all 7 generated candidates on each fixture (cap 8, no omissions).
+
+Campaign child freeze `campaign_freeze_v2.json` SHA-256
+`54e8d96c27a9d8e4b8b46b04db0eb3a9697cb3d5177d79dfe82260073adf7b23`
+binds 73 runtime/initial-evidence files and 58 sealed evaluator files. Both
+sections verified before execution. No held-out outcome, oracle or reserved
+content has been opened by root. The four paired comparisons now execute as
+eight serialized 60-action sessions. Common evaluation collection follows;
+learning/scoring receives only raw histories and frozen candidate readings.
+No commits or source changes occur during fits because provenance includes HEAD.
+
+## Collection complete (2026-09-07 16:02 UTC)
+
+All eight arms spent exactly 60 charged attempts and 59 new paired Steps.
+Every treatment/control pair has identical `(action, ok, before, after)` histories.
+No targeted action was selected. Treatment recognition errors by fixture/seed:
+dispatch 76/68, workshop 89/63; these are 296 failed button queries, not 296
+world actions. Failed primitives per arm were dispatch 14/18 and workshop 10/8,
+identical in the paired controls: 100 failures of 480 total acquisition attempts.
+Every scheduled fit completed. Numeric-input text rejection and click timeouts
+remain in the raw failure ledger. Timeout cause is not yet established.
+
+Both common evaluation traces completed with no failed actions: dispatch 47
+charged / 46 paired with 10 task targets; workshop 51 / 50. Dispatch has 36 click
+opportunities, workshop 42. The initial dispatch score has 8 complete readings,
+all emissions unestablished; current-inferred state reading raises KeyError at
+all 36 clicks. Workshop initial current-inferred fails on 32 of 42 clicks.
+These aggregate outcomes are now disclosed to root after the freeze. Both
+interfaces' oracle meanings, source, sealed review and reserved interface stay
+unopened by root. Terminal scoring is completing without source changes.
+
+The service was intentionally stopped after both common evaluations: root sent
+Ctrl-C to owned runner session 37805; it terminated and reaped child group200140.
+`jobs/server_t1/process.json` preserves the intentional interrupt and termination;
+`ps` confirms runner200138 and child200140 are gone. Only two single-threaded
+workshop score jobs may remain active, owned by baseline_verification.
+
+Next: seal all complete raw/model outputs with preserve_first_pass.py, commit the
+immutable checkpoint, then release evaluator-only binding controls and the
+acquisition summary. Review failure attribution before the two-site V4 graph
+ownership repair. Missing live normalization and possible suffix statistics in
+_normalise_sections are separate hypotheses, not yet demonstrated causes.

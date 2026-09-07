@@ -1,0 +1,111 @@
+{
+  "bootstrap_goto": 0,
+  "budget": 60,
+  "charged_attempts": 60,
+  "complete": true,
+  "end": {
+    "argv": [
+      "scripts/transport_collect.py",
+      "acquire",
+      "--url",
+      "http://127.0.0.1:8767/workshop",
+      "--reset-url",
+      "http://127.0.0.1:8767/reset?fixture=workshop&partition=acquisition",
+      "--initial",
+      "docs/data/v4/transport/first_pass/workshop/initial_v2",
+      "--policy",
+      "contested",
+      "--seed",
+      "1701",
+      "--budget",
+      "60",
+      "--freeze",
+      "docs/data/v4/transport/campaign_freeze_v2.json",
+      "--out",
+      "docs/data/v4/transport/first_pass/workshop/contested_1701"
+    ],
+    "cwd": "/home/moloch/semabi",
+    "git_head": "152d87506cad8cea62ec107c4e5ae735a744329c",
+    "pid": 232213,
+    "utc": "2026-09-07T15:55:59.308088+00:00"
+  },
+  "failed_attempts": 10,
+  "fit_runtime_failures": 0,
+  "freeze_sha256": "54e8d96c27a9d8e4b8b46b04db0eb3a9697cb3d5177d79dfe82260073adf7b23",
+  "initial_sha256": {
+    "observations.jsonl": "99c84dd7e01c8c6a08c58c7aee0f5335b0c5b925c17c56149cb5987ccefe5331",
+    "steps.jsonl": "cb87a0a2555b56467d69540af9c02369e3ef2107b26ce63d54c2387af3fb622c"
+  },
+  "initial_steps": 37,
+  "navigation_waits": 0,
+  "paired_steps_recorded": 59,
+  "policy": "contested",
+  "primitive_counts": {
+    "click": 51,
+    "press": 2,
+    "reload": 1,
+    "reset": 1,
+    "type": 5
+  },
+  "raw_hashes": {
+    "decisions.jsonl": "0137f0eeff2c1c8338477ceca5d29820252e4818c0951cd4c36010191a895b9a",
+    "observations.jsonl": "bf3d3c50dc09b0394ee90e0bc1c641d207fa0f9c09c5e912429392591c069116",
+    "steps.jsonl": "39f90afbb94b23a649ff8fb558a70f2a33d1aaefd82de281601b329e01ec0fae"
+  },
+  "recognition_runtime_failures": 89,
+  "refits": [
+    {
+      "after_charged_attempts": 0,
+      "status": "FITTED",
+      "training_steps": 37
+    },
+    {
+      "after_charged_attempts": 15,
+      "status": "FITTED",
+      "training_steps": 51
+    },
+    {
+      "after_charged_attempts": 30,
+      "status": "FITTED",
+      "training_steps": 66
+    },
+    {
+      "after_charged_attempts": 45,
+      "status": "FITTED",
+      "training_steps": 81
+    }
+  ],
+  "seed": 1701,
+  "settle_timeouts": 0,
+  "snapshot_calls": 60,
+  "start": {
+    "argv": [
+      "scripts/transport_collect.py",
+      "acquire",
+      "--url",
+      "http://127.0.0.1:8767/workshop",
+      "--reset-url",
+      "http://127.0.0.1:8767/reset?fixture=workshop&partition=acquisition",
+      "--initial",
+      "docs/data/v4/transport/first_pass/workshop/initial_v2",
+      "--policy",
+      "contested",
+      "--seed",
+      "1701",
+      "--budget",
+      "60",
+      "--freeze",
+      "docs/data/v4/transport/campaign_freeze_v2.json",
+      "--out",
+      "docs/data/v4/transport/first_pass/workshop/contested_1701"
+    ],
+    "cwd": "/home/moloch/semabi",
+    "git_head": "152d87506cad8cea62ec107c4e5ae735a744329c",
+    "pid": 232213,
+    "utc": "2026-09-07T15:54:53.822110+00:00"
+  },
+  "status": "FINISHED",
+  "targeted_attempts": 0,
+  "terminal_refit": "performed by scoring process using all acquired history",
+  "unpaired_attempts": 1
+}
