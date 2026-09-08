@@ -117,6 +117,7 @@ class Hypotheses:
         self.alias_map: dict[tuple[str, str], str] = {}  # (template, key value) -> canonical key value (another template's)
         self.key_overrides: dict[tuple[str, str, str], str] = {}  # (observation, template, rendered key) -> associated key
         self.persistent_widgets: set[tuple[str, str]] = set()  # (template, slot) widget values shown to survive reloads
+        self._reload_persistent_widgets: set[tuple[str, str]] = set()  # automatic claims, revocable under the current key
         self.slot_attachments: dict[tuple[str, str], str] = {}  # (source template, slot) -> sibling mention template
         self.contextual_identity: set[str] = set()  # mention templates keyed by (enclosing key, own key)
         self.mention_type_assignments: dict[tuple[str, str, str], str] = {}
@@ -129,6 +130,7 @@ class Hypotheses:
         # heading/region context).  Populated only by a verified local intervention.
         self.record_splits: list[dict] = []
         self._split_done = False
+        self._context_key_materialization_error: str | None = None
         self.frozen = False
 
     # ------------------------------------------------------------- templates
@@ -151,6 +153,10 @@ class Hypotheses:
     # ------------------------------------------------------------- instances
     def parse_units(self, sig: str) -> list[UnitInstance]:
         """Unit instances of one observation (all recurring templates; nested allowed)."""
+        return self._parse_units(sig)
+
+    def _parse_units(self, sig: str, *, raw_keys: bool = False, cache: bool = True) -> list[UnitInstance]:
+        """The native parser; raw keys and detached ordinary parses never replace the cache."""
         obs = self.G.obs[sig]
         insts: list[UnitInstance] = []
         by_root: dict[int, UnitInstance] = {}
@@ -293,27 +299,29 @@ class Hypotheses:
                     ui.slots[u.key_slot] = "|".join(ui.slots[p] for p in parts)
                     ui.slot_nodes[u.key_slot] = ui.slot_nodes[parts[0]]
         # aliases (verified correspondences): a key shown under another naming convention
-        if self.alias_map or self.key_overrides:
+        if not raw_keys and (self.alias_map or self.key_overrides):
             for ui in insts:
                 u = self.units.get(ui.template)
                 if u and u.key_slot and u.key_slot in ui.slots:
-                    rendered = ui.slots[u.key_slot]
-                    canon = self.key_overrides.get((sig, ui.template, rendered),
-                                                   self.alias_map.get((ui.template, rendered)))
-                    if canon is not None:
-                        ui.slots[u.key_slot] = canon
+                    ui.slots[u.key_slot] = self._canonical_key(sig, ui.template, ui.slots[u.key_slot])
         # duplicate names among siblings are told apart by position (second copy: "name#2")
         seen: dict[tuple[int | None, str, str], int] = defaultdict(int)
         for ui in insts:
             u = self.units.get(ui.template)
-            if u and u.key_slot and u.key_slot in ui.slots:
+            if not raw_keys and u and u.key_slot and u.key_slot in ui.slots:
                 k = (ui.parent_root, ui.template, ui.slots[u.key_slot])
                 seen[k] += 1
                 if seen[k] > 1:
                     ui.slots[u.key_slot] = f"{ui.slots[u.key_slot]}#{seen[k]}"
                     ui.positional = True
-        self._page_instances[sig] = {ui.root: ui for ui in insts}
+        if not raw_keys and cache:
+            self._page_instances[sig] = {ui.root: ui for ui in insts}
         return insts
+
+    def _canonical_key(self, sig: str, template: str, rendered: str) -> str:
+        canonical = self.key_overrides.get((sig, template, rendered),
+                                           self.alias_map.get((template, rendered)))
+        return rendered if canonical is None else canonical
 
     def _property_list(self, obs, sig: str, i: int) -> bool:
         """A key-value table, its row groups and its rows are fields of their container,
@@ -377,11 +385,8 @@ class Hypotheses:
                 rendered = ui.slots.get(u.key_slot)
                 if rendered is None:
                     continue
-                canonical = self.key_overrides.get(
-                    (ui.sig, ui.template, rendered),
-                    self.alias_map.get((ui.template, rendered)),
-                )
-                if canonical is None or canonical == rendered:
+                canonical = self._canonical_key(ui.sig, ui.template, rendered)
+                if canonical == rendered:
                     continue
                 ui.slots[u.key_slot] = canonical
                 changed += 1
@@ -716,12 +721,186 @@ class Hypotheses:
                 if kept >= 2 and lost == 0:
                     new = sid[:-1]
                     self.persistent_widgets.add((t, new))
+                    self._reload_persistent_widgets.add((t, new))
                     for ui in u.instances:
                         if sid in ui.slots:
                             ui.slots[new] = ui.slots.pop(sid)
                             ui.slot_nodes[new] = ui.slot_nodes.pop(sid)
                     u.evidence.append(f"widget slot {sid} survives reloads ({kept}): attribute")
             self._slot_stats(u)
+
+    def _reload_widget_evidence(self, u: UnitHyp, sid: str, raw: dict) -> dict[str, int]:
+        """Compare raw values under the current own key, never position-suffixed keys."""
+        counts = {"kept": 0, "lost": 0, "ambiguous": 0, "missing": 0, "mismatched": 0}
+        by_sig: dict[str, dict[str, list[UnitInstance]]] = defaultdict(lambda: defaultdict(list))
+        for (sig, template, _root), ui in raw.items():
+            if template == u.template and u.key_slot in ui.slots:
+                key = self._canonical_key(sig, template, ui.slots[u.key_slot])
+                by_sig[sig][key].append(ui)
+        pairs = getattr(self, "reload_pairs", [])
+        reload_sigs = {sig for pair in pairs for sig in pair}
+        counts["ambiguous"] = sum(len(matches) > 1 for sig in reload_sigs
+                                  for matches in by_sig.get(sig, {}).values())
+        fitted: dict[tuple, list[UnitInstance]] = defaultdict(list)
+        for ui in u.instances:
+            if ui.sig in reload_sigs:
+                fitted[(ui.sig, ui.template, ui.root)].append(ui)
+        sites = set(fitted) | {site for site in raw if site[0] in reload_sigs and site[1] == u.template}
+        mismatched = set()
+        bound_slots = {sid, u.key_slot} | set(u.key_slot.split("|") if u.key_slot else [])
+        for site in sites:
+            parsed, fits = raw.get(site), fitted.get(site, [])
+            if (site[1] != u.template or parsed is None or len(fits) != 1
+                    or fits[0].parent_root != parsed.parent_root):
+                mismatched.add(site)
+                continue
+            fit = fits[0]
+            for slot in bound_slots:
+                if ((slot in parsed.slots) != (slot in fit.slots)
+                        or (slot in parsed.slots and (parsed.slot_nodes.get(slot) is None
+                            or parsed.slot_nodes[slot] != fit.slot_nodes.get(slot)))):
+                    mismatched.add(site)
+        counts["mismatched"] = len(mismatched)
+
+        def value(ui):
+            if (ui.sig, ui.template, ui.root) in mismatched:
+                return None
+            return ui.slots.get(sid)
+
+        for a, b in pairs:
+            for key in set(by_sig.get(a, {})) | set(by_sig.get(b, {})):
+                left, right = by_sig.get(a, {}).get(key, []), by_sig.get(b, {}).get(key, [])
+                if not left or not right:
+                    counts["missing"] += 1
+                    continue
+                if len(left) != 1 or len(right) != 1:
+                    continue
+                va, vb = value(left[0]), value(right[0])
+                if va is None or vb is None:
+                    counts["missing"] += 1
+                else:
+                    counts["kept" if va == vb else "lost"] += 1
+        return counts
+
+    def _raw_unit_instances(self) -> dict[tuple[str, str, int], UnitInstance]:
+        return {(ui.sig, ui.template, ui.root): ui
+                for sig in self.G.obs for ui in self._parse_units(sig, raw_keys=True)}
+
+    def _has_key_associations(self, template: str) -> bool:
+        return (any(t == template for t, _key in self.alias_map)
+                or any(t == template for _sig, t, _key in self.key_overrides))
+
+    def _key_materialization(self, ui: UnitInstance, template: str, key_slot: str,
+                             former_key: str, raw: dict, former_template: str | None = None) -> tuple[dict, dict]:
+        parsed = raw.get((ui.sig, template, ui.root))
+        parts = set(key_slot.split("|")) | set(former_key.split("|"))
+        if (ui.template not in (template, former_template) or parsed is None
+                or parsed.parent_root != ui.parent_root
+                or any(p not in parsed.slots or p not in ui.slots or parsed.slot_nodes.get(p) is None
+                       or parsed.slot_nodes[p] != ui.slot_nodes.get(p) for p in parts)
+                or any(slot in ui.slots and ui.slot_nodes.get(slot) != parsed.slot_nodes[slot.split("|")[0]]
+                       for slot in (former_key, key_slot))):
+            raise ValueError(f"cannot materialize selected key {key_slot} from its raw instance")
+        slots = {p: parsed.slots[p] for p in parts}
+        nodes = {p: parsed.slot_nodes[p] for p in parts}
+        slots[former_key] = "|".join(parsed.slots[p] for p in former_key.split("|"))
+        nodes[former_key] = parsed.slot_nodes[former_key.split("|")[0]]
+        slots[key_slot] = self._canonical_key(ui.sig, template,
+                                              "|".join(parsed.slots[p] for p in key_slot.split("|")))
+        nodes[key_slot] = parsed.slot_nodes[key_slot.split("|")[0]]
+        return slots, nodes
+
+    def _materialize_key(self, u: UnitHyp, key_slot: str, former_key: str, raw: dict,
+                         former_template: str | None = None) -> None:
+        updates = [(ui, *self._key_materialization(ui, u.template, key_slot, former_key, raw), False)
+                   for ui in u.instances]
+        if former_template is not None:
+            parsed_pages = {}
+            for ui in u.instances:
+                cached = self._page_instances.get(ui.sig, {}).get(ui.root)
+                if (cached is None or cached.sig != ui.sig or cached.root != ui.root
+                        or cached.template not in (u.template, former_template)):
+                    continue
+                fields, _nodes = self._key_materialization(cached, u.template, key_slot, former_key,
+                                                          raw, former_template)
+                if ui.sig not in parsed_pages:
+                    parsed_pages[ui.sig] = {instance.root: instance
+                                           for instance in self._parse_units(ui.sig, cache=False)}
+                parsed = parsed_pages[ui.sig].get(ui.root)
+                if parsed is None or parsed.template != u.template:
+                    raise ValueError(f"cannot refresh selected key {key_slot} in its cached instance")
+                updates.append((cached, {sid: parsed.slots.get(sid) for sid in fields},
+                                {sid: parsed.slot_nodes.get(sid) for sid in fields}, parsed.positional))
+        # Validate every participating binding before updating any instance. Cache
+        # updates use an ordinary detached parse, including positional key suffixes.
+        for ui, slots, nodes, positional in updates:
+            ui.template = u.template
+            ui.positional = positional
+            for sid, value in slots.items():
+                if value is None:
+                    ui.slots.pop(sid, None)
+                    ui.slot_nodes.pop(sid, None)
+                else:
+                    ui.slots[sid] = value
+                    ui.slot_nodes[sid] = nodes[sid]
+        self._slot_stats(u)
+
+    def _demote_widget(self, ui: UnitInstance, sid: str, raw: UnitInstance | None) -> None:
+        ui.slots.pop(sid, None)
+        ui.slot_nodes.pop(sid, None)
+        ui.slots.pop(sid + "~", None)
+        ui.slot_nodes.pop(sid + "~", None)
+        if raw is not None and sid in raw.slots and sid in raw.slot_nodes:
+            ui.slots[sid + "~"] = raw.slots[sid]
+            ui.slot_nodes[sid + "~"] = raw.slot_nodes[sid]
+        for composite in set(ui.slots) | set(ui.slot_nodes):
+            if "|" in composite and sid in composite.split("|"):
+                ui.slots.pop(composite, None)
+                ui.slot_nodes.pop(composite, None)
+
+    def _revoke_unsupported_widgets(self) -> bool:
+        owned = self._reload_persistent_widgets & self.persistent_widgets
+        if not owned:
+            return False
+        raw = self._raw_unit_instances()
+        rejected = []
+        for template, sid in sorted(owned):
+            u = self.units.get(template)
+            if u is None:
+                rejected.append((template, sid))
+                continue
+            counts = self._reload_widget_evidence(u, sid, raw)
+            if counts["kept"] >= 2 and counts["lost"] == counts["ambiguous"] == counts["mismatched"] == 0:
+                continue
+            reason = ("mismatched raw/fitted binding" if counts["mismatched"] else "ambiguous own key"
+                      if counts["ambiguous"] else "reload value changed" if counts["lost"]
+                      else "insufficient matched reload values")
+            detail = ", ".join(f"{name}={count}" for name, count in counts.items())
+            u.evidence.append(f"widget persistence revoked: slot {sid} under key {u.key_slot} ({detail}): {reason}")
+            rejected.append((template, sid))
+        dependencies = []
+        for template, sid in rejected:
+            self.persistent_widgets.discard((template, sid))
+            self._reload_persistent_widgets.discard((template, sid))
+            u = self.units.get(template)
+            if u is None:
+                continue
+            if u.key_slot and sid in u.key_slot.split("|"):
+                dependencies.append((template, sid, u.key_slot))
+            instances = list(u.instances)
+            for ui in u.instances:
+                cached = self._page_instances.get(ui.sig, {}).get(ui.root)
+                if cached is not None and (cached.sig, cached.template, cached.root) == (ui.sig, template, ui.root):
+                    instances.append(cached)
+            seen = set()
+            for ui in instances:
+                if id(ui) not in seen:
+                    self._demote_widget(ui, sid, raw.get((ui.sig, template, ui.root)))
+                    seen.add(id(ui))
+            self._slot_stats(u)
+        if dependencies:
+            raise ValueError(f"rejected reload widget persistence is required by a selected key: {dependencies}")
+        return bool(rejected)
 
     def _slot_order(self, uh: UnitHyp, sid: str) -> int:
         for ui in uh.instances:
@@ -818,10 +997,12 @@ class Hypotheses:
         """One template can realise different things in different containers (a row
         'X loads N' lists hives under a bloom and blooms under a hive): split a keyed unit
         type by enclosing template when the key sets of the contexts barely overlap."""
+        changed_keys = []
         for t in list(self.units):
             u = self.units[t]
             if not u.key_slot:
                 continue
+            former_key = u.key_slot
             fam_root = {}
             for f in self._families():
                 for v in f:
@@ -846,6 +1027,16 @@ class Hypotheses:
                         if root == c:
                             self.ctx_split[(t, pt)] = nt
                     self.ctx_split[(t, c)] = nt
+                    for source, sid in self._reload_persistent_widgets & self.persistent_widgets:
+                        if source == t:
+                            self.persistent_widgets.add((nt, sid))
+                            self._reload_persistent_widgets.add((nt, sid))
+                    for (source, key), canonical in list(self.alias_map.items()):
+                        if source == t:
+                            self.alias_map.setdefault((nt, key), canonical)
+                    for (sig, source, key), canonical in list(self.key_overrides.items()):
+                        if source == t:
+                            self.key_overrides.setdefault((sig, nt, key), canonical)
                     nu = UnitHyp(nt, by_ctx[c])
                     nu.max_per_obs = u.max_per_obs
                     for ui in by_ctx[c]:
@@ -854,14 +1045,46 @@ class Hypotheses:
                     self._choose_key(nu)
                     nu.evidence.append(f"split from {t[:40]} by context {str(c)[:40]}")
                     self.units[nt] = nu
+                    if nu.key_slot and nu.key_slot != former_key and self._has_key_associations(nt):
+                        changed_keys.append((nu, former_key, t))
                     u.instances = [ui for ui in u.instances if ui.template == t]
             self._slot_stats(u)
             self._choose_key(u)
+            if u.key_slot and u.key_slot != former_key and self._has_key_associations(t):
+                changed_keys.append((u, former_key, t))
+        if changed_keys:
+            # All derived units and mappings must exist before the parser resolves
+            # their new selected keys. Do not run key selection again after this.
+            try:
+                raw = self._raw_unit_instances()
+                for u, former_key, former_template in changed_keys:
+                    self._materialize_key(u, u.key_slot, former_key, raw, former_template)
+            except Exception as error:
+                self._context_key_materialization_error = str(error)
+                raise
 
     def _build_entity_types(self) -> None:
-        if not self._split_done:
-            self._split_by_context()
-            self._split_done = True
+        """Finalize the current identity, removing unsupported automatic widget claims."""
+        try:
+            if self._context_key_materialization_error is not None:
+                raise ValueError("context key materialization previously failed: " + self._context_key_materialization_error)
+            if not self._split_done:
+                self._split_by_context()
+                self._split_done = True
+            while True:
+                if any(u.key_slot and u.key_slot not in u.slots for u in self.units.values()):
+                    raise ValueError("selected key is unavailable after widget persistence revocation")
+                self._build_entity_types_once()
+                # Splitting happens once; each further pass only removes owned claims.
+                if not self._revoke_unsupported_widgets():
+                    break
+        except Exception:
+            self.entity_types = {}
+            self.tid_of_template = {}
+            self.frozen = False
+            raise
+
+    def _build_entity_types_once(self) -> None:
         self.entity_types = {}
         self.tid_of_template = {}
         keyed = [u for u in self.units.values() if u.key_slot]
@@ -912,6 +1135,7 @@ class Hypotheses:
                 continue
             groups[find(u.template)].append(u)
         tid = 0
+        raw_composites = None
         for root, us in groups.items():
             # harmonise composite keys across the templates of one entity type
             comps = [u.key_slot for u in us if "|" in u.key_slot]
@@ -920,11 +1144,17 @@ class Hypotheses:
                 parts = comp.split("|")
                 for u in us:
                     if "|" not in u.key_slot and all(p in u.slots for p in parts):
-                        for ui in u.instances:
-                            if all(p in ui.slots for p in parts):
-                                ui.slots[comp] = "|".join(ui.slots[p] for p in parts)
-                                ui.slot_nodes[comp] = ui.slot_nodes[parts[0]]
-                        self._slot_stats(u)
+                        associated = self._has_key_associations(u.template)
+                        if associated and raw_composites is None:
+                            raw_composites = self._raw_unit_instances()
+                        if associated:
+                            self._materialize_key(u, comp, u.key_slot, raw_composites)
+                        else:
+                            for ui in u.instances:
+                                if all(p in ui.slots for p in parts):
+                                    ui.slots[comp] = "|".join(ui.slots[p] for p in parts)
+                                    ui.slot_nodes[comp] = ui.slot_nodes[parts[0]]
+                            self._slot_stats(u)
                         u.key_slot = comp
                         u.evidence.append(f"composite key {comp} adopted from a sibling template")
             et = EntityType(tid, [u.template for u in us], {u.template: u.key_slot for u in us})

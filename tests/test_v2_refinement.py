@@ -1,11 +1,14 @@
 import json
 from types import SimpleNamespace
 
+import pytest
+
 from semabi.compiler.abstract import AbsObj, AbstractState, Diff
 from semabi.compiler.induce import ActT, Locator
 from semabi.compiler.observation import Node, Observation
 from semabi.compiler.v2.abstractor import V2Tracker
 from semabi.compiler.v2.counterexamples import abstraction_contradictions, classify_unregistered
+from semabi.compiler.v2.graph import ObsGraph
 from semabi.compiler.v2.hypotheses import Hypotheses, UnitHyp, UnitInstance
 from semabi.compiler.v2.refinement import (
     AmbiguityComponent,
@@ -14,6 +17,7 @@ from semabi.compiler.v2.refinement import (
     RefinementDecision,
     apply_context_membership_result,
     choose_intervention_component,
+    configure_hypotheses,
     load_decisions,
     read_components,
     write_decisions,
@@ -67,6 +71,63 @@ def test_supported_observation_associations_rewrite_fitted_keys():
     assert [x.slots["cell#0"] for x in instances] == ["R1", "R2"]
     assert set(unit.slots["cell#0"].values) == {"R1", "R2"}
     assert any("supported observation evidence" in e for e in unit.evidence)
+
+
+def _configured_widget_hypothesis(after_keys=("Alpha", "Beta")):
+    graph = ObsGraph()
+    sigs = []
+    for status, keys in (("Before", ("Alpha", "Beta")), ("After", after_keys)):
+        page = Observation([
+            Node(0, -1, "group", ""), Node(1, 0, "status", status), Node(2, 0, "list", ""),
+            Node(3, 2, "listitem", keys[0]), Node(4, 3, "combobox", "", value="Red"),
+            Node(5, 2, "listitem", keys[1]), Node(6, 5, "combobox", "", value="Blue"),
+            Node(7, 0, "button", "Help"), Node(8, 0, "link", "About"), Node(9, 0, "heading", "Inventory"),
+        ])
+        sigs.append(page.structural_signature())
+        graph.add(sigs[-1], page)
+    hypothesis = Hypotheses(graph)
+    return hypothesis, hypothesis.template(sigs[0], 3), sigs
+
+
+def _configure_widget(hypothesis, template):
+    configure_hypotheses(hypothesis, [{
+        "kind": "ATTACH_PERSISTENT_WIDGET",
+        "target": {"source_template": template, "source_slot": "combobox#0"},
+    }])
+
+
+@pytest.mark.parametrize("reload_evidence", ["none", "one_match"])
+def test_configured_widget_persistence_does_not_require_automatic_reload_support(reload_evidence):
+    hypothesis, template, sigs = _configured_widget_hypothesis(after_keys=("Alpha", "Gamma"))
+    _configure_widget(hypothesis, template)
+
+    hypothesis.fit(reload_pairs=[tuple(sigs)] if reload_evidence == "one_match" else [])
+
+    assert (template, "combobox#0") in hypothesis.persistent_widgets
+    unit = hypothesis.units[template]
+    assert unit.key_slot == "listitem#0"
+    assert all("combobox#0" in ui.slots and "combobox#0~" not in ui.slots for ui in unit.instances)
+    assert "combobox#0" in hypothesis.entity_types[hypothesis.tid_of_template[template]].attr_slots[template]
+    assert all("combobox#0" in ui.slots for sig in sigs for ui in hypothesis.parse_units(sig) if ui.template == template)
+
+
+def test_explicit_support_added_after_automatic_promotion_survives_key_revision():
+    hypothesis, template, sigs = _configured_widget_hypothesis()
+    hypothesis.fit(reload_pairs=[tuple(sigs)])
+    assert (template, "combobox#0") in hypothesis.persistent_widgets
+    _configure_widget(hypothesis, template)
+    for rendered, canonical in (("Alpha", "Beta"), ("Beta", "Alpha")):
+        hypothesis.key_overrides[(sigs[1], template, rendered)] = canonical
+    hypothesis._apply_key_associations()
+
+    hypothesis._build_entity_types()
+
+    assert (template, "combobox#0") in hypothesis.persistent_widgets
+    unit = hypothesis.units[template]
+    assert unit.key_slot == "listitem#0"
+    assert [ui.slots[unit.key_slot] for ui in unit.instances if ui.sig == sigs[1]] == ["Beta", "Alpha"]
+    assert all("combobox#0" in ui.slots for ui in unit.instances)
+    assert "combobox#0" in hypothesis.entity_types[hypothesis.tid_of_template[template]].attr_slots[template]
 
 
 def test_component_roundtrip_does_not_mutate_loaded_json(tmp_path):

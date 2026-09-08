@@ -1154,6 +1154,7 @@ def configure_hypotheses(H, decisions: list[dict[str, Any]]) -> bool:
         t = d["target"]
         source = (t["source_template"], t["source_slot"])
         H.persistent_widgets.add(source)
+        H._reload_persistent_widgets.discard(source)
         if t.get("target_template"):
             H.slot_attachments[source] = t["target_template"]
             if t.get("identity_policy") == "ENCLOSING_KEY_PLUS_MENTION_KEY":
