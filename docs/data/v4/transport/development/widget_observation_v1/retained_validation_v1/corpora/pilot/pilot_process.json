@@ -1,0 +1,36 @@
+{
+  "case": "pilot",
+  "owner": "/root/baseline_verification",
+  "pid": 1559741,
+  "started_utc": "2026-09-08T10:28:10.441659+00:00",
+  "state": "completed",
+  "dev": "/home/moloch/semabi/runs/.w2_scoring_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev",
+  "hold": "/home/moloch/semabi/runs/.w2_scoring_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold",
+  "control": "button:Book pilot",
+  "command": [
+    "/home/moloch/semabi/.venv/bin/python",
+    "/home/moloch/semabi/runs/.w2_scoring_worktree/docs/data/v4/transport/baseline/check_corpora.py",
+    "pilot"
+  ],
+  "working_directory": "/home/moloch/semabi/runs/.w2_scoring_worktree",
+  "instrument_sha256": "ecfb411df3cc80c00642b6166874a705f4135f8bbf6224d71c45234ee7c0ce0d",
+  "source_snapshot_sha256": "bc0652aaed5494929d869b7bd5a24b0283d08ae59f95f99fbdb9c7dcacf51519",
+  "scope": "disclosed retained development regression; no fresh-generalization claim",
+  "fit_boundary": "existing instrument: search on all dev; outcome split 0.999; hold scoring only",
+  "input_files": {
+    "/home/moloch/semabi/runs/.w2_scoring_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/identity_refutations_v4.json": "b406eb5590e34d135b7c33019363bae33b9c21a62e3f69d997179342c826fabb",
+    "/home/moloch/semabi/runs/.w2_scoring_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/join_merge.json": "f278ea2c154f42c02c5ea3ed78adf7b93b58949b0db24bfd5a399b93cc7670f2",
+    "/home/moloch/semabi/runs/.w2_scoring_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/observations.jsonl": "025ba4e35a7cbd0a973dfc536db7fa0f1e1059df28615dab4c7ce1b5ed74e222",
+    "/home/moloch/semabi/runs/.w2_scoring_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+    "/home/moloch/semabi/runs/.w2_scoring_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_dev/steps.jsonl": "d56bcb072f2a7c7ebd1019181dffbd2bc7cc3e09db647fd33c7369601cd4708b",
+    "/home/moloch/semabi/runs/.w2_scoring_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/join_merge.json": "efd65ecc27d800260c4b8ad9a32ff17151e4282aa667b8fd7ab4f6f4f3fe02ef",
+    "/home/moloch/semabi/runs/.w2_scoring_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/observations.jsonl": "28dc70e37469268b335f9b83448038b3029fdc96f7cd282d238347250764c304",
+    "/home/moloch/semabi/runs/.w2_scoring_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/probes.acquired.jsonl": "5760a7005fe09833873ab54fd3f0a835802a4a4d42e711c2fb9752ad953640da",
+    "/home/moloch/semabi/runs/.w2_scoring_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/probes.jsonl": "4246029308aa34d8df2834cc2ea658ca518431e5d47d28f0aef88122cffdc199",
+    "/home/moloch/semabi/runs/.w2_scoring_worktree/runs/v4/transport_g1_corpora_v1/harbour_pil_hold/steps.jsonl": "8a6adb6eb3516d024437c098a4884162425301705b2005cdbc08f6d71c4c375c"
+  },
+  "ended_utc": "2026-09-08T10:45:30.055914+00:00",
+  "elapsed_seconds": 1039.6083047130087,
+  "result_sha256": "2cd2c3ceb67fe0d637eef94b26d881c52fc77fdf562c6a20f39eae7067e84900",
+  "changed_inputs": []
+}

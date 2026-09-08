@@ -1,0 +1,14 @@
+{
+  "args": {
+    "cmd": "python -I -B - <<'PY'\nfrom pathlib import Path\nimport hashlib,json,datetime\nroot=Path('/home/moloch/semabi');wt=root/'runs/.w2_scoring_worktree';rel=Path('docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1');gate=wt/rel;target=root/'docs/data/v4/transport/development/widget_observation_v1/retained_validation_v1'\nraw=(gate/'results_manifest_v1.json').read_bytes();assert hashlib.sha256(raw).hexdigest()=='cb8992e869a1c3cf680e864ff65f55cb5e0cb220acef0d695aa965bd0ec8c26d';m=json.loads(raw);assert m['status']=='PRESERVED' and not m['custody_findings'] and m['all_owned_jobs_terminated'];assert not target.exists();target.mkdir(parents=True);records=[]\ndef copy_file(src,dst,held=None):\n assert src.is_file() and not src.is_symlink();b=src.read_bytes();ident={'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}\n if held is not None:assert ident==held,(src,ident,held)\n dst.parent.mkdir(parents=True,exist_ok=True)\n with dst.open('xb') as f:f.write(b)\n assert dst.read_bytes()==b and src.stat().st_ino!=dst.stat().st_ino\n records.append({'source':str(src),'destination':str(dst.relative_to(root)),**ident})\nfor name,held in sorted(m['files'].items()):\n p=Path(name).relative_to(rel);assert '..' not in p.parts;copy_file(wt/name,target/p,held)\nfor name in ['results_manifest_v1.json','root_final_preserve_tool_v1.json']:copy_file(gate/name,target/name)\nsummary={'schema':'semabi.transport.w2_retained_gate_copy.v1','created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'source_final_manifest_sha256':hashlib.sha256(raw).hexdigest(),'copied_files':records,'bound_files':len(m['files']),'postseal_receipts':['root_final_preserve_tool_v1.json'],'scope':'Byte-exact regular-file copies; original paths and manifests unchanged. Copied files are not new executions.'}\nq=target/'copy_manifest_v1.json';q.write_text(json.dumps(summary,indent=2,sort_keys=True)+'\\n');print(json.dumps({'files_copied':len(records),'bound_files':len(m['files']),'bytes':sum(x['bytes'] for x in records),'copy_manifest_sha256':hashlib.sha256(q.read_bytes()).hexdigest()}))\nPY",
+    "workdir": "/home/moloch/semabi",
+    "max_output_tokens": 2200
+  },
+  "result": {
+    "chunk_id": "532349",
+    "wall_time_seconds": 0.000003099,
+    "exit_code": 0,
+    "original_token_count": 38,
+    "output": "{\"files_copied\": 146, \"bound_files\": 144, \"bytes\": 5792459, \"copy_manifest_sha256\": \"cb928445d48752d0c5b676e2e682541359d7692c8c225c9ac94bd75b14feb64c\"}\n"
+  }
+}

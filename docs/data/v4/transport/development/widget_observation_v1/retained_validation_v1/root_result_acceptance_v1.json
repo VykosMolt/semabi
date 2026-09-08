@@ -1,0 +1,55 @@
+{
+  "corpora": {
+    "cases": 5,
+    "components_per_case": 6,
+    "differences": 0,
+    "known_residuals": "RETAINED"
+  },
+  "created_utc": "2026-09-08T11:26:21.503476+00:00",
+  "decision": "ACCEPT_W2_BROAD_RESULTS",
+  "evidence": {
+    "comparison_inputs_v1.json": {
+      "bytes": 37610,
+      "sha256": "c0ee8b7dea440b8439f2304cc46512f226950e7d77458f8bb7e7686672c5678a"
+    },
+    "corpus_comparison_v1.json": {
+      "bytes": 111818,
+      "sha256": "a7270da92e9c668bff7f033c735351622fd47fc58113c90011a0c369f141022d"
+    },
+    "full_suite_summary_v1.json": {
+      "bytes": 322526,
+      "sha256": "1671b180538e282751f7827f56ccb71407ecdc550e99160901fa0711acbeccaa"
+    },
+    "independent_broad_review_v1.md": {
+      "bytes": 2750,
+      "sha256": "b9300a940a23a50676e3b942017657481defefcf696fe2cd82ab27a6095664b1"
+    },
+    "independent_final_preserver_review_v1.md": {
+      "bytes": 2327,
+      "sha256": "a671b637880600c1c9ebd85ecbc09cdef4e94aefda73bd0aa9bfb042b94e236e"
+    },
+    "native_artifact_manifest_v1.json": {
+      "bytes": 29956,
+      "sha256": "f284d5bae207d87ce46f90fd589f7c5886647172ee42ed4e134f79fbfb42d140"
+    },
+    "root_corpus_review_v1.json": {
+      "bytes": 2674,
+      "sha256": "4d22907c48e4756d4cc6ed03d91db116414523e7d4ebe6a3e348e817b565dbff"
+    }
+  },
+  "final_custody": "PENDING_ADDITIVE_SEAL",
+  "full_suite": {
+    "added_passing_cases": 38,
+    "errors": 0,
+    "failed": 0,
+    "passed": 697,
+    "retained_predecessor_cases": 663,
+    "skipped": 3,
+    "testcases": 701,
+    "xfail": 1
+  },
+  "main_adoption": "NOT_YET; requires successful final custody and exact source/test transfer",
+  "schema": "semabi.transport.w2_root_result_acceptance.v1",
+  "scope": "Accept reviewed W2 objective/source checkpoint on focused and retained regression evidence. No fresh transport, identity-truth or JOIN claim.",
+  "source_head": "b15e6b0a4c2736fabfcb48fbab19981d82b575e8"
+}

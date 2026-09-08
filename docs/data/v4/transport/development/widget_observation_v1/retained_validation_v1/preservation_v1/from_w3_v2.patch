@@ -1,0 +1,63 @@
+--- W3/preservation_v1/preserve_native_v2.py
++++ W2/preservation_v1/preserve_native_v1.py
+@@ -1,4 +1,4 @@
+-"""Seal W3 raw artifacts after root reaping; never interpret scored payloads."""
++"""Seal W2 raw artifacts after root reaping; never interpret scored payloads."""
+ import argparse
+ from datetime import datetime, timezone
+ import hashlib
+@@ -12,10 +12,10 @@
+ SELF = Path(__file__).absolute()
+ ROOT, HERE = SELF.parents[8], SELF.parents[1]
+ BINDINGS = {
+-    'commands_v2.json': '13053e60aa5105e9780d4a7459ff7589f2ca561d067b08ef3593a5bf61cf16eb',
+-    'source_freeze_v1.json': '49d0888546223dc90aef70212a80018dabbc68e92bf16dcf394b17ef698c8eac',
+-    'corpus_freeze_v1.json': 'e28cdcb3483ae6edce0cd931bcf70c0913dde554eeffcdd0a5685cd20a9b73ae',
+-    'full_suite_source_freeze_v1.json': 'e34af04a2fe44fdef0d1e541c3f4592b994b534efd9aa1710be0314cf838671b',
++    'commands_v1.json': '95fc4ffdf9332ae2f9dc43896ebf1761c12954d78ce1ec2316ee01ece3f26f2d',
++    'source_freeze_v1.json': 'f15f4aefce1fcb198ac8420b962eb0a476a0aa427981aeaad79a03f7025df680',
++    'corpus_freeze_v1.json': 'bc0652aaed5494929d869b7bd5a24b0283d08ae59f95f99fbdb9c7dcacf51519',
++    'full_suite_source_freeze_v1.json': 'a58990b74aea8e01b7963e8cd1ae1ec3a4211ca3ef3999dccdf462710a82ee21',
+ }
+ CHECKS, FINDINGS = [], []
+ TERMINATION_SCOPE = 'Recorded runners, primary children and owned groups only; escaped descendants are not traced.'
+@@ -178,7 +178,7 @@
+     for option in ('commands', 'source-freeze', 'corpus-freeze', 'full-suite-freeze', 'self'):
+         parser.add_argument('--' + option + '-sha256', required=True)
+     args = parser.parse_args()
+-    require(Path.cwd() == ROOT and SELF.resolve(strict=True) == SELF, 'Use the canonical W3 worktree')
++    require(Path.cwd() == ROOT and SELF.resolve(strict=True) == SELF, 'Use the canonical W2 worktree')
+     require(sys.flags.safe_path and sys.dont_write_bytecode and sys.flags.optimize == 0, 'Require safe startup, no bytecode, optimization zero')
+     require(fingerprint(SELF)['sha256'] == args.self_sha256, 'Preserver source digest differs')
+     supplied = (args.commands_sha256, args.source_freeze_sha256, args.corpus_freeze_sha256, args.full_suite_freeze_sha256)
+@@ -197,7 +197,7 @@
+           and corpus['files'] == source['files'] and full['native_files'] == source['source_files'] and full['test_files'] == source['test_files']
+           and corpus['verification_files'] == {**source['verification_files'], (HERE / 'source_freeze_v1.json').relative_to(ROOT).as_posix(): supplied[1]}
+           and full['verification_files'] == {**corpus['verification_files'], (HERE / 'corpus_freeze_v1.json').relative_to(ROOT).as_posix(): supplied[2]})
+-    check('complete frozen coverage', len(full['files']) == 2949 and len(full['retained_external_files']) == 175
++    check('complete frozen coverage', len(full['files']) == 3536 and len(full['retained_external_files']) == 182
+           and all(full['files'].get(p) == h for mapping in (source['tracked_files'], source['source_files'], source['test_files'],
+               source['files'], source['verification_files'], source['suite_retained_run_files'], source['corpora']['files']) for p, h in mapping.items()))
+     for label, base, files in (('full frozen files', ROOT, full['files']), ('retained external files', Path('/'), full['retained_external_files'])):
+@@ -216,7 +216,7 @@
+     jobs = {name: inspect_job(name, row, contract['jobs'][name], launches, source) for name, row in commands['jobs'].items() if name != 'corpus_comparison_v1'}
+     check('six native launch receipts', len(jobs) == 6 and set(launches) == set(jobs))
+     host_after = sample_host(jobs)
+-    record = {'schema': 'semabi.transport.w3_raw_completion_checks.v1', 'created_utc': datetime.now(timezone.utc).isoformat(),
++    record = {'schema': 'semabi.transport.w2_raw_completion_checks.v1', 'created_utc': datetime.now(timezone.utc).isoformat(),
+               'bindings': BINDINGS, 'preserver': {'path': str(SELF), **fingerprint(SELF)}, 'host_after': host_after,
+               'checks': CHECKS, 'findings': FINDINGS, 'jobs': jobs,
+               'all_owned_jobs_terminated': all(row['terminated'] for row in jobs.values()) and not host_after['unknown'] and not host_after['present'],
+@@ -231,10 +231,10 @@
+               'excluded_runtime_scratch': str(HERE / 'full_pytest_tmp_v1'), 'semantic_acceptance': 'NOT_ASSESSED',
+               'all_owned_jobs_terminated': record['all_owned_jobs_terminated'], 'custody_findings': FINDINGS,
+               'termination_scope': TERMINATION_SCOPE}
+-    write(proposal, {'schema': 'semabi.transport.w3_native_artifact_proposal.v1', **common, 'files': original})
++    write(proposal, {'schema': 'semabi.transport.w2_native_artifact_proposal.v1', **common, 'files': original})
+     original[proposal.relative_to(ROOT).as_posix()] = fingerprint(proposal)
+     require(inventory() == original, 'Raw inventory changed after exclusive proposal')
+-    write(output, {'schema': 'semabi.transport.w3_native_artifacts.v1', **common, 'files': original,
++    write(output, {'schema': 'semabi.transport.w2_native_artifacts.v1', **common, 'files': original,
+                    'status': 'PRESERVED_WITH_FINDINGS' if FINDINGS else 'PRESERVED', 'proposal_sha256': fingerprint(proposal)['sha256']})
+     print(json.dumps({'path': str(output), **fingerprint(output), 'findings': len(FINDINGS)}))
+ 

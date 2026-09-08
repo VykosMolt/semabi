@@ -1,0 +1,18 @@
+{
+  "args": {
+    "cmd": "/home/moloch/semabi/.venv/bin/python -I -B docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/preservation_v1/preserve_native_v1.py --commands-sha256 95fc4ffdf9332ae2f9dc43896ebf1761c12954d78ce1ec2316ee01ece3f26f2d --source-freeze-sha256 f15f4aefce1fcb198ac8420b962eb0a476a0aa427981aeaad79a03f7025df680 --corpus-freeze-sha256 bc0652aaed5494929d869b7bd5a24b0283d08ae59f95f99fbdb9c7dcacf51519 --full-suite-freeze-sha256 a58990b74aea8e01b7963e8cd1ae1ec3a4211ca3ef3999dccdf462710a82ee21 --self-sha256 d035422ebd85803f47a866b69d886732562a8f1986da0db521a4b9721479bbdd",
+    "workdir": "/home/moloch/semabi/runs/.w2_scoring_worktree",
+    "login": false,
+    "sandbox_permissions": "require_escalated",
+    "justification": "Preserve W2 raw validation artifacts with the independently reviewed sealer after all six owned jobs are terminated and reaped, before semantic result reading.",
+    "yield_time_ms": 1000,
+    "max_output_tokens": 3500
+  },
+  "result": {
+    "chunk_id": "ef34b8",
+    "wall_time_seconds": 0.301421775,
+    "exit_code": 0,
+    "original_token_count": 71,
+    "output": "{\"path\": \"/home/moloch/semabi/runs/.w2_scoring_worktree/docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/native_artifact_manifest_v1.json\", \"bytes\": 29956, \"sha256\": \"f284d5bae207d87ce46f90fd589f7c5886647172ee42ed4e134f79fbfb42d140\", \"findings\": 0}\n"
+  }
+}

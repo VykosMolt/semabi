@@ -1,0 +1,55 @@
+{
+  "commands_sha256": "95fc4ffdf9332ae2f9dc43896ebf1761c12954d78ce1ec2316ee01ece3f26f2d",
+  "created_utc": "2026-09-08T11:05:06.104701+00:00",
+  "decision": "GO_ONCE_METADATA_PREPARATION",
+  "exec_args": {
+    "cmd": "taskset -c 21 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 PYTHONOPTIMIZE=0 PYTHONPATH= PYTHONPYCACHEPREFIX=/tmp/semabi_w2_gate_comparison_preparation_v1_no_pyc VECLIB_MAXIMUM_THREADS=1 /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/prepare_comparison_v1.py --w3-manifest /home/moloch/semabi/runs/.w3_repair_worktree/docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/native_artifact_manifest_v1.json --w3-manifest-sha256 b59eb2b89f45889242484ba342aa44b1f1dedfec4e52ef43e85ec4ef5304f8db --w2-manifest /home/moloch/semabi/runs/.w2_scoring_worktree/docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/native_artifact_manifest_v1.json --w2-manifest-sha256 f284d5bae207d87ce46f90fd589f7c5886647172ee42ed4e134f79fbfb42d140 --source-freeze-sha256 f15f4aefce1fcb198ac8420b962eb0a476a0aa427981aeaad79a03f7025df680 --corpus-freeze-sha256 bc0652aaed5494929d869b7bd5a24b0283d08ae59f95f99fbdb9c7dcacf51519",
+    "justification": "Bind W2 comparison inputs from the two preserved and reaped six-job phases using the frozen metadata preparer.",
+    "login": false,
+    "max_output_tokens": 3500,
+    "sandbox_permissions": "require_escalated",
+    "workdir": "/home/moloch/semabi/runs/.w2_scoring_worktree",
+    "yield_time_ms": 1000
+  },
+  "preparer_sha256": "d37603c0e6e73d2068f4d082c3e32367fe56eaeede58dcf83a38eb70ed4948a5",
+  "replacement_elements": {
+    "<PRESERVED_W2_CORPUS_MANIFEST_ABSOLUTE_PATH>": "/home/moloch/semabi/runs/.w2_scoring_worktree/docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/native_artifact_manifest_v1.json",
+    "<PRESERVED_W2_CORPUS_MANIFEST_SHA256>": "f284d5bae207d87ce46f90fd589f7c5886647172ee42ed4e134f79fbfb42d140",
+    "<PRESERVED_W3_CORPUS_MANIFEST_ABSOLUTE_PATH>": "/home/moloch/semabi/runs/.w3_repair_worktree/docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/native_artifact_manifest_v1.json",
+    "<PRESERVED_W3_CORPUS_MANIFEST_SHA256>": "b59eb2b89f45889242484ba342aa44b1f1dedfec4e52ef43e85ec4ef5304f8db"
+  },
+  "root_host": {
+    "allowed_cpus": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ],
+    "effective_uid": 1000,
+    "pid": 1628151,
+    "pid_namespace": "pid:[4026531836]",
+    "priority": 0
+  },
+  "schema": "semabi.transport.w2_comparison_preparation_go.v1",
+  "scope": "Exactly the declared four late manifest substitutions; no native fit, semantic reading or comparator launch."
+}

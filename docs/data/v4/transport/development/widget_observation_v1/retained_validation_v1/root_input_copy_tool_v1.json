@@ -1,0 +1,15 @@
+{
+  "args": {
+    "cmd": "python3 - <<'PY'\nfrom pathlib import Path\nimport datetime,hashlib,json\nsrc=Path('/home/moloch/semabi/runs/.w3_repair_worktree')\ndst=Path('/home/moloch/semabi/runs/.w2_scoring_worktree')\nreceipt=src/'docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/root_input_copy_v1.json'\nassert hashlib.sha256(receipt.read_bytes()).hexdigest()=='72bfcd5a62c9b7878cf476aa0a01f8f10c7ab44f350d0d696b384fdfa4d86620'\nd=json.loads(receipt.read_bytes()); out={}; total=0\nfor kind in ('copied_corpus_files','verified_existing_suite_files'):\n    out[kind]={}\n    for name,meta in d[kind].items():\n        rel=Path(name); assert not rel.is_absolute() and '..' not in rel.parts\n        a=src/rel; b=dst/rel\n        assert a.is_file() and not a.is_symlink()\n        data=a.read_bytes(); sha=hashlib.sha256(data).hexdigest()\n        assert sha==meta['sha256'] and len(data)==meta['bytes'],name\n        present=b.exists()\n        if present:\n            assert b.is_file() and not b.is_symlink() and b.read_bytes()==data,name\n        else:\n            b.parent.mkdir(parents=True,exist_ok=True)\n            with b.open('xb') as f:f.write(data)\n        assert hashlib.sha256(b.read_bytes()).hexdigest()==sha\n        total+=len(data)\n        out[kind][name]={'copy_from':str(a),'candidate_target':str(b),'sha256':sha,'bytes':len(data),'already_present_and_matching':present}\np=dst/'docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/root_input_copy_v1.json'\np.parent.mkdir(parents=True,exist_ok=True)\nrecord={'schema':'semabi.transport.w2_exact_input_copy.v1','created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'source_receipt':str(receipt),'source_receipt_sha256':hashlib.sha256(receipt.read_bytes()).hexdigest(),'status':'EXACT_COPY_VERIFIED','native_executed':False,**out}\nwith p.open('x') as f:f.write(json.dumps(record,indent=2,sort_keys=True)+'\\n')\nprint(json.dumps({'path':str(p),'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'corpus_files':len(out['copied_corpus_files']),'suite_files':len(out['verified_existing_suite_files']),'total_bytes':total,'native_executed':False}))\nPY",
+    "workdir": "/home/moloch/semabi",
+    "max_output_tokens": 1500,
+    "yield_time_ms": 1000
+  },
+  "result": {
+    "chunk_id": "229fa2",
+    "wall_time_seconds": 0.000002819,
+    "exit_code": 0,
+    "original_token_count": 84,
+    "output": "{\"path\": \"/home/moloch/semabi/runs/.w2_scoring_worktree/docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/root_input_copy_v1.json\", \"sha256\": \"6a0642f8ae870c9eb3245024a8620b5b6214d0f9aa9719d4205c4d8c949c683a\", \"corpus_files\": 45, \"suite_files\": 18, \"total_bytes\": 88506943, \"native_executed\": false}\n"
+  }
+}

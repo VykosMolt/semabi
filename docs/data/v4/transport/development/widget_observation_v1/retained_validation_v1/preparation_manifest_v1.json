@@ -1,0 +1,108 @@
+{
+  "created_utc": "2026-09-08T10:13:11.759787+00:00",
+  "files": {
+    "adaptation_from_w3_v1.patch": {
+      "bytes": 39895,
+      "sha256": "17ba84b279a352b5403f79cd8fdd1368dca8abcb41e72cc1ede2255e4f54e377"
+    },
+    "command_templates_v1.json": {
+      "bytes": 36011,
+      "sha256": "9f813e0e059676a6852844b7ad80fb846184d399ba4d9677b8c3b237ce6ab67b"
+    },
+    "compare_corpora.py.template": {
+      "bytes": 22906,
+      "sha256": "0654020711c3213a6f178923fdcc1ddd442449106fab37c188f0aa229ce8ce7c"
+    },
+    "comparison_policy_v1.json": {
+      "bytes": 3856,
+      "sha256": "b5e72092d25be4117b9ff92c66f0a33e4c34873d5bf0da853ab682661179cac0"
+    },
+    "freeze_contract_v1.json": {
+      "bytes": 9410,
+      "sha256": "8fce1c30e4a91fc77d1321cc4949e2e62035629206c1050d2eb9117e37b0f65a"
+    },
+    "input_identities_v1.json": {
+      "bytes": 39151,
+      "sha256": "6229e6bf7e4b7060f65f87d68fcf7284a7eb837effe7643e9e21ff6ddb55221b"
+    },
+    "plan_v1.md": {
+      "bytes": 4641,
+      "sha256": "6ac4ecad09a5d90c437cfb211901771b56a53510327d2177c64b9095472acd05"
+    },
+    "prepare_comparison_v1.py.template": {
+      "bytes": 8721,
+      "sha256": "d37603c0e6e73d2068f4d082c3e32367fe56eaeede58dcf83a38eb70ed4948a5"
+    },
+    "result_contract_v1.json": {
+      "bytes": 15726,
+      "sha256": "24679afebd293a9d5f4691bd421951f13755b2253e309933c014de4d36bd7866"
+    },
+    "retained_full_suite_helpers.py.template": {
+      "bytes": 11524,
+      "sha256": "ae25cc9f8fc63ec61fa412ef15cdd26bdbf77c89b2cea9a5c6f080276a000284"
+    },
+    "retained_residual_rows_v1.json": {
+      "bytes": 442384,
+      "sha256": "48c79098e3891689e123530fd181baf98501a4c2814b294316c26e126e8af3b3"
+    },
+    "root_input_copy_tool_v1.json": {
+      "bytes": 2810,
+      "sha256": "9fc29e97bc289e7022e3f0133e2f1c089a010b4cfeaf788b27285abf8a19c9ee"
+    },
+    "root_input_copy_v1.json": {
+      "bytes": 31179,
+      "sha256": "6a0642f8ae870c9eb3245024a8620b5b6214d0f9aa9719d4205c4d8c949c683a"
+    },
+    "run_corpus.py.template": {
+      "bytes": 6793,
+      "sha256": "126fa25175f0e404fbfe5028d169e7107959a775b59410df299475240563e1df"
+    },
+    "run_full_suite_v1.py.template": {
+      "bytes": 9821,
+      "sha256": "64e9c667189d30aa00ad5cb749930c097135a842b4ef0e2aeed3202d0da57c97"
+    },
+    "runtime_boundary_contract_v1.json": {
+      "bytes": 20765,
+      "sha256": "16f8452221d8ff338b7af734ea7fe570ba4816e1a6d7fde21d5fb8e1803ecee3"
+    },
+    "static_preparation_checks_v1.json": {
+      "bytes": 3845,
+      "sha256": "b0f82a5112ec217e4e27fd227bd6ffba8b9ce90e8f586f31fe0404cac2f922e0"
+    },
+    "template_sources_v1.json": {
+      "bytes": 4795,
+      "sha256": "caf23e525669aa18f223716fbd2ef2ca8509e079a18a379fd3d906bebc39e9b3"
+    },
+    "validation_guard.py.template": {
+      "bytes": 9115,
+      "sha256": "9438779d62d16cb216d54b1ab35384920fd38fbc37f6a7ad16b04cf1eef4d404"
+    }
+  },
+  "gate_directory": "/home/moloch/semabi/runs/.w2_scoring_worktree/docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1",
+  "no_final_freeze_GO_commit_or_acceptance": true,
+  "no_native_execution": true,
+  "no_repository_source_or_test_edits": true,
+  "pending_root_actions": [
+    "Review and byte-copy the six templates to sibling runnable source names.",
+    "Recheck runtime/source/input inventories and derive exclusive W2 source/corpus/full-suite freezes.",
+    "Bind actual digests into exact commands, verify current host allocation and issue GO.",
+    "After both six-job raw phases are preserved, bind actual W3/W2 manifests and result digests before a separately reviewed comparison command."
+  ],
+  "predecessor_source_head": "aaa9b5df915464754341794179b5297cf22f6140",
+  "root_owned_preserved_files": [
+    "root_input_copy_v1.json",
+    "root_input_copy_tool_v1.json"
+  ],
+  "schema": "semabi.transport.w2_validation_preparation_manifest.v1",
+  "source_head": "b15e6b0a4c2736fabfcb48fbab19981d82b575e8",
+  "source_templates": [
+    "compare_corpora.py",
+    "prepare_comparison_v1.py",
+    "retained_full_suite_helpers.py",
+    "run_corpus.py",
+    "run_full_suite_v1.py",
+    "validation_guard.py"
+  ],
+  "status": "PREPARATION_READY_FOR_ROOT_REVIEW_NO_FREEZE_OR_GO",
+  "working_directory": "/home/moloch/semabi/runs/.w2_scoring_worktree"
+}

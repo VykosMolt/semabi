@@ -1,0 +1,18 @@
+{
+  "args": {
+    "cmd": "taskset -c 21 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 PYTHONOPTIMIZE=0 PYTHONPATH= PYTHONPYCACHEPREFIX=/tmp/semabi_w2_gate_comparison_preparation_v1_no_pyc VECLIB_MAXIMUM_THREADS=1 /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/prepare_comparison_v1.py --w3-manifest /home/moloch/semabi/runs/.w3_repair_worktree/docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1/native_artifact_manifest_v1.json --w3-manifest-sha256 b59eb2b89f45889242484ba342aa44b1f1dedfec4e52ef43e85ec4ef5304f8db --w2-manifest /home/moloch/semabi/runs/.w2_scoring_worktree/docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/native_artifact_manifest_v1.json --w2-manifest-sha256 f284d5bae207d87ce46f90fd589f7c5886647172ee42ed4e134f79fbfb42d140 --source-freeze-sha256 f15f4aefce1fcb198ac8420b962eb0a476a0aa427981aeaad79a03f7025df680 --corpus-freeze-sha256 bc0652aaed5494929d869b7bd5a24b0283d08ae59f95f99fbdb9c7dcacf51519",
+    "justification": "Bind W2 comparison inputs from the two preserved and reaped six-job phases using the frozen metadata preparer.",
+    "login": false,
+    "max_output_tokens": 3500,
+    "sandbox_permissions": "require_escalated",
+    "workdir": "/home/moloch/semabi/runs/.w2_scoring_worktree",
+    "yield_time_ms": 1000
+  },
+  "result": {
+    "chunk_id": "5be936",
+    "wall_time_seconds": 0.000002819,
+    "exit_code": 0,
+    "original_token_count": 72,
+    "output": "{\"bytes\": 37610, \"output\": \"/home/moloch/semabi/runs/.w2_scoring_worktree/docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/comparison_inputs_v1.json\", \"phases\": [\"W3\", \"W2\"], \"sha256\": \"c0ee8b7dea440b8439f2304cc46512f226950e7d77458f8bb7e7686672c5678a\"}\n"
+  }
+}

@@ -1,0 +1,157 @@
+"""Shared source custody and primary-interpreter import checks for W2."""
+from datetime import datetime, timezone
+import hashlib
+import importlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+
+ROOT = Path(__file__).resolve().parents[7]
+HERE = Path(__file__).resolve().parent
+HEAD = 'b15e6b0a4c2736fabfcb48fbab19981d82b575e8'
+CASES = ('allocation_positive', 'allocation_refusals', 'pilot', 'separating', 'separating_extended')
+ENV = {name: '1' for name in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS',
+                             'NUMEXPR_NUM_THREADS', 'VECLIB_MAXIMUM_THREADS', 'BLIS_NUM_THREADS')}
+ENV.update(PYTHONHASHSEED='0', PYTHONDONTWRITEBYTECODE='1', PYTHONPATH='', PYTHONOPTIMIZE='0')
+
+
+def require(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def checked(name):
+    require(isinstance(name, str) and name and not Path(name).is_absolute()
+            and all(part not in ('', '.', '..') for part in name.split('/')),
+            'Expected canonical worktree-relative file')
+    path = ROOT / name
+    require(path.resolve(strict=True) == path and path.is_file(), 'Expected actual file: ' + name)
+    return path
+
+
+def write_json(path, record):
+    with path.open('x') as stream:
+        json.dump(record, stream, indent=2, sort_keys=True)
+        stream.write('\n')
+
+
+def verify_files(files):
+    require(isinstance(files, dict) and files, 'Expected nonempty frozen inventory')
+    for name, expected in files.items():
+        require(sha(checked(name)) == expected, 'Frozen bytes changed: ' + name)
+
+
+def verify(source_sha, corpus_sha):
+    require(Path.cwd() == ROOT, 'Run from the candidate worktree')
+    require(sys.flags.safe_path and sys.flags.optimize == 0,
+            'Use safe startup and preserve runtime assertions')
+    require(all(os.environ.get(name) == expected for name, expected in ENV.items()),
+            'Use the frozen thread, hash-seed and bytecode-write environment')
+    prefix = Path(os.environ.get('PYTHONPYCACHEPREFIX', ''))
+    require(prefix.is_absolute() and prefix.resolve() == prefix and not prefix.is_symlink(),
+            'Use a canonical absolute fresh bytecode prefix')
+    require(str(prefix) == sys.pycache_prefix and sys.dont_write_bytecode,
+            'Interpreter bytecode flags differ from the declared environment')
+    require(not prefix.exists() or (prefix.is_dir() and not any(prefix.iterdir())),
+            'Bytecode lookup prefix must remain absent or empty')
+    require(subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip() == HEAD,
+            'Candidate source commit changed')
+    require(not subprocess.check_output(['git', 'diff', '--name-only', 'HEAD', '--'], cwd=ROOT, text=True).strip(),
+            'Tracked candidate worktree is dirty')
+    source_path = checked((HERE / 'source_freeze_v1.json').relative_to(ROOT).as_posix())
+    corpus_path = checked((HERE / 'corpus_freeze_v1.json').relative_to(ROOT).as_posix())
+    require(sha(source_path) == source_sha and sha(corpus_path) == corpus_sha, 'Freeze digest differs')
+    source, corpus = json.loads(source_path.read_text()), json.loads(corpus_path.read_text())
+    require(source['schema'] == 'semabi.transport.w2_validation_freeze.v1'
+            and corpus['schema'] == 'semabi.transport.w2_corpus_freeze.v1'
+            and source['source_head'] == corpus['source_head'] == HEAD
+            and source['working_directory'] == corpus['working_directory'] == str(ROOT),
+            'Wrong W2 phase, source or worktree')
+    require(sys.version == source['python_version'] and sys.executable == source['python_executable'],
+            'Interpreter changed')
+    affinity = sorted(os.sched_getaffinity(0))
+    require(len(affinity) == 1 and affinity in source['allowed_cpu_affinities']
+            and os.getpriority(os.PRIO_PROCESS, 0) == 0, 'Unassigned CPU affinity or priority')
+    require({name: os.environ.get(name) for name in source['pytest_environment']} == source['pytest_environment'],
+            'Frozen pytest environment overrides changed')
+    require(corpus['source_freeze'] == {'path': source_path.relative_to(ROOT).as_posix(), 'sha256': source_sha}
+            and corpus['files'] == source['files'] and corpus['corpora'] == source['corpora']
+            and corpus['verification_files'] == {**source['verification_files'], source_path.relative_to(ROOT).as_posix(): source_sha},
+            'Corpus extension changed frozen commitments')
+    for key in ('source_files', 'test_files', 'files', 'verification_files', 'suite_retained_run_files'):
+        verify_files(source[key])
+    verify_files(corpus['verification_files'])
+    for directory, key in (('semabi', 'source_files'), ('tests', 'test_files')):
+        require({path.relative_to(ROOT).as_posix() for path in (ROOT / directory).rglob('*.py')}
+                == set(source[key]), 'Python file inventory differs: ' + directory)
+    suite_names = ('harbour_transfer', 'blend_book_transfer', 'harbour_dev')
+    require({path.relative_to(ROOT).as_posix() for name in suite_names
+             for path in (ROOT / 'runs/v4' / name).rglob('*') if path.is_file()}
+            == set(source['suite_retained_run_files']), 'Retained suite input inventory differs')
+    metadata = source['corpora']
+    manifest_path = checked(metadata['manifest'])
+    require(sha(manifest_path) == metadata['manifest_sha256'], 'Persistent manifest changed')
+    manifest = json.loads(manifest_path.read_text())
+    require(metadata['root'] == manifest['root'] == 'runs/v4/transport_g1_corpora_v1'
+            and len(manifest['files']) == 45, 'Wrong persistent corpus inventory')
+    corpus_root = ROOT / metadata['root']
+    expected_inputs = {(corpus_root / name).relative_to(ROOT).as_posix(): digest for name, digest in manifest['files'].items()}
+    require(metadata['files'] == expected_inputs, 'Corpus input commitments differ')
+    verify_files(expected_inputs)
+    require({path.relative_to(corpus_root).as_posix() for path in corpus_root.rglob('*') if path.is_file()}
+            == set(manifest['files']), 'Copied corpus membership differs')
+    return source, corpus, corpus_root
+
+
+def origins(source, phase):
+    rows, violations = {}, []
+    for name, module in sorted(sys.modules.copy().items()):
+        if name != 'semabi' and not name.startswith('semabi.'):
+            continue
+        try:
+            path = Path(module.__file__)
+            require(path.is_absolute() and path.resolve(strict=True) == path and path.suffix == '.py',
+                    'Native module lacks canonical Python source')
+            relative = path.relative_to(ROOT).as_posix()
+            digest = sha(path)
+            require(source['source_files'].get(relative) == digest, 'Native module source differs')
+            spec = module.__spec__
+            require(spec is not None and spec.origin == str(path), 'Module spec origin differs')
+            package_paths = list(getattr(module, '__path__', []))
+            require(not package_paths or package_paths == [str(path.parent)], 'Package search path differs')
+            rows[name] = {'path': str(path), 'relative_path': relative, 'sha256': digest,
+                          'spec_origin': spec.origin, 'package_paths': package_paths}
+        except Exception as error:
+            violations.append({'module': name, 'error': f'{type(error).__name__}: {error}',
+                               'reported_file': str(getattr(module, '__file__', None))})
+    return {'phase': phase, 'recorded_utc': datetime.now(timezone.utc).isoformat(),
+            'modules': rows, 'violations': violations}
+
+
+def anchor(source):
+    require(not any(name == 'semabi' or name.startswith('semabi.') for name in sys.modules),
+            'SemABI was imported before candidate authentication')
+    sys.path.insert(0, str(ROOT))
+    package = importlib.import_module('semabi')
+    require(package.__file__ == str(ROOT / 'semabi/__init__.py')
+            and list(package.__path__) == [str(ROOT / 'semabi')], 'Candidate package anchor differs')
+    record = origins(source, 'candidate_package_anchor')
+    require(not record['violations'], 'Candidate package anchor failed source checks')
+    return record
+
+
+def execution_record(source_sha, corpus_sha, scope):
+    return {'schema': 'semabi.transport.w2_import_origins.v1', 'scope': scope,
+            'source_head': HEAD, 'source_freeze_sha256': source_sha, 'corpus_freeze_sha256': corpus_sha,
+            'actual_command': [sys.executable, *sys.argv], 'cwd': str(ROOT), 'pid': os.getpid(),
+            'required_environment': ENV, 'bytecode_prefix': sys.pycache_prefix,
+            'dont_write_bytecode': sys.dont_write_bytecode, 'affinity': sorted(os.sched_getaffinity(0)),
+            'safe_path': sys.flags.safe_path, 'optimize': sys.flags.optimize,
+            'limitation': 'Snapshots cover SemABI entries present in this interpreter at each boundary. They do not observe child module tables or modules removed between snapshots.',
+            'snapshots': []}

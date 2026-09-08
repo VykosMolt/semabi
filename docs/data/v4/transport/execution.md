@@ -1,6 +1,6 @@
 # Fresh-interface campaign execution record
 
-## Active checkpoint (2026-09-08 11:13 UTC)
+## Active checkpoint (2026-09-08 11:46 UTC)
 
 Current question: after repairing widget persistence and attribute-span evidence,
 does preserving the uniquely checked receiver's represented owner in view
@@ -10,7 +10,7 @@ and missing or ambiguous native owners/receiver parameters. The draft is a
 control on disclosed J1 observations; native execution and learner changes have
 not begun. Missing patch objects and references remain separate JOIN blockers.
 
-Main native source includes accepted W1 and W3. W3 was adopted byte-for-byte in
+Main native source includes accepted W1, W3 and W2. W3 was adopted byte-for-byte in
 `47c0d5c3d214900fe97747fd9842c7c83fdafe3f`; see
 [main adoption](development/widget_key_revision_v1/main_adoption_v1.json) and
 [broad validation](development/widget_key_revision_v1/broad_validation_v1.md).
@@ -31,8 +31,9 @@ all 137 bound files plus two later actual receipts are retained byte-for-byte.
 Original diagnostics, rejected proposals and earlier invalid instruments remain
 preserved with their original status.
 
-W2 remains isolated at `b15e6b0a4c2736fabfcb48fbab19981d82b575e8` in
-`runs/.w2_scoring_worktree`; main has not adopted it. Its
+W2 was tested at `b15e6b0a4c2736fabfcb48fbab19981d82b575e8` in
+`runs/.w2_scoring_worktree` and adopted on main at
+`2887ec8e9a9e6b1304d68588bbc46f1fe3cb76d9`. Its
 [contract](development/widget_observation_v1/repair_contract_v3.md) adds exact
 persistent attribute-span evidence only, using unique raw own-key witnesses and
 actual emitted sources. References, unsupported attachments and checked-state
@@ -50,17 +51,28 @@ relative order/outcomes; only three skip texts' declared worktree prefixes diffe
 All 38 additions pass. Exact late binding `c0ee8b7d…` authenticates 108 inputs from
 the original six-job W3 and W2 raw phases. The frozen comparator `a7270da9…`
 finds zero differences in all six components across all five corpora, with ten
-matched input files per phase/case. Independent broad-result review and final
-additive sealer review are underway; final custody and two-file adoption remain.
-The W2 gate is under
+matched input files per phase/case. Independent source/result and final custody
+reviewers accepted the evidence. Final manifest `cb8992e8…` binds 144 files,
+including the raw manifest, all raw members, additive analysis and acceptance.
+All 146 files including the final manifest and its later actual receipt are
+retained byte-for-byte in the main
+[broad validation record](development/widget_observation_v1/broad_validation_v1.md).
+The [main adoption record](development/widget_observation_v1/main_adoption_v1.json)
+verifies the two-file source commit and all native/test/runtime/dependency and
+retained input bytes against the tested snapshot after committing. The original
+W2 gate remains immutable under
 `runs/.w2_scoring_worktree/docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1`.
 
-Next actions: finish W2 independent review, final seal, exact retention and
-source adoption; then review/freeze and execute the J1 receiver-view control
-with the existing collection-position guard intact. Its five retained pages
-are identical except checked-state selection. The draft has no native driver
-or approved resident-Fit setup yet. No new transport or JOIN claim follows from
-these regression results. A negative control result redirects the next repair.
+Next actions: review, freeze and execute the J1 receiver-view control with the
+existing collection-position guard intact. Its five retained pages are identical
+except checked-state selection. Independent design review accepts it as a
+conditional representation diagnostic, with explicit raw-assisted ownership
+and no identity-truth claim. A source-evidence amendment and family-admission
+check precede driver review. The driver will fit once on an exclusive copy of
+two disclosed training files using unchanged W2 source, freeze optional-input
+absence and authenticate actual native setup; missing admission yields
+SETUP_LIMIT. No native fit has started. No new transport or JOIN claim follows
+from the widget regressions. A negative control result redirects the next repair.
 
 No owned validation jobs remain active. W2 full 44470 ended 10:54:53;
 positive 81637 ended 10:39:44; refusals 71668 ended 10:47:10; pilot 78952 ended 10:45:30;

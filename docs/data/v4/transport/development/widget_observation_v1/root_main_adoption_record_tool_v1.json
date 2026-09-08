@@ -1,0 +1,17 @@
+{
+  "tool_name": "exec_command",
+  "arguments": {
+    "cmd": "python -I -B /tmp/semabi_w2_finalize_adoption_v1.py",
+    "workdir": "/home/moloch/semabi",
+    "login": false,
+    "yield_time_ms": 10000,
+    "max_output_tokens": 2000
+  },
+  "result": {
+    "chunk_id": "5eba74",
+    "wall_time_seconds": 0.000003026,
+    "exit_code": 0,
+    "original_token_count": 82,
+    "output": "{\"artifact\": {\"bytes\": 2723, \"sha256\": \"baba1173aac3d37186761892dca95bc943b9bce8c4e8c7c50db08f358f5a31ec\"}, \"checked_counts\": {\"corpus_inputs\": 45, \"dependencies\": 6, \"native\": 156, \"runtime\": 67, \"suite_inputs\": 18, \"tests\": 70}, \"decision\": \"ADOPTED_REVIEWED_W2_SOURCE\", \"head\": \"2887ec8e9a9e6b1304d68588bbc46f1fe3cb76d9\"}\n"
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "absent_final_freeze_and_GO_outputs": [
+    "source_freeze_v1.json",
+    "corpus_freeze_v1.json",
+    "full_suite_source_freeze_v1.json",
+    "comparison_inputs_v1.json",
+    "commands_v1.json",
+    "go_v1.json"
+  ],
+  "commands": {
+    "P_B_and_zero_optimization": true,
+    "actual_W3_full_reap_dependency": true,
+    "both_six_job_raw_seal_dependencies": true,
+    "cpus": [
+      7,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
+    ],
+    "distinct_prefixes": true,
+    "seven_job_templates": true,
+    "six_threads_limited_to_one": true
+  },
+  "comparison": {
+    "G2_differences_AST_sha256": "df9482b7142431e47ba5defa930687864b12fa7a108cb49f144cfd1f6e630264",
+    "G2_source_sha256": "6a4c7eedcfd6143581a8cd75e47c0459b48ac8614657fcf0e0a615d1558ad001",
+    "both_preserved_manifests_and_owned_six_jobs_required": true,
+    "complete_raw_results_and_historical_residual_copy_retained": true,
+    "components": [
+      "reading",
+      "fit",
+      "dev_steps",
+      "outcome_cut",
+      "development",
+      "holdout"
+    ],
+    "late_preparer_required_artifact_count_per_phase": 53,
+    "metadata_preparer_imports": [
+      "argparse",
+      "datetime",
+      "hashlib",
+      "json",
+      "pathlib"
+    ],
+    "only_two_provenance_exclusions": true,
+    "same_authenticated_dynamic_difference_loader": true,
+    "strict_objective_and_objective_test_delta": true
+  },
+  "created_utc": "2026-09-08T10:13:11.759078+00:00",
+  "input_metadata": {
+    "actual_input_bytes_not_reread_by_preparer": true,
+    "all_rows_match_root_receipt_and_W3_commitments": true,
+    "corpus_rows": 45,
+    "root_input_copy_receipt": {
+      "bytes": 31179,
+      "path": "/home/moloch/semabi/runs/.w2_scoring_worktree/docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/root_input_copy_v1.json",
+      "sha256": "6a0642f8ae870c9eb3245024a8620b5b6214d0f9aa9719d4205c4d8c949c683a"
+    },
+    "root_input_copy_tool_receipt": {
+      "bytes": 2810,
+      "path": "/home/moloch/semabi/runs/.w2_scoring_worktree/docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/root_input_copy_tool_v1.json",
+      "sha256": "9fc29e97bc289e7022e3f0133e2f1c089a010b4cfeaf788b27285abf8a19c9ee"
+    },
+    "suite_rows": 18
+  },
+  "limitations": "Static source syntax, bounded adaptation and metadata contracts only. Root owns runtime recheck, final freezes, commands, GO, native execution and result acceptance.",
+  "mechanical_reuse": {
+    "retained_full_suite_helpers.py": "Byte-identical to W3.",
+    "run_corpus.py": "Only W3/w3 identity replacements and exact committed HEAD substitution.",
+    "run_full_suite_v1.py": "Only W3/w3 identity replacements and exact committed HEAD substitution.",
+    "validation_guard.py": "Only W3/w3 identity replacements and exact committed HEAD substitution."
+  },
+  "native_executed": false,
+  "schema": "semabi.transport.w2_static_preparation_checks.v1",
+  "source_delta": {
+    "candidate": "b15e6b0a4c2736fabfcb48fbab19981d82b575e8",
+    "git_tree_changed_native_and_test_files": [
+      "semabi/compiler/v4/objective.py",
+      "tests/test_v4_objective.py"
+    ],
+    "predecessor": "aaa9b5df915464754341794179b5297cf22f6140"
+  },
+  "status": "PASS_STATIC_PREPARATION_ONLY",
+  "syntax": {
+    "compare_corpora.py": "AST parse and compile passed; source not executed.",
+    "prepare_comparison_v1.py": "AST parse and compile passed; source not executed.",
+    "retained_full_suite_helpers.py": "AST parse and compile passed; source not executed.",
+    "run_corpus.py": "AST parse and compile passed; source not executed.",
+    "run_full_suite_v1.py": "AST parse and compile passed; source not executed.",
+    "validation_guard.py": "AST parse and compile passed; source not executed."
+  },
+  "templates_executed": false,
+  "tests_collected_or_run": false
+}

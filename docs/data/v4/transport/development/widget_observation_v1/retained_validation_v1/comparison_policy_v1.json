@@ -1,0 +1,84 @@
+{
+  "candidate": {
+    "gate_directory": "/home/moloch/semabi/runs/.w2_scoring_worktree/docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1",
+    "phase": "W2",
+    "source_head": "b15e6b0a4c2736fabfcb48fbab19981d82b575e8",
+    "working_directory": "/home/moloch/semabi/runs/.w2_scoring_worktree"
+  },
+  "cases": {
+    "allocation_positive": [
+      "harbour_join_dev",
+      "harbour_join_hold"
+    ],
+    "allocation_refusals": [
+      "harbour_ref_dev",
+      "harbour_ref_hold"
+    ],
+    "pilot": [
+      "harbour_pil_dev",
+      "harbour_pil_hold"
+    ],
+    "separating": [
+      "harbour_sep_dev",
+      "harbour_sep_hold"
+    ],
+    "separating_extended": [
+      "harbour_sep2_dev",
+      "harbour_sep_hold"
+    ]
+  },
+  "comparison_binding_identity": "/home/moloch/semabi/runs/.w2_scoring_worktree/docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/comparison_inputs_v1.json",
+  "components": [
+    "reading",
+    "fit",
+    "dev_steps",
+    "outcome_cut",
+    "development",
+    "holdout"
+  ],
+  "difference_algorithm": {
+    "path": "/home/moloch/semabi/docs/data/v4/transport/development/g2/compare_corpora.py",
+    "preservation_manifest": "/home/moloch/semabi/docs/data/v4/transport/development/g2/results_manifest_v1.json",
+    "preservation_manifest_sha256": "481f879db351618431127a8f7a99db1a35ed06975c7f1f325347c9953a80d67e",
+    "reuse": "Authenticated unchanged differences() AST and COMPONENTS; only output labels G1/G2 become W3/W2.",
+    "sha256": "6a4c7eedcfd6143581a8cd75e47c0459b48ac8614657fcf0e0a615d1558ad001"
+  },
+  "excluded_from_semantic_projection": [
+    "top-level provenance",
+    "reading.provenance.source_run"
+  ],
+  "excluded_values_retained": true,
+  "native_source_delta": [
+    "semabi/compiler/v4/objective.py"
+  ],
+  "predecessor": {
+    "corpus_freeze_sha256": "e28cdcb3483ae6edce0cd931bcf70c0913dde554eeffcdd0a5685cd20a9b73ae",
+    "gate_directory": "/home/moloch/semabi/runs/.w3_repair_worktree/docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1",
+    "phase": "W3",
+    "preservation_manifest": "LATER_ROOT_BINDING_NO_CURRENT_RESULT_OR_ACCEPTANCE_CLAIM",
+    "source_freeze_sha256": "49d0888546223dc90aef70212a80018dabbc68e92bf16dcf394b17ef698c8eac",
+    "source_head": "aaa9b5df915464754341794179b5297cf22f6140",
+    "working_directory": "/home/moloch/semabi/runs/.w3_repair_worktree"
+  },
+  "required_owned_job_names": [
+    "corpus_allocation_positive",
+    "corpus_allocation_refusals",
+    "corpus_pilot",
+    "corpus_separating",
+    "corpus_separating_extended",
+    "full_pytest_v1"
+  ],
+  "requirements": [
+    "Bind both completed six-native-job phase preservation manifests by their actual hashes before one comparison. No equality-to-W1 precondition and no baseline native rerun.",
+    "Preserve every field and ordered row in all six components, including wrong, ambiguous, unestablished, abstaining, recognition and primitive-error rows.",
+    "Only completed authenticated results enter semantic comparison; missing/incomplete attempts remain retained and do not become empty successful results.",
+    "Retain the exact historical residual index plus all actual W3/W2 residual rows through complete raw result retention and all reported differences.",
+    "Late metadata preparation may bind manifests/result digests only; it cannot alter source selection, projection, comparison code or acceptance thresholds."
+  ],
+  "schema": "semabi.transport.w2_comparison_policy.v1",
+  "scope": "Disclosed same-seed development comparison of W2 against preserved W3 output. Preservation and semantic acceptance are separate; no source/ontology truth or fresh transfer claim.",
+  "status": "POLICY_PREPARED_BEFORE_RESULT_BINDING_NO_EXECUTION",
+  "test_source_delta": [
+    "tests/test_v4_objective.py"
+  ]
+}

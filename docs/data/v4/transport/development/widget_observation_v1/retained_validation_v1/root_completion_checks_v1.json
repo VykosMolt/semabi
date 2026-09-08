@@ -1,0 +1,950 @@
+{
+  "all_owned_jobs_terminated": true,
+  "bindings": {
+    "commands_v1.json": "95fc4ffdf9332ae2f9dc43896ebf1761c12954d78ce1ec2316ee01ece3f26f2d",
+    "corpus_freeze_v1.json": "bc0652aaed5494929d869b7bd5a24b0283d08ae59f95f99fbdb9c7dcacf51519",
+    "full_suite_source_freeze_v1.json": "a58990b74aea8e01b7963e8cd1ae1ec3a4211ca3ef3999dccdf462710a82ee21",
+    "source_freeze_v1.json": "f15f4aefce1fcb198ac8420b962eb0a476a0aa427981aeaad79a03f7025df680"
+  },
+  "checks": [
+    {
+      "detail": null,
+      "name": "freeze links",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "complete frozen coverage",
+      "pass": true
+    },
+    {
+      "detail": {
+        "count": 3536,
+        "mismatches": []
+      },
+      "name": "full frozen files",
+      "pass": true
+    },
+    {
+      "detail": {
+        "count": 182,
+        "mismatches": []
+      },
+      "name": "retained external files",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "clean frozen HEAD",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "tracked membership",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "membership:semabi",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "membership:tests",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "membership:runs/v4/transport_g1_corpora_v1",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "retained suite input membership",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_positive: actual launch",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_positive: actual terminal continuity",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_positive: runner/child/group",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_positive: source/command/cwd/log",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_positive: wrapper exit continuity",
+      "pass": true
+    },
+    {
+      "detail": 0,
+      "name": "corpus_allocation_positive: outer outcome is zero",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_positive: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/allocation_positive/allocation_positive.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_positive: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/allocation_positive/allocation_positive_fit.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_positive: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/allocation_positive/allocation_positive_partial.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_positive: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/allocation_positive/allocation_positive_process.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_positive: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/allocation_positive/source_snapshot.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_positive: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/allocation_positive/adapter.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_positive: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/allocation_positive/adapter_postflight.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_positive: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/allocation_positive/import_origins_v1.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_positive: inner source/process association",
+      "pass": true
+    },
+    {
+      "detail": {
+        "execution_error": null,
+        "postflight_error": null,
+        "postflight_status": "VERIFIED"
+      },
+      "name": "corpus_allocation_positive: inner postflight",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_positive: measurement returned",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_positive: inner process completion",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_refusals: actual launch",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_refusals: actual terminal continuity",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_refusals: runner/child/group",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_refusals: source/command/cwd/log",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_refusals: wrapper exit continuity",
+      "pass": true
+    },
+    {
+      "detail": 0,
+      "name": "corpus_allocation_refusals: outer outcome is zero",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_refusals: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/allocation_refusals/allocation_refusals.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_refusals: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/allocation_refusals/allocation_refusals_fit.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_refusals: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/allocation_refusals/allocation_refusals_partial.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_refusals: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/allocation_refusals/allocation_refusals_process.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_refusals: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/allocation_refusals/source_snapshot.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_refusals: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/allocation_refusals/adapter.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_refusals: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/allocation_refusals/adapter_postflight.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_refusals: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/allocation_refusals/import_origins_v1.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_refusals: inner source/process association",
+      "pass": true
+    },
+    {
+      "detail": {
+        "execution_error": null,
+        "postflight_error": null,
+        "postflight_status": "VERIFIED"
+      },
+      "name": "corpus_allocation_refusals: inner postflight",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_refusals: measurement returned",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_allocation_refusals: inner process completion",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_pilot: actual launch",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_pilot: actual terminal continuity",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_pilot: runner/child/group",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_pilot: source/command/cwd/log",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_pilot: wrapper exit continuity",
+      "pass": true
+    },
+    {
+      "detail": 0,
+      "name": "corpus_pilot: outer outcome is zero",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_pilot: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/pilot/pilot.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_pilot: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/pilot/pilot_fit.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_pilot: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/pilot/pilot_partial.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_pilot: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/pilot/pilot_process.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_pilot: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/pilot/source_snapshot.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_pilot: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/pilot/adapter.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_pilot: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/pilot/adapter_postflight.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_pilot: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/pilot/import_origins_v1.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_pilot: inner source/process association",
+      "pass": true
+    },
+    {
+      "detail": {
+        "execution_error": null,
+        "postflight_error": null,
+        "postflight_status": "VERIFIED"
+      },
+      "name": "corpus_pilot: inner postflight",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_pilot: measurement returned",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_pilot: inner process completion",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating: actual launch",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating: actual terminal continuity",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating: runner/child/group",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating: source/command/cwd/log",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating: wrapper exit continuity",
+      "pass": true
+    },
+    {
+      "detail": 0,
+      "name": "corpus_separating: outer outcome is zero",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/separating/separating.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/separating/separating_fit.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/separating/separating_partial.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/separating/separating_process.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/separating/source_snapshot.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/separating/adapter.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/separating/adapter_postflight.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/separating/import_origins_v1.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating: inner source/process association",
+      "pass": true
+    },
+    {
+      "detail": {
+        "execution_error": null,
+        "postflight_error": null,
+        "postflight_status": "VERIFIED"
+      },
+      "name": "corpus_separating: inner postflight",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating: measurement returned",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating: inner process completion",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating_extended: actual launch",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating_extended: actual terminal continuity",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating_extended: runner/child/group",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating_extended: source/command/cwd/log",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating_extended: wrapper exit continuity",
+      "pass": true
+    },
+    {
+      "detail": 0,
+      "name": "corpus_separating_extended: outer outcome is zero",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating_extended: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/separating_extended/separating_extended.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating_extended: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/separating_extended/separating_extended_fit.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating_extended: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/separating_extended/separating_extended_partial.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating_extended: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/separating_extended/separating_extended_process.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating_extended: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/separating_extended/source_snapshot.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating_extended: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/separating_extended/adapter.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating_extended: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/separating_extended/adapter_postflight.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating_extended: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/separating_extended/import_origins_v1.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating_extended: inner source/process association",
+      "pass": true
+    },
+    {
+      "detail": {
+        "execution_error": null,
+        "postflight_error": null,
+        "postflight_status": "VERIFIED"
+      },
+      "name": "corpus_separating_extended: inner postflight",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating_extended: measurement returned",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "corpus_separating_extended: inner process completion",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "full_pytest_v1: actual launch",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "full_pytest_v1: actual terminal continuity",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "full_pytest_v1: runner/child/group",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "full_pytest_v1: source/command/cwd/log",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "full_pytest_v1: wrapper exit continuity",
+      "pass": true
+    },
+    {
+      "detail": 0,
+      "name": "full_pytest_v1: outer outcome is zero",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "full_pytest_v1: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/full_pytest_v1.xml",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "full_pytest_v1: declared output present:docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/full_suite_v1/import_origins_v1.json",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "full_pytest_v1: inner source/process association",
+      "pass": true
+    },
+    {
+      "detail": {
+        "execution_error": null,
+        "postflight_error": null,
+        "postflight_status": "VERIFIED"
+      },
+      "name": "full_pytest_v1: inner postflight",
+      "pass": true
+    },
+    {
+      "detail": 0,
+      "name": "full_pytest_v1: inner pytest outcome",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "full_pytest_v1: pytest/wrapper exit continuity",
+      "pass": true
+    },
+    {
+      "detail": null,
+      "name": "six native launch receipts",
+      "pass": true
+    },
+    {
+      "detail": [],
+      "name": "recorded processes and groups fully reaped",
+      "pass": true
+    },
+    {
+      "detail": [],
+      "name": "host scan complete without unknown entries",
+      "pass": true
+    }
+  ],
+  "created_utc": "2026-09-08T11:03:05.021817+00:00",
+  "findings": [],
+  "host_after": {
+    "effective_uid": 1000,
+    "live_owned": [],
+    "pid": 1626001,
+    "pid_namespace": "pid:[4026531836]",
+    "present": [],
+    "recorded_groups": [
+      1557973,
+      1558187,
+      1558330,
+      1559741,
+      1559886,
+      1560007
+    ],
+    "recorded_pids": [
+      1557971,
+      1557973,
+      1558185,
+      1558187,
+      1558328,
+      1558330,
+      1559739,
+      1559741,
+      1559884,
+      1559886,
+      1560005,
+      1560007
+    ],
+    "source": "/home/moloch/semabi/runs/.w2_scoring_worktree/docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/preservation_v1/preserve_native_v1.py",
+    "source_sha256": "d035422ebd85803f47a866b69d886732562a8f1986da0db521a4b9721479bbdd",
+    "unknown": []
+  },
+  "jobs": {
+    "corpus_allocation_positive": {
+      "group": 1558187,
+      "measurement_state": "completed",
+      "outer_returncode": 0,
+      "pid_argv": [
+        [
+          1558185,
+          [
+            "/home/moloch/semabi/.venv/bin/python",
+            "-P",
+            "-B",
+            "docs/data/v4/transport/run_job.py",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/jobs/corpus_allocation_positive",
+            "--",
+            "/home/moloch/semabi/.venv/bin/python",
+            "-P",
+            "-B",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/run_corpus.py",
+            "allocation_positive",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/allocation_positive",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpus_freeze_v1.json",
+            "--source-freeze-sha256",
+            "f15f4aefce1fcb198ac8420b962eb0a476a0aa427981aeaad79a03f7025df680",
+            "--corpus-freeze-sha256",
+            "bc0652aaed5494929d869b7bd5a24b0283d08ae59f95f99fbdb9c7dcacf51519"
+          ]
+        ],
+        [
+          1558187,
+          [
+            "/home/moloch/semabi/.venv/bin/python",
+            "-P",
+            "-B",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/run_corpus.py",
+            "allocation_positive",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/allocation_positive",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpus_freeze_v1.json",
+            "--source-freeze-sha256",
+            "f15f4aefce1fcb198ac8420b962eb0a476a0aa427981aeaad79a03f7025df680",
+            "--corpus-freeze-sha256",
+            "bc0652aaed5494929d869b7bd5a24b0283d08ae59f95f99fbdb9c7dcacf51519"
+          ]
+        ]
+      ],
+      "process": "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/jobs/corpus_allocation_positive/process.json",
+      "terminal_receipt": "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/terminal_receipts/allocation_positive_v1.json",
+      "terminated": true,
+      "tool_returncode": 0,
+      "tool_session_id": 81637
+    },
+    "corpus_allocation_refusals": {
+      "group": 1558330,
+      "measurement_state": "completed",
+      "outer_returncode": 0,
+      "pid_argv": [
+        [
+          1558328,
+          [
+            "/home/moloch/semabi/.venv/bin/python",
+            "-P",
+            "-B",
+            "docs/data/v4/transport/run_job.py",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/jobs/corpus_allocation_refusals",
+            "--",
+            "/home/moloch/semabi/.venv/bin/python",
+            "-P",
+            "-B",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/run_corpus.py",
+            "allocation_refusals",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/allocation_refusals",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpus_freeze_v1.json",
+            "--source-freeze-sha256",
+            "f15f4aefce1fcb198ac8420b962eb0a476a0aa427981aeaad79a03f7025df680",
+            "--corpus-freeze-sha256",
+            "bc0652aaed5494929d869b7bd5a24b0283d08ae59f95f99fbdb9c7dcacf51519"
+          ]
+        ],
+        [
+          1558330,
+          [
+            "/home/moloch/semabi/.venv/bin/python",
+            "-P",
+            "-B",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/run_corpus.py",
+            "allocation_refusals",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/allocation_refusals",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpus_freeze_v1.json",
+            "--source-freeze-sha256",
+            "f15f4aefce1fcb198ac8420b962eb0a476a0aa427981aeaad79a03f7025df680",
+            "--corpus-freeze-sha256",
+            "bc0652aaed5494929d869b7bd5a24b0283d08ae59f95f99fbdb9c7dcacf51519"
+          ]
+        ]
+      ],
+      "process": "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/jobs/corpus_allocation_refusals/process.json",
+      "terminal_receipt": "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/terminal_receipts/allocation_refusals_v1.json",
+      "terminated": true,
+      "tool_returncode": 0,
+      "tool_session_id": 71668
+    },
+    "corpus_pilot": {
+      "group": 1559741,
+      "measurement_state": "completed",
+      "outer_returncode": 0,
+      "pid_argv": [
+        [
+          1559739,
+          [
+            "/home/moloch/semabi/.venv/bin/python",
+            "-P",
+            "-B",
+            "docs/data/v4/transport/run_job.py",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/jobs/corpus_pilot",
+            "--",
+            "/home/moloch/semabi/.venv/bin/python",
+            "-P",
+            "-B",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/run_corpus.py",
+            "pilot",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/pilot",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpus_freeze_v1.json",
+            "--source-freeze-sha256",
+            "f15f4aefce1fcb198ac8420b962eb0a476a0aa427981aeaad79a03f7025df680",
+            "--corpus-freeze-sha256",
+            "bc0652aaed5494929d869b7bd5a24b0283d08ae59f95f99fbdb9c7dcacf51519"
+          ]
+        ],
+        [
+          1559741,
+          [
+            "/home/moloch/semabi/.venv/bin/python",
+            "-P",
+            "-B",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/run_corpus.py",
+            "pilot",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/pilot",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpus_freeze_v1.json",
+            "--source-freeze-sha256",
+            "f15f4aefce1fcb198ac8420b962eb0a476a0aa427981aeaad79a03f7025df680",
+            "--corpus-freeze-sha256",
+            "bc0652aaed5494929d869b7bd5a24b0283d08ae59f95f99fbdb9c7dcacf51519"
+          ]
+        ]
+      ],
+      "process": "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/jobs/corpus_pilot/process.json",
+      "terminal_receipt": "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/terminal_receipts/pilot_v1.json",
+      "terminated": true,
+      "tool_returncode": 0,
+      "tool_session_id": 78952
+    },
+    "corpus_separating": {
+      "group": 1559886,
+      "measurement_state": "completed",
+      "outer_returncode": 0,
+      "pid_argv": [
+        [
+          1559884,
+          [
+            "/home/moloch/semabi/.venv/bin/python",
+            "-P",
+            "-B",
+            "docs/data/v4/transport/run_job.py",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/jobs/corpus_separating",
+            "--",
+            "/home/moloch/semabi/.venv/bin/python",
+            "-P",
+            "-B",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/run_corpus.py",
+            "separating",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/separating",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpus_freeze_v1.json",
+            "--source-freeze-sha256",
+            "f15f4aefce1fcb198ac8420b962eb0a476a0aa427981aeaad79a03f7025df680",
+            "--corpus-freeze-sha256",
+            "bc0652aaed5494929d869b7bd5a24b0283d08ae59f95f99fbdb9c7dcacf51519"
+          ]
+        ],
+        [
+          1559886,
+          [
+            "/home/moloch/semabi/.venv/bin/python",
+            "-P",
+            "-B",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/run_corpus.py",
+            "separating",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/separating",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpus_freeze_v1.json",
+            "--source-freeze-sha256",
+            "f15f4aefce1fcb198ac8420b962eb0a476a0aa427981aeaad79a03f7025df680",
+            "--corpus-freeze-sha256",
+            "bc0652aaed5494929d869b7bd5a24b0283d08ae59f95f99fbdb9c7dcacf51519"
+          ]
+        ]
+      ],
+      "process": "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/jobs/corpus_separating/process.json",
+      "terminal_receipt": "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/terminal_receipts/separating_v1.json",
+      "terminated": true,
+      "tool_returncode": 0,
+      "tool_session_id": 39977
+    },
+    "corpus_separating_extended": {
+      "group": 1560007,
+      "measurement_state": "completed",
+      "outer_returncode": 0,
+      "pid_argv": [
+        [
+          1560005,
+          [
+            "/home/moloch/semabi/.venv/bin/python",
+            "-P",
+            "-B",
+            "docs/data/v4/transport/run_job.py",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/jobs/corpus_separating_extended",
+            "--",
+            "/home/moloch/semabi/.venv/bin/python",
+            "-P",
+            "-B",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/run_corpus.py",
+            "separating_extended",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/separating_extended",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpus_freeze_v1.json",
+            "--source-freeze-sha256",
+            "f15f4aefce1fcb198ac8420b962eb0a476a0aa427981aeaad79a03f7025df680",
+            "--corpus-freeze-sha256",
+            "bc0652aaed5494929d869b7bd5a24b0283d08ae59f95f99fbdb9c7dcacf51519"
+          ]
+        ],
+        [
+          1560007,
+          [
+            "/home/moloch/semabi/.venv/bin/python",
+            "-P",
+            "-B",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/run_corpus.py",
+            "separating_extended",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpora/separating_extended",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpus_freeze_v1.json",
+            "--source-freeze-sha256",
+            "f15f4aefce1fcb198ac8420b962eb0a476a0aa427981aeaad79a03f7025df680",
+            "--corpus-freeze-sha256",
+            "bc0652aaed5494929d869b7bd5a24b0283d08ae59f95f99fbdb9c7dcacf51519"
+          ]
+        ]
+      ],
+      "process": "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/jobs/corpus_separating_extended/process.json",
+      "terminal_receipt": "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/terminal_receipts/separating_extended_v1.json",
+      "terminated": true,
+      "tool_returncode": 0,
+      "tool_session_id": 76468
+    },
+    "full_pytest_v1": {
+      "group": 1557973,
+      "outer_returncode": 0,
+      "pid_argv": [
+        [
+          1557971,
+          [
+            "/home/moloch/semabi/.venv/bin/python",
+            "-P",
+            "-B",
+            "docs/data/v4/transport/run_job.py",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/jobs/full_pytest_v1",
+            "--",
+            "/home/moloch/semabi/.venv/bin/python",
+            "-P",
+            "-B",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/run_full_suite_v1.py",
+            "--source-freeze-sha256",
+            "a58990b74aea8e01b7963e8cd1ae1ec3a4211ca3ef3999dccdf462710a82ee21"
+          ]
+        ],
+        [
+          1557973,
+          [
+            "/home/moloch/semabi/.venv/bin/python",
+            "-P",
+            "-B",
+            "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/run_full_suite_v1.py",
+            "--source-freeze-sha256",
+            "a58990b74aea8e01b7963e8cd1ae1ec3a4211ca3ef3999dccdf462710a82ee21"
+          ]
+        ]
+      ],
+      "process": "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/jobs/full_pytest_v1/process.json",
+      "pytest_returncode": 0,
+      "terminal_receipt": "docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/terminal_receipts/full_pytest_v1_v1.json",
+      "terminated": true,
+      "tool_returncode": 0,
+      "tool_session_id": 44470
+    }
+  },
+  "preserver": {
+    "bytes": 16867,
+    "path": "/home/moloch/semabi/runs/.w2_scoring_worktree/docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/preservation_v1/preserve_native_v1.py",
+    "sha256": "d035422ebd85803f47a866b69d886732562a8f1986da0db521a4b9721479bbdd"
+  },
+  "schema": "semabi.transport.w2_raw_completion_checks.v1",
+  "scope": "Raw custody only; no JUnit, fit, partial, scored corpus or comparator payload was parsed.",
+  "termination_scope": "Recorded runners, primary children and owned groups only; escaped descendants are not traced."
+}

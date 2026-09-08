@@ -1,0 +1,575 @@
+--- W3/validation_guard.py
++++ W2/validation_guard.py.template
+@@ -1,4 +1,4 @@
+-"""Shared source custody and primary-interpreter import checks for W3."""
++"""Shared source custody and primary-interpreter import checks for W2."""
+ from datetime import datetime, timezone
+ import hashlib
+ import importlib
+@@ -10,7 +10,7 @@
+ 
+ ROOT = Path(__file__).resolve().parents[7]
+ HERE = Path(__file__).resolve().parent
+-HEAD = 'aaa9b5df915464754341794179b5297cf22f6140'
++HEAD = 'b15e6b0a4c2736fabfcb48fbab19981d82b575e8'
+ CASES = ('allocation_positive', 'allocation_refusals', 'pilot', 'separating', 'separating_extended')
+ ENV = {name: '1' for name in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS',
+                              'NUMEXPR_NUM_THREADS', 'VECLIB_MAXIMUM_THREADS', 'BLIS_NUM_THREADS')}
+@@ -68,11 +68,11 @@
+     corpus_path = checked((HERE / 'corpus_freeze_v1.json').relative_to(ROOT).as_posix())
+     require(sha(source_path) == source_sha and sha(corpus_path) == corpus_sha, 'Freeze digest differs')
+     source, corpus = json.loads(source_path.read_text()), json.loads(corpus_path.read_text())
+-    require(source['schema'] == 'semabi.transport.w3_validation_freeze.v1'
+-            and corpus['schema'] == 'semabi.transport.w3_corpus_freeze.v1'
++    require(source['schema'] == 'semabi.transport.w2_validation_freeze.v1'
++            and corpus['schema'] == 'semabi.transport.w2_corpus_freeze.v1'
+             and source['source_head'] == corpus['source_head'] == HEAD
+             and source['working_directory'] == corpus['working_directory'] == str(ROOT),
+-            'Wrong W3 phase, source or worktree')
++            'Wrong W2 phase, source or worktree')
+     require(sys.version == source['python_version'] and sys.executable == source['python_executable'],
+             'Interpreter changed')
+     affinity = sorted(os.sched_getaffinity(0))
+@@ -147,7 +147,7 @@
+ 
+ 
+ def execution_record(source_sha, corpus_sha, scope):
+-    return {'schema': 'semabi.transport.w3_import_origins.v1', 'scope': scope,
++    return {'schema': 'semabi.transport.w2_import_origins.v1', 'scope': scope,
+             'source_head': HEAD, 'source_freeze_sha256': source_sha, 'corpus_freeze_sha256': corpus_sha,
+             'actual_command': [sys.executable, *sys.argv], 'cwd': str(ROOT), 'pid': os.getpid(),
+             'required_environment': ENV, 'bytecode_prefix': sys.pycache_prefix,
+--- W3/run_corpus.py
++++ W2/run_corpus.py.template
+@@ -1,4 +1,4 @@
+-"""Run the unchanged baseline measurement with authenticated W3 imports."""
++"""Run the unchanged baseline measurement with authenticated W2 imports."""
+ import argparse
+ from datetime import datetime, timezone
+ import hashlib
+@@ -25,7 +25,7 @@
+         raw = path.read_bytes()
+         if path.resolve(strict=True) != path or source['verification_files'].get(path.relative_to(ROOT).as_posix()) != hashlib.sha256(raw).hexdigest():
+             raise ValueError('Entry point or shared guard changed')
+-    guard = types.ModuleType('w3_validation_guard')
++    guard = types.ModuleType('w2_validation_guard')
+     guard.__file__ = str(path)
+     exec(compile(raw, str(path), 'exec'), guard.__dict__)
+     return guard
+@@ -44,7 +44,7 @@
+     source, corpus, corpus_root = guard.verify(args.source_freeze_sha256, args.corpus_freeze_sha256)
+     out, snapshot = args.destination.absolute(), args.snapshot.absolute()
+     guard.require(out == HERE / 'corpora' / args.case and snapshot == HERE / 'corpus_freeze_v1.json',
+-                  'Use canonical W3 corpus output and snapshot')
++                  'Use canonical W2 corpus output and snapshot')
+     guard.require(out.resolve() == out, 'Corpus output ancestry must be canonical')
+     guard.require(not out.exists() and not out.is_symlink(), 'Corpus identities are exclusive')
+     if args.verify_only:
+@@ -56,7 +56,7 @@
+     shutil.copyfile(snapshot, out / 'source_snapshot.json')
+     record = guard.execution_record(args.source_freeze_sha256, args.corpus_freeze_sha256, 'PRIMARY_CORPUS_INTERPRETER')
+     measurement = ROOT / 'docs/data/v4/transport/baseline/check_corpora.py'
+-    adapter = {'schema': 'semabi.transport.w3_corpus_adapter.v1', 'owner': '/root',
++    adapter = {'schema': 'semabi.transport.w2_corpus_adapter.v1', 'owner': '/root',
+                'actual_command': [sys.executable, str(Path(__file__).resolve()), *sys.argv[1:]],
+                'cwd': str(ROOT), 'pid': os.getpid(), 'started_utc': datetime.now(timezone.utc).isoformat(),
+                'source_head': guard.HEAD, 'source_freeze_sha256': args.source_freeze_sha256,
+@@ -73,7 +73,7 @@
+         record['snapshots'].append(guard.anchor(source))
+         os.environ['SEMABI_BASELINE_CORPORA'] = str(corpus_root)
+         guard.require('link_probe' not in sys.modules, 'Legacy helper was preloaded before authentication')
+-        spec = importlib.util.spec_from_file_location('w3_retained_baseline_measurement', measurement)
++        spec = importlib.util.spec_from_file_location('w2_retained_baseline_measurement', measurement)
+         module = importlib.util.module_from_spec(spec)
+         spec.loader.exec_module(module)
+         guard.require(args.case in module.CASES and module.PREQ == corpus_root and module.ROOT == ROOT,
+--- W3/run_full_suite_v1.py
++++ W2/run_full_suite_v1.py.template
+@@ -1,4 +1,4 @@
+-"""Run the canonical full suite at the independently reviewed W3 source checkpoint."""
++"""Run the canonical full suite at the independently reviewed W2 source checkpoint."""
+ import argparse
+ from datetime import datetime, timezone
+ import hashlib
+@@ -56,7 +56,7 @@
+ 
+ def verify(freeze, expected_sha, helpers):
+     require(Path.cwd() == ROOT and freeze['working_directory'] == str(ROOT)
+-            and freeze['schema'] == 'semabi.transport.w3_full_suite_freeze.v1',
++            and freeze['schema'] == 'semabi.transport.w2_full_suite_freeze.v1',
+             'Wrong full-suite source or worktree')
+     require(sha(HERE / 'full_suite_source_freeze_v1.json') == expected_sha, 'Full-suite source freeze changed')
+     require(subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
+@@ -117,7 +117,7 @@
+         require(not output.exists() and not output.is_symlink(), 'Full-suite output identity already exists')
+     output = HERE / 'full_suite_v1'
+     output.mkdir()
+-    record = {'schema': 'semabi.transport.w3_full_suite_execution.v1',
++    record = {'schema': 'semabi.transport.w2_full_suite_execution.v1',
+               'created_utc': datetime.now(timezone.utc).isoformat(), 'source_head': freeze['source_head'],
+               'source_freeze_sha256': args.source_freeze_sha256, 'working_directory': str(ROOT),
+               'actual_command': [sys.executable, *sys.argv], 'pid': os.getpid(),
+--- W3/compare_corpora.py
++++ W2/compare_corpora.py.template
+@@ -1,4 +1,4 @@
+-"""Compare W3 directly to accepted retained W1 six-component payloads."""
++"""Compare preserved W2 and W3 outputs with the authenticated G2 semantic policy."""
+ import argparse
+ import ast
+ import copy
+@@ -10,16 +10,10 @@
+ ROOT = Path(__file__).resolve().parents[7]
+ HERE = Path(__file__).resolve().parent
+ MAIN = Path('/home/moloch/semabi')
+-W1_ROOT = MAIN / 'runs/.w1_worktree'
+-W1 = W1_ROOT / 'docs/data/v4/transport/development/widget_persistence_v1'
+-W1_GATE_ROOT = MAIN / 'runs/.w1_validation_worktree'
+-W1_ACCEPTANCE = W1_GATE_ROOT / 'docs/data/v4/transport/development/widget_persistence_v1/validation_repair_v2/root_full_gate_acceptance_v2.json'
++W3_ROOT = MAIN / 'runs/.w3_repair_worktree'
++W3 = W3_ROOT / 'docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1'
++W3_HEAD = 'aaa9b5df915464754341794179b5297cf22f6140'
+ G2 = MAIN / 'docs/data/v4/transport/development/g2'
+-W1_MANIFEST_SHA = '47518651d62874ed1d52536bacbdb4fc088e16e848a5462be07bde7780cfc851'
+-W1_SOURCE_SHA = '583d17e7a1d6170b58205e07145b683456490aec44d36718bfc227319bf78a62'
+-W1_CORPUS_SHA = 'b55eede3d9665ca8219dc495477924b40b07b0130e941e75b043bc1e64d06e8e'
+-W1_COMPARISON_SHA = '7b21fd66b2c9871016993ccb31cb22b4509244dbbb6fbbe1f25520567ff76dbb'
+-W1_ACCEPTANCE_SHA = '46ec930bebbb7bc3eb212ef61ff3d14dbb7ef4cb43127a3b3765dfdc7a1d57ca'
+ G2_MANIFEST_SHA = '481f879db351618431127a8f7a99db1a35ed06975c7f1f325347c9953a80d67e'
+ COMPARATOR_SHA = '6a4c7eedcfd6143581a8cd75e47c0459b48ac8614657fcf0e0a615d1558ad001'
+ CASES = {'allocation_positive': ('harbour_join_dev', 'harbour_join_hold'),
+@@ -28,6 +22,7 @@
+          'separating': ('harbour_sep_dev', 'harbour_sep_hold'),
+          'separating_extended': ('harbour_sep2_dev', 'harbour_sep_hold')}
+ COMPONENTS = ('reading', 'fit', 'dev_steps', 'outcome_cut', 'development', 'holdout')
++OWNED_JOBS = sorted(['full_pytest_v1', *('corpus_' + case for case in CASES)])
+ 
+ 
+ def require(condition, message):
+@@ -49,7 +44,7 @@
+         raw = path.read_bytes()
+         require(path.resolve(strict=True) == path and source['verification_files'].get(path.relative_to(ROOT).as_posix())
+                 == hashlib.sha256(raw).hexdigest(), 'Entry point or shared guard changed')
+-    guard = types.ModuleType('w3_validation_guard')
++    guard = types.ModuleType('w2_validation_guard')
+     guard.__file__ = str(path)
+     exec(compile(raw, str(path), 'exec'), guard.__dict__)
+     return guard
+@@ -57,16 +52,15 @@
+ 
+ def main():
+     parser = argparse.ArgumentParser(description=__doc__, allow_abbrev=False)
+-    parser.add_argument('--w1-manifest-sha', required=True)
++    parser.add_argument('--comparison-inputs-sha256', required=True)
+     parser.add_argument('--source-freeze-sha256', required=True)
+     parser.add_argument('--corpus-freeze-sha256', required=True)
+     args = parser.parse_args()
+-    require(args.w1_manifest_sha == W1_MANIFEST_SHA, 'Use the accepted retained W1 preservation manifest')
+     guard = load_guard(args.source_freeze_sha256)
+-    source, w3_freeze, w3_corpus_root = guard.verify(args.source_freeze_sha256, args.corpus_freeze_sha256)
++    source, w2_freeze, w2_corpus_root = guard.verify(args.source_freeze_sha256, args.corpus_freeze_sha256)
+     output = HERE / 'corpus_comparison_v1.json'
+     require(not output.exists() and not output.is_symlink(), 'Comparison identity is exclusive')
+-    roots = {'W1': W1_ROOT, 'W1_GATE': W1_GATE_ROOT, 'G2': MAIN, 'W3': ROOT}
++    roots = {'W3': W3_ROOT, 'G2': MAIN, 'W2': ROOT}
+     inputs = {phase: {} for phase in roots}
+ 
+     def data(phase, path, expected=None):
+@@ -82,41 +76,88 @@
+     def read(phase, path, expected=None):
+         return json.loads(data(phase, path, expected))
+ 
+-    w1_manifest = read('W1', W1 / 'results_manifest_v1.json', W1_MANIFEST_SHA)
++    binding = read('W2', HERE / 'comparison_inputs_v1.json', args.comparison_inputs_sha256)
++    policy_path = HERE / 'comparison_policy_v1.json'
++    policy = read('W2', policy_path, source['verification_files'][policy_path.relative_to(ROOT).as_posix()])
++    require(binding['schema'] == 'semabi.transport.w2_comparison_inputs.v1'
++            and binding['policy_sha256'] == sha(policy_path)
++            and binding['predecessor_source_head'] == W3_HEAD
++            and binding['candidate_source_head'] == source['source_head']
++            and set(binding['phases']) == {'W3', 'W2'}, 'Late comparison binding differs')
++    require(policy['components'] == list(COMPONENTS)
++            and policy['cases'] == {name: list(pair) for name, pair in CASES.items()}
++            and policy['predecessor']['source_head'] == W3_HEAD
++            and policy['predecessor']['working_directory'] == str(W3_ROOT)
++            and policy['predecessor']['gate_directory'] == str(W3)
++            and policy['candidate']['source_head'] == source['source_head']
++            and policy['candidate']['working_directory'] == str(ROOT)
++            and policy['candidate']['gate_directory'] == str(HERE), 'Prepared comparison policy differs')
++    manifests = {}
++    for phase, base in (('W3', W3), ('W2', HERE)):
++        entry = binding['phases'][phase]
++        path = Path(entry['preservation_manifest']['path'])
++        require(entry['working_directory'] == str(roots[phase]) and entry['gate_directory'] == str(base)
++                and path.is_relative_to(base) and path.stat().st_size == entry['preservation_manifest']['bytes'],
++                'Preservation root or manifest size differs')
++        manifest = read(phase, path, entry['preservation_manifest']['sha256'])
++        require(manifest['status'] == 'PRESERVED' and manifest['all_owned_jobs_terminated'] is True
++                and manifest['owned_job_names'] == entry['owned_job_names'] == OWNED_JOBS
++                and manifest['schema'] == entry['preservation_manifest']['schema']
++                and manifest['source_head'] == entry['source_head']
++                and manifest['working_directory'] == str(roots[phase])
++                and manifest['source_freeze_sha256'] == entry['source_freeze_sha256']
++                and manifest['corpus_freeze_sha256'] == entry['corpus_freeze_sha256']
++                and manifest['full_suite_source_freeze_sha256'] == entry['full_suite_source_freeze_sha256']
++                and manifest['files'][(base / 'full_suite_source_freeze_v1.json').relative_to(roots[phase]).as_posix()]['sha256']
++                    == entry['full_suite_source_freeze_sha256'],
++                'Invalid preserved corpus phase')
++        expected_results = {(base / 'corpora' / case / (case + '.json')).relative_to(roots[phase]).as_posix()
++                            for case in CASES}
++        require(set(entry['result_files']) == expected_results
++                and all(manifest['files'][name] == digest for name, digest in entry['result_files'].items()),
++                'Late binding changed completed result identities')
++        manifests[phase] = manifest
++    w3_source_sha = binding['phases']['W3']['source_freeze_sha256']
++    w3_corpus_sha = binding['phases']['W3']['corpus_freeze_sha256']
++    require(w3_source_sha == policy['predecessor']['source_freeze_sha256']
++            and w3_corpus_sha == policy['predecessor']['corpus_freeze_sha256']
++            and binding['phases']['W3']['source_head'] == W3_HEAD
++            and binding['phases']['W2']['source_head'] == source['source_head']
++            and binding['phases']['W2']['source_freeze_sha256'] == args.source_freeze_sha256
++            and binding['phases']['W2']['corpus_freeze_sha256'] == args.corpus_freeze_sha256,
++            'Comparison source commitments differ')
+     g2_manifest = read('G2', G2 / 'results_manifest_v1.json', G2_MANIFEST_SHA)
+-    acceptance = read('W1_GATE', W1_ACCEPTANCE, W1_ACCEPTANCE_SHA)
+-    require(w1_manifest['schema'] == 'semabi.transport.w1_validation_results.v1'
+-            and w1_manifest['status'] == g2_manifest['status'] == 'PRESERVED'
+-            and w1_manifest['all_owned_jobs_terminated'] is True
+-            and g2_manifest['schema'] == 'semabi.transport.g2_results.v1'
+-            and g2_manifest['all_owned_jobs_terminated'] is True
+-            and w1_manifest['source_freeze_sha256'] == W1_SOURCE_SHA
+-            and w1_manifest['corpus_freeze_sha256'] == W1_CORPUS_SHA
+-            and w1_manifest['corpus_comparison']['sha256'] == W1_COMPARISON_SHA
+-            and acceptance['decision'] == 'ACCEPT_FULL_GATE_AND_RETAINED_CORPUS_REUSE',
+-            'Invalid accepted W1 preservation or acceptance chain')
++    require(g2_manifest['schema'] == 'semabi.transport.g2_results.v1'
++            and g2_manifest['status'] == 'PRESERVED' and g2_manifest['all_owned_jobs_terminated'] is True,
++            'Invalid retained comparison authority')
+ 
+     def preserved(phase, path):
+-        manifest = w1_manifest if phase == 'W1' else g2_manifest
++        manifest = g2_manifest if phase == 'G2' else manifests[phase]
+         entry = manifest['files'][path.relative_to(roots[phase]).as_posix()]
+         require(set(entry) == {'bytes', 'sha256'} and path.stat().st_size == entry['bytes'], 'Preserved artifact size differs')
+         return data(phase, path, entry['sha256'])
+ 
+-    w1_source = json.loads(preserved('W1', W1 / 'source_freeze_v1.json'))
+-    w1_freeze = json.loads(preserved('W1', W1 / 'corpus_freeze_v1.json'))
+-    chain = json.loads(preserved('W1', W1 / 'corpus_comparison_v1.json'))
+-    require(sha(W1 / 'source_freeze_v1.json') == W1_SOURCE_SHA and sha(W1 / 'corpus_freeze_v1.json') == W1_CORPUS_SHA
+-            and sha(W1 / 'corpus_comparison_v1.json') == W1_COMPARISON_SHA, 'Accepted W1 freeze/comparison link differs')
+-    require(w1_source['source_head'] == w1_freeze['source_head'] == w1_manifest['source_head']
+-            and w1_source['working_directory'] == w1_manifest['working_directory'] == str(W1_ROOT)
+-            and chain['schema'] == 'semabi.transport.w1_b1_corpus_comparison.v1'
+-            and chain['source_freeze_sha256'] == W1_SOURCE_SHA and chain['corpus_freeze_sha256'] == W1_CORPUS_SHA
+-            and chain['retained_comparator_sha256'] == COMPARATOR_SHA
+-            and chain['accepted_b1_g2_chain']['g2_results_manifest_sha256'] == G2_MANIFEST_SHA
+-            and set(chain['comparisons']) == set(CASES), 'Accepted W1 comparison identity differs')
+-    for row in chain['comparisons'].values():
+-        require(row['semantic_payloads_equal'] is True and row['differences'] == []
+-                and row['components_equal'] == {name: True for name in COMPONENTS}, 'Accepted W1/B1 equality chain differs')
++    w3_source = json.loads(preserved('W3', W3 / 'source_freeze_v1.json'))
++    w3_freeze = json.loads(preserved('W3', W3 / 'corpus_freeze_v1.json'))
++    require(sha(W3 / 'source_freeze_v1.json') == w3_source_sha and sha(W3 / 'corpus_freeze_v1.json') == w3_corpus_sha
++            and w3_source['schema'] == 'semabi.transport.w3_validation_freeze.v1'
++            and w3_freeze['schema'] == 'semabi.transport.w3_corpus_freeze.v1'
++            and w3_source['source_head'] == w3_freeze['source_head'] == W3_HEAD
++            and w3_source['working_directory'] == w3_freeze['working_directory'] == str(W3_ROOT),
++            'Retained W3 freeze/source link differs')
++    require(json.loads(preserved('W2', HERE / 'source_freeze_v1.json')) == source
++            and json.loads(preserved('W2', HERE / 'corpus_freeze_v1.json')) == w2_freeze,
++            'Candidate preservation binds different freezes')
++    require(w3_source['source_files'].keys() == source['source_files'].keys()
++            and {name for name in source['source_files'] if source['source_files'][name] != w3_source['source_files'][name]}
++                == set(policy['native_source_delta']) == {'semabi/compiler/v4/objective.py'},
++            'Comparison does not isolate the objective source delta')
++    require(w3_source['test_files'].keys() == source['test_files'].keys()
++            and {name for name in source['test_files'] if source['test_files'][name] != w3_source['test_files'][name]}
++                == set(policy['test_source_delta']) == {'tests/test_v4_objective.py'},
++            'Comparison test-source delta differs')
++    residual_path = HERE / 'retained_residual_rows_v1.json'
++    data('W2', residual_path, source['verification_files'][residual_path.relative_to(ROOT).as_posix()])
+     comparator_path = G2 / 'compare_corpora.py'
+     comparator = preserved('G2', comparator_path)
+     require(hashlib.sha256(comparator).hexdigest() == COMPARATOR_SHA, 'Retained G2 comparison algorithm changed')
+@@ -128,29 +169,28 @@
+     components = next(ast.literal_eval(node.value) for node in tree.body if isinstance(node, ast.Assign)
+                       and any(isinstance(target, ast.Name) and target.id == 'COMPONENTS' for target in node.targets))
+     require(components == COMPONENTS, 'Retained semantic projection changed')
+-    declared = {'W1': W1_ROOT, 'W3': ROOT}
+-    require(chain['declared_original_worktree_roots']['W1'] == str(W1_ROOT), 'Historical W1 root differs')
++    declared = {'W3': W3_ROOT, 'W2': ROOT}
+     corpus_roots = {phase: root / 'runs/v4/transport_g1_corpora_v1' for phase, root in declared.items()}
+-    require(corpus_roots['W3'] == w3_corpus_root, 'Candidate corpus routing differs')
+-    manifest = read('W3', ROOT / source['corpora']['manifest'], source['corpora']['manifest_sha256'])
+-    require(w1_freeze['corpora'] == source['corpora'], 'W1/W3 persistent input commitments differ')
++    require(corpus_roots['W2'] == w2_corpus_root, 'Candidate corpus routing differs')
++    manifest = read('W2', ROOT / source['corpora']['manifest'], source['corpora']['manifest_sha256'])
++    require(w3_freeze['corpora'] == source['corpora'], 'W3/W2 persistent input commitments differ')
+     for name, digest in manifest['files'].items():
+-        data('W3', w3_corpus_root / name, digest)
++        data('W2', w2_corpus_root / name, digest)
+     for path, digest in ((HERE / 'source_freeze_v1.json', args.source_freeze_sha256),
+                          (HERE / 'corpus_freeze_v1.json', args.corpus_freeze_sha256)):
+-        data('W3', path, digest)
+-    for name, digest in w3_freeze['verification_files'].items():
+-        data('W3', ROOT / name, digest)
++        data('W2', path, digest)
++    for name, digest in w2_freeze['verification_files'].items():
++        data('W2', ROOT / name, digest)
+     results = {}
+     for case, pair in CASES.items():
+         values, consumed, mapped, excluded = {}, {}, {}, {}
+         for phase, base, freeze, phase_source, source_sha, corpus_sha in (
+-            ('W1', W1, w1_freeze, w1_source, W1_SOURCE_SHA, W1_CORPUS_SHA),
+-            ('W3', HERE, w3_freeze, source, args.source_freeze_sha256, args.corpus_freeze_sha256)):
++            ('W3', W3, w3_freeze, w3_source, w3_source_sha, w3_corpus_sha),
++            ('W2', HERE, w2_freeze, source, args.source_freeze_sha256, args.corpus_freeze_sha256)):
+             directory = base / 'corpora' / case
+ 
+             def artifact(path):
+-                return json.loads(preserved(phase, path)) if phase == 'W1' else read(phase, path)
++                return json.loads(preserved(phase, path))
+ 
+             result = artifact(directory / (case + '.json'))
+             fit = artifact(directory / (case + '_fit.json'))
+@@ -188,7 +228,7 @@
+                 relative = path.relative_to(corpus_roots[phase]).as_posix()
+                 require(path == corpus_roots[phase] / relative and all(part not in ('', '.', '..') for part in relative.split('/'))
+                         and manifest['files'][relative] == expected, 'Unexpected consumed corpus path/hash')
+-                data('W3', w3_corpus_root / relative, expected)
++                data('W2', w2_corpus_root / relative, expected)
+                 mapped[phase][relative] = expected
+             require(mapped[phase] == {name: value for name, value in manifest['files'].items() if name.split('/')[0] in pair},
+                     'Consumed inventory omitted or added a case input')
+@@ -199,24 +239,20 @@
+                     and job['child_pid'] == inner['pid'] == adapter['pid'], 'Owned job is incomplete or belongs to another execution')
+             script_relative = (base / 'run_corpus.py').relative_to(roots[phase]).as_posix()
+             tail = [script_relative, case, str(directory.relative_to(roots[phase])), str((base / 'corpus_freeze_v1.json').relative_to(roots[phase]))]
+-            flags = ['-B'] if phase == 'W1' else ['-P', '-B']
++            flags = ['-P', '-B']
+             command = [str(MAIN / '.venv/bin/python'), *flags, *tail,
+                 '--source-freeze-sha256', source_sha, '--corpus-freeze-sha256', corpus_sha]
+             require(job['command'] == command, 'Owned corpus command differs')
+             require(job['python_hash_seed'] == '0' and job['thread_limits'] == {name: '1' for name in
+                 ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS', 'NUMEXPR_NUM_THREADS')}, 'Corpus seed/thread settings differ')
+-            if phase == 'W1':
+-                preserved(phase, job_path.parent / 'output.log')
++            preserved(phase, job_path.parent / 'output.log')
+             data(phase, job_path.parent / 'output.log', job['log_sha256'])
+             require(job['source_hashes'] == phase_source['source_files'], 'Owned source-file hashes differ')
+-            if phase in ('W1', 'W3'):
++            if phase in ('W3', 'W2'):
+                 audit_path = directory / 'import_origins_v1.json'
+                 audit = artifact(audit_path)
+                 require(sha(audit_path) == postflight['import_origins_sha256'], 'Origin receipt link differs')
+-                expected_environment = guard.ENV if phase == 'W3' else {
+-                    **{name: '1' for name in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS',
+-                                              'NUMEXPR_NUM_THREADS', 'VECLIB_MAXIMUM_THREADS', 'BLIS_NUM_THREADS')},
+-                    'PYTHONHASHSEED': '0', 'PYTHONDONTWRITEBYTECODE': '1'}
++                expected_environment = guard.ENV
+                 require(audit['scope'] == 'PRIMARY_CORPUS_INTERPRETER' and audit['postflight_status'] == 'VERIFIED'
+                         and audit['measurement_returned'] is True and 'execution_error' not in audit
+                         and audit['source_head'] == freeze['source_head'] and audit['source_freeze_sha256'] == source_sha
+@@ -224,8 +260,7 @@
+                         and audit['cwd'] == str(declared[phase]) and audit['required_environment'] == adapter['required_environment'] == expected_environment
+                         and audit['dont_write_bytecode'] is True and audit['bytecode_prefix'] == adapter['bytecode_prefix']
+                         and audit['affinity'] == adapter['affinity'] and len(audit['affinity']) == 1, 'Candidate origin/execution receipt differs')
+-                if phase == 'W3':
+-                    require(audit['safe_path'] is True and audit['optimize'] == 0, 'Candidate startup flags differ')
++                require(audit['safe_path'] is True and audit['optimize'] == 0, 'Candidate startup flags differ')
+                 require([row['phase'] for row in audit['snapshots']] == ['candidate_package_anchor', 'before_measurement', 'after_measurement_or_failure'],
+                         'Candidate origin boundaries differ')
+                 for boundary in audit['snapshots']:
+@@ -244,33 +279,32 @@
+                                'reading_provenance_source_run': source_run}
+             values[phase] = copy.deepcopy({name: result[name] for name in COMPONENTS})
+             values[phase]['reading']['provenance'].pop('source_run', None)
+-        w1_result_name = (W1 / 'corpora' / case / (case + '.json')).relative_to(W1_ROOT).as_posix()
+-        require(chain['inputs']['W1'][w1_result_name] == inputs['W1'][w1_result_name],
+-                'Accepted W1 comparison references different retained result bytes')
+-        require(mapped['W1'] == mapped['W3'], 'Consumed bytes differ across declared roots')
+-        rows = differences(values['W1'], values['W3'])
+-        rows = [{({'G1': 'W1', 'G2': 'W3'}.get(key, key)): value for key, value in row.items()} for row in rows]
+-        results[case] = {'components_equal': {name: values['W1'][name] == values['W3'][name] for name in COMPONENTS},
+-            'differences': rows, 'semantic_payloads_equal': values['W1'] == values['W3'],
++        require(mapped['W3'] == mapped['W2'], 'Consumed bytes differ across declared roots')
++        rows = differences(values['W3'], values['W2'])
++        rows = [{({'G1': 'W3', 'G2': 'W2'}.get(key, key)): value for key, value in row.items()} for row in rows]
++        results[case] = {'components_equal': {name: values['W3'][name] == values['W2'][name] for name in COMPONENTS},
++            'differences': rows, 'semantic_payloads_equal': values['W3'] == values['W2'],
+             'consumed_absolute_paths': consumed, 'consumed_relative_to_declared_roots': mapped,
+             'excluded_execution_and_source_run_provenance': excluded}
+     guard.verify(args.source_freeze_sha256, args.corpus_freeze_sha256)
+     for phase, files in inputs.items():
+         for name, digest in files.copy().items():
+             data(phase, roots[phase] / name, digest)
+-    record = {'schema': 'semabi.transport.w3_w1_corpus_comparison.v1', 'inputs': inputs,
++    record = {'schema': 'semabi.transport.w2_w3_corpus_comparison.v1', 'inputs': inputs,
+         'source_sha256': sha(Path(__file__)), 'source_freeze_sha256': args.source_freeze_sha256,
+-        'corpus_freeze_sha256': args.corpus_freeze_sha256, 'w1_results_manifest_sha256': W1_MANIFEST_SHA,
+-        'accepted_w1_context': {'acceptance_sha256': W1_ACCEPTANCE_SHA, 'comparison_sha256': W1_COMPARISON_SHA,
+-            'accepted_b1_g2_chain': chain['accepted_b1_g2_chain'],
+-            'qualification': 'W1 is the immediate accepted retained-output predecessor with recorded primary candidate-package origins. Its B1/G2 equality is supporting historical context; no additional B1 comparison is executed.'},
++        'corpus_freeze_sha256': args.corpus_freeze_sha256,
++        'comparison_inputs_sha256': args.comparison_inputs_sha256, 'comparison_policy_sha256': sha(policy_path),
++        'preservation_manifests': {phase: entry['preservation_manifest'] for phase, entry in binding['phases'].items()},
++        'predecessor_source_head': W3_HEAD,
++        'predecessor_context': 'Preserved W3 output is the immediate predecessor. Its acceptance or equality to W1 is not assumed or required by this comparison.',
++        'retained_historical_residual_rows_sha256': sha(residual_path),
+         'retained_comparator_sha256': COMPARATOR_SHA, 'comparisons': results,
+         'artifact_roots': {phase: str(root) for phase, root in roots.items()},
+         'declared_original_worktree_roots': {phase: str(root) for phase, root in declared.items()},
+         'declared_corpus_roots': {phase: str(root) for phase, root in corpus_roots.items()},
+         'projection': 'Exactly the G2 projection: all reading/fit/dev_steps/outcome_cut/development/holdout fields; only top-level execution provenance and reading.provenance.source_run excluded.',
+-        'routing': 'The retained W1 artifact root and recorded worktree root are explicit. Consumed absolute paths map to the same 45 manifest-relative paths/hashes and byte-identical W3 input copies.',
+-        'difference_algorithm': 'Unchanged G2 differences() AST; only top-level report labels G1/G2 relabeled W1/W3.',
++        'routing': 'Both preserved artifact/worktree roots are explicit. Consumed absolute paths map to the same 45 manifest-relative paths/hashes and byte-identical input copies.',
++        'difference_algorithm': 'Unchanged G2 differences() AST; only top-level report labels G1/G2 relabeled W3/W2.',
+         'scope': 'Same-seed retained development regression. Every difference retained; no fresh-transfer or equivalence hypothesis is automatically established.'}
+     guard.write_json(output, record)
+     print(json.dumps({'output': str(output.relative_to(ROOT)), 'sha256': sha(output),
+--- /dev/null
++++ W2/prepare_comparison_v1.py.template
+@@ -0,0 +1,142 @@
++"""Bind corpus inputs from preserved six-job W3/W2 phases without native execution."""
++import argparse
++from datetime import datetime, timezone
++import hashlib
++import json
++from pathlib import Path
++
++ROOT = Path(__file__).resolve().parents[7]
++HERE = Path(__file__).resolve().parent
++W3_ROOT = Path('/home/moloch/semabi/runs/.w3_repair_worktree')
++W3 = W3_ROOT / 'docs/data/v4/transport/development/widget_key_revision_repair_v1/validation_gate_v1'
++W3_HEAD = 'aaa9b5df915464754341794179b5297cf22f6140'
++CASES = ('allocation_positive', 'allocation_refusals', 'pilot', 'separating', 'separating_extended')
++OWNED_JOBS = sorted(['full_pytest_v1', *('corpus_' + case for case in CASES)])
++
++
++def require(condition, message):
++    if not condition:
++        raise ValueError(message)
++
++
++def raw(path, expected=None):
++    require(path.is_absolute() and path.resolve(strict=True) == path and path.is_file(),
++            'Expected canonical regular metadata or preserved artifact')
++    content = path.read_bytes()
++    digest = hashlib.sha256(content).hexdigest()
++    require(expected is None or digest == expected, 'Frozen or preserved bytes changed: ' + str(path))
++    return content, {'bytes': len(content), 'sha256': digest}
++
++
++def read(path, expected=None):
++    content, binding = raw(path, expected)
++    return json.loads(content), binding
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__, allow_abbrev=False)
++    parser.add_argument('--w3-manifest', type=Path, required=True)
++    parser.add_argument('--w3-manifest-sha256', required=True)
++    parser.add_argument('--w2-manifest', type=Path, required=True)
++    parser.add_argument('--w2-manifest-sha256', required=True)
++    parser.add_argument('--source-freeze-sha256', required=True)
++    parser.add_argument('--corpus-freeze-sha256', required=True)
++    args = parser.parse_args()
++    require(Path.cwd() == ROOT, 'Run from the W2 worktree')
++    output = HERE / 'comparison_inputs_v1.json'
++    require(not output.exists() and not output.is_symlink(), 'Comparison binding identity is exclusive')
++    source, _ = read(HERE / 'source_freeze_v1.json', args.source_freeze_sha256)
++    corpus, _ = read(HERE / 'corpus_freeze_v1.json', args.corpus_freeze_sha256)
++    require(source['schema'] == 'semabi.transport.w2_validation_freeze.v1'
++            and corpus['schema'] == 'semabi.transport.w2_corpus_freeze.v1'
++            and source['source_head'] == corpus['source_head']
++            and source['working_directory'] == corpus['working_directory'] == str(ROOT),
++            'Wrong candidate source/corpus commitment')
++    policy_path = HERE / 'comparison_policy_v1.json'
++    for path in (Path(__file__).resolve(), policy_path):
++        raw(path, source['verification_files'][path.relative_to(ROOT).as_posix()])
++    policy, policy_binding = read(policy_path)
++    require(policy['schema'] == 'semabi.transport.w2_comparison_policy.v1'
++            and policy['predecessor']['source_head'] == W3_HEAD
++            and policy['predecessor']['working_directory'] == str(W3_ROOT)
++            and policy['predecessor']['gate_directory'] == str(W3)
++            and policy['candidate']['source_head'] == source['source_head']
++            and policy['candidate']['working_directory'] == str(ROOT)
++            and policy['candidate']['gate_directory'] == str(HERE)
++            and set(policy['cases']) == set(CASES), 'Prepared comparison identity differs')
++    phases = {}
++    authenticated = {}
++    for phase, root, base, path, expected, head, source_sha, corpus_sha in (
++            ('W3', W3_ROOT, W3, args.w3_manifest, args.w3_manifest_sha256, W3_HEAD,
++             policy['predecessor']['source_freeze_sha256'], policy['predecessor']['corpus_freeze_sha256']),
++            ('W2', ROOT, HERE, args.w2_manifest, args.w2_manifest_sha256, source['source_head'],
++             args.source_freeze_sha256, args.corpus_freeze_sha256)):
++        require(path.is_absolute() and path.is_relative_to(base), 'Use a preserved manifest inside its declared gate')
++        manifest, manifest_binding = read(path, expected)
++        require(manifest['status'] == 'PRESERVED' and manifest['all_owned_jobs_terminated'] is True
++                and manifest['owned_job_names'] == OWNED_JOBS
++                and manifest['source_head'] == head and manifest['working_directory'] == str(root)
++                and manifest['source_freeze_sha256'] == source_sha
++                and manifest['corpus_freeze_sha256'] == corpus_sha,
++                'Corpus phase has no matching completed preservation manifest')
++        required = [base / 'source_freeze_v1.json', base / 'corpus_freeze_v1.json',
++                    base / 'full_suite_source_freeze_v1.json']
++        result_files = {}
++        for case in CASES:
++            directory = base / 'corpora' / case
++            required += [directory / name for name in (
++                case + '.json', case + '_fit.json', case + '_partial.json', case + '_process.json',
++                'source_snapshot.json', 'adapter.json', 'adapter_postflight.json', 'import_origins_v1.json')]
++            required += [base / 'jobs' / ('corpus_' + case) / name for name in ('process.json', 'output.log')]
++        for artifact in required:
++            name = artifact.relative_to(root).as_posix()
++            entry = manifest['files'][name]
++            require(set(entry) == {'bytes', 'sha256'}, 'Preservation file record differs')
++            _, actual = raw(artifact, entry['sha256'])
++            require(actual == entry, 'Preserved artifact size differs')
++            authenticated[str(artifact)] = actual
++        for case in CASES:
++            directory = base / 'corpora' / case
++            inner, _ = read(directory / (case + '_process.json'))
++            job, _ = read(base / 'jobs' / ('corpus_' + case) / 'process.json')
++            postflight, _ = read(directory / 'adapter_postflight.json')
++            require(inner['state'] == 'completed' and inner['case'] == case and inner['changed_inputs'] == []
++                    and job['status'] == 'FINISHED' and job['returncode'] == 0 and job['child_terminated'] is True
++                    and postflight['status'] == 'VERIFIED', 'Corpus case is incomplete')
++            artifact = directory / (case + '.json')
++            entry = authenticated[str(artifact)]
++            require(inner['result_sha256'] == entry['sha256'], 'Completed result digest differs')
++            result_files[artifact.relative_to(root).as_posix()] = entry
++        require(authenticated[str(base / 'source_freeze_v1.json')]['sha256'] == source_sha
++                and authenticated[str(base / 'corpus_freeze_v1.json')]['sha256'] == corpus_sha
++                and authenticated[str(base / 'full_suite_source_freeze_v1.json')]['sha256']
++                    == manifest['full_suite_source_freeze_sha256'],
++                'Preservation inventory binds different freezes')
++        phases[phase] = {'working_directory': str(root), 'gate_directory': str(base), 'source_head': head,
++                         'source_freeze_sha256': source_sha, 'corpus_freeze_sha256': corpus_sha,
++                         'full_suite_source_freeze_sha256': manifest['full_suite_source_freeze_sha256'],
++                         'owned_job_names': OWNED_JOBS,
++                         'preservation_manifest': {'path': str(path), 'schema': manifest['schema'], **manifest_binding},
++                         'result_files': result_files}
++        authenticated[str(path)] = manifest_binding
++    for path, expected in authenticated.items():
++        _, actual = raw(Path(path), expected['sha256'])
++        require(actual == expected, 'Preserved input changed during comparison preparation')
++    raw(policy_path, policy_binding['sha256'])
++    record = {'schema': 'semabi.transport.w2_comparison_inputs.v1',
++              'created_utc': datetime.now(timezone.utc).isoformat(), 'policy_sha256': policy_binding['sha256'],
++              'predecessor_source_head': W3_HEAD, 'candidate_source_head': source['source_head'],
++              'phases': phases, 'authenticated_inputs': authenticated,
++              'preparer_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
++              'native_executed': False, 'semantic_comparison_executed': False,
++              'scope': 'Late binding of complete corpus outputs from preserved six-native-job phases. No W3 acceptance/equality claim, '
++                       'new native baseline, projection change, source change or GO is introduced.'}
++    with output.open('x') as stream:
++        json.dump(record, stream, indent=2, sort_keys=True)
++        stream.write('\n')
++    _, binding = raw(output)
++    print(json.dumps({'output': str(output), **binding, 'phases': list(phases)}, sort_keys=True))
++
++
++if __name__ == '__main__':
++    main()

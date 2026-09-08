@@ -1,0 +1,14 @@
+{
+  "args": {
+    "cmd": "python -I -B - <<'PY'\nfrom pathlib import Path\nimport json,hashlib,datetime\np=Path('docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1');sha=lambda q:hashlib.sha256(q.read_bytes()).hexdigest()\nassert sha(p/'native_artifact_manifest_v1.json')=='f284d5bae207d87ce46f90fd589f7c5886647172ee42ed4e134f79fbfb42d140'\nsummary=json.loads((p/'full_suite_summary_v1.json').read_text());corp=json.loads((p/'root_corpus_review_v1.json').read_text());assert summary['counts']['W2']=={'passed':697,'pytest.skip':3,'pytest.xfail':1} and len(summary['cases']['W2'])==701 and len(summary['added_cases'])==38 and not summary['removed_cases'] and summary['predecessor_relative_order_preserved'];assert all(x['only_declared_worktree_prefix_difference'] for x in summary['raw_common_outcome_differences']);assert corp['all_six_components_equal']\nrefs=['native_artifact_manifest_v1.json','full_suite_summary_v1.json','corpus_comparison_v1.json','root_corpus_review_v1.json','independent_broad_review_v1.md','independent_final_preserver_review_v1.md','comparison_inputs_v1.json']\nrecord={'schema':'semabi.transport.w2_root_result_acceptance.v1','created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'decision':'ACCEPT_W2_BROAD_RESULTS','source_head':'b15e6b0a4c2736fabfcb48fbab19981d82b575e8','full_suite':{'testcases':701,'passed':697,'skipped':3,'xfail':1,'failed':0,'errors':0,'retained_predecessor_cases':663,'added_passing_cases':38},'corpora':{'cases':5,'components_per_case':6,'differences':0,'known_residuals':'RETAINED'},'evidence':{name:{'bytes':(p/name).stat().st_size,'sha256':sha(p/name)} for name in refs},'final_custody':'PENDING_ADDITIVE_SEAL','main_adoption':'NOT_YET; requires successful final custody and exact source/test transfer','scope':'Accept reviewed W2 objective/source checkpoint on focused and retained regression evidence. No fresh transport, identity-truth or JOIN claim.'}\nout=p/'root_result_acceptance_v1.json';assert not out.exists();out.write_text(json.dumps(record,indent=2,sort_keys=True)+'\\n');print(json.dumps({'path':str(out),'sha256':sha(out)}))\nPY",
+    "workdir": "/home/moloch/semabi/runs/.w2_scoring_worktree",
+    "max_output_tokens": 2000
+  },
+  "result": {
+    "chunk_id": "4f9643",
+    "wall_time_seconds": 0.000003104,
+    "exit_code": 0,
+    "original_token_count": 51,
+    "output": "{\"path\": \"docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/root_result_acceptance_v1.json\", \"sha256\": \"270623004801c2dec402e3014092714e972134435c3f80fa9082473c9e2c7570\"}\n"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "args": {
+    "cmd": "taskset -c 21 env PYTHONPATH= PYTHONOPTIMIZE=0 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 PYTHONPYCACHEPREFIX=/tmp/semabi_w2_gate_preparation_v1_no_pyc /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/freeze_preparation_v1.py",
+    "workdir": "/home/moloch/semabi/runs/.w2_scoring_worktree",
+    "login": false,
+    "max_output_tokens": 3500,
+    "yield_time_ms": 1000
+  },
+  "result": {
+    "chunk_id": "0f9ab8",
+    "wall_time_seconds": 0.985565767,
+    "exit_code": 0,
+    "original_token_count": 431,
+    "output": "{\n  \"corpus_files\": 45,\n  \"created_utc\": \"2026-09-08T10:18:02.403929+00:00\",\n  \"dependency_files\": 6,\n  \"files\": {\n    \"/home/moloch/semabi/runs/.w2_scoring_worktree/docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/commands_v1.json\": \"95fc4ffdf9332ae2f9dc43896ebf1761c12954d78ce1ec2316ee01ece3f26f2d\",\n    \"/home/moloch/semabi/runs/.w2_scoring_worktree/docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/corpus_freeze_v1.json\": \"bc0652aaed5494929d869b7bd5a24b0283d08ae59f95f99fbdb9c7dcacf51519\",\n    \"/home/moloch/semabi/runs/.w2_scoring_worktree/docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/full_suite_source_freeze_v1.json\": \"a58990b74aea8e01b7963e8cd1ae1ec3a4211ca3ef3999dccdf462710a82ee21\",\n    \"/home/moloch/semabi/runs/.w2_scoring_worktree/docs/data/v4/transport/development/widget_observation_repair_v1/validation_gate_v1/source_freeze_v1.json\": \"f15f4aefce1fcb198ac8420b962eb0a476a0aa427981aeaad79a03f7025df680\"\n  },\n  \"launch_authority\": \"Root independently reviews/rechecks these freezes and commands, then issues separate GO and owns launch.\",\n  \"native_files\": 156,\n  \"native_modules_imported\": [],\n  \"preparer_source_sha256\": \"7d8882316c393230a654d28f7fd27fee58766c5838b3d5195b1288c821ccf4c6\",\n  \"python_executable\": \"/home/moloch/semabi/.venv/bin/python\",\n  \"retained_external_files\": 182,\n  \"runtime_files\": 67,\n  \"schema\": \"semabi.transport.w2_validation_freeze_creation.v1\",\n  \"source_head\": \"b15e6b0a4c2736fabfcb48fbab19981d82b575e8\",\n  \"status\": \"FROZEN_NATIVE_COMMANDS_PREPARED_COMPARISON_PENDING_NO_GO\",\n  \"suite_files\": 18,\n  \"test_files\": 70,\n  \"tracked_files\": 3429,\n  \"verification_files\": 68\n}\n"
+  }
+}

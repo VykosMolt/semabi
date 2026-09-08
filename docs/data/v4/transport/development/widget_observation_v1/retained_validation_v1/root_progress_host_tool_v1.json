@@ -1,0 +1,17 @@
+{
+  "args": {
+    "cmd": "ps -p 1557971,1557973,1560005,1560007 -o pid,ppid,stat,etime,pcpu,rss,args",
+    "workdir": "/home/moloch/semabi/runs/.w2_scoring_worktree",
+    "login": false,
+    "sandbox_permissions": "require_escalated",
+    "justification": "Inspect the four recorded W2 runner and child processes to track the remaining owned validation jobs.",
+    "max_output_tokens": 2500
+  },
+  "result": {
+    "chunk_id": "dd7c73",
+    "wall_time_seconds": 0.000002424,
+    "exit_code": 1,
+    "original_token_count": 13,
+    "output": "    PID    PPID STAT     ELAPSED %CPU   RSS COMMAND\n"
+  }
+}

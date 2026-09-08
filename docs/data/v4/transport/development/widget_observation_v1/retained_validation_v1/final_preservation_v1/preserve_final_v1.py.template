@@ -1,0 +1,204 @@
+"""Add comparison custody to the immutable W2 raw seal without interpreting results."""
+import argparse
+from datetime import datetime, timezone
+import hashlib
+import json
+import os
+from pathlib import Path
+import shlex
+import sys
+import types
+
+SELF = Path(__file__).absolute()
+ROOT, HERE = SELF.parents[8], SELF.parents[1]
+RAW_SHA = '__W2_RAW_MANIFEST_SHA256__'
+HELPER_SHA = 'd035422ebd85803f47a866b69d886732562a8f1986da0db521a4b9721479bbdd'
+
+W3_RAW_SHA = 'b59eb2b89f45889242484ba342aa44b1f1dedfec4e52ef43e85ec4ef5304f8db'
+PREPARER_SHA = 'd37603c0e6e73d2068f4d082c3e32367fe56eaeede58dcf83a38eb70ed4948a5'
+LATE_TOKEN = '<LATE_COMPARISON_INPUTS_SHA256>'
+
+
+def require(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+
+def authenticated(path, expected):
+    require(path.resolve(strict=True) == path and path.is_file(), 'Noncanonical artifact: ' + str(path))
+    raw = path.read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == expected, 'Authenticated bytes changed: ' + str(path))
+    return raw
+
+
+def bind_late_comparison(h, raw_path, raw, commands, source, original):
+    inputs_path, policy_path, preparer_path = [HERE / name for name in
+        ('comparison_inputs_v1.json', 'comparison_policy_v1.json', 'prepare_comparison_v1.py')]
+    inputs_file = original[inputs_path.relative_to(ROOT).as_posix()]
+    inputs, policy = h.metadata(inputs_path), h.metadata(policy_path)
+    require(inputs['schema'] == 'semabi.transport.w2_comparison_inputs.v1'
+        and inputs['native_executed'] is inputs['semantic_comparison_executed'] is False
+        and set(inputs['phases']) == {'W3', 'W2'}, 'Invalid late input identity')
+    require(inputs['preparer_sha256'] == PREPARER_SHA == h.fingerprint(preparer_path)['sha256']
+        == source['verification_files'][preparer_path.relative_to(ROOT).as_posix()]
+        and inputs['policy_sha256'] == h.fingerprint(policy_path)['sha256']
+        == source['verification_files'][policy_path.relative_to(ROOT).as_posix()], 'Frozen preparation source or policy differs')
+    require(inputs['predecessor_source_head'] == policy['predecessor']['source_head']
+        and inputs['candidate_source_head'] == policy['candidate']['source_head'] == source['source_head'], 'Late source heads differ')
+    expected_inputs, phase_manifests, replacements = {}, {}, {}
+    freeze_names = {'source_freeze_v1.json': 'source_freeze_sha256', 'corpus_freeze_v1.json': 'corpus_freeze_sha256',
+                    'full_suite_source_freeze_v1.json': 'full_suite_source_freeze_sha256'}
+    for phase, identity, digest in (('W3', policy['predecessor'], W3_RAW_SHA), ('W2', policy['candidate'], RAW_SHA)):
+        root, base = Path(identity['working_directory']), Path(identity['gate_directory'])
+        manifest_path = base / 'native_artifact_manifest_v1.json'
+        manifest_bytes = authenticated(manifest_path, digest)
+        manifest = json.loads(manifest_bytes)
+        manifest_file = {'bytes': len(manifest_bytes), 'sha256': digest}
+        entry = inputs['phases'][phase]
+        require(manifest['schema'] == 'semabi.transport.' + phase.lower() + '_native_artifacts.v1'
+            and manifest['status'] == 'PRESERVED' and manifest['all_owned_jobs_terminated'] is True
+            and manifest['owned_job_names'] == entry['owned_job_names'] == policy['required_owned_job_names']
+            and manifest['source_head'] == entry['source_head'] == identity['source_head']
+            and manifest['working_directory'] == entry['working_directory'] == str(root)
+            and entry['gate_directory'] == str(base), 'Late phase differs from its preserved six-job raw seal')
+        require(entry['preservation_manifest'] == {'path': str(manifest_path), 'schema': manifest['schema'], **manifest_file}
+            and all(entry[key] == manifest[key] for key in freeze_names.values())
+            and all(entry[key] == (identity if phase == 'W3' else raw)[key] for key in
+                    ('source_freeze_sha256', 'corpus_freeze_sha256')), 'Late raw manifest or freeze binding differs')
+        require(phase != 'W2' or (root == ROOT and base == HERE and manifest_path == raw_path and manifest == raw), 'Wrong W2 raw root')
+        required, result_files = [base / name for name in freeze_names], {}
+        for case in policy['cases']:
+            directory = base / 'corpora' / case
+            required += [directory / name for name in (case + '.json', case + '_fit.json', case + '_partial.json',
+                case + '_process.json', 'source_snapshot.json', 'adapter.json', 'adapter_postflight.json', 'import_origins_v1.json')]
+            required += [base / 'jobs' / ('corpus_' + case) / name for name in ('process.json', 'output.log')]
+            result_name = (directory / (case + '.json')).relative_to(root).as_posix()
+            result_files[result_name] = manifest['files'][result_name]
+        require(entry['result_files'] == result_files, 'Late result identities differ')
+        for artifact in required:
+            expected_inputs[str(artifact)] = manifest['files'][artifact.relative_to(root).as_posix()]
+        require(all(expected_inputs[str(base / name)]['sha256'] == entry[key] for name, key in freeze_names.items()), 'Preserved freeze bytes differ')
+        expected_inputs[str(manifest_path)] = manifest_file
+        phase_manifests[phase] = entry['preservation_manifest']
+        replacements['<PRESERVED_' + phase + '_CORPUS_MANIFEST_ABSOLUTE_PATH>'] = str(manifest_path)
+        replacements['<PRESERVED_' + phase + '_CORPUS_MANIFEST_SHA256>'] = digest
+    require(inputs['authenticated_inputs'] == expected_inputs, 'Late authenticated inventory differs')
+    require(all(h.fingerprint(Path(path)) == entry for path, entry in expected_inputs.items()), 'Late preserved input bytes changed')
+    preparation = commands['late_comparison_preparation']
+    require(all(preparation['outer_argv'].count(token) == 1 for token in replacements), 'Frozen preparation placeholders differ')
+    preparation_argv = [replacements.get(part, part) for part in preparation['outer_argv']]
+    receipt_path = ROOT / preparation['tool_receipt']
+    receipt = h.metadata(receipt_path)
+    result = receipt['result']
+    require(shlex.split(receipt['args']['cmd']) == preparation_argv and receipt['args']['workdir'] == str(ROOT)
+        and type(result.get('exit_code')) is int and result['exit_code'] == 0 and 'session_id' not in result,
+        'Actual preparation command or direct completion differs')
+    require(json.loads(result['output']) == {'output': str(inputs_path), **inputs_file, 'phases': ['W3', 'W2']}, 'Preparation output digest differs')
+    command = dict(commands['jobs']['corpus_comparison_v1'])
+    for key in ('inner_argv', 'outer_argv'):
+        require(command[key].count(LATE_TOKEN) == 1, 'Frozen comparison must contain exactly one late token per vector')
+        command[key] = [inputs_file['sha256'] if part == LATE_TOKEN else part for part in command[key]]
+    external_inputs = {path: entry for path, entry in expected_inputs.items() if not Path(path).is_relative_to(ROOT)}
+    return command, {'inputs': {'path': str(inputs_path), **inputs_file}, 'policy_sha256': inputs['policy_sha256'],
+        'preparer_sha256': PREPARER_SHA, 'preparation_receipt': {'path': str(receipt_path), **h.fingerprint(receipt_path)},
+        'phase_manifests': phase_manifests, 'authenticated_input_count': len(expected_inputs),
+        'derived_comparator_argv': {key: command[key] for key in ('inner_argv', 'outer_argv')}}, external_inputs
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__, allow_abbrev=False)
+    parser.add_argument('--raw-manifest-sha256', required=True)
+    parser.add_argument('--self-sha256', required=True)
+    args = parser.parse_args()
+    require(Path.cwd() == ROOT and sys.flags.safe_path and sys.dont_write_bytecode
+            and sys.flags.optimize == 0, 'Require canonical W2 worktree and safe startup')
+    authenticated(SELF, args.self_sha256)
+    raw_path = HERE / 'native_artifact_manifest_v1.json'
+    require(args.raw_manifest_sha256 == RAW_SHA, 'Wrong raw seal identity')
+    raw = json.loads(authenticated(raw_path, RAW_SHA))
+    require(raw['schema'] == 'semabi.transport.w2_native_artifacts.v1' and raw['status'] == 'PRESERVED'
+            and raw['all_owned_jobs_terminated'] is True and raw['working_directory'] == str(ROOT), 'Invalid raw seal')
+    helper_path = HERE / 'preservation_v1/preserve_native_v1.py'
+    helper_bytes = authenticated(helper_path, HELPER_SHA)
+    require(raw['files'][helper_path.relative_to(ROOT).as_posix()]
+            == {'bytes': len(helper_bytes), 'sha256': HELPER_SHA}, 'Raw seal binds another helper')
+    h = types.ModuleType('w2_retained_raw_preserver')
+    h.__file__ = str(helper_path)
+    exec(compile(helper_bytes, str(helper_path), 'exec'), h.__dict__)
+    proposal, output = HERE / 'artifact_manifest_proposal_v1.json', HERE / 'results_manifest_v1.json'
+    require(all(not p.exists() and not p.is_symlink() for p in (proposal, output)), 'Final outputs are exclusive')
+    original = h.inventory()
+    require(all(original.get(name) == entry for name, entry in raw['files'].items()), 'Original raw file changed or disappeared')
+    require(original[raw_path.relative_to(ROOT).as_posix()]['sha256'] == RAW_SHA
+            and original[SELF.relative_to(ROOT).as_posix()]['sha256'] == args.self_sha256, 'Raw manifest or preserver changed')
+    commands, source = [h.metadata(HERE / name) for name in ('commands_v1.json', 'source_freeze_v1.json')]
+    require(all(h.fingerprint(HERE / name)['sha256'] == digest for name, digest in raw['bindings'].items()), 'Raw binding changed')
+    host = h.metadata(HERE / 'root_host_before_v1.json')
+    require(os.readlink('/proc/self/ns/pid') == host.get('sampler_pid_namespace')
+            and os.geteuid() == host.get('effective_uid'), 'Require the recorded host PID namespace and UID')
+    name = 'corpus_comparison_v1'
+    command, late_binding, external_inputs = bind_late_comparison(h, raw_path, raw, commands, source, original)
+    contract = h.metadata(HERE / 'result_contract_v1.json')['jobs'][name]
+    process = h.metadata(ROOT / contract['process'])
+    launch = h.metadata(HERE / 'root_comparison_launch_tool_v1.json')
+    terminal = h.metadata(ROOT / contract['terminal_receipt'])
+    job = {'process': contract['process'], 'terminal_receipt': contract['terminal_receipt'],
+           'group': process.get('owned_process_group'), 'outer_returncode': process.get('returncode'),
+           'pid_argv': [(process.get('runner_pid'), command['outer_argv'][command['outer_argv'].index(sys.executable):]),
+                        (process.get('child_pid'), command['inner_argv'])], 'terminated': False}
+
+    def continuity():
+        lp, tp = launch['result'], terminal['result']
+        session = lp.get('session_id')
+        session_ok = (type(session) is int and terminal['args'].get('session_id') == session) if session is not None else terminal == launch
+        actual = json.loads(tp['output'])
+        launch_ok = h.check('comparison actual launch', shlex.split(launch['args']['cmd']) == command['outer_argv']
+                           and launch['args']['workdir'] == str(ROOT) and launch['args']['sandbox_permissions'] == 'require_escalated')
+        terminal_ok = h.check('comparison actual terminal continuity', session_ok and type(tp.get('exit_code')) is int
+            and 'session_id' not in tp and all(process.get(k) == actual.get(k) for k in
+                ('status', 'returncode', 'child_pid', 'child_terminated', 'end_utc'))
+            and process.get('status') in ('FINISHED', 'FAILED', 'INTERRUPTED') and process.get('child_terminated') is True
+            and type(process.get('returncode')) is int and isinstance(process.get('end_utc'), str) and bool(process['end_utc']))
+        pid_ok = h.check('comparison runner/child/group', all(type(pid) is int and pid > 0 for pid, _ in job['pid_argv'])
+                         and process['runner_pid'] != process['child_pid'] == job['group'])
+        provenance_ok = h.check('comparison source/command/cwd/log', process.get('source_head') == source['source_head'] == raw['source_head']
+            and process.get('source_hashes') == source['source_files'] and process.get('command') == command['inner_argv']
+            and process.get('cwd') == command['cwd'] == str(ROOT) and process.get('log_sha256') == h.fingerprint(ROOT / contract['log'])['sha256']
+            and process.get('instrument_hashes') == {p: {**source['files'], **source['verification_files']}[p] for p in
+                ('scripts/transport_collect.py', 'scripts/transport_score.py', 'docs/data/v4/transport/run_job.py')})
+        exit_ok = h.check('comparison wrapper exit continuity', type(process.get('returncode')) is int and
+            (tp.get('exit_code') != 0 if process.get('status') == 'INTERRUPTED' else tp.get('exit_code') == process['returncode'] % 256))
+        job.update(terminated=launch_ok and terminal_ok and pid_ok and provenance_ok and exit_ok,
+                   tool_returncode=tp.get('exit_code'), tool_session_id=session)
+
+    h.attempt('comparison continuity metadata', continuity)
+    h.check('comparison outer outcome is zero', type(job['outer_returncode']) is int and job['outer_returncode'] == 0, job['outer_returncode'])
+    for path in contract['outputs']:
+        h.check('comparison declared output present:' + path, (ROOT / path).is_file())
+    host_after = h.sample_host({name: job})
+    terminated = job['terminated'] and not host_after['unknown'] and not host_after['present']
+    common = {'created_utc': datetime.now(timezone.utc).isoformat(), 'source_head': raw['source_head'],
+        'working_directory': str(ROOT), 'raw_manifest': {'path': str(raw_path), **h.fingerprint(raw_path)},
+        'source_freeze_sha256': raw['source_freeze_sha256'], 'corpus_freeze_sha256': raw['corpus_freeze_sha256'],
+        'full_suite_source_freeze_sha256': raw['full_suite_source_freeze_sha256'],
+        'preserver': {'path': str(SELF), **h.fingerprint(SELF)}, 'retained_helper_sha256': HELPER_SHA,
+        'owned_job_names': sorted([*raw['owned_job_names'], name]), 'comparison_job': job,
+        'late_comparison_binding': late_binding,
+        'checks': h.CHECKS, 'custody_findings': h.FINDINGS, 'host_after': host_after,
+        'all_owned_jobs_terminated': raw['all_owned_jobs_terminated'] and terminated,
+        'termination_scope': h.TERMINATION_SCOPE, 'native_termination_basis': 'Authenticated raw seal; this final host sample covers the comparator only.',
+        'excluded_runtime_scratch': raw['excluded_runtime_scratch'], 'semantic_acceptance': 'NOT_ASSESSED',
+        'scope': 'Additive artifact custody only. Original raw bytes are unchanged; comparison payload and semantic acceptance are not interpreted.'}
+    require(all(h.fingerprint(Path(path)) == entry for path, entry in external_inputs.items()), 'External late inputs changed during preservation')
+    require(h.inventory() == original, 'Gate inventory changed during final preservation')
+    h.write(proposal, {'schema': 'semabi.transport.w2_validation_artifact_proposal.v1', **common, 'files': original})
+    original[proposal.relative_to(ROOT).as_posix()] = h.fingerprint(proposal)
+    require(all(h.fingerprint(Path(path)) == entry for path, entry in external_inputs.items()), 'External late inputs changed after proposal')
+    require(h.inventory() == original, 'Gate inventory changed after exclusive proposal')
+    h.write(output, {'schema': 'semabi.transport.w2_validation_results.v1', **common, 'files': original,
+                    'status': 'PRESERVED_WITH_FINDINGS' if h.FINDINGS else 'PRESERVED', 'proposal_sha256': h.fingerprint(proposal)['sha256']})
+    print(json.dumps({'path': str(output), **h.fingerprint(output), 'findings': len(h.FINDINGS)}))
+
+
+if __name__ == '__main__':
+    main()

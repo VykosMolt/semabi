@@ -1,0 +1,53 @@
+2026-09-08T10:27:58.783041+00:00 allocation_refusals: settled reading
+2026-09-08T10:31:38.564197+00:00 allocation_refusals: fitting
+2026-09-08T10:47:08.718744+00:00 allocation_refusals: scoring and visible binding checks
+{
+  "development": {
+    "target_clicks": 32,
+    "failed_attempts": 0,
+    "recognition_mismatches": 0,
+    "visible_check_ledger": {
+      "match": 96
+    },
+    "visible_check_scope": {
+      "bound vessel length survives representation": {
+        "match": 32
+      },
+      "selected object retained": {
+        "match": 32
+      },
+      "sheet vessel available in action binding": {
+        "match": 32
+      }
+    },
+    "version_space_ledger": {},
+    "decision_list_ledger": {}
+  },
+  "holdout": {
+    "target_clicks": 27,
+    "failed_attempts": 0,
+    "recognition_mismatches": 0,
+    "visible_check_ledger": {
+      "match": 81
+    },
+    "visible_check_scope": {
+      "bound vessel length survives representation": {
+        "match": 27
+      },
+      "selected object retained": {
+        "match": 27
+      },
+      "sheet vessel available in action binding": {
+        "match": 27
+      }
+    },
+    "version_space_ledger": {
+      "one outcome was admissible and it happened": 16,
+      "several outcomes remained admissible; the one that happened was among them": 11
+    },
+    "decision_list_ledger": {
+      "the event the interface returned": 24,
+      "a different event": 3
+    }
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "checked_counts": {
+    "corpus_inputs": 45,
+    "dependencies": 6,
+    "native": 156,
+    "runtime": 67,
+    "suite_inputs": 18,
+    "tests": 70
+  },
+  "complete_native_test_membership_equal": true,
+  "corpora": {
+    "cases": 5,
+    "components_per_case": 6,
+    "differences": 0,
+    "known_residuals": "RETAINED"
+  },
+  "created_utc": "2026-09-08T11:45:40.943233+00:00",
+  "decision": "ADOPTED_REVIEWED_W2_SOURCE",
+  "evidence": {
+    "independent_final_custody_review_v1.md": {
+      "bytes": 2825,
+      "sha256": "dd8b060a774534784d76cf8005c67cba3179294b6a3d80a941a3448397830afc"
+    },
+    "retained_validation_v1/copy_manifest_v1.json": {
+      "bytes": 65008,
+      "sha256": "cb928445d48752d0c5b676e2e682541359d7692c8c225c9ac94bd75b14feb64c"
+    },
+    "retained_validation_v1/corpus_comparison_v1.json": {
+      "bytes": 111818,
+      "sha256": "a7270da92e9c668bff7f033c735351622fd47fc58113c90011a0c369f141022d"
+    },
+    "retained_validation_v1/full_suite_summary_v1.json": {
+      "bytes": 322526,
+      "sha256": "1671b180538e282751f7827f56ccb71407ecdc550e99160901fa0711acbeccaa"
+    },
+    "retained_validation_v1/independent_broad_review_v1.md": {
+      "bytes": 2750,
+      "sha256": "b9300a940a23a50676e3b942017657481defefcf696fe2cd82ab27a6095664b1"
+    },
+    "retained_validation_v1/results_manifest_v1.json": {
+      "bytes": 43861,
+      "sha256": "cb8992e869a1c3cf680e864ff65f55cb5e0cb220acef0d695aa965bd0ec8c26d"
+    },
+    "retained_validation_v1/root_result_acceptance_v1.json": {
+      "bytes": 1915,
+      "sha256": "270623004801c2dec402e3014092714e972134435c3f80fa9082473c9e2c7570"
+    },
+    "root_exact_adoption_check_v1.json": {
+      "bytes": 789,
+      "sha256": "0a1d0a292cfe858e2d42a9bd3e0abcb3da95b13183a4c249b86df81f0d052733"
+    },
+    "root_main_commit_tool_v1.json": {
+      "bytes": 716,
+      "sha256": "0e33975a81f9dc05c670988468e2277ac76018d1e358c1992cb80ff33e6dd208"
+    }
+  },
+  "exact_changed_paths": [
+    "semabi/compiler/v4/objective.py",
+    "tests/test_v4_objective.py"
+  ],
+  "full_suite": {
+    "errors": 0,
+    "failed": 0,
+    "passed": 697,
+    "skipped": 3,
+    "xfail": 1
+  },
+  "main_source_commit": "2887ec8e9a9e6b1304d68588bbc46f1fe3cb76d9",
+  "parent_main_commit": "fec67da9b7c22f4bc9942d13673a457f482126df",
+  "schema": "semabi.transport.w2_main_adoption.v1",
+  "scope": "Exact two-file source/test adoption, with canonical full suite and dedicated corpus evidence inherited from identical verified bytes. No unchanged passing native jobs rerun, fresh transfer, identity-truth or JOIN claim.",
+  "source_adoption_main_index_clean": true,
+  "source_bytes_equal_after_commit": true,
+  "tested_source_commit": "b15e6b0a4c2736fabfcb48fbab19981d82b575e8"
+}

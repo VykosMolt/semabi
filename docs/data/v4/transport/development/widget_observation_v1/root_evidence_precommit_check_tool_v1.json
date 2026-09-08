@@ -1,0 +1,17 @@
+{
+  "tool_name": "exec_command",
+  "arguments": {
+    "cmd": "python -I -B - <<'PY'\nimport hashlib,json,subprocess\nfrom pathlib import Path\nroot=Path('/home/moloch/semabi')\np=root/'docs/data/v4/transport/development/widget_observation_v1/retained_validation_v1'\nd=json.loads((p/'copy_manifest_v1.json').read_text())\nfor r in d['copied_files']:\n q=root/r['destination']; b=q.read_bytes()\n assert len(b)==r['bytes'] and hashlib.sha256(b).hexdigest()==r['sha256'],q\nstaged=subprocess.check_output(['git','diff','--cached','--name-only','-z'],text=True).split('\\0')\nstaged=[v for v in staged if v]\nassert all(v=='docs/data/v4/transport/execution.md' or v.startswith('docs/data/v4/transport/development/widget_observation_v1/') for v in staged)\nassert not any('j1_receiver_view_control_v1' in v for v in staged)\ncheck=subprocess.run(['git','diff','--cached','--check'],capture_output=True,text=True)\nwarn=[]\nfor line in check.stdout.splitlines():\n if ': trailing whitespace.' in line or ': new blank line at EOF.' in line or ': space before tab in indent.' in line:\n  name=line.rsplit(':',2)[0]\n  assert '/retained_validation_v1/' in name and Path(name).suffix in {'.log','.xml','.patch'},line\n  warn.append(name)\nassert check.returncode in (0,2),check\nprint(json.dumps({'copied_files_rehash':len(d['copied_files']),'staged_files':len(staged),'staged_scope':'W2 evidence and execution record only','whitespace_warnings_in_original_preserved_artifacts':len(warn),'raw_files_with_warnings':len(set(warn)),'other_source_and_prose_whitespace':'PASS'},sort_keys=True))\nPY",
+    "workdir": "/home/moloch/semabi",
+    "login": false,
+    "yield_time_ms": 10000,
+    "max_output_tokens": 2000
+  },
+  "result": {
+    "chunk_id": "94c1a7",
+    "wall_time_seconds": 0.000003037,
+    "exit_code": 0,
+    "original_token_count": 61,
+    "output": "{\"copied_files_rehash\": 146, \"other_source_and_prose_whitespace\": \"PASS\", \"raw_files_with_warnings\": 4, \"staged_files\": 160, \"staged_scope\": \"W2 evidence and execution record only\", \"whitespace_warnings_in_original_preserved_artifacts\": 24}\n"
+  }
+}
