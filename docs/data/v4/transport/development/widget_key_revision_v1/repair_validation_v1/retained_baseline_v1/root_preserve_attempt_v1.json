@@ -1,0 +1,14 @@
+{
+  "args": {
+    "cmd": "env PYTHONPATH= python3 -P -B docs/data/v4/transport/development/widget_key_revision_v1/repair_validation_v1/preserve_focused_v1.py /home/moloch/semabi/runs/.w3_baseline_worktree/docs/data/v4/transport/development/widget_key_revision_repair_v1/root_focused_baseline_v1",
+    "workdir": "/home/moloch/semabi",
+    "max_output_tokens": 1500
+  },
+  "result": {
+    "chunk_id": "bd77a8",
+    "wall_time_seconds": 0.656043389,
+    "exit_code": 1,
+    "original_token_count": 170,
+    "output": "Traceback (most recent call last):\n  File \"/home/moloch/semabi/docs/data/v4/transport/development/widget_key_revision_v1/repair_validation_v1/preserve_focused_v1.py\", line 124, in <module>\n    main()\n    ~~~~^^\n  File \"/home/moloch/semabi/docs/data/v4/transport/development/widget_key_revision_v1/repair_validation_v1/preserve_focused_v1.py\", line 108, in main\n    raise ValueError('Unexpected symlink in retained attempt: ' + str(path))\nValueError: Unexpected symlink in retained attempt: /home/moloch/semabi/runs/.w3_baseline_worktree/docs/data/v4/transport/development/widget_key_revision_repair_v1/root_focused_baseline_v1/pytest_tmp_v1/test_component_roundtrip_does_current\n"
+  }
+}

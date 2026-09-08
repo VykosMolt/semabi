@@ -1760,14 +1760,20 @@ components and existing residual errors. The full suite reports 631 passes,
 three skips and one expected failure, but its wrapper fails because intentional
 manifest-test caches leave directories under the unused prefix. The
 [preserved attempt](data/v4/transport/development/widget_persistence_v1/retained_validation_v1/validation_completion_v1.md)
-and 121-file seal retain that failure; an isolated test-fixture repair precedes
-a new full-suite gate. The candidate is not adopted. J1 had no qualifying reload pairs, so this repair
+and 121-file seal retain that failure. J1 had no qualifying reload pairs, so this repair
 supports future probes without claiming to fix its original failure.
 The test-only cache-fixture repair is committed separately at `a1c0bc96` and
 passes all five affected tests with the wrapper's cache/origin postflight intact.
-Its focused attempt is sealed at `98a0fe11…`; the canonical full-suite retry is
-prepared with the original pytest configuration and plugins preserved. Native
-and retained corpus inputs are unchanged; main adoption still awaits that gate.
+Its focused attempt is sealed at `98a0fe11…`; the canonical full-suite retry now
+also passes with 631 passes, three skips, one expected failure, outer code zero
+and VERIFIED postflight. Its 56-file seal `3a3a3a2e…` and independent/root reviews
+support adoption. Main commits `cc04636a` and `2025ee5b` adopt both changes;
+[exact source comparison](data/v4/transport/development/widget_persistence_v1/main_adoption_v2.json)
+verifies all 156 native and 70 test files against the tested snapshot, plus
+runtime, configuration and retained-suite dependencies. Unchanged five-corpus
+evidence is reused. The first failed wrapper attempt remains preserved. Origin
+snapshots cover the parent interpreter at two boundaries; root `.pytest_cache`
+is runtime scratch, and the complete installed dependency tree is not hash-bound.
 The reviewed [W2 diagnostic](data/v4/transport/development/widget_observation_v1/report_v1.md)
 isolates a separate scoring omission. The same native keyed/promoted widget
 attribute delta is SPURIOUS under the current predicate and EXPLAINED when its

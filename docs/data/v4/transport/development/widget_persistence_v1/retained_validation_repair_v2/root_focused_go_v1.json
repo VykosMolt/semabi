@@ -1,0 +1,42 @@
+{
+  "argv": [
+    "taskset",
+    "-c",
+    "6",
+    "env",
+    "PYTHONHASHSEED=0",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "PYTHONPYCACHEPREFIX=/tmp/semabi_w1_validation_repair_v2_focused_no_pyc",
+    "OMP_NUM_THREADS=1",
+    "OPENBLAS_NUM_THREADS=1",
+    "MKL_NUM_THREADS=1",
+    "NUMEXPR_NUM_THREADS=1",
+    "VECLIB_MAXIMUM_THREADS=1",
+    "BLIS_NUM_THREADS=1",
+    "/home/moloch/semabi/.venv/bin/python",
+    "-B",
+    "docs/data/v4/transport/run_job.py",
+    "docs/data/v4/transport/development/widget_persistence_v1/validation_repair_v2/focused_job_v1",
+    "--",
+    "/home/moloch/semabi/.venv/bin/python",
+    "-B",
+    "docs/data/v4/transport/development/widget_persistence_v1/validation_repair_v2/run_focused_v1.py",
+    "--preparation-sha256",
+    "657b45c43cdda37ecb3c7432649f30478e4173dd4338a1859a5fe3eb0d954033"
+  ],
+  "author": "/root",
+  "created_utc": "2026-09-08T06:46:41.201521+00:00",
+  "decision": "GO_ONCE",
+  "independent_source_review": "ACCEPT from /root/baseline_verification/post_controls_review; explicit configuration and local-fixture scope checked before this GO.",
+  "reviewed_hashes": {
+    "focused_command_v1.json": "1ac0e8bbcdde5efff25ae6b08bd964a4bbf9d92902e1104d89230d29e4ff115e",
+    "focused_preparation_v1.json": "657b45c43cdda37ecb3c7432649f30478e4173dd4338a1859a5fe3eb0d954033",
+    "run_focused_v1.py": "ae25cc9f8fc63ec61fa412ef15cdd26bdbf77c89b2cea9a5c6f080276a000284"
+  },
+  "runtime_subset_verified": 67,
+  "schema": "semabi.transport.w1_cache_repair_root_focused_go.v1",
+  "scope": "Exactly the five existing affected tests. Preserve all outcomes and wrapper gates, actual tool/process receipts, and absent ambient prefix. No full-suite or corpus execution under this GO.",
+  "shell_command": "taskset -c 6 env PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 PYTHONPYCACHEPREFIX=/tmp/semabi_w1_validation_repair_v2_focused_no_pyc OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 BLIS_NUM_THREADS=1 /home/moloch/semabi/.venv/bin/python -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/widget_persistence_v1/validation_repair_v2/focused_job_v1 -- /home/moloch/semabi/.venv/bin/python -B docs/data/v4/transport/development/widget_persistence_v1/validation_repair_v2/run_focused_v1.py --preparation-sha256 657b45c43cdda37ecb3c7432649f30478e4173dd4338a1859a5fe3eb0d954033",
+  "verified_file_count": 239,
+  "working_directory": "/home/moloch/semabi/runs/.w1_validation_worktree"
+}

@@ -1,0 +1,13 @@
+# W1 cache-fixture repair: canonical full-suite result v2
+
+The single authorized canonical suite attempt completed at committed test-only source `a1c0bc96d6a9725a3f23e18dbc96f97b0bd38f08`. It ran from 2026-09-08 07:42:25.271071 UTC to 08:02:31.756806 UTC under command SHA-256 `3eb953cdec161be126709682869a5b8787f34dff43d7e588309f3f6a15d02202` and source freeze `a1b4242f0cf11a885822e693e0412d6e3c451543ed8417eefe1aed4890f2afc1`.
+
+The [complete JUnit](full_pytest_v2.xml) contains **635 cases: 631 passed, 3 skipped and 1 xfailed**, with zero failures or errors. Pytest reported 1205.12 seconds. The testcase identity multiset and ordered outcomes match the original sealed W1 suite. Every nonpass identity, type and reason is retained; the three skip-location texts differ only in the declared worktree-root prefix. Both raw sets are included in [completion checks](full_suite_completion_checks_v2.json).
+
+Pytest and the outer wrapper both returned zero. The [execution ledger](full_suite_v2/import_origins_v2.json) reports `VERIFIED` postflight, with one native module at the initial boundary and 85 at the final boundary, and no origin violations. Safe startup and disabled bytecode writes were enabled, optimization was zero, the canonical configuration and default plugins were retained, and the unused ambient bytecode prefix was restored and absent at both boundaries and afterward.
+
+All 2,884 frozen candidate files and 170 retained external files still match their hashes. The committed source remains clean; all 156 native files, 67 retained runtime files, eighteen suite inputs and original forty-five corpus inputs are unchanged. The focused result's 26 sealed members remain intact. The five original corpus runs were retained without repetition, together with their historical B1 origin qualification. The original W1 attempt, including its failed cache-prefix postflight, remains separately preserved.
+
+Session 71974 was reaped with exit code zero. The final host receipt finds runner 1388929, child 1388940 and the owned process group absent. [Launch receipts](full_suite_launch_tool_receipts_v2.json), [terminal receipts](full_suite_terminal_receipt_v2.json) and [host samples](full_suite_host_samples_v2.jsonl) retain the actual observations, including the initial sandbox PID-namespace sampling limitation.
+
+Native origin coverage is limited to the primary interpreter's two module-table boundaries. It does not observe removed modules, executed code objects, synthetic test children or browser descendants; configuration selection remains source-derived from bound discovery inputs. Preservation and custody verification do not grant semantic acceptance or main adoption. Root owns the completed-result review.

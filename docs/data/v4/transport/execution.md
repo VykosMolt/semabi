@@ -1,94 +1,93 @@
 # Fresh-interface campaign execution record
 
-## Active checkpoint (2026-09-08 07:43 UTC)
+## Active checkpoint (2026-09-08 08:33 UTC)
 
 Current question: how should widget persistence and raw observation evidence
 respond when the candidate changes object identity or field ownership? J1's
 reviewed result localizes missing patch objects, references and receiver naming;
 it does not establish persistence as a sufficient repair or learned JOIN.
 
-Main evidence checkpoint is `5935f6c365a510259591da76636924f71f41b646`.
-It preserves W1's first validation attempt and W2's reviewed diagnostic. Main
-native/test bytes are unchanged. J1 remains associated with `6aea64ba`; its
-705-file first pass, invalid attempts, corrected scores, controls and matching
-training replay are immutable. Both phases retain 313 charges, 312 Steps, zero
-action failures and 24 unestablished targets; the event-literal surface is empty.
-The [J1 measurement](development/j1/analysis/measurement_summary_v2/report_v1.md)
-and [accepted closeout](development/j1/root_closeout_v1.json) give denominators,
-exposure history and reviewed causal limits. Its fixtures/results are disclosed
-development evidence.
+Main source is now `2025ee5b8d3c6b4e0ae376a7426e6c2a3ced7399`, after local
+adoption of W1's duplicate-key guard (`cc04636a`, from `284d80c`) and cache-fixture
+repair (`2025ee5b`, from `a1c0bc96`). Root compared all 156 native and 70 test
+files, exact membership, 67 runtime, six measurement dependencies, 18 retained
+suite inputs and pytest configuration against the tested source; every byte
+matches. [Adoption](development/widget_persistence_v1/main_adoption_v2.json)
+binds the actual cherry-pick receipt and accepted gate. The preceding evidence
+checkpoint is `0461f74`; original and rejected artifacts remain immutable.
 
-W1 source `284d80c` withholds reload promotion for ambiguous own-key matches.
-The focused file passes 16 tests, versus three failures/13 passes before repair.
-Five dedicated corpus runs preserve all six retained semantic components and
-residual errors. The first full suite reports 631 passes, three skips and one
-expected failure, but its wrapper fails on cache-prefix residue. The 121-file
-seal `47518651…` and [preserved report](development/widget_persistence_v1/retained_validation_v1/validation_completion_v1.md)
-retain that failed gate. B1's retained numerical comparison is authenticated;
-its historical worktree import origins remain unestablished. W1 records explicit
-candidate-package anchoring and native origin snapshots.
+W1's focused semantic regression improved from 13 passes/three failures to 16
+passes. Five dedicated corpus runs preserve all six retained semantic components
+and their residual errors. Its first full suite had 631 passes, three skips and
+one expected failure, but failed the wrapper's ambient-cache check; the original
+121-file seal `47518651…` remains a failed validation attempt. The test-only
+repair's five affected tests pass with verified cache/origin postflight. Its
+canonical full suite now also passes: 631 passes, three skips, one expected
+failure, actual outer code zero and VERIFIED postflight. Exact ordered outcomes
+match the original run after only declared worktree-prefix normalization in
+three skip texts. The 56-file seal `3a3a3a2e…` includes complete preparation,
+revisions, process/origin/host records and the focused result. Root and independent
+review accept the gate; 61 exact files are retained in
+[validation repair](development/widget_persistence_v1/retained_validation_repair_v2/full_suite_result_v2.md).
+The five original corpus runs are reused because native/runtime/input bytes
+match. B1's historical loaded origins remain unestablished. The parent-origin
+ledger covers two boundaries; installed dependencies are not wholly hash-frozen,
+and root `.pytest_cache` is runtime scratch outside the explicit bindings.
 
-The test-only cache-isolation repair is source commit
-`a1c0bc96d6a9725a3f23e18dbc96f97b0bd38f08` in `runs/.w1_validation_worktree`,
-parent `284d80c`. Its five affected tests pass with wrapper code zero and verified
-postflight; every private tree is removed and the ambient prefix restored/absent.
-The focused 26-file seal is `98a0fe1130bfc15988de66d3db0d5c73328c886c76f543b8686028135fbb8ad2`.
-Independent source, runtime-observer and supplemental result reviews pass. The
-canonical full-suite retry is frozen at `a1b4242f…`, with concrete CPU 6 command
-`3eb953cd…`: actual pytest configuration, conftest inputs and unchanged plugins
-are bound, with safe interpreter startup and explicit normal optimization.
-The superseded preparation and optimization-gap review are archived before any
-execution. Root verified 2,884 candidate and 170
-retained external files; independent review accepted the correction. Root GO
-`63f1390f…` authorizes the one attempt, now running from 07:42:25 UTC.
-No five-corpus repeat is needed if
-native/input/runtime dependencies remain identical. Main adoption remains pending.
+J1 remains associated with `6aea64ba`: its 705-file first pass, invalid attempts,
+corrected scores, controls and matching training replay are preserved. Each
+phase has 313 charges, 312 Steps, zero action failures and 24 unestablished
+targets; its event-literal surface is empty. The
+[J1 measurement](development/j1/analysis/measurement_summary_v2/report_v1.md)
+and [accepted closeout](development/j1/root_closeout_v1.json) retain denominators,
+exposure and causal limits. Its fixtures are disclosed development evidence.
 
-[W2](development/widget_observation_v1/report_v1.md) preserves eight fresh scoring
-rows and all 133 controls. The same keyed/promoted attribute delta is SPURIOUS
-under the current raw-change predicate and EXPLAINED under its diagnostic
-intervention; the other three interpretation conditions remain NOTHING. The
-37-file seal `d32f9fa3…` and independent review `ba40439f…` are accepted. Identities
-and reload calibration are supplied; no normal fit or fresh transfer ran in W2.
+[W2](development/widget_observation_v1/report_v1.md) preserves eight diagnostic
+scoring rows and 133 controls under seal `d32f9fa3…`. The keyed/promoted widget
+attribute delta changes from SPURIOUS to EXPLAINED under the diagnostic raw-value
+predicate; the other interpretation conditions remain NOTHING. Supplied keys
+and reload calibration are controls, not earned identity. The reviewed
+[repair contract](development/widget_observation_v1/repair_contract_v3.md) adds
+only exact persistent attribute-span evidence with unique raw-owner pairing and
+unique emitted sources. References, unsupported attachment provenance and
+checked-state carriers remain ineligible. A worker prepares regressions in
+`runs/.w2_scoring_worktree`; production code and execution are pending.
 
-[W3](development/widget_key_revision_v1/report_v1.md) now executes two actual
-default fits on identical invented observations. An after-only supplied key
-bijection keeps unique non-positional identities but retains widget promotion
-with zero surviving/two lost same-key reload values; the native tracker records
-two opposite attribute changes. CONTROL retains two values and has no delta.
-All 14 predictions match. Root inspected the semantic result only after its
-26-file seal `4c51d39889083683cb6779fdc4a219e0c7ab41f69cafde21066b40c304cb6086`
-passed 6,228 custody checks. Independent saved-result review is accepted in
-the three-file review seal `9593ab7e…`; it preserves the initially mistaken
-serialization comparison and its correction. Root acceptance is `4be6a031…`.
-This shows inconsistency under supplied identity, not identity truth or normal induction.
+[W3](development/widget_key_revision_v1/report_v1.md) preserves two actual default
+fits under seal `4c51d398…`. An after-only supplied key bijection leaves zero
+kept/two lost reload values while retaining widget persistence and emitting two
+identity-induced attribute changes. CONTROL retains two values and no delta.
+All 14 diagnostic predictions match; independent review and root acceptance
+preserve the serialization-comparison correction and supplied-identity limit.
+The [repair contract](development/widget_key_revision_v1/repair_contract_v1.md)
+revalidates automatically owned persistence after key/context/composite changes,
+preserving configured support and rejecting unsupported selected-key dependencies.
 
-The [W3 repair contract](development/widget_key_revision_v1/repair_contract_v1.md)
-defines revocable reload-owned persistence after key/context/composite changes.
-Configured support is preserved. Invalid selected-key dependencies cause an
-explicit failed candidate build. Worktree `runs/.w3_repair_worktree` on branch
-`w3-revocable-widget-persistence` starts at `a1c0bc96`; a worker owns the two V2
-native files and two existing test files. Tests/source are being prepared; no
-native repair execution or adoption has occurred.
+The first W3 regression baseline in `runs/.w3_baseline_worktree` is reaped and
+sealed at `0a22d2e2…`: 53 cases, 37 passes, 16 failures. Fifteen exercise target
+semantic defects; the owner=999 fixture raises an earlier IndexError and is
+invalid for the intended assertion. Preserve it and correct the parent to an
+existing different node in the next test version. The initial preservation
+attempt rejected pytest scratch symlinks; version 2 records their targets and
+seals all 18 regular artifacts with 281 passing custody checks, retaining the
+failed preservation receipt. Candidate_v3 and its prepared command remain
+unexecuted: source review found context-driven key reselection could leave fitted
+and freshly parsed values inconsistent. Candidate_v4 and matching baseline_v4
+tests are being prepared in `runs/.w3_repair_worktree`; original snapshots stay
+held. No W3 repair is adopted.
 
-Next actions: finish the W1 full-suite source/metadata review and launch its
-single owned retry; implement and review the bounded persistence
-revision mechanism; then repair V4's raw-widget scoring criterion against owner,
-field-swap and key-revision controls. The proposed scoring mechanism and its
-carrier limits are in [W2 repair design](development/widget_observation_v1/repair_design_v1.md).
-Source design must preserve separately
-validated persistent-widget evidence and keep unsupported carriers explicit.
-No production score change or W3 native repair is adopted yet.
+Next actions: finish and review the W3 context correction and test-fixture
+revision, execute the paired focused checks with unique output identities,
+then run its canonical full suite and five corpora before adoption. Develop
+W2's scoring repair against its separately prepared controls after the W3 parser
+interface is accepted. Neither checkpoint ends the development goal.
 
-Owned processes: all prior W1/W2 jobs and the W1 focused retry are reaped. W3
-runner 1353891 and child/group 1353902 completed directly with exit zero at
-07:02:36 UTC; the actual later host sample finds both and the group absent.
-The canonical full suite is the sole active native job: owner
-`/root/baseline_verification`, session 71974, runner 1388929 and child/group
-1388940 on CPU 6. Available heavy-job
-budget is CPUs 0–23 with normal priority and one numerical thread per worker;
-small diagnostics remain on one CPU. P15, automatic link/union revision and
-whole-rival acquisition remain open. Continue after each verified checkpoint.
+Owned processes: no native job is active. The W1 full-suite session 71974,
+runner 1388929 and child/group 1388940 are reaped; its final host sample finds
+all absent. The W3 baseline session 16927, runner 1416965 and child/group 1416976
+are also reaped and absent. Available heavy-job budget is CPUs 0–23 with normal
+priority and one numerical thread per worker; small diagnostics use one CPU.
+P15, automatic link/union revision and whole-rival acquisition remain open.
 
 The paragraphs below retain the earlier campaign sequence and exposure state
 at each checkpoint; the active status above supersedes earlier pending actions.

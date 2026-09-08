@@ -1,0 +1,545 @@
+.................F.FFFFF..FFFFF.FFFFF................                    [100%]
+=================================== FAILURES ===================================
+____ test_widget_persistence_follows_final_native_identity[AFTER_BIJECTION] ____
+
+association = 'AFTER_BIJECTION'
+
+    @pytest.mark.parametrize("association", ["CONTROL", "AFTER_BIJECTION", "BOTH_BIJECTION"])
+    def test_widget_persistence_follows_final_native_identity(association):
+        hypothesis, template, pages, sigs = _native_widget_hypothesis()
+        changed_sigs = sigs if association == "BOTH_BIJECTION" else sigs[1:] if association == "AFTER_BIJECTION" else []
+        for sig in changed_sigs:
+            for rendered, canonical in (("Alpha", "Beta"), ("Beta", "Alpha")):
+                hypothesis.key_overrides[(sig, template, rendered)] = canonical
+    
+        hypothesis.fit(reload_pairs=[tuple(sigs)])
+    
+        unit = hypothesis.units[template]
+        assert unit.key_slot == "listitem#0"  # the default fit chose this, not the fixture
+        supported = association != "AFTER_BIJECTION"
+>       assert ((template, "combobox#0") in hypothesis.persistent_widgets) is supported
+E       AssertionError: assert (('listitem[_](combobox[_])', 'combobox#0') in {('listitem[_](combobox[_])', 'combobox#0')}) is False
+E        +  where {('listitem[_](combobox[_])', 'combobox#0')} = <semabi.compiler.v2.hypotheses.Hypotheses object at 0x7fa92b826840>.persistent_widgets
+
+tests/test_v2_collection_variation.py:305: AssertionError
+__________ test_public_aliases_expose_an_unmatched_widget_reload_loss __________
+
+    def test_public_aliases_expose_an_unmatched_widget_reload_loss():
+        before = [("Alpha", "Red"), ("Beta", "Blue"), ("Spare", "Edited")]
+        after = [("Alpha", "Red"), ("Beta", "Blue"), ("Changed", "Default")]
+        hypothesis, template, _pages, sigs = _native_widget_hypothesis(before, after)
+        hypothesis.fit(reload_pairs=[tuple(sigs)])
+        assert hypothesis.units[template].key_slot == "listitem#0"
+        assert (template, "combobox#0") in hypothesis.persistent_widgets
+    
+        hypothesis.apply_aliases([SimpleNamespace(b_template=template, b_key="Changed", a_key="Spare")])
+    
+        unit = hypothesis.units[template]
+>       assert (template, "combobox#0") not in hypothesis.persistent_widgets
+E       AssertionError: assert ('listitem[_](combobox[_])', 'combobox#0') not in {('listitem[_](combobox[_])', 'combobox#0')}
+E        +  where {('listitem[_](combobox[_])', 'combobox#0')} = <semabi.compiler.v2.hypotheses.Hypotheses object at 0x7fa92b825d30>.persistent_widgets
+
+tests/test_v2_collection_variation.py:350: AssertionError
+_____ test_post_promotion_key_collisions_cannot_be_repaired_by_position[0] _____
+
+collision_side = 0
+
+    @pytest.mark.parametrize("collision_side", [0, 1])
+    def test_post_promotion_key_collisions_cannot_be_repaired_by_position(collision_side):
+        rows = [("Alpha", "Red"), ("Beta", "Blue"), ("Gamma", "Green"), ("Delta", "Gold")]
+        hypothesis, template, _pages, sigs = _native_widget_hypothesis(rows)
+        hypothesis.fit(reload_pairs=[tuple(sigs)])
+        assert (template, "combobox#0") in hypothesis.persistent_widgets
+        hypothesis.key_overrides[(sigs[collision_side], template, "Beta")] = "Alpha"
+        hypothesis._apply_key_associations()
+        parsed = [ui for ui in hypothesis.parse_units(sigs[collision_side]) if ui.template == template]
+        assert [ui.slots["listitem#0"] for ui in parsed] == ["Alpha", "Alpha#2", "Gamma", "Delta"]
+        assert parsed[1].positional
+        cached = hypothesis._page_instances[sigs[collision_side]]
+    
+        hypothesis._build_entity_types()
+    
+>       assert (template, "combobox#0") not in hypothesis.persistent_widgets
+E       AssertionError: assert ('listitem[_](combobox[_])', 'combobox#0') not in {('listitem[_](combobox[_])', 'combobox#0')}
+E        +  where {('listitem[_](combobox[_])', 'combobox#0')} = <semabi.compiler.v2.hypotheses.Hypotheses object at 0x7fa92b79f260>.persistent_widgets
+
+tests/test_v2_collection_variation.py:372: AssertionError
+_____ test_post_promotion_key_collisions_cannot_be_repaired_by_position[1] _____
+
+collision_side = 1
+
+    @pytest.mark.parametrize("collision_side", [0, 1])
+    def test_post_promotion_key_collisions_cannot_be_repaired_by_position(collision_side):
+        rows = [("Alpha", "Red"), ("Beta", "Blue"), ("Gamma", "Green"), ("Delta", "Gold")]
+        hypothesis, template, _pages, sigs = _native_widget_hypothesis(rows)
+        hypothesis.fit(reload_pairs=[tuple(sigs)])
+        assert (template, "combobox#0") in hypothesis.persistent_widgets
+        hypothesis.key_overrides[(sigs[collision_side], template, "Beta")] = "Alpha"
+        hypothesis._apply_key_associations()
+        parsed = [ui for ui in hypothesis.parse_units(sigs[collision_side]) if ui.template == template]
+        assert [ui.slots["listitem#0"] for ui in parsed] == ["Alpha", "Alpha#2", "Gamma", "Delta"]
+        assert parsed[1].positional
+        cached = hypothesis._page_instances[sigs[collision_side]]
+    
+        hypothesis._build_entity_types()
+    
+>       assert (template, "combobox#0") not in hypothesis.persistent_widgets
+E       AssertionError: assert ('listitem[_](combobox[_])', 'combobox#0') not in {('listitem[_](combobox[_])', 'combobox#0')}
+E        +  where {('listitem[_](combobox[_])', 'combobox#0')} = <semabi.compiler.v2.hypotheses.Hypotheses object at 0x7fa92b9e52b0>.persistent_widgets
+
+tests/test_v2_collection_variation.py:372: AssertionError
+_ test_rejected_widget_key_dependencies_fail_without_rekeying[False-combobox#0] _
+
+key_slot = 'combobox#0', supported = False
+
+    @pytest.mark.parametrize("key_slot", ["combobox#0", "listitem#0|combobox#0"])
+    @pytest.mark.parametrize("supported", [False, True])
+    def test_rejected_widget_key_dependencies_fail_without_rekeying(key_slot, supported):
+        """Native parses with a direct key intervention isolate the finalizer's dependency rule."""
+        hypothesis, template, _pages, sigs = _native_widget_hypothesis()
+        hypothesis.fit(reload_pairs=[tuple(sigs)])
+        unit = hypothesis.units[template]
+        hypothesis._add_composite_keys(unit)
+        unit.key_slot = key_slot
+        if not supported:
+            values = ("Red", "Blue") if key_slot == "combobox#0" else ("Alpha|Red", "Beta|Blue")
+            for rendered, canonical in zip(values, reversed(values)):
+                hypothesis.key_overrides[(sigs[1], template, rendered)] = canonical
+            hypothesis._apply_key_associations()
+>           with pytest.raises(ValueError, match="widget.*selected key"):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ValueError
+
+tests/test_v2_collection_variation.py:399: Failed
+_ test_rejected_widget_key_dependencies_fail_without_rekeying[False-listitem#0|combobox#0] _
+
+key_slot = 'listitem#0|combobox#0', supported = False
+
+    @pytest.mark.parametrize("key_slot", ["combobox#0", "listitem#0|combobox#0"])
+    @pytest.mark.parametrize("supported", [False, True])
+    def test_rejected_widget_key_dependencies_fail_without_rekeying(key_slot, supported):
+        """Native parses with a direct key intervention isolate the finalizer's dependency rule."""
+        hypothesis, template, _pages, sigs = _native_widget_hypothesis()
+        hypothesis.fit(reload_pairs=[tuple(sigs)])
+        unit = hypothesis.units[template]
+        hypothesis._add_composite_keys(unit)
+        unit.key_slot = key_slot
+        if not supported:
+            values = ("Red", "Blue") if key_slot == "combobox#0" else ("Alpha|Red", "Beta|Blue")
+            for rendered, canonical in zip(values, reversed(values)):
+                hypothesis.key_overrides[(sigs[1], template, rendered)] = canonical
+            hypothesis._apply_key_associations()
+>           with pytest.raises(ValueError, match="widget.*selected key"):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ValueError
+
+tests/test_v2_collection_variation.py:399: Failed
+_ test_revocation_removes_unused_widget_composites_and_restores_slot_statistics _
+
+    def test_revocation_removes_unused_widget_composites_and_restores_slot_statistics():
+        hypothesis, template, _pages, sigs = _native_widget_hypothesis()
+        hypothesis.fit(reload_pairs=[tuple(sigs)])
+        unit = hypothesis.units[template]
+        hypothesis._add_composite_keys(unit)
+        assert "listitem#0|combobox#0" in unit.slots
+        for rendered, canonical in (("Alpha", "Beta"), ("Beta", "Alpha")):
+            hypothesis.key_overrides[(sigs[1], template, rendered)] = canonical
+        hypothesis._apply_key_associations()
+    
+        hypothesis._build_entity_types()
+    
+        assert unit.key_slot == "listitem#0"
+>       assert unit.slots["combobox#0~"].values == Counter({"Red": 2, "Blue": 2})
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'combobox#0~'
+
+tests/test_v2_collection_variation.py:431: KeyError
+________ test_context_split_rechecks_each_inherited_widget_claim[none] _________
+
+association = 'none'
+
+    @pytest.mark.parametrize("association", ["none", "alias", "override"])
+    def test_context_split_rechecks_each_inherited_widget_claim(association):
+        pages = []
+        for status, secondary in (("Before", ("Gamma", "Delta")), ("After", ("Epsilon", "Zeta"))):
+            pages.append(build(
+                ("group", "", -1), ("status", status, 0),
+                ("article", "", 0), ("list", "", 2),
+                ("listitem", "Alpha", 3), ("combobox", "", 4, "Red"),
+                ("listitem", "Beta", 3), ("combobox", "", 6, "Blue"),
+                ("section", "", 0), ("list", "", 8),
+                ("listitem", secondary[0], 9), ("combobox", "", 10, "Green"),
+                ("listitem", secondary[1], 9), ("combobox", "", 12, "Gold")))
+        hypothesis, templates, sigs = _parsed_widget_units(pages, [4, 10], [2, 8])
+        template = templates[0]
+        assert templates == [template, template]
+        hypothesis._promote_persistent_widgets()
+        assert (template, "combobox#0") in hypothesis.persistent_widgets
+        for rendered, canonical in (("Epsilon", "Gamma"), ("Zeta", "Delta")):
+            if association == "alias":
+                hypothesis.alias_map[(template, rendered)] = canonical
+            elif association == "override":
+                hypothesis.key_overrides[(sigs[1], template, rendered)] = canonical
+        hypothesis._apply_key_associations()
+    
+        hypothesis._build_entity_types()
+    
+        derived, = set(hypothesis.ctx_split.values())
+        assert (template, "combobox#0") in hypothesis.persistent_widgets
+        supported = association != "none"
+        assert ((derived, "combobox#0") in hypothesis.persistent_widgets) is supported
+        slot = "combobox#0" if supported else "combobox#0~"
+>       assert all(slot in ui.slots for ui in hypothesis.units[derived].instances)
+E       assert False
+E        +  where False = all(<generator object test_context_split_rechecks_each_inherited_widget_claim.<locals>.<genexpr> at 0x7fa92b0045f0>)
+
+tests/test_v2_collection_variation.py:493: AssertionError
+________ test_context_split_rechecks_each_inherited_widget_claim[alias] ________
+
+association = 'alias'
+
+    @pytest.mark.parametrize("association", ["none", "alias", "override"])
+    def test_context_split_rechecks_each_inherited_widget_claim(association):
+        pages = []
+        for status, secondary in (("Before", ("Gamma", "Delta")), ("After", ("Epsilon", "Zeta"))):
+            pages.append(build(
+                ("group", "", -1), ("status", status, 0),
+                ("article", "", 0), ("list", "", 2),
+                ("listitem", "Alpha", 3), ("combobox", "", 4, "Red"),
+                ("listitem", "Beta", 3), ("combobox", "", 6, "Blue"),
+                ("section", "", 0), ("list", "", 8),
+                ("listitem", secondary[0], 9), ("combobox", "", 10, "Green"),
+                ("listitem", secondary[1], 9), ("combobox", "", 12, "Gold")))
+        hypothesis, templates, sigs = _parsed_widget_units(pages, [4, 10], [2, 8])
+        template = templates[0]
+        assert templates == [template, template]
+        hypothesis._promote_persistent_widgets()
+        assert (template, "combobox#0") in hypothesis.persistent_widgets
+        for rendered, canonical in (("Epsilon", "Gamma"), ("Zeta", "Delta")):
+            if association == "alias":
+                hypothesis.alias_map[(template, rendered)] = canonical
+            elif association == "override":
+                hypothesis.key_overrides[(sigs[1], template, rendered)] = canonical
+        hypothesis._apply_key_associations()
+    
+        hypothesis._build_entity_types()
+    
+        derived, = set(hypothesis.ctx_split.values())
+        assert (template, "combobox#0") in hypothesis.persistent_widgets
+        supported = association != "none"
+>       assert ((derived, "combobox#0") in hypothesis.persistent_widgets) is supported
+E       AssertionError: assert (('listitem[_](combobox[_])@ctx0', 'combobox#0') in {('listitem[_](combobox[_])', 'combobox#0')}) is True
+E        +  where {('listitem[_](combobox[_])', 'combobox#0')} = <semabi.compiler.v2.hypotheses.Hypotheses object at 0x7fa92ba1c470>.persistent_widgets
+
+tests/test_v2_collection_variation.py:491: AssertionError
+______ test_context_split_rechecks_each_inherited_widget_claim[override] _______
+
+association = 'override'
+
+    @pytest.mark.parametrize("association", ["none", "alias", "override"])
+    def test_context_split_rechecks_each_inherited_widget_claim(association):
+        pages = []
+        for status, secondary in (("Before", ("Gamma", "Delta")), ("After", ("Epsilon", "Zeta"))):
+            pages.append(build(
+                ("group", "", -1), ("status", status, 0),
+                ("article", "", 0), ("list", "", 2),
+                ("listitem", "Alpha", 3), ("combobox", "", 4, "Red"),
+                ("listitem", "Beta", 3), ("combobox", "", 6, "Blue"),
+                ("section", "", 0), ("list", "", 8),
+                ("listitem", secondary[0], 9), ("combobox", "", 10, "Green"),
+                ("listitem", secondary[1], 9), ("combobox", "", 12, "Gold")))
+        hypothesis, templates, sigs = _parsed_widget_units(pages, [4, 10], [2, 8])
+        template = templates[0]
+        assert templates == [template, template]
+        hypothesis._promote_persistent_widgets()
+        assert (template, "combobox#0") in hypothesis.persistent_widgets
+        for rendered, canonical in (("Epsilon", "Gamma"), ("Zeta", "Delta")):
+            if association == "alias":
+                hypothesis.alias_map[(template, rendered)] = canonical
+            elif association == "override":
+                hypothesis.key_overrides[(sigs[1], template, rendered)] = canonical
+        hypothesis._apply_key_associations()
+    
+        hypothesis._build_entity_types()
+    
+        derived, = set(hypothesis.ctx_split.values())
+        assert (template, "combobox#0") in hypothesis.persistent_widgets
+        supported = association != "none"
+>       assert ((derived, "combobox#0") in hypothesis.persistent_widgets) is supported
+E       AssertionError: assert (('listitem[_](combobox[_])@ctx0', 'combobox#0') in {('listitem[_](combobox[_])', 'combobox#0')}) is True
+E        +  where {('listitem[_](combobox[_])', 'combobox#0')} = <semabi.compiler.v2.hypotheses.Hypotheses object at 0x7fa92ba1c290>.persistent_widgets
+
+tests/test_v2_collection_variation.py:491: AssertionError
+_ test_composite_harmonization_rechecks_widget_key_dependencies[AFTER_BIJECTION] _
+
+association = 'AFTER_BIJECTION'
+
+    @pytest.mark.parametrize("association", ["AFTER_BIJECTION", "CONTROL", "BOTH_BIJECTION"])
+    def test_composite_harmonization_rechecks_widget_key_dependencies(association):
+        pages = [build(
+            ("group", "", -1), ("status", status, 0), ("list", "", 0),
+            ("listitem", "Alpha", 2), ("combobox", "", 3, "Red"),
+            ("listitem", "Beta", 2), ("combobox", "", 5, "Blue"),
+            ("list", "", 0),
+            ("listitem", "Alpha", 7), ("combobox", "", 8, "Red"), ("button", "Inspect", 8),
+            ("listitem", "Beta", 7), ("combobox", "", 11, "Blue"), ("button", "Inspect", 11))
+            for status in ("Before", "After")]
+        hypothesis, (donor, recipient), sigs = _parsed_widget_units(pages, [3, 8])
+        assert donor != recipient
+        hypothesis._promote_persistent_widgets()
+        assert hypothesis.persistent_widgets == {(donor, "combobox#0"), (recipient, "combobox#0")}
+        hypothesis._add_composite_keys(hypothesis.units[donor])
+        composite = "listitem#0|combobox#0"
+        hypothesis.units[donor].key_slot = composite
+        assert hypothesis.units[recipient].key_slot == "listitem#0"
+        if association == "BOTH_BIJECTION":
+            for template in (donor, recipient):
+                for sig in sigs:
+                    for rendered, canonical in (("Alpha|Red", "Beta|Blue"), ("Beta|Blue", "Alpha|Red")):
+                        hypothesis.key_overrides[(sig, template, rendered)] = canonical
+            hypothesis._apply_key_associations()
+        elif association == "AFTER_BIJECTION":
+            for rendered, canonical in (("Alpha|Red", "Beta|Blue"), ("Beta|Blue", "Alpha|Red")):
+                hypothesis.key_overrides[(sigs[1], recipient, rendered)] = canonical
+        if association == "AFTER_BIJECTION":
+>           with pytest.raises(ValueError, match="widget.*selected key"):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ValueError
+
+tests/test_v2_collection_variation.py:537: Failed
+_ test_composite_harmonization_rechecks_widget_key_dependencies[BOTH_BIJECTION] _
+
+association = 'BOTH_BIJECTION'
+
+    @pytest.mark.parametrize("association", ["AFTER_BIJECTION", "CONTROL", "BOTH_BIJECTION"])
+    def test_composite_harmonization_rechecks_widget_key_dependencies(association):
+        pages = [build(
+            ("group", "", -1), ("status", status, 0), ("list", "", 0),
+            ("listitem", "Alpha", 2), ("combobox", "", 3, "Red"),
+            ("listitem", "Beta", 2), ("combobox", "", 5, "Blue"),
+            ("list", "", 0),
+            ("listitem", "Alpha", 7), ("combobox", "", 8, "Red"), ("button", "Inspect", 8),
+            ("listitem", "Beta", 7), ("combobox", "", 11, "Blue"), ("button", "Inspect", 11))
+            for status in ("Before", "After")]
+        hypothesis, (donor, recipient), sigs = _parsed_widget_units(pages, [3, 8])
+        assert donor != recipient
+        hypothesis._promote_persistent_widgets()
+        assert hypothesis.persistent_widgets == {(donor, "combobox#0"), (recipient, "combobox#0")}
+        hypothesis._add_composite_keys(hypothesis.units[donor])
+        composite = "listitem#0|combobox#0"
+        hypothesis.units[donor].key_slot = composite
+        assert hypothesis.units[recipient].key_slot == "listitem#0"
+        if association == "BOTH_BIJECTION":
+            for template in (donor, recipient):
+                for sig in sigs:
+                    for rendered, canonical in (("Alpha|Red", "Beta|Blue"), ("Beta|Blue", "Alpha|Red")):
+                        hypothesis.key_overrides[(sig, template, rendered)] = canonical
+            hypothesis._apply_key_associations()
+        elif association == "AFTER_BIJECTION":
+            for rendered, canonical in (("Alpha|Red", "Beta|Blue"), ("Beta|Blue", "Alpha|Red")):
+                hypothesis.key_overrides[(sigs[1], recipient, rendered)] = canonical
+        if association == "AFTER_BIJECTION":
+            with pytest.raises(ValueError, match="widget.*selected key"):
+                hypothesis._build_entity_types()
+            assert hypothesis.entity_types == hypothesis.tid_of_template == {}
+            assert not hypothesis.frozen
+            assert (recipient, "combobox#0") not in hypothesis.persistent_widgets
+        else:
+            hypothesis._build_entity_types()
+            assert (recipient, "combobox#0") in hypothesis.persistent_widgets
+            assert (donor, "combobox#0") in hypothesis.persistent_widgets
+            expected_keys = ["Beta|Blue", "Alpha|Red"] if association == "BOTH_BIJECTION" else ["Alpha|Red", "Beta|Blue"]
+            for template in (donor, recipient):
+                unit = hypothesis.units[template]
+                for sig in sigs:
+                    fitted = [ui for ui in unit.instances if ui.sig == sig]
+                    parsed = [ui for ui in hypothesis.parse_units(sig) if ui.template == template]
+>                   assert [ui.slots[composite] for ui in fitted] == expected_keys
+E                   AssertionError: assert ['Alpha|Red', 'Beta|Blue'] == ['Beta|Blue', 'Alpha|Red']
+E                     
+E                     At index 0 diff: 'Alpha|Red' != 'Beta|Blue'
+E                     Use -v to get more diff
+
+tests/test_v2_collection_variation.py:552: AssertionError
+_ test_missing_reload_or_widget_node_cannot_support_a_finalized_claim[reload_pair] _
+
+missing_evidence = 'reload_pair'
+
+    @pytest.mark.parametrize("missing_evidence", ["reload_pair", "widget_node", "owner", "composite_component_node"])
+    def test_missing_reload_or_widget_node_cannot_support_a_finalized_claim(missing_evidence):
+        rows = [("Alpha", "Red"), ("Beta", "Blue"), ("Gamma", "Green"), ("Delta", "Gold")]
+        hypothesis, template, _pages, sigs = _native_widget_hypothesis(rows)
+        hypothesis.fit(reload_pairs=[tuple(sigs)])
+        unit = hypothesis.units[template]
+        if missing_evidence == "reload_pair":
+            hypothesis.reload_pairs = []
+        elif missing_evidence == "widget_node":
+            unit.instances[0].slot_nodes["combobox#0"] = 999
+        elif missing_evidence == "owner":
+            unit.instances[0].parent_root = 999
+        else:
+            # A selected composite's node is its first component. The later component's
+            # binding still needs validation even when three other rows match perfectly.
+            hypothesis._add_composite_keys(unit)
+            unit.key_slot = "combobox#0|listitem#0"
+            for ui in unit.instances:
+                ui.slots[unit.key_slot] = ui.slots["combobox#0"] + "|" + ui.slots["listitem#0"]
+                ui.slot_nodes[unit.key_slot] = ui.slot_nodes["combobox#0"]
+            hypothesis._slot_stats(unit)
+            unit.instances[0].slot_nodes["listitem#0"] = 999
+    
+        if missing_evidence == "composite_component_node":
+            with pytest.raises(ValueError, match="widget.*selected key"):
+                hypothesis._build_entity_types()
+        else:
+            hypothesis._build_entity_types()
+    
+>       assert (template, "combobox#0") not in hypothesis.persistent_widgets
+E       AssertionError: assert ('listitem[_](combobox[_])', 'combobox#0') not in {('listitem[_](combobox[_])', 'combobox#0')}
+E        +  where {('listitem[_](combobox[_])', 'combobox#0')} = <semabi.compiler.v2.hypotheses.Hypotheses object at 0x7fa92ba1cfb0>.persistent_widgets
+
+tests/test_v2_collection_variation.py:589: AssertionError
+_ test_missing_reload_or_widget_node_cannot_support_a_finalized_claim[widget_node] _
+
+missing_evidence = 'widget_node'
+
+    @pytest.mark.parametrize("missing_evidence", ["reload_pair", "widget_node", "owner", "composite_component_node"])
+    def test_missing_reload_or_widget_node_cannot_support_a_finalized_claim(missing_evidence):
+        rows = [("Alpha", "Red"), ("Beta", "Blue"), ("Gamma", "Green"), ("Delta", "Gold")]
+        hypothesis, template, _pages, sigs = _native_widget_hypothesis(rows)
+        hypothesis.fit(reload_pairs=[tuple(sigs)])
+        unit = hypothesis.units[template]
+        if missing_evidence == "reload_pair":
+            hypothesis.reload_pairs = []
+        elif missing_evidence == "widget_node":
+            unit.instances[0].slot_nodes["combobox#0"] = 999
+        elif missing_evidence == "owner":
+            unit.instances[0].parent_root = 999
+        else:
+            # A selected composite's node is its first component. The later component's
+            # binding still needs validation even when three other rows match perfectly.
+            hypothesis._add_composite_keys(unit)
+            unit.key_slot = "combobox#0|listitem#0"
+            for ui in unit.instances:
+                ui.slots[unit.key_slot] = ui.slots["combobox#0"] + "|" + ui.slots["listitem#0"]
+                ui.slot_nodes[unit.key_slot] = ui.slot_nodes["combobox#0"]
+            hypothesis._slot_stats(unit)
+            unit.instances[0].slot_nodes["listitem#0"] = 999
+    
+        if missing_evidence == "composite_component_node":
+            with pytest.raises(ValueError, match="widget.*selected key"):
+                hypothesis._build_entity_types()
+        else:
+            hypothesis._build_entity_types()
+    
+>       assert (template, "combobox#0") not in hypothesis.persistent_widgets
+E       AssertionError: assert ('listitem[_](combobox[_])', 'combobox#0') not in {('listitem[_](combobox[_])', 'combobox#0')}
+E        +  where {('listitem[_](combobox[_])', 'combobox#0')} = <semabi.compiler.v2.hypotheses.Hypotheses object at 0x7fa92b9fb0e0>.persistent_widgets
+
+tests/test_v2_collection_variation.py:589: AssertionError
+__ test_missing_reload_or_widget_node_cannot_support_a_finalized_claim[owner] __
+
+missing_evidence = 'owner'
+
+    @pytest.mark.parametrize("missing_evidence", ["reload_pair", "widget_node", "owner", "composite_component_node"])
+    def test_missing_reload_or_widget_node_cannot_support_a_finalized_claim(missing_evidence):
+        rows = [("Alpha", "Red"), ("Beta", "Blue"), ("Gamma", "Green"), ("Delta", "Gold")]
+        hypothesis, template, _pages, sigs = _native_widget_hypothesis(rows)
+        hypothesis.fit(reload_pairs=[tuple(sigs)])
+        unit = hypothesis.units[template]
+        if missing_evidence == "reload_pair":
+            hypothesis.reload_pairs = []
+        elif missing_evidence == "widget_node":
+            unit.instances[0].slot_nodes["combobox#0"] = 999
+        elif missing_evidence == "owner":
+            unit.instances[0].parent_root = 999
+        else:
+            # A selected composite's node is its first component. The later component's
+            # binding still needs validation even when three other rows match perfectly.
+            hypothesis._add_composite_keys(unit)
+            unit.key_slot = "combobox#0|listitem#0"
+            for ui in unit.instances:
+                ui.slots[unit.key_slot] = ui.slots["combobox#0"] + "|" + ui.slots["listitem#0"]
+                ui.slot_nodes[unit.key_slot] = ui.slot_nodes["combobox#0"]
+            hypothesis._slot_stats(unit)
+            unit.instances[0].slot_nodes["listitem#0"] = 999
+    
+        if missing_evidence == "composite_component_node":
+            with pytest.raises(ValueError, match="widget.*selected key"):
+                hypothesis._build_entity_types()
+        else:
+>           hypothesis._build_entity_types()
+
+tests/test_v2_collection_variation.py:587: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+semabi/compiler/v2/hypotheses.py:1009: in _build_entity_types
+    pt = self.template(ui.sig, p)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+semabi/compiler/v2/hypotheses.py:136: in template
+    return collapsed_template(self.G, sig, i, self.memo)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+semabi/compiler/v2/units.py:24: in collapsed_template
+    n = obs.node(i)
+        ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Observation(nodes=[Node(i=0, parent=-1, role='group', name='', value=None, checked=None, options=None, placeholder=Non... name='Inventory', value=None, checked=None, options=None, placeholder=None, current=None, bbox=(0, 0, 0, 0))], url='')
+i = 999
+
+    def node(self, i: int) -> Node:
+>       return self.nodes[i]
+               ^^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+semabi/compiler/observation.py:57: IndexError
+_ test_missing_reload_or_widget_node_cannot_support_a_finalized_claim[composite_component_node] _
+
+missing_evidence = 'composite_component_node'
+
+    @pytest.mark.parametrize("missing_evidence", ["reload_pair", "widget_node", "owner", "composite_component_node"])
+    def test_missing_reload_or_widget_node_cannot_support_a_finalized_claim(missing_evidence):
+        rows = [("Alpha", "Red"), ("Beta", "Blue"), ("Gamma", "Green"), ("Delta", "Gold")]
+        hypothesis, template, _pages, sigs = _native_widget_hypothesis(rows)
+        hypothesis.fit(reload_pairs=[tuple(sigs)])
+        unit = hypothesis.units[template]
+        if missing_evidence == "reload_pair":
+            hypothesis.reload_pairs = []
+        elif missing_evidence == "widget_node":
+            unit.instances[0].slot_nodes["combobox#0"] = 999
+        elif missing_evidence == "owner":
+            unit.instances[0].parent_root = 999
+        else:
+            # A selected composite's node is its first component. The later component's
+            # binding still needs validation even when three other rows match perfectly.
+            hypothesis._add_composite_keys(unit)
+            unit.key_slot = "combobox#0|listitem#0"
+            for ui in unit.instances:
+                ui.slots[unit.key_slot] = ui.slots["combobox#0"] + "|" + ui.slots["listitem#0"]
+                ui.slot_nodes[unit.key_slot] = ui.slot_nodes["combobox#0"]
+            hypothesis._slot_stats(unit)
+            unit.instances[0].slot_nodes["listitem#0"] = 999
+    
+        if missing_evidence == "composite_component_node":
+>           with pytest.raises(ValueError, match="widget.*selected key"):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ValueError
+
+tests/test_v2_collection_variation.py:584: Failed
+=========================== short test summary info ============================
+FAILED tests/test_v2_collection_variation.py::test_widget_persistence_follows_final_native_identity[AFTER_BIJECTION]
+FAILED tests/test_v2_collection_variation.py::test_public_aliases_expose_an_unmatched_widget_reload_loss
+FAILED tests/test_v2_collection_variation.py::test_post_promotion_key_collisions_cannot_be_repaired_by_position[0]
+FAILED tests/test_v2_collection_variation.py::test_post_promotion_key_collisions_cannot_be_repaired_by_position[1]
+FAILED tests/test_v2_collection_variation.py::test_rejected_widget_key_dependencies_fail_without_rekeying[False-combobox#0]
+FAILED tests/test_v2_collection_variation.py::test_rejected_widget_key_dependencies_fail_without_rekeying[False-listitem#0|combobox#0]
+FAILED tests/test_v2_collection_variation.py::test_revocation_removes_unused_widget_composites_and_restores_slot_statistics
+FAILED tests/test_v2_collection_variation.py::test_context_split_rechecks_each_inherited_widget_claim[none]
+FAILED tests/test_v2_collection_variation.py::test_context_split_rechecks_each_inherited_widget_claim[alias]
+FAILED tests/test_v2_collection_variation.py::test_context_split_rechecks_each_inherited_widget_claim[override]
+FAILED tests/test_v2_collection_variation.py::test_composite_harmonization_rechecks_widget_key_dependencies[AFTER_BIJECTION]
+FAILED tests/test_v2_collection_variation.py::test_composite_harmonization_rechecks_widget_key_dependencies[BOTH_BIJECTION]
+FAILED tests/test_v2_collection_variation.py::test_missing_reload_or_widget_node_cannot_support_a_finalized_claim[reload_pair]
+FAILED tests/test_v2_collection_variation.py::test_missing_reload_or_widget_node_cannot_support_a_finalized_claim[widget_node]
+FAILED tests/test_v2_collection_variation.py::test_missing_reload_or_widget_node_cannot_support_a_finalized_claim[owner]
+FAILED tests/test_v2_collection_variation.py::test_missing_reload_or_widget_node_cannot_support_a_finalized_claim[composite_component_node]
+16 failed, 37 passed in 0.48s

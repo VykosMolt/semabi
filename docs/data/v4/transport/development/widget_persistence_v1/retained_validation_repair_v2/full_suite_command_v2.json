@@ -1,0 +1,77 @@
+{
+  "ambient_prefix": "/tmp/semabi_w1_validation_repair_v2_full_pytest_no_pyc",
+  "argv": [
+    "taskset",
+    "-c",
+    "6",
+    "env",
+    "BLIS_NUM_THREADS=1",
+    "MKL_NUM_THREADS=1",
+    "NUMEXPR_NUM_THREADS=1",
+    "OMP_NUM_THREADS=1",
+    "OPENBLAS_NUM_THREADS=1",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "PYTHONHASHSEED=0",
+    "PYTHONPATH=",
+    "PYTHONPYCACHEPREFIX=/tmp/semabi_w1_validation_repair_v2_full_pytest_no_pyc",
+    "VECLIB_MAXIMUM_THREADS=1",
+    "PYTHONOPTIMIZE=0",
+    "/home/moloch/semabi/.venv/bin/python",
+    "-P",
+    "-B",
+    "docs/data/v4/transport/run_job.py",
+    "docs/data/v4/transport/development/widget_persistence_v1/validation_repair_v2/full_pytest_job_v2",
+    "--",
+    "/home/moloch/semabi/.venv/bin/python",
+    "-P",
+    "-B",
+    "docs/data/v4/transport/development/widget_persistence_v1/validation_repair_v2/run_full_suite_v2.py",
+    "--source-freeze-sha256",
+    "a1b4242f0cf11a885822e693e0412d6e3c451543ed8417eefe1aed4890f2afc1"
+  ],
+  "cpu_affinity": [
+    6
+  ],
+  "created_utc": "2026-09-08T07:36:11.106458+00:00",
+  "entrypoint": {
+    "path": "/home/moloch/semabi/runs/.w1_validation_worktree/docs/data/v4/transport/development/widget_persistence_v1/validation_repair_v2/run_full_suite_v2.py",
+    "sha256": "b01258b1b05bbcdfe24c41c098ea5de96b5995bc182656ae834cf30a94e338bd"
+  },
+  "environment": {
+    "BLIS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "PYTEST_ADDOPTS": null,
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": null,
+    "PYTEST_PLUGINS": null,
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONHASHSEED": "0",
+    "PYTHONOPTIMIZE": "0",
+    "PYTHONPATH": "",
+    "PYTHONPYCACHEPREFIX": "/tmp/semabi_w1_validation_repair_v2_full_pytest_no_pyc",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "job_identity": "docs/data/v4/transport/development/widget_persistence_v1/validation_repair_v2/full_pytest_job_v2",
+  "pytest_args": [
+    "-q",
+    "tests",
+    "--junitxml=docs/data/v4/transport/development/widget_persistence_v1/validation_repair_v2/full_pytest_v2.xml",
+    "--basetemp=docs/data/v4/transport/development/widget_persistence_v1/validation_repair_v2/full_pytest_tmp_v2"
+  ],
+  "runner": {
+    "path": "/home/moloch/semabi/runs/.w1_validation_worktree/docs/data/v4/transport/run_job.py",
+    "sha256": "3c91a704135db5cfa553c7bdc9a5a55fffa999f73e2e9aebd9f7f2a3534525d7"
+  },
+  "schema": "semabi.transport.w1_cache_repair_full_suite_command.v2",
+  "scope": "Exactly one canonical full-suite attempt after root GO. No corpus rerun or main adoption.",
+  "shell_command": "taskset -c 6 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 PYTHONPATH= PYTHONPYCACHEPREFIX=/tmp/semabi_w1_validation_repair_v2_full_pytest_no_pyc VECLIB_MAXIMUM_THREADS=1 PYTHONOPTIMIZE=0 /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/widget_persistence_v1/validation_repair_v2/full_pytest_job_v2 -- /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/development/widget_persistence_v1/validation_repair_v2/run_full_suite_v2.py --source-freeze-sha256 a1b4242f0cf11a885822e693e0412d6e3c451543ed8417eefe1aed4890f2afc1",
+  "source_freeze": {
+    "path": "/home/moloch/semabi/runs/.w1_validation_worktree/docs/data/v4/transport/development/widget_persistence_v1/validation_repair_v2/full_suite_source_freeze_v2.json",
+    "sha256": "a1b4242f0cf11a885822e693e0412d6e3c451543ed8417eefe1aed4890f2afc1"
+  },
+  "source_head": "a1c0bc96d6a9725a3f23e18dbc96f97b0bd38f08",
+  "status": "PREPARED_NOT_EXECUTED_ROOT_GO_REQUIRED",
+  "working_directory": "/home/moloch/semabi/runs/.w1_validation_worktree"
+}

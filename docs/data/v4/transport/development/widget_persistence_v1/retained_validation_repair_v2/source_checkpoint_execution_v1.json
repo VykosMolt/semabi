@@ -1,0 +1,103 @@
+{
+  "schema": "semabi.transport.w1_cache_repair_source_checkpoint_execution.v1",
+  "coordinator": "/root/baseline_verification",
+  "scope": "Approved test-only local source checkpoint; no main adoption or further native jobs.",
+  "source_prechecks": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "e6fb40",
+        "wall_time_seconds": 0.000002751,
+        "exit_code": 0,
+        "original_token_count": 291,
+        "output": "{\n  \"created_utc\": \"2026-09-08T06:58:24.502122+00:00\",\n  \"decision\": \"ACCEPT_FOCUSED_RESULT_AND_TEST_ONLY_LOCAL_COMMIT\",\n  \"files_to_commit\": {\n    \"tests/test_v4_manifests.py\": \"cf453a06fccc15b6bdb300330046fb303ac50755c838cad572bcc7ed0e11dd4a\"\n  },\n  \"focused_results_manifest_sha256\": \"98a0fe1130bfc15988de66d3db0d5c73328c886c76f543b8686028135fbb8ad2\",\n  \"message\": \"test(v4): isolate manifest bytecode cache fixtures\",\n  \"review_basis\": \"Independent static source and focused observer/configuration reviews passed before execution; root read the completed execution and verified exact five cache rows and 26 sealed files. Independent result review is supplementary and remains pending.\",\n  \"root_verified_attempt_members\": 26,\n  \"schema\": \"semabi.transport.w1_cache_repair_root_source_checkpoint_go.v1\",\n  \"scope\": \"Test-only source checkpoint on w1-cache-fixture-isolation. Then prepare and independently review a versioned canonical full-suite freeze/command. No corpus repeat or main adoption. Original W1 attempt remains immutable.\",\n  \"source_checkpoint_proposal_sha256\": \"6fc18b09da08f34f35742e74c63dcb694f4ac669060ac8ea9ced6684a414023f\",\n  \"tests\": 5\n}\n\n"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "2918b6",
+        "wall_time_seconds": 0.000001566,
+        "exit_code": 0,
+        "original_token_count": 23,
+        "output": " M tests/test_v4_manifests.py\n?? docs/data/v4/transport/development/widget_persistence_v1/\n"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "0123c4",
+        "wall_time_seconds": 0.000001744,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      }
+    }
+  ],
+  "git_add": {
+    "tool": "exec_command",
+    "arguments": {
+      "cmd": "git add -- tests/test_v4_manifests.py",
+      "workdir": "/home/moloch/semabi/runs/.w1_validation_worktree",
+      "sandbox_permissions": "require_escalated",
+      "justification": "Stage only the root-approved manifest cache-fixture test repair for its isolated local source checkpoint?",
+      "max_output_tokens": 1500,
+      "yield_time_ms": 1000
+    },
+    "result": {
+      "chunk_id": "d9981b",
+      "wall_time_seconds": 0.000002362,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    }
+  },
+  "git_commit": {
+    "tool": "exec_command",
+    "arguments": {
+      "cmd": "git commit -m 'test(v4): isolate manifest bytecode cache fixtures'",
+      "workdir": "/home/moloch/semabi/runs/.w1_validation_worktree",
+      "sandbox_permissions": "require_escalated",
+      "justification": "Create the explicitly approved local checkpoint containing only the reviewed manifest cache-fixture test repair?",
+      "max_output_tokens": 2000,
+      "yield_time_ms": 1000
+    },
+    "result": {
+      "chunk_id": "676add",
+      "wall_time_seconds": 0.000003016,
+      "exit_code": 0,
+      "original_token_count": 35,
+      "output": "[w1-cache-fixture-isolation a1c0bc9] test(v4): isolate manifest bytecode cache fixtures\n 1 file changed, 26 insertions(+), 20 deletions(-)\n"
+    }
+  },
+  "postcommit_verification": {
+    "tool": "exec_command",
+    "arguments": {
+      "cmd": "/home/moloch/semabi/.venv/bin/python -B - <<'PY'\nfrom pathlib import Path\nimport hashlib,json,subprocess\nROOT=Path.cwd();HERE=ROOT/'docs/data/v4/transport/development/widget_persistence_v1/validation_repair_v2';prep=json.loads((HERE/'focused_preparation_v1.json').read_text());sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();head=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip();assert head=='a1c0bc96d6a9725a3f23e18dbc96f97b0bd38f08';assert subprocess.check_output(['git','diff','--name-only','HEAD','--'],text=True)=='';assert subprocess.check_output(['git','diff-tree','--no-commit-id','--name-only','-r','HEAD'],text=True).splitlines()==['tests/test_v4_manifests.py'];assert all(sha(ROOT/name)==digest for name,digest in prep['native_files'].items());assert all(sha(ROOT/name)==digest for name,digest in prep['runtime_files'].items());assert sha(HERE/'focused_results_manifest_v1.json')=='98a0fe1130bfc15988de66d3db0d5c73328c886c76f543b8686028135fbb8ad2';print(json.dumps({'head':head,'parent':subprocess.check_output(['git','rev-parse','HEAD^'],text=True).strip(),'branch':subprocess.check_output(['git','branch','--show-current'],text=True).strip(),'committed_files':['tests/test_v4_manifests.py'],'test_file_sha256':sha(ROOT/'tests/test_v4_manifests.py'),'native_files_unchanged':156,'runtime_files_unchanged':67,'tracked_worktree_clean':True,'focused_seal_sha256':sha(HERE/'focused_results_manifest_v1.json'),'root_go_sha256':sha(HERE/'root_source_checkpoint_go_v1.json')}))\nPY",
+      "workdir": "/home/moloch/semabi/runs/.w1_validation_worktree",
+      "max_output_tokens": 1200,
+      "yield_time_ms": 1000
+    },
+    "result": {
+      "chunk_id": "50a373",
+      "wall_time_seconds": 0.000003224,
+      "exit_code": 0,
+      "original_token_count": 140,
+      "output": "{\"head\": \"a1c0bc96d6a9725a3f23e18dbc96f97b0bd38f08\", \"parent\": \"284d80c855ff37c42a509ae1dd88f83d4e04e3f4\", \"branch\": \"w1-cache-fixture-isolation\", \"committed_files\": [\"tests/test_v4_manifests.py\"], \"test_file_sha256\": \"cf453a06fccc15b6bdb300330046fb303ac50755c838cad572bcc7ed0e11dd4a\", \"native_files_unchanged\": 156, \"runtime_files_unchanged\": 67, \"tracked_worktree_clean\": true, \"focused_seal_sha256\": \"98a0fe1130bfc15988de66d3db0d5c73328c886c76f543b8686028135fbb8ad2\", \"root_go_sha256\": \"d4df7cc7ed043340af0339b2731fb1e80797a15b979506a6212f1a237732f106\"}\n"
+    }
+  },
+  "checkpoint": {
+    "head": "a1c0bc96d6a9725a3f23e18dbc96f97b0bd38f08",
+    "parent": "284d80c855ff37c42a509ae1dd88f83d4e04e3f4",
+    "branch": "w1-cache-fixture-isolation",
+    "committed_files": [
+      "tests/test_v4_manifests.py"
+    ],
+    "test_file_sha256": "cf453a06fccc15b6bdb300330046fb303ac50755c838cad572bcc7ed0e11dd4a",
+    "native_files_unchanged": 156,
+    "runtime_files_unchanged": 67,
+    "tracked_worktree_clean": true,
+    "focused_seal_sha256": "98a0fe1130bfc15988de66d3db0d5c73328c886c76f543b8686028135fbb8ad2",
+    "root_go_sha256": "d4df7cc7ed043340af0339b2731fb1e80797a15b979506a6212f1a237732f106"
+  }
+}

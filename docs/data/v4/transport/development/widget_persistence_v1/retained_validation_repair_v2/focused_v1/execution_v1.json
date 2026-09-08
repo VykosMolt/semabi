@@ -1,0 +1,302 @@
+{
+  "actual_command": [
+    "/home/moloch/semabi/.venv/bin/python",
+    "docs/data/v4/transport/development/widget_persistence_v1/validation_repair_v2/run_focused_v1.py",
+    "--preparation-sha256",
+    "657b45c43cdda37ecb3c7432649f30478e4173dd4338a1859a5fe3eb0d954033"
+  ],
+  "base_source_head": "284d80c855ff37c42a509ae1dd88f83d4e04e3f4",
+  "candidate_status": "UNCOMMITTED_TEST_ONLY_REPAIR",
+  "collected_nodeids": [
+    "tests/test_v4_manifests.py::test_live_divergent_bytecode_cache_is_rejected",
+    "tests/test_v4_manifests.py::test_stale_bytecode_cache_is_not_rejected",
+    "tests/test_v4_manifests.py::test_hash_based_bytecode_cache_with_wrong_source_hash_is_rejected",
+    "tests/test_v4_manifests.py::test_every_optimization_level_present_on_disk_is_found_not_only_a_fixed_list",
+    "tests/test_v4_manifests.py::test_chain_replay_closure_also_rejects_a_live_divergent_cache"
+  ],
+  "cpu_affinity": [
+    6
+  ],
+  "created_utc": "2026-09-08T06:47:47.793516+00:00",
+  "cwd": "/home/moloch/semabi/runs/.w1_validation_worktree",
+  "environment": {
+    "BLIS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "PYTEST_ADDOPTS": null,
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": null,
+    "PYTEST_PLUGINS": null,
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONHASHSEED": "0",
+    "PYTHONPYCACHEPREFIX": "/tmp/semabi_w1_validation_repair_v2_focused_no_pyc",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "limitation": "Source/path snapshots do not observe code objects or modules removed between boundaries. Per-test cache observations are boundary checks, not continuous filesystem tracing.",
+  "pid": 1340226,
+  "postflight_status": "VERIFIED",
+  "prefix_after_pytest": {
+    "ambient_prefix": "/tmp/semabi_w1_validation_repair_v2_focused_no_pyc",
+    "dont_write_bytecode": true,
+    "exists": false,
+    "is_symlink": false,
+    "runtime_prefix": "/tmp/semabi_w1_validation_repair_v2_focused_no_pyc"
+  },
+  "prefix_before_pytest": {
+    "ambient_prefix": "/tmp/semabi_w1_validation_repair_v2_focused_no_pyc",
+    "dont_write_bytecode": true,
+    "exists": false,
+    "is_symlink": false,
+    "runtime_prefix": "/tmp/semabi_w1_validation_repair_v2_focused_no_pyc"
+  },
+  "preparation_sha256": "657b45c43cdda37ecb3c7432649f30478e4173dd4338a1859a5fe3eb0d954033",
+  "pytest_args": [
+    "-q",
+    "-c",
+    "pyproject.toml",
+    "--noconftest",
+    "tests/test_v4_manifests.py::test_live_divergent_bytecode_cache_is_rejected",
+    "tests/test_v4_manifests.py::test_stale_bytecode_cache_is_not_rejected",
+    "tests/test_v4_manifests.py::test_hash_based_bytecode_cache_with_wrong_source_hash_is_rejected",
+    "tests/test_v4_manifests.py::test_every_optimization_level_present_on_disk_is_found_not_only_a_fixed_list",
+    "tests/test_v4_manifests.py::test_chain_replay_closure_also_rejects_a_live_divergent_cache",
+    "--junitxml=docs/data/v4/transport/development/widget_persistence_v1/validation_repair_v2/focused_pytest_v1.xml",
+    "--basetemp=docs/data/v4/transport/development/widget_persistence_v1/validation_repair_v2/focused_pytest_tmp_v1"
+  ],
+  "pytest_returncode": 0,
+  "pytest_version": "9.1.1",
+  "schema": "semabi.transport.w1_cache_repair_focused_execution.v1",
+  "scope": "PRIMARY_PYTEST_INTERPRETER; the five selected tests declare no child interpreters.",
+  "snapshots": [
+    {
+      "modules": {
+        "semabi": {
+          "package_paths": [
+            "/home/moloch/semabi/runs/.w1_validation_worktree/semabi"
+          ],
+          "path": "/home/moloch/semabi/runs/.w1_validation_worktree/semabi/__init__.py",
+          "relative_path": "semabi/__init__.py",
+          "sha256": "0a6e61cf4d9d8dc368fef7bc2053e6db686e3fb70272d7f9e9f1e5b3f79f95e8",
+          "spec_origin": "/home/moloch/semabi/runs/.w1_validation_worktree/semabi/__init__.py"
+        }
+      },
+      "phase": "before_pytest",
+      "violations": []
+    },
+    {
+      "modules": {
+        "semabi": {
+          "package_paths": [
+            "/home/moloch/semabi/runs/.w1_validation_worktree/semabi"
+          ],
+          "path": "/home/moloch/semabi/runs/.w1_validation_worktree/semabi/__init__.py",
+          "relative_path": "semabi/__init__.py",
+          "sha256": "0a6e61cf4d9d8dc368fef7bc2053e6db686e3fb70272d7f9e9f1e5b3f79f95e8",
+          "spec_origin": "/home/moloch/semabi/runs/.w1_validation_worktree/semabi/__init__.py"
+        },
+        "semabi.compiler": {
+          "package_paths": [
+            "/home/moloch/semabi/runs/.w1_validation_worktree/semabi/compiler"
+          ],
+          "path": "/home/moloch/semabi/runs/.w1_validation_worktree/semabi/compiler/__init__.py",
+          "relative_path": "semabi/compiler/__init__.py",
+          "sha256": "5249623658aef7d2b87bd34d06fab3f181b1ef5bbb9dd70b827592bb01b02893",
+          "spec_origin": "/home/moloch/semabi/runs/.w1_validation_worktree/semabi/compiler/__init__.py"
+        },
+        "semabi.compiler.browser": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w1_validation_worktree/semabi/compiler/browser.py",
+          "relative_path": "semabi/compiler/browser.py",
+          "sha256": "91c0f1dfde05413177497b1711a4e7e2eaf663582ba156f365525dc1dc60e792",
+          "spec_origin": "/home/moloch/semabi/runs/.w1_validation_worktree/semabi/compiler/browser.py"
+        },
+        "semabi.compiler.evidence": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w1_validation_worktree/semabi/compiler/evidence.py",
+          "relative_path": "semabi/compiler/evidence.py",
+          "sha256": "9f78ec47d22eaa4c4d35705a916343ce1ed15f6f1b24d97d14bb262fbfcfbbd2",
+          "spec_origin": "/home/moloch/semabi/runs/.w1_validation_worktree/semabi/compiler/evidence.py"
+        },
+        "semabi.compiler.observation": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w1_validation_worktree/semabi/compiler/observation.py",
+          "relative_path": "semabi/compiler/observation.py",
+          "sha256": "ccf5dbae2727837a6dae01f8cf26627a2c1bcaf63d7c11f9a48d699b7eb9c36c",
+          "spec_origin": "/home/moloch/semabi/runs/.w1_validation_worktree/semabi/compiler/observation.py"
+        },
+        "semabi.compiler.v4": {
+          "package_paths": [
+            "/home/moloch/semabi/runs/.w1_validation_worktree/semabi/compiler/v4"
+          ],
+          "path": "/home/moloch/semabi/runs/.w1_validation_worktree/semabi/compiler/v4/__init__.py",
+          "relative_path": "semabi/compiler/v4/__init__.py",
+          "sha256": "c41acb8afd5f3306718e6b5bb242db1dae876bf512bcec1d6c49108e8fbcc38c",
+          "spec_origin": "/home/moloch/semabi/runs/.w1_validation_worktree/semabi/compiler/v4/__init__.py"
+        },
+        "semabi.compiler.v4.custody": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w1_validation_worktree/semabi/compiler/v4/custody.py",
+          "relative_path": "semabi/compiler/v4/custody.py",
+          "sha256": "8f2aa81f444843459ef553c07639afa9ffcc3f342276fde1da5a152da715fb29",
+          "spec_origin": "/home/moloch/semabi/runs/.w1_validation_worktree/semabi/compiler/v4/custody.py"
+        },
+        "semabi.compiler.v4.frozen_evidence": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w1_validation_worktree/semabi/compiler/v4/frozen_evidence.py",
+          "relative_path": "semabi/compiler/v4/frozen_evidence.py",
+          "sha256": "cb3f7980fd9d24e888f45267ce5f7e597576ea2d2db63783988455bc340f3a65",
+          "spec_origin": "/home/moloch/semabi/runs/.w1_validation_worktree/semabi/compiler/v4/frozen_evidence.py"
+        },
+        "semabi.compiler.v4.manifests": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w1_validation_worktree/semabi/compiler/v4/manifests.py",
+          "relative_path": "semabi/compiler/v4/manifests.py",
+          "sha256": "086e3c03591d0a21cfe0fe4717c184f1013fbd1becb86c42d376d98cbcf90b1f",
+          "spec_origin": "/home/moloch/semabi/runs/.w1_validation_worktree/semabi/compiler/v4/manifests.py"
+        },
+        "semabi.compiler.v4.pinned": {
+          "package_paths": [],
+          "path": "/home/moloch/semabi/runs/.w1_validation_worktree/semabi/compiler/v4/pinned.py",
+          "relative_path": "semabi/compiler/v4/pinned.py",
+          "sha256": "f3be252e1f021424565aaa20baf846b6b0d1522d9a7678e7770a4b6e006e2c8b",
+          "spec_origin": "/home/moloch/semabi/runs/.w1_validation_worktree/semabi/compiler/v4/pinned.py"
+        }
+      },
+      "phase": "after_pytest_or_failure",
+      "violations": []
+    }
+  ],
+  "test_cache_checks": {
+    "tests/test_v4_manifests.py::test_chain_replay_closure_also_rejects_a_live_divergent_cache": {
+      "call_exception": null,
+      "call_outcome": "passed",
+      "prefix_after_call": {
+        "ambient_prefix": "/tmp/semabi_w1_validation_repair_v2_focused_no_pyc",
+        "dont_write_bytecode": true,
+        "exists": false,
+        "is_symlink": false,
+        "runtime_prefix": "/tmp/semabi_w1_validation_repair_v2_focused_no_pyc"
+      },
+      "prefix_after_teardown": {
+        "ambient_prefix": "/tmp/semabi_w1_validation_repair_v2_focused_no_pyc",
+        "dont_write_bytecode": true,
+        "exists": false,
+        "is_symlink": false,
+        "runtime_prefix": "/tmp/semabi_w1_validation_repair_v2_focused_no_pyc"
+      },
+      "private_directories_after_call": 6,
+      "private_files_after_call": [],
+      "private_root": "/home/moloch/semabi/runs/.w1_validation_worktree/.pytest-v4-manifest-x6g88erh/bytecode",
+      "private_root_present_after_call": true,
+      "private_symlinks_after_call": [],
+      "teardown_outcome": "passed",
+      "temporary_root": "/home/moloch/semabi/runs/.w1_validation_worktree/.pytest-v4-manifest-x6g88erh",
+      "temporary_root_absent_after_teardown": true
+    },
+    "tests/test_v4_manifests.py::test_every_optimization_level_present_on_disk_is_found_not_only_a_fixed_list": {
+      "call_exception": null,
+      "call_outcome": "passed",
+      "prefix_after_call": {
+        "ambient_prefix": "/tmp/semabi_w1_validation_repair_v2_focused_no_pyc",
+        "dont_write_bytecode": true,
+        "exists": false,
+        "is_symlink": false,
+        "runtime_prefix": "/tmp/semabi_w1_validation_repair_v2_focused_no_pyc"
+      },
+      "prefix_after_teardown": {
+        "ambient_prefix": "/tmp/semabi_w1_validation_repair_v2_focused_no_pyc",
+        "dont_write_bytecode": true,
+        "exists": false,
+        "is_symlink": false,
+        "runtime_prefix": "/tmp/semabi_w1_validation_repair_v2_focused_no_pyc"
+      },
+      "private_directories_after_call": 8,
+      "private_files_after_call": [],
+      "private_root": "/home/moloch/semabi/runs/.w1_validation_worktree/.pytest-v4-manifest-ke5nvcc9/bytecode",
+      "private_root_present_after_call": true,
+      "private_symlinks_after_call": [],
+      "teardown_outcome": "passed",
+      "temporary_root": "/home/moloch/semabi/runs/.w1_validation_worktree/.pytest-v4-manifest-ke5nvcc9",
+      "temporary_root_absent_after_teardown": true
+    },
+    "tests/test_v4_manifests.py::test_hash_based_bytecode_cache_with_wrong_source_hash_is_rejected": {
+      "call_exception": null,
+      "call_outcome": "passed",
+      "prefix_after_call": {
+        "ambient_prefix": "/tmp/semabi_w1_validation_repair_v2_focused_no_pyc",
+        "dont_write_bytecode": true,
+        "exists": false,
+        "is_symlink": false,
+        "runtime_prefix": "/tmp/semabi_w1_validation_repair_v2_focused_no_pyc"
+      },
+      "prefix_after_teardown": {
+        "ambient_prefix": "/tmp/semabi_w1_validation_repair_v2_focused_no_pyc",
+        "dont_write_bytecode": true,
+        "exists": false,
+        "is_symlink": false,
+        "runtime_prefix": "/tmp/semabi_w1_validation_repair_v2_focused_no_pyc"
+      },
+      "private_directories_after_call": 8,
+      "private_files_after_call": [],
+      "private_root": "/home/moloch/semabi/runs/.w1_validation_worktree/.pytest-v4-manifest-8rn0vl3p/bytecode",
+      "private_root_present_after_call": true,
+      "private_symlinks_after_call": [],
+      "teardown_outcome": "passed",
+      "temporary_root": "/home/moloch/semabi/runs/.w1_validation_worktree/.pytest-v4-manifest-8rn0vl3p",
+      "temporary_root_absent_after_teardown": true
+    },
+    "tests/test_v4_manifests.py::test_live_divergent_bytecode_cache_is_rejected": {
+      "call_exception": null,
+      "call_outcome": "passed",
+      "prefix_after_call": {
+        "ambient_prefix": "/tmp/semabi_w1_validation_repair_v2_focused_no_pyc",
+        "dont_write_bytecode": true,
+        "exists": false,
+        "is_symlink": false,
+        "runtime_prefix": "/tmp/semabi_w1_validation_repair_v2_focused_no_pyc"
+      },
+      "prefix_after_teardown": {
+        "ambient_prefix": "/tmp/semabi_w1_validation_repair_v2_focused_no_pyc",
+        "dont_write_bytecode": true,
+        "exists": false,
+        "is_symlink": false,
+        "runtime_prefix": "/tmp/semabi_w1_validation_repair_v2_focused_no_pyc"
+      },
+      "private_directories_after_call": 8,
+      "private_files_after_call": [],
+      "private_root": "/home/moloch/semabi/runs/.w1_validation_worktree/.pytest-v4-manifest-7g3p129s/bytecode",
+      "private_root_present_after_call": true,
+      "private_symlinks_after_call": [],
+      "teardown_outcome": "passed",
+      "temporary_root": "/home/moloch/semabi/runs/.w1_validation_worktree/.pytest-v4-manifest-7g3p129s",
+      "temporary_root_absent_after_teardown": true
+    },
+    "tests/test_v4_manifests.py::test_stale_bytecode_cache_is_not_rejected": {
+      "call_exception": null,
+      "call_outcome": "passed",
+      "prefix_after_call": {
+        "ambient_prefix": "/tmp/semabi_w1_validation_repair_v2_focused_no_pyc",
+        "dont_write_bytecode": true,
+        "exists": false,
+        "is_symlink": false,
+        "runtime_prefix": "/tmp/semabi_w1_validation_repair_v2_focused_no_pyc"
+      },
+      "prefix_after_teardown": {
+        "ambient_prefix": "/tmp/semabi_w1_validation_repair_v2_focused_no_pyc",
+        "dont_write_bytecode": true,
+        "exists": false,
+        "is_symlink": false,
+        "runtime_prefix": "/tmp/semabi_w1_validation_repair_v2_focused_no_pyc"
+      },
+      "private_directories_after_call": 8,
+      "private_files_after_call": [],
+      "private_root": "/home/moloch/semabi/runs/.w1_validation_worktree/.pytest-v4-manifest-5csvm268/bytecode",
+      "private_root_present_after_call": true,
+      "private_symlinks_after_call": [],
+      "teardown_outcome": "passed",
+      "temporary_root": "/home/moloch/semabi/runs/.w1_validation_worktree/.pytest-v4-manifest-5csvm268",
+      "temporary_root_absent_after_teardown": true
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "command_sha256": "1429bb3f1f50a1da671a2ed85b4ba41c8a7cbc0c9b2d97ea1ecae4195926789f",
+  "created_utc": "2026-09-08T08:08:22.906598+00:00",
+  "decision": "GO_ONCE_BASELINE",
+  "exec_command_args": {
+    "cmd": "taskset -c 9 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 PYTHONOPTIMIZE=0 PYTHONPATH= PYTHONPYCACHEPREFIX=/tmp/semabi_w3_repair_baseline_v1_no_pyc VECLIB_MAXIMUM_THREADS=1 /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/widget_key_revision_repair_v1/root_focused_baseline_v1/job_v1 -- /home/moloch/semabi/.venv/bin/python -P -B /home/moloch/semabi/docs/data/v4/transport/development/widget_key_revision_v1/repair_validation_v1/run_focused_v1.py --freeze /home/moloch/semabi/runs/.w3_baseline_worktree/docs/data/v4/transport/development/widget_key_revision_repair_v1/root_focused_baseline_v1/source_freeze_v1.json --sha256 abc18f7e5e1a419407a4ecf146f4be7fdb92835fbb16cedca2011e54c3e9a073",
+    "justification": "Run the frozen W3 regression baseline once on the authorized local CPU, preserving failures for comparison with the repair.",
+    "max_output_tokens": 4500,
+    "sandbox_permissions": "require_escalated",
+    "workdir": "/home/moloch/semabi/runs/.w3_baseline_worktree",
+    "yield_time_ms": 1000
+  },
+  "independent_review": "ACCEPT: 229 worktree and two external files, original native bytes, exact candidate-matching baseline_v3 tests, flags/environment/source/path guard and unique outputs verified by /root/baseline_verification/post_controls_review.",
+  "root_review": "Read both test files additions, source intervention and runner completely. Expected failures are development evidence; result acceptance remains separate.",
+  "schema": "semabi.widget_key_revision.root_focused_go.v1",
+  "source_freeze_sha256": "abc18f7e5e1a419407a4ecf146f4be7fdb92835fbb16cedca2011e54c3e9a073"
+}

@@ -1,0 +1,266 @@
+{
+  "argv": [
+    "/home/moloch/semabi/.venv/bin/python",
+    "-P",
+    "-B",
+    "/home/moloch/semabi/docs/data/v4/transport/development/widget_key_revision_v1/repair_validation_v1/run_focused_v1.py",
+    "--freeze",
+    "/home/moloch/semabi/runs/.w3_baseline_worktree/docs/data/v4/transport/development/widget_key_revision_repair_v1/root_focused_baseline_v1/source_freeze_v1.json",
+    "--sha256",
+    "abc18f7e5e1a419407a4ecf146f4be7fdb92835fbb16cedca2011e54c3e9a073"
+  ],
+  "cpu_affinity": [
+    9
+  ],
+  "created_utc": "2026-09-08T08:08:42.302051+00:00",
+  "environment": {
+    "BLIS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "PYTEST_ADDOPTS": null,
+    "PYTEST_DISABLE_PLUGIN_AUTOLOAD": null,
+    "PYTEST_PLUGINS": null,
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONHASHSEED": "0",
+    "PYTHONOPTIMIZE": "0",
+    "PYTHONPATH": "",
+    "PYTHONPYCACHEPREFIX": "/tmp/semabi_w3_repair_baseline_v1_no_pyc",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "interpreter_flags": {
+    "dont_write_bytecode": true,
+    "optimize": 0,
+    "safe_path": true
+  },
+  "pid": 1416976,
+  "postflight": {
+    "ambient_prefix_absent": true,
+    "verified_external_files": 2,
+    "verified_files": 229
+  },
+  "postflight_status": "VERIFIED",
+  "preflight": {
+    "ambient_prefix_absent": true,
+    "verified_external_files": 2,
+    "verified_files": 229
+  },
+  "priority": 0,
+  "pytest_args": [
+    "-q",
+    "-c",
+    "pytest.ini",
+    "--noconftest",
+    "tests/test_v2_collection_variation.py",
+    "tests/test_v2_refinement.py",
+    "--junitxml=/home/moloch/semabi/runs/.w3_baseline_worktree/docs/data/v4/transport/development/widget_key_revision_repair_v1/root_focused_baseline_v1/pytest_v1.xml",
+    "--basetemp=/home/moloch/semabi/runs/.w3_baseline_worktree/docs/data/v4/transport/development/widget_key_revision_repair_v1/root_focused_baseline_v1/pytest_tmp_v1"
+  ],
+  "pytest_returncode": 1,
+  "schema": "semabi.widget_key_revision.focused_execution.v1",
+  "scope": "Primary pytest interpreter source/path snapshots, not executed-code-object or child-module coverage.",
+  "snapshots": [
+    {
+      "modules": {
+        "semabi": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/__init__.py",
+          "package_paths": [
+            "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi"
+          ],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/__init__.py",
+          "spec_package_paths": [
+            "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi"
+          ]
+        }
+      },
+      "violations": []
+    },
+    {
+      "modules": {
+        "semabi": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/__init__.py",
+          "package_paths": [
+            "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi"
+          ],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/__init__.py",
+          "spec_package_paths": [
+            "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi"
+          ]
+        },
+        "semabi.compiler": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/__init__.py",
+          "package_paths": [
+            "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler"
+          ],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/__init__.py",
+          "spec_package_paths": [
+            "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler"
+          ]
+        },
+        "semabi.compiler.abstract": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/abstract.py",
+          "package_paths": [],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/abstract.py",
+          "spec_package_paths": []
+        },
+        "semabi.compiler.belief": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/belief.py",
+          "package_paths": [],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/belief.py",
+          "spec_package_paths": []
+        },
+        "semabi.compiler.browser": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/browser.py",
+          "package_paths": [],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/browser.py",
+          "spec_package_paths": []
+        },
+        "semabi.compiler.compile": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/compile.py",
+          "package_paths": [],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/compile.py",
+          "spec_package_paths": []
+        },
+        "semabi.compiler.compile_v2": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/compile_v2.py",
+          "package_paths": [],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/compile_v2.py",
+          "spec_package_paths": []
+        },
+        "semabi.compiler.evidence": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/evidence.py",
+          "package_paths": [],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/evidence.py",
+          "spec_package_paths": []
+        },
+        "semabi.compiler.explorer": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/explorer.py",
+          "package_paths": [],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/explorer.py",
+          "spec_package_paths": []
+        },
+        "semabi.compiler.induce": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/induce.py",
+          "package_paths": [],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/induce.py",
+          "spec_package_paths": []
+        },
+        "semabi.compiler.model": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/model.py",
+          "package_paths": [],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/model.py",
+          "spec_package_paths": []
+        },
+        "semabi.compiler.observation": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/observation.py",
+          "package_paths": [],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/observation.py",
+          "spec_package_paths": []
+        },
+        "semabi.compiler.parse": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/parse.py",
+          "package_paths": [],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/parse.py",
+          "spec_package_paths": []
+        },
+        "semabi.compiler.v2": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v2/__init__.py",
+          "package_paths": [
+            "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v2"
+          ],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v2/__init__.py",
+          "spec_package_paths": [
+            "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v2"
+          ]
+        },
+        "semabi.compiler.v2.abstractor": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v2/abstractor.py",
+          "package_paths": [],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v2/abstractor.py",
+          "spec_package_paths": []
+        },
+        "semabi.compiler.v2.controls": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v2/controls.py",
+          "package_paths": [],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v2/controls.py",
+          "spec_package_paths": []
+        },
+        "semabi.compiler.v2.counterexamples": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v2/counterexamples.py",
+          "package_paths": [],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v2/counterexamples.py",
+          "spec_package_paths": []
+        },
+        "semabi.compiler.v2.graph": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v2/graph.py",
+          "package_paths": [],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v2/graph.py",
+          "spec_package_paths": []
+        },
+        "semabi.compiler.v2.hypotheses": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v2/hypotheses.py",
+          "package_paths": [],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v2/hypotheses.py",
+          "spec_package_paths": []
+        },
+        "semabi.compiler.v2.refinement": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v2/refinement.py",
+          "package_paths": [],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v2/refinement.py",
+          "spec_package_paths": []
+        },
+        "semabi.compiler.v2.units": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v2/units.py",
+          "package_paths": [],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v2/units.py",
+          "spec_package_paths": []
+        },
+        "semabi.compiler.v2.validation": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v2/validation.py",
+          "package_paths": [],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v2/validation.py",
+          "spec_package_paths": []
+        },
+        "semabi.compiler.v4": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v4/__init__.py",
+          "package_paths": [
+            "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v4"
+          ],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v4/__init__.py",
+          "spec_package_paths": [
+            "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v4"
+          ]
+        },
+        "semabi.compiler.v4.abstractor": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v4/abstractor.py",
+          "package_paths": [],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v4/abstractor.py",
+          "spec_package_paths": []
+        },
+        "semabi.compiler.v4.emission": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v4/emission.py",
+          "package_paths": [],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v4/emission.py",
+          "spec_package_paths": []
+        },
+        "semabi.compiler.v4.referring": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v4/referring.py",
+          "package_paths": [],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/compiler/v4/referring.py",
+          "spec_package_paths": []
+        },
+        "semabi.relmodel": {
+          "file": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/relmodel.py",
+          "package_paths": [],
+          "spec_origin": "/home/moloch/semabi/runs/.w3_baseline_worktree/semabi/relmodel.py",
+          "spec_package_paths": []
+        }
+      },
+      "violations": []
+    }
+  ],
+  "source_freeze_sha256": "abc18f7e5e1a419407a4ecf146f4be7fdb92835fbb16cedca2011e54c3e9a073",
+  "source_head": "a1c0bc96d6a9725a3f23e18dbc96f97b0bd38f08",
+  "working_directory": "/home/moloch/semabi/runs/.w3_baseline_worktree"
+}

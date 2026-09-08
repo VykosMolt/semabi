@@ -1,0 +1,22 @@
+{
+  "counts": {
+    "passed": 631,
+    "skipped": 3,
+    "xfailed": 1
+  },
+  "created_utc": "2026-09-08T08:28:18.194440+00:00",
+  "decision": "ACCEPT_FULL_GATE_AND_RETAINED_CORPUS_REUSE",
+  "independent_review_sha256": "54b2e5bfb48786f1cacff16984c9748e466ac6037556d40027a74b4be9bf6897",
+  "native_guard_commit": "284d80c855ff37c42a509ae1dd88f83d4e04e3f4",
+  "next_action": "Copy the exact evidence into main, then cherry-pick the two reviewed local commits and verify main native/test/config/runtime bytes against the tested snapshot. This record is not a claim that main adoption has already occurred.",
+  "provenance_limits": [
+    "Primary-interpreter native origin snapshots only; no executed-object, removed-module or child-module certification.",
+    "Configuration selection is source-derived; only named installed runtime/discovery files and pytest version are bound, not the entire dependency installation.",
+    "Root .pytest_cache is runtime scratch outside the explicit source bindings; no whole-root ignored-file inventory claim."
+  ],
+  "result_manifest_sha256": "3a3a3a2e9e1ca406c83b848f92e5ca3827f7aa38f68e04f29060369d69031823",
+  "retained_corpus_reuse": "Five original W1 runs are accepted unchanged: all 156 native, 67 runtime, six measurement dependencies and 45 corpus inputs match. Their six semantic components and residual errors remain as measured; no rerun occurred. B1 historical loaded origins remain unestablished.",
+  "root_checks_sha256": "6d7108b0ed73e669a6641b92bfb9dd29ada04adf6c23178577c7ac78892fa345",
+  "schema": "semabi.transport.w1_root_full_gate_acceptance.v2",
+  "source_head": "a1c0bc96d6a9725a3f23e18dbc96f97b0bd38f08"
+}

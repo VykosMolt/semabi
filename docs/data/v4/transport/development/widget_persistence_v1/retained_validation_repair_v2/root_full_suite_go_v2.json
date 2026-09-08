@@ -1,0 +1,38 @@
+{
+  "created_utc": "2026-09-08T07:41:20.861874+00:00",
+  "decision": "GO_EXACTLY_ONE_CANONICAL_FULL_SUITE_ATTEMPT",
+  "exec_command_args": {
+    "cmd": "taskset -c 6 env BLIS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONHASHSEED=0 PYTHONPATH= PYTHONPYCACHEPREFIX=/tmp/semabi_w1_validation_repair_v2_full_pytest_no_pyc VECLIB_MAXIMUM_THREADS=1 PYTHONOPTIMIZE=0 /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/run_job.py docs/data/v4/transport/development/widget_persistence_v1/validation_repair_v2/full_pytest_job_v2 -- /home/moloch/semabi/.venv/bin/python -P -B docs/data/v4/transport/development/widget_persistence_v1/validation_repair_v2/run_full_suite_v2.py --source-freeze-sha256 a1b4242f0cf11a885822e693e0412d6e3c451543ed8417eefe1aed4890f2afc1",
+    "max_output_tokens": 3000,
+    "workdir": "/home/moloch/semabi/runs/.w1_validation_worktree",
+    "yield_time_ms": 1000
+  },
+  "held_preparation": {
+    "full_suite_command_v2.json": "3eb953cdec161be126709682869a5b8787f34dff43d7e588309f3f6a15d02202",
+    "full_suite_independent_review_v2.json": "8f85ad6e0dd87c8929a90ccca03a6c68770d6a5efd2a063d996f1c581ea31fc6",
+    "full_suite_protocol_v2.md": "9bfca5ca47a8d84c0e1d7d9419c516d5a47d796228789d93cbcad6030cf2c623",
+    "full_suite_source_freeze_v2.json": "a1b4242f0cf11a885822e693e0412d6e3c451543ed8417eefe1aed4890f2afc1",
+    "run_full_suite_v2.py": "b01258b1b05bbcdfe24c41c098ea5de96b5995bc182656ae834cf30a94e338bd"
+  },
+  "metadata_origin_limits": {
+    "other_children": "Playwright browser/driver descendants are not Python SemABI workers; third-party process behavior is outside the native origin ledger.",
+    "primary": "PRIMARY_PYTEST_INTERPRETER; canonical anchored SemABI package and before/after module table paths/hashes.",
+    "private_script_execution": "scripts/v4_authority.py and scripts/v4_freeze_evaluator_inputs.py execute under private names. Source custody binds their bytes; SemABI origin snapshots do not observe those executions.",
+    "python_children": "CONTROLLED_SYNTHETIC_AUTHORITY_TESTS; test_v4_execution_authority.py intentionally executes synthetic temporary SemABI packages. These children are excluded from the parent origin ledger and remain unmodified.",
+    "static_child_inventory": {
+      "authority_helper_calls": 27,
+      "count_basis": "Static current test parametrization/loops; no runtime count claim.",
+      "direct_calls": 2,
+      "plain_import_helper_calls": 4,
+      "sha256": "c92176562a009479c497a080c61bb553ee0d334ff7b15864ba437dbf53e20de7",
+      "test_file": "tests/test_v4_execution_authority.py",
+      "total_expanded_python_launches": 33
+    }
+  },
+  "owner": "/root/baseline_verification",
+  "root": "/root",
+  "root_review": "Complete original runtime/protocol/command read, all metadata and 2884 candidate plus 170 external file digests verified; source/metadata delta against archived v2 verified; independent initial review and targeted optimization repair review both accepted.",
+  "schema": "semabi.transport.w1_cache_repair.root_full_suite_go.v2",
+  "scope": "One CPU 6 canonical full-suite attempt with original config/default plugins, normal optimization, source/path boundary snapshots, isolated prefix and test caches. Retain actual failures and verify/reap owned processes. No corpus rerun or source adoption authorized by this GO.",
+  "source_head": "a1c0bc96d6a9725a3f23e18dbc96f97b0bd38f08"
+}

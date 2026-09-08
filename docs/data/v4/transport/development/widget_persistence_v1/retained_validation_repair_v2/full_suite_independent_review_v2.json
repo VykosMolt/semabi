@@ -1,0 +1,16 @@
+{
+  "created_utc": "2026-09-08T07:40:34.181442+00:00",
+  "earlier_finding_path": "preparation_revisions/before_optimization_guard_v2/independent_review_finding_v2.json",
+  "earlier_finding_sha256": "8b7e3bb404df4e70307bdbd4e9760a5973d8a13627317bb17c00354b8082b732",
+  "exact_final_review_message": "Targeted rebound review ACCEPT. Direct diff from archived held package shows source delta is exactly the optimize==0 preflight plus recorded optimize field; protocol adds the matching contract; command adds one `PYTHONOPTIMIZE=0` assignment and refreshed hashes/timestamps only. Current hashes match b01258b1/a1b4242f/3eb953cd/9bfca5ca. Freeze delta is exactly env binding, preserved-review metadata, two changed common file hashes, and six added archived files; no removals; tracked/native/test/runtime/retained/external/discovery/pytest args/version/entrypoints are unchanged. All six archive hashes match, manifest binds the four true pre-edit files, and the separately timed finding is accurately described. JSON argv equals shell tokenization, freeze and command environments match, both -P/-B pairs remain, actual venv probe evidence shows PYTHONOPTIMIZE=0 => optimize0, and all output/prefix identities remain absent. Prior finding is repaired; no new blocker. Verdict ACCEPT for canonical GO.",
+  "files": {
+    "full_suite_command_v2.json": "3eb953cdec161be126709682869a5b8787f34dff43d7e588309f3f6a15d02202",
+    "full_suite_protocol_v2.md": "9bfca5ca47a8d84c0e1d7d9419c516d5a47d796228789d93cbcad6030cf2c623",
+    "full_suite_source_freeze_v2.json": "a1b4242f0cf11a885822e693e0412d6e3c451543ed8417eefe1aed4890f2afc1",
+    "run_full_suite_v2.py": "b01258b1b05bbcdfe24c41c098ea5de96b5995bc182656ae834cf30a94e338bd"
+  },
+  "reviewer": "/root/baseline_verification/post_controls_review",
+  "schema": "semabi.transport.w1_full_suite_independent_review.v2",
+  "scope": "Static source and metadata review only. Root owns concrete execution authorization and result acceptance. No native imports or full-suite execution are claimed by this record.",
+  "verdict": "ACCEPT_PRE_EXECUTION_INSTRUMENT"
+}

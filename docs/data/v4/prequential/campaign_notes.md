@@ -3000,9 +3000,14 @@ fails on directories left by intentional manifest-test cache fixtures. The
 test-only cache repair and new full-suite validation precede adoption. The
 test repair is now isolated source commit `a1c0bc96`, with five affected tests
 passing and wrapper postflight verified under the `98a0fe11…` focused seal.
-Its canonical full-suite retry is frozen and awaiting final review/GO. Native
-and five-corpus dependencies remain unchanged; no repeat of those measurements
-is needed for this test-only change.
+Its canonical full-suite retry now passes with 631 passes, three skips, one
+expected failure, actual outer code zero and VERIFIED postflight. The 56-file
+seal `3a3a3a2e…` and independent/root reviews are accepted, retaining the explicit
+parent-origin, installed-dependency and root `.pytest_cache` provenance limits.
+Main adopts the native guard and test repair at `cc04636a` and `2025ee5b`;
+[adoption evidence](../transport/development/widget_persistence_v1/main_adoption_v2.json)
+verifies exact tested native/test/config/runtime bytes. The five original corpus
+runs are reused because their inputs and native/measurement dependencies match.
 
 ## P48 / W2: observation evidence for promoted widgets (recorded 2026-09-08)
 
@@ -3050,3 +3055,13 @@ context changes, and preserves separately configured evidence. Unsupported
 fields demote coherently; a dependent selected key makes the candidate fail
 explicitly rather than silently changing identity. The implementation is being
 prepared in a new worktree based on `a1c0bc96`, with tests in existing files.
+
+The first focused baseline is preserved before analysis at `0a22d2e2…`: 37
+passes and 16 failures across 53 cases. Fifteen failures exercise the target
+semantic defects; one out-of-range parent fixture raises an earlier IndexError
+and must be corrected without changing its intended assertion. A failed
+preserver attempt and its correction for pytest scratch symlinks are retained.
+Candidate_v3 was not executed: independent source review found an additional
+context-driven key-selection mismatch between fitted and fresh parsed values.
+The next source/test version adds that control and corrects the malformed
+parent fixture; no W3 native repair is adopted yet.

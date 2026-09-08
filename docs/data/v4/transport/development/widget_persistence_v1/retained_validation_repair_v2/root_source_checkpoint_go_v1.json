@@ -1,0 +1,15 @@
+{
+  "created_utc": "2026-09-08T06:58:24.502122+00:00",
+  "decision": "ACCEPT_FOCUSED_RESULT_AND_TEST_ONLY_LOCAL_COMMIT",
+  "files_to_commit": {
+    "tests/test_v4_manifests.py": "cf453a06fccc15b6bdb300330046fb303ac50755c838cad572bcc7ed0e11dd4a"
+  },
+  "focused_results_manifest_sha256": "98a0fe1130bfc15988de66d3db0d5c73328c886c76f543b8686028135fbb8ad2",
+  "message": "test(v4): isolate manifest bytecode cache fixtures",
+  "review_basis": "Independent static source and focused observer/configuration reviews passed before execution; root read the completed execution and verified exact five cache rows and 26 sealed files. Independent result review is supplementary and remains pending.",
+  "root_verified_attempt_members": 26,
+  "schema": "semabi.transport.w1_cache_repair_root_source_checkpoint_go.v1",
+  "scope": "Test-only source checkpoint on w1-cache-fixture-isolation. Then prepare and independently review a versioned canonical full-suite freeze/command. No corpus repeat or main adoption. Original W1 attempt remains immutable.",
+  "source_checkpoint_proposal_sha256": "6fc18b09da08f34f35742e74c63dcb694f4ac669060ac8ea9ced6684a414023f",
+  "tests": 5
+}

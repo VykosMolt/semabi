@@ -1,0 +1,201 @@
+{
+  "created_utc": "2026-09-08T07:16:51.076650+00:00",
+  "default_conftest_cutoff": "/home/moloch/semabi/runs/.w1_validation_worktree",
+  "discovery_source_files": {
+    "/home/moloch/semabi/.venv/lib/python3.12/site-packages/_pytest/config/__init__.py": "98b05c2c37d09e1d5c05975efc2d9af98d4aff6ea47de410a8e93956420873c1",
+    "/home/moloch/semabi/.venv/lib/python3.12/site-packages/_pytest/config/findpaths.py": "535d149e6f3962e44260b6645bb354976e19531f5dd248e14ee7d7fff61c8848",
+    "/home/moloch/semabi/.venv/lib/python3.12/site-packages/_pytest/main.py": "8ee2725057ff1811e2ae9ebdf1befb7518195f8f333f9f8ca024d76a4b80780e"
+  },
+  "expected_ignored_config": "pyproject.toml",
+  "expected_selected_config": "pytest.ini",
+  "files": {
+    ".pytest.ini": {
+      "original_w1_present": false,
+      "original_w1_tracked": false,
+      "present": false,
+      "tracked": false
+    },
+    ".pytest.toml": {
+      "original_w1_present": false,
+      "original_w1_tracked": false,
+      "present": false,
+      "tracked": false
+    },
+    "conftest.py": {
+      "original_w1_present": false,
+      "original_w1_tracked": false,
+      "present": false,
+      "tracked": false
+    },
+    "pyproject.toml": {
+      "bytes": 410,
+      "original_w1_bytes": 410,
+      "original_w1_present": true,
+      "original_w1_sha256": "856abafeb3e6ea04e7c4448c0d5b132bf4c3efcbcc18349e89cdfa6f981353f8",
+      "original_w1_tracked": true,
+      "present": true,
+      "sha256": "856abafeb3e6ea04e7c4448c0d5b132bf4c3efcbcc18349e89cdfa6f981353f8",
+      "tracked": true
+    },
+    "pytest.ini": {
+      "bytes": 67,
+      "original_w1_bytes": 67,
+      "original_w1_present": true,
+      "original_w1_sha256": "7a230f8bff3b84770b27da73d30c5825e7e161bacf1e7d9c47f58fa3adfd4d43",
+      "original_w1_tracked": true,
+      "present": true,
+      "sha256": "7a230f8bff3b84770b27da73d30c5825e7e161bacf1e7d9c47f58fa3adfd4d43",
+      "tracked": true
+    },
+    "pytest.toml": {
+      "original_w1_present": false,
+      "original_w1_tracked": false,
+      "present": false,
+      "tracked": false
+    },
+    "setup.cfg": {
+      "original_w1_present": false,
+      "original_w1_tracked": false,
+      "present": false,
+      "tracked": false
+    },
+    "tests/.pytest.ini": {
+      "original_w1_present": false,
+      "original_w1_tracked": false,
+      "present": false,
+      "tracked": false
+    },
+    "tests/.pytest.toml": {
+      "original_w1_present": false,
+      "original_w1_tracked": false,
+      "present": false,
+      "tracked": false
+    },
+    "tests/conftest.py": {
+      "original_w1_present": false,
+      "original_w1_tracked": false,
+      "present": false,
+      "tracked": false
+    },
+    "tests/pyproject.toml": {
+      "original_w1_present": false,
+      "original_w1_tracked": false,
+      "present": false,
+      "tracked": false
+    },
+    "tests/pytest.ini": {
+      "original_w1_present": false,
+      "original_w1_tracked": false,
+      "present": false,
+      "tracked": false
+    },
+    "tests/pytest.toml": {
+      "original_w1_present": false,
+      "original_w1_tracked": false,
+      "present": false,
+      "tracked": false
+    },
+    "tests/setup.cfg": {
+      "original_w1_present": false,
+      "original_w1_tracked": false,
+      "present": false,
+      "tracked": false
+    },
+    "tests/tox.ini": {
+      "original_w1_present": false,
+      "original_w1_tracked": false,
+      "present": false,
+      "tracked": false
+    },
+    "tox.ini": {
+      "original_w1_present": false,
+      "original_w1_tracked": false,
+      "present": false,
+      "tracked": false
+    }
+  },
+  "independent_collector": "/root/baseline_verification/pytest_discovery_inputs",
+  "schema": "semabi.transport.w1_cache_repair_pytest_discovery_bindings.v2",
+  "scope": "Explicit influencing configuration/conftest inputs for the preserved canonical full-suite argv and current flat test inventory. Default plugins and configuration behavior remain enabled.",
+  "selection_basis": "Source-derived installed pytest9.1.1 canonical -q tests discovery: seven config names are absent under tests; tracked pytest.ini wins at ROOT, lower-priority same-directory candidates are still parsed, and its parent becomes the default conftest cutoff. No runtime observer plugin is added.",
+  "source_head": "a1c0bc96d6a9725a3f23e18dbc96f97b0bd38f08",
+  "source_references": {
+    "_pytest/config/__init__.py": "615/669: initial conftest search;1598: selected-config parent default confcutdir.",
+    "_pytest/config/findpaths.py": "158-199: config basename precedence and ignored same-directory config parsing."
+  },
+  "test_directory_members": [
+    "test_boundary.py",
+    "test_llm.py",
+    "test_oracle_audit.py",
+    "test_parse.py",
+    "test_pipeline_smoke.py",
+    "test_planner.py",
+    "test_relmodel.py",
+    "test_v1_browser_replay.py",
+    "test_v2_action_slot_boundary.py",
+    "test_v2_budget_curve.py",
+    "test_v2_collection_variation.py",
+    "test_v2_column_judgement.py",
+    "test_v2_controls.py",
+    "test_v2_differential.py",
+    "test_v2_numeric_key.py",
+    "test_v2_refinement.py",
+    "test_v2_reopen.py",
+    "test_v2_sections.py",
+    "test_v2_unseen_tokens.py",
+    "test_v2_validation.py",
+    "test_v4_acquired_probes.py",
+    "test_v4_admissible.py",
+    "test_v4_attribute_named_once.py",
+    "test_v4_binding.py",
+    "test_v4_claim_ledger.py",
+    "test_v4_column_invariance.py",
+    "test_v4_columns.py",
+    "test_v4_consequence.py",
+    "test_v4_correspondence.py",
+    "test_v4_created_argument.py",
+    "test_v4_creation.py",
+    "test_v4_delta_granularity.py",
+    "test_v4_detail_view.py",
+    "test_v4_emission.py",
+    "test_v4_execution_authority.py",
+    "test_v4_experiment_extension.py",
+    "test_v4_fields.py",
+    "test_v4_frozen_reference.py",
+    "test_v4_frozen_transform.py",
+    "test_v4_identity.py",
+    "test_v4_identity_exclusion.py",
+    "test_v4_identity_scoreboard.py",
+    "test_v4_identity_ties.py",
+    "test_v4_joint_candidate.py",
+    "test_v4_learned_preconditions.py",
+    "test_v4_manifests.py",
+    "test_v4_metamorphic.py",
+    "test_v4_navigation_settling.py",
+    "test_v4_objective.py",
+    "test_v4_outcome.py",
+    "test_v4_outcome_chronology.py",
+    "test_v4_pinned.py",
+    "test_v4_pinned_partial_family.py",
+    "test_v4_placeholder_row.py",
+    "test_v4_probe.py",
+    "test_v4_probe_adapter.py",
+    "test_v4_prospective.py",
+    "test_v4_reference_origin.py",
+    "test_v4_refutation_binding.py",
+    "test_v4_renaming.py",
+    "test_v4_retained_frontier.py",
+    "test_v4_search_revisits.py",
+    "test_v4_sensing_not_in_macro.py",
+    "test_v4_separating_witness.py",
+    "test_v4_source_candidates.py",
+    "test_v4_state_fidelity.py",
+    "test_v4_transfer.py",
+    "test_v4_transfer_asymmetry.py",
+    "test_v4_transfer_runner.py",
+    "test_v4_withheld_union.py"
+  ],
+  "test_directory_membership_bytes": 1722,
+  "test_directory_membership_sha256": "4becb59fdbe20c0d760a29fbd92c7d8d330f3c1278dd95d9fa97ea55ab73173c",
+  "working_directory": "/home/moloch/semabi/runs/.w1_validation_worktree"
+}

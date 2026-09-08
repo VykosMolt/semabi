@@ -1,0 +1,172 @@
+{
+  "schema": "semabi.transport.w1_full_suite_terminal_receipt.v2",
+  "created_utc": "2026-09-08 08:03:32 UTC",
+  "coordinator": "/root/baseline_verification",
+  "session_id": 71974,
+  "scope": "Actual unified-exec owner terminal return and point-in-time host absence check; no inference from a log-only completion.",
+  "terminal_tool": {
+    "args": {
+      "session_id": 71974,
+      "chars": "",
+      "yield_time_ms": 60000,
+      "max_output_tokens": 1000
+    },
+    "result": {
+      "chunk_id": "3bc392",
+      "wall_time_seconds": 55.120867505,
+      "exit_code": 0,
+      "original_token_count": 34,
+      "output": "{\"status\": \"FINISHED\", \"returncode\": 0, \"child_pid\": 1388940, \"child_terminated\": true, \"end_utc\": \"2026-09-08T08:02:31.756806+00:00\"}\n"
+    }
+  },
+  "session_polls": [
+    {
+      "args": {
+        "session_id": 71974,
+        "chars": "",
+        "yield_time_ms": 60000,
+        "max_output_tokens": 1000
+      },
+      "result": {
+        "chunk_id": "20c6c1",
+        "wall_time_seconds": 60.000732466,
+        "session_id": 71974,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "args": {
+        "session_id": 71974,
+        "chars": "",
+        "yield_time_ms": 60000,
+        "max_output_tokens": 1000
+      },
+      "result": {
+        "chunk_id": "95ad77",
+        "wall_time_seconds": 60.001315005,
+        "session_id": 71974,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "args": {
+        "session_id": 71974,
+        "chars": "",
+        "yield_time_ms": 60000,
+        "max_output_tokens": 1000
+      },
+      "result": {
+        "chunk_id": "7546eb",
+        "wall_time_seconds": 60.000414859,
+        "session_id": 71974,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "args": {
+        "session_id": 71974,
+        "chars": "",
+        "yield_time_ms": 60000,
+        "max_output_tokens": 1000
+      },
+      "result": {
+        "chunk_id": "c42f4c",
+        "wall_time_seconds": 60.000788737,
+        "session_id": 71974,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "args": {
+        "session_id": 71974,
+        "chars": "",
+        "yield_time_ms": 60000,
+        "max_output_tokens": 1000
+      },
+      "result": {
+        "chunk_id": "3f7204",
+        "wall_time_seconds": 60.001353003,
+        "session_id": 71974,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "args": {
+        "session_id": 71974,
+        "chars": "",
+        "yield_time_ms": 60000,
+        "max_output_tokens": 1000
+      },
+      "result": {
+        "chunk_id": "c0a124",
+        "wall_time_seconds": 60.000516842,
+        "session_id": 71974,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "args": {
+        "session_id": 71974,
+        "chars": "",
+        "yield_time_ms": 60000,
+        "max_output_tokens": 1000
+      },
+      "result": {
+        "chunk_id": "9537ca",
+        "wall_time_seconds": 60.001790291,
+        "session_id": 71974,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "args": {
+        "session_id": 71974,
+        "chars": "",
+        "yield_time_ms": 60000,
+        "max_output_tokens": 1000
+      },
+      "result": {
+        "chunk_id": "b17c69",
+        "wall_time_seconds": 60.001217268,
+        "session_id": 71974,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "args": {
+        "session_id": 71974,
+        "chars": "",
+        "yield_time_ms": 60000,
+        "max_output_tokens": 1000
+      },
+      "result": {
+        "chunk_id": "3bc392",
+        "wall_time_seconds": 55.120867505,
+        "exit_code": 0,
+        "original_token_count": 34,
+        "output": "{\"status\": \"FINISHED\", \"returncode\": 0, \"child_pid\": 1388940, \"child_terminated\": true, \"end_utc\": \"2026-09-08T08:02:31.756806+00:00\"}\n"
+      }
+    }
+  ],
+  "final_host_args": {
+    "cmd": "python3 - <<'PY'\nfrom pathlib import Path\nfrom datetime import datetime,timezone\nimport json,subprocess\np=Path('/home/moloch/semabi/runs/.w1_validation_worktree/docs/data/v4/transport/development/widget_persistence_v1/validation_repair_v2')\njob=json.loads((p/'full_pytest_job_v2/process.json').read_text())\nrows=[]\nfor line in subprocess.check_output(['ps','-e','-o','pid=,ppid=,pgid=,stat=,etime=,time=,pcpu=,args='],text=True).splitlines():\n parts=line.split(None,7)\n if len(parts)>=8 and (int(parts[0])==job['runner_pid'] or int(parts[2])==job['owned_process_group']):rows.append(line.strip())\nrecord={'created_utc':datetime.now(timezone.utc).isoformat(),'phase':'after_terminal_reap_host_sample','scope':'Read-only point-in-time host runner/owned-group absence after actual tool terminal return; not continuous or exhaustive historical child tracing.','session_id':71974,'coordinator':'/root/baseline_verification','job_status':job['status'],'job_returncode':job['returncode'],'runner_pid':job['runner_pid'],'child_pid':job['child_pid'],'owned_process_group':job['owned_process_group'],'runner_proc_present':(Path('/proc')/str(job['runner_pid'])).exists(),'child_proc_present':(Path('/proc')/str(job['child_pid'])).exists(),'owned_ps_rows':rows}\nwith (p/'full_suite_host_samples_v2.jsonl').open('a') as f:f.write(json.dumps(record,sort_keys=True)+'\\n')\nprint(json.dumps(record,indent=2))\nassert job['status']=='FINISHED' and job['child_terminated'] is True\nassert not rows and not record['runner_proc_present'] and not record['child_proc_present']\nPY",
+    "sandbox_permissions": "require_escalated",
+    "justification": "May I verify in the host process namespace that the reaped full-suite runner and its owned process group have terminated, and retain the final receipt?",
+    "max_output_tokens": 1500
+  },
+  "final_host_result": {
+    "chunk_id": "365bf8",
+    "wall_time_seconds": 0.000003006,
+    "exit_code": 0,
+    "original_token_count": 139,
+    "output": "{\n  \"created_utc\": \"2026-09-08T08:03:32.933462+00:00\",\n  \"phase\": \"after_terminal_reap_host_sample\",\n  \"scope\": \"Read-only point-in-time host runner/owned-group absence after actual tool terminal return; not continuous or exhaustive historical child tracing.\",\n  \"session_id\": 71974,\n  \"coordinator\": \"/root/baseline_verification\",\n  \"job_status\": \"FINISHED\",\n  \"job_returncode\": 0,\n  \"runner_pid\": 1388929,\n  \"child_pid\": 1388940,\n  \"owned_process_group\": 1388940,\n  \"runner_proc_present\": false,\n  \"child_proc_present\": false,\n  \"owned_ps_rows\": []\n}\n"
+  }
+}

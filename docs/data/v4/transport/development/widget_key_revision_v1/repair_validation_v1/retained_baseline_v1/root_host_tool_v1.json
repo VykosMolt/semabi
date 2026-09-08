@@ -1,0 +1,16 @@
+{
+  "args": {
+    "cmd": "env PYTHONPATH= python3 -P -B - <<'PY'\nimport json,pathlib\nfrom datetime import datetime,timezone\nh=pathlib.Path('/home/moloch/semabi/runs/.w3_baseline_worktree/docs/data/v4/transport/development/widget_key_revision_repair_v1/root_focused_baseline_v1')\nj=json.loads((h/'job_v1/process.json').read_text());runner=j['runner_pid'];child=j['child_pid']\nassert isinstance(runner,int) and isinstance(child,int) and child==1416976\nmembers=[]\nfor p in pathlib.Path('/proc').iterdir():\n if not p.name.isdigit():continue\n try:\n  raw=(p/'stat').read_text();fields=raw[raw.rfind(')')+2:].split()\n  if int(fields[2])==child:members.append(int(p.name))\n except (FileNotFoundError,ProcessLookupError,PermissionError):pass\nsample={'schema':'semabi.widget_key_revision.focused_host_termination.v1','created_utc':datetime.now(timezone.utc).isoformat(),'runner_pid':runner,'child_pid':child,'runner_present':pathlib.Path('/proc',str(runner)).exists(),'child_present':pathlib.Path('/proc',str(child)).exists(),'child_process_group_members':members,'scope':'Actual post-exit host process sample; not a live environment measurement.'}\nwith (h/'root_host_termination_v1.json').open('x') as f:json.dump(sample,f,indent=2,sort_keys=True);f.write('\\n')\nprint(json.dumps(sample,indent=2))\nPY",
+    "workdir": "/home/moloch/semabi",
+    "sandbox_permissions": "require_escalated",
+    "justification": "Verify that the owned W3 baseline runner, child, and process group have terminated before preserving the test result.",
+    "max_output_tokens": 1800
+  },
+  "result": {
+    "chunk_id": "9ffee4",
+    "wall_time_seconds": 0.000002777,
+    "exit_code": 0,
+    "original_token_count": 89,
+    "output": "{\n  \"schema\": \"semabi.widget_key_revision.focused_host_termination.v1\",\n  \"created_utc\": \"2026-09-08T08:13:02.166576+00:00\",\n  \"runner_pid\": 1416965,\n  \"child_pid\": 1416976,\n  \"runner_present\": false,\n  \"child_present\": false,\n  \"child_process_group_members\": [],\n  \"scope\": \"Actual post-exit host process sample; not a live environment measurement.\"\n}\n"
+  }
+}

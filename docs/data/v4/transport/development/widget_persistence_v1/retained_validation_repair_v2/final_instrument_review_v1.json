@@ -1,0 +1,18 @@
+{
+  "schema": "semabi.transport.w1_cache_repair_final_instrument_review.v1",
+  "reviewer": "/root/baseline_verification/post_controls_review",
+  "scope": "READ_ONLY_STATIC_GATE_REVIEW_BEFORE_EXECUTION",
+  "verdict": "ACCEPT",
+  "runner_sha256": "ae25cc9f8fc63ec61fa412ef15cdd26bdbf77c89b2cea9a5c6f080276a000284",
+  "preparation_sha256": "657b45c43cdda37ecb3c7432649f30478e4173dd4338a1859a5fe3eb0d954033",
+  "command_sha256": "1ac0e8bbcdde5efff25ae6b08bd964a4bbf9d92902e1104d89230d29e4ff115e",
+  "findings": [],
+  "reviewed_points": [
+    "Modern pluggy wrapper=True/tryfirst=True observes the first-result report and returns it unchanged.",
+    "A successful pytest return requires exact five-node complete passing call/teardown observations, private cache roots, zero remaining files/symlinks, restored absent ambient prefix and removal of all private trees.",
+    "All 239 file bindings, native/test membership, diff and command links rehash correctly.",
+    "Explicit -c pyproject.toml and --noconftest bind configuration and prevent untracked conftest influence; each selected test requests only its module-local tmp_path fixture.",
+    "Before-correction sources/preparations/commands were preserved and their revision manifest fields match."
+  ],
+  "limit": "This verdict approved source and command preparation. Actual native execution evidence and root acceptance are separate."
+}

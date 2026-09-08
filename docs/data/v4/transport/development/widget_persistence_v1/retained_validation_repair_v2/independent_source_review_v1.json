@@ -1,0 +1,21 @@
+{
+  "schema": "semabi.transport.w1_cache_repair_independent_source_review.v1",
+  "reviewer": "/root/baseline_verification/post_controls_review",
+  "scope": "READ_ONLY_STATIC_SOURCE; no native imports, tests, reruns or file edits",
+  "base_source_head": "284d80c855ff37c42a509ae1dd88f83d4e04e3f4",
+  "test_file": "tests/test_v4_manifests.py",
+  "test_file_sha256": "cf453a06fccc15b6bdb300330046fb303ac50755c838cad572bcc7ed0e11dd4a",
+  "verdict": "ACCEPT_STATIC; focused execution pending",
+  "findings": [],
+  "reviewed_mechanism": [
+    "The only new import is sys; the helper receives explicit cache_root.",
+    "The outer try starts before prefix assignment and restores the exact prior prefix even when derivation/read/mkdir/write/yield/unlink/original-byte restoration fails.",
+    "The unchanged inner cleanup preserves absent-to-unlink and present-to-identical-byte-restoration while the private prefix remains active.",
+    "All eight contexts in exactly five callers receive existing tmp_path/bytecode; payloads, optimization values, expected errors, source targets and pre/post checks remain unchanged.",
+    "The existing absolute exclusive tmp_path fixture removes its entire temporary tree; manifest discovery uses the same runtime prefix during the yielded context."
+  ],
+  "limits": [
+    "Process-global prefix mutation assumes the frozen sequential execution; the selected bodies start no threads or subprocesses.",
+    "Execution must still retain real cache-isolation, prefix-restoration and cleanup observations; this source review does not assert an executed test result."
+  ]
+}
