@@ -1,0 +1,52 @@
+{
+  "additive_artifact_manifest": "docs/data/v4/transport/development/j1/scoring_v1/artifact_manifest_v1.json",
+  "boundary": "All preservation, scoring and later score receipts live outside every frozen execution output root. No score, diagnostic, repaired model or extra application interaction has run.",
+  "created_utc": "2026-09-07T23:25:23.252066+00:00",
+  "evaluation_freeze": {
+    "path": "docs/data/v4/transport/development/j1/evaluation_freeze_v1.json",
+    "sha256": "f9817e8b864f4797e6d202839fb38d96775d82ce11cbe7ab7bce5e0b8c74bceb"
+  },
+  "first_pass_preservation": {
+    "command": [
+      "python3",
+      "docs/data/v4/transport/development/j1/preserve.py",
+      "--freeze",
+      "docs/data/v4/transport/development/j1/evaluation_freeze_v1.json",
+      "--out",
+      "docs/data/v4/transport/development/j1/first_pass_manifest_v1.json"
+    ],
+    "must_follow": "Final custody handoff and verified reaping of every owned execution process; preserve all available invalid/partial results too."
+  },
+  "owner": "/root",
+  "schema": "semabi.j1.post_preservation_execution_plan.v1",
+  "score": {
+    "command": [
+      ".venv/bin/python",
+      "docs/data/v4/transport/development/j1/evaluate.py",
+      "--freeze",
+      "docs/data/v4/transport/development/j1/evaluation_freeze_v1.json",
+      "--preserved",
+      "docs/data/v4/transport/development/j1/first_pass_manifest_v1.json",
+      "--out",
+      "docs/data/v4/transport/development/j1/scoring_v1/evaluation_v1.json"
+    ],
+    "cpu": 19,
+    "execution_receipts_directory": "docs/data/v4/transport/development/j1/scoring_v1/execution_receipts",
+    "job": "docs/data/v4/transport/development/j1/scoring_v1/jobs/evaluate_v1",
+    "normal_priority": true,
+    "output": "docs/data/v4/transport/development/j1/scoring_v1/evaluation_v1.json",
+    "prerequisite": "Root has run the accepted preserver and independently rehashed its complete first-pass manifest.",
+    "python_hash_seed": "0",
+    "threads": 1
+  },
+  "sequence": [
+    "Complete/reap all eight execution jobs and hold their receipt inventory.",
+    "Run first-pass preserver once at its exclusive original identity.",
+    "Root independently authenticates inventory and source/termination metadata without displaying outcomes.",
+    "Run saved-forecast scorer once through the stock owned-job wrapper on CPU19.",
+    "Reap scorer, authenticate first-pass preservation again, and hash the complete additive score/job/tool-receipt inventory.",
+    "Only then display semantic scores and run separately admitted evaluator controls."
+  ],
+  "source_head": "5f3dc893c701f90a7cfe859f986287faadd6b856",
+  "status": "PREPARED_NO_EXECUTION"
+}

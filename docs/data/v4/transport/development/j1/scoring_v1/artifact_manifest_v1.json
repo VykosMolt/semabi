@@ -1,0 +1,65 @@
+{
+  "disposition": "Original partial execution and invalid measurement remain immutable. No capability result follows from these unestablished outcomes. Checkpoint diagnosis may now use the preserved primary and predictor artifacts; invariance was not executed.",
+  "evaluation": {
+    "custody_error": {
+      "detail": "Finite owned job did not finish successfully",
+      "type": "ProtocolError"
+    },
+    "path": "docs/data/v4/transport/development/j1/scoring_v1/evaluation_v1.json",
+    "phases": [
+      {
+        "all_channels_unestablished": true,
+        "all_charges": 313,
+        "all_clicks": 96,
+        "designated_targets": 24,
+        "name": "primary"
+      },
+      {
+        "all_channels_unestablished": true,
+        "all_charges": 313,
+        "all_clicks": 96,
+        "designated_targets": 24,
+        "name": "invariance"
+      }
+    ],
+    "sha256": "ffd242bf550d1584876fb97e2abf91110c8d62a1bb088dfeb14fcc1b0d5b4adb",
+    "status": "INVALID_CUSTODY_UNESTABLISHED"
+  },
+  "exposure": "Root inspected invalid score metadata and synthetic missing-forecast rows only. No actual checkpoint reason or semantic outcome was opened before this seal.",
+  "file_count": 5,
+  "files": {
+    "docs/data/v4/transport/development/j1/scoring_v1/evaluation_v1.json": "ffd242bf550d1584876fb97e2abf91110c8d62a1bb088dfeb14fcc1b0d5b4adb",
+    "docs/data/v4/transport/development/j1/scoring_v1/execution_receipts/launch_intent_v1.json": "cfa56df3df22049d40a306f65715f7636f14eac77eb4380726052c0fff4106de",
+    "docs/data/v4/transport/development/j1/scoring_v1/execution_receipts/tool_completion_v1.json": "93f781fb8a80c2f9eda9217d3d5b99cb6fc396484a024bbaf3ec219826cee93a",
+    "docs/data/v4/transport/development/j1/scoring_v1/jobs/evaluate_v1/output.log": "1f4620b5c5355858d974ce1c38ca8e4ee1506c2412f0b409df89c7ca4dfc2a4b",
+    "docs/data/v4/transport/development/j1/scoring_v1/jobs/evaluate_v1/process.json": "79bd5504d87cbcfdcf7b44d7d3f3f0328574b0623dcc9da86860193c4105a75c"
+  },
+  "first_pass": {
+    "files_rehashed": 497,
+    "path": "docs/data/v4/transport/development/j1/first_pass_manifest_v1.json",
+    "sha256": "c05c792722432db0db3c535f9a405b7c65795346ae5216921546d57ac59ee7cc"
+  },
+  "freeze": {
+    "path": "docs/data/v4/transport/development/j1/evaluation_freeze_v1.json",
+    "sha256": "f9817e8b864f4797e6d202839fb38d96775d82ce11cbe7ab7bce5e0b8c74bceb"
+  },
+  "job": {
+    "child_terminated": true,
+    "host_runner_and_child_absent": true,
+    "path": "docs/data/v4/transport/development/j1/scoring_v1/jobs/evaluate_v1",
+    "pid_namespace": "pid:[4026531836]",
+    "returncode": 2,
+    "source_files_rehashed": 156,
+    "status": "FAILED",
+    "tool_reaped": true
+  },
+  "owner": "/root",
+  "recorded_utc": "2026-09-08T00:10:07.507061+00:00",
+  "root_first_pass_review": {
+    "path": "docs/data/v4/transport/development/j1/root_first_pass_review_v1.json",
+    "sha256": "2d46fb5af1bc0e8c990153a97110d9c31162ef46e09c6fbd03d557d67a6e0bc1"
+  },
+  "schema": "semabi.j1.score_preservation.v1",
+  "source_head": "5f3dc893c701f90a7cfe859f986287faadd6b856",
+  "status": "INVALID_FIRST_PASS_SCORE_PRESERVED_AND_REVIEWED"
+}

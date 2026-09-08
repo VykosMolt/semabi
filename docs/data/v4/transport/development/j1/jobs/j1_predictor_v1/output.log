@@ -1,0 +1,14 @@
+{"cleanup_errors":[],"output":"/home/moloch/semabi/docs/data/v4/transport/development/j1/evaluation_execution_v1/predictor_v1","pid":953331,"status":"FAILED"}
+Traceback (most recent call last):
+  File "/home/moloch/semabi/docs/data/v4/transport/development/j1/predictor.py", line 466, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/moloch/semabi/docs/data/v4/transport/development/j1/predictor.py", line 462, in main
+    return {"prepare": prepare, "run": run}[args.operation](args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/moloch/semabi/docs/data/v4/transport/development/j1/predictor.py", line 433, in run
+    result = serve(server, ledger, Forecaster(fit, monitor, model, bindings, native), checkpoint, provenance, output)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/moloch/semabi/docs/data/v4/transport/development/j1/predictor.py", line 323, in serve
+    raise RuntimeError("Incomplete forecast or model checkpoint; dependent action must stop")
+RuntimeError: Incomplete forecast or model checkpoint; dependent action must stop

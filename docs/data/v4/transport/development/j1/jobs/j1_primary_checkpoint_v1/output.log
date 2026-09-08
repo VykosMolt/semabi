@@ -1,0 +1,9 @@
+{"path":"docs/data/v4/transport/development/j1/evaluation_execution_v1/control_receipts/after_primary_v1.json","sha256":"d10989bbea35039d309eed7e14c5b34474d06e4a80630b9bf2b3c6a561c4cb43","status":"ERROR"}
+Traceback (most recent call last):
+  File "/home/moloch/semabi/docs/data/v4/transport/development/j1/control.py", line 53, in <module>
+    main()
+  File "/home/moloch/semabi/docs/data/v4/transport/development/j1/control.py", line 38, in main
+    io.require(acknowledgement["instrument_status"] == "COMPLETE", "Resident checkpoint is incomplete")
+  File "/home/moloch/semabi/docs/data/v4/transport/development/j1/live_io.py", line 33, in require
+    raise ProtocolError(detail)
+_j1_actor_live_io.ProtocolError: Resident checkpoint is incomplete

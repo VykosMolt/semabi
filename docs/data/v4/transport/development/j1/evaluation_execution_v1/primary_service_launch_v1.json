@@ -1,0 +1,69 @@
+{
+  "environment": {
+    "BLIS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONHASHSEED": "0",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "expected_cpu": 22,
+  "global_freeze_sha256": "f9817e8b864f4797e6d202839fb38d96775d82ce11cbe7ab7bce5e0b8c74bceb",
+  "go_sha256": "229738a4b3fb16d2d2a9174a729ae6948447332d91d6956da4c756074b16bca1",
+  "job": {
+    "command": [
+      ".venv/bin/python",
+      "experiments/join_v1/server.py",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "8771",
+      "--profile",
+      "primary"
+    ],
+    "cpu": 22,
+    "kind": "service",
+    "path": "docs/data/v4/transport/development/j1/jobs/j1_primary_service_v1",
+    "role": "primary_service"
+  },
+  "nice": 0,
+  "outer_command": [
+    "taskset",
+    "-c",
+    "22",
+    "env",
+    "PYTHONHASHSEED=0",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "BLIS_NUM_THREADS=1",
+    "MKL_NUM_THREADS=1",
+    "NUMEXPR_NUM_THREADS=1",
+    "OMP_NUM_THREADS=1",
+    "OPENBLAS_NUM_THREADS=1",
+    "VECLIB_MAXIMUM_THREADS=1",
+    ".venv/bin/python",
+    "docs/data/v4/transport/run_job.py",
+    "docs/data/v4/transport/development/j1/jobs/j1_primary_service_v1",
+    "--",
+    ".venv/bin/python",
+    "experiments/join_v1/server.py",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "8771",
+    "--profile",
+    "primary"
+  ],
+  "predictor_ready_receipt_sha256": "0256d1a4a486a3be82cf54f002ca69cb689b9c782a801a3996372b1452d2a0f5",
+  "recorded_utc": "2026-09-07T23:47:46.171748+00:00",
+  "role": "primary_service",
+  "schema": "semabi.j1.owned_job_launch.v1",
+  "source_head": "5f3dc893c701f90a7cfe859f986287faadd6b856",
+  "status": "LAUNCH_REQUESTED",
+  "tool": {
+    "sandbox_permissions": "require_escalated",
+    "tty": true,
+    "workdir": "/home/moloch/semabi"
+  }
+}

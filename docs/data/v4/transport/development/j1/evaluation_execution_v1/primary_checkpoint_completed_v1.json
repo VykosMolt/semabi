@@ -1,0 +1,46 @@
+{
+  "checkpoint_index": 1,
+  "checkpoint_instrument_status": "INCOMPLETE",
+  "checkpoint_reference": {
+    "path": "docs/data/v4/transport/development/j1/evaluation_execution_v1/predictor_v1/checkpoint_0001.json",
+    "sha256": "ad743e7ac4e721f6113a2b69cac4423656241c9a0420fbe18ce7cb1534a42add"
+  },
+  "control_reference": {
+    "path": "docs/data/v4/transport/development/j1/evaluation_execution_v1/control_receipts/after_primary_v1.json",
+    "sha256": "d10989bbea35039d309eed7e14c5b34474d06e4a80630b9bf2b3c6a561c4cb43"
+  },
+  "control_status": "ERROR",
+  "dependent_jobs_stopped": [
+    "invariance_service",
+    "invariance_actor",
+    "invariance_checkpoint",
+    "shutdown"
+  ],
+  "failure_details_not_diagnosed": true,
+  "inspection_namespace": "host",
+  "ledger_receipt_index": 314,
+  "owned_runner_and_child_absent": true,
+  "process": {
+    "child_pid": 973814,
+    "child_terminated": true,
+    "end_utc": "2026-09-07T23:55:36.433218+00:00",
+    "log_sha256": "d78f91f525b1b533e6d941f3c6f14863367ab076bbb468e8577e60eb5dfc5fa4",
+    "owned_process_group": 973814,
+    "returncode": 1,
+    "runner_pid": 973812,
+    "start_utc": "2026-09-07T23:55:28.938724+00:00",
+    "status": "FAILED"
+  },
+  "process_record": {
+    "path": "docs/data/v4/transport/development/j1/jobs/j1_primary_checkpoint_v1/process.json",
+    "sha256": "86ad62695e3eced834e1c99edea039bb1ccc67c3962f175487412f23fc9a8f4c"
+  },
+  "recorded_utc": "2026-09-07T23:57:57.916697+00:00",
+  "role": "primary_checkpoint",
+  "runtime_resource_scope": "CPU18 and environment are bound by the exact launch command; this short job finished before a live-resource sample.",
+  "schema": "semabi.j1.control_job_completed.v1",
+  "status": "FAILED_INCOMPLETE_CHECKPOINT",
+  "tool_exit_code": 1,
+  "tool_reaped": true,
+  "tool_session_id": 2944
+}

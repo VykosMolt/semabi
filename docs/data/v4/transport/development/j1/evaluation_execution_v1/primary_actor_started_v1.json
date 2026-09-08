@@ -1,0 +1,57 @@
+{
+  "child_pid": 968653,
+  "inspection_namespace": "host",
+  "owned_process_group": 968653,
+  "predictor_pid": 953331,
+  "primary_service_pid": 967891,
+  "process_record_path": "docs/data/v4/transport/development/j1/jobs/j1_primary_actor_v1/process.json",
+  "process_record_sha256": "2fd5b20fe9dd9051c4a98f505335eb46ad69483721610bdabb2cd2e140653e87",
+  "recorded_utc": "2026-09-07T23:49:27.935524+00:00",
+  "resources": [
+    {
+      "affinity": [
+        17
+      ],
+      "environment": {
+        "BLIS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONHASHSEED": "0",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "nice": 0,
+      "pgid": 968651,
+      "pid": 968651,
+      "role": "runner_pid"
+    },
+    {
+      "affinity": [
+        17
+      ],
+      "environment": {
+        "BLIS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONHASHSEED": "0",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "nice": 0,
+      "pgid": 968653,
+      "pid": 968653,
+      "role": "child_pid"
+    }
+  ],
+  "role": "primary_actor",
+  "runner_pid": 968651,
+  "schema": "semabi.j1.owned_job_started.v1",
+  "source_head": "5f3dc893c701f90a7cfe859f986287faadd6b856",
+  "start_utc": "2026-09-07T23:48:54.265307+00:00",
+  "status": "RUNNING",
+  "tool_session_id": 28183
+}

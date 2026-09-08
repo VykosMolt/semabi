@@ -1,0 +1,19 @@
+{
+  "cleanup_authority": "Existing root GO: safely clean up/reap only recorded owned processes after job failure.",
+  "extra_model_or_fixture_requests": 0,
+  "failed_job": "primary_checkpoint",
+  "failure_receipt_sha256": "bfe443bc74a04651e3a7c5cb10d4829eb72f0c5be19cbc89dd07b793d31a573e",
+  "native_fit_retries": 0,
+  "reason": "First prescribed checkpoint returned INCOMPLETE; original control job failed and is reaped.",
+  "recorded_utc": "2026-09-07T23:57:57.916959+00:00",
+  "replacement_identities": 0,
+  "schema": "semabi.j1.evaluation_execution_stop.v1",
+  "scoring_or_diagnosis": false,
+  "status": "DEPENDENT_WORK_STOPPED",
+  "unlaunched_jobs": [
+    "invariance_service",
+    "invariance_actor",
+    "invariance_checkpoint",
+    "shutdown"
+  ]
+}

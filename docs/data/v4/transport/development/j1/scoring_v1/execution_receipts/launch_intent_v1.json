@@ -1,0 +1,21 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "docs/data/v4/transport/development/j1/evaluate.py",
+    "--freeze",
+    "docs/data/v4/transport/development/j1/evaluation_freeze_v1.json",
+    "--preserved",
+    "docs/data/v4/transport/development/j1/first_pass_manifest_v1.json",
+    "--out",
+    "docs/data/v4/transport/development/j1/scoring_v1/evaluation_v1.json"
+  ],
+  "cpu": 19,
+  "expected_failure_disposition": "The frozen evaluator must retain all313charges and24targets perphase when custody is incomplete. A nonzero invalid-custody result is preserved, not retried.",
+  "job": "docs/data/v4/transport/development/j1/scoring_v1/jobs/evaluate_v1",
+  "owner": "/root",
+  "preservation_sha256": "c05c792722432db0db3c535f9a405b7c65795346ae5216921546d57ac59ee7cc",
+  "recorded_utc": "2026-09-08T00:05:10.535014+00:00",
+  "root_review_sha256": "2d46fb5af1bc0e8c990153a97110d9c31162ef46e09c6fbd03d557d67a6e0bc1",
+  "schema": "semabi.j1.score_launch_intent.v1",
+  "source_head": "5f3dc893c701f90a7cfe859f986287faadd6b856"
+}

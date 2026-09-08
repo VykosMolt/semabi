@@ -1,6 +1,6 @@
 # Fresh-interface campaign execution record
 
-## Active checkpoint (2026-09-07 23:19 UTC)
+## Active checkpoint (2026-09-08 00:27 UTC)
 
 T1, G1 and G2 are preserved and locally committed. G2 checkpoint `38f1f08` contains
 G2 and its reviewed evidence: 577 passing tests, 3 skips, 1 expected failure,
@@ -118,10 +118,64 @@ on the corrected declaration. The phase-preparation source passed independent re
 correction clarifies that a late failure can leave partial exclusive manifests.
 The prepared J1 evaluation plan has eight jobs, one
 resident Fit, 626 forecasts across two profiles, three ordered control requests
-and four model checkpoints including startup. Final phase freezes and execution
-wait for the remaining instrument acceptance; no J1 fit or evaluation has
-started. The existing supplied-formula control does not
-establish that the normal learner learned JOIN.
+and four model checkpoints including startup. The accepted source, training,
+fixture and instrument evidence are committed at `5f3dc89`. Root's admission
+binds 173 source files and 271 preparation artifacts, SHA-256
+`49e2c67fd77ba06851409d085c701ed6d1871e199ba6805ed314cab1a527aca3`.
+The reviewed preparer created C2, predictor, actor and global phase freezes on
+that HEAD. Root read their concrete routing and independently rehashed 456 files,
+checked all runtime gates without native imports, and verified the same 312-step
+cut, eight commands, source/fixture hashes and exact two B1 trace differences.
+Global freeze SHA-256
+`f9817e8b864f4797e6d202839fb38d96775d82ce11cbe7ab7bce5e0b8c74bceb`;
+root phase review SHA-256
+`ff231abed2c7d7401e53bee451aa105b10f6c2f3fe4fb33124908d46854203c2`.
+The owned resident job completed one native Fit and all 313 primary forecasts.
+The primary actor completed 313 charged attempts, 312 paired Steps and all 24
+targets with zero action failures. All forecasts had complete copied records.
+The first post-primary checkpoint returned INCOMPLETE and the resident process
+stopped. Invariance service, actor, checkpoint and shutdown jobs were not launched.
+The four started jobs are reaped; independent host checks found all eight owned
+PIDs, the Unix socket and TCP port 8771 absent.
+
+Root preserved all 497 available first-pass source/input/execution files before
+opening any failure reason or semantic result. The partial manifest SHA-256 is
+`c05c792722432db0db3c535f9a405b7c65795346ae5216921546d57ac59ee7cc`;
+its zero binding failures, 20 missing outputs and four unlaunched job identities
+remain explicit. Root independently rehashed the full inventory and execution
+handoff. The unchanged frozen evaluator ran once and returned
+INVALID_CUSTODY_UNESTABLISHED: all 313 opportunities and 24 designated targets
+in each phase remain unestablished in every prediction channel. This is an
+invalid measurement, not evidence for or against learned JOIN. Its additive
+five-file score/job/tool-receipt seal SHA-256 is
+`f93987391b760d5085ac11e0cd08e7d8242fcae61eaf779e351cd9eead37d3ca`.
+The original execution roots and score remain immutable.
+
+After both seals, root and an independent reviewer opened the saved checkpoint
+projections. Both are COMPLETE and all native identity/ownership checks agree.
+The sole failing check is learned-commitment equality: one outcome Evidence's
+`_blocks` changed from None to 148 entries. Those entries exactly match the
+frozen native pair enumeration from the unchanged stored training evidence.
+No other learned-commitment field differs. The invented native reproducer
+confirms that a LIST query populates this cache while preserving every other
+Evidence field and the query answers. Root diagnosis SHA-256
+`2f09aebafa5935acbd3703f62f3125d462457401224e31b4fc8ac3322f9d88d0`
+binds the exact source and checkpoints. The independent diagnosis agrees and
+adds a substantive counterexample: replacing the cache with an empty list
+changes LIST's answer while leaving base evidence and RULE unchanged. Root read
+the full report and rehashed both seven-file diagnosis inventories. Independent
+seal SHA-256 `7a48e0c77bcd7345c1973972501acd2572811320c2290709d8f89869bd7e3c22`.
+The accepted correction contract validates every populated cache against its
+complete ordered derivation, retains all base evidence and raw cache values,
+and canonicalizes only this exact typed field in the learned commitment.
+Root has now seen checkpoint training evidence and outcome frame names, but no
+actual primary forecast/outcome records or oracle payloads. Primary is disclosed
+development evidence; the invariance phase remains unexecuted. Original scoring
+and diagnosis on `5f3dc89` are complete, permitting a local original-result
+checkpoint before instrument edits. V2's separate plan reserves new output,
+job and socket identities, pending implementation review and a disclosed pilot.
+The existing supplied-
+formula control does not establish that the normal learner learned JOIN.
 
 At 20:01 UTC the user lifted the temporary one-core restriction, then explicitly
 requested **all 24 logical CPUs (0–23)** at 20:08 UTC. Use normal priority for
@@ -131,14 +185,16 @@ The last G2 fit retained its original single-core/low-priority settings through
 completion. Versioned resource override: `development/g2/resource_override_v3.json`.
 No GPU, paid compute, external deployment or push is authorized.
 
-Current ownership: root owns coordination, phase freezes and J1 scoring/custody;
-`reserved_audit` owns evaluation CLI/preservation review after sealing training
-and preparing the evaluation schedule; `baseline_verification` now prepares
-separate evaluator diagnostics using the frozen fixture specification, with no
-actual J1 learner results and no semantic disclosure to root;
-`acquisition_audit/binding_contract_review` reviews phase-freeze preparation after
-completing the disclosed native pilot.
-No heavy native job or fixture service remains live at this checkpoint.
+Current ownership: root owns original-result preservation, the accepted correction
+contract and V2 preparation/pilot versioning; `reserved_audit` completed its
+independent diagnosis and will implement the monitor correction after the local
+checkpoint. `baseline_verification` owns
+separate post-preservation evaluator diagnostics and their independent review,
+without opening actual J1 learner payloads. Its corrected invented checks pass
+78/78 and all 19 unchanged reviewer counterexamples pass; a newly found narrow
+typed-record compatibility gap is being preserved and corrected before acceptance.
+No native fit, fixture service or evaluation actor is live. Only small diagnosis
+and review work is running at this checkpoint.
 A report or commit is a checkpoint; continue through reviewed J1
 execution and the next evidence-justified development milestone.
 
