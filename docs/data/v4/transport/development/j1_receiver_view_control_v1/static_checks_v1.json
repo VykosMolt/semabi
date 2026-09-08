@@ -1,0 +1,28 @@
+{
+  "callable_source": {
+    "bytes": 14713,
+    "sha256": "998a995bf555bb03f425d5e3f038aa3a651a0dd8cf31f264aa7e5fdd23718e42"
+  },
+  "checks": {
+    "cohort_exact_except_checked": true,
+    "native_source_head_matches_proposal": true,
+    "no_file_open_or_import_module_call": true,
+    "no_fit_or_forecast_or_outcome_call": true,
+    "no_main_entry_point": true,
+    "no_module_level_call_expression": true,
+    "no_native_module_loaded": true,
+    "no_receiver_name_lookup_literal": true,
+    "one_unchecked_four_uniquely_checked": true,
+    "source_ast_parse_compile_only": true,
+    "stdlib_imports_only": true
+  },
+  "imports": [
+    "copy",
+    "hashlib",
+    "json"
+  ],
+  "line_count": 272,
+  "schema": "semabi.j1.receiver_view_control_static_checks.v1",
+  "scope": "No module import, function invocation, native loading, fit, query or outcome execution; no runtime acceptance.",
+  "status": "STATIC_PREPARATION_CHECKS_PASS"
+}

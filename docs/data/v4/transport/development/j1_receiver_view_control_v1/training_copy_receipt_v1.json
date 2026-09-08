@@ -1,0 +1,40 @@
+{
+  "complete_directory_membership": [
+    "observations.jsonl",
+    "steps.jsonl"
+  ],
+  "explicit_absence": {
+    "collector_verification.json": true,
+    "config.json": true,
+    "decisions.jsonl": true,
+    "identity_readings_v4.json": true,
+    "identity_refutations_v4.json": true,
+    "meta.json": true,
+    "model_v4.json": true,
+    "model_v4.txt": true,
+    "probes.acquired.jsonl": true,
+    "probes.jsonl": true,
+    "refinements_v2.json": true,
+    "run.json": true,
+    "search_v4.log": true
+  },
+  "input_files": {
+    "observations.jsonl": {
+      "bytes": 501696,
+      "copy": "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/training_copy_v1/observations.jsonl",
+      "sha256": "c271d8d73229326d558a3790365cd5743d227da5e0ebd93e66b1928848d9c4b9",
+      "source": "/home/moloch/semabi/docs/data/v4/transport/first_pass/join/j1_training_v1/observations.jsonl"
+    },
+    "steps.jsonl": {
+      "bytes": 81025,
+      "copy": "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/training_copy_v1/steps.jsonl",
+      "sha256": "53ac19a56ed58a852f1bd84468f3b7907f0765252b8501e8a990176325b15452",
+      "source": "/home/moloch/semabi/docs/data/v4/transport/first_pass/join/j1_training_v1/steps.jsonl"
+    }
+  },
+  "native_executed": false,
+  "schema": "semabi.j1.receiver_view_training_copy.v1",
+  "scope": "Copies only the two disclosed input JSONLs; no optional sidecars, application, oracle or held-out input. Root concrete freeze remains pending.",
+  "status": "EXACT_TWO_INPUT_METADATA_COPY",
+  "training_directory": "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/training_copy_v1"
+}

@@ -1,0 +1,10 @@
+--- control_v1.py
++++ control_v2.py
+@@ -113,6 +113,7 @@
+     need(len({tuple(row["owner_id"]) for row in rows}) == len(rows), "duplicate_radio_owner")
+     need(len(owners) <= 1, "multiple_checked_radios")
+     family = next(iter(families))
++    need(family == "radio:Select receiver", "unexpected_parsed_radio_family")
+     need(family not in state.view, "base_source_already_present_no_overwrite")
+     need(nodes[ACTION_NODE]["role"] == "button" and
+          nodes[ACTION_NODE]["name"] == "Transmit" and

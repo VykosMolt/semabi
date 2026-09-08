@@ -1,0 +1,33 @@
+{
+  "added_native_source": {
+    "bytes": 52053,
+    "path": "/home/moloch/semabi/runs/.w2_scoring_worktree/semabi/compiler/v2/abstractor.py",
+    "sha256": "0d9b484e558df2844ce8c21dd5b15d16d894a823ae9cd7152a1421a351dd61d5"
+  },
+  "base_evidence": {
+    "bytes": 8791,
+    "path": "/home/moloch/semabi/docs/data/v4/transport/development/j1_receiver_view_control_v1/source_evidence_v1.json",
+    "sha256": "d29a61bd741c107317246cf18f9049b219481a1f61aff90d3244fdfbeef30b42"
+  },
+  "corrected_attribution": {
+    "_instance_widgets_lines": [
+      847,
+      857
+    ],
+    "inherited_implementation": "semabi/compiler/v2/abstractor.py",
+    "ordinary_EvidenceLog_probe_reads_lines": [
+      702,
+      721
+    ],
+    "supersedes": "source_evidence_v1.json source_cutpoints incorrectly attributes inherited view construction/_instance_widgets to v4/abstractor.py",
+    "v4_subclass_delegation": "semabi/compiler/v4/abstractor.py:16-24",
+    "view_construction_lines": [
+      598,
+      603
+    ]
+  },
+  "schema": "semabi.j1.receiver_view_source_amendment.v2",
+  "scope": "Source attribution and binding amendment only; no native source, observation, outcome or intervention change.",
+  "source_head": "b15e6b0a4c2736fabfcb48fbab19981d82b575e8",
+  "status": "PREPARATION_ONLY_NO_NATIVE_EXECUTION"
+}

@@ -1,6 +1,16 @@
 # Fresh-interface campaign execution record
 
-## Active checkpoint (2026-09-08 11:46 UTC)
+## Paused for user review (2026-09-08 11:53 UTC)
+
+The user requested a handoff. Both widget repairs and their reviewed evidence
+are committed; all owned validation jobs are reaped. Receiver-view preparation
+is stopped before any native execution. Its driver status classification and
+final input-audit review remain unfinished. See the
+[review handoff](handoff_2026_09_08.md) for commits, validation and the exact
+next step. The research goal remains unfinished; the following checkpoint
+records the state reached before this pause.
+
+### Completed repair checkpoint (2026-09-08 11:46 UTC)
 
 Current question: after repairing widget persistence and attribute-span evidence,
 does preserving the uniquely checked receiver's represented owner in view
