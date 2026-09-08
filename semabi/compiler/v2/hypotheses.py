@@ -682,22 +682,31 @@ class Hypotheses:
         attribute of the entity (domain state shown in a widget)."""
         if not self.reload_pairs:
             return
+        reload_sigs = {sig for pair in self.reload_pairs for sig in pair}
         for t, u in self.units.items():
             if not u.key_slot:
                 continue
             trans = [sid for sid in u.slots if sid.endswith("~")]
             if not trans:
                 continue
-            by_sig: dict[str, dict[str, UnitInstance]] = defaultdict(dict)
+            by_sig: dict[str, dict[str, list[UnitInstance]]] = defaultdict(lambda: defaultdict(list))
             for ui in u.instances:
                 k = ui.slots.get(u.key_slot)
                 if k is not None:
-                    by_sig[ui.sig][k] = ui
+                    by_sig[ui.sig][k].append(ui)
+            # Keys are chosen among siblings. Repeated keys under different parents
+            # do not identify the same instance across reloads. Withhold the whole
+            # template: other retained keys must not erase an ambiguous counterexample.
+            if any(len(matches) > 1 for sig in reload_sigs for matches in by_sig.get(sig, {}).values()):
+                u.evidence.append(f"widget persistence withheld: key {u.key_slot} is ambiguous within a reload observation")
+                continue
             for sid in trans:
                 kept = lost = 0
                 for a, b in self.reload_pairs:
-                    for k, ua in by_sig.get(a, {}).items():
-                        ub = by_sig.get(b, {}).get(k)
+                    for k, matches in by_sig.get(a, {}).items():
+                        ua = matches[0]
+                        after = by_sig.get(b, {}).get(k, [])
+                        ub = after[0] if after else None
                         if ub is None or sid not in ua.slots or sid not in ub.slots:
                             continue
                         if ua.slots[sid] == ub.slots[sid]:
