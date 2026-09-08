@@ -1,6 +1,6 @@
 # Fresh-interface campaign execution record
 
-## Active checkpoint (2026-09-08 01:30 UTC)
+## Active checkpoint (2026-09-08 01:47 UTC)
 
 T1, G1 and G2 are preserved and locally committed. G2 checkpoint `38f1f08` contains
 G2 and its reviewed evidence: 577 passing tests, 3 skips, 1 expected failure,
@@ -211,21 +211,43 @@ execution are preserved. V2's 19-file seal is unchanged; the new 20-file V3 seal
 SHA-256 is `6ea0b0b19b8ebbb26909b49b087931a8ef1e117247683606ce92cff4589de3d0`.
 Root's acceptance binds 173 runtime files and 56 correction artifacts, SHA-256
 `76c88154394f44b77fbcb7c4f9d2a2b42cebbd7177604e196fc99c88b5a6c3bf`.
-The native pilot remains required; tiny-check host resource settings are supplied
-command evidence rather than independently sampled OS attestations.
+The correction and preparation evidence are locally committed at `861d83f`.
+The new disclosed T1 native pilot passes all 19 criteria: one Fit, seven durable
+requests, three complete native forecasts and five complete checkpoints. Root
+rehashed 198 source/input/output bindings, passed every checkpoint through the
+unchanged strict custody gate, and recomputed all learned commitments and raw
+cache summaries/changes. Startup common projection equals the native fit trace.
+All four owned PIDs are absent in the host namespace, both launcher sessions are
+reaped, and the Unix socket is removed. Comparison SHA-256
+`ec6499bb1b624ce9d509979f7f9b37eb9805b6e4e4a7a490ab01fbbe04387111`;
+root pilot review SHA-256
+`d3cec45529cf42877d44b1912ec928935071b999b741e16e7f9fe5dcb8b2ace6`.
+Tiny-check resource settings remain supplied-command evidence; the native
+predictor also retains its enforced CPU affinity in its completed run record.
 
-Current ownership: root owns the candidate checkpoint, disclosed T1 pilot and V2
-admission/freezes; `reserved_audit` holds the accepted monitor and remains the
-planned J1 executor. `baseline_verification` owns the separate diagnostics. Its
+Root's corrected-attempt admission binds the actual 173 runtime files and 428
+preparation artifacts, SHA-256
+`1e314c0eea875e89e84d6473e8740ab965639db789b5801061baae72ff2e4834`.
+It authenticates the invalid parent, reviewed correction, new pilot, preserved
+training and unchanged caller controls. Evolving post-preservation diagnostics
+are excluded. The admission recorder is source-only and made no native import.
+
+Current ownership: root owns the pilot/admission checkpoint and V2 phase freezes;
+`reserved_audit` is reviewing concrete admission metadata and remains the planned
+J1 executor after root reviews the actual phase freeze. `baseline_verification`
+owns the separate diagnostics. Its
 source-only compatibility audit found an optional ParsedObs cache being decoded
 as required semantic data. That held package is preserved; the narrow correction
-passes 90 authored checks and all 19 unchanged reviewer counterexamples and is
-under independent review. No actual J1 learner payloads or semantic report were
-opened by root. Production diagnostics await V2 compatibility and preservation.
-Next: commit the accepted candidate, execute the seven-request T1 native pilot,
-then prepare and verify the new eight-job J1 freeze. Primary is disclosed replay;
-invariance remains unexecuted. No native fit, fixture service or evaluation actor
-is live. All tiny correction jobs have ended.
+passes 90 authored checks and all 19 unchanged reviewer counterexamples. Review
+then exposed original set-order validation being changed by snapshot inlining;
+the failing candidate and probes are preserved before the narrow container fix.
+The original set/mapping envelope must be validated before projection. This
+affects the separate diagnostics, whose source is excluded from V2. No actual
+J1 learner payloads or semantic report were opened by root. Production diagnostics
+await reviewed compatibility and V2 preservation. Next: commit pilot/admission,
+prepare and verify the new eight-job J1 freeze, then execute once. Primary is
+disclosed replay; invariance remains unexecuted. No native fit, fixture service
+or evaluation actor is live.
 A report or commit is a checkpoint; continue through reviewed J1
 execution and the next evidence-justified development milestone.
 

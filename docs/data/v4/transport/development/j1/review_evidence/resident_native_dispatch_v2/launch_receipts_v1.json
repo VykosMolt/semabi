@@ -1,0 +1,31 @@
+{
+  "schema": "semabi.j1.resident_pilot_launch_receipts.v1",
+  "plan_sha256": "604afa7874f60853231a602161b422389bd573365185d04074c1655728336656",
+  "modes": {
+    "predictor": {
+      "command": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 BLIS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 taskset -c 13 .venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/development/j1/review_evidence/resident_native_dispatch_v2/jobs/predictor_v1 -- .venv/bin/python docs/data/v4/transport/development/j1/predictor.py run --training docs/data/v4/transport/first_pass/dispatch/initial_v2 --freeze docs/data/v4/transport/development/j1/review_evidence/resident_native_dispatch_v2/predictor_freeze.json --out-dir docs/data/v4/transport/development/j1/review_evidence/resident_native_dispatch_v2/predictor --socket /tmp/semabi_j1_resident_dispatch_e57e8bfef4e1.sock",
+      "tool_receipt": {
+        "chunk_id": "c70675",
+        "wall_time_seconds": 1.000826946,
+        "session_id": 17051,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    "driver": {
+      "command": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 BLIS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 taskset -c 18 .venv/bin/python docs/data/v4/transport/run_job.py docs/data/v4/transport/development/j1/review_evidence/resident_native_dispatch_v2/jobs/driver_v1 -- .venv/bin/python docs/data/v4/transport/development/j1/review_evidence/resident_native_validation_v2.py run --plan docs/data/v4/transport/development/j1/review_evidence/resident_native_dispatch_v2/plan.json",
+      "tool_receipt": {
+        "chunk_id": "87fca8",
+        "wall_time_seconds": 1.001817637,
+        "session_id": 18786,
+        "original_token_count": 0,
+        "output": ""
+      }
+    }
+  },
+  "additional_environment_limits": {
+    "BLIS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "scope": "Exact frozen inner commands and four planned thread controls; two additional numerical-library variables enforce the user's one-thread resource instruction."
+}

@@ -1,0 +1,60 @@
+{
+  "driver_terminal_exists": true,
+  "jobs": {
+    "driver": {
+      "child_pid": 1053998,
+      "command": [
+        ".venv/bin/python",
+        "docs/data/v4/transport/development/j1/review_evidence/resident_native_validation_v2.py",
+        "run",
+        "--plan",
+        "docs/data/v4/transport/development/j1/review_evidence/resident_native_dispatch_v2/plan.json"
+      ],
+      "processes": {
+        "child_pid": {
+          "pid": 1053998,
+          "present": false
+        },
+        "runner_pid": {
+          "pid": 1053996,
+          "present": false
+        }
+      },
+      "runner_pid": 1053996,
+      "source_head": "861d83fe80fbcd8d10ee0df674a8c35aa563aa56",
+      "status": "FINISHED"
+    },
+    "predictor": {
+      "child_pid": 1053853,
+      "command": [
+        ".venv/bin/python",
+        "docs/data/v4/transport/development/j1/predictor.py",
+        "run",
+        "--training",
+        "docs/data/v4/transport/first_pass/dispatch/initial_v2",
+        "--freeze",
+        "docs/data/v4/transport/development/j1/review_evidence/resident_native_dispatch_v2/predictor_freeze.json",
+        "--out-dir",
+        "docs/data/v4/transport/development/j1/review_evidence/resident_native_dispatch_v2/predictor",
+        "--socket",
+        "/tmp/semabi_j1_resident_dispatch_e57e8bfef4e1.sock"
+      ],
+      "processes": {
+        "child_pid": {
+          "pid": 1053853,
+          "present": false
+        },
+        "runner_pid": {
+          "pid": 1053850,
+          "present": false
+        }
+      },
+      "runner_pid": 1053850,
+      "source_head": "861d83fe80fbcd8d10ee0df674a8c35aa563aa56",
+      "status": "FINISHED"
+    }
+  },
+  "namespace": "pid:[4026531836]",
+  "ready_exists": true,
+  "recorded_utc": "2026-09-08T01:35:40.315209+00:00"
+}
