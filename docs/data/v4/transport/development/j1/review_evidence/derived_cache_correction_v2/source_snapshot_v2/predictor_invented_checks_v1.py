@@ -321,117 +321,6 @@ def cache_snapshot_resolution():
     assert m.resolve({"$snapshot": address}, before["snapshots"])["fields"]["_blocks"] is None
 
 
-def cache_association_projection(*, referenced=False, aliases=False):
-    evidence, monitor = evidence_fixture()
-    projection = monitor.capture()
-    empty = copied_evidence(projection)
-    populated = deepcopy(empty)
-    populated["fields"]["_blocks"] = [{"$tuple": list(block)} for block in PAIR_BLOCKS]
-    if referenced:
-        left, right = m.trace.sha(empty), m.trace.sha(populated)
-        projection["snapshots"][left] = empty
-        if not aliases:
-            projection["snapshots"][right] = populated
-        records = [{"$snapshot": left}, {"$snapshot": left if aliases else right}]
-        # The duplicated physical table must not add either logical occurrences
-        # or another physical count of its payloads.
-        projection["common"]["snapshots"] = projection["snapshots"]
-    else:
-        records = [empty, populated]
-    projection["common"]["fit"]["outcomes"]["items"] = [["first", records[0]], ["second", records[1]]]
-    return projection, monitor
-
-
-def cache_association_swap(*, referenced=False):
-    before, monitor = cache_association_projection(referenced=referenced)
-    after = deepcopy(before)
-    rows = after["common"]["fit"]["outcomes"]["items"]
-    rows[0][1], rows[1][1] = rows[1][1], rows[0][1]
-    originals = [m.trace.canonical(value) for value in (before, after)]
-    assert originals[0] != originals[1]
-    assert m.trace.canonical(m.learned_view(before)) == m.trace.canonical(m.learned_view(after))
-    with patch.object(monitor, "capture", side_effect=[before, after]):
-        first, second = monitor.checkpoint(), monitor.checkpoint()
-    complete(first)
-    complete(second)
-    a, b = (row["derived_cache_summary"][CACHE_KEY] for row in (first, second))
-    physical = ("copied_occurrences", "populated_occurrences", "values_sha256")
-    assert {key: a[key] for key in physical} == {key: b[key] for key in physical}
-    assert a["copied_occurrences"] == 2 and a["populated_occurrences"] == 1
-    paths = [("common", "fit", "outcomes", "items", index, 1) for index in range(2)]
-    before_rows = {tuple(row["path"]): row for row in a["logical_occurrences"]}
-    after_rows = {tuple(row["path"]): row for row in b["logical_occurrences"]}
-    assert set(before_rows) == set(after_rows) == set(paths)
-    assert [before_rows[path]["populated"] for path in paths] == [False, True]
-    assert [after_rows[path]["populated"] for path in paths] == [True, False]
-    assert before_rows[paths[0]]["value_sha256"] == after_rows[paths[1]]["value_sha256"]
-    assert before_rows[paths[1]]["value_sha256"] == after_rows[paths[0]]["value_sha256"]
-    assert a["logical_occurrences_sha256"] != b["logical_occurrences_sha256"]
-    assert second["changes"]["derived_evidence_caches"][CACHE_KEY] == {"before": a, "after": b, "changed": True}
-    assert first["learned_commitment_sha256"] == second["learned_commitment_sha256"]
-    assert [m.trace.canonical(value) for value in (before, after)] == originals
-
-
-def cache_association_unchanged():
-    before, monitor = cache_association_projection(referenced=True)
-    after = deepcopy(before)
-    after["snapshots"] = dict(reversed(list(after["snapshots"].items())))
-    after["common"] = dict(reversed(list(after["common"].items())))
-    after["common"]["snapshots"] = after["snapshots"]
-    originals = [m.trace.canonical(value) for value in (before, after)]
-    with patch.object(monitor, "capture", side_effect=[before, after]):
-        first, second = monitor.checkpoint(), monitor.checkpoint()
-    complete(first)
-    complete(second)
-    a, b = (row["derived_cache_summary"][CACHE_KEY] for row in (first, second))
-    assert a == b and second["changes"]["derived_evidence_caches"][CACHE_KEY]["changed"] is False
-    assert a["logical_occurrences"] == sorted(a["logical_occurrences"], key=lambda row: m.trace.canonical(row["path"]))
-    assert m.trace.sha(a["logical_occurrences"]) == a["logical_occurrences_sha256"]
-    assert [m.trace.canonical(value) for value in (before, after)] == originals
-
-
-def cache_logical_aliases():
-    projection, monitor = cache_association_projection(referenced=True, aliases=True)
-    original = m.trace.canonical(projection)
-    summary = m.evidence_cache_summary(projection)[CACHE_KEY]
-    assert summary["copied_occurrences"] == 1 and summary["populated_occurrences"] == 0
-    rows = summary["logical_occurrences"]
-    assert len(rows) == 2 and rows[0]["path"] != rows[1]["path"]
-    assert rows[0]["value_sha256"] == rows[1]["value_sha256"]
-    assert all(row["populated"] is False for row in rows)
-    assert all(type(component) in (str, int) for row in rows for component in row["path"])
-    assert all(component not in projection["snapshots"] for row in rows for component in row["path"] if type(component) is str)
-    assert m.trace.canonical(projection) == original
-
-
-def cache_logical_root_only_omission():
-    record = {"$record": m.EVIDENCE_RECORD, "fields": copied_pair_fields()}
-    address = m.trace.sha(record)
-    projection = {"common": {"data": {"snapshots": [record]}, "snapshots": {address: record}},
-                  "snapshots": {address: record}, "nested": {"common": {"snapshots": [record]}}}
-    summary = m.evidence_cache_summary(projection)[CACHE_KEY]
-    assert summary["copied_occurrences"] == 3
-    assert [row["path"] for row in summary["logical_occurrences"]] == [
-        ["common", "data", "snapshots", 0], ["nested", "common", "snapshots", 0]]
-
-
-def cache_logical_invalid_reference(kind):
-    projection = {"common": {"value": {"$snapshot": "missing"}}, "snapshots": {}}
-    if kind == "cycle":
-        projection["common"]["value"] = {"$snapshot": "loop"}
-        projection["snapshots"]["loop"] = {"$snapshot": "loop"}
-    elif kind == "field_type":
-        projection = {"common": {0: []}, "snapshots": {}}
-    original = m.trace.canonical(projection)
-    try:
-        m.evidence_cache_summary(projection)
-    except ValueError:
-        pass
-    else:
-        raise AssertionError("Invalid logical cache reference/path accepted")
-    assert m.trace.canonical(projection) == original
-
-
 def unrelated_blocks_field(label):
     value = {"fields": {"_blocks": None, "masks": "unrelated"}}
     if label is not None:
@@ -823,14 +712,6 @@ def main():
         "untyped_blocks_field_remains_committed": lambda: unrelated_blocks_field(None),
         "other_typed_blocks_field_remains_committed": lambda: unrelated_blocks_field("invented.other.Evidence"),
         "short_evidence_label_is_not_normalized": lambda: unrelated_blocks_field("Evidence"),
-        "derived_cache_inline_population_swap_visible": cache_association_swap,
-        "derived_cache_reference_only_population_swap_visible": lambda: cache_association_swap(referenced=True),
-        "derived_cache_unchanged_logical_association_stable": cache_association_unchanged,
-        "derived_cache_logical_aliases_keep_physical_count": cache_logical_aliases,
-        "derived_cache_only_root_storage_tables_omitted": cache_logical_root_only_omission,
-        "derived_cache_missing_logical_reference_rejected": lambda: cache_logical_invalid_reference("missing"),
-        "derived_cache_cyclic_logical_reference_rejected": lambda: cache_logical_invalid_reference("cycle"),
-        "derived_cache_nonstring_logical_field_key_rejected": lambda: cache_logical_invalid_reference("field_type"),
     }
     native_cache_mutations = {
         "poisoned_empty_cache": lambda value: setattr(value, "_blocks", []),

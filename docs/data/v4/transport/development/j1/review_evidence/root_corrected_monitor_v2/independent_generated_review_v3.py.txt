@@ -1,0 +1,80 @@
+from copy import deepcopy
+import hashlib, importlib.util, json, pathlib, random, sys
+root=pathlib.Path('docs/data/v4/transport/development/j1')
+def load(name,p):
+ s=importlib.util.spec_from_file_location(name,p); m=importlib.util.module_from_spec(s); s.loader.exec_module(m); return m
+new=load('_review_new_v3',root/'live_model.py')
+oldpath=root/'review_evidence/derived_cache_correction_v2/source_snapshot_v2/live_model.py'
+oldns={'__file__':str(root/'live_model.py'),'__name__':'_review_old_v2'}
+exec(compile(oldpath.read_text(),str(oldpath),'exec'),oldns)
+KEY=new.EVIDENCE_RECORD+'._blocks'
+
+def record(tag,populated):
+ events=[tag,tag,'z']; masks=[1,3,2]
+ groups={'$mapping':'dict','items':[[tag,[0,1]],['z',[2]]]}
+ fields={'events':events,'masks':masks,'by_event':groups,'_blocks':None}
+ if populated: fields['_blocks']=new.evidence_pair_blocks(fields)
+ return {'$record':new.EVIDENCE_RECORD,'fields':fields}
+
+def oracle(proj):
+ snaps=proj['snapshots']; rows=[]
+ def walk(v,path=(),active=()):
+  if type(v) is list:
+   for i,x in enumerate(v): walk(x,path+(i,),active)
+  elif type(v) is dict:
+   if set(v)=={'$snapshot'}:
+    k=v['$snapshot']
+    if k in active or k not in snaps: raise ValueError
+    walk(snaps[k],path,active+(k,)); return
+   if v.get('$record')==new.EVIDENCE_RECORD:
+    raw=v['fields']['_blocks']; new.evidence_pair_blocks(v['fields'])
+    rows.append({'path':list(path),'populated':raw is not None,'value_sha256':new.trace.sha(raw)})
+   for k,x in v.items():
+    if type(k) is not str: raise ValueError
+    walk(x,path+(k,),active)
+ logical={k:v for k,v in proj.items() if k!='snapshots'}
+ logical['common']={k:v for k,v in proj['common'].items() if k!='snapshots'}
+ walk(logical)
+ rows.sort(key=lambda x:new.trace.canonical(x['path']))
+ return rows
+
+rng=random.Random(82173)
+for case in range(500):
+ r0=record('a',bool(case&1)); r1=record('a',not bool(case&1)); r2=record('b',bool(case&2))
+ snaps={'r0':r0,'r1':r1,'r2':r2,
+        'pair':{'payload':[{'$snapshot':'r0'},{'deep':{'$snapshot':'r1'}}]},
+        'chain':{'$snapshot':'pair'}}
+ refs=[]; choices=['r0','r1','r2','pair','chain']
+ for i in range(rng.randrange(1,9)):
+  k=rng.choice(choices); refs.append({'slot':i,'v':{'$snapshot':k}})
+ common={'records':refs,'inline':[deepcopy(r2)],'snapshots':snaps}
+ proj={'schema':'x','common':common,'snapshots':snaps,'other':{'inline':deepcopy(r0)}}
+ if case%2:
+  proj=dict(reversed(list(proj.items())))
+  proj['common']=dict(reversed(list(proj['common'].items())))
+  proj['snapshots']=dict(reversed(list(proj['snapshots'].items())))
+  proj['common']['snapshots']=proj['snapshots']
+ s=new.evidence_cache_summary(proj)[KEY]
+ assert s['logical_occurrences']==oracle(proj)
+ assert s['logical_occurrences_sha256']==new.trace.sha(s['logical_occurrences'])
+ prev=oldns['evidence_cache_summary'](proj)[KEY]
+ for k in ('copied_occurrences','populated_occurrences','values_sha256'): assert s[k]==prev[k],(case,k)
+ q=deepcopy(proj); q=dict(reversed(list(q.items()))); q['common']=dict(reversed(list(q['common'].items()))); q['snapshots']=dict(reversed(list(q['snapshots'].items()))); q['common']['snapshots']=q['snapshots']
+ assert new.evidence_cache_summary(q)==new.evidence_cache_summary(proj)
+r=record('a',False); p={'common':{'x':{'$snapshot':'a'},'y':{'$snapshot':'a'},'snapshots':{}},'snapshots':{'a':[{'$snapshot':'b'},{'$snapshot':'b'}],'b':r}}
+s=new.evidence_cache_summary(p)[KEY]
+assert [x['path'] for x in s['logical_occurrences']]==[['common','x',0],['common','x',1],['common','y',0],['common','y',1]]
+for snaps,ref in [({},'absent'), ({'a':{'$snapshot':'b'},'b':{'$snapshot':'a'}},'a')]:
+ try:new.evidence_cache_summary({'common':{'x':{'$snapshot':ref}},'snapshots':snaps})
+ except ValueError:pass
+ else:raise AssertionError('invalid reachable ref accepted')
+u={'common':{},'snapshots':{'dead':{'$snapshot':'dead'}}}
+assert new.evidence_cache_summary(u)[KEY]['logical_occurrences']==[]
+mp=root/'review_evidence/derived_cache_correction_v3/artifact_manifest_v3.json'; md=json.loads(mp.read_bytes())
+assert len(md['files'])==md['file_count']==20
+for rel,meta in md['files'].items():
+ b=pathlib.Path(rel).read_bytes(); assert len(b)==meta['bytes'] and hashlib.sha256(b).hexdigest()==meta['sha256']
+wp=root/'review_evidence/resident_native_validation_v2.py'; sp=importlib.util.spec_from_file_location('_wrapper_review',wp); w=importlib.util.module_from_spec(sp); sp.loader.exec_module(w)
+assert w.authored_proof()['checks']==114
+assert not any(x=='semabi' or x.startswith('semabi.') for x in sys.modules)
+print(json.dumps({'random_oracle_cases':500,'physical_v2_equivalence_cases':500,'manifest_files_rehashed':20,'wrapper_proof_bound':True,'native_modules_imported':False},sort_keys=True))

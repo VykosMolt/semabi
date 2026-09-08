@@ -1,0 +1,285 @@
+{
+  "candidate_freeze_sha256": "3c365fc86acc2391b0a1300ebe8d010ceafc418b80ff7d0a5a57917c7f317a08",
+  "candidate_sources": {
+    "docs/data/v4/transport/development/j1/live_contract_v1.md": "fbc4740d168aebef146a017f712aa969a13e0274a886828c60fdf622dc270076",
+    "docs/data/v4/transport/development/j1/live_io.py": "2cf44787526076337b53d8a67ef12796c7460d2dcb64cfbbbec7093c946a5327",
+    "docs/data/v4/transport/development/j1/live_model.py": "b83ff047ad79350774c142817789c75708f6b3f025d7b46b83f4744233a4bc96",
+    "docs/data/v4/transport/development/j1/predictor.py": "c0d05260b4668db3e885e6691d7b9cd61096c8db6547ae56dd1358348ef48e51",
+    "docs/data/v4/transport/development/j1/review_evidence/predictor_invented_checks_v1.py": "a2fd729b3b17550f1c610e89e510d9db86bf846ab832b8fe6a38d2a426207416",
+    "docs/data/v4/transport/development/j1/review_evidence/trace_invented_checks_v1.py": "da900268ed09af212ad0921efe4c8a320762ff1c4e13a841185ac53f6afa5ba0",
+    "docs/data/v4/transport/development/j1/trace.py": "25c1624ce8bffbb0bda98f478fc64c73a54d492f3c02c37e81dce44d04892249"
+  },
+  "diagnostic_script_sha256": "b5ae9921610d4086871980e80a54aee46f16484ce26d4aa5835768cb66dac71a",
+  "exposure": {
+    "limit": "Post-preservation diagnostic only. Original V1 files/statuses/result identities remain unchanged; this is neither adoption nor resident custody evidence.",
+    "not_executed": "Native Fit, saved-model query, fixture service, browser, evaluation, scoring or pilot.",
+    "not_opened": "Oracle, invariance, scoring result payload, primary browser payload, forecast ledger, or evaluator configuration.",
+    "opened": "Candidate freeze/source, opaque hashes of authenticated frozen files and preservation/contract seals; preserved checkpoint_0000/0001 contents; native modules only for invented Evidence."
+  },
+  "native_invented_evidence_control": {
+    "all_other_native_stored_fields_unchanged": true,
+    "cache_after": [
+      {
+        "$tuple": [
+          3,
+          7,
+          "A"
+        ]
+      },
+      {
+        "$tuple": [
+          3,
+          7,
+          "A"
+        ]
+      },
+      {
+        "$tuple": [
+          3,
+          7,
+          "A"
+        ]
+      },
+      {
+        "$tuple": [
+          1,
+          63,
+          "B"
+        ]
+      },
+      {
+        "$tuple": [
+          1,
+          63,
+          "B"
+        ]
+      },
+      {
+        "$tuple": [
+          1,
+          63,
+          "B"
+        ]
+      }
+    ],
+    "cache_before": null,
+    "candidate_rejects_answer_changing_cache": {
+      "detail": "Populated Evidence cache differs from its exact ordered derivation",
+      "type": "ValueError"
+    },
+    "list_answer": {
+      "B": {
+        "condition": [
+          [
+            "present",
+            "base"
+          ]
+        ],
+        "covers": 3,
+        "event": "B",
+        "preceded_by": [
+          "A"
+        ],
+        "sole": false,
+        "witnesses": [
+          3,
+          4,
+          5
+        ]
+      }
+    },
+    "native_callback_free_copy_normalization_and_summary_checks": 3,
+    "native_calls_observed_including_imports": {
+      "<genexpr>": 210,
+      "<module>": 9,
+      "Alias": 1,
+      "Answer": 1,
+      "ControlOutcome": 1,
+      "Event": 1,
+      "Evidence": 1,
+      "Grounding": 1,
+      "Node": 1,
+      "NodeDesc": 1,
+      "ObsGraph": 1,
+      "Observation": 1,
+      "Query": 1,
+      "Role": 1,
+      "Rule": 1,
+      "TextTemplate": 1,
+      "Vocabulary": 1,
+      "Vouch": 1,
+      "__init__": 1,
+      "_admissible_in_lists": 3,
+      "_bits": 6,
+      "_closure": 5,
+      "_condition": 2,
+      "_cover": 7,
+      "_event_bits": 13,
+      "_keep": 14,
+      "_mask": 7,
+      "_pair_blocks": 9,
+      "_pure_on": 5,
+      "admissible": 7
+    },
+    "native_fit_or_learning_calls": 0,
+    "normalized_before_after_cleared_equal": true,
+    "poisoned_cache": [],
+    "poisoned_list_answer": {},
+    "profile_restored": true,
+    "query": [
+      [
+        "present",
+        "base"
+      ]
+    ],
+    "repeated_answer_equal_and_cache_identity_reused": true,
+    "rows": [
+      [
+        [
+          [
+            "present",
+            "base"
+          ],
+          [
+            "present",
+            "guard"
+          ]
+        ],
+        "A",
+        []
+      ],
+      [
+        [
+          [
+            "present",
+            "base"
+          ],
+          [
+            "present",
+            "guard"
+          ]
+        ],
+        "A",
+        []
+      ],
+      [
+        [
+          [
+            "present",
+            "base"
+          ],
+          [
+            "present",
+            "guard"
+          ]
+        ],
+        "A",
+        []
+      ],
+      [
+        [
+          [
+            "present",
+            "base"
+          ]
+        ],
+        "B",
+        []
+      ],
+      [
+        [
+          [
+            "present",
+            "base"
+          ]
+        ],
+        "B",
+        []
+      ],
+      [
+        [
+          [
+            "present",
+            "base"
+          ]
+        ],
+        "B",
+        []
+      ]
+    ],
+    "rule_answer": {},
+    "scope": "Six invented Evidence rows and one invented query; no Fit or saved-model query.",
+    "summary_after": {
+      "semabi.compiler.v4.outcome.Evidence._blocks": {
+        "copied_occurrences": 1,
+        "populated_occurrences": 1,
+        "values_sha256": "f3dc6a7bc39c98d067a9162776e7f193817a227a92b69b05d66f91f537757f89"
+      }
+    },
+    "summary_before": {
+      "semabi.compiler.v4.outcome.Evidence._blocks": {
+        "copied_occurrences": 1,
+        "populated_occurrences": 0,
+        "values_sha256": "53b41ab0dae62befcb8708620b6d14794a24fedad6c24c03dd01e51fa698ff0b"
+      }
+    }
+  },
+  "recorded_utc": "2026-09-08T00:48:23.009636+00:00",
+  "saved_checkpoints": [
+    {
+      "candidate_diagnostic_learned_commitment_sha256": "135459275c4bfdd3ef806172be64a4e3603c57ca19e961518436b061ee276fef",
+      "checkpoint_index": 0,
+      "entire_saved_copy_unchanged": true,
+      "original_failed_checks": [],
+      "original_instrument_status": "COMPLETE",
+      "original_learned_commitment_sha256": "c8e253e64a232e6ec509ab090ba06e965b8ae7c970f9db6e5c8cdda8535019c4",
+      "original_projection_status": "COMPLETE",
+      "raw_cache_summary": {
+        "semabi.compiler.v4.outcome.Evidence._blocks": {
+          "copied_occurrences": 4,
+          "populated_occurrences": 0,
+          "values_sha256": "b317c62d64a54eb9b034db5b5cf6084fd6a012c98bc4bd63a7b618429999e674"
+        }
+      }
+    },
+    {
+      "candidate_diagnostic_learned_commitment_sha256": "135459275c4bfdd3ef806172be64a4e3603c57ca19e961518436b061ee276fef",
+      "checkpoint_index": 1,
+      "entire_saved_copy_unchanged": true,
+      "original_failed_checks": [
+        "learned_commitment_unchanged"
+      ],
+      "original_instrument_status": "INCOMPLETE",
+      "original_learned_commitment_sha256": "18574d073f378a4ddae0c9d3928f08d8e111f9548e4e1b724c7be01e658e4ee9",
+      "original_projection_status": "COMPLETE",
+      "raw_cache_summary": {
+        "semabi.compiler.v4.outcome.Evidence._blocks": {
+          "copied_occurrences": 4,
+          "populated_occurrences": 1,
+          "values_sha256": "674930ea95d5df8982d9009d62a67362254136af698a5ad3405a1e256766fdb1"
+        }
+      }
+    }
+  ],
+  "schema": "semabi.j1.derived_cache_saved_diagnostic.v2",
+  "source_and_inputs_authenticated_before_and_after": true,
+  "stable_diagnostic_commitment_sha256": "135459275c4bfdd3ef806172be64a4e3603c57ca19e961518436b061ee276fef",
+  "status": "PASS",
+  "unchanged_frozen_file_count": 167,
+  "visible_raw_cache_population_change": {
+    "after": {
+      "semabi.compiler.v4.outcome.Evidence._blocks": {
+        "copied_occurrences": 4,
+        "populated_occurrences": 1,
+        "values_sha256": "674930ea95d5df8982d9009d62a67362254136af698a5ad3405a1e256766fdb1"
+      }
+    },
+    "before": {
+      "semabi.compiler.v4.outcome.Evidence._blocks": {
+        "copied_occurrences": 4,
+        "populated_occurrences": 0,
+        "values_sha256": "b317c62d64a54eb9b034db5b5cf6084fd6a012c98bc4bd63a7b618429999e674"
+      }
+    }
+  }
+}

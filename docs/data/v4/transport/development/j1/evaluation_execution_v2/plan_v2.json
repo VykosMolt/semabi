@@ -1,0 +1,753 @@
+{
+  "baseline_native_lineage": "Native B1 source remains unchanged; V1 at 5f3dc893c701f90a7cfe859f986287faadd6b856 was preserved as invalid. Only the external Evidence derived-cache monitor correction is intended for V2; exact committed source and acceptance references are pending.",
+  "correction_contract": {
+    "path": "docs/data/v4/transport/development/j1/analysis/checkpoint_failure_v1/correction_contract_v2.md",
+    "sha256": "d4d14d5f932d171573f7669e04b821153bbeb2c4313944592f876242eff19d52"
+  },
+  "created_utc": "2026-09-08T00:21:22.916078+00:00",
+  "exclusive_outputs_absent_at_plan_time": [
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2",
+    "/tmp/semabi-j1-evaluation-v2.sock",
+    "docs/data/v4/transport/first_pass/join/j1_primary_evaluation_v2",
+    "docs/data/v4/transport/first_pass/join/j1_invariance_evaluation_v2",
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/control_receipts/after_primary_v2.json",
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/control_receipts/after_invariance_v2.json",
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/control_receipts/shutdown_v2.json",
+    "docs/data/v4/transport/development/j1/jobs/j1_predictor_v2",
+    "docs/data/v4/transport/development/j1/jobs/j1_primary_service_v2",
+    "docs/data/v4/transport/development/j1/jobs/j1_primary_actor_v2",
+    "docs/data/v4/transport/development/j1/jobs/j1_primary_checkpoint_v2",
+    "docs/data/v4/transport/development/j1/jobs/j1_invariance_service_v2",
+    "docs/data/v4/transport/development/j1/jobs/j1_invariance_actor_v2",
+    "docs/data/v4/transport/development/j1/jobs/j1_invariance_checkpoint_v2",
+    "docs/data/v4/transport/development/j1/jobs/j1_predictor_shutdown_v2"
+  ],
+  "executed_processes_for_this_plan": 0,
+  "execution_order": [
+    {
+      "action": "WAIT for corrected monitor acceptance, a completed disclosed resident pilot on that monitor, a coherent local source checkpoint, reviewed V2 phase/source commitments and root GO. This plan itself performs no execution.",
+      "step": 1
+    },
+    {
+      "action": "Rehash all actual frozen public/runtime/instrument and opaque evaluator inventories, exact raw training bytes, source HEAD and runner. Record freeze resolution and delegation. Verify every job/output/socket identity absent; create only canonical parent directories.",
+      "step": 2
+    },
+    {
+      "action": "Launch j1_predictor_v2 once on CPU 13. Record wrapper and child PID/PGID, session ID, source/input hashes, affinity/nice/thread environment. Wait for actual ready.json and its owned Unix socket; authenticate metadata only. The program performs its sole training fit and initial checkpoint internally.",
+      "step": 3
+    },
+    {
+      "action": "Launch j1_primary_service_v2 on CPU 22. Record ownership/profile and verify its own 127.0.0.1:8771 listening socket through host process metadata. Do not perform HTTP/browser readiness probes.",
+      "step": 4
+    },
+    {
+      "action": "Launch j1_primary_actor_v2 once on CPU 17, pointing to the same predictor output. Run the fixed primary_evaluation script exactly. Each charged action must follow authenticated ledger persistence and actor receipt persistence. No policy choice or script change may depend on a forecast.",
+      "step": 5
+    },
+    {
+      "action": "Reap the primary actor and check actual raw counts/hashes, native run, collector_verification, actor_verification, receipt/reconciliation associations and fixed target allocation. Report metadata only; preserve all partial failures and perform no retries.",
+      "step": 6
+    },
+    {
+      "action": "Run j1_primary_checkpoint_v2 on CPU 18. Require an authenticated COMPLETE control receipt and unchanged resident fit identity/learned commitment/source/training. Reap the control job. The primary checkpoint output is the first element of ordered_control_outputs.",
+      "step": 7
+    },
+    {
+      "action": "Stop and reap only the owned primary fixture wrapper/child. Confirm its runner/child absent and port 8771 released before any profile change. Keep the same resident predictor alive; no shutdown, new fit or reinitialization occurs here.",
+      "step": 8
+    },
+    {
+      "action": "Launch j1_invariance_service_v2 on CPU 22 with profile permuted at the same address. Authenticate owned listener metadata. Launch j1_invariance_actor_v2 on CPU 17 using permuted_evaluation and the exact same predictor output. Run the fixed allocation once.",
+      "step": 9
+    },
+    {
+      "action": "Reap the invariance actor, verify its own raw/instrument/receipt/accounting gates, then run and reap j1_invariance_checkpoint_v2 on CPU 18. Require the same PID/fit ID/native-fit count and unchanged commitments. The checkpoint is the second ordered control output.",
+      "step": 10
+    },
+    {
+      "action": "Run j1_predictor_shutdown_v2 on CPU 18. Preserve the third ordered control output and durable shutdown ledger record. Reap this driver, then wait for and reap the original predictor tool session. Authenticate terminal record, native_fit_calls=1, checkpoint count, complete ledgers/projections and owned Unix socket removal.",
+      "step": 11
+    },
+    {
+      "action": "Stop and reap only the owned permuted fixture wrapper/child. Confirm both fixture profiles and predictor have no remaining owned processes/listeners. Preserve actual planned service interruption statuses and wrapper exits without treating them as failed learner measurements.",
+      "step": 12
+    },
+    {
+      "action": "Retain every complete or partial V2 output under its new identity. Root preserves all available outputs before semantic scoring or diagnosis. Root supplies reviewed preservation/scoring commands outside V2 sealed execution roots. No V1 result is overwritten or reclassified.",
+      "step": 13
+    }
+  ],
+  "executor": "/root/reserved_audit",
+  "expected_accounting": {
+    "both_profiles": {
+      "charged_attempts": 626,
+      "complete_global_ledger_records": 629,
+      "designated_targets": 48,
+      "external_checkpoint_operations": 2,
+      "forecast_operations": 626,
+      "native_fit_calls": 1,
+      "paired_steps": 624,
+      "resident_predictor_processes": 1,
+      "shutdown_operations": 1
+    },
+    "checkpoint_projection_files_if_complete": [
+      "checkpoint_0000.json",
+      "checkpoint_0001.json",
+      "checkpoint_0002.json",
+      "checkpoint_0003.json"
+    ],
+    "checkpoint_scope": "Initial projection is created at predictor startup outside the ledger. External controls after primary, after invariance and at shutdown each create another checkpoint. No extra readiness-check checkpoint is allowed.",
+    "failures": "Every setup failure, unresolved target, no-op, unpaired reset, native prediction error and missing fixed allocation position remains explicit. Native complete only means zero action failures and is separate from instrument/ledger/allocation completeness.",
+    "per_profile": {
+      "actor_reconciliations": 313,
+      "boundary_reloads": 1,
+      "case_count": 24,
+      "charged_attempts": 313,
+      "designated_targets": 24,
+      "extra_calibration_or_exploration_actions": 0,
+      "forecast_receipts": 313,
+      "paired_steps": 312,
+      "resets": 24,
+      "script_snapshot_requests": 312,
+      "scripted_primitives": 288,
+      "unpaired_initial_resets": 1
+    },
+    "status": "FIXED_PUBLIC_REQUIREMENTS; must be checked against actual execution"
+  },
+  "exposure": {
+    "fixture_authorship": "Generated fixture from a separate agent; shared context and author exposure do not establish blinding or independent real-application transfer.",
+    "invariance_phase": "Not executed in V1. Root has not opened its case/answer/oracle payloads. First execution remains reserved under the corrected frozen instrument.",
+    "learner_boundary": "Only fixed raw training and public pre-action Observation/Primitive messages; no evaluator script/label/oracle enters predictor.",
+    "primary_phase": "Disclosed development replay: primary was executed in V1, and checkpoint training evidence plus outcome frame names informed the cache diagnosis. V1 raw forecast/outcome payloads remain unopened by root at plan preparation."
+  },
+  "failure_policy": {
+    "cleanup": "Graceful durable predictor shutdown is the normal path. If infrastructure prevents it, retain the failed control/job evidence, stop only the recorded owned process groups, and record any missing shutdown/checkpoint as missing.",
+    "incomplete_instrument_or_custody": "Stop dependent application actions; preserve the partial allocation and all available evidence. Do not resume, rerun, repair or replace its output identity. Coordinate root-directed cleanup using only recorded owned sessions/PIDs.",
+    "native_prediction_or_resolution_failure": "Retain the explicit forecast/error/unreachable opportunity and continue only as the accepted frozen actor permits; do not inject a replacement answer or extra action.",
+    "unexpected_process_death": "Preserve the original logs/records and report filtered metadata; no automatic restart or new Fit."
+  },
+  "fixture_routing": {
+    "invariance_selector": "permuted_evaluation",
+    "primary_selector": "primary_evaluation",
+    "profiles_serialized": [
+      "primary",
+      "permuted"
+    ],
+    "reset": "http://127.0.0.1:8771/reset",
+    "route": "http://127.0.0.1:8771/join",
+    "routing_exposure": "Previously displayed script top-level and routing keys only; no further script contents opened.",
+    "same_address_both_profiles": true,
+    "script": {
+      "path": "experiments/join_v1/oracle/scripts_v1.json",
+      "sha256": "d44719acaa5ae83757829fd652796804abd230a213c5401d5228851ff8ab8b39"
+    }
+  },
+  "inline_driver_included": false,
+  "jobs": [
+    {
+      "cpu": 13,
+      "inner_command_template": [
+        ".venv/bin/python",
+        "docs/data/v4/transport/development/j1/predictor.py",
+        "run",
+        "--training",
+        "docs/data/v4/transport/first_pass/join/j1_training_v1",
+        "--freeze",
+        "<PREDICTOR_FREEZE_PATH_FROM_ROOT>",
+        "--out-dir",
+        "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2",
+        "--socket",
+        "/tmp/semabi-j1-evaluation-v2.sock"
+      ],
+      "job": "j1_predictor_v2",
+      "kind": "resident_predictor",
+      "lifetime": "One process and one native Fit from startup through both profiles and final durable shutdown. No restart or refit.",
+      "out_dir": "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2",
+      "outer_command_template": [
+        "taskset",
+        "-c",
+        "13",
+        "env",
+        "PYTHONHASHSEED=0",
+        "BLIS_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "NUMEXPR_NUM_THREADS=1",
+        "OMP_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "VECLIB_MAXIMUM_THREADS=1",
+        ".venv/bin/python",
+        "docs/data/v4/transport/run_job.py",
+        "docs/data/v4/transport/development/j1/jobs/j1_predictor_v2",
+        "--",
+        ".venv/bin/python",
+        "docs/data/v4/transport/development/j1/predictor.py",
+        "run",
+        "--training",
+        "docs/data/v4/transport/first_pass/join/j1_training_v1",
+        "--freeze",
+        "<PREDICTOR_FREEZE_PATH_FROM_ROOT>",
+        "--out-dir",
+        "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2",
+        "--socket",
+        "/tmp/semabi-j1-evaluation-v2.sock"
+      ],
+      "path": "docs/data/v4/transport/development/j1/jobs/j1_predictor_v2",
+      "socket_path": "/tmp/semabi-j1-evaluation-v2.sock",
+      "status": "PLANNED_PENDING_PHASE_FREEZES_AND_EXPLICIT_GO",
+      "tool_launch": {
+        "namespace": "One shared host namespace for resident predictor, actor, fixture services and control drivers",
+        "sandbox_permissions": "require_escalated",
+        "tty": true
+      }
+    },
+    {
+      "cpu": 22,
+      "inner_command_template": [
+        ".venv/bin/python",
+        "experiments/join_v1/server.py",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8771",
+        "--profile",
+        "primary"
+      ],
+      "job": "j1_primary_service_v2",
+      "kind": "fixture_service",
+      "outer_command_template": [
+        "taskset",
+        "-c",
+        "22",
+        "env",
+        "PYTHONHASHSEED=0",
+        "BLIS_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "NUMEXPR_NUM_THREADS=1",
+        "OMP_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "VECLIB_MAXIMUM_THREADS=1",
+        ".venv/bin/python",
+        "docs/data/v4/transport/run_job.py",
+        "docs/data/v4/transport/development/j1/jobs/j1_primary_service_v2",
+        "--",
+        ".venv/bin/python",
+        "experiments/join_v1/server.py",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8771",
+        "--profile",
+        "primary"
+      ],
+      "path": "docs/data/v4/transport/development/j1/jobs/j1_primary_service_v2",
+      "profile": "primary",
+      "status": "PLANNED_PENDING_PHASE_FREEZES_AND_EXPLICIT_GO",
+      "stop": "Ctrl-C only to the recorded owned runner PTY; let the stock wrapper terminate/reap its owned child group; preserve actual INTERRUPTED record and wrapper exit.",
+      "tool_launch": {
+        "namespace": "One shared host namespace for resident predictor, actor, fixture services and control drivers",
+        "sandbox_permissions": "require_escalated",
+        "tty": true
+      }
+    },
+    {
+      "cpu": 17,
+      "depends_on_predictor_output": "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2",
+      "fixture_routing_selector": "primary_evaluation",
+      "inner_command_template": [
+        ".venv/bin/python",
+        "docs/data/v4/transport/development/j1/act.py",
+        "--actor-freeze",
+        "<ACTOR_FREEZE_PATH_FROM_ROOT>",
+        "--predictor-dir",
+        "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2",
+        "script",
+        "--url",
+        "http://127.0.0.1:8771/join",
+        "--reset-url",
+        "http://127.0.0.1:8771/reset",
+        "--script",
+        "experiments/join_v1/oracle/scripts_v1.json",
+        "--fixture",
+        "primary_evaluation",
+        "--seed",
+        "0",
+        "--freeze",
+        "<COLLECTOR_FREEZE_PATH_FROM_ROOT>",
+        "--out",
+        "docs/data/v4/transport/first_pass/join/j1_primary_evaluation_v2"
+      ],
+      "job": "j1_primary_actor_v2",
+      "kind": "evaluation_actor",
+      "outer_command_template": [
+        "taskset",
+        "-c",
+        "17",
+        "env",
+        "PYTHONHASHSEED=0",
+        "BLIS_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "NUMEXPR_NUM_THREADS=1",
+        "OMP_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "VECLIB_MAXIMUM_THREADS=1",
+        ".venv/bin/python",
+        "docs/data/v4/transport/run_job.py",
+        "docs/data/v4/transport/development/j1/jobs/j1_primary_actor_v2",
+        "--",
+        ".venv/bin/python",
+        "docs/data/v4/transport/development/j1/act.py",
+        "--actor-freeze",
+        "<ACTOR_FREEZE_PATH_FROM_ROOT>",
+        "--predictor-dir",
+        "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2",
+        "script",
+        "--url",
+        "http://127.0.0.1:8771/join",
+        "--reset-url",
+        "http://127.0.0.1:8771/reset",
+        "--script",
+        "experiments/join_v1/oracle/scripts_v1.json",
+        "--fixture",
+        "primary_evaluation",
+        "--seed",
+        "0",
+        "--freeze",
+        "<COLLECTOR_FREEZE_PATH_FROM_ROOT>",
+        "--out",
+        "docs/data/v4/transport/first_pass/join/j1_primary_evaluation_v2"
+      ],
+      "path": "docs/data/v4/transport/development/j1/jobs/j1_primary_actor_v2",
+      "raw_output": "docs/data/v4/transport/first_pass/join/j1_primary_evaluation_v2",
+      "status": "PLANNED_PENDING_PHASE_FREEZES_AND_EXPLICIT_GO",
+      "tool_launch": {
+        "namespace": "One shared host namespace for resident predictor, actor, fixture services and control drivers",
+        "sandbox_permissions": "require_escalated",
+        "tty": true
+      }
+    },
+    {
+      "control_output": "docs/data/v4/transport/development/j1/evaluation_execution_v2/control_receipts/after_primary_v2.json",
+      "control_source_review": "Unchanged accepted control.py; V2 admission must authenticate its exact source.",
+      "cpu": 18,
+      "inner_command_template": [
+        ".venv/bin/python",
+        "docs/data/v4/transport/development/j1/control.py",
+        "--actor-freeze",
+        "<ACTOR_FREEZE_PATH_FROM_ROOT>",
+        "--collector-freeze",
+        "<COLLECTOR_FREEZE_PATH_FROM_ROOT>",
+        "--predictor-dir",
+        "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2",
+        "--operation",
+        "checkpoint",
+        "--out",
+        "docs/data/v4/transport/development/j1/evaluation_execution_v2/control_receipts/after_primary_v2.json"
+      ],
+      "job": "j1_primary_checkpoint_v2",
+      "kind": "checkpoint_or_shutdown_driver",
+      "operation": "checkpoint",
+      "outer_command_template": [
+        "taskset",
+        "-c",
+        "18",
+        "env",
+        "PYTHONHASHSEED=0",
+        "BLIS_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "NUMEXPR_NUM_THREADS=1",
+        "OMP_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "VECLIB_MAXIMUM_THREADS=1",
+        ".venv/bin/python",
+        "docs/data/v4/transport/run_job.py",
+        "docs/data/v4/transport/development/j1/jobs/j1_primary_checkpoint_v2",
+        "--",
+        ".venv/bin/python",
+        "docs/data/v4/transport/development/j1/control.py",
+        "--actor-freeze",
+        "<ACTOR_FREEZE_PATH_FROM_ROOT>",
+        "--collector-freeze",
+        "<COLLECTOR_FREEZE_PATH_FROM_ROOT>",
+        "--predictor-dir",
+        "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2",
+        "--operation",
+        "checkpoint",
+        "--out",
+        "docs/data/v4/transport/development/j1/evaluation_execution_v2/control_receipts/after_primary_v2.json"
+      ],
+      "path": "docs/data/v4/transport/development/j1/jobs/j1_primary_checkpoint_v2",
+      "status": "PLANNED_PENDING_PHASE_FREEZES_AND_EXPLICIT_GO",
+      "tool_launch": {
+        "namespace": "One shared host namespace for resident predictor, actor, fixture services and control drivers",
+        "sandbox_permissions": "require_escalated",
+        "tty": true
+      }
+    },
+    {
+      "cpu": 22,
+      "inner_command_template": [
+        ".venv/bin/python",
+        "experiments/join_v1/server.py",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8771",
+        "--profile",
+        "permuted"
+      ],
+      "job": "j1_invariance_service_v2",
+      "kind": "fixture_service",
+      "outer_command_template": [
+        "taskset",
+        "-c",
+        "22",
+        "env",
+        "PYTHONHASHSEED=0",
+        "BLIS_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "NUMEXPR_NUM_THREADS=1",
+        "OMP_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "VECLIB_MAXIMUM_THREADS=1",
+        ".venv/bin/python",
+        "docs/data/v4/transport/run_job.py",
+        "docs/data/v4/transport/development/j1/jobs/j1_invariance_service_v2",
+        "--",
+        ".venv/bin/python",
+        "experiments/join_v1/server.py",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8771",
+        "--profile",
+        "permuted"
+      ],
+      "path": "docs/data/v4/transport/development/j1/jobs/j1_invariance_service_v2",
+      "profile": "permuted",
+      "status": "PLANNED_PENDING_PHASE_FREEZES_AND_EXPLICIT_GO",
+      "stop": "Ctrl-C only to the recorded owned runner PTY; let the stock wrapper terminate/reap its owned child group; preserve actual INTERRUPTED record and wrapper exit.",
+      "tool_launch": {
+        "namespace": "One shared host namespace for resident predictor, actor, fixture services and control drivers",
+        "sandbox_permissions": "require_escalated",
+        "tty": true
+      }
+    },
+    {
+      "cpu": 17,
+      "depends_on_predictor_output": "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2",
+      "fixture_routing_selector": "permuted_evaluation",
+      "inner_command_template": [
+        ".venv/bin/python",
+        "docs/data/v4/transport/development/j1/act.py",
+        "--actor-freeze",
+        "<ACTOR_FREEZE_PATH_FROM_ROOT>",
+        "--predictor-dir",
+        "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2",
+        "script",
+        "--url",
+        "http://127.0.0.1:8771/join",
+        "--reset-url",
+        "http://127.0.0.1:8771/reset",
+        "--script",
+        "experiments/join_v1/oracle/scripts_v1.json",
+        "--fixture",
+        "permuted_evaluation",
+        "--seed",
+        "0",
+        "--freeze",
+        "<COLLECTOR_FREEZE_PATH_FROM_ROOT>",
+        "--out",
+        "docs/data/v4/transport/first_pass/join/j1_invariance_evaluation_v2"
+      ],
+      "job": "j1_invariance_actor_v2",
+      "kind": "evaluation_actor",
+      "outer_command_template": [
+        "taskset",
+        "-c",
+        "17",
+        "env",
+        "PYTHONHASHSEED=0",
+        "BLIS_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "NUMEXPR_NUM_THREADS=1",
+        "OMP_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "VECLIB_MAXIMUM_THREADS=1",
+        ".venv/bin/python",
+        "docs/data/v4/transport/run_job.py",
+        "docs/data/v4/transport/development/j1/jobs/j1_invariance_actor_v2",
+        "--",
+        ".venv/bin/python",
+        "docs/data/v4/transport/development/j1/act.py",
+        "--actor-freeze",
+        "<ACTOR_FREEZE_PATH_FROM_ROOT>",
+        "--predictor-dir",
+        "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2",
+        "script",
+        "--url",
+        "http://127.0.0.1:8771/join",
+        "--reset-url",
+        "http://127.0.0.1:8771/reset",
+        "--script",
+        "experiments/join_v1/oracle/scripts_v1.json",
+        "--fixture",
+        "permuted_evaluation",
+        "--seed",
+        "0",
+        "--freeze",
+        "<COLLECTOR_FREEZE_PATH_FROM_ROOT>",
+        "--out",
+        "docs/data/v4/transport/first_pass/join/j1_invariance_evaluation_v2"
+      ],
+      "path": "docs/data/v4/transport/development/j1/jobs/j1_invariance_actor_v2",
+      "raw_output": "docs/data/v4/transport/first_pass/join/j1_invariance_evaluation_v2",
+      "status": "PLANNED_PENDING_PHASE_FREEZES_AND_EXPLICIT_GO",
+      "tool_launch": {
+        "namespace": "One shared host namespace for resident predictor, actor, fixture services and control drivers",
+        "sandbox_permissions": "require_escalated",
+        "tty": true
+      }
+    },
+    {
+      "control_output": "docs/data/v4/transport/development/j1/evaluation_execution_v2/control_receipts/after_invariance_v2.json",
+      "control_source_review": "Unchanged accepted control.py; V2 admission must authenticate its exact source.",
+      "cpu": 18,
+      "inner_command_template": [
+        ".venv/bin/python",
+        "docs/data/v4/transport/development/j1/control.py",
+        "--actor-freeze",
+        "<ACTOR_FREEZE_PATH_FROM_ROOT>",
+        "--collector-freeze",
+        "<COLLECTOR_FREEZE_PATH_FROM_ROOT>",
+        "--predictor-dir",
+        "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2",
+        "--operation",
+        "checkpoint",
+        "--out",
+        "docs/data/v4/transport/development/j1/evaluation_execution_v2/control_receipts/after_invariance_v2.json"
+      ],
+      "job": "j1_invariance_checkpoint_v2",
+      "kind": "checkpoint_or_shutdown_driver",
+      "operation": "checkpoint",
+      "outer_command_template": [
+        "taskset",
+        "-c",
+        "18",
+        "env",
+        "PYTHONHASHSEED=0",
+        "BLIS_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "NUMEXPR_NUM_THREADS=1",
+        "OMP_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "VECLIB_MAXIMUM_THREADS=1",
+        ".venv/bin/python",
+        "docs/data/v4/transport/run_job.py",
+        "docs/data/v4/transport/development/j1/jobs/j1_invariance_checkpoint_v2",
+        "--",
+        ".venv/bin/python",
+        "docs/data/v4/transport/development/j1/control.py",
+        "--actor-freeze",
+        "<ACTOR_FREEZE_PATH_FROM_ROOT>",
+        "--collector-freeze",
+        "<COLLECTOR_FREEZE_PATH_FROM_ROOT>",
+        "--predictor-dir",
+        "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2",
+        "--operation",
+        "checkpoint",
+        "--out",
+        "docs/data/v4/transport/development/j1/evaluation_execution_v2/control_receipts/after_invariance_v2.json"
+      ],
+      "path": "docs/data/v4/transport/development/j1/jobs/j1_invariance_checkpoint_v2",
+      "status": "PLANNED_PENDING_PHASE_FREEZES_AND_EXPLICIT_GO",
+      "tool_launch": {
+        "namespace": "One shared host namespace for resident predictor, actor, fixture services and control drivers",
+        "sandbox_permissions": "require_escalated",
+        "tty": true
+      }
+    },
+    {
+      "control_output": "docs/data/v4/transport/development/j1/evaluation_execution_v2/control_receipts/shutdown_v2.json",
+      "control_source_review": "Unchanged accepted control.py; V2 admission must authenticate its exact source.",
+      "cpu": 18,
+      "inner_command_template": [
+        ".venv/bin/python",
+        "docs/data/v4/transport/development/j1/control.py",
+        "--actor-freeze",
+        "<ACTOR_FREEZE_PATH_FROM_ROOT>",
+        "--collector-freeze",
+        "<COLLECTOR_FREEZE_PATH_FROM_ROOT>",
+        "--predictor-dir",
+        "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2",
+        "--operation",
+        "shutdown",
+        "--out",
+        "docs/data/v4/transport/development/j1/evaluation_execution_v2/control_receipts/shutdown_v2.json"
+      ],
+      "job": "j1_predictor_shutdown_v2",
+      "kind": "checkpoint_or_shutdown_driver",
+      "operation": "shutdown",
+      "outer_command_template": [
+        "taskset",
+        "-c",
+        "18",
+        "env",
+        "PYTHONHASHSEED=0",
+        "BLIS_NUM_THREADS=1",
+        "MKL_NUM_THREADS=1",
+        "NUMEXPR_NUM_THREADS=1",
+        "OMP_NUM_THREADS=1",
+        "OPENBLAS_NUM_THREADS=1",
+        "VECLIB_MAXIMUM_THREADS=1",
+        ".venv/bin/python",
+        "docs/data/v4/transport/run_job.py",
+        "docs/data/v4/transport/development/j1/jobs/j1_predictor_shutdown_v2",
+        "--",
+        ".venv/bin/python",
+        "docs/data/v4/transport/development/j1/control.py",
+        "--actor-freeze",
+        "<ACTOR_FREEZE_PATH_FROM_ROOT>",
+        "--collector-freeze",
+        "<COLLECTOR_FREEZE_PATH_FROM_ROOT>",
+        "--predictor-dir",
+        "docs/data/v4/transport/development/j1/evaluation_execution_v2/predictor_v2",
+        "--operation",
+        "shutdown",
+        "--out",
+        "docs/data/v4/transport/development/j1/evaluation_execution_v2/control_receipts/shutdown_v2.json"
+      ],
+      "path": "docs/data/v4/transport/development/j1/jobs/j1_predictor_shutdown_v2",
+      "status": "PLANNED_PENDING_PHASE_FREEZES_AND_EXPLICIT_GO",
+      "tool_launch": {
+        "namespace": "One shared host namespace for resident predictor, actor, fixture services and control drivers",
+        "sandbox_permissions": "require_escalated",
+        "tty": true
+      }
+    }
+  ],
+  "native_imports_or_fits_for_this_plan": 0,
+  "native_pilot_requirement": "New disclosed T1 resident validation on the corrected monitor plus native invented Evidence cache controls and independent adversarial review; old pilot alone is insufficient.",
+  "observed_head_while_plan_prepared": "5f3dc893c701f90a7cfe859f986287faadd6b856",
+  "ordered_control_outputs": [
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/control_receipts/after_primary_v2.json",
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/control_receipts/after_invariance_v2.json",
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/control_receipts/shutdown_v2.json"
+  ],
+  "parent_attempt": {
+    "disposition": "Original partial first pass and invalid score remain immutable.",
+    "first_pass": {
+      "path": "docs/data/v4/transport/development/j1/first_pass_manifest_v1.json",
+      "sha256": "c05c792722432db0db3c535f9a405b7c65795346ae5216921546d57ac59ee7cc"
+    },
+    "freeze": {
+      "path": "docs/data/v4/transport/development/j1/evaluation_freeze_v1.json",
+      "sha256": "f9817e8b864f4797e6d202839fb38d96775d82ce11cbe7ab7bce5e0b8c74bceb"
+    },
+    "score_seal": {
+      "path": "docs/data/v4/transport/development/j1/scoring_v1/artifact_manifest_v1.json",
+      "sha256": "f93987391b760d5085ac11e0cd08e7d8242fcae61eaf779e351cd9eead37d3ca"
+    }
+  },
+  "pending_control_source_sha256": "877c823a78d9629d0e493d8b3da32317b7ac3bb762a58a66192fae34265b95c5",
+  "post_collection_pending_operations": [
+    {
+      "authority": "No invocation authorized or inferred. Root must provide reviewed exact CLI, inputs, output identities and ordering.",
+      "command": null,
+      "kind": "preservation",
+      "owner": "/root",
+      "source_path_candidate": "docs/data/v4/transport/development/j1/preserve.py",
+      "source_review": "Unchanged instrument accepted before V1. V2 source/input/output admission remains pending; do not invoke this template."
+    },
+    {
+      "authority": "No fit or retrospective native forecast is authorized. Root supplies the reviewed saved-forecast scoring CLI only after its required preservation gate.",
+      "command": null,
+      "cpu": 19,
+      "kind": "post_preservation_scoring",
+      "owner": "/root",
+      "source_path_candidate": "docs/data/v4/transport/development/j1/evaluate.py",
+      "source_review": "Unchanged instrument accepted before V1. V2 source/input/output admission remains pending; do not invoke this template."
+    }
+  ],
+  "public_instrument_source_snapshots_for_plan_only": {
+    "docs/data/v4/transport/development/j1/act.py": "26a91ec96deb9c381dcc28c4e0277c6a349c0d940f7693e7bb9e6d3e55b267b7",
+    "docs/data/v4/transport/development/j1/collect.py": "53d1bcb26ef3069a23404cd3872713b840ced39215e34d8022f9c2c94fd0492d",
+    "docs/data/v4/transport/development/j1/control.py": "877c823a78d9629d0e493d8b3da32317b7ac3bb762a58a66192fae34265b95c5",
+    "docs/data/v4/transport/development/j1/live_io.py": "2cf44787526076337b53d8a67ef12796c7460d2dcb64cfbbbec7093c946a5327",
+    "docs/data/v4/transport/development/j1/predictor.py": "c0d05260b4668db3e885e6691d7b9cd61096c8db6547ae56dd1358348ef48e51",
+    "docs/data/v4/transport/run_job.py": "3c91a704135db5cfa553c7bdc9a5a55fffa999f73e2e9aebd9f7f2a3534525d7"
+  },
+  "required_freezes": {
+    "actor": {
+      "owner": "/root",
+      "path": "<ACTOR_FREEZE_PATH_FROM_ROOT>",
+      "sha256": null,
+      "status": "PENDING_AFTER_DISCLOSED_NATIVE_PILOT"
+    },
+    "collector": {
+      "owner": "/root",
+      "path": "<COLLECTOR_FREEZE_PATH_FROM_ROOT>",
+      "sha256": null,
+      "status": "PENDING_ACTUAL_PHASE_REFERENCE; must equal actor freeze collector reference, not assumed from training phase"
+    },
+    "global": {
+      "owner": "/root",
+      "path": "<GLOBAL_FIRST_PASS_FREEZE_PATH_FROM_ROOT>",
+      "sha256": null,
+      "status": "PENDING_SOURCE_INSTRUMENT_FIXTURE_AND_EXECUTION_COMMITMENT"
+    },
+    "predictor": {
+      "owner": "/root",
+      "path": "<PREDICTOR_FREEZE_PATH_FROM_ROOT>",
+      "sha256": null,
+      "status": "PENDING_AFTER_DISCLOSED_NATIVE_PILOT"
+    }
+  },
+  "required_parent_directories_before_launch": [
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2",
+    "docs/data/v4/transport/development/j1/evaluation_execution_v2/control_receipts"
+  ],
+  "resources": {
+    "actor_cpu": 17,
+    "actor_reset_seed": 0,
+    "checkpoint_shutdown_cpu": 18,
+    "fixture_service_cpu": 22,
+    "io_priority": "normal",
+    "nice": 0,
+    "numerical_threads": {
+      "BLIS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "VECLIB_MAXIMUM_THREADS": "1"
+    },
+    "post_preservation_score_cpu_if_needed": 19,
+    "predictor_cpu": 13,
+    "profile_state": "Exactly one fixture process at a time; no primary/permuted overlap.",
+    "python_hash_seed": "0"
+  },
+  "root_coordinator": "/root",
+  "schema": "semabi.j1.corrected_evaluation_execution_plan.v2",
+  "source_or_original_artifact_edits_for_this_plan": false,
+  "status": "PREPARED_ONLY_PENDING_CORRECTED_MONITOR_REVIEW_AND_PILOT",
+  "template_resolution": "Every angle-bracket freeze token must be replaced by the reviewed root-supplied exact path and digest in a separately preserved launch receipt before any process starts. This plan does not authorize invoking a command template. Root reviews control.py and final instruments before GO.",
+  "training": {
+    "actual_paired_steps": 312,
+    "directory": "docs/data/v4/transport/first_pass/join/j1_training_v1",
+    "execution_handoff": {
+      "path": "docs/data/v4/transport/development/j1/execution_receipts_v1/training_execution_handoff_v1.json",
+      "sha256": "c44d7251a193345ff02a752171df2e8058348e9faab3bfacaf4c7aea3bdcfe7b"
+    },
+    "execution_receipts_manifest": {
+      "path": "docs/data/v4/transport/development/j1/execution_receipts_v1/training_receipts_manifest_v1.json",
+      "sha256": "5cb90c9e5259090bd85c8cbe23100db0f39ad8671a0bd601c1e6fad496e9a2f8"
+    },
+    "measurement_head": "592590560008632076469ae51beb160d23817b86",
+    "observation_sha256": "c271d8d73229326d558a3790365cd5743d227da5e0ebd93e66b1928848d9c4b9",
+    "root_training_preservation_reference": {
+      "path": "docs/data/v4/transport/development/j1/training_preservation_v1.json",
+      "sha256": "06cf6e5ed9031de829639dc5df04df613abbfc008435c3e08dd0bee680db0e29"
+    },
+    "step_sha256": "53ac19a56ed58a852f1bd84468f3b7907f0765252b8501e8a990176325b15452"
+  }
+}

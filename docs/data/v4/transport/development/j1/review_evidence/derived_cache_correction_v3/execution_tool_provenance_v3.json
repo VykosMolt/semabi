@@ -1,0 +1,285 @@
+{
+  "before_source_snapshot": {
+    "path": "docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v2/source_snapshot_v2/live_model.py",
+    "sha256": "b83ff047ad79350774c142817789c75708f6b3f025d7b46b83f4744233a4bc96"
+  },
+  "binds_sealed_manifest": {
+    "all_twenty_files_rehashed_before_addition": true,
+    "file_count": 20,
+    "path": "docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/artifact_manifest_v3.json",
+    "sha256": "6ea0b0b19b8ebbb26909b49b087931a8ef1e117247683606ce92cff4589de3d0"
+  },
+  "candidate_freeze": {
+    "path": "docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/candidate_freeze_v3.json",
+    "sha256": "3167fe2e19c9d6a757f8ebc9b5303be8918076afbbe4e3a8b11230d0166af9e3"
+  },
+  "candidate_source_hashes": {
+    "docs/data/v4/transport/development/j1/live_contract_v1.md": "4031693fb3cd6a3b12bab4aa2d31044e83b0ba129a6457f9dc2851850de9d1f9",
+    "docs/data/v4/transport/development/j1/live_io.py": "2cf44787526076337b53d8a67ef12796c7460d2dcb64cfbbbec7093c946a5327",
+    "docs/data/v4/transport/development/j1/live_model.py": "e8847bce1e8b55f21164672d61b83e3acc3aaec7ca8087803acb5b217ed70210",
+    "docs/data/v4/transport/development/j1/predictor.py": "c0d05260b4668db3e885e6691d7b9cd61096c8db6547ae56dd1358348ef48e51",
+    "docs/data/v4/transport/development/j1/review_evidence/predictor_invented_checks_v1.py": "e7e97930466d685875308830fa74abf8f6767b397c9fb5edf1e7e5b769455ba0",
+    "docs/data/v4/transport/development/j1/review_evidence/trace_invented_checks_v1.py": "da900268ed09af212ad0921efe4c8a320762ff1c4e13a841185ac53f6afa5ba0",
+    "docs/data/v4/transport/development/j1/trace.py": "25c1624ce8bffbb0bda98f478fc64c73a54d492f3c02c37e81dce44d04892249"
+  },
+  "executions": [
+    {
+      "case": "reviewer_before_v2",
+      "exec_command_return": {
+        "chunk_id": "79f858",
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": "",
+        "wall_time_seconds": 2.353e-06
+      },
+      "independently_sampled_os_process_fields": {
+        "affinity": null,
+        "argv": null,
+        "nice": null,
+        "pid": null,
+        "process_start_time": null
+      },
+      "monitor_source_sha256_at_execution": "b83ff047ad79350774c142817789c75708f6b3f025d7b46b83f4744233a4bc96",
+      "observed_os_pids": [],
+      "os_pid_availability": "Unavailable: no OS process ID was returned or retained in these command receipts, stdout, or stderr. No PID was inferred.",
+      "outer_tool_return": {
+        "status": "Script completed",
+        "wall_time_display": "6.7 seconds"
+      },
+      "receipt_identity": {
+        "chunk_id": "79f858",
+        "functions_cell_id": null,
+        "functions_cell_id_availability": "No running cell ID was returned: functions.exec completed in its initial call.",
+        "session_id": null,
+        "session_id_availability": "No session_id was returned: the command completed in its initial exec_command call."
+      },
+      "recorded_outcome": "The original inline and referenced summary collisions were reproduced; the original assertions passed.",
+      "script": {
+        "path": "docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/reviewer_verbatim_reproducer_v2.py",
+        "sha256": "b25fd0318e96809533b2a9002909918128b16365dc7a95ffdf447174f1c2535b"
+      },
+      "sealed_execution_record": {
+        "path": "docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/reviewer_before_v2_execution.json",
+        "sha256": "f10c7339fa06e327c5f40611c1d065b26c5324e2fc7685c07d3d731edda309f6"
+      },
+      "stderr": {
+        "bytes": 0,
+        "path": "docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/reviewer_before_v2.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "path": "docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/reviewer_before_v2.stdout.json",
+        "sha256": "ce66bee44ab908efa2511bc47f5b3b5c9314baa49f62aadcddb7ccd61443ee73"
+      },
+      "submission": {
+        "arguments": {
+          "cmd": "env PYTHONHASHSEED=0 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 taskset -c 20 .venv/bin/python -B docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/reviewer_verbatim_reproducer_v2.py > docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/reviewer_before_v2.stdout.json 2> docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/reviewer_before_v2.stderr.log",
+          "justification": "Run the authorized reviewer’s standard-library-only, source-pinned cache-swap reproducer on the host before editing V2. It uses invented copied records, no native Fit or service, and preserves its output in the new V3 evidence directory.",
+          "max_output_tokens": 1000,
+          "sandbox_permissions": "require_escalated",
+          "workdir": "/home/moloch/semabi",
+          "yield_time_ms": 1000
+        },
+        "argv_scope": "Parsed from the exact submitted shell command; OS argv was not independently sampled. No shell/login override was supplied.",
+        "launch_argv_from_submitted_command": [
+          "env",
+          "PYTHONHASHSEED=0",
+          "OMP_NUM_THREADS=1",
+          "OPENBLAS_NUM_THREADS=1",
+          "MKL_NUM_THREADS=1",
+          "NUMEXPR_NUM_THREADS=1",
+          "taskset",
+          "-c",
+          "20",
+          ".venv/bin/python",
+          "-B",
+          "docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/reviewer_verbatim_reproducer_v2.py"
+        ],
+        "nested_tool": "exec_command",
+        "outer_tool": "functions.exec",
+        "python_argv_from_submitted_command": [
+          ".venv/bin/python",
+          "-B",
+          "docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/reviewer_verbatim_reproducer_v2.py"
+        ]
+      }
+    },
+    {
+      "case": "authored_v3",
+      "exec_command_return": {
+        "chunk_id": "cc78fd",
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": "",
+        "wall_time_seconds": 0.132471781
+      },
+      "independently_sampled_os_process_fields": {
+        "affinity": null,
+        "argv": null,
+        "nice": null,
+        "pid": null,
+        "process_start_time": null
+      },
+      "monitor_source_sha256_at_execution": "e8847bce1e8b55f21164672d61b83e3acc3aaec7ca8087803acb5b217ed70210",
+      "observed_os_pids": [],
+      "os_pid_availability": "Unavailable: no OS process ID was returned or retained in these command receipts, stdout, or stderr. No PID was inferred.",
+      "outer_tool_return": {
+        "status": "Script completed",
+        "wall_time_display": "6.3 seconds"
+      },
+      "receipt_identity": {
+        "chunk_id": "cc78fd",
+        "functions_cell_id": null,
+        "functions_cell_id_availability": "No running cell ID was returned: functions.exec completed in its initial call.",
+        "session_id": null,
+        "session_id_availability": "No session_id was returned: the command completed in its initial exec_command call."
+      },
+      "recorded_outcome": "All 114 authored checks passed.",
+      "script": {
+        "path": "docs/data/v4/transport/development/j1/review_evidence/predictor_invented_checks_v1.py",
+        "sha256": "e7e97930466d685875308830fa74abf8f6767b397c9fb5edf1e7e5b769455ba0"
+      },
+      "sealed_execution_record": {
+        "path": "docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/host_executions_v3.json",
+        "sha256": "9d43be1dcb773e798965509e180e81bbb4cb6cd72e97548d3efeb7c2613d6125"
+      },
+      "stderr": {
+        "bytes": 0,
+        "path": "docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/authored_v3.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "path": "docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/authored_v3.stdout.log",
+        "sha256": "8ebec4fedcce39a64548f8b7a07dc3a63b550505c457c7bfa5fae727ec0542b2"
+      },
+      "submission": {
+        "arguments": {
+          "cmd": "env PYTHONHASHSEED=0 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 taskset -c 20 .venv/bin/python -B docs/data/v4/transport/development/j1/review_evidence/predictor_invented_checks_v1.py --result docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/predictor_invented_checks_v3.json > docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/authored_v3.stdout.log 2> docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/authored_v3.stderr.log",
+          "justification": "Run the authorized frozen V3 invented monitor suite on the host, including its existing temporary local Unix-socket controls. It uses CPU 20 with one numerical thread, imports no native learner, and writes a new V3 result without changing source or HEAD.",
+          "max_output_tokens": 1000,
+          "sandbox_permissions": "require_escalated",
+          "workdir": "/home/moloch/semabi",
+          "yield_time_ms": 1000
+        },
+        "argv_scope": "Parsed from the exact submitted shell command; OS argv was not independently sampled. No shell/login override was supplied.",
+        "launch_argv_from_submitted_command": [
+          "env",
+          "PYTHONHASHSEED=0",
+          "OMP_NUM_THREADS=1",
+          "OPENBLAS_NUM_THREADS=1",
+          "MKL_NUM_THREADS=1",
+          "NUMEXPR_NUM_THREADS=1",
+          "taskset",
+          "-c",
+          "20",
+          ".venv/bin/python",
+          "-B",
+          "docs/data/v4/transport/development/j1/review_evidence/predictor_invented_checks_v1.py",
+          "--result",
+          "docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/predictor_invented_checks_v3.json"
+        ],
+        "nested_tool": "exec_command",
+        "outer_tool": "functions.exec",
+        "python_argv_from_submitted_command": [
+          ".venv/bin/python",
+          "-B",
+          "docs/data/v4/transport/development/j1/review_evidence/predictor_invented_checks_v1.py",
+          "--result",
+          "docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/predictor_invented_checks_v3.json"
+        ]
+      }
+    },
+    {
+      "case": "reviewer_after_v3",
+      "exec_command_return": {
+        "chunk_id": "c63a3d",
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": "",
+        "wall_time_seconds": 2.075e-06
+      },
+      "independently_sampled_os_process_fields": {
+        "affinity": null,
+        "argv": null,
+        "nice": null,
+        "pid": null,
+        "process_start_time": null
+      },
+      "monitor_source_sha256_at_execution": "e8847bce1e8b55f21164672d61b83e3acc3aaec7ca8087803acb5b217ed70210",
+      "observed_os_pids": [],
+      "os_pid_availability": "Unavailable: no OS process ID was returned or retained in these command receipts, stdout, or stderr. No PID was inferred.",
+      "outer_tool_return": {
+        "status": "Script completed",
+        "wall_time_display": "2.5 seconds"
+      },
+      "receipt_identity": {
+        "chunk_id": "c63a3d",
+        "functions_cell_id": null,
+        "functions_cell_id_availability": "No running cell ID was returned: functions.exec completed in its initial call.",
+        "session_id": null,
+        "session_id_availability": "No session_id was returned: the command completed in its initial exec_command call."
+      },
+      "recorded_outcome": "Both explicit no-collision assertions passed; referenced normalized learned views remained equal.",
+      "script": {
+        "path": "docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/reviewer_after_reproducer_v3.py",
+        "sha256": "c9c46d0ee359f4c7e291f6f56e7f50dd5c48570c07d7a679376afab3a7167e5f"
+      },
+      "sealed_execution_record": {
+        "path": "docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/host_executions_v3.json",
+        "sha256": "9d43be1dcb773e798965509e180e81bbb4cb6cd72e97548d3efeb7c2613d6125"
+      },
+      "stderr": {
+        "bytes": 0,
+        "path": "docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/reviewer_after_v3.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "path": "docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/reviewer_after_v3.stdout.json",
+        "sha256": "48fdf7b96530c37b71f7710d1ca0f833d175043e1f32a41c489f864d3a8daaca"
+      },
+      "submission": {
+        "arguments": {
+          "cmd": "env PYTHONHASHSEED=0 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 taskset -c 20 .venv/bin/python -B docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/reviewer_after_reproducer_v3.py > docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/reviewer_after_v3.stdout.json 2> docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/reviewer_after_v3.stderr.log",
+          "justification": "Run the explicitly adapted reviewer cache-swap reproducer against frozen V3 on the host. The two invented cases and method calls are unchanged; the source pin and expected assertions are disclosed in the adaptation record. No native learner, service, pilot or evaluation runs.",
+          "max_output_tokens": 1000,
+          "sandbox_permissions": "require_escalated",
+          "workdir": "/home/moloch/semabi",
+          "yield_time_ms": 1000
+        },
+        "argv_scope": "Parsed from the exact submitted shell command; OS argv was not independently sampled. No shell/login override was supplied.",
+        "launch_argv_from_submitted_command": [
+          "env",
+          "PYTHONHASHSEED=0",
+          "OMP_NUM_THREADS=1",
+          "OPENBLAS_NUM_THREADS=1",
+          "MKL_NUM_THREADS=1",
+          "NUMEXPR_NUM_THREADS=1",
+          "taskset",
+          "-c",
+          "20",
+          ".venv/bin/python",
+          "-B",
+          "docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/reviewer_after_reproducer_v3.py"
+        ],
+        "nested_tool": "exec_command",
+        "outer_tool": "functions.exec",
+        "python_argv_from_submitted_command": [
+          ".venv/bin/python",
+          "-B",
+          "docs/data/v4/transport/development/j1/review_evidence/derived_cache_correction_v3/reviewer_after_reproducer_v3.py"
+        ]
+      }
+    }
+  ],
+  "recorded_utc": "2026-09-08T01:25:00.153283+00:00",
+  "schema": "semabi.j1.cache_association_execution_tool_provenance.v3",
+  "scope_notes": [
+    "Commands and completed tool returns above are preserved execution evidence; no listed command was rerun to create this file.",
+    "The before command ran against its V2 source pin; authored and after commands ran against the frozen V3 source. Respective source snapshots and pins are reproduction inputs.",
+    "Tool wall-time fields are reproduced as returned; they are not asserted to be independently measured OS process runtimes.",
+    "No new native work, test, service, pilot, evaluation, commit, or source/HEAD change was performed for this addition.",
+    "This new file binds the existing seal and is intentionally outside its unchanged twenty-file inventory."
+  ],
+  "source_head_observed_when_added": "d4a468a3071f2a645e7d361748963a439df5de71",
+  "status": "ADDITIVE_PROVENANCE_COMPLETE"
+}

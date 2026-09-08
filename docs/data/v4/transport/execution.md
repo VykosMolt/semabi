@@ -1,6 +1,6 @@
 # Fresh-interface campaign execution record
 
-## Active checkpoint (2026-09-08 00:27 UTC)
+## Active checkpoint (2026-09-08 01:30 UTC)
 
 T1, G1 and G2 are preserved and locally committed. G2 checkpoint `38f1f08` contains
 G2 and its reviewed evidence: 577 passing tests, 3 skips, 1 expected failure,
@@ -185,16 +185,47 @@ The last G2 fit retained its original single-core/low-priority settings through
 completion. Versioned resource override: `development/g2/resource_override_v3.json`.
 No GPU, paid compute, external deployment or push is authorized.
 
-Current ownership: root owns original-result preservation, the accepted correction
-contract and V2 preparation/pilot versioning; `reserved_audit` completed its
-independent diagnosis and will implement the monitor correction after the local
-checkpoint. `baseline_verification` owns
-separate post-preservation evaluator diagnostics and their independent review,
-without opening actual J1 learner payloads. Its corrected invented checks pass
-78/78 and all 19 unchanged reviewer counterexamples pass; a newly found narrow
-typed-record compatibility gap is being preserved and corrected before acceptance.
-No native fit, fixture service or evaluation actor is live. Only small diagnosis
-and review work is running at this checkpoint.
+The original invalid result and accepted diagnosis are committed at `d4a468a`.
+The accepted monitor correction validates the exact ordered derivation of the typed
+Evidence cache, then normalizes only its lazy population in the learned-content
+comparison. Raw projections and a separate population/digest summary retain the
+cache change. All 114 authored checks pass on the host; the first attempt's four
+sandbox socket failures remain preserved. Root's 21 existing custody-boundary
+checks pass with the current monitor. The 156 native source files are unchanged.
+The old 310 caller checks use substituted monitor helpers and were not repeated
+as purported coverage of this change; their four tested source files are unchanged.
+Saved-checkpoint diagnostics preserve both original statuses and bytes, produce
+the same corrected learned commitment, and reject an answer-changing poisoned
+cache. Their tiny invented native Evidence control made zero Fit calls.
+
+Independent review found a summary defect in the retained 106-check candidate:
+sorting raw cache values hid simultaneous clearing and population at different
+Evidence occurrences, including swaps of content-addressed references. The V3
+correction adds logical path/population/value bindings while retaining the old
+physical counts and digest. Only the summary function changed after V2; capture,
+checkpoint, resolver and learned normalization stayed identical. The 106 old
+cases and eight new cases pass. Independent review accepts the source, V2 plan,
+preparer and final 114-proof pilot wrapper, including 500 generated reference
+cases and 500 physical-summary comparisons. Their exact source and reported
+execution are preserved. V2's 19-file seal is unchanged; the new 20-file V3 seal
+SHA-256 is `6ea0b0b19b8ebbb26909b49b087931a8ef1e117247683606ce92cff4589de3d0`.
+Root's acceptance binds 173 runtime files and 56 correction artifacts, SHA-256
+`76c88154394f44b77fbcb7c4f9d2a2b42cebbd7177604e196fc99c88b5a6c3bf`.
+The native pilot remains required; tiny-check host resource settings are supplied
+command evidence rather than independently sampled OS attestations.
+
+Current ownership: root owns the candidate checkpoint, disclosed T1 pilot and V2
+admission/freezes; `reserved_audit` holds the accepted monitor and remains the
+planned J1 executor. `baseline_verification` owns the separate diagnostics. Its
+source-only compatibility audit found an optional ParsedObs cache being decoded
+as required semantic data. That held package is preserved; the narrow correction
+passes 90 authored checks and all 19 unchanged reviewer counterexamples and is
+under independent review. No actual J1 learner payloads or semantic report were
+opened by root. Production diagnostics await V2 compatibility and preservation.
+Next: commit the accepted candidate, execute the seven-request T1 native pilot,
+then prepare and verify the new eight-job J1 freeze. Primary is disclosed replay;
+invariance remains unexecuted. No native fit, fixture service or evaluation actor
+is live. All tiny correction jobs have ended.
 A report or commit is a checkpoint; continue through reviewed J1
 execution and the next evidence-justified development milestone.
 

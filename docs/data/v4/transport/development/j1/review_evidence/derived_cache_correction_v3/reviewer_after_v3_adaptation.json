@@ -1,0 +1,36 @@
+{
+  "after_script_sha256": "c9c46d0ee359f4c7e291f6f56e7f50dd5c48570c07d7a679376afab3a7167e5f",
+  "candidate_source_sha256": "e8847bce1e8b55f21164672d61b83e3acc3aaec7ca8087803acb5b217ed70210",
+  "expectation": "Original assertions prove collisions in V2. After assertions require both collisions to disappear while referenced normalized learned views remain equal. Original script/output unchanged.",
+  "explicit_changes": [
+    {
+      "after": "EXPECTED = 'e8847bce1e8b55f21164672d61b83e3acc3aaec7ca8087803acb5b217ed70210'",
+      "before": "EXPECTED = 'b83ff047ad79350774c142817789c75708f6b3f025d7b46b83f4744233a4bc96'"
+    },
+    {
+      "after": "assert inline_before != inline_after and inline_summaries[0] != inline_summaries[1]",
+      "before": "assert inline_before != inline_after and inline_summaries[0] == inline_summaries[1]"
+    },
+    {
+      "after": "assert ref_before != ref_after and learned_equal and ref_summaries[0] != ref_summaries[1]",
+      "before": "assert ref_before != ref_after and learned_equal and ref_summaries[0] == ref_summaries[1]"
+    },
+    {
+      "after": "'schema':'semabi.j1.independent_cache_swap_reproducer.v3_after'",
+      "before": "'schema':'semabi.j1.independent_cache_swap_reproducer.v1'"
+    },
+    {
+      "after": "'inline_summary_equal':inline_summaries[0] == inline_summaries[1]",
+      "before": "'inline_summary_equal':True"
+    },
+    {
+      "after": "'referenced_summary_equal':ref_summaries[0] == ref_summaries[1]",
+      "before": "'referenced_summary_equal':True"
+    }
+  ],
+  "header_added": "Explicit V3 expectation adaptation; see reviewer_after_v3_adaptation.json.",
+  "original_verbatim_script_sha256": "b25fd0318e96809533b2a9002909918128b16365dc7a95ffdf447174f1c2535b",
+  "recorded_utc": "2026-09-08T01:13:00.956490+00:00",
+  "same_constructed_case_and_call_ast": true,
+  "schema": "semabi.j1.cache_association_reproducer_adaptation.v3"
+}

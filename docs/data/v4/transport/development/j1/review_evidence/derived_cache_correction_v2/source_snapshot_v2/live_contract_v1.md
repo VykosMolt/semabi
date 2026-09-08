@@ -208,19 +208,6 @@ Keep `capture()` and all raw copied projection values unchanged. A separate
 checkpoint `derived_cache_summary` reports raw copied occurrences, populated
 occurrences and a content digest, counting each stored snapshot payload once.
 `changes.derived_evidence_caches` records the previous and current summaries.
-The reviewed V3 summary correction preserves those physical counts and digest
-and additionally binds each logical occurrence to its raw cache value. Its
-`logical_occurrences` rows contain `path`, `populated` and `value_sha256`, sorted
-by the canonical path; `logical_occurrences_sha256` commits that complete list.
-Path components are field-name strings and list-index integers. Follow snapshot
-references at their referring paths, omitting only the root `snapshots` and
-`common.snapshots` storage tables from this logical walk. Aliases have separate
-logical rows while their physical stored payload remains counted once. A swap
-of populated and empty caches or of their logical references must change the
-summary even when aggregate population and content remain equal. Missing or
-cyclic references fail the summary; snapshot addresses are not path components.
-The V3 mechanism and preserved V2 counterexample are recorded under
-`review_evidence/derived_cache_correction_v3/`.
 Both population and clearing of an exact cache stay visible; either is compatible
 with an unchanged normalized learned commitment. Existing interpretation-cache,
 memo and graph-lookup checks retain their original behavior. A populated but

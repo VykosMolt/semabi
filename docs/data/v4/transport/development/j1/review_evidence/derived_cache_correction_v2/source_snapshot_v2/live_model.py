@@ -200,53 +200,23 @@ def typed_cache_summary(projection):
 def evidence_cache_summary(projection):
     """Retain raw cache population/content separately from its normalized value."""
     values = []
-    logical_occurrences = []
-    snapshots = projection["snapshots"]
-    def cache_value(value):
-        fields = resolve(value, snapshots).get("fields")
-        evidence_pair_blocks(fields)
-        return fields["_blocks"]
     def visit(value):
         if type(value) is list:
             for item in value:
                 visit(item)
         elif type(value) is dict:
             if value.get("$record") == EVIDENCE_RECORD:
-                values.append(cache_value(value))
+                fields = resolve(value, projection["snapshots"]).get("fields")
+                evidence_pair_blocks(fields)
+                values.append(fields["_blocks"])
             for item in value.values():
                 visit(item)
     # Visit each stored snapshot payload once, matching typed_cache_summary.
     visit({**projection, "common": {key: value for key, value in projection["common"].items() if key != "snapshots"}})
-    def logical_visit(value, path=(), active=()):
-        if type(value) is list:
-            for index, item in enumerate(value):
-                logical_visit(item, path + (index,), active)
-        elif type(value) is dict:
-            if set(value) == {"$snapshot"}:
-                key = value["$snapshot"]
-                if key in active or key not in snapshots:
-                    raise ValueError("Missing or cyclic copied snapshot")
-                logical_visit(snapshots[key], path, active + (key,))
-                return
-            if value.get("$record") == EVIDENCE_RECORD:
-                raw = cache_value(value)
-                logical_occurrences.append({"path": list(path), "populated": raw is not None,
-                                            "value_sha256": trace.sha(raw)})
-            for key, item in value.items():
-                if type(key) is not str:
-                    raise ValueError("Logical copied field key is not a string")
-                logical_visit(item, path + (key,), active)
-    # Storage addresses are not logical locations. Follow every reference at
-    # its referring path, including separate aliases of the same payload.
-    logical_visit({**{key: value for key, value in projection.items() if key != "snapshots"},
-                   "common": {key: value for key, value in projection["common"].items() if key != "snapshots"}})
-    logical_occurrences.sort(key=lambda row: trace.canonical(row["path"]))
     return {EVIDENCE_RECORD + "._blocks": {
         "copied_occurrences": len(values),
         "populated_occurrences": sum(value is not None for value in values),
         "values_sha256": trace.sha(sorted(trace.canonical(value) for value in values)),
-        "logical_occurrences": logical_occurrences,
-        "logical_occurrences_sha256": trace.sha(logical_occurrences),
     }}
 
 
