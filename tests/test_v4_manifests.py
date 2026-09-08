@@ -7,6 +7,7 @@ import json
 import marshal
 import os
 import shutil
+import sys
 import tempfile
 from pathlib import Path
 
@@ -615,25 +616,30 @@ def _closure_file() -> str:
 
 
 @contextlib.contextmanager
-def _installed_cache(relative: str, data: bytes, optimization: str = ""):
+def _installed_cache(relative: str, data: bytes, cache_root: Path, optimization: str = ""):
     """Install one bytecode cache for a closure file and always restore the original.
 
-    Only the cache file is touched; the authenticated ``.py`` source and its mtime are
-    never modified, which is exactly the condition the repair defends against.
+    Bytecode stays inside the test-owned cache root. The authenticated ``.py`` source
+    and its mtime are never modified, which is the condition the repair defends against.
     """
 
-    source = ROOT / relative
-    cache = Path(importlib.util.cache_from_source(str(source), optimization=optimization))
-    original = cache.read_bytes() if cache.is_file() else None
-    cache.parent.mkdir(parents=True, exist_ok=True)
-    cache.write_bytes(data)
+    previous_prefix = sys.pycache_prefix
     try:
-        yield cache
+        sys.pycache_prefix = str(cache_root)
+        source = ROOT / relative
+        cache = Path(importlib.util.cache_from_source(str(source), optimization=optimization))
+        original = cache.read_bytes() if cache.is_file() else None
+        cache.parent.mkdir(parents=True, exist_ok=True)
+        cache.write_bytes(data)
+        try:
+            yield cache
+        finally:
+            if original is None:
+                cache.unlink()
+            else:
+                cache.write_bytes(original)
     finally:
-        if original is None:
-            cache.unlink()
-        else:
-            cache.write_bytes(original)
+        sys.pycache_prefix = previous_prefix
 
 
 def _divergent_code(relative: str):
@@ -679,7 +685,7 @@ def test_live_divergent_bytecode_cache_is_rejected(tmp_path):
     forged = _timestamp_pyc(
         _divergent_code(relative), int(stat_result.st_mtime), stat_result.st_size
     )
-    with _installed_cache(relative, forged):
+    with _installed_cache(relative, forged, tmp_path / "bytecode"):
         with pytest.raises(manifests.ManifestError, match="diverges from authenticated source"):
             manifests.load_source_manifest(manifest, repo_root=ROOT)
     # The restored cache authenticates again.
@@ -695,7 +701,7 @@ def test_stale_bytecode_cache_is_not_rejected(tmp_path):
     stale = _timestamp_pyc(
         _divergent_code(relative), int(stat_result.st_mtime) + 1, stat_result.st_size
     )
-    with _installed_cache(relative, stale):
+    with _installed_cache(relative, stale, tmp_path / "bytecode"):
         manifests.load_source_manifest(manifest, repo_root=ROOT)
 
 
@@ -703,7 +709,7 @@ def test_hash_based_bytecode_cache_with_wrong_source_hash_is_rejected(tmp_path):
     relative = _closure_file()
     _source, manifest, _payload = _source_manifest(tmp_path)
     forged = _hash_pyc(_divergent_code(relative), b"\x00" * 8)
-    with _installed_cache(relative, forged):
+    with _installed_cache(relative, forged, tmp_path / "bytecode"):
         with pytest.raises(
             manifests.ManifestError,
             match="hash-based bytecode cache does not match authenticated source",
@@ -729,20 +735,20 @@ def test_every_optimization_level_present_on_disk_is_found_not_only_a_fixed_list
         _divergent_code(relative), int(stat_result.st_mtime), stat_result.st_size
     )
     for optimization in ("1", "2"):
-        with _installed_cache(relative, forged, optimization):
+        with _installed_cache(relative, forged, tmp_path / "bytecode", optimization):
             with pytest.raises(
                 manifests.ManifestError, match="diverges from authenticated source"
             ):
                 manifests.load_source_manifest(manifest, repo_root=ROOT)
 
-    with _installed_cache(relative, forged, "3"):
+    with _installed_cache(relative, forged, tmp_path / "bytecode", "3"):
         with pytest.raises(
             manifests.ManifestError,
             match="optimization level this check cannot reproduce",
         ):
             manifests.load_source_manifest(manifest, repo_root=ROOT)
 
-    with _installed_cache(relative, forged, "custom"):
+    with _installed_cache(relative, forged, tmp_path / "bytecode", "custom"):
         with pytest.raises(
             manifests.ManifestError,
             match="optimization level this check cannot reproduce",
@@ -783,7 +789,7 @@ def test_chain_replay_closure_also_rejects_a_live_divergent_cache(tmp_path):
     forged = _timestamp_pyc(
         _divergent_code(relative), int(stat_result.st_mtime), stat_result.st_size
     )
-    with _installed_cache(relative, forged):
+    with _installed_cache(relative, forged, tmp_path / "bytecode"):
         with pytest.raises(manifests.ManifestError, match="diverges from authenticated source"):
             manifests.load_chain_manifest(chain_path, repo_root=ROOT)
     manifests.load_chain_manifest(chain_path, repo_root=ROOT)
