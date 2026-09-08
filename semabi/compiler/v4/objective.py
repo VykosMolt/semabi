@@ -35,19 +35,114 @@ from __future__ import annotations
 
 import hashlib
 import json
-from collections import Counter
+from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from typing import Any
 
 from semabi.compiler.abstract import diff
 from semabi.compiler.evidence import EvidenceLog
 from semabi.compiler.v2.abstractor import V2Abstractor
-from semabi.compiler.v2.score import _changed_inside_units, _same_view
+from semabi.compiler.v2.graph import node_text
+from semabi.compiler.v2.score import _changed_inside_units as _changed_non_widget_content, _same_view
 
 SENSING_KINDS = ("reload",)
 
 # the abstractor's identity repair: the same object seen under a new key
 KEY_CHANGE = "__key__"
+
+
+def _represented_widget_spans(A: V2Abstractor, obs) -> dict[tuple, str]:
+    """Persistent attribute spans paired by rendered own keys, before association.
+
+    A source slot must uniquely supply an actual emitted attribute of a uniquely
+    represented owner. Reference expansion, record/mention transformations and
+    attachments without an own-field witness are outside this added channel.
+    """
+    H = A.H
+    if not H.persistent_widgets:
+        return {}
+    parsed = A.parsed(obs)
+    sig = obs.structural_signature()
+    units = H._parse_units(sig, raw_keys=True)
+    raw_by_root = {ui.root: ui for ui in units}
+    by_root = defaultdict(list)
+    identities = Counter()
+    for index, inst in enumerate(parsed.instances):
+        by_root[inst.root].append((index, inst))
+        key = inst.slots.get("id", (None, None))[1]
+        if key:
+            identities[(inst.tid, key)] += 1
+
+    witnesses = []
+    for ui in units:
+        unit = H.units.get(ui.template)
+        if unit is None or not unit.key_slot:
+            continue
+        parts = unit.key_slot.split("|")
+        if any(part not in ui.slots or part not in ui.slot_nodes for part in parts):
+            continue
+        # Use text for key-bearing buttons: their leaf_value is merely True.
+        values = tuple(node_text(obs.node(ui.slot_nodes[part])) for part in parts)
+        if any(not value.strip() for value in values):
+            continue
+        witnesses.append(((ui.template, unit.key_slot, values), ui))
+    counts = Counter(witness for witness, _ui in witnesses)
+
+    result = {}
+    for witness, ui in witnesses:
+        if counts[witness] != 1 or len(by_root[ui.root]) != 1:
+            continue
+        et_id = H.tid_of_template.get(ui.template)
+        if et_id is None or et_id in A.record_by_anchor:
+            continue
+        index, owner = by_root[ui.root][0]
+        key = owner.slots.get("id", (None, None))[1]
+        if (owner.anchor != "v2" or owner.tid != A.tid_map.get(et_id) or not key
+                or owner.positional or identities[(owner.tid, key)] != 1
+                or parsed.node_instance.get(ui.root) != index
+                or (sig, ui.root) in H.raw_context_assignments):
+            continue
+        et = H.entity_types[et_id]
+        sources = defaultdict(list)
+        for sid in et.attr_slots.get(ui.template, ()):
+            if sid in ui.slots:
+                sources[A.attr_name(et, ui.template, sid)].append(sid)
+        for name, slots in sources.items():
+            if len(slots) != 1:
+                continue
+            sid = slots[0]
+            if ((ui.template, sid) not in H.persistent_widgets
+                    or (ui.template, sid) in et.ref_slots
+                    or sid.startswith("attached:") or sid not in ui.slot_nodes):
+                continue
+            node = ui.slot_nodes[sid]
+            owns_node = parsed.node_instance.get(node) == index
+            if sid.startswith("^"):
+                # The parser moved the frame's transient field onto its sole
+                # child. Its DOM node can remain a sibling of that child.
+                frame = raw_by_root.get(ui.parent_root)
+                source_sid = sid[1:] + "~"
+                owns_node = (frame is not None and frame.nested == [ui.root]
+                             and source_sid not in frame.slots
+                             and frame.slot_nodes.get(source_sid) == node)
+            if (obs.node(node).role not in ("combobox", "textbox")
+                    or not owns_node
+                    or not name.startswith("attr:")
+                    or name not in owner.slots or owner.slots[name][1] != ui.slots[sid]):
+                continue
+            # Compare this exact data span, not the widget's whole value: a
+            # persistent numeric span in '4 red' cannot explain '4 blue'.
+            result[(*witness, sid, name)] = ui.slots[sid]
+    return result
+
+
+def _changed_inside_units(A: V2Abstractor, log: EvidenceLog, step) -> bool:
+    """Keep V2 observation evidence and add narrowly represented widget changes."""
+    if _changed_non_widget_content(A, log, step):
+        return True
+    before = _represented_widget_spans(A, log.obs(step.before))
+    after = _represented_widget_spans(A, log.obs(step.after))
+    return any(before[field] != after[field] for field in before.keys() & after.keys())
 
 
 def observable_delta_signature(delta) -> tuple:
